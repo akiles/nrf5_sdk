@@ -427,7 +427,7 @@ static inline app_usbd_class_data_t * app_usbd_class_data_access(
 /**
  * @brief Count total number of endpoint up-to interface index
  *
- * The version of @ref APP_USBD_CLASS_CONF_TOTAL_EP_COUNT macro witch takes the
+ * The version of @ref APP_USBD_CLASS_CONF_TOTAL_EP_COUNT macro which takes the
  * number of interfaces to analyze.
  *
  * @param N             Number of interfaces to analyze
@@ -454,6 +454,7 @@ static inline app_usbd_class_data_t * app_usbd_class_data_access(
  *
  * @return Comma separated initialization data for all interfaces.
  */
+/*lint -emacro( (40), APP_USBD_CLASS_IFACES_CONFIG_EXTRACT) */
 #define APP_USBD_CLASS_IFACES_CONFIG_EXTRACT(iface_configs)     \
     MACRO_MAP_FOR_PARAM(iface_configs,                          \
                         APP_USBD_CLASS_IFACE_CONFIG_EXTRACT_,   \
@@ -469,6 +470,7 @@ static inline app_usbd_class_data_t * app_usbd_class_data_access(
  *
  * @return Comma separated list of endpoints
  */
+/*lint -emacro( (40), APP_USBD_CLASS_IFACES_EP_EXTRACT) */
 #define APP_USBD_CLASS_IFACES_EP_EXTRACT(iface_configs) \
     MACRO_MAP(APP_USBD_CLASS_IFACE_EP_EXTRACT_, BRACKET_EXTRACT(iface_configs))
 

@@ -63,7 +63,7 @@ static int ecc_rng(uint8_t *dest, unsigned size)
 
 void ecc_init(bool rng)
 {
-    if(rng)
+    if (rng)
     {
         uECC_set_rng(ecc_rng);
     }
@@ -110,14 +110,14 @@ ret_code_t ecc_p256_public_key_compute(uint8_t const *p_le_sk, uint8_t *p_le_pk)
 
     p_curve = uECC_secp256r1();
 
-    //NRF_LOG_INFO("uECC_compute_public_key\r\n");
+    //NRF_LOG_INFO("uECC_compute_public_key");
     int ret = uECC_compute_public_key((uint8_t *) p_le_sk, (uint8_t *) p_le_pk, p_curve);
     if (!ret)
     {
         return NRF_ERROR_INTERNAL;
     }
 
-    //NRF_LOG_INFO("uECC_compute_public_key complete: %d\r\n", ret);
+    //NRF_LOG_INFO("uECC_compute_public_key complete: %d", ret);
     return NRF_SUCCESS;
 }
 
@@ -137,14 +137,14 @@ ret_code_t ecc_p256_shared_secret_compute(uint8_t const *p_le_sk, uint8_t const 
 
     p_curve = uECC_secp256r1();
 
-    //NRF_LOG_INFO("uECC_shared_secret\r\n");
+    //NRF_LOG_INFO("uECC_shared_secret");
     int ret = uECC_shared_secret((uint8_t *) p_le_pk, (uint8_t *) p_le_sk, p_le_ss, p_curve);
     if (!ret)
     {
         return NRF_ERROR_INTERNAL;
     }
 
-    //NRF_LOG_INFO("uECC_shared_secret complete: %d\r\n", ret);
+    //NRF_LOG_INFO("uECC_shared_secret complete: %d", ret);
     return NRF_SUCCESS;
 }
 
@@ -164,14 +164,14 @@ ret_code_t ecc_p256_sign(uint8_t const *p_le_sk, uint8_t const * p_le_hash, uint
 
     p_curve = uECC_secp256r1();
 
-    //NRF_LOG_INFO("uECC_sign\r\n");
+    //NRF_LOG_INFO("uECC_sign");
     int ret = uECC_sign((const uint8_t *) p_le_sk, (const uint8_t *) p_le_hash, (unsigned) hlen, (uint8_t *) p_le_sig, p_curve);
     if (!ret)
     {
         return NRF_ERROR_INTERNAL;
     }
 
-    //NRF_LOG_INFO("uECC_sign complete: %d\r\n", ret);
+    //NRF_LOG_INFO("uECC_sign complete: %d", ret);
     return NRF_SUCCESS;
 }
 
@@ -191,14 +191,14 @@ ret_code_t ecc_p256_verify(uint8_t const *p_le_pk, uint8_t const * p_le_hash, ui
 
     p_curve = uECC_secp256r1();
 
-    //NRF_LOG_INFO("uECC_verify\r\n");
+    //NRF_LOG_INFO("uECC_verify");
     int ret = uECC_verify((const uint8_t *) p_le_pk, (const uint8_t *) p_le_hash, (unsigned) hlen, (uint8_t *) p_le_sig, p_curve);
     if (!ret)
     {
         return NRF_ERROR_INVALID_DATA;
     }
 
-    //NRF_LOG_INFO("uECC_verify complete: %d\r\n", ret);
+    //NRF_LOG_INFO("uECC_verify complete: %d", ret);
     return NRF_SUCCESS;
 
 }

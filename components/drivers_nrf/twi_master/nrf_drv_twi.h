@@ -43,7 +43,7 @@
  * @brief      Two Wire master interface (TWI/TWIM) APIs.
  *
  *
- * @defgroup nrf_drv_twi TWIS driver
+ * @defgroup nrf_drv_twi TWI driver
  * @{
  * @ingroup    nrf_twi
  * @brief      TWI master APIs.
@@ -51,39 +51,81 @@
 #ifndef NRF_DRV_TWI_H__
 #define NRF_DRV_TWI_H__
 
-#include "nordic_common.h"
-#include "sdk_config.h"
+#include "sdk_common.h"
+#include "nrf_peripherals.h"
 
+#ifdef TWI0_ENABLED
+#define TWI0_INCR TWI0_ENABLED
+#else
+#define TWI0_INCR 0
+#endif
+
+#ifdef TWI1_ENABLED
+#define TWI1_INCR TWI1_ENABLED
+#else
+#define TWI1_INCR 0
+#endif
+
+#define ENABLED_TWI_COUNT (TWI0_INCR + TWI1_INCR)
+
+#define TWIM_ONLY        ( defined(TWIM_PRESENT)  && !defined(TWI_PRESENT))
+#define TWI_TWIM_PRESENT ( defined(TWIM_PRESENT)  &&  defined(TWI_PRESENT))
+#define TWI_ONLY         (!defined(TWIM_PRESENT) &&   defined(TWI_PRESENT))
+
+#define TWI0_WITH_DMA (defined(TWI0_USE_EASY_DMA) && TWI0_USE_EASY_DMA && TWI0_ENABLED)
+#define TWI1_WITH_DMA (defined(TWI1_USE_EASY_DMA) && TWI1_USE_EASY_DMA && TWI1_ENABLED)
+
+#define TWI0_WITHOUT_DMA (defined(TWI0_USE_EASY_DMA) && !TWI0_USE_EASY_DMA && TWI0_ENABLED)
+#define TWI1_WITHOUT_DMA (defined(TWI1_USE_EASY_DMA) && !TWI1_USE_EASY_DMA && TWI1_ENABLED)
+
+// suppress: non-standard use of 'defined' preprocessor operator
+/*lint -save -e491*/
+// Too complex macros for Doxygen
 // This set of macros makes it possible to exclude parts of code when one type
 // of supported peripherals is not used.
-#if ((TWI0_ENABLED == 1 && TWI0_USE_EASY_DMA == 1) || \
-     (TWI1_ENABLED == 1 && TWI1_USE_EASY_DMA == 1))
-    #define TWIM_IN_USE
-#endif
-#if ((TWI0_ENABLED == 1 && TWI0_USE_EASY_DMA != 1) || \
-     (TWI1_ENABLED == 1 && TWI1_USE_EASY_DMA != 1))
-    #define TWI_IN_USE
+#ifndef DOXYGEN
+
+#if (TWI_ONLY && ENABLED_TWI_COUNT) ||      \
+    ((TWI_TWIM_PRESENT) && (TWI0_WITHOUT_DMA || TWI1_WITHOUT_DMA))
+#define TWI_IN_USE 1
 #endif
 
-#include "nrf_twi.h"
-#ifdef TWIM_IN_USE
+#if (TWIM_ONLY && ENABLED_TWI_COUNT) ||     \
+    ((TWI_TWIM_PRESENT) &&  (TWI0_WITH_DMA || TWI1_WITH_DMA))
+#define TWIM_IN_USE 1
+#endif
+
+#endif // DOXYGEN
+
+#ifdef TWI_PRESENT
+    #include "nrf_twi.h"
+#endif
+
+#ifdef TWIM_PRESENT
     #include "nrf_twim.h"
 #endif
+
 #include "sdk_errors.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#if defined(TWIM_IN_USE)
+#if defined(TWIM_IN_USE) && defined(TWI_IN_USE)
     #define NRF_DRV_TWI_PERIPHERAL(id)           \
         (CONCAT_3(TWI, id, _USE_EASY_DMA) == 1 ? \
             (void *)CONCAT_2(NRF_TWIM, id)       \
           : (void *)CONCAT_2(NRF_TWI, id))
+#elif defined(TWIM_IN_USE) && !defined(TWI_IN_USE)
+    #define NRF_DRV_TWI_PERIPHERAL(id)  (void *)CONCAT_2(NRF_TWIM, id)
 #else
     #define NRF_DRV_TWI_PERIPHERAL(id)  (void *)CONCAT_2(NRF_TWI, id)
 #endif
 
+#ifndef TWI_PRESENT
+typedef nrf_twim_frequency_t nrf_twi_frequency_t;
+typedef nrf_twim_error_t nrf_twi_error_t;
+#endif
 
 /**
  * @brief Structure for the TWI master driver instance.
@@ -95,14 +137,29 @@ typedef struct
 #ifdef TWIM_IN_USE
         NRF_TWIM_Type * p_twim; ///< Pointer to a structure with TWIM registers.
 #endif
+#ifdef TWI_IN_USE
         NRF_TWI_Type  * p_twi;  ///< Pointer to a structure with TWI registers.
+#endif
+        void *          p_regs;
     } reg;
     uint8_t drv_inst_idx; ///< Driver instance index.
     bool    use_easy_dma; ///< True if the peripheral with EasyDMA (TWIM) shall be used.
 } nrf_drv_twi_t;
 
 #define TWI0_INSTANCE_INDEX 0
-#define TWI1_INSTANCE_INDEX TWI0_INSTANCE_INDEX+TWI0_ENABLED
+#define TWI1_INSTANCE_INDEX TWI0_INSTANCE_INDEX+TWI0_INCR
+
+#ifndef DOXYGEN
+#if defined(TWIM_IN_USE)
+  #if TWIM_ONLY
+    #define TWI_USE_EASY_DMA(_id) true
+  #else
+    #define TWI_USE_EASY_DMA(_id) CONCAT_3(TWI, _id, _USE_EASY_DMA)
+  #endif
+#else
+    #define TWI_USE_EASY_DMA(_id) false
+#endif
+#endif // DOXYGEN
 
 /**
  * @brief Macro for creating a TWI master driver instance.
@@ -111,7 +168,7 @@ typedef struct
 {                                                       \
     .reg          = {NRF_DRV_TWI_PERIPHERAL(id)},       \
     .drv_inst_idx = CONCAT_3(TWI, id, _INSTANCE_INDEX), \
-    .use_easy_dma = CONCAT_3(TWI, id, _USE_EASY_DMA)    \
+    .use_easy_dma = TWI_USE_EASY_DMA(id)                \
 }
 
 /**
@@ -241,7 +298,7 @@ typedef void (* nrf_drv_twi_evt_handler_t)(nrf_drv_twi_evt_t const * p_event,
  * @brief Function for initializing the TWI driver instance.
  *
  * @param[in] p_instance      Pointer to the driver instance structure.
- * @param[in] p_config        Initial configuration. If NULL, the default configuration is used.
+ * @param[in] p_config        Initial configuration.
  * @param[in] event_handler   Event handler provided by the user. If NULL, blocking mode is enabled.
  * @param[in] p_context       Context passed to event handler.
  *
@@ -430,9 +487,11 @@ uint32_t nrf_drv_twi_stopped_event_get(nrf_drv_twi_t const * p_instance);
  *@}
  **/
 
+/*lint -restore*/
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif // NRF_DRV_TWI_H__
+

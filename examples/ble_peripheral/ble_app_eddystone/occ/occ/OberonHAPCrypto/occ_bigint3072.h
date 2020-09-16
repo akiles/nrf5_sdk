@@ -44,7 +44,7 @@
 
 
 /**@{
- * add 
+ * add
  *
  * `r = a + b`
  *
@@ -131,7 +131,7 @@ int occ_bigint_addw1536(uint32_t r[48], const uint32_t a[48], int w);
  * @param[out] r Absolute difference of @p a and @p b.
  * @param      a Minuend.
  * @param      b Subtrahend.
- 
+
  * @returns sign of `a - b`.
  *
  * @remark @p r may be same as @p a.

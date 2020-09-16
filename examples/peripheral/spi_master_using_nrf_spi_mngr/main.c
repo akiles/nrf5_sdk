@@ -58,10 +58,10 @@
 #include "nrf_gfx.h"
 #include "bsp.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
-
+#include "nrf_log_default_backends.h"
 
 #if defined( __GNUC__ ) && (__LINT__ == 0)
     // This is required if one wants to use floating-point values in 'printf'
@@ -291,6 +291,8 @@ int main(void)
     timer_interrupt_init();
     APP_ERROR_CHECK(nrf_pwr_mgmt_init());
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
     APP_ERROR_CHECK(bsp_init(BSP_INIT_BUTTONS, bsp_event_handler));
 
     NRF_LOG_INFO("SPI transaction manager example\n\r");

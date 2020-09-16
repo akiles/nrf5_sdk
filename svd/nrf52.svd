@@ -906,7 +906,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <name>PIN</name>
               <description>GPIO number P0.n onto which Reset is exposed</description>
               <lsb>0</lsb>
-              <msb>4</msb>
+              <msb>5</msb>
             </field>
             <field>
               <name>CONNECT</name>
@@ -9858,7 +9858,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         </cluster>
         <register>
           <name>FREQUENCY</name>
-          <description>SPI frequency</description>
+          <description>SPI frequency. Accuracy depends on the HFCLK source selected.</description>
           <addressOffset>0x524</addressOffset>
           <access>read-write</access>
           <resetValue>0x04000000</resetValue>

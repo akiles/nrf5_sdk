@@ -45,7 +45,7 @@
  *
  * @see [RFC 2104 - HMAC: Keyed-Hashing for Message Authentication](http://tools.ietf.org/html/rfc2104)
  */
- 
+
 #ifndef OCC_HMAC_SHA256_H
 #define OCC_HMAC_SHA256_H
 

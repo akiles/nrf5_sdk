@@ -56,9 +56,10 @@
 #include "app_timer.h"
 
 #include "nrf_delay.h"
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 /* Time between RTC interrupts. */
 #define APP_TIMER_TICKS_TIMEOUT APP_TIMER_TICKS(50)
@@ -135,7 +136,7 @@ static void slider_handler(uint16_t step)
     static uint16_t slider_val;
     if (slider_val != step)
     {
-        NRF_LOG_INFO("Slider value: %03d.\r\n", step);
+        NRF_LOG_INFO("Slider value: %03d.", step);
         slider_val = step;
     }
 }
@@ -156,7 +157,7 @@ void nrf_csense_handler(nrf_csense_evt_t * p_evt)
             {
                 uint16_t * btn_cnt = ((uint16_t *)p_evt->p_instance->p_context);
                 (*btn_cnt)++;
-                NRF_LOG_INFO("Button touched %03d times.\r\n", (*btn_cnt));
+                NRF_LOG_INFO("Button touched %03d times.", (*btn_cnt));
             }
             break;
         case NRF_CSENSE_SLIDER_EVT_PRESSED:
@@ -171,7 +172,7 @@ void nrf_csense_handler(nrf_csense_evt_t * p_evt)
             }
             break;
         default:
-            NRF_LOG_WARNING("Unknown event.\r\n");
+            NRF_LOG_WARNING("Unknown event.");
             break;
     }
 }
@@ -210,7 +211,9 @@ int main(void)
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
-    NRF_LOG_INFO("Capacitive sensing library example.\r\n");
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    NRF_LOG_INFO("Capacitive sensing library example.");
 
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);

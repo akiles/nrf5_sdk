@@ -61,17 +61,19 @@
 extern "C" {
 #endif
 
-
+#ifdef NRF52810_XXAA
+    #define SPIS0_IRQ            SPIM0_SPIS0_IRQn
+    #define SPIS0_IRQ_HANDLER    SPIM0_SPIS0_IRQHandler
+#else
     #define SPIS0_IRQ            SPI0_TWI0_IRQn
     #define SPIS0_IRQ_HANDLER    SPI0_TWI0_IRQHandler
     #define SPIS1_IRQ            SPI1_TWI1_IRQn
     #define SPIS1_IRQ_HANDLER    SPI1_TWI1_IRQHandler
-
 #if SPIS_COUNT > 2
     #define SPIS2_IRQ            SPIM2_SPIS2_SPI2_IRQn
     #define SPIS2_IRQ_HANDLER    SPIM2_SPIS2_SPI2_IRQHandler
 #endif
-
+#endif // NRF52810_XXAA
 /**
  * @defgroup nrf_drv_spis SPI slave driver
  * @{

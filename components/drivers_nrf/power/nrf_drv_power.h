@@ -341,32 +341,6 @@ __STATIC_INLINE nrf_drv_power_usb_state_t nrf_drv_power_usbstatus_get(void);
 
 #endif /* NRF_POWER_HAS_USBREG */
 
-#ifdef SOFTDEVICE_PRESENT
-/**
- * @brief Function called by the SoftDevice handler if an @ref nrf_soc event is received from the SoftDevice.
- *
- * @param[in] evt_id One of NRF_SOC_EVTS values.
- */
-void nrf_drv_power_on_soc_event(uint32_t evt_id);
-
-/**
- * @brief Function called by the SoftDevice handler when the SoftDevice has been enabled.
- *
- * This function is called just after the SoftDevice has been properly enabled.
- * Its main purpose is to reenable required interrupts and connect them to SD events.
- */
-void nrf_drv_power_on_sd_enable(void);
-
-/**
- * @brief Function called by the SoftDevice handler when the SoftDevice has been disabled.
- *
- * This function is called just after the SoftDevice has been properly disabled.
- * Its main purpose is to reenable required interrupts.
- */
-void nrf_drv_power_on_sd_disable(void);
-
-#endif /* SOFTDEVICE_PRESENT */
-
 /** @} */
 
 #ifndef SUPPRESS_INLINE_IMPLEMENTATION
@@ -375,11 +349,11 @@ void nrf_drv_power_on_sd_disable(void);
 __STATIC_INLINE nrf_drv_power_usb_state_t nrf_drv_power_usbstatus_get(void)
 {
     uint32_t status = nrf_power_usbregstatus_get();
-    if(0 == (status & NRF_POWER_USBREGSTATUS_VBUSDETECT_MASK))
+    if (0 == (status & NRF_POWER_USBREGSTATUS_VBUSDETECT_MASK))
     {
         return NRF_DRV_POWER_USB_STATE_DISCONNECTED;
     }
-    if(0 == (status & NRF_POWER_USBREGSTATUS_OUTPUTRDY_MASK))
+    if (0 == (status & NRF_POWER_USBREGSTATUS_OUTPUTRDY_MASK))
     {
         return NRF_DRV_POWER_USB_STATE_CONNECTED;
     }

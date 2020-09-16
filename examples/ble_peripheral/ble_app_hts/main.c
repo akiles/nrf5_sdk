@@ -54,7 +54,6 @@
 #include "nordic_common.h"
 #include "nrf.h"
 #include "app_error.h"
-#include "nrf_gpio.h"
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
@@ -64,21 +63,20 @@
 #include "ble_hts.h"
 #include "ble_dis.h"
 #include "ble_conn_params.h"
-#include "boards.h"
 #include "sensorsim.h"
-#include "softdevice_handler.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_soc.h"
+#include "nrf_sdh_ble.h"
 #include "app_timer.h"
 #include "peer_manager.h"
-#include "bsp.h"
 #include "bsp_btn_ble.h"
 #include "fds.h"
-#include "fstorage.h"
 #include "ble_conn_state.h"
 #include "nrf_ble_gatt.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 
 #define DEVICE_NAME                     "Nordic_HTS"                                /**< Name of device. Will be included in the advertising data. */
@@ -86,6 +84,9 @@
 #define MODEL_NUM                       "NS-HTS-EXAMPLE"                            /**< Model number. Will be passed to Device Information Service. */
 #define MANUFACTURER_ID                 0x1122334455                                /**< Manufacturer ID, part of System ID. Will be passed to Device Information Service. */
 #define ORG_UNIQUE_ID                   0x667788                                    /**< Organizational Unique ID, part of System ID. Will be passed to Device Information Service. */
+
+#define APP_BLE_OBSERVER_PRIO           1                                           /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_CONN_CFG_TAG            1                                           /**< A tag identifying the SoftDevice BLE configuration. */
 
 #define APP_ADV_INTERVAL                40                                          /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
 #define APP_ADV_TIMEOUT_IN_SECONDS      180                                         /**< The advertising timeout in units of seconds. */
@@ -124,26 +125,30 @@
 #define APP_FEATURE_NOT_SUPPORTED       BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2        /**< Reply when unsupported features are requested. */
 
 
-static uint16_t       m_conn_handle = BLE_CONN_HANDLE_INVALID;                      /**< Handle of the current connection. */
-static ble_bas_t      m_bas;                                                        /**< Structure used to identify the battery service. */
-static ble_hts_t      m_hts;                                                        /**< Structure used to identify the health thermometer service. */
-static nrf_ble_gatt_t m_gatt;                                                       /**< GATT module instance. */
+APP_TIMER_DEF(m_battery_timer_id);                                                  /**< Battery timer. */
+BLE_BAS_DEF(m_bas);                                                                 /**< Structure used to identify the battery service. */
+BLE_HTS_DEF(m_hts);                                                                 /**< Structure used to identify the health thermometer service. */
+NRF_BLE_GATT_DEF(m_gatt);                                                           /**< GATT module instance. */
+BLE_ADVERTISING_DEF(m_advertising);                                                 /**< Advertising module instance. */
 
+static uint16_t          m_conn_handle = BLE_CONN_HANDLE_INVALID;                   /**< Handle of the current connection. */
+static bool              m_hts_meas_ind_conf_pending = false;                       /**< Flag to keep track of when an indication confirmation is pending. */
 static sensorsim_cfg_t   m_battery_sim_cfg;                                         /**< Battery Level sensor simulator configuration. */
 static sensorsim_state_t m_battery_sim_state;                                       /**< Battery Level sensor simulator state. */
-static bool              m_hts_meas_ind_conf_pending = false;                       /**< Flag to keep track of when an indication confirmation is pending. */
-
 static sensorsim_cfg_t   m_temp_celcius_sim_cfg;                                    /**< Temperature simulator configuration. */
 static sensorsim_state_t m_temp_celcius_sim_state;                                  /**< Temperature simulator state. */
 
-APP_TIMER_DEF(m_battery_timer_id);                                                  /**< Battery timer. */
+static ble_uuid_t m_adv_uuids[] =                                                   /**< Universally unique service identifiers. */
+{
+    {BLE_UUID_HEALTH_THERMOMETER_SERVICE, BLE_UUID_TYPE_BLE},
+    {BLE_UUID_BATTERY_SERVICE, BLE_UUID_TYPE_BLE},
+    {BLE_UUID_DEVICE_INFORMATION_SERVICE, BLE_UUID_TYPE_BLE}
+};
 
-static ble_uuid_t m_adv_uuids[] = {{BLE_UUID_HEALTH_THERMOMETER_SERVICE, BLE_UUID_TYPE_BLE},
-                                   {BLE_UUID_BATTERY_SERVICE, BLE_UUID_TYPE_BLE},
-                                   {BLE_UUID_DEVICE_INFORMATION_SERVICE, BLE_UUID_TYPE_BLE}}; /**< Universally unique service identifiers. */
 
 static void advertising_start(bool erase_bonds);
 static void temperature_measurement_send(void);
+
 
 /**@brief Callback function for asserts in the SoftDevice.
  *
@@ -174,12 +179,12 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
     {
         case PM_EVT_BONDED_PEER_CONNECTED:
         {
-            NRF_LOG_INFO("Connected to a previously bonded device.\r\n");
+            NRF_LOG_INFO("Connected to a previously bonded device.");
         } break;
 
         case PM_EVT_CONN_SEC_SUCCEEDED:
         {
-            NRF_LOG_INFO("Connection secured: role: %d, conn_handle: 0x%x, procedure: %d.\r\n",
+            NRF_LOG_INFO("Connection secured: role: %d, conn_handle: 0x%x, procedure: %d.",
                          ble_conn_state_role(p_evt->conn_handle),
                          p_evt->conn_handle,
                          p_evt->params.conn_sec_succeeded.procedure);
@@ -653,7 +658,7 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
     switch (ble_adv_evt)
     {
         case BLE_ADV_EVT_FAST:
-            NRF_LOG_INFO("Fast advertising.\r\n");
+            NRF_LOG_INFO("Fast advertising.");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
             APP_ERROR_CHECK(err_code);
             break;
@@ -668,50 +673,64 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
 }
 
 
-/**@brief Function for handling the Application's BLE Stack events.
+/**@brief Function for handling BLE events.
  *
- * @param[in] p_ble_evt  Bluetooth stack event.
+ * @param[in]   p_ble_evt   Bluetooth stack event.
+ * @param[in]   p_context   Unused.
  */
-static void on_ble_evt(ble_evt_t * p_ble_evt)
+static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 {
     uint32_t err_code = NRF_SUCCESS;
 
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
-            NRF_LOG_INFO("Connected.\r\n");
+            NRF_LOG_INFO("Connected.");
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
-
             m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
-            break; // BLE_GAP_EVT_CONNECTED
+            break;
 
         case BLE_GAP_EVT_DISCONNECTED:
-            NRF_LOG_INFO("Disconnected.\r\n");
+            NRF_LOG_INFO("Disconnected.");
             m_conn_handle               = BLE_CONN_HANDLE_INVALID;
             m_hts_meas_ind_conf_pending = false;
-            break; // BLE_GAP_EVT_DISCONNECTED
+            break;
+
+#if defined(S132)
+        case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
+        {
+            NRF_LOG_DEBUG("PHY update request.");
+            ble_gap_phys_t const phys =
+            {
+                .rx_phys = BLE_GAP_PHY_AUTO,
+                .tx_phys = BLE_GAP_PHY_AUTO,
+            };
+            err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
+            APP_ERROR_CHECK(err_code);
+        } break;
+#endif
 
         case BLE_GATTC_EVT_TIMEOUT:
             // Disconnect on GATT Client timeout event.
-            NRF_LOG_DEBUG("GATT Client Timeout.\r\n");
+            NRF_LOG_DEBUG("GATT Client Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gattc_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_GATTC_EVT_TIMEOUT
+            break;
 
         case BLE_GATTS_EVT_TIMEOUT:
             // Disconnect on GATT Server timeout event.
-            NRF_LOG_DEBUG("GATT Server Timeout.\r\n");
+            NRF_LOG_DEBUG("GATT Server Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gatts_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_GATTS_EVT_TIMEOUT
+            break;
 
         case BLE_EVT_USER_MEM_REQUEST:
             err_code = sd_ble_user_mem_reply(m_conn_handle, NULL);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_EVT_USER_MEM_REQUEST
+            break;
 
         case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
         {
@@ -740,55 +759,12 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                     APP_ERROR_CHECK(err_code);
                 }
             }
-        } break; // BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST
+        } break;
 
         default:
             // No implementation needed.
             break;
     }
-}
-
-
-/**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
- *
- * @details This function is called from the BLE Stack event interrupt handler after a BLE stack
- *          event has been received.
- *
- * @param[in] p_ble_evt  Bluetooth stack event.
- */
-static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
-{
-    ble_hts_on_ble_evt(&m_hts, p_ble_evt);
-    ble_bas_on_ble_evt(&m_bas, p_ble_evt);
-    ble_conn_params_on_ble_evt(p_ble_evt);
-    /** The Connection state module has to be fed BLE events in order to function correctly
-     * Remember to call ble_conn_state_on_ble_evt before calling any ble_conns_state_* functions. */
-    ble_conn_state_on_ble_evt(p_ble_evt);
-    pm_on_ble_evt(p_ble_evt);
-    bsp_btn_ble_on_ble_evt(p_ble_evt);
-    on_ble_evt(p_ble_evt);
-    ble_advertising_on_ble_evt(p_ble_evt);
-    nrf_ble_gatt_on_ble_evt(&m_gatt, p_ble_evt);
-}
-
-
-/**@brief Function for dispatching a system event to interested modules.
- *
- * @details This function is called from the System event interrupt handler after a system
- *          event has been received.
- *
- * @param[in] sys_evt  System stack event.
- */
-static void sys_evt_dispatch(uint32_t sys_evt)
-{
-    // Dispatch the system event to the fstorage module, where it will be
-    // dispatched to the Flash Data Storage (FDS) module.
-    fs_sys_event_handler(sys_evt);
-
-    // Dispatch to the Advertising module last, since it will check if there are any
-    // pending flash operations in fstorage. Let fstorage process system events first,
-    // so that it can report correctly to the Advertising module.
-    ble_advertising_on_sys_evt(sys_evt);
 }
 
 
@@ -800,44 +776,21 @@ static void ble_stack_init(void)
 {
     ret_code_t err_code;
 
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    err_code = nrf_sdh_enable_request();
+    APP_ERROR_CHECK(err_code);
 
-    // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
-
+    // Configure the BLE stack using the default settings.
     // Fetch the start address of the application RAM.
     uint32_t ram_start = 0;
-    err_code = softdevice_app_ram_start_get(&ram_start);
-    APP_ERROR_CHECK(err_code);
-
-    // Overwrite some of the default configurations for the BLE stack.
-    ble_cfg_t ble_cfg;
-
-    // Configure the number of custom UUIDS.
-    memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.common_cfg.vs_uuid_cfg.vs_uuid_count = 0;
-    err_code = sd_ble_cfg_set(BLE_COMMON_CFG_VS_UUID, &ble_cfg, ram_start);
-    APP_ERROR_CHECK(err_code);
-
-    // Configure the maximum number of connections.
-    memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = BLE_GAP_ROLE_COUNT_PERIPH_DEFAULT;
-    ble_cfg.gap_cfg.role_count_cfg.central_role_count = 0;
-    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = 0;
-    err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start);
+    err_code = nrf_sdh_ble_default_cfg_set(APP_BLE_CONN_CFG_TAG, &ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Enable BLE stack.
-    err_code = softdevice_enable(&ram_start);
+    err_code = nrf_sdh_ble_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
 
-    // Register with the SoftDevice handler module for BLE events.
-    err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
-
-    // Register with the SoftDevice handler module for BLE events.
-    err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
+    // Register a handler for BLE events.
+    NRF_SDH_BLE_OBSERVER(m_ble_observer, APP_BLE_OBSERVER_PRIO, ble_evt_handler, NULL);
 }
 
 
@@ -867,7 +820,7 @@ static void bsp_event_handler(bsp_event_t event)
         case BSP_EVENT_WHITELIST_OFF:
             if (m_conn_handle == BLE_CONN_HANDLE_INVALID)
             {
-                err_code = ble_advertising_restart_without_whitelist();
+                err_code = ble_advertising_restart_without_whitelist(&m_advertising);
                 if (err_code != NRF_ERROR_INVALID_STATE)
                 {
                     APP_ERROR_CHECK(err_code);
@@ -928,7 +881,7 @@ static void delete_bonds(void)
 {
     ret_code_t err_code;
 
-    NRF_LOG_INFO("Erase bonds!\r\n");
+    NRF_LOG_INFO("Erase bonds!");
 
     err_code = pm_peers_delete();
     APP_ERROR_CHECK(err_code);
@@ -943,25 +896,26 @@ static void delete_bonds(void)
 static void advertising_init(void)
 {
     ret_code_t             err_code;
-    ble_advdata_t          advdata;
-    ble_adv_modes_config_t options;
+    ble_advertising_init_t init;
 
-    // Build and set advertising data
-    memset(&advdata, 0, sizeof(advdata));
+    memset(&init, 0, sizeof(init));
 
-    advdata.name_type               = BLE_ADVDATA_FULL_NAME;
-    advdata.include_appearance      = true;
-    advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
-    advdata.uuids_complete.uuid_cnt = sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
-    advdata.uuids_complete.p_uuids  = m_adv_uuids;
+    init.advdata.name_type               = BLE_ADVDATA_FULL_NAME;
+    init.advdata.include_appearance      = true;
+    init.advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
+    init.advdata.uuids_complete.uuid_cnt = sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
+    init.advdata.uuids_complete.p_uuids  = m_adv_uuids;
 
-    memset(&options, 0, sizeof(options));
-    options.ble_adv_fast_enabled  = true;
-    options.ble_adv_fast_interval = APP_ADV_INTERVAL;
-    options.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;
+    init.config.ble_adv_fast_enabled  = true;
+    init.config.ble_adv_fast_interval = APP_ADV_INTERVAL;
+    init.config.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;
 
-    err_code = ble_advertising_init(&advdata, NULL, &options, on_adv_evt, NULL);
+    init.evt_handler = on_adv_evt;
+
+    err_code = ble_advertising_init(&m_advertising, &init);
     APP_ERROR_CHECK(err_code);
+
+    ble_advertising_conn_cfg_tag_set(&m_advertising, APP_BLE_CONN_CFG_TAG);
 }
 
 
@@ -990,6 +944,8 @@ static void log_init(void)
 {
     ret_code_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 }
 
 
@@ -1013,7 +969,7 @@ static void advertising_start(bool erase_bonds)
     }
     else
     {
-        uint32_t err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
+        uint32_t err_code = ble_advertising_start(&m_advertising, BLE_ADV_MODE_FAST);
         APP_ERROR_CHECK(err_code);
     }
 }
@@ -1039,7 +995,7 @@ int main(void)
     peer_manager_init();
 
     // Start execution.
-    NRF_LOG_INFO("Health Thermometer example started.\r\n");
+    NRF_LOG_INFO("Health Thermometer example started.");
     application_timers_start();
 
     advertising_start(erase_bonds);

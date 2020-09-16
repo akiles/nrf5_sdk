@@ -43,8 +43,7 @@
 #include "nrf_drv_rng.h"
 #include "nrf_crypto_rng.h"
 
-#if defined(NRF_CRYPTO_BACKEND_MICRO_ECC) && (NRF_CRYPTO_BACKEND_MICRO_ECC == 1)
-#if defined(NRF_CRYPTO_SUPPORTS_RNG) && (NRF_CRYPTO_SUPPORTS_RNG == 1)
+#if (NRF_CRYPTO_BACKEND_MICRO_ECC && NRF_CRYPTO_BACKEND_MICRO_ECC_RNG)
 
 #include "uECC.h"
 
@@ -98,7 +97,7 @@ uint32_t nrf_crypto_rng_vector_generate(uint8_t * p_target, uint32_t length)
         cur_len = MIN(left, available);
 
         err_code = nrf_drv_rng_rand(p_target + (length - left), cur_len);
-        if(err_code != NRF_SUCCESS)
+        if (err_code != NRF_SUCCESS)
         {
             return err_code;
         }
@@ -106,13 +105,10 @@ uint32_t nrf_crypto_rng_vector_generate(uint8_t * p_target, uint32_t length)
         // Remove current length of generated data
         left -= cur_len;
 
-    } while(left > 0);
+    } while (left > 0);
 
     return NRF_SUCCESS;
 }
 
-#endif // NRF_CRYPTO_SUPPORTS_RNG
-
-#endif // NRF_CRYPTO_BACKEND_MICRO_ECC
-
-#endif // NRF_CRYPTO_BACKEND_SW
+#endif // NRF_CRYPTO_BACKEND_MICRO_ECC && NRF_CRYPTO_BACKEND_MICRO_ECC_RNG
+#endif // NRF_MODULE_ENABLED(NRF_CRYPTO)

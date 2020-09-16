@@ -177,6 +177,59 @@ uint32_t ble_l2cap_tx_rsp_dec(uint8_t const * const p_buf,
                               uint32_t * const      p_result_code);
 #endif
 
+#if NRF_SD_BLE_API_VERSION >= 5
+uint32_t ble_l2cap_ch_setup_req_enc(uint16_t conn_handle,
+                                    uint16_t * p_local_cid,
+                                    ble_l2cap_ch_setup_params_t const *p_params,
+                                    uint8_t * const  p_buf,
+                                    uint32_t * const p_buf_len);
+
+uint32_t ble_l2cap_ch_setup_rsp_dec(uint8_t const * const p_buf,
+                                    uint32_t              packet_len,
+                                    uint16_t *            p_local_cid,
+                                    uint32_t * const      p_result_code);
+
+uint32_t ble_l2cap_ch_release_req_enc(uint16_t conn_handle,
+                                      uint16_t local_cid,
+                                      uint8_t * const  p_buf,
+                                      uint32_t * const p_buf_len);
+
+uint32_t ble_l2cap_ch_release_rsp_dec(uint8_t const * const p_buf,
+                                     uint32_t              packet_len,
+                                     uint32_t * const      p_result_code);
+
+uint32_t ble_l2cap_ch_rx_req_enc(uint16_t conn_handle,
+                                 uint16_t local_cid,
+                                 ble_data_t const *p_sdu_buf,
+                                 uint8_t * const  p_buf,
+                                 uint32_t * const p_buf_len);
+
+uint32_t ble_l2cap_ch_rx_rsp_dec(uint8_t const * const p_buf,
+                                 uint32_t              packet_len,
+                                 uint32_t * const      p_result_code);
+
+uint32_t ble_l2cap_ch_tx_req_enc(uint16_t conn_handle,
+                                 uint16_t local_cid,
+                                 ble_data_t const *p_sdu_buf,
+                                 uint8_t * const  p_buf,
+                                 uint32_t * const p_buf_len);
+
+uint32_t ble_l2cap_ch_tx_rsp_dec(uint8_t const * const p_buf,
+                                 uint32_t              packet_len,
+                                 uint32_t * const      p_result_code);
+
+uint32_t ble_l2cap_ch_flow_control_req_enc(uint16_t conn_handle,
+                                 uint16_t local_cid,
+                                 uint16_t credits,
+                                 uint16_t *p_credits,
+                                 uint8_t * const  p_buf,
+                                 uint32_t * const p_buf_len);
+
+uint32_t ble_l2cap_ch_flow_control_rsp_dec(uint8_t const * const p_buf,
+                                 uint32_t              packet_len,
+                                 uint16_t *            p_credits,
+                                 uint32_t * const      p_result_code);
+#endif //NRF_SD_BLE_API_VERSION >= 5
 
 #ifdef __cplusplus
 }

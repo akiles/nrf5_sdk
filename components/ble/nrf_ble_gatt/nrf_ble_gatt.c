@@ -37,34 +37,33 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-#include "sdk_config.h"
 
-#if NRF_BLE_GATT_ENABLED
-#include "nrf_ble_gatt.h"
-#include "ble_srv_common.h"
 #include "sdk_common.h"
-#include "app_error.h"
-#include "sdk_macros.h"
+#if NRF_MODULE_ENABLED(NRF_BLE_GATT)
 
-#define NRF_LOG_MODULE_NAME "nrf_ble_gatt"
+#include "nrf_ble_gatt.h"
+
+#define NRF_LOG_MODULE_NAME ble_gatt
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
-#define LL_HEADER_LEN   4   //!< Length of a link layer header, in bytes.
+
+#define L2CAP_HDR_LEN   4   //!< Length of a L2CAP header, in bytes.
 
 
-STATIC_ASSERT(NRF_BLE_GATT_MAX_MTU_SIZE <= 251);
-STATIC_ASSERT(NRF_BLE_GATT_MAX_MTU_SIZE + LL_HEADER_LEN <= 255);
+STATIC_ASSERT(NRF_SDH_BLE_GATT_MAX_MTU_SIZE <= 251);
+STATIC_ASSERT(NRF_SDH_BLE_GATT_MAX_MTU_SIZE + L2CAP_HDR_LEN <= 255);
 
 
 /**@brief Initialize a link's parameters to defaults. */
 static void link_init(nrf_ble_gatt_link_t * p_link)
 {
-    p_link->att_mtu_desired            = NRF_BLE_GATT_MAX_MTU_SIZE;
+    p_link->att_mtu_desired            = NRF_SDH_BLE_GATT_MAX_MTU_SIZE;
     p_link->att_mtu_effective          = BLE_GATT_ATT_MTU_DEFAULT;
     p_link->att_mtu_exchange_pending   = false;
     p_link->att_mtu_exchange_requested = false;
-    p_link->data_length_desired        = NRF_BLE_GATT_MAX_MTU_SIZE + LL_HEADER_LEN;
-    p_link->data_length_effective      = BLE_GATT_ATT_MTU_DEFAULT + LL_HEADER_LEN;
+    p_link->data_length_desired        = NRF_SDH_BLE_GATT_MAX_MTU_SIZE + L2CAP_HDR_LEN;
+    p_link->data_length_effective      = BLE_GATT_ATT_MTU_DEFAULT + L2CAP_HDR_LEN;
 }
 
 /**@brief   Start a data length update request.
@@ -75,7 +74,7 @@ static void link_init(nrf_ble_gatt_link_t * p_link)
  */
 static void data_length_update(uint16_t conn_handle, nrf_ble_gatt_t const * p_gatt)
 {
-    NRF_LOG_DEBUG("Requesting to update data length to %u on connection 0x%x.\r\n",
+    NRF_LOG_DEBUG("Requesting to update data length to %u on connection 0x%x.",
                   p_gatt->links[conn_handle].data_length_desired, conn_handle);
 
     ble_gap_data_length_params_t const dlp =
@@ -90,7 +89,7 @@ static void data_length_update(uint16_t conn_handle, nrf_ble_gatt_t const * p_ga
     if (err_code != NRF_SUCCESS)
     {
         NRF_LOG_ERROR("sd_ble_gap_data_length_update() (request)"
-                      " on connection 0x%x returned unexpected value 0x%x.\r\n",
+                      " on connection 0x%x returned unexpected value 0x%x.",
                       conn_handle, err_code);
     }
 }
@@ -129,7 +128,7 @@ static void on_connected_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const * p_ble_ev
     // Begin an ATT MTU exchange if necessary.
     if (p_link->att_mtu_desired > p_link->att_mtu_effective)
     {
-        NRF_LOG_DEBUG("Requesting to update ATT MTU to %u bytes on connection 0x%x.\r\n",
+        NRF_LOG_DEBUG("Requesting to update ATT MTU to %u bytes on connection 0x%x.",
                       p_link->att_mtu_desired, conn_handle);
 
         err_code = sd_ble_gattc_exchange_mtu_request(conn_handle, p_link->att_mtu_desired);
@@ -142,12 +141,12 @@ static void on_connected_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const * p_ble_ev
         {
             p_link->att_mtu_exchange_pending = true;
             NRF_LOG_DEBUG("sd_ble_gattc_exchange_mtu_request()"
-                          " on connection 0x%x returned busy, will retry.\r\n", conn_handle);
+                          " on connection 0x%x returned busy, will retry.", conn_handle);
         }
         else
         {
             NRF_LOG_ERROR("sd_ble_gattc_exchange_mtu_request()"
-                          " returned unexpected value 0x%x.\r\n",
+                          " returned unexpected value 0x%x.",
                           err_code);
         }
     }
@@ -188,7 +187,7 @@ static void on_exchange_mtu_rsp_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const * p
     p_link->att_mtu_effective = MIN(server_rx_mtu, p_link->att_mtu_desired);
     p_link->att_mtu_effective = MAX(p_link->att_mtu_effective, BLE_GATT_ATT_MTU_DEFAULT);
 
-    NRF_LOG_DEBUG("ATT MTU updated to %u bytes on connection 0x%x (response).\r\n",
+    NRF_LOG_DEBUG("ATT MTU updated to %u bytes on connection 0x%x (response).",
                   p_link->att_mtu_effective, conn_handle);
 
     // Trigger an event indicating that the ATT MTU size has changed.
@@ -223,21 +222,21 @@ static void on_exchange_mtu_request_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const
 
     nrf_ble_gatt_link_t * p_link = &p_gatt->links[conn_handle];
 
-    NRF_LOG_DEBUG("Peer on connection 0x%x requested an ATT MTU of %u bytes.\r\n",
+    NRF_LOG_DEBUG("Peer on connection 0x%x requested an ATT MTU of %u bytes.",
                   conn_handle, client_mtu);
 
     client_mtu = MAX(client_mtu, BLE_GATT_ATT_MTU_DEFAULT);
     p_link->att_mtu_effective = MIN(client_mtu, p_link->att_mtu_desired);
     p_link->att_mtu_exchange_pending = false;
 
-    NRF_LOG_DEBUG("Updating ATT MTU to %u bytes (desired: %u) on connection 0x%x.\r\n",
+    NRF_LOG_DEBUG("Updating ATT MTU to %u bytes (desired: %u) on connection 0x%x.",
                   p_link->att_mtu_effective, p_link->att_mtu_desired, conn_handle);
 
     err_code = sd_ble_gatts_exchange_mtu_reply(conn_handle, p_link->att_mtu_desired);
 
     if (err_code != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("sd_ble_gatts_exchange_mtu_reply() returned unexpected value 0x%x.\r\n",
+        NRF_LOG_ERROR("sd_ble_gatts_exchange_mtu_reply() returned unexpected value 0x%x.",
                       err_code);
     }
 
@@ -280,17 +279,17 @@ static void on_data_length_update_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const *
     p_gatt->links[conn_handle].data_length_effective =
         gap_evt.params.data_length_update.effective_params.max_tx_octets;
 
-    NRF_LOG_DEBUG("Data length updated to %u on connection 0x%0x.\r\n",
+    NRF_LOG_DEBUG("Data length updated to %u on connection 0x%0x.",
                   p_gatt->links[conn_handle].data_length_effective,
                   conn_handle);
 
-    NRF_LOG_DEBUG("max_rx_octets: %u\r\n",
+    NRF_LOG_DEBUG("max_rx_octets: %u",
                   gap_evt.params.data_length_update.effective_params.max_rx_octets);
-    NRF_LOG_DEBUG("max_tx_octets: %u\r\n",
+    NRF_LOG_DEBUG("max_tx_octets: %u",
                   gap_evt.params.data_length_update.effective_params.max_tx_octets);
-    NRF_LOG_DEBUG("max_rx_time: %u\r\n",
+    NRF_LOG_DEBUG("max_rx_time: %u",
                   gap_evt.params.data_length_update.effective_params.max_rx_time_us);
-    NRF_LOG_DEBUG("max_tx_time: %u\r\n",
+    NRF_LOG_DEBUG("max_tx_time: %u",
                   gap_evt.params.data_length_update.effective_params.max_tx_time_us);
 
     if (p_gatt->evt_handler != NULL)
@@ -313,7 +312,7 @@ static void on_data_length_update_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const *
  *          link's preferred data length, and what requested by the peer.
  *          The link preferred data length is set to the global preferred data length
  *          upon connection and can be overridden by calling nrf_ble_gatt_data_length_set().
- *          The default is NRF_BLE_GATT_MAX_MTU_SIZE + LL_HEADER_LEN.
+ *          The default is NRF_SDH_BLE_GATT_MAX_MTU_SIZE + L2CAP_HDR_LEN.
  *
  *@note     The SoftDevice will not send any BLE_GAP_EVT_DATA_LENGTH_UPDATE events on this side.
  *          Therefore, the connection data length is updated immediately and an event is sent
@@ -332,7 +331,7 @@ static void on_data_length_update_request_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t
     uint8_t const data_length_peer =
         p_gap_evt->params.data_length_update_request.peer_params.max_tx_octets;
 
-    NRF_LOG_DEBUG("Peer on connection 0x%x requested a data length of %u bytes.\r\n",
+    NRF_LOG_DEBUG("Peer on connection 0x%x requested a data length of %u bytes.",
                   p_gap_evt->conn_handle, data_length_peer);
 
     uint8_t const data_length = MIN(p_link->data_length_desired, data_length_peer);
@@ -343,7 +342,7 @@ static void on_data_length_update_request_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t
         .max_tx_octets = data_length,
     };
 
-    NRF_LOG_DEBUG("Updating data length to %u bytes on connection 0x%x.\r\n",
+    NRF_LOG_DEBUG("Updating data length to %u bytes on connection 0x%x.",
                   data_length, p_gap_evt->conn_handle);
 
     err_code = sd_ble_gap_data_length_update(p_gap_evt->conn_handle, &dlp, NULL);
@@ -351,7 +350,7 @@ static void on_data_length_update_request_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t
     if (err_code != NRF_SUCCESS)
     {
         NRF_LOG_ERROR("sd_ble_gap_data_length_update() (reply)"
-                      " returned unexpected value 0x%x.\r\n",
+                      " returned unexpected value 0x%x.",
                       err_code);
     }
 }
@@ -362,9 +361,9 @@ ret_code_t nrf_ble_gatt_init(nrf_ble_gatt_t * p_gatt, nrf_ble_gatt_evt_handler_t
     VERIFY_PARAM_NOT_NULL(p_gatt);
 
     p_gatt->evt_handler             = evt_handler;
-    p_gatt->att_mtu_desired_periph  = NRF_BLE_GATT_MAX_MTU_SIZE;
-    p_gatt->att_mtu_desired_central = NRF_BLE_GATT_MAX_MTU_SIZE;
-    p_gatt->data_length             = NRF_BLE_GATT_MAX_MTU_SIZE + LL_HEADER_LEN;
+    p_gatt->att_mtu_desired_periph  = NRF_SDH_BLE_GATT_MAX_MTU_SIZE;
+    p_gatt->att_mtu_desired_central = NRF_SDH_BLE_GATT_MAX_MTU_SIZE;
+    p_gatt->data_length             = NRF_SDH_BLE_GATT_MAX_MTU_SIZE + L2CAP_HDR_LEN;
 
     for (uint32_t i = 0; i < NRF_BLE_GATT_LINK_COUNT; i++)
     {
@@ -379,7 +378,7 @@ ret_code_t nrf_ble_gatt_att_mtu_periph_set(nrf_ble_gatt_t * p_gatt, uint16_t des
 {
     VERIFY_PARAM_NOT_NULL(p_gatt);
 
-    if ((desired_mtu < BLE_GATT_ATT_MTU_DEFAULT) || (desired_mtu > NRF_BLE_GATT_MAX_MTU_SIZE))
+    if ((desired_mtu < BLE_GATT_ATT_MTU_DEFAULT) || (desired_mtu > NRF_SDH_BLE_GATT_MAX_MTU_SIZE))
     {
         return NRF_ERROR_INVALID_PARAM;
     }
@@ -393,7 +392,7 @@ ret_code_t nrf_ble_gatt_att_mtu_central_set(nrf_ble_gatt_t * p_gatt, uint16_t de
 {
     VERIFY_PARAM_NOT_NULL(p_gatt);
 
-    if ((desired_mtu < BLE_GATT_ATT_MTU_DEFAULT) || (desired_mtu > NRF_BLE_GATT_MAX_MTU_SIZE))
+    if ((desired_mtu < BLE_GATT_ATT_MTU_DEFAULT) || (desired_mtu > NRF_SDH_BLE_GATT_MAX_MTU_SIZE))
     {
         return NRF_ERROR_INVALID_PARAM;
     }
@@ -427,7 +426,7 @@ ret_code_t nrf_ble_gatt_data_length_set(nrf_ble_gatt_t * p_gatt,
 
     if (conn_handle == BLE_CONN_HANDLE_INVALID)
     {
-        p_gatt->data_length = MIN(data_length, NRF_BLE_GATT_MAX_MTU_SIZE + LL_HEADER_LEN);
+        p_gatt->data_length = MIN(data_length, NRF_SDH_BLE_GATT_MAX_MTU_SIZE + L2CAP_HDR_LEN);
         return NRF_SUCCESS;
     }
 
@@ -474,9 +473,10 @@ ret_code_t nrf_ble_gatt_data_length_get(nrf_ble_gatt_t const * p_gatt,
 }
 
 
-void nrf_ble_gatt_on_ble_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const * p_ble_evt)
+void nrf_ble_gatt_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
-    uint16_t conn_handle = p_ble_evt->evt.common_evt.conn_handle;
+    nrf_ble_gatt_t * p_gatt      = (nrf_ble_gatt_t *)p_context;
+    uint16_t         conn_handle = p_ble_evt->evt.common_evt.conn_handle;
 
     if (conn_handle >= NRF_BLE_GATT_LINK_COUNT)
     {
@@ -525,12 +525,12 @@ void nrf_ble_gatt_on_ble_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const * p_ble_ev
             p_gatt->links[conn_handle].att_mtu_exchange_pending   = false;
             p_gatt->links[conn_handle].att_mtu_exchange_requested = true;
 
-            NRF_LOG_DEBUG("Requesting to update ATT MTU to %u bytes on connection 0x%x (retry).\r\n",
+            NRF_LOG_DEBUG("Requesting to update ATT MTU to %u bytes on connection 0x%x (retry).",
                           p_gatt->links[conn_handle].att_mtu_desired, conn_handle);
         }
         else if (err_code != NRF_ERROR_BUSY)
         {
-            NRF_LOG_ERROR("sd_ble_gattc_exchange_mtu_request() returned unexpected value 0x%x.\r\n",
+            NRF_LOG_ERROR("sd_ble_gattc_exchange_mtu_request() returned unexpected value 0x%x.",
                           err_code);
         }
     }

@@ -136,6 +136,33 @@ void sdk_mapped_flags_bulk_update_by_key(uint16_t           * p_keys,
 }
 
 
+bool sdk_mapped_flags_get_by_key_w_idx(uint16_t         * p_keys,
+                                       sdk_mapped_flags_t flags,
+                                       uint16_t           key,
+                                       uint8_t          * p_index)
+{
+    if (p_keys != NULL)
+    {
+        for (uint32_t i = 0; i < SDK_MAPPED_FLAGS_N_KEYS; i++)
+        {
+            if (p_keys[i] == key)
+            {
+                if (p_index != NULL)
+                {
+                    *p_index = i;
+                }
+                return sdk_mapped_flags_get_by_index(flags, i);
+            }
+        }
+    }
+    if (p_index != NULL)
+    {
+        *p_index = SDK_MAPPED_FLAGS_N_KEYS;
+    }
+    return false;
+}
+
+
 bool sdk_mapped_flags_get_by_key(uint16_t * p_keys, sdk_mapped_flags_t flags, uint16_t key)
 {
     if (p_keys != NULL)

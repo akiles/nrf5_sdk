@@ -75,7 +75,7 @@
  *    #occ_srp_scrambling_parameter, #occ_srp_premaster_secret,
  *    #occ_srp_session_key).
  * 4. Client sends proof of the session key to the server.
- * 5. Server validates proof (see #occ_srp_proof_m1), then sends proof of the 
+ * 5. Server validates proof (see #occ_srp_proof_m1), then sends proof of the
  *    session key to the client (see #occ_srp_proof_m2).
  * 6. Client validates proof. Both parties know that they share the same private
  *    session key.
@@ -183,7 +183,7 @@ void occ_srp_public_key(uint8_t pub_b[occ_srp_PUBLIC_KEY_BYTES],
 /**@}*/
 
 /**@name SRP-6 Session key generation.
- * 
+ *
  * A premaster secret can be derived from both the client's and server's public
  * keys, the server's private key and the password verifier. A shared session
  * key can be generated from this premaster secret.
@@ -245,7 +245,7 @@ void occ_srp_session_key(uint8_t k[occ_srp_SESSION_KEY_BYTES],
 /**@}*/
 
 /**@name SRP-6 Proof exchange.
- * 
+ *
  * Proofs are exchanged from client to server and vice versa to ensure that both
  * parties computed the same shared session key. The proofs only match if the
  * correct password is used by the client.

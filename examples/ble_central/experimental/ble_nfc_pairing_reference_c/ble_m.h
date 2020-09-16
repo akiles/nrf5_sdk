@@ -40,27 +40,17 @@
 
 /**@brief     Application BLE module.
  *
- * @details   This module contains most of functions used
- *            by application to manage BLE stack events
+ * @details   This module contains most of the functions used
+ *            by the application to manage BLE stack events
  *            and BLE connections.
  */
 
 #ifndef BLE_M_H__
 #define BLE_M_H__
 
+#include <stdint.h>
 #include <stdbool.h>
-#include "sdk_errors.h"
-#include "ble.h"
-#include "softdevice_handler.h"
-#include "ble_gap.h"
 
-/**@brief Variable length data encapsulation in terms of length and pointer to data.
- */
-typedef struct
-{
-    uint8_t * p_data;   /**< Pointer to data. */
-    uint16_t  data_len; /**< Length of data. */
-} data_t;
 
 /**@brief Function for terminating connection with BLE peripheral device.
  */
@@ -100,5 +90,6 @@ bool ble_is_connected(void);
  * @return Returns connection handle.
  */
 uint16_t ble_get_conn_handle(void);
+
 
 #endif // BLE_M_H__

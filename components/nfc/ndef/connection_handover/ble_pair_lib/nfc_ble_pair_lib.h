@@ -43,6 +43,7 @@
 #include <stdbool.h>
 #include "sdk_errors.h"
 #include "ble.h"
+#include "ble_advertising.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -61,11 +62,13 @@ extern "C" {
 /**
  * @brief NFC pairing types
  */
-typedef enum {
+typedef enum
+{
     NFC_PAIRING_MODE_JUST_WORKS,        /**< Legacy Just Works pairing without security key */
     NFC_PAIRING_MODE_OOB,               /**< Legacy OOB pairing with Temporary Key shared through NFC tag data */
     NFC_PAIRING_MODE_LESC_JUST_WORKS,   /**< LESC pairing without authentication data */
     NFC_PAIRING_MODE_LESC_OOB,          /**< LESC pairing with OOB authentication data */
+    NFC_PAIRING_MODE_GENERIC_OOB,       /**< OOB pairing with fallback from LESC to Legacy mode */
     NFC_PAIRING_MODE_CNT                /**< Number of available pairing modes */
 } nfc_pairing_mode_t;
 
@@ -76,16 +79,15 @@ typedef enum {
  *          It is also assumed that BLE advertising has already been initialized and it is configured
  *          to run in the BLE_ADV_MODE_FAST mode.
  *
- * @note    This library also controls BLE advertising, so @ref ble_advertising_on_ble_evt should not
- *          be called on BLE events.
- *
  * @param[in] mode                  Pairing mode, this is value of the @ref nfc_pairing_mode_t enum.
+ * @param[in] p_advertising         Pointer to the advertising module instance.
  *
  * @retval NRF_SUCCESS              If NFC has been initialized properly.
  * @retval NRF_ERROR_INVALID_PARAM  If pairing mode is invalid.
+ * @retval NRF_ERROR_NULL           If pointer to the advertising module instance is NULL.
  * @retval Other                    Other error codes might be returned depending on used modules.
  */
-ret_code_t nfc_ble_pair_init(nfc_pairing_mode_t mode);
+ret_code_t nfc_ble_pair_init(ble_advertising_t * const p_advertising, nfc_pairing_mode_t mode);
 
 /**
  * @brief Sets pairing data and BLE security mode.
@@ -104,20 +106,6 @@ ret_code_t nfc_ble_pair_mode_set(nfc_pairing_mode_t mode);
  * @return Current pairing mode.
  */
 nfc_pairing_mode_t nfc_ble_pair_mode_get(void);
-
-/**
- * @brief NFC pairing BLE events handler
- *
- * @details Handles BLE authorization events, replying with OOB data.
- *
- * @note    This function should be called inside BLE event dispatcher as it response to the
- *          @ref BLE_GAP_EVT_AUTH_KEY_REQUEST and @ref BLE_GAP_EVT_LESC_DHKEY_REQUEST events.
- *          It also manages BLE advertising module based on @ref BLE_GAP_EVT_CONNECTED and
- *          @ref BLE_GAP_EVT_DISCONNECTED events.
- *
- * @param[in] p_ble_evt Bluetooth stack event.
- */
-void on_nfc_ble_pair_evt(const ble_evt_t * const p_ble_evt);
 
 /** @} */
 

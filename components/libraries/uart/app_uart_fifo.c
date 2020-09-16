@@ -204,7 +204,7 @@ uint32_t app_uart_get(uint8_t * p_byte)
     ret_code_t err_code =  app_fifo_get(&m_rx_fifo, p_byte);
 
     // If FIFO was full new request to receive one byte was not scheduled. Must be done here.
-    if(rx_ovf)
+    if (rx_ovf)
     {
         m_rx_ovf = false;
         uint32_t uart_err_code = nrf_drv_uart_rx(&app_uart_inst, rx_buffer, 1);

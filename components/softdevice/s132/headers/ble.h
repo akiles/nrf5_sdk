@@ -1,37 +1,39 @@
 /*
- * Copyright (c) Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
  *
- *   1. Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
  *
- *   2. Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
  *
- *   3. Neither the name of Nordic Semiconductor ASA nor the names of other
- *   contributors to this software may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
  *
- *   4. This software must only be used in a processor manufactured by Nordic
- *   Semiconductor ASA, or in a processor manufactured by a third party that
- *   is used in combination with a processor manufactured by Nordic Semiconductor.
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
  *
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 /**
@@ -98,6 +100,7 @@ enum BLE_CONN_CFGS
     BLE_CONN_CFG_GATTC,                    /**< BLE GATTC specific connection configuration. */
     BLE_CONN_CFG_GATTS,                    /**< BLE GATTS specific connection configuration. */
     BLE_CONN_CFG_GATT,                     /**< BLE GATT specific connection configuration. */
+    BLE_CONN_CFG_L2CAP,                    /**< BLE L2CAP specific connection configuration. */
 };
 
 /**@brief BLE Common Configuration IDs.
@@ -216,6 +219,7 @@ typedef struct
     ble_gap_evt_t     gap_evt;    /**< GAP originated event, evt_id in BLE_GAP_EVT_* series. */
     ble_gattc_evt_t   gattc_evt;  /**< GATT client originated event, evt_id in BLE_GATTC_EVT* series. */
     ble_gatts_evt_t   gatts_evt;  /**< GATT server originated event, evt_id in BLE_GATTS_EVT* series. */
+    ble_l2cap_evt_t   l2cap_evt;  /**< L2CAP originated event, evt_id in BLE_L2CAP_EVT* series. */
   } evt;                          /**< Event union. */
 } ble_evt_t;
 
@@ -250,7 +254,6 @@ typedef struct
  * by the application and should be regarded as reserved as long as any PA/LNA toggling is enabled.
  *
  * @note  @ref sd_ble_opt_get is not supported for this option.
- * @note  This feature is only supported for nRF52, on nRF51 @ref NRF_ERROR_NOT_SUPPORTED will always be returned.
  * @note  Setting this option while the radio is in use (i.e. any of the roles are active) may have undefined consequences
  * and must be avoided by the application.
  */
@@ -316,8 +319,9 @@ typedef struct
   union {
     ble_gap_conn_cfg_t   gap_conn_cfg;      /**< GAP connection configuration, cfg_id is @ref BLE_CONN_CFG_GAP. */
     ble_gattc_conn_cfg_t gattc_conn_cfg;    /**< GATTC connection configuration, cfg_id is @ref BLE_CONN_CFG_GATTC. */
-    ble_gatts_conn_cfg_t gatts_conn_cfg;    /**< GATTS this connection configuration, cfg_id is @ref BLE_CONN_CFG_GATTS. */
-    ble_gatt_conn_cfg_t  gatt_conn_cfg;     /**< GATT this connection configuration, cfg_id is @ref BLE_CONN_CFG_GATT. */
+    ble_gatts_conn_cfg_t gatts_conn_cfg;    /**< GATTS connection configuration, cfg_id is @ref BLE_CONN_CFG_GATTS. */
+    ble_gatt_conn_cfg_t  gatt_conn_cfg;     /**< GATT connection configuration, cfg_id is @ref BLE_CONN_CFG_GATT. */
+    ble_l2cap_conn_cfg_t l2cap_conn_cfg;    /**< L2CAP connection configuration, cfg_id is @ref BLE_CONN_CFG_L2CAP. */
   } params;                                 /**< Connection configuration union. */
 } ble_conn_cfg_t;
 
@@ -548,7 +552,7 @@ SVCALL(SD_BLE_VERSION_GET, uint32_t, sd_ble_version_get(ble_version_t *p_version
  * @param[in] p_block Pointer to a user memory block structure or NULL if memory is managed by the application.
  *
  * @mscs
- * @mmsc{@ref BLE_GATTS_QUEUED_WRITE_NOBUF_PEER_CANCEL_MSC}
+ * @mmsc{@ref BLE_GATTS_QUEUED_WRITE_PEER_CANCEL_MSC}
  * @mmsc{@ref BLE_GATTS_QUEUED_WRITE_NOBUF_AUTH_MSC}
  * @mmsc{@ref BLE_GATTS_QUEUED_WRITE_NOBUF_NOAUTH_MSC}
  * @mmsc{@ref BLE_GATTS_QUEUED_WRITE_BUF_AUTH_MSC}
@@ -558,6 +562,7 @@ SVCALL(SD_BLE_VERSION_GET, uint32_t, sd_ble_version_get(ble_version_t *p_version
  *
  * @retval ::NRF_SUCCESS Successfully queued a response to the peer.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
+ * @retval ::NRF_ERROR_BUSY The stack is busy, process pending events and retry.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
  * @retval ::NRF_ERROR_INVALID_LENGTH Invalid user memory block length supplied.
  * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection state or no user memory request pending.

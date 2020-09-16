@@ -67,8 +67,8 @@ uint32_t ser_app_hal_hw_init(ser_app_hal_flash_op_done_handler_t handler)
     nrf_drv_clock_lfclk_request(NULL);
     nrf_drv_clock_hfclk_request(NULL);
 
-    while(false == nrf_drv_clock_hfclk_is_running());
-    while(false == nrf_drv_clock_lfclk_is_running());
+    while (false == nrf_drv_clock_hfclk_is_running());
+    while (false == nrf_drv_clock_lfclk_is_running());
 
     return NRF_SUCCESS;
 }

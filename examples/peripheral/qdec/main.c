@@ -72,9 +72,10 @@
 #include "app_error.h"
 #include "qenc_sim.h"
 #include "nordic_common.h"
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 static volatile bool m_report_ready_flag = false;
 static volatile bool m_first_report_flag = true;
@@ -112,12 +113,12 @@ void check_report(int32_t expected)
     // Error checking and printing
     if ( m_accdblread != 0 )
     {
-        NRF_LOG_ERROR("m_accdblread was expected to have value 0 but is %u\r\n", (unsigned int)m_accdblread);
+        NRF_LOG_ERROR("m_accdblread was expected to have value 0 but is %u", (unsigned int)m_accdblread);
         APP_ERROR_HANDLER(0);
     }
     if ( m_accread != expected )
     {
-        NRF_LOG_ERROR("m_accread should be %d but is %d\r\n", (int)expected, (int)m_accread);
+        NRF_LOG_ERROR("m_accread should be %d but is %d", (int)expected, (int)m_accread);
         APP_ERROR_HANDLER(0);
     }
     m_first_report_flag = false;  // clear silently after first run
@@ -136,6 +137,8 @@ int main(void)
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
     // Initialize hardware
     err_code = nrf_drv_qdec_init(NULL, qdec_event_handler);
     APP_ERROR_CHECK(err_code);
@@ -145,7 +148,7 @@ int main(void)
     // Initialize quadrature encoder simulator
     qenc_init((nrf_qdec_ledpol_t)nrf_qdec_ledpol_get());
 
-    NRF_LOG_INFO("QDEC testing started\r\n");
+    NRF_LOG_INFO("QDEC testing started");
 
     while (true)
     {

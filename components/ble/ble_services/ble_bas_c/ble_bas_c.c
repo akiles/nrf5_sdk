@@ -40,12 +40,13 @@
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(BLE_BAS_C)
 #include "ble_bas_c.h"
-#include "ble_db_discovery.h"
 #include "ble_types.h"
+#include "ble_db_discovery.h"
 #include "ble_srv_common.h"
 #include "ble_gattc.h"
-#define NRF_LOG_MODULE_NAME "BLE_BAS_C"
+#define NRF_LOG_MODULE_NAME ble_bas_c
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #define TX_BUFFER_MASK       0x07                  /**< TX Buffer mask, must be a mask of contiguous zeroes, followed by contiguous sequence of ones: 000...111. */
 #define TX_BUFFER_SIZE       (TX_BUFFER_MASK + 1)  /**< Size of the send buffer, which is 1 higher than the mask. */
@@ -104,14 +105,14 @@ static void tx_buffer_process(void)
         }
         if (err_code == NRF_SUCCESS)
         {
-            NRF_LOG_DEBUG("SD Read/Write API returns Success..\r\n");
+            NRF_LOG_DEBUG("SD Read/Write API returns Success..");
             m_tx_index++;
             m_tx_index &= TX_BUFFER_MASK;
         }
         else
         {
             NRF_LOG_DEBUG("SD Read/Write API returns error. This message sending will be "
-                "attempted again..\r\n");
+                "attempted again..");
         }
     }
 }
@@ -122,7 +123,7 @@ static void tx_buffer_process(void)
  * @param[in] p_bas_c   Pointer to the Battery Service Client Structure.
  * @param[in] p_ble_evt Pointer to the SoftDevice event.
  */
-static void on_write_rsp(ble_bas_c_t * p_bas_c, const ble_evt_t * p_ble_evt)
+static void on_write_rsp(ble_bas_c_t * p_bas_c, ble_evt_t const * p_ble_evt)
 {
     // Check if the event if on the link for this instance
     if (p_bas_c->conn_handle != p_ble_evt->evt.gattc_evt.conn_handle)
@@ -142,7 +143,7 @@ static void on_write_rsp(ble_bas_c_t * p_bas_c, const ble_evt_t * p_ble_evt)
  * @param[in] p_bas_c   Pointer to the Battery Service Client Structure.
  * @param[in] p_ble_evt Pointer to the SoftDevice event.
  */
-static void on_read_rsp(ble_bas_c_t * p_bas_c, const ble_evt_t * p_ble_evt)
+static void on_read_rsp(ble_bas_c_t * p_bas_c, ble_evt_t const * p_ble_evt)
 {
     const ble_gattc_evt_read_rsp_t * p_response;
 
@@ -180,7 +181,7 @@ static void on_read_rsp(ble_bas_c_t * p_bas_c, const ble_evt_t * p_ble_evt)
  * @param[in] p_ble_bas_c Pointer to the Battery Service Client structure.
  * @param[in] p_ble_evt   Pointer to the BLE event received.
  */
-static void on_hvx(ble_bas_c_t * p_ble_bas_c, const ble_evt_t * p_ble_evt)
+static void on_hvx(ble_bas_c_t * p_ble_bas_c, ble_evt_t const * p_ble_evt)
 {
     // Check if the event if on the link for this instance
     if (p_ble_bas_c->conn_handle != p_ble_evt->evt.gattc_evt.conn_handle)
@@ -233,7 +234,7 @@ void ble_bas_on_db_disc_evt(ble_bas_c_t * p_ble_bas_c, const ble_db_discovery_ev
             }
         }
 
-        NRF_LOG_DEBUG("Battery Service discovered at peer.\r\n");
+        NRF_LOG_DEBUG("Battery Service discovered at peer.");
 
         //If the instance has been assigned prior to db_discovery, assign the db_handles
         if (p_ble_bas_c->conn_handle != BLE_CONN_HANDLE_INVALID)
@@ -248,7 +249,7 @@ void ble_bas_on_db_disc_evt(ble_bas_c_t * p_ble_bas_c, const ble_db_discovery_ev
     }
     else
     {
-        NRF_LOG_DEBUG("Battery Service discovery failure at peer. \r\n");
+        NRF_LOG_DEBUG("Battery Service discovery failure at peer. ");
     }
 }
 
@@ -257,7 +258,7 @@ void ble_bas_on_db_disc_evt(ble_bas_c_t * p_ble_bas_c, const ble_db_discovery_ev
  */
 static uint32_t cccd_configure(uint16_t conn_handle, uint16_t handle_cccd, bool notification_enable)
 {
-    NRF_LOG_DEBUG("Configuring CCCD. CCCD Handle = %d, Connection Handle = %d\r\n",
+    NRF_LOG_DEBUG("Configuring CCCD. CCCD Handle = %d, Connection Handle = %d",
                                                             handle_cccd,conn_handle);
 
     tx_message_t * p_msg;
@@ -320,12 +321,14 @@ static void on_disconnected(ble_bas_c_t * p_ble_bas_c, const ble_evt_t * p_ble_e
 }
 
 
-void ble_bas_c_on_ble_evt(ble_bas_c_t * p_ble_bas_c, const ble_evt_t * p_ble_evt)
+void ble_bas_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
-    if ((p_ble_bas_c == NULL) || (p_ble_evt == NULL))
+    if ((p_ble_evt == NULL) || (p_context == NULL))
     {
         return;
     }
+
+    ble_bas_c_t * p_ble_bas_c = (ble_bas_c_t *)p_context;
 
     switch (p_ble_evt->header.evt_id)
     {

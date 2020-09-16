@@ -99,7 +99,7 @@ static void evt_send(gcm_evt_t const * p_gcm_evt)
  *
  * @return  Whether the write was on a CCCD.
  */
-static bool cccd_written(ble_gatts_evt_write_t * p_write_evt)
+static bool cccd_written(ble_gatts_evt_write_t const * p_write_evt)
 {
     return (    (p_write_evt->op        == BLE_GATTS_OP_WRITE_REQ)
              && (p_write_evt->uuid.type == BLE_UUID_TYPE_BLE)
@@ -480,7 +480,7 @@ static void service_changed_pending_flags_check(void)
  *
  * @param[in]  p_ble_evt  The BLE event from the SoftDevice.
  */
-void gcm_ble_evt_handler(ble_evt_t * p_ble_evt)
+void gcm_ble_evt_handler(ble_evt_t const * p_ble_evt)
 {
     gcm_evt_t event;
 

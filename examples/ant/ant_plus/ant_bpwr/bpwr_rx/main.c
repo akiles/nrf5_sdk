@@ -48,13 +48,7 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-/**@file
- * @defgroup ant_bpwr_display_main ANT Bicycle Power display example
- * @{
- * @ingroup nrf_ant_bicycle_power
- *
- * @brief Example of ANT Bicycle Power profile display.
- *
+/*
  * Before compiling this example for NRF52, complete the following steps:
  * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
  * - Extract the downloaded zip file and copy the S212 SoftDevice headers to <tt>\<InstallFolder\>/components/softdevice/s212/headers</tt>.
@@ -64,66 +58,48 @@
 
 #include <stdio.h>
 #include "nrf.h"
-#include "nrf_soc.h"
 #include "bsp.h"
 #include "hardfault.h"
 #include "app_error.h"
-#include "nordic_common.h"
-#include "ant_stack_config.h"
-#include "softdevice_handler.h"
-#include "ant_bpwr.h"
-#include "ant_state_indicator.h"
-#include "ant_key_manager.h"
 #include "app_timer.h"
+#include "nrf_pwr_mgmt.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
+#include "ant_key_manager.h"
+#include "ant_bpwr.h"
 #include "bsp_btn_ant.h"
+#include "ant_state_indicator.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
-
-#define BPWR_CHANNEL_NUMBER         0x00 /**< Channel number assigned to Bicycle Power profile. */
-
-#define WILDCARD_TRANSMISSION_TYPE  0x00 /**< Wildcard transmission type. */
-#define WILDCARD_DEVICE_NUMBER      0x00 /**< Wildcard device number. */
-
-#define ANTPLUS_NETWORK_NUMBER      0 /**< Network number. */
+#include "nrf_log_default_backends.h"
 
 /** @snippet [ANT BPWR RX Instance] */
 void ant_bpwr_evt_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_evt_t event);
 
 BPWR_DISP_CHANNEL_CONFIG_DEF(m_ant_bpwr,
-                             BPWR_CHANNEL_NUMBER,
-                             WILDCARD_TRANSMISSION_TYPE,
-                             WILDCARD_DEVICE_NUMBER,
-                             ANTPLUS_NETWORK_NUMBER);
+                             BPWR_CHANNEL_NUM,
+                             CHAN_ID_TRANS_TYPE,
+                             CHAN_ID_DEV_NUM,
+                             ANTPLUS_NETWORK_NUM);
 BPWR_DISP_PROFILE_CONFIG_DEF(m_ant_bpwr,
                              ant_bpwr_evt_handler);
 
-ant_bpwr_profile_t m_ant_bpwr;
+static ant_bpwr_profile_t m_ant_bpwr;
 /** @snippet [ANT BPWR RX Instance] */
 
 
-/**@brief Function for dispatching an ANT stack event to all modules with an ANT stack event handler.
- *
- * @details This function is called from the ANT Stack event interrupt handler after an ANT stack
- *          event has been received.
- *
- * @param[in] p_ant_evt  ANT stack event.
- *
- * @snippet [ANT BPWR RX Profile handling] */
-void ant_evt_dispatch(ant_evt_t * p_ant_evt)
-{
-    ant_bpwr_disp_evt_handler(&m_ant_bpwr, p_ant_evt);
-    ant_state_indicator_evt_handler(p_ant_evt);
-    bsp_btn_ant_on_ant_evt(p_ant_evt);
-}
+NRF_SDH_ANT_OBSERVER(m_ant_observer, ANT_BPWR_ANT_OBSERVER_PRIO,
+                     ant_bpwr_disp_evt_handler, &m_ant_bpwr);
+
+
 /** @snippet [ANT BPWR RX Profile handling] */
 
 /**@brief Function for handling bsp events.
  */
 void bsp_evt_handler(bsp_event_t evt)
 {
-    uint32_t              err_code;
+    ret_code_t            err_code;
     ant_bpwr_page1_data_t page1;
 
     switch (evt)
@@ -136,7 +112,7 @@ void bsp_evt_handler(bsp_event_t evt)
             break;
 
         case BSP_EVENT_SLEEP:
-            ant_state_indicator_sleep_mode_enter();
+            nrf_pwr_mgmt_shutdown(NRF_PWR_MGMT_SHUTDOWN_GOTO_SYSOFF);
             break;
 
         default:
@@ -144,17 +120,43 @@ void bsp_evt_handler(bsp_event_t evt)
     }
 }
 
+/**
+ * @brief Function for shutdown events.
+ *
+ * @param[in]   event       Shutdown type.
+ */
+static bool shutdown_handler(nrf_pwr_mgmt_evt_t event)
+{
+    ret_code_t err_code;
+
+    switch (event)
+    {
+        case NRF_PWR_MGMT_EVT_PREPARE_WAKEUP:
+            err_code = bsp_btn_ant_sleep_mode_prepare();
+            APP_ERROR_CHECK(err_code);
+            break;
+
+        default:
+            break;
+    }
+
+    return true;
+}
+
+NRF_PWR_MGMT_HANDLER_REGISTER(shutdown_handler, APP_SHUTDOWN_HANDLER_PRIORITY);
 
 /**@brief Function for handling Bicycle Power profile's events
  *
  */
 void ant_bpwr_evt_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_evt_t event)
 {
+    nrf_pwr_mgmt_feed();
+
     switch (event)
     {
         case ANT_BPWR_PAGE_1_UPDATED:
             // calibration data received from sensor
-            NRF_LOG_DEBUG("Received calibration data\r\n\r\n");
+            NRF_LOG_DEBUG("Received calibration data");
             break;
 
         case ANT_BPWR_PAGE_16_UPDATED:
@@ -167,17 +169,17 @@ void ant_bpwr_evt_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_evt_t event)
             /* fall through */
         case ANT_BPWR_PAGE_81_UPDATED:
             // data actualization
-            NRF_LOG_DEBUG("Page was updated\r\n\r\n");
+            NRF_LOG_DEBUG("Page was updated");
             break;
 
         case ANT_BPWR_CALIB_TIMEOUT:
             // calibration request time-out
-            NRF_LOG_DEBUG("ANT_BPWR_CALIB_TIMEOUT\r\n\r\n");
+            NRF_LOG_DEBUG("ANT_BPWR_CALIB_TIMEOUT");
             break;
 
         case ANT_BPWR_CALIB_REQUEST_TX_FAILED:
             // Please consider retrying the request.
-            NRF_LOG_DEBUG("ANT_BPWR_CALIB_REQUEST_TX_FAILED\r\n\r\n");
+            NRF_LOG_DEBUG("ANT_BPWR_CALIB_REQUEST_TX_FAILED");
             break;
 
         default:
@@ -185,7 +187,6 @@ void ant_bpwr_evt_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_evt_t event)
             break;
     }
 }
-
 
 /**
  * @brief Function for setup all thinks not directly associated with ANT stack/protocol.
@@ -196,47 +197,44 @@ void ant_bpwr_evt_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_evt_t event)
  */
 static void utils_setup(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
     err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                         bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 
-    err_code = NRF_LOG_INIT(NULL);
+    err_code = bsp_btn_ant_init(m_ant_bpwr.channel_number, BPWR_DISP_CHANNEL_TYPE);
     APP_ERROR_CHECK(err_code);
 
-    err_code = bsp_btn_ant_init();
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    err_code = ant_state_indicator_init(m_ant_bpwr.channel_number, BPWR_DISP_CHANNEL_TYPE);
     APP_ERROR_CHECK(err_code);
 }
-
 
 /**
  * @brief Function for ANT stack initialization.
- *
- * @details Initializes the SoftDevice and the ANT event interrupt.
  */
 static void softdevice_setup(void)
 {
-    uint32_t err_code;
-
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
+    ret_code_t err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
+    ASSERT(nrf_sdh_is_enabled());
+
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 
-    err_code = ant_stack_static_config(); // set ant resource
-    APP_ERROR_CHECK(err_code);
-
-    err_code = ant_plus_key_set(ANTPLUS_NETWORK_NUMBER);
+    err_code = ant_plus_key_set(ANTPLUS_NETWORK_NUM);
     APP_ERROR_CHECK(err_code);
 }
-
 
 /**
  * @brief Function for Bicycle Power profile initialization.
@@ -246,11 +244,9 @@ static void softdevice_setup(void)
 static void profile_setup(void)
 {
 /** @snippet [ANT BPWR RX Profile Setup] */
-    uint32_t err_code;
-
-    err_code = ant_bpwr_disp_init(&m_ant_bpwr,
-                                  BPWR_DISP_CHANNEL_CONFIG(m_ant_bpwr),
-                                  BPWR_DISP_PROFILE_CONFIG(m_ant_bpwr));
+    ret_code_t err_code = ant_bpwr_disp_init(&m_ant_bpwr,
+                                             BPWR_DISP_CHANNEL_CONFIG(m_ant_bpwr),
+                                             BPWR_DISP_PROFILE_CONFIG(m_ant_bpwr));
     APP_ERROR_CHECK(err_code);
 
     err_code = ant_bpwr_disp_open(&m_ant_bpwr);
@@ -261,29 +257,17 @@ static void profile_setup(void)
 /** @snippet [ANT BPWR RX Profile Setup] */
 }
 
-
 /**@brief Function for application main entry, does not return.
  */
 int main(void)
 {
-    uint32_t err_code;
-
     utils_setup();
     softdevice_setup();
-    ant_state_indicator_init(m_ant_bpwr.channel_number, BPWR_DISP_CHANNEL_TYPE);
     profile_setup();
 
-    for (;; )
+    for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            err_code = sd_app_evt_wait();
-            APP_ERROR_CHECK(err_code);
-        }
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }
-
-
-/**
- *@}
- **/

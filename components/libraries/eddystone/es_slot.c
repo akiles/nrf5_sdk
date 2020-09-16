@@ -163,7 +163,7 @@ static void set_ranging_data_for_slot(uint8_t slot_no, nrf_ble_escs_radio_tx_pwr
  * @param[in] length        Length of write operation.
  * @param[in] p_frame_data  Pointer to written data.
  */
-static void configure_slot(uint8_t slot_no, uint8_t length, uint8_t * p_frame_data)
+static void configure_slot(uint8_t slot_no, uint8_t length, uint8_t const * p_frame_data)
 {
     // If a TLM slot is being configured and there already exists a TLM.
     if ((es_frame_type_t)p_frame_data[0] == ES_FRAME_TYPE_TLM && m_reg.tlm_configured)
@@ -207,7 +207,7 @@ static void configure_slot(uint8_t slot_no, uint8_t length, uint8_t * p_frame_da
  * @param[in] length        Length of write operation.
  * @param[in] p_frame_data  Pointer to written data.
  */
-static void configure_eid_slot(uint8_t slot_no, uint8_t length, uint8_t * p_frame_data)
+static void configure_eid_slot(uint8_t slot_no, uint8_t length, uint8_t const * p_frame_data)
 {
     bool clear_eid_slot = false;
 
@@ -230,14 +230,14 @@ static void configure_eid_slot(uint8_t slot_no, uint8_t length, uint8_t * p_fram
     if (length == ESCS_EID_WRITE_ECDH_LENGTH)
     {
         es_security_client_pub_ecdh_receive(slot_no,
-                                            &p_frame_data[ESCS_EID_WRITE_PUB_KEY_INDEX],
+                                            (uint8_t*)&p_frame_data[ESCS_EID_WRITE_PUB_KEY_INDEX],
                                             p_frame_data[ESCS_EID_WRITE_ECDH_LENGTH -1]);
     }
 
     else if (length == ESCS_EID_WRITE_IDK_LENGTH)
     {
         es_security_shared_ik_receive(slot_no,
-                                      &p_frame_data[ESCS_EID_WRITE_ENC_ID_KEY_INDEX],
+                                      (uint8_t*)&p_frame_data[ESCS_EID_WRITE_ENC_ID_KEY_INDEX],
                                       p_frame_data[ESCS_EID_WRITE_IDK_LENGTH - 1]);
     }
 
@@ -293,7 +293,7 @@ void es_slot_set_adv_custom_tx_power(uint8_t slot_no, nrf_ble_escs_adv_tx_pwr_t 
 }
 
 
-void es_slot_on_write(uint8_t slot_no, uint8_t length, uint8_t * p_frame_data)
+void es_slot_on_write(uint8_t slot_no, uint8_t length, uint8_t const * p_frame_data)
 {
     slot_boundary_check(&slot_no);
 

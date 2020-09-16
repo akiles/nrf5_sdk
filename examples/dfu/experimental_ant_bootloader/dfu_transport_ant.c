@@ -64,7 +64,8 @@
 #include "ant_boot_settings.h"
 #include "app_util.h"
 #include "app_error.h"
-#include "softdevice_handler.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 #include "nordic_common.h"
 #include "app_timer.h"
 #include "crc.h"
@@ -1028,23 +1029,19 @@ static void antfs_event_process(const antfs_event_return_t * p_event)
 }
 
 
-/**@brief       Function for dispatching a SoftDevice event to all modules with a S110
- *              SoftDevice event handler.
- *
- * @details     This function is called from the S110 SoftDevice event interrupt handler after a
- *              S110 SoftDevice event has been received.
- *
- * @param[in]   p_ble_evt   S110 SoftDevice event.
- */
-static void ant_evt_dispatch(ant_evt_t * p_ant_evt)
+
+/**@brief   ANT event handler. */
+static void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
-    antfs_message_process(p_ant_evt->msg.evt_buffer);                         // process regular ant event messages.
+    antfs_message_process(p_ant_evt->message.aucMessage);                   // process regular ant event messages.
 
     while (antfs_event_extract(&m_antfs_event))                             // check for antfs events.
     {
         antfs_event_process(&m_antfs_event);
     }
 }
+
+NRF_SDH_ANT_OBSERVER(m_ant_observer, 0, ant_evt_handler, NULL);
 
 static void upload_data_response_fail_reset(void)
 {
@@ -1089,7 +1086,7 @@ static void services_init(void)
     antfs_channel_setup();
 
     /* adjust coex settings
-     * only enables ANT search and ANT synch keep alive priority behaviour. Transfer keep alive disabled to ensure flash erase doesn’t time out
+     * only enables ANT search and ANT synch keep alive priority behaviour. Transfer keep alive disabled to ensure flash erase doesnï¿½t time out
      * */
     uint32_t err_code;
     static uint8_t aucCoexConfig[8] = {0x09, 0x00, 0x00, 0x04, 0x00, 0x3A, 0x00, 0x3A};
@@ -1115,16 +1112,7 @@ static void services_init(void)
 
 uint32_t dfu_transport_update_start(void)
 {
-    uint32_t err_code;
-
     m_antfs_dfu_state = ANTFS_DFU_STATE_RESET;
-
-    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
-
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
 
     // DFU flash activity call back.
     dfu_register_callback(dfu_cb_handler);

@@ -151,9 +151,9 @@ uint16_t const * app_usbd_string_desc_get(app_usbd_string_desc_idx_t idx, uint16
     uint8_t lang_idx = 0;
     if (ARRAY_SIZE(m_langids) > 1)
     {
-        while(m_langids[lang_idx] != langid)
+        while (m_langids[lang_idx] != langid)
         {
-            if(++lang_idx >= ARRAY_SIZE(m_langids))
+            if (++lang_idx >= ARRAY_SIZE(m_langids))
             {
                 return NULL;
             }

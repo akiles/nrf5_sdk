@@ -6,7 +6,7 @@
  *           nrf52 from Nordic Semiconductor.
  *
  * @version  V1
- * @date     22. February 2017
+ * @date     6. June 2017
  *
  * @note     Generated with SVDConv V2.81d 
  *           from CMSIS SVD File 'nrf52.svd' Version 1,
@@ -851,7 +851,7 @@ typedef struct {                                    /*!< SPIM Structure         
   __I  uint32_t  RESERVED10;
   SPIM_PSEL_Type PSEL;                              /*!< Unspecified                                                           */
   __I  uint32_t  RESERVED11[4];
-  __IO uint32_t  FREQUENCY;                         /*!< SPI frequency                                                         */
+  __IO uint32_t  FREQUENCY;                         /*!< SPI frequency. Accuracy depends on the HFCLK source selected.         */
   __I  uint32_t  RESERVED12[3];
   SPIM_RXD_Type RXD;                                /*!< RXD EasyDMA channel                                                   */
   SPIM_TXD_Type TXD;                                /*!< TXD EasyDMA channel                                                   */

@@ -88,9 +88,7 @@ extern "C" {
 #define MMA7660_TAP_DETECTED(tilt_status)   (tilt_status & (1U << 5))
 #define MMA7660_SHAKE_DETECTED(tilt_status) (tilt_status & (1U << 7))
 
-
-extern uint8_t const mma7660_xout_reg_addr;
-
+extern uint8_t APP_TWI_BUFFER_LOC_IND mma7660_xout_reg_addr;
 
 #define MMA7660_READ(p_reg_addr, p_buffer, byte_cnt) \
     APP_TWI_WRITE(MMA7660_ADDR, p_reg_addr, 1,        APP_TWI_NO_STOP), \
@@ -100,10 +98,9 @@ extern uint8_t const mma7660_xout_reg_addr;
     MMA7660_READ(&mma7660_xout_reg_addr, p_buffer, 4)
 
 #define MMA7660_INIT_TRANSFER_COUNT 1
+
 extern app_twi_transfer_t const
     mma7660_init_transfers[MMA7660_INIT_TRANSFER_COUNT];
-
-
 
 #ifdef __cplusplus
 }

@@ -51,12 +51,11 @@
 
 #include "mma7660.h"
 
-
-uint8_t const mma7660_xout_reg_addr = MMA7660_REG_XOUT;
-
+uint8_t APP_TWI_BUFFER_LOC_IND mma7660_xout_reg_addr = MMA7660_REG_XOUT;
 
 // Set Active mode.
-static uint8_t const default_config[] = { MMA7660_REG_MODE, 1 };
+static uint8_t APP_TWI_BUFFER_LOC_IND default_config[] = { MMA7660_REG_MODE, 1 };
+
 app_twi_transfer_t const mma7660_init_transfers[MMA7660_INIT_TRANSFER_COUNT] =
 {
     APP_TWI_WRITE(MMA7660_ADDR, default_config, sizeof(default_config), 0)

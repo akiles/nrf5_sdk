@@ -49,8 +49,8 @@
  * 
  */
 
-#ifndef DEBUG_PIN_H_
-#define DEBUG_PIN_H_
+#ifndef DEBUG_PIN_H__
+#define DEBUG_PIN_H__
 
 #include "nrf.h"
 //#include "nrf51_bitfields.h"

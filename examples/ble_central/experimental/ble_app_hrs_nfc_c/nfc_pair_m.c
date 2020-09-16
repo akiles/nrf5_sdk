@@ -50,9 +50,13 @@
 #include "ble_m.h"
 #include "ecc.h"
 #include "peer_manager.h"
+#include "nrf_sdh_ble.h"
 
-#define NRF_LOG_MODULE_NAME "NFC_PAIR_M"
+#define NRF_LOG_MODULE_NAME NFC_PAIR_M
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
+
+#define NFC_BLE_PAIR_OBSERVER_PRIO         1                                                /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 
 #define SEL_RES_CASCADE_BIT_NUM            3                                                /**< Number of Cascade bit within SEL_RES byte. */
 #define SEL_RES_TAG_PLATFORM_MASK          0x60                                             /**< Mask of Tag Platform bit group within SEL_RES byte. */
@@ -92,6 +96,8 @@ __ALIGN(4) static ble_gap_lesc_p256_pk_t m_lesc_sk;                             
 __ALIGN(4) static ble_gap_lesc_dhkey_t   m_lesc_dhkey;                                      /**< LESC ECC DH Key. */
 __ALIGN(4) static ble_gap_lesc_p256_pk_t m_lesc_peer_pk;                                    /**< LESC Peer ECC Public Key. */
 
+static void ble_nfc_pair_handler(const ble_evt_t * const p_ble_evt, void * p_context);
+
 void nfc_pair_start(void)
 {
     m_read_tag = true;
@@ -117,6 +123,9 @@ void nfc_init(void)
     // Update Peer Manager with new LESC keys .
     err_code = pm_lesc_public_key_set(&m_lesc_pk);
     APP_ERROR_CHECK(err_code);
+    
+    // Register handler for BLE events.
+    NRF_SDH_BLE_OBSERVER(m_ble_observer, NFC_BLE_PAIR_OBSERVER_PRIO, ble_nfc_pair_handler, NULL);
 }
 
 /**
@@ -171,7 +180,7 @@ ret_code_t tag_data_read(uint8_t * buffer, uint32_t buffer_size)
     err_code = adafruit_pn532_tag2_read(block_num, buffer);
     if (err_code)
     {
-        NRF_LOG_INFO("Failed to read blocks: %d-%d\r\n", block_num,
+        NRF_LOG_INFO("Failed to read blocks: %d-%d", block_num,
                      block_num + T2T_END_PAGE_OFFSET);
         return NRF_ERROR_INTERNAL;
     }
@@ -195,7 +204,7 @@ ret_code_t tag_data_read(uint8_t * buffer, uint32_t buffer_size)
         err_code = adafruit_pn532_tag2_read(block_num, buffer + offset_for_block);
         if (err_code)
         {
-            NRF_LOG_INFO("Failed to read blocks: %d-%d\r\n",
+            NRF_LOG_INFO("Failed to read blocks: %d-%d",
                          block_num,
                          block_num + T2T_END_PAGE_OFFSET);
             return NRF_ERROR_INTERNAL;
@@ -223,31 +232,31 @@ void nfc_oob_pairing_tag_invalidate(void)
  */
 __STATIC_INLINE void nfc_essential_pairing_data_copy(nfc_ble_oob_pairing_data_t * p_pairing_data)
 {
-    if(p_pairing_data->p_device_addr != NULL)
+    if (p_pairing_data->p_device_addr != NULL)
     {
         memcpy(&m_device_addr, p_pairing_data->p_device_addr, sizeof(ble_gap_addr_t));
     }
 
-    if(p_pairing_data->p_tk_value != NULL)
+    if (p_pairing_data->p_tk_value != NULL)
     {
         memcpy(&m_device_tk, p_pairing_data->p_tk_value, sizeof(ble_advdata_tk_value_t));
     }
 
-    if(p_pairing_data->p_lesc_confirm_value != NULL)
+    if (p_pairing_data->p_lesc_confirm_value != NULL)
     {
         memcpy(m_ble_lesc_oob_peer_data.c,
                p_pairing_data->p_lesc_confirm_value,
                sizeof(m_ble_lesc_oob_peer_data.c));
     }
 
-    if(p_pairing_data->p_lesc_random_value != NULL)
+    if (p_pairing_data->p_lesc_random_value != NULL)
     {
         memcpy(m_ble_lesc_oob_peer_data.r,
                p_pairing_data->p_lesc_random_value,
                sizeof(m_ble_lesc_oob_peer_data.r));
     }
 
-    if(p_pairing_data->p_device_addr != NULL)
+    if (p_pairing_data->p_device_addr != NULL)
     {
         memcpy(&m_ble_lesc_oob_peer_data.addr,
                p_pairing_data->p_device_addr,
@@ -326,15 +335,15 @@ void ndef_data_analyze(tlv_block_t * p_tlv_block)
 
         if (ret_code != NRF_SUCCESS)
         {
-            NRF_LOG_INFO("Error during parsing a NDEF message.\r\n");
+            NRF_LOG_INFO("Error during parsing a NDEF message.");
         }
         else
         {
             // If tag was matched, disconnect after reading correctly next NDEF message.
-            if(m_tag_match)
+            if (m_tag_match)
             {
                 ble_disconnect();
-                while(m_tag_match){};
+                while (m_tag_match){};
             }
             else
             {
@@ -362,11 +371,11 @@ void tag_data_analyze(uint8_t * buffer)
     err_code = type_2_tag_parse(test_type_2_tag, buffer);
     if (err_code == NRF_ERROR_NO_MEM)
     {
-        NRF_LOG_INFO("Not enough memory to read whole tag. Printing what've been read.\r\n");
+        NRF_LOG_INFO("Not enough memory to read whole tag. Printing what've been read.");
     }
     else if (err_code != NRF_SUCCESS)
     {
-        NRF_LOG_INFO("Error during parsing a tag. Printing what could've been read.\r\n");
+        NRF_LOG_INFO("Error during parsing a tag. Printing what could've been read.");
     }
 
     NRF_LOG_RAW_INFO("\r\n");
@@ -387,7 +396,7 @@ void nfc_tag_process(void)
 {
     ret_code_t err_code;
 
-    if(m_read_tag)
+    if (m_read_tag)
     {
         // Buffer for tag data.
         static uint8_t tag_data[TAG_DATA_BUFFER_SIZE];
@@ -402,20 +411,21 @@ void nfc_tag_process(void)
                 break;
 
             case NRF_ERROR_NO_MEM:
-                NRF_LOG_INFO("Declared buffer is to small to store tag data.\r\n");
+                NRF_LOG_INFO("Declared buffer is to small to store tag data.");
                 break;
 
             case NRF_ERROR_NOT_FOUND:
-                NRF_LOG_INFO("No Tag found.\r\n");
+                NRF_LOG_INFO("No Tag found.");
                 break;
 
             case NRF_ERROR_NOT_SUPPORTED:
-                NRF_LOG_INFO("Tag not supported.\r\n");
+                NRF_LOG_INFO("Tag not supported.");
                 break;
 
             default:
-                NRF_LOG_INFO("Error during tag read.\r\n");
+                NRF_LOG_INFO("Error during tag read.");
                 err_code = adafruit_pn532_field_off();
+                APP_ERROR_CHECK(err_code);
                 break;
         }
     }
@@ -454,18 +464,26 @@ ret_code_t nfc_tk_value_get(ble_advdata_tk_value_t ** pp_tk_value)
     }
 }
 
-void on_nfc_pair_evt(const ble_evt_t * const p_ble_evt)
+/**
+ * @brief Function for handling NFC pairing BLE events.
+ *
+ * @details Handles authentication events, replying with OOB data.
+ *
+ * @param[in] p_ble_evt Bluetooth stack event.
+ * @param[in] p_context Unused.
+ */
+static void ble_nfc_pair_handler(const ble_evt_t * const p_ble_evt, void * p_context)
 {
     ret_code_t err_code;
 
     const ble_gap_evt_t * const p_gap_evt = &p_ble_evt->evt.gap_evt;
 
-    switch(p_ble_evt->header.evt_id)
+    switch (p_ble_evt->header.evt_id)
     {
         // Upon authentication key request, reply with Temporary Key that was read from the NFC tag.
         case BLE_GAP_EVT_AUTH_KEY_REQUEST:
         {
-            NRF_LOG_INFO("BLE_GAP_EVT_AUTH_KEY_REQUEST\r\n");
+            NRF_LOG_INFO("BLE_GAP_EVT_AUTH_KEY_REQUEST");
 
             ble_advdata_tk_value_t* oob_key;
             err_code = nfc_tk_value_get(&oob_key);
@@ -480,12 +498,12 @@ void on_nfc_pair_evt(const ble_evt_t * const p_ble_evt)
         // Upon LESC Diffie_Hellman key request, reply with key computed from device secret key and peer public key.
         case BLE_GAP_EVT_LESC_DHKEY_REQUEST:
         {
-            NRF_LOG_INFO("BLE_GAP_EVT_LESC_DHKEY_REQUEST\r\n");
+            NRF_LOG_INFO("BLE_GAP_EVT_LESC_DHKEY_REQUEST");
 
             uint16_t conn_handle = ble_get_conn_handle();
 
             // If LESC OOB pairing is on, perform authentication with OOB data.
-            if(p_ble_evt->evt.gap_evt.params.lesc_dhkey_request.oobd_req)
+            if (p_ble_evt->evt.gap_evt.params.lesc_dhkey_request.oobd_req)
             {
                 err_code = sd_ble_gap_lesc_oob_data_set(conn_handle,
                                                         NULL,

@@ -49,8 +49,8 @@
  * 
  */
 
-#ifndef ANT_BOOT_SETTINGS_API_H_
-#define ANT_BOOT_SETTINGS_API_H_
+#ifndef ANT_BOOT_SETTINGS_API_H__
+#define ANT_BOOT_SETTINGS_API_H__
 
 #include <stdint.h>
 #include "ant_boot_settings.h"
@@ -85,4 +85,4 @@ void ant_boot_settings_validate(uint8_t enter_boot_mode);
 }
 #endif
 
-#endif //ANT_BOOT_SETTINGS_API_H_
+#endif //ANT_BOOT_SETTINGS_API_H__

@@ -57,7 +57,7 @@ uint32_t ant_event_rx_enc(ant_evt_t const * const p_event,
     SER_ASSERT_NOT_NULL(p_buf_len);
 
     SER_ASSERT_LENGTH_LEQ(index + SER_EVT_HEADER_SIZE + 2 + 1, *p_buf_len);
-    p_message = (ANT_MESSAGE *)p_event->msg.evt_buffer;
+    p_message = (ANT_MESSAGE *)&p_event->message;
 
     index           += uint16_encode(EVENT_RX, &(p_buf[index]));                          // Mesg ID
     p_buf[index++]  = p_message->ANT_MESSAGE_ucSize;                                       // Mesg Size

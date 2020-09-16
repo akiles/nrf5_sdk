@@ -120,7 +120,7 @@ void smd_pdb_evt_handler(pdb_evt_t const * p_event)
  *
  * @param[in]  p_gap_evt  The event from the SoftDevice.
  */
-static void sec_params_request_process(ble_gap_evt_t * p_gap_evt)
+static void sec_params_request_process(ble_gap_evt_t const * p_gap_evt)
 {
     smd_evt_t evt =
     {
@@ -174,14 +174,15 @@ static void sec_proc_start(uint16_t     conn_handle,
  *
  * @param[in]  p_gap_evt  The event from the SoftDevice.
  */
-static void sec_info_request_process(ble_gap_evt_t * p_gap_evt)
+static void sec_info_request_process(ble_gap_evt_t const * p_gap_evt)
 {
     ret_code_t                 err_code;
     ble_gap_enc_info_t const * p_enc_info = NULL;
     pm_peer_data_flash_t       peer_data;
-    pm_peer_id_t               peer_id = im_peer_id_get_by_master_id(&p_gap_evt->params.sec_info_request.master_id);
-    smd_evt_t evt;
 
+    pm_peer_id_t peer_id = im_peer_id_get_by_master_id(&p_gap_evt->params.sec_info_request.master_id);
+
+    smd_evt_t evt;
     evt.conn_handle = p_gap_evt->conn_handle;
 
     if (peer_id == PM_PEER_ID_INVALID)
@@ -243,7 +244,7 @@ static void sec_info_request_process(ble_gap_evt_t * p_gap_evt)
  *
  * @param[in]  p_gap_evt  The event from the SoftDevice.
  */
-static void sec_request_process(ble_gap_evt_t * p_gap_evt)
+static void sec_request_process(ble_gap_evt_t const * p_gap_evt)
 {
     smd_evt_t evt =
     {
@@ -268,7 +269,7 @@ static void sec_request_process(ble_gap_evt_t * p_gap_evt)
  *
  * @param[in]  p_gap_evt  The event from the SoftDevice.
  */
-static void auth_status_success_process(ble_gap_evt_t * p_gap_evt)
+static void auth_status_success_process(ble_gap_evt_t const * p_gap_evt)
 {
     ret_code_t           err_code   = NRF_SUCCESS;
     uint8_t              role       = ble_conn_state_role(p_gap_evt->conn_handle);
@@ -442,7 +443,7 @@ static void link_secure_failure(uint16_t            conn_handle,
  *
  * @param[in]  p_gap_evt  The event from the SoftDevice.
  */
-static void disconnect_process(ble_gap_evt_t * p_gap_evt)
+static void disconnect_process(ble_gap_evt_t const * p_gap_evt)
 {
     pm_sec_error_code_t error = (p_gap_evt->params.disconnected.reason
                                         == BLE_HCI_CONN_TERMINATED_DUE_TO_MIC_FAILURE)
@@ -457,7 +458,7 @@ static void disconnect_process(ble_gap_evt_t * p_gap_evt)
  *
  * @param[in]  p_gap_evt  The event from the SoftDevice.
  */
-static void auth_status_failure_process(ble_gap_evt_t * p_gap_evt)
+static void auth_status_failure_process(ble_gap_evt_t const * p_gap_evt)
 {
     link_secure_failure(p_gap_evt->conn_handle,
                         p_gap_evt->params.auth_status.auth_status,
@@ -469,7 +470,7 @@ static void auth_status_failure_process(ble_gap_evt_t * p_gap_evt)
  *
  * @param[in]  p_gap_evt  The event from the SoftDevice.
  */
-static void auth_status_process(ble_gap_evt_t * p_gap_evt)
+static void auth_status_process(ble_gap_evt_t const * p_gap_evt)
 {
     switch (p_gap_evt->params.auth_status.auth_status)
     {
@@ -488,7 +489,7 @@ static void auth_status_process(ble_gap_evt_t * p_gap_evt)
  *
  * @param[in]  p_gap_evt  The event from the SoftDevice.
  */
-static void conn_sec_update_process(ble_gap_evt_t * p_gap_evt)
+static void conn_sec_update_process(ble_gap_evt_t const * p_gap_evt)
 {
     if (ble_conn_state_encrypted(p_gap_evt->conn_handle))
     {
@@ -866,7 +867,7 @@ ret_code_t smd_link_secure(uint16_t               conn_handle,
 }
 
 
-void smd_ble_evt_handler(ble_evt_t * p_ble_evt)
+void smd_ble_evt_handler(ble_evt_t const * p_ble_evt)
 {
     switch (p_ble_evt->header.evt_id)
     {

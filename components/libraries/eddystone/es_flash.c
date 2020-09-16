@@ -63,7 +63,7 @@ typedef struct
 {
     uint16_t          record_key;
     uint16_t          file_id;
-    uint8_t *         p_chunk_buf;
+    uint8_t *         p_data_buf;
     uint8_t *         p_data;
     uint16_t          size_bytes;
     es_flash_access_t access_type;
@@ -151,11 +151,14 @@ static void fds_cb(fds_evt_t const * const p_evt)
 static ret_code_t access_flash_data(const flash_access_params_t * p_params)
 {
     ret_code_t         err_code;
-    fds_record_chunk_t chunk           = {.p_data = p_params->p_chunk_buf};
-    fds_record_t       record_to_write = {.data.p_chunks = &chunk, .file_id = p_params->file_id};
     fds_flash_record_t record = {0};
     fds_record_desc_t  desc   = {0};
     fds_find_token_t   ft     = {0};
+    fds_record_t       record_to_write =
+    {
+        .data.p_data = p_params->p_data_buf,
+        .file_id     = p_params->file_id
+    };
 
     err_code = fds_record_find_by_key(p_params->record_key, &desc, &ft);
 
@@ -184,19 +187,10 @@ static ret_code_t access_flash_data(const flash_access_params_t * p_params)
             break;
 
         case ES_FLASH_ACCESS_WRITE:
-            // Note chunk.p_data points to p_params->p_chunk_buf
-            memcpy(p_params->p_chunk_buf, p_params->p_data, p_params->size_bytes);
+            memcpy(p_params->p_data_buf, p_params->p_data, p_params->size_bytes);
 
-            chunk.length_words = p_params->size_bytes / 4;
-
-            if (p_params->size_bytes % 4 != 0)
-            {
-                chunk.length_words++;
-            }
-
-            record_to_write.key = p_params->record_key;
-
-            record_to_write.data.num_chunks = 1;
+            record_to_write.data.length_words = (p_params->size_bytes +3) / 4;
+            record_to_write.key               = p_params->record_key;
 
             if (err_code == FDS_ERR_NOT_FOUND)
             {
@@ -229,7 +223,7 @@ ret_code_t es_flash_access_lock_key(uint8_t * p_lock_key, es_flash_access_t acce
 {
     flash_access_params_t params = {.record_key  = RECORD_KEY_LOCK_KEY,
                                     .file_id     = FILE_ID_ES_FLASH_LOCK_KEY,
-                                    .p_chunk_buf = lock_key_buf,
+                                    .p_data_buf  = lock_key_buf,
                                     .p_data      = (uint8_t *)p_lock_key,
                                     .size_bytes  = SIZE_OF_LOCK_KEY,
                                     .access_type = access_type};
@@ -245,7 +239,7 @@ ret_code_t es_flash_access_beacon_config(es_flash_beacon_config_t * p_config,
 
     flash_access_params_t params = {.record_key  = RECORD_KEY_BEACON_CONFIG,
                                     .file_id     = FILE_ID_ES_FLASH,
-                                    .p_chunk_buf = beacon_config_buf,
+                                    .p_data_buf  = beacon_config_buf,
                                     .p_data      = (uint8_t *)p_config,
                                     .size_bytes  = sizeof(es_flash_beacon_config_t),
                                     .access_type = access_type};
@@ -267,7 +261,7 @@ ret_code_t es_flash_access_slot_configs(uint8_t           slot_no,
 
     flash_access_params_t params = {.record_key  = RECORD_KEY_SLOTS[slot_no],
                                     .file_id     = FILE_ID_ES_FLASH,
-                                    .p_chunk_buf = slots_buf_p[slot_no],
+                                    .p_data_buf  = slots_buf_p[slot_no],
                                     .p_data      = (uint8_t *)p_slot,
                                     .size_bytes  = sizeof(es_slot_t),
                                     .access_type = access_type};
@@ -280,7 +274,7 @@ ret_code_t es_flash_access_flags(es_flash_flags_t * p_flags, es_flash_access_t a
 {
     flash_access_params_t params = {.record_key  = RECORD_KEY_FLAGS,
                                     .file_id     = FILE_ID_ES_FLASH,
-                                    .p_chunk_buf = flash_flags_buf,
+                                    .p_data_buf  = flash_flags_buf,
                                     .p_data      = (uint8_t *)p_flags,
                                     .size_bytes  = sizeof(es_flash_flags_t),
                                     .access_type = access_type};
@@ -306,7 +300,7 @@ uint32_t es_flash_num_pending_ops(void)
 }
 
 
-void es_flash_on_ble_evt(ble_evt_t * p_evt)
+void es_flash_on_ble_evt(ble_evt_t const * p_evt)
 {
     switch (p_evt->header.evt_id)
     {

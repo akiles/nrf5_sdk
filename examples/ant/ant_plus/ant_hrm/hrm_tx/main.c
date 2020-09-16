@@ -64,22 +64,21 @@
 
 #include <stdio.h>
 #include "nrf.h"
-#include "nrf_soc.h"
 #include "bsp.h"
 #include "hardfault.h"
 #include "app_error.h"
-#include "nordic_common.h"
-#include "ant_stack_config.h"
-#include "softdevice_handler.h"
-#include "ant_hrm.h"
-#include "ant_state_indicator.h"
-#include "ant_key_manager.h"
 #include "app_timer.h"
+#include "nrf_pwr_mgmt.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
+#include "ant_key_manager.h"
+#include "ant_hrm.h"
 #include "ant_hrm_simulator.h"
+#include "ant_state_indicator.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define MODIFICATION_TYPE_BUTTON 0 /* predefined value, MUST REMAIN UNCHANGED */
 #define MODIFICATION_TYPE_AUTO   1 /* predefined value, MUST REMAIN UNCHANGED */
@@ -90,18 +89,18 @@
     #error Unsupported value of MODIFICATION_TYPE.
 #endif
 
-#define APP_TICK_EVENT_INTERVAL  APP_TIMER_TICKS(2000) /**< 2 second's tick event interval in timer tick units. */
+#define APP_TICK_EVENT_INTERVAL  2000 /**< 2 second's tick event interval in timer tick units. */
 #define HRM_CHANNEL_NUMBER       0x00 /**< Channel number assigned to HRM profile. */
-#define ANTPLUS_NETWORK_NUMBER   0 /**< Network number. */
+#define ANTPLUS_NETWORK_NUMBER   0    /**< Network number. */
 
 /** @snippet [ANT HRM TX Instance] */
 void ant_hrm_evt_handler(ant_hrm_profile_t * p_profile, ant_hrm_evt_t event);
 
 HRM_SENS_CHANNEL_CONFIG_DEF(m_ant_hrm,
-                            HRM_CHANNEL_NUMBER,
+                            HRM_CHANNEL_NUM,
                             CHAN_ID_TRANS_TYPE,
                             CHAN_ID_DEV_NUM,
-                            ANTPLUS_NETWORK_NUMBER);
+                            ANTPLUS_NETWORK_NUM);
 HRM_SENS_PROFILE_CONFIG_DEF(m_ant_hrm,
                             true,
                             ANT_HRM_PAGE_0,
@@ -110,9 +109,13 @@ HRM_SENS_PROFILE_CONFIG_DEF(m_ant_hrm,
 static ant_hrm_profile_t m_ant_hrm;
 /** @snippet [ANT HRM TX Instance] */
 
+
+NRF_SDH_ANT_OBSERVER(m_ant_observer, ANT_HRM_ANT_OBSERVER_PRIO,
+                     ant_hrm_sens_evt_handler, &m_ant_hrm);
+
+
 static ant_hrm_simulator_t  m_ant_hrm_simulator;    /**< Simulator used to simulate pulse. */
 APP_TIMER_DEF(m_tick_timer);                        /**< Timer used to update cumulative operating time. */
-
 
 #if MODIFICATION_TYPE == MODIFICATION_TYPE_BUTTON
 /**@brief Function for handling bsp events.
@@ -135,24 +138,8 @@ void bsp_evt_handler(bsp_event_t evt)
     }
 }
 
-
 /** @snippet [ANT HRM simulator button] */
 #endif // MODIFICATION_TYPE == MODIFICATION_TYPE_BUTTON
-
-
-/**@brief Function for dispatching a ANT stack event to all modules with a ANT stack event handler.
- *
- * @details This function is called from the ANT Stack event interrupt handler after a ANT stack
- *          event has been received.
- *
- * @param[in] p_ant_evt  ANT stack event.
- */
-void ant_evt_dispatch(ant_evt_t * p_ant_evt)
-{
-    ant_hrm_sens_evt_handler(&m_ant_hrm, p_ant_evt);
-    ant_state_indicator_evt_handler(p_ant_evt);
-}
-
 
 /**
  * @brief 2 seconds tick handler for updataing cumulative operating time.
@@ -162,7 +149,6 @@ static void app_tick_handler(void * p_context)
     // Only the first 3 bytes of this value are taken into account
     m_ant_hrm.HRM_PROFILE_operating_time++;
 }
-
 
 /**
  * @brief Function for setup all thinks not directly associated witch ANT stack/protocol.
@@ -174,24 +160,30 @@ static void app_tick_handler(void * p_context)
  */
 static void utils_setup(void)
 {
-    uint32_t err_code;
-
-    err_code = NRF_LOG_INIT(NULL);
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 
     // Initialize and start a single continuous mode timer, which is used to update the event time
     // on the main data page.
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
-    #if (MODIFICATION_TYPE == MODIFICATION_TYPE_BUTTON)
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
+
+#if (MODIFICATION_TYPE == MODIFICATION_TYPE_BUTTON)
     /** @snippet [ANT Pulse simulator button init] */
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                         bsp_evt_handler);
     /** @snippet [ANT Pulse simulator button init] */
-    #else
+#else
     err_code = bsp_init(BSP_INIT_LED, NULL);
-    #endif
+#endif
+    APP_ERROR_CHECK(err_code);
+
+    err_code = ant_state_indicator_init(m_ant_hrm.channel_number, HRM_SENS_CHANNEL_TYPE);
     APP_ERROR_CHECK(err_code);
 
     err_code = app_timer_create(&m_tick_timer,
@@ -204,19 +196,15 @@ static void utils_setup(void)
     APP_ERROR_CHECK(err_code);
 }
 
-
 /**@brief Function for the HRM simulator initialization.
  */
 static void simulator_setup(void)
 {
     /** @snippet [ANT HRM simulator init] */
-    const ant_hrm_simulator_cfg_t simulator_cfg = DEFAULT_ANT_HRM_SIMULATOR_CFG(&m_ant_hrm,
-                                                                                SIMULATOR_MIN,
-                                                                                SIMULATOR_MAX,
-                                                                                SIMULATOR_INCR);
+    const ant_hrm_simulator_cfg_t simulator_cfg =
+        DEFAULT_ANT_HRM_SIMULATOR_CFG(&m_ant_hrm, SIMULATOR_MIN, SIMULATOR_MAX, SIMULATOR_INCR);
 
     /** @snippet [ANT HRM simulator init] */
-
 #if MODIFICATION_TYPE == MODIFICATION_TYPE_AUTO
     /** @snippet [ANT HRM simulator auto init] */
     ant_hrm_simulator_init(&m_ant_hrm_simulator, &simulator_cfg, true);
@@ -228,7 +216,6 @@ static void simulator_setup(void)
 #endif
 }
 
-
 /**
  * @brief Function for ANT stack initialization.
  *
@@ -236,29 +223,25 @@ static void simulator_setup(void)
  */
 static void softdevice_setup(void)
 {
-    uint32_t err_code;
-
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
+    ret_code_t err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
+    ASSERT(nrf_sdh_is_enabled());
+
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 
-    err_code = ant_stack_static_config(); // set ant resource
-    APP_ERROR_CHECK(err_code);
-
-    err_code = ant_plus_key_set(ANTPLUS_NETWORK_NUMBER);
+    err_code = ant_plus_key_set(ANTPLUS_NETWORK_NUM);
     APP_ERROR_CHECK(err_code);
 }
-
 
 /**@brief Function for handling ANT HRM events.
  */
 /** @snippet [ANT HRM simulator call] */
 void ant_hrm_evt_handler(ant_hrm_profile_t * p_profile, ant_hrm_evt_t event)
 {
+    nrf_pwr_mgmt_feed();
+
     switch (event)
     {
         case ANT_HRM_PAGE_0_UPDATED:
@@ -277,8 +260,6 @@ void ant_hrm_evt_handler(ant_hrm_profile_t * p_profile, ant_hrm_evt_t event)
             break;
     }
 }
-
-
 /** @snippet [ANT HRM simulator call] */
 
 /**
@@ -289,7 +270,7 @@ void ant_hrm_evt_handler(ant_hrm_profile_t * p_profile, ant_hrm_evt_t event)
 static void profile_setup(void)
 {
 /** @snippet [ANT HRM TX Profile Setup] */
-    uint32_t err_code;
+    ret_code_t err_code;
 
     err_code = ant_hrm_sens_init(&m_ant_hrm,
                                  HRM_SENS_CHANNEL_CONFIG(m_ant_hrm),
@@ -310,27 +291,19 @@ static void profile_setup(void)
 /** @snippet [ANT HRM TX Profile Setup] */
 }
 
-
 /**@brief Function for application main entry, does not return.
  */
 int main(void)
 {
-    uint32_t err_code;
-
     utils_setup();
     softdevice_setup();
-    ant_state_indicator_init(m_ant_hrm.channel_number, HRM_SENS_CHANNEL_TYPE);
     simulator_setup();
-
     profile_setup();
 
-    for (;; )
+    for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            err_code = sd_app_evt_wait();
-            APP_ERROR_CHECK(err_code);
-        }
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }
 

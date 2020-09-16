@@ -46,7 +46,7 @@
 /**
  * scaled numbers for Montgomery multiplication
  */
-typedef struct 
+typedef struct
 {
     uint32_t w[96]; /**< `x * 2^1536 modulo p3072`, little endian */
 }

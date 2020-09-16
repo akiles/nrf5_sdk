@@ -43,7 +43,7 @@
 #include "nrf_crypto_rng.h"
 #include "nrf_drv_rng.h"
 
-#if NRF_CRYPTO_BACKEND_SW
+#if NRF_CRYPTO_BACKEND_MICRO_ECC && NRF_CRYPTO_BACKEND_MICRO_ECC_SHA256
 #include "nrf_crypto_sw_rng.h"
 #endif
 

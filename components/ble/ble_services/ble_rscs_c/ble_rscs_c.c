@@ -48,8 +48,9 @@
 #include "ble_srv_common.h"
 #include "ble_gattc.h"
 
-#define NRF_LOG_MODULE_NAME "BLE_RSCS_C"
+#define NRF_LOG_MODULE_NAME ble_rscs_c
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #define TX_BUFFER_MASK         0x07                  /**< TX Buffer mask, must be a mask of continuous zeroes, followed by continuous sequence of ones: 000...111. */
 #define TX_BUFFER_SIZE         (TX_BUFFER_MASK + 1)  /**< Size of send buffer, which is 1 higher than the mask. */
@@ -110,14 +111,14 @@ static void tx_buffer_process(void)
         }
         if (err_code == NRF_SUCCESS)
         {
-            NRF_LOG_INFO("SD Read/Write API returns Success.\r\n");
+            NRF_LOG_DEBUG("SD Read/Write API returns Success.");
             m_tx_index++;
             m_tx_index &= TX_BUFFER_MASK;
         }
         else
         {
-            NRF_LOG_INFO("SD Read/Write API returns error. This message sending will be "
-                "attempted again..\r\n");
+            NRF_LOG_DEBUG("SD Read/Write API returns error. This message sending will be "
+                          "attempted again..");
         }
     }
 }
@@ -223,14 +224,11 @@ void ble_rscs_on_db_disc_evt(ble_rscs_c_t * p_ble_rscs_c, const ble_db_discovery
         p_evt->params.discovered_db.srv_uuid.uuid == BLE_UUID_RUNNING_SPEED_AND_CADENCE &&
         p_evt->params.discovered_db.srv_uuid.type == BLE_UUID_TYPE_BLE)
     {
-
         ble_rscs_c_evt_t evt;
         evt.conn_handle = p_evt->conn_handle;
 
         // Find the CCCD Handle of the Running Speed and Cadence characteristic.
-        uint32_t i;
-
-        for (i = 0; i < p_evt->params.discovered_db.char_count; i++)
+        for (uint32_t i = 0; i < p_evt->params.discovered_db.char_count; i++)
         {
             if (p_evt->params.discovered_db.charateristics[i].characteristic.uuid.uuid ==
                 BLE_UUID_RSC_MEASUREMENT_CHAR)
@@ -244,7 +242,7 @@ void ble_rscs_on_db_disc_evt(ble_rscs_c_t * p_ble_rscs_c, const ble_db_discovery
             }
         }
 
-        NRF_LOG_INFO("Running Speed and Cadence Service discovered at peer.\r\n");
+        NRF_LOG_DEBUG("Running Speed and Cadence Service discovered at peer.");
 
         //If the instance has been assigned prior to db_discovery, assign the db_handles
         if (p_ble_rscs_c->conn_handle != BLE_CONN_HANDLE_INVALID)
@@ -317,12 +315,14 @@ static void on_disconnected(ble_rscs_c_t * p_ble_rscs_c, const ble_evt_t * p_ble
 }
 
 
-void ble_rscs_c_on_ble_evt(ble_rscs_c_t * p_ble_rscs_c, const ble_evt_t * p_ble_evt)
+void ble_rscs_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
-    if ((p_ble_rscs_c == NULL) || (p_ble_evt == NULL))
+    if ((p_context == NULL) || (p_ble_evt == NULL))
     {
         return;
     }
+
+    ble_rscs_c_t * p_ble_rscs_c = (ble_rscs_c_t *)p_context;
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -348,8 +348,8 @@ void ble_rscs_c_on_ble_evt(ble_rscs_c_t * p_ble_rscs_c, const ble_evt_t * p_ble_
  */
 static uint32_t cccd_configure(uint16_t conn_handle, uint16_t handle_cccd, bool enable)
 {
-    NRF_LOG_INFO("Configuring CCCD. CCCD Handle = %d, Connection Handle = %d\r\n",
-        handle_cccd, conn_handle);
+    NRF_LOG_DEBUG("Configuring CCCD. CCCD Handle = %d, Connection Handle = %d",
+                  handle_cccd, conn_handle);
 
     tx_message_t * p_msg;
     uint16_t       cccd_val = enable ? BLE_GATT_HVX_NOTIFICATION : 0;

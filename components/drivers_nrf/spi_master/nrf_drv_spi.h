@@ -50,31 +50,49 @@
 #include "nordic_common.h"
 #include "sdk_config.h"
 #include "nrf_peripherals.h"
+#include "sdk_errors.h"
+
+#ifdef SPI_PRESENT
 #include "nrf_spi.h"
+#endif
+
 #ifdef SPIM_PRESENT
 #include "nrf_spim.h"
 #endif
-#include "sdk_errors.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#if defined(SPIM_PRESENT)
+#if defined(SPIM_PRESENT) && defined(SPI_PRESENT)
     #define NRF_DRV_SPI_PERIPHERAL(id)           \
         (CONCAT_3(SPI, id, _USE_EASY_DMA) == 1 ? \
             (void *)CONCAT_2(NRF_SPIM, id)       \
           : (void *)CONCAT_2(NRF_SPI, id))
     #define SPI2_IRQ            SPIM2_SPIS2_SPI2_IRQn
     #define SPI2_IRQ_HANDLER    SPIM2_SPIS2_SPI2_IRQHandler
-#else
+#elif defined (SPI_PRESENT)
     #define NRF_DRV_SPI_PERIPHERAL(id)  (void *)CONCAT_2(NRF_SPI, id)
+#elif defined (SPIM_PRESENT)
+    #define NRF_DRV_SPI_PERIPHERAL(id)  (void *)CONCAT_2(NRF_SPIM, id)
 #endif
+
+#ifndef SPI_PRESENT
+typedef nrf_spim_frequency_t nrf_spi_frequency_t;
+typedef nrf_spim_mode_t      nrf_spi_mode_t;
+typedef nrf_spim_bit_order_t nrf_spi_bit_order_t;
+#define NRF_SPI_PIN_NOT_CONNECTED 0xFFFFFFFF
+#endif
+
+#ifdef NRF52810_XXAA
+#define SPI0_IRQ            SPIM0_SPIS0_IRQn
+#define SPI0_IRQ_HANDLER    SPIM0_SPIS0_IRQHandler
+#else
 #define SPI0_IRQ            SPI0_TWI0_IRQn
 #define SPI0_IRQ_HANDLER    SPI0_TWI0_IRQHandler
 #define SPI1_IRQ            SPI1_TWI1_IRQn
 #define SPI1_IRQ_HANDLER    SPI1_TWI1_IRQHandler
-
+#endif
 /**
  * @defgroup nrf_drv_spi SPI master driver
  * @{
@@ -98,6 +116,14 @@ typedef struct
 #define SPI1_INSTANCE_INDEX SPI0_INSTANCE_INDEX+SPI0_ENABLED
 #define SPI2_INSTANCE_INDEX SPI1_INSTANCE_INDEX+SPI1_ENABLED
 
+#if defined(SPIM_PRESENT) && defined(SPI_PRESENT)
+#define SPI_N_USE_EASY_DMA(_id) CONCAT_3(SPI, _id, _USE_EASY_DMA)
+#elif defined(SPIM_PRESENT) && !defined(SPI_PRESENT)
+#define SPI_N_USE_EASY_DMA(_id) true
+#else
+#define SPI_N_USE_EASY_DMA(_id) false
+#endif
+
 /**
  * @brief Macro for creating an SPI master driver instance.
  */
@@ -106,9 +132,8 @@ typedef struct
     .p_registers  = NRF_DRV_SPI_PERIPHERAL(id),         \
     .irq          = CONCAT_3(SPI, id, _IRQ),            \
     .drv_inst_idx = CONCAT_3(SPI, id, _INSTANCE_INDEX), \
-    .use_easy_dma = CONCAT_3(SPI, id, _USE_EASY_DMA)    \
+    .use_easy_dma = SPI_N_USE_EASY_DMA(id)              \
 }
-
 /**
  * @brief This value can be provided instead of a pin number for signals MOSI,
  *        MISO, and Slave Select to specify that the given signal is not used and
@@ -270,9 +295,11 @@ typedef void (* nrf_drv_spi_evt_handler_t)(nrf_drv_spi_evt_t const * p_event,
  *
  * This function configures and enables the specified peripheral.
  *
+ * @note MISO pin has pull down enabled.
+ *
  * @param[in] p_instance Pointer to the driver instance structure.
  * @param[in] p_config   Pointer to the structure with the initial configuration.
- *                       If NULL, the default configuration is used.
+ *
  * @param     handler    Event handler provided by the user. If NULL, transfers
  *                       will be performed in blocking mode.
  * @param      p_context Context passed to event handler.
@@ -291,6 +318,8 @@ ret_code_t nrf_drv_spi_init(nrf_drv_spi_t const * const p_instance,
 
 /**
  * @brief Function for uninitializing the SPI master driver instance.
+ *
+ * @note Configuration of pins is kept.
  *
  * @param[in] p_instance Pointer to the driver instance structure.
  */

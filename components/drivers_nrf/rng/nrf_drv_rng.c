@@ -45,16 +45,15 @@
 #include "nrf_drv_rng.h"
 #include "nrf_drv_common.h"
 #include "nordic_common.h"
+#include "app_util_platform.h"
 #include "nrf_assert.h"
 #include "nrf_queue.h"
 
 #ifdef SOFTDEVICE_PRESENT
-    #include "softdevice_handler.h"
-    #include "nrf_soc.h"
-    #include "app_util_platform.h"
+    #include "nrf_sdh.h"
 #endif // SOFTDEVICE_PRESENT
 
-#define NRF_LOG_MODULE_NAME "RNG"
+#define NRF_LOG_MODULE_NAME rng
 
 #if RNG_CONFIG_LOG_ENABLED
     #define NRF_LOG_LEVEL       RNG_CONFIG_LOG_LEVEL
@@ -64,7 +63,7 @@
     #define NRF_LOG_LEVEL       0
 #endif //RNG_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
-#include "nrf_log_ctrl.h"
+NRF_LOG_MODULE_REGISTER();
 
 /* Validate configuration */
 INTERRUPT_PRIORITY_VALIDATION(RNG_CONFIG_IRQ_PRIORITY);
@@ -80,17 +79,22 @@ NRF_QUEUE_DEF(uint8_t, m_rand_pool, RNG_CONFIG_POOL_SIZE, NRF_QUEUE_MODE_OVERFLO
 static const nrf_drv_rng_config_t m_default_config = NRF_DRV_RNG_DEFAULT_CONFIG;
 
 #ifdef SOFTDEVICE_PRESENT
+#ifdef S132
+    #define SD_RAND_POOL_SIZE           (64)
+#else
     #define SD_RAND_POOL_SIZE           (32)
+#endif
     STATIC_ASSERT(RNG_CONFIG_POOL_SIZE == SD_RAND_POOL_SIZE);
 
     #define NRF_DRV_RNG_LOCK()          CRITICAL_REGION_ENTER()
     #define NRF_DRV_RNG_RELEASE()       CRITICAL_REGION_EXIT()
-    #define NRF_DRV_RNG_SD_IS_ENABLED() softdevice_handler_is_enabled()
+    #define NRF_DRV_RNG_SD_IS_ENABLED() nrf_sdh_is_enabled()
 #else
     #define NRF_DRV_RNG_LOCK()          do { } while (0)
     #define NRF_DRV_RNG_RELEASE()       do { } while (0)
     #define NRF_DRV_RNG_SD_IS_ENABLED() false
 #endif // SOFTDEVICE_PRESENT
+
 
 /**
  * @brief Function for starting generation.
@@ -174,7 +178,7 @@ void nrf_drv_rng_uninit(void)
 
     nrf_queue_reset(&m_rand_pool);
     m_rng_cb.state = NRF_DRV_STATE_UNINITIALIZED;
-    NRF_LOG_INFO("Uninitialized.\r\n");
+    NRF_LOG_INFO("Uninitialized.");
 }
 
 void nrf_drv_rng_bytes_available(uint8_t * p_bytes_available)
@@ -193,7 +197,7 @@ void nrf_drv_rng_bytes_available(uint8_t * p_bytes_available)
 
     *p_bytes_available  = nrf_queue_utilization_get(&m_rand_pool);
 
-    NRF_LOG_INFO("Function: %s, available bytes: %d.\r\n", (uint32_t)__func__, *p_bytes_available);
+    NRF_LOG_INFO("Function: %s, available bytes: %d.", (uint32_t)__func__, *p_bytes_available);
 }
 
 ret_code_t nrf_drv_rng_rand(uint8_t * p_buff, uint8_t length)
@@ -228,10 +232,10 @@ ret_code_t nrf_drv_rng_rand(uint8_t * p_buff, uint8_t length)
     ASSERT((err_code == NRF_SUCCESS) || (err_code == NRF_ERROR_NOT_FOUND));
 
 #if defined(RNG_CONFIG_RANDOM_NUMBER_LOG_ENABLED) && (RNG_CONFIG_RANDOM_NUMBER_LOG_ENABLED != 0)
-    NRF_LOG_DEBUG("Rand buffer data:\r\n");
+    NRF_LOG_DEBUG("Rand buffer data:");
     NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_buff, length);
 #endif // RNG_CONFIG_RANDOM_NUMBER_LOG_ENABLED
-    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+    NRF_LOG_WARNING("Function: %s, error code: %s.",
                     (uint32_t)__func__,
                     (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
 
@@ -249,27 +253,46 @@ void nrf_drv_rng_block_rand(uint8_t * p_buff, uint32_t length)
 
         do {
             err_code = nrf_drv_rng_rand(p_buff, len);
-        } while(err_code != NRF_SUCCESS);
+        } while (err_code != NRF_SUCCESS);
 
         length -= len;
         p_buff += len;
     }
 
-    NRF_LOG_DEBUG("Rand buffer data:\r\n");
+    NRF_LOG_DEBUG("Rand buffer data:");
     NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_buff, length);
 }
 
 #ifdef SOFTDEVICE_PRESENT
-void nrf_drv_rng_on_sd_disable(void)
+static void sd_state_evt_handler(nrf_sdh_state_evt_t state, void * p_context)
 {
-    NRF_DRV_RNG_LOCK();
-    if (m_rng_cb.state == NRF_DRV_STATE_INITIALIZED)
+    switch (state)
     {
-        nrf_drv_rng_setup();
-        nrf_drv_rng_start();
+        case NRF_SDH_EVT_STATE_ENABLE_PREPARE:
+            NVIC_DisableIRQ(RNG_IRQn);
+            break;
+
+        case NRF_SDH_EVT_STATE_DISABLED:
+            NRF_DRV_RNG_LOCK();
+            if (m_rng_cb.state == NRF_DRV_STATE_INITIALIZED)
+            {
+                nrf_drv_rng_setup();
+                nrf_drv_rng_start();
+            }
+            NRF_DRV_RNG_RELEASE();
+            break;
+
+        default:
+            break;
     }
-    NRF_DRV_RNG_RELEASE();
 }
+
+NRF_SDH_STATE_OBSERVER(m_sd_state_observer, RNG_CONFIG_STATE_OBSERVER_PRIO) =
+{
+    .handler   = sd_state_evt_handler,
+    .p_context = NULL,
+};
+
 #endif // SOFTDEVICE_PRESENT
 
 void RNG_IRQHandler(void)
@@ -290,7 +313,7 @@ void RNG_IRQHandler(void)
             nrf_drv_rng_stop();
         }
 
-        NRF_LOG_DEBUG("Event: NRF_RNG_EVENT_VALRDY.\r\n");
+        NRF_LOG_DEBUG("Event: NRF_RNG_EVENT_VALRDY.");
     }
     NRF_DRV_RNG_RELEASE();
 }

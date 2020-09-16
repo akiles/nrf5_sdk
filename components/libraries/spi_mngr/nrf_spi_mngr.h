@@ -49,6 +49,18 @@
 extern "C" {
 #endif
 
+/*lint -save -e491*/
+#ifndef NRF_SPI_MNGR_BUFFERS_IN_RAM
+  #define NRF_SPI_MNGR_BUFFERS_IN_RAM defined(SPIM_PRESENT)
+#endif
+
+#if NRF_SPI_MNGR_BUFFERS_IN_RAM
+  #define NRF_SPI_MNGR_BUFFER_LOC_IND
+#else
+  #define NRF_SPI_MNGR_BUFFER_LOC_IND const
+#endif
+/*lint -restore*/
+
 /**
  * @defgroup nrf_spi_mngr SPI transaction manager
  * @{

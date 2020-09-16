@@ -46,8 +46,9 @@
 #include "ble_cts_c.h"
 #include "ble_date_time.h"
 #include "ble_db_discovery.h"
-#define NRF_LOG_MODULE_NAME "BLE_CTS_C"
+#define NRF_LOG_MODULE_NAME ble_cts_c
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #define CTS_YEAR_MIN 1582                     /**< The lowest valid Current Time year is the year when the western calendar was introduced. */
 #define CTS_YEAR_MAX 9999                     /**< The highest possible Current Time. */
@@ -69,7 +70,7 @@
  */
 void ble_cts_c_on_db_disc_evt(ble_cts_c_t * p_cts, ble_db_discovery_evt_t * p_evt)
 {
-    NRF_LOG_DEBUG("Database Discovery handler called with event 0x%x\r\n", p_evt->evt_type);
+    NRF_LOG_DEBUG("Database Discovery handler called with event 0x%x", p_evt->evt_type);
 
     ble_cts_c_evt_t evt;
     const ble_gatt_db_char_t * p_chars = p_evt->params.discovered_db.charateristics;
@@ -78,15 +79,12 @@ void ble_cts_c_on_db_disc_evt(ble_cts_c_t * p_cts, ble_db_discovery_evt_t * p_ev
     evt.conn_handle = p_evt->conn_handle;
 
     // Check if the Current Time Service was discovered.
-    if (p_evt->evt_type == BLE_DB_DISCOVERY_COMPLETE &&
-        p_evt->params.discovered_db.srv_uuid.uuid == BLE_UUID_CURRENT_TIME_SERVICE &&
-        p_evt->params.discovered_db.srv_uuid.type == BLE_UUID_TYPE_BLE)
+    if (   (p_evt->evt_type == BLE_DB_DISCOVERY_COMPLETE)
+        && (p_evt->params.discovered_db.srv_uuid.uuid == BLE_UUID_CURRENT_TIME_SERVICE)
+        && (p_evt->params.discovered_db.srv_uuid.type == BLE_UUID_TYPE_BLE))
     {
-
         // Find the handles of the Current Time characteristic.
-        uint32_t i;
-
-        for (i = 0; i < p_evt->params.discovered_db.char_count; i++)
+        for (uint32_t i = 0; i < p_evt->params.discovered_db.char_count; i++)
         {
             if (p_evt->params.discovered_db.charateristics[i].characteristic.uuid.uuid ==
                 BLE_UUID_CURRENT_TIME_CHAR)
@@ -98,7 +96,7 @@ void ble_cts_c_on_db_disc_evt(ble_cts_c_t * p_cts, ble_db_discovery_evt_t * p_ev
             }
         }
 
-        NRF_LOG_INFO("Current Time Service discovered at peer.\r\n");
+        NRF_LOG_INFO("Current Time Service discovered at peer.");
 
         evt.evt_type    = BLE_CTS_C_EVT_DISCOVERY_COMPLETE;
     }
@@ -138,8 +136,8 @@ uint32_t ble_cts_c_init(ble_cts_c_t * p_cts, ble_cts_c_init_t const * p_cts_init
  * @return NRF_ERROR_DATA_SIZE if length does not match the expected size of the data.
  */
 static uint32_t current_time_decode(current_time_char_t * p_time,
-                                    const uint8_t       * p_data,
-                                    const uint32_t        length)
+                                    uint8_t const       * p_data,
+                                    uint32_t const        length)
 {
     //lint -save -e415 -e416 "Access of out of bounds pointer" "Creation of out of bounds pointer"
 
@@ -149,7 +147,7 @@ static uint32_t current_time_decode(current_time_char_t * p_time,
         return NRF_ERROR_DATA_SIZE;
     }
 
-    NRF_LOG_DEBUG("Current Time read response data:\r\n");
+    NRF_LOG_DEBUG("Current Time read response data:");
     NRF_LOG_HEXDUMP_DEBUG(p_data, 10);
 
     uint32_t index = 0;
@@ -168,7 +166,6 @@ static uint32_t current_time_decode(current_time_char_t * p_time,
     p_time->adjust_reason.external_reference_time_update  = (p_data[index] >> 1) & 0x01;
     p_time->adjust_reason.change_of_time_zone             = (p_data[index] >> 2) & 0x01;
     p_time->adjust_reason.change_of_daylight_savings_time = (p_data[index] >> 3) & 0x01;
-
 
     //lint -restore
     return NRF_SUCCESS;
@@ -239,7 +236,7 @@ static uint32_t current_time_validate(current_time_char_t * p_time)
  * @param[in] p_cts      Current Time Service client structure.
  * @param[in] p_ble_evt  Event received from the BLE stack.
  */
-static void current_time_read(ble_cts_c_t * p_cts, const ble_evt_t * p_ble_evt)
+static void current_time_read(ble_cts_c_t * p_cts, ble_evt_t const * p_ble_evt)
 {
     ble_cts_c_evt_t evt;
     uint32_t        err_code = NRF_SUCCESS;
@@ -309,9 +306,10 @@ static void on_disconnect(ble_cts_c_t * p_cts, ble_evt_t const * p_ble_evt)
 }
 
 
-void ble_cts_c_on_ble_evt(ble_cts_c_t * p_cts, ble_evt_t const * p_ble_evt)
+void ble_cts_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
-    NRF_LOG_DEBUG("BLE event handler called with event 0x%x\r\n", p_ble_evt->header.evt_id);
+    ble_cts_c_t * p_cts = (ble_cts_c_t *)p_context;
+    NRF_LOG_DEBUG("BLE event handler called with event 0x%x", p_ble_evt->header.evt_id);
 
     switch (p_ble_evt->header.evt_id)
     {

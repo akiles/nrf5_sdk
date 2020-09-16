@@ -47,7 +47,7 @@
 #include "nrf_gpio.h"
 #include "app_util_platform.h"
 
-#define NRF_LOG_MODULE_NAME "PWM"
+#define NRF_LOG_MODULE_NAME pwm
 
 #if PWM_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       PWM_CONFIG_LOG_LEVEL
@@ -57,7 +57,7 @@
 #define NRF_LOG_LEVEL       0
 #endif //PWM_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
-#include "nrf_log_ctrl.h"
+NRF_LOG_MODULE_REGISTER();
 
 #if NRF_MODULE_ENABLED(PWM_NRF52_ANOMALY_109_WORKAROUND)
 // The workaround uses interrupts to wake up the CPU and ensure it is active
@@ -140,7 +140,7 @@ ret_code_t nrf_drv_pwm_init(nrf_drv_pwm_t const * const p_instance,
     if (p_cb->state != NRF_DRV_STATE_UNINITIALIZED)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__,
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__,
             (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
@@ -180,7 +180,7 @@ ret_code_t nrf_drv_pwm_init(nrf_drv_pwm_t const * const p_instance,
     p_cb->state = NRF_DRV_STATE_INITIALIZED;
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__,
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__,
         (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
@@ -311,9 +311,9 @@ uint32_t nrf_drv_pwm_simple_playback(nrf_drv_pwm_t const * const p_instance,
     }
     nrf_pwm_shorts_set(p_instance->p_registers, shorts_mask);
 
-    NRF_LOG_INFO("Function: %s, sequence length: %d.\r\n", (uint32_t)__func__,
+    NRF_LOG_INFO("Function: %s, sequence length: %d.", (uint32_t)__func__,
         p_sequence->length * sizeof(p_sequence->values));
-    NRF_LOG_DEBUG("Sequence data:\r\n");
+    NRF_LOG_DEBUG("Sequence data:");
     NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_sequence->values.p_raw,
         p_sequence->length * sizeof(p_sequence->values));
     return start_playback(p_instance, p_cb, flags,
@@ -352,14 +352,14 @@ uint32_t nrf_drv_pwm_complex_playback(nrf_drv_pwm_t const * const p_instance,
     }
     nrf_pwm_shorts_set(p_instance->p_registers, shorts_mask);
 
-    NRF_LOG_INFO("Function: %s, sequence 0 length: %d.\r\n", (uint32_t)__func__,
+    NRF_LOG_INFO("Function: %s, sequence 0 length: %d.", (uint32_t)__func__,
         p_sequence_0->length * sizeof(p_sequence_0->values));
-    NRF_LOG_INFO("Function: %s, sequence 1 length: %d.\r\n", (uint32_t)__func__,
+    NRF_LOG_INFO("Function: %s, sequence 1 length: %d.", (uint32_t)__func__,
         p_sequence_1->length * sizeof(p_sequence_1->values));
-    NRF_LOG_DEBUG("Sequence 0 data:\r\n");
+    NRF_LOG_DEBUG("Sequence 0 data:");
     NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_sequence_0->values.p_raw,
         p_sequence_0->length * sizeof(p_sequence_0->values));
-    NRF_LOG_DEBUG("Sequence 1 data:\r\n");
+    NRF_LOG_DEBUG("Sequence 1 data:");
     NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_sequence_1->values.p_raw,
         p_sequence_1->length * sizeof(p_sequence_1->values));
     return start_playback(p_instance, p_cb, flags, NRF_PWM_TASK_SEQSTART0);
@@ -390,7 +390,7 @@ bool nrf_drv_pwm_stop(nrf_drv_pwm_t const * const p_instance,
         } while (wait_until_stopped);
     }
 
-    NRF_LOG_INFO("%s returned %d.\r\n", (uint32_t)__func__, ret_val);
+    NRF_LOG_INFO("%s returned %d.", (uint32_t)__func__, ret_val);
     return ret_val;
 }
 
@@ -412,11 +412,11 @@ bool nrf_drv_pwm_is_stopped(nrf_drv_pwm_t const * const p_instance)
     if (nrf_pwm_event_check(p_instance->p_registers, NRF_PWM_EVENT_STOPPED))
     {
         p_cb->state = NRF_DRV_STATE_INITIALIZED;
-        NRF_LOG_INFO("Disabled.\r\n");
+        NRF_LOG_INFO("Disabled.");
         ret_val = true;
     }
 
-    NRF_LOG_INFO("%s returned %d.\r\n", (uint32_t)__func__, ret_val);
+    NRF_LOG_INFO("%s returned %d.", (uint32_t)__func__, ret_val);
     return ret_val;
 }
 
@@ -484,33 +484,33 @@ void DMA_ISSUE_EGU_IRQHandler(void)
 }
 #endif
 
-
-#if NRF_MODULE_ENABLED(PWM0)
+#if NRF_MODULE_ENABLED(PWM0) && defined (PWM0_CH_NUM)
 void PWM0_IRQHandler(void)
 {
     irq_handler(NRF_PWM0, &m_cb[PWM0_INSTANCE_INDEX]);
 }
 #endif
 
-#if NRF_MODULE_ENABLED(PWM1)
+#if NRF_MODULE_ENABLED(PWM1) && defined (PWM1_CH_NUM)
 void PWM1_IRQHandler(void)
 {
     irq_handler(NRF_PWM1, &m_cb[PWM1_INSTANCE_INDEX]);
 }
 #endif
 
-#if NRF_MODULE_ENABLED(PWM2)
+#if NRF_MODULE_ENABLED(PWM2) && defined (PWM2_CH_NUM)
 void PWM2_IRQHandler(void)
 {
     irq_handler(NRF_PWM2, &m_cb[PWM2_INSTANCE_INDEX]);
 }
 #endif
 
-#if PWM3_ENABLED
+#if PWM3_ENABLED && defined (PWM3_CH_NUM)
 void PWM3_IRQHandler(void)
 {
     irq_handler(NRF_PWM3, &m_cb[PWM3_INSTANCE_INDEX]);
 }
 #endif
+
 #endif //ENABLED_PWM_COUNT
 #endif //NRF_MODULE_ENABLED(PWM)

@@ -145,6 +145,22 @@ void sdk_mapped_flags_bulk_update_by_key(uint16_t           * p_keys,
 bool sdk_mapped_flags_get_by_key(uint16_t * p_keys, sdk_mapped_flags_t flags, uint16_t key);
 
 
+/**@brief Function for getting the state of a specific flag.
+ *
+ * @param[in]  p_keys   The list of associated keys (assumed to have a length of
+ *                      @ref SDK_MAPPED_FLAGS_N_KEYS).
+ * @param[in]  flags    The flag collection from which to read.
+ * @param[in]  key      The key for which to get the flag.
+ * @param[out] p_index  If not NULL, the index of the key.
+ *
+ * @return  The state of the flag.
+ */
+bool sdk_mapped_flags_get_by_key_w_idx(uint16_t         * p_keys,
+                                       sdk_mapped_flags_t flags,
+                                       uint16_t           key,
+                                       uint8_t          * p_index);
+
+
 /**@brief Function for getting a list of all keys that have a specific flag set to true.
  *
  * @param[in]  p_keys  The list of associated keys (assumed to have a length of

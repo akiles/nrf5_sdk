@@ -53,7 +53,7 @@ static uint32_t rng_result_get(CRYSError_t crys_error)
 {
     uint32_t        ret_val;
 
-    switch(crys_error)
+    switch (crys_error)
     {
         case CRYS_OK:
             ret_val = NRF_SUCCESS;

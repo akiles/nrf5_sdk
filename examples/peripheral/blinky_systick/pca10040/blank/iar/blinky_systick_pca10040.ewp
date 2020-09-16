@@ -180,16 +180,6 @@
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
-          <state>NRF52_PAN_12</state>
-          <state>NRF52_PAN_15</state>
-          <state>NRF52_PAN_20</state>
-          <state>NRF52_PAN_31</state>
-          <state>NRF52_PAN_36</state>
-          <state>NRF52_PAN_51</state>
-          <state>NRF52_PAN_54</state>
-          <state>NRF52_PAN_55</state>
-          <state>NRF52_PAN_58</state>
-          <state>NRF52_PAN_64</state>
           <state>NRF52_PAN_74</state>
         </option>
         <option>
@@ -319,15 +309,17 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\..\..\..\config\blinky_systick_pca10040</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\systick</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
@@ -495,16 +487,6 @@
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
-          <state>NRF52_PAN_12</state>
-          <state>NRF52_PAN_15</state>
-          <state>NRF52_PAN_20</state>
-          <state>NRF52_PAN_31</state>
-          <state>NRF52_PAN_36</state>
-          <state>NRF52_PAN_51</state>
-          <state>NRF52_PAN_54</state>
-          <state>NRF52_PAN_55</state>
-          <state>NRF52_PAN_58</state>
-          <state>NRF52_PAN_64</state>
           <state>NRF52_PAN_74</state>
         </option>
         <option>
@@ -601,15 +583,17 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$\..\..\..\config\blinky_systick_pca10040</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\systick</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>

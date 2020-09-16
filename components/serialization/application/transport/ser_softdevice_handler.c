@@ -41,7 +41,8 @@
 #include <string.h>
 #include "nrf_queue.h"
 #include "app_scheduler.h"
-#include "softdevice_handler.h"
+#include "nrf_sdh.h"
+#include "nrf_sdm.h"
 #include "ser_sd_transport.h"
 #include "ser_app_hal.h"
 #include "ser_config.h"
@@ -49,6 +50,7 @@
 #include "ble_serialization.h"
 #if defined(BLE_STACK_SUPPORT_REQD)
 #include "ble_app.h"
+#include "nrf_sdh_ble.h"
 #endif
 #if defined(ANT_STACK_SUPPORT_REQD)
 #include "ant_event.h"
@@ -61,7 +63,9 @@
 #if defined(BLE_STACK_SUPPORT_REQD)
 typedef struct
 {
-    uint32_t evt_data[CEIL_DIV(BLE_STACK_EVT_MSG_BUF_SIZE, sizeof (uint32_t))]; /**< Buffer for decoded event */
+    //lint -save -e666
+    uint32_t evt_data[CEIL_DIV(NRF_SDH_BLE_EVT_BUF_SIZE, sizeof (uint32_t))]; /**< Buffer for decoded event */
+    //lint -restore
 } ser_sd_handler_evt_data_t;
 #endif
 
@@ -235,7 +239,7 @@ uint32_t sd_ant_event_get(uint8_t* p_channel, uint8_t* p_event, uint8_t* p_ant_m
     {
         *p_event     = ((ant_evt_t *)item.evt_data) -> event;
         *p_channel   = ((ant_evt_t *)item.evt_data) -> channel;
-        memcpy(p_ant_mesg, ((ant_evt_t *)item.evt_data) -> msg.evt_buffer, ANT_STACK_EVT_MSG_BUF_SIZE);
+        memcpy(p_ant_mesg, ((ant_evt_t *)item.evt_data)->message.aucMessage, MESG_BUFFER_SIZE);
     } else {
         err_code = NRF_ERROR_NOT_FOUND;
     }

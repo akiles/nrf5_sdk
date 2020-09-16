@@ -80,7 +80,7 @@ void es_adv_timing_start(uint16_t adv_interval);
 /**@brief Function for stopping Eddystone advertisement timing event generation. */
 void es_adv_timing_stop(void);
 
-/**@brief Function for initializing the Eddystone advertisement timers. 
+/**@brief Function for initializing the Eddystone advertisement timers.
  */
 void es_adv_timing_timers_init(void);
 

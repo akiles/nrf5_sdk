@@ -41,7 +41,7 @@
 #include "ble_dtm_conn.h"
 #include "ble_serialization.h"
 #include "nrf_error.h"
-#include "softdevice_handler.h"
+#include "nrf_sdm.h"
 #include "ser_conn_dtm_cmd_decoder.h"
 #include "ser_hal_transport.h"
 

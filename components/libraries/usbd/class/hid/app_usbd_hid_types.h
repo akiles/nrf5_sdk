@@ -42,6 +42,7 @@
 
 #include <stdint.h>
 
+#include "app_usbd_types.h"
 #include "sdk_common.h"
 
 /**
@@ -201,24 +202,20 @@ typedef enum {
 } app_usbd_hid_report_type_t;
 
 
+/**
+ * @brief Hid version BCD value definition
+ *
+ * The version of the HID descriptors used.
+ */
+#define APP_USBD_HID_BCD_VER APP_USBD_BCD_VER_MAKE(1, 11)
 
 /**
- * @brief Helper macro for HID BCD release.
+ * @brief HID version BCD value definition distributed into bytes
  *
- * @param major Hid release number major.
- * @param minor Hid release number minor.
- *
- * @ref app_usbd_hid_descriptor_t::bcdHID
- * @ref APP_USBD_HID_BCD_V1_11
+ * This is a value written directly into @ref app_usbd_hid_descriptor_t::bcdHID.
+ * @sa APP_USBD_HID_BCD_VER
  */
-#define APP_USBD_HID_BCD_MAKE(major, minor) 0x##minor, 0x##major
-
-/**
- * @brief HID 1.11 BCD value definition.
- *
- *  @ref app_usbd_hid_descriptor_t::bcdHID
- */
-#define APP_USBD_HID_BCD_V1_11 APP_USBD_HID_BCD_MAKE(1, 11)
+#define APP_USBD_HID_BCD_VER_BYTES LSB_16(APP_USBD_HID_BCD_VER), MSB_16(APP_USBD_HID_BCD_VER)
 
 /**
  * @brief Initializer of interface descriptor for HID classes.
@@ -248,7 +245,7 @@ typedef enum {
 #define APP_USBD_HID_HID_DSC(...)                                                                  \
     /*.bLength =           */ sizeof(app_usbd_hid_descriptor_t) + 3 * (NUM_VA_ARGS(__VA_ARGS__)),  \
     /*.bDescriptorType =   */ APP_USBD_HID_DESCRIPTOR_HID,                                         \
-    /*.bcdHID =            */ APP_USBD_HID_BCD_V1_11,                                              \
+    /*.bcdHID =            */ APP_USBD_HID_BCD_VER_BYTES,                                          \
     /*.bCountryCode =      */ APP_USBD_HID_COUNTRY_NOT_SUPPORTED,                                  \
     /*.bNumDescriptors =   */ (NUM_VA_ARGS(__VA_ARGS__)),                                          \
     /*.bRDescriptorType =  */ APP_USBD_HID_REPORT_ITEM(sizeof(GET_VA_ARG_1_(__VA_ARGS__))),        \

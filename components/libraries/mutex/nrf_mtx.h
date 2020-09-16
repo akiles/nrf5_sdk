@@ -109,7 +109,7 @@ __STATIC_INLINE bool nrf_mtx_trylock(nrf_mtx_t * p_mtx)
 {
     ASSERT(p_mtx  != NULL);
 
-    uint32_t old_val = nrf_atomic_u32_store_fetch(p_mtx, NRF_MTX_LOCKED);
+    uint32_t old_val = nrf_atomic_u32_fetch_store(p_mtx, NRF_MTX_LOCKED);
 
     return (old_val == NRF_MTX_UNLOCKED);
 }

@@ -63,24 +63,22 @@
  */
 
 #include <stdio.h>
-#include <string.h>
 #include "nrf.h"
-#include "nrf_soc.h"
 #include "bsp.h"
 #include "hardfault.h"
 #include "app_error.h"
-#include "nordic_common.h"
-#include "ant_stack_config.h"
-#include "softdevice_handler.h"
-#include "ant_bpwr.h"
-#include "ant_state_indicator.h"
-#include "ant_key_manager.h"
 #include "app_timer.h"
+#include "nrf_pwr_mgmt.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
+#include "ant_key_manager.h"
+#include "ant_bpwr.h"
 #include "ant_bpwr_simulator.h"
+#include "ant_state_indicator.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define MODIFICATION_TYPE_BUTTON 0 /* predefined value, MUST REMAIN UNCHANGED */
 #define MODIFICATION_TYPE_AUTO   1 /* predefined value, MUST REMAIN UNCHANGED */
@@ -90,48 +88,29 @@
     #error Unsupported value of MODIFICATION_TYPE.
 #endif
 
-#ifndef SENSOR_TYPE // can be provided as preprocesor global symbol
-    #define SENSOR_TYPE (TORQUE_NONE)
-#endif
-
-#define BPWR_CHANNEL_NUMBER         0x00 /**< Channel number assigned to Bicycle Power profile. */
-#define ANTPLUS_NETWORK_NUMBER      0       /**< Network number. */
-#define CALIBRATION_DATA            0x55AAu /**< General calibration data value. */
-
 /** @snippet [ANT BPWR TX Instance] */
 void ant_bpwr_evt_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_evt_t event);
 void ant_bpwr_calib_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_page1_data_t * p_page1);
 
 BPWR_SENS_CHANNEL_CONFIG_DEF(m_ant_bpwr,
-                             BPWR_CHANNEL_NUMBER,
+                             BPWR_CHANNEL_NUM,
                              CHAN_ID_TRANS_TYPE,
                              CHAN_ID_DEV_NUM,
-                             ANTPLUS_NETWORK_NUMBER);
+                             ANTPLUS_NETWORK_NUM);
 BPWR_SENS_PROFILE_CONFIG_DEF(m_ant_bpwr,
                             (ant_bpwr_torque_t)(SENSOR_TYPE),
                             ant_bpwr_calib_handler,
                             ant_bpwr_evt_handler);
 
-ant_bpwr_profile_t m_ant_bpwr;
+static ant_bpwr_profile_t m_ant_bpwr;
+
+
+NRF_SDH_ANT_OBSERVER(m_ant_observer, ANT_BPWR_ANT_OBSERVER_PRIO,
+                     ant_bpwr_sens_evt_handler, &m_ant_bpwr);
+
 /** @snippet [ANT BPWR TX Instance] */
 
-ant_bpwr_simulator_t m_ant_bpwr_simulator;    /**< Simulator used to simulate profile data. */
-
-/**@brief Function for dispatching an ANT stack event to all modules with an ANT stack event handler.
- *
- * @details This function is called from the ANT Stack event interrupt handler after an ANT stack
- *          event has been received.
- *
- * @param[in] p_ant_evt  ANT stack event.
- *
- * @snippet [ANT BPWR TX Profile handling] */
-void ant_evt_dispatch(ant_evt_t * p_ant_evt)
-{
-    ant_bpwr_sens_evt_handler(&m_ant_bpwr, p_ant_evt);
-    ant_state_indicator_evt_handler(p_ant_evt);
-}
-/** @snippet [ANT BPWR TX Profile handling] */
-
+static ant_bpwr_simulator_t  m_ant_bpwr_simulator;
 
 /**@brief Function for handling bsp events.
  */
@@ -158,12 +137,13 @@ void bsp_evt_handler(bsp_event_t event)
 }
 /** @snippet [ANT BPWR simulator button] */
 
-
 /**@brief Function for handling ANT BPWR events.
  */
 /** @snippet [ANT BPWR simulator call] */
 void ant_bpwr_evt_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_evt_t event)
 {
+    nrf_pwr_mgmt_feed();
+
     switch (event)
     {
         case ANT_BPWR_PAGE_1_UPDATED:
@@ -185,7 +165,6 @@ void ant_bpwr_evt_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_evt_t event)
     }
 }
 /** @snippet [ANT BPWR simulator call] */
-
 
 /**@brief Function for handling ANT BPWR events.
  */
@@ -223,7 +202,6 @@ void ant_bpwr_calib_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_page1_data_
 }
 /** @snippet [ANT BPWR calibration] */
 
-
 /**
  * @brief Function for setup all thinks not directly associated with ANT stack/protocol.
  * @desc Initialization of: @n
@@ -233,21 +211,26 @@ void ant_bpwr_calib_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_page1_data_
  */
 static void utils_setup(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
     // Initialize and start a single continuous mode timer, which is used to update the event time
     // on the main data page.
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
-    err_code = NRF_LOG_INIT(NULL);
+    err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                         bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
-}
 
+    err_code = ant_state_indicator_init(m_ant_bpwr.channel_number, BPWR_SENS_CHANNEL_TYPE);
+    APP_ERROR_CHECK(err_code);
+}
 
 /**@brief Function for the BPWR simulator initialization.
  */
@@ -259,7 +242,6 @@ void simulator_setup(void)
         .p_profile   = &m_ant_bpwr,
         .sensor_type = (ant_bpwr_torque_t)(SENSOR_TYPE),
     };
-
     /** @snippet [ANT BPWR simulator init] */
 
 #if MODIFICATION_TYPE == MODIFICATION_TYPE_AUTO
@@ -273,7 +255,6 @@ void simulator_setup(void)
 #endif
 }
 
-
 /**
  * @brief Function for ANT stack initialization.
  *
@@ -281,23 +262,17 @@ void simulator_setup(void)
  */
 static void softdevice_setup(void)
 {
-    uint32_t err_code;
-
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
+    ret_code_t err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
+    ASSERT(nrf_sdh_is_enabled());
+
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 
-    err_code = ant_stack_static_config(); // set ant resource
-    APP_ERROR_CHECK(err_code);
-
-    err_code = ant_plus_key_set(ANTPLUS_NETWORK_NUMBER);
+    err_code = ant_plus_key_set(ANTPLUS_NETWORK_NUM);
     APP_ERROR_CHECK(err_code);
 }
-
 
 /**
  * @brief Function for Bicycle Power profile initialization.
@@ -307,7 +282,7 @@ static void softdevice_setup(void)
 static void profile_setup(void)
 {
 /** @snippet [ANT BPWR TX Profile Setup] */
-    uint32_t err_code;
+    ret_code_t err_code;
 
     err_code = ant_bpwr_sens_init(&m_ant_bpwr,
                                   BPWR_SENS_CHANNEL_CONFIG(m_ant_bpwr),
@@ -333,30 +308,18 @@ static void profile_setup(void)
 /** @snippet [ANT BPWR TX Profile Setup] */
 }
 
-
 /**@brief Function for application main entry, does not return.
  */
 int main(void)
 {
-    uint32_t err_code;
-
     utils_setup();
     softdevice_setup();
-    ant_state_indicator_init(m_ant_bpwr.channel_number, BPWR_SENS_CHANNEL_TYPE);
     simulator_setup();
     profile_setup();
 
-    for (;; )
+    for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            err_code = sd_app_evt_wait();
-            APP_ERROR_CHECK(err_code);
-        }
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }
-
-
-/**
- *@}
- **/

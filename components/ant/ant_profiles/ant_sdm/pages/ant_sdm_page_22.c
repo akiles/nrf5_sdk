@@ -44,15 +44,14 @@
 #include "ant_sdm_page_22.h"
 #include "ant_sdm_utils.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_SDM_PAGE_22"
-#if ANT_SDM_PAGE_22_LOG_ENABLED
-#define NRF_LOG_LEVEL       ANT_SDM_PAGE_22_LOG_LEVEL
-#define NRF_LOG_INFO_COLOR  ANT_SDM_PAGE_22_INFO_COLOR
-#else // ANT_SDM_PAGE_22_LOG_ENABLED
+#define NRF_LOG_MODULE_NAME ant_sdm
+#if ANT_SDM_LOG_ENABLED
+#define NRF_LOG_LEVEL       ANT_SDM_LOG_LEVEL
+#define NRF_LOG_INFO_COLOR  ANT_SDM_INFO_COLOR
+#else // ANT_SDM_LOG_ENABLED
 #define NRF_LOG_LEVEL       0
-#endif // ANT_SDM_PAGE_22_LOG_ENABLED
+#endif // ANT_SDM_LOG_ENABLED
 #include "nrf_log.h"
-
 
 /**@brief SDM page 22 data layout structure. */
 typedef struct

@@ -42,6 +42,8 @@
 #include "nrf_serial.h"
 #include "nrf_drv_common.h"
 
+#if defined (UART_PRESENT)
+
 static void event_handler(nrf_serial_t const * p_serial,
                           nrf_serial_event_t event)
 {
@@ -628,5 +630,47 @@ ret_code_t nrf_serial_rx_drain(nrf_serial_t const * p_serial)
     nrf_mtx_unlock(&p_serial->p_ctx->read_lock);
     return NRF_SUCCESS;
 }
+#else
+ret_code_t nrf_serial_init(nrf_serial_t const * p_serial,
+                           nrf_drv_uart_config_t const * p_drv_uart_config,
+                           nrf_serial_config_t const * p_config)
+{
+    return NRF_ERROR_NOT_SUPPORTED;
+}
 
+ret_code_t nrf_serial_uninit(nrf_serial_t const * p_serial)
+{
+    return NRF_ERROR_NOT_SUPPORTED;
+}
+ret_code_t nrf_serial_write(nrf_serial_t const * p_serial,
+                            void const * p_data,
+                            size_t size,
+                            size_t * p_written,
+                            uint32_t timeout_ms)
+{
+    return NRF_ERROR_NOT_SUPPORTED;
+}
+ret_code_t nrf_serial_read(nrf_serial_t const * p_serial,
+                           void * p_data,
+                           size_t size,
+                           size_t * p_read,
+                           uint32_t timeout_ms)
+{
+    return NRF_ERROR_NOT_SUPPORTED;
+}
+ret_code_t nrf_serial_flush(nrf_serial_t const * p_serial, uint32_t timeout_ms)
+{
+    return NRF_ERROR_NOT_SUPPORTED;
+}
+ret_code_t nrf_serial_tx_abort(nrf_serial_t const * p_serial)
+{
+    return NRF_ERROR_NOT_SUPPORTED;
+}
+ret_code_t nrf_serial_rx_drain(nrf_serial_t const * p_serial)
+{
+    return NRF_ERROR_NOT_SUPPORTED;
+}
+
+#endif // UART_PRESENT
 #endif //NRF_MODULE_ENABLED(NRF_SERIAL)
+

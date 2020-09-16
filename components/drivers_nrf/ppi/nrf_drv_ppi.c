@@ -47,7 +47,7 @@
 #include "nrf_ppi.h"
 #include "app_util_platform.h"
 
-#define NRF_LOG_MODULE_NAME "PPI"
+#define NRF_LOG_MODULE_NAME ppi
 
 #if PPI_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       PPI_CONFIG_LOG_LEVEL
@@ -57,7 +57,7 @@
 #define NRF_LOG_LEVEL       0
 #endif //PPI_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
-#include "nrf_log_ctrl.h"
+NRF_LOG_MODULE_REGISTER();
 
 
 static nrf_drv_state_t     m_drv_state;            /**< Driver state */
@@ -210,7 +210,7 @@ uint32_t nrf_drv_ppi_init(void)
         err_code = NRF_ERROR_MODULE_ALREADY_INITIALIZED;
     }
 
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -224,7 +224,7 @@ uint32_t nrf_drv_ppi_uninit(void)
     if (m_drv_state == NRF_DRV_STATE_UNINITIALIZED)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -242,7 +242,7 @@ uint32_t nrf_drv_ppi_uninit(void)
     }
     channel_allocated_clr_all();
     group_allocated_clr_all();
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -268,12 +268,12 @@ uint32_t nrf_drv_ppi_channel_alloc(nrf_ppi_channel_t * p_channel)
         CRITICAL_REGION_EXIT();
         if (err_code == NRF_SUCCESS)
         {
-            NRF_LOG_INFO("Allocated channel: %d.\r\n", channel);
+            NRF_LOG_INFO("Allocated channel: %d.", channel);
             break;
         }
     }
 
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -294,7 +294,7 @@ uint32_t nrf_drv_ppi_channel_free(nrf_ppi_channel_t channel)
         channel_allocated_clr(channel);
         CRITICAL_REGION_EXIT();
     }
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -317,9 +317,9 @@ uint32_t nrf_drv_ppi_channel_assign(nrf_ppi_channel_t channel, uint32_t eep, uin
     else
     {
         nrf_ppi_channel_endpoint_setup(channel, eep, tep);
-        NRF_LOG_INFO("Assigned channel: %d, event end point: %x, task end point: %x.\r\n", channel, eep, tep);
+        NRF_LOG_INFO("Assigned channel: %d, event end point: %x, task end point: %x.", channel, eep, tep);
     }
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -338,13 +338,13 @@ uint32_t nrf_drv_ppi_channel_fork_assign(nrf_ppi_channel_t channel, uint32_t for
     else
     {
         nrf_ppi_fork_endpoint_setup(channel, fork_tep);
-        NRF_LOG_INFO("Fork assigned channel: %d, task end point: %d.\r\n", channel, fork_tep);
+        NRF_LOG_INFO("Fork assigned channel: %d, task end point: %d.", channel, fork_tep);
     }
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 #else
     err_code = NRF_ERROR_NOT_SUPPORTED;
-    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 #endif
 }
@@ -365,7 +365,7 @@ uint32_t nrf_drv_ppi_channel_enable(nrf_ppi_channel_t channel)
     {
         nrf_ppi_channel_enable(channel);
     }
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -387,7 +387,7 @@ uint32_t nrf_drv_ppi_channel_disable(nrf_ppi_channel_t channel)
         nrf_ppi_channel_disable(channel);
         err_code = NRF_SUCCESS;
     }
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -413,12 +413,12 @@ uint32_t nrf_drv_ppi_group_alloc(nrf_ppi_channel_group_t * p_group)
         CRITICAL_REGION_EXIT();
         if (err_code == NRF_SUCCESS)
         {
-            NRF_LOG_INFO("Allocated group: %d.\r\n", group);
+            NRF_LOG_INFO("Allocated group: %d.", group);
             break;
         }
     }
 
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -442,7 +442,7 @@ uint32_t nrf_drv_ppi_group_free(nrf_ppi_channel_group_t group)
         group_allocated_clr(group);
         CRITICAL_REGION_EXIT();
     }
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -463,7 +463,7 @@ uint32_t nrf_drv_ppi_group_enable(nrf_ppi_channel_group_t group)
     {
         nrf_ppi_group_enable(group);
     }
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -480,7 +480,7 @@ uint32_t nrf_drv_ppi_group_disable(nrf_ppi_channel_group_t group)
     {
         nrf_ppi_group_disable(group);
     }
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -507,7 +507,7 @@ uint32_t nrf_drv_ppi_channels_remove_from_group(uint32_t channel_mask,
         nrf_ppi_channels_remove_from_group(channel_mask, group);
         CRITICAL_REGION_EXIT();
     }
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -534,7 +534,7 @@ uint32_t nrf_drv_ppi_channels_include_in_group(uint32_t channel_mask,
         nrf_ppi_channels_include_in_group(channel_mask, group);
         CRITICAL_REGION_EXIT();
     }
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 #endif //NRF_MODULE_ENABLED(PPI)

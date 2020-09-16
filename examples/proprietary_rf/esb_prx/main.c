@@ -49,9 +49,10 @@
 #include "nrf_error.h"
 #include "boards.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 uint8_t led_nr;
 
@@ -64,13 +65,13 @@ void nrf_esb_event_handler(nrf_esb_evt_t const * p_event)
     switch (p_event->evt_id)
     {
         case NRF_ESB_EVENT_TX_SUCCESS:
-            NRF_LOG_DEBUG("TX SUCCESS EVENT\r\n");
+            NRF_LOG_DEBUG("TX SUCCESS EVENT");
             break;
         case NRF_ESB_EVENT_TX_FAILED:
-            NRF_LOG_DEBUG("TX FAILED EVENT\r\n");
+            NRF_LOG_DEBUG("TX FAILED EVENT");
             break;
         case NRF_ESB_EVENT_RX_RECEIVED:
-            NRF_LOG_DEBUG("RX RECEIVED EVENT\r\n");
+            NRF_LOG_DEBUG("RX RECEIVED EVENT");
             if (nrf_esb_read_rx_payload(&rx_payload) == NRF_SUCCESS)
             {
                 // Set LEDs identical to the ones on the PTX.
@@ -79,7 +80,7 @@ void nrf_esb_event_handler(nrf_esb_evt_t const * p_event)
                 nrf_gpio_pin_write(LED_3, !(rx_payload.data[1]%8>2 && rx_payload.data[1]%8<=6));
                 nrf_gpio_pin_write(LED_4, !(rx_payload.data[1]%8>3));
 
-                NRF_LOG_DEBUG("Receiving packet: %02x\r\n", rx_payload.data[1]);
+                NRF_LOG_DEBUG("Receiving packet: %02x", rx_payload.data[1]);
             }
             break;
     }
@@ -140,12 +141,14 @@ int main(void)
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
     clocks_start();
 
     err_code = esb_init();
     APP_ERROR_CHECK(err_code);
 
-    NRF_LOG_DEBUG("Enhanced ShockBurst Receiver Example running.\r\n");
+    NRF_LOG_DEBUG("Enhanced ShockBurst Receiver Example running.");
 
     err_code = nrf_esb_start_rx();
     APP_ERROR_CHECK(err_code);

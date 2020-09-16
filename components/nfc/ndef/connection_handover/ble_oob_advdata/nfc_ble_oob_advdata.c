@@ -37,6 +37,9 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+#include "sdk_config.h"
+#if NFC_BLE_OOB_ADVDATA_ENABLED
+
 #include "nfc_ble_oob_advdata.h"
 #include "sdk_common.h"
 #include "nfc_ble_pair_msg.h"
@@ -86,10 +89,10 @@ static ret_code_t sec_mgr_oob_flags_encode(uint8_t    oob_flags,
     NFC_BLE_OOB_ADVDATA_INPUT_VERIFY(p_encoded_data, p_offset, AD_TYPE_OOB_FLAGS_SIZE, max_size);
 
     // Encode flags.
-    p_encoded_data[*p_offset]  = (uint8_t)(ADV_AD_TYPE_FIELD_SIZE + AD_TYPE_OOB_FLAGS_DATA_SIZE);
-    *p_offset                 += ADV_LENGTH_FIELD_SIZE;
+    p_encoded_data[*p_offset]  = (uint8_t)(AD_TYPE_FIELD_SIZE + AD_TYPE_OOB_FLAGS_DATA_SIZE);
+    *p_offset                 += AD_LENGTH_FIELD_SIZE;
     p_encoded_data[*p_offset]  = BLE_GAP_AD_TYPE_SECURITY_MANAGER_OOB_FLAGS;
-    *p_offset                 += ADV_AD_TYPE_FIELD_SIZE;
+    *p_offset                 += AD_TYPE_FIELD_SIZE;
     p_encoded_data[*p_offset]  = oob_flags;
     *p_offset                 += AD_TYPE_OOB_FLAGS_DATA_SIZE;
 
@@ -117,10 +120,10 @@ static ret_code_t tk_value_encode(ble_advdata_tk_value_t * p_tk_value,
     NFC_BLE_OOB_ADVDATA_INPUT_VERIFY(p_encoded_data, p_offset, AD_TYPE_TK_VALUE_SIZE, max_size);
 
     // Encode TK Value.
-    p_encoded_data[*p_offset]  = (uint8_t)(ADV_AD_TYPE_FIELD_SIZE + AD_TYPE_TK_VALUE_DATA_SIZE);
-    *p_offset                 += ADV_LENGTH_FIELD_SIZE;
+    p_encoded_data[*p_offset]  = (uint8_t)(AD_TYPE_FIELD_SIZE + AD_TYPE_TK_VALUE_DATA_SIZE);
+    *p_offset                 += AD_LENGTH_FIELD_SIZE;
     p_encoded_data[*p_offset]  = BLE_GAP_AD_TYPE_SECURITY_MANAGER_TK_VALUE;
-    *p_offset                 += ADV_AD_TYPE_FIELD_SIZE;
+    *p_offset                 += AD_TYPE_FIELD_SIZE;
 
     // Remember location of TK in the buffer if this feature was enabled.
     err_code = nfc_tk_to_group_add(&p_encoded_data[*p_offset]);
@@ -153,10 +156,10 @@ static ret_code_t lesc_value_encode(ble_gap_lesc_oob_data_t * p_lesc_value,
     NFC_BLE_OOB_ADVDATA_INPUT_VERIFY(p_encoded_data, p_offset, AD_TYPE_LESC_SIZE, max_size);
 
     // Encode LESC Confirm Value.
-    p_encoded_data[*p_offset]  = (uint8_t)(ADV_AD_TYPE_FIELD_SIZE + AD_TYPE_CONFIRM_VALUE_DATA_SIZE);
-    *p_offset                 += ADV_LENGTH_FIELD_SIZE;
+    p_encoded_data[*p_offset]  = (uint8_t)(AD_TYPE_FIELD_SIZE + AD_TYPE_CONFIRM_VALUE_DATA_SIZE);
+    *p_offset                 += AD_LENGTH_FIELD_SIZE;
     p_encoded_data[*p_offset]  = BLE_GAP_AD_TYPE_LESC_CONFIRM_VALUE;
-    *p_offset                 += ADV_AD_TYPE_FIELD_SIZE;
+    *p_offset                 += AD_TYPE_FIELD_SIZE;
 
     memcpy(&p_encoded_data[*p_offset], p_lesc_value->c, sizeof(p_lesc_value->c));
 
@@ -165,10 +168,10 @@ static ret_code_t lesc_value_encode(ble_gap_lesc_oob_data_t * p_lesc_value,
     (*p_offset) += AD_TYPE_CONFIRM_VALUE_DATA_SIZE;
 
     // Encode LESC Random Value.
-    p_encoded_data[*p_offset]  = (uint8_t)(ADV_AD_TYPE_FIELD_SIZE + AD_TYPE_RANDOM_VALUE_DATA_SIZE);
-    *p_offset                 += ADV_LENGTH_FIELD_SIZE;
+    p_encoded_data[*p_offset]  = (uint8_t)(AD_TYPE_FIELD_SIZE + AD_TYPE_RANDOM_VALUE_DATA_SIZE);
+    *p_offset                 += AD_LENGTH_FIELD_SIZE;
     p_encoded_data[*p_offset]  = BLE_GAP_AD_TYPE_LESC_RANDOM_VALUE;
-    *p_offset                 += ADV_AD_TYPE_FIELD_SIZE;
+    *p_offset                 += AD_TYPE_FIELD_SIZE;
 
     memcpy(&p_encoded_data[*p_offset], p_lesc_value->r, sizeof(p_lesc_value->r));
 
@@ -202,10 +205,10 @@ static ret_code_t le_role_encode(ble_advdata_le_role_t   le_role,
     NFC_BLE_OOB_ADVDATA_INPUT_VERIFY(p_encoded_data, p_offset, AD_TYPE_LE_ROLE_SIZE, max_size);
 
     // Encode LE Role.
-    p_encoded_data[*p_offset]  = (uint8_t)(ADV_AD_TYPE_FIELD_SIZE + AD_TYPE_LE_ROLE_DATA_SIZE);
-    *p_offset                 += ADV_LENGTH_FIELD_SIZE;
+    p_encoded_data[*p_offset]  = (uint8_t)(AD_TYPE_FIELD_SIZE + AD_TYPE_LE_ROLE_DATA_SIZE);
+    *p_offset                 += AD_LENGTH_FIELD_SIZE;
     p_encoded_data[*p_offset]  = BLE_GAP_AD_TYPE_LE_ROLE;
-    *p_offset                 += ADV_AD_TYPE_FIELD_SIZE;
+    *p_offset                 += AD_TYPE_FIELD_SIZE;
     switch (le_role)
     {
         case BLE_ADVDATA_ROLE_ONLY_PERIPH:
@@ -252,11 +255,11 @@ __STATIC_INLINE ret_code_t nfc_ble_oob_name_size_calc(ble_advdata_t const * cons
         err_code = sd_ble_gap_device_name_get(NULL, &device_len);
     }
 
-    *p_len  += ADV_LENGTH_FIELD_SIZE + ADV_AD_TYPE_FIELD_SIZE + device_len;
+    *p_len  += AD_LENGTH_FIELD_SIZE + AD_TYPE_FIELD_SIZE + device_len;
     return err_code;
 }
 
-/**@brief Function for calculating the size of AD Types which are encoded by @ref adv_data_encode function.
+/**@brief Function for calculating the size of AD Types which are encoded by @ref ble_advdata_encode function.
  *
  * @param[in]      p_advdata  Pointer to the structure for specifying the content of encoded data.
  * @param[out]     p_len      Size of the buffer that is necessary to encode AD Types.
@@ -289,6 +292,7 @@ static ret_code_t nfc_ble_oob_adv_data_size_calc(ble_advdata_t const * const p_a
     return err_code;
 }
 
+#if ADVANCED_ADVDATA_SUPPORT == 0
 /**@brief Function for verifying if BLE advertising data structure contains only supported AD Types
  *        by this encoding module.
  *
@@ -322,18 +326,24 @@ static ret_code_t nfc_ble_oob_adv_data_check(ble_advdata_t advdata)
         return NRF_ERROR_INVALID_PARAM;
     }
 }
+#endif //ADVANCED_ADVDATA_SUPPORT
 
 ret_code_t nfc_ble_oob_adv_data_encode(ble_advdata_t const * const p_advdata,
                                        uint8_t             * const p_encoded_data,
                                        uint16_t            * const p_len)
 {
     ret_code_t err_code = NRF_SUCCESS;
-    uint16_t max_size = *p_len;
-    uint16_t offset   = 0;
+    uint16_t   max_size = *p_len;
+    uint16_t   offset   = 0;
 
+#if ADVANCED_ADVDATA_SUPPORT
+    // In this mode, you cannot count the NDEF message length.
+    VERIFY_FALSE(p_encoded_data == NULL, NRF_ERROR_INVALID_PARAM);
+#else
     // Verify ADV data structure.
     err_code = nfc_ble_oob_adv_data_check(*p_advdata);
     VERIFY_SUCCESS(err_code);
+#endif //ADVANCED_ADVDATA_SUPPORT
 
     // Encode Security Manager OOB Flags.
     if (p_advdata->p_sec_mgr_oob_flags != NULL)
@@ -370,7 +380,7 @@ ret_code_t nfc_ble_oob_adv_data_encode(ble_advdata_t const * const p_advdata,
     if (p_encoded_data != NULL)
     {
         uint16_t adv_data_size = max_size - offset;
-        err_code = adv_data_encode(p_advdata, p_encoded_data + offset, &adv_data_size);
+        err_code = ble_advdata_encode(p_advdata, p_encoded_data + offset, &adv_data_size);
         *p_len   = offset + adv_data_size;
     }
     else
@@ -390,3 +400,5 @@ void nfc_tk_value_payload_encode(ble_advdata_tk_value_t * p_tk_value,
         *(p_tk_payload_data++) = p_tk_value->tk[i];
     }
 }
+
+#endif // NFC_BLE_OOB_ADVDATA_ENABLED

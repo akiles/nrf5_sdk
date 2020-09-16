@@ -48,10 +48,6 @@
 #include "pm_buffer.h"
 
 
-#define N_WRITE_BUFFERS             (8)                 /**< The number of write buffers available. */
-#define N_WRITE_BUFFER_RECORDS      (N_WRITE_BUFFERS)   /**< The number of write buffer records. */
-
-
 /**@brief Macro for verifying that the data ID is among the values eligible for using the write buffer.
  *
  * @param[in] data_id  The data ID to verify.
@@ -108,9 +104,9 @@ typedef struct
 
 
 static bool                m_module_initialized;
-static pm_buffer_t         m_write_buffer;                                 /**< The state of the write buffer. */
-static pdb_buffer_record_t m_write_buffer_records[N_WRITE_BUFFER_RECORDS]; /**< The available write buffer records. */
-static uint32_t            m_n_writes;                                     /**< The number of pending (Not yet successfully requested in Peer Data Storage) store operations. */
+static pm_buffer_t         m_write_buffer;                                  /**< The state of the write buffer. */
+static pdb_buffer_record_t m_write_buffer_records[PM_FLASH_BUFFERS];        /**< The available write buffer records. */
+static uint32_t            m_n_writes;                                      /**< The number of pending (Not yet successfully requested in Peer Data Storage) store operations. */
 
 
 
@@ -141,7 +137,7 @@ static void write_buffer_record_invalidate(pdb_buffer_record_t * p_record)
  */
 static pdb_buffer_record_t * write_buffer_record_find_next(pm_peer_id_t peer_id, int * p_index)
 {
-    for (uint32_t i = *p_index; i < N_WRITE_BUFFER_RECORDS; i++)
+    for (uint32_t i = *p_index; i < PM_FLASH_BUFFERS; i++)
     {
         if ((m_write_buffer_records[i].peer_id == peer_id))
         {
@@ -246,7 +242,7 @@ static void pdb_evt_send(pdb_evt_t * p_event)
  */
 static void internal_state_reset()
 {
-    for (uint32_t i = 0; i < N_WRITE_BUFFER_RECORDS; i++)
+    for (uint32_t i = 0; i < PM_FLASH_BUFFERS; i++)
     {
         write_buffer_record_invalidate(&m_write_buffer_records[i]);
     }
@@ -341,7 +337,7 @@ void pdb_pds_evt_handler(pds_evt_t const * p_event)
 
     if (m_n_writes > 0)
     {
-        for (uint32_t i = 0; i < N_WRITE_BUFFER_RECORDS; i++)
+        for (uint32_t i = 0; i < PM_FLASH_BUFFERS; i++)
         {
             if  ((m_write_buffer_records[i].store_busy)
               || (m_write_buffer_records[i].store_flash_full && retry_flash_full))
@@ -379,7 +375,7 @@ ret_code_t pdb_init()
 
     internal_state_reset();
 
-    PM_BUFFER_INIT(&m_write_buffer, N_WRITE_BUFFERS, PDB_WRITE_BUF_SIZE, ret);
+    PM_BUFFER_INIT(&m_write_buffer, PM_FLASH_BUFFERS, PDB_WRITE_BUF_SIZE, ret);
 
     if (ret != NRF_SUCCESS)
     {
@@ -514,7 +510,7 @@ ret_code_t pdb_write_buf_get(pm_peer_id_t       peer_id,
     VERIFY_DATA_ID_WRITE_BUF(data_id);
 
     if (   (n_bufs == 0)
-        || (n_bufs > N_WRITE_BUFFERS)
+        || (n_bufs > PM_FLASH_BUFFERS)
         || !pds_peer_id_is_allocated(peer_id))
     {
         return NRF_ERROR_INVALID_PARAM;

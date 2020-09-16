@@ -310,7 +310,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\..\..\..\config\cli_pca10056</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
@@ -326,22 +325,29 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli\cdc_acm</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli\rtt</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli\uart</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_cli</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_cli\cdc_acm</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_cli\rtt</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_cli\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_mpu</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_ringbuf</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_stack_guard</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault\nrf52</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\mutex</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\pwr_mgmt</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\queue</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm</state>
@@ -349,7 +355,9 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
           <state>$PROJ_DIR$\..\config</state>
         </option>
@@ -610,7 +618,6 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$\..\..\..\config\cli_pca10056</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
@@ -626,22 +633,29 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli\cdc_acm</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli\rtt</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli\uart</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_cli</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_cli\cdc_acm</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_cli\rtt</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_cli\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_mpu</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_ringbuf</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_stack_guard</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault\nrf52</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\mutex</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\pwr_mgmt</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\queue</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm</state>
@@ -649,7 +663,9 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
           <state>$PROJ_DIR$\..\config</state>
         </option>
@@ -1036,28 +1052,41 @@
     </settings>
   </configuration>  <group>
   <name>nRF_Log</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_backend_serial.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_frontend.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_rtt.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_serial.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_uart.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_default_backends.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_frontend.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_str_formatter.c</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
+  <name>nRF_Core</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_mpu\nrf_mpu.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_stack_guard\nrf_stack_guard.c</name>    </file>  </group>  <group>
   <name>nRF_Libraries</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button\app_button.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm\app_usbd_cdc_acm.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault\nrf52\handler\hardfault_handler_iar.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault\hardfault_implementation.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli\nrf_cli.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli\cdc_acm\nrf_cli_cdc_acm.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli\rtt\nrf_cli_rtt.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli\uart\nrf_cli_uart.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo\nrf_atfifo.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc\nrf_balloc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_cli\nrf_cli.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_cli\cdc_acm\nrf_cli_cdc_acm.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_cli\rtt\nrf_cli_rtt.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_cli\uart\nrf_cli_uart.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf\nrf_fprintf.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf\nrf_fprintf_format.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj\nrf_memobj.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\pwr_mgmt\nrf_pwr_mgmt.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\queue\nrf_queue.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_ringbuf\nrf_ringbuf.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\app_usbd.c</name>    </file>    <file>

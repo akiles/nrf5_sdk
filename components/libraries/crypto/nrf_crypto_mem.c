@@ -81,7 +81,7 @@ uint32_t nrf_crypto_mem_free(nrf_value_length_t * p_mem)
         return NRF_ERROR_NULL;
     }
 
-    if(p_mem->length != 0)
+    if (p_mem->length != 0)
     {
         nrf_free(p_mem->p_value);
     }

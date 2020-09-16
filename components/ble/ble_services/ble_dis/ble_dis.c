@@ -38,9 +38,9 @@
  * 
  */
 /* Attention!
-*  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
-*  qualification listings, this section of source code must not be modified.
-*/
+ * To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
+ * qualification listings, this section of source code must not be modified.
+ */
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(BLE_DIS)
 #include "ble_dis.h"
@@ -72,7 +72,7 @@ static ble_gatts_char_handles_t pnp_id_handles;
  * @param[out]  p_encoded_buffer   Buffer where the encoded data will be written.
  * @param[in]   p_sys_id           System ID to be encoded.
  */
-static void sys_id_encode(uint8_t * p_encoded_buffer, const ble_dis_sys_id_t * p_sys_id)
+static void sys_id_encode(uint8_t * p_encoded_buffer, ble_dis_sys_id_t const * p_sys_id)
 {
     APP_ERROR_CHECK_BOOL(p_sys_id != NULL);
     APP_ERROR_CHECK_BOOL(p_encoded_buffer != NULL);
@@ -94,7 +94,7 @@ static void sys_id_encode(uint8_t * p_encoded_buffer, const ble_dis_sys_id_t * p
  * @param[out]  p_encoded_buffer   Buffer where the encoded data will be written.
  * @param[in]   p_pnp_id           PnP ID to be encoded.
  */
-static void pnp_id_encode(uint8_t * p_encoded_buffer, const ble_dis_pnp_id_t * p_pnp_id)
+static void pnp_id_encode(uint8_t * p_encoded_buffer, ble_dis_pnp_id_t const * p_pnp_id)
 {
     uint8_t len = 0;
 
@@ -124,7 +124,7 @@ static void pnp_id_encode(uint8_t * p_encoded_buffer, const ble_dis_pnp_id_t * p
 static uint32_t char_add(uint16_t                        uuid,
                          uint8_t                       * p_char_value,
                          uint16_t                        char_len,
-                         const ble_srv_security_mode_t * dis_attr_md,
+                         ble_srv_security_mode_t const * dis_attr_md,
                          ble_gatts_char_handles_t      * p_handles)
 {
     ble_uuid_t          ble_uuid;
@@ -169,7 +169,7 @@ static uint32_t char_add(uint16_t                        uuid,
 }
 
 
-uint32_t ble_dis_init(const ble_dis_init_t * p_dis_init)
+uint32_t ble_dis_init(ble_dis_init_t const * p_dis_init)
 {
     uint32_t   err_code;
     ble_uuid_t ble_uuid;

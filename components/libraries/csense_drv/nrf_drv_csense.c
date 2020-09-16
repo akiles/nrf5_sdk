@@ -157,7 +157,7 @@ static void conversion_handler(uint16_t val)
     m_csense.channels_to_read &= ~(1UL<<m_csense.cur_chann_idx);
 
     // decide if there will be more conversions
-    if(m_csense.channels_to_read == 0)
+    if (m_csense.channels_to_read == 0)
     {
         m_csense.busy = false;
 #if USE_COMP == 0 && defined(SAADC_PRESENT)
@@ -167,12 +167,12 @@ static void conversion_handler(uint16_t val)
 
     m_csense.event_handler(&event_struct);
 
-    if(m_csense.channels_to_read > 0)     // Start new conversion.
+    if (m_csense.channels_to_read > 0)     // Start new conversion.
     {
         ret_code_t err_code;
         calculate_next_channel();
         err_code = nrf_drv_csense_sample();
-        if(err_code != NRF_SUCCESS)
+        if (err_code != NRF_SUCCESS)
         {
             return;
         }
@@ -191,7 +191,7 @@ static void conversion_handler(uint16_t val)
  */
 static void counter_compare_handler(nrf_timer_event_t event_type, void* p_context)
 {
-    if(event_type == NRF_TIMER_EVENT_COMPARE0)
+    if (event_type == NRF_TIMER_EVENT_COMPARE0)
     {
         uint16_t val =  nrf_drv_timer_capture_get(&m_timer1, NRF_TIMER_CC_CHANNEL1);
         nrf_drv_timer_pause(&m_timer1);
@@ -261,7 +261,7 @@ static ret_code_t ppi_init(void)
         return NRF_ERROR_INTERNAL;
     }
 
-    for(i = 0; i < PPI_REQUIRED_CHANNELS ; i++)
+    for (i = 0; i < PPI_REQUIRED_CHANNELS ; i++)
     {
         err_code = nrf_drv_ppi_channel_alloc(&m_ppi_channels[i]);
         if (NRF_SUCCESS != err_code)
@@ -296,7 +296,7 @@ static ret_code_t ppi_init(void)
        return NRF_ERROR_INTERNAL;
     }
 
-    for(i = 0; i < PPI_REQUIRED_CHANNELS ; i++)
+    for (i = 0; i < PPI_REQUIRED_CHANNELS ; i++)
     {
         err_code = nrf_drv_ppi_channel_enable(m_ppi_channels[i]);
         if (NRF_SUCCESS != err_code)
@@ -335,7 +335,7 @@ static ret_code_t comp_init(void)
     m_comp_config.isource = NRF_COMP_ISOURCE_Ien10uA;
 
     err_code = nrf_drv_comp_init(&m_comp_config, comp_event_handler);
-    if(err_code != NRF_SUCCESS)
+    if (err_code != NRF_SUCCESS)
     {
         return NRF_ERROR_INTERNAL;
     }
@@ -372,7 +372,7 @@ static ret_code_t adc_init(void)
 
     nrf_drv_adc_config_t adc_config = NRF_DRV_ADC_DEFAULT_CONFIG;
     err_code = nrf_drv_adc_init(&adc_config, adc_handler);
-    if(err_code != NRF_SUCCESS)
+    if (err_code != NRF_SUCCESS)
     {
         return NRF_ERROR_INTERNAL;
     }
@@ -442,12 +442,12 @@ ret_code_t nrf_drv_csense_init(nrf_drv_csense_config_t const * p_config, nrf_drv
 
     ret_code_t err_code;
 
-    if(p_config == NULL)
+    if (p_config == NULL)
     {
         return NRF_ERROR_INVALID_PARAM;
     }
 
-    if(event_handler == NULL)
+    if (event_handler == NULL)
     {
         return NRF_ERROR_INVALID_PARAM;
     }
@@ -464,30 +464,30 @@ ret_code_t nrf_drv_csense_init(nrf_drv_csense_config_t const * p_config, nrf_drv
 
 #if USE_COMP
     err_code = comp_init();
-    if(err_code != NRF_SUCCESS)
+    if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
     err_code = timer_init();
-    if(err_code != NRF_SUCCESS)
+    if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
     err_code = ppi_init();
-    if(err_code != NRF_SUCCESS)
+    if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
 #else
 #ifdef ADC_PRESENT
     err_code = adc_init();
-    if(err_code != NRF_SUCCESS)
+    if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
 #elif defined(SAADC_PRESENT)
     err_code = saadc_init();
-    if(err_code != NRF_SUCCESS)
+    if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
@@ -512,16 +512,16 @@ ret_code_t nrf_drv_csense_uninit(void)
     nrf_drv_timer_uninit(&m_timer0);
     nrf_drv_timer_uninit(&m_timer1);
     nrf_drv_comp_uninit();
-    for(i =0; i < 3; i++)
+    for (i =0; i < 3; i++)
     {
         err_code = nrf_drv_ppi_channel_free(m_ppi_channels[i]);
-        if(err_code != NRF_SUCCESS)
+        if (err_code != NRF_SUCCESS)
         {
             return err_code;
         }
     }
     err_code = nrf_drv_ppi_uninit();
-    if(err_code != NRF_SUCCESS)
+    if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
@@ -559,7 +559,7 @@ void nrf_drv_csense_channels_disable(uint8_t channels_mask)
 
     m_csense.adc_channels_input_mask &= ~channels_mask;
 
-    if(m_csense.adc_channels_input_mask == 0)
+    if (m_csense.adc_channels_input_mask == 0)
     {
         m_csense.module_state = NRF_DRV_STATE_INITIALIZED;
     }
@@ -574,14 +574,14 @@ ret_code_t nrf_drv_csense_sample(void)
 {
     ASSERT(m_csense.module_state == NRF_DRV_STATE_POWERED_ON);
 
-    if(m_csense.adc_channels_input_mask != 0)
+    if (m_csense.adc_channels_input_mask != 0)
     {
-        if(m_csense.channels_to_read == 0)
+        if (m_csense.channels_to_read == 0)
         {
 #if USE_COMP == 0 && defined(SAADC_PRESENT)
             nrf_saadc_enable();
 #endif
-            if(nrf_drv_csense_is_busy() == true)
+            if (nrf_drv_csense_is_busy() == true)
             {
                 return NRF_ERROR_BUSY;
             }
@@ -616,7 +616,7 @@ ret_code_t nrf_drv_csense_sample(void)
         nrf_gpio_pin_clear(m_csense.output_pin);
         err_code = nrf_drv_saadc_sample();
 #endif //ADC_PRESENT
-        if(err_code != NRF_SUCCESS)
+        if (err_code != NRF_SUCCESS)
         {
             return err_code;
         }

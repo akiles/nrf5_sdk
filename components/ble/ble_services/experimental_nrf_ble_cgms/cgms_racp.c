@@ -287,7 +287,7 @@ static ret_code_t racp_report_records_less_equal(nrf_ble_cgms_t * p_cgms)
     uint16_t offset;
     uint16_t i;
 
-    if(p_cgms->racp_data.racp_request.operand_len != 2)
+    if (p_cgms->racp_data.racp_request.operand_len != 2)
     {
         if (p_cgms->error_handler != NULL)
         {
@@ -363,7 +363,7 @@ static ret_code_t racp_report_records_greater_equal(nrf_ble_cgms_t * p_cgms)
     uint16_t offset;
     uint16_t i;
 
-    if(p_cgms->racp_data.racp_request.operand_len != 2)
+    if (p_cgms->racp_data.racp_request.operand_len != 2)
     {
         if (p_cgms->error_handler != NULL)
         {
@@ -676,10 +676,9 @@ static void report_num_records_request_execute(nrf_ble_cgms_t   * p_cgms,
  * @param[in]   p_cgms      Service instance.
  * @param[in]   p_evt_write WRITE event to be handled.
  */
-static void on_racp_value_write(nrf_ble_cgms_t * p_cgms, ble_gatts_evt_write_t * p_evt_write)
+static void on_racp_value_write(nrf_ble_cgms_t * p_cgms, ble_gatts_evt_write_t const * p_evt_write)
 {
-//    ble_racp_value_t racp_request;
-    uint8_t          response_code;
+    uint8_t response_code;
 
     // set up reply to authorized write.
     ble_gatts_rw_authorize_reply_params_t auth_reply;
@@ -761,8 +760,8 @@ static void on_racp_value_write(nrf_ble_cgms_t * p_cgms, ble_gatts_evt_write_t *
 }
 
 
-void cgms_racp_on_rw_auth_req(nrf_ble_cgms_t                       * p_cgms,
-                              ble_gatts_evt_rw_authorize_request_t * p_auth_req)
+void cgms_racp_on_rw_auth_req(nrf_ble_cgms_t                             * p_cgms,
+                              ble_gatts_evt_rw_authorize_request_t const * p_auth_req)
 {
     if (p_auth_req->type == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
     {

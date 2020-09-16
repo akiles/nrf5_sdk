@@ -6,7 +6,7 @@
  *           nrf52840 from Nordic Semiconductor.
  *
  * @version  V1
- * @date     22. February 2017
+ * @date     6. June 2017
  *
  * @note     Generated with SVDConv V2.81d 
  *           from CMSIS SVD File 'nrf52840.svd' Version 1,
@@ -127,8 +127,8 @@ typedef enum {
   UARTE1_IRQn                   =  40,              /*!<  40  UARTE1                                                           */
   QSPI_IRQn                     =  41,              /*!<  41  QSPI                                                             */
   CRYPTOCELL_IRQn               =  42,              /*!<  42  CRYPTOCELL                                                       */
-  SPIM3_IRQn                    =  43,              /*!<  43  SPIM3                                                            */
-  PWM3_IRQn                     =  45               /*!<  45  PWM3                                                             */
+  PWM3_IRQn                     =  45,              /*!<  45  PWM3                                                             */
+  SPIM3_IRQn                    =  47               /*!<  47  SPIM3                                                            */
 } IRQn_Type;
 
 
@@ -512,7 +512,7 @@ typedef struct {
 typedef struct {
   __IO uint32_t  EPOUT[8];                          /*!< Description collection[0]: Amount of bytes received last in
                                                          the data stage of this OUT endpoint                                   */
-  __IO uint32_t  ISOOUT;                            /*!< Amount of bytes received last on this iso OUT data endpoint           */
+  __I  uint32_t  ISOOUT;                            /*!< Amount of bytes received last on this iso OUT data endpoint           */
 } USBD_SIZE_Type;
 
 typedef struct {
@@ -623,7 +623,8 @@ typedef struct {                                    /*!< UICR Structure         
   __IO uint32_t  APPROTECT;                         /*!< Access port protection                                                */
   __IO uint32_t  NFCPINS;                           /*!< Setting of pins dedicated to NFC functionality: NFC antenna
                                                          or GPIO                                                               */
-  __I  uint32_t  RESERVED2[60];
+  __IO uint32_t  DEBUGCTRL;                         /*!< Processor debug control                                               */
+  __I  uint32_t  RESERVED2[59];
   __IO uint32_t  EXTSUPPLY;                         /*!< Enable external circuitry to be supplied from VDD pin. Applicable
                                                          in high voltage mode only.                                            */
   __IO uint32_t  REGOUT0;                           /*!< GPIO reference voltage / external output supply voltage in high
@@ -714,11 +715,14 @@ typedef struct {                                    /*!< CLOCK Structure        
   __I  uint32_t  LFCLKSRCCOPY;                      /*!< Copy of LFCLKSRC register, set when LFCLKSTART task was triggered     */
   __I  uint32_t  RESERVED5[62];
   __IO uint32_t  LFCLKSRC;                          /*!< Clock source for the LFCLK                                            */
-  __I  uint32_t  RESERVED6[7];
+  __I  uint32_t  RESERVED6[3];
+  __IO uint32_t  HFXODEBOUNCE;                      /*!< HFXO debounce time. The HFXO is started by triggering the TASKS_HFCLKSTART
+                                                         task.                                                                 */
+  __I  uint32_t  RESERVED7[3];
   __IO uint32_t  CTIV;                              /*!< Calibration timer interval                                            */
-  __I  uint32_t  RESERVED7[8];
+  __I  uint32_t  RESERVED8[8];
   __IO uint32_t  TRACECONFIG;                       /*!< Clocking options for the Trace Port debug interface                   */
-  __I  uint32_t  RESERVED8[21];
+  __I  uint32_t  RESERVED9[21];
   __IO uint32_t  LFRCMODE;                          /*!< LFRC mode configuration                                               */
 } NRF_CLOCK_Type;
 
@@ -773,18 +777,22 @@ typedef struct {                                    /*!< RADIO Structure        
   __IO uint32_t  EVENTS_TXREADY;                    /*!< RADIO has ramped up and is ready to be started TX path                */
   __IO uint32_t  EVENTS_RXREADY;                    /*!< RADIO has ramped up and is ready to be started RX path                */
   __IO uint32_t  EVENTS_MHRMATCH;                   /*!< MAC Header match found.                                               */
-  __I  uint32_t  RESERVED3[40];
+  __I  uint32_t  RESERVED3[3];
+  __IO uint32_t  EVENTS_PHYEND;                     /*!< Generated in Ble_LR125Kbit, Ble_LR500Kbit and BleIeee802154_250Kbit
+                                                         modes when last bit is sent on air.                                   */
+  __I  uint32_t  RESERVED4[36];
   __IO uint32_t  SHORTS;                            /*!< Shortcut register                                                     */
-  __I  uint32_t  RESERVED4[64];
+  __I  uint32_t  RESERVED5[64];
   __IO uint32_t  INTENSET;                          /*!< Enable interrupt                                                      */
   __IO uint32_t  INTENCLR;                          /*!< Disable interrupt                                                     */
-  __I  uint32_t  RESERVED5[61];
+  __I  uint32_t  RESERVED6[61];
   __I  uint32_t  CRCSTATUS;                         /*!< CRC status                                                            */
-  __I  uint32_t  RESERVED6;
+  __I  uint32_t  RESERVED7;
   __I  uint32_t  RXMATCH;                           /*!< Received address                                                      */
   __I  uint32_t  RXCRC;                             /*!< CRC field of previously received packet                               */
   __I  uint32_t  DAI;                               /*!< Device address match index                                            */
-  __I  uint32_t  RESERVED7[60];
+  __I  uint32_t  PDUSTAT;                           /*!< Payload status                                                        */
+  __I  uint32_t  RESERVED8[59];
   __IO uint32_t  PACKETPTR;                         /*!< Packet pointer                                                        */
   __IO uint32_t  FREQUENCY;                         /*!< Frequency                                                             */
   __IO uint32_t  TXPOWER;                           /*!< Output power                                                          */
@@ -800,28 +808,28 @@ typedef struct {                                    /*!< RADIO Structure        
   __IO uint32_t  CRCCNF;                            /*!< CRC configuration                                                     */
   __IO uint32_t  CRCPOLY;                           /*!< CRC polynomial                                                        */
   __IO uint32_t  CRCINIT;                           /*!< CRC initial value                                                     */
-  __I  uint32_t  RESERVED8;
+  __I  uint32_t  RESERVED9;
   __IO uint32_t  TIFS;                              /*!< Inter Frame Spacing in us                                             */
   __I  uint32_t  RSSISAMPLE;                        /*!< RSSI sample                                                           */
-  __I  uint32_t  RESERVED9;
+  __I  uint32_t  RESERVED10;
   __I  uint32_t  STATE;                             /*!< Current radio state                                                   */
   __IO uint32_t  DATAWHITEIV;                       /*!< Data whitening initial value                                          */
-  __I  uint32_t  RESERVED10[2];
+  __I  uint32_t  RESERVED11[2];
   __IO uint32_t  BCC;                               /*!< Bit counter compare                                                   */
-  __I  uint32_t  RESERVED11[39];
+  __I  uint32_t  RESERVED12[39];
   __IO uint32_t  DAB[8];                            /*!< Description collection[0]: Device address base segment 0              */
   __IO uint32_t  DAP[8];                            /*!< Description collection[0]: Device address prefix 0                    */
   __IO uint32_t  DACNF;                             /*!< Device address match configuration                                    */
   __IO uint32_t  MHRMATCHCONF;                      /*!< Search Pattern Configuration                                          */
   __IO uint32_t  MHRMATCHMAS;                       /*!< Pattern mask                                                          */
-  __I  uint32_t  RESERVED12;
+  __I  uint32_t  RESERVED13;
   __IO uint32_t  MODECNF0;                          /*!< Radio mode configuration register 0                                   */
-  __I  uint32_t  RESERVED13[3];
+  __I  uint32_t  RESERVED14[3];
   __IO uint32_t  SFD;                               /*!< IEEE 802.15.4 Start of Frame Delimiter                                */
   __IO uint32_t  EDCNT;                             /*!< IEEE 802.15.4 Energy Detect Loop Count                                */
   __IO uint32_t  EDSAMPLE;                          /*!< IEEE 802.15.4 Energy Detect Level                                     */
   __IO uint32_t  CCACTRL;                           /*!< IEEE 802.15.4 Clear Channel Assessment Control                        */
-  __I  uint32_t  RESERVED14[611];
+  __I  uint32_t  RESERVED15[611];
   __IO uint32_t  POWER;                             /*!< Peripheral power control                                              */
 } NRF_RADIO_Type;
 
@@ -1922,10 +1930,7 @@ typedef struct {                                    /*!< NVMC Structure         
   */
 
 typedef struct {                                    /*!< ACL Structure                                                         */
-  __I  uint32_t  RESERVED0[449];
-  __IO uint32_t  DISABLEINDEBUG;                    /*!< Disable all ACL protection mechanisms for regions while in debug
-                                                         mode                                                                  */
-  __I  uint32_t  RESERVED1[62];
+  __I  uint32_t  RESERVED0[512];
   ACL_ACL_Type ACL[8];                              /*!< Unspecified                                                           */
 } NRF_ACL_Type;
 
@@ -2141,7 +2146,9 @@ typedef struct {                                    /*!< USBD Structure         
   __O  uint32_t  EPSTALL;                           /*!< STALL endpoints                                                       */
   __IO uint32_t  ISOSPLIT;                          /*!< Controls the split of ISO buffers                                     */
   __I  uint32_t  FRAMECNTR;                         /*!< Returns the current value of the start of frame counter               */
-  __I  uint32_t  RESERVED9[3];
+  __I  uint32_t  RESERVED9[2];
+  __IO uint32_t  LOWPOWER;                          /*!< First silicon only: Controls USBD peripheral low-power mode
+                                                         during USB suspend                                                    */
   __IO uint32_t  ISOINCONFIG;                       /*!< Controls the response of the ISO IN endpoint to an IN token
                                                          when no data is ready to be sent                                      */
   __I  uint32_t  RESERVED10[51];
@@ -2167,7 +2174,8 @@ typedef struct {                                    /*!< QSPI Structure         
   __O  uint32_t  TASKS_READSTART;                   /*!< Start transfer from external flash memory to internal RAM             */
   __O  uint32_t  TASKS_WRITESTART;                  /*!< Start transfer from internal RAM to external flash memory             */
   __O  uint32_t  TASKS_ERASESTART;                  /*!< Start external flash memory erase operation                           */
-  __I  uint32_t  RESERVED0[60];
+  __O  uint32_t  TASKS_DEACTIVATE;                  /*!< Deactivate QSPI interface                                             */
+  __I  uint32_t  RESERVED0[59];
   __IO uint32_t  EVENTS_READY;                      /*!< QSPI peripheral is ready. This event will be generated as a
                                                          response to any QSPI task.                                            */
   __I  uint32_t  RESERVED1[127];
@@ -2330,8 +2338,8 @@ typedef struct {                                    /*!< CRYPTOCELL Structure   
 #define NRF_USBD_BASE                   0x40027000UL
 #define NRF_UARTE1_BASE                 0x40028000UL
 #define NRF_QSPI_BASE                   0x40029000UL
-#define NRF_SPIM3_BASE                  0x4002B000UL
 #define NRF_PWM3_BASE                   0x4002D000UL
+#define NRF_SPIM3_BASE                  0x4002F000UL
 #define NRF_P0_BASE                     0x50000000UL
 #define NRF_P1_BASE                     0x50000300UL
 #define NRF_CRYPTOCELL_BASE             0x5002A000UL
@@ -2408,8 +2416,8 @@ typedef struct {                                    /*!< CRYPTOCELL Structure   
 #define NRF_USBD                        ((NRF_USBD_Type           *) NRF_USBD_BASE)
 #define NRF_UARTE1                      ((NRF_UARTE_Type          *) NRF_UARTE1_BASE)
 #define NRF_QSPI                        ((NRF_QSPI_Type           *) NRF_QSPI_BASE)
-#define NRF_SPIM3                       ((NRF_SPIM_Type           *) NRF_SPIM3_BASE)
 #define NRF_PWM3                        ((NRF_PWM_Type            *) NRF_PWM3_BASE)
+#define NRF_SPIM3                       ((NRF_SPIM_Type           *) NRF_SPIM3_BASE)
 #define NRF_P0                          ((NRF_GPIO_Type           *) NRF_P0_BASE)
 #define NRF_P1                          ((NRF_GPIO_Type           *) NRF_P1_BASE)
 #define NRF_CRYPTOCELL                  ((NRF_CRYPTOCELL_Type     *) NRF_CRYPTOCELL_BASE)

@@ -1081,7 +1081,7 @@ uint32_t conn_mw_ble_gap_device_identities_set(uint8_t const * const p_rx_buf,
 }
 
 #if NRF_SD_BLE_API_VERSION >= 5
-uint32_t conn_mw_ble_gap_phy_request(uint8_t const * const p_rx_buf,
+uint32_t conn_mw_ble_gap_phy_update(uint8_t const * const p_rx_buf,
                                      uint32_t              rx_buf_len,
                                      uint8_t * const       p_tx_buf,
                                      uint32_t * const      p_tx_buf_len)
@@ -1098,12 +1098,12 @@ uint32_t conn_mw_ble_gap_phy_request(uint8_t const * const p_rx_buf,
    ble_gap_phys_t   gap_phys;
    ble_gap_phys_t * p_gap_phys = &gap_phys;
 
-   err_code = ble_gap_phy_request_req_dec(p_rx_buf, rx_buf_len, &conn_handle, &p_gap_phys);
+   err_code = ble_gap_phy_update_req_dec(p_rx_buf, rx_buf_len, &conn_handle, &p_gap_phys);
    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
-   sd_err_code = sd_ble_gap_phy_request(conn_handle, p_gap_phys);
+   sd_err_code = sd_ble_gap_phy_update(conn_handle, p_gap_phys);
 
-   err_code = ble_gap_phy_request_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
+   err_code = ble_gap_phy_update_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
    return err_code;

@@ -42,8 +42,9 @@
 #include "ble_ln_common.h"
 #include "sdk_common.h"
 
-#define NRF_LOG_MODULE_NAME "BLE_LN_CP"
+#define NRF_LOG_MODULE_NAME ble_ln_cp
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 // Feature Mask bits
 #define FEATURE_MASK_INSTANTANEOUS_SPEED                 (0x01 << 0)         /**< Instantaneous Speed mask bit. */
@@ -812,7 +813,7 @@ ret_code_t ble_lncp_init(ble_lncp_t * p_lncp, ble_lncp_init_t const * p_lncp_ini
     add_char_params.write_access         = p_lncp_init->write_perm;
     add_char_params.cccd_write_access    = p_lncp_init->cccd_write_perm;
 
-    NRF_LOG_DEBUG("Initialized\r\n");
+    NRF_LOG_DEBUG("Initialized");
 
     return characteristic_add(p_lncp->service_handle,
                               &add_char_params,

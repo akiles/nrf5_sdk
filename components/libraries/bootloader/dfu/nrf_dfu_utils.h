@@ -41,7 +41,7 @@
  *
  * @defgroup sdk_nrf_dfu_utils DFU utilities
  * @{
- * @ingroup  sdk_nrf_dfu
+ * @ingroup  nrf_dfu
  */
 
 #ifndef NRF_DFU_UTILS_H__
@@ -57,24 +57,28 @@ extern "C"
 {
 #endif
 
-// 3400ms is the smallest stable value with nrf connect for PC v1.1.1.
-// 7500ms is the smallest stable value with nrf connect for Android v1.1.1.
-// Smaller values may allow the device to reset before the next DFU transation is started.
-#define RESET_DELAY_LENGTH_MS   10000
-extern const app_timer_id_t nrf_dfu_utils_reset_delay_timer;
+
+/** @brief Function to handle timeout resets in the DFU.
+ *
+ * @warning This function will not return.
+ *
+ * param[in]    p_context   Unused param to comply with app timer API.
+ */
+void nrf_dfu_reset_timeout_handler(void * p_context);
+
 
 /** @brief Function for continuing an ongoing DFU operation.
  *
  * @details     This function initiates or continues the DFU copy-back
  *              routines. These routines are fail-safe operations to activate
- *              either a new SoftDevice, Bootloader, combination of SoftDevice and
- *              Bootloader, or a new application.
+ *              either a new SoftDevice, bootloader, combination of SoftDevice and
+ *              bootloader, or a new application.
  *
  * @details     This function relies on accessing MBR commands through supervisor calls.
  *              It does not rely on the SoftDevice for flash operations.
  *
  * @note        When updating the bootloader or both bootloader and SoftDevice in combination,
- *              this function does not return, but rather initiate a reboot to activate
+ *              this function does not return, but rather initiates a reboot to activate
  *              the new bootloader.
  *
  * @param[in,out] p_enter_dfu_mode    True if the continuation failed or the update requires DFU mode.

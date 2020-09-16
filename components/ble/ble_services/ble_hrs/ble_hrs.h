@@ -60,8 +60,13 @@
  *          If an event handler is supplied by the application, the Heart Rate Service will
  *          generate Heart Rate Service events to the application.
  *
- * @note The application must propagate BLE stack events to the Heart Rate Service module by calling
- *       ble_hrs_on_ble_evt() from the @ref softdevice_handler callback.
+ * @note    The application must register this module as BLE event observer using the
+ *          NRF_SDH_BLE_OBSERVER macro. Example:
+ *          @code
+ *              ble_hrs_t instance;
+ *              NRF_SDH_BLE_OBSERVER(anything, BLE_HRS_BLE_OBSERVER_PRIO,
+ *                                   ble_hrs_on_ble_evt, &instance);
+ *          @endcode
  *
  * @note Attention!
  *  To maintain compliance with Nordic Semiconductor ASA Bluetooth profile
@@ -75,11 +80,23 @@
 #include <stdbool.h>
 #include "ble.h"
 #include "ble_srv_common.h"
+#include "nrf_sdh_ble.h"
 #include "nrf_ble_gatt.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**@brief   Macro for defining a ble_hrs instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_HRS_DEF(_name)                                                                          \
+static ble_hrs_t _name;                                                                             \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     BLE_HRS_BLE_OBSERVER_PRIO,                                                     \
+                     ble_hrs_on_ble_evt, &_name)
 
 // Body Sensor Location values
 #define BLE_HRS_BODY_SENSOR_LOCATION_OTHER      0
@@ -92,17 +109,18 @@ extern "C" {
 
 #define BLE_HRS_MAX_BUFFERED_RR_INTERVALS       20      /**< Size of RR Interval buffer inside service. */
 
+
 /**@brief Heart Rate Service event type. */
 typedef enum
 {
-    BLE_HRS_EVT_NOTIFICATION_ENABLED,                   /**< Heart Rate value notification enabled event. */
-    BLE_HRS_EVT_NOTIFICATION_DISABLED                   /**< Heart Rate value notification disabled event. */
+    BLE_HRS_EVT_NOTIFICATION_ENABLED,   /**< Heart Rate value notification enabled event. */
+    BLE_HRS_EVT_NOTIFICATION_DISABLED   /**< Heart Rate value notification disabled event. */
 } ble_hrs_evt_type_t;
 
 /**@brief Heart Rate Service event. */
 typedef struct
 {
-    ble_hrs_evt_type_t evt_type;                        /**< Type of event. */
+    ble_hrs_evt_type_t evt_type;    /**< Type of event. */
 } ble_hrs_evt_t;
 
 // Forward declaration of the ble_hrs_t type.
@@ -139,6 +157,7 @@ struct ble_hrs_s
     uint8_t                      max_hrm_len;                                          /**< Current maximum HR measurement length, adjusted according to the current ATT MTU. */
 };
 
+
 /**@brief Function for initializing the Heart Rate Service.
  *
  * @param[out]  p_hrs       Heart Rate Service structure. This structure will have to be supplied by
@@ -148,7 +167,7 @@ struct ble_hrs_s
  *
  * @return      NRF_SUCCESS on successful initialization of service, otherwise an error code.
  */
-uint32_t ble_hrs_init(ble_hrs_t * p_hrs, const ble_hrs_init_t * p_hrs_init);
+uint32_t ble_hrs_init(ble_hrs_t * p_hrs, ble_hrs_init_t const * p_hrs_init);
 
 
 /**@brief Function for handling the GATT module's events.
@@ -158,17 +177,18 @@ uint32_t ble_hrs_init(ble_hrs_t * p_hrs, const ble_hrs_init_t * p_hrs_init);
  * @param[in]   p_hrs      Heart Rate Service structure.
  * @param[in]   p_gatt_evt  Event received from the GATT module.
  */
-void ble_hrs_on_gatt_evt(ble_hrs_t * p_hrs, const nrf_ble_gatt_evt_t * p_gatt_evt);
+void ble_hrs_on_gatt_evt(ble_hrs_t * p_hrs, nrf_ble_gatt_evt_t const * p_gatt_evt);
 
 
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @details Handles all events from the BLE stack of interest to the Heart Rate Service.
  *
- * @param[in]   p_hrs      Heart Rate Service structure.
- * @param[in]   p_ble_evt  Event received from the BLE stack.
+ * @param[in]   p_ble_evt   Event received from the BLE stack.
+ * @param[in]   p_context   Heart Rate Service structure.
  */
-void ble_hrs_on_ble_evt(ble_hrs_t * p_hrs, ble_evt_t * p_ble_evt);
+void ble_hrs_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
+
 
 /**@brief Function for sending heart rate measurement if notification has been enabled.
  *
@@ -183,6 +203,7 @@ void ble_hrs_on_ble_evt(ble_hrs_t * p_hrs, ble_evt_t * p_ble_evt);
  */
 uint32_t ble_hrs_heart_rate_measurement_send(ble_hrs_t * p_hrs, uint16_t heart_rate);
 
+
 /**@brief Function for adding a RR Interval measurement to the RR Interval buffer.
  *
  * @details All buffered RR Interval measurements will be included in the next heart rate
@@ -195,6 +216,7 @@ uint32_t ble_hrs_heart_rate_measurement_send(ble_hrs_t * p_hrs, uint16_t heart_r
  */
 void ble_hrs_rr_interval_add(ble_hrs_t * p_hrs, uint16_t rr_interval);
 
+
 /**@brief Function for checking if RR Interval buffer is full.
  *
  * @param[in]   p_hrs        Heart Rate Service structure.
@@ -202,6 +224,7 @@ void ble_hrs_rr_interval_add(ble_hrs_t * p_hrs, uint16_t rr_interval);
  * @return      true if RR Interval buffer is full, false otherwise.
  */
 bool ble_hrs_rr_interval_buffer_is_full(ble_hrs_t * p_hrs);
+
 
 /**@brief Function for setting the state of the Sensor Contact Supported bit.
  *
@@ -212,12 +235,14 @@ bool ble_hrs_rr_interval_buffer_is_full(ble_hrs_t * p_hrs);
  */
 uint32_t ble_hrs_sensor_contact_supported_set(ble_hrs_t * p_hrs, bool is_sensor_contact_supported);
 
+
 /**@brief Function for setting the state of the Sensor Contact Detected bit.
  *
  * @param[in]   p_hrs                        Heart Rate Service structure.
  * @param[in]   is_sensor_contact_detected   TRUE if sensor contact is detected, FALSE otherwise.
  */
 void ble_hrs_sensor_contact_detected_update(ble_hrs_t * p_hrs, bool is_sensor_contact_detected);
+
 
 /**@brief Function for setting the Body Sensor Location.
  *

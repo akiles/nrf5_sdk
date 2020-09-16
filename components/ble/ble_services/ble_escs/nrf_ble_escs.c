@@ -265,7 +265,7 @@ static uint32_t char_add(const char_init_t        * p_char_init,
     memset(&ble_uuid, 0, sizeof(ble_uuid));
     memset(&attr_md, 0, sizeof(attr_md));
 
-    if(p_char_init->read)
+    if (p_char_init->read)
     {
         char_md.char_props.read  = 1;
         BLE_GAP_CONN_SEC_MODE_SET_OPEN(&attr_md.read_perm);
@@ -276,7 +276,7 @@ static uint32_t char_add(const char_init_t        * p_char_init,
         BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&attr_md.read_perm);
     }
 
-    if(p_char_init->write)
+    if (p_char_init->write)
     {
         BLE_GAP_CONN_SEC_MODE_SET_OPEN(&attr_md.write_perm);
         char_md.char_props.write  = 1;
@@ -306,7 +306,7 @@ static uint32_t char_add(const char_init_t        * p_char_init,
                                                &attr_char_value,
                                                p_handles);
 
-    if(err_code == NRF_SUCCESS)
+    if (err_code == NRF_SUCCESS)
     {
         ASSERT(m_handle_to_uuid_map_idx < BLE_ESCS_NUMBER_OF_CHARACTERISTICS);
         m_handle_to_uuid_map[m_handle_to_uuid_map_idx].val_handle = p_handles->value_handle;
@@ -323,7 +323,7 @@ static uint32_t char_add(const char_init_t        * p_char_init,
  * @param[in] p_escs     Eddystone Configuration Service structure.
  * @param[in] p_ble_evt Pointer to the event received from BLE stack.
  */
-static void on_connect(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt)
+static void on_connect(nrf_ble_escs_t * p_escs, ble_evt_t const * p_ble_evt)
 {
     VERIFY_PARAM_NOT_NULL_VOID(p_escs);
     p_escs->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
@@ -335,7 +335,7 @@ static void on_connect(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt)
  * @param[in] p_escs    Eddystone Configuration Service structure.
  * @param[in] p_ble_evt Pointer to the event received from BLE stack.
  */
-static void on_disconnect(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt)
+static void on_disconnect(nrf_ble_escs_t * p_escs, ble_evt_t const * p_ble_evt)
 {
     VERIFY_PARAM_NOT_NULL_VOID(p_escs);
     UNUSED_PARAMETER(p_ble_evt);
@@ -347,9 +347,9 @@ static uint32_t get_evt_type_for_handle(uint16_t handle, uint16_t * p_uuid)
 {
     VERIFY_PARAM_NOT_NULL(p_uuid);
 
-    for(uint8_t i = 0; i < BLE_ESCS_NUMBER_OF_CHARACTERISTICS; ++i)
+    for (uint8_t i = 0; i < BLE_ESCS_NUMBER_OF_CHARACTERISTICS; ++i)
     {
-        if(m_handle_to_uuid_map[i].val_handle == handle)
+        if (m_handle_to_uuid_map[i].val_handle == handle)
         {
             *p_uuid = m_handle_to_uuid_map[i].uuid;
             return NRF_SUCCESS;
@@ -364,7 +364,7 @@ static uint32_t get_evt_type_for_handle(uint16_t handle, uint16_t * p_uuid)
  * @param[in] p_escs     Eddystone Configuration Service structure.
  * @param[in] p_ble_evt Pointer to the event received from BLE stack.
  */
-static ret_code_t on_write(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt)
+static ret_code_t on_write(nrf_ble_escs_t * p_escs, ble_evt_t const * p_ble_evt)
 {
     uint32_t err_code;
     uint16_t write_evt_uuid = 0;
@@ -372,7 +372,8 @@ static ret_code_t on_write(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt)
     VERIFY_PARAM_NOT_NULL(p_escs);
     VERIFY_PARAM_NOT_NULL(p_ble_evt);
 
-    ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.authorize_request.request.write;
+    ble_gatts_evt_write_t const * p_evt_write =
+        &p_ble_evt->evt.gatts_evt.params.authorize_request.request.write;
 
     err_code = get_evt_type_for_handle(p_evt_write->handle, &write_evt_uuid);
     RETURN_IF_ERROR(err_code);
@@ -392,7 +393,7 @@ static ret_code_t on_write(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt)
  * @param[in] p_escs     Eddystone Configuration Service structure.
  * @param[in] p_ble_evt Pointer to the event received from BLE stack.
  */
-static void on_long_write(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt)
+static void on_long_write(nrf_ble_escs_t * p_escs, ble_evt_t const * p_ble_evt)
 {
     static uint16_t write_evt_uuid;
     static bool write_evt_uuid_set = false;
@@ -401,8 +402,9 @@ static void on_long_write(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt)
     VERIFY_PARAM_NOT_NULL_VOID(p_escs);
     VERIFY_PARAM_NOT_NULL_VOID(p_ble_evt);
 
-    ble_gatts_evt_write_t * p_evt_write =
+    ble_gatts_evt_write_t const * p_evt_write =
         &p_ble_evt->evt.gatts_evt.params.authorize_request.request.write;
+
     ble_gatts_rw_authorize_reply_params_t reply = {0};
 
     if (p_evt_write->op == BLE_GATTS_OP_PREP_WRITE_REQ)
@@ -469,7 +471,7 @@ static void on_long_write(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt)
  * @param[in] p_escs     Eddystone Configuration Service structure.
  * @param[in] p_ble_evt Pointer to the event received from BLE stack.
  */
-static ret_code_t on_read(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt)
+static ret_code_t on_read(nrf_ble_escs_t * p_escs, ble_evt_t const * p_ble_evt)
 {
     VERIFY_PARAM_NOT_NULL(p_escs);
     VERIFY_PARAM_NOT_NULL(p_ble_evt);
@@ -485,13 +487,15 @@ static ret_code_t on_read(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt)
 }
 
 
-static ret_code_t on_rw_authorize_req(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt)
+static ret_code_t on_rw_authorize_req(nrf_ble_escs_t * p_escs, ble_evt_t const * p_ble_evt)
 {
     ret_code_t err_code;
     VERIFY_PARAM_NOT_NULL(p_escs);
     VERIFY_PARAM_NOT_NULL(p_ble_evt);
 
-    ble_gatts_evt_rw_authorize_request_t *ar = &p_ble_evt->evt.gatts_evt.params.authorize_request;
+    ble_gatts_evt_rw_authorize_request_t const * ar =
+        &p_ble_evt->evt.gatts_evt.params.authorize_request;
+
     if (ar->type == BLE_GATTS_AUTHORIZE_TYPE_READ)
     {
         err_code = on_read(p_escs, p_ble_evt);
@@ -506,7 +510,7 @@ static ret_code_t on_rw_authorize_req(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble
             RETURN_IF_ERROR(err_code);
         }
 
-        else if(ar->request.write.op == BLE_GATTS_OP_PREP_WRITE_REQ
+        else if (ar->request.write.op == BLE_GATTS_OP_PREP_WRITE_REQ
              || ar->request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW)
         {
             on_long_write(p_escs, p_ble_evt);
@@ -525,7 +529,7 @@ static ret_code_t on_rw_authorize_req(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble
 
 
 
-ret_code_t nrf_ble_escs_on_ble_evt(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt)
+ret_code_t nrf_ble_escs_on_ble_evt(nrf_ble_escs_t * p_escs, ble_evt_t const * p_ble_evt)
 {
     ret_code_t err_code;
 

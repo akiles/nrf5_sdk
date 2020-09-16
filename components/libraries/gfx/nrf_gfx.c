@@ -47,9 +47,9 @@
 #include "app_util_platform.h"
 #include "nrf_assert.h"
 
-#define NRF_LOG_MODULE_NAME "GFX"
+#define NRF_LOG_MODULE_NAME gfx
 #include "nrf_log.h"
-#include "nrf_log_ctrl.h"
+NRF_LOG_MODULE_REGISTER();
 
 static inline void pixel_draw(nrf_lcd_t const * p_instance,
                               uint16_t x,

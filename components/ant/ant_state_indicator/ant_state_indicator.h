@@ -51,12 +51,11 @@
  */
 
 #include <stdint.h>
-#include "ant_stack_handler_types.h"
+#include "sdk_errors.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 
 /**
  * @brief Function for initializing the ANT channel state indicator.
@@ -67,20 +66,11 @@ extern "C" {
  *
  * @param[in] channel       ANT channel number.
  * @param[in] channel_type  ANT channel type (see Assign Channel Parameters in ant_parameters.h: @ref ant_parameters).
- */
-void ant_state_indicator_init( uint8_t channel, uint8_t channel_type);
-
-
-/**
- * @brief Function for handling ANT events.
  *
- * @details This function handles all events from the ANT stack that are of interest to the channel state indicator.
- *          This function should always be called when an ANT event occurs.
- *
- * @param[in]   p_ant_evt       Event received from the ANT stack.
+ * @retval NRF_SUCCESS  If the module was initialized successfully. Otherwise, a propagated error
+ *                      code is returned.
  */
-void ant_state_indicator_evt_handler(ant_evt_t * p_ant_evt);
-
+ret_code_t ant_state_indicator_init(uint8_t channel, uint8_t channel_type);
 
 /**
  * @brief Function for indicating the channel opening.
@@ -91,23 +81,15 @@ void ant_state_indicator_evt_handler(ant_evt_t * p_ant_evt);
  * @retval      NRF_ERROR_NO_MEM          If the internal timer operations queue was full.
  * @retval      NRF_ERROR_INVALID_STATE   If the application timer module has not been initialized
  *                                        or the internal timer has not been created.
- */
-uint32_t ant_state_indicator_channel_opened(void);
-
-
-/**@brief Function for putting the chip into sleep mode.
  *
- * @details This function sets up a wakeup button and puts the chip into deep sleep mode.
- *
- * @note This function will not return.
+ * @retval NRF_SUCCESS  If the state was indicated successfully. Otherwise, a propagated error
+ *                      code is returned.
  */
-void ant_state_indicator_sleep_mode_enter(void);
-
-
+ret_code_t ant_state_indicator_channel_opened(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif // ANT_STATE_INDICATOR_H__
 /** @} */

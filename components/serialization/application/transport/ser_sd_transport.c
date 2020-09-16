@@ -48,8 +48,9 @@
 #include "ser_dbg_sd_str.h"
 #include "ser_app_power_system_off.h"
 #include "app_util.h"
-#define NRF_LOG_MODULE_NAME "SER_XFER"
+#define NRF_LOG_MODULE_NAME ser_xfer
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #ifdef BLE_STACK_SUPPORT_REQD
 /** SoftDevice event handler. */
@@ -132,7 +133,7 @@ static void ser_sd_transport_rx_packet_handler(uint8_t * p_data, uint16_t length
 #ifdef BLE_STACK_SUPPORT_REQD
             case SER_PKT_TYPE_EVT:
                 /* It is ensured during opening that handler is not NULL. No check needed. */
-                NRF_LOG_DEBUG("[EVT]: %s \r\n", (uint32_t)ser_dbg_sd_evt_str_get(uint16_decode(&p_data[SER_EVT_ID_POS]))); // p_data points to EVT_ID
+                NRF_LOG_DEBUG("[EVT]: %s ", (uint32_t)ser_dbg_sd_evt_str_get(uint16_decode(&p_data[SER_EVT_ID_POS]))); // p_data points to EVT_ID
                 m_ble_evt_handler(p_data, length);
                 break;
 #endif // BLE_STACK_SUPPORT_REQD
@@ -140,7 +141,7 @@ static void ser_sd_transport_rx_packet_handler(uint8_t * p_data, uint16_t length
 #ifdef ANT_STACK_SUPPORT_REQD
             case SER_PKT_TYPE_ANT_EVT:
                 /* It is ensured during opening that handler is not NULL. No check needed. */
-                NRF_LOG_DEBUG("[ANT_EVT_ID]: %s \r\n", (uint32_t)ser_dbg_sd_evt_str_get(uint16_decode(&p_data[SER_EVT_ID_POS]))); // p_data points to EVT_ID
+                NRF_LOG_DEBUG("[ANT_EVT_ID]: %s ", (uint32_t)ser_dbg_sd_evt_str_get(uint16_decode(&p_data[SER_EVT_ID_POS]))); // p_data points to EVT_ID
                 m_ant_evt_handler(p_data, length);
                 break;
 #endif // ANT_STACK_SUPPORT_REQD
@@ -319,6 +320,6 @@ uint32_t ser_sd_transport_cmd_write(const uint8_t *                p_buffer,
         m_rsp_wait = false;
     }
 
-    NRF_LOG_DEBUG("[SD_CALL]:%s, err_code= 0x%X\r\n", (uint32_t)ser_dbg_sd_call_str_get(p_buffer[1]), err_code);
+    NRF_LOG_DEBUG("[SD_CALL]:%s, err_code= 0x%X", (uint32_t)ser_dbg_sd_call_str_get(p_buffer[1]), err_code);
     return err_code;
 }

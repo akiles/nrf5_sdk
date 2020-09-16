@@ -443,7 +443,11 @@ ret_code_t app_usbd_hid_event_handler(app_usbd_class_inst_t const * p_inst,
             {
                 break;
             }
-            app_usbd_core_class_rwu_register(p_inst);
+            ret = app_usbd_class_rwu_register(p_inst);
+            if (ret != NRF_SUCCESS)
+            {
+                break;
+            }
             app_usbd_hid_state_flag_set(p_hid_ctx, APP_USBD_HID_STATE_FLAG_APPENDED);
             break;
         case APP_USBD_EVT_INST_REMOVE:
@@ -453,14 +457,17 @@ ret_code_t app_usbd_hid_event_handler(app_usbd_class_inst_t const * p_inst,
             {
                 break;
             }
-
-            app_usbd_core_class_rwu_unregister(p_inst);
+            ret = app_usbd_class_rwu_unregister(p_inst);
+            if (ret != NRF_SUCCESS)
+            {
+                break;
+            }
             app_usbd_hid_state_flag_clr(p_hid_ctx, APP_USBD_HID_STATE_FLAG_APPENDED);
             break;
-        case APP_USBD_EVT_START:
+        case APP_USBD_EVT_STARTED:
             app_usbd_hid_state_flag_set(p_hid_ctx, APP_USBD_HID_STATE_FLAG_STARTED);
             break;
-        case APP_USBD_EVT_STOP:
+        case APP_USBD_EVT_STOPPED:
             app_usbd_hid_state_flag_clr(p_hid_ctx, APP_USBD_HID_STATE_FLAG_STARTED);
             break;
         default:

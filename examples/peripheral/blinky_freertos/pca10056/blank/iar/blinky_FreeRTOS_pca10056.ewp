@@ -308,7 +308,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\..\..\..\config\blinky_FreeRTOS_pca10056</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
@@ -318,22 +317,25 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\freertos\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\freertos\portable\CMSIS\nrf52</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\freertos\portable\IAR\nrf52</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\freertos\source\include</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
           <state>$PROJ_DIR$\..\config</state>
         </option>
         <option>
@@ -591,7 +593,6 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$\..\..\..\config\blinky_FreeRTOS_pca10056</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
@@ -601,22 +602,25 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\freertos\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\freertos\portable\CMSIS\nrf52</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\freertos\portable\IAR\nrf52</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\freertos\source\include</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
           <state>$PROJ_DIR$\..\config</state>
         </option>
         <option>
@@ -1002,8 +1006,7 @@
     </settings>
   </configuration>  <group>
   <name>nRF_Log</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_backend_serial.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_frontend.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_frontend.c</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>Third Parties</name>    <file>
@@ -1024,12 +1027,13 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer_freertos.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc\nrf_balloc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj\nrf_memobj.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\clock\nrf_drv_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_nvic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>    </file>  </group>  <group>
   <name>Board Support</name>    <file>
@@ -1038,10 +1042,6 @@
   <name>Application</name>    <file>
     <name>$PROJ_DIR$\..\..\..\main.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\config\sdk_config.h</name>    </file>  </group>  <group>
-  <name>nRF_Segger_RTT</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\RTT_Syscalls_IAR.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_printf.c</name>    </file>  </group>  <group>
   <name>Device</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\iar\iar_startup_nrf52840.s</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\system_nrf52840.c</name>    </file>  </group></project>

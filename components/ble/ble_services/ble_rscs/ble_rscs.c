@@ -38,9 +38,9 @@
  * 
  */
 /* Attention!
-*  To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
-*  qualification listings, this section of source code must not be modified.
-*/
+ * To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
+ * qualification listings, this section of source code must not be modified.
+ */
 
 #include "sdk_common.h"
 
@@ -66,7 +66,7 @@
  * @param[in]   p_rscs      Running Speed and Cadence Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_connect(ble_rscs_t * p_rscs, ble_evt_t * p_ble_evt)
+static void on_connect(ble_rscs_t * p_rscs, ble_evt_t const * p_ble_evt)
 {
     p_rscs->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
 }
@@ -77,7 +77,7 @@ static void on_connect(ble_rscs_t * p_rscs, ble_evt_t * p_ble_evt)
  * @param[in]   p_rscs      Running Speed and Cadence Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_disconnect(ble_rscs_t * p_rscs, ble_evt_t * p_ble_evt)
+static void on_disconnect(ble_rscs_t * p_rscs, ble_evt_t const * p_ble_evt)
 {
     UNUSED_PARAMETER(p_ble_evt);
     p_rscs->conn_handle = BLE_CONN_HANDLE_INVALID;
@@ -89,7 +89,7 @@ static void on_disconnect(ble_rscs_t * p_rscs, ble_evt_t * p_ble_evt)
  * @param[in]   p_rscs        Running Speed and Cadence Service structure.
  * @param[in]   p_evt_write   Write event received from the BLE stack.
  */
-static void on_meas_cccd_write(ble_rscs_t * p_rscs, ble_gatts_evt_write_t * p_evt_write)
+static void on_meas_cccd_write(ble_rscs_t * p_rscs, ble_gatts_evt_write_t const * p_evt_write)
 {
     if (p_evt_write->len == 2)
     {
@@ -118,9 +118,9 @@ static void on_meas_cccd_write(ble_rscs_t * p_rscs, ble_gatts_evt_write_t * p_ev
  * @param[in]   p_rscs      Running Speed and Cadence Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_write(ble_rscs_t * p_rscs, ble_evt_t * p_ble_evt)
+static void on_write(ble_rscs_t * p_rscs, ble_evt_t const * p_ble_evt)
 {
-    ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
+    ble_gatts_evt_write_t const * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
 
     if (p_evt_write->handle == p_rscs->meas_handles.cccd_handle)
     {
@@ -129,12 +129,14 @@ static void on_write(ble_rscs_t * p_rscs, ble_evt_t * p_ble_evt)
 }
 
 
-void ble_rscs_on_ble_evt(ble_rscs_t * p_rscs, ble_evt_t * p_ble_evt)
+void ble_rscs_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
-    if (p_rscs == NULL || p_ble_evt == NULL)
+    if ((p_context == NULL) || (p_ble_evt == NULL))
     {
         return;
     }
+
+    ble_rscs_t * p_rscs = (ble_rscs_t *)p_context;
 
     switch (p_ble_evt->header.evt_id)
     {

@@ -110,7 +110,7 @@ ret_code_t sm_init(void);
  *
  * @param[in]  ble_evt    The SoftDevice event.
  */
-void sm_ble_evt_handler(ble_evt_t * ble_evt);
+void sm_ble_evt_handler(ble_evt_t const * ble_evt);
 
 
 /**@brief Function for providing pairing and bonding parameters to use for pairing procedures.

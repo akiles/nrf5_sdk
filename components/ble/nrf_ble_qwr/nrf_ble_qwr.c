@@ -404,11 +404,13 @@ static void on_rw_authorize_request(nrf_ble_qwr_t         * p_qwr,
 }
 
 
-void nrf_ble_qwr_on_ble_evt(nrf_ble_qwr_t * p_qwr,
-                            ble_evt_t     * p_ble_evt)
+void nrf_ble_qwr_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
-    VERIFY_PARAM_NOT_NULL_VOID(p_qwr);
+    VERIFY_PARAM_NOT_NULL_VOID(p_context);
     VERIFY_PARAM_NOT_NULL_VOID(p_ble_evt);
+
+    nrf_ble_qwr_t * p_qwr = (nrf_ble_qwr_t *)p_context;
+
     VERIFY_MODULE_INITIALIZED_VOID();
 
     if (p_ble_evt->evt.common_evt.conn_handle == p_qwr->conn_handle)

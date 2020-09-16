@@ -81,7 +81,7 @@ uint32_t ble_gatts_evt_rw_authorize_request_dec(uint8_t const * const p_buf,
                (p_event->evt.gatts_evt.params.authorize_request.request.write.op == BLE_GATTS_OP_PREP_WRITE_REQ)))
     {
         uint32_t conn_index;
-        if(app_ble_user_mem_context_find(p_event->evt.gatts_evt.conn_handle, &conn_index) != NRF_ERROR_NOT_FOUND)
+        if (app_ble_user_mem_context_find(p_event->evt.gatts_evt.conn_handle, &conn_index) != NRF_ERROR_NOT_FOUND)
         {
             SER_PULL_len16data(&m_app_user_mem_table[conn_index].mem_block.p_mem, &m_app_user_mem_table[conn_index].mem_block.len);
         }
@@ -144,12 +144,12 @@ uint32_t ble_gatts_evt_write_dec(uint8_t const * const p_buf,
     SER_PULL_uint16(&p_event->evt.gatts_evt.conn_handle);
     SER_PULL_FIELD_EXTENDED(&p_event->evt.gatts_evt.params.write, ble_gatts_evt_write_t_dec);
 
-    if(p_event != NULL)
+    if (p_event != NULL)
     {
-        if(p_event->evt.gatts_evt.params.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW)
+        if (p_event->evt.gatts_evt.params.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW)
         {
             uint32_t conn_index;
-            if(app_ble_user_mem_context_find(p_event->evt.gatts_evt.conn_handle, &conn_index) != NRF_ERROR_NOT_FOUND)
+            if (app_ble_user_mem_context_find(p_event->evt.gatts_evt.conn_handle, &conn_index) != NRF_ERROR_NOT_FOUND)
             {
                 SER_PULL_len16data(&m_app_user_mem_table[conn_index].mem_block.p_mem, &m_app_user_mem_table[conn_index].mem_block.len);
                 SER_ASSERT(err_code == NRF_SUCCESS, err_code);

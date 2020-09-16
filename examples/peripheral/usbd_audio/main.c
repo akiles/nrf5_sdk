@@ -42,6 +42,7 @@
 #include <stddef.h>
 
 #include "nrf.h"
+#include "app_util.h"
 #include "nrf_drv_usbd.h"
 #include "nrf_drv_clock.h"
 #include "nrf_gpio.h"
@@ -55,9 +56,10 @@
 #include "app_error.h"
 #include "boards.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 /**@file
  * @defgroup usbd_aduio_example main.c
@@ -73,6 +75,11 @@
 #define LED_AUDIO_TX   (BSP_BOARD_LED_3)
 
 /**
+ * @brief USB audio samples size
+ */
+#define BUFFER_SIZE  (48)
+
+/**
  * @brief Enable power USB detection
  *
  * Configure if example supports USB port connection
@@ -83,14 +90,14 @@
 
 /**
  * @brief Audio class user event handler
- * */
+ */
 static void hp_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
                                      app_usbd_audio_user_event_t   event);
 static void mic_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
                                       app_usbd_audio_user_event_t   event);
 /**
  * @brief   Input terminal channel configuration
- * */
+ */
 #define HP_TERMINAL_CH_CONFIG()                                                                       \
         (APP_USBD_AUDIO_IN_TERM_CH_CONFIG_LEFT_FRONT | APP_USBD_AUDIO_IN_TERM_CH_CONFIG_RIGHT_FRONT)
 
@@ -100,7 +107,7 @@ static void mic_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
  *      general
  *      channel 0
  *      channel 1
- * */
+ */
 #define HP_FEATURE_CONTROLS()                                                                         \
         APP_USBD_U16_TO_RAW_DSC(APP_USBD_AUDIO_FEATURE_UNIT_CONTROL_MUTE),                         \
         APP_USBD_U16_TO_RAW_DSC(APP_USBD_AUDIO_FEATURE_UNIT_CONTROL_MUTE),                         \
@@ -110,7 +117,7 @@ static void mic_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
  *  - input terminal 1
  *  - feature unit descriptor
  *  - output terminal
- * */
+ */
 #define HP_AUDIO_CONTROL_DSC_LIST() (                                                                           \
         APP_USBD_AUDIO_INPUT_TERMINAL_DSC(1, APP_USBD_AUDIO_TERMINAL_USB_STREAMING, 2, HP_TERMINAL_CH_CONFIG()) \
         APP_USBD_AUDIO_FEATURE_UNIT_DSC(2, 1, HP_FEATURE_CONTROLS())                                            \
@@ -131,35 +138,35 @@ static void mic_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
  *     EP_GENERAL
  *     ISO_EP_OUT
  *
- * */
+ */
 static const uint8_t m_hp_audio_class_descriptors[] = {
-        /* Audio control interface descriptor descriptor: 0
-         * + descriptors defined by AUDIO_CONTROL_DSC_LIST*/
-        APP_USBD_AUDIO_CONTROL_DSC(0, HP_AUDIO_CONTROL_DSC_LIST(), (1))
+    /* Audio control interface descriptor descriptor: 0
+     * + descriptors defined by AUDIO_CONTROL_DSC_LIST*/
+    APP_USBD_AUDIO_CONTROL_DSC(0, HP_AUDIO_CONTROL_DSC_LIST(), (1))
 
-        /*Audio streaming interface descriptor descriptor: 1, setting: 0*/
-        APP_USBD_AUDIO_STREAMING_DSC(1, 0, 0)
+    /*Audio streaming interface descriptor descriptor: 1, setting: 0*/
+    APP_USBD_AUDIO_STREAMING_DSC(1, 0, 0)
 
-        /*Audio streaming interface descriptor descriptor: 1, setting: 1*/
-        APP_USBD_AUDIO_STREAMING_DSC(1, 1, 1)
+    /*Audio streaming interface descriptor descriptor: 1, setting: 1*/
+    APP_USBD_AUDIO_STREAMING_DSC(1, 1, 1)
 
-        /*Audio class specific interface descriptor*/
-        APP_USBD_AUDIO_AS_IFACE_DSC(1, 0, APP_USBD_AUDIO_AS_IFACE_FORMAT_PCM)
+    /*Audio class specific interface descriptor*/
+    APP_USBD_AUDIO_AS_IFACE_DSC(1, 0, APP_USBD_AUDIO_AS_IFACE_FORMAT_PCM)
 
-        /*Audio class specific format I descriptor*/
-        APP_USBD_AUDIO_AS_FORMAT_III_DSC(2, 2, 16, 1, APP_USBD_U24_TO_RAW_DSC(48000))
+    /*Audio class specific format I descriptor*/
+    APP_USBD_AUDIO_AS_FORMAT_III_DSC(2, 2, 16, 1, APP_USBD_U24_TO_RAW_DSC(48000))
 
-        /*Audio class specific endpoint general descriptor*/
-        APP_USBD_AUDIO_EP_GENERAL_DSC(0x00, 0, 0)
+    /*Audio class specific endpoint general descriptor*/
+    APP_USBD_AUDIO_EP_GENERAL_DSC(0x00, 0, 0)
 
-        /*Standard ISO endpoint descriptor*/
-        APP_USBD_AUDIO_ISO_EP_OUT_DSC(192)
+    /*Standard ISO endpoint descriptor*/
+    APP_USBD_AUDIO_ISO_EP_OUT_DSC(192)
 };
 
 
 /**
  * @brief   Input terminal channel configuration
- * */
+ */
 #define MIC_TERMINAL_CH_CONFIG()                                                                       \
         (APP_USBD_AUDIO_IN_TERM_CH_CONFIG_LEFT_FRONT | APP_USBD_AUDIO_IN_TERM_CH_CONFIG_RIGHT_FRONT)
 
@@ -169,7 +176,7 @@ static const uint8_t m_hp_audio_class_descriptors[] = {
  *      general
  *      channel 0
  *      channel 1
- * */
+ */
 #define MIC_FEATURE_CONTROLS()                                                                     \
         APP_USBD_U16_TO_RAW_DSC(APP_USBD_AUDIO_FEATURE_UNIT_CONTROL_MUTE),                         \
         APP_USBD_U16_TO_RAW_DSC(APP_USBD_AUDIO_FEATURE_UNIT_CONTROL_MUTE),                         \
@@ -180,7 +187,7 @@ static const uint8_t m_hp_audio_class_descriptors[] = {
  *  - input terminal 1
  *  - feature unit descriptor
  *  - output terminal
- * */
+ */
 #define MIC_AUDIO_CONTROL_DSC_LIST() (                                                                           \
         APP_USBD_AUDIO_INPUT_TERMINAL_DSC(1, APP_USBD_AUDIO_TERMINAL_IN_MICROPHONE, 2, MIC_TERMINAL_CH_CONFIG()) \
         APP_USBD_AUDIO_FEATURE_UNIT_DSC(2, 1, MIC_FEATURE_CONTROLS())                                            \
@@ -201,47 +208,47 @@ static const uint8_t m_hp_audio_class_descriptors[] = {
  *     EP_GENERAL
  *     ISO_EP_IN
  *
- * */
+ */
 static const uint8_t m_mic_audio_class_descriptors[] = {
-        /* Audio control interface descriptor descriptor: 2
-         * + descriptors defined by AUDIO_CONTROL_DSC_LIST*/
-        APP_USBD_AUDIO_CONTROL_DSC(2, MIC_AUDIO_CONTROL_DSC_LIST(), (3))
+    /* Audio control interface descriptor descriptor: 2
+     * + descriptors defined by AUDIO_CONTROL_DSC_LIST*/
+    APP_USBD_AUDIO_CONTROL_DSC(2, MIC_AUDIO_CONTROL_DSC_LIST(), (3))
 
-        /*Audio streaming interface descriptor descriptor: 3, setting: 0*/
-        APP_USBD_AUDIO_STREAMING_DSC(3, 0, 0)
+    /*Audio streaming interface descriptor descriptor: 3, setting: 0*/
+    APP_USBD_AUDIO_STREAMING_DSC(3, 0, 0)
 
-        /*Audio streaming interface descriptor descriptor: 3, setting: 1*/
-        APP_USBD_AUDIO_STREAMING_DSC(3, 1, 1)
+    /*Audio streaming interface descriptor descriptor: 3, setting: 1*/
+    APP_USBD_AUDIO_STREAMING_DSC(3, 1, 1)
 
-        /*Audio class specific interface descriptor*/
-        APP_USBD_AUDIO_AS_IFACE_DSC(3, 0, APP_USBD_AUDIO_AS_IFACE_FORMAT_PCM)
+    /*Audio class specific interface descriptor*/
+    APP_USBD_AUDIO_AS_IFACE_DSC(3, 0, APP_USBD_AUDIO_AS_IFACE_FORMAT_PCM)
 
-        /*Audio class specific format I descriptor*/
-        APP_USBD_AUDIO_AS_FORMAT_I_DSC(2, 2, 16, 1, APP_USBD_U24_TO_RAW_DSC(48000))
+    /*Audio class specific format I descriptor*/
+    APP_USBD_AUDIO_AS_FORMAT_I_DSC(2, 2, 16, 1, APP_USBD_U24_TO_RAW_DSC(48000))
 
-        /*Audio class specific endpoint general descriptor*/
-        APP_USBD_AUDIO_EP_GENERAL_DSC(0x00, 0, 0)
+    /*Audio class specific endpoint general descriptor*/
+    APP_USBD_AUDIO_EP_GENERAL_DSC(0x00, 0, 0)
 
-        /*Standard ISO endpoint descriptor*/
-        APP_USBD_AUDIO_ISO_EP_IN_DSC(192)
+    /*Standard ISO endpoint descriptor*/
+    APP_USBD_AUDIO_ISO_EP_IN_DSC(192)
 };
 
 
 /**
  * @brief Interfaces list passed to @ref APP_USBD_AUDIO_GLOBAL_DEF
- * */
+ */
 #define HP_INTERFACES_CONFIG() APP_USBD_AUDIO_CONFIG_OUT(0, 1)
 
 /**
  * @brief Interfaces list passed to @ref APP_USBD_AUDIO_GLOBAL_DEF
- * */
+ */
 #define MIC_INTERFACES_CONFIG() APP_USBD_AUDIO_CONFIG_IN(2, 3)
 
 /*lint -save -e26 -e64 -e123 -e505 -e651*/
 
 /**
  * @brief Headphone Audio class instance
- * */
+ */
 APP_USBD_AUDIO_GLOBAL_DEF(m_app_audio_headphone,
                           HP_INTERFACES_CONFIG(),
                           hp_audio_user_ev_handler,
@@ -250,7 +257,7 @@ APP_USBD_AUDIO_GLOBAL_DEF(m_app_audio_headphone,
 
 /**
  * @brief Headphone Audio class instance
- * */
+ */
 APP_USBD_AUDIO_GLOBAL_DEF(m_app_audio_microphone,
                           MIC_INTERFACES_CONFIG(),
                           mic_audio_user_ev_handler,
@@ -261,42 +268,46 @@ APP_USBD_AUDIO_GLOBAL_DEF(m_app_audio_microphone,
 /*lint -restore*/
 
 /**
- * @brief I2S output data counter
- * */
-static size_t m_tx_counter;
-
-/**
- * @brief USB audio receive data counter
- * */
-static size_t m_rx_counter;
-
-/**
- * @brief USB audio buffer size
- * */
-#define BUFFER_SIZE  (48)
-
-/**
- * @brief USB audio receive buffer
- * */
-static int16_t  m_rx_buffer[2 * BUFFER_SIZE];
-
+ * @brief Internal audio temporary buffer
+ */
 static int16_t  m_temp_buffer[2 * BUFFER_SIZE];
 
-static int16_t  m_tx_buffer[2 * BUFFER_SIZE];
+
+
+/**
+ * @brief The size of last received block from the microphone
+ */
+static size_t m_temp_buffer_size;
 
 /**
  * @brief Actual headphones mute
- * */
+ */
 static uint8_t  m_mute_hp;
 
 /**
  * @brief Actual sampling frequency
- * */
+ */
 static uint32_t m_freq_hp;
 
 /**
+ * @brief Actual microphone mute state
+ */
+static uint8_t  m_mute_mic;
+
+/**
+ * @brief Actual microphone sampling frequency
+ */
+static uint32_t m_freq_mic;
+
+/**
+ * @brief  USB connection status
+ */
+static bool m_usb_connected = false;
+
+
+/**
  * @brief Audio class specific request handle (headphones)
- * */
+ */
 static void hp_audio_user_class_req(app_usbd_class_inst_t const * p_inst)
 {
     app_usbd_audio_t const * p_audio = app_usbd_audio_class_get(p_inst);
@@ -332,7 +343,7 @@ static void hp_audio_user_class_req(app_usbd_class_inst_t const * p_inst)
             if (p_req->req_type == APP_USBD_AUDIO_REQ_SET_CUR)
             {
                 //Only set frequency is supported
-                m_freq_hp = p_req->payload[0] + (p_req->payload[1] << 8) + (p_req->payload[2] << 16);
+                m_freq_hp = uint24_decode(p_req->payload);
             }
 
             break;
@@ -341,20 +352,9 @@ static void hp_audio_user_class_req(app_usbd_class_inst_t const * p_inst)
     }
 }
 
-
-/**
- * @brief Actual microphone mute state
- * */
-static uint8_t  m_mute_mic;
-
-/**
- * @brief Actual microphone sampling frequency
- * */
-static uint32_t m_freq_mic;
-
 /**
  * @brief Audio class specific request handle (microphone)
- * */
+ */
 static void mic_audio_user_class_req(app_usbd_class_inst_t const * p_inst)
 {
     app_usbd_audio_t const * p_audio = app_usbd_audio_class_get(p_inst);
@@ -390,7 +390,7 @@ static void mic_audio_user_class_req(app_usbd_class_inst_t const * p_inst)
             if (p_req->req_type == APP_USBD_AUDIO_REQ_SET_CUR)
             {
                 //Only set frequency is supported
-                m_freq_mic = p_req->payload[0] + (p_req->payload[1] << 8) + (p_req->payload[2] << 16);
+                m_freq_mic = uint24_decode(p_req->payload);
             }
 
             break;
@@ -401,13 +401,12 @@ static void mic_audio_user_class_req(app_usbd_class_inst_t const * p_inst)
 
 /**
  * @brief User event handler @ref app_usbd_audio_user_ev_handler_t (headphones)
- * */
+ */
 static void hp_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
                                      app_usbd_audio_user_event_t   event)
 {
     app_usbd_audio_t const * p_audio = app_usbd_audio_class_get(p_inst);
     UNUSED_VARIABLE(p_audio);
-    UNUSED_VARIABLE(m_rx_counter);
     switch (event)
     {
         case APP_USBD_AUDIO_USER_EVT_CLASS_REQ:
@@ -415,9 +414,13 @@ static void hp_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
             break;
         case APP_USBD_AUDIO_USER_EVT_RX_DONE:
         {
-            m_rx_counter++;
-            memcpy(m_temp_buffer, m_rx_buffer, sizeof(m_rx_buffer));
-            bsp_board_led_invert(LED_AUDIO_RX);
+            ret_code_t ret;
+            /* Block from headphones copied into buffer, send it into microphone input */
+            ret = app_usbd_audio_class_tx_start(&m_app_audio_microphone.base, m_temp_buffer, m_temp_buffer_size);
+            if (NRF_SUCCESS == ret)
+            {
+                bsp_board_led_invert(LED_AUDIO_RX);
+            }
             break;
         }
         default:
@@ -427,13 +430,12 @@ static void hp_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
 
 /**
  * @brief User event handler @ref app_usbd_audio_user_ev_handler_t (microphone)
- * */
+ */
 static void mic_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
                                       app_usbd_audio_user_event_t   event)
 {
     app_usbd_audio_t const * p_audio = app_usbd_audio_class_get(p_inst);
     UNUSED_VARIABLE(p_audio);
-    UNUSED_VARIABLE(m_tx_counter);
 
     switch (event)
     {
@@ -442,8 +444,6 @@ static void mic_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
             break;
         case APP_USBD_AUDIO_USER_EVT_TX_DONE:
         {
-            m_tx_counter++;
-            memcpy(m_tx_buffer, m_temp_buffer, sizeof(m_tx_buffer));
             bsp_board_led_invert(LED_AUDIO_TX);
             break;
         }
@@ -456,29 +456,42 @@ static void mic_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
  * @brief USBD library specific event handler.
  *
  * @param event     USBD library event.
- * */
+ */
 static void usbd_user_ev_handler(app_usbd_event_type_t event)
 {
     switch (event)
     {
+        case APP_USBD_EVT_DRV_SOF:
+        {
+            if (APP_USBD_STATE_Configured != app_usbd_core_state_get())
+            {
+                break;
+            }
+            size_t rx_size = app_usbd_audio_class_rx_size_get(&m_app_audio_headphone.base);
+            m_temp_buffer_size = rx_size;
+            if (rx_size > 0)
+            {
+                ASSERT(rx_size <= sizeof(m_temp_buffer));
+                ret_code_t ret;
+                ret = app_usbd_audio_class_rx_start(&m_app_audio_headphone.base, m_temp_buffer, rx_size);
+                if (NRF_SUCCESS != ret)
+                {
+                    NRF_LOG_ERROR("Cannot start RX transfer from headphone\r\n");
+                }
+            }
+            break;
+        }
         case APP_USBD_EVT_DRV_SUSPEND:
-            bsp_board_led_off(LED_USB_RESUME);
+            bsp_board_leds_off();
             break;
         case APP_USBD_EVT_DRV_RESUME:
             bsp_board_led_on(LED_USB_RESUME);
             break;
-        case APP_USBD_EVT_START:
-            app_usbd_audio_class_rx_buf_set(&m_app_audio_headphone.base,
-                                            m_rx_buffer,
-                                            sizeof(m_rx_buffer));
-
-            app_usbd_audio_class_tx_buf_set(&m_app_audio_microphone.base,
-                                            m_tx_buffer,
-                                            sizeof(m_tx_buffer));
-
-            bsp_board_led_invert(LED_USB_START);
+        case APP_USBD_EVT_STARTED:
+            bsp_board_led_on(LED_USB_START);
             break;
-        case APP_USBD_EVT_STOP:
+        case APP_USBD_EVT_STOPPED:
+            app_usbd_disable();
             bsp_board_leds_off();
             break;
         default:
@@ -486,21 +499,12 @@ static void usbd_user_ev_handler(app_usbd_event_type_t event)
     }
 }
 
-static const app_usbd_config_t m_usbd_config = {
-    .ev_handler = usbd_user_ev_handler
-};
-
-/**
- * @brief  USB connection status
- * */
-static bool m_usb_connected = false;
-
 static void power_usb_event_handler(nrf_drv_power_usb_evt_t event)
 {
-    switch(event)
+    switch (event)
     {
         case NRF_DRV_POWER_USB_EVT_DETECTED:
-            NRF_LOG_INFO("USB power detected\r\n");
+            NRF_LOG_INFO("USB power detected");
 
             if (!nrf_drv_usbd_is_enabled())
             {
@@ -508,11 +512,11 @@ static void power_usb_event_handler(nrf_drv_power_usb_evt_t event)
             }
             break;
         case NRF_DRV_POWER_USB_EVT_REMOVED:
-            NRF_LOG_INFO("USB power removed\r\n");
+            NRF_LOG_INFO("USB power removed");
             m_usb_connected = false;
             break;
         case NRF_DRV_POWER_USB_EVT_READY:
-            NRF_LOG_INFO("USB ready\r\n");
+            NRF_LOG_INFO("USB ready");
             m_usb_connected = true;
             break;
         default:
@@ -534,7 +538,7 @@ static void usb_start(void)
     }
     else
     {
-        NRF_LOG_INFO("No USB power detection enabled\r\nStarting USB now\r\n");
+        NRF_LOG_INFO("No USB power detection enabled\r\nStarting USB now");
 
         app_usbd_enable();
         app_usbd_start();
@@ -547,14 +551,19 @@ static bool usb_connection_handle(bool last_usb_conn_status)
     if (last_usb_conn_status != m_usb_connected)
     {
         last_usb_conn_status = m_usb_connected;
-        m_usb_connected ? app_usbd_start() : app_usbd_disable();
+        m_usb_connected ? app_usbd_start() : app_usbd_stop();
     }
 
     return last_usb_conn_status;
 }
+
 int main(void)
 {
     ret_code_t ret;
+    static const app_usbd_config_t usbd_config = {
+        .ev_state_proc = usbd_user_ev_handler,
+        .enable_sof = true
+    };
 
     ret = nrf_drv_clock_init();
     APP_ERROR_CHECK(ret);
@@ -563,21 +572,23 @@ int main(void)
 
     ret = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(ret);
-    NRF_LOG_INFO("Hello USB!\r\n");
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    NRF_LOG_INFO("Hello USB!");
 
     bsp_board_leds_init();
     bsp_board_buttons_init();
 
-    ret = app_usbd_init(&m_usbd_config);
+    ret = app_usbd_init(&usbd_config);
     APP_ERROR_CHECK(ret);
 
     app_usbd_class_inst_t const * class_inst_hp =
-            app_usbd_audio_class_inst_get(&m_app_audio_headphone);
+        app_usbd_audio_class_inst_get(&m_app_audio_headphone);
     ret = app_usbd_class_append(class_inst_hp);
     APP_ERROR_CHECK(ret);
 
     app_usbd_class_inst_t const * class_inst_mic =
-            app_usbd_audio_class_inst_get(&m_app_audio_microphone);
+        app_usbd_audio_class_inst_get(&m_app_audio_microphone);
     ret = app_usbd_class_append(class_inst_mic);
     APP_ERROR_CHECK(ret);
 
@@ -586,8 +597,15 @@ int main(void)
 
     while (true)
     {
+        while (app_usbd_event_queue_process())
+        {
+            /* Nothing to do */
+        }
         last_usb_conn_status = usb_connection_handle(last_usb_conn_status);
+
         UNUSED_RETURN_VALUE(NRF_LOG_PROCESS());
+        /* Sleep CPU only if there was no interrupt since last loop processing */
+        __WFE();
     }
 }
 

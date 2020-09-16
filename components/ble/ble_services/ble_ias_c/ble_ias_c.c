@@ -48,7 +48,7 @@
 #include "ble_db_discovery.h"
 
 
-void ble_ias_c_on_db_disc_evt(ble_ias_c_t * p_ias_c, const ble_db_discovery_evt_t * p_evt)
+void ble_ias_c_on_db_disc_evt(ble_ias_c_t * p_ias_c, ble_db_discovery_evt_t const * p_evt)
 {
     ble_ias_c_evt_t evt;
 
@@ -56,19 +56,14 @@ void ble_ias_c_on_db_disc_evt(ble_ias_c_t * p_ias_c, const ble_db_discovery_evt_
     evt.evt_type = BLE_IAS_C_EVT_DISCOVERY_FAILED;
     evt.conn_handle = p_evt->conn_handle;
 
-    const ble_gatt_db_char_t * p_chars = p_evt->params.discovered_db.charateristics;
+    ble_gatt_db_char_t const * p_chars = p_evt->params.discovered_db.charateristics;
 
     // Check if the Immediate Alert Service was discovered.
-    if (p_evt->evt_type == BLE_DB_DISCOVERY_COMPLETE
-        &&
-        p_evt->params.discovered_db.srv_uuid.uuid == BLE_UUID_IMMEDIATE_ALERT_SERVICE
-        &&
-        p_evt->params.discovered_db.srv_uuid.type == BLE_UUID_TYPE_BLE)
+    if (   (p_evt->evt_type == BLE_DB_DISCOVERY_COMPLETE)
+        && (p_evt->params.discovered_db.srv_uuid.uuid == BLE_UUID_IMMEDIATE_ALERT_SERVICE)
+        && (p_evt->params.discovered_db.srv_uuid.type == BLE_UUID_TYPE_BLE))
     {
-
-        uint32_t i;
-
-        for (i = 0; i < p_evt->params.discovered_db.char_count; i++)
+        for (uint32_t i = 0; i < p_evt->params.discovered_db.char_count; i++)
         {
             // The Alert Level characteristic in the Immediate Alert Service instance is found
             // on peer. Check if it has the correct property 'Write without response'.
@@ -141,9 +136,10 @@ static void on_disconnect(ble_ias_c_t * p_ias_c, ble_evt_t const * p_ble_evt)
 }
 
 
-void ble_ias_c_on_ble_evt(ble_ias_c_t * p_ias_c, ble_evt_t const * p_ble_evt)
+void ble_ias_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
-    uint32_t err_code = NRF_SUCCESS;
+    uint32_t      err_code = NRF_SUCCESS;
+    ble_ias_c_t * p_ias_c  = (ble_ias_c_t *)p_context;
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -156,7 +152,7 @@ void ble_ias_c_on_ble_evt(ble_ias_c_t * p_ias_c, ble_evt_t const * p_ble_evt)
             break;
     }
 
-    if (err_code != NRF_SUCCESS && p_ias_c->error_handler != 0)
+    if ((err_code != NRF_SUCCESS) && (p_ias_c->error_handler != NULL))
     {
         p_ias_c->error_handler(err_code);
     }

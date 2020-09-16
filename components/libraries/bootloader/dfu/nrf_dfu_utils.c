@@ -46,18 +46,19 @@
 #include "nrf_bootloader_info.h"
 #include "crc32.h"
 #include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 #include "app_timer.h"
+#include "nrf_delay.h"
 
-
-static app_timer_t nrf_dfu_utils_reset_delay_timer_data = { {0} };
-const app_timer_id_t nrf_dfu_utils_reset_delay_timer = &nrf_dfu_utils_reset_delay_timer_data;
+static app_timer_t nrf_dfu_post_sd_bl_timeout_timer = { {0} };
+const app_timer_id_t nrf_dfu_post_sd_bl_timeout_timer_id = &nrf_dfu_post_sd_bl_timeout_timer;
 
 /**
  * Round up val to the next page boundry
  */
-static uint32_t align_to_page(uint32_t val, uint32_t page_size)
+static uint32_t align_to_page(uint32_t val)
 {
-    return ((val + page_size - 1 ) &~ (page_size - 1));
+    return ((val + CODE_PAGE_SIZE - 1 ) &~ (CODE_PAGE_SIZE - 1));
 }
 
 
@@ -80,10 +81,10 @@ static void nrf_dfu_invalidate_bank(nrf_dfu_bank_t * p_bank)
 }
 
 
-/** @brief Function to continue App update
+/** @brief Function to continue application update.
  *
  * @details This function will be called after reset if there is a valid application in Bank1
- *          required to be copied down to bank0.
+ *          required to be copied down to Bank 0.
  *
  * @param[in]       src_addr            Source address of the application to copy from Bank1 to Bank0.
  *
@@ -101,19 +102,21 @@ static void nrf_dfu_invalidate_bank(nrf_dfu_bank_t * p_bank)
  * @retval  FS_ERR_FAILURE_SINCE_LAST   If an error occurred in another transaction and fstorage cannot continue before
  *                                      the event has been dealt with.
  */
-static uint32_t nrf_dfu_app_continue(uint32_t               src_addr)
+static uint32_t nrf_dfu_app_continue(uint32_t src_addr)
 {
-    // This function only in use when new app is present in bank 1
+    // This function is only in use when new app is present in Bank 1
     uint32_t const image_size  = s_dfu_settings.bank_1.image_size;
-    uint32_t const split_size  = CODE_PAGE_SIZE; // Arbitrary number that must be page aligned
+    uint32_t const split_size  = CODE_PAGE_SIZE; // Must be page aligned
 
-    uint32_t ret_val            = NRF_SUCCESS;
-    uint32_t target_addr        = MAIN_APPLICATION_START_ADDR + s_dfu_settings.write_offset;
-    uint32_t length_left        = (image_size - s_dfu_settings.write_offset);
+    uint32_t ret_val     = NRF_SUCCESS;
+    uint32_t target_addr = MAIN_APPLICATION_START_ADDR + s_dfu_settings.write_offset;
+    uint32_t length_left = (image_size - s_dfu_settings.write_offset);
     uint32_t cur_len;
     uint32_t crc;
 
-    NRF_LOG_DEBUG("Enter nrf_dfu_app_continue\r\n");
+    NRF_LOG_DEBUG("Enter nrf_dfu_app_continue");
+
+    src_addr += s_dfu_settings.write_offset;
 
     // Copy the application down safely
     do
@@ -121,14 +124,14 @@ static uint32_t nrf_dfu_app_continue(uint32_t               src_addr)
         cur_len = (length_left > split_size) ? split_size : length_left;
 
         // Erase the target page
-        ret_val = nrf_dfu_flash_erase((uint32_t*) target_addr, split_size / CODE_PAGE_SIZE, NULL);
+        ret_val = nrf_dfu_flash_erase(target_addr, split_size / CODE_PAGE_SIZE, NULL);
         if (ret_val != NRF_SUCCESS)
         {
             return ret_val;
         }
 
         // Flash one page
-        ret_val = nrf_dfu_flash_store((uint32_t*)target_addr, (uint32_t*)src_addr, cur_len, NULL);
+        ret_val = nrf_dfu_flash_store(target_addr, (uint32_t*)src_addr, cur_len, NULL);
         if (ret_val != NRF_SUCCESS)
         {
             return ret_val;
@@ -138,15 +141,7 @@ static uint32_t nrf_dfu_app_continue(uint32_t               src_addr)
         if (ret_val != NRF_SUCCESS)
         {
             // We will not retry the copy
-            NRF_LOG_ERROR("Invalid data during compare: target: 0x%08x, src: 0x%08x\r\n", target_addr, src_addr);
-            return ret_val;
-        }
-
-        // Erase the head (to handle growing bank 0)
-        ret_val = nrf_dfu_flash_erase((uint32_t*) src_addr, split_size / CODE_PAGE_SIZE, NULL);
-        if (ret_val != NRF_SUCCESS)
-        {
-            NRF_LOG_ERROR("App update: Failure erasing page at addr: 0x%08x\r\n", src_addr);
+            NRF_LOG_ERROR("Invalid data during compare: target: 0x%08x, src: 0x%08x", target_addr, src_addr);
             return ret_val;
         }
 
@@ -158,14 +153,14 @@ static uint32_t nrf_dfu_app_continue(uint32_t               src_addr)
 
         length_left -= cur_len;
     }
-    while(length_left > 0);
+    while (length_left > 0);
 
-    // Check the crc of the copied data. Enable if so.
+    // Check the CRC of the copied data. Enable if so.
     crc = crc32_compute((uint8_t*)MAIN_APPLICATION_START_ADDR, image_size, NULL);
 
     if (crc == s_dfu_settings.bank_1.image_crc)
     {
-        NRF_LOG_DEBUG("Setting app as valid\r\n");
+        NRF_LOG_DEBUG("Setting app as valid");
         s_dfu_settings.bank_0.bank_code = NRF_DFU_BANK_VALID_APP;
         s_dfu_settings.bank_0.image_crc = crc;
         s_dfu_settings.bank_0.image_size = image_size;
@@ -173,7 +168,7 @@ static uint32_t nrf_dfu_app_continue(uint32_t               src_addr)
     else
     {
         NRF_LOG_ERROR("CRC computation failed for copied app: "
-                      "src crc: 0x%08x, res crc: 0x%08x\r\n",
+                      "src crc: 0x%08x, res crc: 0x%08x",
                       s_dfu_settings.bank_1.image_crc,
                       crc);
     }
@@ -184,16 +179,44 @@ static uint32_t nrf_dfu_app_continue(uint32_t               src_addr)
     return ret_val;
 }
 
+/**
+ * @brief Flash storage callback used to reset the device if no new DFU is initiated within the timer's expiration.
+ *
+ * After the completion of a SD, BL or SD + BL update, the controller might want to update the
+ * application as well. Because of this, the DFU target will stay in bootloader mode for some
+ * time after completion. However, if no such update is received, the device should reset
+ * to look for a valid app and resume regular operation.
+ */
+static void reset_device_callback(nrf_fstorage_evt_t * p_evt)
+{
+    uint32_t err_code;
+
+    // Verify that the current application is valid.
+    if (nrf_dfu_app_is_valid())
+    {
+        NRF_LOG_DEBUG("Starting reset delay timer");
+
+        err_code = app_timer_create(&nrf_dfu_post_sd_bl_timeout_timer_id, APP_TIMER_MODE_SINGLE_SHOT, nrf_dfu_reset_timeout_handler);
+        APP_ERROR_CHECK(err_code);
+        // 3400 ms is the smallest stable value with nRF Connect for PC v1.1.1.
+        // 7500 ms is the smallest stable value with nRF Connect for Android v1.1.1.
+        // Smaller values may allow the device to reset before the next DFU transation is started.
+        err_code = app_timer_start(nrf_dfu_post_sd_bl_timeout_timer_id, APP_TIMER_TICKS(NRF_DFU_POST_SD_BL_TIMEOUT_MS), NULL);
+        APP_ERROR_CHECK(err_code);
+    }
+}
+
+
 /** @brief Function to execute the continuation of a SoftDevice update.
  *
  * @param[in]       src_addr            Source address of the SoftDevice to copy from.
  * @param[in]       p_bank              Pointer to the bank where the SoftDevice resides.
  *
  * @retval NRF_SUCCESS Continuation was successful.
- * @retval NRF_ERROR_INVALID_LENGTH Invalid len
- * @retval NRF_ERROR_NO_MEM if UICR.NRFFW[1] is not set (i.e. is 0xFFFFFFFF).
- * @retval NRF_ERROR_INVALID_PARAM if an invalid command is given.
- * @retval NRF_ERROR_INTERNAL indicates that the contents of the memory blocks where not verified correctly after copying.
+ * @retval NRF_ERROR_INVALID_LENGTH Invalid length.
+ * @retval NRF_ERROR_NO_MEM If UICR.NRFFW[1] is not set (i.e. is 0xFFFFFFFF).
+ * @retval NRF_ERROR_INVALID_PARAM If an invalid command is given.
+ * @retval NRF_ERROR_INTERNAL Indicates that the contents of the memory blocks were not verified correctly after copying.
  * @retval NRF_ERROR_NULL If the content of the memory blocks differs after copying.
  */
 #if defined(SOFTDEVICE_PRESENT)
@@ -202,54 +225,55 @@ static uint32_t nrf_dfu_sd_continue_impl(uint32_t             src_addr,
 {
     uint32_t   ret_val      = NRF_SUCCESS;
     uint32_t   target_addr  = SOFTDEVICE_REGION_START + s_dfu_settings.write_offset;
-    uint32_t   length_left  = align_to_page(s_dfu_settings.sd_size - s_dfu_settings.write_offset, CODE_PAGE_SIZE);
-    uint32_t   split_size   = align_to_page(length_left / 4, CODE_PAGE_SIZE);
+    uint32_t   length_left  = align_to_page(s_dfu_settings.sd_size - s_dfu_settings.write_offset);
+    uint32_t   split_size   = align_to_page(length_left / 4);
 
-    NRF_LOG_DEBUG("Enter nrf_bootloader_dfu_sd_continue\r\n");
+    NRF_LOG_DEBUG("Enter nrf_bootloader_dfu_sd_continue");
 
     // This can be a continuation due to a power failure
     src_addr += s_dfu_settings.write_offset;
 
     if (s_dfu_settings.sd_size != 0 && s_dfu_settings.write_offset == s_dfu_settings.sd_size)
     {
-        NRF_LOG_DEBUG("SD already copied\r\n");
+        NRF_LOG_DEBUG("SD already copied");
         return NRF_SUCCESS;
     }
 
     if (s_dfu_settings.write_offset == 0)
     {
-        NRF_LOG_DEBUG("Updating SD. Old SD ver: %d, New ver: %d\r\n", SD_VERSION_GET(MBR_SIZE) / 100000, SD_VERSION_GET(src_addr) / 100000);
+        NRF_LOG_DEBUG("Updating SD. Old SD ver: %d, New ver: %d",
+            SD_VERSION_GET(MBR_SIZE) / 100000, SD_VERSION_GET(src_addr) / 100000);
     }
 
     do
     {
-        // If less than split size remain, reduce split size to avoid overwriting bank 0.
+        // If less than split size remain, reduce split size to avoid overwriting Bank 0.
         if (split_size > length_left)
         {
-            split_size = align_to_page(length_left, CODE_PAGE_SIZE);
+            split_size = align_to_page(length_left);
         }
 
-        NRF_LOG_DEBUG("Copying [0x%08x-0x%08x] to [0x%08x-0x%08x]: Len: 0x%08x\r\n", src_addr, src_addr + split_size, target_addr, target_addr + split_size, split_size);
+        NRF_LOG_DEBUG("Copying [0x%08x-0x%08x] to [0x%08x-0x%08x]: Len: 0x%08x", src_addr, src_addr + split_size, target_addr, target_addr + split_size, split_size);
 
         // Copy a chunk of the SD. Size in words
         ret_val = nrf_dfu_mbr_copy_sd((uint32_t*)target_addr, (uint32_t*)src_addr, split_size);
         if (ret_val != NRF_SUCCESS)
         {
-            NRF_LOG_ERROR("Failed to copy SD: target: 0x%08x, src: 0x%08x, len: 0x%08x\r\n", target_addr, src_addr, split_size);
+            NRF_LOG_ERROR("Failed to copy SD: target: 0x%08x, src: 0x%08x, len: 0x%08x", target_addr, src_addr, split_size);
             return ret_val;
         }
 
-        NRF_LOG_DEBUG("Finished copying [0x%08x-0x%08x] to [0x%08x-0x%08x]: Len: 0x%08x\r\n", src_addr, src_addr + split_size, target_addr, target_addr + split_size, split_size);
+        NRF_LOG_DEBUG("Finished copying [0x%08x-0x%08x] to [0x%08x-0x%08x]: Len: 0x%08x", src_addr, src_addr + split_size, target_addr, target_addr + split_size, split_size);
 
         // Validate copy. Size in words
         ret_val = nrf_dfu_mbr_compare((uint32_t*)target_addr, (uint32_t*)src_addr, split_size);
         if (ret_val != NRF_SUCCESS)
         {
-            NRF_LOG_ERROR("Failed to Compare SD: target: 0x%08x, src: 0x%08x, len: 0x%08x\r\n", target_addr, src_addr, split_size);
+            NRF_LOG_ERROR("Failed to Compare SD: target: 0x%08x, src: 0x%08x, len: 0x%08x", target_addr, src_addr, split_size);
             return ret_val;
         }
 
-        NRF_LOG_DEBUG("Validated 0x%08x-0x%08x to 0x%08x-0x%08x: Size: 0x%08x\r\n", src_addr, src_addr + split_size, target_addr, target_addr + split_size, split_size);
+        NRF_LOG_DEBUG("Validated 0x%08x-0x%08x to 0x%08x-0x%08x: Size: 0x%08x", src_addr, src_addr + split_size, target_addr, target_addr + split_size, split_size);
 
         target_addr += split_size;
         src_addr += split_size;
@@ -263,7 +287,7 @@ static uint32_t nrf_dfu_sd_continue_impl(uint32_t             src_addr,
             length_left -= split_size;
         }
 
-        NRF_LOG_DEBUG("Finished with the SD update.\r\n");
+        NRF_LOG_DEBUG("Finished with the SD update.");
 
         // Save the updated point of writes in case of power loss
         s_dfu_settings.write_offset = s_dfu_settings.sd_size - length_left;
@@ -274,28 +298,8 @@ static uint32_t nrf_dfu_sd_continue_impl(uint32_t             src_addr,
     return ret_val;
 }
 
-/**
- * @brief Flash storage callback used to reset the device if no new DFU is initiated within the timers expiration.
- *
- * After the completion of a SD, BL or SD + BL update, the controller might want to update the
- * application as well. Because of this, the DFU target will stay in bootloader mode for some
- * time after completion. However, if no such update is received the device should reset to
- * to look for a valid app and resume regular operation.
- */
-static void reset_device_callback( fs_evt_t const * const evt, fs_ret_t result )
-{
-    // Verify that the current application is valid.
-    if (nrf_dfu_app_is_valid())
-    {
-        // Start a timer which resets the device on expiration.
-        NRF_LOG_DEBUG("Starting reset delay timer\r\n");
-        uint32_t err_code = app_timer_start(nrf_dfu_utils_reset_delay_timer, APP_TIMER_TICKS(RESET_DELAY_LENGTH_MS), NULL);
-        APP_ERROR_CHECK(err_code);
-    }
-}
 
-
-/** @brief Function to continue SoftDevice update
+/** @brief Function to continue SoftDevice update.
  *
  * @details     This function will be called after reset if there is a valid SoftDevice in Bank0 or Bank1
  *          required to be relocated and activated through MBR commands.
@@ -304,10 +308,10 @@ static void reset_device_callback( fs_evt_t const * const evt, fs_ret_t result )
  * @param[in]       p_bank              Pointer to the bank where the SoftDevice resides.
  *
  * @retval NRF_SUCCESS Continuation was successful.
- * @retval NRF_ERROR_INVALID_LENGTH Invalid len
- * @retval NRF_ERROR_NO_MEM if UICR.NRFFW[1] is not set (i.e. is 0xFFFFFFFF).
- * @retval NRF_ERROR_INVALID_PARAM if an invalid command is given.
- * @retval NRF_ERROR_INTERNAL indicates that the contents of the memory blocks where not verified correctly after copying.
+ * @retval NRF_ERROR_INVALID_LENGTH Invalid length.
+ * @retval NRF_ERROR_NO_MEM If UICR.NRFFW[1] is not set (i.e. is 0xFFFFFFFF).
+ * @retval NRF_ERROR_INVALID_PARAM If an invalid command is given.
+ * @retval NRF_ERROR_INTERNAL Indicates that the contents of the memory blocks were not verified correctly after copying.
  * @retval NRF_ERROR_NULL If the content of the memory blocks differs after copying.
  */
 static uint32_t nrf_dfu_sd_continue(uint32_t             src_addr,
@@ -318,37 +322,37 @@ static uint32_t nrf_dfu_sd_continue(uint32_t             src_addr,
     ret_val = nrf_dfu_sd_continue_impl(src_addr, p_bank);
     if (ret_val != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("SD update continuation failed\r\n");
+        NRF_LOG_ERROR("SD update continuation failed");
         return ret_val;
     }
 
     nrf_dfu_invalidate_bank(p_bank);
 
-    // Upon successful completion, the callback function will be called and reset the device. If a valid app i present, it will launch.
-    NRF_LOG_DEBUG("Writing settings and reseting device.\r\n");
+    // Upon successful completion, the callback function will be called and reset the device. If a valid app is present, it will launch.
+    NRF_LOG_DEBUG("Writing settings and reseting device.");
     ret_val = nrf_dfu_settings_write(reset_device_callback);
 
     return ret_val;
 }
 #endif
 
-/** @brief Function to continue Bootloader update
+/** @brief Function to continue bootloader update.
  *
- * @details     This function will be called after reset if there is a valid Bootloader in Bank0 or Bank1
+ * @details     This function will be called after reset if there is a valid bootloader in Bank 0 or Bank 1
  *              required to be relocated and activated through MBR commands.
  *
  * @param[in]       src_addr            Source address of the BL to copy from.
  * @param[in]       p_bank              Pointer to the bank where the SoftDevice resides.
  *
- * @return This fucntion will not return if the bootloader is copied succesfully.
- *         After the copy is verified the device will reset and start the new bootloader.
+ * @return This function will not return if the bootloader is copied successfully.
+ *         After the copy is verified, the device will reset and start the new bootloader.
  *
  * @retval NRF_SUCCESS Continuation was successful.
  * @retval NRF_ERROR_INVALID_LENGTH Invalid length of flash operation.
- * @retval NRF_ERROR_NO_MEM if no parameter page is provided (see sds for more info).
- * @retval NRF_ERROR_INVALID_PARAM if an invalid command is given.
- * @retval NRF_ERROR_INTERNAL internal error that should not happen.
- * @retval NRF_ERROR_FORBIDDEN if NRF_UICR->BOOTADDR is not set.
+ * @retval NRF_ERROR_NO_MEM If no parameter page is provided (see sds for more info).
+ * @retval NRF_ERROR_INVALID_PARAM If an invalid command is given.
+ * @retval NRF_ERROR_INTERNAL Internal error that should not happen.
+ * @retval NRF_ERROR_FORBIDDEN If NRF_UICR->BOOTADDR is not set.
  */
 static uint32_t nrf_dfu_bl_continue(uint32_t src_addr, nrf_dfu_bank_t * p_bank)
 {
@@ -358,31 +362,30 @@ static uint32_t nrf_dfu_bl_continue(uint32_t src_addr, nrf_dfu_bank_t * p_bank)
     // if the update is a combination of BL + SD, offset with SD size to get BL start address
     src_addr += s_dfu_settings.sd_size;
 
-    NRF_LOG_DEBUG("Verifying BL: Addr: 0x%08x, Src: 0x%08x, Len: 0x%08x\r\n", MAIN_APPLICATION_START_ADDR, src_addr, len);
-
+    NRF_LOG_DEBUG("Verifying BL: Addr: 0x%08x, Src: 0x%08x, Len: 0x%08x", MAIN_APPLICATION_START_ADDR, src_addr, len);
 
     // If the bootloader is the same as the banked version, the copy is finished
     ret_val = nrf_dfu_mbr_compare((uint32_t*)BOOTLOADER_START_ADDR, (uint32_t*)src_addr, len);
     if (ret_val == NRF_SUCCESS)
     {
-        NRF_LOG_DEBUG("Bootloader was verified\r\n");
+        NRF_LOG_DEBUG("Bootloader was verified");
 
         // Invalidate bank, marking completion
         nrf_dfu_invalidate_bank(p_bank);
 
-        // Upon successful completion, the callback function will be called and reset the device. If a valid app i present, it will launch.
-        NRF_LOG_DEBUG("Writing settings and reseting device.\r\n");
+        // Upon successful completion, the callback function will be called and reset the device. If a valid app is present, it will launch.
+        NRF_LOG_DEBUG("Writing settings and reseting device.");
         ret_val = nrf_dfu_settings_write(reset_device_callback);
     }
     else
     {
-        NRF_LOG_DEBUG("Bootloader not verified, copying: Src: 0x%08x, Len: 0x%08x\r\n", src_addr, len);
+        NRF_LOG_DEBUG("Bootloader not verified, copying: Src: 0x%08x, Len: 0x%08x", src_addr, len);
         // Bootloader is different than the banked version. Continue copy
         // Note that if the SD and BL was combined, then the split point between them is in s_dfu_settings.sd_size
         ret_val = nrf_dfu_mbr_copy_bl((uint32_t*)src_addr, len);
-        if(ret_val != NRF_SUCCESS)
+        if (ret_val != NRF_SUCCESS)
         {
-            NRF_LOG_ERROR("Request to copy BL failed\r\n");
+            NRF_LOG_ERROR("Request to copy BL failed");
         }
     }
 
@@ -390,40 +393,40 @@ static uint32_t nrf_dfu_bl_continue(uint32_t src_addr, nrf_dfu_bank_t * p_bank)
 }
 
 
-/** @brief Function to continue combined Bootloader and SoftDevice update
+/** @brief Function to continue combined bootloader and SoftDevice update.
  *
- * @details     This function will be called after reset if there is a valid Bootloader and SoftDevice in Bank0 or Bank1
+ * @details     This function will be called after reset if there is a valid bootloader and SoftDevice in Bank 0 or Bank 1
  *              required to be relocated and activated through MBR commands.
  *
- * @param[in]       src_addr            Source address of the combined Bootloader and SoftDevice to copy from.
+ * @param[in]       src_addr            Source address of the combined bootloader and SoftDevice to copy from.
  * @param[in]       p_bank              Pointer to the bank where the SoftDevice resides.
  *
  * @retval NRF_SUCCESS Continuation was successful.
- * @retval NRF_ERROR_INVALID_LENGTH Invalid len
- * @retval NRF_ERROR_NO_MEM if UICR.NRFFW[1] is not set (i.e. is 0xFFFFFFFF).
- * @retval NRF_ERROR_INVALID_PARAM if an invalid command is given.
- * @retval NRF_ERROR_INTERNAL indicates that the contents of the memory blocks where not verified correctly after copying.
+ * @retval NRF_ERROR_INVALID_LENGTH Invalid length.
+ * @retval NRF_ERROR_NO_MEM If UICR.NRFFW[1] is not set (i.e. is 0xFFFFFFFF).
+ * @retval NRF_ERROR_INVALID_PARAM If an invalid command is given.
+ * @retval NRF_ERROR_INTERNAL Indicates that the contents of the memory blocks where not verified correctly after copying.
  * @retval NRF_ERROR_NULL If the content of the memory blocks differs after copying.
- * @retval NRF_ERROR_FORBIDDEN if NRF_UICR->BOOTADDR is not set.
+ * @retval NRF_ERROR_FORBIDDEN If NRF_UICR->BOOTADDR is not set.
  */
 #if defined(SOFTDEVICE_PRESENT)
 static uint32_t nrf_dfu_sd_bl_continue(uint32_t src_addr, nrf_dfu_bank_t * p_bank)
 {
     uint32_t ret_val = NRF_SUCCESS;
 
-    NRF_LOG_DEBUG("Enter nrf_dfu_sd_bl_continue\r\n");
+    NRF_LOG_DEBUG("Enter nrf_dfu_sd_bl_continue");
 
     ret_val = nrf_dfu_sd_continue_impl(src_addr, p_bank);
     if (ret_val != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("SD+BL: SD copy failed\r\n");
+        NRF_LOG_ERROR("SD+BL: SD copy failed");
         return ret_val;
     }
 
     ret_val = nrf_dfu_bl_continue(src_addr, p_bank);
     if (ret_val != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("SD+BL: BL copy failed\r\n");
+        NRF_LOG_ERROR("SD+BL: BL copy failed");
         return ret_val;
     }
 
@@ -438,16 +441,16 @@ static uint32_t nrf_dfu_continue_bank(nrf_dfu_bank_t * p_bank, uint32_t src_addr
     switch (p_bank->bank_code)
     {
        case NRF_DFU_BANK_VALID_APP:
-            NRF_LOG_DEBUG("Valid App\r\n");
+            NRF_LOG_DEBUG("Valid App");
             if(s_dfu_settings.bank_current == NRF_DFU_CURRENT_BANK_1)
             {
-                // Only continue copying if valid app in bank1
+                // Only continue copying if valid app in Bank 1
                 ret_val = nrf_dfu_app_continue(src_addr);
             }
             break;
 #if defined(SOFTDEVICE_PRESENT)
        case NRF_DFU_BANK_VALID_SD:
-            NRF_LOG_DEBUG("Valid SD\r\n");
+            NRF_LOG_DEBUG("Valid SD");
             // There is a valid SD that needs to be copied (or continued)
             ret_val = nrf_dfu_sd_continue(src_addr, p_bank);
             (*p_enter_dfu_mode) = 1;
@@ -455,29 +458,45 @@ static uint32_t nrf_dfu_continue_bank(nrf_dfu_bank_t * p_bank, uint32_t src_addr
 #endif
 
         case NRF_DFU_BANK_VALID_BL:
-            NRF_LOG_DEBUG("Valid BL\r\n");
+            NRF_LOG_DEBUG("Valid BL");
             // There is a valid BL that must be copied (or continued)
             ret_val = nrf_dfu_bl_continue(src_addr, p_bank);
             break;
 
 #if defined(SOFTDEVICE_PRESENT)
         case NRF_DFU_BANK_VALID_SD_BL:
-            NRF_LOG_DEBUG("Valid SD + BL\r\n");
+            NRF_LOG_DEBUG("Valid SD + BL");
             // There is a valid SD + BL that must be copied (or continued)
             ret_val = nrf_dfu_sd_bl_continue(src_addr, p_bank);
-            // Set the bank-code to invalid, and reset size/CRC
             (*p_enter_dfu_mode) = 1;
+            // Set the bank-code to invalid, and reset size/CRC
             break;
 #endif
 
         case NRF_DFU_BANK_INVALID:
         default:
-            NRF_LOG_ERROR("Single: Invalid bank\r\n");
+            NRF_LOG_ERROR("Single: Invalid bank");
             break;
     }
 
     return ret_val;
 }
+
+
+void nrf_dfu_reset_timeout_handler(void * p_context)
+{
+    UNUSED_PARAMETER(p_context);
+
+    NRF_LOG_DEBUG("DFU reset due to inactivity timeout.");
+
+#ifdef NRF_DFU_DEBUG_VERSION
+    NRF_LOG_FLUSH();
+    nrf_delay_ms(100);
+#endif
+
+    NVIC_SystemReset();
+}
+
 
 uint32_t nrf_dfu_continue(uint32_t * p_enter_dfu_mode)
 {
@@ -485,7 +504,7 @@ uint32_t nrf_dfu_continue(uint32_t * p_enter_dfu_mode)
     nrf_dfu_bank_t    * p_bank;
     uint32_t            src_addr = CODE_REGION_1_START;
 
-    NRF_LOG_DEBUG("Enter nrf_dfu_continue\r\n");
+    NRF_LOG_DEBUG("Enter nrf_dfu_continue");
 
     if (s_dfu_settings.bank_layout == NRF_DFU_BANK_LAYOUT_SINGLE )
     {
@@ -498,7 +517,7 @@ uint32_t nrf_dfu_continue(uint32_t * p_enter_dfu_mode)
     else
     {
         p_bank = &s_dfu_settings.bank_1;
-        src_addr += align_to_page(s_dfu_settings.bank_0.image_size, CODE_PAGE_SIZE);
+        src_addr += align_to_page(s_dfu_settings.bank_0.image_size);
     }
 
     ret_val = nrf_dfu_continue_bank(p_bank, src_addr, p_enter_dfu_mode);
@@ -508,15 +527,15 @@ uint32_t nrf_dfu_continue(uint32_t * p_enter_dfu_mode)
 
 bool nrf_dfu_app_is_valid(void)
 {
-    NRF_LOG_DEBUG("Enter nrf_dfu_app_is_valid\r\n");
+    NRF_LOG_DEBUG("Enter nrf_dfu_app_is_valid");
     if (s_dfu_settings.bank_0.bank_code != NRF_DFU_BANK_VALID_APP)
     {
        // Bank 0 has no valid app. Nothing to boot
-       NRF_LOG_DEBUG("Return false in valid app check\r\n");
+       NRF_LOG_DEBUG("Return false in valid app check");
        return false;
     }
 
-    // If CRC == 0, this means CRC check is skipped.
+    // If CRC == 0, the CRC check is skipped.
     if (s_dfu_settings.bank_0.image_crc != 0)
     {
         uint32_t crc = crc32_compute((uint8_t*) CODE_REGION_1_START,
@@ -526,12 +545,12 @@ bool nrf_dfu_app_is_valid(void)
         if (crc != s_dfu_settings.bank_0.image_crc)
         {
             // CRC does not match with what is stored.
-            NRF_LOG_DEBUG("Return false in CRC\r\n");
+            NRF_LOG_DEBUG("Return false in CRC");
             return  false;
         }
     }
 
-    NRF_LOG_DEBUG("Return true. App was valid\r\n");
+    NRF_LOG_DEBUG("Return true. App was valid");
     return true;
 }
 
@@ -541,26 +560,26 @@ uint32_t nrf_dfu_find_cache(uint32_t size_req, bool dual_bank_only, uint32_t * p
     uint32_t free_size =  DFU_REGION_TOTAL_SIZE - DFU_APP_DATA_RESERVED;
     nrf_dfu_bank_t * p_bank;
 
-    NRF_LOG_DEBUG("Enter nrf_dfu_find_cache\r\n");
+    NRF_LOG_DEBUG("Enter nrf_dfu_find_cache");
 
     if (p_address == NULL)
     {
         return NRF_ERROR_INVALID_PARAM;
     }
-    
-    // Simple check if size requirement can me met
+
+    // Simple check whether the size requirement can be met
     if(free_size < size_req)
     {
-        NRF_LOG_DEBUG("No way to fit the new firmware on device\r\n");
+        NRF_LOG_DEBUG("No way to fit the new firmware on device");
         return NRF_ERROR_NO_MEM;
     }
 
-    NRF_LOG_DEBUG("Bank content\r\n");
-    NRF_LOG_DEBUG("Bank type: %d\r\n", s_dfu_settings.bank_layout);
-    NRF_LOG_DEBUG("Bank 0 code: 0x%02x: Size: %d\r\n", s_dfu_settings.bank_0.bank_code, s_dfu_settings.bank_0.image_size);
-    NRF_LOG_DEBUG("Bank 1 code: 0x%02x: Size: %d\r\n", s_dfu_settings.bank_1.bank_code, s_dfu_settings.bank_1.image_size);
+    NRF_LOG_DEBUG("Bank content");
+    NRF_LOG_DEBUG("Bank type: %d", s_dfu_settings.bank_layout);
+    NRF_LOG_DEBUG("Bank 0 code: 0x%02x: Size: %d", s_dfu_settings.bank_0.bank_code, s_dfu_settings.bank_0.image_size);
+    NRF_LOG_DEBUG("Bank 1 code: 0x%02x: Size: %d", s_dfu_settings.bank_1.bank_code, s_dfu_settings.bank_1.image_size);
 
-    // Setting bank_0 as candidate
+    // Setting Bank 0 as candidate
     p_bank = &s_dfu_settings.bank_0;
 
     // Setting candidate address
@@ -571,19 +590,19 @@ uint32_t nrf_dfu_find_cache(uint32_t size_req, bool dual_bank_only, uint32_t * p
     {
         // Valid app present.
 
-        NRF_LOG_DEBUG("free_size before bank select: %d\r\n", free_size);
+        NRF_LOG_DEBUG("free_size before bank select: %d", free_size);
 
-        free_size -= align_to_page(p_bank->image_size, CODE_PAGE_SIZE);
+        free_size -= align_to_page(p_bank->image_size);
 
-        NRF_LOG_DEBUG("free_size: %d, size_req: %d\r\n", free_size, size_req);
+        NRF_LOG_DEBUG("free_size: %d, size_req: %d", free_size, size_req);
 
-        // Check if we can fit the new in the free space or if removal of old app is required.
-        if(size_req > free_size)
+        // Check if we can fit the new app in the free space or if removal of old app is required.
+        if (size_req > free_size)
         {
-            // Not enough room in free space (bank_1)
-            if ((dual_bank_only))
+            // Not enough room in free space (Bank 1)
+            if (dual_bank_only)
             {
-                NRF_LOG_ERROR("Failure: dual bank restriction\r\n");
+                NRF_LOG_ERROR("Failure: dual bank restriction");
                 return NRF_ERROR_NO_MEM;
             }
 
@@ -591,18 +610,18 @@ uint32_t nrf_dfu_find_cache(uint32_t size_req, bool dual_bank_only, uint32_t * p
             s_dfu_settings.bank_layout = NRF_DFU_BANK_LAYOUT_SINGLE;
             s_dfu_settings.bank_current = NRF_DFU_CURRENT_BANK_0;
             p_bank = &s_dfu_settings.bank_0;
-            NRF_LOG_DEBUG("Enforcing single bank\r\n");
+            NRF_LOG_DEBUG("Enforcing single bank");
         }
         else
         {
-            // Room in bank_1 for update
+            // Room in Bank 1 for update
             // Ensure we are using dual bank layout
             s_dfu_settings.bank_layout = NRF_DFU_BANK_LAYOUT_DUAL;
             s_dfu_settings.bank_current = NRF_DFU_CURRENT_BANK_1;
             p_bank = &s_dfu_settings.bank_1;
-            // Set to first free page boundry after previous app
-            (*p_address) += align_to_page(s_dfu_settings.bank_0.image_size, CODE_PAGE_SIZE);
-            NRF_LOG_DEBUG("Using second bank\r\n");
+            // Set to first free page boundary after previous app
+            (*p_address) += align_to_page(s_dfu_settings.bank_0.image_size);
+            NRF_LOG_DEBUG("Using second bank");
         }
     }
     else
@@ -612,7 +631,7 @@ uint32_t nrf_dfu_find_cache(uint32_t size_req, bool dual_bank_only, uint32_t * p
         s_dfu_settings.bank_current = NRF_DFU_CURRENT_BANK_0;
 
         p_bank = &s_dfu_settings.bank_0;
-        NRF_LOG_DEBUG("No previous, using bank 0\r\n");
+        NRF_LOG_DEBUG("No previous, using bank 0");
     }
 
     // Set the bank-code to invalid, and reset size/CRC

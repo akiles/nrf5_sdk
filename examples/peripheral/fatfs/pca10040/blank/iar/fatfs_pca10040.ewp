@@ -181,16 +181,6 @@
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
-          <state>NRF52_PAN_12</state>
-          <state>NRF52_PAN_15</state>
-          <state>NRF52_PAN_20</state>
-          <state>NRF52_PAN_31</state>
-          <state>NRF52_PAN_36</state>
-          <state>NRF52_PAN_51</state>
-          <state>NRF52_PAN_54</state>
-          <state>NRF52_PAN_55</state>
-          <state>NRF52_PAN_58</state>
-          <state>NRF52_PAN_64</state>
           <state>NRF52_PAN_74</state>
         </option>
         <option>
@@ -320,7 +310,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\..\..\..\config\fatfs_pca10040</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
@@ -330,12 +319,16 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_master</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\block_dev</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\block_dev\sdc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sdcard</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
@@ -345,6 +338,7 @@
           <state>$PROJ_DIR$\..\..\..</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\fatfs\port</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\fatfs\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\protothreads</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\protothreads\pt-1.4</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
@@ -511,16 +505,6 @@
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
-          <state>NRF52_PAN_12</state>
-          <state>NRF52_PAN_15</state>
-          <state>NRF52_PAN_20</state>
-          <state>NRF52_PAN_31</state>
-          <state>NRF52_PAN_36</state>
-          <state>NRF52_PAN_51</state>
-          <state>NRF52_PAN_54</state>
-          <state>NRF52_PAN_55</state>
-          <state>NRF52_PAN_58</state>
-          <state>NRF52_PAN_64</state>
           <state>NRF52_PAN_74</state>
         </option>
         <option>
@@ -617,7 +601,6 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$\..\..\..\config\fatfs_pca10040</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
@@ -627,12 +610,16 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_master</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\block_dev</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\block_dev\sdc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sdcard</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
@@ -642,6 +629,7 @@
           <state>$PROJ_DIR$\..\..\..</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\fatfs\port</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\fatfs\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\protothreads</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\protothreads\pt-1.4</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
@@ -1030,8 +1018,12 @@
     </settings>
   </configuration>  <group>
   <name>nRF_Log</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_backend_serial.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_frontend.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_rtt.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_serial.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_uart.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_default_backends.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_frontend.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_str_formatter.c</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Libraries</name>    <file>
@@ -1042,7 +1034,11 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc\nrf_balloc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\block_dev\sdc\nrf_block_dev_sdc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf\nrf_fprintf.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf\nrf_fprintf_format.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj\nrf_memobj.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>    </file>    <file>

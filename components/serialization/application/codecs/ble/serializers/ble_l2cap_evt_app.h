@@ -77,6 +77,46 @@ uint32_t ble_l2cap_evt_rx_dec(uint8_t const * const p_buf,
                               ble_evt_t * const     p_event,
                               uint32_t * const      p_event_len);
 
+uint32_t ble_l2cap_evt_ch_setup_request_dec(uint8_t const * const p_buf,
+                              uint32_t              packet_len,
+                              ble_evt_t * const     p_event,
+                              uint32_t * const      p_event_len);
+
+uint32_t ble_l2cap_evt_ch_setup_refused_dec(uint8_t const * const p_buf,
+                              uint32_t              packet_len,
+                              ble_evt_t * const     p_event,
+                              uint32_t * const      p_event_len);
+
+uint32_t ble_l2cap_evt_ch_setup_dec(uint8_t const * const p_buf,
+                              uint32_t              packet_len,
+                              ble_evt_t * const     p_event,
+                              uint32_t * const      p_event_len);
+
+uint32_t ble_l2cap_evt_ch_released_dec(uint8_t const * const p_buf,
+                              uint32_t              packet_len,
+                              ble_evt_t * const     p_event,
+                              uint32_t * const      p_event_len);
+
+uint32_t ble_l2cap_evt_ch_sdu_buf_released_dec(uint8_t const * const p_buf,
+                              uint32_t              packet_len,
+                              ble_evt_t * const     p_event,
+                              uint32_t * const      p_event_len);
+
+uint32_t ble_l2cap_evt_ch_credit_dec(uint8_t const * const p_buf,
+                              uint32_t              packet_len,
+                              ble_evt_t * const     p_event,
+                              uint32_t * const      p_event_len);
+
+uint32_t ble_l2cap_evt_ch_rx_dec(uint8_t const * const p_buf,
+                              uint32_t              packet_len,
+                              ble_evt_t * const     p_event,
+                              uint32_t * const      p_event_len);
+
+
+uint32_t ble_l2cap_evt_ch_tx_dec(uint8_t const * const p_buf,
+                              uint32_t              packet_len,
+                              ble_evt_t * const     p_event,
+                              uint32_t * const      p_event_len);
 /** @} */
 
 #ifdef __cplusplus

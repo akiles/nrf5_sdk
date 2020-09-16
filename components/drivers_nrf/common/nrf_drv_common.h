@@ -321,7 +321,7 @@ __STATIC_INLINE IRQn_Type nrf_drv_get_IRQn(void const * const pinst)
 #if NRF_MODULE_ENABLED(CLOCK) || NRF_MODULE_ENABLED(POWER)
 __STATIC_INLINE void nrf_drv_common_power_clock_irq_init(void)
 {
-    if(!nrf_drv_common_irq_enable_check(POWER_CLOCK_IRQn))
+    if (!nrf_drv_common_irq_enable_check(POWER_CLOCK_IRQn))
     {
         nrf_drv_common_irq_enable(
             POWER_CLOCK_IRQn,

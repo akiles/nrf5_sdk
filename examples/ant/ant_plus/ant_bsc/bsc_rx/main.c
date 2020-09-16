@@ -62,31 +62,23 @@
  * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
  */
 
-#include <string.h>
-#include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
-#include "app_error.h"
+#include "nrf.h"
 #include "bsp.h"
 #include "hardfault.h"
+#include "app_error.h"
 #include "app_timer.h"
-#include "ant_stack_config.h"
-#include "softdevice_handler.h"
-#include "ant_bsc.h"
+#include "nrf_pwr_mgmt.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 #include "ant_key_manager.h"
-#include "ant_state_indicator.h"
+#include "ant_bsc.h"
 #include "bsp_btn_ant.h"
+#include "ant_state_indicator.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
-
-#define BSC_CHANNEL_NUMBER          0x00                                                            /**< Channel number assigned to BSC profile. */
-
-#define WILDCARD_TRANSMISSION_TYPE  0x00                                                            /**< Wildcard transmission type. */
-#define WILDCARD_DEVICE_NUMBER      0x00                                                            /**< Wildcard device number. */
-
-#define ANTPLUS_NETWORK_NUMBER      0x00                                                            /**< Network number. */
+#include "nrf_log_default_backends.h"
 
 #define WHEEL_CIRCUMFERENCE         2070                                                            /**< Bike wheel circumference [mm] */
 #define BSC_EVT_TIME_FACTOR         1024                                                            /**< Time unit factor for BSC events */
@@ -97,6 +89,8 @@
 #define SPEED_COEFFICIENT           (WHEEL_CIRCUMFERENCE * BSC_EVT_TIME_FACTOR * BSC_MS_TO_KPH_NUM \
                                      / BSC_MS_TO_KPH_DEN / BSC_MM_TO_M_FACTOR)                      /**< Coefficient for speed value calculation */
 #define CADENCE_COEFFICIENT         (BSC_EVT_TIME_FACTOR * BSC_RPM_TIME_FACTOR)                     /**< Coefficient for cadence value calculation */
+
+#define APP_ANT_OBSERVER_PRIO       1                                                               /**< Application's ANT observer priority. You shouldn't need to modify this value. */
 
 typedef struct
 {
@@ -111,45 +105,27 @@ typedef struct
 static bsc_disp_calc_data_t m_speed_calc_data   = {0};
 static bsc_disp_calc_data_t m_cadence_calc_data = {0};
 
-/**@brief Application ANT event handler.
- *
- * @details This function is used to detect disconnection from the sensor device.
- *
- * @param[in] p_ant_evt  Pointer to ANT stack event structure.
- */
-static void on_ant_evt(ant_evt_t * p_ant_event);
-
 /** @snippet [ANT BSC RX Instance] */
 void ant_bsc_evt_handler(ant_bsc_profile_t * p_profile, ant_bsc_evt_t event);
 
 BSC_DISP_CHANNEL_CONFIG_DEF(m_ant_bsc,
-                            BSC_CHANNEL_NUMBER,
-                            WILDCARD_TRANSMISSION_TYPE,
+                            BSC_CHANNEL_NUM,
+                            CHAN_ID_TRANS_TYPE,
                             DISPLAY_TYPE,
-                            WILDCARD_DEVICE_NUMBER,
-                            ANTPLUS_NETWORK_NUMBER,
+                            CHAN_ID_DEV_NUM,
+                            ANTPLUS_NETWORK_NUM,
                             BSC_MSG_PERIOD_4Hz);
 BSC_DISP_PROFILE_CONFIG_DEF(m_ant_bsc,
                             ant_bsc_evt_handler);
-ant_bsc_profile_t m_ant_bsc;
+
+static ant_bsc_profile_t m_ant_bsc;
+
+NRF_SDH_ANT_OBSERVER(m_bsc_ant_observer, ANT_BSC_ANT_OBSERVER_PRIO,
+                     ant_bsc_disp_evt_handler, &m_ant_bsc);
+
 /** @snippet [ANT BSC RX Instance] */
 
-/**@brief Function for dispatching a ANT stack event to all modules with a ANT stack event handler.
- *
- * @details This function is called from the ANT Stack event interrupt handler after a ANT stack
- *          event has been received.
- *
- * @param[in] p_ant_evt  ANT stack event.
- */
-void ant_evt_dispatch(ant_evt_t * p_ant_evt)
-{
-    ant_bsc_disp_evt_handler(&m_ant_bsc, p_ant_evt);
-    ant_state_indicator_evt_handler(p_ant_evt);
-    bsp_btn_ant_on_ant_evt(p_ant_evt);
-    on_ant_evt(p_ant_evt);
-}
-
-__STATIC_INLINE uint32_t calculate_speed(int32_t rev_cnt, int32_t evt_time)
+static uint32_t calculate_speed(int32_t rev_cnt, int32_t evt_time)
 {
     static uint32_t computed_speed   = 0;
 
@@ -179,7 +155,7 @@ __STATIC_INLINE uint32_t calculate_speed(int32_t rev_cnt, int32_t evt_time)
         m_speed_calc_data.prev_acc_evt_time = m_speed_calc_data.acc_evt_time;
     }
 
-    return (uint32_t) computed_speed;
+    return (uint32_t)computed_speed;
 }
 
 static uint32_t calculate_cadence(int32_t rev_cnt, int32_t evt_time)
@@ -212,12 +188,17 @@ static uint32_t calculate_cadence(int32_t rev_cnt, int32_t evt_time)
         m_cadence_calc_data.prev_acc_evt_time = m_cadence_calc_data.acc_evt_time;
     }
 
-    return (uint32_t) computed_cadence;
+    return (uint32_t)computed_cadence;
 }
 
-static void on_ant_evt(ant_evt_t * p_ant_event)
+/**@brief Function for handling a ANT stack event.
+ *
+ * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
+ */
+static void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
-    switch (p_ant_event->event)
+    switch (p_ant_evt->event)
     {
         case EVENT_RX_FAIL_GO_TO_SEARCH:
             /* Reset speed and cadence values */
@@ -231,9 +212,10 @@ static void on_ant_evt(ant_evt_t * p_ant_event)
     }
 }
 
+NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_evt_handler, NULL);
+
 void ant_bsc_evt_handler(ant_bsc_profile_t * p_profile, ant_bsc_evt_t event)
 {
-
     switch (event)
     {
         case ANT_BSC_PAGE_0_UPDATED:
@@ -248,27 +230,26 @@ void ant_bsc_evt_handler(ant_bsc_profile_t * p_profile, ant_bsc_evt_t event)
             /* fall through */
         case ANT_BSC_PAGE_5_UPDATED:
             /* Log computed value */
-            NRF_LOG_RAW_INFO("\r\n");
 
             if (DISPLAY_TYPE == BSC_SPEED_DEVICE_TYPE)
             {
-                NRF_LOG_INFO("Computed speed value:                 %u kph\r\n\n",
+                NRF_LOG_INFO("Computed speed value:                 %u kph",
                               (unsigned int) calculate_speed(p_profile->BSC_PROFILE_rev_count,
                                                              p_profile->BSC_PROFILE_event_time));
             }
             else if (DISPLAY_TYPE == BSC_CADENCE_DEVICE_TYPE)
             {
-                NRF_LOG_INFO("Computed cadence value:               %u rpm\r\n\n",
+                NRF_LOG_INFO("Computed cadence value:               %u rpm",
                               (unsigned int) calculate_cadence(p_profile->BSC_PROFILE_rev_count,
                                                                p_profile->BSC_PROFILE_event_time));
             }
             break;
 
         case ANT_BSC_COMB_PAGE_0_UPDATED:
-            NRF_LOG_INFO("Computed speed value:                         %u kph\r\n",
+            NRF_LOG_INFO("Computed speed value:                         %u kph",
                           (unsigned int) calculate_speed(p_profile->BSC_PROFILE_speed_rev_count,
                                                          p_profile->BSC_PROFILE_speed_event_time));
-            NRF_LOG_INFO("Computed cadence value:                       %u rpm\r\n\n",
+            NRF_LOG_INFO("Computed cadence value:                       %u rpms",
                           (unsigned int) calculate_cadence(p_profile->BSC_PROFILE_cadence_rev_count,
                                                            p_profile->BSC_PROFILE_cadence_event_time));
             break;
@@ -287,7 +268,7 @@ void bsp_event_handler(bsp_event_t event)
     switch (event)
     {
         case BSP_EVENT_SLEEP:
-            ant_state_indicator_sleep_mode_enter();
+            nrf_pwr_mgmt_shutdown(NRF_PWR_MGMT_SHUTDOWN_GOTO_SYSOFF);
             break;
 
         default:
@@ -295,14 +276,42 @@ void bsp_event_handler(bsp_event_t event)
     }
 }
 
+/**
+ * @brief Function for shutdown events.
+ *
+ * @param[in]   event       Shutdown type.
+ */
+static bool shutdown_handler(nrf_pwr_mgmt_evt_t event)
+{
+    ret_code_t err_code;
+
+    switch (event)
+    {
+        case NRF_PWR_MGMT_EVT_PREPARE_WAKEUP:
+            err_code = bsp_btn_ant_sleep_mode_prepare();
+            APP_ERROR_CHECK(err_code);
+            break;
+
+        default:
+            break;
+    }
+
+    return true;
+}
+
+NRF_PWR_MGMT_HANDLER_REGISTER(shutdown_handler,  APP_SHUTDOWN_HANDLER_PRIORITY);
+
 /**@brief Function for the Timer, Tracer and BSP initialization.
  */
 static void utils_setup(void)
 {
-    uint32_t err_code;
-
-    err_code = NRF_LOG_INIT(NULL);
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
@@ -311,7 +320,10 @@ static void utils_setup(void)
                         bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 
-    err_code = bsp_btn_ant_init();
+    err_code = bsp_btn_ant_init(m_ant_bsc.channel_number, BSC_DISP_CHANNEL_TYPE);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = ant_state_indicator_init(m_ant_bsc.channel_number, BSC_DISP_CHANNEL_TYPE);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -322,20 +334,15 @@ static void utils_setup(void)
  */
 static void softdevice_setup(void)
 {
-    uint32_t err_code;
-
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
+    ret_code_t err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
+    ASSERT(nrf_sdh_is_enabled());
+
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 
-    err_code = ant_stack_static_config();
-    APP_ERROR_CHECK(err_code);
-
-    err_code = ant_plus_key_set(ANTPLUS_NETWORK_NUMBER);
+    err_code = ant_plus_key_set(ANTPLUS_NETWORK_NUM);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -362,25 +369,18 @@ static void profile_setup(void)
 /** @snippet [ANT BSC RX Profile Setup] */
 }
 
-
 /**@brief Function for application main entry, does not return.
  */
 int main(void)
 {
-    uint32_t err_code;
-
     utils_setup();
     softdevice_setup();
-    ant_state_indicator_init(m_ant_bsc.channel_number, BSC_DISP_CHANNEL_TYPE);
     profile_setup();
 
-    for (;; )
+    for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            err_code = sd_app_evt_wait();
-            APP_ERROR_CHECK(err_code);
-        }
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }
 

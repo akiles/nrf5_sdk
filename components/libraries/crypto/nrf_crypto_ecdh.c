@@ -50,12 +50,12 @@
 uint32_t nrf_crypto_ecdh_shared_secret_size_get(nrf_ecc_curve_type_t    curve_type,
                                                 uint32_t              * p_size)
 {
-    if(p_size == NULL)
+    if (p_size == NULL)
     {
         return NRF_ERROR_NULL;
     }
 
-    switch(curve_type)
+    switch (curve_type)
     {
         case NRF_CRYPTO_CURVE_SECP160R1:
             (*p_size)= NRF_CRYPTO_ECDH_SHARED_SECRET_SIZE_SECP160R1;

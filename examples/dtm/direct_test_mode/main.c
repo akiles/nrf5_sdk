@@ -102,7 +102,7 @@ static void uart_init(void)
 
 
 /**@brief Function for splitting UART command bit fields into separate command parameters for the DTM library.
-*
+ *
  * @param[in]   command   The packed UART command.
  * @return      result status from dtmlib.
  */
@@ -113,16 +113,6 @@ static uint32_t dtm_cmd_put(uint16_t command)
     uint32_t       length       = (command >> 2) & 0x3F;
     dtm_pkt_type_t payload      = command & 0x03;
 
-    // Check for Vendor Specific payload.
-    if (payload == 0x03)
-    {
-        /* Note that in a HCI adaption layer, as well as in the DTM PDU format,
-           the value 0x03 is a distinct bit pattern (PRBS15). Even though BLE does not
-           support PRBS15, this implementation re-maps 0x03 to DTM_PKT_VENDORSPECIFIC,
-           to avoid the risk of confusion, should the code be extended to greater coverage.
-        */
-        payload = DTM_PKT_VENDORSPECIFIC;
-    }
     return dtm_cmd(command_code, freq, length, payload);
 }
 

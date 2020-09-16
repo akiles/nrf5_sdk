@@ -54,26 +54,29 @@
 #include "nrf_dfu.h"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 #include "app_error.h"
 #include "app_error_weak.h"
 #include "nrf_bootloader_info.h"
 
+#define BOOTLOADER_BUTTON   (BSP_BUTTON_3)      /**< Button for entering DFU mode. */
+
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
-    NRF_LOG_ERROR("Received a fault! id: 0x%08x, pc: 0x&08x\r\n", id, pc);
+    NRF_LOG_ERROR("Received a fault! id: 0x%08x, pc: 0x%08x, info: 0x%08x", id, pc, info);
     NVIC_SystemReset();
 }
+
 
 void app_error_handler_bare(uint32_t error_code)
 {
     (void)error_code;
-    NRF_LOG_ERROR("Received an error: 0x%08x!\r\n", error_code);
+    NRF_LOG_ERROR("Received an error: 0x%08x!", error_code);
     NVIC_SystemReset();
 }
 
 
-/**@brief Function for initialization of LEDs.
- */
+/**@brief Function for initialization of LEDs. */
 static void leds_init(void)
 {
     bsp_board_leds_init();
@@ -81,8 +84,7 @@ static void leds_init(void)
 }
 
 
-/**@brief Function for initializing the button module.
- */
+/**@brief Function for initializing the button module. */
 static void buttons_init(void)
 {
     nrf_gpio_cfg_sense_input(BOOTLOADER_BUTTON,
@@ -91,15 +93,28 @@ static void buttons_init(void)
 }
 
 
-/**@brief Function for application main entry.
+/**@brief Implementation to use button press to enter bootloader
  */
+bool nrf_dfu_button_enter_check(void)
+{
+    if (nrf_gpio_pin_read(BOOTLOADER_BUTTON) == 0)
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+
+/**@brief Function for application main entry. */
 int main(void)
 {
     uint32_t ret_val;
 
     (void) NRF_LOG_INIT(NULL);
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("Inside main\r\n");
+    NRF_LOG_INFO("Inside main");
 
     leds_init();
     buttons_init();
@@ -113,7 +128,7 @@ int main(void)
     nrf_bootloader_app_start(MAIN_APPLICATION_START_ADDR);
 
     // Should never be reached.
-    NRF_LOG_INFO("After main\r\n");
+    NRF_LOG_INFO("After main");
 }
 
 /**

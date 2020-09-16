@@ -60,6 +60,12 @@
 extern "C" {
 #endif
 
+#if defined(POWER_RAMSTATUS_RAMBLOCK0_Msk)
+#define NRF_POWER_HAS_RAMSTATUS 1
+#else
+#define NRF_POWER_HAS_RAMSTATUS 0
+#endif
+
 /**
  * @name The implemented functionality
  * @{
@@ -318,7 +324,7 @@ bool nrf_power_event_check(nrf_power_event_t event)
 bool nrf_power_event_get_and_clear(nrf_power_event_t event)
 {
     bool ret = nrf_power_event_check(event);
-    if(ret)
+    if (ret)
     {
         nrf_power_event_clear(event);
     }
@@ -371,7 +377,9 @@ typedef enum
     NRF_POWER_RESETREAS_SREQ_MASK     = POWER_RESETREAS_SREQ_Msk    , /*!< Bit mask of SREQ field. */    //!< NRF_POWER_RESETREAS_SREQ_MASK
     NRF_POWER_RESETREAS_LOCKUP_MASK   = POWER_RESETREAS_LOCKUP_Msk  , /*!< Bit mask of LOCKUP field. */  //!< NRF_POWER_RESETREAS_LOCKUP_MASK
     NRF_POWER_RESETREAS_OFF_MASK      = POWER_RESETREAS_OFF_Msk     , /*!< Bit mask of OFF field. */     //!< NRF_POWER_RESETREAS_OFF_MASK
+#if defined(POWER_RESETREAS_LPCOMP_Msk) || defined(__SDK_DOXYGEN__)
     NRF_POWER_RESETREAS_LPCOMP_MASK   = POWER_RESETREAS_LPCOMP_Msk  , /*!< Bit mask of LPCOMP field. */  //!< NRF_POWER_RESETREAS_LPCOMP_MASK
+#endif
     NRF_POWER_RESETREAS_DIF_MASK      = POWER_RESETREAS_DIF_Msk     , /*!< Bit mask of DIF field. */     //!< NRF_POWER_RESETREAS_DIF_MASK
 #if defined(POWER_RESETREAS_NFC_Msk) || defined(__SDK_DOXYGEN__)
     NRF_POWER_RESETREAS_NFC_MASK      = POWER_RESETREAS_NFC_Msk     , /*!< Bit mask of NFC field. */
@@ -394,6 +402,7 @@ typedef enum
 }nrf_power_usbregstatus_mask_t;
 #endif
 
+#if NRF_POWER_HAS_RAMSTATUS
 /**
  * @brief RAM blocks numbers
  *
@@ -418,6 +427,7 @@ typedef enum
  *
  * @sa nrf_power_ramblock_t
  */
+
 typedef enum
 {
     NRF_POWER_RAMBLOCK0_MASK = POWER_RAMSTATUS_RAMBLOCK0_Msk,
@@ -425,6 +435,7 @@ typedef enum
     NRF_POWER_RAMBLOCK2_MASK = POWER_RAMSTATUS_RAMBLOCK2_Msk,
     NRF_POWER_RAMBLOCK3_MASK = POWER_RAMSTATUS_RAMBLOCK3_Msk
 }nrf_power_ramblock_mask_t;
+#endif // NRF_POWER_HAS_RAMSTATUS
 
 /**
  * @brief RAM power state position of the bits
@@ -634,6 +645,7 @@ __STATIC_INLINE uint32_t nrf_power_resetreas_get(void);
  */
 __STATIC_INLINE void nrf_power_resetreas_clear(uint32_t mask);
 
+#if NRF_POWER_HAS_RAMSTATUS
 /**
  * @brief Get RAMSTATUS register
  *
@@ -642,6 +654,7 @@ __STATIC_INLINE void nrf_power_resetreas_clear(uint32_t mask);
  * @return Value with bits sets according to masks in @ref nrf_power_ramblock_mask_t.
  */
 __STATIC_INLINE uint32_t nrf_power_ramstatus_get(void);
+#endif // NRF_POWER_HAS_RAMSTATUS
 
 /**
  * @brief Go to system OFF
@@ -864,20 +877,22 @@ __STATIC_INLINE void nrf_power_resetreas_clear(uint32_t mask)
     NRF_POWER->RESETREAS = mask;
 }
 
+#if NRF_POWER_HAS_RAMSTATUS
 __STATIC_INLINE uint32_t nrf_power_ramstatus_get(void)
 {
     return NRF_POWER->RAMSTATUS;
 }
+#endif // NRF_POWER_HAS_RAMSTATUS
 
 __STATIC_INLINE void nrf_power_system_off(void)
 {
     NRF_POWER->SYSTEMOFF = POWER_SYSTEMOFF_SYSTEMOFF_Enter;
-    /* Solution for simulated System OFF in debug mode.
-     * Also, because dead loop is placed here, we do not need to implement
-     * any barriers here. */
-    while(true)
+    __DSB();
+
+    /* Solution for simulated System OFF in debug mode */
+    while (true)
     {
-        /* Intentionally empty - we would be here only in debug mode */
+        __WFE();
     }
 }
 
@@ -904,7 +919,7 @@ __STATIC_INLINE void nrf_power_pofcon_set(bool enabled, nrf_power_pof_thr_t thr)
 __STATIC_INLINE nrf_power_pof_thr_t nrf_power_pofcon_get(bool * p_enabled)
 {
     uint32_t pofcon = NRF_POWER->POFCON;
-    if(NULL != p_enabled)
+    if (NULL != p_enabled)
     {
         (*p_enabled) = ((pofcon & POWER_POFCON_POF_Msk) >> POWER_POFCON_POF_Pos)
             == POWER_POFCON_POF_Enabled;

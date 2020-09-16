@@ -52,15 +52,16 @@
 #include "nrf_soc.h"
 #include "app_error.h"
 #include "app_scheduler.h"
-#include "softdevice_handler.h"
+#include "nrf_sdh.h"
 #include "ser_hal_transport.h"
 #include "ser_conn_handlers.h"
 #include "boards.h"
 #include "nrf_drv_clock.h"
 
-#define NRF_LOG_MODULE_NAME "CONN"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
+NRF_LOG_MODULE_REGISTER();
 
 #include "ser_phy_debug_comm.h"
 
@@ -79,7 +80,10 @@ int main(void)
     {}
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
-    NRF_LOG_INFO("BLE connectivity started\r\n");
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    NRF_LOG_INFO("BLE connectivity started");
 
 #if (defined(SER_PHY_HCI_DEBUG_ENABLE) || defined(SER_PHY_DEBUG_APP_ENABLE))
     debug_init(NULL);
@@ -89,16 +93,14 @@ int main(void)
     NRF_POWER->TASKS_CONSTLAT = 1;
 
     /* Initialize scheduler queue. */
+    //lint -save -e666
     APP_SCHED_INIT(SER_CONN_SCHED_MAX_EVENT_DATA_SIZE, SER_CONN_SCHED_QUEUE_SIZE);
+    //lint -restore
+
     /* Initialize SoftDevice.
      * SoftDevice Event IRQ is not scheduled but immediately copies BLE events to the application
      * scheduler queue */
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
-
-
-    /* Subscribe for BLE events. */
-    err_code = softdevice_ble_evt_handler_set(ser_conn_ble_event_handle);
+    err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
     /* Open serialization HAL Transport layer and subscribe for HAL Transport events. */
@@ -110,12 +112,12 @@ int main(void)
     {
         /* Process SoftDevice events. */
         app_sched_execute();
-        if (softdevice_handler_is_suspended())
+        if (nrf_sdh_is_suspended())
         {
             // Resume pulling new events if queue utilization drops below 50%.
             if (app_sched_queue_space_get() > (SER_CONN_SCHED_QUEUE_SIZE >> 1))
             {
-                softdevice_handler_resume();
+                nrf_sdh_resume();
             }
         }
 

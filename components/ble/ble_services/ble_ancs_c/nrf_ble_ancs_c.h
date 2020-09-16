@@ -103,8 +103,13 @@
  * |||;
  * @endmsc
  *
- * @note The application must propagate BLE stack events to this module
- *       by calling ble_ancs_c_on_ble_evt() from the @ref softdevice_handler callback.
+ * @note    The application must register this module as BLE event observer using the
+ *          NRF_SDH_BLE_OBSERVER macro. Example:
+ *          @code
+ *              ble_ancs_c_t instance;
+ *              NRF_SDH_BLE_OBSERVER(anything, BLE_ANCS_C_BLE_OBSERVER_PRIO,
+ *                                   ble_ancs_c_on_ble_evt, &instance);
+ *          @endcode
  */
 #ifndef BLE_ANCS_C_H__
 #define BLE_ANCS_C_H__
@@ -113,10 +118,23 @@
 #include "ble_srv_common.h"
 #include "sdk_errors.h"
 #include "ble_db_discovery.h"
+#include "nrf_sdh_ble.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**@brief   Macro for defining a ble_ancs_c instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_ANCS_C_DEF(_name)                                                                       \
+static ble_ancs_c_t _name;                                                                          \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     BLE_ANCS_C_BLE_OBSERVER_PRIO,                                                  \
+                     ble_ancs_c_on_ble_evt, &_name)
+
 #define BLE_ANCS_ATTR_DATA_MAX              32  //!< Maximum data length of an iOS notification attribute.
 #define BLE_ANCS_NB_OF_CATEGORY_ID          12  //!< Number of iOS notification categories: Other, Incoming Call, Missed Call, Voice Mail, Social, Schedule, Email, News, Health And Fitness, Business And Finance, Location, Entertainment.
 #define BLE_ANCS_NB_OF_NOTIF_ATTR           8   //!< Number of iOS notification attributes: AppIdentifier, Title, Subtitle, Message, MessageSize, Date, PositiveActionLabel, NegativeActionLabel.
@@ -145,11 +163,12 @@ extern "C" {
 
 /** @defgroup BLE_ANCS_NP_ERROR_CODES Notification Provider (iOS) Error Codes
  * @{ */
-#define BLE_ANCS_NP_UNKNOWN_COMMAND            0x01A0  //!< The command ID is unknown to the NP.
-#define BLE_ANCS_NP_INVALID_COMMAND            0x01A1  //!< The command format is invalid.
-#define BLE_ANCS_NP_INVALID_PARAMETER          0x01A2  //!< One or more parameters does not exist in the NP.
-#define BLE_ANCS_NP_ACTION_FAILED              0x01A3  //!< The action failed to be performed by the NP.
+#define BLE_ANCS_NP_UNKNOWN_COMMAND         0x01A0  //!< The command ID is unknown to the NP.
+#define BLE_ANCS_NP_INVALID_COMMAND         0x01A1  //!< The command format is invalid.
+#define BLE_ANCS_NP_INVALID_PARAMETER       0x01A2  //!< One or more parameters does not exist in the NP.
+#define BLE_ANCS_NP_ACTION_FAILED           0x01A3  //!< The action failed to be performed by the NP.
 /** @} */
+
 
 /**@brief Event types that are passed from client to application on an event. */
 typedef enum
@@ -225,7 +244,6 @@ typedef enum
     BLE_ANCS_NOTIF_ATTR_ID_NEGATIVE_ACTION_LABEL,  /**< The notification has a "Negative action" that can be executed associated with it. */
 } ble_ancs_c_notif_attr_id_val_t;
 
-
 /**@brief Flags for iOS notifications. */
 typedef struct
 {
@@ -236,9 +254,7 @@ typedef struct
     uint8_t negative_action : 1;  //!< If this flag is set, the notification has a negative action that can be taken.
 } ble_ancs_c_notif_flags_t;
 
-
-/**@brief Parsing states for received iOS notification and app attributes.
- */
+/**@brief Parsing states for received iOS notification and app attributes. */
 typedef enum
 {
     COMMAND_ID,    /**< Parsing the command ID. */
@@ -252,7 +268,6 @@ typedef enum
     DONE,          /**< Parsing for one attribute is done. */
 } ble_ancs_c_parse_state_t;
 
-
 /**@brief iOS notification structure. */
 typedef struct
 {
@@ -262,7 +277,6 @@ typedef struct
     ble_ancs_c_category_id_val_t    category_id;     //!< Classification of the notification type, for example, email or location.
     uint8_t                         category_count;  //!< Current number of active notifications for this category ID.
 } ble_ancs_c_evt_notif_t;
-
 
 /**@brief iOS attribute structure. This type is used for both notification attributes and app attributes. */
 typedef struct
@@ -295,7 +309,6 @@ typedef struct
     uint8_t                         * p_attr_data;  //!< Pointer to where the memory is allocated for storing incoming attributes.
 } ble_ancs_c_attr_list_t;
 
-
 /**@brief Structure used for holding the Apple Notification Center Service found during the
           discovery process.
  */
@@ -308,7 +321,6 @@ typedef struct
     ble_gattc_char_t    data_source_char;   //!< ANCS Data Source Characteristic, where attribute data for the notifications is received from peer (0xC6E9).
     ble_gattc_desc_t    data_source_cccd;   //!< ANCS Data Source Characteristic Descriptor. Enables or disables GATT notifications.
 } ble_ancs_c_service_t;
-
 
 /**@brief ANCS client module event structure.
  *
@@ -326,10 +338,8 @@ typedef struct
     ble_ancs_c_service_t   service;                        //!< Information on the discovered Alert Notification Service. This field will be filled if the @p evt_type is @ref BLE_ANCS_C_EVT_DISCOVERY_COMPLETE.
 } ble_ancs_c_evt_t;
 
-
 /**@brief iOS notification event handler type. */
 typedef void (*ble_ancs_c_evt_handler_t) (ble_ancs_c_evt_t * p_evt);
-
 
 typedef struct
 {
@@ -342,7 +352,6 @@ typedef struct
     uint16_t                 current_attr_index;       //!< Variable to keep track of how much (for a given attribute) we are done parsing.
     uint32_t                 current_app_id_index;     //!< Variable to keep track of how much (for a given app identifier) we are done parsing.
 } ble_ancs_parse_sm_t;
-
 
 /**@brief iOS notification structure, which contains various status information for the client. */
 typedef struct
@@ -358,7 +367,6 @@ typedef struct
     ble_ancs_c_evt_t         evt;                                             //!< The event is filled with several iterations of the @ref ancs_parse_get_attrs_response function when requesting iOS notification attributes. So we must allocate memory for it here.
 } ble_ancs_c_t;
 
-
 /**@brief Apple Notification client init structure, which contains all options and data needed for
  *        initialization of the client. */
 typedef struct
@@ -366,7 +374,6 @@ typedef struct
     ble_ancs_c_evt_handler_t evt_handler;    //!< Event handler to be called for handling events in the Battery Service.
     ble_srv_error_handler_t  error_handler;  //!< Function to be called in case of an error.
 } ble_ancs_c_init_t;
-
 
 
 /**@brief Apple Notification Center Service UUIDs. */
@@ -380,10 +387,10 @@ extern const ble_uuid128_t ble_ancs_ds_base_uuid128;  //!< Data source UUID.
  *
  * @details Handles all events from the BLE stack that are of interest to the ANCS client.
  *
- * @param[in] p_ancs     ANCS client structure.
  * @param[in] p_ble_evt  Event received from the BLE stack.
+ * @param[in] p_context     ANCS client structure.
  */
-void ble_ancs_c_on_ble_evt(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_evt);
+void ble_ancs_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 
 
 /**@brief     Function for handling events from the database discovery module.
@@ -409,7 +416,7 @@ void ble_ancs_c_on_ble_evt(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_evt);
  *
  * @retval NRF_SUCCESS  If the client was initialized successfully. Otherwise, an error code is returned.
  */
-ret_code_t ble_ancs_c_init(ble_ancs_c_t * p_ancs, const ble_ancs_c_init_t * p_ancs_init);
+ret_code_t ble_ancs_c_init(ble_ancs_c_t * p_ancs, ble_ancs_c_init_t const * p_ancs_init);
 
 
 /**@brief Function for writing to the CCCD to enable notifications from the Apple Notification Service.
@@ -419,7 +426,7 @@ ret_code_t ble_ancs_c_init(ble_ancs_c_t * p_ancs, const ble_ancs_c_init_t * p_an
  *
  * @retval NRF_SUCCESS If writing to the CCCD was successful. Otherwise, an error code is returned.
  */
-ret_code_t ble_ancs_c_notif_source_notif_enable(const ble_ancs_c_t * p_ancs);
+ret_code_t ble_ancs_c_notif_source_notif_enable(ble_ancs_c_t const * p_ancs);
 
 
 /**@brief Function for writing to the CCCD to enable data source notifications from the ANCS.
@@ -429,7 +436,7 @@ ret_code_t ble_ancs_c_notif_source_notif_enable(const ble_ancs_c_t * p_ancs);
  *
  * @retval NRF_SUCCESS If writing to the CCCD was successful. Otherwise, an error code is returned.
  */
-ret_code_t ble_ancs_c_data_source_notif_enable(const ble_ancs_c_t * p_ancs);
+ret_code_t ble_ancs_c_data_source_notif_enable(ble_ancs_c_t const * p_ancs);
 
 
 /**@brief Function for writing to the CCCD to disable notifications from the ANCS.
@@ -439,7 +446,7 @@ ret_code_t ble_ancs_c_data_source_notif_enable(const ble_ancs_c_t * p_ancs);
  *
  * @retval NRF_SUCCESS If writing to the CCCD was successful. Otherwise, an error code is returned.
  */
-ret_code_t ble_ancs_c_notif_source_notif_disable(const ble_ancs_c_t * p_ancs);
+ret_code_t ble_ancs_c_notif_source_notif_disable(ble_ancs_c_t const * p_ancs);
 
 
 /**@brief Function for writing to the CCCD to disable data source notifications from the ANCS.
@@ -449,7 +456,7 @@ ret_code_t ble_ancs_c_notif_source_notif_disable(const ble_ancs_c_t * p_ancs);
  *
  * @retval NRF_SUCCESS If writing to the CCCD was successful. Otherwise, an error code is returned.
  */
-ret_code_t ble_ancs_c_data_source_notif_disable(const ble_ancs_c_t * p_ancs);
+ret_code_t ble_ancs_c_data_source_notif_disable(ble_ancs_c_t const * p_ancs);
 
 
 /**@brief Function for registering attributes that will be requested when @ref nrf_ble_ancs_c_request_attrs
@@ -463,9 +470,9 @@ ret_code_t ble_ancs_c_data_source_notif_disable(const ble_ancs_c_t * p_ancs);
  * @retval NRF_SUCCESS If all operations were successful. Otherwise, an error code is returned.
  */
 ret_code_t nrf_ble_ancs_c_attr_add(ble_ancs_c_t                       * p_ancs,
-                                   const ble_ancs_c_notif_attr_id_val_t id,
+                                   ble_ancs_c_notif_attr_id_val_t const id,
                                    uint8_t                            * p_data,
-                                   const uint16_t                       len);
+                                   uint16_t const                       len);
 
 
 /**@brief Function for removing attributes so that they will no longer be requested when
@@ -477,7 +484,7 @@ ret_code_t nrf_ble_ancs_c_attr_add(ble_ancs_c_t                       * p_ancs,
  * @retval NRF_SUCCESS If all operations were successful. Otherwise, an error code is returned.
  */
 ret_code_t nrf_ble_ancs_c_attr_remove(ble_ancs_c_t                       * p_ancs,
-                                      const ble_ancs_c_notif_attr_id_val_t id);
+                                      ble_ancs_c_notif_attr_id_val_t const id);
 
 /**@brief Function for removing attributes so that they will no longer be requested when
  *        @ref nrf_ble_ancs_c_app_attr_request is called.
@@ -488,7 +495,7 @@ ret_code_t nrf_ble_ancs_c_attr_remove(ble_ancs_c_t                       * p_anc
  * @retval NRF_SUCCESS If all operations were successful. Otherwise, an error code is returned.
  */
 ret_code_t nrf_ble_ancs_c_app_attr_remove(ble_ancs_c_t                     * p_ancs,
-                                          const ble_ancs_c_app_attr_id_val_t id);
+                                          ble_ancs_c_app_attr_id_val_t const id);
 
 
 /**@brief Function for registering attributes that will be requested when @ref nrf_ble_ancs_c_app_attr_request
@@ -502,9 +509,9 @@ ret_code_t nrf_ble_ancs_c_app_attr_remove(ble_ancs_c_t                     * p_a
  * @retval NRF_SUCCESS If all operations were successful. Otherwise, an error code is returned.
  */
 ret_code_t nrf_ble_ancs_c_app_attr_add(ble_ancs_c_t                     * p_ancs,
-                                       const ble_ancs_c_app_attr_id_val_t id,
+                                       ble_ancs_c_app_attr_id_val_t const id,
                                        uint8_t                          * p_data,
-                                       const uint16_t                     len);
+                                       uint16_t const                     len);
 
 /**@brief Function for clearing the list of notification attributes and app attributes that
  *        would be requested from NP.
@@ -524,7 +531,7 @@ ret_code_t nrf_ble_ancs_c_attr_req_clear_all(ble_ancs_c_t * p_ancs);
  * @retval NRF_SUCCESS If all operations were successful. Otherwise, an error code is returned.
  */
 ret_code_t nrf_ble_ancs_c_request_attrs(ble_ancs_c_t                 * p_ancs,
-                                        const ble_ancs_c_evt_notif_t * p_notif);
+                                        ble_ancs_c_evt_notif_t const * p_notif);
 
 /**@brief Function for requesting attributes for a given app.
  *
@@ -536,7 +543,7 @@ ret_code_t nrf_ble_ancs_c_request_attrs(ble_ancs_c_t                 * p_ancs,
  * @retval NRF_SUCCESS If all operations were successful. Otherwise, an error code is returned.
  */
 ret_code_t nrf_ble_ancs_c_app_attr_request(ble_ancs_c_t  * p_ancs,
-                                           const uint8_t * p_app_id,
+                                           uint8_t const * p_app_id,
                                            uint32_t        len);
 
 
@@ -572,8 +579,8 @@ ret_code_t nrf_ancs_perform_notif_action(ble_ancs_c_t * p_ancs,
  * @retval    NRF_ERROR_NULL If @p p_ancs was a NULL pointer.
  */
 ret_code_t nrf_ble_ancs_c_handles_assign(ble_ancs_c_t               * p_ancs,
-                                         const uint16_t               conn_handle,
-                                         const ble_ancs_c_service_t * p_service);
+                                         uint16_t const               conn_handle,
+                                         ble_ancs_c_service_t const * p_service);
 
 #endif // BLE_ANCS_C_H__
 

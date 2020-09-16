@@ -75,13 +75,13 @@ extern "C" {
 /**
  * @brief Macro for converting expected frequency to prescaler setting.
  */
-#define RTC_FREQ_TO_PRESCALER(FREQ) (uint16_t)((RTC_INPUT_FREQ / (FREQ)) - 1)
+#define RTC_FREQ_TO_PRESCALER(FREQ) (uint16_t)(((RTC_INPUT_FREQ) / (FREQ)) - 1)
 
 /**< Macro for wrapping values to RTC capacity. */
-#define RTC_WRAP(val) (val & RTC_COUNTER_COUNTER_Msk)
+#define RTC_WRAP(val) ((val) & RTC_COUNTER_COUNTER_Msk)
 
-#define RTC_CHANNEL_INT_MASK(ch)    ((uint32_t)NRF_RTC_INT_COMPARE0_MASK << ch)
-#define RTC_CHANNEL_EVENT_ADDR(ch)  (nrf_rtc_event_t)(NRF_RTC_EVENT_COMPARE_0 + ch * sizeof(uint32_t))
+#define RTC_CHANNEL_INT_MASK(ch)    ((uint32_t)(NRF_RTC_INT_COMPARE0_MASK) << (ch))
+#define RTC_CHANNEL_EVENT_ADDR(ch)  (nrf_rtc_event_t)((NRF_RTC_EVENT_COMPARE_0) + (ch) * sizeof(uint32_t))
 /**
  * @enum nrf_rtc_task_t
  * @brief RTC tasks.

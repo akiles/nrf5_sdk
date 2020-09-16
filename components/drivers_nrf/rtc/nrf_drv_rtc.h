@@ -65,7 +65,7 @@ extern "C" {
  */
 
 /**@brief Macro to convert microseconds into ticks. */
-#define RTC_US_TO_TICKS(us,freq) ((us * freq) / 1000000)
+#define RTC_US_TO_TICKS(us,freq) (((us) * (freq)) / 1000000U)
 
 /**
  * @enum nrf_drv_rtc_int_type_t
@@ -129,7 +129,7 @@ typedef void (*nrf_drv_rtc_handler_t)(nrf_drv_rtc_int_type_t int_type);
  * After initialization, the instance is in power off state.
  *
  * @param[in]  p_instance         Pointer to the driver instance structure.
- * @param[in]  p_config           Initial configuration. Default configuration used if NULL.
+ * @param[in]  p_config           Initial configuration.
  * @param[in]  handler            User's event handler.
  *
  * @retval     NRF_SUCCESS               If successfully initialized.

@@ -120,12 +120,12 @@ typedef struct
     .sdin_pin     = I2S_CONFIG_SDIN_PIN,     \
     .irq_priority = I2S_CONFIG_IRQ_PRIORITY, \
     .mode         = (nrf_i2s_mode_t)I2S_CONFIG_MASTER,       \
-    .format       = (nrf_i2s_format_t)I2S_CONFIG_FORMAT,       \
-    .alignment    = (nrf_i2s_align_t)I2S_CONFIG_ALIGN,        \
-    .sample_width = (nrf_i2s_swidth_t)I2S_CONFIG_SWIDTH,       \
-    .channels     = (nrf_i2s_channels_t)I2S_CONFIG_CHANNELS,     \
-    .mck_setup    = (nrf_i2s_mck_t)I2S_CONFIG_MCK_SETUP,    \
-    .ratio        = (nrf_i2s_ratio_t)I2S_CONFIG_RATIO,        \
+    .format       = (nrf_i2s_format_t)I2S_CONFIG_FORMAT,     \
+    .alignment    = (nrf_i2s_align_t)I2S_CONFIG_ALIGN,       \
+    .sample_width = (nrf_i2s_swidth_t)I2S_CONFIG_SWIDTH,     \
+    .channels     = (nrf_i2s_channels_t)I2S_CONFIG_CHANNELS, \
+    .mck_setup    = (nrf_i2s_mck_t)I2S_CONFIG_MCK_SETUP,     \
+    .ratio        = (nrf_i2s_ratio_t)I2S_CONFIG_RATIO,       \
 }
 
 /**

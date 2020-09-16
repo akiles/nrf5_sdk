@@ -80,8 +80,8 @@ ret_code_t cgms_racp_char_add(nrf_ble_cgms_t * p_cgms);
  * @param[in] p_cgms     Instance of the CGM Service.
  * @param[in] p_auth_req Authorize request event to be handled.
  */
-void cgms_racp_on_rw_auth_req(nrf_ble_cgms_t                       * p_cgms,
-                              ble_gatts_evt_rw_authorize_request_t * p_auth_req);
+void cgms_racp_on_rw_auth_req(nrf_ble_cgms_t                             * p_cgms,
+                              ble_gatts_evt_rw_authorize_request_t const * p_auth_req);
 
 
 /**@brief Function for handling @ref BLE_GATTS_EVT_HVN_TX_COMPLETE events.

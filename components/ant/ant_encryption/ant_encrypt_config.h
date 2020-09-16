@@ -53,7 +53,7 @@
 #include <stdint.h>
 
 #include "sdk_errors.h"
-#include "ant_stack_handler_types.h"
+#include "nrf_sdh_ant.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -220,20 +220,6 @@ ret_code_t ant_channel_encrypt_config(uint8_t                          channel_t
  * @param[in] p_crypto_info_set Pointer to the settings.
  */
 ret_code_t ant_stack_encryption_config(ant_encrypt_stack_settings_t const * const p_crypto_info_set);
-
-
-/**
- * @brief Function for handling ANT encryption events.
- *
- * This function should be used directly in the ANT event dispatching process.
- * It serves the ANT encryption events to the registered event handler.
- * If @ref ant_encrypt_negotiation_slave is used, this function is required.
- *
- * This function should be used by the @ref ant_encrypt_config module.
- *
- * @param[in] p_ant_evt  Pointer to the ANT stack event message structure.
- */
-void ant_encrypt_event_handler(ant_evt_t * p_ant_evt);
 
 /**
  * @brief Function for registering an event handler for ANT encryption events.

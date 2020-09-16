@@ -82,7 +82,7 @@ typedef struct
 /**
  * @brief Function for initializing the nrf_drv_rng module.
  *
- * @param[in]  p_config                 Initial configuration. Default configuration used if NULL.
+ * @param[in]  p_config                 Initial configuration.
  *
  * @retval  NRF_SUCCESS                             Driver was successfully initialized.
  * @retval  NRF_ERROR_MODULE_ALREADY_INITIALIZED    Driver was already initialized.
@@ -124,18 +124,6 @@ ret_code_t nrf_drv_rng_rand(uint8_t * p_buff, uint8_t length);
  */
 void nrf_drv_rng_block_rand(uint8_t * p_buff, uint32_t length);
 
-#ifdef SOFTDEVICE_PRESENT
-/**
- * @brief Function called by the SoftDevice handler when the SoftDevice has been disabled.
- *
- * This function is called just after the SoftDevice has been properly disabled.
- * It has two purposes:
- * 1. Reinitializes RNG hardware.
- * 2. Trigger new random numbers generation.
- */
-void nrf_drv_rng_on_sd_disable(void);
-
-#endif
 /**
  *@}
  **/

@@ -50,7 +50,7 @@ extern "C" {
 #include "sdk_common.h"
 #include "nrf_atomic.h"
 #include "app_usbd_hid_types.h"
-#include "app_usbd_core.h"
+#include "app_usbd.h"
 
 /**
  * @defgroup app_usbd_hid USB HID class
@@ -327,7 +327,7 @@ static inline bool app_usbd_hid_trans_required(app_usbd_hid_ctx_t * p_hid_ctx)
 {
     if (app_usbd_hid_state_flag_test(p_hid_ctx, APP_USBD_HID_STATE_FLAG_SUSPENDED) != 0)
     {
-        app_usbd_core_class_rwu_pend();
+        UNUSED_RETURN_VALUE(app_usbd_wakeup_req());
         return false;
     }
 

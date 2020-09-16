@@ -88,26 +88,25 @@ typedef uint16_t nrf_swi_flags_t;
  */
 typedef void (* nrf_swi_handler_t)(nrf_swi_t, nrf_swi_flags_t);
 
-/**@brief Maximum numbers of SWIs. This number is fixed for a specific chip. */
-#if NRF_MODULE_ENABLED(EGU)
-#define SWI_MAX              EGU_COUNT
-#else
-#define SWI_MAX              SWI_COUNT
-/**@brief Number of flags per SWI (fixed number). */
-#define SWI_MAX_FLAGS        16
-#endif
-
 #ifdef SOFTDEVICE_PRESENT
     #if SWI_COUNT > 2
         #undef SWI_COUNT
-        #define SWI_COUNT 2
+      #ifdef NRF52810_XXAA
+        #define SWI_COUNT 3 // SoftDevice for NRF52810_XXAA utilizes 3 SWIs
+      #else
+        #define SWI_COUNT 2 // usually, SoftDevice utilizes 4 SWIs
+      #endif
     #endif
 #else
     #ifdef SVCALL_AS_NORMAL_FUNCTION
     // Serialization is enabled.
         #if SWI_COUNT > 2
             #undef SWI_COUNT
-            #define SWI_COUNT 2
+          #ifdef NRF52810_XXAA
+            #define SWI_COUNT 3 // SoftDevice for NRF52810_XXAA will utilize 3 SWIs
+          #else
+            #define SWI_COUNT 2 // usually, SoftDevice utilizes 4 SWIs
+          #endif
         #endif
     #endif
 #endif
@@ -152,7 +151,9 @@ void nrf_drv_swi_uninit(void);
  *
  * @param[out] p_swi         Pointer to the SWI that has been allocated.
  * @param[in]  event_handler Event handler function.
- *                           If NULL, no interrupt will be enabled (can be NULL only if the EGU driver is enabled).
+ *                           If NULL, no interrupt will be enabled (can be NULL only if the EGU
+                             driver is enabled and available. For some microcontrollers, it is
+                             possible that number of EGUs and SWIs differ).
  *                           For classic SWI, must be a valid handler pointer.
  * @param[in]  priority      Interrupt priority.
  *

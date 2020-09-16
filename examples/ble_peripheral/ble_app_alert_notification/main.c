@@ -52,7 +52,6 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "ble_ans_c.h"
 #include "nordic_common.h"
 #include "nrf.h"
 #include "app_error.h"
@@ -60,28 +59,31 @@
 #include "ble_gap.h"
 #include "ble_advdata.h"
 #include "ble_advertising.h"
-#include "nrf_gpio.h"
-#include "softdevice_handler.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ble.h"
+#include "nrf_sdh_soc.h"
 #include "ble_srv_common.h"
 #include "ble_conn_params.h"
-#include "boards.h"
 #include "ble_db_discovery.h"
+#include "ble_ans_c.h"
 #include "app_timer.h"
-#include "bsp.h"
 #include "bsp_btn_ble.h"
 #include "peer_manager.h"
 #include "fds.h"
-#include "fstorage.h"
 #include "ble_conn_state.h"
 #include "nrf_ble_gatt.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 
 #define DEVICE_NAME                     "Nordic_Alert_Notif."                       /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME               "NordicSemiconductor"                       /**< Manufacturer. Will be passed to Device Information Service. */
+
+#define APP_BLE_OBSERVER_PRIO           1                                           /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_CONN_CFG_TAG            1                                           /**< A tag identifying the SoftDevice BLE configuration. */
+
 #define APP_ADV_FAST_INTERVAL           40                                          /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
 #define APP_ADV_SLOW_INTERVAL           3200                                        /**< Slow advertising interval (in units of 0.625 ms. This value corresponds to 2 seconds). */
 #define APP_ADV_FAST_TIMEOUT            30                                          /**< The duration of the fast advertising period (in seconds). */
@@ -99,7 +101,6 @@
 #define MAX_CONN_PARAMS_UPDATE_COUNT    3                                           /**< Number of attempts before giving up the connection parameter negotiation. */
 
 #define MESSAGE_BUFFER_SIZE             18                                          /**< Size of buffer holding optional messages in notifications. */
-
 #define BLE_ANS_NB_OF_CATEGORY_ID       10                                          /**< Number of categories. */
 
 #define SEC_PARAM_BOND                  1                                           /**< Perform bonding. */
@@ -113,6 +114,7 @@
 
 #define DEAD_BEEF                       0xDEADBEEF                                  /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
+
 typedef enum
 {
     ALERT_NOTIFICATION_DISABLED, /**< Alert Notifications has been disabled. */
@@ -120,19 +122,21 @@ typedef enum
     ALERT_NOTIFICATION_ON,       /**< Alert State is on. */
 } ble_ans_c_alert_state_t;
 
-static ble_ans_c_t        m_ans_c;                                                  /**< Structure used to identify the Alert Notification Service Client. */
-static uint8_t            m_alert_message_buffer[MESSAGE_BUFFER_SIZE];              /**< Message buffer for optional notify messages. */
-static ble_db_discovery_t m_ble_db_discovery;                                       /**< Structure used to identify the DB Discovery module. */
-static uint16_t           m_cur_conn_handle = BLE_CONN_HANDLE_INVALID;              /**< Handle of the current connection. */
-static nrf_ble_gatt_t     m_gatt;                                                  /**< GATT module instance. */
 
+APP_TIMER_DEF(m_sec_req_timer_id);                                                  /**< Security request timer. The timer lets us start pairing request if one does not arrive from the Central. */
+BLE_ANS_C_DEF(m_ans_c);                                                             /**< Structure used to identify the Alert Notification Service Client. */
+NRF_BLE_GATT_DEF(m_gatt);                                                           /**< GATT module instance. */
+BLE_ADVERTISING_DEF(m_advertising);                                                 /**< Advertising module instance. */
+BLE_DB_DISCOVERY_DEF(m_ble_db_discovery);                                           /**< DB discovery module instance. */
+
+static uint16_t m_cur_conn_handle = BLE_CONN_HANDLE_INVALID;                        /**< Handle of the current connection. */
+
+static uint8_t m_alert_message_buffer[MESSAGE_BUFFER_SIZE];                         /**< Message buffer for optional notify messages. */
 static ble_ans_c_alert_state_t m_new_alert_state    = ALERT_NOTIFICATION_DISABLED;  /**< State that holds the current state of New Alert Notifications, i.e. Enabled, Alert On, Disabled. */
 static ble_ans_c_alert_state_t m_unread_alert_state = ALERT_NOTIFICATION_DISABLED;  /**< State that holds the current state of Unread Alert Notifications, i.e. Enabled, Alert On, Disabled. */
-APP_TIMER_DEF(m_sec_req_timer_id);                                                  /**< Security request timer. The timer lets us start pairing request if one does not arrive from the Central. */
-
 
 /**@brief String literals for the iOS notification categories. used then printing to UART. */
-static const char * lit_catid[BLE_ANS_NB_OF_CATEGORY_ID] =
+static char const * lit_catid[BLE_ANS_NB_OF_CATEGORY_ID] =
 {
     "Simple alert",
     "Email",
@@ -178,12 +182,12 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
     {
         case PM_EVT_BONDED_PEER_CONNECTED:
         {
-            NRF_LOG_INFO("Connected to a previously bonded device.\r\n");
+            NRF_LOG_INFO("Connected to a previously bonded device.");
         } break;
 
         case PM_EVT_CONN_SEC_SUCCEEDED:
         {
-            NRF_LOG_INFO("Connection secured: role: %d, conn_handle: 0x%x, procedure: %d.\r\n",
+            NRF_LOG_INFO("Connection secured: role: %d, conn_handle: 0x%x, procedure: %d.",
                          ble_conn_state_role(p_evt->conn_handle),
                          p_evt->conn_handle,
                          p_evt->params.conn_sec_succeeded.procedure);
@@ -287,7 +291,7 @@ static void sec_req_timeout_handler(void * p_context)
         // If the link is still not secured by the peer, initiate security procedure.
         if (!status.encrypted)
         {
-            NRF_LOG_INFO("Start encryption.\r\n");
+            NRF_LOG_INFO("Start encryption.");
             err_code = pm_conn_secure(m_cur_conn_handle, false);
             APP_ERROR_CHECK(err_code);
         }
@@ -307,15 +311,15 @@ static void alert_notification_setup(void)
     APP_ERROR_CHECK(err_code);
 
     m_new_alert_state = ALERT_NOTIFICATION_ENABLED;
-    NRF_LOG_INFO("New Alert State: Enabled.\r\n");
+    NRF_LOG_INFO("New Alert State: Enabled.");
 
     err_code = ble_ans_c_enable_notif_unread_alert(&m_ans_c);
     APP_ERROR_CHECK(err_code);
 
     m_unread_alert_state = ALERT_NOTIFICATION_ENABLED;
-    NRF_LOG_INFO("Unread Alert State: Enabled.\r\n");
+    NRF_LOG_INFO("Unread Alert State: Enabled.");
 
-    NRF_LOG_DEBUG("Notifications enabled.\r\n");
+    NRF_LOG_DEBUG("Notifications enabled.");
 }
 
 
@@ -335,13 +339,13 @@ static void control_point_setup(ble_ans_c_evt_t * p_evt)
     {
         setting.command  = ANS_ENABLE_UNREAD_CATEGORY_STATUS_NOTIFICATION;
         setting.category = (ble_ans_category_id_t)p_evt->data.alert.alert_category;
-        NRF_LOG_DEBUG("Unread status notification enabled for received categories.\r\n");
+        NRF_LOG_DEBUG("Unread status notification enabled for received categories.");
     }
     else if (p_evt->uuid.uuid == BLE_UUID_SUPPORTED_NEW_ALERT_CATEGORY_CHAR)
     {
         setting.command  = ANS_ENABLE_NEW_INCOMING_ALERT_NOTIFICATION;
         setting.category = (ble_ans_category_id_t)p_evt->data.alert.alert_category;
-        NRF_LOG_DEBUG("New incoming notification enabled for received categories.\r\n");
+        NRF_LOG_DEBUG("New incoming notification enabled for received categories.");
     }
     else
     {
@@ -359,7 +363,7 @@ static void control_point_setup(ble_ans_c_evt_t * p_evt)
  */
 static void supported_alert_notification_read(void)
 {
-    NRF_LOG_DEBUG("Read supported Alert Notification characteristics on the connected peer.\r\n");
+    NRF_LOG_DEBUG("Read supported Alert Notification characteristics on the connected peer.");
 
     ret_code_t err_code;
 
@@ -385,19 +389,19 @@ static void new_alert_state_toggle(void)
     {
         m_new_alert_state = ALERT_NOTIFICATION_ENABLED;
         err_code          = bsp_indication_set(BSP_INDICATE_ALERT_OFF);
-        NRF_LOG_INFO("New Alert State: Off.\r\n");
+        NRF_LOG_INFO("New Alert State: Off.");
     }
     else if (m_new_alert_state == ALERT_NOTIFICATION_ENABLED)
     {
         m_new_alert_state = ALERT_NOTIFICATION_DISABLED;
         err_code          = ble_ans_c_disable_notif_new_alert(&m_ans_c);
-        NRF_LOG_INFO("New Alert State: Disabled.\r\n");
+        NRF_LOG_INFO("New Alert State: Disabled.");
     }
     else
     {
         m_new_alert_state = ALERT_NOTIFICATION_ENABLED;
         err_code          = ble_ans_c_enable_notif_new_alert(&m_ans_c);
-        NRF_LOG_INFO("New Alert State: Enabled.\r\n");
+        NRF_LOG_INFO("New Alert State: Enabled.");
     }
 
     // If the user presses the button while we are not connected,
@@ -422,19 +426,19 @@ static void unread_alert_state_toggle(void)
     {
         m_unread_alert_state = ALERT_NOTIFICATION_ENABLED;
         err_code             = bsp_indication_set(BSP_INDICATE_ALERT_OFF);
-        NRF_LOG_INFO("Unread Alert State: Off.\r\n");
+        NRF_LOG_INFO("Unread Alert State: Off.");
     }
     else if (m_unread_alert_state == ALERT_NOTIFICATION_ENABLED)
     {
         m_unread_alert_state = ALERT_NOTIFICATION_DISABLED;
         err_code             = ble_ans_c_disable_notif_unread_alert(&m_ans_c);
-        NRF_LOG_INFO("Unread Alert State: Disabled.\r\n");
+        NRF_LOG_INFO("Unread Alert State: Disabled.");
     }
     else
     {
         m_unread_alert_state = ALERT_NOTIFICATION_ENABLED;
         err_code             = ble_ans_c_enable_notif_unread_alert(&m_ans_c);
-        NRF_LOG_INFO("Unread Alert State: Enabled.\r\n");
+        NRF_LOG_INFO("Unread Alert State: Enabled.");
     }
 
     // If the user presses the button while we are not connected,
@@ -465,7 +469,7 @@ static void all_alert_notify_request(void)
         {
             APP_ERROR_HANDLER(err_code);
         }
-        NRF_LOG_INFO("Notify the Unread Alert characteristic for all categories.\r\n");
+        NRF_LOG_INFO("Notify the Unread Alert characteristic for all categories.");
     }
 
     if (m_new_alert_state == ALERT_NOTIFICATION_ON ||
@@ -478,7 +482,7 @@ static void all_alert_notify_request(void)
         {
             APP_ERROR_HANDLER(err_code);
         }
-        NRF_LOG_INFO("Notify the New Alert characteristic for all categories.\r\n");
+        NRF_LOG_INFO("Notify the New Alert characteristic for all categories.");
     }
 }
 
@@ -498,10 +502,10 @@ static void handle_alert_notification(ble_ans_c_evt_t * p_evt)
             err_code = bsp_indication_set(BSP_INDICATE_ALERT_1);
             APP_ERROR_CHECK(err_code);
             m_unread_alert_state = ALERT_NOTIFICATION_ON;
-            NRF_LOG_INFO("Unread Alert state: On.\r\n");
-            NRF_LOG_INFO("  Category:                 %s\r\n",
+            NRF_LOG_INFO("Unread Alert state: On.");
+            NRF_LOG_INFO("  Category:                 %s",
                          (uint32_t)lit_catid[p_evt->data.alert.alert_category]);
-            NRF_LOG_INFO("  Number of unread alerts:  %d\r\n",
+            NRF_LOG_INFO("  Number of unread alerts:  %d",
                          p_evt->data.alert.alert_category_count);
         }
     }
@@ -512,12 +516,12 @@ static void handle_alert_notification(ble_ans_c_evt_t * p_evt)
             err_code = bsp_indication_set(BSP_INDICATE_ALERT_0);
             APP_ERROR_CHECK(err_code);
             m_new_alert_state = ALERT_NOTIFICATION_ON;
-            NRF_LOG_INFO("New Alert state: On.\r\n");
-            NRF_LOG_INFO("  Category:                 %s\r\n",
+            NRF_LOG_INFO("New Alert state: On.");
+            NRF_LOG_INFO("  Category:                 %s",
                          (uint32_t)lit_catid[p_evt->data.alert.alert_category]);
-            NRF_LOG_INFO("  Number of new alerts:     %d\r\n",
+            NRF_LOG_INFO("  Number of new alerts:     %d",
                          p_evt->data.alert.alert_category_count);
-            NRF_LOG_INFO("  Text String Information:  %s\r\n",
+            NRF_LOG_INFO("  Text String Information:  %s",
                          (uint32_t)p_evt->data.alert.p_alert_msg_buf);
         }
     }
@@ -561,11 +565,11 @@ static void on_ans_c_evt(ble_ans_c_evt_t * p_evt)
     {
         case BLE_ANS_C_EVT_NOTIFICATION:
             handle_alert_notification(p_evt);
-            NRF_LOG_DEBUG("Alert Notification received from server, UUID: %X.\r\n", p_evt->uuid.uuid);
+            NRF_LOG_DEBUG("Alert Notification received from server, UUID: %X.", p_evt->uuid.uuid);
             break; // BLE_ANS_C_EVT_NOTIFICATION
 
         case BLE_ANS_C_EVT_DISCOVERY_COMPLETE:
-            NRF_LOG_DEBUG("Alert Notification Service discovered on the server.\r\n");
+            NRF_LOG_DEBUG("Alert Notification Service discovered on the server.");
             err_code = ble_ans_c_handles_assign(&m_ans_c,
                                                 p_evt->conn_handle,
                                                 &p_evt->data.service);
@@ -575,7 +579,7 @@ static void on_ans_c_evt(ble_ans_c_evt_t * p_evt)
             break; // BLE_ANS_C_EVT_DISCOVERY_COMPLETE
 
         case BLE_ANS_C_EVT_READ_RESP:
-            NRF_LOG_DEBUG("Alert Setup received from server, UUID: %X.\r\n", p_evt->uuid.uuid);
+            NRF_LOG_DEBUG("Alert Setup received from server, UUID: %X.", p_evt->uuid.uuid);
             control_point_setup(p_evt);
             break; // BLE_ANS_C_EVT_READ_RESP
 
@@ -753,26 +757,26 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
     switch (ble_adv_evt)
     {
         case BLE_ADV_EVT_DIRECTED:
-            NRF_LOG_INFO("Directed advertising\r\n");
+            NRF_LOG_INFO("Directed advertising");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_DIRECTED);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_ADV_EVT_DIRECTED
+            break;
 
         case BLE_ADV_EVT_FAST:
-            NRF_LOG_INFO("Fast advertising\r\n");
+            NRF_LOG_INFO("Fast advertising");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_ADV_EVT_FAST
+            break;
 
         case BLE_ADV_EVT_SLOW:
-            NRF_LOG_INFO("Slow advertising\r\n");
+            NRF_LOG_INFO("Slow advertising");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_SLOW);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_ADV_EVT_SLOW
+            break;
 
         case BLE_ADV_EVT_IDLE:
             sleep_mode_enter();
-            break; // BLE_ADV_EVT_IDLE
+            break;
 
         default:
             break;
@@ -780,24 +784,25 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
 }
 
 
-/**@brief Function for handling the Application's BLE Stack events.
+/**@brief Function for handling BLE events.
  *
- * @param[in] p_ble_evt  Bluetooth stack event.
+ * @param[in]   p_ble_evt   Bluetooth stack event.
+ * @param[in]   p_context   Unused.
  */
-static void on_ble_evt(ble_evt_t * p_ble_evt)
+static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 {
     ret_code_t err_code = NRF_SUCCESS;
 
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_DISCONNECTED:
-            NRF_LOG_INFO("Disconnected.\r\n");
+            NRF_LOG_INFO("Disconnected.");
             err_code = bsp_indication_set(BSP_INDICATE_IDLE);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_GAP_EVT_DISCONNECTED
+            break;
 
         case BLE_GAP_EVT_CONNECTED:
-            NRF_LOG_INFO("Connected.\r\n");
+            NRF_LOG_INFO("Connected.");
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
             m_cur_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
@@ -806,24 +811,38 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             APP_ERROR_CHECK(err_code);
             err_code = app_timer_start(m_sec_req_timer_id, SECURITY_REQUEST_DELAY, NULL);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_GAP_EVT_CONNECTED
+            break;
+
+#if defined(S132)
+        case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
+        {
+            NRF_LOG_DEBUG("PHY update request.");
+            ble_gap_phys_t const phys =
+            {
+                .rx_phys = BLE_GAP_PHY_AUTO,
+                .tx_phys = BLE_GAP_PHY_AUTO,
+            };
+            err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
+            APP_ERROR_CHECK(err_code);
+        } break;
+#endif
 
         case BLE_GATTC_EVT_TIMEOUT:
             // Disconnect on GATT Client timeout event.
-            NRF_LOG_DEBUG("GATT Client Timeout.\r\n");
+            NRF_LOG_DEBUG("GATT Client Timeout.");
             m_cur_conn_handle = BLE_CONN_HANDLE_INVALID;
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gattc_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_GATTC_EVT_TIMEOUT
+            break;
 
         case BLE_GATTS_EVT_TIMEOUT:
             // Disconnect on GATT Server timeout event.
-            NRF_LOG_DEBUG("GATT Server Timeout.\r\n");
+            NRF_LOG_DEBUG("GATT Server Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gatts_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_GATTS_EVT_TIMEOUT
+            break;
 
         default:
             // No implementation needed.
@@ -844,7 +863,7 @@ static void bsp_event_handler(bsp_event_t event)
     {
         case BSP_EVENT_SLEEP:
             sleep_mode_enter();
-            break; // BSP_EVENT_SLEEP
+            break;
 
         case BSP_EVENT_DISCONNECT:
             err_code = sd_ble_gap_disconnect(m_cur_conn_handle,
@@ -853,77 +872,36 @@ static void bsp_event_handler(bsp_event_t event)
             {
                 APP_ERROR_CHECK(err_code);
             }
-            break; // BSP_EVENT_DISCONNECT
+            break;
 
         case BSP_EVENT_KEY_0:
-            NRF_LOG_DEBUG("Button 1 pushed.\r\n");
+            NRF_LOG_DEBUG("Button 1 pushed.");
             if (m_ans_c.conn_handle != BLE_CONN_HANDLE_INVALID)
             {
                 new_alert_state_toggle();
             }
-            break; // BSP_EVENT_KEY_0
+            break;
 
         case BSP_EVENT_KEY_1:
-            NRF_LOG_DEBUG("Button 2 pushed.\r\n");
+            NRF_LOG_DEBUG("Button 2 pushed.");
             if (m_ans_c.conn_handle != BLE_CONN_HANDLE_INVALID)
             {
                 unread_alert_state_toggle();
             }
-            break; // BSP_EVENT_KEY_1
+            break;
 
         case BSP_EVENT_KEY_2:
-            NRF_LOG_DEBUG("Button 3 pushed.\r\n");
+            NRF_LOG_DEBUG("Button 3 pushed.");
             if (m_ans_c.conn_handle != BLE_CONN_HANDLE_INVALID)
             {
                 all_alert_notify_request();
             }
-            break; // BSP_EVENT_KEY_2
+            break;
 
         default:
             // No implementation needed.
             break;
     }
-}
-
-
-/**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
- *
- * @details This function is called from the BLE Stack event interrupt handler after a BLE stack
- *          event has been received.
- *
- * @param[in] p_ble_evt  Bluetooth stack event.
- */
-static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
-{
-    ble_conn_state_on_ble_evt(p_ble_evt);
-    pm_on_ble_evt(p_ble_evt);
-    ble_db_discovery_on_ble_evt(&m_ble_db_discovery, p_ble_evt);
-    ble_conn_params_on_ble_evt(p_ble_evt);
-    ble_ans_c_on_ble_evt(&m_ans_c, p_ble_evt);
-    bsp_btn_ble_on_ble_evt(p_ble_evt);
-    on_ble_evt(p_ble_evt);
-    ble_advertising_on_ble_evt(p_ble_evt);
-    nrf_ble_gatt_on_ble_evt(&m_gatt, p_ble_evt);
-}
-
-
-/**@brief Function for dispatching a system event to interested modules.
- *
- * @details This function is called from the System event interrupt handler after a system
- *          event has been received.
- *
- * @param[in] sys_evt  System stack event.
- */
-static void sys_evt_dispatch(uint32_t sys_evt)
-{
-    // Dispatch the system event to the fstorage module, where it will be
-    // dispatched to the Flash Data Storage (FDS) module.
-    fs_sys_event_handler(sys_evt);
-
-    // Dispatch to the Advertising module last, since it will check if there are any
-    // pending flash operations in fstorage. Let fstorage process system events first,
-    // so that it can report correctly to the Advertising module.
-    ble_advertising_on_sys_evt(sys_evt);
 }
 
 
@@ -935,44 +913,21 @@ static void ble_stack_init(void)
 {
     ret_code_t err_code;
 
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    err_code = nrf_sdh_enable_request();
+    APP_ERROR_CHECK(err_code);
 
-    // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
-
-    // Fetch the starting address of the application ram. This is needed by the upcoming SoftDevice calls.
+    // Configure the BLE stack using the default settings.
+    // Fetch the start address of the application RAM.
     uint32_t ram_start = 0;
-    err_code = softdevice_app_ram_start_get(&ram_start);
-    APP_ERROR_CHECK(err_code);
-
-    // Overwrite some of the default configurations for the BLE stack.
-    ble_cfg_t ble_cfg;
-
-    // Configure the number of custom UUIDS.
-    memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.common_cfg.vs_uuid_cfg.vs_uuid_count = 0;
-    err_code = sd_ble_cfg_set(BLE_COMMON_CFG_VS_UUID, &ble_cfg, ram_start);
-    APP_ERROR_CHECK(err_code);
-
-    // Configure the maximum number of connections.
-    memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = BLE_GAP_ROLE_COUNT_PERIPH_DEFAULT;
-    ble_cfg.gap_cfg.role_count_cfg.central_role_count = 0;
-    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = 0;
-    err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start);
+    err_code = nrf_sdh_ble_default_cfg_set(APP_BLE_CONN_CFG_TAG, &ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Enable BLE stack.
-    err_code = softdevice_enable(&ram_start);
+    err_code = nrf_sdh_ble_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
 
-    // Register with the SoftDevice handler module for BLE events.
-    err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
-
-    // Register with the SoftDevice handler module for BLE events.
-    err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
+    // Register a handler for BLE events.
+    NRF_SDH_BLE_OBSERVER(m_ble_observer, APP_BLE_OBSERVER_PRIO, ble_evt_handler, NULL);
 }
 
 
@@ -1016,7 +971,7 @@ static void delete_bonds(void)
 {
     ret_code_t err_code;
 
-    NRF_LOG_INFO("Erase bonds!\r\n");
+    NRF_LOG_INFO("Erase bonds!");
 
     err_code = pm_peers_delete();
     APP_ERROR_CHECK(err_code);
@@ -1028,27 +983,29 @@ static void delete_bonds(void)
 static void advertising_init(void)
 {
     ret_code_t    err_code;
-    ble_advdata_t advdata;
+    ble_advertising_init_t init;
 
-    // Build advertising data struct to pass into @ref ble_advertising_init.
-    memset(&advdata, 0, sizeof(advdata));
+    memset(&init, 0, sizeof(init));
 
-    advdata.name_type               = BLE_ADVDATA_FULL_NAME;
-    advdata.include_appearance      = true;
-    advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
-    advdata.uuids_complete.uuid_cnt = 0;
-    advdata.uuids_complete.p_uuids  = NULL;
+    init.advdata.name_type               = BLE_ADVDATA_FULL_NAME;
+    init.advdata.include_appearance      = true;
+    init.advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
+    init.advdata.uuids_complete.uuid_cnt = 0;
+    init.advdata.uuids_complete.p_uuids  = NULL;
 
-    ble_adv_modes_config_t options = {0};
-    options.ble_adv_fast_enabled  = true;
-    options.ble_adv_fast_interval = APP_ADV_FAST_INTERVAL;
-    options.ble_adv_fast_timeout  = APP_ADV_FAST_TIMEOUT;
-    options.ble_adv_slow_enabled  = true;
-    options.ble_adv_slow_interval = APP_ADV_SLOW_INTERVAL;
-    options.ble_adv_slow_timeout  = APP_ADV_SLOW_TIMEOUT;
+    init.config.ble_adv_fast_enabled  = true;
+    init.config.ble_adv_fast_interval = APP_ADV_FAST_INTERVAL;
+    init.config.ble_adv_fast_timeout  = APP_ADV_FAST_TIMEOUT;
+    init.config.ble_adv_slow_enabled  = true;
+    init.config.ble_adv_slow_interval = APP_ADV_SLOW_INTERVAL;
+    init.config.ble_adv_slow_timeout  = APP_ADV_SLOW_TIMEOUT;
 
-    err_code = ble_advertising_init(&advdata, NULL, &options, on_adv_evt, NULL);
+    init.evt_handler = on_adv_evt;
+
+    err_code = ble_advertising_init(&m_advertising, &init);
     APP_ERROR_CHECK(err_code);
+
+    ble_advertising_conn_cfg_tag_set(&m_advertising, APP_BLE_CONN_CFG_TAG);
 }
 
 
@@ -1078,6 +1035,8 @@ static void log_init(void)
 {
     ret_code_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 }
 
 
@@ -1101,7 +1060,7 @@ static void advertising_start(bool erase_bonds)
     }
     else
     {
-        ret_code_t err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
+        ret_code_t err_code = ble_advertising_start(&m_advertising, BLE_ADV_MODE_FAST);
         APP_ERROR_CHECK(err_code);
     }
 }
@@ -1128,7 +1087,7 @@ int main(void)
     peer_manager_init();
 
     // Start execution.
-    NRF_LOG_INFO("Alert Notification client example started.\r\n");
+    NRF_LOG_INFO("Alert Notification client example started.");
     advertising_start(erase_bonds);
 
     // Enter main loop.

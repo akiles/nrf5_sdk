@@ -49,16 +49,20 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "ble_advdata.h"
 #include "nordic_common.h"
-#include "softdevice_handler.h"
 #include "bsp.h"
+#include "nrf_soc.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ble.h"
+#include "ble_advdata.h"
 #include "app_timer.h"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 
-#define APP_CFG_NON_CONN_ADV_TIMEOUT    0                                 /**< Time for which the device must be advertising in non-connectable mode (in seconds). 0 disables timeout. */
+#define APP_BLE_CONN_CFG_TAG            1                                 /**< A tag identifying the SoftDevice BLE configuration. */
+
 #define NON_CONNECTABLE_ADV_INTERVAL    MSEC_TO_UNITS(100, UNIT_0_625_MS) /**< The advertising interval for non-connectable advertisement (100 ms). This value can vary between 100ms to 10.24s). */
 
 #define APP_BEACON_INFO_LENGTH          0x17                              /**< Total length of information advertised by the Beacon. */
@@ -94,6 +98,7 @@ static uint8_t m_beacon_info[APP_BEACON_INFO_LENGTH] =                    /**< I
     APP_MEASURED_RSSI    // Manufacturer specific information. The Beacon's measured TX power in
                          // this implementation.
 };
+
 
 /**@brief Callback function for asserts in the SoftDevice.
  *
@@ -165,10 +170,10 @@ static void advertising_init(void)
     memset(&m_adv_params, 0, sizeof(m_adv_params));
 
     m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_NONCONN_IND;
-    m_adv_params.p_peer_addr = NULL;                             // Undirected advertisement.
+    m_adv_params.p_peer_addr = NULL;    // Undirected advertisement.
     m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
     m_adv_params.interval    = NON_CONNECTABLE_ADV_INTERVAL;
-    m_adv_params.timeout     = APP_CFG_NON_CONN_ADV_TIMEOUT;
+    m_adv_params.timeout     = 0;       // Never time out.
 }
 
 
@@ -178,7 +183,7 @@ static void advertising_start(void)
 {
     ret_code_t err_code;
 
-    err_code = sd_ble_gap_adv_start(&m_adv_params, BLE_CONN_CFG_TAG_DEFAULT);
+    err_code = sd_ble_gap_adv_start(&m_adv_params, APP_BLE_CONN_CFG_TAG);
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
@@ -194,40 +199,17 @@ static void ble_stack_init(void)
 {
     ret_code_t err_code;
 
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    err_code = nrf_sdh_enable_request();
+    APP_ERROR_CHECK(err_code);
 
-    // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
-
-    // Fetch the starting address of the application ram. This is needed by the upcoming SoftDevice calls.
+    // Configure the BLE stack using the default settings.
+    // Fetch the start address of the application RAM.
     uint32_t ram_start = 0;
-    err_code = softdevice_app_ram_start_get(&ram_start);
-    APP_ERROR_CHECK(err_code);
-
-    // Overwrite some of the default configurations for the BLE stack.
-    ble_cfg_t ble_cfg;
-
-    // Configure the number of custom UUIDS.
-    memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.common_cfg.vs_uuid_cfg.vs_uuid_count = 0;
-    err_code = sd_ble_cfg_set(BLE_COMMON_CFG_VS_UUID, &ble_cfg, ram_start);
-    APP_ERROR_CHECK(err_code);
-
-    // Configure the maximum number of connections.
-    memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = BLE_GAP_ROLE_COUNT_PERIPH_DEFAULT;
-    ble_cfg.gap_cfg.role_count_cfg.central_role_count = 0;
-    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = 0;
-    err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start);
-    APP_ERROR_CHECK(err_code);
-
-    memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.gatts_cfg.attr_tab_size.attr_tab_size = BLE_GATTS_ATTR_TAB_SIZE_MIN;
-    err_code = sd_ble_cfg_set(BLE_GATTS_CFG_ATTR_TAB_SIZE, &ble_cfg, ram_start);
+    err_code = nrf_sdh_ble_default_cfg_set(APP_BLE_CONN_CFG_TAG, &ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Enable BLE stack.
-    err_code = softdevice_enable(&ram_start);
+    err_code = nrf_sdh_ble_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -237,6 +219,8 @@ static void log_init(void)
 {
     ret_code_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 }
 
 /**@brief Function for initializing LEDs. */
@@ -277,7 +261,7 @@ int main(void)
     advertising_start();
 
     // Start execution.
-    NRF_LOG_INFO("Beacon example started.\r\n");
+    NRF_LOG_INFO("Beacon example started.");
 
     // Enter main loop.
     for (;; )

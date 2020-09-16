@@ -54,12 +54,11 @@
 #include "ant_interface.h"
 #include "ant_parameters.h"
 #include "app_error.h"
-#include "ant_error.h"
 #include "boards.h"
 #include "sdk_config.h"
 #include "ant_channel_config.h"
-#include "nrf_soc.h"
 #include "nrf_delay.h"
+#include "nrf_sdh_ant.h"
 
 // I/O configuration
 #define LED_BROADCAST                   BSP_BOARD_LED_0
@@ -67,12 +66,11 @@
 #define LED_BURST                       BSP_BOARD_LED_2
 
 // Channel configuration.
-#define ANT_CHANNEL_NUMBER              0x00                 /**< ANT Channel 0. */
-#define EXT_ASSIGN                      0x00                 /**< ANT Ext Assign. */
-#define ANT_CUSTOM_TRANSMIT_POWER       0u                   /**< ANT Custom Transmit Power (Invalid/Not Used). */
-#define ANT_CHANNEL_DEFAULT_NETWORK     0x00                 /**< ANT Channel Network. */
-#define BROADCAST_DATA_BUFFER_SIZE      8u                   /**< Size of the broadcast data buffer. */
-#define BURST_BLOCK_SIZE                32u                  /**< Size of data block transmitted via burst. Size must be divisible by 8. */
+#define ANT_CUSTOM_TRANSMIT_POWER       0u      /**< ANT Custom Transmit Power (Invalid/Not Used). */
+#define BROADCAST_DATA_BUFFER_SIZE      8u      /**< Size of the broadcast data buffer. */
+#define BURST_BLOCK_SIZE                32u     /**< Size of data block transmitted via burst. Size must be divisible by 8. */
+
+#define APP_ANT_OBSERVER_PRIO           1       /**< Application's ANT observer priority. You shouldn't need to modify this value. */
 
 // Static variables and buffers.
 static uint8_t m_tx_buffer[BROADCAST_DATA_BUFFER_SIZE]; /**< Primary data (Broadcast/Acknowledged) transmit buffer. */
@@ -87,36 +85,34 @@ enum MESSAGE_TYPES_MASTER_STATES
     BURST
 } state_message_types;
 
-
-
 void ant_message_types_master_setup(void)
 {
     uint32_t err_code;
 
     ant_channel_config_t channel_config =
     {
-        .channel_number    = ANT_CHANNEL_NUMBER,
+        .channel_number    = ANT_CHANNEL_NUM,
         .channel_type      = CHANNEL_TYPE_MASTER,
-        .ext_assign        = EXT_ASSIGN,
+        .ext_assign        = 0x00,
         .rf_freq           = RF_FREQ,
         .transmission_type = CHAN_ID_TRANS_TYPE,
         .device_type       = CHAN_ID_DEV_TYPE,
         .device_number     = (uint16_t) (NRF_FICR->DEVICEID[0]),
         .channel_period    = CHAN_PERIOD,
-        .network_number    = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number    = ANT_NETWORK_NUM,
     };
 
     err_code = ant_channel_init(&channel_config);
     APP_ERROR_CHECK(err_code);
 
     //Set Tx Power
-    err_code = sd_ant_channel_radio_tx_power_set(ANT_CHANNEL_NUMBER,
+    err_code = sd_ant_channel_radio_tx_power_set(ANT_CHANNEL_NUM,
                                                  RADIO_TX_POWER_LVL_3,
                                                  ANT_CUSTOM_TRANSMIT_POWER);
     APP_ERROR_CHECK(err_code);
 
     // Open channel.
-    err_code = sd_ant_channel_open(ANT_CHANNEL_NUMBER);
+    err_code = sd_ant_channel_open(ANT_CHANNEL_NUM);
     APP_ERROR_CHECK(err_code);
 
     // Write counter value to last byte of the broadcast data.
@@ -126,7 +122,7 @@ void ant_message_types_master_setup(void)
     m_tx_buffer[BROADCAST_DATA_BUFFER_SIZE - 1] = m_counter;
 
     // Configure the initial payload of the broadcast data
-    err_code = sd_ant_broadcast_message_tx(ANT_CHANNEL_NUMBER,
+    err_code = sd_ant_broadcast_message_tx(ANT_CHANNEL_NUM,
                                            BROADCAST_DATA_BUFFER_SIZE,
                                            m_tx_buffer);
     APP_ERROR_CHECK(err_code);
@@ -157,8 +153,12 @@ void ant_message_types_master_bsp_evt_handler(bsp_event_t evt)
     }
 }
 
-
-void ant_message_types_master_event_handler(ant_evt_t * p_ant_evt)
+/**@brief Function for handling a ANT stack event.
+ *
+ * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
+ */
+static void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
     uint32_t err_code;
     uint32_t led_output = LED_BROADCAST;
@@ -176,7 +176,7 @@ void ant_message_types_master_event_handler(ant_evt_t * p_ant_evt)
             if (state_message_types == BROADCAST)
             {
                 // Send as broadcast
-                err_code = sd_ant_broadcast_message_tx(ANT_CHANNEL_NUMBER,
+                err_code = sd_ant_broadcast_message_tx(ANT_CHANNEL_NUM,
                                                        BROADCAST_DATA_BUFFER_SIZE,
                                                        m_tx_buffer);
                 APP_ERROR_CHECK(err_code);
@@ -186,7 +186,7 @@ void ant_message_types_master_event_handler(ant_evt_t * p_ant_evt)
             else if (state_message_types == ACKNOWLEDGED)
             {
                 // Send as acknowledged
-                err_code = sd_ant_acknowledge_message_tx(ANT_CHANNEL_NUMBER,
+                err_code = sd_ant_acknowledge_message_tx(ANT_CHANNEL_NUM,
                                                          BROADCAST_DATA_BUFFER_SIZE,
                                                          m_tx_buffer);
                 APP_ERROR_CHECK(err_code);
@@ -208,7 +208,7 @@ void ant_message_types_master_event_handler(ant_evt_t * p_ant_evt)
                 }
 
                 // Queue a Burst Transfer.  Since this is a small burst, queue entire burst.
-                err_code = sd_ant_burst_handler_request(ANT_CHANNEL_NUMBER,
+                err_code = sd_ant_burst_handler_request(ANT_CHANNEL_NUM,
                                                         BURST_BLOCK_SIZE,
                                                         m_burst_data,
                                                         (BURST_SEGMENT_START | BURST_SEGMENT_END));
@@ -236,3 +236,4 @@ void ant_message_types_master_event_handler(ant_evt_t * p_ant_evt)
     }
 }
 
+NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_evt_handler, NULL);

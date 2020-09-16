@@ -43,15 +43,14 @@
 #include "ant_sdm_page_2.h"
 #include "ant_sdm_utils.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_SDM_PAGE_2"
-#if ANT_SDM_PAGE_2_LOG_ENABLED
-#define NRF_LOG_LEVEL       ANT_SDM_PAGE_2_LOG_LEVEL
-#define NRF_LOG_INFO_COLOR  ANT_SDM_PAGE_2_INFO_COLOR
-#else // ANT_SDM_PAGE_2_LOG_ENABLED
+#define NRF_LOG_MODULE_NAME ant_sdm
+#if ANT_SDM_LOG_ENABLED
+#define NRF_LOG_LEVEL       ANT_SDM_LOG_LEVEL
+#define NRF_LOG_INFO_COLOR  ANT_SDM_INFO_COLOR
+#else // ANT_SDM_LOG_ENABLED
 #define NRF_LOG_LEVEL       0
-#endif // ANT_SDM_PAGE_2_LOG_ENABLED
+#endif // ANT_SDM_LOG_ENABLED
 #include "nrf_log.h"
-
 
 /**@brief SDM page 2 data layout structure. */
 typedef struct
@@ -78,16 +77,16 @@ static void page_2_data_log(ant_sdm_page2_data_t const * p_page_data)
 
     uint16_t cadence = ANT_SDM_CADENCE_RESCALE(p_page_data->cadence);
 
-    NRF_LOG_INFO("Status:\r\n");
-    NRF_LOG_INFO("state:                                %s\r\n",
+    NRF_LOG_INFO("Status:");
+    NRF_LOG_INFO("state:                                %s",
                 (uint32_t)p_state[p_page_data->status.items.state]);
-    NRF_LOG_INFO("health:                               %s\r\n",
+    NRF_LOG_INFO("health:                               %s",
                 (uint32_t)p_health[p_page_data->status.items.health]);
-    NRF_LOG_INFO("battery:                              %s\r\n",
+    NRF_LOG_INFO("battery:                              %s",
                 (uint32_t)p_battery[p_page_data->status.items.battery]);
-    NRF_LOG_INFO("location:                             %s\r\n",
+    NRF_LOG_INFO("location:                             %s",
                 (uint32_t)p_location[p_page_data->status.items.location]);
-    NRF_LOG_INFO("Cadence                               %u.%01u strides/min\r\n",
+    NRF_LOG_INFO("Cadence                               %u.%01u strides/min",
                 cadence / ANT_SDM_CADENCE_DISP_PRECISION,
                 cadence % ANT_SDM_CADENCE_DISP_PRECISION);
 }

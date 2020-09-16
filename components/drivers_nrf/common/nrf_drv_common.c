@@ -53,7 +53,7 @@
 
 #if NRF_MODULE_ENABLED(PERIPHERAL_RESOURCE_SHARING)
 
-#define NRF_LOG_MODULE_NAME "COMMON"
+#define NRF_LOG_MODULE_NAME common
 
 #if COMMON_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       COMMON_CONFIG_LOG_LEVEL
@@ -63,7 +63,8 @@
 #define NRF_LOG_LEVEL       0
 #endif //COMMON_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
-#include "nrf_log_ctrl.h"
+NRF_LOG_MODULE_REGISTER();
+
 
 typedef struct {
     nrf_drv_irq_handler_t handler;
@@ -163,13 +164,13 @@ static ret_code_t acquire_shared_resource(shared_resource_t * p_resource,
     if (busy)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
     p_resource->handler = handler;
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 #endif
@@ -207,7 +208,7 @@ ret_code_t nrf_drv_common_per_res_acquire(void const * p_per_base,
     ret_code_t err_code;
 
     err_code = NRF_ERROR_INVALID_PARAM;
-    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -254,7 +255,7 @@ void nrf_drv_common_per_res_release(void const * p_per_base)
 void nrf_drv_common_power_irq_disable(void)
 {
 #if NRF_DRV_COMMON_POWER_CLOCK_ISR
-    if(!nrf_drv_clock_init_check())
+    if (!nrf_drv_clock_init_check())
 #endif
     {
         nrf_drv_common_irq_disable(POWER_CLOCK_IRQn);
@@ -266,7 +267,7 @@ void nrf_drv_common_power_irq_disable(void)
 void nrf_drv_common_clock_irq_disable(void)
 {
 #if NRF_DRV_COMMON_POWER_CLOCK_ISR
-    if(!nrf_drv_power_init_check())
+    if (!nrf_drv_power_init_check())
 #endif
     {
         nrf_drv_common_irq_disable(POWER_CLOCK_IRQn);

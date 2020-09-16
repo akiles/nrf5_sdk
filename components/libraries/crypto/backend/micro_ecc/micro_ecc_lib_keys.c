@@ -40,7 +40,7 @@
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(NRF_CRYPTO)
 
-#if defined(NRF_CRYPTO_BACKEND_MICRO_ECC) && (NRF_CRYPTO_BACKEND_MICRO_ECC == 1)
+#if NRF_CRYPTO_BACKEND_MICRO_ECC
 
 #include "micro_ecc_lib_keys.h"
 #include "micro_ecc_lib_shared.h"
@@ -50,11 +50,11 @@
 #include "uECC.h"
 
 
-#if !defined(NRF_CRYPTO_BACKEND_SW)
-#error Enable NRF_CRYPTO_BACKEND_SW in SDK config for key generation (required random number generator)
+#if !defined(NRF_CRYPTO_BACKEND_MICRO_ECC_SHA256)
+#error Enable NRF_CRYPTO_BACKEND_MICRO_ECC_SHA256 in SDK config for key generation (required random number generator)
 #endif
 
-#if defined(NRF_CRYPTO_SUPPORTS_RNG) && NRF_CRYPTO_SUPPORTS_RNG == 1
+#if NRF_CRYPTO_BACKEND_MICRO_ECC_RNG
 
 uint32_t nrf_crypto_ecc_key_pair_generate(nrf_crypto_curve_info_t       curve_type,
                                           nrf_value_length_t          * p_private_key,
@@ -123,7 +123,6 @@ uint32_t nrf_crypto_ecc_key_pair_generate(nrf_crypto_curve_info_t       curve_ty
 }
 
 
-
 uint32_t nrf_crypto_ecc_public_key_calculate(nrf_crypto_curve_info_t       curve_type,
                                              nrf_value_length_t    const * p_private_key,
                                              nrf_value_length_t          * p_public_key)
@@ -186,7 +185,8 @@ uint32_t nrf_crypto_ecc_public_key_calculate(nrf_crypto_curve_info_t       curve
     return NRF_SUCCESS;
 }
 
-#endif
+#endif // NRF_CRYPTO_BACKEND_MICRO_ECC_RNG
+
 
 uint32_t nrf_crypto_ecc_private_key_to_raw(nrf_crypto_curve_info_t          curve_info,
                                            nrf_value_length_t       const * p_private_key,
@@ -227,6 +227,7 @@ uint32_t nrf_crypto_ecc_private_key_to_raw(nrf_crypto_curve_info_t          curv
     return NRF_SUCCESS;
 }
 
+
 uint32_t nrf_crypto_ecc_public_key_to_raw(nrf_crypto_curve_info_t       curve_info,
                                           nrf_value_length_t    const * p_public_key,
                                           nrf_value_length_t          * p_raw_key)
@@ -265,6 +266,7 @@ uint32_t nrf_crypto_ecc_public_key_to_raw(nrf_crypto_curve_info_t       curve_in
     return NRF_SUCCESS;
 }
 
+
 uint32_t nrf_crypto_ecc_public_key_from_raw(nrf_crypto_curve_info_t   curve_type,
                                             nrf_value_length_t      * p_public_key_raw,
                                             nrf_value_length_t      * p_public_key)
@@ -275,5 +277,4 @@ uint32_t nrf_crypto_ecc_public_key_from_raw(nrf_crypto_curve_info_t   curve_type
 }
 
 #endif // NRF_CRYPTO_BACKEND_MICRO_ECC
-
 #endif // NRF_MODULE_ENABLED(NRF_CRYPTO)

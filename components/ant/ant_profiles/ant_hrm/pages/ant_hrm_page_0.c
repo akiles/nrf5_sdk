@@ -43,7 +43,7 @@
 #include "ant_hrm_page_0.h"
 #include "ant_hrm_utils.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_HRM_PAGE_0"
+#define NRF_LOG_MODULE_NAME ant_hrm_page_0
 #if ANT_HRM_PAGE_0_LOG_ENABLED
 #define NRF_LOG_LEVEL       ANT_HRM_PAGE_0_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  ANT_HRM_PAGE_0_INFO_COLOR
@@ -51,6 +51,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // ANT_HRM_PAGE_0_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 /**@brief HRM page 0 data layout structure. */
 typedef struct
@@ -69,8 +70,8 @@ typedef struct
  */
 static void page0_data_log(ant_hrm_page0_data_t const * p_page_data)
 {
-    NRF_LOG_INFO("Heart beat count:                 %u\r\n", (unsigned int)p_page_data->beat_count);
-    NRF_LOG_INFO("Computed heart rate:              %u\r\n",
+    NRF_LOG_INFO("Heart beat count:                 %u", (unsigned int)p_page_data->beat_count);
+    NRF_LOG_INFO("Computed heart rate:              %u",
                  (unsigned int) p_page_data->computed_heart_rate);
     NRF_LOG_INFO("Heart beat event time:            %u.%03us\r\n\n",
                  (unsigned int) ANT_HRM_BEAT_TIME_SEC(p_page_data->beat_time),

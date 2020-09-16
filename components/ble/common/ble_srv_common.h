@@ -85,7 +85,7 @@ extern "C" {
 #define BLE_UUID_BMS_SERVICE                                     0x181E     /**< BOND MANAGEMENT service UUID*/
 #define BLE_UUID_CGM_SERVICE                                     0x181F     /**< Continuous Glucose Monitoring service UUID*/
 #define BLE_UUID_PLX_SERVICE                                     0x1822     /**< Pulse Oximeter Service UUID*/
-
+#define BLE_UUID_OTS_SERVICE                                     0x1825     /**< Object Transfer Service UUID*/
 
 /** @} */
 
@@ -177,7 +177,18 @@ extern "C" {
 #define BLE_UUID_PLX_SPOT_CHECK_MEAS                             0x2A5E     /**< PLX Service, spot check measurement characteristic UUID*/
 #define BLE_UUID_PLX_CONTINUOUS_MEAS                             0x2A5F     /**< PLX Service, continuous measurement characteristic UUID*/
 #define BLE_UUID_PLX_FEATURES                                    0x2A60     /**< PLX Service, feature characteristic UUID*/
-
+#define BLE_UUID_OTS_FEATURES                                    0x2ABD     /**< OTS Service, feature characteristic UUID*/
+#define BLE_UUID_OTS_OBJECT_NAME                                 0x2ABE     /**< OTS Service, Object Name characteristic UUID*/
+#define BLE_UUID_OTS_OBJECT_TYPE                                 0x2ABF     /**< OTS Service, Object Type characteristic UUID*/
+#define BLE_UUID_OTS_OBJECT_SIZE                                 0x2AC0     /**< OTS Service, Object Size characteristic UUID*/
+#define BLE_UUID_OTS_OBJECT_FIRST_CREATED                        0x2AC1     /**< OTS Service, Object First Created characteristic UUID*/
+#define BLE_UUID_OTS_OBJECT_LAST_MODIFIED                        0x2AC2     /**< OTS Service, Object Last Modified characteristic UUID*/
+#define BLE_UUID_OTS_OBJECT_ID                                   0x2AC3     /**< OTS Service, Object ID characteristic UUID*/
+#define BLE_UUID_OTS_OBJECT_PROPERTIES                           0x2AC4     /**< OTS Service, Object Properties characteristic UUID*/
+#define BLE_UUID_OTS_OACP                                        0x2AC5     /**< OTS Service, Object Action Control Point characteristic UUID*/
+#define BLE_UUID_OTS_OLCP                                        0x2AC6     /**< OTS Service, Object List Control Point characteristic UUID*/
+#define BLE_UUID_OTS_LF                                          0x2AC7     /**< OTS Service, Object List Filter characteristic UUID*/
+#define BLE_UUID_OTS_OBJECT_CHANGED                              0x2AC8     /**< OTS Service, Object Changed characteristic UUID*/
 
 
 

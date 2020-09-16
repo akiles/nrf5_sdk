@@ -42,7 +42,7 @@
 
 #include "ant_hrm_page_2.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_HRM_PAGE_2"
+#define NRF_LOG_MODULE_NAME ant_hrm_page_2
 #if ANT_HRM_PAGE_2_LOG_ENABLED
 #define NRF_LOG_LEVEL       ANT_HRM_PAGE_2_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  ANT_HRM_PAGE_2_INFO_COLOR
@@ -50,6 +50,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // ANT_HRM_PAGE_2_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 /**@brief HRM page 2 data layout structure. */
 typedef struct
@@ -67,7 +68,7 @@ typedef struct
  */
 static void page2_data_log(ant_hrm_page2_data_t const * p_page_data)
 {
-    NRF_LOG_INFO("Manufacturer ID:                  %u\r\n", (unsigned int)p_page_data->manuf_id);
+    NRF_LOG_INFO("Manufacturer ID:                  %u", (unsigned int)p_page_data->manuf_id);
     NRF_LOG_INFO("Serial No (upper 16-bits):        0x%X\r\n\n", (unsigned int)p_page_data->serial_num);
 }
 

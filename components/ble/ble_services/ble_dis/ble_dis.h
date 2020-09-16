@@ -122,7 +122,7 @@ typedef struct
  *
  * @return      NRF_SUCCESS on successful initialization of service.
  */
-uint32_t ble_dis_init(const ble_dis_init_t * p_dis_init);
+uint32_t ble_dis_init(ble_dis_init_t const * p_dis_init);
 
 
 #ifdef __cplusplus

@@ -92,16 +92,16 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t *file_name);
  * Check passes if "expr" evaluates to true. */
 
 #ifdef _lint
-#define ASSERT(expr) \
+#define ASSERT(expr)                                                          \
 if (expr)                                                                     \
 {                                                                             \
 }                                                                             \
 else                                                                          \
 {                                                                             \
-    while(1);             \
+    while (1);                                                                \
 }
 #else //_lint
-#define ASSERT(expr) \
+#define ASSERT(expr)                                                          \
 if (NRF_ASSERT_PRESENT)                                                       \
 {                                                                             \
     if (expr)                                                                 \
@@ -112,6 +112,7 @@ if (NRF_ASSERT_PRESENT)                                                       \
         assert_nrf_callback((uint16_t)__LINE__, (uint8_t *)__FILE__);         \
     }                                                                         \
 }
+
 #endif
 
 

@@ -62,12 +62,13 @@ extern "C" {
 #define SERVICE_UUID_BASE   {0xBB, 0x4A, 0xFF, 0x4F, 0xAD, 0x03, 0x41, 0x5D, \
                              0xA9, 0x6C, 0x9D, 0x6C, 0xDD, 0xDA, 0x83, 0x04}
 
-#define AMT_SERVICE_UUID                0x1523
-#define AMTS_CHAR_UUID                  0x1524
-#define AMT_RCV_BYTES_CNT_CHAR_UUID     0x1525
+#define AMT_SERVICE_UUID                    0x1523
+#define AMTS_CHAR_UUID                      0x1524
+#define AMT_RCV_BYTES_CNT_CHAR_UUID         0x1525
 
-#define AMT_RCV_BYTES_CNT_MAX_LEN       4
-#define AMT_BYTE_TRANSFER_CNT           (1024 * 1024)
+#define AMT_RCV_BYTES_CNT_MAX_LEN           4
+#define AMT_BYTE_TRANSFER_CNT               (1024 * 1024)
+
 
 /**
  * @defgroup nrf_ble_amt ATT MTU Throughput (AMT) Service Client
@@ -81,6 +82,9 @@ extern "C" {
  * @note     The application must propagate BLE stack events to this module by calling
  *           nrf_ble_amt_c_on_ble_evt().
  */
+
+#define BLE_AMTC_BLE_OBSERVER_PRIO   3
+
 
 /**@brief Structure containing the handles found on the peer. */
 typedef struct
@@ -165,10 +169,10 @@ ret_code_t nrf_ble_amtc_init(nrf_ble_amtc_t * p_ctx, nrf_ble_amtc_evt_handler_t 
  *            event is relevant to the AMT Client module, then it uses it to update
  *            interval variables and, if necessary, send events to the application.
  *
- * @param[in] p_ctx       Pointer to the AMT client structure.
- * @param[in] p_ble_evt   Pointer to the BLE event.
+ * @param[in] p_ble_evt     Pointer to the BLE event.
+ * @param[in] p_context     Pointer to the AMT client structure.
  */
-void nrf_ble_amtc_on_ble_evt(nrf_ble_amtc_t * p_ctx, const ble_evt_t * p_ble_evt);
+void nrf_ble_amtc_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 
 
 /**@brief   Function for enabling CCCD on the peer.
@@ -247,6 +251,9 @@ ret_code_t nrf_ble_amtc_rcb_read(nrf_ble_amtc_t * p_ctx);
  *           amt_on_ble_evt().
  */
 
+#define BLE_AMTS_BLE_OBSERVER_PRIO   3
+
+
 /**@brief AMT Server event type. */
 typedef enum
 {
@@ -287,16 +294,17 @@ typedef struct
 } nrf_ble_amts_t;
 
 
+
 /**@brief   Function for handling BLE events from the SoftDevice.
  *
  * @details This function will handle the BLE events received from the SoftDevice.
  *          If a BLE event is relevant to the AMTS module, then it uses it to update
  *          interval variables and, if necessary, send events to the application.
  *
- * @param     p_ctx       Pointer to the AMTS structure.
- * @param[in] p_ble_evt   Pointer to the BLE event.
+ * @param[in] p_ble_evt     Pointer to the BLE event.
+ * @param     p_context     Pointer to the AMTS structure.
  */
-void nrf_ble_amts_on_ble_evt(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt);
+void nrf_ble_amts_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 
 
 /**@brief   Function for initializing the ATT MTU Throughput Service module.

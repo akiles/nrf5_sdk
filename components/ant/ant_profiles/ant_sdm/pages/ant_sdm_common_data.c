@@ -43,7 +43,7 @@
 #include "ant_sdm_common_data.h"
 #include "ant_sdm_utils.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_SDM"
+#define NRF_LOG_MODULE_NAME ant_sdm
 #if ANT_SDM_LOG_ENABLED
 #define NRF_LOG_LEVEL       ANT_SDM_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  ANT_SDM_INFO_COLOR

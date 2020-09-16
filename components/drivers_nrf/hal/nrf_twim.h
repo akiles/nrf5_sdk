@@ -121,7 +121,12 @@ typedef enum
 {
     NRF_TWIM_FREQ_100K = TWIM_FREQUENCY_FREQUENCY_K100, ///< 100 kbps.
     NRF_TWIM_FREQ_250K = TWIM_FREQUENCY_FREQUENCY_K250, ///< 250 kbps.
-    NRF_TWIM_FREQ_400K = TWIM_FREQUENCY_FREQUENCY_K400  ///< 400 kbps.
+    NRF_TWIM_FREQ_400K = TWIM_FREQUENCY_FREQUENCY_K400, ///< 400 kbps.
+#ifndef TWI_PRESENT
+    NRF_TWI_FREQ_100K = NRF_TWIM_FREQ_100K,
+    NRF_TWI_FREQ_250K = NRF_TWIM_FREQ_250K,
+    NRF_TWI_FREQ_400K = NRF_TWIM_FREQ_400K,
+#endif
 } nrf_twim_frequency_t;
 
 /**
@@ -130,7 +135,11 @@ typedef enum
 typedef enum
 {
     NRF_TWIM_ERROR_ADDRESS_NACK = TWIM_ERRORSRC_ANACK_Msk, ///< NACK received after sending the address.
-    NRF_TWIM_ERROR_DATA_NACK    = TWIM_ERRORSRC_DNACK_Msk  ///< NACK received after sending a data byte.
+    NRF_TWIM_ERROR_DATA_NACK    = TWIM_ERRORSRC_DNACK_Msk, ///< NACK received after sending a data byte.
+#ifndef TWI_PRESENT
+    NRF_TWI_ERROR_ADDRESS_NACK = NRF_TWIM_ERROR_ADDRESS_NACK,
+    NRF_TWI_ERROR_DATA_NACK    = NRF_TWIM_ERROR_DATA_NACK,
+#endif
 } nrf_twim_error_t;
 
 

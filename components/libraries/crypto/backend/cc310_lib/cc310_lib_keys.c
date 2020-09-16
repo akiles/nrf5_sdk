@@ -59,7 +59,7 @@ extern CRYS_RND_Context_t * gp_rnd_context;
 static void swap_array_endian(uint8_t * p_in, uint32_t len, uint8_t * p_out)
 {
     uint32_t i;
-    for(i = 0; i < len; i++)
+    for (i = 0; i < len; i++)
     {
         p_out[len-i-1] = p_in[i];
     }
@@ -69,7 +69,7 @@ static uint32_t key_pair_generate_result_get(CRYSError_t crys_error)
 {
     uint32_t ret_val= NRF_ERROR_INTERNAL;
 
-    switch(crys_error)
+    switch (crys_error)
     {
         case CRYS_OK:
             ret_val = NRF_SUCCESS;
@@ -140,7 +140,7 @@ static uint32_t public_key_calculate_result_get(CRYSError_t crys_error)
 {
     uint32_t ret_val;
 
-    switch(crys_error)
+    switch (crys_error)
     {
         case CRYS_OK:
             ret_val = NRF_SUCCESS;
@@ -159,10 +159,10 @@ static uint32_t public_key_build_result_get(CRYSError_t crys_error)
 {
     uint32_t ret_val;
 
-    switch(crys_error)
+    switch (crys_error)
     {
         case CRYS_OK:
-            NRF_LOG_INFO("Key build result successful!\r\n");
+            NRF_LOG_INFO("Key build result successful!");
             ret_val = NRF_SUCCESS;
             break;
 
@@ -179,10 +179,10 @@ static uint32_t public_key_export_result_get(CRYSError_t crys_error)
 {
     uint32_t ret_val = NRF_SUCCESS;
 
-    switch(crys_error)
+    switch (crys_error)
     {
         case CRYS_OK:
-            NRF_LOG_INFO("Key build result successful!\r\n");
+            NRF_LOG_INFO("Key build result successful!");
             ret_val = NRF_SUCCESS;
             break;
 
@@ -232,7 +232,7 @@ uint32_t nrf_crypto_ecc_key_pair_generate(nrf_crypto_curve_info_t   curve_type,
     // Get the curve domain from curve_type
     if (!cc310_curve_domain_get(curve_type.curve_type, &p_domain))
     {
-        NRF_LOG_INFO("Could not get curve domain!\r\n");
+        NRF_LOG_INFO("Could not get curve domain!");
         return NRF_ERROR_NOT_SUPPORTED;
     }
 
@@ -318,7 +318,7 @@ uint32_t nrf_crypto_ecc_public_key_to_raw(nrf_crypto_curve_info_t       curve_ty
     }
 
     // Ensure the public key can hold the raw representation.
-    if(public_key_raw_size != p_raw_key->length)
+    if (public_key_raw_size != p_raw_key->length)
     {
         return NRF_ERROR_INVALID_LENGTH;
     }
@@ -339,7 +339,7 @@ uint32_t nrf_crypto_ecc_public_key_to_raw(nrf_crypto_curve_info_t       curve_ty
     }
 
     // format is [tag][x][y]
-    if(compact_key_size != public_key_raw_size + 1)
+    if (compact_key_size != public_key_raw_size + 1)
     {
         return NRF_ERROR_INTERNAL;
     }
@@ -399,28 +399,28 @@ uint32_t nrf_crypto_ecc_public_key_from_raw(nrf_crypto_curve_info_t   curve_type
     // Get the curve domain from curve_type
     if (!cc310_curve_domain_get(curve_type.curve_type, &p_domain))
     {
-        NRF_LOG_INFO("Could not get curve domain\r\n");
+        NRF_LOG_INFO("Could not get curve domain");
         return NRF_ERROR_NOT_SUPPORTED;
     }
 
     ret_val = nrf_crypto_ecc_public_key_size_get(curve_type.curve_type, &raw_key_size);
     if (ret_val != NRF_SUCCESS)
     {
-        NRF_LOG_INFO("Could not get key size\r\n");
+        NRF_LOG_INFO("Could not get key size");
         return NRF_SUCCESS;
     }
 
     // Ensure the public key can hold the external type.
     if (p_public_key_raw->length != raw_key_size)
     {
-        NRF_LOG_INFO("p_raw_key->length != raw_key_size\r\n");
+        NRF_LOG_INFO("p_raw_key->length != raw_key_size");
         return NRF_ERROR_INVALID_LENGTH;
     }
 
     // Ensure the public key can hold the internal type.
     if (p_public_key->length != sizeof(CRYS_ECPKI_UserPublKey_t))
     {
-        NRF_LOG_INFO("p_public_key->length != sizeof(CRYS_ECPKI_UserPublKey_t)\r\n");
+        NRF_LOG_INFO("p_public_key->length != sizeof(CRYS_ECPKI_UserPublKey_t)");
         return NRF_ERROR_INVALID_LENGTH;
     }
 
@@ -432,7 +432,7 @@ uint32_t nrf_crypto_ecc_public_key_from_raw(nrf_crypto_curve_info_t   curve_type
     // Compact representation is big-endian by IEEE1636 spec.
     // Indicate that we have a key with X and Y (non-compressed)
     compact_rep[0] = 0x04;
-    if(curve_type.endian_type == NRF_CRYPTO_ENDIAN_LE)
+    if (curve_type.endian_type == NRF_CRYPTO_ENDIAN_LE)
     {
         // Swap X value
         swap_array_endian(p_public_key_raw->p_value, raw_param_size, compact_rep + 1);
@@ -448,12 +448,12 @@ uint32_t nrf_crypto_ecc_public_key_from_raw(nrf_crypto_curve_info_t   curve_type
     // Set the pointer to be the return value.
     p_public_key_user = (CRYS_ECPKI_UserPublKey_t *)p_public_key->p_value;
 
-    NRF_LOG_INFO("Building public key!\r\n");
+    NRF_LOG_INFO("Building public key!");
     crys_error = CRYS_ECPKI_BuildPublKey(p_domain,
                                          compact_rep,
                                          raw_key_size,
                                          p_public_key_user);
-    NRF_LOG_INFO("Finished building public key: 0x%08x!\r\n", crys_error);
+    NRF_LOG_INFO("Finished building public key: 0x%08x!", crys_error);
 
     ret_val = public_key_build_result_get(crys_error);
     return ret_val;

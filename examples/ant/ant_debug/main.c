@@ -48,6 +48,14 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
+/*
+ * Before compiling this example for NRF52, complete the following steps:
+ * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
+ * - Extract the downloaded zip file and copy the S212 SoftDevice headers to <tt>\<InstallFolder\>/components/softdevice/s212/headers</tt>.
+ * If you are using Keil packs, copy the files into a @c headers folder in your example folder.
+ * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
+ */
+
 #include <stdint.h>
 #include <string.h>
 #include "nrf.h"
@@ -56,13 +64,16 @@
 #include "bsp.h"
 #include "boards.h"
 #include "hardfault.h"
-#include "softdevice_handler.h"
-#include "ant_stack_config.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
+#include "nrf_pwr_mgmt.h"
 #include "application.h"
 #include "debug.h"
 
-#define BTN_ID_ERROR                    0                   /**< ID of button used to test error handling. */
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
+#define BTN_ID_ERROR                    0                   /**< ID of button used to test error handling. */
 
 /**@brief Function for error handling, which demonstrates usage of the ANT debug
  * module to output debug information over the debug channel on an assertion
@@ -106,7 +117,6 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
     }
 }
 
-
 /**@brief Function for handling bsp events.
  */
 void bsp_evt_handler(bsp_event_t evt)
@@ -122,43 +132,12 @@ void bsp_evt_handler(bsp_event_t evt)
     }
 }
 
-
-/**@brief Function for dispatching a ANT stack event to all modules with a ANT stack event handler.
- *
- * @details This function is called from the ANT Stack event interrupt handler after a ANT stack
- *          event has been received.
- *
- * @param[in] p_ant_evt  ANT stack event.
- */
-void ant_evt_dispatch(ant_evt_t * p_ant_evt)
-{
-    switch (p_ant_evt->channel)
-    {
-        case APPLICATION_CHANNEL:
-            app_channel_event_handler(p_ant_evt);
-            break;
-
-    #if DEBUG_CHANNEL_INCLUDED
-        case DEBUG_CHANNEL:
-            // Transmit GPIO register values on debug channel
-            ad_debug_field_set(ANT_DEBUG_FIELD_GPIO_REGISTER_LOW, (uint16_t)(NRF_GPIO->IN));
-            ad_debug_field_set(ANT_DEBUG_FIELD_GPIO_REGISTER_HIGH, (uint16_t)(NRF_GPIO->IN >> 16));
-
-            // If event is from debug channel, let the debug handler handle it
-            ad_ant_event_process(p_ant_evt);
-            break;
-    #endif // DEBUG_CHANNEL_INCLUDED
-
-        default:
-            break; // No implementation needed
-    }
-}
-
 /**@brief Function for the Timer and BSP initialization.
  */
 static void utils_setup(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
@@ -171,29 +150,30 @@ static void utils_setup(void)
                                                  BSP_BUTTON_ACTION_LONG_PUSH,
                                                  BSP_EVENT_RESET);
     APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
 }
 
+/**@brief Function for ANT stack initialization.
+ */
+static void softdevice_setup(void)
+{
+    ret_code_t err_code = nrf_sdh_enable_request();
+    APP_ERROR_CHECK(err_code);
+
+    ASSERT(nrf_sdh_is_enabled());
+
+    err_code = nrf_sdh_ant_enable();
+    APP_ERROR_CHECK(err_code);
+}
 
 /**@brief Function for application main entry. Does not return.
  */
 int main(void)
 {
-    uint32_t err_code;
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
     utils_setup();
-
-    // Enable SoftDevice.
-    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = ant_stack_static_config();
-    APP_ERROR_CHECK(err_code);
-
-    // Setup and open Channel_0 as a Bidirectional Master.
+    softdevice_setup();
     app_channel_setup();
 
     #if DEBUG_CHANNEL_INCLUDED
@@ -205,8 +185,8 @@ int main(void)
     // Enter main loop
     for (;;)
     {
-        err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }
 

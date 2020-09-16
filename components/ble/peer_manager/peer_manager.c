@@ -50,11 +50,10 @@
 #include "id_manager.h"
 #include "ble_conn_state.h"
 #include "peer_manager_internal.h"
+#include "nrf_sdh_ble.h"
 
-/**< The number of event handlers that can be registered with the module. */
-#define MAX_REGISTRANTS         (3)
-/**< Macro indicating whether the module has been initialized properly. */
-#define MODULE_INITIALIZED      (m_module_initialized)
+
+#define MODULE_INITIALIZED      (m_module_initialized)                  /**< Macro indicating whether the module has been initialized properly. */
 
 
 static bool                          m_module_initialized;              /**< Whether or not @ref pm_init has been called successfully. */
@@ -63,7 +62,7 @@ static bool                          m_deleting_all;                    /**< Tru
 static pm_store_token_t              m_peer_rank_token;                 /**< The store token of an ongoing peer rank update via a call to @ref pm_peer_rank_highest. If @ref PM_STORE_TOKEN_INVALID, there is no ongoing update. */
 static uint32_t                      m_current_highest_peer_rank;       /**< The current highest peer rank. Used by @ref pm_peer_rank_highest. */
 static pm_peer_id_t                  m_highest_ranked_peer;             /**< The peer with the highest peer rank. Used by @ref pm_peer_rank_highest. */
-static pm_evt_handler_t              m_evt_handlers[MAX_REGISTRANTS];   /**< The subscribers to Peer Manager events, as registered through @ref pm_register. */
+static pm_evt_handler_t              m_evt_handlers[PM_MAX_REGISTRANTS];/**< The subscribers to Peer Manager events, as registered through @ref pm_register. */
 static uint8_t                       m_n_registrants;                   /**< The number of event handlers registered through @ref pm_register. */
 static ble_conn_state_user_flag_id_t m_pairing_flag_id;                 /**< The flag ID for which connections are paired. */
 static ble_conn_state_user_flag_id_t m_bonding_flag_id;                 /**< The flag ID for which connections are bonded. */
@@ -465,8 +464,13 @@ void pm_im_evt_handler(im_evt_t const * p_im_evt)
     }
 }
 
-
-void pm_on_ble_evt(ble_evt_t * p_ble_evt)
+/**
+ * @brief Function for handling BLE events.
+ *
+ * @param[in]   p_ble_evt       Event received from the BLE stack.
+ * @param[in]   p_context       Context.
+ */
+static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 {
     VERIFY_MODULE_INITIALIZED_VOID();
 
@@ -474,6 +478,8 @@ void pm_on_ble_evt(ble_evt_t * p_ble_evt)
     sm_ble_evt_handler(p_ble_evt);
     gcm_ble_evt_handler(p_ble_evt);
 }
+
+NRF_SDH_BLE_OBSERVER(m_ble_evt_observer, PM_BLE_OBSERVER_PRIO, ble_evt_handler, NULL);
 
 
 /**@brief Function for resetting the internal state of this module.
@@ -558,7 +564,7 @@ ret_code_t pm_register(pm_evt_handler_t event_handler)
 {
     VERIFY_MODULE_INITIALIZED();
 
-    if (m_n_registrants >= MAX_REGISTRANTS)
+    if (m_n_registrants >= PM_MAX_REGISTRANTS)
     {
         return NRF_ERROR_NO_MEM;
     }

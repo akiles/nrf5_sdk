@@ -93,7 +93,7 @@ ret_code_t es_adv_timing_resolve(es_adv_timing_resolver_input_t * p_input)
     for (uint32_t i = 0; i < p_input->num_slots_configured; ++i)
     {
         uint8_t slot_no = p_input->p_slots_configured[i];
-        
+
         if (!(eTLM_required && slot_no == p_input->tlm_slot))
         {
             es_adv_timing_resolver_adv_timing_t * p_current_result = &p_input->p_result->timing_results[result_index];
@@ -136,7 +136,7 @@ ret_code_t es_adv_timing_resolve(es_adv_timing_resolver_input_t * p_input)
 
     p_input->p_result->len_timing_results = result_index; // Note: index has been increased to equal length of result.
 
-    if(p_input->p_result->len_timing_results > 0)
+    if (p_input->p_result->len_timing_results > 0)
     {
         p_input->p_result->timing_results[p_input->p_result->len_timing_results - 1].delay_ms = 0; // Last Slot does not need delay.
     }

@@ -49,7 +49,7 @@
 bool cc310_curve_domain_get(nrf_ecc_curve_type_t curve_type, CRYS_ECPKI_Domain_t ** p_domain)
 {
     CRYS_ECPKI_DomainID_t domain_id;
-    switch(curve_type)
+    switch (curve_type)
     {
         case NRF_CRYPTO_CURVE_SECP160R1:
             domain_id = CRYS_ECPKI_DomainID_secp160r1;

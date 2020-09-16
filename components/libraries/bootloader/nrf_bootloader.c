@@ -55,7 +55,7 @@
  #if (__LINT__ != 1)
 __WEAK uint32_t nrf_dfu_init(void)
 {
-    NRF_LOG_DEBUG("in weak nrf_dfu_init\r\n");
+    NRF_LOG_DEBUG("in weak nrf_dfu_init");
     return NRF_SUCCESS;
 }
 #endif
@@ -68,25 +68,23 @@ __WEAK uint32_t nrf_dfu_init(void)
  */
 __WEAK uint32_t nrf_dfu_init_user(void)
 {
-    NRF_LOG_DEBUG("in weak nrf_dfu_init_user\r\n");
+    NRF_LOG_DEBUG("in weak nrf_dfu_init_user");
     return NRF_SUCCESS;
 }
 
 
 uint32_t nrf_bootloader_init(void)
 {
-    NRF_LOG_DEBUG("In nrf_bootloader_init\r\n");
+    NRF_LOG_DEBUG("In nrf_bootloader_init");
 
     uint32_t ret_val = NRF_SUCCESS;
 
-    #if 0
     // Call user-defined init function if implemented
     ret_val = nrf_dfu_init_user();
     if (ret_val != NRF_SUCCESS)
     {
         return ret_val;
     }
-    #endif
 
     // Call DFU init function if implemented
     ret_val = nrf_dfu_init();
@@ -95,6 +93,6 @@ uint32_t nrf_bootloader_init(void)
         return ret_val;
     }
 
-    NRF_LOG_DEBUG("After nrf_bootloader_init\r\n");
+    NRF_LOG_DEBUG("After nrf_bootloader_init");
     return ret_val;
 }

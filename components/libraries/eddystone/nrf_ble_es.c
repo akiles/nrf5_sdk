@@ -50,6 +50,7 @@
 #include "es_slot.h"
 #include "es_stopwatch.h"
 #include "escs_defs.h"
+#include "nrf_sdh_ble.h"
 
 static uint16_t                       m_conn_handle = BLE_CONN_HANDLE_INVALID;  //!< Connection handle.
 static nrf_ble_escs_t                 m_ble_ecs;                                //!< Struct identifying the Eddystone Config Service.
@@ -99,11 +100,11 @@ static void new_address_set(void)
 #else
         err_code = sd_ble_gap_address_set(BLE_GAP_ADDR_CYCLE_MODE_NONE, &new_address);
 #endif // NRF_SD_BLE_API_VERSION
-    }while(err_code == NRF_ERROR_INVALID_STATE);
+    } while (err_code == NRF_ERROR_INVALID_STATE);
 
     APP_ERROR_CHECK(err_code);
 
-    if(es_adv_remain_connectable_get())
+    if (es_adv_remain_connectable_get())
     {
         es_adv_start_connectable_adv();
     }
@@ -155,7 +156,7 @@ static void lock_beacon(void)
  *
  * @param[in] p_ble_evt Pointer to BLE event.
  */
-static void on_ble_evt(ble_evt_t * p_ble_evt)
+static void on_ble_evt(ble_evt_t const * p_ble_evt)
 {
     ret_code_t            err_code;
     es_flash_flags_t      flash_flag = {{0}};
@@ -379,7 +380,7 @@ static void adv_slots_init(void)
 }
 
 
-void nrf_ble_es_on_ble_evt(ble_evt_t * p_ble_evt)
+void nrf_ble_es_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
     ret_code_t err_code;
 
@@ -389,6 +390,8 @@ void nrf_ble_es_on_ble_evt(ble_evt_t * p_ble_evt)
     on_ble_evt(p_ble_evt);
     es_flash_on_ble_evt(p_ble_evt);
 }
+
+NRF_SDH_BLE_OBSERVER(m_es_observer, 1, nrf_ble_es_on_ble_evt, NULL);
 
 
 void nrf_ble_es_on_start_connectable_advertising(void)

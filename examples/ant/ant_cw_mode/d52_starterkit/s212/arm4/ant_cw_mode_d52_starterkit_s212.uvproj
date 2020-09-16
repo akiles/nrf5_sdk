@@ -350,9 +350,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99 --reduce_paths</MiscControls>
-              <Define> ANT_STACK_SUPPORT_REQD BOARD_D52DK1 NRF52 NRF52832_XXAA S212 SOFTDEVICE_PRESENT</Define>
+              <Define> BOARD_D52DK1 NRF52 NRF52832_XXAA S212 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config\ant_cw_mode_d52_starterkit_s212;..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ant\ant_stack_config;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\..\components\softdevice\s212\headers;..\..\..\..\..\..\components\softdevice\s212\headers\nrf52;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ant\ant_channel_config;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\experimental_log;..\..\..\..\..\..\components\libraries\experimental_log\src;..\..\..\..\..\..\components\libraries\experimental_memobj;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\common;..\..\..\..\..\..\components\softdevice\s212\headers;..\..\..\..\..\..\components\softdevice\s212\headers\nrf52;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\toolchain\cmsis\include;..\config</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,10 +365,10 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DANT_STACK_SUPPORT_REQD,-DBOARD_D52DK1,-DNRF52,-DNRF52832_XXAA,-DS212,-DSOFTDEVICE_PRESENT</MiscControls>
-              <Define> ANT_STACK_SUPPORT_REQD BOARD_D52DK1 NRF52 NRF52832_XXAA S212 SOFTDEVICE_PRESENT</Define>
+              <MiscControls> --cpreproc_opts=-DBOARD_D52DK1,-DNRF52,-DNRF52832_XXAA,-DS212,-DSOFTDEVICE_PRESENT</MiscControls>
+              <Define> BOARD_D52DK1 NRF52 NRF52832_XXAA S212 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config\ant_cw_mode_d52_starterkit_s212;..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ant\ant_stack_config;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\..\components\softdevice\s212\headers;..\..\..\..\..\..\components\softdevice\s212\headers\nrf52;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ant\ant_channel_config;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\experimental_log;..\..\..\..\..\..\components\libraries\experimental_log\src;..\..\..\..\..\..\components\libraries\experimental_memobj;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\common;..\..\..\..\..\..\components\softdevice\s212\headers;..\..\..\..\..\..\components\softdevice\s212\headers\nrf52;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\toolchain\cmsis\include;..\config</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -416,21 +416,9 @@
         </Group>        <Group>
           <GroupName>nRF_ANT</GroupName>
           <Files>            <File>
-              <FileName>ant_stack_config.c</FileName>
+              <FileName>ant_channel_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\ant\ant_stack_config\ant_stack_config.c</FilePath>            </File>          </Files>
-        </Group>        <Group>
-          <GroupName>nRF_Drivers</GroupName>
-          <Files>            <File>
-              <FileName>nrf_drv_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\clock\nrf_drv_clock.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\components\ant\ant_channel_config\ant_channel_config.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Libraries</GroupName>
           <Files>            <File>
@@ -452,36 +440,39 @@
               <FileName>nrf_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\nrf_assert.c</FilePath>            </File>            <File>
+              <FileName>nrf_balloc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\balloc\nrf_balloc.c</FilePath>            </File>            <File>
+              <FileName>nrf_memobj.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_memobj\nrf_memobj.c</FilePath>            </File>            <File>
+              <FileName>nrf_pwr_mgmt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\pwr_mgmt\nrf_pwr_mgmt.c</FilePath>            </File>            <File>
+              <FileName>nrf_section_iter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</FilePath>            </File>            <File>
               <FileName>nrf_strerror.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Log</GroupName>
           <Files>            <File>
-              <FileName>nrf_log_backend_serial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\log\src\nrf_log_backend_serial.c</FilePath>            </File>            <File>
               <FileName>nrf_log_frontend.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\log\src\nrf_log_frontend.c</FilePath>            </File>          </Files>
-        </Group>        <Group>
-          <GroupName>nRF_Segger_RTT</GroupName>
-          <Files>            <File>
-              <FileName>RTT_Syscalls_KEIL.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\external\segger_rtt\RTT_Syscalls_KEIL.c</FilePath>            </File>            <File>
-              <FileName>SEGGER_RTT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</FilePath>            </File>            <File>
-              <FileName>SEGGER_RTT_printf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_printf.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_frontend.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_SoftDevice</GroupName>
           <Files>            <File>
-              <FileName>softdevice_handler.c</FileName>
+              <FileName>nrf_sdh.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\softdevice\common\softdevice_handler\softdevice_handler.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\components\softdevice\common\nrf_sdh.c</FilePath>            </File>            <File>
+              <FileName>nrf_sdh_ant.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\softdevice\common\nrf_sdh_ant.c</FilePath>            </File>            <File>
+              <FileName>nrf_sdh_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\softdevice\common\nrf_sdh_soc.c</FilePath>            </File>          </Files>
         </Group>      </Groups>
     </Target>  </Targets>
 

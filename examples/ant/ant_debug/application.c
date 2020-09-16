@@ -66,21 +66,18 @@
 #include "ant_interface.h"
 #include "ant_parameters.h"
 #include "app_error.h"
-#include "ant_error.h"
 #include "boards.h"
 #include "bsp.h"
 #include "sdk_config.h"
 #include "ant_channel_config.h"
-#include "nrf_soc.h"
 #include "debug.h"
-
-
-#define ANT_CHANNEL_NUMBER              0x00                        /**< ANT Channel 0. */
-#define EXT_ASSIGN                      0x00                        /**< ANT Ext Assign. */
-#define ANT_CHANNEL_DEFAULT_NETWORK     0x00                        /**< ANT Network (default public network). */
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 
 // Data Page Numbers
 #define DIGITALIO_DATA_PID              1u                          /**< Page number: digital data. */
+
+#define APP_ANT_OBSERVER_PRIO           1                           /**< Application's ANT observer priority. You shouldn't need to modify this value. */
 
 static uint8_t m_broadcast_data[ANT_STANDARD_DATA_PAYLOAD_SIZE];    /**< Primary data transmit buffer. */
 static uint8_t m_rx_input_pin_state = 0xFF;                         /**< State of received digital data, from the other node. */
@@ -164,7 +161,7 @@ static void transmit_handle()
     m_broadcast_data[6] = 0xFF;
     m_broadcast_data[7] = m_tx_input_pin_state;
 
-    err_code = sd_ant_broadcast_message_tx(ANT_CHANNEL_NUMBER,
+    err_code = sd_ant_broadcast_message_tx(ANT_CHANNEL_NUM,
                                            ANT_STANDARD_DATA_PAYLOAD_SIZE,
                                            m_broadcast_data);
     APP_ERROR_CHECK(err_code);
@@ -234,15 +231,15 @@ void app_channel_setup(void)
 
     ant_channel_config_t channel_config =
     {
-        .channel_number    = ANT_CHANNEL_NUMBER,
+        .channel_number    = ANT_CHANNEL_NUM,
         .channel_type      = CHANNEL_TYPE_MASTER,
-        .ext_assign        = EXT_ASSIGN,
+        .ext_assign        = 0x00,
         .rf_freq           = RF_FREQ,
         .transmission_type = CHAN_ID_TRANS_TYPE,
         .device_type       = CHAN_ID_DEV_TYPE,
         .device_number     = (uint16_t) NRF_FICR->DEVICEID[0],
         .channel_period    = CHAN_PERIOD,
-        .network_number    = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number    = ANT_NETWORK_NUM,
     };
 
     // Configure channel parameters
@@ -250,22 +247,29 @@ void app_channel_setup(void)
     APP_ERROR_CHECK(err_code);
 
     // Open channel.
-    err_code = sd_ant_channel_open(ANT_CHANNEL_NUMBER);
+    err_code = sd_ant_channel_open(ANT_CHANNEL_NUM);
     APP_ERROR_CHECK(err_code);
 }
 
-
-void app_channel_event_handler(ant_evt_t * p_ant_evt)
+/**@brief Function for handling a ANT stack event.
+ *
+ * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
+ */
+static void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
-   ANT_MESSAGE * p_message = (ANT_MESSAGE *) p_ant_evt->msg.evt_buffer;
+    if (p_ant_evt->channel != ANT_CHANNEL_NUM)
+    {
+        return;
+    }
 
     switch (p_ant_evt->event)
     {
         case EVENT_RX:
-            if (p_message->ANT_MESSAGE_aucPayload[0] == DIGITALIO_DATA_PID)
+            if (p_ant_evt->message.ANT_MESSAGE_aucPayload[0] == DIGITALIO_DATA_PID)
             {
                 // Set LEDs according to Received Digital IO Data Page
-                m_rx_input_pin_state = p_message->ANT_MESSAGE_aucPayload[7];
+                m_rx_input_pin_state = p_ant_evt->message.ANT_MESSAGE_aucPayload[7];
                 led_state_set();
             }
             #if DEBUG_CHANNEL_INCLUDED
@@ -292,6 +296,7 @@ void app_channel_event_handler(ant_evt_t * p_ant_evt)
     }
 }
 
+NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_evt_handler, NULL);
 
 #if DEBUG_CHANNEL_INCLUDED
 void app_custom_debug_command_handler(uint8_t const * const p_command)

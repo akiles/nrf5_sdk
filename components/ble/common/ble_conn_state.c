@@ -44,6 +44,7 @@
 #include "ble.h"
 #include "sdk_mapped_flags.h"
 #include "app_error.h"
+#include "nrf_sdh_ble.h"
 
 
 #if defined(__CC_ARM)
@@ -58,7 +59,6 @@
 
 #define BLE_CONN_STATE_N_DEFAULT_FLAGS 5                                                       /**< The number of flags kept for each connection, excluding user flags. */
 #define BLE_CONN_STATE_N_FLAGS (BLE_CONN_STATE_N_DEFAULT_FLAGS + BLE_CONN_STATE_N_USER_FLAGS)  /**< The number of flags kept for each connection, including user flags. */
-
 
 /**@brief Structure containing all the flag collections maintained by the Connection State module.
  */
@@ -210,8 +210,13 @@ void ble_conn_state_init(void)
     bcs_internal_state_reset();
 }
 
-
-void ble_conn_state_on_ble_evt(ble_evt_t * p_ble_evt)
+/**
+ * @brief Function for handling BLE events.
+ *
+ * @param[in]   p_ble_evt       Event received from the BLE stack.
+ * @param[in]   p_context       Context.
+ */
+static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 {
     switch (p_ble_evt->header.evt_id)
     {
@@ -254,6 +259,8 @@ void ble_conn_state_on_ble_evt(ble_evt_t * p_ble_evt)
             break;
     }
 }
+
+NRF_SDH_BLE_OBSERVER(m_ble_evt_observer, BLE_CONN_STATE_BLE_OBSERVER_PRIO, ble_evt_handler, NULL);
 
 
 bool ble_conn_state_valid(uint16_t conn_handle)
@@ -352,6 +359,23 @@ sdk_mapped_flags_key_list_t ble_conn_state_periph_handles(void)
 {
     return sdk_mapped_flags_key_list_get(m_bcs.valid_conn_handles,
                                         (~m_bcs.flags.central_flags) & (m_bcs.flags.connected_flags));
+}
+
+
+uint8_t ble_conn_state_conn_idx(uint16_t conn_handle)
+{
+    uint8_t index;
+    if (sdk_mapped_flags_get_by_key_w_idx(m_bcs.valid_conn_handles,
+                                          m_bcs.flags.valid_flags,
+                                          conn_handle,
+                                          &index))
+    {
+        return index;
+    }
+    else
+    {
+        return BLE_CONN_STATE_MAX_CONNECTIONS;
+    }
 }
 
 

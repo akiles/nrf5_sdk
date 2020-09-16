@@ -79,14 +79,6 @@ SECTIONS
   } > RAM
 
   . = ALIGN(4);
-  .svc_data :
-  {
-    PROVIDE(__start_svc_data = .);
-    KEEP(*(.svc_data))
-    PROVIDE(__stop_svc_data = .);
-  } > RAM
-
-  . = ALIGN(4);
   .dfu_trans :
   {
     PROVIDE(__start_dfu_trans = .);
@@ -95,5 +87,51 @@ SECTIONS
   } > RAM
 
 } INSERT AFTER .data
+
+SECTIONS
+{
+  .sdh_stack_observers :
+  {
+    PROVIDE(__start_sdh_stack_observers = .);
+    KEEP(*(SORT(.sdh_stack_observers*)))
+    PROVIDE(__stop_sdh_stack_observers = .);
+  } > FLASH
+
+  .sdh_req_observers :
+  {
+    PROVIDE(__start_sdh_req_observers = .);
+    KEEP(*(SORT(.sdh_req_observers*)))
+    PROVIDE(__stop_sdh_req_observers = .);
+  } > FLASH
+
+  .sdh_state_observers :
+  {
+    PROVIDE(__start_sdh_state_observers = .);
+    KEEP(*(SORT(.sdh_state_observers*)))
+    PROVIDE(__stop_sdh_state_observers = .);
+  } > FLASH
+
+  .sdh_ble_observers :
+  {
+    PROVIDE(__start_sdh_ble_observers = .);
+    KEEP(*(SORT(.sdh_ble_observers*)))
+    PROVIDE(__stop_sdh_ble_observers = .);
+  } > FLASH
+
+  .sdh_soc_observers :
+  {
+    PROVIDE(__start_sdh_soc_observers = .);
+    KEEP(*(SORT(.sdh_soc_observers*)))
+    PROVIDE(__stop_sdh_soc_observers = .);
+  } > FLASH
+  
+  .svc_data :
+  {
+    PROVIDE(__start_svc_data = .);
+    KEEP(*(.svc_data))
+    PROVIDE(__stop_svc_data = .);
+  } > FLASH
+  
+} INSERT AFTER .text
 
 INCLUDE "nrf52_common.ld"

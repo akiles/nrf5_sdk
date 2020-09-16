@@ -131,7 +131,7 @@ ret_code_t gcm_init(void);
  *
  * @param[in]  p_ble_evt  The SoftDevice event.
  */
-void gcm_ble_evt_handler(ble_evt_t * p_ble_evt);
+void gcm_ble_evt_handler(ble_evt_t const * p_ble_evt);
 
 
 

@@ -49,8 +49,8 @@
  * 
  */
 
-#ifndef ANT_BOOT_SETTINGS_H_
-#define ANT_BOOT_SETTINGS_H_
+#ifndef ANT_BOOT_SETTINGS_H__
+#define ANT_BOOT_SETTINGS_H__
 
 #include <stdint.h>
 #include "ant_dfu_constrains.h"
@@ -131,4 +131,4 @@ typedef __packed struct
 }
 #endif
 
-#endif //ANT_BOOT_SETTINGS_H_
+#endif //ANT_BOOT_SETTINGS_H__

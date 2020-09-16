@@ -150,6 +150,9 @@ uint32_t ble_event_dec(uint8_t const * const p_buf,
         case BLE_GAP_EVT_PHY_UPDATE:
             fp_event_decoder = ble_gap_evt_phy_update_dec;
             break;
+        case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
+            fp_event_decoder = ble_gap_evt_phy_update_request_dec;
+            break;
 #endif
 #if NRF_SD_BLE_API_VERSION >= 4
         case BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST:
@@ -247,6 +250,41 @@ uint32_t ble_event_dec(uint8_t const * const p_buf,
         case BLE_L2CAP_EVT_RX:
             fp_event_decoder = ble_l2cap_evt_rx_dec;
             break;
+#endif
+
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION >= 5
+        case BLE_L2CAP_EVT_CH_SETUP_REQUEST:
+            fp_event_decoder = ble_l2cap_evt_ch_setup_request_dec;
+            break;
+
+        case BLE_L2CAP_EVT_CH_SETUP_REFUSED:
+            fp_event_decoder = ble_l2cap_evt_ch_setup_refused_dec;
+            break;
+
+        case BLE_L2CAP_EVT_CH_SETUP:
+            fp_event_decoder = ble_l2cap_evt_ch_setup_dec;
+            break;
+
+        case BLE_L2CAP_EVT_CH_RELEASED:
+            fp_event_decoder = ble_l2cap_evt_ch_released_dec;
+            break;
+
+        case BLE_L2CAP_EVT_CH_SDU_BUF_RELEASED:
+            fp_event_decoder = ble_l2cap_evt_ch_sdu_buf_released_dec;
+            break;
+
+        case BLE_L2CAP_EVT_CH_CREDIT:
+            fp_event_decoder = ble_l2cap_evt_ch_credit_dec;
+            break;
+
+        case BLE_L2CAP_EVT_CH_RX:
+            fp_event_decoder = ble_l2cap_evt_ch_rx_dec;
+            break;
+
+        case BLE_L2CAP_EVT_CH_TX:
+            fp_event_decoder = ble_l2cap_evt_ch_tx_dec;
+            break;
+
 #endif
         case BLE_GAP_EVT_ADV_REPORT:
             fp_event_decoder = ble_gap_evt_adv_report_dec;

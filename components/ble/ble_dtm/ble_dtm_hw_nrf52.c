@@ -60,18 +60,26 @@ uint32_t dtm_radio_validate(int32_t m_tx_power, uint8_t m_radio_mode)
 {
     // Initializing code below is quite generic - for BLE, the values are fixed, and expressions
     // are constant. Non-constant values are essentially set in radio_prepare().
-    if (!(m_tx_power == RADIO_TXPOWER_TXPOWER_0dBm     ||
-          m_tx_power == RADIO_TXPOWER_TXPOWER_Pos4dBm  ||
-          m_tx_power == RADIO_TXPOWER_TXPOWER_Neg30dBm ||
-          m_tx_power == RADIO_TXPOWER_TXPOWER_Neg20dBm ||
-          m_tx_power == RADIO_TXPOWER_TXPOWER_Neg16dBm ||
-          m_tx_power == RADIO_TXPOWER_TXPOWER_Neg12dBm ||
-          m_tx_power == RADIO_TXPOWER_TXPOWER_Neg8dBm  ||
-          m_tx_power == RADIO_TXPOWER_TXPOWER_Neg4dBm  ||
-          m_tx_power == RADIO_TXPOWER_TXPOWER_Pos3dBm  ||
+    if (!(m_tx_power == RADIO_TXPOWER_TXPOWER_0dBm        ||
+          m_tx_power == RADIO_TXPOWER_TXPOWER_Pos4dBm     ||
+          m_tx_power == RADIO_TXPOWER_TXPOWER_Neg30dBm    ||
+          m_tx_power == RADIO_TXPOWER_TXPOWER_Neg20dBm    ||
+          m_tx_power == RADIO_TXPOWER_TXPOWER_Neg16dBm    ||
+          m_tx_power == RADIO_TXPOWER_TXPOWER_Neg12dBm    ||
+          m_tx_power == RADIO_TXPOWER_TXPOWER_Neg8dBm     ||
+          m_tx_power == RADIO_TXPOWER_TXPOWER_Neg4dBm     ||
+          m_tx_power == RADIO_TXPOWER_TXPOWER_Pos3dBm     ||
           m_tx_power == RADIO_TXPOWER_TXPOWER_Neg40dBm
           ) ||
-        (m_radio_mode > RADIO_MODE_MODE_Ble_1Mbit) // Values 0 - 2: Proprietary mode, 3 (last valid): BLE
+
+         !(
+#ifdef NRF52840_XXAA
+           m_radio_mode == RADIO_MODE_MODE_Ble_LR125Kbit  ||
+           m_radio_mode == RADIO_MODE_MODE_Ble_LR500Kbit  ||
+#endif //NRF52840_XXAA
+           m_radio_mode == RADIO_MODE_MODE_Ble_1Mbit      ||
+           m_radio_mode == RADIO_MODE_MODE_Ble_2Mbit
+         )
         )
     {
         return DTM_ERROR_ILLEGAL_CONFIGURATION;

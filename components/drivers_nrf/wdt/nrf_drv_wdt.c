@@ -48,7 +48,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define NRF_LOG_MODULE_NAME "WDT"
+#define NRF_LOG_MODULE_NAME wdt
 
 #if WDT_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       WDT_CONFIG_LOG_LEVEL
@@ -58,7 +58,7 @@
 #define NRF_LOG_LEVEL       0
 #endif //WDT_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
-#include "nrf_log_ctrl.h"
+NRF_LOG_MODULE_REGISTER();
 
 
 /**@brief WDT event handler. */
@@ -97,7 +97,7 @@ ret_code_t nrf_drv_wdt_init(nrf_drv_wdt_config_t const * p_config,
     else
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -117,7 +117,7 @@ ret_code_t nrf_drv_wdt_init(nrf_drv_wdt_config_t const * p_config,
     nrf_drv_common_irq_enable(WDT_IRQn, p_config->interrupt_priority);
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -129,7 +129,7 @@ void nrf_drv_wdt_enable(void)
     nrf_wdt_int_enable(NRF_WDT_INT_TIMEOUT_MASK);
     nrf_wdt_task_trigger(NRF_WDT_TASK_START);
     m_state = NRF_DRV_STATE_POWERED_ON;
-    NRF_LOG_INFO("Enabled.\r\n");
+    NRF_LOG_INFO("Enabled.");
 }
 
 
@@ -161,7 +161,7 @@ ret_code_t nrf_drv_wdt_channel_alloc(nrf_drv_wdt_channel_id * p_channel_id)
         result = NRF_ERROR_NO_MEM;
     }
     CRITICAL_REGION_EXIT();
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(result));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(result));
     return result;
 }
 

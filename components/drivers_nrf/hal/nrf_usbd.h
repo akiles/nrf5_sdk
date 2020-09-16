@@ -46,8 +46,7 @@
  * @defgroup nrf_usbd_hal USBD HAL
  * @{
  *
- * @brief @tagAPI52840 Hardware access layer for Two Wire Interface Slave with EasyDMA
- * (USBD) peripheral.
+ * @brief @tagAPI52840 Hardware access layer for Universal Serial Bus Device (USBD) peripheral.
  */
 
 #include "nrf_peripherals.h"
@@ -409,7 +408,7 @@ void nrf_usbd_int_disable(uint32_t int_mask)
  * ------------------------------------------------------------------------------------------------
  */
 /**
- * @ingroup nrf_usbd_hal
+ * @addtogroup nrf_usbd_hal
  * @{
  */
 
@@ -529,16 +528,26 @@ void nrf_usbd_int_disable(uint32_t int_mask)
     (NRF_USBD_EPOUT_CHECK(ep) && (NRF_USBD_EP_NR_GET(ep) < NRF_USBD_EPOUT_CNT)) \
     )
 
+/**
+ * @brief Not isochronous data frame received
+ *
+ * Special value returned by @ref nrf_usbd_episoout_size_get function that means that
+ * data frame was not received at all.
+ * This allows differentiate between situations when zero size data comes or no data comes at all
+ * on isochronous endpoint.
+ */
+#define NRF_USBD_EPISOOUT_NO_DATA ((size_t)(-1))
 
 /**
  * @brief EVENTCAUSE register bit masks
  */
 typedef enum
 {
-    NRF_USBD_EVENTCAUSE_ISOOUTCRC_MASK = USBD_EVENTCAUSE_ISOOUTCRC_Msk, /**< CRC error was detected on isochronous OUT endpoint 8. */
-    NRF_USBD_EVENTCAUSE_SUSPEND_MASK   = USBD_EVENTCAUSE_SUSPEND_Msk  , /**< Signals that the USB lines have been seen idle long enough for the device to enter suspend. */
-    NRF_USBD_EVENTCAUSE_RESUME_MASK    = USBD_EVENTCAUSE_RESUME_Msk   , /**< Signals that a RESUME condition (K state or activity restart) has been detected on the USB lines. */
-    NRF_USBD_EVENTCAUSE_READY_MASK     = USBD_EVENTCAUSE_READY_Msk      /**< MAC is ready for normal operation, rised few us after USBD enabling */
+    NRF_USBD_EVENTCAUSE_ISOOUTCRC_MASK    = USBD_EVENTCAUSE_ISOOUTCRC_Msk, /**< CRC error was detected on isochronous OUT endpoint 8. */
+    NRF_USBD_EVENTCAUSE_SUSPEND_MASK      = USBD_EVENTCAUSE_SUSPEND_Msk  , /**< Signals that the USB lines have been seen idle long enough for the device to enter suspend. */
+    NRF_USBD_EVENTCAUSE_RESUME_MASK       = USBD_EVENTCAUSE_RESUME_Msk   , /**< Signals that a RESUME condition (K state or activity restart) has been detected on the USB lines. */
+    NRF_USBD_EVENTCAUSE_READY_MASK        = USBD_EVENTCAUSE_READY_Msk,     /**< MAC is ready for normal operation, rised few us after USBD enabling */
+    NRF_USBD_EVENTCAUSE_WUREQ_MASK        = (1U << 10)                     /**< The USBD peripheral has exited Low Power mode */
 }nrf_usbd_eventcause_mask_t;
 
 /**
@@ -643,7 +652,6 @@ typedef enum
 {
     NRF_USBD_ISOSPLIT_OneDir = USBD_ISOSPLIT_SPLIT_OneDir, /**< Full buffer dedicated to either iso IN or OUT */
     NRF_USBD_ISOSPLIT_Half   = USBD_ISOSPLIT_SPLIT_HalfIN, /**< Buffer divided in half */
-
 }nrf_usbd_isosplit_t;
 
 /**
@@ -808,8 +816,19 @@ __STATIC_INLINE uint32_t nrf_usbd_epdatastatus_get_and_clear(void);
  * @return Number of received bytes.
  *
  * @note This function may be used on Bulk/Interrupt and Isochronous endpoints.
+ * @note For the function that returns different value for ISOOUT zero transfer or no transfer at all,
+ *       see @ref nrf_usbd_episoout_size_get function. This function would return 0 for both cases.
  */
 __STATIC_INLINE size_t nrf_usbd_epout_size_get(uint8_t ep);
+
+/**
+ * @brief Function for getting number of received bytes on isochronous endpoint.
+ *
+ * @param ep Endpoint identifier, has to be isochronous out endpoint.
+ *
+ * @return Number of bytes received or @ref NRF_USBD_EPISOOUT_NO_DATA
+ */
+__STATIC_INLINE size_t nrf_usbd_episoout_size_get(uint8_t ep);
 
 /**
  * @brief Function for clearing out endpoint to accept any new incoming traffic
@@ -839,8 +858,8 @@ __STATIC_INLINE bool nrf_usbd_pullup_check(void);
 /**
  * @brief Function for configuring the value to be forced on the bus on DRIVEDPDM task
  *
- * Selected state would be forced on the bus when @ref NRF_USBD_TASK_DRIVEDPM is set.
- * The state would be removed from the bus on @ref NRF_USBD_TASK_NODRIVEDPM and
+ * Selected state would be forced on the bus when @ref NRF_USBD_TASK_DRIVEDPDM is set.
+ * The state would be removed from the bus on @ref NRF_USBD_TASK_NODRIVEDPDM and
  * the control would be returned to the USBD peripheral.
  * @param val State to be set
  */
@@ -941,6 +960,37 @@ __STATIC_INLINE nrf_usbd_isosplit_t nrf_usbd_isosplit_get(void);
  * @return Current frame counter
  */
 __STATIC_INLINE uint32_t nrf_usbd_framecntr_get(void);
+
+/**
+ * @brief Function for entering into low power mode
+ *
+ * After this function is called the clock source from the USBD is disconnected internally.
+ * After this function is called most of the USBD registers cannot be accessed anymore.
+ *
+ * @sa nrf_usbd_lowpower_disable
+ * @sa nrf_usbd_lowpower_check
+ */
+__STATIC_INLINE void nrf_usbd_lowpower_enable(void);
+
+/**
+ * @brief Function for exiting from low power mode
+ *
+ * After this function is called the clock source for the USBD is connected internally.
+ * The @ref NRF_USBD_EVENTCAUSE_WUREQ_MASK event would be generated and
+ * then the USBD registers may be accessed.
+ *
+ * @sa nrf_usbd_lowpower_enable
+ * @sa nrf_usbd_lowpower_check
+ */
+__STATIC_INLINE void nrf_usbd_lowpower_disable(void);
+
+/**
+ * @brief Function for checking the state of the low power mode
+ *
+ * @retval true  USBD is in low power mode
+ * @retval false USBD is not in low power mode
+ */
+__STATIC_INLINE bool nrf_usbd_lowpower_check(void);
 
 /**
  * @brief Function for configuring EasyDMA channel
@@ -1111,16 +1161,38 @@ uint16_t nrf_usbd_setup_wlength_get(void)
 
 size_t nrf_usbd_epout_size_get(uint8_t ep)
 {
+    ASSERT(NRF_USBD_EP_VALIDATE(ep));
     ASSERT(NRF_USBD_EPOUT_CHECK(ep));
     if (NRF_USBD_EPISO_CHECK(ep))
     {
-        /* Only single isochronous endpoint supported */
-        ASSERT(NRF_USBD_EP_NR_GET(ep) == ARRAY_SIZE(NRF_USBD->SIZE.EPOUT));
-        return NRF_USBD->SIZE.ISOOUT;
+        size_t size_isoout = NRF_USBD->SIZE.ISOOUT;
+        if ((size_isoout & USBD_SIZE_ISOOUT_ZERO_Msk) == (USBD_SIZE_ISOOUT_ZERO_ZeroData << USBD_SIZE_ISOOUT_ZERO_Pos))
+        {
+            size_isoout = 0;
+        }
+        return size_isoout;
     }
 
     ASSERT(NRF_USBD_EP_NR_GET(ep) < ARRAY_SIZE(NRF_USBD->SIZE.EPOUT));
     return NRF_USBD->SIZE.EPOUT[NRF_USBD_EP_NR_GET(ep)];
+}
+
+size_t nrf_usbd_episoout_size_get(uint8_t ep)
+{
+    ASSERT(NRF_USBD_EP_VALIDATE(ep));
+    ASSERT(NRF_USBD_EPOUT_CHECK(ep));
+    ASSERT(NRF_USBD_EPISO_CHECK(ep));
+
+    size_t size_isoout = NRF_USBD->SIZE.ISOOUT;
+    if (size_isoout == 0)
+    {
+        size_isoout = NRF_USBD_EPISOOUT_NO_DATA;
+    }
+    else if ((size_isoout & USBD_SIZE_ISOOUT_ZERO_Msk) == (USBD_SIZE_ISOOUT_ZERO_ZeroData << USBD_SIZE_ISOOUT_ZERO_Pos))
+    {
+        size_isoout = 0;
+    }
+    return size_isoout;
 }
 
 void nrf_usbd_epout_clear(uint8_t ep)
@@ -1259,6 +1331,22 @@ uint32_t nrf_usbd_framecntr_get(void)
 {
     return NRF_USBD->FRAMECNTR;
 }
+
+void nrf_usbd_lowpower_enable(void)
+{
+    NRF_USBD->LOWPOWER = USBD_LOWPOWER_LOWPOWER_LowPower << USBD_LOWPOWER_LOWPOWER_Pos;
+}
+
+void nrf_usbd_lowpower_disable(void)
+{
+    NRF_USBD->LOWPOWER = USBD_LOWPOWER_LOWPOWER_ForceNormal << USBD_LOWPOWER_LOWPOWER_Pos;
+}
+
+bool nrf_usbd_lowpower_check(void)
+{
+    return (NRF_USBD->LOWPOWER != (USBD_LOWPOWER_LOWPOWER_ForceNormal << USBD_LOWPOWER_LOWPOWER_Pos));
+}
+
 
 void nrf_usbd_ep_easydma_set(uint8_t ep, uint32_t ptr, uint32_t maxcnt)
 {

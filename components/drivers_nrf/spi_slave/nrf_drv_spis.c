@@ -51,7 +51,7 @@
 #include "nrf_drv_common.h"
 #include "nrf_assert.h"
 
-#define NRF_LOG_MODULE_NAME "SPIS"
+#define NRF_LOG_MODULE_NAME spis
 
 #if SPIS_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       SPIS_CONFIG_LOG_LEVEL
@@ -67,7 +67,7 @@
 #define NRF_LOG_LEVEL       0
 #endif //SPIS_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
-#include "nrf_log_ctrl.h"
+NRF_LOG_MODULE_REGISTER();
 
 #if NRF_MODULE_ENABLED(SPIS_NRF52_ANOMALY_109_WORKAROUND)
 #include "nrf_drv_gpiote.h"
@@ -154,7 +154,7 @@ ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
     if (p_cb->state != NRF_DRV_STATE_UNINITIALIZED)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+        NRF_LOG_WARNING("Function: %s, error code: %s.",
                         (uint32_t)__func__,
                         (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
@@ -163,7 +163,7 @@ ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
     if ((uint32_t)p_config->mode > (uint32_t)NRF_DRV_SPIS_MODE_3)
     {
         err_code = NRF_ERROR_INVALID_PARAM;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+        NRF_LOG_WARNING("Function: %s, error code: %s.",
                         (uint32_t)__func__,
                         (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
@@ -171,7 +171,7 @@ ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
     if (!event_handler)
     {
         err_code = NRF_ERROR_NULL;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+        NRF_LOG_WARNING("Function: %s, error code: %s.",
                         (uint32_t)__func__,
                         (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
@@ -181,7 +181,7 @@ ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
             m_irq_handlers[p_instance->instance_id]) != NRF_SUCCESS)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+        NRF_LOG_WARNING("Function: %s, error code: %s.",
                         (uint32_t)__func__,
                         (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
@@ -275,7 +275,7 @@ ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
     if (gpiote_err_code != NRF_SUCCESS)
     {
         err_code = NRF_ERROR_INTERNAL;
-        NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
+        NRF_LOG_INFO("Function: %s, error code: %s.",
                      (uint32_t)__func__,
                      (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
@@ -293,7 +293,7 @@ ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
     nrf_spis_enable(p_spis);
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
+    NRF_LOG_INFO("Function: %s, error code: %s.",
                  (uint32_t)__func__,
                  (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
@@ -318,7 +318,7 @@ void nrf_drv_spis_uninit(nrf_drv_spis_t const * const p_instance)
 #endif
 
     p_cb->state = NRF_DRV_STATE_UNINITIALIZED;
-    NRF_LOG_INFO("Initialized.\r\n");
+    NRF_LOG_INFO("Initialized.");
 }
 
 
@@ -347,8 +347,8 @@ static void spis_state_entry_action_execute(NRF_SPIS_Type * p_spis,
             event.evt_type  = NRF_DRV_SPIS_XFER_DONE;
             event.rx_amount = nrf_spis_rx_amount_get(p_spis);
             event.tx_amount = nrf_spis_tx_amount_get(p_spis);
-            NRF_LOG_INFO("Transfer rx_len:%d.\r\n", event.rx_amount);
-            NRF_LOG_DEBUG("Rx data:\r\n");
+            NRF_LOG_INFO("Transfer rx_len:%d.", event.rx_amount);
+            NRF_LOG_DEBUG("Rx data:");
             NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_cb->rx_buffer,
                                   event.rx_amount * sizeof(p_cb->rx_buffer));
             APP_ERROR_CHECK_BOOL(p_cb->handler != NULL);
@@ -390,11 +390,10 @@ ret_code_t nrf_drv_spis_buffers_set(nrf_drv_spis_t const * const  p_instance,
 
     // EasyDMA requires that transfer buffers are placed in Data RAM region;
     // signal error if they are not.
-    if ((p_tx_buffer != NULL && !nrf_drv_is_in_RAM(p_tx_buffer)) ||
-        (p_rx_buffer != NULL && !nrf_drv_is_in_RAM(p_rx_buffer)))
+    if (!nrf_drv_is_in_RAM(p_tx_buffer) || !nrf_drv_is_in_RAM(p_rx_buffer))
     {
         err_code = NRF_ERROR_INVALID_ADDR;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+        NRF_LOG_WARNING("Function: %s, error code: %s.",
                         (uint32_t)__func__,
                         (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
@@ -424,7 +423,7 @@ ret_code_t nrf_drv_spis_buffers_set(nrf_drv_spis_t const * const  p_instance,
             break;
     }
 
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
+    NRF_LOG_INFO("Function: %s, error code: %s.",
                  (uint32_t)__func__,
                  (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
@@ -441,7 +440,7 @@ static void spis_irq_handler(NRF_SPIS_Type * p_spis, spis_cb_t * p_cb)
     if (nrf_spis_event_check(p_spis, NRF_SPIS_EVENT_ACQUIRED))
     {
         nrf_spis_event_clear(p_spis, NRF_SPIS_EVENT_ACQUIRED);
-        NRF_LOG_DEBUG("SPIS: Event: %s.\r\n", (uint32_t)EVT_TO_STR(NRF_SPIS_EVENT_ACQUIRED));
+        NRF_LOG_DEBUG("SPIS: Event: %s.", (uint32_t)EVT_TO_STR(NRF_SPIS_EVENT_ACQUIRED));
 
         switch (p_cb->spi_state)
         {
@@ -464,7 +463,7 @@ static void spis_irq_handler(NRF_SPIS_Type * p_spis, spis_cb_t * p_cb)
     if (nrf_spis_event_check(p_spis, NRF_SPIS_EVENT_END))
     {
         nrf_spis_event_clear(p_spis, NRF_SPIS_EVENT_END);
-        NRF_LOG_DEBUG("SPIS: Event: %s.\r\n", (uint32_t)EVT_TO_STR(NRF_SPIS_EVENT_END));
+        NRF_LOG_DEBUG("SPIS: Event: %s.", (uint32_t)EVT_TO_STR(NRF_SPIS_EVENT_END));
 
         switch (p_cb->spi_state)
         {

@@ -50,7 +50,7 @@
 #define ANT_REQUEST_CONTROLLER_H__
 #include <stdbool.h>
 #include "ant_common_page_70.h"
-#include "ant_stack_handler_types.h"
+#include "nrf_sdh_ant.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -127,12 +127,12 @@ bool ant_request_controller_ack_needed(ant_request_controller_t * p_controller);
  * @details All events from the ANT stack that are related to the appropriate channel number
  *          should be propagated.
  *
- * @param[in]  p_controller             Pointer to the controller instance.
- * @param[in]  p_ant_event              Event received from the ANT stack.
+ * @param[in]  p_controller         Pointer to the controller instance.
+ * @param[in]  p_ant_evt            Event received from the ANT stack.
  */
 ant_request_controller_evt_t ant_request_controller_disp_evt_handler(
     ant_request_controller_t * p_controller,
-    ant_evt_t                * p_ant_event);
+    ant_evt_t                * p_ant_evt);
 
 /**
  * @brief Function for handling ANT events on sensor side.
@@ -141,11 +141,11 @@ ant_request_controller_evt_t ant_request_controller_disp_evt_handler(
  *          should be propagated.
  *
  * @param[in]  p_controller             Pointer to the controller instance.
- * @param[in]  p_ant_event              Event received from the ANT stack.
+ * @param[in]  p_ant_evt                Event received from the ANT stack.
  * @retval     TRUE                     If there was a pending page.
  */
 void ant_request_controller_sens_evt_handler(ant_request_controller_t * p_controller,
-                                            ant_evt_t                * p_ant_event);
+                                             ant_evt_t                * p_ant_evt);
 
 
 

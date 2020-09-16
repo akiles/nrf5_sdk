@@ -953,7 +953,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           <fields>
             <field>
               <name>PALL</name>
-              <description>Enable or disable Access Port protection.</description>
+              <description>Enable or disable access port protection.</description>
               <lsb>0</lsb>
               <msb>7</msb>
               <enumeratedValues>
@@ -993,6 +993,51 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                   <name>NFC</name>
                   <description>Operation as NFC antenna pins. Configures the protection for NFC operation</description>
                   <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>DEBUGCTRL</name>
+          <description>Processor debug control</description>
+          <addressOffset>0x210</addressOffset>
+          <access>read-write</access>
+          <resetValue>0xFFFFFFFF</resetValue>
+          <fields>
+            <field>
+              <name>CPUNIDEN</name>
+              <description>Configure CPU non-intrusive debug features</description>
+              <lsb>0</lsb>
+              <msb>7</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Enable CPU ITM and ETM functionality (default behavior)</description>
+                  <value>0xFF</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Disable CPU ITM and ETM functionality</description>
+                  <value>0x00</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>CPUFPBEN</name>
+              <description>Configure CPU flash patch and breakpoint (FPB) unit behavior</description>
+              <lsb>8</lsb>
+              <msb>15</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Enable CPU FPB unit (default behavior)</description>
+                  <value>0xFF</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Disable CPU FPB unit. Writes into the FPB registers will be ignored.</description>
+                  <value>0x00</value>
                 </enumeratedValue>
               </enumeratedValues>
             </field>
@@ -1826,7 +1871,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
             </field>
             <field>
               <name>THRESHOLD</name>
-              <description>Power failure comparator threshold setting</description>
+              <description>Power failure comparator threshold setting. This setting applies both for normal voltage mode (supply connected to both VDD and VDDH) and high voltage mode (supply connected to VDDH only).</description>
               <lsb>1</lsb>
               <msb>4</msb>
               <enumeratedValues>
@@ -1894,7 +1939,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
             </field>
             <field>
               <name>THRESHOLDVDDH</name>
-              <description>Power failure comparator threshold setting for voltage supply on VDDH</description>
+              <description>Power failure comparator threshold setting for high voltage mode (supply connected to VDDH only). This setting does not apply for normal voltage mode (supply connected to both VDD and VDDH).</description>
               <lsb>8</lsb>
               <msb>11</msb>
               <enumeratedValues>
@@ -4092,6 +4137,21 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           </fields>
         </register>
         <register>
+          <name>HFXODEBOUNCE</name>
+          <description>HFXO debounce time. The HFXO is started by triggering the TASKS_HFCLKSTART task.</description>
+          <addressOffset>0x528</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x00000010</resetValue>
+          <fields>
+            <field>
+              <name>HFXODEBOUNCE</name>
+              <description>HFXO debounce time. Debounce time = HFXODEBOUNCE * 16 us.</description>
+              <lsb>0</lsb>
+              <msb>7</msb>
+            </field>
+          </fields>
+        </register>
+        <register>
           <name>CTIV</name>
           <description>Calibration timer interval</description>
           <addressOffset>0x538</addressOffset>
@@ -4142,23 +4202,23 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
             </field>
             <field>
               <name>TRACEMUX</name>
-              <description>Pin multiplexing of trace signals.</description>
+              <description>Pin multiplexing of trace signals. See pin assignment chapter for more details.</description>
               <lsb>16</lsb>
               <msb>17</msb>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>GPIO</name>
-                  <description>GPIOs multiplexed onto all trace-pins</description>
+                  <description>No trace signals routed to pins. All pins can be used as regular GPIOs.</description>
                   <value>0</value>
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Serial</name>
-                  <description>SWO multiplexed onto P0.18, GPIO multiplexed onto other trace pins</description>
+                  <description>SWO trace signal routed to pin. Remaining pins can be used as regular GPIOs.</description>
                   <value>1</value>
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Parallel</name>
-                  <description>TRACECLK and TRACEDATA multiplexed onto P0.20, P0.18, P0.16, P0.15 and P0.14.</description>
+                  <description>All trace signals (TRACECLK and TRACEDATA[n]) routed to pins.</description>
                   <value>2</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -4430,6 +4490,12 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           <name>EVENTS_MHRMATCH</name>
           <description>MAC Header match found.</description>
           <addressOffset>0x15C</addressOffset>
+          <access>read-write</access>
+        </register>
+        <register>
+          <name>EVENTS_PHYEND</name>
+          <description>Generated in Ble_LR125Kbit, Ble_LR500Kbit and BleIeee802154_250Kbit modes when last bit is sent on air.</description>
+          <addressOffset>0x16C</addressOffset>
           <access>read-write</access>
         </register>
         <register>
@@ -4731,6 +4797,42 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <description>Shortcut between RXREADY event and START task</description>
               <lsb>19</lsb>
               <msb>19</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Disable shortcut</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Enable shortcut</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>PHYEND_DISABLE</name>
+              <description>Shortcut between PHYEND event and DISABLE task</description>
+              <lsb>20</lsb>
+              <msb>20</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Disable shortcut</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Enable shortcut</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>PHYEND_START</name>
+              <description>Shortcut between PHYEND event and START task</description>
+              <lsb>21</lsb>
+              <msb>21</msb>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>Disabled</name>
@@ -5297,6 +5399,33 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <description>Write '1' to Enable interrupt for MHRMATCH event</description>
               <lsb>23</lsb>
               <msb>23</msb>
+              <enumeratedValues>
+                <usage>read</usage>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Read: Disabled</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Read: Enabled</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+              <enumeratedValues>
+                <usage>write</usage>
+                <enumeratedValue>
+                  <name>Set</name>
+                  <description>Enable</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>PHYEND</name>
+              <description>Write '1' to Enable interrupt for PHYEND event</description>
+              <lsb>27</lsb>
+              <msb>27</msb>
               <enumeratedValues>
                 <usage>read</usage>
                 <enumeratedValue>
@@ -5894,6 +6023,33 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 </enumeratedValue>
               </enumeratedValues>
             </field>
+            <field>
+              <name>PHYEND</name>
+              <description>Write '1' to Disable interrupt for PHYEND event</description>
+              <lsb>27</lsb>
+              <msb>27</msb>
+              <enumeratedValues>
+                <usage>read</usage>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Read: Disabled</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Read: Enabled</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+              <enumeratedValues>
+                <usage>write</usage>
+                <enumeratedValue>
+                  <name>Clear</name>
+                  <description>Disable</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
           </fields>
         </register>
         <register>
@@ -5965,6 +6121,50 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           </fields>
         </register>
         <register>
+          <name>PDUSTAT</name>
+          <description>Payload status</description>
+          <addressOffset>0x414</addressOffset>
+          <access>read-only</access>
+          <fields>
+            <field>
+              <name>PDUSTAT</name>
+              <description>Status on payload length vs. PCNF1.MAXLEN</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>LessThan</name>
+                  <description>Payload less than PCNF1.MAXLEN</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>GreaterThan</name>
+                  <description>Payload greater than PCNF1.MAXLEN</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>CISTAT</name>
+              <description>Status on what rate packet is received with in Long Range</description>
+              <lsb>1</lsb>
+              <msb>2</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>LR125kbit</name>
+                  <description>Frame is received at 125kbps</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>LR500kbit</name>
+                  <description>Frame is received at 500kbps</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
           <name>PACKETPTR</name>
           <description>Packet pointer</description>
           <addressOffset>0x504</addressOffset>
@@ -6023,11 +6223,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <lsb>0</lsb>
               <msb>7</msb>
               <enumeratedValues>
-                <enumeratedValue>
-                  <name>Pos9dBm</name>
-                  <description>+9 dBm</description>
-                  <value>0x9</value>
-                </enumeratedValue>
                 <enumeratedValue>
                   <name>Pos8dBm</name>
                   <description>+8 dBm</description>
@@ -7094,7 +7289,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           <fields>
             <field>
               <name>SFD</name>
-              <description>IEEE 802.15.4 Start of Frame Delimiter</description>
+              <description>IEEE 802.15.4 Start of Frame Delimiter. Note, the least significant 4-bits of the SFD cannot all be zeros.</description>
               <lsb>0</lsb>
               <msb>7</msb>
             </field>
@@ -8306,6 +8501,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>PSEL</name>
           <description>Unspecified</description>
+          <headerStructName>UARTE_PSEL</headerStructName>
           <addressOffset>0x508</addressOffset>
           <register>
             <name>RTS</name>
@@ -8574,6 +8770,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>RXD</name>
           <description>RXD EasyDMA channel</description>
+          <headerStructName>UARTE_RXD</headerStructName>
           <addressOffset>0x534</addressOffset>
           <register>
             <name>PTR</name>
@@ -8621,6 +8818,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>TXD</name>
           <description>TXD EasyDMA channel</description>
+          <headerStructName>UARTE_TXD</headerStructName>
           <addressOffset>0x544</addressOffset>
           <register>
             <name>PTR</name>
@@ -9311,6 +9509,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>PSEL</name>
           <description>Unspecified</description>
+          <headerStructName>UART_PSEL</headerStructName>
           <addressOffset>0x508</addressOffset>
           <register>
             <name>RTS</name>
@@ -10108,6 +10307,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>PSEL</name>
           <description>Unspecified</description>
+          <headerStructName>SPIM_PSEL</headerStructName>
           <addressOffset>0x508</addressOffset>
           <register>
             <name>SCK</name>
@@ -10331,6 +10531,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>RXD</name>
           <description>RXD EasyDMA channel</description>
+          <headerStructName>SPIM_RXD</headerStructName>
           <addressOffset>0x534</addressOffset>
           <register>
             <name>PTR</name>
@@ -10404,6 +10605,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>TXD</name>
           <description>TXD EasyDMA channel</description>
+          <headerStructName>SPIM_TXD</headerStructName>
           <addressOffset>0x544</addressOffset>
           <register>
             <name>PTR</name>
@@ -10539,6 +10741,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>IFTIMING</name>
           <description>Unspecified</description>
+          <headerStructName>SPIM_IFTIMING</headerStructName>
           <addressOffset>0x560</addressOffset>
           <register>
             <name>RXDELAY</name>
@@ -10967,6 +11170,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>PSEL</name>
           <description>Unspecified</description>
+          <headerStructName>SPIS_PSEL</headerStructName>
           <addressOffset>0x508</addressOffset>
           <register>
             <name>SCK</name>
@@ -11128,6 +11332,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>RXD</name>
           <description>Unspecified</description>
+          <headerStructName>SPIS_RXD</headerStructName>
           <addressOffset>0x534</addressOffset>
           <register>
             <name>PTR</name>
@@ -11175,6 +11380,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>TXD</name>
           <description>Unspecified</description>
+          <headerStructName>SPIS_TXD</headerStructName>
           <addressOffset>0x544</addressOffset>
           <register>
             <name>PTR</name>
@@ -12119,6 +12325,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>PSEL</name>
           <description>Unspecified</description>
+          <headerStructName>TWIM_PSEL</headerStructName>
           <addressOffset>0x508</addressOffset>
           <register>
             <name>SCL</name>
@@ -12234,6 +12441,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>RXD</name>
           <description>RXD EasyDMA channel</description>
+          <headerStructName>TWIM_RXD</headerStructName>
           <addressOffset>0x534</addressOffset>
           <register>
             <name>PTR</name>
@@ -12307,6 +12515,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>TXD</name>
           <description>TXD EasyDMA channel</description>
+          <headerStructName>TWIM_TXD</headerStructName>
           <addressOffset>0x544</addressOffset>
           <register>
             <name>PTR</name>
@@ -13083,6 +13292,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>PSEL</name>
           <description>Unspecified</description>
+          <headerStructName>TWIS_PSEL</headerStructName>
           <addressOffset>0x508</addressOffset>
           <register>
             <name>SCL</name>
@@ -13166,6 +13376,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>RXD</name>
           <description>RXD EasyDMA channel</description>
+          <headerStructName>TWIS_RXD</headerStructName>
           <addressOffset>0x534</addressOffset>
           <register>
             <name>PTR</name>
@@ -13213,6 +13424,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>TXD</name>
           <description>TXD EasyDMA channel</description>
+          <headerStructName>TWIS_TXD</headerStructName>
           <addressOffset>0x544</addressOffset>
           <register>
             <name>PTR</name>
@@ -13457,6 +13669,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>PSEL</name>
           <description>Unspecified</description>
+          <headerStructName>SPI_PSEL</headerStructName>
           <addressOffset>0x508</addressOffset>
           <register>
             <name>SCK</name>
@@ -14284,6 +14497,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>PSEL</name>
           <description>Unspecified</description>
+          <headerStructName>TWI_PSEL</headerStructName>
           <addressOffset>0x508</addressOffset>
           <register>
             <name>SCL</name>
@@ -16025,7 +16239,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <name>FRAMEDELAYMAX</name>
               <description>Maximum frame delay in number of 13.56 MHz clocks</description>
               <lsb>0</lsb>
-              <msb>15</msb>
+              <msb>19</msb>
             </field>
           </fields>
         </register>
@@ -16409,7 +16623,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           <fields>
             <field>
               <name>BITFRAMESDD</name>
-              <description>Bit frame SDD as defined by the b5:b1 of byte 1 in SENS_RES response in the &lt;i&gt;NFC Forum, NFC Digital Protocol Technical Specification&lt;/i&gt;</description>
+              <description>Bit frame SDD as defined by the b5:b1 of byte 1 in SENS_RES response in the NFC Forum, NFC Digital Protocol Technical Specification</description>
               <lsb>0</lsb>
               <msb>4</msb>
               <enumeratedValues>
@@ -19004,7 +19218,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                   <enumeratedValue>
                     <name>VDDHDIV5</name>
                     <description>VDDH/5</description>
-                    <value>0x11</value>
+                    <value>0x0D</value>
                   </enumeratedValue>
                 </enumeratedValues>
               </field>
@@ -19076,7 +19290,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                   <enumeratedValue>
                     <name>VDDHDIV5</name>
                     <description>VDDH/5</description>
-                    <value>0x11</value>
+                    <value>0x0D</value>
                   </enumeratedValue>
                 </enumeratedValues>
               </field>
@@ -22269,12 +22483,12 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <enumeratedValues>
                 <enumeratedValue>
                   <name>Default</name>
-                  <description>Default length. Effective length of LENGTH field in encrypted/decrypted packet is 5 bits. A key-stream for packets up to 27 bytes will be generated.</description>
+                  <description>Default length. Effective length of LENGTH field in encrypted/decrypted packet is 5 bits. A key-stream for packet payloads up to 27 bytes will be generated.</description>
                   <value>0</value>
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Extended</name>
-                  <description>Extended length. Effective length of LENGTH field in encrypted/decrypted packet is 8 bits. A key-stream for packets up to MAXPACKETSIZE bytes will be generated.</description>
+                  <description>Extended length. Effective length of LENGTH field in encrypted/decrypted packet is 8 bits. A key-stream for packet payloads up to MAXPACKETSIZE bytes will be generated.</description>
                   <value>1</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -22346,7 +22560,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           <fields>
             <field>
               <name>MAXPACKETSIZE</name>
-              <description>Length of key-stream generated when MODE.LENGTH = Extended. This value must be greater or equal to the subsequent packet to be encrypted/decrypted.</description>
+              <description>Length of key-stream generated when MODE.LENGTH = Extended. This value must be greater or equal to the subsequent packet payload to be encrypted/decrypted.</description>
               <lsb>0</lsb>
               <msb>7</msb>
             </field>
@@ -24771,7 +24985,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <enumeratedValue>
                   <name>ARef</name>
                   <description>VREF = AREF (VDD &amp;gt;= VREF &amp;gt;= AREFMIN)</description>
-                  <value>7</value>
+                  <value>5</value>
                 </enumeratedValue>
               </enumeratedValues>
             </field>
@@ -27896,6 +28110,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           <dimIncrement>32</dimIncrement>
           <name>SEQ[%s]</name>
           <description>Unspecified</description>
+          <headerStructName>PWM_SEQ</headerStructName>
           <addressOffset>0x520</addressOffset>
           <register>
             <name>PTR</name>
@@ -27975,6 +28190,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <cluster>
           <name>PSEL</name>
           <description>Unspecified</description>
+          <headerStructName>PWM_PSEL</headerStructName>
           <addressOffset>0x560</addressOffset>
           <register>
             <dim>4</dim>
@@ -28886,33 +29102,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         <usage>registers</usage>
       </addressBlock>
       <registers>
-        <register>
-          <name>DISABLEINDEBUG</name>
-          <description>Disable all ACL protection mechanisms for regions while in debug mode</description>
-          <addressOffset>0x704</addressOffset>
-          <access>read-write</access>
-          <resetValue>0x00000001</resetValue>
-          <fields>
-            <field>
-              <name>DISABLEINDEBUG</name>
-              <description>Disable the protection mechanism for regions while in debug mode.</description>
-              <lsb>0</lsb>
-              <msb>0</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>ACL is disabled in debug mode</description>
-                  <value>1</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>ACL is enabled in debug mode</description>
-                  <value>0</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-          </fields>
-        </register>
         <cluster>
           <dim>8</dim>
           <dimIncrement>16</dimIncrement>
@@ -37422,8 +37611,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <field>
                 <name>PORT</name>
                 <description>Port number</description>
-                <lsb>5</lsb>
-                <msb>5</msb>
+                <lsb>8</lsb>
+                <msb>8</msb>
               </field>
               <field>
                 <name>CONNECT</name>
@@ -37461,8 +37650,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <field>
                 <name>PORT</name>
                 <description>Port number</description>
-                <lsb>5</lsb>
-                <msb>5</msb>
+                <lsb>8</lsb>
+                <msb>8</msb>
               </field>
               <field>
                 <name>CONNECT</name>
@@ -37500,8 +37689,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <field>
                 <name>PORT</name>
                 <description>Port number</description>
-                <lsb>5</lsb>
-                <msb>5</msb>
+                <lsb>8</lsb>
+                <msb>8</msb>
               </field>
               <field>
                 <name>CONNECT</name>
@@ -37539,8 +37728,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <field>
                 <name>PORT</name>
                 <description>Port number</description>
-                <lsb>5</lsb>
-                <msb>5</msb>
+                <lsb>8</lsb>
+                <msb>8</msb>
               </field>
               <field>
                 <name>CONNECT</name>
@@ -37578,8 +37767,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <field>
                 <name>PORT</name>
                 <description>Port number</description>
-                <lsb>5</lsb>
-                <msb>5</msb>
+                <lsb>8</lsb>
+                <msb>8</msb>
               </field>
               <field>
                 <name>CONNECT</name>
@@ -40831,7 +41020,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
             <name>ISOOUT</name>
             <description>Amount of bytes received last on this iso OUT data endpoint</description>
             <addressOffset>0x020</addressOffset>
-            <access>read-write</access>
+            <access>read-only</access>
+            <resetValue>0x00010000</resetValue>
             <fields>
               <field>
                 <name>SIZE</name>
@@ -41434,6 +41624,33 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           </fields>
         </register>
         <register>
+          <name>LOWPOWER</name>
+          <description>First silicon only: Controls USBD peripheral low-power mode during USB suspend</description>
+          <addressOffset>0x52C</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>LOWPOWER</name>
+              <description>Controls USBD peripheral low-power mode during USB suspend</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>ForceNormal</name>
+                  <description>Software must write this value to exit low power mode and before performing a remote wake-up</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>LowPower</name>
+                  <description>Software must write this value to enter low power mode after DMA and software have finished interacting with the USB peripheral</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
           <name>ISOINCONFIG</name>
           <description>Controls the response of the ISO IN endpoint to an IN token when no data is ready to be sent</description>
           <addressOffset>0x530</addressOffset>
@@ -41702,6 +41919,12 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           <name>TASKS_ERASESTART</name>
           <description>Start external flash memory erase operation</description>
           <addressOffset>0x00C</addressOffset>
+          <access>write-only</access>
+        </register>
+        <register>
+          <name>TASKS_DEACTIVATE</name>
+          <description>Deactivate QSPI interface</description>
+          <addressOffset>0x010</addressOffset>
           <access>write-only</access>
         </register>
         <register>
@@ -42332,6 +42555,24 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 </enumeratedValue>
               </enumeratedValues>
             </field>
+            <field>
+              <name>PPSIZE</name>
+              <description>Page size for commands PP, PP2O, PP4O and PP4IO.</description>
+              <lsb>12</lsb>
+              <msb>12</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>256Bytes</name>
+                  <description>256 bytes.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>512Bytes</name>
+                  <description>512 bytes.</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
           </fields>
         </register>
         <register>
@@ -42667,6 +42908,37 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 </enumeratedValue>
               </enumeratedValues>
             </field>
+            <field>
+              <name>LFEN</name>
+              <description>Enable long frame mode. When enabled, a custom instruction transaction has to be ended by writing the LFSTOP field.</description>
+              <lsb>16</lsb>
+              <msb>16</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Disable</name>
+                  <description>Long frame mode disabled</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enable</name>
+                  <description>Long frame mode enabled</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>LFSTOP</name>
+              <description>Stop (finalize) long frame transaction</description>
+              <lsb>17</lsb>
+              <msb>17</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Stop</name>
+                  <description>Stop</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
           </fields>
         </register>
         <register>
@@ -42738,7 +43010,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           <description>SPI interface timing.</description>
           <addressOffset>0x640</addressOffset>
           <access>read-write</access>
-          <resetValue>0x00000300</resetValue>
+          <resetValue>0x00000200</resetValue>
           <fields>
             <field>
               <name>RXDELAY</name>
@@ -42750,17 +43022,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         </register>
       </registers>
     </peripheral>
-    <peripheral derivedFrom="SPIM0">
-      <name>SPIM3</name>
-      <description>Serial Peripheral Interface Master with EasyDMA 3</description>
-      <groupName>SPIM</groupName>
-      <baseAddress>0x4002B000</baseAddress>
-      <size>32</size>
-      <interrupt>
-        <name>SPIM3</name>
-        <value>43</value>
-      </interrupt>
-    </peripheral>
     <peripheral derivedFrom="PWM0">
       <name>PWM3</name>
       <description>Pulse Width Modulation Unit 3</description>
@@ -42770,6 +43031,17 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
       <interrupt>
         <name>PWM3</name>
         <value>45</value>
+      </interrupt>
+    </peripheral>
+    <peripheral derivedFrom="SPIM0">
+      <name>SPIM3</name>
+      <description>Serial Peripheral Interface Master with EasyDMA 3</description>
+      <groupName>SPIM</groupName>
+      <baseAddress>0x4002F000</baseAddress>
+      <size>32</size>
+      <interrupt>
+        <name>SPIM3</name>
+        <value>47</value>
       </interrupt>
     </peripheral>
     <peripheral>
@@ -48787,8 +49059,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
       <description>GPIO Port 2</description>
       <groupName>GPIO</groupName>
       <baseAddress>0x50000300</baseAddress>
-      <alternatePeripheral>P0</alternatePeripheral>
       <size>32</size>
+      <alternatePeripheral>P0</alternatePeripheral>
     </peripheral>
     <peripheral>
       <name>CRYPTOCELL</name>

@@ -52,9 +52,9 @@
 #include "sdk_config.h"
 
 
-#ifndef ANT_CONFIG_ENCRYPTED_CHANNELS
-    #error Undefined ANT_CONFIG_ENCRYPTED_CHANNELS. It should be defined in sdk_config.h file.
-#elif ANT_CONFIG_ENCRYPTED_CHANNELS > 0
+#ifndef NRF_SDH_ANT_ENCRYPTED_CHANNELS
+    #error Undefined NRF_SDH_ANT_ENCRYPTED_CHANNELS. It should be defined in sdk_config.h file.
+#elif NRF_SDH_ANT_ENCRYPTED_CHANNELS > 0
     #include "ant_encrypt_config.h"
 #endif
 
@@ -75,7 +75,7 @@ typedef struct
     uint16_t channel_period;        ///< The period in 32 kHz counts.
     uint8_t  network_number;        ///< Network number denoting the network key.
 
-#if ANT_CONFIG_ENCRYPTED_CHANNELS > 0
+#if NRF_SDH_ANT_ENCRYPTED_CHANNELS > 0
     ant_encrypt_channel_settings_t * p_crypto_settings; ///< Pointer to cryptographic settings, NULL if this configuration have to be omitted.
 #endif
 

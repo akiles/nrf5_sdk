@@ -249,7 +249,7 @@ bool addr_compare(ble_gap_addr_t const * p_addr1, ble_gap_addr_t const * p_addr2
 }
 
 
-void im_ble_evt_handler(ble_evt_t * ble_evt)
+void im_ble_evt_handler(ble_evt_t const * ble_evt)
 {
     ble_gap_evt_t gap_evt;
     pm_peer_id_t  bonded_matching_peer_id;
@@ -505,7 +505,7 @@ bool im_master_ids_compare(ble_gap_master_id_t const * p_master_id1,
 }
 
 
-pm_peer_id_t im_peer_id_get_by_master_id(ble_gap_master_id_t * p_master_id)
+pm_peer_id_t im_peer_id_get_by_master_id(ble_gap_master_id_t const * p_master_id)
 {
     pm_peer_id_t         peer_id;
     pm_peer_data_flash_t peer_data;

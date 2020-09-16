@@ -40,7 +40,7 @@
 
 #include "ant_interface.h"
 #include "ant_struct_serialization.h"
-#include "ant_stack_handler_types.h"
+#include "nrf_sdh_ant.h"
 #include "ble_serialization.h"
 #include "app_util.h"
 #include "cond_field_serialization.h"
@@ -121,8 +121,8 @@ uint32_t ant_evt_t_enc(void const * const p_void_ant_evt,
     ant_evt_t * p_ant_evt = (ant_evt_t *)p_void_ant_evt;
     uint32_t err_code = NRF_SUCCESS;
 
-    memcpy(&p_buf[*p_index], p_ant_evt->msg.evt_buffer, ANT_STACK_EVT_MSG_BUF_SIZE); // Size + sizeof(size) & sizeof(msg id)
-    *p_index += ANT_STACK_EVT_MSG_BUF_SIZE;
+    memcpy(&p_buf[*p_index], p_ant_evt->message.aucMessage, MESG_BUFFER_SIZE); // Size + sizeof(size) & sizeof(msg id)
+    *p_index += MESG_BUFFER_SIZE;
 
     err_code = uint8_t_enc(&p_ant_evt->event, p_buf, buf_len, p_index);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
@@ -146,8 +146,8 @@ uint32_t ant_evt_t_dec(uint8_t const * const p_buf,
     ant_evt_t * p_ant_evt = (ant_evt_t *)p_void_ant_evt;
     uint32_t err_code = NRF_SUCCESS;
 
-    memcpy(p_ant_evt->msg.evt_buffer, &p_buf[*p_index], ANT_STACK_EVT_MSG_BUF_SIZE); // Size + sizeof(size) & sizeof(msg id)
-    *p_index += ANT_STACK_EVT_MSG_BUF_SIZE;
+    memcpy(p_ant_evt->message.aucMessage, &p_buf[*p_index], MESG_BUFFER_SIZE); // Size + sizeof(size) & sizeof(msg id)
+    *p_index += MESG_BUFFER_SIZE;
 
     err_code = uint8_t_dec(p_buf, buf_len, p_index, &p_ant_evt->event);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);

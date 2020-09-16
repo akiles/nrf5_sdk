@@ -59,10 +59,8 @@
 #include "ant_channel_config.h"
 #include "ant_search_config.h"
 #include "nrf_soc.h"
-
-// Miscellaneous defines.
-#define ANT_CHANNEL_DEFAULT_NETWORK    0x00                               /**< ANT Channel Network. */
-#define ANT_CHANNEL_NUMBER             0x00                               /**< ANT Channel Number. */
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 
 // Application specific commands
 #define COMMAND_PAGE                   0x01                               /**< Page number for command data */
@@ -72,6 +70,8 @@
 // Retry configuration
 #define MAX_RETRIES                    8                                  /**< Maximum number of retries for sending a command */
 #define MIN_BACKOFF_TIME               20                                 /**< Minimum number of ms to wait before next retry attempt. The maximum back off time is 255 + MIN_BACKOFF_TIME */
+
+#define APP_ANT_OBSERVER_PRIO          1                                  /**< Application's ANT observer priority. You shouldn't need to modify this value. */
 
 static uint8_t  m_cmd_tx_buffer[ANT_STANDARD_DATA_PAYLOAD_SIZE];          /**< Command data transmit buffer */
 static uint8_t  m_retries;                                                /**< Number of remaining retries */
@@ -87,7 +87,7 @@ static void retry_perform(void)
 {
     if (m_retries > 0)
     {
-        uint32_t err_code = sd_ant_acknowledge_message_tx(ANT_CHANNEL_NUMBER,
+        uint32_t err_code = sd_ant_acknowledge_message_tx(ANT_CHANNEL_NUM,
                                                           ANT_STANDARD_DATA_PAYLOAD_SIZE,
                                                           m_cmd_tx_buffer);
         if (err_code != TRANSFER_IN_PROGRESS)
@@ -165,7 +165,7 @@ void ant_async_tx_setup(void)
 
     ant_channel_config_t channel_config =
     {
-        .channel_number    = ANT_CHANNEL_NUMBER,
+        .channel_number    = ANT_CHANNEL_NUM,
         .channel_type      = CHANNEL_TYPE_MASTER,
         .ext_assign        = EXT_PARAM_ASYNC_TX_MODE | EXT_PARAM_FAST_INITIATION_MODE,
         .rf_freq           = RF_FREQ,
@@ -173,7 +173,7 @@ void ant_async_tx_setup(void)
         .device_type       = CHAN_ID_DEV_TYPE,
         .device_number     = (uint16_t) (NRF_FICR->DEVICEID[0]),
         .channel_period    = CHAN_PERIOD,
-        .network_number    = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number    = ANT_NETWORK_NUM,
     };
 
     err_code = ant_channel_init(&channel_config);
@@ -209,7 +209,7 @@ void ant_async_tx_bsp_evt_handler(bsp_event_t evt)
 }
 
 
-void ant_async_tx_event_handler(ant_evt_t * p_ant_evt)
+void ant_async_tx_event_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
     switch (p_ant_evt->event)
     {
@@ -237,3 +237,4 @@ void ant_async_tx_event_handler(ant_evt_t * p_ant_evt)
     }
 }
 
+NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_async_tx_event_handler, NULL);

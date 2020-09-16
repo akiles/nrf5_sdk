@@ -108,7 +108,6 @@ int main(void)
 
     /* Configure LED-pins as outputs */
     bsp_board_leds_init();
-    bsp_board_leds_off();
 
     /* Create task for LED0 blinking with priority set to 2 */
     UNUSED_VARIABLE(xTaskCreate(led_toggle_task_function, "LED0", configMINIMAL_STACK_SIZE + 200, NULL, 2, &led_toggle_task_handle));

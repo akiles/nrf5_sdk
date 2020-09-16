@@ -52,7 +52,6 @@
 #define ANT_ASYNC_TX_H__
 
 #include <stdint.h>
-#include "ant_stack_handler_types.h"
 #include "bsp.h"
 
 #ifdef __cplusplus
@@ -71,12 +70,6 @@ void ant_async_tx_setup(void);
  * @param[in] evt   BSP event.
  */
 void ant_async_tx_bsp_evt_handler(bsp_event_t evt);
-
-
-/**@brief Handle ANT events
- * @param[in] p_ant_evt A pointer to the received ANT event to handle.
- */
-void ant_async_tx_event_handler(ant_evt_t * p_ant_evt);
 
 
 #ifdef __cplusplus

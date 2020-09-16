@@ -92,13 +92,4 @@ void nfc_pair_start(void);
  */
 void nfc_pair_stop(void);
 
-/**
- * @brief Function for handling NFC pairing BLE events.
- *
- * @details Handles authentication events, replying with OOB data.
- *
- * @param[in] p_ble_evt Bluetooth stack event.
- */
-void on_nfc_pair_evt(const ble_evt_t * const p_ble_evt);
-
 #endif // NFC_PAIR_M_H__

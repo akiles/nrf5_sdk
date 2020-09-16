@@ -109,7 +109,7 @@ void nrf_nvmc_write_bytes(uint32_t  address, const uint8_t * src, uint32_t num_b
  *
  * @param address   Address to write to.
  * @param src       Pointer to data to copy from.
- * @param num_words Number of bytes in src to write.
+ * @param num_words Number of words in src to write.
  */
 void nrf_nvmc_write_words(uint32_t address, const uint32_t * src, uint32_t num_words);
 

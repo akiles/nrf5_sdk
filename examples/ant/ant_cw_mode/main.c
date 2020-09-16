@@ -48,27 +48,23 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-/**@file
- * @defgroup nrf_ant_background_scanning_demo ANT CW Mode Example
- * @{
- * @ingroup nrf_ant_cw_mode_demo
- *
- * @brief Example of ANT CW Mode Implementation
- *
+/*
  * Before compiling this example for NRF52, complete the following steps:
  * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
- * - Extract the downloaded zip file and copy the S332 SoftDevice headers to <tt>\<InstallFolder\>/components/softdevice/s212/headers</tt>.
+ * - Extract the downloaded zip file and copy the S212 SoftDevice headers to <tt>\<InstallFolder\>/components/softdevice/s212/headers</tt>.
  * If you are using Keil packs, copy the files into a @c headers folder in your example folder.
  * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
  */
 
+#include "nrf_soc.h"
+#include "nrf_pwr_mgmt.h"
+#include "boards.h"
+#include "hardfault.h"
 #include "app_error.h"
 #include "ant_interface.h"
 #include "ant_parameters.h"
-#include "ant_stack_config.h"
-#include "boards.h"
-#include "hardfault.h"
-#include "softdevice_handler.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 #include "sdk_config.h"
 
 
@@ -76,9 +72,7 @@
  */
 static void application_initialize()
 {
-    uint32_t err_code;
-
-    err_code = sd_ant_cw_test_mode_init();
+    uint32_t err_code = sd_ant_cw_test_mode_init();
     APP_ERROR_CHECK(err_code);
 
     // sd_ant_cw_test_mode assumes that the hfclck is enabled.
@@ -99,6 +93,9 @@ static void application_initialize()
                                    RADIO_TXPOWER_TXPOWER_Pos4dBm,
                                    MODULATED_TRANSMISSION_TEST_MODE);
     APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -108,14 +105,12 @@ static void application_initialize()
  */
 static void softdevice_setup(void)
 {
-    ret_code_t err_code;
-
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
+    ret_code_t err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    err_code = ant_stack_static_config();
+    ASSERT(nrf_sdh_is_enabled());
+
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -123,23 +118,12 @@ static void softdevice_setup(void)
 /* Main function */
 int main(void)
 {
-    ret_code_t err_code;
-
-    // Blink LED after successful initialization.
-    bsp_board_leds_init();
-
     softdevice_setup();
     application_initialize();
 
     // Enter main loop
     for (;;)
     {
-        err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+        nrf_pwr_mgmt_run();
     }
 }
-
-
-/**
- *@}
- **/

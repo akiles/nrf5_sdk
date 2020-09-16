@@ -43,7 +43,7 @@
 
 #include "ble_serialization.h"
 #include "app_util.h"
-#include "ant_stack_handler_types.h"
+#include "nrf_sdh_ant.h"
 
 /**
  * @addtogroup ser_app_s212_codecs

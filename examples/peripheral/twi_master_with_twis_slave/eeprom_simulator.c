@@ -71,7 +71,7 @@
     /**
      * @brief Receive buffer.
      *
-     * Receiving buffer must contain the address and 8 bytes of data.
+     * Receiving buffer must contain the address and EEPROM_SIM_SEQ_WRITE_MAX_BYTES bytes of data.
      */
     static uint8_t m_rxbuff[EEPROM_SIM_ADDRESS_LEN_BYTES + EEPROM_SIM_SEQ_WRITE_MAX_BYTES];
 
@@ -162,7 +162,7 @@
 #if (EEPROM_SIM_ADDRESS_LEN_BYTES == 2)
             uint16_t rxbuff;
 
-            if(TWI_ADDRESS_CONFIG == LITTLE_ENDIAN)
+            if (TWI_ADDRESS_CONFIG == LITTLE_ENDIAN)
             {
                 rxbuff = ((m_rxbuff[1] << 8 ) | (m_rxbuff[0]));
             }
@@ -271,7 +271,7 @@ ret_code_t eeprom_simulator_init(void)
     /* Initialize RAM with contents of flash */
     for (uint32_t n=0; n<EEPROM_SIM_SIZE; ++n)
     {
-        m_memory[n] = *(uint8_t *)(m_config.flash_start_addr+n);
+        m_memory[n] = *(uint8_t *)(m_config.flash_start_addr + n);
     }
     m_addr = 0;
 

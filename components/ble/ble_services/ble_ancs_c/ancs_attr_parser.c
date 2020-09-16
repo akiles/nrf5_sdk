@@ -57,7 +57,7 @@ static bool all_req_attrs_parsed(ble_ancs_c_t * p_ancs)
 
 static bool attr_is_requested(ble_ancs_c_t * p_ancs, ble_ancs_c_attr_t attr)
 {
-    if(p_ancs->parse_info.p_attr_list[attr.attr_id].get == true)
+    if (p_ancs->parse_info.p_attr_list[attr.attr_id].get == true)
     {
         return true;
     }
@@ -126,7 +126,7 @@ static ble_ancs_c_parse_state_t app_id_parse(ble_ancs_c_t  * p_ancs,
 {
     p_ancs->evt.app_id[p_ancs->parse_info.current_app_id_index] = p_data_src[(*index)++];
 
-    if(p_ancs->evt.app_id[p_ancs->parse_info.current_app_id_index] != '\0')
+    if (p_ancs->evt.app_id[p_ancs->parse_info.current_app_id_index] != '\0')
     {
         p_ancs->parse_info.current_app_id_index++;
         return APP_ID;
@@ -157,14 +157,14 @@ static ble_ancs_c_parse_state_t attr_id_parse(ble_ancs_c_t  * p_ancs,
 
         if (p_ancs->evt.attr.attr_id >= p_ancs->parse_info.nb_of_attr)
         {
-            NRF_LOG_DEBUG("Attribute ID Invalid.\r\n");
+            NRF_LOG_DEBUG("Attribute ID Invalid.");
             return DONE;
         }
         p_ancs->evt.attr.p_attr_data = p_ancs->parse_info.p_attr_list[p_ancs->evt.attr.attr_id].p_attr_data;
 
         if (all_req_attrs_parsed(p_ancs))
         {
-            NRF_LOG_DEBUG("All requested attributes received. \r\n");
+            NRF_LOG_DEBUG("All requested attributes received. ");
             return DONE;
         }
         else
@@ -173,7 +173,7 @@ static ble_ancs_c_parse_state_t attr_id_parse(ble_ancs_c_t  * p_ancs,
             {
                 p_ancs->parse_info.expected_number_of_attrs--;
             }
-            NRF_LOG_DEBUG("Attribute ID %i \r\n", p_ancs->evt.attr.attr_id);
+            NRF_LOG_DEBUG("Attribute ID %i ", p_ancs->evt.attr.attr_id);
             return ATTR_LEN1;
         }
 }
@@ -218,7 +218,7 @@ static ble_ancs_c_parse_state_t attr_len2_parse(ble_ancs_c_t * p_ancs, const uin
     if (p_ancs->evt.attr.attr_len != 0)
     {
         //If the attribute has a length but there is no allocated space for this attribute
-        if((p_ancs->parse_info.p_attr_list[p_ancs->evt.attr.attr_id].attr_len == 0) ||
+        if ((p_ancs->parse_info.p_attr_list[p_ancs->evt.attr.attr_id].attr_len == 0) ||
            (p_ancs->parse_info.p_attr_list[p_ancs->evt.attr.attr_id].p_attr_data == NULL))
         {
             return ATTR_SKIP;
@@ -231,12 +231,12 @@ static ble_ancs_c_parse_state_t attr_len2_parse(ble_ancs_c_t * p_ancs, const uin
     else
     {
 
-        NRF_LOG_DEBUG("Attribute LEN %i \r\n", p_ancs->evt.attr.attr_len);
-        if(attr_is_requested(p_ancs, p_ancs->evt.attr))
+        NRF_LOG_DEBUG("Attribute LEN %i ", p_ancs->evt.attr.attr_len);
+        if (attr_is_requested(p_ancs, p_ancs->evt.attr))
         {
             p_ancs->evt_handler(&p_ancs->evt);
         }
-        if(all_req_attrs_parsed(p_ancs))
+        if (all_req_attrs_parsed(p_ancs))
         {
             return DONE;
         }
@@ -268,7 +268,7 @@ static ble_ancs_c_parse_state_t attr_data_parse(ble_ancs_c_t  * p_ancs,
     if (   (p_ancs->parse_info.current_attr_index < p_ancs->parse_info.p_attr_list[p_ancs->evt.attr.attr_id].attr_len)
         && (p_ancs->parse_info.current_attr_index < p_ancs->evt.attr.attr_len))
     {
-        //NRF_LOG_DEBUG("Byte copied to buffer: %c\r\n", p_data_src[(*index)]); // Un-comment this line to see every byte of an attribute as it is parsed. Commented out by default since it can overflow the uart buffer.
+        //NRF_LOG_DEBUG("Byte copied to buffer: %c", p_data_src[(*index)]); // Un-comment this line to see every byte of an attribute as it is parsed. Commented out by default since it can overflow the uart buffer.
         p_ancs->evt.attr.p_attr_data[p_ancs->parse_info.current_attr_index++] = p_data_src[(*index)++];
     }
 
@@ -288,12 +288,12 @@ static ble_ancs_c_parse_state_t attr_data_parse(ble_ancs_c_t  * p_ancs,
         {
             return ATTR_SKIP;
         }
-        NRF_LOG_DEBUG("Attribute finished!\r\n");
-        if(attr_is_requested(p_ancs, p_ancs->evt.attr))
+        NRF_LOG_DEBUG("Attribute finished!");
+        if (attr_is_requested(p_ancs, p_ancs->evt.attr))
         {
             p_ancs->evt_handler(&p_ancs->evt);
         }
-        if(all_req_attrs_parsed(p_ancs))
+        if (all_req_attrs_parsed(p_ancs))
         {
             return DONE;
         }
@@ -319,11 +319,11 @@ static ble_ancs_c_parse_state_t attr_skip(ble_ancs_c_t * p_ancs, const uint8_t *
     // continue parsing the next attribute ID if we are not done with all the attributes.
     if (p_ancs->parse_info.current_attr_index == p_ancs->evt.attr.attr_len)
     {
-        if(attr_is_requested(p_ancs, p_ancs->evt.attr))
+        if (attr_is_requested(p_ancs, p_ancs->evt.attr))
         {
             p_ancs->evt_handler(&p_ancs->evt);
         }
-        if(all_req_attrs_parsed(p_ancs))
+        if (all_req_attrs_parsed(p_ancs))
         {
             return DONE;
         }
@@ -379,7 +379,7 @@ void ancs_parse_get_attrs_response(ble_ancs_c_t  * p_ancs,
                 break;
 
             case DONE:
-                NRF_LOG_DEBUG("Parse state: Done \r\n");
+                NRF_LOG_DEBUG("Parse state: Done ");
                 index = hvx_data_len;
                 break;
 

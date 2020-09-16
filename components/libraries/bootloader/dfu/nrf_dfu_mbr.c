@@ -65,7 +65,7 @@ uint32_t nrf_dfu_mbr_copy_sd(uint32_t * p_dst, uint32_t * p_src, uint32_t len)
     uint32_t ret_val;
     uint32_t const len_words = len / sizeof(uint32_t);
 
-    if((len_words & (CODE_PAGE_SIZE / sizeof(uint32_t) - 1)) != 0)
+    if ((len_words & (CODE_PAGE_SIZE / sizeof(uint32_t) - 1)) != 0)
         return NRF_ERROR_INVALID_LENGTH;
 
     sd_mbr_command_t command =
@@ -116,22 +116,39 @@ uint32_t nrf_dfu_mbr_compare(uint32_t * p_ptr1, uint32_t * p_ptr2, uint32_t len)
 }
 
 
-uint32_t nrf_dfu_mbr_vector_table_set(uint32_t address, uint8_t is_temporary)
+uint32_t nrf_dfu_mbr_vector_table_set(uint32_t address)
 {
     uint32_t ret_val;
 
-    NRF_LOG_DEBUG("running vector table set\r\n");
+    NRF_LOG_DEBUG("running vector table set");
     sd_mbr_command_t command =
     {
         .command = SD_MBR_COMMAND_VECTOR_TABLE_BASE_SET,
         .params.base_set.address = address,
-#ifndef SOFTDEVICE_PRESENT
-        .params.base_set.temporary = is_temporary,
-#endif
     };
 
     ret_val = sd_mbr_command(&command);
-    NRF_LOG_DEBUG("After running vector table set\r\n");
+    NRF_LOG_DEBUG("After running vector table set");
 
     return ret_val;
 }
+
+
+#ifndef SOFTDEVICE_PRESENT
+uint32_t nrf_dfu_mbr_irq_forward_address_set(uint32_t address)
+{
+    uint32_t ret_val;
+
+    NRF_LOG_DEBUG("running irq table set");
+    sd_mbr_command_t command =
+    {
+        .command = SD_MBR_COMMAND_IRQ_FORWARD_ADDRESS_SET,
+        .params.irq_forward_address_set.address = address,
+    };
+
+    ret_val = sd_mbr_command(&command);
+    NRF_LOG_DEBUG("After running irq table set");
+
+    return ret_val;
+}
+#endif

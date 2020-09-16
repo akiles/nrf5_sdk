@@ -48,9 +48,9 @@
 #include "ble_err.h"
 #include "ble_srv_common.h"
 
-#define NRF_LOG_MODULE_NAME "AMTS"
+#define NRF_LOG_MODULE_NAME AMTS
 #include "nrf_log.h"
-
+NRF_LOG_MODULE_REGISTER();
 
 #define OPCODE_LENGTH 1 /**< Length of opcode inside a notification. */
 #define HANDLE_LENGTH 2 /**< Length of handle inside a notification. */
@@ -64,7 +64,7 @@ static void char_notification_send(nrf_ble_amts_t * p_ctx);
  * @param     p_ctx       Pointer to the AMTS structure.
  * @param[in] p_ble_evt  Event received from the BLE stack.
  */
-static void on_connect(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt)
+static void on_connect(nrf_ble_amts_t * p_ctx, ble_evt_t const * p_ble_evt)
 {
     p_ctx->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
 }
@@ -75,7 +75,7 @@ static void on_connect(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt)
  * @param     p_ctx         Pointer to the AMTS structure.
  * @param[in] p_ble_evt     Event received from the BLE stack.
  */
-static void on_disconnect(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt)
+static void on_disconnect(nrf_ble_amts_t * p_ctx, ble_evt_t const * p_ble_evt)
 {
     p_ctx->conn_handle = BLE_CONN_HANDLE_INVALID;
 }
@@ -100,9 +100,9 @@ static void on_tx_complete(nrf_ble_amts_t * p_ctx)
  * @param     p_ctx       Pointer to the AMTS structure.
  * @param[in] p_ble_evt   Event received from the BLE stack.
  */
-static void on_write(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt)
+static void on_write(nrf_ble_amts_t * p_ctx, ble_evt_t const * p_ble_evt)
 {
-    ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
+    ble_gatts_evt_write_t const * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
 
     if ((p_evt_write->handle == p_ctx->amts_char_handles.cccd_handle) && (p_evt_write->len == 2))
     {
@@ -123,8 +123,10 @@ static void on_write(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt)
 }
 
 
-void nrf_ble_amts_on_ble_evt(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt)
+void nrf_ble_amts_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
+    nrf_ble_amts_t * p_ctx = (nrf_ble_amts_t *)p_context;
+
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
@@ -172,7 +174,7 @@ void nrf_ble_amts_init(nrf_ble_amts_t * p_ctx, amts_evt_handler_t evt_handler)
 
     amt_params.uuid              = AMTS_CHAR_UUID;
     amt_params.uuid_type         = p_ctx->uuid_type;
-    amt_params.max_len           = NRF_BLE_GATT_MAX_MTU_SIZE;
+    amt_params.max_len           = NRF_SDH_BLE_GATT_MAX_MTU_SIZE;
     amt_params.char_props.notify = 1;
     amt_params.cccd_write_access = SEC_OPEN;
     amt_params.is_var_len        = 1;
@@ -258,7 +260,7 @@ static void char_notification_send(nrf_ble_amts_t * p_ctx)
         }
         else if (err_code != NRF_SUCCESS)
         {
-            NRF_LOG_ERROR("sd_ble_gatts_hvx() failed: 0x%x\r\n", err_code);
+            NRF_LOG_ERROR("sd_ble_gatts_hvx() failed: 0x%x", err_code);
         }
 
         p_ctx->bytes_sent += payload_len;
@@ -293,7 +295,7 @@ void nrf_ble_amts_rbc_set(nrf_ble_amts_t * p_ctx, uint32_t byte_cnt)
                                                  &value_param);
     if (err_code != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("sd_ble_gatts_value_set() failed: 0x%x\r\n", err_code);
+        NRF_LOG_ERROR("sd_ble_gatts_value_set() failed: 0x%x", err_code);
     }
 }
 

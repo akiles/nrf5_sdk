@@ -49,8 +49,8 @@
 #include "nrf_log.h"
 
 
-#define AVAILABLE_LED_PIN_NO            BSP_LED_0                                               /**< Is on when serial DFU transport is enabled (but not connected). */
-#define CONNECTED_LED_PIN_NO            BSP_LED_1                                               /**< Is on when device has connected. */
+#define AVAILABLE_LED_PIN_NO            BSP_LED_0                                                   /**< Is on when serial DFU transport is enabled (but not connected). */
+#define CONNECTED_LED_PIN_NO            BSP_LED_1                                                   /**< Is on when device has connected. */
 
 
 #define CREATE_OBJECT_REQUEST_LEN       (sizeof(uint8_t)+sizeof(uint32_t))
@@ -65,13 +65,11 @@
 static serial_dfu_t m_dfu;
 
 
-//lint -save -e545 -esym(526, dfu_trans) -esym(528, dfu_trans)
 DFU_TRANSPORT_REGISTER(nrf_dfu_transport_t const dfu_trans) =
 {
-    .init_func =        serial_dfu_transport_init,
-    .close_func =       serial_dfu_transport_close
+    .init_func  = serial_dfu_transport_init,
+    .close_func = serial_dfu_transport_close
 };
-//lint -restore
 
 
 ANON_UNIONS_ENABLE
@@ -99,6 +97,11 @@ typedef struct
         {
             uint16_t mtu;
         } serial_mtu_response;
+
+        struct
+        {
+            uint8_t ping_id;
+        } ping_response;
     };
 
 } serial_dfu_response_t;
@@ -121,13 +124,13 @@ static void leds_init(void)
 static void response_send(serial_dfu_t          * p_dfu,
                           serial_dfu_response_t * p_response)
 {
-    uint8_t response_buffer[MAX_RESPONSE_SIZE];
-    uint8_t encoded_response[MAX_RESPONSE_SIZE*2 + 1];
-    uint32_t encoded_response_length;
+    static uint8_t encoded_response[(2 * MAX_RESPONSE_SIZE) + 1] = {0};
+    uint8_t response_buffer[MAX_RESPONSE_SIZE] = {0};
+    uint32_t encoded_response_length = 0;
 
     uint16_t index = 0;
 
-    NRF_LOG_DEBUG("Sending Response: [0x%01x, 0x%01x]\r\n", p_response->op_code, p_response->resp_val);
+    NRF_LOG_DEBUG("Sending Response: [0x%01x, 0x%01x]", p_response->op_code, p_response->resp_val);
 
     response_buffer[index++] = SERIAL_DFU_OP_CODE_RESPONSE;
 
@@ -156,10 +159,21 @@ static void response_send(serial_dfu_t          * p_dfu,
                 index += uint16_encode(p_response->serial_mtu_response.mtu, &response_buffer[index]);
                 break;
 
+            case SERIAL_DFU_OP_CODE_PING:
+                response_buffer[index] = p_response->ping_response.ping_id;
+                index += sizeof(uint8_t);
+                break;
+
             default:
                 // no implementation
                 break;
         }
+    }
+    else if (p_response->resp_val == NRF_DFU_RES_CODE_EXT_ERROR)
+    {
+        response_buffer[index++] = ext_error_get();
+        // Clear the last extended error code
+        (void) ext_error_set(NRF_DFU_EXT_ERROR_NO_ERROR);
     }
 
     // encode into slip
@@ -171,10 +185,9 @@ static void response_send(serial_dfu_t          * p_dfu,
 
 static void on_packet_received(serial_dfu_t * p_dfu)
 {
-    nrf_dfu_req_t       dfu_req;
-    nrf_dfu_res_t       dfu_res = {{{0}}};
-
-    serial_dfu_response_t serial_response;
+    nrf_dfu_req_t dfu_req;
+    nrf_dfu_res_t dfu_res = {{{0}}};
+    serial_dfu_response_t serial_response = {0};
 
     memset(&dfu_req, 0, sizeof(nrf_dfu_req_t));
 
@@ -197,59 +210,59 @@ static void on_packet_received(serial_dfu_t * p_dfu)
                 break;
             }
 
-            NRF_LOG_DEBUG("Received create object\r\n");
+            NRF_LOG_DEBUG("Received create object");
 
             // Reset the packet receipt notification on create object
             p_dfu->pkt_notif_target_count = p_dfu->pkt_notif_target;
 
             // Get type parameter
-            dfu_req.obj_type    =  p_payload[0];
+            dfu_req.obj_type =  p_payload[0];
 
             // Get length value
             dfu_req.object_size = uint32_decode(&p_payload[1]);
 
             // Set req type
-            dfu_req.req_type        = NRF_DFU_OBJECT_OP_CREATE;
+            dfu_req.req_type = NRF_DFU_OBJECT_OP_CREATE;
 
             serial_response.resp_val = nrf_dfu_req_handler_on_req(NULL, &dfu_req, &dfu_res);
             break;
 
         case SERIAL_DFU_OP_CODE_SET_RECEIPT_NOTIF:
-            NRF_LOG_DEBUG("Set receipt notif\r\n");
+            NRF_LOG_DEBUG("Set receipt notif");
             if (packet_payload_len != SET_RECEIPT_NOTIF_REQUEST_LEN)
             {
                 serial_response.resp_val = NRF_DFU_RES_CODE_INVALID_PARAMETER;
                 break;
             }
 
-            p_dfu->pkt_notif_target = uint16_decode(&p_payload[0]);
-            p_dfu->pkt_notif_target_count   = p_dfu->pkt_notif_target;
+            p_dfu->pkt_notif_target       = uint16_decode(&p_payload[0]);
+            p_dfu->pkt_notif_target_count = p_dfu->pkt_notif_target;
 
             serial_response.resp_val = NRF_DFU_RES_CODE_SUCCESS;
             break;
 
         case SERIAL_DFU_OP_CODE_CALCULATE_CRC:
-            NRF_LOG_DEBUG("Received calculate CRC\r\n");
+            NRF_LOG_DEBUG("Received calculate CRC");
 
-            dfu_req.req_type     =  NRF_DFU_OBJECT_OP_CRC;
+            dfu_req.req_type =  NRF_DFU_OBJECT_OP_CRC;
 
-            serial_response.resp_val = nrf_dfu_req_handler_on_req(NULL, &dfu_req, &dfu_res);
+            serial_response.resp_val            = nrf_dfu_req_handler_on_req(NULL, &dfu_req, &dfu_res);
             serial_response.crc_response.offset = dfu_res.offset;
             serial_response.crc_response.crc    = dfu_res.crc;
             break;
 
         case SERIAL_DFU_OP_CODE_EXECUTE_OBJECT:
-            NRF_LOG_DEBUG("Received execute object\r\n");
+            NRF_LOG_DEBUG("Received execute object");
 
             // Set req type
-            dfu_req.req_type     =  NRF_DFU_OBJECT_OP_EXECUTE;
+            dfu_req.req_type =  NRF_DFU_OBJECT_OP_EXECUTE;
 
             serial_response.resp_val = nrf_dfu_req_handler_on_req(NULL, &dfu_req, &dfu_res);
             break;
 
         case SERIAL_DFU_OP_CODE_SELECT_OBJECT:
 
-            NRF_LOG_DEBUG("Received select object\r\n");
+            NRF_LOG_DEBUG("Received select object");
             if (packet_payload_len != SELECT_OBJECT_REQUEST_LEN)
             {
                 serial_response.resp_val = NRF_DFU_RES_CODE_INVALID_PARAMETER;
@@ -268,7 +281,7 @@ static void on_packet_received(serial_dfu_t * p_dfu)
             break;
 
         case SERIAL_DFU_OP_CODE_GET_SERIAL_MTU:
-            NRF_LOG_DEBUG("Received get serial mtu\r\n");
+            NRF_LOG_DEBUG("Received get serial mtu");
 
             serial_response.resp_val = NRF_DFU_RES_CODE_SUCCESS;
             serial_response.serial_mtu_response.mtu = sizeof(p_dfu->recv_buffer);
@@ -279,31 +292,46 @@ static void on_packet_received(serial_dfu_t * p_dfu)
             dfu_req.req_type =  NRF_DFU_OBJECT_OP_WRITE;
 
             // Set data and length
-            dfu_req.p_req    =  &p_payload[0];
-            dfu_req.req_len  =  packet_payload_len;
+            dfu_req.p_req   = &p_payload[0];
+            dfu_req.req_len = packet_payload_len;
 
             serial_response.resp_val = nrf_dfu_req_handler_on_req(NULL, &dfu_req, &dfu_res);
-            if(serial_response.resp_val != NRF_DFU_RES_CODE_SUCCESS)
+            if (serial_response.resp_val != NRF_DFU_RES_CODE_SUCCESS)
             {
-                NRF_LOG_ERROR("Failure to run packet write\r\n");
+                NRF_LOG_ERROR("Failure to run packet write");
             }
 
             // Check if a packet receipt notification is needed to be sent.
             if (p_dfu->pkt_notif_target != 0 && --p_dfu->pkt_notif_target_count == 0)
             {
-                serial_response.op_code = SERIAL_DFU_OP_CODE_CALCULATE_CRC;
+                serial_response.op_code             = SERIAL_DFU_OP_CODE_CALCULATE_CRC;
                 serial_response.crc_response.offset = dfu_res.offset;
                 serial_response.crc_response.crc    = dfu_res.crc;
 
                 // Reset the counter for the number of firmware packets.
                 p_dfu->pkt_notif_target_count = p_dfu->pkt_notif_target;
+
+                response_send(p_dfu, &serial_response);
             }
+            break;
+
+        case SERIAL_DFU_OP_CODE_PING:
+            if (packet_payload_len != sizeof(serial_response.ping_response))
+            {
+                serial_response.resp_val = NRF_DFU_RES_CODE_INVALID_PARAMETER;
+                break;
+            }
+
+            serial_response.resp_val = NRF_DFU_RES_CODE_SUCCESS;
+            serial_response.ping_response.ping_id = p_payload[0];
+
+            NRF_LOG_DEBUG("Received ping %d", p_payload[0]);
             break;
 
         default:
             // Unsupported op code.
-            NRF_LOG_WARNING("Received unsupported OP code\r\n");
-            serial_response.resp_val = NRF_DFU_RES_CODE_INVALID_PARAMETER;
+            NRF_LOG_WARNING("Received unsupported OP code");
+            serial_response.resp_val = NRF_DFU_RES_CODE_OP_CODE_NOT_SUPPORTED;
             break;
     }
 
@@ -332,6 +360,7 @@ static __INLINE void on_rx_complete(serial_dfu_t * p_dfu, uint8_t * p_data, uint
     (void)nrf_drv_uart_rx(&m_dfu.uart_instance, &m_dfu.uart_buffer, 1);
 }
 
+
 static void uart_event_handler(nrf_drv_uart_event_t * p_event, void * p_context)
 {
     switch (p_event->type)
@@ -357,30 +386,28 @@ uint32_t serial_dfu_transport_init(void)
 
     leds_init();
 
-    m_dfu.slip.p_buffer         = m_dfu.recv_buffer;
-    m_dfu.slip.current_index    = 0;
-    m_dfu.slip.buffer_len       = sizeof(m_dfu.recv_buffer);
-    m_dfu.slip.state            = SLIP_STATE_DECODING;
+    m_dfu.slip.p_buffer      = m_dfu.recv_buffer;
+    m_dfu.slip.current_index = 0;
+    m_dfu.slip.buffer_len    = sizeof(m_dfu.recv_buffer);
+    m_dfu.slip.state         = SLIP_STATE_DECODING;
 
     nrf_drv_uart_config_t uart_config = NRF_DRV_UART_DEFAULT_CONFIG;
 
-    uart_config.pseltxd            = TX_PIN_NUMBER;
-    uart_config.pselrxd            = RX_PIN_NUMBER;
-    uart_config.pselcts            = CTS_PIN_NUMBER;
-    uart_config.pselrts            = RTS_PIN_NUMBER;
-    uart_config.hwfc               = NRF_UART_HWFC_ENABLED;
-    uart_config.p_context          = &m_dfu;
+    uart_config.pseltxd   = TX_PIN_NUMBER;
+    uart_config.pselrxd   = RX_PIN_NUMBER;
+    uart_config.pselcts   = CTS_PIN_NUMBER;
+    uart_config.pselrts   = RTS_PIN_NUMBER;
+    uart_config.hwfc      = NRF_UART_HWFC_ENABLED;
+    uart_config.p_context = &m_dfu;
 
 
     nrf_drv_uart_t instance =  NRF_DRV_UART_INSTANCE(0);
     memcpy(&m_dfu.uart_instance, &instance, sizeof(instance));
 
-    err_code =  nrf_drv_uart_init(&m_dfu.uart_instance,
-                                  &uart_config,
-                                  uart_event_handler);
+    err_code =  nrf_drv_uart_init(&m_dfu.uart_instance, &uart_config, uart_event_handler);
     if (err_code != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("Failed initializing uart\n");
+        NRF_LOG_ERROR("Failed initializing uart");
         return err_code;
     }
 
@@ -389,10 +416,10 @@ uint32_t serial_dfu_transport_init(void)
     err_code = nrf_drv_uart_rx(&m_dfu.uart_instance, &m_dfu.uart_buffer, 1);
     if (err_code != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("Failed initializing rx\n");
+        NRF_LOG_ERROR("Failed initializing rx");
     }
 
-    NRF_LOG_DEBUG("UART initialized\n");
+    NRF_LOG_DEBUG("UART initialized");
 
     return err_code;
 }

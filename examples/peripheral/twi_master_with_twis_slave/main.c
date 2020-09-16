@@ -52,8 +52,8 @@
  * - @ref nrf_twis_drv (in asynchronous mode)
  *
  * On the slave, EEPROM memory is simulated.
- * For simulated EEPROM, the AT24C01C device produced by ATMEL was selected.
- * This device has 128 bytes of memory and it is simulated using internal RAM.
+ * The size of the simulated EEPROM is configurable in the config.h file.
+ * Default memory value of the device is 320 bytes. It is simulated using internal RAM.
  * This RAM area is accessed only by simulated EEPROM so the rest of the application can access it
  * only using TWI commands via hardware configured pins.
  *
@@ -63,14 +63,23 @@
  * A maximum of an 8-byte page can be written in a single access.
  * The whole memory can be read in a single access.
  *
+ * When the slave (simulated EEPROM) is initialized, it copies the given part of flash
+ * (see EEPROM_SIM_FLASH_ADDRESS in config.h) into RAM (enabling the use of the slave for
+ * bootloader use cases).
+ *
+ * Many variables like length of sequential writes/reads, TWI instance to use, endianness of
+ * of slave bype addressing can be configured in config.h file
+ *
  * Differences between real chip and simulated one:
  * 1. Simulated chip has practically 0 ms write time.
  *    This example does not poll the memory for readiness.
- * 2. During sequential read, when memory end is reached, zeroes are sent.
- *    There is no support for roll-over.
- * 3. It is possible to write a maximum of 8 bytes in a single sequential write.
- *    However, in simulated EEPROM the whole address pointer is incremented.
- *    In a real memory chip, only the 3 lowest bits chang during writing.
+ * 2. During sequential read, when memory end is reached, there is no support for roll-over.
+ *    It is recommended for master to assure that it does not try to read more than the page limits.
+ *    If the master is not tracking this and trying to read after the page ends, then the slave will start to NACK
+ *    for trying to over-read the memory. The master should end the transaction when slave starts NACKing, which could
+ *    mean that the master has read the end of the page.
+ * 3. It is possible to write a maximum of EEPROM_SIM_SEQ_WRITE_MAX_BYTES bytes in a single
+ *    sequential write. However, in simulated EEPROM the whole address pointer is incremented.
  *    In a real device, writing would roll-over in memory page.
  *
  * On the master side, we communicate with that memory and allow write and read.
@@ -80,9 +89,10 @@
  * - @ref TWI_SCL_M - @ref EEPROM_SIM_SCL_S
  * - @ref TWI_SDA_M - @ref EEPROM_SIM_SDA_S
  *
- * Supported commands are always listed in the welcome message.
+ * Supported commands will be listed after Tab button press.
  * @{
  */
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -96,24 +106,20 @@
 #include "nrf.h"
 #include "bsp.h"
 #include "app_util_platform.h"
-#define NRF_LOG_MODULE_NAME "APP"
+#include "app_timer.h"
+#include "nrf_drv_clock.h"
+
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
-/**
- * @brief Repeated part of the help string.
- *
- * This string contains list of supported commands together with description.
- * It is used in a welcome message and in a help message if an unsupported commmand is detected.
- */
-static const char m_cmd_help_str1[] =
-        "   p - Print the EEPROM contents in a form: address, 8 bytes of code, ASCII form.\r\n";
-static const char m_cmd_help_str2[] =
-        "   w - Write a string starting from address 0.\r\n";
-static const char m_cmd_help_str3[] =
-        "   c - Clear the memory (write 0xff)\r\n";
-static const char m_cmd_help_str4[] =
-        "   x - Get transmission error byte.\r\n";
+#include "nrf_cli.h"
+#include "nrf_cli_uart.h"
+
+
+NRF_CLI_UART_DEF(m_cli_uart_transport, 0, 64, 16);
+NRF_CLI_DEF(m_cli_uart, "uart_cli:~$ ", &m_cli_uart_transport.transport, '\r', 4);
 
 /**
  * @brief TWI master instance.
@@ -198,76 +204,6 @@ static ret_code_t eeprom_read(uint16_t addr, uint8_t * pdata, size_t size)
 }
 
 /**
- * @brief Pretty-print the EEPROM content.
- *
- * Respond on memory print command.
- */
-static void do_print_data(void)
-{
-    uint16_t addr;
-    uint8_t buff[IN_LINE_PRINT_CNT];
-    for (addr=0; addr<(EEPROM_SIM_SIZE); addr+=(IN_LINE_PRINT_CNT))
-    {
-        ret_code_t err_code;
-        err_code = eeprom_read(addr, buff, IN_LINE_PRINT_CNT);
-        if (NRF_SUCCESS != err_code)
-        {
-            NRF_LOG_WARNING("Communication error\r\n");
-            return;
-        }
-
-        NRF_LOG_RAW_INFO("%.2x: ", addr);
-        NRF_LOG_RAW_HEXDUMP_INFO(buff, IN_LINE_PRINT_CNT);
-
-    }
-    NRF_LOG_FLUSH();
-}
-
-
-/**
- * @brief Safely get a string from stdin.
- *
- * Function reads character by character into the given buffer.
- * Maximum @em nmax number of characters are read.
- *
- * Function ignores all nonprintable characters.
- * String may be finished by CR or NL.
- *
- * @attention
- * Remember that after characters are read, zero will be added to mark the string end.
- * Thee given buffer should be no smaller than @em nmax + 1.
- *
- * @param[out] str  Buffer for the string.
- * @param      nmax Maximum number of characters to be read.
- */
-static void safe_gets(char * str, size_t nmax)
-{
-    int c;
-    char cstr[2] = {0, 0};
-    while (1)
-    {
-        c = NRF_LOG_GETCHAR();
-        if (isprint(c))
-        {
-            *str++ = (char)c;
-            cstr[0] = c;
-            NRF_LOG_RAW_INFO("%s", nrf_log_push(cstr));
-            NRF_LOG_FLUSH();
-            if (0 == --nmax)
-                break;
-        }
-        else if ('\n' == c || '\r' == c)
-        {
-            break;
-        }
-    }
-    *str = '\0';
-    cstr[0] = '\n';
-    NRF_LOG_RAW_INFO("%s", nrf_log_push(cstr));
-    NRF_LOG_FLUSH();
-}
-
-/**
  * @brief Check the string length but no more than the given number of characters.
  *
  * Function iterates through the string searching for the zero character.
@@ -288,61 +224,6 @@ static size_t safe_strlen(char const * str, size_t nmax)
             break;
     }
     return n;
-}
-
-/**
- * @brief Function that performs the command of writing a string to EEPROM.
- *
- * Function gets user input and writes the given string to EEPROM starting from address 0.
- * It is accessing EEPROM using maximum allowed number of bytes in sequence.
- */
-static void do_string_write(void)
-{
-    char str[(EEPROM_SIM_SIZE) + 1];
-    uint16_t addr = 0;
-
-    NRF_LOG_RAW_INFO("Waiting for string to write:\r\n");
-    NRF_LOG_FLUSH();
-    safe_gets(str, sizeof(str) - 1);
-    while (1)
-    {
-        ret_code_t err_code;
-        size_t to_write = safe_strlen(str + addr, EEPROM_SIM_SEQ_WRITE_MAX_BYTES);
-        if (0 == to_write)
-            break;
-        err_code = eeprom_write(addr, (uint8_t const *)str + addr, to_write);
-        if (NRF_SUCCESS != err_code)
-        {
-            NRF_LOG_WARNING("Communication error\r\n");
-            return;
-        }
-        addr += to_write;
-    }
-
-    NRF_LOG_RAW_INFO("OK\r\n");
-}
-
-/**
- * @brief Function that performs simulated EEPROM clearing.
- *
- * Function fills the EEPROM with 0xFF value.
- * It is accessing the EEPROM writing only one byte at once.
- */
-static void do_clear_eeprom(void)
-{
-    uint8_t clear_val = 0xff;
-    size_t addr;
-    for (addr=0; addr<(EEPROM_SIM_SIZE); ++addr)
-    {
-        ret_code_t err_code;
-        err_code = eeprom_write(addr, &clear_val, 1);
-        if (NRF_SUCCESS != err_code)
-        {
-            NRF_LOG_WARNING("Communication error\r\n");
-            return;
-        }
-    }
-    NRF_LOG_RAW_INFO("Memory erased\r\n");
 }
 
 /**
@@ -374,21 +255,15 @@ static ret_code_t twi_master_init(void)
     return ret;
 }
 
-static void help_print(void)
-{
-    NRF_LOG_RAW_INFO("%s", (uint32_t)m_cmd_help_str1);
-    NRF_LOG_RAW_INFO("%s", (uint32_t)m_cmd_help_str2);
-    NRF_LOG_RAW_INFO("%s", (uint32_t)m_cmd_help_str3);
-    NRF_LOG_RAW_INFO("%s", (uint32_t)m_cmd_help_str4);
-}
-
 /**
  *  The beginning of the journey
  */
 int main(void)
 {
     ret_code_t err_code;
+    bool epprom_error = 0;
     /* Initialization of UART */
+
     bsp_board_leds_init();
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
@@ -401,56 +276,211 @@ int main(void)
     err_code = twi_master_init();
     APP_ERROR_CHECK(err_code);
 
+    err_code = nrf_drv_clock_init();
+    APP_ERROR_CHECK(err_code);
+    nrf_drv_clock_lfclk_request(NULL);
+
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
+    nrf_drv_uart_config_t uart_config = NRF_DRV_UART_DEFAULT_CONFIG;
+    uart_config.pseltxd = TX_PIN_NUMBER;
+    uart_config.pselrxd = RX_PIN_NUMBER;
+    uart_config.hwfc    = NRF_UART_HWFC_DISABLED;
+    err_code = nrf_cli_init(&m_cli_uart, &uart_config, true, true, NRF_LOG_SEVERITY_INFO);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_cli_start(&m_cli_uart);
+    APP_ERROR_CHECK(err_code);
 
     /* Welcome message */
     NRF_LOG_RAW_INFO(
-            "This is TWIS and TWI usage example\r\n"
-            "You can access simulated EEPROM memory using following commands:\r\n"
+            "This is TWIS and TWI usage example.\r\n"
+            "You can access simulated EEPROM memory using eeprom command.\r\n"
+            "Execute eeprom -h for more information or press <Tab> to see all commands.\r\n"
     );
-    help_print();
-
-    NRF_LOG_FLUSH();
 
     /* Main loop */
     while (1)
     {
-        uint8_t c = NRF_LOG_GETCHAR();
-
-        switch ((char)c)
-        {
-        case '\n':
-        case '\r':
-            break;
-        case 'p':
-            do_print_data();
-            break;
-        case 'w':
-            do_string_write();
-            break;
-        case 'c':
-            do_clear_eeprom();
-            break;
-        case 'x':
-            {
-                uint32_t error = eeprom_simulator_error_get_and_clear();
-                NRF_LOG_WARNING("Error word: %x\r\n", (unsigned int)error);
-            }
-            break;
-        default:
-            NRF_LOG_RAW_INFO("You selected %c\r\n", (char)c);
-            NRF_LOG_RAW_INFO("Unknown command, try one of the following:\r\n");
-            help_print();
-            break;
-        }
-        if (eeprom_simulator_error_check())
-        {
-            NRF_LOG_RAW_INFO(
-                    "WARNING: EEPROM transmission error detected.\r\n"
-                    "Use 'x' command to read error word.\r\n"
-            );
-        }
         NRF_LOG_FLUSH();
+        nrf_cli_process(&m_cli_uart);
+
+        if (epprom_error != eeprom_simulator_error_check())
+        {
+            epprom_error = eeprom_simulator_error_check();
+            if (epprom_error != 0)
+            {
+                NRF_LOG_RAW_INFO(
+                        "WARNING: EEPROM transmission error detected.\r\n"
+                        "Use 'x' command to read error word.\r\n"
+                );
+            }
+        }
     }
 }
+
+/**
+ * @brief Function that performs simulated EEPROM clearing.
+ *
+ * Function fills the EEPROM with 0xFF value.
+ * It is accessing the EEPROM writing only one byte at once.
+ */
+static void eeprom_cmd_clear(nrf_cli_t const * p_cli, size_t argc, char **argv)
+{
+    ASSERT(p_cli);
+    ASSERT(p_cli->p_ctx && p_cli->p_iface && p_cli->p_name);
+
+    uint8_t clear_val = 0xff;
+    size_t addr;
+
+    for (addr = 0; addr < EEPROM_SIM_SIZE; ++addr)
+    {
+        ret_code_t err_code;
+        err_code = eeprom_write(addr, &clear_val, 1);
+        if (NRF_SUCCESS != err_code)
+        {
+            nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "communication error\r\n");
+            return;
+        }
+    }
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "memory erased\r\n");
+}
+
+/**
+ * @brief Function prints epprom error.
+ *
+ */
+static void eeprom_cmd_error(nrf_cli_t const * p_cli, size_t argc, char **argv)
+{
+    ASSERT(p_cli);
+    ASSERT(p_cli->p_ctx && p_cli->p_iface && p_cli->p_name);
+
+    uint32_t error = eeprom_simulator_error_get_and_clear();
+    nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "error word: %x\r\n", error);
+}
+
+/**
+ * @brief Pretty-print the EEPROM content.
+ *
+ * Respond on memory print command.
+ */
+static void eeprom_cmd_read(nrf_cli_t const * p_cli, size_t argc, char **argv)
+{
+    ASSERT(p_cli);
+    ASSERT(p_cli->p_ctx && p_cli->p_iface && p_cli->p_name);
+
+    // +1 for '\0'
+    uint8_t buff[IN_LINE_PRINT_CNT+1];
+
+    for (uint16_t addr = 0; addr < EEPROM_SIM_SIZE; addr += IN_LINE_PRINT_CNT)
+    {
+        ret_code_t err_code;
+        err_code = eeprom_read(addr, buff, IN_LINE_PRINT_CNT);
+        buff[IN_LINE_PRINT_CNT] = '\0';
+        if (NRF_SUCCESS != err_code)
+        {
+            nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "EEPROM transmission error detected.\r\n");
+            return;
+        }
+
+        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%.3x: ", addr);
+        for (uint8_t i = 0; i < IN_LINE_PRINT_CNT; i++)
+        {
+            nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%.2x ", buff[i]);
+            if (!isprint((int)buff[i]))
+            {
+                buff[i] = '.';
+            }
+        }
+        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%s\r\n", buff);
+    }
+}
+
+/**
+ * @brief Function that performs the command of writing a string to EEPROM.
+ *
+ * Function gets user input and writes the given string to EEPROM starting from address 0.
+ * It is accessing EEPROM using maximum allowed number of bytes in sequence.
+ */
+static void eeprom_cmd_write(nrf_cli_t const * p_cli, size_t argc, char **argv)
+{
+    uint16_t addr = 0;
+
+    if (argc < 2)
+    {
+        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s:%s", argv[0], " bad parameter count\r\n");
+        return;
+    }
+    if (argc > 2)
+    {
+        nrf_cli_fprintf(p_cli,
+                        NRF_CLI_WARNING,
+                        "%s:%s",
+                        argv[0],
+                        " bad parameter count - please use quotes\r\n");
+        return;
+    }
+
+    if (strlen(argv[1]) > EEPROM_SIM_SIZE)
+    {
+        nrf_cli_fprintf(p_cli,
+                        NRF_CLI_ERROR,
+                        "too long string: maximum allowed character count = %d\r\n",
+                        argv[0],
+                        EEPROM_SIM_SIZE);
+        return;
+    }
+    while (1)
+    {
+        ret_code_t err_code;
+        size_t to_write = safe_strlen(argv[1] + addr, EEPROM_SIM_SEQ_WRITE_MAX_BYTES);
+        if (0 == to_write)
+            break;
+        err_code = eeprom_write(addr, (uint8_t const *)argv[1] + addr, to_write);
+        if (NRF_SUCCESS != err_code)
+        {
+             nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "communication error\r\n");
+            return;
+        }
+        addr += to_write;
+    }
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "OK\r\n");
+}
+
+/**
+ * @brief Function that allows access to EEPROM.
+ *
+ */
+static void eeprom_cmd(nrf_cli_t const * p_cli, size_t argc, char **argv)
+{
+    ASSERT(p_cli);
+    ASSERT(p_cli->p_ctx && p_cli->p_iface && p_cli->p_name);
+
+    if ((argc == 1) || nrf_cli_help_requested(p_cli))
+    {
+        nrf_cli_help_print(p_cli, NULL, 0);
+        return;
+    }
+
+    nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s:%s%s\r\n", argv[0], " unknown parameter: ", argv[1]);
+}
+
+NRF_CLI_CREATE_STATIC_SUBCMD_SET(m_sub_eeprom)
+{
+    NRF_CLI_CMD(clear, NULL, "clears the memory (write 0xff)", eeprom_cmd_clear),
+    NRF_CLI_CMD(error, NULL, "gets transmission error byte", eeprom_cmd_error),
+    NRF_CLI_CMD(read,
+                NULL,
+                "prints the EEPROM contents in a form: address, 16 bytes of code, ASCII form",
+                eeprom_cmd_read),
+    NRF_CLI_CMD(write,
+                NULL,
+                "writes a string entered within quotes starting from address 0",
+                eeprom_cmd_write),
+    NRF_CLI_SUBCMD_SET_END
+};
+
+NRF_CLI_CMD_REGISTER(eeprom, &m_sub_eeprom, "eeprom access command", eeprom_cmd);
 
 /** @} */ /* End of group twi_master_with_twis_slave_example */

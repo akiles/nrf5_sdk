@@ -61,16 +61,6 @@ extern "C" {
 #error "Unsupported core version"
 #endif
 
-/**
- * @brief Atomic 32 bit unsigned type
- * */
-typedef volatile uint32_t nrf_atomic_u32_t;
-
-/**
- * @brief Atomic 1 bit flag type (technically 32 bit)
- * */
-typedef volatile uint32_t nrf_atomic_flag_t;
-
 #if defined ( __CC_ARM )
 static __asm uint32_t nrf_atomic_internal_mov(nrf_atomic_u32_t * p_ptr,
                                               uint32_t value,

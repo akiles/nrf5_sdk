@@ -52,7 +52,6 @@ extern "C" {
 #include "nrf_mtx.h"
 #include "app_timer.h"
 
-
 /**@file
  *
  * @defgroup nrf_serial Serial port abstraction layer
@@ -165,8 +164,8 @@ typedef struct {
  * @param _rx_size  RX buffer size.
  * */
 #define NRF_SERIAL_BUFFERS_DEF(_name, _tx_size, _rx_size)           \
-    STATIC_ASSERT_MSG((_tx_size) <= UINT8_MAX, NRF_SERIAL_TX_SIZE); \
-    STATIC_ASSERT_MSG((_rx_size) <= UINT8_MAX, NRF_SERIAL_RX_SIZE); \
+    STATIC_ASSERT((_tx_size) <= UINT8_MAX);                         \
+    STATIC_ASSERT((_rx_size) <= UINT8_MAX);                         \
     static uint8_t _name##_txb[_tx_size];                           \
     static uint8_t _name##_rxb[_rx_size];                           \
     static const nrf_serial_buffers_t _name = {                     \
@@ -301,7 +300,7 @@ struct nrf_serial_s {
  * @param p_serial          Serial port instance.
  * @param p_drv_uart_config UART driver configuration. Cannot be NULL.
  * @param p_config          Serial port configuration. Cannot be NULL. This object must be created
- *							using the @ref NRF_SERIAL_CONFIG_DEF macro.
+ *                          using the @ref NRF_SERIAL_CONFIG_DEF macro.
  *
  * @return Standard error code.
  * */

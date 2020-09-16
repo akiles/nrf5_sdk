@@ -83,7 +83,7 @@ static uint8_t m_display_buffer[ST7565_LCD_WIDTH * ST7565_NUMBER_OF_PAGES];
 static const uint8_t m_column_lookup[] = {7, 6, 5, 4, 3, 2, 1, 0};
 
 // Buffer with commands used to display m_display_buffer on a screen.
-static const uint8_t m_command_buffer[] =
+static NRF_SPI_MNGR_BUFFER_LOC_IND uint8_t m_command_buffer[] =
 {
     ST7565_CMD_SELECT_PAGE | 3,     // top page of the the screen
     ST7565_CMD_START_LINE,          // start with y = 0
@@ -111,7 +111,7 @@ static const uint8_t m_command_buffer[] =
 };
 
 // Initialization commands for ST7565 driver.
-static const uint8_t m_initialization[] =
+static NRF_SPI_MNGR_BUFFER_LOC_IND uint8_t m_initialization[] =
 {
     ST7565_CMD_RESET,
     ST7565_CMD_OFF,
@@ -155,7 +155,7 @@ static ret_code_t display_page(uint16_t page)
     // Below structures have to be "static" - they cannot be placed on stack
     // since the transaction is scheduled and these structures most likely
     // will be referred after this function returns
-    static nrf_spi_mngr_transfer_t const transfer_cmd[] =
+    static nrf_spi_mngr_transfer_t NRF_SPI_MNGR_BUFFER_LOC_IND transfer_cmd[] =
     {
         NRF_SPI_MNGR_TRANSFER(&m_command_buffer[ST7565_DISPLAY_CMD_LENGTH * 0], // page 0
                               ST7565_DISPLAY_CMD_LENGTH, NULL, 0),
@@ -201,7 +201,7 @@ static ret_code_t display_page(uint16_t page)
             .p_required_spi_cfg  = NULL
         },
     };
-    static nrf_spi_mngr_transfer_t const transfer_data[] =
+    static nrf_spi_mngr_transfer_t NRF_SPI_MNGR_BUFFER_LOC_IND transfer_data[] =
     {
         NRF_SPI_MNGR_TRANSFER(&m_display_buffer[ST7565_LCD_WIDTH * 0], ST7565_LCD_WIDTH, NULL, 0),
         NRF_SPI_MNGR_TRANSFER(&m_display_buffer[ST7565_LCD_WIDTH * 1], ST7565_LCD_WIDTH, NULL, 0),
@@ -370,7 +370,10 @@ void st7565_display_screen(void)
 
 void st7565_display_invert(bool invert)
 {
-    static uint8_t command[] = {ST7565_CMD_ST7565_NORMAL, ST7565_CMD_ST7565_REVERSE};
+    static uint8_t NRF_SPI_MNGR_BUFFER_LOC_IND command[] = {
+                ST7565_CMD_ST7565_NORMAL, ST7565_CMD_ST7565_REVERSE
+            };
+
     static nrf_spi_mngr_transfer_t const transfer_cmd[] =
     {
         NRF_SPI_MNGR_TRANSFER(&command[0], 1, NULL, 0),

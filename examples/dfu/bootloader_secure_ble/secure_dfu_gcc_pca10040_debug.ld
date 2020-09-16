@@ -11,7 +11,7 @@ MEMORY
    *  those values do not match. The check is performed in main.c, see
    *  APP_ERROR_CHECK_BOOL(*((uint32_t *)NRF_UICR_BOOT_START_ADDRESS) == BOOTLOADER_REGION_START);
    */
-  FLASH (rx) : ORIGIN = 0x75000, LENGTH = 0x9000
+  FLASH (rx) : ORIGIN = 0x73000, LENGTH = 0xA000
 
   /** RAM Region for bootloader. This setting is suitable when used with s132. */
   RAM (rwx) :  ORIGIN = 0x20002C00, LENGTH = 0x5380
@@ -78,12 +78,11 @@ SECTIONS
     PROVIDE(__stop_fs_data = .);
   } > RAM
 
-  . = ALIGN(4);
-  .svc_data :
+  .log_dynamic_data :
   {
-    PROVIDE(__start_svc_data = .);
-    KEEP(*(.svc_data))
-    PROVIDE(__stop_svc_data = .);
+    PROVIDE(__start_log_dynamic_data = .);
+    KEEP(*(.log_dynamic_data))
+    PROVIDE(__stop_log_dynamic_data = .);
   } > RAM
 
   . = ALIGN(4);
@@ -95,5 +94,65 @@ SECTIONS
   } > RAM
 
 } INSERT AFTER .data
+
+SECTIONS
+{
+  .sdh_stack_observers :
+  {
+    PROVIDE(__start_sdh_stack_observers = .);
+    KEEP(*(SORT(.sdh_stack_observers*)))
+    PROVIDE(__stop_sdh_stack_observers = .);
+  } > FLASH
+
+  .sdh_req_observers :
+  {
+    PROVIDE(__start_sdh_req_observers = .);
+    KEEP(*(SORT(.sdh_req_observers*)))
+    PROVIDE(__stop_sdh_req_observers = .);
+  } > FLASH
+
+  .sdh_state_observers :
+  {
+    PROVIDE(__start_sdh_state_observers = .);
+    KEEP(*(SORT(.sdh_state_observers*)))
+    PROVIDE(__stop_sdh_state_observers = .);
+  } > FLASH
+
+  .sdh_ble_observers :
+  {
+    PROVIDE(__start_sdh_ble_observers = .);
+    KEEP(*(SORT(.sdh_ble_observers*)))
+    PROVIDE(__stop_sdh_ble_observers = .);
+  } > FLASH
+
+  .sdh_soc_observers :
+  {
+    PROVIDE(__start_sdh_soc_observers = .);
+    KEEP(*(SORT(.sdh_soc_observers*)))
+    PROVIDE(__stop_sdh_soc_observers = .);
+  } > FLASH
+
+  .log_const_data :
+  {
+    PROVIDE(__start_log_const_data = .);
+    KEEP(*(.log_const_data))
+    PROVIDE(__stop_log_const_data = .);
+  } > FLASH
+
+  .cli_command :
+  {
+    PROVIDE(__start_cli_command = .);
+    KEEP(*(.cli_command))
+    PROVIDE(__stop_cli_command = .);
+  } > FLASH
+  
+  .svc_data :
+  {
+    PROVIDE(__start_svc_data = .);
+    KEEP(*(.svc_data))
+    PROVIDE(__stop_svc_data = .);
+  } > FLASH
+  
+} INSERT AFTER .text
 
 INCLUDE "nrf52_common.ld"

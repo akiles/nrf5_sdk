@@ -63,7 +63,7 @@ static uint32_t ecdsa_result_get(CRYSError_t error)
     uint32_t ret_val = NRF_ERROR_INTERNAL;
 
     // TODO: Invalid data
-    switch(error)
+    switch (error)
     {
         /* From calling CRYS_KDF_KeyDerivFunc */
         case CRYS_KDF_INVALID_ARGUMENT_POINTER_ERROR:
@@ -137,7 +137,7 @@ static uint32_t ecdsa_result_get(CRYSError_t error)
 bool ecdsa_hash_algorithm_get(nrf_hash_type_t hash_type,
                               CRYS_ECPKI_HASH_OpMode_t * p_hash_mode)
 {
-    switch(hash_type)
+    switch (hash_type)
     {
         case NRF_CRYPTO_HASH_TYPE_SHA1:
             (*p_hash_mode) = CRYS_ECPKI_AFTER_HASH_SHA1_mode;

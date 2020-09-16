@@ -52,14 +52,17 @@
 extern "C" {
 #endif
 
-#define EEPROM_SIM_SIZE                   320  //!< Simulated EEPROM size.
+#define EEPROM_SIM_SIZE                   (320u) //!< Simulated EEPROM size.
 
 /* Maximum number of bytes writable to this slave emulator in one sequential access including
-   address of the slave memory
+ * address of the slave memory. Maximum allowed is 255.
+ * Note that separate RAM is allocated for the data to be written to slave.
  */
 #define EEPROM_SIM_SEQ_WRITE_MAX_BYTES    200
 
-/* Maximum number of bytes writable to this slave emulator in one sequential access */
+/* Maximum number of bytes writable to this slave emulator in one sequential access.
+   Maximum allowed is 255.
+ */
 #define EEPROM_SIM_SEQ_READ_MAX_BYTES     200     //<! Number of data bytes transfer in single request
 
 #define EEPROM_SIM_ADDR                   0x50    //!< Simulated EEPROM TWI slave address.
@@ -91,12 +94,12 @@ typedef enum
 #define TWI_ADDRESS_CONFIG    LITTLE_ENDIAN
 
 /* Master Configuration */
-#define MASTER_TWI_INST          0    //!< TWI interface used as a master accessing EEPROM memory.
-#define UART_TX_BUF_SIZE         1024 //!< UART TX buffer size.
-#define UART_RX_BUF_SIZE         32   //!< UART RX buffer size.
-#define TWI_SCL_M                3    //!< Master SCL pin.
-#define TWI_SDA_M                4    //!< Master SDA pin.
-#define IN_LINE_PRINT_CNT        16   //!< Number of data bytes printed in a single line.
+#define MASTER_TWI_INST     0       //!< TWI interface used as a master accessing EEPROM memory.
+#define UART_TX_BUF_SIZE    1024    //!< UART TX buffer size.
+#define UART_RX_BUF_SIZE    32      //!< UART RX buffer size.
+#define TWI_SCL_M           3       //!< Master SCL pin.
+#define TWI_SDA_M           4       //!< Master SDA pin.
+#define IN_LINE_PRINT_CNT   (16u)   //!< Number of data bytes printed in a single line.
 
 
 /** @} */

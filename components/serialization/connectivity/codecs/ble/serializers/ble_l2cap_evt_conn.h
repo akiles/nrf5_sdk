@@ -72,6 +72,46 @@ uint32_t ble_l2cap_evt_rx_enc(ble_evt_t const * const p_event,
                               uint8_t * const         p_buf,
                               uint32_t * const        p_buf_len);
 
+uint32_t ble_l2cap_evt_ch_setup_request_enc(ble_evt_t const * const p_event,
+                                            uint32_t                event_len,
+                                            uint8_t * const         p_buf,
+                                            uint32_t * const        p_buf_len);
+
+uint32_t ble_l2cap_evt_ch_setup_refused_enc(ble_evt_t const * const p_event,
+                                            uint32_t                event_len,
+                                            uint8_t * const         p_buf,
+                                            uint32_t * const        p_buf_len);
+
+uint32_t ble_l2cap_evt_ch_setup_enc(ble_evt_t const * const p_event,
+                                            uint32_t                event_len,
+                                            uint8_t * const         p_buf,
+                                            uint32_t * const        p_buf_len);
+
+
+uint32_t ble_l2cap_evt_ch_released_enc(ble_evt_t const * const p_event,
+                                            uint32_t                event_len,
+                                            uint8_t * const         p_buf,
+                                            uint32_t * const        p_buf_len);
+
+uint32_t ble_l2cap_evt_ch_sdu_buf_released_enc(ble_evt_t const * const p_event,
+                                            uint32_t                event_len,
+                                            uint8_t * const         p_buf,
+                                            uint32_t * const        p_buf_len);
+
+uint32_t ble_l2cap_evt_ch_credit_enc(ble_evt_t const * const p_event,
+                                            uint32_t                event_len,
+                                            uint8_t * const         p_buf,
+                                            uint32_t * const        p_buf_len);
+
+uint32_t ble_l2cap_evt_ch_rx_enc(ble_evt_t const * const p_event,
+                                            uint32_t                event_len,
+                                            uint8_t * const         p_buf,
+                                            uint32_t * const        p_buf_len);
+
+uint32_t ble_l2cap_evt_ch_tx_enc(ble_evt_t const * const p_event,
+                                            uint32_t                event_len,
+                                            uint8_t * const         p_buf,
+                                            uint32_t * const        p_buf_len);
 /** @} */
 
 #ifdef __cplusplus

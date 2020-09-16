@@ -72,7 +72,7 @@
 
 /**
  * ChaCha20 cipher stream generator.
- * 
+ *
  * The encryption key @p k, the nonce @p n and the initial block counter
  * @p count are used to generate a pseudo random cipher stream.
  *
@@ -80,7 +80,7 @@
  *
  * **Example**
  * @include occ_chacha20_stream.c
- * 
+ *
  * @param[out] c     Generated cipher stream.
  * @param      c_len Length of @p c.
  * @param      n     Nonce.
@@ -119,7 +119,7 @@ void occ_chacha20_stream(uint8_t *c, size_t c_len,
  * @param      n_len Nonce length. 0 <= @p n_len <= @c occ_chacha20_NONCE_BYTES_MAX.
  * @param      k     Encryption key.
  * @param      count Initial block counter.
- * 
+ *
  * @remark @p c and @p m can point to the same address.
  *
  * @remark When reusing an encryption key @p k for a different message @p m, a

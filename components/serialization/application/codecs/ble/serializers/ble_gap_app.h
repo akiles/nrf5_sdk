@@ -1481,9 +1481,9 @@ uint32_t ble_gap_data_length_update_rsp_dec(uint8_t const * const              p
 #endif
 
 #if NRF_SD_BLE_API_VERSION >= 5
-/**@brief Encodes @ref sd_ble_gap_phy_request command request.
+/**@brief Encodes @ref sd_ble_gap_phy_update command request.
  *
- * @sa @ref ble_gap_phy_request_rsp_dec for command response decoder.
+ * @sa @ref ble_gap_phy_update_rsp_dec for command response decoder.
  *
  * @param[in]      conn_handle    Connection handle of the connection.
  * @param[in]      p_gap_phys     Pointer to a @ref ble_gap_phys_t
@@ -1496,14 +1496,14 @@ uint32_t ble_gap_data_length_update_rsp_dec(uint8_t const * const              p
  * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
  * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
  */
-uint32_t ble_gap_phy_request_req_enc(uint16_t               conn_handle,
+uint32_t ble_gap_phy_update_req_enc(uint16_t               conn_handle,
                                      ble_gap_phys_t const * p_gap_phys,
                                      uint8_t * const        p_buf,
                                      uint32_t * const       p_buf_len);
 
-/**@brief Decodes response to @ref sd_ble_gap_phy_request command.
+/**@brief Decodes response to @ref sd_ble_gap_phy_update command.
  *
- * @sa @ref ble_gap_phy_request_req_enc for command request encoder.
+ * @sa @ref ble_gap_phy_update_req_enc for command request encoder.
  *
  * @param[in]  p_buf           Pointer to beginning of command response packet.
  * @param[in]  packet_len      Length (in bytes) of response packet.
@@ -1515,7 +1515,7 @@ uint32_t ble_gap_phy_request_req_enc(uint16_t               conn_handle,
  * @retval NRF_ERROR_INVALID_DATA   Decoding failure. Decoded operation code does not match expected
  *                                  operation code.
  */
-uint32_t ble_gap_phy_request_rsp_dec(uint8_t const * const p_buf,
+uint32_t ble_gap_phy_update_rsp_dec(uint8_t const * const p_buf,
                                      uint32_t              packet_len,
                                      uint32_t * const      p_result_code);
 #endif

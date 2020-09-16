@@ -181,16 +181,6 @@
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
-          <state>NRF52_PAN_12</state>
-          <state>NRF52_PAN_15</state>
-          <state>NRF52_PAN_20</state>
-          <state>NRF52_PAN_31</state>
-          <state>NRF52_PAN_36</state>
-          <state>NRF52_PAN_51</state>
-          <state>NRF52_PAN_54</state>
-          <state>NRF52_PAN_55</state>
-          <state>NRF52_PAN_58</state>
-          <state>NRF52_PAN_64</state>
           <state>NRF52_PAN_74</state>
           <state>S212</state>
           <state>SVCALL_AS_NORMAL_FUNCTION</state>
@@ -323,12 +313,10 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\..\..\..\config\ant_io_tx_pca10040_s212_uart</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ant\ant_channel_config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ant\ant_search_config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ant\ant_stack_config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\clock</state>
@@ -337,12 +325,18 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_log</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\hardfault</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\hardfault\nrf52</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\log</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\mutex</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\pwr_mgmt</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\queue</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\scheduler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\strerror</state>
@@ -357,14 +351,13 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\common\transport</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\common\transport\ser_phy</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s212\headers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s212\headers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s212\headers\nrf52</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s212\headers\nrf52</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\segger_rtt</state>
           <state>$PROJ_DIR$\..\config</state>
         </option>
         <option>
@@ -528,16 +521,6 @@
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
-          <state>NRF52_PAN_12</state>
-          <state>NRF52_PAN_15</state>
-          <state>NRF52_PAN_20</state>
-          <state>NRF52_PAN_31</state>
-          <state>NRF52_PAN_36</state>
-          <state>NRF52_PAN_51</state>
-          <state>NRF52_PAN_54</state>
-          <state>NRF52_PAN_55</state>
-          <state>NRF52_PAN_58</state>
-          <state>NRF52_PAN_64</state>
           <state>NRF52_PAN_74</state>
           <state>S212</state>
           <state>SVCALL_AS_NORMAL_FUNCTION</state>
@@ -637,12 +620,10 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$\..\..\..\config\ant_io_tx_pca10040_s212_uart</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ant\ant_channel_config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ant\ant_search_config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ant\ant_stack_config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\clock</state>
@@ -651,12 +632,18 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_log</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\hardfault</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\hardfault\nrf52</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\log</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\mutex</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\pwr_mgmt</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\queue</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\scheduler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\strerror</state>
@@ -671,14 +658,13 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\common\transport</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\common\transport\ser_phy</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s212\headers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s212\headers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s212\headers\nrf52</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s212\headers\nrf52</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\segger_rtt</state>
           <state>$PROJ_DIR$\..\config</state>
         </option>
         <option>
@@ -1064,8 +1050,7 @@
     </settings>
   </configuration>  <group>
   <name>nRF_Log</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\log\src\nrf_log_backend_serial.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\log\src\nrf_log_frontend.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_frontend.c</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Libraries</name>    <file>
@@ -1079,7 +1064,11 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\hardfault\nrf52\handler\hardfault_handler_iar.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\hardfault\hardfault_implementation.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\balloc\nrf_balloc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_memobj\nrf_memobj.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\pwr_mgmt\nrf_pwr_mgmt.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\queue\nrf_queue.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>  </group>  <group>
   <name>nRF_Serialization</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\ant\serializers\ant_acknowledge_message_tx.c</name>    </file>    <file>
@@ -1144,8 +1133,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>    </file>  </group>  <group>
   <name>nRF_ANT</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ant\ant_channel_config\ant_channel_config.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ant\ant_search_config\ant_search_config.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ant\ant_stack_config\ant_stack_config.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ant\ant_search_config\ant_search_config.c</name>    </file>  </group>  <group>
   <name>Board Support</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\bsp\bsp.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\bsp\bsp_nfc.c</name>    </file>  </group>  <group>
@@ -1153,14 +1141,11 @@
     <name>$PROJ_DIR$\..\..\..\ant_io_tx.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\main.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\config\sdk_config.h</name>    </file>  </group>  <group>
-  <name>nRF_Segger_RTT</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\segger_rtt\RTT_Syscalls_IAR.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_printf.c</name>    </file>  </group>  <group>
   <name>Device</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain\iar\iar_startup_nrf52.s</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain\system_nrf52.c</name>    </file>  </group>  <group>
   <name>nRF_SoftDevice</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\common\softdevice_handler\softdevice_handler.c</name>    </file>  </group></project>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\common\nrf_sdh.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\common\nrf_sdh_ant.c</name>    </file>  </group></project>
 
 

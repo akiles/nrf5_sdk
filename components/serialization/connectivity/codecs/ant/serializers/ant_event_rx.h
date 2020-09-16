@@ -42,7 +42,7 @@
 
 #include <string.h>
 #include "ant_parameters.h"
-#include "ant_stack_handler_types.h"
+#include "nrf_sdh_ant.h"
 
 /**
  * @addtogroup ser_conn_s212_codecs

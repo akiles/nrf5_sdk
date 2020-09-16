@@ -43,7 +43,7 @@
  * existing digital signature schemes without sacrificing security. It was
  * developed by Daniel J. Bernstein, et al. Ed25519 is intended to provide
  * attack resistance comparable to quality 128-bit symmetric ciphers.
- * 
+ *
  * @see [Ed25519: high-speed high-security signatures](https://ed25519.cr.yp.to)
  */
 
@@ -107,13 +107,13 @@ void occ_ed25519_sign(uint8_t sig[occ_ed25519_BYTES],
 
 /**
  * Ed25519 signature verification.
- * 
+ *
  * The signature @p sig of the input message @p m is verified using the signer's
  * public key @p pk.
  *
  * **Example**
  * @include occ_ed25519_verify.c
- * 
+ *
  * @param sig   Input signature.
  * @param m     Input message.
  * @param m_len Length of @p m.

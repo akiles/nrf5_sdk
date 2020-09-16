@@ -48,52 +48,46 @@
 #include "nrf_assert.h"
 #include "app_util_platform.h"
 
-#define NRF_LOG_MODULE_NAME "SPI"
+#define NRF_LOG_MODULE_NAME spi
+
 
 #if SPI_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       SPI_CONFIG_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  SPI_CONFIG_INFO_COLOR
 #define NRF_LOG_DEBUG_COLOR SPI_CONFIG_DEBUG_COLOR
+
 #else //SPI_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       0
 #endif //SPI_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
-#ifndef SPIM_PRESENT
-    // Make sure SPIx_USE_EASY_DMA is 0 for nRF51 (if a common
-    // "nrf_drv_config.h" file is provided for nRF51 and nRF52).
-    #undef  SPI0_USE_EASY_DMA
-    #define SPI0_USE_EASY_DMA 0
-    #undef  SPI1_USE_EASY_DMA
-    #define SPI1_USE_EASY_DMA 0
-    #undef  SPI2_USE_EASY_DMA
-    #define SPI2_USE_EASY_DMA 0
-#endif
 
-#ifndef SPI0_USE_EASY_DMA
-#define SPI0_USE_EASY_DMA 0
-#endif
+#define SPIM_ONLY        ( defined(SPIM_PRESENT)  && !defined(SPI_PRESENT))
+#define SPI_SPIM_PRESENT ( defined(SPIM_PRESENT)  &&  defined(SPI_PRESENT))
+#define SPI_ONLY         (!defined(SPIM_PRESENT) &&   defined(SPI_PRESENT))
 
-#ifndef SPI1_USE_EASY_DMA
-#define SPI1_USE_EASY_DMA 0
-#endif
+#define SPI0_WITH_DMA (defined(SPI0_USE_EASY_DMA) && SPI0_USE_EASY_DMA && SPI0_ENABLED)
+#define SPI1_WITH_DMA (defined(SPI1_USE_EASY_DMA) && SPI1_USE_EASY_DMA && SPI1_ENABLED)
+#define SPI2_WITH_DMA (defined(SPI2_USE_EASY_DMA) && SPI2_USE_EASY_DMA && SPI2_ENABLED)
 
-#ifndef SPI2_USE_EASY_DMA
-#define SPI2_USE_EASY_DMA 0
+#define SPI0_WITHOUT_DMA (defined(SPI0_USE_EASY_DMA) && !SPI0_USE_EASY_DMA && SPI0_ENABLED)
+#define SPI1_WITHOUT_DMA (defined(SPI1_USE_EASY_DMA) && !SPI1_USE_EASY_DMA && SPI1_ENABLED)
+#define SPI2_WITHOUT_DMA (defined(SPI2_USE_EASY_DMA) && !SPI2_USE_EASY_DMA && SPI2_ENABLED)
+
+// suppress: non-standard use of 'defined' preprocessor operator
+/*lint -save -e491*/
+#if (SPI_ONLY && ENABLED_SPI_COUNT) || ((SPI_SPIM_PRESENT) && \
+    (SPI0_WITHOUT_DMA || SPI1_WITHOUT_DMA || SPI1_WITHOUT_DMA))
+    #define SPI_IN_USE 1
 #endif
 
-// This set of macros makes it possible to exclude parts of code when one type
-// of supported peripherals is not used.
-#if ((NRF_MODULE_ENABLED(SPI0) && SPI0_USE_EASY_DMA) || \
-     (NRF_MODULE_ENABLED(SPI1) && SPI1_USE_EASY_DMA) || \
-     (NRF_MODULE_ENABLED(SPI2) && SPI2_USE_EASY_DMA))
-    #define SPIM_IN_USE
+#if (SPIM_ONLY && ENABLED_SPI_COUNT) || ((SPI_SPIM_PRESENT) &&  \
+    (SPI0_WITH_DMA || SPI1_WITH_DMA || SPI2_WITH_DMA))
+    #define SPIM_IN_USE 1
 #endif
-#if ((NRF_MODULE_ENABLED(SPI0) && !SPI0_USE_EASY_DMA) || \
-     (NRF_MODULE_ENABLED(SPI1) && !SPI1_USE_EASY_DMA) || \
-     (NRF_MODULE_ENABLED(SPI2) && !SPI2_USE_EASY_DMA))
-    #define SPI_IN_USE
-#endif
+
+
 #if defined(SPIM_IN_USE) && defined(SPI_IN_USE)
     // SPIM and SPI combined
     #define CODE_FOR_SPIM(code) if (p_instance->use_easy_dma) { code }
@@ -180,7 +174,7 @@ ret_code_t nrf_drv_spi_init(nrf_drv_spi_t const * const p_instance,
     if (p_cb->state != NRF_DRV_STATE_UNINITIALIZED)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+        NRF_LOG_WARNING("Function: %s, error code: %s.",
                         (uint32_t)__func__,
                         (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
@@ -191,7 +185,7 @@ ret_code_t nrf_drv_spi_init(nrf_drv_spi_t const * const p_instance,
             m_irq_handlers[p_instance->drv_inst_idx]) != NRF_SUCCESS)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+        NRF_LOG_WARNING("Function: %s, error code: %s.",
                         (uint32_t)__func__,
                         (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
@@ -237,7 +231,7 @@ ret_code_t nrf_drv_spi_init(nrf_drv_spi_t const * const p_instance,
     if (p_config->miso_pin != NRF_DRV_SPI_PIN_NOT_USED)
     {
         miso_pin = p_config->miso_pin;
-        nrf_gpio_cfg_input(miso_pin, NRF_GPIO_PIN_NOPULL);
+        nrf_gpio_cfg_input(miso_pin, NRF_GPIO_PIN_PULLDOWN);
     }
     else
     {
@@ -298,10 +292,10 @@ ret_code_t nrf_drv_spi_init(nrf_drv_spi_t const * const p_instance,
     p_cb->transfer_in_progress = false;
     p_cb->state = NRF_DRV_STATE_INITIALIZED;
 
-    NRF_LOG_INFO("Init\r\n");
+    NRF_LOG_INFO("Init");
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
+    NRF_LOG_INFO("Function: %s, error code: %s.",
                  (uint32_t)__func__,
                  (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
@@ -333,6 +327,7 @@ void nrf_drv_spi_uninit(nrf_drv_spi_t const * const p_instance)
                 p_cb->transfer_in_progress = false;
             }
         }
+        nrf_spim_event_clear(p_spim, NRF_SPIM_EVENT_END);
         nrf_spim_disable(p_spim);
     )
     CODE_FOR_SPI
@@ -365,8 +360,8 @@ ret_code_t nrf_drv_spi_transfer(nrf_drv_spi_t const * const p_instance,
     xfer_desc.tx_length   = tx_buffer_length;
     xfer_desc.rx_length   = rx_buffer_length;
 
-    NRF_LOG_INFO("Transfer tx_len:%d, rx_len:%d.\r\n", tx_buffer_length, rx_buffer_length);
-    NRF_LOG_DEBUG("Tx data:\r\n");
+    NRF_LOG_INFO("Transfer tx_len:%d, rx_len:%d.", tx_buffer_length, rx_buffer_length);
+    NRF_LOG_DEBUG("Tx data:");
     NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_tx_buffer, tx_buffer_length * sizeof(p_tx_buffer));
     return nrf_drv_spi_xfer(p_instance, &xfer_desc, 0);
 }
@@ -383,8 +378,8 @@ static void finish_transfer(spi_control_block_t * p_cb)
     // transfers to be started directly from the handler function.
     p_cb->transfer_in_progress = false;
     p_cb->evt.type = NRF_DRV_SPI_EVENT_DONE;
-    NRF_LOG_INFO("Transfer rx_len:%d.\r\n", p_cb->evt.data.done.rx_length);
-    NRF_LOG_DEBUG("Rx data:\r\n");
+    NRF_LOG_INFO("Transfer completed rx_len:%d.", p_cb->evt.data.done.rx_length);
+    NRF_LOG_DEBUG("Rx data:");
     NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_cb->evt.data.done.p_rx_buffer,
                           p_cb->evt.data.done.rx_length * sizeof(p_cb->evt.data.done.p_rx_buffer));
     p_cb->handler(&p_cb->evt, p_cb->p_context);
@@ -486,7 +481,7 @@ static void spi_xfer(NRF_SPI_Type                  * p_spi,
         do {
             while (!nrf_spi_event_check(p_spi, NRF_SPI_EVENT_READY)) {}
             nrf_spi_event_clear(p_spi, NRF_SPI_EVENT_READY);
-            NRF_LOG_DEBUG("SPI: Event: NRF_SPI_EVENT_READY.\r\n");
+            NRF_LOG_DEBUG("SPI: Event: NRF_SPI_EVENT_READY.");
         } while (transfer_byte(p_spi, p_cb));
         if (p_cb->ss_pin != NRF_DRV_SPI_PIN_NOT_USED)
         {
@@ -543,7 +538,7 @@ static ret_code_t spim_xfer(NRF_SPIM_Type                * p_spim,
     {
         p_cb->transfer_in_progress = false;
         err_code = NRF_ERROR_INVALID_ADDR;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+        NRF_LOG_WARNING("Function: %s, error code: %s.",
                         (uint32_t)__func__,
                         (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
@@ -590,7 +585,7 @@ static ret_code_t spim_xfer(NRF_SPIM_Type                * p_spim,
         spim_int_enable(p_spim, !(flags & NRF_DRV_SPI_FLAG_NO_XFER_EVT_HANDLER));
     }
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
+    NRF_LOG_INFO("Function: %s, error code: %s.",
                  (uint32_t)__func__,
                  (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
@@ -611,7 +606,7 @@ ret_code_t nrf_drv_spi_xfer(nrf_drv_spi_t     const * const p_instance,
     if (p_cb->transfer_in_progress)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+        NRF_LOG_WARNING("Function: %s, error code: %s.",
                         (uint32_t)__func__,
                         (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
@@ -649,7 +644,7 @@ ret_code_t nrf_drv_spi_xfer(nrf_drv_spi_t     const * const p_instance,
         {
             spi_xfer(p_instance->p_registers, p_cb, p_xfer_desc);
         }
-        NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
+        NRF_LOG_INFO("Function: %s, error code: %s.",
                      (uint32_t)__func__,
                      (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
@@ -706,7 +701,7 @@ static void irq_handler_spim(NRF_SPIM_Type * p_spim, spi_control_block_t * p_cb)
     {
         nrf_spim_event_clear(p_spim, NRF_SPIM_EVENT_END);
         ASSERT(p_cb->handler);
-        NRF_LOG_DEBUG("SPIM: Event: NRF_SPIM_EVENT_END.\r\n");
+        NRF_LOG_DEBUG("SPIM: Event: NRF_SPIM_EVENT_END.");
         finish_transfer(p_cb);
     }
 }
@@ -730,7 +725,7 @@ static void irq_handler_spi(NRF_SPI_Type * p_spi, spi_control_block_t * p_cb)
     ASSERT(p_cb->handler);
 
     nrf_spi_event_clear(p_spi, NRF_SPI_EVENT_READY);
-    NRF_LOG_DEBUG("SPI: Event: NRF_SPI_EVENT_READY.\r\n");
+    NRF_LOG_DEBUG("SPI: Event: NRF_SPI_EVENT_READY.");
 
     if (!transfer_byte(p_spi, p_cb))
     {
@@ -743,7 +738,7 @@ static void irq_handler_spi(NRF_SPI_Type * p_spi, spi_control_block_t * p_cb)
 IRQ_HANDLER(0)
 {
     spi_control_block_t * p_cb  = &m_cb[SPI0_INSTANCE_INDEX];
-    #if SPI0_USE_EASY_DMA
+    #if (SPI0_WITH_DMA || SPIM_ONLY)
         irq_handler_spim(NRF_SPIM0, p_cb);
     #else
         irq_handler_spi(NRF_SPI0, p_cb);
@@ -755,7 +750,7 @@ IRQ_HANDLER(0)
 IRQ_HANDLER(1)
 {
     spi_control_block_t * p_cb  = &m_cb[SPI1_INSTANCE_INDEX];
-    #if SPI1_USE_EASY_DMA
+    #if (SPI1_WITH_DMA || SPIM_ONLY)
         irq_handler_spim(NRF_SPIM1, p_cb);
     #else
         irq_handler_spi(NRF_SPI1, p_cb);
@@ -767,12 +762,14 @@ IRQ_HANDLER(1)
 IRQ_HANDLER(2)
 {
     spi_control_block_t * p_cb  = &m_cb[SPI2_INSTANCE_INDEX];
-    #if SPI2_USE_EASY_DMA
+    #if (SPI2_WITH_DMA || SPIM_ONLY)
         irq_handler_spim(NRF_SPIM2, p_cb);
     #else
         irq_handler_spi(NRF_SPI2, p_cb);
     #endif
 }
+/*lint -restore*/
 #endif // NRF_MODULE_ENABLED(SPI2)
 #endif // ENABLED_SPI_COUNT
 #endif // NRF_MODULE_ENABLED(SPI)
+

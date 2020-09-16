@@ -128,11 +128,11 @@ __vector_table
         DCD     UARTE1_IRQHandler
         DCD     QSPI_IRQHandler
         DCD     CRYPTOCELL_IRQHandler
-        DCD     SPIM3_IRQHandler
+        DCD     0                         ; Reserved
         DCD     0                         ; Reserved
         DCD     PWM3_IRQHandler
         DCD     0                         ; Reserved
-        DCD     0                         ; Reserved
+        DCD     SPIM3_IRQHandler
         DCD     0                         ; Reserved
         DCD     0                         ; Reserved
         DCD     0                         ; Reserved
@@ -471,14 +471,14 @@ QSPI_IRQHandler
 CRYPTOCELL_IRQHandler
         B .
 
-        PUBWEAK  SPIM3_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(1)
-SPIM3_IRQHandler
-        B .
-
         PUBWEAK  PWM3_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 PWM3_IRQHandler
+        B .
+
+        PUBWEAK  SPIM3_IRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(1)
+SPIM3_IRQHandler
         B .
 
 

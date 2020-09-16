@@ -55,8 +55,13 @@
  *          If an event handler is supplied by the application, the Human Interface Device Service
  *          will generate Human Interface Device Service events to the application.
  *
- * @note The application must propagate BLE stack events to the Human Interface Device Service
- *       module by calling ble_hids_on_ble_evt() from the @ref softdevice_handler callback.
+ * @note    The application must register this module as BLE event observer using the
+ *          NRF_SDH_BLE_OBSERVER macro. Example:
+ *          @code
+ *              ble_hids_t instance;
+ *              NRF_SDH_BLE_OBSERVER(anything, BLE_HIDS_BLE_OBSERVER_PRIO,
+ *                                   ble_hids_on_ble_evt, &instance);
+ *          @endcode
  *
  * @note Attention!
  *  To maintain compliance with Nordic Semiconductor ASA Bluetooth profile
@@ -70,10 +75,22 @@
 #include <stdbool.h>
 #include "ble.h"
 #include "ble_srv_common.h"
+#include "nrf_sdh_ble.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**@brief   Macro for defining a ble_hids instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_HIDS_DEF(_name)                                                                         \
+static ble_hids_t _name;                                                                            \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     BLE_HIDS_BLE_OBSERVER_PRIO,                                                    \
+                     ble_hids_on_ble_evt, &_name)
 
 /** @name Report Type values
  * @anchor BLE_HIDS_REPORT_TYPE @{
@@ -136,7 +153,7 @@ typedef struct
             ble_hids_char_id_t char_id;             /**< Id of characteristic being read. */
         } char_auth_read;
     } params;
-    ble_evt_t * p_ble_evt;                          /**< corresponding received ble event, NULL if not relevant */
+    ble_evt_t const * p_ble_evt;                    /**< corresponding received ble event, NULL if not relevant */
 } ble_hids_evt_t;
 
 // Forward declaration of the ble_hids_t type.
@@ -250,6 +267,7 @@ struct ble_hids_s
     uint16_t                      conn_handle;                                  /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
 };
 
+
 /**@brief Function for initializing the HID Service.
  *
  * @param[out]  p_hids       HID Service structure. This structure will have to be supplied by the
@@ -261,14 +279,16 @@ struct ble_hids_s
  */
 uint32_t ble_hids_init(ble_hids_t * p_hids, const ble_hids_init_t * p_hids_init);
 
+
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @details Handles all events from the BLE stack of interest to the HID Service.
  *
- * @param[in]   p_hids     HID Service structure.
- * @param[in]   p_ble_evt  Event received from the BLE stack.
+ * @param[in]   p_ble_evt   Event received from the BLE stack.
+ * @param[in]   p_context   HID Service structure.
  */
-void ble_hids_on_ble_evt(ble_hids_t * p_hids, ble_evt_t * p_ble_evt);
+void ble_hids_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
+
 
 /**@brief Function for sending Input Report.
  *
@@ -287,6 +307,7 @@ uint32_t ble_hids_inp_rep_send(ble_hids_t * p_hids,
                                uint16_t     len,
                                uint8_t *    p_data);
 
+
 /**@brief Function for sending Boot Keyboard Input Report.
  *
  * @details Sends data on an Boot Keyboard Input Report characteristic.
@@ -300,6 +321,7 @@ uint32_t ble_hids_inp_rep_send(ble_hids_t * p_hids,
 uint32_t ble_hids_boot_kb_inp_rep_send(ble_hids_t * p_hids,
                                        uint16_t     len,
                                        uint8_t *    p_data);
+
 
 /**@brief Function for sending Boot Mouse Input Report.
  *
@@ -320,6 +342,7 @@ uint32_t ble_hids_boot_mouse_inp_rep_send(ble_hids_t * p_hids,
                                           int8_t       y_delta,
                                           uint16_t     optional_data_len,
                                           uint8_t *    p_optional_data);
+
 
 /**@brief Function for getting the current value of Output Report from the stack.
  *

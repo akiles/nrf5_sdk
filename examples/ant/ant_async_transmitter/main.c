@@ -63,21 +63,42 @@
 #include "bsp.h"
 #include "boards.h"
 #include "hardfault.h"
-#include "softdevice_handler.h"
-#include "ant_stack_config.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
+#include "nrf_pwr_mgmt.h"
 #include "ant_async_tx.h"
+
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 /**@brief Function for the Timer and BSP initialization.
  */
 static void utils_setup(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                         ant_async_tx_bsp_evt_handler);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
+}
+
+/**@brief Function for ANT stack initialization.
+ */
+static void softdevice_setup(void)
+{
+    ret_code_t err_code = nrf_sdh_enable_request();
+    APP_ERROR_CHECK(err_code);
+
+    ASSERT(nrf_sdh_is_enabled());
+
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -86,31 +107,14 @@ static void utils_setup(void)
  */
 int main(void)
 {
-    uint32_t err_code;
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    // Setup buttons and timer
     utils_setup();
-
-    bsp_board_leds_init();
-
-    // Setup SoftDevice and events handler
-    err_code = softdevice_ant_evt_handler_set(ant_async_tx_event_handler);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = ant_stack_static_config();
-    APP_ERROR_CHECK(err_code);
-
-    // Setup async tx channel
+    softdevice_setup();
     ant_async_tx_setup();
 
     // Enter main loop
     for (;;)
     {
-        err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }

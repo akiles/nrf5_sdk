@@ -71,6 +71,7 @@ typedef enum
     SERIAL_DFU_OP_CODE_SELECT_OBJECT               = 0x06,                                 /**< Value of the opcode field for a 'Select object' request. */
     SERIAL_DFU_OP_CODE_GET_SERIAL_MTU              = 0x07,                                 /**< Value of the opcode field for a 'Get Serial MTU' request. */
     SERIAL_DFU_OP_CODE_WRITE_OBJECT                = 0x08,                                 /**< Value of the opcode indicating a write to the current object. */
+    SERIAL_DFU_OP_CODE_PING                        = 0x09,                                 /**< Value of the opcode for a ping command. */
     SERIAL_DFU_OP_CODE_RESPONSE                    = 0x60                                  /**< Value of the opcode field for a response.*/
 } serial_dfu_op_code_t;
 
@@ -84,7 +85,7 @@ typedef struct
     slip_t              slip;
 
     uint8_t             uart_buffer;
-    uint8_t             recv_buffer[256 + 1];
+    uint8_t             recv_buffer[128 + 1];
 
     uint16_t            pkt_notif_target;
     uint16_t            pkt_notif_target_count;

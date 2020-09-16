@@ -107,6 +107,96 @@ uint32_t conn_mw_ble_l2cap_tx(uint8_t const * const p_rx_buf,
                               uint32_t * const p_tx_buf_len);
 
 
+/**@brief Handles sd_ble_l2cap_ch_setup command and prepares response.
+ *
+ * @param[in]     p_rx_buf            Pointer to input buffer.
+ * @param[in]     rx_buf_len          Size of @p p_rx_buf.
+ * @param[out]    p_tx_buf            Pointer to output buffer.
+ * @param[in,out] p_tx_buf_len        \c in: Size of \p p_tx_buf buffer.
+ *                                    \c out: Length of valid data in \p p_tx_buf.
+ *
+ * @retval NRF_SUCCESS                Handler success.
+ * @retval NRF_ERROR_NULL             Handler failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Handler failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Handler failure. Invalid operation type.
+ */
+uint32_t conn_mw_l2cap_ch_setup(uint8_t const * const p_rx_buf,
+                                uint32_t              rx_buf_len,
+                                uint8_t * const       p_tx_buf,
+                                uint32_t * const      p_tx_buf_len);
+
+/**@brief Handles sd_ble_l2cap_ch_release command and prepares response.
+ *
+ * @param[in]     p_rx_buf            Pointer to input buffer.
+ * @param[in]     rx_buf_len          Size of @p p_rx_buf.
+ * @param[out]    p_tx_buf            Pointer to output buffer.
+ * @param[in,out] p_tx_buf_len        \c in: Size of \p p_tx_buf buffer.
+ *                                    \c out: Length of valid data in \p p_tx_buf.
+ *
+ * @retval NRF_SUCCESS                Handler success.
+ * @retval NRF_ERROR_NULL             Handler failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Handler failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Handler failure. Invalid operation type.
+ */
+uint32_t conn_mw_l2cap_ch_release(uint8_t const * const p_rx_buf,
+                                  uint32_t              rx_buf_len,
+                                  uint8_t * const       p_tx_buf,
+                                  uint32_t * const      p_tx_buf_len);
+
+/**@brief Handles sd_ble_l2cap_ch_rx command and prepares response.
+ *
+ * @param[in]     p_rx_buf            Pointer to input buffer.
+ * @param[in]     rx_buf_len          Size of @p p_rx_buf.
+ * @param[out]    p_tx_buf            Pointer to output buffer.
+ * @param[in,out] p_tx_buf_len        \c in: Size of \p p_tx_buf buffer.
+ *                                    \c out: Length of valid data in \p p_tx_buf.
+ *
+ * @retval NRF_SUCCESS                Handler success.
+ * @retval NRF_ERROR_NULL             Handler failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Handler failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Handler failure. Invalid operation type.
+ */
+uint32_t conn_mw_l2cap_ch_rx(uint8_t const * const p_rx_buf,
+                             uint32_t              rx_buf_len,
+                             uint8_t * const       p_tx_buf,
+                             uint32_t * const      p_tx_buf_len);
+
+/**@brief Handles sd_ble_l2cap_ch_tx command and prepares response.
+ *
+ * @param[in]     p_rx_buf            Pointer to input buffer.
+ * @param[in]     rx_buf_len          Size of @p p_rx_buf.
+ * @param[out]    p_tx_buf            Pointer to output buffer.
+ * @param[in,out] p_tx_buf_len        \c in: Size of \p p_tx_buf buffer.
+ *                                    \c out: Length of valid data in \p p_tx_buf.
+ *
+ * @retval NRF_SUCCESS                Handler success.
+ * @retval NRF_ERROR_NULL             Handler failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Handler failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Handler failure. Invalid operation type.
+ */
+uint32_t conn_mw_l2cap_ch_tx(uint8_t const * const p_rx_buf,
+                             uint32_t              rx_buf_len,
+                             uint8_t * const       p_tx_buf,
+                             uint32_t * const      p_tx_buf_len);
+
+/**@brief Handles sd_ble_l2cap_ch_flow_control command and prepares response.
+ *
+ * @param[in]     p_rx_buf            Pointer to input buffer.
+ * @param[in]     rx_buf_len          Size of @p p_rx_buf.
+ * @param[out]    p_tx_buf            Pointer to output buffer.
+ * @param[in,out] p_tx_buf_len        \c in: Size of \p p_tx_buf buffer.
+ *                                    \c out: Length of valid data in \p p_tx_buf.
+ *
+ * @retval NRF_SUCCESS                Handler success.
+ * @retval NRF_ERROR_NULL             Handler failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Handler failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Handler failure. Invalid operation type.
+ */
+uint32_t conn_mw_l2cap_ch_flow_control(uint8_t const * const p_rx_buf,
+                                       uint32_t              rx_buf_len,
+                                       uint8_t * const       p_tx_buf,
+                                       uint32_t * const      p_tx_buf_len);
+
 /** @} */
 
 #ifdef __cplusplus

@@ -52,15 +52,18 @@
 #include "nrf_soc.h"
 #include "app_error.h"
 #include "app_scheduler.h"
-#include "softdevice_handler.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 #include "ser_hal_transport.h"
 #include "ser_conn_handlers.h"
 #include "boards.h"
 #include "nrf_gpio.h"
-
-#define NRF_LOG_MODULE_NAME "CONN"
-#include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
+
+#define NRF_LOG_MODULE_NAME CONN
+#include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #include "ser_phy_debug_comm.h"
 
@@ -70,7 +73,9 @@ int main(void)
     uint32_t err_code = NRF_SUCCESS;
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
-    NRF_LOG_INFO("ANT connectivity started\r\n");
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    NRF_LOG_INFO("ANT connectivity started");
 
 #if ( defined(SER_PHY_HCI_DEBUG_ENABLE) || defined(SER_PHY_DEBUG_APP_ENABLE))
     debug_init(NULL);
@@ -84,13 +89,8 @@ int main(void)
     /* Initialize SoftDevice.
      * SoftDevice Event IRQ is not scheduled but immediately copies ANT events to the application
      * scheduler queue */
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
 
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
-    APP_ERROR_CHECK(err_code);
-
-    /* Subscribe for ANT events. */
-    err_code = softdevice_ant_evt_handler_set(ser_conn_ant_event_handle);
+    err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
     /* Open serialization HAL Transport layer and subscribe for HAL Transport events. */
@@ -102,12 +102,12 @@ int main(void)
     {
         /* Process SoftDevice events. */
         app_sched_execute();
-        if (softdevice_handler_is_suspended())
+        if (nrf_sdh_is_suspended())
         {
             // Resume pulling new events if queue utilization drops below 50%.
             if (app_sched_queue_space_get() > (SER_CONN_SCHED_QUEUE_SIZE >> 1))
             {
-                softdevice_handler_resume();
+                nrf_sdh_resume();
             }
         }
 

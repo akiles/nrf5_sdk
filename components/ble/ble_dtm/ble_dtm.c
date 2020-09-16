@@ -61,6 +61,7 @@
 // but most of these are set by the BLE DTM standard, so changing them is not relevant.
 #define RFPHY_TEST_0X0F_REF_PATTERN  0x0f  /**<  RF-PHY test packet patterns, for the repeated octet packets. */
 #define RFPHY_TEST_0X55_REF_PATTERN  0x55  /**<  RF-PHY test packet patterns, for the repeated octet packets. */
+#define RFPHY_TEST_0XFF_REF_PATTERN  0xFF  /**<  RF-PHY test packet patterns, for the repeated octet packets. */
 
 #define PRBS9_CONTENT  {0xFF, 0xC1, 0xFB, 0xE8, 0x4C, 0x90, 0x72, 0x8B,   \
                         0xE7, 0xB3, 0x51, 0x89, 0x63, 0xAB, 0x23, 0x23,   \
@@ -115,6 +116,7 @@ typedef enum
     STATE_RECEIVER_TEST                                                      /**< State used when a DTM Receive test is running. */
 } state_t;
 
+
 // Internal variables set as side effects of commands or events.
 static state_t           m_state = STATE_UNINITIALIZED;                      /**< Current machine state. */
 static uint16_t          m_rx_pkt_count;                                     /**< Number of valid packets received. */
@@ -136,6 +138,8 @@ static uint8_t const     m_prbs_content[]    = PRBS9_CONTENT;                /**
 static uint8_t           m_packetHeaderLFlen = 8;                            /**< Length of length field in packet Header (in bits). */
 static uint8_t           m_packetHeaderS0len = 1;                            /**< Length of S0 field in packet Header (in bytes). */
 static uint8_t           m_packetHeaderS1len = 0;                            /**< Length of S1 field in packet Header (in bits). */
+static uint8_t           m_packetHeaderPlen  = RADIO_PCNF0_PLEN_8bit;        /**< Length of the preamble. */
+
 static uint8_t           m_crcConfSkipAddr   = 1;                            /**< Leave packet address field out of CRC calculation. */
 static uint8_t           m_static_length     = 0;                            /**< Number of bytes sent in addition to the var.length payload. */
 static uint32_t          m_balen             = 3;                            /**< Base address length in bytes. */
@@ -161,11 +165,26 @@ static bool check_pdu(void)
     pdu_packet_type = (dtm_pkt_type_t)(m_pdu.content[DTM_HEADER_OFFSET] & 0x0F);
     length          = m_pdu.content[DTM_LENGTH_OFFSET];
 
-    if ((pdu_packet_type > (dtm_pkt_type_t)PACKET_TYPE_MAX) || (length > DTM_PAYLOAD_MAX_SIZE))
+    // Check that the length is valid.
+    if (length > DTM_PAYLOAD_MAX_SIZE)
+    {
+        return false;
+    }
+    
+    // If the 1Mbit or 2Mbit radio mode is active, check that one of the three valid uncoded DTM packet types are selected.
+    if ((m_radio_mode == RADIO_MODE_MODE_Ble_1Mbit || m_radio_mode == RADIO_MODE_MODE_Ble_2Mbit) && (pdu_packet_type > (dtm_pkt_type_t)DTM_PKT_0X55))
     {
         return false;
     }
 
+#ifdef NRF52840_XXAA
+    // If a long range radio mode is active, check that one of the four valid coded DTM packet types are selected.
+    if ((m_radio_mode == RADIO_MODE_MODE_Ble_LR500Kbit || m_radio_mode == RADIO_MODE_MODE_Ble_LR125Kbit) && (pdu_packet_type > (dtm_pkt_type_t)DTM_PKT_0XFF))
+    {
+        return false;
+    }
+#endif
+    
     if (pdu_packet_type == DTM_PKT_PRBS9)
     {
         // Payload does not consist of one repeated octet; must compare ir with entire block into
@@ -176,11 +195,20 @@ static bool check_pdu(void)
     {
         pattern = RFPHY_TEST_0X0F_REF_PATTERN;
     }
-    else
+    else if (pdu_packet_type == DTM_PKT_0X55)
     {
         pattern = RFPHY_TEST_0X55_REF_PATTERN;
     }
-
+    else if (pdu_packet_type == DTM_PKT_0XFF)
+    {
+        pattern = RFPHY_TEST_0XFF_REF_PATTERN;
+    }
+    else
+    {
+        // No valid packet type set.
+        return false;
+    }
+    
     for (k = 0; k < length; k++)
     {
         // Check repeated pattern filling the PDU payload
@@ -221,8 +249,9 @@ static void radio_reset(void)
  */
 static uint32_t radio_init(void)
 {
-    if(dtm_radio_validate(m_tx_power, m_radio_mode) != DTM_SUCCESS)
+    if (dtm_radio_validate(m_tx_power, m_radio_mode) != DTM_SUCCESS)
     {
+        m_event = LE_TEST_STATUS_EVENT_ERROR;
         return DTM_ERROR_ILLEGAL_CONFIGURATION;
     }
 
@@ -243,9 +272,26 @@ static uint32_t radio_init(void)
     NRF_RADIO->CRCCNF = (m_crcConfSkipAddr << RADIO_CRCCNF_SKIP_ADDR_Pos) |
                         (m_crcLength << RADIO_CRCCNF_LEN_Pos);
 
-    NRF_RADIO->PCNF0 = (m_packetHeaderS1len << RADIO_PCNF0_S1LEN_Pos) |
+    if (m_radio_mode == RADIO_MODE_MODE_Ble_1Mbit || m_radio_mode == RADIO_MODE_MODE_Ble_2Mbit)
+    {
+        // Non-coded PHY
+        NRF_RADIO->PCNF0 = (m_packetHeaderS1len << RADIO_PCNF0_S1LEN_Pos) |
+                           (m_packetHeaderS0len << RADIO_PCNF0_S0LEN_Pos) |
+                           (m_packetHeaderLFlen << RADIO_PCNF0_LFLEN_Pos) |
+                           (m_packetHeaderPlen << RADIO_PCNF0_PLEN_Pos);
+    }
+#ifdef NRF52840_XXAA
+    else
+    {
+        // Coded PHY (Long range)
+        NRF_RADIO->PCNF0 = (m_packetHeaderS1len << RADIO_PCNF0_S1LEN_Pos) |
                        (m_packetHeaderS0len << RADIO_PCNF0_S0LEN_Pos) |
-                       (m_packetHeaderLFlen << RADIO_PCNF0_LFLEN_Pos);
+                       (m_packetHeaderLFlen << RADIO_PCNF0_LFLEN_Pos) |
+                       (3 << RADIO_PCNF0_TERMLEN_Pos) |
+                       (2 << RADIO_PCNF0_CILEN_Pos) |
+                       (m_packetHeaderPlen << RADIO_PCNF0_PLEN_Pos);
+    }
+#endif
 
     NRF_RADIO->PCNF1 = (m_whitening          << RADIO_PCNF1_WHITEEN_Pos) |
                        (m_endian             << RADIO_PCNF1_ENDIAN_Pos)  |
@@ -368,6 +414,7 @@ static uint32_t dtm_vendor_specific_pkt(uint32_t vendor_cmd, dtm_freq_t vendor_o
         case SET_TX_POWER:
             if (!dtm_set_txpower(vendor_option))
             {
+                m_event = LE_TEST_STATUS_EVENT_ERROR;
                 return DTM_ERROR_ILLEGAL_CONFIGURATION;
             }
             break;
@@ -375,12 +422,106 @@ static uint32_t dtm_vendor_specific_pkt(uint32_t vendor_cmd, dtm_freq_t vendor_o
         case SELECT_TIMER:
             if (!dtm_set_timer(vendor_option))
             {
+                m_event = LE_TEST_STATUS_EVENT_ERROR;
                 return DTM_ERROR_ILLEGAL_CONFIGURATION;
             }
             break;
     }
     // Event code is unchanged, successful
     return DTM_SUCCESS;
+}
+
+
+static uint32_t dtm_packet_interval_calculate(uint32_t test_payload_length, uint32_t mode)
+{
+    uint32_t test_packet_length = 0; // [us] NOTE: bits are us at 1Mbit
+    uint32_t packet_interval    = 0; // us
+    uint32_t overhead_bits      = 0; // bits
+
+    /* packet overhead
+     * see BLE [Vol 6, Part F] page 213
+     * 4.1 LE TEST PACKET FORMAT */
+    if (mode == RADIO_MODE_MODE_Ble_2Mbit)
+    {
+        // 16 preamble
+        // 32 sync word
+        //  8 PDU header, actually packetHeaderS0len * 8
+        //  8 PDU length, actually packetHeaderLFlen
+        // 24 CRC
+        overhead_bits = 88; // 11 bytes
+    }
+    else if (mode == RADIO_MODE_MODE_Ble_1Mbit)
+    {
+        //  8 preamble
+        // 32 sync word
+        //  8 PDU header, actually packetHeaderS0len * 8
+        //  8 PDU length, actually packetHeaderLFlen
+        // 24 CRC
+        overhead_bits = 80; // 10 bytes
+    }
+#ifdef NRF52840_XXAA
+    else if (mode == RADIO_MODE_MODE_Ble_LR125Kbit)
+    {
+        // 80     preamble
+        // 32 * 8 sync word coding=8
+        //  2 * 8 Coding indicator, coding=8
+        //  3 * 8 TERM1 coding=8
+        //  8 * 8 PDU header, actually packetHeaderS0len * 8 coding=8
+        //  8 * 8 PDU length, actually packetHeaderLFlen coding=8
+        // 24 * 8 CRC coding=8
+        //  3 * 8 TERM2 coding=8
+        overhead_bits = 720; // 90 bytes
+    }
+    else if (mode == RADIO_MODE_MODE_Ble_LR500Kbit)
+    {
+        // 80     preamble
+        // 32 * 8 sync word coding=8
+        //  2 * 8 Coding indicator, coding=8
+        //  3 * 8 TERM 1 coding=8
+        //  8 * 2 PDU header, actually packetHeaderS0len * 8 coding=2
+        //  8 * 2 PDU length, actually packetHeaderLFlen coding=2
+        // 24 * 2 CRC coding=2
+        //  3 * 2 TERM2 coding=2
+        // NOTE: this makes us clock out 46 bits for CI + TERM1 + TERM2
+        //       assumption the radio will handle this
+        overhead_bits = 462; // 57.75 bytes
+    }
+#endif
+    /* add PDU payload test_payload length */
+    test_packet_length = (test_payload_length * 8); // in bits
+#ifdef NRF52840_XXAA
+    // account for the encoding of PDU
+    if (mode == RADIO_MODE_MODE_Ble_LR125Kbit)
+    {
+        test_packet_length *= 8; // 1 to 8 encoding
+    }
+    if (mode == RADIO_MODE_MODE_Ble_LR500Kbit)
+    {
+        test_packet_length *= 2; //  1 to 2 encoding
+    }
+#endif
+    // add overhead calculated above
+    test_packet_length += overhead_bits;
+    // we remember this bits are us in 1Mbit
+    if (mode == RADIO_MODE_MODE_Ble_2Mbit)
+    {
+        test_packet_length /= 2; // double speed
+    }
+
+    /*
+     * packet_interval = ceil((test_packet_length+249)/625)*625
+     * NOTE: To avoid floating point an equivalent calculation is used.
+     */
+    uint32_t i       = 0;
+    uint32_t timeout = 0;
+    do
+    {
+        i++;
+        timeout = i * 625;
+    } while (test_packet_length + 249 > timeout);
+    packet_interval = i * 625;
+
+    return packet_interval;
 }
 
 
@@ -456,6 +597,17 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
     m_packet_length = (m_packet_length & 0xC0) | ((uint8_t)length & 0x3F);
     m_packet_type   = payload;
     m_phys_ch       = freq;
+    
+    // If 1 Mbit or 2 Mbit radio mode is in use check for Vendor Specific payload.
+    if ((m_radio_mode == RADIO_MODE_MODE_Ble_1Mbit || m_radio_mode == RADIO_MODE_MODE_Ble_2Mbit) && payload == 0x03)
+    {
+        /* Note that in a HCI adaption layer, as well as in the DTM PDU format,
+           the value 0x03 is a distinct bit pattern (PRBS15). Even though BLE does not
+           support PRBS15, this implementation re-maps 0x03 to DTM_PKT_VENDORSPECIFIC,
+           to avoid the risk of confusion, should the code be extended to greater coverage.
+        */
+        m_packet_type = DTM_PKT_VENDORSPECIFIC;
+    }
 
     // Clean out any non-retrieved event that might linger from an earlier test
     m_new_event     = true;
@@ -469,17 +621,150 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
         return DTM_ERROR_UNINITIALIZED;
     }
 
-    if (cmd == LE_RESET)
+    if (cmd == LE_TEST_SETUP)
     {
         // Note that timer will continue running after a reset
         dtm_test_done();
-        if (freq == 0x01)
+        if (freq == LE_TEST_SETUP_RESET)
         {
+            if (length != 0x00) 
+            {
+                m_event = LE_TEST_STATUS_EVENT_ERROR;
+                return DTM_ERROR_ILLEGAL_CONFIGURATION;
+            }
+            // Reset the packet length upper bits.
+            m_packet_length = 0;
+            
+            // Reset the selected PHY to 1Mbit
+            m_radio_mode        = RADIO_MODE_MODE_Ble_1Mbit;
+            m_packetHeaderPlen  = RADIO_PCNF0_PLEN_8bit;
+
+#ifdef NRF52840_XXAA
+            // Workaround for Errata ID 164
+            *(volatile uint32_t *)0x4000173C &= ~0x80000000; 
+#endif
+        }
+        else if (freq == LE_TEST_SETUP_SET_UPPER)
+        {
+            if (length > 0x03) 
+            {
+                m_event = LE_TEST_STATUS_EVENT_ERROR;
+                return DTM_ERROR_ILLEGAL_CONFIGURATION;
+            }
             m_packet_length = length << 6;
+        }
+        else if (freq == LE_TEST_SETUP_SET_PHY)
+        {
+            switch (length)
+            {
+                case LE_PHY_1M:
+                    m_radio_mode        = RADIO_MODE_MODE_Ble_1Mbit;
+                    m_packetHeaderPlen  = RADIO_PCNF0_PLEN_8bit;
+
+#ifdef NRF52840_XXAA
+                    // Workaround for Errata ID 164
+                    *(volatile uint32_t *)0x4000173C &= ~0x80000000; 
+#endif
+                
+                    return radio_init();
+
+                case LE_PHY_2M:
+                    m_radio_mode        = RADIO_MODE_MODE_Ble_2Mbit;
+                    m_packetHeaderPlen  = RADIO_PCNF0_PLEN_16bit;
+
+#ifdef NRF52840_XXAA
+                    // Workaround for Errata ID 164
+                    *(volatile uint32_t *)0x4000173C &= ~0x80000000; 
+#endif
+                
+                    return radio_init();
+
+                case LE_PHY_LE_CODED_S8:
+#ifdef NRF52840_XXAA
+                    m_radio_mode        = RADIO_MODE_MODE_Ble_LR125Kbit;
+                    m_packetHeaderPlen  = RADIO_PCNF0_PLEN_LongRange;
+
+                    // Workaround for Errata ID 164
+                    *(volatile uint32_t *)0x4000173C |= 0x80000000;
+                    *(volatile uint32_t *)0x4000173C = ((*(volatile uint32_t *)0x4000173C & 0xFFFFFF00) | 0x5C);
+
+                    return radio_init();
+#else
+                    m_event = LE_TEST_STATUS_EVENT_ERROR;
+                    return DTM_ERROR_ILLEGAL_CONFIGURATION;
+#endif // NRF52840_XXAA
+                case LE_PHY_LE_CODED_S2:
+#ifdef NRF52840_XXAA
+                    m_radio_mode        = RADIO_MODE_MODE_Ble_LR500Kbit;
+                    m_packetHeaderPlen  = RADIO_PCNF0_PLEN_LongRange;
+
+                    // Workaround for Errata ID 164
+                    *(volatile uint32_t *)0x4000173C |= 0x80000000;
+                    *(volatile uint32_t *)0x4000173C = ((*(volatile uint32_t *)0x4000173C & 0xFFFFFF00) | 0x5C);
+
+                    return radio_init();
+#else
+                    m_event = LE_TEST_STATUS_EVENT_ERROR;
+                    return DTM_ERROR_ILLEGAL_CONFIGURATION;
+#endif
+                default:
+                    m_event = LE_TEST_STATUS_EVENT_ERROR;
+                    return DTM_ERROR_ILLEGAL_CONFIGURATION;
+            }
+        }
+        else if(freq == LE_TEST_SETUP_SELECT_MODULATION)
+        {
+            if (length > 0x01) 
+            {
+                m_event = LE_TEST_STATUS_EVENT_ERROR;
+                return DTM_ERROR_ILLEGAL_CONFIGURATION;
+            }
+            // Only standard modulation is supported.
+        }
+        else if (freq == LE_TEST_SETUP_READ_SUPPORTED)
+        {
+            if (length != 0x00) 
+            {
+                m_event = LE_TEST_STATUS_EVENT_ERROR;
+                return DTM_ERROR_ILLEGAL_CONFIGURATION;
+            }
+            // 0XXXXXXXXXXX0110 indicate that 2Mbit and DLE is supported and stable modulation is not supported (No nRF5 device supports this).
+            m_event = 0x0006;
+        }
+        else if (freq == LE_TEST_SETUP_READ_MAX)
+        {
+            // Read max supported value.
+            switch (length)
+            {
+                case 0x00:
+                    // Read supportedMaxTxOctets
+                    m_event = 0x01FE;
+                    break;
+
+                case 0x01:
+                    // Read supportedMaxTxTime
+                    m_event = 0x4290;
+                    break;
+
+                case 0x02:
+                    // Read supportedMaxRxOctets
+                    m_event = 0x01FE;
+                    break;
+
+                case 0x03:
+                    // Read supportedMaxRxTime
+                    m_event = 0x4290;
+                    break;
+
+                default:
+                    m_event = LE_TEST_STATUS_EVENT_ERROR;
+                    return DTM_ERROR_ILLEGAL_CONFIGURATION;
+            }
         }
         else
         {
-            m_packet_length = 0;
+            m_event = LE_TEST_STATUS_EVENT_ERROR;
+            return DTM_ERROR_ILLEGAL_CONFIGURATION;
         }
         return DTM_SUCCESS;
     }
@@ -511,6 +796,7 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
         // Parameter error
         // Note: State is unchanged; ongoing test not affected
         m_event = LE_TEST_STATUS_EVENT_ERROR;
+
         return DTM_ERROR_ILLEGAL_CHANNEL;
     }
 
@@ -535,10 +821,10 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
             return DTM_ERROR_ILLEGAL_LENGTH;
         }
 
+
         // Note that PDU uses 4 bits even though BLE DTM uses only 2 (the HCI SDU uses all 4)
         m_pdu.content[DTM_HEADER_OFFSET] = ((uint8_t)m_packet_type & 0x0F);
         m_pdu.content[DTM_LENGTH_OFFSET] = m_packet_length;
-
         switch (m_packet_type)
         {
             case DTM_PKT_PRBS9:
@@ -555,6 +841,11 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
                 // Bit pattern 01010101 repeated
                 memset(m_pdu.content + DTM_HEADER_SIZE, RFPHY_TEST_0X55_REF_PATTERN, m_packet_length);
                 break;
+            
+            case DTM_PKT_0XFF:
+                // Bit pattern 11111111 repeated. Only available in coded PHY (Long range).
+                memset(m_pdu.content + DTM_HEADER_SIZE, RFPHY_TEST_0XFF_REF_PATTERN, m_packet_length);
+                break;
 
             case DTM_PKT_VENDORSPECIFIC:
                 // The length field is for indicating the vendor specific command to execute.
@@ -569,24 +860,10 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
 
         // Initialize CRC value, set channel:
         radio_prepare(TX_MODE);
+
         // Set the timer to the correct period. The delay between each packet is described in the
         // Bluetooth Core Spsification version 4.2 Vol. 6 Part F Section 4.1.6.
-        if ((m_packet_length + DTM_ON_AIR_OVERHEAD_SIZE ) * 8  <= 376)
-        {
-            mp_timer->CC[0]       = 625;                        // 625uS with 1MHz clock to the timer
-        }
-        else if ((m_packet_length + DTM_ON_AIR_OVERHEAD_SIZE ) * 8  <= 1000)
-        {
-            mp_timer->CC[0]       = 1250;                        // 625uS with 1MHz clock to the timer
-        }
-        else if ((m_packet_length + DTM_ON_AIR_OVERHEAD_SIZE ) * 8  <= 1624)
-        {
-            mp_timer->CC[0]       = 1875;                        // 625uS with 1MHz clock to the timer
-        }
-        else
-        {
-            mp_timer->CC[0]       = 2500;                        // 625uS with 1MHz clock to the timer
-        }
+        mp_timer->CC[0] = dtm_packet_interval_calculate(m_packet_length, m_radio_mode);
 
         // Configure PPI so that timer will activate radio every 625 us
         NRF_PPI->CH[0].EEP = (uint32_t)&mp_timer->EVENTS_COMPARE[0];

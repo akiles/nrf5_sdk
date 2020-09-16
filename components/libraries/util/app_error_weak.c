@@ -39,7 +39,6 @@
  */
 #include "app_error.h"
 
-//#define NRF_LOG_MODULE_NAME "APP_ERROR"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 /*lint -save -e14 */
@@ -50,11 +49,12 @@
  */
 __WEAK void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
-    NRF_LOG_ERROR("Fatal\r\n");
+    NRF_LOG_ERROR("Fatal");
     NRF_LOG_FINAL_FLUSH();
+    NRF_BREAKPOINT_COND;
     // On assert, the system can only recover with a reset.
 #ifndef DEBUG
-    NRF_LOG_INFO("Hit weak handler\r\n");
+    NRF_LOG_INFO("Hit weak handler");
     NVIC_SystemReset();
 #else
     app_error_save_and_stop(id, pc, info);

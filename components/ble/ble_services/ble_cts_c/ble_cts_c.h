@@ -62,8 +62,13 @@
  *          to the application. The current time is then available in the params field of the
  *          passed @ref ble_cts_c_evt_t structure.
  *
- * @note The application must propagate BLE stack events to this module by calling
- *       ble_cts_c_on_ble_evt() from the @ref softdevice_handler callback function.
+ * @note    The application must register this module as BLE event observer using the
+ *          NRF_SDH_BLE_OBSERVER macro. Example:
+ *          @code
+ *              ble_cts_c_t instance;
+ *              NRF_SDH_BLE_OBSERVER(anything, BLE_CTS_C_BLE_OBSERVER_PRIO,
+ *                                   ble_cts_c_on_ble_evt, &instance);
+ *          @endcode
  */
 
 #ifndef BLE_CTS_C_H__
@@ -74,11 +79,23 @@
 #include "ble.h"
 #include "ble_date_time.h"
 #include "ble_db_discovery.h"
+#include "nrf_sdh_ble.h"
 #include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**@brief   Macro for defining a ble_bps instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_CTS_C_DEF(_name)                                                                        \
+static ble_cts_c_t _name;                                                                           \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     BLE_CTS_C_BLE_OBSERVER_PRIO,                                                   \
+                     ble_cts_c_on_ble_evt, &_name)
 
 
 /**@brief "Day Date Time" field of the "Exact Time 256" field of the Current Time Characteristic. */
@@ -199,10 +216,10 @@ uint32_t ble_cts_c_init(ble_cts_c_t * p_cts, const ble_cts_c_init_t * p_cts_init
  *          Current Time Service client. This is a callback function that must be dispatched
  *          from main application context.
  *
- * @param[in] p_cts      Current Time Service client structure.
- * @param[in] p_ble_evt  Event received from the BLE stack.
+ * @param[in] p_ble_evt     Event received from the BLE stack.
+ * @param[in] p_context     Current Time Service client structure.
  */
-void ble_cts_c_on_ble_evt(ble_cts_c_t * p_cts, const ble_evt_t * p_ble_evt);
+void ble_cts_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 
 
 /**@brief Function for checking whether the peer's Current Time Service instance and the Current Time

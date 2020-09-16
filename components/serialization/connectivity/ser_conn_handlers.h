@@ -61,14 +61,16 @@
 #include <stdint.h>
 #include "nordic_common.h"
 #include "app_util.h"
-#include "ble_stack_handler_types.h"
-#include "ant_stack_handler_types.h"
-#include "softdevice_handler.h"
 #include "ser_hal_transport.h"
 
 #ifdef BLE_STACK_SUPPORT_REQD
 #include "ble.h"
+#include "nrf_sdh_ble.h"
 #endif // BLE_STACK_SUPPORT_REQD
+
+#ifdef ANT_STACK_SUPPORT_REQD
+#include "nrf_sdh_ant.h"
+#endif // ANT_STACK_SUPPORT_REQD
 
 #ifdef __cplusplus
 extern "C" {
@@ -78,13 +80,19 @@ extern "C" {
 #define SER_CONN_SCHED_QUEUE_SIZE             16u
 
 /** Maximum size of events data in the application scheduler queue aligned to 32 bits - this is
- *  size of the buffer created in the SOFTDEVICE_HANDLER_INIT macro, which stores events pulled
- *  from the SoftDevice. */
-#define SER_CONN_SCHED_MAX_EVENT_DATA_SIZE    ((CEIL_DIV(MAX(                                   \
-                                                             MAX(BLE_STACK_EVT_MSG_BUF_SIZE,    \
-                                                                 ANT_STACK_EVT_STRUCT_SIZE),    \
-                                                             SYS_EVT_MSG_BUF_SIZE               \
-                                                            ),                                  \
+ *  size of the buffers of the SoftDevice handler, which stores events pulled from the SoftDevice.
+ */
+
+#if defined(BLE_STACK_SUPPORT_REQD) && defined(ANT_STACK_SUPPORT_REQD)
+#define STACK_EVENT_MAX_SIZE    MAX(NRF_SDH_BLE_EVT_BUF_SIZE, NRF_SDH_ANT_EVT_BUF_SIZE)
+#elif defined(BLE_STACK_SUPPORT_REQD)
+#define STACK_EVENT_MAX_SIZE    NRF_SDH_BLE_EVT_BUF_SIZE
+#elif defined(ANT_STACK_SUPPORT_REQD)
+#define STACK_EVENT_MAX_SIZE    NRF_SDH_ANT_EVT_BUF_SIZE
+#endif
+
+#define SER_CONN_SCHED_MAX_EVENT_DATA_SIZE    ((CEIL_DIV(MAX(STACK_EVENT_MAX_SIZE,              \
+                                                             sizeof(uint32_t)),                 \
                                                          sizeof(uint32_t))) *                   \
                                                sizeof(uint32_t))
 
@@ -110,8 +118,9 @@ uint32_t ser_conn_rx_process(void);
  * @details BLE events are put into application scheduler queue to be processed at a later time.
  *
  * @param[in] p_ble_evt    A pointer to a BLE event.
+ * @param[in] p_context    A parameter to the handler. Not used.
  */
-void ser_conn_ble_event_handle(ble_evt_t * p_ble_evt);
+void ser_conn_ble_event_handle(ble_evt_t const * p_ble_evt, void * p_context);
 #endif // BLE_STACK_SUPPORT_REQD
 
 #ifdef ANT_STACK_SUPPORT_REQD
@@ -120,8 +129,9 @@ void ser_conn_ble_event_handle(ble_evt_t * p_ble_evt);
  * @details ANT events are put into application scheduler queue to be processed at a later time.
  *
  * @param[in] p_ant_evt    A pointer to a BLE event.
+ * @param[in] p_context    A parameter to the handler. Not used.
  */
-void ser_conn_ant_event_handle(ant_evt_t * p_ant_evt);
+void ser_conn_ant_event_handle(ant_evt_t * p_ant_evt, void * p_context);
 #endif // ANT_STACK_SUPPORT_REQD
 
 #ifdef __cplusplus

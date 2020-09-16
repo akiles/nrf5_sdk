@@ -1256,33 +1256,6 @@ uint32_t ble_gap_opt_compat_mode_1_t_dec(uint8_t const * const p_buf,
     SER_STRUCT_DEC_END;
 }
 
-uint32_t ble_gap_opt_compat_mode_2_t_enc(void const * const p_void_struct,
-                                      uint8_t * const    p_buf,
-                                      uint32_t           buf_len,
-                                      uint32_t * const   p_index)
-{
-    SER_STRUCT_ENC_BEGIN(ble_gap_opt_compat_mode_2_t);
-
-    uint8_t enable = p_struct->enable;
-    SER_PUSH_uint8(&enable);
-
-    SER_STRUCT_ENC_END;
-}
-
-uint32_t ble_gap_opt_compat_mode_2_t_dec(uint8_t const * const p_buf,
-                                      uint32_t              buf_len,
-                                      uint32_t * const      p_index,
-                                      void * const          p_void_struct)
-{
-    SER_STRUCT_DEC_BEGIN(ble_gap_opt_compat_mode_2_t);
-
-    uint8_t enable;
-    SER_PULL_uint8(&enable);
-    p_struct->enable = enable;
-
-    SER_STRUCT_DEC_END;
-}
-
 uint32_t ble_gap_opt_slave_latency_disable_t_enc(void const * const p_void_struct,
                                       uint8_t * const    p_buf,
                                       uint32_t           buf_len,
@@ -1423,6 +1396,37 @@ uint32_t ble_gap_data_length_limitation_t_dec(uint8_t const * const p_buf,
 
     SER_STRUCT_DEC_END;
 }
+#endif
+
+#if NRF_SD_BLE_API_VERSION == 4
+
+uint32_t ble_gap_opt_compat_mode_2_t_enc(void const * const p_void_struct,
+                                      uint8_t * const    p_buf,
+                                      uint32_t           buf_len,
+                                      uint32_t * const   p_index)
+{
+    SER_STRUCT_ENC_BEGIN(ble_gap_opt_compat_mode_2_t);
+
+    uint8_t enable = p_struct->enable;
+    SER_PUSH_uint8(&enable);
+
+    SER_STRUCT_ENC_END;
+}
+
+uint32_t ble_gap_opt_compat_mode_2_t_dec(uint8_t const * const p_buf,
+                                      uint32_t              buf_len,
+                                      uint32_t * const      p_index,
+                                      void * const          p_void_struct)
+{
+    SER_STRUCT_DEC_BEGIN(ble_gap_opt_compat_mode_2_t);
+
+    uint8_t enable;
+    SER_PULL_uint8(&enable);
+    p_struct->enable = enable;
+
+    SER_STRUCT_DEC_END;
+}
+
 #endif
 
 #if NRF_SD_BLE_API_VERSION >= 5

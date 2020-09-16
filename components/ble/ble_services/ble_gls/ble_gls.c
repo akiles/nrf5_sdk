@@ -38,9 +38,9 @@
  * 
  */
 /* Attention!
-*  To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
-*  qualification listings, this section of source code must not be modified.
-*/
+ * To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
+ * qualification listings, this section of source code must not be modified.
+ */
 
 #include "sdk_common.h"
 
@@ -782,7 +782,7 @@ static void racp_report_records_procedure(ble_gls_t * p_gls)
  *         If it is to be rejected, p_response_code will contain the response code to be
  *         returned to the central.
  */
-static bool is_request_to_be_executed(const ble_racp_value_t * p_racp_request,
+static bool is_request_to_be_executed(ble_racp_value_t const * p_racp_request,
                                       uint8_t                * p_response_code)
 {
     *p_response_code = RACP_RESPONSE_RESERVED;
@@ -1029,7 +1029,7 @@ uint32_t ble_gls_are_cccd_configured(ble_gls_t * p_gls, bool * p_are_cccd_config
  * @param[in] p_gls        Service instance.
  * @param[in] p_evt_write  WRITE event to be handled.
  */
-static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt_write)
+static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t const * p_evt_write)
 {
     ble_racp_value_t                      racp_request;
     uint8_t                               response_code;
@@ -1069,7 +1069,7 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
     }
 
     // Decode request.
-    ble_racp_decode(p_evt_write->len, p_evt_write->data, &racp_request);
+    ble_racp_decode(p_evt_write->len, (uint8_t*)p_evt_write->data, &racp_request);
 
     // Check if request is to be executed.
     if (is_request_to_be_executed(&racp_request, &response_code))
@@ -1143,7 +1143,7 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
  * @param[in] p_gls        Service instance.
  * @param[in] p_evt_write  WRITE event to be handled.
  */
-static void on_glm_cccd_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt_write)
+static void on_glm_cccd_write(ble_gls_t * p_gls, ble_gatts_evt_write_t const * p_evt_write)
 {
     if (p_evt_write->len == 2)
     {
@@ -1174,9 +1174,9 @@ static void on_glm_cccd_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt_w
  * @param[in] p_gls      Glucose Service structure.
  * @param[in] p_ble_evt  Event received from the BLE stack.
  */
-static void on_write(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
+static void on_write(ble_gls_t * p_gls, ble_evt_t const * p_ble_evt)
 {
-    ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
+    ble_gatts_evt_write_t const * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
 
     if (p_evt_write->handle == p_gls->glm_handles.cccd_handle)
     {
@@ -1196,7 +1196,7 @@ static void on_write(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
  * @param[in] p_gls      Glucose Service structure.
  * @param[in] p_ble_evt  Event received from the BLE stack.
  */
-static void on_tx_complete(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
+static void on_tx_complete(ble_gls_t * p_gls, ble_evt_t const * p_ble_evt)
 {
     m_racp_proc_records_reported_since_txcomplete = 0;
 
@@ -1218,9 +1218,9 @@ static void on_tx_complete(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
  * @param[in] p_gls      Glucose Service structure.
  * @param[in] p_ble_evt  Event received from the BLE stack.
  */
-static void on_hvc(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
+static void on_hvc(ble_gls_t * p_gls, ble_evt_t const * p_ble_evt)
 {
-    ble_gatts_evt_hvc_t * p_hvc = &p_ble_evt->evt.gatts_evt.params.hvc;
+    ble_gatts_evt_hvc_t const * p_hvc = &p_ble_evt->evt.gatts_evt.params.hvc;
 
     if (p_hvc->handle == p_gls->racp_handles.value_handle)
     {
@@ -1241,9 +1241,11 @@ static void on_hvc(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
 }
 
 
-static void on_rw_authorize_request(ble_gls_t * p_gls, ble_gatts_evt_t * p_gatts_evt)
+static void on_rw_authorize_request(ble_gls_t * p_gls, ble_gatts_evt_t const * p_gatts_evt)
 {
-    ble_gatts_evt_rw_authorize_request_t * p_auth_req = &p_gatts_evt->params.authorize_request;
+    ble_gatts_evt_rw_authorize_request_t const * p_auth_req =
+        &p_gatts_evt->params.authorize_request;
+
     if (p_auth_req->type == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
     {
         if (   (p_gatts_evt->params.authorize_request.request.write.op
@@ -1262,8 +1264,10 @@ static void on_rw_authorize_request(ble_gls_t * p_gls, ble_gatts_evt_t * p_gatts
     }
 }
 
-void ble_gls_on_ble_evt(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
+void ble_gls_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
+    ble_gls_t * p_gls = (ble_gls_t *)p_context;
+
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:

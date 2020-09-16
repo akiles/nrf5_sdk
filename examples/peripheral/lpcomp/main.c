@@ -70,9 +70,10 @@
 #include "app_error.h"
 #include "boards.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define WAVE_ON_PIN_NUMBER 2
 
@@ -106,7 +107,7 @@ static void print_statistics(void)
     while (voltage_falls_detected)
     {
         voltage_falls_detected--;
-        NRF_LOG_INFO("#%d fall detected\r\n", (int)voltage_falls_total);
+        NRF_LOG_INFO("#%d fall detected", (int)voltage_falls_total);
     }
 }
 
@@ -142,9 +143,11 @@ int main(void)
     uint32_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
     lpcomp_init();
 
-    NRF_LOG_INFO("LPCOMP driver usage example\r\n");
+    NRF_LOG_INFO("LPCOMP driver usage example");
 
     while (true)
     {

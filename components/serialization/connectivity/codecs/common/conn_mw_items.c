@@ -77,6 +77,12 @@ static const conn_mw_item_t conn_mw_item[] = {
     {SD_BLE_L2CAP_CID_REGISTER, conn_mw_ble_l2cap_cid_register},
     {SD_BLE_L2CAP_CID_UNREGISTER, conn_mw_ble_l2cap_cid_unregister},
     {SD_BLE_L2CAP_TX, conn_mw_ble_l2cap_tx},
+#elif defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION >= 5
+    {SD_BLE_L2CAP_CH_SETUP, conn_mw_l2cap_ch_setup},
+    {SD_BLE_L2CAP_CH_RELEASE, conn_mw_l2cap_ch_release},
+    {SD_BLE_L2CAP_CH_RX, conn_mw_l2cap_ch_rx},
+    {SD_BLE_L2CAP_CH_TX, conn_mw_l2cap_ch_tx},
+    {SD_BLE_L2CAP_CH_FLOW_CONTROL, conn_mw_l2cap_ch_flow_control},
 #endif
     //Functions from ble_gap.h
     {SD_BLE_GAP_SCAN_STOP, conn_mw_ble_gap_scan_stop},
@@ -116,7 +122,7 @@ static const conn_mw_item_t conn_mw_item[] = {
     {SD_BLE_GAP_LESC_OOB_DATA_GET, conn_mw_ble_gap_lesc_oob_data_get},
     {SD_BLE_GAP_RSSI_GET, conn_mw_ble_gap_rssi_get},
 #if NRF_SD_BLE_API_VERSION >= 5
-    {SD_BLE_GAP_PHY_REQUEST, conn_mw_ble_gap_phy_request},
+    {SD_BLE_GAP_PHY_UPDATE, conn_mw_ble_gap_phy_update},
 #endif
 #if NRF_SD_BLE_API_VERSION >= 4
     {SD_BLE_GAP_DATA_LENGTH_UPDATE, conn_mw_ble_gap_data_length_update},

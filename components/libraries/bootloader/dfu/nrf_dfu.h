@@ -39,7 +39,7 @@
  */
 /**@file
  *
- * @defgroup sdk_nrf_dfu DFU bootloader
+ * @defgroup nrf_dfu DFU bootloader
  * @{
  * @ingroup  sdk_nrf_bootloader
  * @brief Bootloader with Device Firmware Update (DFU) functionality.
@@ -59,7 +59,7 @@
 extern "C" {
 #endif
 
-#define BOOTLOADER_BUTTON                       (BSP_BUTTON_3)                      /**< Button for entering DFU mode. */
+
 
 /** @brief Function for initializing a DFU operation.
  *
@@ -70,6 +70,16 @@ extern "C" {
  */
 uint32_t nrf_dfu_init(void);
 
+    
+/** @brief Function to check if button was pressed
+ *
+ * @note    This function must be implemented by the application to enable
+ *          entering bootloader mode based on button press.
+ *
+ * @retval true if the DFU mode should be entered, otherwise false.
+ */
+bool nrf_dfu_button_enter_check(void);
+    
 
 /** @brief Function for checking if DFU mode should be entered.
  *
@@ -92,10 +102,6 @@ bool nrf_dfu_enter_check(void);
  */
 bool nrf_dfu_check_failsafe_reset(void);
 
-
-/** @brief Function for blocking until an event (i.e. incoming BLE packet) arrives.
- */
-void nrf_dfu_wait(void);
 
 #ifdef __cplusplus
 }

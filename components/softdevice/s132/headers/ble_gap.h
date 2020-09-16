@@ -1,37 +1,39 @@
 /*
- * Copyright (c) Nordic Semiconductor ASA
+ * Copyright (c) 2011 - 2017, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
  *
- *   1. Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
  *
- *   2. Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
  *
- *   3. Neither the name of Nordic Semiconductor ASA nor the names of other
- *   contributors to this software may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
  *
- *   4. This software must only be used in a processor manufactured by Nordic
- *   Semiconductor ASA, or in a processor manufactured by a third party that
- *   is used in combination with a processor manufactured by Nordic Semiconductor.
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
  *
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 /**
@@ -94,6 +96,7 @@ enum BLE_GAP_SVCS
   SD_BLE_GAP_CONNECT,                           /**< Connect. */
   SD_BLE_GAP_CONNECT_CANCEL,                    /**< Cancel ongoing connection procedure. */
   SD_BLE_GAP_RSSI_GET,                          /**< Get the last RSSI sample. */
+  SD_BLE_GAP_PHY_UPDATE,                        /**< Initiate or respond to a PHY Update Procedure. */
   SD_BLE_GAP_DATA_LENGTH_UPDATE,                /**< Initiate or respond to a Data Length Update Procedure. */
 };
 
@@ -119,7 +122,9 @@ enum BLE_GAP_EVTS
   BLE_GAP_EVT_SEC_REQUEST,                      /**< Security Request.                               \n See @ref ble_gap_evt_sec_request_t.          */
   BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST,        /**< Connection Parameter Update Request.            \n Reply with @ref sd_ble_gap_conn_param_update. \n See @ref ble_gap_evt_conn_param_update_request_t. */
   BLE_GAP_EVT_SCAN_REQ_REPORT,                  /**< Scan request report.                            \n See @ref ble_gap_evt_scan_req_report_t. */
-  BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST,       /**< Data Length Update request.                     \n Reply with @ref sd_ble_gap_data_length_update.\n See @ref ble_gap_evt_data_length_update_request_t. */
+  BLE_GAP_EVT_PHY_UPDATE_REQUEST,               /**< PHY Update Request.                             \n Reply with @ref sd_ble_gap_phy_update. \n See @ref ble_gap_evt_phy_update_request_t. */
+  BLE_GAP_EVT_PHY_UPDATE,                       /**< PHY Update Procedure is complete.               \n See @ref ble_gap_evt_phy_update_t.           */
+  BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST,       /**< Data Length Update Request.                     \n Reply with @ref sd_ble_gap_data_length_update.\n See @ref ble_gap_evt_data_length_update_request_t. */
   BLE_GAP_EVT_DATA_LENGTH_UPDATE,               /**< LL Data Channel PDU payload length updated.     \n See @ref ble_gap_evt_data_length_update_t. */
 };
 
@@ -133,7 +138,6 @@ enum BLE_GAP_OPTS
   BLE_GAP_OPT_PASSKEY,                          /**< Set passkey. @ref ble_gap_opt_passkey_t */
   BLE_GAP_OPT_SCAN_REQ_REPORT,                  /**< Scan request report. @ref ble_gap_opt_scan_req_report_t */
   BLE_GAP_OPT_COMPAT_MODE_1,                    /**< Compatibility mode. @ref ble_gap_opt_compat_mode_1_t */
-  BLE_GAP_OPT_COMPAT_MODE_2,                    /**< Compatibility mode. @ref ble_gap_opt_compat_mode_2_t */
   BLE_GAP_OPT_AUTH_PAYLOAD_TIMEOUT,             /**< Set Authenticated payload timeout. @ref ble_gap_opt_auth_payload_timeout_t */
   BLE_GAP_OPT_SLAVE_LATENCY_DISABLE,            /**< Disable slave latency. @ref ble_gap_opt_slave_latency_disable_t */
 };
@@ -176,10 +180,9 @@ enum BLE_GAP_CFGS
 /**@defgroup BLE_GAP_TIMEOUT_SOURCES GAP Timeout sources
  * @{ */
 #define BLE_GAP_TIMEOUT_SRC_ADVERTISING                0x00 /**< Advertising timeout. */
-#define BLE_GAP_TIMEOUT_SRC_SECURITY_REQUEST           0x01 /**< Security request timeout. */
-#define BLE_GAP_TIMEOUT_SRC_SCAN                       0x02 /**< Scanning timeout. */
-#define BLE_GAP_TIMEOUT_SRC_CONN                       0x03 /**< Connection timeout. */
-#define BLE_GAP_TIMEOUT_SRC_AUTH_PAYLOAD               0x04 /**< Authenticated payload timeout. */
+#define BLE_GAP_TIMEOUT_SRC_SCAN                       0x01 /**< Scanning timeout. */
+#define BLE_GAP_TIMEOUT_SRC_CONN                       0x02 /**< Connection timeout. */
+#define BLE_GAP_TIMEOUT_SRC_AUTH_PAYLOAD               0x03 /**< Authenticated payload timeout. */
 /**@} */
 
 
@@ -206,6 +209,9 @@ enum BLE_GAP_CFGS
  * @{ */
 #define BLE_GAP_PRIVACY_MODE_OFF                       0x00 /**< Device will send and accept its identity address for its own address. */
 #define BLE_GAP_PRIVACY_MODE_DEVICE_PRIVACY            0x01 /**< Device will send and accept only private addresses for its own address. */
+#define BLE_GAP_PRIVACY_MODE_NETWORK_PRIVACY           0x02 /**< Device will send and accept only private addresses for its own address,
+                                                                 and will not accept a peer using identity address as sender address when
+                                                                 the peer IRK is exchanged, non-zero and added to the identity list. */
 /**@} */
 
 
@@ -264,7 +270,6 @@ enum BLE_GAP_CFGS
 /**@defgroup BLE_GAP_ADV_INTERVALS GAP Advertising interval max and min
  * @{ */
 #define BLE_GAP_ADV_INTERVAL_MIN        0x0020 /**< Minimum Advertising interval in 625 us units, i.e. 20 ms. */
-#define BLE_GAP_ADV_NONCON_INTERVAL_MIN 0x00A0 /**< Minimum Advertising interval in 625 us units for non connectable mode, i.e. 100 ms. */
 #define BLE_GAP_ADV_INTERVAL_MAX        0x4000 /**< Maximum Advertising interval in 625 us units, i.e. 10.24 s. */
  /**@}  */
 
@@ -414,6 +419,14 @@ enum BLE_GAP_CFGS
 /**@brief Disable RSSI events for connections */
 #define BLE_GAP_RSSI_THRESHOLD_INVALID 0xFF
 
+/**@defgroup BLE_GAP_PHYS GAP PHYs
+ * @{ */
+#define BLE_GAP_PHY_AUTO                         0x00    /**< Automatic PHY selection. Refer @ref sd_ble_gap_phy_update for more information.*/
+#define BLE_GAP_PHY_1MBPS                        0x01    /**< 1 Mbps PHY. */
+#define BLE_GAP_PHY_2MBPS                        0x02    /**< 2 Mbps PHY. */
+#define BLE_GAP_PHY_CODED                        0x04    /**< Coded PHY. */
+
+/**@} */
 
 /**@defgroup BLE_GAP_CONN_SEC_MODE_SET_MACROS GAP attribute security requirement setters
  *
@@ -484,11 +497,14 @@ enum BLE_GAP_CFGS
 /**@} */
 
 
-
-
 /**@brief Automatic data length parameter. */
 #define BLE_GAP_DATA_LENGTH_AUTO 0
 
+/**@defgroup BLE_GAP_AUTH_PAYLOAD_TIMEOUT Authenticated payload timeout defines.
+  * @{ */
+#define BLE_GAP_AUTH_PAYLOAD_TIMEOUT_MAX (48000) /**< Maximum authenticated payload timeout in 10 ms units, i.e. 8 minutes. */
+#define BLE_GAP_AUTH_PAYLOAD_TIMEOUT_MIN (1)     /**< Minimum authenticated payload timeout in 10 ms units, i.e. 10 ms. */
+/**@} */
 
 /**@defgroup GAP_SEC_MODES GAP Security Modes
  * @{ */
@@ -536,7 +552,7 @@ typedef struct
  * Security Mode 1 Level 1: No security is needed (aka open link).\n
  * Security Mode 1 Level 2: Encrypted link required, MITM protection not necessary.\n
  * Security Mode 1 Level 3: MITM protected encrypted link required.\n
- * Security Mode 1 Level 4: LESC MITM protected encrypted link required.\n
+ * Security Mode 1 Level 4: LESC MITM protected encrypted link using a 128-bit strength encryption key required.\n
  * Security Mode 2 Level 1: Signing or encryption required, MITM protection not necessary.\n
  * Security Mode 2 Level 2: MITM protected signing required, unless link is MITM protected encrypted.\n
  */
@@ -603,7 +619,7 @@ typedef struct
 } ble_gap_scan_params_t;
 
 
-/**@brief Device Privacy.
+/**@brief Privacy.
  *
  *        The privacy feature provides a way for the device to avoid being tracked over a period of time.
  *        The privacy feature, when enabled, hides the local device identity and replaces it with a private address
@@ -612,6 +628,9 @@ typedef struct
  *        If a device still wants to be recognized by other peers, it needs to share it's Identity Resolving Key (IRK).
  *        With this key, a device can generate a random private address that can only be recognized by peers in possession of that key,
  *        and devices can establish connections without revealing their real identities.
+ *
+ *        Both network privacy (@ref BLE_GAP_PRIVACY_MODE_NETWORK_PRIVACY) and device privacy (@ref BLE_GAP_PRIVACY_MODE_DEVICE_PRIVACY)
+ *        are supported.
  *
  * @note  If the device IRK is updated, the new IRK becomes the one to be distributed in all
  *        bonding procedures performed after @ref sd_ble_gap_privacy_set returns.
@@ -627,6 +646,20 @@ typedef struct
                                             By default, the default IRK is used to generate random private resolvable addresses for the local device unless instructed otherwise. */
 } ble_gap_privacy_params_t;
 
+
+/**@brief PHY preferences for TX and RX
+ * @note  tx_phys and rx_phys are bit fields. Multiple bits can be set in them to indicate multiple preferred PHYs for each direction.
+ * @code
+ * p_gap_phys->tx_phys = BLE_GAP_PHY_1MBPS | BLE_GAP_PHY_2MBPS;
+ * p_gap_phys->rx_phys = BLE_GAP_PHY_1MBPS | BLE_GAP_PHY_2MBPS;
+ * @endcode
+ *
+ */
+typedef struct
+{
+  uint8_t tx_phys;     /**< Preferred transmit PHYs, see @ref BLE_GAP_PHYS. */
+  uint8_t rx_phys;     /**< Preferred receive PHYs, see @ref BLE_GAP_PHYS. */
+} ble_gap_phys_t;
 
 /** @brief Keys that can be exchanged during a bonding procedure. */
 typedef struct
@@ -729,6 +762,19 @@ typedef struct
   ble_gap_conn_params_t conn_params;            /**<  GAP Connection Parameters. */
 } ble_gap_evt_conn_param_update_t;
 
+/**@brief Event structure for @ref BLE_GAP_EVT_PHY_UPDATE_REQUEST. */
+typedef struct
+{
+  ble_gap_phys_t peer_preferred_phys;            /**< The PHYs the peer prefers to use. */
+} ble_gap_evt_phy_update_request_t;
+
+/**@brief Event Structure for @ref BLE_GAP_EVT_PHY_UPDATE. */
+typedef struct
+{
+  uint8_t status;                               /**< Status of the procedure, see @ref BLE_HCI_STATUS_CODES.*/
+  uint8_t tx_phy;                               /**< TX PHY for this connection, see @ref BLE_GAP_PHYS. */
+  uint8_t rx_phy;                               /**< RX PHY for this connection, see @ref BLE_GAP_PHYS. */
+} ble_gap_evt_phy_update_t;
 
 /**@brief Event structure for @ref BLE_GAP_EVT_SEC_PARAMS_REQUEST. */
 typedef struct
@@ -851,6 +897,7 @@ typedef struct
   uint8_t               auth_status;            /**< Authentication status, see @ref BLE_GAP_SEC_STATUS. */
   uint8_t               error_src : 2;          /**< On error, source that caused the failure, see @ref BLE_GAP_SEC_STATUS_SOURCES. */
   uint8_t               bonded : 1;             /**< Procedure resulted in a bond. */
+  uint8_t               lesc : 1;               /**< Procedure resulted in a LE Secure Connection. */
   ble_gap_sec_levels_t  sm1_levels;             /**< Levels supported in Security Mode 1. */
   ble_gap_sec_levels_t  sm2_levels;             /**< Levels supported in Security Mode 2. */
   ble_gap_sec_kdist_t   kdist_own;              /**< Bitmap stating which keys were exchanged (distributed) by the local device. If bonding with LE Secure Connections, the enc bit will be always set. */
@@ -950,11 +997,13 @@ typedef struct
     ble_gap_evt_auth_status_t                 auth_status;                  /**< Authentication Status Event Parameters. */
     ble_gap_evt_conn_sec_update_t             conn_sec_update;              /**< Connection Security Update Event Parameters. */
     ble_gap_evt_timeout_t                     timeout;                      /**< Timeout Event Parameters. */
-    ble_gap_evt_rssi_changed_t                rssi_changed;                 /**< RSSI Event parameters. */
+    ble_gap_evt_rssi_changed_t                rssi_changed;                 /**< RSSI Event Parameters. */
     ble_gap_evt_adv_report_t                  adv_report;                   /**< Advertising Report Event Parameters. */
     ble_gap_evt_sec_request_t                 sec_request;                  /**< Security Request Event Parameters. */
     ble_gap_evt_conn_param_update_request_t   conn_param_update_request;    /**< Connection Parameter Update Parameters. */
-    ble_gap_evt_scan_req_report_t             scan_req_report;              /**< Scan Request Report parameters. */
+    ble_gap_evt_scan_req_report_t             scan_req_report;              /**< Scan Request Report Parameters. */
+    ble_gap_evt_phy_update_request_t          phy_update_request;           /**< PHY Update Request Event Parameters. */
+    ble_gap_evt_phy_update_t                  phy_update;                   /**< PHY Update Parameters. */
     ble_gap_evt_data_length_update_request_t  data_length_update_request;   /**< Data Length Update Request Event Parameters. */
     ble_gap_evt_data_length_update_t          data_length_update;           /**< Data Length Update Event Parameters. */
   } params;                                                                 /**< Event Parameters. */
@@ -1158,8 +1207,12 @@ typedef struct
  *        This can be used with @ref sd_ble_opt_set to enable and disable
  *        compatibility mode 1. Compatibility mode 1 is disabled by default.
  *
- *  @note  Compatibility mode 1 enables interoperability with devices that do not support
- *         a value of 0 for the WinOffset parameter in the Link Layer CONNECT_REQ packet.
+ *  @note  Compatibility mode 1 enables interoperability with devices that do not support a value of
+ *         0 for the WinOffset parameter in the Link Layer CONNECT_IND packet. This applies to a
+ *         limited set of legacy peripheral devices from another vendor. Enabling this compatibility
+ *         mode will only have an effect if the local device will act as a central device and
+ *         initiate a connection to a peripheral device. In that case it may lead to the connection
+ *         creation taking up to one connection interval longer to complete for all connections.
  *
  *  @retval ::NRF_SUCCESS Set successfully.
  *  @retval ::NRF_ERROR_INVALID_STATE When connection creation is ongoing while mode 1 is set.
@@ -1169,27 +1222,10 @@ typedef struct
    uint8_t enable : 1;                           /**< Enable compatibility mode 1.*/
 } ble_gap_opt_compat_mode_1_t;
 
-/**@brief Compatibility mode 2 option.
- *
- *        This can be used with @ref sd_ble_opt_set to enable compatibility mode 2.
- *        Compatibility mode 2 is disabled by default.
- *
- *  @note  Compatibility mode 2 enables interoperability with devices that initiate Feature exchange
- *         and version exchange procedure in parallel.
- *
- *  @retval ::NRF_SUCCESS Set successfully.
- *  @retval ::NRF_ERROR_INVALID_PARAM if enable bit is not set to 1. Currently only enabling is supported.
- *  @retval ::NRF_ERROR_INVALID_STATE When any role is running while mode 2 is set.
- */
-typedef struct
-{
-   uint8_t enable : 1;                           /**< Enable compatibility mode 2.*/
-} ble_gap_opt_compat_mode_2_t;
-
-
 /**@brief Authenticated payload timeout option.
  *
- *        This can be used with @ref sd_ble_opt_set to change the Authenticated payload timeout to a value other than the default of 8 minutes.
+ *        This can be used with @ref sd_ble_opt_set to change the Authenticated payload timeout to a value other
+ *        than the default of @ref BLE_GAP_AUTH_PAYLOAD_TIMEOUT_MAX.
  *
  * @note  The authenticated payload timeout event ::BLE_GAP_TIMEOUT_SRC_AUTH_PAYLOAD will be generated
  *        if auth_payload_timeout time has elapsed without receiving a packet with a valid MIC on an encrypted
@@ -1208,7 +1244,7 @@ typedef struct
 typedef struct
 {
   uint16_t   conn_handle;                       /**< Connection Handle */
-  uint16_t   auth_payload_timeout;              /**< Requested timeout in 10 ms unit. Maximum is 48 000 (=480 000 ms =8 min). Minimum is 1 (=10 ms). */
+  uint16_t   auth_payload_timeout;              /**< Requested timeout in 10 ms unit, see @ref BLE_GAP_AUTH_PAYLOAD_TIMEOUT. */
 } ble_gap_opt_auth_payload_timeout_t;
 
 
@@ -1220,7 +1256,6 @@ typedef union
   ble_gap_opt_passkey_t                 passkey;                   /**< Parameters for the Passkey option.*/
   ble_gap_opt_scan_req_report_t         scan_req_report;           /**< Parameters for the scan request report option.*/
   ble_gap_opt_compat_mode_1_t           compat_mode_1;             /**< Parameters for the compatibility mode 1 option.*/
-  ble_gap_opt_compat_mode_2_t           compat_mode_2;             /**< Parameters for the compatibility mode 2 option.*/
   ble_gap_opt_auth_payload_timeout_t    auth_payload_timeout;      /**< Parameters for the authenticated payload timeout option.*/
   ble_gap_opt_slave_latency_disable_t   slave_latency_disable;     /**< Parameters for the Disable slave latency option */
 } ble_gap_opt_t;
@@ -1357,9 +1392,10 @@ SVCALL(SD_BLE_GAP_PRIVACY_SET, uint32_t, sd_ble_gap_privacy_set(ble_gap_privacy_
 
 /**@brief Get privacy settings.
  *
- * @note  The privacy settings returned include the current device irk as well.
+ * @note ::ble_gap_privacy_params_t::p_device_irk must be initialized to NULL or a valid address before this function is called.
+ *       If it is initialized to a valid address, the address pointed to will contain the current device IRK on return.
  *
- * @param[in] p_privacy_params Privacy settings.
+ * @param[in,out] p_privacy_params Privacy settings.
  *
  * @retval ::NRF_SUCCESS            Privacy settings read.
  * @retval ::NRF_ERROR_INVALID_ADDR The pointer given for returning the privacy settings may be NULL or invalid.
@@ -1419,7 +1455,9 @@ SVCALL(SD_BLE_GAP_ADV_DATA_SET, uint32_t, sd_ble_gap_adv_data_set(uint8_t const 
  *
  * @param[in] p_adv_params Pointer to advertising parameters structure.
  * @param[in] conn_cfg_tag Tag identifying a configuration set by @ref sd_ble_cfg_set or @ref
- *                         BLE_CONN_CFG_TAG_DEFAULT to use the default connection configuration.
+ *                         BLE_CONN_CFG_TAG_DEFAULT to use the default connection configuration. If
+ *                         @ref ble_gap_adv_params_t::type is @ref BLE_GAP_ADV_TYPE_ADV_NONCONN_IND,
+ *                         this is ignored.
  *
  * @retval ::NRF_SUCCESS The BLE stack has started advertising.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
@@ -1428,7 +1466,6 @@ SVCALL(SD_BLE_GAP_ADV_DATA_SET, uint32_t, sd_ble_gap_adv_data_set(uint8_t const 
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied, check the accepted ranges and limits.
  * @retval ::BLE_ERROR_GAP_INVALID_BLE_ADDR Invalid Bluetooth address supplied.
  * @retval ::BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST Discoverable mode and whitelist incompatible.
- * @retval ::NRF_ERROR_BUSY The stack is busy, process pending events and retry.
  * @retval ::NRF_ERROR_RESOURCES Not enough BLE role slots available.
  *                               Stop one or more currently active roles (Central, Peripheral or Observer) and try again
  */
@@ -1479,7 +1516,7 @@ SVCALL(SD_BLE_GAP_ADV_STOP, uint32_t, sd_ble_gap_adv_stop(void));
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied, check parameter limits and constraints.
  * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation.
- * @retval ::NRF_ERROR_BUSY Procedure already in progress or not allowed at this time, process pending events and wait for pending procedures to complete and retry.
+ * @retval ::NRF_ERROR_BUSY Procedure already in progress, wait for pending procedures to complete and retry.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid connection handle supplied.
  * @retval ::NRF_ERROR_NO_MEM Not enough memory to complete operation.
  */
@@ -1512,11 +1549,7 @@ SVCALL(SD_BLE_GAP_DISCONNECT, uint32_t, sd_ble_gap_disconnect(uint16_t conn_hand
 
 /**@brief Set the radio's transmit power.
  *
- * @param[in] tx_power Radio transmit power in dBm (accepted values are -40, -30, -20, -16, -12, -8, -4, 0, 3, and 4 dBm).
- *
- * @note The +3dBm setting is only available on nRF52 series ICs.
- * @note The -30dBm setting is only available on nRF51 series ICs.
- * @note The -40dBm setting is only available on nRF52 series ICs.
+ * @param[in] tx_power Radio transmit power in dBm (accepted values are -40, -20, -16, -12, -8, -4, 0, 3, and 4 dBm).
  *
  * @retval ::NRF_SUCCESS Successfully changed the transmit power.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
@@ -1642,7 +1675,6 @@ SVCALL(SD_BLE_GAP_DEVICE_NAME_GET, uint32_t, sd_ble_gap_device_name_get(uint8_t 
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
  * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation.
- * @retval ::NRF_ERROR_BUSY The stack is busy, process pending events and retry.
  * @retval ::NRF_ERROR_NO_MEM The maximum number of authentication procedures that can run in parallel for the given role is reached.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid connection handle supplied.
  * @retval ::NRF_ERROR_NOT_SUPPORTED Setting of sign or link fields in @ref ble_gap_sec_kdist_t not supported.
@@ -1701,6 +1733,7 @@ SVCALL(SD_BLE_GAP_AUTHENTICATE, uint32_t, sd_ble_gap_authenticate(uint16_t conn_
  *
  * @retval ::NRF_SUCCESS Successfully accepted security parameter from the application.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
+ * @retval ::NRF_ERROR_BUSY The stack is busy, process pending events and retry.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
  * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid connection handle supplied.
@@ -1776,8 +1809,6 @@ SVCALL(SD_BLE_GAP_AUTH_KEY_REPLY, uint32_t, sd_ble_gap_auth_key_reply(uint16_t c
 SVCALL(SD_BLE_GAP_LESC_DHKEY_REPLY, uint32_t, sd_ble_gap_lesc_dhkey_reply(uint16_t conn_handle, ble_gap_lesc_dhkey_t const *p_dhkey));
 
 /**@brief Notify the peer of a local keypress.
- *
- * @details This function can only be used when an authentication procedure using LE Secure Connection is in progress. Calling it at other times will result in an @ref NRF_ERROR_INVALID_STATE.
  *
  * @mscs
  * @mmsc{@ref BLE_GAP_PERIPH_LESC_BONDING_PKE_CD_MSC}
@@ -1991,7 +2022,6 @@ SVCALL(SD_BLE_GAP_RSSI_GET, uint32_t, sd_ble_gap_rssi_get(uint16_t conn_handle, 
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
- * @retval ::NRF_ERROR_BUSY The stack is busy, process pending events and retry.
  * @retval ::NRF_ERROR_RESOURCES Not enough BLE role slots available.
  *                               Stop one or more currently active roles (Central, Peripheral or Broadcaster) and try again
  */
@@ -2023,8 +2053,6 @@ SVCALL(SD_BLE_GAP_SCAN_STOP, uint32_t, sd_ble_gap_scan_stop(void));
  * @endmscs
  *
  * @param[in] p_peer_addr   Pointer to peer address. If the use_whitelist bit is set in @ref ble_gap_scan_params_t, then this is ignored.
- *                          If @ref ble_gap_addr_t::addr_id_peer is set then p_peer_addr must be present in the device identity list
- *                          see @ref sd_ble_gap_device_identities_set.
  * @param[in] p_scan_params Pointer to scan parameters structure.
  * @param[in] p_conn_params Pointer to desired connection parameters.
  * @param[in] conn_cfg_tag  Tag identifying a configuration set by @ref sd_ble_cfg_set or @ref
@@ -2040,8 +2068,6 @@ SVCALL(SD_BLE_GAP_SCAN_STOP, uint32_t, sd_ble_gap_scan_stop(void));
  *                                   existing locally initiated connect procedure, which must complete before initiating again.
  * @retval ::BLE_ERROR_GAP_INVALID_BLE_ADDR Invalid Peer address.
  * @retval ::NRF_ERROR_CONN_COUNT The limit of available connections has been reached.
- * @retval ::NRF_ERROR_BUSY The stack is busy, process pending events and retry. If another connection is being established
- *                          wait for the corresponding @ref BLE_GAP_EVT_CONNECTED event before calling again.
  * @retval ::NRF_ERROR_RESOURCES Not enough BLE role slots available.
  *                               Stop one or more currently active roles (Central, Peripheral or Broadcaster) and try again
  */
@@ -2059,6 +2085,41 @@ SVCALL(SD_BLE_GAP_CONNECT, uint32_t, sd_ble_gap_connect(ble_gap_addr_t const *p_
  */
 SVCALL(SD_BLE_GAP_CONNECT_CANCEL, uint32_t, sd_ble_gap_connect_cancel(void));
 
+
+/**@brief Initiate or respond to a PHY Update Procedure
+ *
+ * @details   This function is used to initiate or respond to a PHY Update Procedure. It will always generate a
+ *            @ref BLE_GAP_EVT_PHY_UPDATE event if successfully executed. If @ref ble_gap_phys_t::tx_phys or @ref ble_gap_phys_t::rx_phys
+ *            is @ref BLE_GAP_PHY_AUTO, then the stack will select a PHY for the respective direction based on the peer's PHY preferences
+ *            and the local stack configuration. If the peer does not support the PHY Update Procedure, then the
+ *            resulting @ref BLE_GAP_EVT_PHY_UPDATE event will have a status set to
+ *            @ref BLE_HCI_UNSUPPORTED_REMOTE_FEATURE.
+ *            If the PHY procedure was rejected by the peer due to a procedure collision, the status will be
+ *            @ref BLE_HCI_STATUS_CODE_LMP_ERROR_TRANSACTION_COLLISION or @ref BLE_HCI_DIFFERENT_TRANSACTION_COLLISION.
+ *            If the peer responds to the PHY Update procedure with invalid parameters, the status will be @ref BLE_HCI_STATUS_CODE_INVALID_LMP_PARAMETERS.
+ *            If the PHY procedure was rejected by the peer for a different reason, the status will contain the reason as specified by the peer.
+ *
+ * @events
+ * @event{@ref BLE_GAP_EVT_PHY_UPDATE, Result of the PHY Update Procedure.}
+ * @endevents
+ *
+ * @mscs
+ * @mmsc{@ref BLE_GAP_CENTRAL_PHY_UPDATE}
+ * @mmsc{@ref BLE_GAP_PERIPHERAL_PHY_UPDATE}
+ * @endmscs
+ *
+ * @param[in] conn_handle   Connection handle to indicate the connection for which the PHY Update is requested.
+ * @param[in] p_gap_phys    Pointer to PHY structure.
+ *
+ * @retval ::NRF_SUCCESS Successfully requested a PHY Update.
+ * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
+ * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid connection handle supplied.
+ * @retval ::NRF_ERROR_INVALID_PARAM Unsupported PHYs supplied to the call.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation.
+ * @retval ::NRF_ERROR_BUSY Procedure is already in progress or not allowed at this time. Process pending events and wait for the pending procedure to complete and retry.
+ *
+ */
+SVCALL(SD_BLE_GAP_PHY_UPDATE, uint32_t, sd_ble_gap_phy_update(uint16_t conn_handle, ble_gap_phys_t const *p_gap_phys));
 
 /**@brief Initiate or respond to a Data Length Update Procedure.
  *

@@ -50,7 +50,7 @@
 #include "ant_encrypt_negotiation_slave.h"
 
 /** Number of supported channels. */
-#define NUMBER_OF_CHANNELS (ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED)
+#define NUMBER_OF_CHANNELS (NRF_SDH_ANT_TOTAL_CHANNELS_ALLOCATED)
 
 /** Flag to block other channels from attempting to enable encryption while
  * another encryption is in the process.
@@ -142,11 +142,8 @@ static void ant_slave_encrypt_try_enable(uint8_t ant_channel,
 
 void ant_slave_encrypt_negotiation(ant_evt_t * p_ant_evt)
 {
-
-    uint8_t const ant_channel = p_ant_evt->channel;
-    ANT_MESSAGE               * p_ant_msg;
-
-    ant_encrypt_tracking_state_t track_state = ant_channel_encryp_tracking_state_get(ant_channel);
+    ant_encrypt_tracking_state_t track_state =
+        ant_channel_encryp_tracking_state_get(p_ant_evt->channel);
 
     if (track_state == ANT_ENC_CHANNEL_STAT_TRACKING_UNSUPPORTED)
         return;
@@ -159,25 +156,24 @@ void ant_slave_encrypt_negotiation(ant_evt_t * p_ant_evt)
                 m_can_enable_crypto = true;
             }
 
-            ant_channel_encryp_tracking_state_set(ant_channel, ANT_ENC_CHANNEL_STAT_NOT_TRACKING);
+            ant_channel_encryp_tracking_state_set(p_ant_evt->channel,
+                                                  ANT_ENC_CHANNEL_STAT_NOT_TRACKING);
             break;
 
         case EVENT_RX:
-            /*lint -e545 -save*/
-            p_ant_msg = (ANT_MESSAGE *) &(p_ant_evt->msg.evt_buffer);
-            /*lint -restore*/
-            ant_slave_encrypt_try_enable(ant_channel, p_ant_msg->ANT_MESSAGE_ucMesgID);
+            ant_slave_encrypt_try_enable(p_ant_evt->channel,
+                                         p_ant_evt->message.ANT_MESSAGE_ucMesgID);
             break;
 
         case EVENT_ENCRYPT_NEGOTIATION_SUCCESS:
             m_can_enable_crypto = true;
-            ant_channel_encryp_tracking_state_set(ant_channel,
+            ant_channel_encryp_tracking_state_set(p_ant_evt->channel,
                                                   ANT_ENC_CHANNEL_STAT_TRACKING_DECRYPTED);
             break;
 
         case EVENT_ENCRYPT_NEGOTIATION_FAIL:
             m_can_enable_crypto = true;
-            ant_channel_encryp_tracking_state_set(ant_channel,
+            ant_channel_encryp_tracking_state_set(p_ant_evt->channel,
                                                   ANT_ENC_CHANNEL_STAT_TRACKING_ENCRYPTED);
             break;
 

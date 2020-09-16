@@ -74,9 +74,9 @@ void es_adv_init(uint8_t                     ecs_uuid_type,
 
 /** @brief Function for passing BLE events to this module.
  *
- * @param[in] p_ble_evt     Pointer to the BLE evt.
+ * @param[in]   p_ble_evt   Pointer to the BLE evt.
  */
-void es_adv_on_ble_evt(ble_evt_t * p_ble_evt);
+void es_adv_on_ble_evt(ble_evt_t const * p_ble_evt);
 
 /** @brief Function for starting the advertisements.
  */
@@ -115,7 +115,7 @@ nrf_ble_escs_adv_interval_t es_adv_interval_get(void);
  */
 bool es_adv_remain_connectable_get(void);
 
-/** @brief Function for initializing the Eddystone advertisement timers. 
+/** @brief Function for initializing the Eddystone advertisement timers.
  */
 void es_adv_timers_init(void);
 

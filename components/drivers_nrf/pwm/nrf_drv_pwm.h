@@ -217,7 +217,7 @@ typedef void (* nrf_drv_pwm_handler_t)(nrf_drv_pwm_evt_type_t event_type);
  *
  * @param[in] p_instance Pointer to the driver instance structure.
  * @param[in] p_config   Pointer to the structure with initial configuration.
- *                       If NULL, the default configuration is used.
+ *
  * @param[in] handler    Event handler provided by the user. If NULL is passed
  *                       instead, event notifications are not done and PWM
  *                       interrupts are disabled.

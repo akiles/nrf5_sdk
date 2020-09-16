@@ -47,8 +47,13 @@
  * @details This module implements the Alert Notification Client according to the
  *          Alert Notification Profile.
  *
- * @note The application must propagate BLE stack events to the Alert Notification Client module
- *       by calling ble_ans_c_on_ble_evt() from the @ref softdevice_handler callback.
+ * @note    The application must register this module as BLE event observer using the
+ *          NRF_SDH_BLE_OBSERVER macro. Example:
+ *          @code
+ *              ble_ans_c_t instance;
+ *              NRF_SDH_BLE_OBSERVER(anything, BLE_ANS_C_BLE_OBSERVER_PRIO,
+ *                                   ble_ans_c_on_ble_evt, &instance);
+ *          @endcode
  *
  * @note Attention!
  *  To maintain compliance with Nordic Semiconductor ASA Bluetooth profile
@@ -63,10 +68,22 @@
 #include "sdk_common.h"
 #include "ble_srv_common.h"
 #include "ble_db_discovery.h"
+#include "nrf_sdh_ble.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**@brief   Macro for defining a ble_ans_c instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_ANS_C_DEF(_name)                                                                        \
+static ble_ans_c_t _name;                                                                           \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     BLE_ANS_C_BLE_OBSERVER_PRIO,                                                   \
+                     ble_ans_c_on_ble_evt, &_name)
 
 
 // Forward declaration of the ble_ans_c_t type.
@@ -151,9 +168,7 @@ typedef struct
     uint8_t * p_alert_msg_buf;                                /**< Pointer to buffer containing the optional text message. */
 } ble_ans_alert_notification_t;
 
-
-/**@brief Struct to hold information on the Alert Notification Service if found on the server.
-*/
+/**@brief Struct to hold information on the Alert Notification Service if found on the server. */
 typedef struct
 {
     ble_gattc_service_t service;                              /**< The GATT service holding the discovered Alert Notification Service. */
@@ -165,7 +180,6 @@ typedef struct
     ble_gattc_char_t    unread_alert_status;                  /**< Characteristic for the Unread Alert Notification. @ref BLE_UUID_UNREAD_ALERT_CHAR */
     ble_gattc_desc_t    unread_alert_cccd;                    /**< Characteristic Descriptor for Unread Alert Category. Enables or Disables GATT notifications */
 } ble_ans_c_service_t;
-
 
 /**@brief Alert Notification Event structure
  *
@@ -188,7 +202,6 @@ typedef struct
 
 /**@brief Alert Notification event handler type. */
 typedef void (*ble_ans_c_evt_handler_t) (ble_ans_c_evt_t * p_evt);
-
 
 /**@brief Alert Notification structure. This contains various status information for the client. */
 struct ble_ans_c_s
@@ -227,17 +240,17 @@ typedef struct
  *                    the discovery.
  * @param[in] p_evt   Pointer to the event received from the database discovery module.
  */
-void ble_ans_c_on_db_disc_evt(ble_ans_c_t * p_ans, const ble_db_discovery_evt_t * p_evt);
+void ble_ans_c_on_db_disc_evt(ble_ans_c_t * p_ans, ble_db_discovery_evt_t const * p_evt);
 
 
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @details Handles all events from the BLE stack of interest to the Alert Notification Client.
  *
- * @param[in]   p_ans      Alert Notification Client structure.
- * @param[in]   p_ble_evt  Event received from the BLE stack.
+ * @param[in]   p_ble_evt   Event received from the BLE stack.
+ * @param[in]   p_context   Alert Notification Client structure.
  */
-void ble_ans_c_on_ble_evt(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt);
+void ble_ans_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 
 
 /**@brief Function for initializing the Alert Notification Client.
@@ -249,7 +262,7 @@ void ble_ans_c_on_ble_evt(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt);
  *
  * @return      NRF_SUCCESS on successful initialization of client, otherwise an error code.
  */
-uint32_t ble_ans_c_init(ble_ans_c_t * p_ans, const ble_ans_c_init_t * p_ans_init);
+uint32_t ble_ans_c_init(ble_ans_c_t * p_ans, ble_ans_c_init_t const * p_ans_init);
 
 
 /**@brief Function for writing the to CCCD to enable new alert notifications from the Alert Notification Service.
@@ -259,7 +272,7 @@ uint32_t ble_ans_c_init(ble_ans_c_t * p_ans, const ble_ans_c_init_t * p_ans_init
  *
  * @return     NRF_SUCCESS on successful writing of the CCCD, otherwise an error code.
  */
-uint32_t ble_ans_c_enable_notif_new_alert(const ble_ans_c_t * p_ans);
+uint32_t ble_ans_c_enable_notif_new_alert(ble_ans_c_t const * p_ans);
 
 
 /**@brief Function for writing to the CCCD to enable unread alert notifications from the Alert Notification Service.
@@ -269,7 +282,7 @@ uint32_t ble_ans_c_enable_notif_new_alert(const ble_ans_c_t * p_ans);
  *
  * @return     NRF_SUCCESS on successful writing of the CCCD, otherwise an error code.
  */
-uint32_t ble_ans_c_enable_notif_unread_alert(const ble_ans_c_t * p_ans);
+uint32_t ble_ans_c_enable_notif_unread_alert(ble_ans_c_t const * p_ans);
 
 
 /**@brief Function for writing to the CCCD to disable new alert notifications from the Alert Notification Service.
@@ -279,7 +292,7 @@ uint32_t ble_ans_c_enable_notif_unread_alert(const ble_ans_c_t * p_ans);
  *
  * @return     NRF_SUCCESS on successful writing of the CCCD, otherwise an error code.
  */
-uint32_t ble_ans_c_disable_notif_new_alert(const ble_ans_c_t * p_ans);
+uint32_t ble_ans_c_disable_notif_new_alert(ble_ans_c_t const * p_ans);
 
 
 /**@brief Function for writing to the CCCD to disable unread alert notifications from the Alert Notification Service.
@@ -289,7 +302,7 @@ uint32_t ble_ans_c_disable_notif_new_alert(const ble_ans_c_t * p_ans);
  *
  * @return     NRF_SUCCESS on successful writing of the CCCD, otherwise an error code.
  */
-uint32_t ble_ans_c_disable_notif_unread_alert(const ble_ans_c_t * p_ans);
+uint32_t ble_ans_c_disable_notif_unread_alert(ble_ans_c_t const * p_ans);
 
 
 /**@brief Function for writing to the Alert Notification Control Point to specify alert notification behavior in the
@@ -304,8 +317,8 @@ uint32_t ble_ans_c_disable_notif_unread_alert(const ble_ans_c_t * p_ans);
  *
  * @return     NRF_SUCCESS     on successful writing of the Control Point, otherwise an error code.
  */
-uint32_t ble_ans_c_control_point_write(const ble_ans_c_t             * p_ans,
-                                       const ble_ans_control_point_t * p_control_point);
+uint32_t ble_ans_c_control_point_write(ble_ans_c_t const             * p_ans,
+                                       ble_ans_control_point_t const * p_control_point);
 
 
 /**@brief Function for reading the Supported New Alert characteristic value of the service.
@@ -316,7 +329,7 @@ uint32_t ble_ans_c_control_point_write(const ble_ans_c_t             * p_ans,
  *
  * @return     NRF_SUCCESS on successful transmission of the read request, otherwise an error code.
  */
-uint32_t ble_ans_c_new_alert_read(const ble_ans_c_t * p_ans);
+uint32_t ble_ans_c_new_alert_read(ble_ans_c_t const * p_ans);
 
 
 /**@brief Function for reading the Supported Unread Alert characteristic value of the service.
@@ -327,7 +340,7 @@ uint32_t ble_ans_c_new_alert_read(const ble_ans_c_t * p_ans);
  *
  * @return     NRF_SUCCESS on successful transmission of the read request, otherwise an error code.
  */
-uint32_t ble_ans_c_unread_alert_read(const ble_ans_c_t * p_ans);
+uint32_t ble_ans_c_unread_alert_read(ble_ans_c_t const * p_ans);
 
 
 /**@brief Function for requesting the peer to notify the New Alert characteristics immediately.
@@ -338,7 +351,7 @@ uint32_t ble_ans_c_unread_alert_read(const ble_ans_c_t * p_ans);
  *
  * @return     NRF_SUCCESS on successful transmission of the read request, otherwise an error code.
  */
-uint32_t ble_ans_c_new_alert_notify(const ble_ans_c_t * p_ans, ble_ans_category_id_t category);
+uint32_t ble_ans_c_new_alert_notify(ble_ans_c_t const * p_ans, ble_ans_category_id_t category);
 
 
 /**@brief Function for requesting the peer to notify the Unread Alert characteristics immediately.
@@ -349,7 +362,7 @@ uint32_t ble_ans_c_new_alert_notify(const ble_ans_c_t * p_ans, ble_ans_category_
  *
  * @return     NRF_SUCCESS on successful transmission of the read request, otherwise an error code.
  */
-uint32_t ble_ans_c_unread_alert_notify(const ble_ans_c_t * p_ans, ble_ans_category_id_t category);
+uint32_t ble_ans_c_unread_alert_notify(ble_ans_c_t const * p_ans, ble_ans_category_id_t category);
 
 
 /**@brief     Function for assigning a handles to a an instance of ans_c.
@@ -369,8 +382,8 @@ uint32_t ble_ans_c_unread_alert_notify(const ble_ans_c_t * p_ans, ble_ans_catego
  *
  */
 uint32_t ble_ans_c_handles_assign(ble_ans_c_t               * p_ans,
-                                  const uint16_t              conn_handle,
-                                  const ble_ans_c_service_t * p_peer_handles);
+                                  uint16_t const              conn_handle,
+                                  ble_ans_c_service_t const * p_peer_handles);
 
 
 

@@ -65,8 +65,27 @@ extern "C" {
 #endif
 
 
-#define NRF_PDM_MAX_BUFFER_SIZE 32768
+#define NRF_PDM_MAX_BUFFER_SIZE 32767
 
+
+/**
+ * @brief PDM error type.
+ */
+typedef enum
+{
+    PDM_NO_ERROR = 0,
+    PDM_ERROR_OVERFLOW = 1
+} nrf_drv_pdm_error_t;
+
+/**
+ * @brief PDM event structure.
+ */
+typedef struct
+{
+    bool                buffer_requested;  ///< Buffer request flag.
+    int16_t *           buffer_released;   ///< Pointer to the released buffer. Can be NULL.
+    nrf_drv_pdm_error_t error;             ///< Error type.
+} nrf_drv_pdm_evt_t;
 
 /**
  * @brief PDM interface driver configuration structure.
@@ -81,9 +100,6 @@ typedef struct
     nrf_pdm_gain_t gain_l;             ///< Left channel gain.
     nrf_pdm_gain_t gain_r;             ///< Right channel gain.
     uint8_t        interrupt_priority; ///< Interrupt priority.
-    uint16_t       buffer_length;      ///< Length of a single buffer (in 16-bit words).
-    int16_t *      buffer_a;           ///< Sample buffer A (filled first).
-    int16_t *      buffer_b;           ///< Sample buffer B (filled after buffer A).
 } nrf_drv_pdm_config_t;
 
 
@@ -93,11 +109,8 @@ typedef struct
  *
  * @param PIN_CLK  CLK output pin.
  * @param PIN_DIN  DIN input pin.
- * @param BUFF_A   Sample buffer A (filled first).
- * @param BUFF_B   Sample buffer B (filled after buffer A).
- * @param BUFF_LEN Length of a single buffer (in 16-bit words).
  */
-#define NRF_DRV_PDM_DEFAULT_CONFIG(PIN_CLK, PIN_DIN, BUFF_A, BUFF_B, BUFF_LEN) \
+#define NRF_DRV_PDM_DEFAULT_CONFIG(PIN_CLK, PIN_DIN) \
 {                                                                              \
     .mode               = (nrf_pdm_mode_t)PDM_CONFIG_MODE,                     \
     .edge               = (nrf_pdm_edge_t)PDM_CONFIG_EDGE,                     \
@@ -106,29 +119,26 @@ typedef struct
     .clock_freq         = (nrf_pdm_freq_t)PDM_CONFIG_CLOCK_FREQ,               \
     .gain_l             = NRF_PDM_GAIN_DEFAULT,                                \
     .gain_r             = NRF_PDM_GAIN_DEFAULT,                                \
-    .interrupt_priority = PDM_CONFIG_IRQ_PRIORITY,                             \
-    .buffer_length      = BUFF_LEN,                                            \
-    .buffer_a           = BUFF_A,                                              \
-    .buffer_b           = BUFF_B                                               \
+    .interrupt_priority = PDM_CONFIG_IRQ_PRIORITY                              \
 }
 
 
 /**
  * @brief   Handler for PDM interface ready events.
  *
- * This event handler is called when a buffer is full and ready to be processed.
+ * This event handler is called on buffer request, error or when a buffer is full
+ * and ready to be processed.
  *
- * @param[in] p_buffer Sample buffer pointer.
- * @param[in] length   Buffer length in 16-bit words.
+ * @param[in] evt    Pointer to the PDM event structure.
  */
-typedef void (*nrf_drv_pdm_event_handler_t)(uint32_t * buffer, uint16_t length);
+typedef void (*nrf_drv_pdm_event_handler_t)(nrf_drv_pdm_evt_t const * const evt);
 
 
 /**
  * @brief Function for initializing the PDM interface.
  *
- * @param[in] p_config      Pointer to a configuration structure. If NULL, the default one is used.
- * @param[in] event_handler Event handler provided by the user.
+ * @param[in] p_config      Pointer to a configuration structure. Cannot be NULL.
+ * @param[in] event_handler Event handler provided by the user. Cannot be NULL.
  *
  * @retval    NRF_SUCCESS If initialization was successful.
  * @retval    NRF_ERROR_INVALID_STATE If the driver is already initialized.
@@ -192,7 +202,20 @@ ret_code_t nrf_drv_pdm_start(void);
  */
 ret_code_t nrf_drv_pdm_stop(void);
 
-
+/**
+ * @brief   Function for supplying the sample buffer.
+ *
+ * Call this function after every buffer request event.
+ *
+ * @param[in]  buffer        Pointer to the receive buffer. Cannot be NULL.
+ * @param[in]  buffer_length Length of the receive buffer in 16-bit words.
+ *
+ * @retval NRF_SUCCESS             If the buffer was applied successfully.
+ * @retval NRF_ERROR_BUSY          If the buffer was already supplied or the peripheral is currently being stopped.
+ * @retval NRF_ERROR_INVALID_STATE If the driver was not initialized.
+ * @retval NRF_ERROR_INVALID_PARAM If invalid parameters were provided.
+ */
+ret_code_t nrf_drv_pdm_buffer_set(int16_t * buffer, uint16_t buffer_length);
 
 #ifdef __cplusplus
 }

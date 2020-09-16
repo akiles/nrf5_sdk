@@ -39,10 +39,10 @@
  */
 /**@file
  * HKDF-SHA512 is a key derivation function based on HMAC-SHA512.
- * 
+ *
  * @see [RFC 5869 - HMAC-based Extract-and-Expand Key Derivation Function (HKDF)](http://tools.ietf.org/html/rfc5869)
  */
- 
+
 #ifndef OCC_HKDF_SHA512_H
 #define OCC_HKDF_SHA512_H
 

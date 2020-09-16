@@ -74,7 +74,7 @@ void tx_buffer_insert(tx_message_t * p_msg)
     m_tx_buffer[m_tx_insert_index].req.write_req.gattc_params.p_value  = m_tx_buffer[m_tx_insert_index].req.write_req.gattc_value;
     m_tx_buffer[m_tx_insert_index].req.write_req.gattc_params.offset   = p_msg->req.write_req.gattc_params.offset;
 
-    if(p_msg->type == WRITE_REQ)
+    if (p_msg->type == WRITE_REQ)
     {
         memcpy(m_tx_buffer[m_tx_insert_index].req.write_req.gattc_value,
                p_msg->req.write_req.gattc_value,

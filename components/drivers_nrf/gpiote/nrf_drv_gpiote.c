@@ -46,7 +46,7 @@
 #include "nrf_bitmask.h"
 #include <string.h>
 
-#define NRF_LOG_MODULE_NAME "GPIOTE"
+#define NRF_LOG_MODULE_NAME gpiote
 
 #if GPIOTE_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       GPIOTE_CONFIG_LOG_LEVEL
@@ -56,7 +56,7 @@
 #define NRF_LOG_LEVEL       0
 #endif  // GPIOTE_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
-#include "nrf_log_ctrl.h"
+NRF_LOG_MODULE_REGISTER();
 
 /* Validate configuration */
 INTERRUPT_PRIORITY_VALIDATION(GPIOTE_CONFIG_IRQ_PRIORITY);
@@ -228,7 +228,7 @@ ret_code_t nrf_drv_gpiote_init(void)
     if (m_cb.state != NRF_DRV_STATE_UNINITIALIZED)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+        NRF_LOG_WARNING("Function: %s, error code: %s.",
                         (uint32_t)__func__,
                         (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
@@ -252,7 +252,7 @@ ret_code_t nrf_drv_gpiote_init(void)
     m_cb.state = NRF_DRV_STATE_INITIALIZED;
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__,
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__,
                  (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
@@ -285,7 +285,7 @@ void nrf_drv_gpiote_uninit(void)
         }
     }
     m_cb.state = NRF_DRV_STATE_UNINITIALIZED;
-    NRF_LOG_INFO("Uninitialized.\r\n");
+    NRF_LOG_INFO("Uninitialized.");
 }
 
 
@@ -337,7 +337,7 @@ ret_code_t nrf_drv_gpiote_out_init(nrf_drv_gpiote_pin_t                pin,
         }
     }
 
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__,
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__,
                  (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
@@ -538,7 +538,7 @@ ret_code_t nrf_drv_gpiote_in_init(nrf_drv_gpiote_pin_t               pin,
         }
     }
 
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__,
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__,
                  (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
@@ -685,10 +685,10 @@ void GPIOTE_IRQHandler(void)
             if (mask & status)
             {
                 nrf_drv_gpiote_pin_t pin = nrf_gpiote_event_pin_get(i);
-                NRF_LOG_DEBUG("Event in number: %d.\r\n", i);
+                NRF_LOG_DEBUG("Event in number: %d.", i);
                 nrf_gpiote_polarity_t        polarity = nrf_gpiote_event_polarity_get(i);
                 nrf_drv_gpiote_evt_handler_t handler  = channel_handler_get(i);
-                NRF_LOG_DEBUG("Pin: %d, polarity: %d.\r\n", pin, polarity);
+                NRF_LOG_DEBUG("Pin: %d, polarity: %d.", pin, polarity);
                 if (handler)
                 {
                     handler(pin, polarity);
@@ -740,7 +740,7 @@ void GPIOTE_IRQHandler(void)
                         if ((pin_state && (sense == NRF_GPIO_PIN_SENSE_HIGH)) ||
                             (!pin_state && (sense == NRF_GPIO_PIN_SENSE_LOW))  )
                         {
-                            NRF_LOG_DEBUG("PORT event for pin: %d, polarity: %d.\r\n", pin,
+                            NRF_LOG_DEBUG("PORT event for pin: %d, polarity: %d.", pin,
                                           polarity);
                             if (polarity == NRF_GPIOTE_POLARITY_TOGGLE)
                             {

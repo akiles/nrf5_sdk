@@ -143,7 +143,7 @@ void es_slot_radio_tx_pwr_set(uint8_t slot_no, nrf_ble_escs_radio_tx_pwr_t radio
  * @param[in,out]   p_frame_data    Pointer to the data.
  *
  */
-void es_slot_on_write(uint8_t slot_no, uint8_t length, uint8_t * p_frame_data);
+void es_slot_on_write(uint8_t slot_no, uint8_t length, uint8_t const * p_frame_data);
 
 /**@brief Function for writing the slot's configuration to flash.
  *

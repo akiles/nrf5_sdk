@@ -48,15 +48,14 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-/**
- * @brief The ANT-FS client device simulator.
- *
+/*
  * Before compiling this example for NRF52, complete the following steps:
  * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
  * - Extract the downloaded zip file and copy the S212 SoftDevice headers to <tt>\<InstallFolder\>/components/softdevice/s212/headers</tt>.
  * If you are using Keil packs, copy the files into a @c headers folder in your example folder.
  * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
  */
+
 #include <stdint.h>
 #include <stdio.h>
 #include "mem.h"
@@ -65,17 +64,17 @@
 #include "app_error.h"
 #include "app_timer.h"
 #include "hardfault.h"
-#include "nordic_common.h"
 #include "ant_parameters.h"
-#include "ant_stack_config.h"
-#include "app_util_platform.h"
-#include "softdevice_handler.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
+#include "nrf_pwr_mgmt.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define APP_TIMER_OP_QUEUE_SIZE     0x04                            /**< Size of timer operation queues. */
+#define APP_ANT_OBSERVER_PRIO       1                               /**< Application's ANT observer priority. You shouldn't need to modify this value. */
 
 static const uint8_t m_friendly_name[] = "Ref Design";              /**< Client's friendly name. */
 static const uint8_t m_pass_key[]      = {0x01, 0x02, 0x03, 0x04,\
@@ -98,16 +97,8 @@ static void event_pairing_request_handle(void)
     const char * p_name = antfs_hostname_get();
     if (p_name != NULL)
     {
-        NRF_LOG_INFO("host name: %s\r\n", (uint32_t)p_name);
+        NRF_LOG_INFO("host name: %s", (uint32_t)p_name);
     }
-}
-
-
-/**@brief Function to execute while waiting for the wait burst busy flag
-*/
-static void event_burst_wait_handle(void)
-{
-    // No implementation needed
 }
 
 
@@ -129,7 +120,7 @@ static void event_download_request_handle(const antfs_event_return_t * p_event)
         if (!(m_temp_dir_structure.general_flags & ANTFS_DIR_READ_MASK))
         {
             response = RESPONSE_MESSAGE_NOT_AVAILABLE;
-            NRF_LOG_INFO("Download request denied: file n/a for reading\r\n");
+            NRF_LOG_INFO("Download request denied: file n/a for reading");
         }
 
         // Set response parameters.
@@ -148,7 +139,7 @@ static void event_download_request_handle(const antfs_event_return_t * p_event)
         m_response_info.file_size.data            = 0;
         m_response_info.max_file_size             = 0;
         m_response_info.max_burst_block_size.data = 0;
-        NRF_LOG_INFO("Download request denied: file does not exist\r\n");
+        NRF_LOG_INFO("Download request denied: file does not exist");
     }
 
     antfs_download_req_resp_prepare(response, &m_response_info);
@@ -221,7 +212,7 @@ static void event_upload_request_handle(const antfs_event_return_t * p_event)
         if (!(m_temp_dir_structure.general_flags & ANTFS_DIR_WRITE_MASK))
         {
             response = RESPONSE_MESSAGE_NOT_AVAILABLE;
-            NRF_LOG_INFO("Upload request denied: file n/a for writing\r\n");
+            NRF_LOG_INFO("Upload request denied: file n/a for writing");
         }
 
         // Set response parameters.
@@ -244,7 +235,7 @@ static void event_upload_request_handle(const antfs_event_return_t * p_event)
         m_response_info.max_file_size             = 0;
         m_response_info.max_burst_block_size.data = 0;
         m_response_info.file_crc                  = 0;
-        NRF_LOG_INFO("Upload request denied: file does not exist\r\n");
+        NRF_LOG_INFO("Upload request denied: file does not exist");
     }
 
     m_upload_success = true;
@@ -276,7 +267,7 @@ static void event_upload_data_handle(const antfs_event_return_t * p_event)
             // Failed to write the data to system; do not attempt to write any more data after this,
             // and set upload response as FAIL.
             m_upload_success = false;
-            NRF_LOG_INFO("Failed to write file to system\r\n");
+            NRF_LOG_INFO("Failed to write file to system");
             NRF_LOG_INFO("Current offset %u, ", offset);
         }
         else
@@ -295,7 +286,7 @@ static void event_upload_data_handle(const antfs_event_return_t * p_event)
  */
 static void event_upload_complete_handle(void)
 {
-    NRF_LOG_INFO("ANTFS_EVENT_UPLOAD_COMPLETE\r\n");
+    NRF_LOG_INFO("ANTFS_EVENT_UPLOAD_COMPLETE");
 
     // @note: Suppress return value as no use case for handling it exists.
     UNUSED_RETURN_VALUE(antfs_upload_data_resp_transmit(m_upload_success));
@@ -324,7 +315,7 @@ static void event_erase_request_handle(const antfs_event_return_t * p_event)
             if (!(m_temp_dir_structure.general_flags & ANTFS_DIR_ERASE_MASK))
             {
                 response = RESPONSE_MESSAGE_FAIL;
-                NRF_LOG_INFO("Erase request denied: file n/a for erasing\r\n");
+                NRF_LOG_INFO("Erase request denied: file n/a for erasing");
             }
             else
             {
@@ -339,14 +330,14 @@ static void event_erase_request_handle(const antfs_event_return_t * p_event)
         {
             // Index not found.
             response = RESPONSE_MESSAGE_FAIL;
-            NRF_LOG_INFO("Erase request denied: file does not exist\r\n");
+            NRF_LOG_INFO("Erase request denied: file does not exist");
         }
     }
     else
     {
         // Should not delete the directory.
         response = RESPONSE_MESSAGE_FAIL;
-        NRF_LOG_INFO("Erase request denied: can not delete directory\r\n");
+        NRF_LOG_INFO("Erase request denied: can not delete directory");
     }
 
     antfs_erase_req_resp_transmit(response);
@@ -365,41 +356,41 @@ static void antfs_event_extract_and_process(void)
         switch (antfs_event.event)
         {
             case ANTFS_EVENT_OPEN_COMPLETE:
-                NRF_LOG_INFO("ANTFS_EVENT_OPEN_COMPLETE\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_OPEN_COMPLETE");
                 break;
 
             case ANTFS_EVENT_CLOSE_COMPLETE:
-                NRF_LOG_INFO("ANTFS_EVENT_CLOSE_COMPLETE\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_CLOSE_COMPLETE");
                 break;
 
             case ANTFS_EVENT_LINK:
-                NRF_LOG_INFO("ANTFS_EVENT_LINK\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_LINK");
                 break;
 
             case ANTFS_EVENT_AUTH:
-                NRF_LOG_INFO("ANTFS_EVENT_AUTH\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_AUTH");
                 break;
 
             case ANTFS_EVENT_TRANS:
-                NRF_LOG_INFO("ANTFS_EVENT_TRANS\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_TRANS");
                 break;
 
             case ANTFS_EVENT_PAIRING_REQUEST:
-                NRF_LOG_INFO("ANTFS_EVENT_PAIRING_REQUEST\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_PAIRING_REQUEST");
                 event_pairing_request_handle();
                 break;
 
             case ANTFS_EVENT_PAIRING_TIMEOUT:
-                NRF_LOG_INFO("ANTFS_EVENT_PAIRING_TIMEOUT\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_PAIRING_TIMEOUT");
                 break;
 
             case ANTFS_EVENT_DOWNLOAD_REQUEST:
-                NRF_LOG_INFO("ANTFS_EVENT_DOWNLOAD_REQUEST\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_DOWNLOAD_REQUEST");
                 event_download_request_handle(&antfs_event);
                 break;
 
             case ANTFS_EVENT_DOWNLOAD_START:
-                NRF_LOG_INFO("ANTFS_EVENT_DOWNLOAD_START\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_DOWNLOAD_START");
                 break;
 
             case ANTFS_EVENT_DOWNLOAD_REQUEST_DATA:
@@ -407,40 +398,40 @@ static void antfs_event_extract_and_process(void)
                 break;
 
             case ANTFS_EVENT_DOWNLOAD_COMPLETE:
-                NRF_LOG_INFO("ANTFS_EVENT_DOWNLOAD_COMPLETE\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_DOWNLOAD_COMPLETE");
                 break;
 
             case ANTFS_EVENT_DOWNLOAD_FAIL:
-                NRF_LOG_INFO("ANTFS_EVENT_DOWNLOAD_FAIL\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_DOWNLOAD_FAIL");
                 break;
 
             case ANTFS_EVENT_UPLOAD_REQUEST:
-                NRF_LOG_INFO("ANTFS_EVENT_UPLOAD_REQUEST\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_UPLOAD_REQUEST");
                 event_upload_request_handle(&antfs_event);
                 break;
 
             case ANTFS_EVENT_UPLOAD_START:
-                NRF_LOG_INFO("ANTFS_EVENT_UPLOAD_START\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_UPLOAD_START");
                 break;
 
             case ANTFS_EVENT_UPLOAD_DATA:
-                NRF_LOG_INFO("ANTFS_EVENT_UPLOAD_DATA\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_UPLOAD_DATA");
                 event_upload_data_handle(&antfs_event);
                 break;
 
             case ANTFS_EVENT_UPLOAD_FAIL:
-                NRF_LOG_INFO("ANTFS_EVENT_UPLOAD_FAIL\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_UPLOAD_FAIL");
                 // @note: Suppress return value as no use case for handling it exists.
                 UNUSED_RETURN_VALUE(antfs_upload_data_resp_transmit(false));
                 break;
 
             case ANTFS_EVENT_UPLOAD_COMPLETE:
-                NRF_LOG_INFO("ANTFS_EVENT_UPLOAD_COMPLETE\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_UPLOAD_COMPLETE");
                 event_upload_complete_handle();
                 break;
 
             case ANTFS_EVENT_ERASE_REQUEST:
-                NRF_LOG_INFO("ANTFS_EVENT_ERASE_REQUEST\r\n");
+                NRF_LOG_INFO("ANTFS_EVENT_ERASE_REQUEST");
                 event_erase_request_handle(&antfs_event);
                 break;
 
@@ -479,34 +470,31 @@ static void bsp_evt_handler(bsp_event_t event)
 }
 
 
-/**@brief Function for dispatching a ANT stack event to all modules with a ANT stack event handler.
- *
- * @details This function is called from the ANT Stack event interrupt handler after a ANT stack
- *          event has been received.
+/**@brief Function for handling a ANT stack event.
  *
  * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
  */
-void ant_evt_dispatch(ant_evt_t * p_ant_evt)
+static void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
-    antfs_message_process(p_ant_evt->msg.evt_buffer);
+    antfs_message_process(p_ant_evt->message.aucMessage);
     antfs_event_extract_and_process();
 }
+
+
+NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_evt_handler, NULL);
 
 
 /**@brief Function for configuring and setting up the SoftDevice.
  */
 static void softdevice_setup(void)
 {
-    uint32_t err_code;
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
+    ret_code_t err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
-    APP_ERROR_CHECK(err_code);
+    ASSERT(nrf_sdh_is_enabled());
 
-    err_code = ant_stack_static_config(); // set ANT resource
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -522,11 +510,16 @@ static void utils_setup(void)
     ret_code_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                         bsp_evt_handler);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -535,8 +528,6 @@ static void utils_setup(void)
  */
 int main(void)
 {
-    uint32_t err_code;
-
     utils_setup();
     softdevice_setup();
 
@@ -551,15 +542,12 @@ int main(void)
         m_friendly_name
     };
 
-    antfs_init(&params, event_burst_wait_handle);
+    antfs_init(&params, nrf_pwr_mgmt_run);
     antfs_channel_setup();
 
     for (;; )
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            err_code = sd_app_evt_wait();
-            APP_ERROR_CHECK(err_code);
-        }
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }

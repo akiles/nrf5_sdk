@@ -59,18 +59,18 @@
 #include "sdk_config.h"
 #include "ant_channel_config.h"
 #include "nrf_soc.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 
 // Miscellaneous defines.
-#define ANT_CHANNEL_DEFAULT_NETWORK    0x00                         ///< ANT Channel Network.
-#define ANT_CHANNEL_NUMBER             0x00                         ///< ANT Channel Number.
-#define EXT_TYPE                       0                            ///< Extended assign.
+#define BURST_PACKET_SIZE       8u                              ///< The burst packet size, in bytes.
+#define BURST_PACKET_TOTAL_SIZE (BURST_PACKET_SIZE + 1u)        ///< The burst packet total size in bytes, including channel number/sequence number.
 
-#define BURST_PACKET_SIZE              8u                           ///< The burst packet size, in bytes.
-#define BURST_PACKET_TOTAL_SIZE        (BURST_PACKET_SIZE + 1u)     ///< The burst packet total size in bytes, including channel number/sequence number.
+#define BURST_TOTAL_PACKETS     1024u                           ///< Total size of burst data to send.
+#define BURST_BLOCK_SIZE        NRF_SDH_ANT_BURST_QUEUE_SIZE    ///< Burst block size, in number of bytes.
 
-#define BURST_TOTAL_PACKETS            1024u                        ///< Total size of burst data to send.
-#define BURST_BLOCK_SIZE               ANT_CONFIG_BURST_QUEUE_SIZE  ///< Burst block size, in number of bytes.
 
+#define APP_ANT_OBSERVER_PRIO   1                               ///< Application's ANT observer priority. You shouldn't need to modify this value.
 
 static uint8_t  m_sequence_number;                ///< Burst sequence number.
 static uint8_t  m_burst_data[BURST_BLOCK_SIZE];   ///< Burst buffer.
@@ -125,7 +125,7 @@ static void burst_data_send(void)
     memset(m_burst_data, 0, BURST_BLOCK_SIZE);
     burst_buffer_fill(m_burst_data, bytes_to_send);
 
-    err_code = sd_ant_burst_handler_request(ANT_CHANNEL_NUMBER,
+    err_code = sd_ant_burst_handler_request(ANT_CHANNEL_NUM,
                                             bytes_to_send,
                                             m_burst_data,
                                             burst_segment);
@@ -166,15 +166,15 @@ void ant_advanced_burst_setup(void)
 
     ant_channel_config_t channel_config =
     {
-        .channel_number    = ANT_CHANNEL_NUMBER,
+        .channel_number    = ANT_CHANNEL_NUM,
         .channel_type      = CHANNEL_TYPE_MASTER,
-        .ext_assign        = EXT_TYPE,
+        .ext_assign        = 0x00,
         .rf_freq           = RF_FREQ,
         .transmission_type = CHAN_ID_TRANS_TYPE,
         .device_type       = CHAN_ID_DEV_TYPE,
         .device_number     = (uint16_t) (NRF_FICR->DEVICEID[0]),
         .channel_period    = CHAN_PERIOD,
-        .network_number    = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number    = ANT_NETWORK_NUM,
     };
 
     uint8_t adv_burst_config[] =
@@ -200,7 +200,7 @@ void ant_advanced_burst_setup(void)
     err_code = sd_ant_adv_burst_config_set(adv_burst_config, sizeof(adv_burst_config));
     APP_ERROR_CHECK(err_code);
 
-    err_code = sd_ant_channel_open(ANT_CHANNEL_NUMBER);
+    err_code = sd_ant_channel_open(ANT_CHANNEL_NUM);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -224,10 +224,15 @@ void ant_advanced_burst_bsp_evt_handler(bsp_event_t evt)
 }
 
 
-void ant_advanced_burst_event_handler(ant_evt_t * p_ant_evt)
+/**
+ * @brief Function for handling ANT events.
+ *
+ * @param[in]   p_ant_evt       Event received from the ANT stack.
+ * @param[in]   p_context       Context.
+ */
+static void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
-    uint8_t       p_burst_message[BURST_PACKET_TOTAL_SIZE];
-    ANT_MESSAGE * p_ant_message = (ANT_MESSAGE *) p_ant_evt->msg.evt_buffer;
+    uint8_t p_burst_message[BURST_PACKET_TOTAL_SIZE];
 
     switch (p_ant_evt->event)
     {
@@ -258,19 +263,18 @@ void ant_advanced_burst_event_handler(ant_evt_t * p_ant_evt)
             break;
 
         case EVENT_RX:
-
-            switch (p_ant_message->ANT_MESSAGE_ucMesgID)
+            switch (p_ant_evt->message.ANT_MESSAGE_ucMesgID)
             {
                 case MESG_BURST_DATA_ID:
                     // The first packet of an advanced burst transfer will be a regular burst
                     // message. If the other end point does not have advanced burst enabled,
                     // we will receive regular burst messages as well.
-                    p_burst_message[0] = p_ant_message->ANT_MESSAGE_ucChannel;
+                    p_burst_message[0] = p_ant_evt->message.ANT_MESSAGE_ucChannel;
                     memcpy(&p_burst_message[1],
-                           p_ant_message->ANT_MESSAGE_aucPayload,
+                           p_ant_evt->message.ANT_MESSAGE_aucPayload,
                            BURST_PACKET_SIZE);
                     m_sequence_number =
-                        SEQUENCE_NUMBER_MASK & p_ant_message->ANT_MESSAGE_ucChannel;
+                        SEQUENCE_NUMBER_MASK & p_ant_evt->message.ANT_MESSAGE_ucChannel;
                     burst_data_process(p_burst_message);
                     break;
 
@@ -279,7 +283,7 @@ void ant_advanced_burst_event_handler(ant_evt_t * p_ant_evt)
                     // If it is an advanced burst message, split it into a series of regular 8-byte
                     // burst messages so everything can be processed in the same function
                     for (uint8_t i = 0;
-                         (int32_t)(i * BURST_PACKET_SIZE) < (p_ant_message->ANT_MESSAGE_ucSize - 1);
+                         (int32_t)(i * BURST_PACKET_SIZE) < (p_ant_evt->message.ANT_MESSAGE_ucSize - 1);
                          i++ ) // For each 8-byte packet
                     {
                         // Increment the sequence number
@@ -290,9 +294,9 @@ void ant_advanced_burst_event_handler(ant_evt_t * p_ant_evt)
                         m_sequence_number += SEQUENCE_NUMBER_INC;
 
                         // Check if it is the last packet
-                        if (((p_ant_message->ANT_MESSAGE_ucChannel & SEQUENCE_LAST_MESSAGE) != 0)
+                        if (((p_ant_evt->message.ANT_MESSAGE_ucChannel & SEQUENCE_LAST_MESSAGE) != 0)
                             && (((i + 1) * BURST_PACKET_SIZE) ==
-                                (p_ant_message->ANT_MESSAGE_ucSize - 1)))
+                                (p_ant_evt->message.ANT_MESSAGE_ucSize - 1)))
                         {
                             m_sequence_number |= SEQUENCE_LAST_MESSAGE;
                         }
@@ -300,10 +304,10 @@ void ant_advanced_burst_event_handler(ant_evt_t * p_ant_evt)
                         // Package up the burst message data as a regular burst, replacing
                         // the sequence number.
                         p_burst_message[0] = m_sequence_number
-                                             | (p_ant_message->ANT_MESSAGE_ucChannel
+                                             | (p_ant_evt->message.ANT_MESSAGE_ucChannel
                                                 & CHANNEL_NUMBER_MASK);
                         memcpy(&p_burst_message[1],
-                               &p_ant_message->ANT_MESSAGE_aucMesgData[i * BURST_PACKET_SIZE + 1],
+                               &p_ant_evt->message.ANT_MESSAGE_aucMesgData[i * BURST_PACKET_SIZE + 1],
                                BURST_PACKET_SIZE);
 
                         // Process burst data
@@ -318,4 +322,4 @@ void ant_advanced_burst_event_handler(ant_evt_t * p_ant_evt)
     }
 }
 
-
+NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_evt_handler, NULL);

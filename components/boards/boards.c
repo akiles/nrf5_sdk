@@ -72,7 +72,7 @@ void bsp_board_led_off(uint32_t led_idx)
 void bsp_board_leds_off(void)
 {
     uint32_t i;
-    for(i = 0; i < LEDS_NUMBER; ++i)
+    for (i = 0; i < LEDS_NUMBER; ++i)
     {
         bsp_board_led_off(i);
     }
@@ -81,7 +81,7 @@ void bsp_board_leds_off(void)
 void bsp_board_leds_on(void)
 {
     uint32_t i;
-    for(i = 0; i < LEDS_NUMBER; ++i)
+    for (i = 0; i < LEDS_NUMBER; ++i)
     {
         bsp_board_led_on(i);
     }
@@ -96,7 +96,7 @@ void bsp_board_led_invert(uint32_t led_idx)
 void bsp_board_leds_init(void)
 {
     uint32_t i;
-    for(i = 0; i < LEDS_NUMBER; ++i)
+    for (i = 0; i < LEDS_NUMBER; ++i)
     {
         nrf_gpio_cfg_output(m_board_led_list[i]);
     }
@@ -113,7 +113,7 @@ uint32_t bsp_board_pin_to_led_idx(uint32_t pin_number)
 {
     uint32_t ret = 0xFFFFFFFF;
     uint32_t i;
-    for(i = 0; i < LEDS_NUMBER; ++i)
+    for (i = 0; i < LEDS_NUMBER; ++i)
     {
         if (m_board_led_list[i] == pin_number)
         {
@@ -136,7 +136,7 @@ bool bsp_board_button_state_get(uint32_t button_idx)
 void bsp_board_buttons_init(void)
 {
     uint32_t i;
-    for(i = 0; i < BUTTONS_NUMBER; ++i)
+    for (i = 0; i < BUTTONS_NUMBER; ++i)
     {
         nrf_gpio_cfg_input(m_board_btn_list[i], BUTTON_PULL);
     }
@@ -146,7 +146,7 @@ uint32_t bsp_board_pin_to_button_idx(uint32_t pin_number)
 {
     uint32_t i;
     uint32_t ret = 0xFFFFFFFF;
-    for(i = 0; i < BUTTONS_NUMBER; ++i)
+    for (i = 0; i < BUTTONS_NUMBER; ++i)
     {
         if (m_board_btn_list[i] == pin_number)
         {

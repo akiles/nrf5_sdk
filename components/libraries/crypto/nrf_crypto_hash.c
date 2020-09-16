@@ -47,13 +47,13 @@
 #include "cc310_lib_hash.h"
 #endif
 
-#if NRF_CRYPTO_BACKEND_SW
+#if NRF_CRYPTO_BACKEND_MICRO_ECC && NRF_CRYPTO_BACKEND_MICRO_ECC_SHA256
 #include "nrf_crypto_sw_hash.h"
 #endif
 
 uint32_t nrf_crypto_hash_size_get(nrf_hash_type_t hash_type, uint32_t * p_hash_size)
 {
-    switch(hash_type)
+    switch (hash_type)
     {
         case NRF_CRYPTO_HASH_TYPE_MD5:
             (*p_hash_size) = NRF_CRYPTO_HASH_SIZE_MD5;

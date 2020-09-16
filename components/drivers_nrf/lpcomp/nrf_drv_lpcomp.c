@@ -49,7 +49,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define NRF_LOG_MODULE_NAME "LPCOMP"
+#define NRF_LOG_MODULE_NAME lpcomp
 
 #if LPCOMP_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       LPCOMP_CONFIG_LOG_LEVEL
@@ -64,7 +64,7 @@
 #define NRF_LOG_LEVEL       0
 #endif //LPCOMP_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
-#include "nrf_log_ctrl.h"
+NRF_LOG_MODULE_REGISTER();
 
 
 static lpcomp_events_handler_t m_lpcomp_events_handler = NULL;
@@ -84,7 +84,7 @@ static void lpcomp_execute_handler(nrf_lpcomp_event_t event, uint32_t event_mask
     if ( nrf_lpcomp_event_check(event) && nrf_lpcomp_int_enable_check(event_mask) )
     {
         nrf_lpcomp_event_clear(event);
-        NRF_LOG_DEBUG("Event: %s.\r\n", (uint32_t)EVT_TO_STR(event));
+        NRF_LOG_DEBUG("Event: %s.", (uint32_t)EVT_TO_STR(event));
 
         m_lpcomp_events_handler(event);
     }
@@ -109,7 +109,7 @@ ret_code_t nrf_drv_lpcomp_init(const nrf_drv_lpcomp_config_t * p_config,
     if (m_state != NRF_DRV_STATE_UNINITIALIZED)
     { // LPCOMP driver is already initialized
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -117,7 +117,7 @@ ret_code_t nrf_drv_lpcomp_init(const nrf_drv_lpcomp_config_t * p_config,
     if (nrf_drv_common_per_res_acquire(NRF_LPCOMP, IRQ_HANDLER_NAME) != NRF_SUCCESS)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 #endif
@@ -131,7 +131,7 @@ ret_code_t nrf_drv_lpcomp_init(const nrf_drv_lpcomp_config_t * p_config,
     else
     {
         err_code = NRF_ERROR_INVALID_PARAM;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -161,7 +161,7 @@ ret_code_t nrf_drv_lpcomp_init(const nrf_drv_lpcomp_config_t * p_config,
     m_state = NRF_DRV_STATE_INITIALIZED;
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -176,7 +176,7 @@ void nrf_drv_lpcomp_uninit(void)
 #endif
     m_state = NRF_DRV_STATE_UNINITIALIZED;
     m_lpcomp_events_handler = NULL;
-    NRF_LOG_INFO("Uninitialized.\r\n");
+    NRF_LOG_INFO("Uninitialized.");
 }
 
 void nrf_drv_lpcomp_enable(void)
@@ -185,7 +185,7 @@ void nrf_drv_lpcomp_enable(void)
     nrf_lpcomp_enable();
     nrf_lpcomp_task_trigger(NRF_LPCOMP_TASK_START);
     m_state = NRF_DRV_STATE_POWERED_ON;
-    NRF_LOG_INFO("Enabled.\r\n");
+    NRF_LOG_INFO("Enabled.");
 }
 
 void nrf_drv_lpcomp_disable(void)
@@ -194,7 +194,7 @@ void nrf_drv_lpcomp_disable(void)
     nrf_lpcomp_disable();
     nrf_lpcomp_task_trigger(NRF_LPCOMP_TASK_STOP);
     m_state = NRF_DRV_STATE_INITIALIZED;
-    NRF_LOG_INFO("Disabled.\r\n");
+    NRF_LOG_INFO("Disabled.");
 }
 
 void nrf_drv_lpcomp_event_handler_register(lpcomp_events_handler_t lpcomp_events_handler)

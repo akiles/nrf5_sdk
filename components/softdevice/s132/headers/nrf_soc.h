@@ -1,38 +1,41 @@
 /*
- * Copyright (c) Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
  *
- *   1. Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
  *
- *   2. Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
  *
- *   3. Neither the name of Nordic Semiconductor ASA nor the names of other
- *   contributors to this software may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
  *
- *   4. This software must only be used in a processor manufactured by Nordic
- *   Semiconductor ASA, or in a processor manufactured by a third party that
- *   is used in combination with a processor manufactured by Nordic Semiconductor.
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
  *
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 /**
  * @defgroup nrf_soc_api SoC Library API
  * @{
@@ -68,25 +71,22 @@ extern "C" {
 /**@brief The minimum allowed timeslot extension time. */
 #define NRF_RADIO_MINIMUM_TIMESLOT_LENGTH_EXTENSION_TIME_US (200)
 
+/**@brief The maximum processing time to handle a timeslot extension. */
+#define NRF_RADIO_MAX_EXTENSION_PROCESSING_TIME_US           (17)
+
+/**@brief The latest time before the end of a timeslot the timeslot can be extended. */
+#define NRF_RADIO_MIN_EXTENSION_MARGIN_US                    (79)
+
 #define SOC_ECB_KEY_LENGTH                (16)                       /**< ECB key length. */
 #define SOC_ECB_CLEARTEXT_LENGTH          (16)                       /**< ECB cleartext length. */
 #define SOC_ECB_CIPHERTEXT_LENGTH         (SOC_ECB_CLEARTEXT_LENGTH) /**< ECB ciphertext length. */
 
-#ifdef NRF51
-#define SD_EVT_IRQn                       (SWI2_IRQn)        /**< SoftDevice Event IRQ number. Used for both protocol events and SoC events. */
-#define SD_EVT_IRQHandler                 (SWI2_IRQHandler)  /**< SoftDevice Event IRQ handler. Used for both protocol events and SoC events. */
-#define RADIO_NOTIFICATION_IRQn           (SWI1_IRQn)        /**< The radio notification IRQ number. */
-#define RADIO_NOTIFICATION_IRQHandler     (SWI1_IRQHandler)  /**< The radio notification IRQ handler. */
-#endif
-#ifdef NRF52
 #define SD_EVT_IRQn                       (SWI2_EGU2_IRQn)        /**< SoftDevice Event IRQ number. Used for both protocol events and SoC events. */
 #define SD_EVT_IRQHandler                 (SWI2_EGU2_IRQHandler)  /**< SoftDevice Event IRQ handler. Used for both protocol events and SoC events.
                                                                        The default interrupt priority for this handler is set to 4 */
 #define RADIO_NOTIFICATION_IRQn           (SWI1_EGU1_IRQn)        /**< The radio notification IRQ number. */
 #define RADIO_NOTIFICATION_IRQHandler     (SWI1_EGU1_IRQHandler)  /**< The radio notification IRQ handler.
                                                                        The default interrupt priority for this handler is set to 4 */
-#endif
-
 #define NRF_RADIO_LENGTH_MIN_US           (100)               /**< The shortest allowed radio timeslot, in microseconds. */
 #define NRF_RADIO_LENGTH_MAX_US           (100000)            /**< The longest allowed radio timeslot, in microseconds. */
 
@@ -229,7 +229,12 @@ enum NRF_RADIO_CALLBACK_SIGNAL_TYPE
 enum NRF_RADIO_SIGNAL_CALLBACK_ACTION
 {
   NRF_RADIO_SIGNAL_CALLBACK_ACTION_NONE,            /**< Return without action. */
-  NRF_RADIO_SIGNAL_CALLBACK_ACTION_EXTEND,          /**< Request an extension of the current timeslot (maximum execution time for this action is when the extension succeeded). */
+  NRF_RADIO_SIGNAL_CALLBACK_ACTION_EXTEND,          /**< Request an extension of the current
+                                                         timeslot. Maximum execution time for this action:
+                                                         @ref NRF_RADIO_MAX_EXTENSION_PROCESSING_TIME_US.
+                                                         This action must be started at least @ref
+                                                         NRF_RADIO_MIN_EXTENSION_MARGIN_US before
+                                                         the end of the timeslot. */
   NRF_RADIO_SIGNAL_CALLBACK_ACTION_END,             /**< End the current radio timeslot. */
   NRF_RADIO_SIGNAL_CALLBACK_ACTION_REQUEST_AND_END  /**< Request a new radio timeslot and end the current timeslot. */
 };
@@ -512,7 +517,6 @@ SVCALL(SD_POWER_RAM_POWER_GET, uint32_t, sd_power_ram_power_get(uint8_t index, u
  * @param[in] gpregret_id 0 for GPREGRET, 1 for GPREGRET2.
  * @param[in] gpregret_msk Bits to be set in the GPREGRET register.
  *
- * @note nRF51 does only have one general purpose retained register, so gpregret_id must be 0 on nRF51.
  * @retval ::NRF_SUCCESS
  */
 SVCALL(SD_POWER_GPREGRET_SET, uint32_t, sd_power_gpregret_set(uint32_t gpregret_id, uint32_t gpregret_msk));
@@ -522,7 +526,6 @@ SVCALL(SD_POWER_GPREGRET_SET, uint32_t, sd_power_gpregret_set(uint32_t gpregret_
  * @param[in] gpregret_id 0 for GPREGRET, 1 for GPREGRET2.
  * @param[in] gpregret_msk Bits to be clear in the GPREGRET register.
  *
- * @note nRF51 does only have one general purpose retained register, so gpregret_id must be 0 on nRF51.
  * @retval ::NRF_SUCCESS
  */
 SVCALL(SD_POWER_GPREGRET_CLR, uint32_t, sd_power_gpregret_clr(uint32_t gpregret_id, uint32_t gpregret_msk));
@@ -532,7 +535,6 @@ SVCALL(SD_POWER_GPREGRET_CLR, uint32_t, sd_power_gpregret_clr(uint32_t gpregret_
  * @param[in] gpregret_id 0 for GPREGRET, 1 for GPREGRET2.
  * @param[out] p_gpregret Contents of the GPREGRET register.
  *
- * @note nRF51 does only have one general purpose retained register, so gpregret_id must be 0 on nRF51.
  * @retval ::NRF_SUCCESS
  */
 SVCALL(SD_POWER_GPREGRET_GET, uint32_t, sd_power_gpregret_get(uint32_t gpregret_id, uint32_t *p_gpregret));
@@ -785,7 +787,7 @@ SVCALL(SD_TEMP_GET, uint32_t, sd_temp_get(int32_t * p_temp));
 * @note
 *      - This call takes control over the radio and the CPU during flash erase and write to make sure that
 *        they will not interfere with the flash access. This means that all interrupts will be blocked
-*        for a predictable time (depending on the NVMC specification in nRF51 Series Reference Manual
+*        for a predictable time (depending on the NVMC specification in the device's Product Specification
 *        and the command parameters).
 *      - The data in the p_src buffer should not be modified before the @ref NRF_EVT_FLASH_OPERATION_SUCCESS
 *        or the @ref NRF_EVT_FLASH_OPERATION_ERROR have been received if the SoftDevice is enabled.
@@ -793,7 +795,8 @@ SVCALL(SD_TEMP_GET, uint32_t, sd_temp_get(int32_t * p_temp));
 *
 * @param[in]  p_dst Pointer to start of flash location to be written.
 * @param[in]  p_src Pointer to buffer with data to be written.
-* @param[in]  size  Number of 32-bit words to write. Maximum size is 256 32-bit words for nRF51 and 1024 for nRF52.
+* @param[in]  size  Number of 32-bit words to write. Maximum size is the number of words in one
+*                   flash page. See the device's Product Specification for details.
 *
 * @retval ::NRF_ERROR_INVALID_ADDR   Tried to write to a non existing flash address, or p_dst or p_src was unaligned.
 * @retval ::NRF_ERROR_BUSY           The previous command has not yet completed.
@@ -819,7 +822,7 @@ SVCALL(SD_FLASH_WRITE, uint32_t, sd_flash_write(uint32_t * p_dst, uint32_t const
 * @note
 *      - This call takes control over the radio and the CPU during flash erase and write to make sure that
 *        they will not interfere with the flash access. This means that all interrupts will be blocked
-*        for a predictable time (depending on the NVMC specification in nRF51 Series Reference Manual
+*        for a predictable time (depending on the NVMC specification in the device's Product Specification
 *        and the command parameters).
 *
 *
@@ -837,15 +840,14 @@ SVCALL(SD_FLASH_PAGE_ERASE, uint32_t, sd_flash_page_erase(uint32_t page_number))
 /**@brief Flash Protection set
  *
  * Commands to set the flash protection configuration registers.
-   On nRF51 this sets the PROTENSETx registers of the MPU peripheral.
-   On nRF52 this sets the CONFIGx registers of the BPROT peripheral.
+   This sets the CONFIGx registers of the BPROT peripheral.
  *
  * @note To read the values read them directly. They are only write-protected.
  *
  * @param[in]  block_cfg0 Value to be written to the configuration register.
  * @param[in]  block_cfg1 Value to be written to the configuration register.
- * @param[in]  block_cfg2 Value to be written to the configuration register (ignored on nRF51).
- * @param[in]  block_cfg3 Value to be written to the configuration register (ignored on nRF51).
+ * @param[in]  block_cfg2 Value to be written to the configuration register.
+ * @param[in]  block_cfg3 Value to be written to the configuration register.
  *
  * @retval ::NRF_ERROR_FORBIDDEN Tried to protect the SoftDevice.
  * @retval ::NRF_SUCCESS Values successfully written to configuration registers.

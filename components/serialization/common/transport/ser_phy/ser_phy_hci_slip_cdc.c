@@ -51,8 +51,9 @@
 #include "app_error.h"
 #include "app_util_platform.h"
 
-#define NRF_LOG_MODULE_NAME "CONN"
+#define NRF_LOG_MODULE_NAME sphy_cdc
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #define APP_SLIP_END     0xC0 /**< SLIP code for identifying the beginning and end of a packet frame.. */
 #define APP_SLIP_ESC     0xDB /**< SLIP escape code. This code is used to specify that the following character is specially encoded. */
@@ -635,7 +636,7 @@ static void cdc_acm_user_ev_handler(app_usbd_class_inst_t const * p_inst,
     switch (event)
     {
     case APP_USBD_CDC_ACM_USER_EVT_PORT_OPEN:
-        NRF_LOG_DEBUG("EVT_PORT_OPEN\r\n");
+        NRF_LOG_DEBUG("EVT_PORT_OPEN");
         if (!m_port_open)
         {
             m_port_open = true;
@@ -645,7 +646,7 @@ static void cdc_acm_user_ev_handler(app_usbd_class_inst_t const * p_inst,
         break;
 
     case APP_USBD_CDC_ACM_USER_EVT_PORT_CLOSE:
-        NRF_LOG_DEBUG("EVT_PORT_CLOSE\r\n");
+        NRF_LOG_DEBUG("EVT_PORT_CLOSE");
         m_port_open = false;
         break;
 
@@ -709,7 +710,7 @@ static void clock_event_handler(nrf_drv_clock_evt_type_t event)
     ASSERT(event == NRF_DRV_CLOCK_EVT_HFCLK_STARTED);
     (void)event;
 
-    NRF_LOG_DEBUG("Clock started\r\n");
+    NRF_LOG_DEBUG("Clock started");
 
     APP_ERROR_CHECK(app_usbd_init(NULL));
     APP_ERROR_CHECK(app_usbd_class_append(
@@ -718,7 +719,7 @@ static void clock_event_handler(nrf_drv_clock_evt_type_t event)
     app_usbd_enable();
     app_usbd_start();
 
-    NRF_LOG_DEBUG("USB started\r\n");
+    NRF_LOG_DEBUG("USB started");
 }
 static nrf_drv_clock_handler_item_t m_clock_handler_item = {
     NULL,

@@ -67,36 +67,34 @@
 #include "app_timer.h"
 #include "nrf_error.h"
 #include "boards.h"
-#include "softdevice_handler.h"
-#include "pstorage_platform.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 #include "ant_boot_settings_api.h"
 #include "antfs_ota.h"
 #if !defined (S210_V3_STACK)
 #include "nrf_mbr.h"
 #endif // !S210_V3_STACK
-#include "ant_stack_config.h"
 #include "debug_pin.h"
-#include "softdevice_handler_appsh.h"
 
 #define ENABLE_BUTTON // include button detection
 //#define ENABLE_IO_LED // include LED status on N5DK1 i/o board
 
 #if defined (ENABLE_BUTTON)
    #if defined (BOARD_N5DK1)
-      #define BOOTLOADER_BUTTON_PIN        BUTTON_D                                                /**< Button used to enter SW update mode. */
+      #define BOOTLOADER_BUTTON_PIN     BUTTON_D                    /**< Button used to enter SW update mode. */
    #else
-      #define BOOTLOADER_BUTTON_PIN        BUTTON_1                                                /**< Button used to enter SW update mode. */
+      #define BOOTLOADER_BUTTON_PIN     BUTTON_1                    /**< Button used to enter SW update mode. */
    #endif
 #endif
 
 #if defined (ENABLE_IO_LED)
-   #define BOOTLOADER_ERROR_LED         LED_C                                                   /**< N5DK Leds, set=led off, clr=led on  */
+   #define BOOTLOADER_ERROR_LED         LED_C                       /**< N5DK Leds, set=led off, clr=led on  */
    #define BOOTLOADER_ACTIVE_LED        LED_D
 #endif // ENABLE_IO_LED
 
-#define SCHED_MAX_EVENT_DATA_SIZE       MAX(ANT_STACK_EVT_MSG_BUF_SIZE, 0)                      /**< Maximum size of scheduler events. */
+#define SCHED_MAX_EVENT_DATA_SIZE       NRF_SDH_ANT_EVT_BUF_SIZE    /**< Maximum size of scheduler events. */
 
-#define SCHED_QUEUE_SIZE                20                                                      /**< Maximum number of events in the scheduler queue. */
+#define SCHED_QUEUE_SIZE                20                          /**< Maximum number of events in the scheduler queue. */
 
 
 /**@brief Function for error handling, which is called when an error has occurred.
@@ -213,36 +211,16 @@ static void buttons_init(void)
 #endif // ENABLE_BUTTON
 
 
-/**@brief Function for dispatching a stack event to all modules with a stack event handler.
- *
- * @details This function is called from the scheduler in the main loop after a stack
- *          event has been received.
- *
- * @param[in]   event   stack event.
- */
-static void sys_evt_dispatch(uint32_t event)
-{
-    pstorage_sys_event_handler(event);
-}
-
-
-/**@brief Function for initializing the ANT stack.
- *
- * @details Initializes the SoftDevice and the BLE event interrupt.
- */
+/**@brief Function for initializing the ANT stack. */
 static void ant_stack_init(void)
 {
-    uint32_t         err_code;
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    ret_code_t err_code;
 
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, softdevice_evt_schedule);
+    err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
-
-    // Configure ant stack regards used channels.
-    err_code = ant_stack_static_config();
+    // Enable ANT stack.
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 }
 

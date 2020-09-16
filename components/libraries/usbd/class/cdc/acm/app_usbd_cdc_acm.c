@@ -50,13 +50,17 @@
  */
 
 
-#define NRF_LOG_MODULE_NAME "CDC_ACM"
-#if APP_USBD_CDC_ACM_LOG_ENABLED
-#else //APP_USBD_CDC_ACM_LOG_ENABLED
-#define NRF_LOG_LEVEL       0
-#endif //APP_USBD_CDC_ACM_LOG_ENABLED
-#include "nrf_log.h"
+#define NRF_LOG_MODULE_NAME cdc_acm
 
+#if APP_USBD_CDC_ACM_CONFIG_LOG_ENABLED
+#define NRF_LOG_LEVEL       APP_USBD_CDC_ACM_CONFIG_LOG_LEVEL
+#define NRF_LOG_INFO_COLOR  APP_USBD_CDC_ACM_CONFIG_INFO_COLOR
+#define NRF_LOG_DEBUG_COLOR APP_USBD_CDC_ACM_CONFIG_DEBUG_COLOR
+#else //APP_USBD_CDC_ACM_CONFIG_LOG_ENABLED
+#define NRF_LOG_LEVEL       0
+#endif //APP_USBD_CDC_ACM_CONFIG_LOG_ENABLED
+#include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #define APP_USBD_CDC_ACM_COMM_IFACE_IDX 0    /**< CDC ACM class comm interface index. */
 #define APP_USBD_CDC_ACM_DATA_IFACE_IDX 1    /**< CDC ACM class data interface index. */
@@ -291,7 +295,7 @@ static ret_code_t cdc_acm_req_out_data_cb(nrf_drv_usbd_ep_status_t status, void 
                    sizeof(app_usbd_cdc_line_coding_t));
 
             NRF_LOG_INFO("REQ_SET_LINE_CODING: baudrate: %"PRIu32", databits: %u, "
-                    "format: %u, parity: %u\r\n",
+                    "format: %u, parity: %u",
                     uint32_decode(p_cdc_acm_ctx->line_coding.dwDTERate),
                     p_cdc_acm_ctx->line_coding.bDataBits,
                     p_cdc_acm_ctx->line_coding.bCharFormat,
@@ -376,7 +380,7 @@ static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
                 return NRF_ERROR_NOT_SUPPORTED;
             }
 
-            NRF_LOG_INFO("REQ_SET_CONTROL_LINE_STATE: 0x%x\r\n", p_setup_ev->setup.wValue.w);
+            NRF_LOG_INFO("REQ_SET_CONTROL_LINE_STATE: 0x%x", p_setup_ev->setup.wValue.w);
 
             bool old_dtr = (p_cdc_acm_ctx->line_state & APP_USBD_CDC_ACM_LINE_STATE_DTR) ?
                             true : false;
@@ -469,7 +473,7 @@ static ret_code_t cdc_acm_endpoint_ev(app_usbd_class_inst_t const *  p_inst,
 {
     if (comm_ep_in_addr_get(p_inst) == p_event->drv_evt.data.eptransfer.ep)
     {
-        NRF_LOG_INFO("EPIN_COMM: notify\r\n");
+        NRF_LOG_INFO("EPIN_COMM: notify");
         return NRF_SUCCESS;
     }
 
@@ -478,7 +482,7 @@ static ret_code_t cdc_acm_endpoint_ev(app_usbd_class_inst_t const *  p_inst,
         switch (p_event->drv_evt.data.eptransfer.status)
         {
             case NRF_USBD_EP_OK:
-                NRF_LOG_INFO("EPIN_DATA: %02x done\r\n", p_event->drv_evt.data.eptransfer.ep);
+                NRF_LOG_INFO("EPIN_DATA: %02x done", p_event->drv_evt.data.eptransfer.ep);
                 user_event_handler(p_inst, APP_USBD_CDC_ACM_USER_EVT_TX_DONE);
                 return NRF_SUCCESS;
             case NRF_USBD_EP_ABORTED:
@@ -493,7 +497,7 @@ static ret_code_t cdc_acm_endpoint_ev(app_usbd_class_inst_t const *  p_inst,
         switch (p_event->drv_evt.data.eptransfer.status)
         {
             case NRF_USBD_EP_OK:
-                NRF_LOG_INFO("EPOUT_DATA: %02x done\r\n", p_event->drv_evt.data.eptransfer.ep);
+                NRF_LOG_INFO("EPOUT_DATA: %02x done", p_event->drv_evt.data.eptransfer.ep);
                 user_event_handler(p_inst, APP_USBD_CDC_ACM_USER_EVT_RX_DONE);
                 return NRF_SUCCESS;
             case NRF_USBD_EP_WAITING:
@@ -544,9 +548,9 @@ static ret_code_t cdc_acm_event_handler(app_usbd_class_inst_t const *  p_inst,
             ret = app_usbd_class_sof_unregister(p_inst);
             break;
         }
-        case APP_USBD_EVT_START:
+        case APP_USBD_EVT_STARTED:
             break;
-        case APP_USBD_EVT_STOP:
+        case APP_USBD_EVT_STOPPED:
             break;
         default:
             ret = NRF_ERROR_NOT_SUPPORTED;

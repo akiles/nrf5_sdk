@@ -74,6 +74,7 @@ typedef enum {
     HAL_NFC_PARAM_ID_TESTING,         ///< Used for unit tests.
     HAL_NFC_PARAM_FWI,                ///< Frame Wait Time parameter.
     HAL_NFC_PARAM_SELRES,             ///< Parameter for setting the 'Protocol' bits for SEL_RES packet.
+    HAL_NFC_PARAM_DID,                ///< Parameter for DID field management.
     HAL_NFC_PARAM_ID_UNKNOWN
 } hal_nfc_param_id_t;
 

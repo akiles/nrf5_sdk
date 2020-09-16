@@ -10,8 +10,8 @@ $(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: \
 
 # Source files common to all targets
 SRC_FILES += \
-  $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_serial.c \
-  $(SDK_ROOT)/components/libraries/log/src/nrf_log_frontend.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_frontend.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_str_formatter.c \
   $(SDK_ROOT)/components/boards/boards.c \
   $(SDK_ROOT)/components/libraries/button/app_button.c \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
@@ -42,9 +42,19 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/low_power_pwm/low_power_pwm.c \
   $(SDK_ROOT)/components/libraries/mem_manager/mem_manager.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
+  $(SDK_ROOT)/components/libraries/atomic_fifo/nrf_atfifo.c \
+  $(SDK_ROOT)/components/libraries/balloc/nrf_balloc.c \
+  $(SDK_ROOT)/components/libraries/experimental_cli/nrf_cli.c \
+  $(SDK_ROOT)/components/libraries/experimental_cli/uart/nrf_cli_uart.c \
   $(SDK_ROOT)/components/libraries/csense/nrf_csense.c \
   $(SDK_ROOT)/components/libraries/csense_drv/nrf_drv_csense.c \
+  $(SDK_ROOT)/external/fprintf/nrf_fprintf.c \
+  $(SDK_ROOT)/external/fprintf/nrf_fprintf_format.c \
+  $(SDK_ROOT)/components/libraries/experimental_memobj/nrf_memobj.c \
+  $(SDK_ROOT)/components/libraries/pwr_mgmt/nrf_pwr_mgmt.c \
   $(SDK_ROOT)/components/libraries/queue/nrf_queue.c \
+  $(SDK_ROOT)/components/libraries/experimental_ringbuf/nrf_ringbuf.c \
+  $(SDK_ROOT)/components/libraries/experimental_section_vars/nrf_section_iter.c \
   $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/components/libraries/slip/slip.c \
   $(SDK_ROOT)/components/libraries/usbd/app_usbd.c \
@@ -79,9 +89,6 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/bsp/bsp.c \
   $(SDK_ROOT)/components/libraries/bsp/bsp_nfc.c \
   $(PROJ_DIR)/main.c \
-  $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
-  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
-  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
   $(SDK_ROOT)/components/drivers_nrf/spi_slave/nrf_drv_spis.c \
   $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf52840.S \
   $(SDK_ROOT)/components/toolchain/system_nrf52840.c \
@@ -92,11 +99,12 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/usbd \
   $(SDK_ROOT)/components/toolchain/gcc \
   ../config \
-  $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/drivers_nrf/comp \
+  $(SDK_ROOT)/components/libraries/experimental_cli \
   $(SDK_ROOT)/components/drivers_nrf/spi_master \
   $(SDK_ROOT)/components/libraries/pwm \
   $(SDK_ROOT)/components/drivers_nrf/twi_master \
+  $(SDK_ROOT)/components/libraries/experimental_section_vars \
   $(SDK_ROOT)/components/libraries/fifo \
   $(SDK_ROOT)/components/libraries/usbd/class/cdc \
   $(SDK_ROOT)/components/libraries/strerror \
@@ -113,7 +121,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/uart \
   $(SDK_ROOT)/components/libraries/csense_drv \
   $(SDK_ROOT)/components/libraries/csense \
-  $(SDK_ROOT)/components/libraries/usbd/class/msc \
+  $(SDK_ROOT)/components/libraries/balloc \
   $(SDK_ROOT)/components/libraries/ecc \
   $(SDK_ROOT)/components/drivers_nrf/swi \
   $(SDK_ROOT)/components/libraries/usbd/class/hid \
@@ -124,34 +132,40 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/rng \
   $(SDK_ROOT)/components/libraries/uart \
   $(SDK_ROOT)/components/device \
-  $(SDK_ROOT)/components/libraries/hci \
+  $(SDK_ROOT)/components/libraries/experimental_log \
   $(SDK_ROOT)/components/libraries/usbd/class/hid/kbd \
-  $(SDK_ROOT)/components/libraries/log \
   $(SDK_ROOT)/components/drivers_nrf/spi_slave \
   $(SDK_ROOT)/components/toolchain \
   $(SDK_ROOT)/components/libraries/slip \
   $(SDK_ROOT)/components/libraries/button \
   $(SDK_ROOT)/components/libraries/usbd/class/hid/generic \
   $(SDK_ROOT)/components/drivers_nrf/lpcomp \
-  $(SDK_ROOT)/components/libraries/timer \
+  $(SDK_ROOT)/components/libraries/experimental_cli/uart \
   $(SDK_ROOT)/components/drivers_nrf/i2s \
   $(SDK_ROOT)/components/libraries/usbd/class/cdc/acm \
+  $(SDK_ROOT)/components/libraries/mutex \
   $(SDK_ROOT)/components/libraries/queue \
   $(SDK_ROOT)/components/libraries/gpiote \
+  $(SDK_ROOT)/components/libraries/experimental_log/src \
   $(SDK_ROOT)/components/drivers_nrf/gpiote \
   $(SDK_ROOT)/components/drivers_nrf/saadc \
   $(SDK_ROOT)/components/drivers_nrf/power \
+  $(SDK_ROOT)/components/libraries/pwr_mgmt \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
   $(SDK_ROOT)/components/libraries/usbd/config \
   $(SDK_ROOT)/components/libraries/atomic \
   $(SDK_ROOT)/components/boards \
   $(SDK_ROOT)/components/libraries/usbd/class/audio \
+  $(SDK_ROOT)/components/libraries/atomic_fifo \
   $(SDK_ROOT)/components/drivers_nrf/hal \
+  $(SDK_ROOT)/components/libraries/experimental_memobj \
   $(SDK_ROOT)/components/drivers_nrf/systick \
   $(SDK_ROOT)/components/drivers_nrf/rtc \
   $(SDK_ROOT)/components/drivers_nrf/common \
   $(SDK_ROOT)/components/libraries/twi \
   $(SDK_ROOT)/components/drivers_nrf/clock \
+  $(SDK_ROOT)/components/libraries/usbd/class/msc \
+  $(SDK_ROOT)/components/libraries/experimental_ringbuf \
   $(PROJ_DIR) \
   $(SDK_ROOT)/components/libraries/low_power_pwm \
   $(SDK_ROOT)/components/libraries/usbd/class/hid/mouse \
@@ -159,47 +173,64 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/wdt \
   $(SDK_ROOT)/components/drivers_nrf/ppi \
   $(SDK_ROOT)/components/drivers_nrf/qdec \
+  $(SDK_ROOT)/components/libraries/timer \
   $(SDK_ROOT)/components/libraries/block_dev \
+  $(SDK_ROOT)/external/fprintf \
   $(SDK_ROOT)/components/drivers_nrf/twis_slave \
-  $(SDK_ROOT)/components/libraries/log/src \
+  $(SDK_ROOT)/components/libraries/hci \
 
 # Libraries common to all targets
 LIB_FILES += \
 
+# Optimization flags
+OPT = -O3 -g3
+# Uncomment the line below to enable link time optimization
+#OPT += -flto
+
 # C flags common to all targets
+CFLAGS += $(OPT)
 CFLAGS += -DBOARD_PCA10056
 CFLAGS += -DCONFIG_GPIO_AS_PINRESET
 CFLAGS += -DNRF52840_XXAA
 CFLAGS += -DSWI_DISABLE0
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
-CFLAGS +=  -Wall -Werror -O3 -g3
+CFLAGS +=  -Wall -Werror
 CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
-# keep every function in separate section, this allows linker to discard unused ones
+# keep every function in a separate section, this allows linker to discard unused ones
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -fno-builtin --short-enums 
+CFLAGS += -fno-builtin -fshort-enums 
 
 # C++ flags common to all targets
-CXXFLAGS += \
+CXXFLAGS += $(OPT)
 
 # Assembler flags common to all targets
-ASMFLAGS += -x assembler-with-cpp
+ASMFLAGS += -g3
+ASMFLAGS += -mcpu=cortex-m4
+ASMFLAGS += -mthumb -mabi=aapcs
+ASMFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 ASMFLAGS += -DBOARD_PCA10056
 ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
 ASMFLAGS += -DNRF52840_XXAA
 ASMFLAGS += -DSWI_DISABLE0
 
 # Linker flags
+LDFLAGS += $(OPT)
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)
 LDFLAGS += -mcpu=cortex-m4
 LDFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
-# let linker to dump unused sections
+# let linker dump unused sections
 LDFLAGS += -Wl,--gc-sections
 # use newlib in nano version
-LDFLAGS += --specs=nano.specs -lc -lnosys
+LDFLAGS += --specs=nano.specs
 
 
-.PHONY: $(TARGETS) default all clean help flash 
+# Add standard libraries at the very end of the linker input, after all objects
+# that may need symbols provided by these libraries.
+LIB_FILES += -lc -lnosys -lm
+
+
+.PHONY: default help
 
 # Default target - first one defined
 default: nrf52840_xxaa
@@ -215,11 +246,13 @@ include $(TEMPLATE_PATH)/Makefile.common
 
 $(foreach target, $(TARGETS), $(call define_target, $(target)))
 
+.PHONY: flash erase
+
 # Flash the program
 flash: $(OUTPUT_DIRECTORY)/nrf52840_xxaa.hex
 	@echo Flashing: $<
-	nrfjprog --program $< -f nrf52 --sectorerase
-	nrfjprog --reset -f nrf52
+	nrfjprog -f nrf52 --program $< --sectorerase
+	nrfjprog -f nrf52 --reset
 
 erase:
-	nrfjprog --eraseall -f nrf52
+	nrfjprog -f nrf52 --eraseall

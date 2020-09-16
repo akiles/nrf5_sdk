@@ -46,6 +46,7 @@
 #include "ble_gatt_struct_serialization.h"
 #include "ble_gattc_struct_serialization.h"
 #include "ble_gatts_struct_serialization.h"
+#include "ble_l2cap_struct_serialization.h"
 #include "cond_field_serialization.h"
 #include "app_util.h"
 
@@ -152,11 +153,13 @@ uint32_t ble_opt_get_rsp_dec(uint8_t const * const p_buf,
             fp_decoder = ble_gap_opt_compat_mode_1_t_dec;
             p_struct   = &(p_opt->gap_opt.compat_mode_1);
         break;
+
+#endif
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION == 4
         case BLE_GAP_OPT_COMPAT_MODE_2:
             fp_decoder = ble_gap_opt_compat_mode_2_t_dec;
             p_struct   = &(p_opt->gap_opt.compat_mode_2);
         break;
-
 #endif
         default:
             SER_ASSERT(NRF_ERROR_INVALID_PARAM, NRF_ERROR_INVALID_PARAM);
@@ -185,7 +188,7 @@ uint32_t ble_opt_set_req_enc(uint32_t const          opt_id,
     SER_PUSH_COND(p_opt, NULL);
     if (p_opt)
     {
-        switch(opt_id)
+        switch (opt_id)
         {
 #if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION < 4
             case BLE_COMMON_OPT_CONN_BW:
@@ -237,13 +240,15 @@ uint32_t ble_opt_set_req_enc(uint32_t const          opt_id,
                 fp_encoder = ble_gap_opt_compat_mode_1_t_enc;
                 p_struct   = &(p_opt->gap_opt.compat_mode_1);
             break;
-            case BLE_GAP_OPT_COMPAT_MODE_2:
-                fp_encoder = ble_gap_opt_compat_mode_2_t_enc;
-                p_struct   = &(p_opt->gap_opt.compat_mode_2);
-            break;
             case BLE_GAP_OPT_SLAVE_LATENCY_DISABLE:
                 fp_encoder = ble_gap_opt_slave_latency_disable_t_enc;
                 p_struct   = &(p_opt->gap_opt.slave_latency_disable);
+            break;
+#endif
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION == 4
+            case BLE_GAP_OPT_COMPAT_MODE_2:
+                fp_encoder = ble_gap_opt_compat_mode_2_t_enc;
+                p_struct   = &(p_opt->gap_opt.compat_mode_2);
             break;
 #endif
             default:
@@ -437,7 +442,7 @@ uint32_t ble_cfg_set_req_enc(uint32_t              cfg_id,
     if (p_cfg)
     {
 
-        switch(cfg_id)
+        switch (cfg_id)
         {
             case BLE_CONN_CFG_GAP:
                 fp_encoder = ble_gap_conn_cfg_t_enc;
@@ -455,6 +460,12 @@ uint32_t ble_cfg_set_req_enc(uint32_t              cfg_id,
                 fp_encoder = ble_gatt_conn_cfg_t_enc;
                 p_struct   = &(p_cfg->conn_cfg.params.gatt_conn_cfg);
                 break;
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION >= 5
+            case BLE_CONN_CFG_L2CAP:
+                fp_encoder = ble_l2cap_conn_cfg_t_enc;
+                p_struct   = &(p_cfg->conn_cfg.params.l2cap_conn_cfg);
+                break;
+#endif
             case BLE_COMMON_CFG_VS_UUID:
                 fp_encoder = ble_common_cfg_vs_uuid_t_enc;
                 p_struct   = &(p_cfg->common_cfg.vs_uuid_cfg);

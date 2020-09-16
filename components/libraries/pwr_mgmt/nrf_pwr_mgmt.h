@@ -81,16 +81,16 @@ typedef enum
 /**@brief Shutdown event types. */
 typedef enum
 {
-    NRF_PWR_MGMT_EVT_PREPARE_WAKEUP,
+    NRF_PWR_MGMT_EVT_PREPARE_WAKEUP = NRF_PWR_MGMT_SHUTDOWN_GOTO_SYSOFF,
     //!< Application will prepare the wakeup mechanism.
 
-    NRF_PWR_MGMT_EVT_PREPARE_SYSOFF,
+    NRF_PWR_MGMT_EVT_PREPARE_SYSOFF = NRF_PWR_MGMT_SHUTDOWN_STAY_IN_SYSOFF,
     //!< Application will prepare to stay in System OFF state.
 
-    NRF_PWR_MGMT_EVT_PREPARE_DFU,
+    NRF_PWR_MGMT_EVT_PREPARE_DFU    = NRF_PWR_MGMT_SHUTDOWN_GOTO_DFU,
     //!< Application will prepare to enter DFU mode.
 
-    NRF_PWR_MGMT_EVT_PREPARE_RESET,
+    NRF_PWR_MGMT_EVT_PREPARE_RESET  = NRF_PWR_MGMT_SHUTDOWN_RESET,
     //!< Application will prepare to chip reset.
 } nrf_pwr_mgmt_evt_t;
 
@@ -112,10 +112,10 @@ typedef bool (*nrf_pwr_mgmt_shutdown_handler_t)(nrf_pwr_mgmt_evt_t event);
  * @param[in]   _priority   Priority of the given handler.
  */
 #define NRF_PWR_MGMT_HANDLER_REGISTER(_handler, _priority)                               \
-            STATIC_ASSERT(_priority < NRF_PWR_MGMT_CONFIG_HANDLER_PRIORITY_COUNT);       \
-            NRF_SECTION_SET_ITEM_REGISTER(pwr_mgmt_data,                                 \
-                                          _priority,                                     \
-                                          nrf_pwr_mgmt_shutdown_handler_t const _handler)
+    STATIC_ASSERT(_priority < NRF_PWR_MGMT_CONFIG_HANDLER_PRIORITY_COUNT);               \
+    /*lint -esym(528,*_handler_function) -esym(529,*_handler_function) : Symbol not referenced. */         \
+    NRF_SECTION_SET_ITEM_REGISTER(pwr_mgmt_data, _priority,                              \
+                                  static nrf_pwr_mgmt_shutdown_handler_t const CONCAT_2(_handler, _handler_function)) = (_handler)
 
 /**@brief   Function for initializing power management.
  *

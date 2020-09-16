@@ -46,9 +46,11 @@
 #ifdef SOFTDEVICE_PRESENT
 #include "nrf_soc.h"
 #endif
-#define NRF_LOG_MODULE_NAME "HARDFAULT"
+#define NRF_LOG_MODULE_NAME hardfault
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+NRF_LOG_MODULE_REGISTER();
+
 #if defined(DEBUG_NRF)
 /**
  * @brief Pointer to the last received stack pointer.
@@ -69,7 +71,7 @@ __WEAK void HardFault_process(HardFault_stack_t * p_stack)
 
 void HardFault_c_handler(uint32_t * p_stack_address)
 {
-    NRF_LOG_ERROR("Hardfault PC:%x\r\n", ((HardFault_stack_t *)p_stack_address)->pc);
+    NRF_LOG_ERROR("Hardfault PC:%x", ((HardFault_stack_t *)p_stack_address)->pc);
     NRF_LOG_FINAL_FLUSH();
 #if defined(DEBUG_NRF)
     HardFault_p_stack = (HardFault_stack_t *)p_stack_address;

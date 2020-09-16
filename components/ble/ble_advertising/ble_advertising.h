@@ -51,10 +51,6 @@
  *
  * @note     The Advertising Module supports only applications with a single peripheral link.
  *
- * The application must propagate BLE stack events to this module by calling
- * @ref ble_advertising_on_ble_evt() and system events by calling
- * @ref ble_advertising_on_sys_evt().
- *
  */
 
 #ifndef BLE_ADVERTISING_H__
@@ -70,9 +66,22 @@
 extern "C" {
 #endif
 
+/**@brief   Macro for defining a ble_advertising instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_ADVERTISING_DEF(_name)                                                                  \
+static ble_advertising_t _name;                                                                     \
+NRF_SDH_BLE_OBSERVER(_name ## _ble_obs,                                                             \
+                     BLE_ADV_BLE_OBSERVER_PRIO,                                                     \
+                     ble_advertising_on_ble_evt, &_name);                                           \
+NRF_SDH_SOC_OBSERVER(_name ## _soc_obs,                                                             \
+                     BLE_ADV_SOC_OBSERVER_PRIO,                                                     \
+                     ble_advertising_on_sys_evt, &_name)
 
-/**@brief Advertising modes.
-*/
+
+/**@brief   Advertising modes. */
 typedef enum
 {
     BLE_ADV_MODE_IDLE,          /**< Idle; no connectable advertising is ongoing. */
@@ -82,7 +91,7 @@ typedef enum
     BLE_ADV_MODE_SLOW,          /**< Slow advertising is similar to fast advertising. By default, it uses a longer advertising interval and time-out than fast advertising. However, these options are defined by the user. */
 } ble_adv_mode_t;
 
-/**@brief Advertising events.
+/**@brief   Advertising events.
  *
  * @details These events are propagated to the main application if a handler was provided during
  *          initialization of the Advertising Module. Events for modes that are not used can be
@@ -102,14 +111,14 @@ typedef enum
     BLE_ADV_EVT_PEER_ADDR_REQUEST    /**< Request a peer address from the main application. For directed advertising to work, the peer address must be set when this event occurs. */
 } ble_adv_evt_t;
 
-
-/**@brief Options for the different advertisement modes.
+/**@brief   Options for the different advertisement modes.
  *
  * @details This structure is used to enable or disable advertising modes and to configure time-out
  *          periods and advertising intervals.
  */
 typedef struct
 {
+    bool     ble_adv_on_disconnect_disabled;  /**< Enable or disable automatic return to advertising upon disconnecting.*/
     bool     ble_adv_whitelist_enabled;       /**< Enable or disable use of the whitelist. */
     bool     ble_adv_directed_enabled;        /**< Enable or disable direct advertising mode. */
     bool     ble_adv_directed_slow_enabled;   /**< Enable or disable direct advertising mode. */
@@ -123,6 +132,61 @@ typedef struct
     uint32_t ble_adv_slow_timeout;            /**< Time-out (in seconds) for slow advertising. */
 } ble_adv_modes_config_t;
 
+/**@brief   BLE advertising event handler type. */
+typedef void (*ble_adv_evt_handler_t) (ble_adv_evt_t const adv_evt);
+
+/**@brief   BLE advertising error handler type. */
+typedef void (*ble_adv_error_handler_t) (uint32_t nrf_error);
+
+typedef struct
+{
+    bool                        initialized;
+    bool                        advertising_start_pending;                /**< Flag to keep track of ongoing operations in flash. */
+
+    ble_adv_evt_t               adv_evt;                                  /**< Advertising event propogated to the main application. The event is either a transaction to a new advertising mode, or a request for whitelist or peer address. */
+
+    ble_adv_mode_t              adv_mode_current;                         /**< Variable to keep track of the current advertising mode. */
+    ble_adv_modes_config_t      adv_modes_config;                         /**< Struct to keep track of disabled and enabled advertising modes, as well as time-outs and intervals.*/
+    uint8_t                     conn_cfg_tag;                             /**< Variable to keep track of what connection settings will be used if the advertising results in a connection. */
+
+    ble_gap_addr_t              peer_address;                             /**< Address of the most recently connected peer, used for direct advertising. */
+    bool                        peer_addr_reply_expected;                 /**< Flag to verify that peer address is only set when requested. */
+
+    ble_advdata_t               advdata;                                  /**< Used by the initialization function to set name, appearance, and UUIDs and advertising flags visible to peer devices. */
+    ble_advdata_manuf_data_t    manuf_specific_data;                      /**< Manufacturer specific data structure*/
+    uint8_t                     manuf_data_array[BLE_GAP_ADV_MAX_SIZE];   /**< Array to store the Manufacturer specific data*/
+    ble_advdata_service_data_t  service_data;                             /**< Service data structure. */
+    uint8_t                     service_data_array[BLE_GAP_ADV_MAX_SIZE]; /**< Array to store the service data. */
+    ble_advdata_conn_int_t      slave_conn_int;                           /**< Connection interval range structure.*/
+    uint16_t                    current_slave_link_conn_handle;           /**< Connection handle for the active link. */
+
+    ble_adv_evt_handler_t       evt_handler;                              /**< Handler for the advertising events. Can be initialized as NULL if no handling is implemented on in the main application. */
+    ble_adv_error_handler_t     error_handler;                            /**< Handler for the advertising error events. */
+
+    bool                        whitelist_temporarily_disabled;           /**< Flag to keep track of temporary disabling of the whitelist. */
+    bool                        whitelist_reply_expected;
+
+#if (NRF_SD_BLE_API_VERSION <= 2)
+    // For SoftDevices v 2.x, this module caches a whitelist which is retrieved from the
+    // application using an event, and which is passed as a parameter when calling
+    // sd_ble_gap_adv_start().
+    ble_gap_addr_t * p_whitelist_addrs[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
+    ble_gap_irk_t  * p_whitelist_irks[BLE_GAP_WHITELIST_IRK_MAX_COUNT];
+    ble_gap_addr_t   whitelist_addrs[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
+    ble_gap_irk_t    whitelist_irks[BLE_GAP_WHITELIST_IRK_MAX_COUNT];
+
+    ble_gap_whitelist_t m_whitelist =
+    {
+        .pp_addrs = p_whitelist_addrs,
+        .pp_irks  = p_whitelist_irks
+    };
+#else
+    // For SoftDevices v 3.x, this module does not need to cache a whitelist, but it needs to
+    // be aware of whether or not a whitelist has been set (e.g. using the Peer Manager)
+    // in order to start advertising with the proper advertising params (filter policy).
+    bool whitelist_in_use;
+#endif
+} ble_advertising_t;
 
 typedef struct
 {
@@ -131,109 +195,110 @@ typedef struct
     bool     enabled;
 } ble_adv_mode_config_t;
 
-
-/**@brief BLE advertising event handler type. */
-typedef void (*ble_advertising_evt_handler_t) (ble_adv_evt_t const adv_evt);
-
-/**@brief BLE advertising error handler type. */
-typedef void (*ble_advertising_error_handler_t) (uint32_t nrf_error);
-
-/**@brief Initialization parameters for the Advertising Module.
- * @details This structure is used to pass advertising options, advertising data, and an event handler to the Advertising Module during initialization. */
+/**@brief     Initialization parameters for the Advertising Module.
+ * @details This structure is used to pass advertising options, advertising data,
+ *          and an event handler to the Advertising Module during initialization.
+ */
 typedef struct
 {
-    ble_adv_modes_config_t        options;     /**< Parameters for advertising modes.*/
-    ble_advdata_t                 advdata;     /**< Advertising data. */
-    ble_advertising_evt_handler_t evt_handler; /**< Event handler. */
-} ble_adv_init_t;
+    ble_advdata_t           advdata;       /**< Advertising data: name, appearance, discovery flags, and more. */
+    ble_advdata_t           srdata;        /**< Scan response data: Supplement to advertising data. */
+    ble_adv_modes_config_t  config;        /**< Select which advertising modes and intervals will be utilized.*/
+    ble_adv_evt_handler_t   evt_handler;   /**< Event handler that will be called upon advertising events. */
+    ble_adv_error_handler_t error_handler; /**< Error handler that will propogate internal errors to the main applications. */
+} ble_advertising_init_t;
 
 
-/**@brief Function for handling BLE events.
+/**@brief   Function for handling BLE events.
  *
  * @details This function must be called from the BLE stack event dispatcher for
  *          the module to handle BLE events that are relevant for the Advertising Module.
  *
- * @param[in] p_ble_evt BLE stack event.
+ * @param[in] p_ble_evt     BLE stack event.
+ * @param[in] p_adv         Advertising module instance.
  */
-void ble_advertising_on_ble_evt(const ble_evt_t * const p_ble_evt);
+void ble_advertising_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_adv);
 
 
-/**@brief Function for handling system events.
+/**@brief   Function for handling system events.
  *
  * @details This function must be called to handle system events that are relevant
  *          for the Advertising Module. Specifically, the advertising module can not use the
  *          softdevice as long as there are pending writes to the flash memory. This
  *          event handler is designed to delay advertising until there is no flash operation.
  *
- * @param[in] sys_evt  System event.
+ * @param[in] sys_evt       System event.
+ * @param[in] p_adv         Advertising module instance.
  */
-void ble_advertising_on_sys_evt(uint32_t sys_evt);
+void ble_advertising_on_sys_evt(uint32_t sys_evt, void * p_adv);
 
 
-/**@brief Function for initializing the Advertising Module.
+/**@brief   Function for initializing the Advertising Module.
  *
  * @details Encodes the required advertising data and passes it to the stack.
  *          Also builds a structure to be passed to the stack when starting advertising.
  *          The supplied advertising data is copied to a local structure and is manipulated
  *          depending on what advertising modes are started in @ref ble_advertising_start.
  *
- * @param[in] p_advdata     Advertising data: name, appearance, discovery flags, and more.
- * @param[in] p_srdata      Scan response data: Supplement to advertising data.
- * @param[in] p_config      Select which advertising modes and intervals will be utilized.
- * @param[in] evt_handler   Event handler that will be called upon advertising events.
- * @param[in] error_handler Error handler that will propogate internal errors to the main applications.
+ * @param[out] p_advertising Advertising module instance. This structure must be supplied by
+ *                           the application. It is initialized by this function and will later
+ *                           be used to identify this particular module instance.
+ * @param[in] p_init         Information needed to initialize the module.
  *
  * @retval NRF_SUCCESS If initialization was successful. Otherwise, an error code is returned.
  */
-uint32_t ble_advertising_init(ble_advdata_t                   const * p_advdata,
-                              ble_advdata_t                   const * p_srdata,
-                              ble_adv_modes_config_t          const * p_config,
-                              ble_advertising_evt_handler_t   const   evt_handler,
-                              ble_advertising_error_handler_t const   error_handler);
+uint32_t ble_advertising_init(ble_advertising_t            * const p_advertising,
+                              ble_advertising_init_t const * const p_init);
 
 
- /**@brief Function for changing the connection settings tag that will be used for upcoming connections.
+ /**@brief  Function for changing the connection settings tag that will be used for upcoming connections.
  *
  * @details See @ref sd_ble_cfg_set for more details about changing connection settings. If this
  *          function is never called, @ref BLE_CONN_CFG_TAG_DEFAULT will be used.
  *
+ * @param[in] p_advertising Advertising module instance.
  * @param[in] ble_cfg_tag Configuration for the connection settings (see @ref sd_ble_cfg_set).
  */
-void ble_advertising_conn_cfg_tag_set(uint8_t ble_cfg_tag);
+void ble_advertising_conn_cfg_tag_set(ble_advertising_t * const p_advertising, uint8_t ble_cfg_tag);
 
-/**@brief Function for starting advertising.
+/**@brief   Function for starting advertising.
  *
  * @details You can start advertising in any of the advertising modes that you enabled
  *          during initialization.
  *
+ * @param[in] p_advertising    Advertising module instance.
  * @param[in] advertising_mode  Advertising mode.
  *
  * @retval @ref NRF_SUCCESS On success, else an error code indicating reason for failure.
  * @retval @ref NRF_ERROR_INVALID_STATE If the module is not initialized.
  */
-uint32_t ble_advertising_start(ble_adv_mode_t advertising_mode);
+uint32_t ble_advertising_start(ble_advertising_t * const p_advertising,
+                               ble_adv_mode_t            advertising_mode);
 
 
-/**@brief Function for setting the peer address.
+/**@brief   Function for setting the peer address.
  *
  * @details The peer address must be set by the application upon receiving a
  *          @ref BLE_ADV_EVT_PEER_ADDR_REQUEST event. Without the peer address, the directed
  *          advertising mode will not be run.
  *
+ * @param[in] p_advertising Advertising module instance.
  * @param[in] p_peer_addr  Pointer to a peer address.
  *
  * @retval @ref NRF_SUCCESS Successfully stored the peer address pointer in the advertising module.
  * @retval @ref NRF_ERROR_INVALID_STATE If a reply was not expected.
  */
-uint32_t ble_advertising_peer_addr_reply(ble_gap_addr_t * p_peer_addr);
+uint32_t ble_advertising_peer_addr_reply(ble_advertising_t * const p_advertising,
+                                         ble_gap_addr_t          * p_peer_addr);
 
 
-/**@brief Function for setting a whitelist.
+/**@brief   Function for setting a whitelist.
  *
  * @details The whitelist must be set by the application upon receiving a
  *          @ref BLE_ADV_EVT_WHITELIST_REQUEST event. Without the whitelist, the whitelist
  *          advertising for fast and slow modes will not be run.
  *
+ * @param[in] p_advertising Advertising module instance.
  * @param[in] p_gap_addrs   The list of GAP addresses to whitelist.
  * @param[in] addr_cnt      The number of GAP addresses to whitelist.
  * @param[in] p_gap_irks    The list of peer IRK to whitelist.
@@ -243,21 +308,41 @@ uint32_t ble_advertising_peer_addr_reply(ble_gap_addr_t * p_peer_addr);
  * @retval @ref NRF_ERROR_INVALID_STATE     If a call to this function was made without a
  *                                          BLE_ADV_EVT_WHITELIST_REQUEST event being received.
  */
-uint32_t ble_advertising_whitelist_reply(ble_gap_addr_t const * p_gap_addrs,
+uint32_t ble_advertising_whitelist_reply(ble_advertising_t * const p_advertising,
+                                         ble_gap_addr_t const    * p_gap_addrs,
                                          uint32_t               addr_cnt,
                                          ble_gap_irk_t  const * p_gap_irks,
                                          uint32_t               irk_cnt);
 
 
-/**@brief Function for disabling whitelist advertising.
+/**@brief   Function for disabling whitelist advertising.
  *
  * @details This function temporarily disables whitelist advertising.
  *          Calling this function resets the current time-out countdown.
  *
+ * @param[in]  p_advertising Advertising module instance.
+ *
  * @retval @ref NRF_SUCCESS On success, else an error message propogated from the Softdevice.
  */
-uint32_t ble_advertising_restart_without_whitelist(void);
+uint32_t ble_advertising_restart_without_whitelist(ble_advertising_t * const p_advertising);
 
+
+/**@brief   Function for changing advertising modes configuration.
+ *
+ * @details This function can be called if you wish to reconfigure the advertising modes that the
+ *          advertising module will cycle through. Enable or disable modes as listed in
+ *          @ref ble_adv_mode_t; or change the duration of the advertising and use of whitelist.
+ *
+ *          Keep in mind that @ref ble_adv_modes_config_t is also supplied when calling
+ *          @ref ble_advertising_init. Calling @ref ble_advertising_modes_config_set
+ *          is only necessary if your application requires this behaviour to change.
+ *
+ * @param[in]  p_advertising      Advertising module instance.
+ * @param[in]  p_adv_modes_config Struct to keep track of disabled and enabled advertising modes,
+ *                                as well as time-outs and intervals.
+ */
+void ble_advertising_modes_config_set(ble_advertising_t            * const p_advertising,
+                                      ble_adv_modes_config_t const * const p_adv_modes_config);
 /** @} */
 
 

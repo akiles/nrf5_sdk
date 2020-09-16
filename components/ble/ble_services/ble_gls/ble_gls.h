@@ -46,8 +46,13 @@
  *
  * @details This module implements the Glucose Service.
  *
- * @note The application must propagate BLE stack events to the Glucose Service module by calling
- *       ble_gls_on_ble_evt() from the @ref softdevice_handler callback.
+ * @note    The application must register this module as BLE event observer using the
+ *          NRF_SDH_BLE_OBSERVER macro. Example:
+ *          @code
+ *              ble_gls_t instance;
+ *              NRF_SDH_BLE_OBSERVER(anything, BLE_GLS_BLE_OBSERVER_PRIO,
+ *                                   ble_gls_on_ble_evt, &instance);
+ *          @endcode
  *
  * @note Attention!
  *  To maintain compliance with Nordic Semiconductor ASA Bluetooth profile
@@ -62,112 +67,126 @@
 #include "ble.h"
 #include "ble_srv_common.h"
 #include "ble_date_time.h"
+#include "nrf_sdh_ble.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/**@brief   Macro for defining a ble_gls instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_GLS_DEF(_name)                                                                          \
+static ble_gls_t _name;                                                                             \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     BLE_GLS_BLE_OBSERVER_PRIO,                                                     \
+                     ble_gls_on_ble_evt, &_name)
+
+
 /**@brief Glucose feature */
-#define BLE_GLS_FEATURE_LOW_BATT                       0x0001  /**< Low Battery Detection During Measurement Supported */
-#define BLE_GLS_FEATURE_MALFUNC                        0x0002  /**< Sensor Malfunction Detection Supported */
-#define BLE_GLS_FEATURE_SAMPLE_SIZE                    0x0004  /**< Sensor Sample Size Supported */
-#define BLE_GLS_FEATURE_INSERT_ERR                     0x0008  /**< Sensor Strip Insertion Error Detection Supported */
-#define BLE_GLS_FEATURE_TYPE_ERR                       0x0010  /**< Sensor Strip Type Error Detection Supported */
-#define BLE_GLS_FEATURE_RES_HIGH_LOW                   0x0020  /**< Sensor Result High-Low Detection Supported */
-#define BLE_GLS_FEATURE_TEMP_HIGH_LOW                  0x0040  /**< Sensor Temperature High-Low Detection Supported */
-#define BLE_GLS_FEATURE_READ_INT                       0x0080  /**< Sensor Read Interrupt Detection Supported */
-#define BLE_GLS_FEATURE_GENERAL_FAULT                  0x0100  /**< General Device Fault Supported */
-#define BLE_GLS_FEATURE_TIME_FAULT                     0x0200  /**< Time Fault Supported */
-#define BLE_GLS_FEATURE_MULTI_BOND                     0x0400  /**< Multiple Bond Supported */
+#define BLE_GLS_FEATURE_LOW_BATT                        0x0001  /**< Low Battery Detection During Measurement Supported */
+#define BLE_GLS_FEATURE_MALFUNC                         0x0002  /**< Sensor Malfunction Detection Supported */
+#define BLE_GLS_FEATURE_SAMPLE_SIZE                     0x0004  /**< Sensor Sample Size Supported */
+#define BLE_GLS_FEATURE_INSERT_ERR                      0x0008  /**< Sensor Strip Insertion Error Detection Supported */
+#define BLE_GLS_FEATURE_TYPE_ERR                        0x0010  /**< Sensor Strip Type Error Detection Supported */
+#define BLE_GLS_FEATURE_RES_HIGH_LOW                    0x0020  /**< Sensor Result High-Low Detection Supported */
+#define BLE_GLS_FEATURE_TEMP_HIGH_LOW                   0x0040  /**< Sensor Temperature High-Low Detection Supported */
+#define BLE_GLS_FEATURE_READ_INT                        0x0080  /**< Sensor Read Interrupt Detection Supported */
+#define BLE_GLS_FEATURE_GENERAL_FAULT                   0x0100  /**< General Device Fault Supported */
+#define BLE_GLS_FEATURE_TIME_FAULT                      0x0200  /**< Time Fault Supported */
+#define BLE_GLS_FEATURE_MULTI_BOND                      0x0400  /**< Multiple Bond Supported */
 
 /**@brief Glucose measurement flags */
-#define BLE_GLS_MEAS_FLAG_TIME_OFFSET                  0x01    /**< Time Offset Present */
-#define BLE_GLS_MEAS_FLAG_CONC_TYPE_LOC                0x02    /**< Glucose Concentration, Type, and Sample Location Present */
-#define BLE_GLS_MEAS_FLAG_UNITS_KG_L                   0x00    /**< Glucose Concentration Units kg/L */
-#define BLE_GLS_MEAS_FLAG_UNITS_MOL_L                  0x04    /**< Glucose Concentration Units mol/L */
-#define BLE_GLS_MEAS_FLAG_SENSOR_STATUS                0x08    /**< Sensor Status Annunciation Present */
-#define BLE_GLS_MEAS_FLAG_CONTEXT_INFO                 0x10    /**< Context Information Follows */
+#define BLE_GLS_MEAS_FLAG_TIME_OFFSET                   0x01    /**< Time Offset Present */
+#define BLE_GLS_MEAS_FLAG_CONC_TYPE_LOC                 0x02    /**< Glucose Concentration, Type, and Sample Location Present */
+#define BLE_GLS_MEAS_FLAG_UNITS_KG_L                    0x00    /**< Glucose Concentration Units kg/L */
+#define BLE_GLS_MEAS_FLAG_UNITS_MOL_L                   0x04    /**< Glucose Concentration Units mol/L */
+#define BLE_GLS_MEAS_FLAG_SENSOR_STATUS                 0x08    /**< Sensor Status Annunciation Present */
+#define BLE_GLS_MEAS_FLAG_CONTEXT_INFO                  0x10    /**< Context Information Follows */
 
 /**@brief Glucose measurement type */
-#define BLE_GLS_MEAS_TYPE_CAP_BLOOD                    1       /**< Capillary whole blood */
-#define BLE_GLS_MEAS_TYPE_CAP_PLASMA                   2       /**< Capillary plasma */
-#define BLE_GLS_MEAS_TYPE_VEN_BLOOD                    3       /**< Venous whole blood */
-#define BLE_GLS_MEAS_TYPE_VEN_PLASMA                   4       /**< Venous plasma */
-#define BLE_GLS_MEAS_TYPE_ART_BLOOD                    5       /**< Arterial whole blood */
-#define BLE_GLS_MEAS_TYPE_ART_PLASMA                   6       /**< Arterial plasma */
-#define BLE_GLS_MEAS_TYPE_UNDET_BLOOD                  7       /**< Undetermined whole blood */
-#define BLE_GLS_MEAS_TYPE_UNDET_PLASMA                 8       /**< Undetermined plasma */
-#define BLE_GLS_MEAS_TYPE_FLUID                        9       /**< Interstitial fluid (ISF) */
-#define BLE_GLS_MEAS_TYPE_CONTROL                      10      /**< Control solution */
+#define BLE_GLS_MEAS_TYPE_CAP_BLOOD                     1       /**< Capillary whole blood */
+#define BLE_GLS_MEAS_TYPE_CAP_PLASMA                    2       /**< Capillary plasma */
+#define BLE_GLS_MEAS_TYPE_VEN_BLOOD                     3       /**< Venous whole blood */
+#define BLE_GLS_MEAS_TYPE_VEN_PLASMA                    4       /**< Venous plasma */
+#define BLE_GLS_MEAS_TYPE_ART_BLOOD                     5       /**< Arterial whole blood */
+#define BLE_GLS_MEAS_TYPE_ART_PLASMA                    6       /**< Arterial plasma */
+#define BLE_GLS_MEAS_TYPE_UNDET_BLOOD                   7       /**< Undetermined whole blood */
+#define BLE_GLS_MEAS_TYPE_UNDET_PLASMA                  8       /**< Undetermined plasma */
+#define BLE_GLS_MEAS_TYPE_FLUID                         9       /**< Interstitial fluid (ISF) */
+#define BLE_GLS_MEAS_TYPE_CONTROL                       10      /**< Control solution */
 
 /**@brief Glucose measurement location */
-#define BLE_GLS_MEAS_LOC_FINGER                        1       /**< Finger */
-#define BLE_GLS_MEAS_LOC_AST                           2       /**< Alternate Site Test (AST) */
-#define BLE_GLS_MEAS_LOC_EAR                           3       /**< Earlobe */
-#define BLE_GLS_MEAS_LOC_CONTROL                       4       /**< Control solution */
-#define BLE_GLS_MEAS_LOC_NOT_AVAIL                     15      /**< Sample Location value not available */
+#define BLE_GLS_MEAS_LOC_FINGER                         1       /**< Finger */
+#define BLE_GLS_MEAS_LOC_AST                            2       /**< Alternate Site Test (AST) */
+#define BLE_GLS_MEAS_LOC_EAR                            3       /**< Earlobe */
+#define BLE_GLS_MEAS_LOC_CONTROL                        4       /**< Control solution */
+#define BLE_GLS_MEAS_LOC_NOT_AVAIL                      15      /**< Sample Location value not available */
 
 /**@brief Glucose sensor status annunciation */
-#define BLE_GLS_MEAS_STATUS_BATT_LOW                   0x0001  /**< Device battery low at time of measurement */
-#define BLE_GLS_MEAS_STATUS_SENSOR_FAULT               0x0002  /**< Sensor malfunction or faulting at time of measurement */
-#define BLE_GLS_MEAS_STATUS_SAMPLE_SIZE                0x0004  /**< Sample size for blood or control solution insufficient at time of measurement */
-#define BLE_GLS_MEAS_STATUS_STRIP_INSERT               0x0008  /**< Strip insertion error */
-#define BLE_GLS_MEAS_STATUS_STRIP_TYPE                 0x0010  /**< Strip type incorrect for device */
-#define BLE_GLS_MEAS_STATUS_RESULT_HIGH                0x0020  /**< Sensor result higher than the device can process */
-#define BLE_GLS_MEAS_STATUS_RESULT_LOW                 0x0040  /**< Sensor result lower than the device can process */
-#define BLE_GLS_MEAS_STATUS_TEMP_HIGH                  0x0080  /**< Sensor temperature too high for valid test/result at time of measurement */
-#define BLE_GLS_MEAS_STATUS_TEMP_LOW                   0x0100  /**< Sensor temperature too low for valid test/result at time of measurement */
-#define BLE_GLS_MEAS_STATUS_STRIP_PULL                 0x0200  /**< Sensor read interrupted because strip was pulled too soon at time of measurement */
-#define BLE_GLS_MEAS_STATUS_GENERAL_FAULT              0x0400  /**< General device fault has occurred in the sensor */
-#define BLE_GLS_MEAS_STATUS_TIME_FAULT                 0x0800  /**< Time fault has occurred in the sensor and time may be inaccurate */
+#define BLE_GLS_MEAS_STATUS_BATT_LOW                    0x0001  /**< Device battery low at time of measurement */
+#define BLE_GLS_MEAS_STATUS_SENSOR_FAULT                0x0002  /**< Sensor malfunction or faulting at time of measurement */
+#define BLE_GLS_MEAS_STATUS_SAMPLE_SIZE                 0x0004  /**< Sample size for blood or control solution insufficient at time of measurement */
+#define BLE_GLS_MEAS_STATUS_STRIP_INSERT                0x0008  /**< Strip insertion error */
+#define BLE_GLS_MEAS_STATUS_STRIP_TYPE                  0x0010  /**< Strip type incorrect for device */
+#define BLE_GLS_MEAS_STATUS_RESULT_HIGH                 0x0020  /**< Sensor result higher than the device can process */
+#define BLE_GLS_MEAS_STATUS_RESULT_LOW                  0x0040  /**< Sensor result lower than the device can process */
+#define BLE_GLS_MEAS_STATUS_TEMP_HIGH                   0x0080  /**< Sensor temperature too high for valid test/result at time of measurement */
+#define BLE_GLS_MEAS_STATUS_TEMP_LOW                    0x0100  /**< Sensor temperature too low for valid test/result at time of measurement */
+#define BLE_GLS_MEAS_STATUS_STRIP_PULL                  0x0200  /**< Sensor read interrupted because strip was pulled too soon at time of measurement */
+#define BLE_GLS_MEAS_STATUS_GENERAL_FAULT               0x0400  /**< General device fault has occurred in the sensor */
+#define BLE_GLS_MEAS_STATUS_TIME_FAULT                  0x0800  /**< Time fault has occurred in the sensor and time may be inaccurate */
 
 /**@brief Glucose measurement context flags */
-#define BLE_GLS_CONTEXT_FLAG_CARB                      0x01    /**< Carbohydrate id and carbohydrate present */
-#define BLE_GLS_CONTEXT_FLAG_MEAL                      0x02    /**< Meal present */
-#define BLE_GLS_CONTEXT_FLAG_TESTER                    0x04    /**< Tester-health present */
-#define BLE_GLS_CONTEXT_FLAG_EXERCISE                  0x08    /**< Exercise duration and exercise intensity present */
-#define BLE_GLS_CONTEXT_FLAG_MED                       0x10    /**< Medication ID and medication present */
-#define BLE_GLS_CONTEXT_FLAG_MED_KG                    0x00    /**< Medication value units, kilograms */
-#define BLE_GLS_CONTEXT_FLAG_MED_L                     0x20    /**< Medication value units, liters */
-#define BLE_GLS_CONTEXT_FLAG_HBA1C                     0x40    /**< Hba1c present */
-#define BLE_GLS_CONTEXT_FLAG_EXT                       0x80    /**< Extended flags present */
+#define BLE_GLS_CONTEXT_FLAG_CARB                       0x01    /**< Carbohydrate id and carbohydrate present */
+#define BLE_GLS_CONTEXT_FLAG_MEAL                       0x02    /**< Meal present */
+#define BLE_GLS_CONTEXT_FLAG_TESTER                     0x04    /**< Tester-health present */
+#define BLE_GLS_CONTEXT_FLAG_EXERCISE                   0x08    /**< Exercise duration and exercise intensity present */
+#define BLE_GLS_CONTEXT_FLAG_MED                        0x10    /**< Medication ID and medication present */
+#define BLE_GLS_CONTEXT_FLAG_MED_KG                     0x00    /**< Medication value units, kilograms */
+#define BLE_GLS_CONTEXT_FLAG_MED_L                      0x20    /**< Medication value units, liters */
+#define BLE_GLS_CONTEXT_FLAG_HBA1C                      0x40    /**< Hba1c present */
+#define BLE_GLS_CONTEXT_FLAG_EXT                        0x80    /**< Extended flags present */
 
 /**@brief Glucose measurement context carbohydrate ID */
-#define BLE_GLS_CONTEXT_CARB_BREAKFAST                 1       /**< Breakfast */
-#define BLE_GLS_CONTEXT_CARB_LUNCH                     2       /**< Lunch */
-#define BLE_GLS_CONTEXT_CARB_DINNER                    3       /**< Dinner */
-#define BLE_GLS_CONTEXT_CARB_SNACK                     4       /**< Snack */
-#define BLE_GLS_CONTEXT_CARB_DRINK                     5       /**< Drink */
-#define BLE_GLS_CONTEXT_CARB_SUPPER                    6       /**< Supper */
-#define BLE_GLS_CONTEXT_CARB_BRUNCH                    7       /**< Brunch */
+#define BLE_GLS_CONTEXT_CARB_BREAKFAST                  1       /**< Breakfast */
+#define BLE_GLS_CONTEXT_CARB_LUNCH                      2       /**< Lunch */
+#define BLE_GLS_CONTEXT_CARB_DINNER                     3       /**< Dinner */
+#define BLE_GLS_CONTEXT_CARB_SNACK                      4       /**< Snack */
+#define BLE_GLS_CONTEXT_CARB_DRINK                      5       /**< Drink */
+#define BLE_GLS_CONTEXT_CARB_SUPPER                     6       /**< Supper */
+#define BLE_GLS_CONTEXT_CARB_BRUNCH                     7       /**< Brunch */
 
 /**@brief Glucose measurement context meal */
-#define BLE_GLS_CONTEXT_MEAL_PREPRANDIAL               1       /**< Preprandial (before meal) */
-#define BLE_GLS_CONTEXT_MEAL_POSTPRANDIAL              2       /**< Postprandial (after meal) */
-#define BLE_GLS_CONTEXT_MEAL_FASTING                   3       /**< Fasting */
-#define BLE_GLS_CONTEXT_MEAL_CASUAL                    4       /**< Casual (snacks, drinks, etc.) */
-#define BLE_GLS_CONTEXT_MEAL_BEDTIME                   5       /**< Bedtime */
+#define BLE_GLS_CONTEXT_MEAL_PREPRANDIAL                1       /**< Preprandial (before meal) */
+#define BLE_GLS_CONTEXT_MEAL_POSTPRANDIAL               2       /**< Postprandial (after meal) */
+#define BLE_GLS_CONTEXT_MEAL_FASTING                    3       /**< Fasting */
+#define BLE_GLS_CONTEXT_MEAL_CASUAL                     4       /**< Casual (snacks, drinks, etc.) */
+#define BLE_GLS_CONTEXT_MEAL_BEDTIME                    5       /**< Bedtime */
 
 /**@brief Glucose measurement context tester */
-#define BLE_GLS_CONTEXT_TESTER_SELF                    1       /**< Self */
-#define BLE_GLS_CONTEXT_TESTER_PRO                     2       /**< Health care professional */
-#define BLE_GLS_CONTEXT_TESTER_LAB                     3       /**< Lab test */
-#define BLE_GLS_CONTEXT_TESTER_NOT_AVAIL               15      /**< Tester value not available */
+#define BLE_GLS_CONTEXT_TESTER_SELF                     1       /**< Self */
+#define BLE_GLS_CONTEXT_TESTER_PRO                      2       /**< Health care professional */
+#define BLE_GLS_CONTEXT_TESTER_LAB                      3       /**< Lab test */
+#define BLE_GLS_CONTEXT_TESTER_NOT_AVAIL                15      /**< Tester value not available */
 
 /**@brief Glucose measurement context health */
-#define BLE_GLS_CONTEXT_HEALTH_MINOR                   1       /**< Minor health issues */
-#define BLE_GLS_CONTEXT_HEALTH_MAJOR                   2       /**< Major health issues */
-#define BLE_GLS_CONTEXT_HEALTH_MENSES                  3       /**< During menses */
-#define BLE_GLS_CONTEXT_HEALTH_STRESS                  4       /**< Under stress */
-#define BLE_GLS_CONTEXT_HEALTH_NONE                    5       /**< No health issues */
-#define BLE_GLS_CONTEXT_HEALTH_NOT_AVAIL               15      /**< Health value not available */
+#define BLE_GLS_CONTEXT_HEALTH_MINOR                    1       /**< Minor health issues */
+#define BLE_GLS_CONTEXT_HEALTH_MAJOR                    2       /**< Major health issues */
+#define BLE_GLS_CONTEXT_HEALTH_MENSES                   3       /**< During menses */
+#define BLE_GLS_CONTEXT_HEALTH_STRESS                   4       /**< Under stress */
+#define BLE_GLS_CONTEXT_HEALTH_NONE                     5       /**< No health issues */
+#define BLE_GLS_CONTEXT_HEALTH_NOT_AVAIL                15      /**< Health value not available */
 
 /**@brief Glucose measurement context medication ID */
-#define BLE_GLS_CONTEXT_MED_RAPID                      1       /**< Rapid acting insulin */
-#define BLE_GLS_CONTEXT_MED_SHORT                      2       /**< Short acting insulin */
-#define BLE_GLS_CONTEXT_MED_INTERMED                   3       /**< Intermediate acting insulin */
-#define BLE_GLS_CONTEXT_MED_LONG                       4       /**< Long acting insulin */
-#define BLE_GLS_CONTEXT_MED_PREMIX                     5       /**< Pre-mixed insulin */
+#define BLE_GLS_CONTEXT_MED_RAPID                       1       /**< Rapid acting insulin */
+#define BLE_GLS_CONTEXT_MED_SHORT                       2       /**< Short acting insulin */
+#define BLE_GLS_CONTEXT_MED_INTERMED                    3       /**< Intermediate acting insulin */
+#define BLE_GLS_CONTEXT_MED_LONG                        4       /**< Long acting insulin */
+#define BLE_GLS_CONTEXT_MED_PREMIX                      5       /**< Pre-mixed insulin */
+
 
 /**@brief SFLOAT format (IEEE-11073 16-bit FLOAT, meaning 4 bits for exponent (base 10) and 12 bits mantissa) */
 typedef struct
@@ -227,8 +246,8 @@ typedef struct
 /**@brief Glucose measurement record */
 typedef struct
 {
-  ble_gls_meas_t          meas;                                /**< Glucose measurement */
-  ble_gls_meas_context_t  context;                             /**< Glucose measurement context */
+    ble_gls_meas_t          meas;                              /**< Glucose measurement */
+    ble_gls_meas_context_t  context;                           /**< Glucose measurement context */
 } ble_gls_rec_t;
 
 /**@brief Glucose Service init structure. This contains all options and data needed for
@@ -256,6 +275,7 @@ struct ble_gls_s
     bool                      is_context_supported;
 };
 
+
 /**@brief Function for initializing the Glucose Service.
  *
  * @details This call allows the application to initialize the Glucose Service.
@@ -267,16 +287,18 @@ struct ble_gls_s
  *
  * @return      NRF_SUCCESS on successful initialization of service, otherwise an error code.
  */
-uint32_t ble_gls_init(ble_gls_t * p_gls, const ble_gls_init_t * p_gls_init);
+uint32_t ble_gls_init(ble_gls_t * p_gls, ble_gls_init_t const * p_gls_init);
+
 
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @details Handles all events from the BLE stack of interest to the Glucose Service.
  *
- * @param[in]   p_gls      Glucose Service structure.
- * @param[in]   p_ble_evt  Event received from the BLE stack.
+ * @param[in]   p_ble_evt   Event received from the BLE stack.
+ * @param[in]   p_context   Glucose Service structure.
  */
-void ble_gls_on_ble_evt(ble_gls_t * p_gls, ble_evt_t * p_ble_evt);
+void ble_gls_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
+
 
 /**@brief Function for reporting a new glucose measurement to the glucose service module.
  *

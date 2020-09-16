@@ -191,7 +191,7 @@ ret_code_t sha256_final(sha256_context_t *ctx, uint8_t * hash, uint8_t le)
     ctx->data[56] = ctx->bitlen >> 56;
     sha256_transform(ctx, ctx->data);
 
-    if(le)
+    if (le)
     {
         for (i = 0; i < 4; ++i) {
             hash[i]      = (ctx->state[7] >> (i * 8)) & 0x000000ff;

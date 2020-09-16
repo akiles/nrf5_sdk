@@ -38,9 +38,9 @@
  * 
  */
 /* Attention!
-*  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
-*  qualification listings, this section of source code must not be modified.
-*/
+ * To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
+ * qualification listings, this section of source code must not be modified.
+ */
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(BLE_HIDS)
 #include "ble_hids.h"
@@ -93,7 +93,7 @@ static ble_hids_char_id_t make_char_id(uint16_t uuid, uint8_t rep_type, uint8_t 
  * @param[in]   p_hids      HID Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_connect(ble_hids_t * p_hids, ble_evt_t * p_ble_evt)
+static void on_connect(ble_hids_t * p_hids, ble_evt_t const * p_ble_evt)
 {
     uint32_t          err_code;
     uint8_t           default_protocol_mode;
@@ -129,7 +129,7 @@ static void on_connect(ble_hids_t * p_hids, ble_evt_t * p_ble_evt)
  * @param[in]   p_hids      HID Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_disconnect(ble_hids_t * p_hids, ble_evt_t * p_ble_evt)
+static void on_disconnect(ble_hids_t * p_hids, ble_evt_t const * p_ble_evt)
 {
     UNUSED_PARAMETER(p_ble_evt);
     p_hids->conn_handle = BLE_CONN_HANDLE_INVALID;
@@ -141,7 +141,7 @@ static void on_disconnect(ble_hids_t * p_hids, ble_evt_t * p_ble_evt)
  * @param[in]   p_hids        HID Service structure.
  * @param[in]   p_evt_write   Write event received from the BLE stack.
  */
-static void on_control_point_write(ble_hids_t * p_hids, ble_gatts_evt_write_t * p_evt_write)
+static void on_control_point_write(ble_hids_t * p_hids, ble_gatts_evt_write_t const * p_evt_write)
 {
     if ((p_evt_write->len == 1) && (p_hids->evt_handler != NULL))
     {
@@ -173,7 +173,7 @@ static void on_control_point_write(ble_hids_t * p_hids, ble_gatts_evt_write_t * 
  * @param[in]   p_hids        HID Service structure.
  * @param[in]   p_evt_write   Write event received from the BLE stack.
  */
-static void on_protocol_mode_write(ble_hids_t * p_hids, ble_gatts_evt_write_t * p_evt_write)
+static void on_protocol_mode_write(ble_hids_t * p_hids, ble_gatts_evt_write_t const * p_evt_write)
 {
     if ((p_evt_write->len == 1) && (p_hids->evt_handler != NULL))
     {
@@ -206,9 +206,9 @@ static void on_protocol_mode_write(ble_hids_t * p_hids, ble_gatts_evt_write_t * 
  * @param[in]   p_char_id     Id of report characteristic.
  * @param[in]   p_evt_write   Write event received from the BLE stack.
  */
-static void on_report_cccd_write(ble_hids_t            * p_hids,
-                                 ble_hids_char_id_t    * p_char_id,
-                                 ble_gatts_evt_write_t * p_evt_write)
+static void on_report_cccd_write(ble_hids_t                  * p_hids,
+                                 ble_hids_char_id_t          * p_char_id,
+                                 ble_gatts_evt_write_t const * p_evt_write)
 {
     if (p_evt_write->len == 2)
     {
@@ -239,7 +239,7 @@ static void on_report_cccd_write(ble_hids_t            * p_hids,
  * @param[in]   p_char_id   Id of report characteristic.
  */
 static void on_report_value_write(ble_hids_t         * p_hids,
-                                  ble_evt_t          * p_ble_evt,
+                                  ble_evt_t const    * p_ble_evt,
                                   ble_hids_char_id_t * p_char_id)
 {
     if (p_hids->evt_handler != NULL)
@@ -250,7 +250,7 @@ static void on_report_value_write(ble_hids_t         * p_hids,
         evt.params.char_write.char_id = *p_char_id;
         evt.params.char_write.offset  = p_ble_evt->evt.gatts_evt.params.write.offset;
         evt.params.char_write.len     = p_ble_evt->evt.gatts_evt.params.write.len;
-        evt.params.char_write.data    = p_ble_evt->evt.gatts_evt.params.write.data;
+        evt.params.char_write.data    = (uint8_t*)p_ble_evt->evt.gatts_evt.params.write.data;
 
         p_hids->evt_handler(p_hids, &evt);
     }
@@ -263,7 +263,7 @@ static void on_report_value_write(ble_hids_t         * p_hids,
  */
 static void on_report_value_read_auth(ble_hids_t         * p_hids,
                                       ble_hids_char_id_t * p_char_id,
-                                      ble_evt_t          * p_ble_evt)
+                                      ble_evt_t const    * p_ble_evt)
 {
     if (p_hids->evt_handler != NULL)
     {
@@ -271,7 +271,7 @@ static void on_report_value_read_auth(ble_hids_t         * p_hids,
 
         evt.evt_type                      = BLE_HIDS_EVT_REPORT_READ;
         evt.params.char_auth_read.char_id = *p_char_id;
-        evt.p_ble_evt                     = p_ble_evt;
+        evt.p_ble_evt                     = (ble_evt_t*)p_ble_evt;
 
         p_hids->evt_handler(p_hids, &evt);
     }
@@ -354,10 +354,10 @@ static bool rep_value_identify(ble_hids_t         * p_hids,
  * @param[in]   p_hids      HID Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_write(ble_hids_t * p_hids, ble_evt_t * p_ble_evt)
+static void on_write(ble_hids_t * p_hids, ble_evt_t const * p_ble_evt)
 {
-    ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
-    ble_hids_char_id_t      char_id;
+    ble_hids_char_id_t            char_id;
+    ble_gatts_evt_write_t const * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
 
     if (p_evt_write->handle == p_hids->hid_control_point_handles.value_handle)
     {
@@ -406,10 +406,12 @@ static void on_write(ble_hids_t * p_hids, ble_evt_t * p_ble_evt)
  * @param[in]   p_hids      HID Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_rw_authorize_request(ble_hids_t * p_hids, ble_evt_t * p_ble_evt)
+static void on_rw_authorize_request(ble_hids_t * p_hids, ble_evt_t const * p_ble_evt)
 {
-    ble_gatts_evt_rw_authorize_request_t * evt_rw_auth = &p_ble_evt->evt.gatts_evt.params.authorize_request;
-    ble_hids_char_id_t                     char_id;
+    ble_gatts_evt_rw_authorize_request_t const * evt_rw_auth =
+        &p_ble_evt->evt.gatts_evt.params.authorize_request;
+
+    ble_hids_char_id_t char_id;
 
     if (evt_rw_auth->type != BLE_GATTS_AUTHORIZE_TYPE_READ)
     {
@@ -423,8 +425,11 @@ static void on_rw_authorize_request(ble_hids_t * p_hids, ble_evt_t * p_ble_evt)
     }
 }
 
-void ble_hids_on_ble_evt(ble_hids_t * p_hids, ble_evt_t * p_ble_evt)
+
+void ble_hids_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
+    ble_hids_t * p_hids = (ble_hids_t *)p_context;
+
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
@@ -442,6 +447,7 @@ void ble_hids_on_ble_evt(ble_hids_t * p_hids, ble_evt_t * p_ble_evt)
         case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
             on_rw_authorize_request(p_hids, p_ble_evt);
             break;
+
         default:
             // No implementation needed.
             break;
@@ -457,7 +463,7 @@ void ble_hids_on_ble_evt(ble_hids_t * p_hids, ble_evt_t * p_ble_evt)
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
 static uint32_t protocol_mode_char_add(ble_hids_t                    * p_hids,
-                                       const ble_srv_security_mode_t * p_sec_mode)
+                                       ble_srv_security_mode_t const * p_sec_mode)
 {
     ble_gatts_char_md_t char_md;
     ble_gatts_attr_t    attr_char_value;
@@ -613,7 +619,7 @@ static uint32_t rep_char_add(ble_hids_t *                   p_hids,
  *
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
-static uint32_t rep_map_char_add(ble_hids_t * p_hids, const ble_hids_init_t * p_hids_init)
+static uint32_t rep_map_char_add(ble_hids_t * p_hids, ble_hids_init_t const * p_hids_init)
 {
     uint32_t            err_code;
     ble_gatts_char_md_t char_md;
@@ -725,7 +731,7 @@ static uint32_t rep_map_char_add(ble_hids_t * p_hids, const ble_hids_init_t * p_
 static uint32_t boot_inp_rep_char_add(ble_hids_t                         * p_hids,
                                       uint16_t                             uuid,
                                       uint16_t                             max_data_len,
-                                      const ble_srv_cccd_security_mode_t * p_sec_mode,
+                                      ble_srv_cccd_security_mode_t const * p_sec_mode,
                                       ble_gatts_char_handles_t           * p_char_handles)
 {
     ble_gatts_char_md_t char_md;
@@ -785,7 +791,7 @@ static uint32_t boot_inp_rep_char_add(ble_hids_t                         * p_hid
  *
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
-static uint32_t boot_kb_outp_rep_char_add(ble_hids_t * p_hids, const ble_hids_init_t * p_hids_init)
+static uint32_t boot_kb_outp_rep_char_add(ble_hids_t * p_hids, ble_hids_init_t const * p_hids_init)
 {
     ble_gatts_char_md_t char_md;
     ble_gatts_attr_t    attr_char_value;
@@ -836,7 +842,7 @@ static uint32_t boot_kb_outp_rep_char_add(ble_hids_t * p_hids, const ble_hids_in
  * @return      Size of encoded data.
  */
 static uint8_t encode_hid_information(uint8_t                          * p_encoded_buffer,
-                                      const ble_hids_hid_information_t * p_hid_information)
+                                      ble_hids_hid_information_t const * p_hid_information)
 {
     uint8_t len = uint16_encode(p_hid_information->bcd_hid, p_encoded_buffer);
 
@@ -856,7 +862,7 @@ static uint8_t encode_hid_information(uint8_t                          * p_encod
  *
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
-static uint32_t hid_information_char_add(ble_hids_t * p_hids, const ble_hids_init_t * p_hids_init)
+static uint32_t hid_information_char_add(ble_hids_t * p_hids, ble_hids_init_t const * p_hids_init)
 {
     ble_gatts_char_md_t char_md;
     ble_gatts_attr_t    attr_char_value;
@@ -910,7 +916,7 @@ static uint32_t hid_information_char_add(ble_hids_t * p_hids, const ble_hids_ini
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
 static uint32_t hid_control_point_char_add(ble_hids_t                    * p_hids,
-                                           const ble_srv_security_mode_t * p_sec_mode)
+                                           ble_srv_security_mode_t const * p_sec_mode)
 {
     ble_gatts_char_md_t char_md;
     ble_gatts_attr_t    attr_char_value;
@@ -963,7 +969,7 @@ static uint32_t hid_control_point_char_add(ble_hids_t                    * p_hid
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
 static uint32_t inp_rep_characteristics_add(ble_hids_t            * p_hids,
-                                            const ble_hids_init_t * p_hids_init)
+                                            ble_hids_init_t const * p_hids_init)
 {
     if ((p_hids_init->inp_rep_count != 0) && (p_hids_init->p_inp_rep_array != NULL))
     {
@@ -1007,7 +1013,7 @@ static uint32_t inp_rep_characteristics_add(ble_hids_t            * p_hids,
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
 static uint32_t outp_rep_characteristics_add(ble_hids_t            * p_hids,
-                                             const ble_hids_init_t * p_hids_init)
+                                             ble_hids_init_t const * p_hids_init)
 {
     if ((p_hids_init->outp_rep_count != 0) && (p_hids_init->p_outp_rep_array != NULL))
     {
@@ -1051,7 +1057,7 @@ static uint32_t outp_rep_characteristics_add(ble_hids_t            * p_hids,
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
 static uint32_t feature_rep_characteristics_add(ble_hids_t            * p_hids,
-                                                const ble_hids_init_t * p_hids_init)
+                                                ble_hids_init_t const * p_hids_init)
 {
     if ((p_hids_init->feature_rep_count != 0) && (p_hids_init->p_feature_rep_array != NULL))
     {
@@ -1093,7 +1099,7 @@ static uint32_t feature_rep_characteristics_add(ble_hids_t            * p_hids,
  *
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
-static uint32_t includes_add(ble_hids_t * p_hids, const ble_hids_init_t * p_hids_init)
+static uint32_t includes_add(ble_hids_t * p_hids, ble_hids_init_t const * p_hids_init)
 {
     uint32_t err_code;
     uint8_t  i;
@@ -1114,7 +1120,7 @@ static uint32_t includes_add(ble_hids_t * p_hids, const ble_hids_init_t * p_hids
 }
 
 
-uint32_t ble_hids_init(ble_hids_t * p_hids, const ble_hids_init_t * p_hids_init)
+uint32_t ble_hids_init(ble_hids_t * p_hids, ble_hids_init_t const * p_hids_init)
 {
     uint32_t   err_code;
     ble_uuid_t ble_uuid;

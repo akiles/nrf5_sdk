@@ -75,7 +75,9 @@ typedef enum
     NRF_COMP_INPUT_4 = COMP_PSEL_PSEL_AnalogInput4,        /*!< AIN4 selected as analog input. */
     NRF_COMP_INPUT_5 = COMP_PSEL_PSEL_AnalogInput5,        /*!< AIN5 selected as analog input. */
     NRF_COMP_INPUT_6 = COMP_PSEL_PSEL_AnalogInput6,        /*!< AIN6 selected as analog input. */
+#ifdef COMP_PSEL_PSEL_AnalogInput7
     NRF_COMP_INPUT_7 = COMP_PSEL_PSEL_AnalogInput7         /*!< AIN7 selected as analog input. */
+#endif
 }nrf_comp_input_t;
 
 /**

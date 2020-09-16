@@ -239,7 +239,7 @@ static void peer_ids_load()
         // It is safe to ignore the return value since the descriptor was
         // just obtained and also 'record' is different from NULL.
         (void)fds_record_open(&record_desc, &record);
-        peer_id = file_id_to_peer_id(record.p_header->ic.file_id);
+        peer_id = file_id_to_peer_id(record.p_header->file_id);
         (void)fds_record_close(&record_desc);
 
         (void)peer_id_allocate(peer_id);
@@ -404,7 +404,7 @@ ret_code_t pds_peer_data_read(pm_peer_id_t                    peer_id,
     // @note emdi: could this actually be set by the caller and used instead
     // of an additional parameter (data_id) ?
     p_data->data_id      = data_id;
-    p_data->length_words = rec_flash.p_header->tl.length_words;
+    p_data->length_words = rec_flash.p_header->length_words;
 
     // If p_buf_len is NULL, provide a pointer to data in flash, otherwise,
     // check that the buffer is large enough and copy the data in flash into the buffer.
@@ -474,10 +474,10 @@ bool pds_peer_data_iterate(pm_peer_data_id_t            data_id,
     }
 
     p_data->data_id      = data_id;
-    p_data->length_words = rec_flash.p_header->tl.length_words;
+    p_data->length_words = rec_flash.p_header->length_words;
     p_data->p_all_data   = rec_flash.p_data;
 
-    *p_peer_id           = file_id_to_peer_id(rec_flash.p_header->ic.file_id);
+    *p_peer_id           = file_id_to_peer_id(rec_flash.p_header->file_id);
 
     (void)fds_record_close(&rec_desc);
 
@@ -541,7 +541,6 @@ ret_code_t pds_peer_data_store(pm_peer_id_t                 peer_id,
     ret_code_t         ret;
     fds_record_t       rec;
     fds_record_desc_t  rec_desc;
-    fds_record_chunk_t rec_chunk;
 
     NRF_PM_DEBUG_CHECK(m_module_initialized);
     NRF_PM_DEBUG_CHECK(p_peer_data != NULL);
@@ -549,15 +548,11 @@ ret_code_t pds_peer_data_store(pm_peer_id_t                 peer_id,
     VERIFY_PEER_ID_IN_RANGE(peer_id);
     VERIFY_PEER_DATA_ID_IN_RANGE(p_peer_data->data_id);
 
-    // Prepare chunk.
-    rec_chunk.p_data       = p_peer_data->p_all_data;
-    rec_chunk.length_words = p_peer_data->length_words;
-
     // Prepare the record to be stored in flash.
-    rec.file_id         = peer_id_to_file_id(peer_id);
-    rec.key             = peer_data_id_to_record_key(p_peer_data->data_id);
-    rec.data.p_chunks   = &rec_chunk;
-    rec.data.num_chunks = 1;
+    rec.file_id           = peer_id_to_file_id(peer_id);
+    rec.key               = peer_data_id_to_record_key(p_peer_data->data_id);
+    rec.data.p_data       = (void*)p_peer_data->p_all_data;
+    rec.data.length_words = p_peer_data->length_words;
 
     ret = peer_data_find(peer_id, p_peer_data->data_id, &rec_desc);
 

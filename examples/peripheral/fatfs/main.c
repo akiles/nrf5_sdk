@@ -54,12 +54,13 @@
 #include "diskio_blkdev.h"
 #include "nrf_block_dev_sdc.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define FILE_NAME   "NORDIC.TXT"
-#define TEST_STRING "SD card example.\r\n"
+#define TEST_STRING "SD card example."
 
 #define SDC_SCK_PIN     ARDUINO_13_PIN  ///< SDC serial clock (SCK) pin.
 #define SDC_MOSI_PIN    ARDUINO_11_PIN  ///< SDC serial data in (DI) pin.
@@ -100,34 +101,34 @@ static void fatfs_example()
 
     diskio_blockdev_register(drives, ARRAY_SIZE(drives));
 
-    NRF_LOG_INFO("Initializing disk 0 (SDC)...\r\n");
+    NRF_LOG_INFO("Initializing disk 0 (SDC)...");
     for (uint32_t retries = 3; retries && disk_state; --retries)
     {
         disk_state = disk_initialize(0);
     }
     if (disk_state)
     {
-        NRF_LOG_INFO("Disk initialization failed.\r\n");
+        NRF_LOG_INFO("Disk initialization failed.");
         return;
     }
 
     uint32_t blocks_per_mb = (1024uL * 1024uL) / m_block_dev_sdc.block_dev.p_ops->geometry(&m_block_dev_sdc.block_dev)->blk_size;
     uint32_t capacity = m_block_dev_sdc.block_dev.p_ops->geometry(&m_block_dev_sdc.block_dev)->blk_count / blocks_per_mb;
-    NRF_LOG_INFO("Capacity: %d MB\r\n", capacity);
+    NRF_LOG_INFO("Capacity: %d MB", capacity);
 
-    NRF_LOG_INFO("Mounting volume...\r\n");
+    NRF_LOG_INFO("Mounting volume...");
     ff_result = f_mount(&fs, "", 1);
     if (ff_result)
     {
-        NRF_LOG_INFO("Mount failed.\r\n");
+        NRF_LOG_INFO("Mount failed.");
         return;
     }
 
-    NRF_LOG_INFO("\r\n Listing directory: /\r\n");
+    NRF_LOG_INFO("\r\n Listing directory: /");
     ff_result = f_opendir(&dir, "/");
     if (ff_result)
     {
-        NRF_LOG_INFO("Directory listing failed!\r\n");
+        NRF_LOG_INFO("Directory listing failed!");
         return;
     }
 
@@ -144,22 +145,22 @@ static void fatfs_example()
         {
             if (fno.fattrib & AM_DIR)
             {
-                NRF_LOG_RAW_INFO("   <DIR>   %s\r\n",(uint32_t)fno.fname);
+                NRF_LOG_RAW_INFO("   <DIR>   %s",(uint32_t)fno.fname);
             }
             else
             {
-                NRF_LOG_RAW_INFO("%9lu  %s\r\n", fno.fsize, (uint32_t)fno.fname);
+                NRF_LOG_RAW_INFO("%9lu  %s", fno.fsize, (uint32_t)fno.fname);
             }
         }
     }
     while (fno.fname[0]);
-    NRF_LOG_RAW_INFO("\r\n");
+    NRF_LOG_RAW_INFO("");
 
-    NRF_LOG_INFO("Writing to file " FILE_NAME "...\r\n");
+    NRF_LOG_INFO("Writing to file " FILE_NAME "...");
     ff_result = f_open(&file, FILE_NAME, FA_READ | FA_WRITE | FA_OPEN_APPEND);
     if (ff_result != FR_OK)
     {
-        NRF_LOG_INFO("Unable to open or create file: " FILE_NAME ".\r\n");
+        NRF_LOG_INFO("Unable to open or create file: " FILE_NAME ".");
         return;
     }
 
@@ -170,7 +171,7 @@ static void fatfs_example()
     }
     else
     {
-        NRF_LOG_INFO("%d bytes written.\r\n", bytes_written);
+        NRF_LOG_INFO("%d bytes written.", bytes_written);
     }
 
     (void) f_close(&file);
@@ -185,7 +186,9 @@ int main(void)
     bsp_board_leds_init();
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
-    NRF_LOG_INFO("\r\nFATFS example.\r\n\r\n");
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    NRF_LOG_INFO("FATFS example.");
 
     fatfs_example();
 

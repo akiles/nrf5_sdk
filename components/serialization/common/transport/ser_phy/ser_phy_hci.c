@@ -51,8 +51,9 @@
 #include "nrf_soc.h"
 #include "ser_config.h"
 #include "ser_phy_debug_comm.h"
-#define NRF_LOG_MODULE_NAME "SPHY_HCI"
+#define NRF_LOG_MODULE_NAME sphy_hci
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 // hide globals for release version, expose for debug version
 #if defined(SER_PHY_HCI_DEBUG_ENABLE)
 #define _static
@@ -746,7 +747,7 @@ static void hci_slip_event_handler(ser_phy_hci_slip_evt_t * p_event)
 
     if ( p_event->evt_type == SER_PHY_HCI_SLIP_EVT_PKT_SENT )
     {
-        NRF_LOG_DEBUG("EVT_PKT_SENT\r\n");
+        NRF_LOG_DEBUG("EVT_PKT_SENT");
 
         DEBUG_EVT_SLIP_PACKET_TXED(0);
         event.evt_source                    = HCI_SLIP_EVT;
@@ -762,7 +763,7 @@ static void hci_slip_event_handler(ser_phy_hci_slip_evt_t * p_event)
     }
     else if ( p_event->evt_type == SER_PHY_HCI_SLIP_EVT_ACK_SENT )
     {
-        NRF_LOG_DEBUG("EVT_ACK_SENT\r\n");
+        NRF_LOG_DEBUG("EVT_ACK_SENT");
 
         DEBUG_EVT_SLIP_ACK_TXED(0);
         event.evt_source                    = HCI_SLIP_EVT;
@@ -791,7 +792,7 @@ static void hci_slip_event_handler(ser_phy_hci_slip_evt_t * p_event)
             event.evt.ser_phy_slip_evt.evt_params.received_pkt.p_buffer,
             event.evt.ser_phy_slip_evt.evt_params.received_pkt.num_of_bytes);
 
-        NRF_LOG_DEBUG("EVT_PKT_RECEIVED 0x%X/%u\r\n", packet_type,
+        NRF_LOG_DEBUG("EVT_PKT_RECEIVED 0x%X/%u", packet_type,
             p_event->evt_params.received_pkt.num_of_bytes);
 
         if (packet_type == PKT_TYPE_ACK )
@@ -857,7 +858,7 @@ static void hci_slip_event_handler(ser_phy_hci_slip_evt_t * p_event)
     }
     else
     {
-        NRF_LOG_DEBUG("EVT_HW_ERROR\r\n");
+        NRF_LOG_DEBUG("EVT_HW_ERROR");
     }
 }
 

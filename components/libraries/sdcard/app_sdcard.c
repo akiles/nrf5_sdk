@@ -126,7 +126,7 @@
 #define SDC_BREAK(PT, EXIT_CODE) do {                            \
                                      *p_exit_code = (EXIT_CODE); \
                                      PT_EXIT(PT);                \
-                                 } while(0)
+                                 } while (0)
 
 /**< Check the value of R1 response and break current task on error. */
 #define SDC_RESP_CHECK(PT, R1) do {                                                             \
@@ -134,7 +134,7 @@
                                    {                                                            \
                                        SDC_BREAK((PT), SDC_ERROR_COMMUNICATION);                \
                                    }                                                            \
-                               } while(0)
+                               } while (0)
 
 /**< Check the result of an SDC operation and break on failure. */
 #define SDC_RESULT_CHECK(PT, RESULT) do {                             \
@@ -142,7 +142,7 @@
                                          {                            \
                                              SDC_BREAK((PT), RESULT); \
                                          }                            \
-                                     } while(0);
+                                     } while (0);
 
 
 static const nrf_drv_spi_t m_spi = NRF_DRV_SPI_INSTANCE(APP_SDCARD_SPI_INSTANCE);  /**< SPI instance. */
@@ -246,8 +246,13 @@ __STATIC_INLINE void sdc_spi_transfer(uint8_t const * const p_txb,
  */
 __STATIC_INLINE void sdc_spi_hispeed(void)
 {
+#ifdef SPI_PRESENT
     nrf_spi_frequency_set((NRF_SPI_Type *)m_spi.p_registers,
                           (nrf_spi_frequency_t) APP_SDCARD_FREQ_DATA);
+#else
+    nrf_spim_frequency_set((NRF_SPIM_Type *)m_spi.p_registers,
+                           (nrf_spi_frequency_t) APP_SDCARD_FREQ_DATA);
+#endif
 }
 
 
@@ -263,7 +268,7 @@ static uint32_t sdc_calculate_size(uint8_t const * const p_csd)
     // Values are calculated as stated in SD Specifications, chapter 5.3.
     uint8_t csd_version = p_csd[0] >> 6;
 
-    switch(csd_version)
+    switch (csd_version)
     {
         case 0:
         case 2:
@@ -413,7 +418,7 @@ static PT_THREAD(sdc_pt_sub_data_read(uint8_t * p_rx_data,
                 }
 
                 // Search for the first token.
-                while(rx_length && p_rx_data[0] ==  SDC_EMPTY_BYTE)
+                while (rx_length && p_rx_data[0] ==  SDC_EMPTY_BYTE)
                 {
                     ++p_rx_data;
                     --rx_length;
@@ -885,7 +890,7 @@ static void spi_handler(nrf_drv_spi_evt_t const * p_event,
             // Command response missing.
             sdc_evt_t evt;
             evt.result = SDC_ERROR_NOT_RESPONDING;
-            switch(m_cb.state.op)
+            switch (m_cb.state.op)
             {
                 case SDC_OP_RESET:
                 case SDC_OP_IDENTIFICATION:
@@ -927,7 +932,7 @@ static void spi_handler(nrf_drv_spi_evt_t const * p_event,
 
     sdc_result_t exit_code = SDC_ERROR_INTERNAL;
     sdc_evt_t evt;
-    switch(m_cb.state.op)
+    switch (m_cb.state.op)
     {
         case SDC_OP_RESET:
             m_cb.state.op = SDC_OP_IDENTIFICATION;

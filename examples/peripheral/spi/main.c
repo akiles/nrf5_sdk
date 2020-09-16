@@ -44,9 +44,9 @@
 #include "boards.h"
 #include "app_error.h"
 #include <string.h>
-#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define SPI_INSTANCE  0 /**< SPI instance index. */
 static const nrf_drv_spi_t spi = NRF_DRV_SPI_INSTANCE(SPI_INSTANCE);  /**< SPI instance. */
@@ -65,10 +65,10 @@ void spi_event_handler(nrf_drv_spi_evt_t const * p_event,
                        void *                    p_context)
 {
     spi_xfer_done = true;
-    NRF_LOG_INFO("Transfer completed.\r\n");
+    NRF_LOG_INFO("Transfer completed.");
     if (m_rx_buf[0] != 0)
     {
-        NRF_LOG_INFO(" Received: \r\n");
+        NRF_LOG_INFO(" Received:");
         NRF_LOG_HEXDUMP_INFO(m_rx_buf, strlen((const char *)m_rx_buf));
     }
 }
@@ -78,8 +78,9 @@ int main(void)
     bsp_board_leds_init();
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
-
-    NRF_LOG_INFO("SPI example\r\n");
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+    
+    NRF_LOG_INFO("SPI example.");
 
     nrf_drv_spi_config_t spi_config = NRF_DRV_SPI_DEFAULT_CONFIG;
     spi_config.ss_pin   = SPI_SS_PIN;

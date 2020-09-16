@@ -39,7 +39,7 @@
  */
 
 #include "sdk_config.h"
-#if NFC_HAL_ENABLED
+#if NFC_T2T_HAL_ENABLED
 
 #include "hal_nfc_t2t.h"
 #include <stdint.h>
@@ -51,7 +51,7 @@
 #include "nordic_common.h"
 #include "nrf_drv_clock.h"
 
-#define NRF_LOG_MODULE_NAME "HAL_NFC"
+#define NRF_LOG_MODULE_NAME hal_nfc
 #if HAL_NFC_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       HAL_NFC_CONFIG_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  HAL_NFC_CONFIG_INFO_COLOR
@@ -60,7 +60,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // HAL_NFC_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
-
+NRF_LOG_MODULE_REGISTER();
 
 #if HAL_NFC_CONFIG_DEBUG_PIN_ENABLED
     #include "nrf_gpio.h"
@@ -293,7 +293,7 @@ ret_code_t hal_nfc_setup(hal_nfc_callback_t callback, void * p_context)
     field_timer_with_callback_config();
 #endif // HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
 
-    NRF_LOG_INFO("Init\r\n");
+    NRF_LOG_INFO("Init");
     HAL_NFC_DEBUG_PINS_INITIALIZE();
 
     if ((err_code == NRF_SUCCESS) || (err_code == NRF_ERROR_MODULE_ALREADY_INITIALIZED))
@@ -457,7 +457,7 @@ ret_code_t hal_nfc_start(void)
     NVIC_SetPriority(NFCT_IRQn, NFCT_CONFIG_IRQ_PRIORITY);
     NVIC_EnableIRQ(NFCT_IRQn);
 
-    NRF_LOG_INFO("Start\r\n");
+    NRF_LOG_INFO("Start");
     return NRF_SUCCESS;
 }
 
@@ -477,7 +477,7 @@ ret_code_t hal_nfc_send(const uint8_t * p_data, size_t data_length)
     NRF_NFCT->INTENSET      = (NFCT_INTENSET_TXFRAMEEND_Enabled << NFCT_INTENSET_TXFRAMEEND_Pos);
     NRF_NFCT->TASKS_STARTTX = 1;
 
-    NRF_LOG_INFO("Send\r\n");
+    NRF_LOG_INFO("Send");
     return NRF_SUCCESS;
 }
 
@@ -485,7 +485,7 @@ ret_code_t hal_nfc_stop(void)
 {
     NRF_NFCT->TASKS_DISABLE = 1;
 
-    NRF_LOG_INFO("Stop\r\n");
+    NRF_LOG_INFO("Stop");
     return NRF_SUCCESS;
 }
 
@@ -509,7 +509,7 @@ void NFCT_IRQHandler(void)
         current_field = NFC_FIELD_STATE_ON;
         HAL_NFC_DEBUG_PIN_CLEAR(HAL_NFC_DETECT_EVENT_DEBUG_PIN);  //DEBUG!
 
-        NRF_LOG_DEBUG("Field detected\r\n");
+        NRF_LOG_DEBUG("Field detected");
     }
 
 #ifndef HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
@@ -519,7 +519,7 @@ void NFCT_IRQHandler(void)
         current_field =
            (current_field == NFC_FIELD_STATE_NONE) ? NFC_FIELD_STATE_OFF : NFC_FIELD_STATE_UNKNOWN;
 
-        NRF_LOG_DEBUG("Field lost\r\n");
+        NRF_LOG_DEBUG("Field lost");
     }
 #endif // HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
 
@@ -559,7 +559,7 @@ void NFCT_IRQHandler(void)
             NRF_NFCT->TASKS_ENABLERXDATA = 1;
         }
 
-        NRF_LOG_DEBUG("Rx fend\r\n");
+        NRF_LOG_DEBUG("Rx fend");
     }
 
     if (NRF_NFCT->EVENTS_TXFRAMEEND && (NRF_NFCT->INTEN & NFCT_INTEN_TXFRAMEEND_Msk))
@@ -579,7 +579,7 @@ void NFCT_IRQHandler(void)
             m_nfc_lib_callback(m_nfc_lib_context, HAL_NFC_EVENT_DATA_TRANSMITTED, 0, 0);
         }
 
-        NRF_LOG_DEBUG("Tx fend\r\n");
+        NRF_LOG_DEBUG("Tx fend");
     }
 
     if (NRF_NFCT->EVENTS_SELECTED && (NRF_NFCT->INTEN & NFCT_INTEN_SELECTED_Msk))
@@ -611,7 +611,7 @@ void NFCT_IRQHandler(void)
             m_nfc_lib_callback(m_nfc_lib_context, HAL_NFC_EVENT_FIELD_ON, 0, 0);
         }
 
-        NRF_LOG_DEBUG("Selected\r\n");
+        NRF_LOG_DEBUG("Selected");
     }
 
     if (NRF_NFCT->EVENTS_RXERROR && (NRF_NFCT->INTEN & NFCT_INTEN_RXERROR_Msk))
@@ -619,7 +619,7 @@ void NFCT_IRQHandler(void)
         uint32_t rx_status = NRF_NFCT->FRAMESTATUS.RX;
         nrf_nfct_event_clear(&NRF_NFCT->EVENTS_RXERROR);
 
-        NRF_LOG_DEBUG("Rx error (0x%x)\r\n", (unsigned int) rx_status);
+        NRF_LOG_DEBUG("Rx error (0x%x)", (unsigned int) rx_status);
         (void) rx_status;
 
         /* Clear rx frame status */
@@ -637,13 +637,13 @@ void NFCT_IRQHandler(void)
             NRF_NFCT->ERRORSTATUS = NFCT_ERRORSTATUS_FRAMEDELAYTIMEOUT_Msk;
             m_slp_req_received    = false;
 
-            NRF_LOG_DEBUG("Error (SLP_REQ)\r\n");
+            NRF_LOG_DEBUG("Error (SLP_REQ)");
         }
         /* Report any other error */
         err_status &= ~NFCT_ERRORSTATUS_FRAMEDELAYTIMEOUT_Msk;
         if (err_status)
         {
-            NRF_LOG_DEBUG("Error (0x%x)\r\n", (unsigned int) err_status);
+            NRF_LOG_DEBUG("Error (0x%x)", (unsigned int) err_status);
         }
 
         /* Clear error status */
@@ -731,8 +731,8 @@ static inline void hal_nfc_re_setup(void)
 
     hal_nfc_common_hw_setup(nfc_internal);
 
-    NRF_LOG_INFO("Reinitialize\r\n");
+    NRF_LOG_INFO("Reinitialize");
 }
 #endif // HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
 
-#endif // NFC_HAL_ENABLED
+#endif // NFC_T2T_HAL_ENABLED

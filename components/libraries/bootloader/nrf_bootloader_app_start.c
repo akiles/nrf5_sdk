@@ -50,31 +50,33 @@ extern void nrf_bootloader_app_start_impl(uint32_t start_addr);
 
 void nrf_bootloader_app_start(uint32_t start_addr)
 {
-    NRF_LOG_DEBUG("Running nrf_bootloader_app_start with address: 0x%08x\r\n", start_addr);
+    NRF_LOG_DEBUG("Running nrf_bootloader_app_start with address: 0x%08x", start_addr);
     uint32_t err_code;
 
-    //NRF_LOG_INFO("Initializing SD in mbr\r\n");
+    //NRF_LOG_INFO("Initializing SD in mbr");
     err_code = nrf_dfu_mbr_init_sd();
-    if(err_code != NRF_SUCCESS)
+    if (err_code != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("Failed running nrf_dfu_mbr_init_sd\r\n");
+        NRF_LOG_ERROR("Failed running nrf_dfu_mbr_init_sd");
         return;
     }
 
-    // Disable interrupts
-    NRF_LOG_DEBUG("Disabling interrupts\r\n");
+    // Disable and clear interrupts
+    NRF_LOG_DEBUG("Disabling interrupts");
 
     NVIC->ICER[0]=0xFFFFFFFF;
+    NVIC->ICPR[0]=0xFFFFFFFF;
 #if defined(__NRF_NVIC_ISER_COUNT) && __NRF_NVIC_ISER_COUNT == 2
     NVIC->ICER[1]=0xFFFFFFFF;
+    NVIC->ICPR[1]=0xFFFFFFFF;
 #endif
 
     // Set the sd softdevice vector table base address
-    NRF_LOG_DEBUG("Setting SD vector table base: 0x%08x\r\n", start_addr);
+    NRF_LOG_DEBUG("Setting SD vector table base: 0x%08x", start_addr);
     err_code = sd_softdevice_vector_table_base_set(start_addr);
-    if(err_code != NRF_SUCCESS)
+    if (err_code != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("Failed running sd_softdevice_vector_table_base_set\r\n");
+        NRF_LOG_ERROR("Failed running sd_softdevice_vector_table_base_set");
         return;
     }
 

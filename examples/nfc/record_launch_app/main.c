@@ -47,9 +47,10 @@
 #include "app_error.h"
 #include "hardfault.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 /** @snippet [NFC Launch App usage_0] */
 /* nRF Toolbox Android application package name */
@@ -104,6 +105,8 @@ int main(void)
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
     /* Configure LED-pins as outputs */
     bsp_board_leds_init();
 
@@ -137,6 +140,7 @@ int main(void)
     while (1)
     {
         NRF_LOG_FLUSH();
+        __WFE();
     }
 }
 

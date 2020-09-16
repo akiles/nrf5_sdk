@@ -162,7 +162,7 @@ uint32_t es_flash_num_pending_ops(void);
  */
 ret_code_t es_flash_factory_reset(void);
 
-void es_flash_on_ble_evt(ble_evt_t * p_evt);
+void es_flash_on_ble_evt(ble_evt_t const * p_evt);
 
 /**@brief Function for initializing the flash module.
  *

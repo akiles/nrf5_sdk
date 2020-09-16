@@ -55,12 +55,12 @@
 uint32_t nrf_crypto_ecc_private_key_size_get(nrf_ecc_curve_type_t   curve_type,
                                              uint32_t             * p_key_size)
 {
-    if(p_key_size == NULL)
+    if (p_key_size == NULL)
     {
         return NRF_ERROR_NULL;
     }
 
-    switch(curve_type)
+    switch (curve_type)
     {
         case NRF_CRYPTO_CURVE_SECP160R1:
             (*p_key_size)= NRF_CRYPTO_ECC_PRIVATE_KEY_SIZE_SECP160R1;
@@ -109,12 +109,12 @@ uint32_t nrf_crypto_ecc_private_key_size_get(nrf_ecc_curve_type_t   curve_type,
 uint32_t nrf_crypto_ecc_public_key_size_get(nrf_ecc_curve_type_t    curve_type,
                                             uint32_t              * p_key_size)
 {
-    if(p_key_size == NULL)
+    if (p_key_size == NULL)
     {
         return NRF_ERROR_NULL;
     }
 
-    switch(curve_type)
+    switch (curve_type)
     {
         case NRF_CRYPTO_CURVE_SECP160R1:
             (*p_key_size)= NRF_CRYPTO_ECC_PUBLIC_KEY_SIZE_SECP160R1;

@@ -53,22 +53,11 @@
 #ifndef ANT_FA_TX_H__
 #define ANT_FA_TX_H__
 
-#include <stdint.h>
-#include "ant_stack_handler_types.h"
-#include "bsp.h"
-
 
 /**@brief Function for configuring and opening master channel.
  *
  */
 void ant_freq_ag_setup(void);
-
-
-/**@brief Function for processing channel event messages for the IO Master.
- *
- * @param[in] p_ant_evt A pointer to the received ANT event to handle.
- */
-void ant_freq_ag_event_handler(ant_evt_t * p_ant_evt);
 
 
 #endif  // ANT_IO_RX_H__

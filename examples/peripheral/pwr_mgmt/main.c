@@ -47,9 +47,10 @@
 #include "app_error.h"
 #include "nrf_drv_clock.h"
 #include "nrf_pwr_mgmt.h"
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #if NRF_PWR_MGMT_CONFIG_USE_SCHEDULER
 #include "app_scheduler.h"
@@ -68,7 +69,7 @@ static volatile bool m_sysoff_started;  /**< True if the application started sle
 
 /**@brief Handler for shutdown preparation.
  */
-bool app_shutdown_handler(nrf_pwr_mgmt_evt_t event)
+bool shutdown_handler(nrf_pwr_mgmt_evt_t event)
 {
     uint32_t err_code;
 
@@ -81,13 +82,13 @@ bool app_shutdown_handler(nrf_pwr_mgmt_evt_t event)
     switch (event)
     {
         case NRF_PWR_MGMT_EVT_PREPARE_SYSOFF:
-            NRF_LOG_INFO("NRF_PWR_MGMT_EVT_PREPARE_SYSOFF\r\n");
+            NRF_LOG_INFO("NRF_PWR_MGMT_EVT_PREPARE_SYSOFF");
             err_code = bsp_buttons_disable();
             APP_ERROR_CHECK(err_code);
             break;
 
         case NRF_PWR_MGMT_EVT_PREPARE_WAKEUP:
-            NRF_LOG_INFO("NRF_PWR_MGMT_EVT_PREPARE_WAKEUP\r\n");
+            NRF_LOG_INFO("NRF_PWR_MGMT_EVT_PREPARE_WAKEUP");
             err_code = bsp_buttons_disable();
             // Suppress NRF_ERROR_NOT_SUPPORTED return code.
             UNUSED_VARIABLE(err_code);
@@ -102,12 +103,12 @@ bool app_shutdown_handler(nrf_pwr_mgmt_evt_t event)
             break;
 
         case NRF_PWR_MGMT_EVT_PREPARE_DFU:
-            NRF_LOG_ERROR("Entering DFU is not supported by this example.\r\n");
+            NRF_LOG_ERROR("Entering DFU is not supported by this example.");
             APP_ERROR_HANDLER(NRF_ERROR_API_NOT_IMPLEMENTED);
             break;
 
         case NRF_PWR_MGMT_EVT_PREPARE_RESET:
-            NRF_LOG_INFO("NRF_PWR_MGMT_EVT_PREPARE_RESET\r\n");
+            NRF_LOG_INFO("NRF_PWR_MGMT_EVT_PREPARE_RESET");
             break;
     }
 
@@ -116,10 +117,9 @@ bool app_shutdown_handler(nrf_pwr_mgmt_evt_t event)
 
     return true;
 }
-//lint -esym(528, m_app_shutdown_handler)
-/**@brief Register application shutdown handler with priority 0.
- */
-NRF_PWR_MGMT_HANDLER_REGISTER(m_app_shutdown_handler, 0) = app_shutdown_handler;
+
+/**@brief Register application shutdown handler with priority 0. */
+NRF_PWR_MGMT_HANDLER_REGISTER(shutdown_handler, 0);
 
 
 /**@brief Function for handling BSP events.
@@ -128,7 +128,7 @@ static void bsp_evt_handler(bsp_event_t evt)
 {
 #if NRF_PWR_MGMT_CONFIG_STANDBY_TIMEOUT_ENABLED
     nrf_pwr_mgmt_feed();
-    NRF_LOG_INFO("Power management fed\r\n");
+    NRF_LOG_INFO("Power management fed");
 #endif // NRF_PWR_MGMT_CONFIG_STANDBY_TIMEOUT_ENABLED
 
     switch (evt)
@@ -137,12 +137,12 @@ static void bsp_evt_handler(bsp_event_t evt)
             if (m_is_ready)
             {
                 m_is_ready = false;
-                NRF_LOG_INFO("System is not ready for shutdown\r\n");
+                NRF_LOG_INFO("System is not ready for shutdown");
             }
             else
             {
                 m_is_ready = true;
-                NRF_LOG_INFO("System is ready for shutdown\r\n");
+                NRF_LOG_INFO("System is ready for shutdown");
             }
             if (m_sysoff_started && m_is_ready)
             {
@@ -228,7 +228,9 @@ static void bsp_configuration()
 int main(void)
 {
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
-    NRF_LOG_INFO("Power Management example\r\n");
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    NRF_LOG_INFO("Power Management example");
 
     lfclk_config();
 

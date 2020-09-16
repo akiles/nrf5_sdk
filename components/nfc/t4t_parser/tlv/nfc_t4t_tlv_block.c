@@ -46,7 +46,7 @@
 #include "sdk_macros.h"
 #include "nordic_common.h"
 
-#define NRF_LOG_MODULE_NAME "NFC_T4T_TLV_BLOCK_PARSER"
+#define NRF_LOG_MODULE_NAME nfc_t4t_tlv_block_parser
 #if NFC_T4T_TLV_BLOCK_PARSER_LOG_ENABLED
 #define NRF_LOG_LEVEL       NFC_T4T_TLV_BLOCK_PARSER_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  NFC_T4T_TLV_BLOCK_PARSER_INFO_COLOR
@@ -54,6 +54,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // NFC_T4T_TLV_BLOCK_PARSER_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #define TLV_TYPE_FIELD_LEN                  1U    ///< Length of a type field.
 
@@ -283,42 +284,41 @@ ret_code_t nfc_t4t_file_control_tlv_parse(nfc_t4t_tlv_block_t * p_file_control_t
 
 void nfc_t4t_file_control_tlv_printout(uint8_t num, nfc_t4t_tlv_block_t * p_t4t_tlv_block)
 {
-    NRF_LOG_INFO("%d file Control TLV\r\n", num);
+    NRF_LOG_INFO("%d file Control TLV", num);
     switch (p_t4t_tlv_block->type)
     {
         case NDEF_FILE_CONTROL_TLV:
-            NRF_LOG_INFO("Type: NDEF File Control (0x%02x)\r\n", p_t4t_tlv_block->type);
+            NRF_LOG_INFO("Type: NDEF File Control (0x%02x)", p_t4t_tlv_block->type);
             break;
 
         case PROPRIETARY_FILE_CONTROL_TLV:
-            NRF_LOG_INFO("Type: Proprietary File Control (0x%02x)\r\n", p_t4t_tlv_block->type);
+            NRF_LOG_INFO("Type: Proprietary File Control (0x%02x)", p_t4t_tlv_block->type);
             break;
 
         case EXTENDED_NDEF_FILE_CONTROL_TLV:
-            NRF_LOG_INFO("Type: Extended NDEF File Control (0x%02x)\r\n", p_t4t_tlv_block->type);
+            NRF_LOG_INFO("Type: Extended NDEF File Control (0x%02x)", p_t4t_tlv_block->type);
             break;
 
         default:
-            NRF_LOG_INFO("Type: Unknown (0x%02x)\r\n", p_t4t_tlv_block->type);
+            NRF_LOG_INFO("Type: Unknown (0x%02x)", p_t4t_tlv_block->type);
     }
-    NRF_LOG_INFO("Length (in bytes): %d\r\n", p_t4t_tlv_block->length);
+    NRF_LOG_INFO("Length (in bytes): %d", p_t4t_tlv_block->length);
 
     nfc_t4t_file_control_val_t * p_tlv_val = &p_t4t_tlv_block->value;
-    NRF_LOG_INFO("File Identifier: 0x%04X \r\n", p_tlv_val->file_id);
-    NRF_LOG_INFO("Maximum file size: %d \r\n", p_tlv_val->max_file_size);
-    NRF_LOG_INFO("Read access condition: 0x%02X \r\n", p_tlv_val->read_access);
-    NRF_LOG_INFO("Write access condition: 0x%02x \r\n\r\n", p_tlv_val->write_access);
+    NRF_LOG_INFO("File Identifier: 0x%04X ", p_tlv_val->file_id);
+    NRF_LOG_INFO("Maximum file size: %d ", p_tlv_val->max_file_size);
+    NRF_LOG_INFO("Read access condition: 0x%02X ", p_tlv_val->read_access);
+    NRF_LOG_INFO("Write access condition: 0x%02x ", p_tlv_val->write_access);
 
     if (p_tlv_val->file.p_content != NULL)
     {
-        NRF_LOG_INFO("NDEF file content present. Length: %d \r\n", p_tlv_val->file.len);
+        NRF_LOG_INFO("NDEF file content present. Length: %d ", p_tlv_val->file.len);
         NRF_LOG_HEXDUMP_INFO(p_tlv_val->file.p_content, p_tlv_val->file.len);
     }
     else
     {
-        NRF_LOG_INFO("NDEF file content is not present \r\n");
+        NRF_LOG_INFO("NDEF file content is not present ");
     }
-    NRF_LOG_RAW_INFO("\r\n");
 }
 
 

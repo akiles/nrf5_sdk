@@ -60,9 +60,13 @@
  *          @ref ble_cscs_init_t structure.
  *
  *
- * @note The application or the service using this module must propagate BLE stack events to the
- *       Cycling Speead and Candence Service module by calling ble_cscs_on_ble_evt() from the
- *       from the @ref softdevice_handler function. This service will forward the event to the @ref ble_sdk_srv_sc_ctrlpt module.
+ * @note    The application must register this module as BLE event observer using the
+ *          NRF_SDH_BLE_OBSERVER macro. Example:
+ *          @code
+ *              ble_cscs_t instance;
+ *              NRF_SDH_BLE_OBSERVER(anything, BLE_CSCS_BLE_OBSERVER_PRIO,
+ *                                   ble_cscs_on_ble_evt, &instance);
+ *          @endcode
  *
  * @note Attention!
  *  To maintain compliance with Nordic Semiconductor ASA Bluetooth profile
@@ -78,17 +82,31 @@
 #include "ble_srv_common.h"
 #include "ble_sc_ctrlpt.h"
 #include "ble_sensor_location.h"
+#include "nrf_sdh_ble.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/**@brief   Macro for defining a ble_cscs instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_CSCS_DEF(_name)                                                                         \
+static ble_cscs_t _name;                                                                            \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     BLE_CSCS_BLE_OBSERVER_PRIO,                                                    \
+                     ble_cscs_on_ble_evt, &_name)
+
+
 /** @defgroup BLE_CSCS_FEATURES Cycling Speed and Cadence Service feature bits
  * @{ */
-#define BLE_CSCS_FEATURE_WHEEL_REV_BIT                  (0x01 << 0)     /**< Wheel Revolution Data Supported bit. */
-#define BLE_CSCS_FEATURE_CRANK_REV_BIT                  (0x01 << 1)     /**< Crank Revolution Data Supported bit. */
-#define BLE_CSCS_FEATURE_MULTIPLE_SENSORS_BIT           (0x01 << 2)     /**< Multiple Sensor Locations Supported bit. */
+#define BLE_CSCS_FEATURE_WHEEL_REV_BIT          (0x01 << 0)     /**< Wheel Revolution Data Supported bit. */
+#define BLE_CSCS_FEATURE_CRANK_REV_BIT          (0x01 << 1)     /**< Crank Revolution Data Supported bit. */
+#define BLE_CSCS_FEATURE_MULTIPLE_SENSORS_BIT   (0x01 << 2)     /**< Multiple Sensor Locations Supported bit. */
 /** @} */
+
 
 /**@brief Cycling Speed and Cadence Service event type. */
 typedef enum
@@ -153,6 +171,7 @@ typedef struct ble_cscs_meas_s
     uint16_t    last_crank_event_time;                                  /**< Last Crank Event Time. */
 } ble_cscs_meas_t;
 
+
 /**@brief Function for initializing the Cycling Speed and Cadence Service.
  *
  * @param[out]  p_cscs      Cycling Speed and Cadence Service structure. This structure will have to
@@ -162,17 +181,19 @@ typedef struct ble_cscs_meas_s
  *
  * @return      NRF_SUCCESS on successful initialization of service, otherwise an error code.
  */
-uint32_t ble_cscs_init(ble_cscs_t * p_cscs, const ble_cscs_init_t * p_cscs_init);
+uint32_t ble_cscs_init(ble_cscs_t * p_cscs, ble_cscs_init_t const * p_cscs_init);
+
 
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @details Handles all events from the BLE stack of interest to the Cycling Speed and Cadence
  *          Service.
  *
- * @param[in]   p_cscs     Cycling Speed and Cadence Service structure.
- * @param[in]   p_ble_evt  Event received from the BLE stack.
+ * @param[in]   p_ble_evt   Event received from the BLE stack.
+ * @param[in]   p_context   Cycling Speed and Cadence Service structure.
  */
-void ble_cscs_on_ble_evt(ble_cscs_t * p_cscs, ble_evt_t * p_ble_evt);
+void ble_cscs_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
+
 
 /**@brief Function for sending cycling speed and cadence measurement if notification has been enabled.
  *

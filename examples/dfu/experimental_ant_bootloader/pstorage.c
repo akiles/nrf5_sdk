@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "pstorage.h"
 #include <stdlib.h>
 #include <stdint.h>
@@ -49,6 +48,7 @@
 #include "nrf_soc.h"
 #include "app_util.h"
 #include "app_error.h"
+#include "nrf_sdh_soc.h"
 
 #define INVALID_OPCODE             0x00                                /**< Invalid op code identifier. */
 #define SOC_MAX_WRITE_SIZE         PSTORAGE_FLASH_PAGE_SIZE            /**< Maximum write size allowed for a single call to \ref sd_flash_write as specified in the SoC API. */
@@ -1136,12 +1136,12 @@ static void flash_operation_failure_run(void)
     }
 }
 
-
 /**@brief Function for handling flash access result events.
  *
- * @param[in] sys_evt System event to be handled.
+ * @param[in] evt       System event to be handled.
+ * @param[in] p_context Parameter to pass to the handler.
  */
-void pstorage_sys_event_handler(uint32_t sys_evt)
+void pstorage_sys_event_handler(uint32_t sys_evt, void * p_context)
 {
     if (m_state != STATE_IDLE && m_state != STATE_ERROR)
     {
@@ -1173,6 +1173,7 @@ void pstorage_sys_event_handler(uint32_t sys_evt)
     }
 }
 
+NRF_SDH_SOC_OBSERVER(m_soc_evt_observer, 0, pstorage_sys_event_handler, NULL);
 
 /**@brief Function for calculating the tail area size in number of 32-bit words.
  *

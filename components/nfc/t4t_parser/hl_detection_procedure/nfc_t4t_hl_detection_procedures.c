@@ -46,7 +46,7 @@
 #include "sdk_macros.h"
 #include "nordic_common.h"
 
-#define NRF_LOG_MODULE_NAME "NFC_T4T_HL_DETECTION_PROCEDURES"
+#define NRF_LOG_MODULE_NAME nfc_t4t_hl_detection_procedures
 #if NFC_T4T_HL_DETECTION_PROCEDURES_LOG_ENABLED
 #define NRF_LOG_LEVEL       NFC_T4T_HL_DETECTION_PROCEDURES_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  NFC_T4T_HL_DETECTION_PROCEDURES_INFO_COLOR
@@ -54,6 +54,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // NFC_T4T_HL_DETECTION_PROCEDURES_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #define CC_FILE_ID                0xE103 ///< File Identifier of Capability Container.
 #define FILE_ID_SIZE              2      ///< Size of File Identifier field in CC file.
@@ -63,7 +64,7 @@
 
 // Adafruit library limitations.
 #define MAX_ADAFRUIT_RAPDU_SIZE   242    ///< Maximal value of RAPDU data field size
-#define MAX_ADAFRUIT_CAPDU_SIZE   56     ///< Maximal value of CAPDU data field size
+#define MAX_ADAFRUIT_CAPDU_SIZE   240    ///< Maximal value of CAPDU data field size
 
 static uint8_t       m_file_id[FILE_ID_SIZE];                                                       ///< Buffer for selected EF ID storage.
 static const uint8_t m_nfc_t4t_select_ndef_app_data[] = {0xD2, 0x76, 0x00, 0x00, 0x85, 0x01, 0x01}; ///< NDEF Tag Application name.
@@ -166,7 +167,7 @@ ret_code_t nfc_t4t_ndef_tag_app_select(void)
     nfc_t4t_resp_apdu_t rapdu;
     uint8_t             apdu_buff[APDU_BUFF_SIZE];
 
-    NRF_LOG_INFO("NDEF Tag Application Select Procedure \r\n");
+    NRF_LOG_INFO("NDEF Tag Application Select Procedure ");
 
     nfc_t4t_comm_apdu_clear(&capdu);
     capdu.instruction = NFC_T4T_CAPDU_SELECT_INS;
@@ -190,7 +191,7 @@ ret_code_t nfc_t4t_file_select(uint16_t file_id)
 
     if (file_id != CC_FILE_ID)
     {
-        NRF_LOG_INFO("File (ID = %4X) Select Procedure \r\n", file_id);
+        NRF_LOG_INFO("File (ID = %4X) Select Procedure ", file_id);
     }
     UNUSED_RETURN_VALUE(uint16_big_encode(file_id, m_file_id));
 
@@ -208,7 +209,7 @@ ret_code_t nfc_t4t_file_select(uint16_t file_id)
 
 ret_code_t nfc_t4t_cc_select(void)
 {
-    NRF_LOG_INFO("Capability Container Select Procedure \r\n");
+    NRF_LOG_INFO("Capability Container Select Procedure ");
 
     return nfc_t4t_file_select(CC_FILE_ID);
 }
@@ -224,7 +225,7 @@ ret_code_t nfc_t4t_cc_read(nfc_t4t_capability_container_t * const p_cc_file)
     uint8_t             storage_buff[CC_STORAGE_BUFF_SIZE];
     uint8_t             apdu_buff[APDU_BUFF_SIZE];
 
-    NRF_LOG_INFO("Capability Container Read Procedure \r\n");
+    NRF_LOG_INFO("Capability Container Read Procedure ");
 
     nfc_t4t_comm_apdu_clear(&capdu);
     capdu.instruction = NFC_T4T_CAPDU_READ_INS;
@@ -274,7 +275,7 @@ ret_code_t nfc_t4t_ndef_read(nfc_t4t_capability_container_t * const p_cc_file,
     uint16_t            file_offset = 0;
     uint8_t             apdu_buff[APDU_BUFF_SIZE];
 
-    NRF_LOG_INFO("NDEF Read Procedure \r\n");
+    NRF_LOG_INFO("NDEF Read Procedure ");
 
     // Read the NLEN (NDEF length) field of NDEF file.
     nfc_t4t_comm_apdu_clear(&capdu);
@@ -335,7 +336,7 @@ ret_code_t nfc_t4t_ndef_update(nfc_t4t_capability_container_t * const p_cc_file,
     uint8_t               apdu_buff[APDU_BUFF_SIZE];
     nfc_t4t_tlv_block_t * p_tlv_block;
 
-    NRF_LOG_INFO("NDEF Update Procedure \r\n");
+    NRF_LOG_INFO("NDEF Update Procedure ");
 
     if (ndef_file_buff_len < NDEF_FILE_NLEN_FIELD_SIZE)
     {

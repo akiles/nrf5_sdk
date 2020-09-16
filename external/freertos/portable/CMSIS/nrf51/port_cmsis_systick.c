@@ -91,9 +91,6 @@
 #include "nrf_rtc.h"
 #include "nrf_drv_clock.h"
 
-
-static volatile TickType_t m_tick_overflow_count = 0;
-#define portNRF_RTC_BITWIDTH 24
 /*-----------------------------------------------------------*/
 
 void xPortSysTickHandler( void )
@@ -108,20 +105,19 @@ void xPortSysTickHandler( void )
     uint32_t systick_counter = nrf_rtc_counter_get(portNRF_RTC_REG);
     nrf_rtc_event_clear(portNRF_RTC_REG, NRF_RTC_EVENT_TICK);
 
-    /* check for overflow in TICK counter */
-    if(nrf_rtc_event_pending(portNRF_RTC_REG, NRF_RTC_EVENT_OVERFLOW))
-    {
-        nrf_rtc_event_clear(portNRF_RTC_REG, NRF_RTC_EVENT_OVERFLOW);
-        m_tick_overflow_count++;
-    }
-
     if (configUSE_DISABLE_TICK_AUTO_CORRECTION_DEBUG == 0)
     {
         /* check FreeRTOSConfig.h file for more details on configUSE_DISABLE_TICK_AUTO_CORRECTION_DEBUG */
         TickType_t diff;
-        diff = ((m_tick_overflow_count << portNRF_RTC_BITWIDTH) + systick_counter) - xTaskGetTickCount();
+        diff = (systick_counter - xTaskGetTickCount()) & portNRF_RTC_MAXTICKS;
 
-        while((diff--) > 0)
+        /* At most 1 step if scheduler is suspended - the xTaskIncrementTick
+         * would return the tick state from the moment when suspend function was called. */
+        if ((diff > 1) && (xTaskGetSchedulerState() != taskSCHEDULER_RUNNING))
+        {
+            diff = 1;
+        }
+        while ((diff--) > 0)
         {
             switch_req |= xTaskIncrementTick();
         }
@@ -190,7 +186,7 @@ void vPortSuppressTicksAndSleep( TickType_t xExpectedIdleTime )
         uint8_t dummy = 0;
         uint32_t err_code = sd_nvic_critical_region_enter(&dummy);
         APP_ERROR_CHECK(err_code);
-    }while(0);
+    }while (0);
 #else
     __disable_irq();
 #endif
@@ -242,27 +238,21 @@ void vPortSuppressTicksAndSleep( TickType_t xExpectedIdleTime )
         /* Correct the system ticks */
         {
             TickType_t diff;
+            TickType_t exitTime;
 
             nrf_rtc_event_clear(portNRF_RTC_REG, NRF_RTC_EVENT_TICK);
             nrf_rtc_int_enable (portNRF_RTC_REG, NRF_RTC_INT_TICK_MASK);
 
-            /* check for overflow in TICK counter */
-            if(nrf_rtc_event_pending(portNRF_RTC_REG, NRF_RTC_EVENT_OVERFLOW))
-            {
-                nrf_rtc_event_clear(portNRF_RTC_REG, NRF_RTC_EVENT_OVERFLOW);
-                m_tick_overflow_count++;
-            }
-
-            diff = ((m_tick_overflow_count << portNRF_RTC_BITWIDTH) + nrf_rtc_counter_get(portNRF_RTC_REG)) - xTaskGetTickCount();
+            exitTime = nrf_rtc_counter_get(portNRF_RTC_REG);
+            diff =  (exitTime - enterTime) & portNRF_RTC_MAXTICKS;
 
             /* It is important that we clear pending here so that our corrections are latest and in sync with tick_interrupt handler */
             NVIC_ClearPendingIRQ(portNRF_RTC_IRQn);
 
-            if((configUSE_TICKLESS_IDLE_SIMPLE_DEBUG) && (diff > xExpectedIdleTime))
+            if ((configUSE_TICKLESS_IDLE_SIMPLE_DEBUG) && (diff > xExpectedIdleTime))
             {
                 diff = xExpectedIdleTime;
             }
-
             if (diff > 0)
             {
                 vTaskStepTick(diff);

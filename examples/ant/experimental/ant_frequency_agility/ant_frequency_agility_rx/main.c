@@ -51,13 +51,13 @@
 
 #include <stdint.h>
 #include "nrf.h"
+#include "nrf_soc.h"
 #include "app_error.h"
 #include "app_timer.h"
 #include "bsp.h"
-#include "boards.h"
 #include "hardfault.h"
-#include "softdevice_handler.h"
-#include "ant_stack_config.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 #include "ant_frequency_agility_rx.h"
 
 #define APP_TIMER_PRESCALER             0                    /**< Value of the RTC1 PRESCALER register. */
@@ -73,8 +73,7 @@ static void utils_setup(void)
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                        NULL);
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, NULL);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -83,19 +82,16 @@ static void utils_setup(void)
  */
 int main(void)
 {
-    uint32_t           err_code;
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    uint32_t err_code;
 
     utils_setup();
 
-    // Setup SoftDevice and events handler
-    err_code = softdevice_ant_evt_handler_set(ant_freq_ag_event_handler);
+    err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
-    APP_ERROR_CHECK(err_code);
+    ASSERT(nrf_sdh_is_enabled());
 
-    err_code = ant_stack_static_config();
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 
     // Setup and start ANT channel

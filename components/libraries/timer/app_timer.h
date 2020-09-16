@@ -70,6 +70,7 @@
 #include "app_error.h"
 #include "app_util.h"
 #include "compiler_abstraction.h"
+#include "nordic_common.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -118,9 +119,9 @@ typedef app_timer_t * app_timer_id_t;
  *
  * @param timer_id Name of the timer identifier variable that will be used to control the timer.
  */
-#define APP_TIMER_DEF(timer_id)                                    \
-    static app_timer_t timer_id##_data = { {0} };                  \
-    static const app_timer_id_t timer_id = &timer_id##_data
+#define APP_TIMER_DEF(timer_id)                                      \
+    static app_timer_t CONCAT_2(timer_id,_data) = { {0} };           \
+    static const app_timer_id_t timer_id = &CONCAT_2(timer_id,_data)
 
 
 /**@brief Application time-out handler type. */

@@ -52,15 +52,17 @@
 #include "ant_frequency_agility_rx.h"
 #include <stdint.h>
 #include "string.h"
+#include "sdk_config.h"
+#include "bsp.h"
+#include "nrf_soc.h"
 #include "ant_interface.h"
 #include "ant_parameters.h"
-#include "app_error.h"
-#include "ant_error.h"
-#include "boards.h"
-#include "sdk_config.h"
 #include "ant_channel_config.h"
 #include "ant_search_config.h"
-#include "nrf_soc.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
+#include "app_error.h"
+#include "ant_error.h"
 
 //ANT Channels
 #define ANT_CHANNEL_NUMBER              0x00                    /**< ANT Channel 0. */
@@ -204,16 +206,16 @@ void ant_freq_ag_setup(void)
 }
 
 
-void ant_freq_ag_event_handler(ant_evt_t * p_ant_evt)
+static void ant_freq_ag_event_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
     uint32_t err_code;
     uint8_t channel_status = 0;
-    ANT_MESSAGE * p_message = (ANT_MESSAGE*) p_ant_evt->msg.evt_buffer;
+    ANT_MESSAGE * p_message = (ANT_MESSAGE*) p_ant_evt->message.aucMessage;
 
-    switch(p_ant_evt->event)
+    switch (p_ant_evt->event)
     {
         case EVENT_RX:
-           if(p_message->ANT_MESSAGE_aucPayload[0] == DIGITALIO_DATA_PID)
+           if (p_message->ANT_MESSAGE_aucPayload[0] == DIGITALIO_DATA_PID)
            {
                //Set LEDs according to Received Digital IO Data Page
                m_rx_input_pin_state = p_message->ANT_MESSAGE_aucPayload[7];
@@ -222,34 +224,32 @@ void ant_freq_ag_event_handler(ant_evt_t * p_ant_evt)
            // Transmit data on the reverse direction every channel period
            handle_transmit();
            break;
+
         case EVENT_TX:
         case EVENT_TRANSFER_TX_COMPLETED:
         case EVENT_TRANSFER_TX_FAILED:
-
           // Transmit data on the reverse direction every channel period
           handle_transmit();
           break;
+
         case EVENT_CHANNEL_CLOSED:
             // Re -open the channel
             err_code = sd_ant_channel_status_get (ANT_CHANNEL_NUMBER, &channel_status);
             APP_ERROR_CHECK(err_code);
 
-            if((channel_status & STATUS_CHANNEL_STATE_MASK) == STATUS_ASSIGNED_CHANNEL)
+            if ((channel_status & STATUS_CHANNEL_STATE_MASK) == STATUS_ASSIGNED_CHANNEL)
             {
                 err_code = sd_ant_channel_open(ANT_CHANNEL_NUMBER);
                 APP_ERROR_CHECK(err_code);
             }
-
             break;
 
         case EVENT_RX_SEARCH_TIMEOUT:
-
-            break;
-
         default:
           break;
     }
 }
 
+NRF_SDH_ANT_OBSERVER(m_ant_observer, 1, ant_freq_ag_event_handler, NULL);
 
 

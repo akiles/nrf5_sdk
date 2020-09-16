@@ -52,7 +52,6 @@
 #define ANT_SEARCH_SHARING_H__
 
 #include <stdint.h>
-#include "ant_stack_handler_types.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -62,12 +61,6 @@ extern "C" {
  *
  */
 void ant_search_sharing_setup(void);
-
-
-/**@brief Handle ANT events
- * @param[in] p_ant_evt A pointer to the received ANT event to handle.
- */
-void ant_search_sharing_event_handler(ant_evt_t * p_ant_evt);
 
 
 #ifdef __cplusplus

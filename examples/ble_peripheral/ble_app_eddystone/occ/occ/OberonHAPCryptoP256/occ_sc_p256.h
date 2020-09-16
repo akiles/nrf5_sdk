@@ -45,7 +45,7 @@
 
 
 // P-256 scalar modulo group order
-typedef struct 
+typedef struct
 {
     uint32_t w[8]; // little endian
 }

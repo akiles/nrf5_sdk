@@ -547,7 +547,7 @@ typedef uint32_t (*field_ext_decoder_handler_t)(uint8_t const * const p_buf,
                 SER_ASSERT(err_code == NRF_SUCCESS, err_code);  \
                 *p_event_len     -= field_ext_len;              \
                 evt_extended_len += field_ext_len;              \
-            } while(0)                                          \
+            } while (0)                                          \
 
 
 /** Generic command response status code encoder. */

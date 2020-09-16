@@ -88,8 +88,8 @@ __STATIC_INLINE ret_code_t flags_decode(uint8_t              const * p_flags_dat
 void nfc_oob_data_printout(nfc_ble_oob_pairing_data_t const * const p_pairing_data)
 {
     NRF_LOG_RAW_INFO("\r\n");
-    NRF_LOG_INFO("BLE Advertising data contents\r\n");
-    NRF_LOG_INFO("Device name: %s\r\n", nrf_log_push((char *)p_pairing_data->device_name.p_name));
+    NRF_LOG_INFO("BLE Advertising data contents");
+    NRF_LOG_INFO("Device name: %s", NRF_LOG_PUSH((char *)p_pairing_data->device_name.p_name));
     NRF_LOG_INFO("Device Address: ");
 
     for (int i=0; i < BLE_GAP_ADDR_LEN; ++i)
@@ -98,10 +98,10 @@ void nfc_oob_data_printout(nfc_ble_oob_pairing_data_t const * const p_pairing_da
     }
     NRF_LOG_RAW_INFO("\r\n");
 
-    if(p_pairing_data->p_tk_value != NULL)
+    if (p_pairing_data->p_tk_value != NULL)
     {
         NRF_LOG_INFO("Device Temporary Key: ");
-        for(int i=0; i < BLE_GAP_SEC_KEY_LEN; ++i)
+        for (int i=0; i < BLE_GAP_SEC_KEY_LEN; ++i)
         {
             NRF_LOG_RAW_INFO("%02X ", p_pairing_data->p_tk_value->tk[i]);
         }
@@ -109,20 +109,20 @@ void nfc_oob_data_printout(nfc_ble_oob_pairing_data_t const * const p_pairing_da
     }
     else
     {
-        NRF_LOG_INFO("Device Temporary Key not present.\r\n");
+        NRF_LOG_INFO("Device Temporary Key not present.");
     }
 
-    if(p_pairing_data->p_lesc_confirm_value != NULL && p_pairing_data->p_lesc_random_value)
+    if (p_pairing_data->p_lesc_confirm_value != NULL && p_pairing_data->p_lesc_random_value)
     {
         NRF_LOG_INFO("LESC Confirmation Value: ");
-        for(int i=0; i < BLE_GAP_SEC_KEY_LEN; ++i)
+        for (int i=0; i < BLE_GAP_SEC_KEY_LEN; ++i)
         {
             NRF_LOG_RAW_INFO("%02X ", p_pairing_data->p_lesc_confirm_value[i]);
         }
         NRF_LOG_RAW_INFO("\r\n");
 
         NRF_LOG_INFO("LESC Random Value: ");
-        for(int i=0; i < BLE_GAP_SEC_KEY_LEN; ++i)
+        for (int i=0; i < BLE_GAP_SEC_KEY_LEN; ++i)
         {
             NRF_LOG_RAW_INFO("%02X ", p_pairing_data->p_lesc_random_value[i]);
         }
@@ -130,7 +130,7 @@ void nfc_oob_data_printout(nfc_ble_oob_pairing_data_t const * const p_pairing_da
     }
     else
     {
-        NRF_LOG_INFO("LESC data not present.\r\n");
+        NRF_LOG_INFO("LESC data not present.");
     }
 
     NRF_LOG_RAW_INFO("\r\n");
@@ -422,9 +422,9 @@ ret_code_t nfc_ble_oob_advdata_parse(uint8_t              const * p_advdata,
         err_code = field_length_validate(field_length, index, len);
         VERIFY_SUCCESS(err_code);
 
-        uint8_t         field_type     =  p_advdata[index + ADV_LENGTH_FIELD_SIZE];
-        uint8_t const * p_field_data   =  &p_advdata[index + ADV_AD_DATA_OFFSET];
-        uint8_t         field_data_len =  field_length - ADV_AD_TYPE_FIELD_SIZE;
+        uint8_t         field_type     =  p_advdata[index + AD_LENGTH_FIELD_SIZE];
+        uint8_t const * p_field_data   =  &p_advdata[index + AD_DATA_OFFSET];
+        uint8_t         field_data_len =  field_length - AD_TYPE_FIELD_SIZE;
 
         switch (field_type)
         {
@@ -505,7 +505,7 @@ ret_code_t nfc_ble_oob_advdata_parse(uint8_t              const * p_advdata,
 
         VERIFY_SUCCESS(err_code);
 
-        index += field_length + ADV_LENGTH_FIELD_SIZE;
+        index += field_length + AD_LENGTH_FIELD_SIZE;
     }
 
     err_code = field_type_validate(p_nfc_ble_pairing_data, &ad_type_counter);
@@ -535,14 +535,14 @@ ret_code_t nfc_ble_oob_advdata_parser_field_find(uint8_t    type,
         err_code = field_length_validate(field_length, index, *p_len);
         VERIFY_SUCCESS(err_code);
 
-        uint8_t field_type   = p_advdata[index + ADV_LENGTH_FIELD_SIZE];
+        uint8_t field_type   = p_advdata[index + AD_LENGTH_FIELD_SIZE];
         if (field_type == type)
         {
-            *pp_field_data  = &p_advdata[index + ADV_AD_DATA_OFFSET];
-            *p_len          = field_length - ADV_AD_TYPE_FIELD_SIZE;
+            *pp_field_data  = &p_advdata[index + AD_DATA_OFFSET];
+            *p_len          = field_length - AD_TYPE_FIELD_SIZE;
             return NRF_SUCCESS;
         }
-        index += field_length + ADV_LENGTH_FIELD_SIZE;
+        index += field_length + AD_LENGTH_FIELD_SIZE;
     }
     return NRF_ERROR_NOT_FOUND;
 }

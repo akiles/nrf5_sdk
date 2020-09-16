@@ -58,9 +58,10 @@
 #include "nordic_common.h"
 #include "nrf_error.h"
 #include "app_error.h"
- #define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 static uint32_t                   packet;              /**< Packet to transmit. */
 
@@ -145,6 +146,8 @@ int main(void)
 
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
     err_code = bsp_init(BSP_INIT_LED, NULL);
     APP_ERROR_CHECK(err_code);
 
@@ -153,7 +156,7 @@ int main(void)
     NRF_RADIO->PACKETPTR = (uint32_t)&packet;
 
     err_code = bsp_indication_set(BSP_INDICATE_USER_STATE_OFF);
-    NRF_LOG_INFO("Wait for first packet\r\n");
+    NRF_LOG_INFO("Wait for first packet");
     APP_ERROR_CHECK(err_code);
     NRF_LOG_FLUSH();
 
@@ -162,10 +165,10 @@ int main(void)
         uint32_t received = read_packet();
 
         err_code = bsp_indication_set(BSP_INDICATE_RCV_OK);
-        NRF_LOG_INFO("Packet was received\r\n");
+        NRF_LOG_INFO("Packet was received");
         APP_ERROR_CHECK(err_code);
 
-        NRF_LOG_INFO("The contents of the package is %u\r\n", (unsigned int)received);
+        NRF_LOG_INFO("The contents of the package is %u", (unsigned int)received);
         NRF_LOG_FLUSH();
     }
 }

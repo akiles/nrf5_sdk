@@ -162,12 +162,14 @@ static void start_pending_transaction(app_twi_t const * p_app_twi,
                         sizeof(*p_instance_cfg)) != 0)
             {
                 ret_code_t err_code;
+
                 nrf_drv_twi_uninit(&p_app_twi->twi);
                 err_code = nrf_drv_twi_init(&p_app_twi->twi,
                         p_instance_cfg,
                         twi_event_handler,
                         (void *)p_app_twi);
                 ASSERT(err_code == NRF_SUCCESS);
+                UNUSED_VARIABLE(err_code);
                 nrf_drv_twi_enable(&p_app_twi->twi);
 
                 p_app_twi->p_app_twi_cb->p_current_configuration = p_instance_cfg;

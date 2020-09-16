@@ -54,9 +54,10 @@
 #include "app_util_platform.h"
 #include "app_error.h"
 #include "boards.h"
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define LED_OK         BSP_BOARD_LED_0
 #define LED_ERROR      BSP_BOARD_LED_1
@@ -140,14 +141,14 @@ static bool check_samples(uint32_t const * p_buffer, uint16_t number_of_words)
             if (actual_sample_l != expected_sample_l ||
                 actual_sample_r != expected_sample_r)
             {
-                NRF_LOG_INFO("%3u: %04x/%04x, expected: %04x/%04x\r\n",
+                NRF_LOG_INFO("%3u: %04x/%04x, expected: %04x/%04x",
                     m_blocks_transferred, actual_sample_l, actual_sample_r,
                     expected_sample_l, expected_sample_r);
                 return false;
             }
         }
     }
-    NRF_LOG_INFO("%3u: OK\r\n", m_blocks_transferred);
+    NRF_LOG_INFO("%3u: OK", m_blocks_transferred);
     return true;
 }
 
@@ -220,8 +221,9 @@ int main(void)
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
-    NRF_LOG_INFO("\r\n"
-           "I2S loopback example\r\n");
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    NRF_LOG_INFO("I2S loopback example");
 
     nrf_drv_i2s_config_t config = NRF_DRV_I2S_DEFAULT_CONFIG;
     // In Master mode the MCK frequency and the MCK/LRCK ratio should be

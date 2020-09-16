@@ -51,6 +51,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include "compiler_abstraction.h"
 #include "nordic_common.h"
 #include "nrf.h"
@@ -60,7 +61,7 @@ extern "C" {
 #endif
 
 //lint -save -e27 -e10 -e19
-#if defined ( __CC_ARM )
+#if defined ( __CC_ARM ) && !defined (__LINT__)
 extern char STACK$$Base;
 extern char STACK$$Length;
 #define STACK_BASE    &STACK$$Base
@@ -80,9 +81,9 @@ extern uint32_t __StackLimit;
 
 enum
 {
-    UNIT_0_625_MS = 625,                                /**< Number of microseconds in 0.625 milliseconds. */
-    UNIT_1_25_MS  = 1250,                               /**< Number of microseconds in 1.25 milliseconds. */
-    UNIT_10_MS    = 10000                               /**< Number of microseconds in 10 milliseconds. */
+    UNIT_0_625_MS = 625,        /**< Number of microseconds in 0.625 milliseconds. */
+    UNIT_1_25_MS  = 1250,       /**< Number of microseconds in 1.25 milliseconds. */
+    UNIT_10_MS    = 10000       /**< Number of microseconds in 10 milliseconds. */
 };
 
 
@@ -104,56 +105,35 @@ enum
 #define STRING_CONCATENATE(lhs, rhs) STRING_CONCATENATE_IMPL(lhs, rhs)
 
 
-// Disable lint-warnings/errors for STATIC_ASSERT_MSG
-//lint --emacro(10, STATIC_ASSERT_MSG)
-//lint --emacro(18, STATIC_ASSERT_MSG)
-//lint --emacro(19, STATIC_ASSERT_MSG)
-//lint --emacro(30, STATIC_ASSERT_MSG)
-//lint --emacro(37, STATIC_ASSERT_MSG)
-//lint --emacro(42, STATIC_ASSERT_MSG)
-//lint --emacro(26, STATIC_ASSERT_MSG)
-//lint --emacro(102,STATIC_ASSERT_MSG)
-//lint --emacro(533,STATIC_ASSERT_MSG)
-//lint --emacro(534,STATIC_ASSERT_MSG)
-//lint --emacro(132,STATIC_ASSERT_MSG)
-//lint --emacro(414,STATIC_ASSERT_MSG)
-//lint --emacro(578,STATIC_ASSERT_MSG)
-//lint --emacro(628,STATIC_ASSERT_MSG)
-//lint --emacro(648,STATIC_ASSERT_MSG)
-//lint --emacro(830,STATIC_ASSERT_MSG)
-
-
-/**@brief Macro for doing static (i.e. compile time) assertion.
-*
-* @note If the EXPR isn't resolvable, then the error message won't be shown.
-*
-* @note The output of STATIC_ASSERT_MSG will be different across different compilers.
-*
-* @param[in] EXPR Constant expression to be verified.
-* @param[in] MSG  Name of the static assert.
-*/
-#if defined(__COUNTER__)
-
-    #define STATIC_ASSERT_MSG(EXPR, MSG) \
-        ;enum { STRING_CONCATENATE(MSG, __COUNTER__) = 1 / (!!(EXPR)) }
-
-#else
-
-    #define STATIC_ASSERT_MSG(EXPR, MSG) \
-        ;enum { STRING_CONCATENATE(MSG, __LINE__) = 1 / (!!(EXPR)) }
-
-#endif
-
+// Disable lint-warnings/errors for STATIC_ASSERT
+//lint -emacro(10, STATIC_ASSERT)
+//lint -emacro(15, STATIC_ASSERT)
+//lint -emacro(18, STATIC_ASSERT)
+//lint -emacro(19, STATIC_ASSERT)
+//lint -emacro(30, STATIC_ASSERT)
+//lint -emacro(37, STATIC_ASSERT)
+//lint -emacro(42, STATIC_ASSERT)
+//lint -emacro(26, STATIC_ASSERT)
+//lint -emacro(102,STATIC_ASSERT)
+//lint -emacro(533,STATIC_ASSERT)
+//lint -emacro(534,STATIC_ASSERT)
+//lint -emacro(132,STATIC_ASSERT)
+//lint -emacro(414,STATIC_ASSERT)
+//lint -emacro(578,STATIC_ASSERT)
+//lint -emacro(628,STATIC_ASSERT)
+//lint -emacro(648,STATIC_ASSERT)
+//lint -emacro(830,STATIC_ASSERT)
 
 /**@brief Macro for doing static (i.e. compile time) assertion.
 *
 * @note If the EXPR isn't resolvable, then the error message won't be shown.
-*
 * @note The output of STATIC_ASSERT will be different across different compilers.
 *
 * @param[in] EXPR Constant expression to be verified.
+* @hideinitializer
 */
-#define STATIC_ASSERT(EXPR) STATIC_ASSERT_MSG((EXPR), static_assert_)
+#define STATIC_ASSERT(EXPR) \
+    extern char (*_do_assert(void)) [sizeof(char[1 - 2*!(EXPR)])]
 
 
 /**@brief Implementation details for NUM_VAR_ARGS */

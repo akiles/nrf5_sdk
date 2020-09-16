@@ -42,19 +42,20 @@
 #include <stdint.h>
 #include "compiler_abstraction.h"
 
+extern void HardFault_c_handler(uint32_t *);
+
 void HardFault_Handler(void) __attribute__(( naked ));
 
 void HardFault_Handler(void)
 {
     __ASM volatile(
-    "   ldr r3, =HardFault_c_handler            \n"
     "   tst lr, #4                              \n"
 
     /* PSP is quite simple and does not require additional handler */
     "   itt ne                                  \n"
     "   mrsne r0, psp                           \n"
     /* Jump to the handler, do not store LR - returning from handler just exits exception */
-    "   bxne  r3                                \n"
+    "   bne  HardFault_Handler_Continue         \n"
 
     /* Processing MSP requires stack checking */
     "   mrs r0, msp                             \n"
@@ -73,9 +74,25 @@ void HardFault_Handler(void)
     "   mov   r0, #0                            \n"
 
     "HardFault_Handler_Continue:                \n"
+#if HARDFAULT_HANDLER_GDB_PSP_BACKTRACE
+    "   mov r3, sp                              \n" /* Remember old SP */
+    "   mov sp, r0                              \n" /* SP changed the pointer when hardfault was generated - we cannot just switch to PSP in exception */
+    "   push {r3,lr}                            \n" /* Save old SP and LR on the task stack */
+    "   .cfi_def_cfa_offset 8                   \n"
+    "   .cfi_offset 14, -4                      \n"
+   /* No information about saved SP above (no .cfi_offset 13, -8).
+    * In other case this would direct us back to using always MSP while backtracking */
+    "   ldr r3, =%0                             \n"
+    "   blx r3                                  \n"
+    "   pop {r3,lr}                             \n"
+    "   mov sp, r3                              \n"
+    "   bx lr                                   \n"
+#else // HARDFAULT_HANDLER_GDB_PSP_BACKTRACE
+    "   ldr r3, =%0                             \n"
     "   bx r3                                   \n"
-
-    "   .align                                  \n"
+#endif
+    "   .ltorg                                  \n"
+    : : "X"(HardFault_c_handler)
     );
 }
 #endif //NRF_MODULE_ENABLED(HARDFAULT_HANDLER)

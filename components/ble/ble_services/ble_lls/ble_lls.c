@@ -38,9 +38,9 @@
  * 
  */
 /* Attention!
-*  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
-*  qualification listings, this section of source code must not be modified.
-*/
+ * To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
+ * qualification listings, this section of source code must not be modified.
+ */
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(BLE_LLS)
 #include "ble_lls.h"
@@ -54,7 +54,7 @@
  * @param[in]   p_lls   Link Loss Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_connect(ble_lls_t * p_lls, ble_evt_t * p_ble_evt)
+static void on_connect(ble_lls_t * p_lls, ble_evt_t const * p_ble_evt)
 {
     // Link reconnected, notify application with a no_alert event
     ble_lls_evt_t evt;
@@ -72,7 +72,7 @@ static void on_connect(ble_lls_t * p_lls, ble_evt_t * p_ble_evt)
  * @param[in]   p_lls       Link Loss Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_disconnect(ble_lls_t * p_lls, ble_evt_t * p_ble_evt)
+static void on_disconnect(ble_lls_t * p_lls, ble_evt_t const * p_ble_evt)
 {
     uint8_t reason = p_ble_evt->evt.gap_evt.params.disconnected.reason;
 
@@ -105,7 +105,7 @@ static void on_disconnect(ble_lls_t * p_lls, ble_evt_t * p_ble_evt)
  * @param[in]   p_lls       Link Loss Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_auth_status(ble_lls_t * p_lls, ble_evt_t * p_ble_evt)
+static void on_auth_status(ble_lls_t * p_lls, ble_evt_t const * p_ble_evt)
 {
     if (p_ble_evt->evt.gap_evt.params.auth_status.auth_status == BLE_GAP_SEC_STATUS_SUCCESS)
     {
@@ -119,8 +119,15 @@ static void on_auth_status(ble_lls_t * p_lls, ble_evt_t * p_ble_evt)
 }
 
 
-void ble_lls_on_ble_evt(ble_lls_t * p_lls, ble_evt_t * p_ble_evt)
+void ble_lls_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
+    ble_lls_t * p_lls = (ble_lls_t *)p_context;
+
+    if (p_lls == NULL || p_ble_evt == NULL)
+    {
+        return;
+    }
+
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
@@ -199,12 +206,17 @@ uint32_t ble_lls_init(ble_lls_t * p_lls, const ble_lls_init_t * p_lls_init)
     uint32_t   err_code;
     ble_uuid_t ble_uuid;
 
-    // Initialize service structure
+    if (p_lls == NULL || p_lls_init == NULL)
+    {
+        return NRF_ERROR_NULL;
+    }
+
     if (p_lls_init->evt_handler == NULL)
     {
         return NRF_ERROR_INVALID_PARAM;
     }
 
+    // Initialize service structure
     p_lls->evt_handler   = p_lls_init->evt_handler;
     p_lls->error_handler = p_lls_init->error_handler;
 
@@ -228,6 +240,11 @@ uint32_t ble_lls_init(ble_lls_t * p_lls, const ble_lls_init_t * p_lls_init)
 uint32_t ble_lls_alert_level_get(ble_lls_t * p_lls, uint8_t * p_alert_level)
 {
     ble_gatts_value_t gatts_value;
+
+    if (p_lls == NULL || p_alert_level == NULL)
+    {
+        return NRF_ERROR_NULL;
+    }
 
     // Initialize value struct.
     memset(&gatts_value, 0, sizeof(gatts_value));

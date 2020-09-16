@@ -64,50 +64,41 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "app_error.h"
+#include <string.h>
 #include "nrf.h"
-#include "ant_interface.h"
-#include "ant_parameters.h"
-#include "nrf_soc.h"
-#include "nrf_sdm.h"
-#include "app_timer.h"
 #include "bsp.h"
 #include "hardfault.h"
-#include "nordic_common.h"
-#include "ant_stack_config.h"
+#include "app_error.h"
+#include "app_timer.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
+#include "nrf_pwr_mgmt.h"
+#include "ant_interface.h"
+#include "ant_parameters.h"
 #include "ant_channel_config.h"
-#include "softdevice_handler.h"
 
-// Channel configuration.
-#define ANT_BROADCAST_CHANNEL_NUMBER    0x00    /**< ANT Channel 0. */
-#define EXT_ASSIGN_NONE                 0x00    /**< ANT Ext Assign. */
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
-// Miscellaneous defines.
-#define ANT_NETWORK_NUMBER              0x00    /**< Default public network number. */
+#define APP_ANT_OBSERVER_PRIO   1    /**< Application's ANT observer priority. You shouldn't need to modify this value. */
 
-
-/**@brief Function for dispatching a ANT stack event to all modules with an ANT stack event handler.
- *
- * @details This function is called from the ANT stack event interrupt handler after an ANT stack
- *          event has been received.
+/**@brief Function for handling a ANT stack event.
  *
  * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
  */
-void ant_evt_dispatch(ant_evt_t * p_ant_evt)
+void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
-    if (p_ant_evt->channel == ANT_BROADCAST_CHANNEL_NUMBER)
+    if (p_ant_evt->channel == BROADCAST_CHANNEL_NUMBER)
     {
-        ANT_MESSAGE * p_message = (ANT_MESSAGE *)p_ant_evt->msg.evt_buffer;
-
         switch (p_ant_evt->event)
         {
             case EVENT_RX:
-
-                if (p_message->ANT_MESSAGE_ucMesgID == MESG_BROADCAST_DATA_ID
-                    || p_message->ANT_MESSAGE_ucMesgID == MESG_ACKNOWLEDGED_DATA_ID
-                    || p_message->ANT_MESSAGE_ucMesgID == MESG_BURST_DATA_ID)
+                if (p_ant_evt->message.ANT_MESSAGE_ucMesgID == MESG_BROADCAST_DATA_ID
+                 || p_ant_evt->message.ANT_MESSAGE_ucMesgID == MESG_ACKNOWLEDGED_DATA_ID
+                 || p_ant_evt->message.ANT_MESSAGE_ucMesgID == MESG_BURST_DATA_ID)
                 {
                     err_code = bsp_indication_set(BSP_INDICATE_RCV_OK);
                     APP_ERROR_CHECK(err_code);
@@ -120,12 +111,14 @@ void ant_evt_dispatch(ant_evt_t * p_ant_evt)
     }
 }
 
+NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_evt_handler, NULL);
 
 /**@brief Function for the Timer and BSP initialization.
  */
 static void utils_setup(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
@@ -133,57 +126,48 @@ static void utils_setup(void)
     err_code = bsp_init(BSP_INIT_LED,
                         NULL);
     APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
 }
 
-
 /**@brief Function for ANT stack initialization.
- *
- * @details Initializes the SoftDevice and the ANT event interrupt.
  */
 static void softdevice_setup(void)
 {
-    uint32_t err_code;
-
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
+    ret_code_t err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
-    APP_ERROR_CHECK(err_code);
+    ASSERT(nrf_sdh_is_enabled());
 
-    err_code = ant_stack_static_config();
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 }
-
 
 /**@brief Function for setting up the ANT module to be ready for RX broadcast.
  */
 static void ant_channel_rx_broadcast_setup(void)
 {
-    uint32_t err_code;
-
     ant_channel_config_t broadcast_channel_config =
     {
-        .channel_number    = ANT_BROADCAST_CHANNEL_NUMBER,
+        .channel_number    = BROADCAST_CHANNEL_NUMBER,
         .channel_type      = CHANNEL_TYPE_SLAVE,
-        .ext_assign        = EXT_ASSIGN_NONE,
+        .ext_assign        = 0x00,
         .rf_freq           = RF_FREQ,
         .transmission_type = CHAN_ID_TRANS_TYPE,
         .device_type       = CHAN_ID_DEV_TYPE,
         .device_number     = CHAN_ID_DEV_NUM,
         .channel_period    = CHAN_PERIOD,
-        .network_number    = ANT_NETWORK_NUMBER,
+        .network_number    = ANT_NETWORK_NUM,
     };
 
-    err_code = ant_channel_init(&broadcast_channel_config);
+    ret_code_t err_code = ant_channel_init(&broadcast_channel_config);
     APP_ERROR_CHECK(err_code);
 
     // Open channel.
-    err_code = sd_ant_channel_open(ANT_BROADCAST_CHANNEL_NUMBER);
+    err_code = sd_ant_channel_open(BROADCAST_CHANNEL_NUMBER);
     APP_ERROR_CHECK(err_code);
 }
-
 
 /**@brief Function for application main entry. Does not return.
  */
@@ -196,21 +180,11 @@ int main(void)
     // Main loop.
     for (;;)
     {
-#if CPU_LOAD_TRACE
-        // Disabling interrupts in this way is highly not recommended. It has an impact on the work
-        // of the SoftDevice and is used only to show CPU load.
-        __disable_irq();
-        bsp_board_led_off(BSP_BOARD_LED_0);
-        __WFI();
-        bsp_board_led_on(BSP_BOARD_LED_0);
-        __enable_irq();
-#else
-        // Put CPU in sleep if possible.
-        uint32_t err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
-#endif // CPU_LOAD_TRACE
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }
+
 
 /**
  *@}

@@ -46,7 +46,7 @@
 #include "app_util_platform.h"
 #include "compiler_abstraction.h"
 
-#define NRF_LOG_MODULE_NAME "TWIS"
+#define NRF_LOG_MODULE_NAME twis
 
 #if TWIS_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       TWIS_CONFIG_LOG_LEVEL
@@ -63,7 +63,7 @@
 #define NRF_LOG_LEVEL       0
 #endif //TWIS_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
-#include "nrf_log_ctrl.h"
+NRF_LOG_MODULE_REGISTER();
 
 /**
  * @internal
@@ -157,8 +157,12 @@ static nrf_drv_twis_var_inst_t m_var_inst[ENABLED_TWIS_COUNT] =
     #endif
     };
 #else
+  #if defined (NRF52810_XXAA)
+    #define IRQ_HANDLER(n) void TWIM##n##_TWIS##n##_IRQHandler(void)
+  #else
     #define IRQ_HANDLER(n) \
         void SPIM##n##_SPIS##n##_TWIM##n##_TWIS##n##_SPI##n##_TWI##n##_IRQHandler(void)
+  #endif
 #endif // NRF_MODULE_ENABLED(PERIPHERAL_RESOURCE_SHARING)
 
 /**
@@ -480,8 +484,8 @@ static void nrf_drv_twis_state_machine(uint8_t instNr)
             {
                 evdata.type = TWIS_EVT_READ_DONE;
                 evdata.data.tx_amount = nrf_twis_tx_amount_get(p_reg);
-                NRF_LOG_INFO("Transfer rx_len:%d\r\n", evdata.data.tx_amount);
-                NRF_LOG_DEBUG("Tx data:\r\n");
+                NRF_LOG_INFO("Transfer rx_len:%d", evdata.data.tx_amount);
+                NRF_LOG_DEBUG("Tx data:");
                 NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_reg->TXD.PTR, evdata.data.tx_amount * sizeof(p_reg->TXD.PTR));
                 nrf_drv_call_event_handler(instNr, &evdata);
                 /* Go to idle and repeat the state machine if READ or WRITE events detected.
@@ -606,7 +610,7 @@ ret_code_t nrf_drv_twis_init(
     if ( m_var_inst[instNr].state != NRF_DRV_STATE_UNINITIALIZED)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -615,7 +619,7 @@ ret_code_t nrf_drv_twis_init(
             NRF_SUCCESS)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 #endif
@@ -663,7 +667,7 @@ ret_code_t nrf_drv_twis_init(
     m_var_inst[instNr].ev_handler = event_handler;
     m_var_inst[instNr].state      = NRF_DRV_STATE_INITIALIZED;
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -827,26 +831,26 @@ ret_code_t nrf_drv_twis_tx_prepare(
     if (p_var_inst->state != NRF_DRV_STATE_POWERED_ON)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     /* Check data address */
     if (!nrf_drv_is_in_RAM(p_buf))
     {
         err_code = NRF_ERROR_INVALID_ADDR;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     /* Check data size */
     if ((size & TWIS_TXD_MAXCNT_MAXCNT_Msk) != size)
     {
         err_code = NRF_ERROR_INVALID_LENGTH;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
     nrf_twis_tx_prepare(p_reg, (uint8_t const *)p_buf, (nrf_twis_amount_t)size);
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 
 }
@@ -875,27 +879,27 @@ ret_code_t nrf_drv_twis_rx_prepare(
     if (p_var_inst->state != NRF_DRV_STATE_POWERED_ON)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     /* Check data address */
     if (!nrf_drv_is_in_RAM(p_buf))
     {
         err_code = NRF_ERROR_INVALID_ADDR;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     /* Check data size */
     if ((size & TWIS_RXD_MAXCNT_MAXCNT_Msk) != size)
     {
         err_code = NRF_ERROR_INVALID_LENGTH;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
     nrf_twis_rx_prepare(p_reg, (uint8_t *)p_buf, (nrf_twis_amount_t)size);
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 

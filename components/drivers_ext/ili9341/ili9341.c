@@ -160,6 +160,10 @@ static void set_addr_window(uint16_t x_0, uint16_t y_0, uint16_t x_1, uint16_t y
 
 static void command_list(void)
 {
+    write_command(ILI9341_SWRESET);
+    nrf_delay_ms(120);
+    write_command(ILI9341_DISPOFF);
+    nrf_delay_ms(120);
     write_command(ILI9341_PWCTRB);
     write_data(0x00);
     write_data(0XC1);

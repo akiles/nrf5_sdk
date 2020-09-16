@@ -55,9 +55,10 @@
 #include "app_util_platform.h"
 #include "app_error.h"
 #include "boards.h"
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 #include "sdk_config.h"
 
 #define QSPI_STD_CMD_WRSR   0x01
@@ -69,7 +70,7 @@
 #define WAIT_FOR_PERIPH() do { \
         while (!m_finished) {} \
         m_finished = false;    \
-    } while(0)
+    } while (0)
 
 static volatile bool m_finished = false;
 static uint8_t m_buffer_tx[QSPI_TEST_DATA_SIZE];
@@ -120,8 +121,10 @@ int main(void)
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
-    NRF_LOG_INFO("\r\n"
-                 "QSPI write and read example using 24bit addressing mode\r\n");
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    NRF_LOG_INFO(""
+                 "QSPI write and read example using 24bit addressing mode");
 
     srand(0);
     for (i = 0; i < QSPI_TEST_DATA_SIZE; ++i)
@@ -133,7 +136,7 @@ int main(void)
 
     err_code = nrf_drv_qspi_init(&config, qspi_handler, NULL);
     APP_ERROR_CHECK(err_code);
-    NRF_LOG_INFO("QSPI Initialized\r\n");
+    NRF_LOG_INFO("QSPI Initialized");
 
     configure_memory();
 
@@ -141,25 +144,25 @@ int main(void)
     err_code = nrf_drv_qspi_erase(NRF_QSPI_ERASE_LEN_64KB, 0);
     APP_ERROR_CHECK(err_code);
     WAIT_FOR_PERIPH();
-    NRF_LOG_INFO("Process of erasing first block start\r\n");
+    NRF_LOG_INFO("Process of erasing first block start");
 
     err_code = nrf_drv_qspi_write(m_buffer_tx, QSPI_TEST_DATA_SIZE, 0);
     APP_ERROR_CHECK(err_code);
     WAIT_FOR_PERIPH();
-    NRF_LOG_INFO("Process of writing data start\r\n");
+    NRF_LOG_INFO("Process of writing data start");
 
     err_code = nrf_drv_qspi_read(m_buffer_rx, QSPI_TEST_DATA_SIZE, 0);
     WAIT_FOR_PERIPH();
-    NRF_LOG_INFO("Data read\r\n");
+    NRF_LOG_INFO("Data read");
 
-    NRF_LOG_INFO("Compare...\r\n");
+    NRF_LOG_INFO("Compare...");
     if (memcmp(m_buffer_tx, m_buffer_rx, QSPI_TEST_DATA_SIZE) == 0)
     {
-        NRF_LOG_INFO("Data consistent\r\n");
+        NRF_LOG_INFO("Data consistent");
     }
     else
     {
-        NRF_LOG_INFO("Data inconsistent\r\n");
+        NRF_LOG_INFO("Data inconsistent");
     }
 
     nrf_drv_qspi_uninit();

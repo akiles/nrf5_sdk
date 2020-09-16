@@ -64,11 +64,23 @@ extern "C" {
 #include "ble.h"
 #include "ble_srv_common.h"
 
+/**@brief   Macro for defining a nrf_ble_qwr instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define NRF_BLE_QWR_DEF(_name)                                                                      \
+static nrf_ble_qwr_t _name;                                                                         \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     NRF_BLE_QWR_BLE_OBSERVER_PRIO,                                                 \
+                     nrf_ble_qwr_on_ble_evt, &_name)
+
 #ifndef NRF_BLE_QWR_ATTR_LIST_SIZE
-#define NRF_BLE_QWR_ATTR_LIST_SIZE    10        //!< Maximum number of attribute handles that can be registered. This number must be adjusted according to the number of attributes for which Queued Writes will be enabled.
+#define NRF_BLE_QWR_ATTR_LIST_SIZE          10                                      //!< Maximum number of attribute handles that can be registered. This number must be adjusted according to the number of attributes for which Queued Writes will be enabled.
 #endif
 
-#define NRF_BLE_QWR_REJ_REQUEST_ERR_CODE BLE_GATT_STATUS_ATTERR_APP_BEGIN + 0                  //!< Error code used by the module to reject prepare write requests on non-registered attributes.
+#define NRF_BLE_QWR_REJ_REQUEST_ERR_CODE    BLE_GATT_STATUS_ATTERR_APP_BEGIN + 0    //!< Error code used by the module to reject prepare write requests on non-registered attributes.
+
 
 /**@brief Queued Writes module event types. */
 typedef enum
@@ -77,14 +89,12 @@ typedef enum
     NRF_BLE_QWR_EVT_AUTH_REQUEST,               //!< Event that indicates that an execute write command was received for a registered handle and that the write request must now be accepted or rejected.
 } nrf_ble_qwr_evt_type_t;
 
-
 /**@brief Queued Writes module events. */
 typedef struct
 {
     nrf_ble_qwr_evt_type_t evt_type;            //!< Type of the event.
     uint16_t               attr_handle;         //!< Handle of the attribute to which the event relates.
 } nrf_ble_qwr_evt_t;
-
 
 // Forward declaration of the nrf_ble_qwr_t type.
 struct nrf_ble_qwr_t;
@@ -96,7 +106,6 @@ struct nrf_ble_qwr_t;
  * one of the @ref BLE_GATT_STATUS_CODES.*/
 typedef uint16_t (* nrf_ble_qwr_evt_handler_t) (struct nrf_ble_qwr_t * p_qwr,
                                                 nrf_ble_qwr_evt_t    * p_evt);
-
 
 /**@brief Queued Writes structure.
  * @details This structure contains status information for the Queued Writes module. */
@@ -113,7 +122,6 @@ typedef struct nrf_ble_qwr_t
     uint16_t                      conn_handle;                                                  //!< Connection handle.
     nrf_ble_qwr_evt_handler_t     callback;                                                     //!< Event handler function that is called for events concerning the handles of all registered attributes.
 } nrf_ble_qwr_t;
-
 
 /**@brief Queued Writes init structure.
  * @details This structure contains all information
@@ -165,10 +173,10 @@ ret_code_t nrf_ble_qwr_attr_register(nrf_ble_qwr_t * p_qwr, uint16_t attr_handle
  *
  * @details Handles all events from the BLE stack that are of interest to the Queued Writes module.
  *
- * @param[in]  p_qwr      Queued Writes structure.
- * @param[in]  p_ble_evt  Event received from the BLE stack.
+ * @param[in]  p_ble_evt    Event received from the BLE stack.
+ * @param[in]  p_context    Queued Writes structure.
  */
-void nrf_ble_qwr_on_ble_evt(nrf_ble_qwr_t * p_qwr, ble_evt_t * p_ble_evt);
+void nrf_ble_qwr_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 
 
 /**@brief Function for retrieving the received data for a given attribute.

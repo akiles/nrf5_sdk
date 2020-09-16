@@ -39,30 +39,37 @@
  */
 #include "nrf_dfu.h"
 
-#include "nrf_dfu_transport.h"
-#include "nrf_dfu_utils.h"
+#include "boards.h"
+#include "nrf_power.h"
+#include "nrf_soc.h"
+#include "nrf_clock.h"
+#include "nrf_drv_clock.h"
+
 #include "nrf_bootloader_app_start.h"
+#include "nrf_bootloader_info.h"
 #include "nrf_dfu_settings.h"
-#include "nrf_gpio.h"
+#include "nrf_dfu_utils.h"
+#include "nrf_dfu_transport.h"
+#include "nrf_dfu_req_handler.h"
 #include "app_scheduler.h"
 #include "app_timer.h"
 #include "nrf_log.h"
-#include "boards.h"
-#include "nrf_bootloader_info.h"
-#include "nrf_dfu_req_handler.h"
+#include "nrf_log_ctrl.h"
+
 #ifdef NRF_DFU_DEBUG_VERSION
 #include "nrf_delay.h"
 #endif //NRF_DFU_DEBUG_VERSION
-#ifndef SOFTDEVICE_PRESENT
-#include "nrf_soc.h"
-#endif
-
-#define SCHED_MAX_EVENT_DATA_SIZE       MAX(APP_TIMER_SCHED_EVENT_DATA_SIZE, 0)                 /**< Maximum size of scheduler events. */
-#define BOOTLOADER_DFU_START            0xB1                                                    /**< Magic value written to retention register when starting DFU buttonless. */
-#define SCHED_QUEUE_SIZE                20                                                      /**< Maximum number of events in the scheduler queue. */
 
 
-// Weak function implementation
+#define BOOTLOADER_DFU_START            0xB1        /**< Magic value written to retention register when starting buttonless DFU. */
+#define SCHED_QUEUE_SIZE                16          /**< Maximum number of events in the scheduler queue. */
+
+
+// Inactivity timer to resets the device.
+// It can be stopped by transports when they are active and restarted as necessary.
+static app_timer_t    nrf_dfu_inactivity_timeout_timer    = {{0}};
+const  app_timer_id_t nrf_dfu_inactivity_timeout_timer_id = &nrf_dfu_inactivity_timeout_timer;
+
 
 /** @brief Weak implemenation of nrf_dfu_check_enter.
  *
@@ -71,12 +78,12 @@
  */
 __WEAK bool nrf_dfu_enter_check(void)
 {
-    if (nrf_gpio_pin_read(BOOTLOADER_BUTTON) == 0)
+    if (nrf_dfu_button_enter_check() == true)
     {
         return true;
     }
 
-    if(NRF_POWER->GPREGRET == BOOTLOADER_DFU_START)
+    if (nrf_power_gpregret_get() == BOOTLOADER_DFU_START)
     {
         return true;
     }
@@ -91,57 +98,58 @@ __WEAK bool nrf_dfu_enter_check(void)
 }
 
 
-// Internal Functions
-static void reset_delay_timer_handler(void * p_context)
+static void clock_init(void)
 {
-    NRF_LOG_DEBUG("Reset delay timer expired, resetting.\r\n");
-#ifdef NRF_DFU_DEBUG_VERSION
-    nrf_delay_ms(100);
-#endif
-    NVIC_SystemReset();
+    ret_code_t err_code;
+
+    NRF_LOG_DEBUG("Initializing the clock.");
+    err_code = nrf_drv_clock_init();
+    APP_ERROR_CHECK(err_code);
+
+    nrf_drv_clock_lfclk_request(NULL);
+
+    // Wait for the clock to be ready.
+    while (!nrf_clock_lf_is_running()) {;}
 }
 
-/**@brief Function for initializing the timer handler module (app_timer).
- */
+
+/**@brief Function for initializing the timer module. */
 static void timers_init(void)
 {
-    APP_ERROR_CHECK(app_timer_init());
-    APP_ERROR_CHECK( app_timer_create(&nrf_dfu_utils_reset_delay_timer, APP_TIMER_MODE_SINGLE_SHOT, reset_delay_timer_handler) );
+    ret_code_t err_code;
+
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
+    // Start a single shot timer that will reset the DFU on timeout.
+    err_code = app_timer_create(&nrf_dfu_inactivity_timeout_timer_id,
+                                APP_TIMER_MODE_SINGLE_SHOT,
+                                nrf_dfu_reset_timeout_handler);
+    APP_ERROR_CHECK(err_code);
 }
 
 
-/** @brief Function for event scheduler initialization.
- */
+/** @brief Function for initializing the event scheduler. */
 static void scheduler_init(void)
 {
-    APP_SCHED_INIT(SCHED_MAX_EVENT_DATA_SIZE, SCHED_QUEUE_SIZE);
+    APP_SCHED_INIT(APP_TIMER_SCHED_EVENT_DATA_SIZE, SCHED_QUEUE_SIZE);
 }
 
 
 static void wait_for_event()
 {
-    // Transport is waiting for event?
-    while(true)
+    while (true)
     {
-        // Can't be emptied like this because of lack of static variables
-#ifdef BLE_STACK_SUPPORT_REQD
-        (void)sd_app_evt_wait();
-#else
-        __WFI();
-#endif
         app_sched_execute();
+        if (!NRF_LOG_PROCESS())
+        {
+        #ifdef BLE_STACK_SUPPORT_REQD
+            (void)sd_app_evt_wait();
+        #else
+            __WFE();
+        #endif
+        }
     }
-}
-
-
-void nrf_dfu_wait()
-{
-#ifdef BLE_STACK_SUPPORT_REQD
-        (void)sd_app_evt_wait();
-#else
-        __WFI();
-#endif
-    app_sched_execute();
 }
 
 
@@ -150,17 +158,20 @@ uint32_t nrf_dfu_init()
     uint32_t ret_val = NRF_SUCCESS;
     uint32_t enter_bootloader_mode = 0;
 
-    NRF_LOG_DEBUG("In real nrf_dfu_init\r\n");
+    NRF_LOG_DEBUG("In real nrf_dfu_init");
 
-    nrf_dfu_settings_init();
+    nrf_dfu_settings_init(false);
+
+    // Initialize the clock and timers.
+    clock_init();
     timers_init();
 
     // Continue ongoing DFU operations
     // Note that this part does not rely on SoftDevice interaction
     ret_val = nrf_dfu_continue(&enter_bootloader_mode);
-    if(ret_val != NRF_SUCCESS)
+    if (ret_val != NRF_SUCCESS)
     {
-        NRF_LOG_DEBUG("Could not continue DFU operation: 0x%08x\r\n", ret_val);
+        NRF_LOG_DEBUG("Could not continue DFU operation: 0x%08x", ret_val);
         enter_bootloader_mode = 1;
     }
 
@@ -168,39 +179,60 @@ uint32_t nrf_dfu_init()
     // besides the effect of the continuation
     if (nrf_dfu_enter_check())
     {
-        NRF_LOG_DEBUG("Application sent bootloader request\n");
+        NRF_LOG_DEBUG("Application sent bootloader request");
         enter_bootloader_mode = 1;
     }
 
-    NRF_POWER->GPREGRET = 0;
+    nrf_power_gpregret_set(0);
 
-    if(enter_bootloader_mode != 0 || !nrf_dfu_app_is_valid())
+    if (enter_bootloader_mode != 0 || !nrf_dfu_app_is_valid())
     {
         scheduler_init();
+
+        // Start the inactivity timer.
+        ret_val = app_timer_start(nrf_dfu_inactivity_timeout_timer_id,
+                                  APP_TIMER_TICKS(NRF_DFU_INACTIVITY_TIMEOUT_MS),
+                                  NULL);
+
+        if (ret_val != NRF_SUCCESS)
+        {
+            NRF_LOG_ERROR("Could not initialize inactivity timer");
+            return ret_val;
+        }
 
         // Initializing transports
         ret_val = nrf_dfu_transports_init();
         if (ret_val != NRF_SUCCESS)
         {
-            NRF_LOG_ERROR("Could not initalize DFU transport: 0x%08x\r\n", ret_val);
+            NRF_LOG_ERROR("Could not initalize DFU transport: 0x%08x", ret_val);
             return ret_val;
         }
 
         (void)nrf_dfu_req_handler_init();
 
         // This function will never return
-        NRF_LOG_DEBUG("Waiting for events\r\n");
+        NRF_LOG_DEBUG("Waiting for events");
         wait_for_event();
-        NRF_LOG_DEBUG("After waiting for events\r\n");
+        NRF_LOG_DEBUG("After waiting for events");
+    }
+
+    // Erase additional data like peer data or advertisement name
+    ret_val = nrf_dfu_settings_additional_erase();
+    if (ret_val != NRF_SUCCESS)
+    {
+        return ret_val;
     }
 
     if (nrf_dfu_app_is_valid())
     {
-        NRF_LOG_DEBUG("Jumping to: 0x%08x\r\n", MAIN_APPLICATION_START_ADDR);
+        // Uninitialize the clock driver to prevent interfering with app.
+        nrf_drv_clock_uninit();
+
+        NRF_LOG_DEBUG("Jumping to: 0x%08x", MAIN_APPLICATION_START_ADDR);
         nrf_bootloader_app_start(MAIN_APPLICATION_START_ADDR);
     }
 
     // Should not be reached!
-    NRF_LOG_INFO("After real nrf_dfu_init\r\n");
+    NRF_LOG_INFO("After real nrf_dfu_init");
     return NRF_SUCCESS;
 }

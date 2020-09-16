@@ -51,15 +51,15 @@
 
 #include "lm75b.h"
 
-
-uint8_t const lm75b_conf_reg_addr  = LM75B_REG_CONF;
-uint8_t const lm75b_temp_reg_addr  = LM75B_REG_TEMP;
-uint8_t const lm75b_tos_reg_addr   = LM75B_REG_TOS;
-uint8_t const lm75b_thyst_reg_addr = LM75B_REG_THYST;
+uint8_t APP_TWI_BUFFER_LOC_IND lm75b_conf_reg_addr  = LM75B_REG_CONF;
+uint8_t APP_TWI_BUFFER_LOC_IND lm75b_temp_reg_addr  = LM75B_REG_TEMP;
+uint8_t APP_TWI_BUFFER_LOC_IND lm75b_tos_reg_addr   = LM75B_REG_TOS;
+uint8_t APP_TWI_BUFFER_LOC_IND lm75b_thyst_reg_addr = LM75B_REG_THYST;
 
 
 // Set default configuration of LM75B - write 0 to Conf register.
-static uint8_t const default_config[] = { LM75B_REG_CONF, 0 };
+static uint8_t APP_TWI_BUFFER_LOC_IND default_config[] = { LM75B_REG_CONF, 0 };
+
 app_twi_transfer_t const lm75b_init_transfers[LM75B_INIT_TRANSFER_COUNT] =
 {
     APP_TWI_WRITE(LM75B_ADDR, default_config, sizeof(default_config), 0)

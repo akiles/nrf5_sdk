@@ -184,7 +184,7 @@ static void leds_off(void)
     if (m_alert_on)
     {
         uint32_t i;
-        for(i = 0; i < LEDS_NUMBER; i++)
+        for (i = 0; i < LEDS_NUMBER; i++)
         {
             if (i != BSP_LED_ALERT)
             {
@@ -207,7 +207,7 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
     uint32_t err_code   = NRF_SUCCESS;
     uint32_t next_delay = 0;
 
-    if(m_leds_clear)
+    if (m_leds_clear)
     {
         m_leds_clear = false;
         leds_off();

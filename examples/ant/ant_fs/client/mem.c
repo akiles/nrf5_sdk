@@ -51,7 +51,7 @@
 #include "mem.h"
 #include <string.h>
 
-#define NRF_LOG_MODULE_NAME "MEM"
+#define NRF_LOG_MODULE_NAME MEM
 
 #if MEM_WRITE_LOG_ENABLED
 #define NRF_LOG_LEVEL       MEM_WRITE_LOG_LEVEL
@@ -61,6 +61,7 @@
 #define NRF_LOG_LEVEL       0
 #endif //MEM_WRITE_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #define MEM_DIR_SIZE          9u                     /**< Example directory size. */
 #define MEM_DIR_INVALID_INDEX 0xFFFFu                /**< Defined invalid index value. */

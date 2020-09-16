@@ -38,6 +38,7 @@ static bool errata_98(void);
 static bool errata_103(void);
 static bool errata_115(void);
 static bool errata_120(void);
+static bool errata_136(void);
 
 
 #if defined ( __CC_ARM )
@@ -127,6 +128,14 @@ void SystemInit(void)
        for your device located at https://infocenter.nordicsemi.com/  */
     if (errata_120()){
         *(volatile uint32_t *)0x40029640ul = 0x200ul;
+    }
+    
+    /* Workaround for Errata 136 "System: Bits in RESETREAS are set when they should not be" found at the Errata document
+       for your device located at https://infocenter.nordicsemi.com/  */
+    if (errata_136()){
+        if (NRF_POWER->RESETREAS & POWER_RESETREAS_RESETPIN_Msk){
+            NRF_POWER->RESETREAS =  ~POWER_RESETREAS_RESETPIN_Msk;
+        }
     }
     
     /* Enable the FPU if the compiler used floating point unit instructions. __FPU_USED is a MACRO defined by the
@@ -226,6 +235,16 @@ static bool errata_115(void)
 
 
 static bool errata_120(void)
+{
+    if ((*(uint32_t *)0x10000130ul == 0x8ul) && (*(uint32_t *)0x10000134ul == 0x0ul)){
+        return true;
+    }
+    
+    return false;
+}
+
+
+static bool errata_136(void)
 {
     if ((*(uint32_t *)0x10000130ul == 0x8ul) && (*(uint32_t *)0x10000134ul == 0x0ul)){
         return true;

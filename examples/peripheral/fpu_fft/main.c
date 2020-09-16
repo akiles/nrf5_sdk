@@ -52,9 +52,10 @@
 #include "app_util_platform.h"
 #include "bsp.h"
 #include "nrf_delay.h"
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 /*lint -save -e689 */ /* Apparent end of comment ignored */
 #include "arm_const_structs.h"
 /*lint -restore */
@@ -174,7 +175,7 @@ static void draw_line(uint16_t line_width)
         line[i] = '-';
     }
     line[line_width] = 0;
-    NRF_LOG_INFO("%s\r\n", nrf_log_push(line));
+    NRF_LOG_RAW_INFO("%s\r\n", nrf_log_push(line));
 }
 
 /**
@@ -185,7 +186,7 @@ static void draw_line(uint16_t line_width)
  */
 static void draw_fft_header(float32_t input_sine_freq, bool is_noisy)
 {
-    NRF_LOG_INFO("Input: sine %uHz, noise: %s.\r\n", (uint16_t)input_sine_freq,
+    NRF_LOG_RAW_INFO("Input: sine %uHz, noise: %s.\r\n", (uint16_t)input_sine_freq,
            (uint32_t)((is_noisy == true) ? "yes" : "no"));
 }
 
@@ -223,7 +224,8 @@ static void draw_fft_data(float32_t * p_input_data, uint16_t data_size, uint16_t
             }
         }
         tmp_str[data_size] = 0;
-        NRF_LOG_INFO("%s\r\n", nrf_log_push(tmp_str));
+        NRF_LOG_RAW_INFO("%s\r\n", NRF_LOG_PUSH(tmp_str));
+        NRF_LOG_FLUSH();
     }
 
     draw_line(data_size);
@@ -241,8 +243,10 @@ int main(void)
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
     // Welcome message.
-    NRF_LOG_INFO("This is FPU usage example with FFT calculation and drawing.\n");
+    NRF_LOG_RAW_INFO("This is FPU usage example with FFT calculation and drawing.\r\n");
 
 #ifdef FPU_INTERRUPT_MODE
     // Enable FPU interrupt
@@ -277,6 +281,8 @@ int main(void)
         // Draw FFT bin power chart.
         draw_fft_header(sine_freq, noise);
         draw_fft_data(m_fft_output_f32, FFT_TEST_OUT_SAMPLES_LEN, GRAPH_WINDOW_HEIGHT);
+
+        NRF_LOG_FLUSH();
 
 #ifndef FPU_INTERRUPT_MODE
         /* Clear FPSCR register and clear pending FPU interrupts. This code is base on

@@ -58,15 +58,18 @@
 #include "ant_channel_config.h"
 #include "ant_search_config.h"
 #include "nrf_soc.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 
 
 // Miscellaneous defines.
-#define ANT_CHANNEL_DEFAULT_NETWORK    0x00         /**< ANT Channel Network. */
-#define ANT_CHANNEL_NUMBER_0           0            /**< ANT Channel Number for channel 0. */
-#define ANT_CHANNEL_NUMBER_1           1            /**< ANT Channel Number for channel 1. */
+#define ANT_CHANNEL_NUM_0           0       /**< ANT Channel Number for channel 0. */
+#define ANT_CHANNEL_NUM_1           1       /**< ANT Channel Number for channel 1. */
 
-bool m_rx_first_ch0;                                /**< Received first message on channel 0. */
-bool m_rx_first_ch1;                                /**< Received first message on channel 1. */
+#define APP_ANT_OBSERVER_PRIO       1       /**< Application's ANT observer priority. You shouldn't need to modify this value. */
+
+bool m_rx_first_ch0;                        /**< Received first message on channel 0. */
+bool m_rx_first_ch1;                        /**< Received first message on channel 1. */
 
 
 void ant_search_sharing_setup(void)
@@ -78,7 +81,7 @@ void ant_search_sharing_setup(void)
         .channel_type   = CHANNEL_TYPE_SLAVE,
         .ext_assign     = 0x00,
         .device_number  = 0x00,     // Wild card
-        .network_number = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number = ANT_NETWORK_NUM,
     };
 
     ant_search_config_t search_config =
@@ -94,7 +97,7 @@ void ant_search_sharing_setup(void)
     m_rx_first_ch1 = false;
 
     // Configure channel parameters for channel 0
-    channel_config.channel_number    = ANT_CHANNEL_NUMBER_0;
+    channel_config.channel_number    = ANT_CHANNEL_NUM_0;
     channel_config.device_type       = CH0_CHAN_ID_DEV_TYPE;
     channel_config.transmission_type = CH0_CHAN_ID_TRANS_TYPE;
     channel_config.channel_period    = CH0_CHAN_PERIOD;
@@ -103,12 +106,12 @@ void ant_search_sharing_setup(void)
     APP_ERROR_CHECK(err_code);
 
     // Configure search parameters for channel 0
-    search_config.channel_number = ANT_CHANNEL_NUMBER_0;
+    search_config.channel_number = ANT_CHANNEL_NUM_0;
     err_code                     = ant_search_init(&search_config);
     APP_ERROR_CHECK(err_code);
 
     // Configure channel parameters for channel 1
-    channel_config.channel_number    = ANT_CHANNEL_NUMBER_1;
+    channel_config.channel_number    = ANT_CHANNEL_NUM_1;
     channel_config.device_type       = CH1_CHAN_ID_DEV_TYPE;
     channel_config.transmission_type = CH1_CHAN_ID_TRANS_TYPE;
     channel_config.channel_period    = CH1_CHAN_PERIOD;
@@ -117,28 +120,32 @@ void ant_search_sharing_setup(void)
     APP_ERROR_CHECK(err_code);
 
     // Configure search parameters for channel 1
-    search_config.channel_number = ANT_CHANNEL_NUMBER_1;
+    search_config.channel_number = ANT_CHANNEL_NUM_1;
     err_code                     = ant_search_init(&search_config);
     APP_ERROR_CHECK(err_code);
 
     // Open both channels
-    err_code = sd_ant_channel_open(ANT_CHANNEL_NUMBER_0);
+    err_code = sd_ant_channel_open(ANT_CHANNEL_NUM_0);
     APP_ERROR_CHECK(err_code);
 
-    err_code = sd_ant_channel_open(ANT_CHANNEL_NUMBER_1);
+    err_code = sd_ant_channel_open(ANT_CHANNEL_NUM_1);
     APP_ERROR_CHECK(err_code);
 
 }
 
-
-void ant_search_sharing_event_handler(ant_evt_t * p_ant_evt)
+/**@brief Function for handling a ANT stack event.
+ *
+ * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
+ */
+void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
     switch (p_ant_evt->event)
     {
         case EVENT_RX:
             switch (p_ant_evt->channel)
             {
-                case ANT_CHANNEL_NUMBER_0:
+                case ANT_CHANNEL_NUM_0:
                     if (!m_rx_first_ch0)
                     {
                         m_rx_first_ch0 = true;
@@ -146,7 +153,7 @@ void ant_search_sharing_event_handler(ant_evt_t * p_ant_evt)
                     }
                     break;
 
-                case ANT_CHANNEL_NUMBER_1:
+                case ANT_CHANNEL_NUM_1:
                     if (!m_rx_first_ch1)
                     {
                         m_rx_first_ch1 = true;
@@ -161,4 +168,4 @@ void ant_search_sharing_event_handler(ant_evt_t * p_ant_evt)
     }
 }
 
-
+NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_evt_handler, NULL);

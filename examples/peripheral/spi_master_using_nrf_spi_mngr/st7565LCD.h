@@ -38,8 +38,8 @@
  * 
  */
 
-#ifndef _st7565LCD_H_
-#define _st7565LCD_H_
+#ifndef _st7565LCD_H__
+#define _st7565LCD_H__
 
 #include "sdk_errors.h"
 #include "nrf_lcd.h"

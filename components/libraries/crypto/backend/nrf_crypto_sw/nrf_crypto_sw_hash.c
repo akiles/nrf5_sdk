@@ -70,7 +70,7 @@ uint32_t nrf_crypto_hash_init(nrf_crypto_hash_info_t    hash_info,
     }
 
     // Currently SHA256 is the only available hash algorithm
-    if(hash_info.hash_type != NRF_CRYPTO_HASH_TYPE_SHA256)
+    if (hash_info.hash_type != NRF_CRYPTO_HASH_TYPE_SHA256)
     {
         return NRF_ERROR_NOT_SUPPORTED;
     }
@@ -213,6 +213,6 @@ uint32_t nrf_crypto_hash_compute(nrf_crypto_hash_info_t    hash_info,
 }
 
 
-#endif // NRF_CRYPTO_BACKEND_SW
+#endif // NRF_CRYPTO_BACKEND_MICRO_ECC_SHA256
 
 #endif // NRF_MODULE_ENABLED(NRF_CRYPTO)

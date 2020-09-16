@@ -55,7 +55,7 @@
 extern "C" {
 #endif
 
-#define BLE_GATT_DB_MAX_CHARS 5        /**< The maximum number of characteristics present in a service record. */
+#define BLE_GATT_DB_MAX_CHARS 6        /**< The maximum number of characteristics present in a service record. */
 
 /**@brief Structure for holding the characteristic and the handle of its CCCD present on a server.
  */

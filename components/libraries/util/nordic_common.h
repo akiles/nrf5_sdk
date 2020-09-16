@@ -146,7 +146,7 @@ extern "C" {
  * @param[in] W  Word whose bit is being set.
  * @param[in] B  Bit number in the word to be set.
  */
-#define SET_BIT(W,B)  ((W) |= (uint32_t)(1U << (B)))
+#define SET_BIT(W, B)  ((W) |= (uint32_t)(1U << (B)))
 
 
 /**@brief Clears a bit in the uint32 word.
@@ -154,7 +154,7 @@ extern "C" {
  * @param[in] W   Word whose bit is to be cleared.
  * @param[in] B   Bit number in the word to be cleared.
  */
-#define CLR_BIT(W, B) ((W) &= (~((uint32_t)1U << (B))))
+#define CLR_BIT(W, B) ((W) &= (~(uint32_t)(1U << (B))))
 
 
 /**@brief Checks if a bit is set.
@@ -165,7 +165,7 @@ extern "C" {
  * @retval 1 if bit is set.
  * @retval 0 if bit is not set.
  */
-#define IS_SET(W,B) (((W) >> (B)) & 1)
+#define IS_SET(W, B) (((W) >> (B)) & 1)
 
 #define BIT_0 0x01 /**< The value of bit 0 */
 #define BIT_1 0x02 /**< The value of bit 1 */

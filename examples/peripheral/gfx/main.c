@@ -55,9 +55,11 @@
 #include "app_error.h"
 #include <string.h>
 
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
+
 
 #define GRAY            0xC618
 #define RED             0xF800
@@ -199,6 +201,8 @@ static void rect_draw(void)
 
 int main(void)
 {
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 
     NRF_LOG_INFO("This a GFX usage example application.")
     NRF_LOG_FLUSH();

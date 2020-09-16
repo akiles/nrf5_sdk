@@ -716,7 +716,7 @@ uint32_t conn_mw_ble_gap_device_identities_set(uint8_t const * const p_rx_buf,
                                                uint8_t * const       p_tx_buf,
                                                uint32_t * const      p_tx_buf_len);
 
-/**@brief Handles @ref sd_ble_gap_phy_request command request and prepares response.
+/**@brief Handles @ref sd_ble_gap_phy_update command request and prepares response.
  *
  * @param[in]     p_rx_buf            Pointer to input buffer.
  * @param[in]     rx_buf_len          Size of @p p_rx_buf.
@@ -731,7 +731,7 @@ uint32_t conn_mw_ble_gap_device_identities_set(uint8_t const * const p_rx_buf,
  */
 
 #if NRF_SD_BLE_API_VERSION >= 5
-uint32_t conn_mw_ble_gap_phy_request(uint8_t const * const p_rx_buf,
+uint32_t conn_mw_ble_gap_phy_update(uint8_t const * const p_rx_buf,
                                      uint32_t              rx_buf_len,
                                      uint8_t * const       p_tx_buf,
                                      uint32_t * const      p_tx_buf_len);

@@ -108,9 +108,11 @@ typedef enum
  */
 typedef enum
 {
-  NRF_GZLL_DATARATE_250KBIT,    ///<  250 Kbps datarate.
-  NRF_GZLL_DATARATE_1MBIT,      ///<  1 Mbps datarate.
-  NRF_GZLL_DATARATE_2MBIT       ///<  2 Mbps datarate.
+#ifdef NRF51
+  NRF_GZLL_DATARATE_250KBIT = 0,    ///<  250 Kbps datarate, available only for the nRF51.
+#endif
+  NRF_GZLL_DATARATE_1MBIT   = 1,    ///<  1 Mbps datarate.
+  NRF_GZLL_DATARATE_2MBIT   = 2     ///<  2 Mbps datarate.
 } nrf_gzll_datarate_t;
 
 
@@ -153,13 +155,13 @@ typedef enum
   NRF_GZLL_ERROR_CODE_INSUFFICIENT_PACKETS_AVAILABLE      =  8,
   ///< There are insufficient packets in the Gazell memory pool to
   ///< successfully execute the operation.
-  NRF_GZLL_ERROR_CODE_ATTEMPTED_TO_ADD_TO_FULL_FIFO     =  9,
+  NRF_GZLL_ERROR_CODE_ATTEMPTED_TO_ADD_TO_FULL_FIFO       =  9,
   ///< There is insufficient space in the TX FIFO for the data packet.
-  NRF_GZLL_ERROR_CODE_NO_SPACE_IN_RX_FIFO_FOR_ACK        = 10,
+  NRF_GZLL_ERROR_CODE_NO_SPACE_IN_RX_FIFO_FOR_ACK         = 10,
   ///< There is insufficient space in the RX FIFO for the ACK.
   NRF_GZLL_ERROR_CODE_ATTEMPTED_TO_FETCH_FROM_EMPTY_FIFO  = 11,
   ///< Attempted to fetch a packet from an empty FIFO. Use the functions nrf_gzll_get_tx_fifo_packet_count() or nrf_gzll_get_rx_fifo_packet_count()
-  NRF_GZLL_ERROR_CODE_ATTEMPTED_TO_FLUSH_WHEN_ENABLED    = 12,
+  NRF_GZLL_ERROR_CODE_ATTEMPTED_TO_FLUSH_WHEN_ENABLED     = 12,
   ///< Attempted to fetch a packet from an empty FIFO. Use the functions nrf_gzll_get_tx_fifo_packet_count() or nrf_gzll_get_rx_fifo_packet_count()
   NRF_GZLL_ERROR_CODE_INVALID_PARAMETER                   = 14,
   ///< Attempted to set a variable which was not valid.
@@ -167,7 +169,9 @@ typedef enum
   ///< An internal assert occurred.
   NRF_GZLL_ERROR_CODE_CALLBACK_NOT_IMPLEMENTED            = 16,
   ///< A callback was called but not implemented by the application.
-  NRF_GZLL_ERROR_CODE_NUMBER_OF_ERROR_CODES               = 17,
+  NRF_GZLL_ERROR_CODE_INVALID_ADDRESS                     = 17,
+  ///< Invalid pipe 0 address detected, see Anomaly 107 at nRF52832 errata document.
+  NRF_GZLL_ERROR_CODE_NUMBER_OF_ERROR_CODES               = 18,
   ///< Number of possible error codes.
 } nrf_gzll_error_code_t;
 
@@ -228,7 +232,8 @@ bool nrf_gzll_init(nrf_gzll_mode_t mode);
  * When enabled the behaviour described for the current Gazell Link Layer mode
  * will apply.
  *
- * @retval false if nrf_gzll_init has not previously been called.
+ * @retval false if nrf_gzll_init has not previously been called or invalid address
+ *               has been set - see Anomaly 107 at nRF52832 errata document.
  */
 bool nrf_gzll_enable(void);
 
@@ -503,6 +508,9 @@ nrf_gzll_mode_t nrf_gzll_get_mode(void);
  *
  * @param base_address The 4 byte base address. All bytes are used.
  *
+ * @note Due to the nRF52 Anomaly 107, pipe 0 address should not have
+ *       both prefix and two LSB of base address set to 0.
+ *
  * @retval true  If the parameter was set.
  * @return false If Gazell was enabled.
  */
@@ -546,6 +554,9 @@ uint32_t nrf_gzll_get_base_address_1(void);
  * @param pipe                The pipe that the address should apply to.
  *                            This value must be < NRF_GZLL_CONST_PIPE_COUNT.
  * @param address_prefix_byte The address prefix byte.
+ *
+ * @note Due to the Anomaly 107, pipe 0 address should not have
+ *       both prefix and two LSB of base address set to 0.
  *
  * @retval true  If the parameter was set.
  * @retval false If Gazell was enabled, or if the pipe was invalid.

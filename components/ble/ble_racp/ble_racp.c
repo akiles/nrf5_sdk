@@ -43,7 +43,7 @@
 #include <stdlib.h>
 
 
-void ble_racp_decode(uint8_t data_len, uint8_t * p_data, ble_racp_value_t * p_racp_val)
+void ble_racp_decode(uint8_t data_len, uint8_t const * p_data, ble_racp_value_t * p_racp_val)
 {
     p_racp_val->opcode      = 0xFF;
     p_racp_val->operator    = 0xFF;
@@ -61,7 +61,7 @@ void ble_racp_decode(uint8_t data_len, uint8_t * p_data, ble_racp_value_t * p_ra
     if (data_len > 2)
     {
         p_racp_val->operand_len = data_len - 2;
-        p_racp_val->p_operand   = &p_data[2];  //lint !e416
+        p_racp_val->p_operand   = (uint8_t*)&p_data[2];  //lint !e416
     }
 }
 

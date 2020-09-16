@@ -57,20 +57,20 @@
 
 
 #define AD_TYPE_LE_ROLE_DATA_SIZE       1UL                                     /**< Data size (in octets) of the LE Bluetooth Device Address AD type. */
-#define AD_TYPE_LE_ROLE_SIZE            (ADV_AD_DATA_OFFSET + \
+#define AD_TYPE_LE_ROLE_SIZE            (AD_DATA_OFFSET + \
                                             AD_TYPE_LE_ROLE_DATA_SIZE)          /**< Size (in octets) of the LE Bluetooth Device Address AD type. */
 #define AD_TYPE_TK_VALUE_DATA_SIZE      (sizeof(ble_advdata_tk_value_t))        /**< Data size (in octets) of the Security Manager TK value AD type. */
-#define AD_TYPE_TK_VALUE_SIZE           (ADV_AD_DATA_OFFSET + \
+#define AD_TYPE_TK_VALUE_SIZE           (AD_DATA_OFFSET + \
                                             AD_TYPE_TK_VALUE_DATA_SIZE)         /**< Size (in octets) of the Security Manager TK value AD type. */
 #define AD_TYPE_OOB_FLAGS_DATA_SIZE     1UL                                     /**< Data size (in octets) of the Security Manager OOB Flags AD type. */
-#define AD_TYPE_OOB_FLAGS_SIZE          (ADV_AD_DATA_OFFSET + \
+#define AD_TYPE_OOB_FLAGS_SIZE          (AD_DATA_OFFSET + \
                                             AD_TYPE_OOB_FLAGS_DATA_SIZE)        /**< Size (in octets) of the Security Manager OOB Flags AD type. */
 
 #define AD_TYPE_CONFIRM_VALUE_DATA_SIZE 16UL                                    /**< Data size (in octets) of the LESC Confirmation value. */
-#define AD_TYPE_CONFIRM_VALUE_SIZE      (ADV_AD_DATA_OFFSET + \
+#define AD_TYPE_CONFIRM_VALUE_SIZE      (AD_DATA_OFFSET + \
                                             AD_TYPE_CONFIRM_VALUE_DATA_SIZE)    /**< Size (in octets) of the LESC Confirmation value AD type. */
 #define AD_TYPE_RANDOM_VALUE_DATA_SIZE  16UL                                    /**< Data size (in octets) of the LESC Random value. */
-#define AD_TYPE_RANDOM_VALUE_SIZE       (ADV_AD_DATA_OFFSET + \
+#define AD_TYPE_RANDOM_VALUE_SIZE       (AD_DATA_OFFSET + \
                                             AD_TYPE_RANDOM_VALUE_DATA_SIZE)     /**< Size (in octets) of the LESC Random value AD type. */
 #define AD_TYPE_LESC_SIZE               (AD_TYPE_RANDOM_VALUE_SIZE + \
                                             AD_TYPE_CONFIRM_VALUE_SIZE)         /**< Size (in octets) of the LESC OOB AD data field in NDEF message. */
@@ -99,7 +99,7 @@ typedef enum
  *
  * @details This function encodes data into the Advertising and Scan Response data format (AD structures).
  *          Encoding is based on the selections in the supplied structures. This function uses
- *          @ref adv_data_encode to encode regular data and adds additional AD Structures which are specific
+ *          @ref ble_advdata_encode to encode regular data and adds additional AD Structures which are specific
  *          for NFC OOB pairing: Security Manager TK Value, LESC OOB values, OOB Flags, and LE Role.
  *
  * @param[in]      p_advdata       Pointer to the structure for specifying the content of encoded data.

@@ -50,6 +50,10 @@
 
 #include "sdk_errors.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Function for getting a printable error string.
  *
@@ -77,5 +81,9 @@ char const * nrf_strerror_get(ret_code_t code);
 char const * nrf_strerror_find(ret_code_t code);
 
 /** @} */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* NRF_STRERROR_H__ */

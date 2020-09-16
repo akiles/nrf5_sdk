@@ -54,9 +54,10 @@
 #include "nordic_common.h"
 #include "nrf_error.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define BUTTON_PREV_ID           0                           /**< Button used to switch the state. */
 #define BUTTON_NEXT_ID           1                           /**< Button used to switch the state. */
@@ -91,7 +92,7 @@ void bsp_evt_handler(bsp_event_t evt)
             return; // no implementation needed
     }
     err_code = bsp_indication_set(actual_state);
-    NRF_LOG_INFO("%s\r\n", (uint32_t)indications_list[actual_state]);
+    NRF_LOG_INFO("%s", (uint32_t)indications_list[actual_state]);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -133,8 +134,9 @@ int main(void)
     APP_ERROR_CHECK(err_code);
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("BSP example started.\r\n");
+    NRF_LOG_INFO("BSP example started.");
     bsp_configuration();
 
     while (true)

@@ -1772,7 +1772,7 @@ uint32_t _sd_ble_gap_data_length_update(uint16_t conn_handle,
 #endif
 
 #if NRF_SD_BLE_API_VERSION >= 5
-/**@brief Command response callback function for @ref sd_ble_gap_phy_request BLE command.
+/**@brief Command response callback function for @ref sd_ble_gap_phy_update BLE command.
  *
  * Callback for decoding the output parameters and the command response return code.
  *
@@ -1781,11 +1781,11 @@ uint32_t _sd_ble_gap_data_length_update(uint16_t conn_handle,
  *
  * @return Decoded command response return code.
  */
-static uint32_t gap_phy_request_rsp_dec(const uint8_t * p_buffer, uint16_t length)
+static uint32_t gap_phy_update_rsp_dec(const uint8_t * p_buffer, uint16_t length)
 {
     uint32_t result_code = 0;
 
-    const uint32_t err_code = ble_gap_phy_request_rsp_dec(p_buffer,
+    const uint32_t err_code = ble_gap_phy_update_rsp_dec(p_buffer,
                                                           length,
                                                           &result_code);
 
@@ -1797,17 +1797,17 @@ static uint32_t gap_phy_request_rsp_dec(const uint8_t * p_buffer, uint16_t lengt
     return result_code;
 }
 
-#ifndef _sd_ble_gap_phy_request
-#define _sd_ble_gap_phy_request sd_ble_gap_phy_request
+#ifndef _sd_ble_gap_phy_update
+#define _sd_ble_gap_phy_update sd_ble_gap_phy_update
 #endif
-uint32_t _sd_ble_gap_phy_request(uint16_t                     conn_handle,
+uint32_t _sd_ble_gap_phy_update(uint16_t                     conn_handle,
                                  ble_gap_phys_t const * const p_gap_phys)
 {
     uint8_t * p_buffer;
     uint32_t  buffer_length = 0;
 
     tx_buf_alloc(&p_buffer, (uint16_t *)&buffer_length);
-    const uint32_t err_code = ble_gap_phy_request_req_enc(conn_handle, p_gap_phys,
+    const uint32_t err_code = ble_gap_phy_update_req_enc(conn_handle, p_gap_phys,
                                                            &(p_buffer[1]), &buffer_length);
     //@note: Should never fail.
     APP_ERROR_CHECK(err_code);
@@ -1815,6 +1815,6 @@ uint32_t _sd_ble_gap_phy_request(uint16_t                     conn_handle,
     //@note: Increment buffer length as internally managed packet type field must be included.
     return ser_sd_transport_cmd_write(p_buffer,
                                       (++buffer_length),
-                                      gap_phy_request_rsp_dec);
+                                      gap_phy_update_rsp_dec);
 }
 #endif

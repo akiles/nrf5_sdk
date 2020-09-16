@@ -69,7 +69,7 @@ typedef struct {
 
 
 /**@name Incremental SHA-512 generator.
- * 
+ *
  * This group of functions can be used to incrementally compute the SHA-512
  * hash for a given message.
  *

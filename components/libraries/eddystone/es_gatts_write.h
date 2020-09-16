@@ -55,12 +55,12 @@
 ret_code_t es_gatts_write_handle_unlocked_write(nrf_ble_escs_t * p_escs,
                                                 uint16_t         uuid,
                                                 uint16_t         val_handle,
-                                                uint8_t *        p_data,
+                                                uint8_t const  * p_data,
                                                 uint16_t         length,
                                                 uint8_t          active_slot);
 
 ret_code_t es_gatts_write_handle_unlock(nrf_ble_escs_t * p_escs,
-                                        uint8_t *        p_data,
+                                        uint8_t const  * p_data,
                                         uint16_t         length,
                                         uint16_t         val_handle);
 

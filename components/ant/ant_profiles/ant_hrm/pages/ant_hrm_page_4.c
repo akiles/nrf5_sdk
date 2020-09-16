@@ -43,7 +43,7 @@
 #include "ant_hrm_page_4.h"
 #include "ant_hrm_utils.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_HRM_PAGE_4"
+#define NRF_LOG_MODULE_NAME ant_hrm_page_4
 #if ANT_HRM_PAGE_4_LOG_ENABLED
 #define NRF_LOG_LEVEL       ANT_HRM_PAGE_4_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  ANT_HRM_PAGE_4_INFO_COLOR
@@ -51,6 +51,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // ANT_HRM_PAGE_4_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 /**@brief HRM page 4 data layout structure. */
 typedef struct

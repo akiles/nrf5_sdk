@@ -59,10 +59,11 @@
  */
 
 /** @brief Eddystone event types. */
-typedef enum {
+typedef enum
+{
   NRF_BLE_ES_EVT_ADVERTISEMENT_SENT,        //!< A non-connectable Eddystone frame advertisement was sent.
   NRF_BLE_ES_EVT_CONNECTABLE_ADV_STARTED,   //!< Advertising in connectable mode was started.
-}nrf_ble_es_evt_t;
+} nrf_ble_es_evt_t;
 
 /**@brief Eddystone event handler type. */
 typedef void (*nrf_ble_es_evt_handler_t)(nrf_ble_es_evt_t evt);
@@ -70,13 +71,12 @@ typedef void (*nrf_ble_es_evt_handler_t)(nrf_ble_es_evt_t evt);
 /**@brief Function for handling the application's BLE stack events.
  *
  * @details This function handles all events from the BLE stack that are of
- * interest to the Eddystone library. It must be called from the @ref
- * softdevice_handler callback for all BLE events that are received from the
- * SoftDevice.
+ * interest to the Eddystone library.
  *
- * @param[in]   p_ble_evt  Event received from the BLE stack.
+ * @param[in]   p_ble_evt   Event received from the BLE stack.
+ * @param[in]   p_context   User parameter.
  */
-void nrf_ble_es_on_ble_evt(ble_evt_t * p_ble_evt);
+void nrf_ble_es_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 
 /**@brief Function for putting the beacon in connectable mode.
  *

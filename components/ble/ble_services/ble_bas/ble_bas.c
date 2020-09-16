@@ -38,9 +38,9 @@
  * 
  */
 /* Attention!
-*  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
-*  qualification listings, this section of source code must not be modified.
-*/
+ * To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
+ * qualification listings, this section of source code must not be modified.
+ */
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(BLE_BAS)
 #include "ble_bas.h"
@@ -56,7 +56,7 @@
  * @param[in]   p_bas       Battery Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_connect(ble_bas_t * p_bas, ble_evt_t * p_ble_evt)
+static void on_connect(ble_bas_t * p_bas, ble_evt_t const * p_ble_evt)
 {
     p_bas->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
 }
@@ -67,7 +67,7 @@ static void on_connect(ble_bas_t * p_bas, ble_evt_t * p_ble_evt)
  * @param[in]   p_bas       Battery Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_disconnect(ble_bas_t * p_bas, ble_evt_t * p_ble_evt)
+static void on_disconnect(ble_bas_t * p_bas, ble_evt_t const * p_ble_evt)
 {
     UNUSED_PARAMETER(p_ble_evt);
     p_bas->conn_handle = BLE_CONN_HANDLE_INVALID;
@@ -79,45 +79,48 @@ static void on_disconnect(ble_bas_t * p_bas, ble_evt_t * p_ble_evt)
  * @param[in]   p_bas       Battery Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_write(ble_bas_t * p_bas, ble_evt_t * p_ble_evt)
+static void on_write(ble_bas_t * p_bas, ble_evt_t const * p_ble_evt)
 {
-    if (p_bas->is_notification_supported)
+    if (!p_bas->is_notification_supported)
     {
-        ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
+        return;
+    }
 
-        if (
-            (p_evt_write->handle == p_bas->battery_level_handles.cccd_handle)
-            &&
-            (p_evt_write->len == 2)
-           )
+    ble_gatts_evt_write_t const * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
+
+    if (    (p_evt_write->handle == p_bas->battery_level_handles.cccd_handle)
+        &&  (p_evt_write->len == 2))
+    {
+        if (p_bas->evt_handler == NULL)
         {
-            // CCCD written, call application event handler
-            if (p_bas->evt_handler != NULL)
-            {
-                ble_bas_evt_t evt;
-
-                if (ble_srv_is_notification_enabled(p_evt_write->data))
-                {
-                    evt.evt_type = BLE_BAS_EVT_NOTIFICATION_ENABLED;
-                }
-                else
-                {
-                    evt.evt_type = BLE_BAS_EVT_NOTIFICATION_DISABLED;
-                }
-
-                p_bas->evt_handler(p_bas, &evt);
-            }
+            return;
         }
+
+        ble_bas_evt_t evt;
+
+        if (ble_srv_is_notification_enabled(p_evt_write->data))
+        {
+            evt.evt_type = BLE_BAS_EVT_NOTIFICATION_ENABLED;
+        }
+        else
+        {
+            evt.evt_type = BLE_BAS_EVT_NOTIFICATION_DISABLED;
+        }
+
+        // CCCD written, call application event handler.
+        p_bas->evt_handler(p_bas, &evt);
     }
 }
 
 
-void ble_bas_on_ble_evt(ble_bas_t * p_bas, ble_evt_t * p_ble_evt)
+void ble_bas_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
-    if (p_bas == NULL || p_ble_evt == NULL)
+    if ((p_context == NULL) || (p_ble_evt == NULL))
     {
         return;
     }
+
+    ble_bas_t * p_bas = (ble_bas_t *)p_context;
 
     switch (p_ble_evt->header.evt_id)
     {

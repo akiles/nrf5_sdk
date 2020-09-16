@@ -51,8 +51,13 @@
  *          If an event handler is supplied by the application, the Running Speed and Cadence
  *          Service will generate Running Speed and Cadence Service events to the application.
  *
- * @note The application must propagate BLE stack events to the Running Speead and Candence Service
- *       module by calling ble_rscs_on_ble_evt() from the @ref softdevice_handler function.
+ * @note    The application must register this module as BLE event observer using the
+ *          NRF_SDH_BLE_OBSERVER macro. Example:
+ *          @code
+ *              ble_rscs_t instance;
+ *              NRF_SDH_BLE_OBSERVER(anything, BLE_RSCS_BLE_OBSERVER_PRIO,
+ *                                   ble_rscs_on_ble_evt, &instance);
+ *          @endcode
  *
  * @note Attention!
  *  To maintain compliance with Nordic Semiconductor ASA Bluetooth profile
@@ -65,10 +70,22 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "ble_srv_common.h"
+#include "nrf_sdh_ble.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**@brief   Macro for defining a ble_rscs instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_RSCS_DEF(_name)                                                                         \
+static ble_rscs_t _name;                                                                            \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     BLE_RSCS_BLE_OBSERVER_PRIO,                                                    \
+                     ble_rscs_on_ble_evt, &_name)
 
 /**@brief Running Speed and Cadence Service feature bits. */
 #define BLE_RSCS_FEATURE_INSTANT_STRIDE_LEN_BIT             (0x01 << 0)     /**< Instantaneous Stride Length Measurement Supported bit. */
@@ -76,6 +93,7 @@ extern "C" {
 #define BLE_RSCS_FEATURE_WALKING_OR_RUNNING_STATUS_BIT      (0x01 << 2)     /**< Walking or Running Status Supported bit. */
 #define BLE_RSCS_FEATURE_CALIBRATION_PROCEDURE_BIT          (0x01 << 3)     /**< Calibration Procedure Supported bit. */
 #define BLE_RSCS_FEATURE_MULTIPLE_SENSORS_BIT               (0x01 << 4)     /**< Multiple Sensor Locations Supported bit. */
+
 
 /**@brief Running Speed and Cadence Service event type. */
 typedef enum
@@ -98,7 +116,8 @@ typedef struct ble_rscs_meas_s ble_rscs_meas_t;
 typedef void (*ble_rscs_evt_handler_t) (ble_rscs_t * p_rscs, ble_rscs_evt_t * p_evt);
 
 /**@brief Running Speed and Cadence Service measurement structure. This contains a Running Speed and
- *        Cadence measurement. */
+ *        Cadence measurement.
+ */
 struct ble_rscs_meas_s
 {
     bool        is_inst_stride_len_present;                                 /**< True if Instantaneous Stride Length is present in the measurement. */
@@ -111,7 +130,8 @@ struct ble_rscs_meas_s
 };
 
 /**@brief Running Speed and Cadence Service init structure. This contains all options and data
- *        needed for initialization of the service. */
+ *        needed for initialization of the service.
+ */
 typedef struct
 {
     ble_rscs_evt_handler_t       evt_handler;                               /**< Event handler to be called for handling events in the Running Speed and Cadence Service. */
@@ -122,7 +142,8 @@ typedef struct
 } ble_rscs_init_t;
 
 /**@brief Running Speed and Cadence Service structure. This contains various status information for
- *        the service. */
+ *        the service.
+ */
 struct ble_rscs_s
 {
     ble_rscs_evt_handler_t       evt_handler;                               /**< Event handler to be called for handling events in the Running Speed and Cadence Service. */
@@ -132,7 +153,6 @@ struct ble_rscs_s
     uint16_t                     conn_handle;                               /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
     uint16_t                     feature;                                   /**< Bit mask of features available on sensor. */
 };
-
 
 
 /**@brief Function for initializing the Running Speed and Cadence Service.
@@ -146,15 +166,17 @@ struct ble_rscs_s
  */
 uint32_t ble_rscs_init(ble_rscs_t * p_rscs, const ble_rscs_init_t * p_rscs_init);
 
+
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @details Handles all events from the BLE stack of interest to the Running Speed and Cadence
  *          Service.
  *
- * @param[in]   p_rscs     Running Speed and Cadence Service structure.
- * @param[in]   p_ble_evt  Event received from the BLE stack.
+ * @param[in]   p_ble_evt   Event received from the BLE stack.
+ * @param[in]   p_context   Running Speed and Cadence Service structure.
  */
-void ble_rscs_on_ble_evt(ble_rscs_t * p_rscs, ble_evt_t * p_ble_evt);
+void ble_rscs_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
+
 
 /**@brief Function for sending running speed and cadence measurement if notification has been enabled.
  *

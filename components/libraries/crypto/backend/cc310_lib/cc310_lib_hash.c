@@ -57,7 +57,7 @@ bool hash_algorithm_get(nrf_hash_type_t hash_type, CRYS_HASH_OperationMode_t * p
         return false;
     }
 
-    switch(hash_type)
+    switch (hash_type)
     {
         case NRF_CRYPTO_HASH_TYPE_MD5:
             (*p_hash_mode) = CRYS_HASH_MD5_mode;
@@ -95,7 +95,7 @@ static uint32_t hash_result_get(CRYSError_t error)
 {
     uint32_t ret_val;
 
-    switch(error)
+    switch (error)
     {
         case CRYS_OK:
             ret_val = NRF_SUCCESS;
@@ -269,7 +269,7 @@ uint32_t nrf_crypto_hash_finalize(nrf_crypto_hash_info_t    hash_info,
     }
 
     // Check the length of the hash context
-    if(p_hash_context->length != NRF_CRYPTO_HASH_CONTEXT_SIZE)
+    if (p_hash_context->length != NRF_CRYPTO_HASH_CONTEXT_SIZE)
     {
         return NRF_ERROR_INVALID_LENGTH;
     }
@@ -307,13 +307,13 @@ uint32_t nrf_crypto_hash_compute(nrf_crypto_hash_info_t    hash_info,
         return NRF_ERROR_INVALID_ADDR;
     }
 
-    if(!hash_algorithm_get(hash_info.hash_type, &hash_type))
+    if (!hash_algorithm_get(hash_info.hash_type, &hash_type))
     {
         return NRF_ERROR_NOT_SUPPORTED;
     }
 
     // Currently only supporting LE hash
-    if(hash_info.endian_type != NRF_CRYPTO_ENDIAN_LE)
+    if (hash_info.endian_type != NRF_CRYPTO_ENDIAN_LE)
     {
         return NRF_ERROR_NOT_SUPPORTED;
     }

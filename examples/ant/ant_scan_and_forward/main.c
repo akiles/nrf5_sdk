@@ -75,39 +75,19 @@
 #include "commands.h"
 #include "scan_and_forward.h"
 #include "ant_parameters.h"
-#include "softdevice_handler.h"
-#include "ant_stack_config.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
+#include "nrf_pwr_mgmt.h"
 
-/**@brief Function for dispatching a ANT stack event to all modules with a ANT stack event handler.
- *
- * @details This function is called from the ANT Stack event interrupt handler after a ANT stack
- *          event has been received.
- *
- * @param[in] p_ant_evt  ANT stack event.
- */
-void ant_evt_dispatch(ant_evt_t * p_ant_evt)
-{
-    switch (p_ant_evt->channel)
-    {
-        case SF_ANT_BS_CHANNEL_NUMBER:
-            sf_background_scanner_process(p_ant_evt);
-            break;
-
-        case SF_ANT_MS_CHANNEL_NUMBER:
-            sf_master_beacon_process(p_ant_evt);
-            break;
-
-        default:
-            break;
-    }
-}
-
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 /**@brief Function for the Timer and BSP initialization.
  */
 static void utils_setup(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
@@ -115,8 +95,10 @@ static void utils_setup(void)
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                         sf_bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
-}
 
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
+}
 
 /**@brief Function for ANT stack initialization.
  *
@@ -124,20 +106,14 @@ static void utils_setup(void)
  */
 static void softdevice_setup(void)
 {
-    uint32_t err_code;
-
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
+    ret_code_t err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
-    APP_ERROR_CHECK(err_code);
+    ASSERT(nrf_sdh_is_enabled());
 
-    err_code = ant_stack_static_config();
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 }
-
 
 /**@brief Initializes the battery board switches as inputs.
  */
@@ -153,28 +129,19 @@ void switch_init(void)
 #endif
 }
 
-
 /** @brief The main function
  */
 int main(void)
 {
-    uint32_t err_code;
-
-    switch_init();
     utils_setup();
+    switch_init();
     softdevice_setup();
-
     sf_init();
 
     // Enter main loop
     for (;;)
     {
-        err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }
-
-
-/**
- *@}
- **/

@@ -43,6 +43,8 @@
 #include "ral_irq_handlers.h"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
+
 #include "nrf_drv_clock.h"
 
 #include "fsm.h"
@@ -167,7 +169,8 @@ int main(void)
 {
     ral_irq_handler_import();
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
-    NRF_LOG_INFO("Wireless UART example. \r\n");
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+    NRF_LOG_INFO("Wireless UART example. ");
 
     app_task_init();
     sys_task_post(APP_TASK_ID);

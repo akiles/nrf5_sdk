@@ -174,7 +174,9 @@ ret_code_t nfc_t2t_parameter_get(nfc_t2t_param_id_t id, void * p_data, size_t * 
  * If an invalid size is given (too big), the function returns with an error
  * and the currently registered payload is left unchanged.
  *
- * @param[in] p_payload        Pointer to the memory area containing the payload to send.
+ * @note Provided pointer must point to RAM region.
+ *
+ * @param[in] p_payload        Pointer to the memory area in RAM containing the payload to send.
  * @param[in] payload_length   Size of the payload in bytes.
  *
  * @retval NRF_SUCCESS If the operation was successful. If one 
@@ -201,7 +203,9 @@ ret_code_t nfc_t2t_payload_set(const uint8_t * p_payload, size_t payload_length)
  * If an invalid size is given (too big), the function returns with an error
  * and the currently registered payload is left unchanged.
  *
- * @param[in] p_payload        Pointer to the memory area containing the payload to send.
+ * @note Provided pointer must points to RAM region.
+ *
+ * @param[in] p_payload        Pointer to the memory area in RAM containing the payload to send.
  * @param[in] payload_length   Size of the payload in bytes.
  *
  * @retval NRF_SUCCESS If the operation was successful. If one 

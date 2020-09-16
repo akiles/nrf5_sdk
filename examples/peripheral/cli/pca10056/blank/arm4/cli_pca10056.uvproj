@@ -352,7 +352,7 @@
               <MiscControls>--c99 --reduce_paths</MiscControls>
               <Define> BOARD_PCA10056 CONFIG_GPIO_AS_PINRESET DEBUG DEBUG_NRF NRF52840_XXAA SWI_DISABLE0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config\cli_pca10056;..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\power;..\..\..\..\..\..\components\drivers_nrf\systick;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\drivers_nrf\usbd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\cdc_acm;..\..\..\..\..\..\components\libraries\cli\rtt;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\uart;..\..\..\..\..\..\components\libraries\usbd;..\..\..\..\..\..\components\libraries\usbd\class\cdc;..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm;..\..\..\..\..\..\components\libraries\usbd\config;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\toolchain;..\..\..;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\power;..\..\..\..\..\..\components\drivers_nrf\systick;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\drivers_nrf\usbd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\experimental_cli;..\..\..\..\..\..\components\libraries\experimental_cli\cdc_acm;..\..\..\..\..\..\components\libraries\experimental_cli\rtt;..\..\..\..\..\..\components\libraries\experimental_cli\uart;..\..\..\..\..\..\components\libraries\experimental_log;..\..\..\..\..\..\components\libraries\experimental_log\src;..\..\..\..\..\..\components\libraries\experimental_memobj;..\..\..\..\..\..\components\libraries\experimental_mpu;..\..\..\..\..\..\components\libraries\experimental_ringbuf;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\experimental_stack_guard;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\usbd;..\..\..\..\..\..\components\libraries\usbd\class\cdc;..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm;..\..\..\..\..\..\components\libraries\usbd\config;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\toolchain\cmsis\include;..\..\..;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
               <MiscControls> --cpreproc_opts=-DBOARD_PCA10056,-DCONFIG_GPIO_AS_PINRESET,-DDEBUG,-DDEBUG_NRF,-DNRF52840_XXAA,-DSWI_DISABLE0</MiscControls>
               <Define> BOARD_PCA10056 CONFIG_GPIO_AS_PINRESET DEBUG DEBUG_NRF NRF52840_XXAA SWI_DISABLE0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config\cli_pca10056;..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\power;..\..\..\..\..\..\components\drivers_nrf\systick;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\drivers_nrf\usbd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\cdc_acm;..\..\..\..\..\..\components\libraries\cli\rtt;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\uart;..\..\..\..\..\..\components\libraries\usbd;..\..\..\..\..\..\components\libraries\usbd\class\cdc;..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm;..\..\..\..\..\..\components\libraries\usbd\config;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\toolchain;..\..\..;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\power;..\..\..\..\..\..\components\drivers_nrf\systick;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\drivers_nrf\usbd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\experimental_cli;..\..\..\..\..\..\components\libraries\experimental_cli\cdc_acm;..\..\..\..\..\..\components\libraries\experimental_cli\rtt;..\..\..\..\..\..\components\libraries\experimental_cli\uart;..\..\..\..\..\..\components\libraries\experimental_log;..\..\..\..\..\..\components\libraries\experimental_log\src;..\..\..\..\..\..\components\libraries\experimental_memobj;..\..\..\..\..\..\components\libraries\experimental_mpu;..\..\..\..\..\..\components\libraries\experimental_ringbuf;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\experimental_stack_guard;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\usbd;..\..\..\..\..\..\components\libraries\usbd\class\cdc;..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm;..\..\..\..\..\..\components\libraries\usbd\config;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\toolchain\cmsis\include;..\..\..;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -423,6 +423,15 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\toolchain\system_nrf52840.c</FilePath>            </File>          </Files>
         </Group>        <Group>
+          <GroupName>nRF_Core</GroupName>
+          <Files>            <File>
+              <FileName>nrf_mpu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_mpu\nrf_mpu.c</FilePath>            </File>            <File>
+              <FileName>nrf_stack_guard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_stack_guard\nrf_stack_guard.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
           <GroupName>nRF_Drivers</GroupName>
           <Files>            <File>
               <FileName>app_usbd.c</FileName>
@@ -473,18 +482,12 @@
               <FileName>app_error_weak.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\app_error_weak.c</FilePath>            </File>            <File>
-              <FileName>app_fifo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</FilePath>            </File>            <File>
               <FileName>app_scheduler.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</FilePath>            </File>            <File>
               <FileName>app_timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\timer\app_timer.c</FilePath>            </File>            <File>
-              <FileName>app_uart_fifo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</FilePath>            </File>            <File>
               <FileName>app_usbd_cdc_acm.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm\app_usbd_cdc_acm.c</FilePath>            </File>            <File>
@@ -500,33 +503,69 @@
               <FileName>nrf_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\nrf_assert.c</FilePath>            </File>            <File>
+              <FileName>nrf_atfifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\atomic_fifo\nrf_atfifo.c</FilePath>            </File>            <File>
+              <FileName>nrf_balloc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\balloc\nrf_balloc.c</FilePath>            </File>            <File>
               <FileName>nrf_cli.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\cli\nrf_cli.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_cli\nrf_cli.c</FilePath>            </File>            <File>
               <FileName>nrf_cli_cdc_acm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\cli\cdc_acm\nrf_cli_cdc_acm.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_cli\cdc_acm\nrf_cli_cdc_acm.c</FilePath>            </File>            <File>
               <FileName>nrf_cli_rtt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\cli\rtt\nrf_cli_rtt.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_cli\rtt\nrf_cli_rtt.c</FilePath>            </File>            <File>
               <FileName>nrf_cli_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\cli\uart\nrf_cli_uart.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_cli\uart\nrf_cli_uart.c</FilePath>            </File>            <File>
+              <FileName>nrf_fprintf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\fprintf\nrf_fprintf.c</FilePath>            </File>            <File>
+              <FileName>nrf_fprintf_format.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\fprintf\nrf_fprintf_format.c</FilePath>            </File>            <File>
+              <FileName>nrf_memobj.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_memobj\nrf_memobj.c</FilePath>            </File>            <File>
+              <FileName>nrf_pwr_mgmt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\pwr_mgmt\nrf_pwr_mgmt.c</FilePath>            </File>            <File>
               <FileName>nrf_queue.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\queue\nrf_queue.c</FilePath>            </File>            <File>
+              <FileName>nrf_ringbuf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_ringbuf\nrf_ringbuf.c</FilePath>            </File>            <File>
+              <FileName>nrf_section_iter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</FilePath>            </File>            <File>
               <FileName>nrf_strerror.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Log</GroupName>
           <Files>            <File>
+              <FileName>nrf_log_backend_rtt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_rtt.c</FilePath>            </File>            <File>
               <FileName>nrf_log_backend_serial.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\log\src\nrf_log_backend_serial.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_serial.c</FilePath>            </File>            <File>
+              <FileName>nrf_log_backend_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_uart.c</FilePath>            </File>            <File>
+              <FileName>nrf_log_default_backends.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_default_backends.c</FilePath>            </File>            <File>
               <FileName>nrf_log_frontend.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\log\src\nrf_log_frontend.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_frontend.c</FilePath>            </File>            <File>
+              <FileName>nrf_log_str_formatter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_str_formatter.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Segger_RTT</GroupName>
           <Files>            <File>

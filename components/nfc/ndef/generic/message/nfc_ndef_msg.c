@@ -45,8 +45,6 @@
 #include "nordic_common.h"
 #include "nrf.h"
 
-#define TYPE_4_TAG      4U ///< Type 4 Tag identifier.
-#define NLEN_FIELD_SIZE 2U ///< Size of NLEN field, used to encode NDEF message for Type 4 Tag.
 
 /**
  * @brief Resolve the value of record location flags of the NFC NDEF record within an NFC NDEF message.

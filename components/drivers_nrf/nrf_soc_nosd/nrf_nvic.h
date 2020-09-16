@@ -37,8 +37,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-#ifndef NRF_SOC_H__
-#define NRF_SOC_H__
+#ifndef NRF_NVIC_H__
+#define NRF_NVIC_H__
 
 #include <stdint.h>
 #include "nrf.h"
@@ -163,4 +163,4 @@ uint32_t sd_nvic_critical_region_exit(uint8_t is_nested_critical_region);
 }
 #endif
 
-#endif /* NRF_SOC_H__ */
+#endif /* NRF_NVIC_H__ */

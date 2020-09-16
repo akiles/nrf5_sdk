@@ -83,8 +83,6 @@ typedef struct
 
 typedef uint32_t pstorage_size_t;      /** Size of length and offset fields. */
 
-/**@brief Handles Flash Access Result Events. To be called in the system event dispatcher of the application. */
-void pstorage_sys_event_handler (uint32_t sys_evt);
 
 
 #ifdef __cplusplus

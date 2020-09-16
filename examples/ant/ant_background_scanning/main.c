@@ -74,63 +74,62 @@
 #include "app_util.h"
 #include "hardfault.h"
 #include "nordic_common.h"
-#include "ant_stack_config.h"
+#include "nrf_pwr_mgmt.h"
 #include "ant_channel_config.h"
 #include "ant_search_config.h"
 #include "app_timer.h"
-#include "softdevice_handler.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 #include "sdk_config.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
-
-#define ANT_MS_CHANNEL_NUMBER       ((uint8_t) 1)                       /**< Master channel. */
-#define ANT_BS_CHANNEL_NUMBER       ((uint8_t) 0)                       /**< Background scanning channel. */
+#include "nrf_log_default_backends.h"
 
 #define ANT_NETWORK_NUMBER          ((uint8_t) 0)                       /**< Default public network number. */
-
 #define ANT_BEACON_PAGE             ((uint8_t) 1)
 
+#define APP_ANT_OBSERVER_PRIO       1                                  /**< Application's ANT observer priority. You shouldn't need to modify this value. */
+
 void ant_message_send(void);
-void background_scanner_process(ant_evt_t * p_ant_evt);
-void master_beacon_process(ant_evt_t * p_ant_evt);
+void background_scanner_process(ant_evt_t * p_ant_evt, void * p_context);
+void master_beacon_process(ant_evt_t * p_ant_evt, void * p_context);
 
 static uint8_t m_last_rssi       = 0;
 static uint16_t m_last_device_id = 0;
 static uint8_t m_recieved        = 0;
 
-/**< Derive from device serial number. */
-static uint16_t ant_ms_dev_num_get(void)
-{
-    return ((uint16_t) (NRF_FICR->DEVICEID[0]));
-}
-
-
-/**@brief Function for dispatching an ANT stack event to all modules with an ANT stack event handler.
+/**@brief Function for setting payload for ANT message and sending it via
+ *        ANT master beacon channel.
  *
  * @details This function is called from the ANT stack event interrupt handler after an ANT stack
  *          event has been received.
  *
- * @param[in] p_ant_evt  ANT stack event.
+ * @details   ANT_BEACON_PAGE message is queued. The format is:
+ *            byte[0]   = page (1 = ANT_BEACON_PAGE)
+ *            byte[1]   = last RSSI value received
+ *            byte[2-3] = channel ID of device corresponding to last RSSI value (little endian)
+ *            byte[6]   = counter that increases with every message period
+ *            byte[7]   = number of messages received on background scanning channel
  */
-void ant_evt_dispatch(ant_evt_t * p_ant_evt)
+void ant_message_send()
 {
-    switch (p_ant_evt->channel)
-    {
-        case ANT_BS_CHANNEL_NUMBER:
-            background_scanner_process(p_ant_evt);
-            break;
+    uint32_t       err_code;
+    uint8_t        tx_buffer[ANT_STANDARD_DATA_PAYLOAD_SIZE];
+    static uint8_t counter = 0;
 
-        case ANT_MS_CHANNEL_NUMBER:
-            master_beacon_process(p_ant_evt);
-            break;
+    tx_buffer[0] = ANT_BEACON_PAGE;
+    tx_buffer[1] = m_last_rssi;
+    tx_buffer[2] = (uint8_t) m_last_device_id;        // LSB
+    tx_buffer[3] = (uint8_t) (m_last_device_id >> 8); // MSB
+    tx_buffer[6] = counter++;
+    tx_buffer[7] = m_recieved;
 
-        default:
-            break;
-    }
+    err_code = sd_ant_broadcast_message_tx(ANT_MS_CHANNEL_NUMBER,
+                                           ANT_STANDARD_DATA_PAYLOAD_SIZE,
+                                           tx_buffer);
+    APP_ERROR_CHECK(err_code);
 }
-
 
 /**@brief Initialize application.
  */
@@ -141,7 +140,7 @@ static void application_initialize()
                                             | ANT_LIB_CONFIG_MESG_OUT_INC_DEVICE_ID);
     APP_ERROR_CHECK(err_code);
 
-    const uint16_t dev_num = ant_ms_dev_num_get();
+    const uint16_t dev_num = (uint16_t)NRF_FICR->DEVICEID[0];
 
     const ant_channel_config_t ms_channel_config =
     {
@@ -153,7 +152,7 @@ static void application_initialize()
         .device_type       = CHAN_ID_DEV_TYPE,
         .device_number     = dev_num,
         .channel_period    = CHAN_PERIOD,
-        .network_number    = ANT_NETWORK_NUMBER,
+        .network_number    = ANT_NETWORK_NUM,
     };
 
     const ant_channel_config_t bs_channel_config =
@@ -166,7 +165,7 @@ static void application_initialize()
         .device_type       = CHAN_ID_DEV_TYPE,
         .device_number     = 0x00,              // Wild card
         .channel_period    = 0x00,              // This is not taken into account.
-        .network_number    = ANT_NETWORK_NUMBER,
+        .network_number    = ANT_NETWORK_NUM,
     };
 
     const ant_search_config_t bs_search_config =
@@ -203,7 +202,8 @@ static void application_initialize()
  */
 static void utils_setup(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
@@ -212,8 +212,10 @@ static void utils_setup(void)
                         NULL);
     APP_ERROR_CHECK(err_code);
 
-    err_code = NRF_LOG_INIT(NULL);
+    err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 }
 
 
@@ -223,29 +225,29 @@ static void utils_setup(void)
  */
 static void softdevice_setup(void)
 {
-    uint32_t err_code;
-
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
+    ret_code_t err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
-    APP_ERROR_CHECK(err_code);
+    ASSERT(nrf_sdh_is_enabled());
 
-    err_code = ant_stack_static_config();
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 }
 
 
 /**@brief Process ANT message on ANT background scanning channel.
  *
- * @param[in] p_ant_event ANT message content.
+ * @param[in] p_ant_evt   ANT message content.
+ * @param[in] p_context   Context.
  */
-void background_scanner_process(ant_evt_t * p_ant_evt)
+void background_scanner_process(ant_evt_t * p_ant_evt, void * p_context)
 {
-    uint32_t      err_code;
-    ANT_MESSAGE * p_ant_message = (ANT_MESSAGE*)p_ant_evt->msg.evt_buffer;
+    uint32_t err_code;
+    UNUSED_PARAMETER(p_context);
+    if (p_ant_evt->channel != ANT_BS_CHANNEL_NUMBER)
+    {
+        return;
+    }
 
     switch (p_ant_evt->event)
     {
@@ -254,19 +256,19 @@ void background_scanner_process(ant_evt_t * p_ant_evt)
             err_code = bsp_indication_set(BSP_INDICATE_RCV_OK);
             APP_ERROR_CHECK(err_code);
 
-            if (p_ant_message->ANT_MESSAGE_stExtMesgBF.bANTDeviceID)
+            if (p_ant_evt->message.ANT_MESSAGE_stExtMesgBF.bANTDeviceID)
             {
-                m_last_device_id = uint16_decode(p_ant_message->ANT_MESSAGE_aucExtData);
+                m_last_device_id = uint16_decode(p_ant_evt->message.ANT_MESSAGE_aucExtData);
             }
 
-            if (p_ant_message->ANT_MESSAGE_stExtMesgBF.bANTRssi)
+            if (p_ant_evt->message.ANT_MESSAGE_stExtMesgBF.bANTRssi)
             {
-                m_last_rssi = p_ant_message->ANT_MESSAGE_aucExtData[5];
+                m_last_rssi = p_ant_evt->message.ANT_MESSAGE_aucExtData[5];
             }
 
-            NRF_LOG_INFO("Message number %d\r\n", m_recieved);
-            NRF_LOG_INFO("Device ID:     %d\r\n", m_last_device_id);
-            NRF_LOG_INFO("RSSI:          %d\r\n\r\n", m_last_rssi);
+            NRF_LOG_INFO("Message number %d", m_recieved);
+            NRF_LOG_INFO("Device ID:     %d", m_last_device_id);
+            NRF_LOG_INFO("RSSI:          %d", m_last_rssi);
 
             m_recieved++;
             break;
@@ -278,37 +280,7 @@ void background_scanner_process(ant_evt_t * p_ant_evt)
     }
 }
 
-
-/**@brief Function for setting payload for ANT message and sending it via
- *        ANT master beacon channel.
- *
- *
- * @details   ANT_BEACON_PAGE message is queued. The format is:
- *            byte[0]   = page (1 = ANT_BEACON_PAGE)
- *            byte[1]   = last RSSI value received
- *            byte[2-3] = channel ID of device corresponding to last RSSI value (little endian)
- *            byte[6]   = counter that increases with every message period
- *            byte[7]   = number of messages received on background scanning channel
- */
-void ant_message_send()
-{
-    uint32_t       err_code;
-    uint8_t        tx_buffer[ANT_STANDARD_DATA_PAYLOAD_SIZE];
-    static uint8_t counter = 0;
-
-    tx_buffer[0] = ANT_BEACON_PAGE;
-    tx_buffer[1] = m_last_rssi;
-    tx_buffer[2] = (uint8_t) m_last_device_id;        // LSB
-    tx_buffer[3] = (uint8_t) (m_last_device_id >> 8); // MSB
-    tx_buffer[6] = counter++;
-    tx_buffer[7] = m_recieved;
-
-    err_code = sd_ant_broadcast_message_tx(ANT_MS_CHANNEL_NUMBER,
-                                           ANT_STANDARD_DATA_PAYLOAD_SIZE,
-                                           tx_buffer);
-    APP_ERROR_CHECK(err_code);
-}
-
+NRF_SDH_ANT_OBSERVER(m_ant_bs_observer, APP_ANT_OBSERVER_PRIO, background_scanner_process, NULL);
 
 /**@brief Process ANT message on ANT master beacon channel.
  *
@@ -316,10 +288,16 @@ void ant_message_send()
  * @details   This function handles all events on the master beacon channel.
  *            On EVENT_TX an ANT_BEACON_PAGE message is queued.
  *
- * @param[in] p_ant_event ANT message content.
+ * @param[in] p_ant_evt   ANT message content.
+ * @param[in] p_contex      Context.
  */
-void master_beacon_process(ant_evt_t * p_ant_evt)
+void master_beacon_process(ant_evt_t * p_ant_evt, void * p_contex)
 {
+    if (p_ant_evt->channel != ANT_MS_CHANNEL_NUMBER)
+    {
+        return;
+    }
+
     switch (p_ant_evt->event)
     {
         case EVENT_TX:
@@ -329,15 +307,14 @@ void master_beacon_process(ant_evt_t * p_ant_evt)
         default:
             break;
     }
-
 }
 
+NRF_SDH_ANT_OBSERVER(m_ant_ms_observer, APP_ANT_OBSERVER_PRIO,
+                              master_beacon_process, NULL);
 
 /* Main function */
 int main(void)
 {
-    uint32_t err_code;
-
     utils_setup();
     softdevice_setup();
     application_initialize();
@@ -345,13 +322,12 @@ int main(void)
     // Enter main loop
     for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            err_code = sd_app_evt_wait();
-            APP_ERROR_CHECK(err_code);
-        }
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }
+
+
 /**
  *@}
  **/

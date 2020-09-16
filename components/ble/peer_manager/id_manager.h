@@ -104,7 +104,7 @@ ret_code_t im_init(void);
  *
  * @param[in]  p_ble_evt  The SoftDevice event.
  */
-void im_ble_evt_handler(ble_evt_t * p_ble_evt);
+void im_ble_evt_handler(ble_evt_t const * p_ble_evt);
 
 
 /**@brief Function for getting the corresponding peer ID from a connection handle.
@@ -122,7 +122,7 @@ pm_peer_id_t im_peer_id_get_by_conn_handle(uint16_t conn_handle);
  *
  * @return The corresponding peer ID, or @ref PM_PEER_ID_INVALID if none could be resolved.
  */
-pm_peer_id_t im_peer_id_get_by_master_id(ble_gap_master_id_t * p_master_id);
+pm_peer_id_t im_peer_id_get_by_master_id(ble_gap_master_id_t const * p_master_id);
 
 
 /**@brief Function for getting the corresponding connection handle from a peer ID.

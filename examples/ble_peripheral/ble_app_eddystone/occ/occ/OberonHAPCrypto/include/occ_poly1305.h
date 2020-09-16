@@ -77,7 +77,7 @@ typedef struct {
 
 
 /**@name Incremental Poly1305 generator.
- * 
+ *
  * This group of functions can be used to incrementally compute the Poly1305
  * authenticator for a given message and key.
  *
@@ -99,7 +99,7 @@ void occ_poly1305_init(occ_poly1305_ctx *ctx);
  *
  * The generator state @p ctx is updated to authenticate a message chunk @p in
  * with a key @p k.
- * 
+ *
  * This function can be called repeatedly until the whole message has been
  * processed.
  *

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -37,6 +37,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+
 /** @file
  *
  * @defgroup nfc_writable_ndef_msg_example_main main.c
@@ -45,19 +46,25 @@
  * @brief The application main file of NFC writable NDEF message example.
  *
  */
+
 #include <stdint.h>
 #include <stdbool.h>
 #include "app_error.h"
 #include "boards.h"
 #include "nfc_t4t_lib.h"
-#include "nfc_uri_msg.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_sdh.h"
+#include "ndef_file_m.h"
+#include "nfc_ndef_msg.h"
 
-static const uint8_t m_url[] =
-    {'n', 'o', 'r', 'd', 'i', 'c', 's', 'e', 'm', 'i', '.', 'c', 'o', 'm'}; // URL "nordicsemi.com"
+#include "nrf_log.h"
+#include "nrf_log_default_backends.h"
 
-uint8_t       m_ndef_msg_buf[NDEF_FILE_SIZE];                               // Buffer for NDEF file
-volatile bool m_update_state;                                               // Flag indicating that Type 4 Tag performs NDEF message update procedure.
+#define APP_DEFAULT_BTN BSP_BOARD_BUTTON_0     /**< Button used to set default NDEF message. */
+
+static uint8_t m_ndef_msg_buf[NDEF_FILE_SIZE]; /**< Buffer for NDEF file. */
+volatile bool  m_update_state;                 /**< Flag indicating that Type 4 Tag performs NDEF message update procedure. */
+
 
 /**
  * @brief Callback function for handling NFC events.
@@ -90,10 +97,16 @@ static void nfc_callback(void          * context,
             {
                 m_update_state = true;
             }
-            else if (m_update_state == true)
+            else if (m_update_state)
             {
+                ret_code_t err_code;
                 m_update_state = false;
                 bsp_board_led_on(BSP_BOARD_LED_1);
+
+                // Update FLASH NDEF message file with new message.
+                err_code = ndef_file_update(m_ndef_msg_buf, dataLength + NLEN_FIELD_SIZE);
+                APP_ERROR_CHECK(err_code);
+                NRF_LOG_DEBUG("NDEF message updated!");
             }
             break;
 
@@ -104,31 +117,55 @@ static void nfc_callback(void          * context,
 
 
 /**
- * @brief Function for application main entry.
+ * @brief   Initialize the SoftDevice handler module.
+ */
+static void softdevice_setup(void)
+{
+    ret_code_t err_code = nrf_sdh_enable_request();
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**
+ * @brief   Function for application main entry.
  */
 int main(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
+    /* Initialize SoftDevice - it is required by FDS. */
+    softdevice_setup();
+
     /* Configure LED-pins as outputs */
     bsp_board_leds_init();
+    bsp_board_buttons_init();
+
+    /* Initialize FDS. */
+    err_code = ndef_file_setup();
+    APP_ERROR_CHECK(err_code);
+
+    /* Load NDEF message from the FLASH NDEF file. */
+    err_code = ndef_file_load(m_ndef_msg_buf, sizeof(m_ndef_msg_buf));
+    APP_ERROR_CHECK(err_code);
+
+    // Restore default NDEF message.
+    if (bsp_board_button_state_get(APP_DEFAULT_BTN))
+    {
+        uint32_t size = sizeof(m_ndef_msg_buf);
+        err_code = ndef_file_default_message(m_ndef_msg_buf, &size);
+        APP_ERROR_CHECK(err_code);
+        err_code = ndef_file_update(m_ndef_msg_buf, NDEF_FILE_SIZE);
+        APP_ERROR_CHECK(err_code);
+        NRF_LOG_DEBUG("Default NDEF message restored!");
+    }
 
     /* Set up NFC */
     err_code = nfc_t4t_setup(nfc_callback, NULL);
-    APP_ERROR_CHECK(err_code);
-
-    /* Provide information about available buffer size to encoding function */
-    uint32_t len = sizeof(m_ndef_msg_buf);
-
-    /* Encode URI message into buffer */
-    err_code = nfc_uri_msg_encode(NFC_URI_HTTP_WWW,
-                                  m_url,
-                                  sizeof(m_url),
-                                  m_ndef_msg_buf,
-                                  &len);
     APP_ERROR_CHECK(err_code);
 
     /* Run Read-Write mode for Type 4 Tag platform */
@@ -142,8 +179,8 @@ int main(void)
     while (1)
     {
         NRF_LOG_FLUSH();
+        __WFE();
     }
 }
-
 
 /** @} */

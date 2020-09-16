@@ -72,18 +72,19 @@
 #include "bsp.h"
 #include "hardfault.h"
 #include "app_timer.h"
-#include "ant_stack_config.h"
+#include "nrf_pwr_mgmt.h"
 #include "ant_channel_config.h"
-#include "softdevice_handler.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
+
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 // Global channel parameters
-#define ANT_CHANNEL_DEFAULT_NETWORK     0x00                        /**< ANT Channel Network. */
-#define EXT_ASSIGN_NONE                 0x00                        /**< ANT Ext Assign. */
-#define ANT_RELAY_MAIN_PAGE             ((uint8_t) 1)               /**< Main status page for relay interface channel. */
-
-#define ANT_MOBILE_CHANNEL              ((uint8_t) 0)               /**< Mobile phone interface channel - ANT Channel 0. */
-#define ANT_RELAY_MASTER_CHANNEL        ((uint8_t) 1)               /**< Device to device master channel - ANT Channel 1. */
-#define ANT_RELAY_SLAVE_CHANNEL         ((uint8_t) 2)               /**< Device to device slave channel - ANT Channel 2. */
+#define ANT_RELAY_MAIN_PAGE                 ((uint8_t) 1)               /**< Main status page for relay interface channel. */
+#define ANT_MOBILE_ANT_OBSERVER_PRIO        1                           /**< ANT observer priority. */
+#define ANT_RELAY_MASTER_ANT_OBSERVER_PRIO  1                           /**< Master ANT observer priority. */
+#define ANT_RELAY_SLAVE_ANT_OBSERVER_PRIO   1                           /**< Slave ANT observer priority. */
 
 typedef enum{
     ANT_LED_STATE_OFF = 0,
@@ -100,8 +101,8 @@ typedef enum
 
 typedef enum
 {
-    ANT_MOBILE_MAIN_PAGE    = 1,                                      /**< Main status page for mobile interface channel. */
-    ANT_MOBILE_COMMAND_PAGE = 2                                       /**< Command page for mobile interface (from mobile to device). */
+    ANT_MOBILE_MAIN_PAGE    = 1,    /**< Main status page for mobile interface channel. */
+    ANT_MOBILE_COMMAND_PAGE = 2     /**< Command page for mobile interface (from mobile to device). */
 } ant_mobile_command_t;
 
 typedef enum
@@ -149,7 +150,7 @@ void ant_relay_main_page_handle(uint8_t* p_payload)
 void ant_relay_main_message_assemble(uint8_t channel)
 {
     uint8_t status;
-    uint32_t err_code = sd_ant_channel_status_get(ANT_RELAY_SLAVE_CHANNEL, &status);
+    uint32_t err_code = sd_ant_channel_status_get(ANT_RELAY_SLAVE_CHANNEL_NUMBER, &status);
     APP_ERROR_CHECK(err_code);
 
     uint8_t broadcast_data[ANT_STANDARD_DATA_PAYLOAD_SIZE];
@@ -166,12 +167,13 @@ void ant_relay_main_message_assemble(uint8_t channel)
 
 /**@brief Process ANT message on ANT relay master channel
  *
- * @param[in] p_ant_event ANT message content.
+ * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
  */
-void ant_relay_master_process(ant_evt_t* p_ant_event)
+void ant_relay_master_process(ant_evt_t * p_ant_evt, void * p_context)
 {
-    ANT_MESSAGE* p_ant_message = (ANT_MESSAGE*)p_ant_event->msg.evt_buffer;
-    switch (p_ant_event->event)
+    ANT_MESSAGE* p_ant_message = (ANT_MESSAGE*)&p_ant_evt->message;
+    switch (p_ant_evt->event)
     {
         case EVENT_RX:
             switch (p_ant_message->ANT_MESSAGE_aucPayload[0])
@@ -184,7 +186,7 @@ void ant_relay_master_process(ant_evt_t* p_ant_event)
             break;
 
         case EVENT_TX:
-            ant_relay_main_message_assemble(ANT_RELAY_MASTER_CHANNEL);
+            ant_relay_main_message_assemble(ANT_RELAY_MASTER_CHANNEL_NUMBER);
             break;
 
         default:
@@ -193,16 +195,25 @@ void ant_relay_master_process(ant_evt_t* p_ant_event)
     }
 }
 
+NRF_SDH_ANT_OBSERVER(m_master_observer, ANT_RELAY_MASTER_ANT_OBSERVER_PRIO, ant_relay_master_process, NULL);
+
 /**@brief Process ANT message on ANT slave relay channel
  *
- * @param[in] p_ant_event ANT message content.
+ * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
  */
-void ant_relay_slave_process(ant_evt_t* p_ant_event)
+void ant_relay_slave_process(ant_evt_t * p_ant_evt, void * p_context)
 {
     static bool first_recieved = false;
-    ANT_MESSAGE* p_ant_message = (ANT_MESSAGE*)p_ant_event->msg.evt_buffer;
+    if (p_ant_evt->channel != ANT_RELAY_SLAVE_CHANNEL_NUMBER)
+    {
+        return;
+    }
 
-    switch (p_ant_event->event)
+    ANT_MESSAGE* p_ant_message = (ANT_MESSAGE*)&p_ant_evt->message;
+
+
+    switch (p_ant_evt->event)
     {
         case EVENT_RX:
         {
@@ -229,14 +240,14 @@ void ant_relay_slave_process(ant_evt_t* p_ant_event)
 
         case EVENT_TX:
         {
-            ant_relay_main_message_assemble(ANT_RELAY_SLAVE_CHANNEL);
+            ant_relay_main_message_assemble(ANT_RELAY_SLAVE_CHANNEL_NUMBER);
             break;
         }
         case EVENT_RX_SEARCH_TIMEOUT:
         {
             // Channel has closed.
             // Re-initialize proximity search settings.
-            uint32_t err_code = sd_ant_prox_search_set(ANT_RELAY_SLAVE_CHANNEL, RELAY_PROXIMITY_BIN, 0);
+            uint32_t err_code = sd_ant_prox_search_set(ANT_RELAY_SLAVE_CHANNEL_NUMBER, RELAY_PROXIMITY_BIN, 0);
             APP_ERROR_CHECK(err_code);
             bsp_board_led_off(BSP_BOARD_LED_1);
             break;
@@ -248,6 +259,8 @@ void ant_relay_slave_process(ant_evt_t* p_ant_event)
 
     }
 }
+
+NRF_SDH_ANT_OBSERVER(m_slave_observer, ANT_RELAY_SLAVE_ANT_OBSERVER_PRIO, ant_relay_slave_process, NULL);
 
 /**@brief Process ANT message on ANT mobile interface channel
  *
@@ -264,12 +277,19 @@ void ant_relay_slave_process(ant_evt_t* p_ant_event)
  *            byte[2]   = command (1 = pairing, 2 = led on, 3 = led off)
  *            byte[3-7] = reserved (Set to 0xFF)
  *
- * @param[in] p_ant_event ANT message content.
+ * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
  */
-void ant_mobile_process(ant_evt_t* p_ant_event)
+void ant_mobile_process(ant_evt_t * p_ant_evt, void * p_context)
 {
-    ANT_MESSAGE* p_ant_message = (ANT_MESSAGE*)p_ant_event->msg.evt_buffer;
-    switch (p_ant_event->event)
+    if (p_ant_evt->channel != ANT_MOBILE_CHANNEL_NUMBER)
+    {
+        return;
+    }
+
+    ANT_MESSAGE* p_ant_message = (ANT_MESSAGE*)&p_ant_evt->message;
+
+    switch (p_ant_evt->event)
     {
         case EVENT_RX:
             switch (p_ant_message->ANT_MESSAGE_aucPayload[0])
@@ -290,13 +310,13 @@ void ant_mobile_process(ant_evt_t* p_ant_event)
                         case ANT_COMMAND_PAIRING:
                         {
                             uint8_t channel_status;
-                            uint32_t err_code = sd_ant_channel_status_get (ANT_RELAY_SLAVE_CHANNEL,
-                                                                           &channel_status);
+                            uint32_t err_code = sd_ant_channel_status_get(ANT_RELAY_SLAVE_CHANNEL_NUMBER,
+                                                                          &channel_status);
                             APP_ERROR_CHECK(err_code);
 
                             if ((channel_status & STATUS_CHANNEL_STATE_MASK) == STATUS_ASSIGNED_CHANNEL)
                             {
-                                err_code = sd_ant_channel_open(ANT_RELAY_SLAVE_CHANNEL);
+                                err_code = sd_ant_channel_open(ANT_RELAY_SLAVE_CHANNEL_NUMBER);
                                 APP_ERROR_CHECK(err_code);
                             }
                             break;
@@ -313,7 +333,7 @@ void ant_mobile_process(ant_evt_t* p_ant_event)
         {
             uint8_t status;
 
-            uint32_t err_code = sd_ant_channel_status_get(ANT_RELAY_SLAVE_CHANNEL, &status);
+            uint32_t err_code = sd_ant_channel_status_get(ANT_RELAY_SLAVE_CHANNEL_NUMBER, &status);
             APP_ERROR_CHECK(err_code);
 
             uint8_t broadcast_data[ANT_STANDARD_DATA_PAYLOAD_SIZE];
@@ -321,7 +341,7 @@ void ant_mobile_process(ant_evt_t* p_ant_event)
             broadcast_data[0] = ANT_MOBILE_MAIN_PAGE;
             broadcast_data[1] = ( bsp_board_led_state_get(BSP_BOARD_LED_0) )? ANT_LED_STATE_ON : ANT_LED_STATE_OFF;
             broadcast_data[7] = status & STATUS_CHANNEL_STATE_MASK;
-            err_code          = sd_ant_broadcast_message_tx(ANT_MOBILE_CHANNEL,
+            err_code          = sd_ant_broadcast_message_tx(ANT_MOBILE_CHANNEL_NUMBER,
                                                             ANT_STANDARD_DATA_PAYLOAD_SIZE,
                                                             broadcast_data);
             APP_ERROR_CHECK(err_code);
@@ -334,33 +354,7 @@ void ant_mobile_process(ant_evt_t* p_ant_event)
     }
 }
 
-/**@brief Function for dispatching a ANT stack event to all modules with a ANT stack event handler.
- *
- * @details This function is called from the ANT Stack event interrupt handler after a ANT stack
- *          event has been received.
- *
- * @param[in] p_ant_evt  ANT stack event.
- */
-void ant_evt_dispatch(ant_evt_t * p_ant_evt)
-{
-    switch (p_ant_evt->channel)
-    {
-        case ANT_RELAY_MASTER_CHANNEL:
-            ant_relay_master_process(p_ant_evt);
-            break;
-
-        case ANT_RELAY_SLAVE_CHANNEL:
-            ant_relay_slave_process(p_ant_evt);
-            break;
-
-        case ANT_MOBILE_CHANNEL:
-            ant_mobile_process(p_ant_evt);
-            break;
-
-        default:
-            break;
-    }
-}
+NRF_SDH_ANT_OBSERVER(m_mobile_observer, ANT_MOBILE_ANT_OBSERVER_PRIO, ant_mobile_process, NULL);
 
 /**@brief Function for handling bsp events.
  */
@@ -379,12 +373,13 @@ void bsp_evt_handler(bsp_event_t evt)
         {
             // Open slave channel
             uint8_t channel_status;
-            uint32_t err_code = sd_ant_channel_status_get(ANT_RELAY_SLAVE_CHANNEL, &channel_status);
+            uint32_t err_code = sd_ant_channel_status_get(ANT_RELAY_SLAVE_CHANNEL_NUMBER,
+                                                          &channel_status);
             APP_ERROR_CHECK(err_code);
 
             if ((channel_status & STATUS_CHANNEL_STATE_MASK) == STATUS_ASSIGNED_CHANNEL)
             {
-                err_code = sd_ant_channel_open(ANT_RELAY_SLAVE_CHANNEL);
+                err_code = sd_ant_channel_open(ANT_RELAY_SLAVE_CHANNEL_NUMBER);
                 APP_ERROR_CHECK(err_code);
             }
             break;
@@ -400,9 +395,12 @@ void bsp_evt_handler(bsp_event_t evt)
  */
 static void utils_setup(void)
 {
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
     // Initialize and start a single continuous mode timer, which is used to update the event time
     // on the main data page.
-    uint32_t err_code = app_timer_init();
+    err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
@@ -417,16 +415,12 @@ static void utils_setup(void)
  */
 static void softdevice_setup(void)
 {
-    uint32_t err_code;
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
+    ret_code_t err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
-    APP_ERROR_CHECK(err_code);
+    ASSERT(nrf_sdh_is_enabled());
 
-    err_code = ant_stack_static_config();
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -451,22 +445,22 @@ static void ant_channel_setup(void)
 
     ant_channel_config_t mobile_channel_config =
     {
-        .channel_number     = ANT_MOBILE_CHANNEL,
+        .channel_number     = ANT_MOBILE_CHANNEL_NUMBER,
         .channel_type       = CHANNEL_TYPE_MASTER,
-        .ext_assign         = EXT_ASSIGN_NONE,
+        .ext_assign         = 0x00,
         .rf_freq            = MOBILE_RF_FREQ,
         .transmission_type  = MOBILE_CHAN_ID_TRANS_TYPE,
         .device_type        = MOBILE_CHAN_ID_DEV_TYPE,
         .device_number      = (uint16_t) (NRF_FICR->DEVICEID[0]),
         .channel_period     = MOBILE_CHAN_PERIOD,
-        .network_number     = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number     = ANT_NETWORK_NUM,
     };
 
     err_code = ant_channel_init(&mobile_channel_config);
     APP_ERROR_CHECK(err_code);
 
     // Open channel right away.
-    err_code = sd_ant_channel_open(ANT_MOBILE_CHANNEL);
+    err_code = sd_ant_channel_open(ANT_MOBILE_CHANNEL_NUMBER);
     APP_ERROR_CHECK(err_code);
 
     // !! CONFIGURE RELAY MASTER CHANNEL !! //
@@ -480,22 +474,22 @@ static void ant_channel_setup(void)
 
     ant_channel_config_t relay_master_channel_config =
     {
-        .channel_number     = ANT_RELAY_MASTER_CHANNEL,
+        .channel_number     = ANT_RELAY_MASTER_CHANNEL_NUMBER,
         .channel_type       = CHANNEL_TYPE_MASTER,
-        .ext_assign         = EXT_ASSIGN_NONE,
+        .ext_assign         = 0x00,
         .rf_freq            = RELAY_RF_FREQ,
         .transmission_type  = RELAY_CHAN_ID_TRANS_TYPE,
         .device_type        = RELAY_CHAN_ID_DEV_TYPE,
         .device_number      = (uint16_t) (NRF_FICR->DEVICEID[0]),
         .channel_period     = RELAY_CHAN_PERIOD,
-        .network_number     = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number     = ANT_NETWORK_NUM,
     };
 
     err_code = ant_channel_init(&relay_master_channel_config);
     APP_ERROR_CHECK(err_code);
 
     // Open channel right away.
-    err_code = sd_ant_channel_open(ANT_RELAY_MASTER_CHANNEL);
+    err_code = sd_ant_channel_open(ANT_RELAY_MASTER_CHANNEL_NUMBER);
     APP_ERROR_CHECK(err_code);
 
     // !! CONFIGURE RELAY SLAVE CHANNEL !! //
@@ -509,21 +503,21 @@ static void ant_channel_setup(void)
 
     ant_channel_config_t relay_slave_channel_config =
     {
-        .channel_number     = ANT_RELAY_SLAVE_CHANNEL,
+        .channel_number     = ANT_RELAY_SLAVE_CHANNEL_NUMBER,
         .channel_type       = CHANNEL_TYPE_SLAVE,
-        .ext_assign         = EXT_ASSIGN_NONE,
+        .ext_assign         = 0x00,
         .rf_freq            = RELAY_RF_FREQ,
         .transmission_type  = RELAY_CHAN_ID_TRANS_TYPE,
         .device_type        = RELAY_CHAN_ID_DEV_TYPE,
         .device_number      = 0x00,                     // Wildcard
         .channel_period     = RELAY_CHAN_PERIOD,
-        .network_number     = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number     = ANT_NETWORK_NUM,
     };
 
     err_code = ant_channel_init(&relay_slave_channel_config);
     APP_ERROR_CHECK(err_code);
 
-    err_code = sd_ant_prox_search_set(ANT_RELAY_SLAVE_CHANNEL, RELAY_PROXIMITY_BIN, 0);
+    err_code = sd_ant_prox_search_set(ANT_RELAY_SLAVE_CHANNEL_NUMBER, RELAY_PROXIMITY_BIN, 0);
     APP_ERROR_CHECK(err_code);
 
     // DO NOT OPEN THE SLAVE RIGHT AWAY - IT OPENS ON BUTTON PRESS
@@ -535,24 +529,14 @@ static void ant_channel_setup(void)
  */
 int main(void)
 {
-    // Configure LEDs and buttons.
     utils_setup();
-
-    // Enable SoftDevice.
     softdevice_setup();
-
-    // Setup Channel_0 as a TX Master Only.
     ant_channel_setup();
 
     // Main loop.
     for (;;)
     {
-        // Put CPU in sleep if possible.
-        uint32_t err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }
-
-/**
- *@}
- **/

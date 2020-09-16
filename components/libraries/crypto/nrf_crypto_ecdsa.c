@@ -55,7 +55,7 @@
 
 uint32_t nrf_crypto_ecdsa_signature_size_get(nrf_ecc_curve_type_t curve_type, uint32_t * p_sig_size)
 {
-    switch(curve_type)
+    switch (curve_type)
     {
         case NRF_CRYPTO_CURVE_SECP160R1:
             (*p_sig_size)= NRF_CRYPTO_ECDSA_SIGNATURE_SIZE_SECP160R1;
@@ -112,7 +112,7 @@ uint32_t nrf_crypto_ecdsa_sizes_get(nrf_crypto_signature_info_t sig_info,
 {
     uint32_t ret_val;
 
-    switch(sig_info.curve_type)
+    switch (sig_info.curve_type)
     {
         case NRF_CRYPTO_CURVE_SECP160R1:
             p_sizes->private_key_size = NRF_CRYPTO_ECC_PRIVATE_KEY_SIZE_SECP160R1;

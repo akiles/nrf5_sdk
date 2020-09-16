@@ -422,7 +422,7 @@ ret_code_t sm_init(void)
 }
 
 
-void sm_ble_evt_handler(ble_evt_t * p_ble_evt)
+void sm_ble_evt_handler(ble_evt_t const * p_ble_evt)
 {
     NRF_PM_DEBUG_CHECK(p_ble_evt != NULL);
 

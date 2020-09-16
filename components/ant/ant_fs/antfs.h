@@ -288,8 +288,8 @@ typedef void(*antfs_burst_wait_handler_t)(void);
  * @param[in] p_params                 The initial ANT-FS configuration parameters.
  * @param[in] burst_wait_handler       Burst wait handler.
  */
-void antfs_init(const antfs_params_t * const p_params,
-                antfs_burst_wait_handler_t burst_wait_handler);
+void antfs_init(const antfs_params_t * const    p_params,
+                antfs_burst_wait_handler_t      burst_wait_handler);
 
 /**@brief Function for getting host name if received.
  *
@@ -316,8 +316,8 @@ bool antfs_pairing_resp_transmit(bool accept);
  * @param[in] response            The download request response code.
  * @param[in] p_request_info      ANT-FS request info structure.
  */
-void antfs_download_req_resp_prepare(uint8_t response,
-                                             const antfs_request_info_t * const p_request_info);
+void antfs_download_req_resp_prepare(uint8_t                            response,
+                                     const antfs_request_info_t * const p_request_info);
 
 /**@brief Function for downloading requested data.
  *
@@ -344,8 +344,8 @@ uint32_t antfs_input_data_download(uint16_t index,
  *                                  state or application is sending a response for a different file
  *                                  than requested.
  */
-bool antfs_upload_req_resp_transmit(uint8_t response,
-                                            const antfs_request_info_t * const p_request_info);
+bool antfs_upload_req_resp_transmit(uint8_t                            response,
+                                    const antfs_request_info_t * const p_request_info);
 
 /**@brief Function for transmitting upload data response to a upload data command by ANT-FS host.
  *

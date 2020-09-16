@@ -64,12 +64,74 @@ extern "C" {
  * @brief Configuration passed to @ref app_usbd_init.
  */
 typedef struct {
+#if (!(APP_USBD_EVENT_QUEUE_ENABLE)) || defined(__SDK_DOXYGEN__)
     /**
      * @brief User defined event handler.
      *
-     * @param event Event type.
+     * This function is called on every event from the interrupt.
+     * It is prepared for external user function that would queue events to be processed
+     * from the main context.
+     * It should be used with operating systems with its own implementation of the queue.
+     *
+     * @param p_event The event structure pointer.
+     *
+     * @note This field is available only when USB internal queue is disabled
+     *       (see @ref APP_USBD_EVENT_QUEUE_ENABLE).
      */
-    void (*ev_handler)(app_usbd_event_type_t event);
+    void (*ev_handler)(app_usbd_internal_evt_t const * const p_event);
+#endif
+
+#if (APP_USBD_EVENT_QUEUE_ENABLE) || defined(__SDK_DOXYGEN__)
+    /**
+     * @brief User defined event handler.
+     *
+     * This function is called on every event from the interrupt.
+     *
+     * @param p_event The event structure pointer.
+     * @param queued  The event is visible in the queue.
+     *                If queue conflict is detected the event might not be accessible inside queue
+     *                until all write operations finish.
+     *                See @ref nrf_atfifo for more details.
+     *
+     * @note This field is available only when USBD internal queue is configured
+     *       (see @ref APP_USBD_EVENT_QUEUE_ENABLE).
+     *
+     * @note If is set to NULL no event would be called from interrupt.
+     * @note This function is called before event is processed.
+     *       It means that if the event type is @ref APP_USBD_EVT_DRV_SETUP,
+     *       there would not be setup field present in the event structure.
+     */
+    void (*ev_isr_handler)(app_usbd_internal_evt_t const * const p_event, bool queued);
+#endif
+
+    /**
+     * @brief User defined event processor
+     *
+     * This function is called while state event is processed.
+     *
+     * * @note This field is available only when USBD internal queue is configured
+     *       (see @ref APP_USBD_EVENT_QUEUE_ENABLE).
+     *
+     * @param event Event type.
+     *              Only following events are sent into this function:
+     *              - APP_USBD_EVT_DRV_SOF
+     *              - APP_USBD_EVT_DRV_RESET  - Note that it also exits suspend
+     *              - APP_USBD_EVT_DRV_SUSPEND
+     *              - APP_USBD_EVT_DRV_RESUME - It is also generated when remote wakeup is generated
+     *              - APP_USBD_EVT_START
+     *              - APP_USBD_EVT_STOP
+     */
+    void (*ev_state_proc)(app_usbd_event_type_t event);
+
+    /**
+     * @brief SOF processing required by the user event processing
+     *
+     * This flag would enable SOF processing for the user events regardless of the fact if any
+     * of the implemented class requires SOF event.
+     *
+     * @note SOF event would be enabled anyway if any of the appended class requires SOF processing.
+     */
+    bool enable_sof;
 } app_usbd_config_t;
 
 /**
@@ -95,7 +157,8 @@ ret_code_t app_usbd_uninit(void);
 /**
  * @brief Enable USBD
  *
- * USBD is enabled and starts requiring High Frequency Clock and power regulator.
+ * USBD is enabled.
+ * Since now the high frequency clock may be requested when USB RESET would be detected.
  */
 void app_usbd_enable(void);
 
@@ -104,27 +167,102 @@ void app_usbd_enable(void);
  *
  * Disabled USDB peripheral cannot be accessed but also stops requesting
  * High Frequency clock and releases power regulator.
+ *
+ * @note This function cannot be called when USB is started. Stop it first.
  */
 void app_usbd_disable(void);
 
 /**
- * @brief Start USB to work
+ * @brief Request USBD to start
  *
- * Start library to work.
- * Enable interrupts.
- * Enable USB pull-ups.
- * After calling this function USB device is visible to a HOST.
+ * The function sends start request to the event queue.
+ * If the queue is enabled (@ref APP_USBD_EVENT_QUEUE_ENABLE) it would be processed
+ * when the queue is processed.
+ * If queue is disabled it would be processed immediately inside this function.
+ * It means that if queue is disabled this function cannot be called from interrupt with priority
+ * higher than USB interrupt.
+ *
+ * When start is processed it would:
+ * 1. Start library.
+ * 2. Enable interrupts.
+ * 3. Enable USB pull-ups.
+ *
+ * @note
+ * In some specific circumstances the library can be left not started and this function would
+ * silently exit.
+ * This may happen if some glitches appears on USB power line or if the plug was disconnected before
+ * whole starting process finishes.
+ * User would get the event from POWER peripheral then.
+ * Also no @ref APP_USBD_EVT_STARTED event would be generated to the classes and user event handler.
+ * For the safe code it is recommended to wait for @ref APP_USBD_EVT_STARTED event if anything
+ * has to be initialized after USB driver is started (just before enabling the interrupts).
+ * If library is properly started the @ref APP_USBD_EVT_STARTED event passed to the user handler
+ * from this function body.
  */
 void app_usbd_start(void);
 
 /**
  * @brief Stop USB to work
  *
- * This function disables interrupts and USB pull-ups.
+ * The function sends stop request to the event queue.
+ * If the queue is enabled (@ref APP_USBD_EVENT_QUEUE_ENABLE) it would be processed
+ * when the queue is processed.
+ * If queue is disabled it would be processed immediately inside this function.
+ * It means that if queue is disabled this function cannot be called from interrupt with priority
+ * higher than USB interrupt.
+ *
+ * When the event is processed interrupts and USB pull-ups are disabled.
  * The peripheral itself is left enabled so it can be programmed,
- * but it a HOST sees it as a peripheral disconnection.
+ * but a HOST sees it as a peripheral disconnection.
+ *
+ * @note
+ * If the library is not started when this function is called it exits silently - also
+ * no @ref APP_USBD_EVT_STOPPED is generated.
  */
 void app_usbd_stop(void);
+
+/**
+ * @brief Request library to suspend
+ *
+ * This function send suspend request to the event queue.
+ *
+ * @note This function should only be called after @ref APP_USBD_EVT_DRV_SUSPEND os received.
+ *       Internal suspend request processing would give no effect if the bus is not in suspend state.
+ */
+void app_usbd_suspend_req(void);
+
+/**
+ * @brief Request library to wake-up
+ *
+ * This function send wakeup request to the event queue.
+ *
+ * @note Calling this function does not mean that peripheral is active - the wakeup request is sent
+ *       into message queue and needs to be processed.
+ *
+ * @retval true  Wakeup generation has been started.
+ * @retval false No wakeup would be generated becouse it is disabled by the host.
+ */
+bool app_usbd_wakeup_req(void);
+
+/**
+ * @brief USBD event processor
+ *
+ * Function to be called on each event to be processed by the library.
+ */
+void app_usbd_event_execute(app_usbd_internal_evt_t const * const p_event);
+
+
+#if (APP_USBD_EVENT_QUEUE_ENABLE) || defined(__SDK_DOXYGEN__)
+/**
+ * @brief Function that process events from the queue
+ *
+ * @note This function calls @ref app_usbd_event_execute internally.
+ *
+ * @retval true  Event was processed
+ * @retval false The event queue is empty
+ */
+bool app_usbd_event_queue_process(void);
+#endif
 
 /**
  * @brief Add class instance
@@ -230,6 +368,36 @@ ret_code_t app_usbd_class_sof_register(app_usbd_class_inst_t const * p_cinst);
  * @sa app_usbd_class_sof_register
  */
 ret_code_t app_usbd_class_sof_unregister(app_usbd_class_inst_t const * p_cinst);
+
+/**
+ * @brief Register class on remote wake-up feature
+ *
+ * @param[in] p_inst Instance of the class
+ *
+ * @retval NRF_SUCCESS Instance that requires remote wake-up registered
+ */
+ret_code_t app_usbd_class_rwu_register(app_usbd_class_inst_t const * const p_inst);
+
+/**
+ * @brief Unregister class from remote wake-up feature
+ *
+ * @param[in] p_inst Instance of the class
+ *
+ * @retval NRF_SUCCESS Instance that requires remote wake-up removed
+ */
+ret_code_t app_usbd_class_rwu_unregister(app_usbd_class_inst_t const * const p_inst);
+
+/**
+ * @brief Check if there is any class with remote wakeup
+ *
+ * The function checks internal registered class with remote wakeup counter.
+ *
+ * @sa app_usbd_class_rwu_register, app_usbd_class_rwu_unregister
+ *
+ * @retval true  The remote wakeup functionality is required by some class instance
+ * @retval false There is no class instance that requires wakeup functionality
+ */
+bool app_usbd_class_rwu_enabled_check(void);
 
 /**
  * @brief Function finds a given descriptor type in class descriptors payload

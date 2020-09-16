@@ -46,6 +46,7 @@
 #include "ble_gatt_struct_serialization.h"
 #include "ble_gattc_struct_serialization.h"
 #include "ble_gatts_struct_serialization.h"
+#include "ble_l2cap_struct_serialization.h"
 #include "app_util.h"
 
 #if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION < 4
@@ -160,6 +161,8 @@ uint32_t ble_opt_get_rsp_enc(uint32_t                return_code,
             fp_encoder = ble_gap_opt_compat_mode_1_t_enc;
             p_struct   = &p_opt->gap_opt.compat_mode_1;
         break;
+#endif
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION == 4
         case BLE_GAP_OPT_COMPAT_MODE_2:
             fp_encoder = ble_gap_opt_compat_mode_2_t_enc;
             p_struct   = &p_opt->gap_opt.compat_mode_2;
@@ -195,7 +198,7 @@ uint32_t ble_opt_set_req_dec(uint8_t const * const   p_buf,
         field_decoder_handler_t fp_decoder = NULL;
         void * p_struct = NULL;
 
-        switch(*p_opt_id)
+        switch (*p_opt_id)
         {
 #if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION < 4
             case BLE_COMMON_OPT_CONN_BW:
@@ -247,13 +250,15 @@ uint32_t ble_opt_set_req_dec(uint8_t const * const   p_buf,
                 fp_decoder = ble_gap_opt_compat_mode_1_t_dec;
                 p_struct   = &((*pp_opt)->gap_opt.compat_mode_1);
             break;
-            case BLE_GAP_OPT_COMPAT_MODE_2:
-                fp_decoder = ble_gap_opt_compat_mode_2_t_dec;
-                p_struct   = &((*pp_opt)->gap_opt.compat_mode_2);
-            break;
             case BLE_GAP_OPT_SLAVE_LATENCY_DISABLE:
                 fp_decoder = ble_gap_opt_slave_latency_disable_t_dec;
                 p_struct   = &((*pp_opt)->gap_opt.slave_latency_disable);
+            break;
+#endif
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION == 4
+            case BLE_GAP_OPT_COMPAT_MODE_2:
+                fp_decoder = ble_gap_opt_compat_mode_2_t_dec;
+                p_struct   = &((*pp_opt)->gap_opt.compat_mode_2);
             break;
 #endif
             default:
@@ -475,7 +480,7 @@ uint32_t ble_cfg_set_req_dec(uint8_t const * const p_buf,
         field_decoder_handler_t fp_decoder = NULL;
         void * p_struct = NULL;
 
-        switch(*p_cfg_id)
+        switch (*p_cfg_id)
         {
             case BLE_CONN_CFG_GAP:
                 fp_decoder = ble_gap_conn_cfg_t_dec;
@@ -493,6 +498,12 @@ uint32_t ble_cfg_set_req_dec(uint8_t const * const p_buf,
                 fp_decoder = ble_gatt_conn_cfg_t_dec;
                 p_struct   = &((*pp_cfg)->conn_cfg.params.gatt_conn_cfg);
                 break;
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION >= 5
+            case BLE_CONN_CFG_L2CAP:
+                fp_decoder = ble_l2cap_conn_cfg_t_dec;
+                p_struct   = &((*pp_cfg)->conn_cfg.params.l2cap_conn_cfg);
+                break;
+#endif
             case BLE_COMMON_CFG_VS_UUID:
                 fp_decoder = ble_common_cfg_vs_uuid_t_dec;
                 p_struct   = &((*pp_cfg)->common_cfg.vs_uuid_cfg);

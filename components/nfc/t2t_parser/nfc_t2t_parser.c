@@ -45,7 +45,7 @@
 #include "nrf_delay.h"
 #include "nfc_t2t_parser.h"
 
-#define NRF_LOG_MODULE_NAME "NFC_T2T_PARSER"
+#define NRF_LOG_MODULE_NAME nfc_t2t_parser
 #if NFC_T2T_PARSER_LOG_ENABLED
 #define NRF_LOG_LEVEL       NFC_T2T_PARSER_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  NFC_T2T_PARSER_INFO_COLOR
@@ -53,6 +53,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // NFC_T2T_PARSER_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 /// Gets least significant nibble (a 4-bit value) from a byte.
 #define LSN_GET(val) (val & 0x0F)
@@ -460,7 +461,7 @@ static ret_code_t type_2_tag_internal_parse(type_2_tag_t * p_type_2_tag, uint8_t
 
     if (!type_2_tag_is_bcc_correct(&p_type_2_tag->sn))
     {
-        NRF_LOG_WARNING("Warning! BCC of the serial number is not correct!\r\n");
+        NRF_LOG_WARNING("Warning! BCC of the serial number is not correct!");
     }
 
     return NRF_SUCCESS;
@@ -550,7 +551,7 @@ static ret_code_t type_2_tag_tlv_parse(type_2_tag_t * p_type_2_tag,
             err_code = type_2_tag_tlv_block_insert(p_type_2_tag, &new_block);
             if (err_code != NRF_SUCCESS)
             {
-                NRF_LOG_WARNING("Warning! Not enough memory  to insert all of the blocks!\r\n");
+                NRF_LOG_WARNING("Warning! Not enough memory  to insert all of the blocks!");
                 return err_code;
             }
             break;
@@ -598,7 +599,7 @@ ret_code_t type_2_tag_parse(type_2_tag_t * p_type_2_tag, uint8_t * p_raw_data)
         // Check if end of tag is reached (no terminator block was present).
         if (type_2_tag_is_end_reached(p_type_2_tag, offset))
         {
-            NRF_LOG_DEBUG("No terminator block was found in the tag!\r\n");
+            NRF_LOG_DEBUG("No terminator block was found in the tag!");
             break;
         }
 
@@ -616,62 +617,61 @@ ret_code_t type_2_tag_parse(type_2_tag_t * p_type_2_tag, uint8_t * p_raw_data)
 void type_2_tag_printout(type_2_tag_t * p_type_2_tag)
 {
     uint32_t i;
-    NRF_LOG_INFO("Type 2 Tag contents:\r\n\r\n");
-    NRF_LOG_INFO("Number of TLV blocks: %d\r\n\r\n", p_type_2_tag->tlv_count);
+    NRF_LOG_INFO("Type 2 Tag contents:");
+    NRF_LOG_INFO("Number of TLV blocks: %d", p_type_2_tag->tlv_count);
 
-    NRF_LOG_INFO("Internal data:\r\n");
-    NRF_LOG_INFO("    Manufacturer ID:      0x%02x\r\n",  p_type_2_tag->sn.manufacturer_id);
-    NRF_LOG_INFO("    Serial number part 1: 0x%04x\r\n",  p_type_2_tag->sn.serial_number_part_1);
-    NRF_LOG_INFO("    Check byte 0:         0x%02x\r\n",  p_type_2_tag->sn.check_byte_0);
-    NRF_LOG_INFO("    Serial number part 2: 0x%08lx\r\n", p_type_2_tag->sn.serial_number_part_2);
-    NRF_LOG_INFO("    Check byte 1:         0x%02x\r\n",  p_type_2_tag->sn.check_byte_1);
-    NRF_LOG_INFO("    Internal byte:        0x%02x\r\n",  p_type_2_tag->sn.internal);
-    NRF_LOG_INFO("    Lock bytes:           0x%04x\r\n\r\n",  p_type_2_tag->lock_bytes);
+    NRF_LOG_INFO("Internal data:");
+    NRF_LOG_INFO("    Manufacturer ID:      0x%02x",  p_type_2_tag->sn.manufacturer_id);
+    NRF_LOG_INFO("    Serial number part 1: 0x%04x",  p_type_2_tag->sn.serial_number_part_1);
+    NRF_LOG_INFO("    Check byte 0:         0x%02x",  p_type_2_tag->sn.check_byte_0);
+    NRF_LOG_INFO("    Serial number part 2: 0x%08lx", p_type_2_tag->sn.serial_number_part_2);
+    NRF_LOG_INFO("    Check byte 1:         0x%02x",  p_type_2_tag->sn.check_byte_1);
+    NRF_LOG_INFO("    Internal byte:        0x%02x",  p_type_2_tag->sn.internal);
+    NRF_LOG_INFO("    Lock bytes:           0x%04x",  p_type_2_tag->lock_bytes);
 
-    NRF_LOG_INFO("Capability Container data:\r\n");
-    NRF_LOG_INFO("    Major version number: %d\r\n", p_type_2_tag->cc.major_version);
-    NRF_LOG_INFO("    Minor version number: %d\r\n", p_type_2_tag->cc.minor_version);
-    NRF_LOG_INFO("    Data area size:       %d\r\n", p_type_2_tag->cc.data_area_size);
-    NRF_LOG_INFO("    Read access:          0x%02X\r\n", p_type_2_tag->cc.read_access);
-    NRF_LOG_INFO("    Write access:         0x%02X\r\n\r\n", p_type_2_tag->cc.write_access);
+    NRF_LOG_INFO("Capability Container data:");
+    NRF_LOG_INFO("    Major version number: %d", p_type_2_tag->cc.major_version);
+    NRF_LOG_INFO("    Minor version number: %d", p_type_2_tag->cc.minor_version);
+    NRF_LOG_INFO("    Data area size:       %d", p_type_2_tag->cc.data_area_size);
+    NRF_LOG_INFO("    Read access:          0x%02X", p_type_2_tag->cc.read_access);
+    NRF_LOG_INFO("    Write access:         0x%02X", p_type_2_tag->cc.write_access);
 
     for (i = 0; i < p_type_2_tag->tlv_count; i++)
     {
-        NRF_LOG_INFO("TLV block 0x%02X: \r\n", p_type_2_tag->p_tlv_block_array[i].tag);
+        NRF_LOG_INFO("TLV block 0x%02X: ", p_type_2_tag->p_tlv_block_array[i].tag);
         switch (p_type_2_tag->p_tlv_block_array[i].tag)
         {
             case TLV_LOCK_CONTROL:
-                NRF_LOG_INFO("Lock Control\r\n\r\n");
+                NRF_LOG_INFO("Lock Control");
                break;
             case TLV_MEMORY_CONTROL:
-                NRF_LOG_INFO("Memory Control\r\n\r\n");
+                NRF_LOG_INFO("Memory Control");
                break;
             case TLV_NDEF_MESSAGE:
-                NRF_LOG_INFO("NDEF Message\r\n\r\n");
+                NRF_LOG_INFO("NDEF Message");
                break;
             case TLV_PROPRIETARY:
-                NRF_LOG_INFO("Proprietary\r\n\r\n");
+                NRF_LOG_INFO("Proprietary");
                break;
             case TLV_NULL:
-                NRF_LOG_INFO("Null\r\n\r\n");
+                NRF_LOG_INFO("Null\r\n");
                break;
             case TLV_TERMINATOR:
-                NRF_LOG_INFO("Terminator\r\n\r\n");
+                NRF_LOG_INFO("Terminator");
                break;
             default:
-                NRF_LOG_INFO("Unknown\r\n\r\n");
+                NRF_LOG_INFO("Unknown");
                break;
         }
 
-        NRF_LOG_INFO("    Length: %d\r\n", p_type_2_tag->p_tlv_block_array[i].length);
+        NRF_LOG_INFO("    Length: %d", p_type_2_tag->p_tlv_block_array[i].length);
 
         if (p_type_2_tag->p_tlv_block_array[i].length > 0)
         {
-            NRF_LOG_INFO("    Data:\r\n");
+            NRF_LOG_INFO("    Data:");
             NRF_LOG_HEXDUMP_INFO(p_type_2_tag->p_tlv_block_array[i].p_value,
                                  p_type_2_tag->p_tlv_block_array[i].length);
         }
-        NRF_LOG_INFO("\r\n\r\n");
     }
 }
 

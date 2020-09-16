@@ -10309,7 +10309,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPIM_PSEL_MISO_PIN_Msk (0x1FUL << SPIM_PSEL_MISO_PIN_Pos) /*!< Bit mask of PIN field. */
 
 /* Register: SPIM_FREQUENCY */
-/* Description: SPI frequency */
+/* Description: SPI frequency. Accuracy depends on the HFCLK source selected. */
 
 /* Bits 31..0 : SPI master data rate */
 #define SPIM_FREQUENCY_FREQUENCY_Pos (0UL) /*!< Position of FREQUENCY field. */
@@ -12464,9 +12464,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UICR_PSELRESET_CONNECT_Connected (0UL) /*!< Connect */
 #define UICR_PSELRESET_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bits 4..0 : GPIO number P0.n onto which Reset is exposed */
+/* Bits 5..0 : GPIO number P0.n onto which Reset is exposed */
 #define UICR_PSELRESET_PIN_Pos (0UL) /*!< Position of PIN field. */
-#define UICR_PSELRESET_PIN_Msk (0x1FUL << UICR_PSELRESET_PIN_Pos) /*!< Bit mask of PIN field. */
+#define UICR_PSELRESET_PIN_Msk (0x3FUL << UICR_PSELRESET_PIN_Pos) /*!< Bit mask of PIN field. */
 
 /* Register: UICR_APPROTECT */
 /* Description: Access Port protection */

@@ -45,8 +45,9 @@
 #include "ble_m.h"
 #include "ecc.h"
 
-#define NRF_LOG_MODULE_NAME "PM_M"
+#define NRF_LOG_MODULE_NAME PM_M
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 // Verify bonding and keys distribution settings.
 #if ((BLE_NFC_SEC_PARAM_BOND)           &&  \
@@ -65,10 +66,10 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
 {
     ret_code_t err_code;
 
-    switch(p_evt->evt_id)
+    switch (p_evt->evt_id)
     {
         case PM_EVT_BONDED_PEER_CONNECTED:
-            NRF_LOG_DEBUG("Connected to previoulsy bonded device\r\n");
+            NRF_LOG_DEBUG("Connected to previoulsy bonded device");
             err_code = pm_peer_rank_highest(p_evt->peer_id);
             if (err_code != NRF_ERROR_BUSY)
             {
@@ -77,7 +78,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
             break;
 
         case PM_EVT_CONN_SEC_SUCCEEDED:
-            NRF_LOG_DEBUG("Link secured. Role: %d. conn_handle: %d, Procedure: %d\r\n",
+            NRF_LOG_DEBUG("Link secured. Role: %d. conn_handle: %d, Procedure: %d",
                            ble_conn_state_role(p_evt->conn_handle),
                            p_evt->conn_handle,
                            p_evt->params.conn_sec_succeeded.procedure);
@@ -98,7 +99,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
              *  be restarted until the link is disconnected and reconnected. Sometimes it is
              *  impossible, to secure the link, or the peer device does not support it. How to
              *  handle this error is highly application dependent. */
-            NRF_LOG_DEBUG("PM_EVT_CONN_SEC_FAILED: %u\r\n", p_evt->params.conn_sec_failed.error);
+            NRF_LOG_DEBUG("PM_EVT_CONN_SEC_FAILED: %u", p_evt->params.conn_sec_failed.error);
 
             if (p_evt->params.conn_sec_failed.error == PM_CONN_SEC_ERROR_PIN_OR_KEY_MISSING)
             {
@@ -129,7 +130,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
             break;
 
         case PM_EVT_CONN_SEC_START:
-            NRF_LOG_DEBUG("PM_EVT_CONN_SEC_START\r\n");
+            NRF_LOG_DEBUG("PM_EVT_CONN_SEC_START");
             break;
 
         // Events that do not need to be implemented.

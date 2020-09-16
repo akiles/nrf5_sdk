@@ -45,7 +45,7 @@
 #include "nrf_gpio.h"
 #include "app_util_platform.h"
 
-#define NRF_LOG_MODULE_NAME "UART"
+#define NRF_LOG_MODULE_NAME uart
 
 #if UART_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       UART_CONFIG_LOG_LEVEL
@@ -57,7 +57,7 @@
 #define NRF_LOG_LEVEL       0
 #endif //UART_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
-#include "nrf_log_ctrl.h"
+NRF_LOG_MODULE_REGISTER();
 
 #if (defined(UARTE_IN_USE) && defined(UART_IN_USE))
     // UARTE and UART combined
@@ -100,6 +100,12 @@ typedef struct
 } uart_control_block_t;
 
 static uart_control_block_t m_cb[UART_ENABLED_COUNT];
+
+#ifdef NRF52810_XXAA
+    #define IRQ_HANDLER(n) void UARTE##n##_IRQHandler(void)
+#else
+    #define IRQ_HANDLER(n) void UART##n##_IRQHandler(void)
+#endif
 
 __STATIC_INLINE void apply_config(nrf_drv_uart_t const * p_instance, nrf_drv_uart_config_t const * p_config)
 {
@@ -270,7 +276,7 @@ ret_code_t nrf_drv_uart_init(const nrf_drv_uart_t * p_instance, nrf_drv_uart_con
     if (p_cb->state != NRF_DRV_STATE_UNINITIALIZED)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_ERROR("Init failed. id:%d in wrong state", nrf_drv_get_IRQn((void *)p_instance->reg.p_reg));
         return err_code;
     }
 
@@ -293,7 +299,6 @@ ret_code_t nrf_drv_uart_init(const nrf_drv_uart_t * p_instance, nrf_drv_uart_con
     p_cb->tx_buffer_length = 0;
     p_cb->state = NRF_DRV_STATE_INITIALIZED;
     p_cb->rx_enabled = false;
-    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -312,7 +317,7 @@ void nrf_drv_uart_uninit(const nrf_drv_uart_t * p_instance)
 
     p_cb->state = NRF_DRV_STATE_UNINITIALIZED;
     p_cb->handler = NULL;
-    NRF_LOG_INFO("Instance uninitialized: %d.\r\n", p_instance->drv_inst_idx);
+    NRF_LOG_INFO("Uninit id: %d.",  nrf_drv_get_IRQn((void *)p_instance->reg.p_reg));
 }
 
 #if defined(UART_IN_USE)
@@ -361,8 +366,6 @@ __STATIC_INLINE ret_code_t nrf_drv_uart_tx_for_uart(const nrf_drv_uart_t * p_ins
         }
         p_cb->tx_buffer_length = 0;
     }
-
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 #endif
@@ -395,8 +398,6 @@ __STATIC_INLINE ret_code_t nrf_drv_uart_tx_for_uarte(const nrf_drv_uart_t * p_in
         }
         p_cb->tx_buffer_length = 0;
     }
-
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 #endif
@@ -417,7 +418,8 @@ ret_code_t nrf_drv_uart_tx(const nrf_drv_uart_t * p_instance, uint8_t const * co
         if (!nrf_drv_is_in_RAM(p_data))
         {
             err_code = NRF_ERROR_INVALID_ADDR;
-            NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+            NRF_LOG_ERROR("Id:%d, Easy-DMA buffer not in RAM: %08x",
+                                           nrf_drv_get_IRQn((void *)p_instance->reg.p_reg), p_data);
             return err_code;
         }
     )
@@ -425,15 +427,15 @@ ret_code_t nrf_drv_uart_tx(const nrf_drv_uart_t * p_instance, uint8_t const * co
     if (nrf_drv_uart_tx_in_progress(p_instance))
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_WARNING("Id:%d busy",nrf_drv_get_IRQn((void *)p_instance->reg.p_reg));
         return err_code;
     }
     p_cb->tx_buffer_length = length;
     p_cb->p_tx_buffer      = p_data;
     p_cb->tx_counter       = 0;
 
-    NRF_LOG_INFO("Transfer tx_len: %d.\r\n", p_cb->tx_buffer_length);
-    NRF_LOG_DEBUG("Tx data:\r\n");
+    NRF_LOG_INFO("TX req id:%d length: %d.", nrf_drv_get_IRQn((void *)p_instance->reg.p_reg), p_cb->tx_buffer_length);
+    NRF_LOG_DEBUG("Tx data:");
     NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_cb->p_tx_buffer, p_cb->tx_buffer_length * sizeof(p_cb->p_tx_buffer));
 
     CODE_FOR_UARTE
@@ -511,14 +513,14 @@ __STATIC_INLINE ret_code_t nrf_drv_uart_rx_for_uart(const nrf_drv_uart_t * p_ins
         if (error)
         {
             err_code = NRF_ERROR_INTERNAL;
-            NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+            NRF_LOG_WARNING("RX Id: %d, transfer error.", nrf_drv_get_IRQn((void *)p_instance->reg.p_reg));
             return err_code;
         }
 
         if (rxto)
         {
+            NRF_LOG_WARNING("RX Id: %d, aborted.", nrf_drv_get_IRQn((void *)p_instance->reg.p_reg));
             err_code = NRF_ERROR_FORBIDDEN;
-            NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
             return err_code;
         }
 
@@ -537,7 +539,6 @@ __STATIC_INLINE ret_code_t nrf_drv_uart_rx_for_uart(const nrf_drv_uart_t * p_ins
         nrf_uart_int_enable(p_instance->reg.p_uart, NRF_UART_INT_MASK_RXDRDY | NRF_UART_INT_MASK_ERROR);
     }
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 #endif
@@ -585,7 +586,6 @@ __STATIC_INLINE ret_code_t nrf_drv_uart_rx_for_uarte(const nrf_drv_uart_t * p_in
     {
         nrf_uarte_int_enable(p_instance->reg.p_uarte, NRF_UARTE_INT_ERROR_MASK | NRF_UARTE_INT_ENDRX_MASK);
     }
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 #endif
@@ -606,7 +606,8 @@ ret_code_t nrf_drv_uart_rx(const nrf_drv_uart_t * p_instance, uint8_t * p_data, 
         if (!nrf_drv_is_in_RAM(p_data))
         {
             err_code = NRF_ERROR_INVALID_ADDR;
-            NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+            NRF_LOG_ERROR("Id:%d, Easy-DMA buffer not in RAM: %08x",
+                                                       nrf_drv_get_IRQn((void *)p_instance->reg.p_reg), p_data);
             return err_code;
         }
     )
@@ -640,7 +641,7 @@ ret_code_t nrf_drv_uart_rx(const nrf_drv_uart_t * p_instance, uint8_t * p_data, 
                 )
             }
             err_code = NRF_ERROR_BUSY;
-            NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+            NRF_LOG_WARNING("RX Id:%d, busy", nrf_drv_get_IRQn((void *)p_instance->reg.p_reg));
             return err_code;
         }
         second_buffer = true;
@@ -659,8 +660,7 @@ ret_code_t nrf_drv_uart_rx(const nrf_drv_uart_t * p_instance, uint8_t * p_data, 
         p_cb->rx_secondary_buffer_length = length;
     }
 
-    NRF_LOG_INFO("Transfer rx_len: %d.\r\n", length);
-
+    NRF_LOG_INFO("RX Id:%d len:%d", nrf_drv_get_IRQn((void *)p_instance->reg.p_reg), length);
 
     CODE_FOR_UARTE
     (
@@ -752,6 +752,7 @@ __STATIC_INLINE void tx_done_event(uart_control_block_t * p_cb, uint8_t bytes)
 
     p_cb->tx_buffer_length = 0;
 
+    NRF_LOG_INFO("TX done len:%d", bytes);
     p_cb->handler(&event, p_cb->p_context);
 }
 
@@ -780,7 +781,7 @@ void nrf_drv_uart_tx_abort(const nrf_drv_uart_t * p_instance)
             p_cb->tx_counter       = TX_COUNTER_ABORT_REQ_VALUE;
         }
     )
-    NRF_LOG_INFO("TX transaction aborted.\r\n");
+    NRF_LOG_INFO("TX abort Id:%d", nrf_drv_get_IRQn((void *)p_instance->reg.p_reg));
 }
 
 void nrf_drv_uart_rx_abort(const nrf_drv_uart_t * p_instance)
@@ -794,7 +795,7 @@ void nrf_drv_uart_rx_abort(const nrf_drv_uart_t * p_instance)
         nrf_uart_int_disable(p_instance->reg.p_uart, NRF_UART_INT_MASK_RXDRDY | NRF_UART_INT_MASK_ERROR);
         nrf_uart_task_trigger(p_instance->reg.p_uart, NRF_UART_TASK_STOPRX);
     )
-    NRF_LOG_INFO("RX transaction aborted.\r\n");
+    NRF_LOG_INFO("RX abort Id:%d", nrf_drv_get_IRQn((void *)p_instance->reg.p_reg));
 }
 
 
@@ -806,7 +807,6 @@ __STATIC_INLINE void uart_irq_handler(NRF_UART_Type * p_uart, uart_control_block
     {
         nrf_drv_uart_event_t event;
         nrf_uart_event_clear(p_uart, NRF_UART_EVENT_ERROR);
-        NRF_LOG_DEBUG("Event: %s.\r\n", (uint32_t)EVT_TO_STR(NRF_UART_EVENT_ERROR));
         nrf_uart_int_disable(p_uart, NRF_UART_INT_MASK_RXDRDY | NRF_UART_INT_MASK_ERROR);
         if (!p_cb->rx_enabled)
         {
@@ -955,7 +955,7 @@ __STATIC_INLINE void uarte_irq_handler(NRF_UARTE_Type * p_uarte, uart_control_bl
 #endif
 
 #if UART0_ENABLED
-void UART0_IRQHandler(void)
+IRQ_HANDLER(0)
 {
     CODE_FOR_UARTE_INT
     (
@@ -984,3 +984,4 @@ void UARTE1_IRQHandler(void)
 }
 #endif
 #endif //NRF_MODULE_ENABLED(UART)
+

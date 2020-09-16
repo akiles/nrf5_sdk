@@ -49,14 +49,12 @@
 #include <stdio.h>
 #include <string.h>
 #include "nordic_common.h"
-#include "softdevice_handler.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ble.h"
 #include "app_timer.h"
-#include "boards.h"
-#include "bsp.h"
 #include "bsp_btn_ble.h"
 #include "ble.h"
 #include "ble_hci.h"
-#include "app_uart.h"
 #include "ble_advdata.h"
 #include "ble_advertising.h"
 #include "ble_conn_params.h"
@@ -65,51 +63,50 @@
 #include "ble_conn_state.h"
 #include "nrf_ble_gatt.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 
-#define CENTRAL_LINK_COUNT        8                                             /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
-#define PERIPHERAL_LINK_COUNT     0                                             /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
-#define TOTAL_LINK_COUNT          CENTRAL_LINK_COUNT + PERIPHERAL_LINK_COUNT    /**< Total number of links used by the application. */
-#define CONN_CFG_TAG              1                                             /**< A tag that refers to the BLE stack configuration we set with @ref sd_ble_cfg_set. Default tag is @ref BLE_CONN_CFG_TAG_DEFAULT. */
+#define APP_BLE_CONN_CFG_TAG      1                                     /**< A tag that refers to the BLE stack configuration we set with @ref sd_ble_cfg_set. Default tag is @ref APP_BLE_CONN_CFG_TAG. */
+#define APP_BLE_OBSERVER_PRIO     1                                     /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 
 #define CENTRAL_SCANNING_LED      BSP_BOARD_LED_0
 #define CENTRAL_CONNECTED_LED     BSP_BOARD_LED_1
+#define LEDBUTTON_LED             BSP_BOARD_LED_2                       /**< LED to indicate a change of state of the the Button characteristic on the peer. */
 
-#define SCAN_INTERVAL             0x00A0                                        /**< Determines scan interval in units of 0.625 millisecond. */
-#define SCAN_WINDOW               0x0050                                        /**< Determines scan window in units of 0.625 millisecond. */
-#define SCAN_TIMEOUT              0x0000                                        /**< Timout when scanning. 0x0000 disables timeout. */
+#define LEDBUTTON_BUTTON          BSP_BUTTON_0                          /**< Button that will write to the LED characteristic of the peer. */
+#define BUTTON_DETECTION_DELAY    APP_TIMER_TICKS(50)                   /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
 
-#define MIN_CONNECTION_INTERVAL   MSEC_TO_UNITS(7.5, UNIT_1_25_MS)              /**< Determines minimum connection interval in milliseconds. */
-#define MAX_CONNECTION_INTERVAL   MSEC_TO_UNITS(30, UNIT_1_25_MS)               /**< Determines maximum connection interval in milliseconds. */
-#define SLAVE_LATENCY             0                                             /**< Determines slave latency in terms of connection events. */
-#define SUPERVISION_TIMEOUT       MSEC_TO_UNITS(4000, UNIT_10_MS)               /**< Determines supervision time-out in units of 10 milliseconds. */
+#define SCAN_INTERVAL             0x00A0                                /**< Determines scan interval in units of 0.625 millisecond. */
+#define SCAN_WINDOW               0x0050                                /**< Determines scan window in units of 0.625 millisecond. */
+#define SCAN_TIMEOUT              0x0000                                /**< Timout when scanning. 0x0000 disables timeout. */
 
-#define UUID16_SIZE               2                                             /**< Size of a UUID, in bytes. */
+#define MIN_CONNECTION_INTERVAL   MSEC_TO_UNITS(7.5, UNIT_1_25_MS)      /**< Determines minimum connection interval in milliseconds. */
+#define MAX_CONNECTION_INTERVAL   MSEC_TO_UNITS(30, UNIT_1_25_MS)       /**< Determines maximum connection interval in milliseconds. */
+#define SLAVE_LATENCY             0                                     /**< Determines slave latency in terms of connection events. */
+#define SUPERVISION_TIMEOUT       MSEC_TO_UNITS(4000, UNIT_10_MS)       /**< Determines supervision time-out in units of 10 milliseconds. */
 
-#define LEDBUTTON_LED             BSP_BOARD_LED_2                               /**< LED to indicate a change of state of the the Button characteristic on the peer. */
-
-#define LEDBUTTON_BUTTON_PIN      BSP_BUTTON_0                                  /**< Button that will write to the LED characteristic of the peer. */
-#define BUTTON_DETECTION_DELAY    APP_TIMER_TICKS(50)                           /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
+#define UUID16_SIZE               2                                     /**< Size of a UUID, in bytes. */
 
 
-static char const m_target_periph_name[] = "Nordic_Blinky";                     /**< Name of the device we try to connect to. This name is searched for in the scan report data*/
+NRF_BLE_GATT_DEF(m_gatt);                                               /**< GATT module instance. */
+BLE_LBS_C_ARRAY_DEF(m_lbs_c, NRF_SDH_BLE_CENTRAL_LINK_COUNT);           /**< LED Button client instances. */
+BLE_DB_DISCOVERY_ARRAY_DEF(m_db_disc, NRF_SDH_BLE_CENTRAL_LINK_COUNT);  /**< Database discovery module instances. */
 
-/** @brief Scan parameters requested for scanning and connection. */
+static char const m_target_periph_name[] = "Nordic_Blinky";             /**< Name of the device we try to connect to. This name is searched for in the scan report data*/
+
+/**@brief Scan parameters requested for scanning and connection. */
 static ble_gap_scan_params_t const m_scan_params =
 {
     .active   = 0,
     .interval = SCAN_INTERVAL,
     .window   = SCAN_WINDOW,
     .timeout  = SCAN_TIMEOUT,
-
     #if (NRF_SD_BLE_API_VERSION <= 2)
         .selective   = 0,
         .p_whitelist = NULL,
     #endif
-
     #if (NRF_SD_BLE_API_VERSION >= 3)
         .use_whitelist  = 0,
         .adv_dir_report = 0,
@@ -124,11 +121,6 @@ static ble_gap_conn_params_t const m_connection_param =
     (uint16_t)SLAVE_LATENCY,
     (uint16_t)SUPERVISION_TIMEOUT
 };
-
-static ble_lbs_c_t        m_ble_lbs_c[TOTAL_LINK_COUNT];           /**< Main structures used by the LED Button client module. */
-static uint8_t            m_ble_lbs_c_count;                       /**< Keeps track of how many instances of LED Button client module have been initialized. >*/
-static ble_db_discovery_t m_ble_db_discovery[TOTAL_LINK_COUNT];    /**< list of DB structures used by the database discovery module. */
-static nrf_ble_gatt_t     m_gatt;                                  /**< GATT module instance. */
 
 
 /**@brief Function to handle asserts in the SoftDevice.
@@ -194,22 +186,20 @@ static uint32_t adv_report_parse(uint8_t type, uint8_array_t * p_advdata, uint8_
 }
 
 
-/**@brief Function to start scanning.
- */
+/**@brief Function to start scanning. */
 static void scan_start(void)
 {
     ret_code_t ret;
 
     (void) sd_ble_gap_scan_stop();
 
-    NRF_LOG_INFO("Start scanning for device name %s.\r\n", (uint32_t)m_target_periph_name);
+    NRF_LOG_INFO("Start scanning for device name %s.", (uint32_t)m_target_periph_name);
     ret = sd_ble_gap_scan_start(&m_scan_params);
     APP_ERROR_CHECK(ret);
 
     ret = bsp_indication_set(BSP_INDICATE_SCANNING);
     APP_ERROR_CHECK(ret);
 }
-
 
 
 /**@brief Handles events coming from the LED Button central module.
@@ -225,8 +215,8 @@ static void lbs_c_evt_handler(ble_lbs_c_t * p_lbs_c, ble_lbs_c_evt_t * p_lbs_c_e
         {
             ret_code_t err_code;
 
-            NRF_LOG_INFO("LED Button service discovered on conn_handle 0x%x\r\n",
-                    p_lbs_c_evt->conn_handle);
+            NRF_LOG_INFO("LED Button service discovered on conn_handle 0x%x",
+                         p_lbs_c_evt->conn_handle);
 
             err_code = app_button_enable();
             APP_ERROR_CHECK(err_code);
@@ -238,9 +228,10 @@ static void lbs_c_evt_handler(ble_lbs_c_t * p_lbs_c, ble_lbs_c_evt_t * p_lbs_c_e
 
         case BLE_LBS_C_EVT_BUTTON_NOTIFICATION:
         {
-            NRF_LOG_INFO("Link 0x%x, Button state changed on peer to 0x%x\r\n",
-                           p_lbs_c_evt->conn_handle,
-                           p_lbs_c_evt->params.button.button_state);
+            NRF_LOG_INFO("Link 0x%x, Button state changed on peer to 0x%x",
+                         p_lbs_c_evt->conn_handle,
+                         p_lbs_c_evt->params.button.button_state);
+
             if (p_lbs_c_evt->params.button.button_state)
             {
                 bsp_board_led_on(LEDBUTTON_LED);
@@ -314,29 +305,21 @@ static void on_adv_report(ble_evt_t const * p_ble_evt)
     if (do_connect)
     {
         // Initiate connection.
-        err_code = sd_ble_gap_connect(peer_addr,
-                                      &m_scan_params, &m_connection_param,
-                                      CONN_CFG_TAG);
+        err_code = sd_ble_gap_connect(peer_addr, &m_scan_params, &m_connection_param, APP_BLE_CONN_CFG_TAG);
         if (err_code != NRF_SUCCESS)
         {
-            NRF_LOG_ERROR("Connection Request Failed, reason %d\r\n", err_code);
+            NRF_LOG_ERROR("Connection Request Failed, reason %d", err_code);
         }
     }
 }
 
-/**@brief Function for handling BLE Stack events concerning central applications.
+
+/**@brief Function for handling BLE events.
  *
- * @details This function keeps the connection handles of central applications up-to-date. It
- *          parses scanning reports, initiating a connection attempt to peripherals when a
- *          target UUID is found, and manages connection parameter update requests. Additionally,
- *          it updates the status of LEDs used to report central applications activity.
- *
- * @note Since this function updates connection handles, @ref BLE_GAP_EVT_DISCONNECTED events
- *       should be dispatched to the target application before invoking this function.
- *
- * @param[in] p_ble_evt  Bluetooth stack event.
+ * @param[in]   p_ble_evt   Bluetooth stack event.
+ * @param[in]   p_context   Unused.
  */
-static void on_ble_evt(ble_evt_t const * p_ble_evt)
+static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 {
     ret_code_t err_code;
 
@@ -349,18 +332,18 @@ static void on_ble_evt(ble_evt_t const * p_ble_evt)
         // discovery, update LEDs status and resume scanning if necessary.
         case BLE_GAP_EVT_CONNECTED:
         {
-            NRF_LOG_INFO("Connection 0x%x established, starting DB discovery.\r\n",
+            NRF_LOG_INFO("Connection 0x%x established, starting DB discovery.",
                          p_gap_evt->conn_handle);
 
-            APP_ERROR_CHECK_BOOL(p_gap_evt->conn_handle < TOTAL_LINK_COUNT);
+            APP_ERROR_CHECK_BOOL(p_gap_evt->conn_handle < NRF_SDH_BLE_CENTRAL_LINK_COUNT);
 
-            err_code = ble_lbs_c_handles_assign(&m_ble_lbs_c[p_gap_evt->conn_handle],
+            err_code = ble_lbs_c_handles_assign(&m_lbs_c[p_gap_evt->conn_handle],
                                                 p_gap_evt->conn_handle,
                                                 NULL);
             APP_ERROR_CHECK(err_code);
 
-            memset(&m_ble_db_discovery[p_gap_evt->conn_handle], 0x00, sizeof(ble_db_discovery_t));
-            err_code = ble_db_discovery_start(&m_ble_db_discovery[p_gap_evt->conn_handle],
+            memset(&m_db_disc[p_gap_evt->conn_handle], 0x00, sizeof(ble_db_discovery_t));
+            err_code = ble_db_discovery_start(&m_db_disc[p_gap_evt->conn_handle],
                                               p_gap_evt->conn_handle);
             if (err_code != NRF_ERROR_BUSY)
             {
@@ -370,7 +353,7 @@ static void on_ble_evt(ble_evt_t const * p_ble_evt)
             // Update LEDs status, and check if we should be looking for more
             // peripherals to connect to.
             bsp_board_led_on(CENTRAL_CONNECTED_LED);
-            if (ble_conn_state_n_centrals() == CENTRAL_LINK_COUNT)
+            if (ble_conn_state_n_centrals() == NRF_SDH_BLE_CENTRAL_LINK_COUNT)
             {
                 bsp_board_led_off(CENTRAL_SCANNING_LED);
             }
@@ -386,7 +369,7 @@ static void on_ble_evt(ble_evt_t const * p_ble_evt)
         // the LEDs status and start scanning again.
         case BLE_GAP_EVT_DISCONNECTED:
         {
-            NRF_LOG_INFO("LBS central link 0x%x disconnected (reason: 0x%x)\r\n",
+            NRF_LOG_INFO("LBS central link 0x%x disconnected (reason: 0x%x)",
                          p_gap_evt->conn_handle,
                          p_gap_evt->params.disconnected.reason);
 
@@ -416,23 +399,37 @@ static void on_ble_evt(ble_evt_t const * p_ble_evt)
             // We have not specified a timeout for scanning, so only connection attemps can timeout.
             if (p_gap_evt->params.timeout.src == BLE_GAP_TIMEOUT_SRC_CONN)
             {
-                NRF_LOG_DEBUG("Connection request timed out.\r\n");
+                NRF_LOG_DEBUG("Connection request timed out.");
             }
         } break;
 
         case BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST:
         {
-            NRF_LOG_DEBUG("BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST.\r\n");
+            NRF_LOG_DEBUG("BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST.");
             // Accept parameters requested by peer.
             err_code = sd_ble_gap_conn_param_update(p_gap_evt->conn_handle,
                                         &p_gap_evt->params.conn_param_update_request.conn_params);
             APP_ERROR_CHECK(err_code);
         } break;
 
+#if defined(S132)
+        case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
+        {
+            NRF_LOG_DEBUG("PHY update request.");
+            ble_gap_phys_t const phys =
+            {
+                .rx_phys = BLE_GAP_PHY_AUTO,
+                .tx_phys = BLE_GAP_PHY_AUTO,
+            };
+            err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
+            APP_ERROR_CHECK(err_code);
+        } break;
+#endif
+
         case BLE_GATTC_EVT_TIMEOUT:
         {
             // Disconnect on GATT Client timeout event.
-            NRF_LOG_DEBUG("GATT Client Timeout.\r\n");
+            NRF_LOG_DEBUG("GATT Client Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gattc_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
@@ -441,7 +438,7 @@ static void on_ble_evt(ble_evt_t const * p_ble_evt)
         case BLE_GATTS_EVT_TIMEOUT:
         {
             // Disconnect on GATT Server timeout event.
-            NRF_LOG_DEBUG("GATT Server Timeout.\r\n");
+            NRF_LOG_DEBUG("GATT Server Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gatts_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
@@ -454,35 +451,7 @@ static void on_ble_evt(ble_evt_t const * p_ble_evt)
 }
 
 
-/**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
- *
- * @details This function is called from the scheduler in the main loop after a BLE stack event has
- * been received.
- *
- * @param[in] p_ble_evt  Bluetooth stack event.
- */
-static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
-{
-    uint16_t conn_handle;
-    conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
-
-    ble_conn_state_on_ble_evt(p_ble_evt);
-    on_ble_evt(p_ble_evt);
-
-    // Make sure taht an invalid connection handle are not passed since
-    // our array of modules is bound to TOTAL_LINK_COUNT.
-    if (conn_handle < TOTAL_LINK_COUNT)
-    {
-        ble_db_discovery_on_ble_evt(&m_ble_db_discovery[conn_handle], p_ble_evt);
-        ble_lbs_c_on_ble_evt(&m_ble_lbs_c[conn_handle], p_ble_evt);
-    }
-
-    nrf_ble_gatt_on_ble_evt(&m_gatt, p_ble_evt);
-}
-
-
-/**@brief LED Button collector initialization.
- */
+/**@brief LED Button collector initialization. */
 static void lbs_c_init(void)
 {
     ret_code_t       err_code;
@@ -490,12 +459,11 @@ static void lbs_c_init(void)
 
     lbs_c_init_obj.evt_handler = lbs_c_evt_handler;
 
-    for (m_ble_lbs_c_count = 0; m_ble_lbs_c_count < TOTAL_LINK_COUNT; m_ble_lbs_c_count++)
+    for (uint32_t i = 0; i < NRF_SDH_BLE_CENTRAL_LINK_COUNT; i++)
     {
-        err_code = ble_lbs_c_init(&m_ble_lbs_c[m_ble_lbs_c_count], &lbs_c_init_obj);
+        err_code = ble_lbs_c_init(&m_lbs_c[i], &lbs_c_init_obj);
         APP_ERROR_CHECK(err_code);
     }
-    m_ble_lbs_c_count = 0;
 }
 
 
@@ -507,41 +475,21 @@ static void ble_stack_init(void)
 {
     ret_code_t err_code;
 
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    err_code = nrf_sdh_enable_request();
+    APP_ERROR_CHECK(err_code);
 
-    // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
-
+    // Configure the BLE stack using the default settings.
     // Fetch the start address of the application RAM.
     uint32_t ram_start = 0;
-    err_code = softdevice_app_ram_start_get(&ram_start);
-    APP_ERROR_CHECK(err_code);
-
-    // Overwrite some of the default configurations for the BLE stack.
-    ble_cfg_t ble_cfg;
-
-    // Configure the maximum number of connections.
-    memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = PERIPHERAL_LINK_COUNT;
-    ble_cfg.gap_cfg.role_count_cfg.central_role_count = CENTRAL_LINK_COUNT;
-    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = 1;
-    err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start);
-    APP_ERROR_CHECK(err_code);
-
-    memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.conn_cfg.params.gap_conn_cfg.conn_count     = PERIPHERAL_LINK_COUNT + CENTRAL_LINK_COUNT;
-    ble_cfg.conn_cfg.params.gap_conn_cfg.event_length   = BLE_GAP_EVENT_LENGTH_DEFAULT;
-    ble_cfg.conn_cfg.conn_cfg_tag                       = CONN_CFG_TAG;
-    err_code = sd_ble_cfg_set(BLE_CONN_CFG_GAP, &ble_cfg, ram_start);
+    err_code = nrf_sdh_ble_default_cfg_set(APP_BLE_CONN_CFG_TAG, &ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Enable BLE stack.
-    err_code = softdevice_enable(&ram_start);
+    err_code = nrf_sdh_ble_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
 
-    // Register with the SoftDevice handler module for BLE events.
-    err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
+    // Register a handler for BLE events.
+    NRF_SDH_BLE_OBSERVER(m_ble_observer, APP_BLE_OBSERVER_PRIO, ble_evt_handler, NULL);
 }
 
 
@@ -559,9 +507,9 @@ static ret_code_t led_status_send_to_all(uint8_t button_action)
 {
     ret_code_t err_code;
 
-    for (uint32_t i = 0; i < CENTRAL_LINK_COUNT; i++)
+    for (uint32_t i = 0; i< NRF_SDH_BLE_CENTRAL_LINK_COUNT; i++)
     {
-        err_code = ble_lbs_led_status_send(&m_ble_lbs_c[i], button_action);
+        err_code = ble_lbs_led_status_send(&m_lbs_c[i], button_action);
         if (err_code != NRF_SUCCESS &&
             err_code != BLE_ERROR_INVALID_CONN_HANDLE &&
             err_code != NRF_ERROR_INVALID_STATE)
@@ -584,11 +532,11 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
 
     switch (pin_no)
     {
-        case LEDBUTTON_BUTTON_PIN:
+        case LEDBUTTON_BUTTON:
             err_code = led_status_send_to_all(button_action);
             if (err_code == NRF_SUCCESS)
             {
-                NRF_LOG_INFO("LBS write LED state %d\r\n", button_action);
+                NRF_LOG_INFO("LBS write LED state %d", button_action);
             }
             break;
 
@@ -605,14 +553,13 @@ static void buttons_init(void)
 {
     ret_code_t err_code;
 
-   //The array must be static because a pointer to it will be saved in the button handler module.
+   // The array must be static because a pointer to it will be saved in the button handler module.
     static app_button_cfg_t buttons[] =
     {
-        {LEDBUTTON_BUTTON_PIN, false, BUTTON_PULL, button_event_handler}
+        {LEDBUTTON_BUTTON, false, BUTTON_PULL, button_event_handler}
     };
 
-    err_code = app_button_init(buttons, sizeof(buttons) / sizeof(buttons[0]),
-                               BUTTON_DETECTION_DELAY);
+    err_code = app_button_init(buttons, ARRAY_SIZE(buttons), BUTTON_DETECTION_DELAY);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -627,11 +574,11 @@ static void buttons_init(void)
  */
 static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
 {
-    NRF_LOG_DEBUG("call to ble_lbs_on_db_disc_evt for instance %d and link 0x%x!\r\n",
+    NRF_LOG_DEBUG("call to ble_lbs_on_db_disc_evt for instance %d and link 0x%x!",
                   p_evt->conn_handle,
                   p_evt->conn_handle);
 
-    ble_lbs_on_db_disc_evt(&m_ble_lbs_c[p_evt->conn_handle], p_evt);
+    ble_lbs_on_db_disc_evt(&m_lbs_c[p_evt->conn_handle], p_evt);
 }
 
 
@@ -659,6 +606,8 @@ static void log_init(void)
 {
     ret_code_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 }
 
 
@@ -692,10 +641,9 @@ int main(void)
     lbs_c_init();
     ble_conn_state_init();
 
-    NRF_LOG_INFO("Multilink example started.\r\n");
+    NRF_LOG_INFO("Multilink example started.");
 
-    // Start scanning for peripherals and initiate connection to devices which
-    // advertise.
+    // Start scanning for peripherals and initiate connection to devices which  advertise.
     scan_start();
 
     // Turn on the LED to signal scanning.
@@ -703,9 +651,8 @@ int main(void)
 
     for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
+        if (!NRF_LOG_PROCESS())
         {
-            // Wait for BLE events.
             power_manage();
         }
     }

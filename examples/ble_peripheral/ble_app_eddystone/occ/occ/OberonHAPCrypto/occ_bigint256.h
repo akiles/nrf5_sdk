@@ -47,7 +47,7 @@
 #ifndef occ_load_littleendian
 
 /**
- * load a word from 4 bytes in memory, unaligned little endian 
+ * load a word from 4 bytes in memory, unaligned little endian
  */
 uint32_t occ_load_littleendian(const uint8_t x[4]);
 
@@ -57,7 +57,7 @@ uint32_t occ_load_littleendian(const uint8_t x[4]);
 void occ_store_littleendian(uint8_t x[4], uint32_t u);
 
 /**
- * load a word from 4 bytes in memory, unaligned big endian 
+ * load a word from 4 bytes in memory, unaligned big endian
  */
 uint32_t occ_load_bigendian(const uint8_t x[4]);
 

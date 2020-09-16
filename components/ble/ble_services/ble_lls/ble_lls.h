@@ -55,8 +55,13 @@
  *          The service also provides a function for letting the application poll the current
  *          value of the Alert Level characteristic.
  *
- * @note The application must propagate BLE stack events to the Link Loss Service
- *       module by calling ble_lls_on_ble_evt() from the @ref softdevice_handler callback.
+ * @note    The application must register this module as BLE event observer using the
+ *          NRF_SDH_BLE_OBSERVER macro. Example:
+ *          @code
+ *              ble_lls_t instance;
+ *              NRF_SDH_BLE_OBSERVER(anything, BLE_LLS_BLE_OBSERVER_PRIO,
+ *                                   ble_lls_on_ble_evt, &instance);
+ *          @endcode
  *
  * @note Attention!
  *  To maintain compliance with Nordic Semiconductor ASA Bluetooth profile
@@ -69,10 +74,23 @@
 #include <stdint.h>
 #include "ble.h"
 #include "ble_srv_common.h"
+#include "nrf_sdh_ble.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**@brief   Macro for defining a ble_lls instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_LLS_DEF(_name)                                                                          \
+static ble_lls_t _name;                                                                             \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     BLE_LLS_BLE_OBSERVER_PRIO,                                                     \
+                     ble_lls_on_ble_evt, &_name)
+
 
 /**@brief Link Loss Service event type. */
 typedef enum
@@ -115,6 +133,7 @@ struct ble_lls_s
     uint16_t                  conn_handle;              /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
 };
 
+
 /**@brief Function for initializing the Link Loss Service.
  *
  * @param[out]  p_lls       Link Loss Service structure. This structure will have to be supplied by
@@ -126,19 +145,23 @@ struct ble_lls_s
  */
 uint32_t ble_lls_init(ble_lls_t * p_lls, const ble_lls_init_t * p_lls_init);
 
+
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @details Handles all events from the BLE stack of interest to the Link Loss Service.
  *
- * @param[in]   p_lls      Link Loss Service structure.
- * @param[in]   p_ble_evt  Event received from the BLE stack.
+ * @param[in]   p_ble_evt   Event received from the BLE stack.
+ * @param[in]   p_context   Link Loss Service structure.
  */
-void ble_lls_on_ble_evt(ble_lls_t * p_lls, ble_evt_t * p_ble_evt);
+void ble_lls_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
+
 
 /**@brief Function for getting current value of the Alert Level characteristic.
  *
  * @param[in]   p_lls          Link Loss Service structure.
  * @param[out]  p_alert_level  Current Alert Level value.
+ *
+ * @return      NRF_SUCCESS on success, otherwise an error code.
  */
 uint32_t ble_lls_alert_level_get(ble_lls_t * p_lls, uint8_t * p_alert_level);
 

@@ -46,7 +46,7 @@
 #include "nrf_drv_swi.h"
 #include "app_util_platform.h"
 
-#define NRF_LOG_MODULE_NAME "SWI"
+#define NRF_LOG_MODULE_NAME swi
 
 #if EGU_ENABLED
 #if SWI_CONFIG_LOG_ENABLED
@@ -58,10 +58,9 @@
 #endif //SWI_CONFIG_LOG_ENABLED
 #endif //EGU_ENABLED
 #include "nrf_log.h"
-#include "nrf_log_ctrl.h"
+NRF_LOG_MODULE_REGISTER();
 
 STATIC_ASSERT(SWI_COUNT > 0);
-STATIC_ASSERT(SWI_COUNT <= SWI_MAX);
 
 #ifdef SWI_DISABLE0
  #undef SWI_DISABLE0
@@ -137,93 +136,105 @@ STATIC_ASSERT(SWI_COUNT <= SWI_MAX);
                          + (SWI_DISABLE0 * SWI_DISABLE1 * SWI_DISABLE2 * SWI_DISABLE3 * SWI_DISABLE4  \
                             * SWI_DISABLE5) )
 
-#define SWI_ARRAY_SIZE   (SWI_COUNT - SWI_START_NUMBER)
-
 #if (SWI_COUNT <= SWI_START_NUMBER)
-  #undef SWI_ARRAY_SIZE
   #define SWI_ARRAY_SIZE 1
+#else
+  #define SWI_ARRAY_SIZE   (SWI_COUNT - SWI_START_NUMBER)
 #endif
 
 static nrf_drv_state_t   m_drv_state = NRF_DRV_STATE_UNINITIALIZED;
 static nrf_swi_handler_t m_swi_handlers[SWI_ARRAY_SIZE];
 
 #if !EGU_ENABLED
-static nrf_swi_flags_t   m_swi_flags[SWI_ARRAY_SIZE];
+  static nrf_swi_flags_t   m_swi_flags[SWI_ARRAY_SIZE];
+  #define SWI_EGU_MIXED   (0)
+  #define SWI_MAX_FLAGS   (16u)
+#elif ((SWI_ARRAY_SIZE > EGU_COUNT) && (SWI_COUNT > EGU_COUNT))
+  #define SWI_EGU_MIXED   (1u)
+  #define SWI_MAX_FLAGS   (16u)
+  static nrf_swi_flags_t   m_swi_flags[SWI_ARRAY_SIZE - EGU_COUNT];
+#else
+  #define SWI_EGU_MIXED   (0)
 #endif
 
+#if NRF_MODULE_ENABLED(EGU)
+#define SWI_EGU_CH_DEF(_idx_, _arg_)     CONCAT_3(EGU, _idx_, _CH_NUM),
+#endif
 /**@brief Function for getting max channel number of given SWI.
  *
  * @param[in]  swi                 SWI number.
  * @return     number of available channels.
  */
-#if NRF_MODULE_ENABLED(EGU)
-__STATIC_INLINE uint32_t swi_channel_number(nrf_swi_t swi)
+uint32_t swi_channel_number(nrf_swi_t swi)
 {
-    uint32_t retval = 0;
-    switch(swi){
-        case 0:
-                retval = EGU0_CH_NUM;
-                break;
-        case 1:
-                retval = EGU1_CH_NUM;
-                break;
-        case 2:
-                retval = EGU2_CH_NUM;
-                break;
-        case 3:
-                retval = EGU3_CH_NUM;
-                break;
-        case 4:
-                retval = EGU4_CH_NUM;
-                break;
-        case 5:
-                retval = EGU5_CH_NUM;
-                break;
-        default:
-            retval = 0;
-    }
+#if NRF_MODULE_ENABLED(EGU)
+    static uint8_t const egu_ch_count[] = {MACRO_REPEAT_FOR(EGU_COUNT, SWI_EGU_CH_DEF)};
 
-    return retval;
+    if (swi < EGU_COUNT)
+    {
+        return (uint32_t)egu_ch_count[swi];
+    }
+ #if SWI_EGU_MIXED
+    if (swi < SWI_COUNT)
+    {
+        return (uint32_t)SWI_MAX_FLAGS;
+    }
+ #endif
+#else // only SWI
+    if (swi < SWI_COUNT)
+    {
+        return (uint32_t)SWI_MAX_FLAGS;
+    }
+#endif  // NRF_MODULE_ENABLED(EGU)
+
+    return 0;
 }
-#else
-#define swi_channel_number(swi) SWI_MAX_FLAGS
-#endif
 
 #if NRF_MODULE_ENABLED(EGU)
-
 /**@brief Get the specific EGU instance. */
 __STATIC_INLINE NRF_EGU_Type * egu_instance_get(nrf_swi_t swi)
 {
-    return (NRF_EGU_Type*) (NRF_EGU0_BASE + (((uint32_t) swi) * (NRF_EGU1_BASE - NRF_EGU0_BASE)));
+#if SWI_EGU_MIXED
+    if (!(swi < EGU_COUNT))
+    {
+        return NULL;
+    }
+#endif
+    return (NRF_EGU_Type*) (NRF_EGU0_BASE +
+        (((uint32_t) swi) * (NRF_EGU1_BASE - NRF_EGU0_BASE)));
 }
 
-/**@brief Software interrupt handler (using EGU). */
-static void nrf_drv_swi_process(nrf_swi_t swi)
+/**@brief Software interrupt handler (can be using EGU). */
+static void nrf_drv_swi_process(nrf_swi_t swi, nrf_swi_flags_t flags)
 {
+    ASSERT(swi < SWI_COUNT);
+
     ASSERT(m_swi_handlers[swi - SWI_START_NUMBER]);
-    nrf_swi_flags_t flags   = 0;
     NRF_EGU_Type * NRF_EGUx = egu_instance_get(swi);
 
-    for (uint8_t i = 0; i < swi_channel_number(swi); ++i)
+    if (NRF_EGUx != NULL)
     {
-        nrf_egu_event_t egu_event = nrf_egu_event_triggered_get(NRF_EGUx, i);
-        if (nrf_egu_event_check(NRF_EGUx, egu_event))
+        flags = 0;
+        for (uint8_t i = 0; i < swi_channel_number(swi); ++i)
         {
-            flags |= (1u << i);
-            nrf_egu_event_clear(NRF_EGUx, egu_event);
+            nrf_egu_event_t egu_event = nrf_egu_event_triggered_get(NRF_EGUx, i);
+            if (nrf_egu_event_check(NRF_EGUx, egu_event))
+            {
+                flags |= (1u << i);
+                nrf_egu_event_clear(NRF_EGUx, egu_event);
+            }
         }
     }
-
+#if SWI_EGU_MIXED // this code is needed to handle SWI instances without EGU
+    else
+    {
+        m_swi_flags[swi - SWI_START_NUMBER - EGU_COUNT] &= ~flags;
+    }
+#endif
     m_swi_handlers[swi - SWI_START_NUMBER](swi, flags);
 }
 
-#define SWI_HANDLER_TEMPLATE(NUM)  void SWI##NUM##_EGU##NUM##_IRQHandler(void) \
-                        {                                                      \
-                            nrf_drv_swi_process(NUM);                          \
-                        }
-
 #else
-
 /**@brief Software interrupt handler (without EGU). */
 static void nrf_drv_swi_process(nrf_swi_t swi, nrf_swi_flags_t flags)
 {
@@ -231,38 +242,82 @@ static void nrf_drv_swi_process(nrf_swi_t swi, nrf_swi_flags_t flags)
     m_swi_flags[swi - SWI_START_NUMBER] &= ~flags;
     m_swi_handlers[swi - SWI_START_NUMBER](swi, flags);
 }
+#endif
 
-
-#define SWI_HANDLER_TEMPLATE(NUM)  void SWI##NUM##_IRQHandler(void)                            \
+#if NRF_MODULE_ENABLED(EGU)
+    #if SWI_EGU_MIXED
+        #define SWI_EGU_HANDLER_TEMPLATE(NUM)  void SWI##NUM##_EGU##NUM##_IRQHandler(void) \
+                        {                                                       \
+                            nrf_drv_swi_process(NUM, 0);                        \
+                        }
+        #define SWI_HANDLER_TEMPLATE(NUM)  void SWI##NUM##_IRQHandler(void)     \
+                        {                                                       \
+                            nrf_drv_swi_process((NUM),                          \
+                                                m_swi_flags[(NUM) - SWI_START_NUMBER - EGU_COUNT]);\
+                        }
+    #else
+        #define SWI_HANDLER_TEMPLATE(NUM)  void SWI##NUM##_EGU##NUM##_IRQHandler(void) \
+                        {                                                      \
+                            nrf_drv_swi_process(NUM, 0);                       \
+                        }
+    #endif  // SWI_EGU_MIXED
+#else
+    #define SWI_HANDLER_TEMPLATE(NUM)  void SWI##NUM##_IRQHandler(void)                        \
                         {                                                                      \
                             nrf_drv_swi_process((NUM), m_swi_flags[(NUM) - SWI_START_NUMBER]); \
                         }
+#endif  // NRF_MODULE_ENABLED(EGU)
 
-#endif
 
-#if SWI_DISABLE0 == 0
-SWI_HANDLER_TEMPLATE(0)
-#endif
+#if SWI_EGU_MIXED == 0
+    #if SWI_DISABLE0 == 0
+        SWI_HANDLER_TEMPLATE(0)
+    #endif
 
-#if SWI_DISABLE1 == 0
-SWI_HANDLER_TEMPLATE(1)
-#endif
+    #if SWI_DISABLE1 == 0
+        SWI_HANDLER_TEMPLATE(1)
+    #endif
 
-#if SWI_DISABLE2 == 0
-SWI_HANDLER_TEMPLATE(2)
-#endif
+    #if SWI_DISABLE2 == 0
+        SWI_HANDLER_TEMPLATE(2)
+    #endif
 
-#if SWI_DISABLE3 == 0
-SWI_HANDLER_TEMPLATE(3)
-#endif
+    #if SWI_DISABLE3 == 0
+        SWI_HANDLER_TEMPLATE(3)
+    #endif
 
-#if SWI_DISABLE4 == 0
-SWI_HANDLER_TEMPLATE(4)
-#endif
+    #if SWI_DISABLE4 == 0
+        SWI_HANDLER_TEMPLATE(4)
+    #endif
 
-#if SWI_DISABLE5 == 0
-SWI_HANDLER_TEMPLATE(5)
-#endif
+    #if SWI_DISABLE5 == 0
+        SWI_HANDLER_TEMPLATE(5)
+    #endif
+#else // SWI_EGU_MIXED == 1: SWI and SWI_EGU handlers
+    #if SWI_DISABLE0 == 0
+        SWI_EGU_HANDLER_TEMPLATE(0)
+    #endif
+
+    #if SWI_DISABLE1 == 0
+        SWI_EGU_HANDLER_TEMPLATE(1) // NRF52810_XXAA has 2xSWI-EGU and 4xSWI
+    #endif
+
+    #if SWI_DISABLE2 == 0
+        SWI_HANDLER_TEMPLATE(2)
+    #endif
+
+    #if SWI_DISABLE3 == 0
+        SWI_HANDLER_TEMPLATE(3)
+    #endif
+
+    #if SWI_DISABLE4 == 0
+        SWI_HANDLER_TEMPLATE(4)
+    #endif
+
+    #if SWI_DISABLE5 == 0
+        SWI_HANDLER_TEMPLATE(5)
+    #endif
+#endif // SWI_EGU_MIXED == 0
 
 #define AVAILABLE_SWI (0x3FuL & ~(                                                       \
                          (SWI_DISABLE0 << 0) | (SWI_DISABLE1 << 1) | (SWI_DISABLE2 << 2) \
@@ -310,11 +365,11 @@ ret_code_t nrf_drv_swi_init(void)
     {
         m_drv_state = NRF_DRV_STATE_INITIALIZED;
         err_code = NRF_SUCCESS;
-        NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     err_code = NRF_ERROR_MODULE_ALREADY_INITIALIZED;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -329,7 +384,10 @@ void nrf_drv_swi_uninit(void)
         nrf_drv_common_irq_disable(nrf_drv_swi_irq_of((nrf_swi_t) i));
 #if NRF_MODULE_ENABLED(EGU)
         NRF_EGU_Type * NRF_EGUx = egu_instance_get(i);
-        nrf_egu_int_disable(NRF_EGUx, NRF_EGU_INT_ALL);
+        if (NRF_EGUx != NULL)
+        {
+            nrf_egu_int_disable(NRF_EGUx, NRF_EGU_INT_ALL);
+        }
 #endif
     }
     m_drv_state = NRF_DRV_STATE_UNINITIALIZED;
@@ -362,22 +420,31 @@ ret_code_t nrf_drv_swi_alloc(nrf_swi_t * p_swi, nrf_swi_handler_t event_handler,
             *p_swi = (nrf_swi_t) i;
             nrf_drv_common_irq_enable(nrf_drv_swi_irq_of(*p_swi), priority);
 #if NRF_MODULE_ENABLED(EGU)
-            if(event_handler != NULL)
+            if ((event_handler != NULL) && (i < EGU_COUNT))
             {
                 NRF_EGU_Type * NRF_EGUx = egu_instance_get(i);
-                nrf_egu_int_enable(NRF_EGUx, NRF_EGU_INT_ALL);
+                if (NRF_EGUx != NULL)
+                {
+                    nrf_egu_int_enable(NRF_EGUx, NRF_EGU_INT_ALL);
+                }
             }
-#endif
+    #if SWI_EGU_MIXED
+            if (i >= EGU_COUNT)
+            {
+                ASSERT(event_handler);
+            }
+    #endif
+#endif // NRF_MODULE_ENABLED(EGU)
             err_code = NRF_SUCCESS;
         }
         CRITICAL_REGION_EXIT();
         if (err_code == NRF_SUCCESS)
         {
-            NRF_LOG_INFO("SWI channel allocated: %d.\r\n", (*p_swi));
+            NRF_LOG_INFO("SWI channel allocated: %d.", (*p_swi));
             break;
         }
     }
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -388,11 +455,25 @@ void nrf_drv_swi_trigger(nrf_swi_t swi, uint8_t flag_number)
     ASSERT(flag_number < swi_channel_number(swi));
 #if NRF_MODULE_ENABLED(EGU)
     NRF_EGU_Type * NRF_EGUx = egu_instance_get(swi);
-    nrf_egu_task_trigger(NRF_EGUx, nrf_egu_task_trigger_get(NRF_EGUx, flag_number));
+    if (NRF_EGUx != NULL)
+    {
+        nrf_egu_task_trigger(NRF_EGUx, nrf_egu_task_trigger_get(NRF_EGUx, flag_number));
+    }
+#if SWI_EGU_MIXED
+    else
+    {
+        if (swi < SWI_COUNT)
+        {
+            /* for swi < EGU_COUNT above code will be executed */
+            m_swi_flags[swi - SWI_START_NUMBER - EGU_COUNT] |= (1 << flag_number);
+            NVIC_SetPendingIRQ(nrf_drv_swi_irq_of(swi));
+        }
+    }
+#endif // SWI_EGU_MIXED
 #else
     m_swi_flags[swi - SWI_START_NUMBER] |= (1 << flag_number);
     NVIC_SetPendingIRQ(nrf_drv_swi_irq_of(swi));
-#endif
+#endif // NRF_MODULE_ENABLED(EGU)
 }
 
 
@@ -401,13 +482,27 @@ void nrf_drv_swi_trigger(nrf_swi_t swi, uint8_t flag_number)
 uint32_t nrf_drv_swi_task_trigger_address_get(nrf_swi_t swi, uint8_t channel)
 {
     NRF_EGU_Type * NRF_EGUx = egu_instance_get(swi);
-    return (uint32_t) nrf_egu_task_trigger_address_get(NRF_EGUx, channel);
+    if (NRF_EGUx != NULL)
+    {
+        return (uint32_t)nrf_egu_task_trigger_address_get(NRF_EGUx, channel);
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 uint32_t nrf_drv_swi_event_triggered_address_get(nrf_swi_t swi, uint8_t channel)
 {
     NRF_EGU_Type * NRF_EGUx = egu_instance_get(swi);
-    return (uint32_t) nrf_egu_event_triggered_address_get(NRF_EGUx, channel);
+    if (NRF_EGUx != NULL)
+    {
+        return (uint32_t)nrf_egu_event_triggered_address_get(NRF_EGUx, channel);
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 #endif

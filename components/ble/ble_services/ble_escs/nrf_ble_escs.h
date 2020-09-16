@@ -185,13 +185,12 @@ typedef struct nrf_ble_escs_s nrf_ble_escs_t;
 typedef void (*nrf_ble_escs_write_evt_handler_t)(nrf_ble_escs_t        * p_escs,
                                                  uint16_t                uuid,
                                                  uint16_t                value_handle,
-                                                 uint8_t               * p_data,
+                                                 uint8_t const         * p_data,
                                                  uint16_t                length);
 
 typedef void (*nrf_ble_escs_read_evt_handler_t)(nrf_ble_escs_t        * p_escs,
                                                 uint16_t                uuid,
-                                                uint16_t                value_handle
-                                               );
+                                                uint16_t                value_handle);
 
 /**@brief Eddystone Configuration Service initialization structure.
  *
@@ -229,6 +228,7 @@ struct nrf_ble_escs_s
     nrf_ble_escs_lock_state_read_t * p_lock_state;
 };
 
+
 /**@brief Function for initializing the Eddystone Configuration Service.
  *
  * @param[out] p_escs     Eddystone Configuration Service structure. This structure must be supplied
@@ -254,7 +254,7 @@ ret_code_t nrf_ble_escs_init(nrf_ble_escs_t * p_escs, const nrf_ble_escs_init_t 
  * @retval                NRF_ERROR_NULL If any of the arguments given are NULL.
  * @retval                NRF_SUCCESS otherwise.
  */
-ret_code_t nrf_ble_escs_on_ble_evt(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt);
+ret_code_t nrf_ble_escs_on_ble_evt(nrf_ble_escs_t * p_escs, ble_evt_t const * p_ble_evt);
 
 /** @} */
 

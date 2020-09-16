@@ -41,7 +41,7 @@
  *
  * @defgroup sdk_nrf_dfu_req_handler Request handling
  * @{
- * @ingroup  sdk_nrf_dfu
+ * @ingroup  nrf_dfu
  */
 
 #ifndef NRF_DFU_REQ_HANDLER_H__

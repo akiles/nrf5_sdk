@@ -40,7 +40,7 @@
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(NRF_CRYPTO)
 
-#if defined(NRF_CRYPTO_BACKEND_MICRO_ECC) && (NRF_CRYPTO_BACKEND_MICRO_ECC == 1)
+#if NRF_CRYPTO_BACKEND_MICRO_ECC
 
 #include "micro_ecc_lib_init.h"
 #include "nrf_crypto_rng.h"
@@ -52,7 +52,7 @@ uint32_t nrf_crypto_init(void)
 {
     uint32_t ret_val = NRF_SUCCESS;
 
-#if defined(NRF_CRYPTO_SUPPORTS_RNG) && (NRF_CRYPTO_SUPPORTS_RNG == 1)
+#if NRF_CRYPTO_BACKEND_MICRO_ECC_RNG
 
     ret_val = nrf_crypto_rng_init();
 
@@ -70,11 +70,13 @@ uint32_t nrf_crypto_init(void)
     return ret_val;
 }
 
+
 uint32_t nrf_crypto_uninit(void)
 {
     // Not possible in this nrf_crypto backend.
     return NRF_SUCCESS;
 }
+
 
 bool nrf_crypto_is_initialized(void)
 {
@@ -82,5 +84,4 @@ bool nrf_crypto_is_initialized(void)
 }
 
 #endif // NRF_CRYPTO_BACKEND_MICRO_ECC
-
 #endif // NRF_MODULE_ENABLED(NRF_CRYPTO)

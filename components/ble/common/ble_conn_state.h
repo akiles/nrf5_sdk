@@ -59,9 +59,6 @@
  *       such as the role, can still be queried until the next time a new connection is established
  *       to any device.
  *
- *          To function properly, this module must be provided with BLE events from the SoftDevice
- *          through the @ref ble_conn_state_on_ble_evt() function. This module should be the first
- *          to receive BLE events if they are dispatched to multiple modules.
  */
 
 #ifndef BLE_CONN_STATE_H__
@@ -85,7 +82,8 @@ typedef enum
     BLE_CONN_STATUS_CONNECTED,     /**< The connection handle refers to an active connection. */
 } ble_conn_state_status_t;
 
-#define BLE_CONN_STATE_N_USER_FLAGS 24  /**< The number of available user flags. */
+#define BLE_CONN_STATE_MAX_CONNECTIONS 20  /**< The maximum number of connections supported. */
+#define BLE_CONN_STATE_N_USER_FLAGS    24  /**< The number of available user flags. */
 
 
 /**@brief One ID for each user flag collection.
@@ -133,13 +131,6 @@ typedef enum
  * @details This function sets all states to their default, removing all records of connection handles.
  */
 void ble_conn_state_init(void);
-
-
-/**@brief Function for providing BLE SoftDevice events to the connection state module.
- *
- * @param[in]  p_ble_evt    The SoftDevice event.
- */
-void ble_conn_state_on_ble_evt(ble_evt_t * p_ble_evt);
 
 
 /**@brief Function for querying whether a connection handle represents a valid connection.
@@ -252,6 +243,21 @@ sdk_mapped_flags_key_list_t ble_conn_state_central_handles(void);
  *          the role of local device is @ref BLE_GAP_ROLE_PERIPH.
  */
 sdk_mapped_flags_key_list_t ble_conn_state_periph_handles(void);
+
+
+/**@brief Function for translating a connection handle to a value that can be used as an array index.
+ *
+ * @details Function for mapping connection handles onto the range <0 - MAX_CONNECTIONS>.
+ *
+ * @note The index will be the same as long as a connection is invalid. A subsequent connection with
+ *       the same connection handle might have a different index.
+ *
+ * @param[in]  conn_handle  The connection for which to retrieve an index.
+ *
+ * @return  An index unique to this connection. Or @ref BLE_CONN_STATE_MAX_CONNECTIONS if
+ *          @p conn_handle refers to an invalid connection.
+ */
+uint8_t ble_conn_state_conn_idx(uint16_t conn_handle);
 
 
 /**@brief Function for obtaining exclusive access to one of the user flag collections.

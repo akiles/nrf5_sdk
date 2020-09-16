@@ -110,7 +110,7 @@ typedef struct
  *                           @note This does not do a data copy. It assumes the data pointed to by
  *                                 p_data is persistant until no longer needed.
  */
-void ble_racp_decode(uint8_t data_len, uint8_t * p_data, ble_racp_value_t * p_racp_val);
+void ble_racp_decode(uint8_t data_len, uint8_t const * p_data, ble_racp_value_t * p_racp_val);
 
 /**@brief Function for encoding a Record Access Control Point response.
  *

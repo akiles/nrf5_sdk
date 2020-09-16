@@ -52,6 +52,9 @@
 #include "bsp.h"
 #include "nrf_delay.h"
 #include "nrf_gpio.h"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define RAM_MEMORY_TEST_ADDRESS (0x20002000UL)  /**< Address in RAM where test word (RAM_MEMORY_TEST_WORD) is written before System OFF and checked after System RESET.*/
 #define RAM_MEMORY_TEST_WORD    (0xFEEDBEEFUL)  /**< Test word that is written to RAM address RAM_MEMORY_TEST_ADDRESS. */
@@ -118,6 +121,9 @@ int main(void)
     uint32_t            loop_count = 0;
 
     bsp_board_leds_init();
+
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 
     // This pin is used for waking up from System OFF and is active low, enabling sense capabilities.
     nrf_gpio_cfg_sense_input(PIN_GPIO_WAKEUP, BUTTON_PULL, NRF_GPIO_PIN_SENSE_LOW);

@@ -40,7 +40,7 @@
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(NRF_CRYPTO)
 
-#if defined(NRF_CRYPTO_BACKEND_MICRO_ECC) && (NRF_CRYPTO_BACKEND_MICRO_ECC == 1)
+#if NRF_CRYPTO_BACKEND_MICRO_ECC
 
 #include "micro_ecc_lib_shared.h"
 #include "nrf_crypto_types.h"
@@ -48,7 +48,7 @@
 
 bool micro_ecc_curve_domain_get(nrf_ecc_curve_type_t curve_type, struct uECC_Curve_t const ** p_curve)
 {
-    switch(curve_type)
+    switch (curve_type)
     {
 #if defined(uECC_SUPPORTS_secp160r1) && uECC_SUPPORTS_secp160r1 == 1
         case NRF_CRYPTO_CURVE_SECP160R1:

@@ -49,8 +49,13 @@
  *          If an event handler is supplied by the application, the Health Thermometer
  *          Service will generate Health Thermometer Service events to the application.
  *
- * @note The application must propagate BLE stack events to the Health Thermometer Service
- *       module by calling ble_hts_on_ble_evt() from the @ref softdevice_handler function.
+ * @note    The application must register this module as BLE event observer using the
+ *          NRF_SDH_BLE_OBSERVER macro. Example:
+ *          @code
+ *              ble_hts_t instance;
+ *              NRF_SDH_BLE_OBSERVER(anything, BLE_HTS_BLE_OBSERVER_PRIO,
+ *                                   ble_hts_on_ble_evt, &instance);
+ *          @endcode
  *
  * @note Attention!
  *  To maintain compliance with Nordic Semiconductor ASA Bluetooth profile
@@ -65,21 +70,34 @@
 #include "ble.h"
 #include "ble_srv_common.h"
 #include "ble_date_time.h"
+#include "nrf_sdh_ble.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/**@brief   Macro for defining a ble_hts instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_HTS_DEF(_name)                                                                          \
+static ble_hts_t _name;                                                                             \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     BLE_HTS_BLE_OBSERVER_PRIO,                                                     \
+                     ble_hts_on_ble_evt, &_name)
+
 // Temperature Type measurement locations
-#define BLE_HTS_TEMP_TYPE_ARMPIT      1
-#define BLE_HTS_TEMP_TYPE_BODY        2
-#define BLE_HTS_TEMP_TYPE_EAR         3
-#define BLE_HTS_TEMP_TYPE_FINGER      4
-#define BLE_HTS_TEMP_TYPE_GI_TRACT    5
-#define BLE_HTS_TEMP_TYPE_MOUTH       6
-#define BLE_HTS_TEMP_TYPE_RECTUM      7
-#define BLE_HTS_TEMP_TYPE_TOE         8
-#define BLE_HTS_TEMP_TYPE_EAR_DRUM    9
+#define BLE_HTS_TEMP_TYPE_ARMPIT        1
+#define BLE_HTS_TEMP_TYPE_BODY          2
+#define BLE_HTS_TEMP_TYPE_EAR           3
+#define BLE_HTS_TEMP_TYPE_FINGER        4
+#define BLE_HTS_TEMP_TYPE_GI_TRACT      5
+#define BLE_HTS_TEMP_TYPE_MOUTH         6
+#define BLE_HTS_TEMP_TYPE_RECTUM        7
+#define BLE_HTS_TEMP_TYPE_TOE           8
+#define BLE_HTS_TEMP_TYPE_EAR_DRUM      9
+
 
 /**@brief Health Thermometer Service event type. */
 typedef enum
@@ -145,6 +163,7 @@ typedef struct ble_hts_meas_s
     uint8_t                      temp_type;                                 /**< Temperature Type. */
 } ble_hts_meas_t;
 
+
 /**@brief Function for initializing the Health Thermometer Service.
  *
  * @param[out]  p_hts       Health Thermometer Service structure. This structure will have to
@@ -156,14 +175,16 @@ typedef struct ble_hts_meas_s
  */
 uint32_t ble_hts_init(ble_hts_t * p_hts, const ble_hts_init_t * p_hts_init);
 
+
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @details Handles all events from the BLE stack of interest to the Health Thermometer Service.
  *
- * @param[in]   p_hts      Health Thermometer Service structure.
- * @param[in]   p_ble_evt  Event received from the BLE stack.
+ * @param[in]   p_ble_evt   Event received from the BLE stack.
+ * @param[in]   p_context   Health Thermometer Service structure.
  */
-void ble_hts_on_ble_evt(ble_hts_t * p_hts, ble_evt_t * p_ble_evt);
+void ble_hts_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
+
 
 /**@brief Function for sending health thermometer measurement if indication has been enabled.
  *
@@ -177,6 +198,7 @@ void ble_hts_on_ble_evt(ble_hts_t * p_hts, ble_evt_t * p_ble_evt);
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
 uint32_t ble_hts_measurement_send(ble_hts_t * p_hts, ble_hts_meas_t * p_hts_meas);
+
 
 /**@brief Function for checking if indication of Temperature Measurement is currently enabled.
  *

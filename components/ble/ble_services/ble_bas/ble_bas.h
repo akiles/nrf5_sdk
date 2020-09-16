@@ -55,14 +55,18 @@
  *          If an event handler is supplied by the application, the Battery Service will
  *          generate Battery Service events to the application.
  *
- * @note The application must propagate BLE stack events to the Battery Service module by calling
- *       ble_bas_on_ble_evt() from the @ref softdevice_handler callback.
+ * @note    The application must register this module as BLE event observer using the
+ *          NRF_SDH_BLE_OBSERVER macro. Example:
+ *          @code
+ *              ble_bas_t instance;
+ *              NRF_SDH_BLE_OBSERVER(anything, BLE_BAS_BLE_OBSERVER_PRIO,
+ *                                   ble_bas_on_ble_evt, &instance);
+ *          @endcode
  *
  * @note Attention!
  *  To maintain compliance with Nordic Semiconductor ASA Bluetooth profile
  *  qualification listings, this section of source code must not be modified.
  */
-
 #ifndef BLE_BAS_H__
 #define BLE_BAS_H__
 
@@ -70,22 +74,35 @@
 #include <stdbool.h>
 #include "ble.h"
 #include "ble_srv_common.h"
+#include "nrf_sdh_ble.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/**@brief   Macro for defining a ble_bas instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_BAS_DEF(_name)                                                                          \
+static ble_bas_t _name;                                                                             \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     BLE_BAS_BLE_OBSERVER_PRIO,                                                     \
+                     ble_bas_on_ble_evt, &_name)
+
+
 /**@brief Battery Service event type. */
 typedef enum
 {
-    BLE_BAS_EVT_NOTIFICATION_ENABLED,                             /**< Battery value notification enabled event. */
-    BLE_BAS_EVT_NOTIFICATION_DISABLED                             /**< Battery value notification disabled event. */
+    BLE_BAS_EVT_NOTIFICATION_ENABLED,   /**< Battery value notification enabled event. */
+    BLE_BAS_EVT_NOTIFICATION_DISABLED   /**< Battery value notification disabled event. */
 } ble_bas_evt_type_t;
 
 /**@brief Battery Service event. */
 typedef struct
 {
-    ble_bas_evt_type_t evt_type;                                  /**< Type of event. */
+    ble_bas_evt_type_t evt_type;        /**< Type of event. */
 } ble_bas_evt_t;
 
 // Forward declaration of the ble_bas_t type.
@@ -118,6 +135,7 @@ struct ble_bas_s
     bool                          is_notification_supported;      /**< TRUE if notification of Battery Level is supported. */
 };
 
+
 /**@brief Function for initializing the Battery Service.
  *
  * @param[out]  p_bas       Battery Service structure. This structure will have to be supplied by
@@ -129,6 +147,7 @@ struct ble_bas_s
  */
 uint32_t ble_bas_init(ble_bas_t * p_bas, const ble_bas_init_t * p_bas_init);
 
+
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @details Handles all events from the BLE stack of interest to the Battery Service.
@@ -138,10 +157,11 @@ uint32_t ble_bas_init(ble_bas_t * p_bas, const ble_bas_init_t * p_bas_init);
  *       battery level has changed while the service has been disconnected from a bonded
  *       client.
  *
- * @param[in]   p_bas      Battery Service structure.
- * @param[in]   p_ble_evt  Event received from the BLE stack.
+ * @param[in]   p_ble_evt   Event received from the BLE stack.
+ * @param[in]   p_context   Battery Service structure.
  */
-void ble_bas_on_ble_evt(ble_bas_t * p_bas, ble_evt_t * p_ble_evt);
+void ble_bas_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
+
 
 /**@brief Function for updating the battery level.
  *

@@ -49,9 +49,13 @@
  *           module. These APIs and types can be used by the application to perform discovery of
  *           LED Button Service at the peer and interact with it.
  *
- * @note     The application must propagate BLE stack events to this module by calling
- *           ble_lbs_c_on_ble_evt().
- *
+ * @note    The application must register this module as BLE event observer using the
+ *          NRF_SDH_BLE_OBSERVER macro. Example:
+ *          @code
+ *              ble_lbs_c_t instance;
+ *              NRF_SDH_BLE_OBSERVER(anything, BLE_LBS_C_BLE_OBSERVER_PRIO,
+ *                                   ble_lbs_c_on_ble_evt, &instance);
+ *          @endcode
  */
 
 #ifndef BLE_LBS_C_H__
@@ -60,10 +64,34 @@
 #include <stdint.h>
 #include "ble.h"
 #include "ble_db_discovery.h"
+#include "nrf_sdh_ble.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**@brief   Macro for defining a ble_lbs_c instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_LBS_C_DEF(_name)                                                                        \
+static ble_lbs_c_t _name;                                                                           \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     BLE_LBS_C_BLE_OBSERVER_PRIO,                                                   \
+                     ble_lbs_c_on_ble_evt, &_name)
+
+/**@brief   Macro for defining multiple ble_lbs_c instances.
+ *
+ * @param   _name   Name of the array of instances.
+ * @param   _cnt    Number of instances to define.
+ */
+#define BLE_LBS_C_ARRAY_DEF(_name, _cnt)                                                            \
+static ble_lbs_c_t _name[_cnt];                                                                     \
+NRF_SDH_BLE_OBSERVERS(_name ## _obs,                                                                \
+                      BLE_LBS_C_BLE_OBSERVER_PRIO,                                                  \
+                      ble_lbs_c_on_ble_evt, &_name, _cnt)
+
 
 #define LBS_UUID_BASE        {0x23, 0xD1, 0xBC, 0xEA, 0x5F, 0x78, 0x23, 0x15, \
                               0xDE, 0xEF, 0x12, 0x12, 0x00, 0x00, 0x00, 0x00}
@@ -78,13 +106,11 @@ typedef enum
     BLE_LBS_C_EVT_BUTTON_NOTIFICATION      /**< Event indicating that a notification of the LED Button Button characteristic has been received from the peer. */
 } ble_lbs_c_evt_type_t;
 
-
 /**@brief Structure containing the Button value received from the peer. */
 typedef struct
 {
     uint8_t button_state;  /**< Button Value. */
 } ble_button_t;
-
 
 /**@brief Structure containing the handles related to the LED Button Service found on the peer. */
 typedef struct
@@ -93,7 +119,6 @@ typedef struct
     uint16_t button_handle;       /**< Handle of the Button characteristic as provided by the SoftDevice. */
     uint16_t led_handle;          /**< Handle of the LED characteristic as provided by the SoftDevice. */
 } lbs_db_t;
-
 
 /**@brief LED Button Event structure. */
 typedef struct
@@ -107,7 +132,6 @@ typedef struct
     } params;
 } ble_lbs_c_evt_t;
 
-
 // Forward declaration of the ble_lbs_c_t type.
 typedef struct ble_lbs_c_s ble_lbs_c_t;
 
@@ -117,7 +141,6 @@ typedef struct ble_lbs_c_s ble_lbs_c_t;
  *          of this module in order to receive events.
  */
 typedef void (* ble_lbs_c_evt_handler_t) (ble_lbs_c_t * p_ble_lbs_c, ble_lbs_c_evt_t * p_evt);
-
 
 /**@brief LED Button Client structure. */
 struct ble_lbs_c_s
@@ -151,16 +174,17 @@ typedef struct
  */
 uint32_t ble_lbs_c_init(ble_lbs_c_t * p_ble_lbs_c, ble_lbs_c_init_t * p_ble_lbs_c_init);
 
+
 /**@brief Function for handling BLE events from the SoftDevice.
  *
  * @details This function will handle the BLE events received from the SoftDevice. If a BLE event
  *          is relevant to the LED Button Client module, then it uses it to update interval
  *          variables and, if necessary, send events to the application.
  *
- * @param[in] p_ble_lbs_c Pointer to the LED button client structure.
- * @param[in] p_ble_evt   Pointer to the BLE event.
+ * @param[in] p_ble_evt     Pointer to the BLE event.
+ * @param[in] p_context     Pointer to the LED button client structure.
  */
-void ble_lbs_c_on_ble_evt(ble_lbs_c_t * p_ble_lbs_c, const ble_evt_t * p_ble_evt);
+void ble_lbs_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 
 
 /**@brief Function for requesting the peer to start sending notification of the Button

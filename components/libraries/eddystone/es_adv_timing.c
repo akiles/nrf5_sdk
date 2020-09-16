@@ -137,7 +137,7 @@ static void adv_interval_timeout(void * p_context)
         adv_slot_timeout(NULL);
     }
 
-    if(m_non_conn_adv_active)
+    if (m_non_conn_adv_active)
     {
         uint32_t err_code = app_timer_start(m_es_adv_interval_timer,
                                    APP_TIMER_TICKS(m_current_adv_interval),

@@ -45,9 +45,9 @@
 #include "buttons_m.h"
 #include "app_timer.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 /**@brief Function for initializing nrf logger.
  */
@@ -55,6 +55,8 @@ static void logs_init()
 {
     ret_code_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 }
 
 /**@brief Function for initializing application timer.
@@ -78,9 +80,9 @@ int main(void)
     peer_manager_init(true);
     nfc_init();
 
-    NRF_LOG_INFO("Heart Rate Monitor Start!\r\n");
+    NRF_LOG_INFO("Heart Rate Monitor Start!");
 
-    while(true)
+    while (true)
     {
         if (NRF_LOG_PROCESS() == false)
         {

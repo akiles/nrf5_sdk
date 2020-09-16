@@ -154,9 +154,12 @@ typedef struct
 /**
  * @brief Macro for creating and initializing an NFC NDEF record descriptor for a generic record.
  *
- * This macro creates and initializes a static instance of type @ref nfc_ndef_record_desc_t.
+ * This macro creates and initializes an instance of type @ref nfc_ndef_record_desc_t.
  *
  * Use the macro @ref NFC_NDEF_GENERIC_RECORD_DESC to access the NDEF record descriptor instance.
+ *
+ * @note The record descriptor is declared as automatic variable, which implies that
+ *       the NDEF record encoding must be done in the same variable scope.
  *
  * @param[in] NAME                  Name of the created descriptor instance.
  * @param[in] TNF                   Type Name Format (TNF) value for the record.
@@ -176,7 +179,7 @@ typedef struct
                                          TYPE_LEN,                              \
                                          P_PAYLOAD_CONSTRUCTOR,                 \
                                          P_PAYLOAD_DESCRIPTOR)                  \
-    static nfc_ndef_record_desc_t NAME##_ndef_generic_record_desc =             \
+    nfc_ndef_record_desc_t NAME##_ndef_generic_record_desc =                    \
     {                                                                           \
         .tnf = TNF,                                                             \
                                                                                 \
@@ -204,6 +207,9 @@ typedef struct
  *
  * Use the macro @ref NFC_NDEF_RECORD_BIN_DATA to access the NDEF record descriptor instance.
  *
+ * @note The record descriptor is declared as automatic variable, which implies that
+ *       the NDEF record encoding must be done in the same variable scope.
+ *
  * @param[in] NAME        Name of the created descriptor instance.
  * @param[in] TNF         Type Name Format (TNF) value for the record.
  * @param[in] P_ID        Pointer to the ID string.
@@ -220,13 +226,13 @@ typedef struct
                                      TYPE_LEN,                                          \
                                      P_PAYLOAD,                                         \
                                      PAYLOAD_LEN)                                       \
-    static nfc_ndef_bin_payload_desc_t NAME##_nfc_ndef_bin_payload_desc =               \
+    nfc_ndef_bin_payload_desc_t NAME##_nfc_ndef_bin_payload_desc =                      \
     {                                                                                   \
         .p_payload      = P_PAYLOAD,                                                    \
         .payload_length = PAYLOAD_LEN                                                   \
     };                                                                                  \
                                                                                         \
-    static nfc_ndef_record_desc_t NAME##_nfc_ndef_bin_record_desc =                     \
+    nfc_ndef_record_desc_t NAME##_nfc_ndef_bin_record_desc =                            \
     {                                                                                   \
         .tnf = TNF,                                                                     \
                                                                                         \

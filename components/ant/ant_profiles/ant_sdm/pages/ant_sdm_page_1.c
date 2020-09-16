@@ -43,13 +43,13 @@
 #include "ant_sdm_page_1.h"
 #include "ant_sdm_utils.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_SDM_PAGE_1"
-#if ANT_SDM_PAGE_1_LOG_ENABLED
-#define NRF_LOG_LEVEL       ANT_SDM_PAGE_1_LOG_LEVEL
-#define NRF_LOG_INFO_COLOR  ANT_SDM_PAGE_1_INFO_COLOR
-#else // ANT_SDM_PAGE_1_LOG_ENABLED
+#define NRF_LOG_MODULE_NAME ant_sdm
+#if ANT_SDM_LOG_ENABLED
+#define NRF_LOG_LEVEL       ANT_SDM_LOG_LEVEL
+#define NRF_LOG_INFO_COLOR  ANT_SDM_INFO_COLOR
+#else // ANT_SDM_LOG_ENABLED
 #define NRF_LOG_LEVEL       0
-#endif // ANT_SDM_PAGE_1_LOG_ENABLED
+#endif // ANT_SDM_LOG_ENABLED
 #include "nrf_log.h"
 
 /**@brief SDM page 1 data layout structure. */
@@ -82,16 +82,16 @@ static void page_1_data_log(ant_sdm_page1_data_t const  * p_page_data,
     uint16_t update_latency = ANT_SDM_UPDATE_LATENCY_RESCALE(p_page_data->update_latency);
     uint32_t time           = ANT_SDM_TIME_RESCALE(p_page_data->time);
 
-    NRF_LOG_INFO("Update latency                        %u.%03u s\r\n",
+    NRF_LOG_INFO("Update latency                        %u.%03u s",
               update_latency / ANT_SDM_UPDATE_LATENCY_DISP_PRECISION,
               update_latency % ANT_SDM_UPDATE_LATENCY_DISP_PRECISION);
-    NRF_LOG_INFO("Time                                  %u.%03u s\r\n",
+    NRF_LOG_INFO("Time                                  %u.%03u s",
               (unsigned int)(time / ANT_SDM_TIME_DISP_PRECISION),
               (unsigned int)(time % ANT_SDM_TIME_DISP_PRECISION));
-    NRF_LOG_INFO("Distance                              %u.%01um \r\n",
+    NRF_LOG_INFO("Distance                              %u.%01um ",
               (unsigned int)(distance / ANT_SDM_DISTANCE_DISP_PRECISION),
               (unsigned int)(distance % ANT_SDM_DISTANCE_DISP_PRECISION));
-    NRF_LOG_INFO("Strides                               %u\r\n", (unsigned int)strides);
+    NRF_LOG_INFO("Strides                               %u", (unsigned int)strides);
 }
 
 

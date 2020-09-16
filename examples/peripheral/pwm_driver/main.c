@@ -56,9 +56,10 @@
 #include "bsp.h"
 #include "app_timer.h"
 #include "nrf_drv_clock.h"
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 static nrf_drv_pwm_t m_pwm0 = NRF_DRV_PWM_INSTANCE(0);
 static nrf_drv_pwm_t m_pwm1 = NRF_DRV_PWM_INSTANCE(1);
@@ -120,7 +121,7 @@ static void demo1_handler(nrf_drv_pwm_evt_type_t event_type)
 }
 static void demo1(void)
 {
-    NRF_LOG_INFO("Demo 1\r\n");
+    NRF_LOG_INFO("Demo 1");
 
     /*
      * This demo plays back a sequence with different values for individual
@@ -163,7 +164,7 @@ static void demo1(void)
 
 static void demo2(void)
 {
-    NRF_LOG_INFO("Demo 2\r\n");
+    NRF_LOG_INFO("Demo 2");
 
     /*
      * This demo plays back two concatenated sequences:
@@ -244,7 +245,7 @@ static void demo2(void)
 
 static void demo3(void)
 {
-    NRF_LOG_INFO("Demo 3\r\n");
+    NRF_LOG_INFO("Demo 3");
 
     /*
      * This demo uses only one channel, which is reflected on LED 1.
@@ -297,7 +298,7 @@ static void demo3(void)
 
 static void demo4(void)
 {
-    NRF_LOG_INFO("Demo 4\r\n");
+    NRF_LOG_INFO("Demo 4");
 
     /*
      * This demo uses all three PWM peripheral instances:
@@ -444,7 +445,7 @@ static void demo4(void)
 
 static void demo5(void)
 {
-    NRF_LOG_INFO("Demo 5\r\n");
+    NRF_LOG_INFO("Demo 5");
 
     /*
      * This demo, similarly to demo1, plays back a sequence with different
@@ -583,8 +584,9 @@ int main(void)
     init_bsp();
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("PWM example\r\n");
+    NRF_LOG_INFO("PWM example");
 
     // Start with Demo 1, then switch to another one when the user presses
     // button 1 or button 2 (see the 'bsp_evt_handler' function).

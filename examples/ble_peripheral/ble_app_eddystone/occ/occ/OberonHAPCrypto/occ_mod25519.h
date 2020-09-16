@@ -46,7 +46,7 @@
 /**
  * modulo 2^255-19 number
  */
-typedef struct 
+typedef struct
 {
   uint32_t w[8]; /**< little endian */
 }

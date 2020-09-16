@@ -50,35 +50,34 @@
 #include "boards.h"
 #include "nrf_delay.h"
 #include "app_util.h"
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 static nrf_esb_payload_t        tx_payload = NRF_ESB_CREATE_PAYLOAD(0, 0x01, 0x00, 0x00, 0x00, 0x11, 0x00, 0x00, 0x00);
 
 static nrf_esb_payload_t        rx_payload;
-
-/*lint -save -esym(40, BUTTON_1) -esym(40, BUTTON_2) -esym(40, BUTTON_3) -esym(40, BUTTON_4) -esym(40, LED_1) -esym(40, LED_2) -esym(40, LED_3) -esym(40, LED_4) */
 
 void nrf_esb_event_handler(nrf_esb_evt_t const * p_event)
 {
     switch (p_event->evt_id)
     {
         case NRF_ESB_EVENT_TX_SUCCESS:
-            NRF_LOG_DEBUG("TX SUCCESS EVENT\r\n");
+            NRF_LOG_DEBUG("TX SUCCESS EVENT");
             break;
         case NRF_ESB_EVENT_TX_FAILED:
-            NRF_LOG_DEBUG("TX FAILED EVENT\r\n");
+            NRF_LOG_DEBUG("TX FAILED EVENT");
             (void) nrf_esb_flush_tx();
             (void) nrf_esb_start_tx();
             break;
         case NRF_ESB_EVENT_RX_RECEIVED:
-            NRF_LOG_DEBUG("RX RECEIVED EVENT\r\n");
+            NRF_LOG_DEBUG("RX RECEIVED EVENT");
             while (nrf_esb_read_rx_payload(&rx_payload) == NRF_SUCCESS)
             {
                 if (rx_payload.length > 0)
                 {
-                    NRF_LOG_DEBUG("RX RECEIVED PAYLOAD\r\n");
+                    NRF_LOG_DEBUG("RX RECEIVED PAYLOAD");
                 }
             }
             break;
@@ -145,6 +144,8 @@ int main(void)
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
     clocks_start();
 
     err_code = esb_init();
@@ -152,11 +153,11 @@ int main(void)
 
     bsp_board_leds_init();
 
-    NRF_LOG_DEBUG("Enhanced ShockBurst Transmitter Example running.\r\n");
+    NRF_LOG_DEBUG("Enhanced ShockBurst Transmitter Example running.");
 
     while (true)
     {
-        NRF_LOG_DEBUG("Transmitting packet %02x\r\n", tx_payload.data[1]);
+        NRF_LOG_DEBUG("Transmitting packet %02x", tx_payload.data[1]);
 
         tx_payload.noack = false;
         if (nrf_esb_write_payload(&tx_payload) == NRF_SUCCESS)
@@ -170,10 +171,9 @@ int main(void)
         }
         else
         {
-            NRF_LOG_WARNING("Sending packet failed\r\n");
+            NRF_LOG_WARNING("Sending packet failed");
         }
 
         nrf_delay_us(50000);
     }
 }
-/*lint -restore */

@@ -37,10 +37,13 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+
 #include "sdk_common.h"
+
 #if NRF_MODULE_ENABLED(NRF_SECTION_ITER)
 
 #include "nrf_section_iter.h"
+
 
 #if !defined(__GNUC__)
 static void nrf_section_iter_item_set(nrf_section_iter_t * p_iter)
@@ -48,6 +51,7 @@ static void nrf_section_iter_item_set(nrf_section_iter_t * p_iter)
     ASSERT(p_iter            != NULL);
     ASSERT(p_iter->p_set     != NULL);
     ASSERT(p_iter->p_section != NULL);
+
     while (true)
     {
         if (p_iter->p_section == p_iter->p_set->p_last)
@@ -69,6 +73,7 @@ static void nrf_section_iter_item_set(nrf_section_iter_t * p_iter)
     }
 }
 #endif
+
 
 void nrf_section_iter_init(nrf_section_iter_t * p_iter, nrf_section_set_t const * p_set)
 {
@@ -106,10 +111,9 @@ void nrf_section_iter_next(nrf_section_iter_t * p_iter)
     {
         p_iter->p_item = NULL;
     }
-
 #else
     ASSERT(p_iter->p_section != NULL);
-    // If current section ended?
+    // End of current section reached?
     if (p_iter->p_item == p_iter->p_section->p_end)
     {
         p_iter->p_section++;
@@ -117,4 +121,5 @@ void nrf_section_iter_next(nrf_section_iter_t * p_iter)
     }
 #endif
 }
+
 #endif // NRF_MODULE_ENABLED(NRF_SECTION_ITER)

@@ -56,7 +56,6 @@
 #include "ser_phy.h"
 #include "ser_config.h"
 #include "nrf_gpio.h"
-#include "nrf_delay.h"
 #include "nrf_gpiote.h"
 #include "nrf_soc.h"
 #include "app_error.h"

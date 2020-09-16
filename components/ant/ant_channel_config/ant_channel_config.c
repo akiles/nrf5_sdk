@@ -74,7 +74,7 @@ uint32_t ant_channel_init(ant_channel_config_t const * p_config)
     }
 
 
-#if ANT_CONFIG_ENCRYPTED_CHANNELS > 0
+#if NRF_SDH_ANT_ENCRYPTED_CHANNELS > 0
     VERIFY_SUCCESS(err_code);
 
     err_code = ant_channel_encrypt_config(p_config->channel_type , p_config->channel_number, p_config->p_crypto_settings);

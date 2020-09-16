@@ -55,12 +55,12 @@ uint32_t nrf_crypto_public_key_compute(uint32_t curve,
                              nrf_crypto_key_t const *p_sk,
                              nrf_crypto_key_t *p_pk)
 {
-    if(curve != NRF_CRYPTO_CURVE_SECP256R1)
+    if (curve != NRF_CRYPTO_CURVE_SECP256R1)
     {
         return NRF_ERROR_NOT_SUPPORTED;
     }
 
-    if(p_sk->len != ECC_P256_SK_LEN || p_pk->len != ECC_P256_PK_LEN)
+    if (p_sk->len != ECC_P256_SK_LEN || p_pk->len != ECC_P256_PK_LEN)
     {
         return NRF_ERROR_INVALID_LENGTH;
     }
@@ -74,12 +74,12 @@ uint32_t nrf_crypto_shared_secret_compute(uint32_t curve,
                                  nrf_crypto_key_t const *p_pk,
                                  nrf_crypto_key_t *p_ss)
 {
-    if(curve != NRF_CRYPTO_CURVE_SECP256R1)
+    if (curve != NRF_CRYPTO_CURVE_SECP256R1)
     {
         return NRF_ERROR_NOT_SUPPORTED;
     }
 
-    if(p_sk->len != ECC_P256_SK_LEN || p_pk->len != ECC_P256_PK_LEN || p_ss->len != ECC_P256_SK_LEN)
+    if (p_sk->len != ECC_P256_SK_LEN || p_pk->len != ECC_P256_PK_LEN || p_ss->len != ECC_P256_SK_LEN)
     {
         return NRF_ERROR_INVALID_LENGTH;
     }
@@ -92,12 +92,12 @@ uint32_t nrf_crypto_sign(uint32_t curve,
                 nrf_crypto_key_t const *p_hash,
                 nrf_crypto_key_t *p_sig)
 {
-    if(curve != NRF_CRYPTO_CURVE_SECP256R1)
+    if (curve != NRF_CRYPTO_CURVE_SECP256R1)
     {
         return NRF_ERROR_NOT_SUPPORTED;
     }
 
-    if(p_sk->len != ECC_P256_SK_LEN || p_sig->len != ECC_P256_PK_LEN)
+    if (p_sk->len != ECC_P256_SK_LEN || p_sig->len != ECC_P256_PK_LEN)
     {
         return NRF_ERROR_INVALID_LENGTH;
     }
@@ -109,12 +109,12 @@ uint32_t nrf_crypto_verify(uint32_t curve,
                   nrf_crypto_key_t const *p_hash,
                   nrf_crypto_key_t const *p_sig)
 {
-    if(curve != NRF_CRYPTO_CURVE_SECP256R1)
+    if (curve != NRF_CRYPTO_CURVE_SECP256R1)
     {
         return NRF_ERROR_NOT_SUPPORTED;
     }
 
-    if(p_pk->len != ECC_P256_PK_LEN || p_sig->len != ECC_P256_PK_LEN)
+    if (p_pk->len != ECC_P256_PK_LEN || p_sig->len != ECC_P256_PK_LEN)
     {
         return NRF_ERROR_INVALID_LENGTH;
     }
@@ -131,12 +131,12 @@ uint32_t nrf_crypto_hash_compute(uint32_t hash_alg,
     ret_code_t       err_code;
     sha256_context_t ctx;
 
-    if(hash_alg != NRF_CRYPTO_HASH_ALG_SHA256)
+    if (hash_alg != NRF_CRYPTO_HASH_ALG_SHA256)
     {
         return NRF_ERROR_NOT_SUPPORTED;
     }
 
-    if(p_hash->len != (256 >> 3))
+    if (p_hash->len != (256 >> 3))
     {
         return NRF_ERROR_INVALID_LENGTH;
     }

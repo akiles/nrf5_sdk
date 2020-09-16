@@ -108,14 +108,14 @@ bool ant_request_controller_ack_needed(ant_request_controller_t * p_controller)
 
 ant_request_controller_evt_t ant_request_controller_disp_evt_handler(
     ant_request_controller_t * p_controller,
-    ant_evt_t                * p_ant_event)
+    ant_evt_t                * p_ant_evt)
 {
     ASSERT(p_controller != NULL);
-    ASSERT(p_ant_event != NULL);
+    ASSERT(p_ant_evt != NULL);
 
     if ( p_controller->state == ANT_REQUEST_CONTROLLER_SENDED)
     {
-        switch (p_ant_event->event)
+        switch (p_ant_evt->event)
         {
             case EVENT_TRANSFER_TX_FAILED:
                 p_controller->state = ANT_REQUEST_CONTROLLER_IDLE;
@@ -181,16 +181,15 @@ __STATIC_INLINE void page_requested(ant_request_controller_t    * p_controller,
 
 
 void ant_request_controller_sens_evt_handler(ant_request_controller_t * p_controller,
-                                             ant_evt_t                * p_ant_event)
+                                             ant_evt_t                * p_ant_evt)
 {
     ASSERT(p_controller != NULL);
-    ASSERT(p_ant_event != NULL);
+    ASSERT(p_ant_evt != NULL);
 
-    ANT_MESSAGE                 * p_message         = (ANT_MESSAGE *)p_ant_event->msg.evt_buffer;
     ant_common_message_layout_t * p_message_payload =
-        (ant_common_message_layout_t *)p_message->ANT_MESSAGE_aucPayload;
+        (ant_common_message_layout_t *)p_ant_evt->message.ANT_MESSAGE_aucPayload;
 
-    switch (p_ant_event->event)
+    switch (p_ant_evt->event)
     {
         case EVENT_RX:
 

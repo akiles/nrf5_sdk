@@ -43,6 +43,22 @@
 #include "sdk_common.h"
 #include "app_usbd.h"
 #include "app_usbd_core.h"
+#include "nrf_power.h"
+#include "nrf_drv_clock.h"
+#if APP_USBD_EVENT_QUEUE_ENABLE
+#include "nrf_atfifo.h"
+#endif
+
+#define NRF_LOG_MODULE_NAME app_usbd
+
+#if APP_USBD_CONFIG_LOG_ENABLED
+#define NRF_LOG_LEVEL       APP_USBD_CONFIG_LOG_LEVEL
+#define NRF_LOG_INFO_COLOR  APP_USBD_CONFIG_INFO_COLOR
+#define NRF_LOG_DEBUG_COLOR APP_USBD_CONFIG_DEBUG_COLOR
+#else //APP_USBD_CONFIG_LOG_ENABLED
+#define NRF_LOG_LEVEL       0
+#endif //APP_USBD_CONFIG_LOG_ENABLED
+#include "nrf_log.h"
 
 /* Base variables tests */
 
@@ -93,6 +109,15 @@ typedef struct
     app_usbd_ep_event_handler_t event_handler;
 }app_usbd_ep_conf_t;
 
+#if (APP_USBD_EVENT_QUEUE_ENABLE) || defined(__SDK_DOXYGEN__)
+/**
+ * @brief Event queue
+ *
+ * The queue with events to be processed
+ */
+NRF_ATFIFO_DEF(m_event_queue, app_usbd_internal_evt_t, APP_USBD_EVENT_QUEUE_SIZE);
+#endif
+
 /**
  * @brief Instances connected with IN endpoints
  *
@@ -130,8 +155,49 @@ static app_usbd_class_inst_t const * m_p_first_sof_cinst;
  * @brief Default configuration (when NULL is passed to @ref app_usbd_init).
  */
 static const app_usbd_config_t m_default_conf = {
-        .ev_handler = NULL
+#if (!(APP_USBD_EVENT_QUEUE_ENABLE)) || defined(__SDK_DOXYGEN__)
+    .ev_handler = app_usbd_event_execute,
+#endif
+#if (APP_USBD_EVENT_QUEUE_ENABLE) || defined(__SDK_DOXYGEN__)
+    .ev_isr_handler = NULL,
+#endif
+    .ev_state_proc = NULL,
+    .enable_sof = false
 };
+
+/**
+ * @brief SUSPEND state machine states
+ *
+ * The enumeration of internal SUSPEND state machine states.
+ */
+typedef enum
+{
+    SUSTATE_STOPPED,                     /**< The USB driver was not started */
+    SUSTATE_STARTED,                     /**< The USB driver was started - waiting for USB RESET */
+    SUSTATE_ACTIVE,                      /**< Active state */
+    SUSTATE_SUSPENDING,                  /**< Suspending - waiting for the user to acknowledge */
+    SUSTATE_SUSPEND,                     /**< Suspended */
+    SUSTATE_RESUMING,                    /**< Resuming - waiting for clock */
+    SUSTATE_WAKINGUP_WAITING_HFCLK_WREQ, /**< Waking up - waiting for clock and WUREQ from driver */
+    SUSTATE_WAKINGUP_WAITING_HFCLK,      /**< Waking up - waiting for HFCLK (WUREQ detected) */
+    SUSTATE_WAKINGUP_WAITING_WREQ,       /**< Waking up - waiting for WREQ (HFCLK active) */
+}app_usbd_sustate_t;
+
+/**
+ * @brief Current suspend state
+ *
+ * The state of the suspend state machine
+ */
+static app_usbd_sustate_t m_sustate;
+
+/**
+ * @brief Remote wake-up register/unregister
+ *
+ * Counter incremented when appended instance required remote wake-up functionality.
+ * It should be decremented when the class is removed.
+ * When this counter is not zero, remote wake-up functionality is activated inside core.
+ */
+static uint8_t m_rwu_registered_counter;
 
 /**
  * @brief Current configuration.
@@ -159,16 +225,32 @@ static inline ret_code_t class_event_handler(app_usbd_class_inst_t  const * cons
     return p_cinst->p_class_methods->event_handler(p_cinst, p_event);
 }
 
+#if (APP_USBD_EVENT_QUEUE_ENABLE) || defined(__SDK_DOXYGEN__)
 /**
  * @brief User event handler call (passed via configuration).
  *
+ * @param p_event Handler of an event that is going to be added into queue.
+ * @param queued  The event is visible in the queue.
+ */
+static inline void user_event_handler(app_usbd_internal_evt_t const * const p_event, bool queued)
+{
+    if ((m_current_conf.ev_isr_handler) != NULL)
+    {
+        m_current_conf.ev_isr_handler(p_event, queued);
+    }
+}
+#endif
+
+/**
+ * @brief User event processor call (passed via configuration)
+ *
  * @param event Event type.
  */
-static inline void user_event_handler(app_usbd_event_type_t event)
+static inline void user_event_state_proc(app_usbd_event_type_t event)
 {
-    if ((m_current_conf.ev_handler) != NULL)
+    if ((m_current_conf.ev_state_proc) != NULL)
     {
-        m_current_conf.ev_handler(event);
+        m_current_conf.ev_state_proc(event);
     }
 }
 
@@ -297,7 +379,7 @@ static void app_usbd_ep_instance_set(nrf_drv_usbd_ep_t ep, app_usbd_class_inst_t
  * This auxiliary function makes future changes easier.
  * Just call the event instance for core module here.
  */
-static inline ret_code_t app_usbd_core_handler_call(nrf_drv_usbd_evt_t const * const p_event)
+static inline ret_code_t app_usbd_core_handler_call(app_usbd_internal_evt_t const * const p_event)
 {
     return m_epout_conf[0].event_handler(
         m_epout_conf[0].p_cinst,
@@ -305,81 +387,160 @@ static inline ret_code_t app_usbd_core_handler_call(nrf_drv_usbd_evt_t const * c
 }
 
 /**
- * @brief USBD event handler
+ * @brief Add event for execution
  *
+ * Dependent on configuration event would be executed in place or would be added into queue
+ * to be executed later.
  *
+ * @param p_event Event to be executed
+ */
+static inline void app_usbd_event_add(app_usbd_internal_evt_t const * const p_event)
+{
+#if (APP_USBD_EVENT_QUEUE_ENABLE)
+    nrf_atfifo_item_put_t cx;
+    app_usbd_internal_evt_t * p_event_item = nrf_atfifo_item_alloc(m_event_queue, &cx);
+    if (NULL != p_event_item)
+    {
+       bool visible;
+       *p_event_item = *p_event;
+       visible = nrf_atfifo_item_put(m_event_queue, &cx);
+       user_event_handler(p_event, visible);
+    }
+    else
+    {
+       NRF_LOG_ERROR("Event queue full.");
+    }
+#else
+    m_current_conf.ev_handler(p_event);
+#endif
+}
+
+/**
+ * @brief Event handler
+ *
+ * The function that pushes the event into the queue
+ * @param p_event
  */
 static void app_usbd_event_handler(nrf_drv_usbd_evt_t const * const p_event)
 {
-    ASSERT(NULL != m_p_first_cinst);
-
-    /* Note - there should never be situation that event is generated on disconnected endpoint */
-    switch(p_event->type)
-    {
-        case NRF_DRV_USBD_EVT_SOF:
-        {
-            app_usbd_class_inst_t const * p_inst = app_usbd_class_sof_first_get();
-            ASSERT(NULL != p_inst); /* This should not happen - when no SOF instances are in the list, SOF event is disabled */
-
-            while (NULL != p_inst)
-            {
-                ret_code_t r = class_event_handler(p_inst, (app_usbd_complex_evt_t const *)p_event);
-                UNUSED_VARIABLE(r);
-                p_inst = app_usbd_class_sof_next_get(p_inst);
-            }
-            break;
-        }
-
-        /* Reset and */
-        case NRF_DRV_USBD_EVT_RESET:
-        case NRF_DRV_USBD_EVT_RESUME:
-        {
-            /* Processing core interface (connected only to EP0) and then all instances from the list */
-            UNUSED_RETURN_VALUE(app_usbd_core_handler_call(p_event));
-            app_usbd_all_call((app_usbd_complex_evt_t const *)p_event);
-            break;
-        }
-        case NRF_DRV_USBD_EVT_SUSPEND:
-        {
-            /* Processing all instances from the list and then core interface (connected only to EP0) */
-            app_usbd_all_call((app_usbd_complex_evt_t const *)p_event);
-            UNUSED_RETURN_VALUE(app_usbd_core_handler_call(p_event));
-            break;
-        }
-
-        case NRF_DRV_USBD_EVT_SETUP:
-        {
-            UNUSED_RETURN_VALUE(app_usbd_core_handler_call(p_event));
-            break;
-        }
-
-        case NRF_DRV_USBD_EVT_EPTRANSFER:
-        {
-            app_usbd_ep_conf_t const * p_ep_conf =
-                    app_usbd_ep_conf_access(p_event->data.eptransfer.ep);
-            ASSERT(NULL != p_ep_conf->p_cinst);
-            ASSERT(NULL != p_ep_conf->event_handler);
-
-            if (NRF_SUCCESS != p_ep_conf->event_handler(p_ep_conf->p_cinst,
-                                                       (app_usbd_complex_evt_t const *)p_event))
-            {
-                /* If error returned, every bulk/interrupt endpoint would be stalled */
-                if (!(0 == NRF_USBD_EP_NR_GET(p_event->data.eptransfer.ep) ||
-                   NRF_USBD_EPISO_CHECK(p_event->data.eptransfer.ep)))
-                {
-                    nrf_drv_usbd_ep_stall(p_event->data.eptransfer.ep);
-                }
-            }
-            break;
-        }
-
-        default:
-            ASSERT(0);
-            break;
-    }
-
-    user_event_handler((app_usbd_event_type_t)p_event->type);
+    app_usbd_event_add((app_usbd_internal_evt_t const *)p_event);
 }
+
+/**
+ * @brief HF clock ready event handler
+ *
+ * Function that is called when high frequency clock is started
+ *
+ * @param event Event type that comes from clock driver
+ */
+static void app_usbd_hfclk_ready(nrf_drv_clock_evt_type_t event)
+{
+    ASSERT(NRF_DRV_CLOCK_EVT_HFCLK_STARTED == event);
+    static const app_usbd_evt_t evt_data = {
+        .type = APP_USBD_EVT_HFCLK_READY
+    };
+    app_usbd_event_add((app_usbd_internal_evt_t const * )&evt_data);
+}
+
+/**
+ * @brief Check if the HFCLK was requested in selected suspend state machine state
+ *
+ *
+ * @param sustate State to be checked
+ *
+ * @retval true  High frequency clock was requested in selected state
+ * @retval false High frequency clock was released in selected state
+ */
+static inline bool app_usbd_sustate_with_requested_hfclk(app_usbd_sustate_t sustate)
+{
+    switch(sustate)
+    {
+        case SUSTATE_STOPPED:                    return false;
+        case SUSTATE_STARTED:                    return false;
+        case SUSTATE_ACTIVE:                     return true;
+        case SUSTATE_SUSPENDING:                 return false;
+        case SUSTATE_SUSPEND:                    return false;
+        case SUSTATE_RESUMING:                   return true;
+        case SUSTATE_WAKINGUP_WAITING_HFCLK_WREQ: return true;
+        case SUSTATE_WAKINGUP_WAITING_HFCLK:      return true;
+        case SUSTATE_WAKINGUP_WAITING_WREQ:      return true;
+        default:
+            return false;
+    }
+}
+
+/**
+ * @brief Check it the HFCLK is running in selected suspend state machine state
+ *
+ * @param sustate State to be checked
+ *
+ * @retval true  High frequency clock is running in selected state
+ * @retval false High frequency clock is released in selected state
+ */
+static inline bool app_usbd_sustate_with_running_hfclk(app_usbd_sustate_t sustate)
+{
+    switch(sustate)
+    {
+        case SUSTATE_STOPPED:                    return false;
+        case SUSTATE_STARTED:                    return false;
+        case SUSTATE_ACTIVE:                     return true;
+        case SUSTATE_SUSPENDING:                 return false;
+        case SUSTATE_SUSPEND:                    return false;
+        case SUSTATE_RESUMING:                   return false;
+        case SUSTATE_WAKINGUP_WAITING_HFCLK_WREQ: return false;
+        case SUSTATE_WAKINGUP_WAITING_HFCLK:      return false;
+        case SUSTATE_WAKINGUP_WAITING_WREQ:      return true;
+        default:
+            return false;
+    }
+}
+
+/**
+ * @brief Get current suspend state machine state
+ *
+ * @return The state of the suspend state machine
+ */
+static inline app_usbd_sustate_t sustate_get(void)
+{
+    return m_sustate;
+}
+
+/**
+ * @brief Set current suspend state machine state
+ *
+ * @param sustate The requested state of the state machine
+ */
+static inline void sustate_set(app_usbd_sustate_t sustate)
+{
+    if (app_usbd_sustate_with_requested_hfclk(sustate) != app_usbd_sustate_with_requested_hfclk(m_sustate))
+    {
+        if (app_usbd_sustate_with_requested_hfclk(sustate))
+        {
+            static nrf_drv_clock_handler_item_t clock_handler_item =
+            {
+                .event_handler = app_usbd_hfclk_ready
+            };
+            nrf_drv_clock_hfclk_request(&clock_handler_item);
+        }
+        else
+        {
+            nrf_drv_clock_hfclk_release();
+        }
+    }
+    if (app_usbd_sustate_with_running_hfclk(sustate) != app_usbd_sustate_with_running_hfclk(m_sustate))
+    {
+        if (app_usbd_sustate_with_running_hfclk(sustate))
+        {
+            nrf_drv_usbd_active_irq_config();
+        }
+        else
+        {
+            nrf_drv_usbd_suspend_irq_config();
+        }
+    }
+    m_sustate = sustate;
+}
+
 
 /** @} */
 
@@ -387,6 +548,16 @@ static void app_usbd_event_handler(nrf_drv_usbd_evt_t const * const p_event)
 ret_code_t app_usbd_init(app_usbd_config_t const * p_config)
 {
     ret_code_t ret;
+
+#if (APP_USBD_EVENT_QUEUE_ENABLE) || defined(__SDK_DOXYGEN__)
+    ret = NRF_ATFIFO_INIT(m_event_queue);
+    if (NRF_SUCCESS != ret)
+    {
+        return NRF_ERROR_INTERNAL;
+    }
+#endif
+
+    UNUSED_RETURN_VALUE(nrf_drv_clock_init());
 
     ret = nrf_drv_usbd_init(app_usbd_event_handler);
     if (NRF_SUCCESS != ret)
@@ -404,6 +575,7 @@ ret_code_t app_usbd_init(app_usbd_config_t const * p_config)
     }
 
     /* Clear variables */
+    m_sustate = SUSTATE_STOPPED;
     m_p_first_cinst = NULL;
     m_p_first_sof_cinst = NULL;
     memset(m_epin_conf , 0, sizeof(m_epin_conf ));
@@ -426,7 +598,7 @@ ret_code_t app_usbd_init(app_usbd_config_t const * p_config)
 
     /* Successfully attached */
     const app_usbd_evt_t evt_data = {
-            .type = APP_USBD_EVT_INST_APPEND
+        .type = APP_USBD_EVT_INST_APPEND
     };
 
     return class_event_handler(p_inst, (app_usbd_complex_evt_t const *)(&evt_data));
@@ -438,7 +610,7 @@ ret_code_t app_usbd_uninit(void)
     ret_code_t ret;
 
     ret = nrf_drv_usbd_uninit();
-    if(NRF_SUCCESS != ret)
+    if (NRF_SUCCESS != ret)
         return ret;
 
     /* Unchain instance list */
@@ -473,68 +645,306 @@ ret_code_t app_usbd_uninit(void)
 void app_usbd_enable(void)
 {
     nrf_drv_usbd_enable();
-    while (!app_usbd_core_power_regulator_is_ready())
-    {
-        /* Just waiting */
-    }
 }
 
 
 void app_usbd_disable(void)
 {
-    if (nrf_drv_usbd_is_started())
-    {
-        app_usbd_stop();
-    }
+    ASSERT(!nrf_drv_usbd_is_started());
     nrf_drv_usbd_disable();
 }
 
 
 void app_usbd_start(void)
 {
-    const app_usbd_evt_t evt_data = {
-            .type = APP_USBD_EVT_START
+    ASSERT(nrf_drv_usbd_is_enabled());
+
+    /* Power should be already enabled - wait just in case if user calls
+     * app_usbd_start just after app_usbd_enable without waiting for the event. */
+    while (!nrf_power_usbregstatus_outrdy_get())
+    {
+        /* Wait for the power but terminate the function if USBD power disappears */
+        if (!nrf_power_usbregstatus_vbusdet_get())
+            return;
+    }
+
+    static const app_usbd_evt_t evt_data = {
+        .type = APP_USBD_EVT_START_REQ
     };
-
-    /* Enable all connected endpoints */
-    uint8_t n;
-    for (n = 1; n < ARRAY_SIZE(m_epin_conf); ++n)
-    {
-        if (NULL != m_epin_conf[n].p_cinst)
-        {
-            nrf_drv_usbd_ep_enable(NRF_DRV_USBD_EPIN(n));
-        }
-    }
-    for (n = 1; n < ARRAY_SIZE(m_epout_conf); ++n)
-    {
-        if (NULL != m_epout_conf[n].p_cinst)
-        {
-            nrf_drv_usbd_ep_enable(NRF_DRV_USBD_EPOUT(n));
-        }
-    }
-
-    /* Send event to all classes */
-    UNUSED_RETURN_VALUE(app_usbd_core_handler_call((nrf_drv_usbd_evt_t const * )&evt_data));
-    app_usbd_all_call((app_usbd_complex_evt_t const *)&evt_data);
-    user_event_handler(APP_USBD_EVT_START);
-
-    nrf_drv_usbd_start(NULL != m_p_first_sof_cinst);
+    app_usbd_event_add((app_usbd_internal_evt_t const * )&evt_data);
 }
 
 
 void app_usbd_stop(void)
 {
     const app_usbd_evt_t evt_data = {
-            .type = APP_USBD_EVT_STOP
+        .type = APP_USBD_EVT_STOP_REQ
     };
-
-    nrf_drv_usbd_stop();
-
-    /* Send event to all classes */
-    app_usbd_all_call((app_usbd_complex_evt_t const * )&evt_data);
-    UNUSED_RETURN_VALUE(app_usbd_core_handler_call((nrf_drv_usbd_evt_t const *)&evt_data));
-    user_event_handler(APP_USBD_EVT_STOP);
+    app_usbd_event_add((app_usbd_internal_evt_t const * )&evt_data);
 }
+
+void app_usbd_suspend_req(void)
+{
+    const app_usbd_evt_t evt_data = {
+       .type = APP_USBD_EVT_SUSPEND_REQ
+   };
+   app_usbd_event_add((app_usbd_internal_evt_t const * )&evt_data);
+}
+
+bool app_usbd_wakeup_req(void)
+{
+    ASSERT(app_usbd_class_rwu_enabled_check());
+    if (!app_usbd_core_feature_state_get(APP_USBD_SETUP_STDFEATURE_DEVICE_REMOTE_WAKEUP))
+        return false;
+
+    const app_usbd_evt_t evt_data = {
+        .type = APP_USBD_EVT_WAKEUP_REQ
+    };
+    app_usbd_event_add((app_usbd_internal_evt_t const * )&evt_data);
+    return true;
+}
+
+
+void app_usbd_event_execute(app_usbd_internal_evt_t const * const p_event)
+{
+    ASSERT(NULL != m_p_first_cinst);
+    /* If no event queue is implemented, it has to be ensured that this function is never called
+     * from the context higher than USB interrupt level
+     * If queue is implemented it would be called always from Thread level
+     * if the library is used correctly.
+     * NOTE: Higher interrupt level -> lower priority value.
+     */
+    ASSERT(USBD_CONFIG_IRQ_PRIORITY <= current_int_priority_get());
+
+    /* Note - there should never be situation that event is generated on disconnected endpoint */
+    switch (p_event->type)
+    {
+        case APP_USBD_EVT_START_REQ:
+        {
+            static const app_usbd_evt_t evt_data = {
+                .type = APP_USBD_EVT_STARTED
+            };
+            /* Enable all connected endpoints */
+            uint8_t n;
+            for (n = 1; n < ARRAY_SIZE(m_epin_conf); ++n)
+            {
+                if (NULL != m_epin_conf[n].p_cinst)
+                {
+                    nrf_drv_usbd_ep_enable(NRF_DRV_USBD_EPIN(n));
+                }
+            }
+            for (n = 1; n < ARRAY_SIZE(m_epout_conf); ++n)
+            {
+                if (NULL != m_epout_conf[n].p_cinst)
+                {
+                    nrf_drv_usbd_ep_enable(NRF_DRV_USBD_EPOUT(n));
+                }
+            }
+
+            /* Send event to all classes */
+            UNUSED_RETURN_VALUE(app_usbd_core_handler_call((app_usbd_internal_evt_t const * )&evt_data));
+            app_usbd_all_call((app_usbd_complex_evt_t const *)&evt_data);
+            user_event_state_proc(APP_USBD_EVT_STARTED);
+
+            nrf_drv_usbd_start((NULL != m_p_first_sof_cinst) || (m_current_conf.enable_sof));
+            sustate_set(SUSTATE_STARTED);
+            break;
+        }
+        case APP_USBD_EVT_STOP_REQ:
+        {
+            static const app_usbd_evt_t evt_data = {
+                .type = APP_USBD_EVT_STOPPED
+            };
+
+            nrf_drv_usbd_stop();
+            sustate_set(SUSTATE_STOPPED);
+
+            /* Send event to all classes */
+            app_usbd_all_call((app_usbd_complex_evt_t const * )&evt_data);
+            UNUSED_RETURN_VALUE(app_usbd_core_handler_call((app_usbd_internal_evt_t const *)&evt_data));
+            user_event_state_proc(APP_USBD_EVT_STOPPED);
+            if (app_usbd_sustate_with_requested_hfclk(sustate_get()))
+            {
+                nrf_drv_clock_hfclk_release();
+            }
+
+            break;
+        }
+        case APP_USBD_EVT_HFCLK_READY:
+        {
+            switch(sustate_get())
+            {
+                case SUSTATE_RESUMING:
+                {
+                    sustate_set(SUSTATE_ACTIVE);
+                    break;
+                }
+                case SUSTATE_WAKINGUP_WAITING_HFCLK_WREQ:
+                {
+                    sustate_set(SUSTATE_WAKINGUP_WAITING_WREQ);
+                    break;
+                }
+                case SUSTATE_WAKINGUP_WAITING_HFCLK:
+                {
+                    sustate_set(SUSTATE_ACTIVE);
+                    break;
+                }
+                default:
+                    break; // Just ignore - it can happen in specyfic situation
+            }
+            break;
+        }
+        case APP_USBD_EVT_SUSPEND_REQ:
+        {
+            /* Suspend request can be only processed when we are in suspending state */
+            if (SUSTATE_SUSPENDING == sustate_get())
+            {
+                if (nrf_drv_usbd_suspend())
+                {
+                    sustate_set(SUSTATE_SUSPEND);
+                }
+            }
+            break;
+        }
+        case APP_USBD_EVT_WAKEUP_REQ:
+        {
+            /* Suspend temporary if no suspend function was called from the application.
+             * This makes it possible to generate APP_USBD_EVT_DRV_WUREQ event from the driver */
+            if (sustate_get() == SUSTATE_SUSPENDING)
+            {
+                if (nrf_drv_usbd_suspend())
+                {
+                    sustate_set(SUSTATE_SUSPEND);
+                }
+            }
+            if (nrf_drv_usbd_wakeup_req())
+            {
+                sustate_set(SUSTATE_WAKINGUP_WAITING_HFCLK_WREQ);
+            }
+            break;
+        }
+
+        case APP_USBD_EVT_DRV_SOF:
+        {
+            user_event_state_proc(APP_USBD_EVT_DRV_SOF);
+
+            app_usbd_class_inst_t const * p_inst = app_usbd_class_sof_first_get();
+            while (NULL != p_inst)
+            {
+                ret_code_t r = class_event_handler(p_inst, (app_usbd_complex_evt_t const *)p_event);
+                UNUSED_VARIABLE(r);
+                p_inst = app_usbd_class_sof_next_get(p_inst);
+            }
+            break;
+        }
+
+        case APP_USBD_EVT_DRV_RESET:
+        {
+            sustate_set(SUSTATE_ACTIVE);
+            user_event_state_proc(APP_USBD_EVT_DRV_RESUME);
+            /* Processing core interface (connected only to EP0) and then all instances from the list */
+            UNUSED_RETURN_VALUE(app_usbd_core_handler_call(p_event));
+            app_usbd_all_call((app_usbd_complex_evt_t const *)p_event);
+            break;
+        }
+        case APP_USBD_EVT_DRV_RESUME:
+        {
+            sustate_set(SUSTATE_RESUMING);
+            user_event_state_proc(APP_USBD_EVT_DRV_RESUME);
+            /* Processing core interface (connected only to EP0) and then all instances from the list */
+            UNUSED_RETURN_VALUE(app_usbd_core_handler_call(p_event));
+            app_usbd_all_call((app_usbd_complex_evt_t const *)p_event);
+            break;
+        }
+        case APP_USBD_EVT_DRV_WUREQ:
+        {
+            static const app_usbd_evt_t evt_data = {
+                .type = APP_USBD_EVT_DRV_RESUME
+            };
+            user_event_state_proc(APP_USBD_EVT_DRV_RESUME);
+            /* Processing core interface (connected only to EP0) and then all instances from the list */
+            UNUSED_RETURN_VALUE(app_usbd_core_handler_call((app_usbd_internal_evt_t const *)&evt_data));
+            app_usbd_all_call((app_usbd_complex_evt_t const *)&evt_data);
+
+            switch(sustate_get())
+            {
+                case SUSTATE_WAKINGUP_WAITING_HFCLK_WREQ:
+                    sustate_set(SUSTATE_WAKINGUP_WAITING_HFCLK);
+                    break;
+                case SUSTATE_WAKINGUP_WAITING_WREQ:
+                    sustate_set(SUSTATE_ACTIVE);
+                    break;
+                default:
+                {
+                    // This should not happen - but try to recover by setting directly active state
+                    NRF_LOG_WARNING("Unexpected state on WUREQ event (%u)", sustate_get());
+                    sustate_set(SUSTATE_ACTIVE);
+                }
+            }
+            break;
+        }
+        case APP_USBD_EVT_DRV_SUSPEND:
+        {
+            sustate_set(SUSTATE_SUSPENDING);
+
+            user_event_state_proc(APP_USBD_EVT_DRV_SUSPEND);
+
+            /* Processing all instances from the list and then core interface (connected only to EP0) */
+            app_usbd_all_call((app_usbd_complex_evt_t const *)p_event);
+            UNUSED_RETURN_VALUE(app_usbd_core_handler_call(p_event));
+            break;
+        }
+
+        case APP_USBD_EVT_DRV_SETUP:
+        {
+            UNUSED_RETURN_VALUE(app_usbd_core_handler_call(p_event));
+            break;
+        }
+
+        case APP_USBD_EVT_DRV_EPTRANSFER:
+        {
+            app_usbd_ep_conf_t const * p_ep_conf =
+                    app_usbd_ep_conf_access(p_event->drv_evt.data.eptransfer.ep);
+            ASSERT(NULL != p_ep_conf->p_cinst);
+            ASSERT(NULL != p_ep_conf->event_handler);
+
+            if (NRF_SUCCESS != p_ep_conf->event_handler(p_ep_conf->p_cinst,
+                                                       (app_usbd_complex_evt_t const *)p_event))
+            {
+                /* If error returned, every bulk/interrupt endpoint would be stalled */
+                if (!(0 == NRF_USBD_EP_NR_GET(p_event->drv_evt.data.eptransfer.ep) ||
+                   NRF_USBD_EPISO_CHECK(p_event->drv_evt.data.eptransfer.ep)))
+                {
+                    nrf_drv_usbd_ep_stall(p_event->drv_evt.data.eptransfer.ep);
+                }
+            }
+            break;
+        }
+
+        default:
+            ASSERT(0);
+            break;
+    }
+}
+
+
+#if (APP_USBD_EVENT_QUEUE_ENABLE) || defined(__SDK_DOXYGEN__)
+bool app_usbd_event_queue_process(void)
+{
+    nrf_atfifo_item_get_t cx;
+    app_usbd_internal_evt_t const * p_event_item = nrf_atfifo_item_get(m_event_queue, &cx);
+    if (NULL != p_event_item)
+    {
+        app_usbd_event_execute(p_event_item);
+        UNUSED_RETURN_VALUE(nrf_atfifo_item_free(m_event_queue, &cx));
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+#endif
 
 
 ret_code_t app_usbd_class_append(app_usbd_class_inst_t const * p_cinst)
@@ -611,7 +1021,7 @@ ret_code_t app_usbd_class_remove(app_usbd_class_inst_t const * p_cinst)
         {
             /* Inform class instance that removing process is going to be started */
             const app_usbd_evt_t evt_data = {
-                    .type = APP_USBD_EVT_INST_REMOVE
+                .type = APP_USBD_EVT_INST_REMOVE
             };
             ret = class_event_handler(p_cinst, (app_usbd_complex_evt_t const *)(&evt_data));
             if (ret != NRF_SUCCESS)
@@ -731,6 +1141,33 @@ ret_code_t app_usbd_class_sof_unregister(app_usbd_class_inst_t const * p_cinst)
         pp_last = &(app_usbd_class_data_access(*pp_last)->p_sof_next);
     }
     return NRF_ERROR_NOT_FOUND;
+}
+
+
+ret_code_t app_usbd_class_rwu_register(app_usbd_class_inst_t const * const p_inst)
+{
+    ASSERT(p_inst != NULL);
+    ++m_rwu_registered_counter;
+    /*Overflow check*/
+    ASSERT(m_rwu_registered_counter != 0);
+
+    return NRF_SUCCESS;
+}
+
+
+ret_code_t app_usbd_class_rwu_unregister(app_usbd_class_inst_t const * const p_inst)
+{
+    ASSERT(p_inst != NULL);
+    /* Usage validation. If counter is 0 unregister is not possible.*/
+    ASSERT(m_rwu_registered_counter != 0);
+    --m_rwu_registered_counter;
+
+    return NRF_SUCCESS;
+}
+
+bool app_usbd_class_rwu_enabled_check(void)
+{
+    return (m_rwu_registered_counter != 0);
 }
 
 ret_code_t app_usbd_interface_std_req_handle(app_usbd_setup_evt_t  const * p_setup_ev)

@@ -62,6 +62,26 @@ extern "C" {
  */
 
 /**
+ * @brief Core interface configuration
+ *
+ * Core instance would have 2 endpoints (IN0 and OUT0).
+ * The interface number does not matter because it is not used.
+ */
+#define APP_USBD_CORE_CLASS_CONFIGURATION ((0, NRF_DRV_USBD_EPOUT0, NRF_DRV_USBD_EPIN0))
+
+/**
+ * @brief Suspend state mask
+ *
+ * Mask used to mark suspended state, suspended state remembers also the target state after wake up
+ */
+#define APP_USBD_STATE_SUSPENDED_MASK 0x80
+
+/**
+ * @brief Remove @ref APP_USBD_STATE_SUSPENDED_MASK bit from core state
+ */
+#define APP_USB_STATE_BASE(state) ((app_usbd_state_t)((uint32_t)(state) & (~APP_USBD_STATE_SUSPENDED_MASK)))
+
+/**
  * @brief USB Device state
  *
  * Possible USB Device states according to specification.
@@ -75,26 +95,11 @@ typedef enum
     APP_USBD_STATE_Addressed  = 0x04, /**< Device has been addressed but have not been configured */
     APP_USBD_STATE_Configured = 0x05, /**< Device is addressed and configured */
 
-    APP_USBD_STATE_SuspendedMask       = 0x10, /**< Mask used to mark suspended state, suspended state remembers also the target state after wake up */
-
-    APP_USBD_STATE_SuspendedPowered    = APP_USBD_STATE_SuspendedMask | APP_USBD_STATE_Powered,    /**< Device is Suspended and on wakeup it will return to Powered state */
-    APP_USBD_STATE_SuspendedDefault    = APP_USBD_STATE_SuspendedMask | APP_USBD_STATE_Default,    /**< Device is Suspended and on wakeup it will return to Default state */
-    APP_USBD_STATE_SuspendedAddressed  = APP_USBD_STATE_SuspendedMask | APP_USBD_STATE_Addressed,  /**< Device is Suspended and on wakeup it will return to Addressed state */
-    APP_USBD_STATE_SuspendedConfigured = APP_USBD_STATE_SuspendedMask | APP_USBD_STATE_Configured  /**< Device is Suspended and on wakeup it will return to Configured state */
+    APP_USBD_STATE_SuspendedPowered    = APP_USBD_STATE_SUSPENDED_MASK | APP_USBD_STATE_Powered,    /**< Device is Suspended and on wakeup it will return to Powered state */
+    APP_USBD_STATE_SuspendedDefault    = APP_USBD_STATE_SUSPENDED_MASK | APP_USBD_STATE_Default,    /**< Device is Suspended and on wakeup it will return to Default state */
+    APP_USBD_STATE_SuspendedAddressed  = APP_USBD_STATE_SUSPENDED_MASK | APP_USBD_STATE_Addressed,  /**< Device is Suspended and on wakeup it will return to Addressed state */
+    APP_USBD_STATE_SuspendedConfigured = APP_USBD_STATE_SUSPENDED_MASK | APP_USBD_STATE_Configured  /**< Device is Suspended and on wakeup it will return to Configured state */
 }app_usbd_state_t;
-
-/**
- * @brief Remove @ref APP_USBD_STATE_SuspendedMask bit from core state
- */
-#define APP_USB_STATE_BASE(state) ((state) & (~APP_USBD_STATE_SuspendedMask))
-
-/**
- * @brief Core interface configuration
- *
- * Core instance would have 2 endpoints (IN0 and OUT0).
- * The interface number does not care because it would not be used.
- */
-#define APP_USBD_CORE_CLASS_CONFIGURATION ((0, NRF_DRV_USBD_EPOUT0, NRF_DRV_USBD_EPIN0))
 
 /**
  * @brief EP0 handler function pointer
@@ -271,31 +276,17 @@ app_usbd_state_t app_usbd_core_state_get(void);
 
 
 /**
- * @brief Check current USBD regulator status
+ * @brief Check current feature state
  *
- * @return true when regulator is ready
+ * Function checks the state of the selected feature that was configured by the host.
+ *
+ * @param feature Feature to check.
+ *                Only features related to the device should be checked by this function.
+ *
+ * @retval true  Selected feature is set
+ * @retval false Selected feature is cleared
  */
-static inline bool app_usbd_core_power_regulator_is_ready(void)
-{
-    return 0 != ( (NRF_POWER->USBREGSTATUS) & POWER_USBREGSTATUS_OUTPUTRDY_Msk);
-}
-
-/**
- * @brief Register class on remote wake-up feature
- * @param[in] p_inst Instance of the class
- */
-void app_usbd_core_class_rwu_register(app_usbd_class_inst_t const * const p_inst);
-
-/**
- * @brief Unregister class from remote wake-up feature
- * @param[in] p_inst Instance of the class
- */
-void app_usbd_core_class_rwu_unregister(app_usbd_class_inst_t const * const p_inst);
-
-/**
- * @brief Set remote wake-up pending
- * */
-void app_usbd_core_class_rwu_pend(void);
+bool app_usbd_core_feature_state_get(app_usbd_setup_stdfeature_t feature);
 
 /** @} */
 

@@ -47,7 +47,7 @@ extern "C" {
 // LEDs definitions
 #define LEDS_NUMBER    1
 
-#define LED_1          25
+#define LED_1          20
 
 #define LEDS_ACTIVE_STATE 0
 
@@ -75,6 +75,8 @@ extern "C" {
 #define CTS_PIN_NUMBER UART_PIN_DISCONNECTED
 #define RTS_PIN_NUMBER UART_PIN_DISCONNECTED
 #define HWFC           false
+
+#define BUZZER_PIN_NUMBER  8
 
 // Arduino board mappings
 #define ARDUINO_SCL_PIN             27    // SCL signal pin

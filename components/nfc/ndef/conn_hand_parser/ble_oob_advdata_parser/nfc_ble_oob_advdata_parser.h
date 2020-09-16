@@ -79,7 +79,7 @@ typedef struct
 /**@brief Function for parsing BLE data encoded in AD Type format.
  *
  *        @details This function parses BLE data encoded in Advertising Data Type format which
- *        can be generated with @ref adv_data_encode function. The result of the parsing is
+ *        can be generated with @ref ble_advdata_encode function. The result of the parsing is
  *        stored within @ref nfc_ble_oob_pairing_data_t structure.
  *
  *        @note Currently, module can be used to parse BLE AD Type data, which contains

@@ -46,22 +46,22 @@ extern void nrf_bootloader_app_start_impl(uint32_t start_addr);
 
 void nrf_bootloader_app_start(uint32_t start_addr)
 {
-    NRF_LOG_DEBUG("Running nrf_bootloader_app_start with address: 0x%08x\r\n", start_addr);
+    NRF_LOG_DEBUG("Running nrf_bootloader_app_start with address: 0x%08x", start_addr);
     uint32_t err_code;
 
     // Disable interrupts
-    NRF_LOG_DEBUG("Disabling interrupts\r\n");
+    NRF_LOG_DEBUG("Disabling interrupts");
 
     NVIC->ICER[0]=0xFFFFFFFF;
 #if defined(__NRF_NVIC_ISER_COUNT) && __NRF_NVIC_ISER_COUNT == 2
     NVIC->ICER[1]=0xFFFFFFFF;
 #endif
 
-    NRF_LOG_DEBUG("Setting MBR vector table base: 0x%08x\r\n", start_addr);
-    err_code = nrf_dfu_mbr_vector_table_set(start_addr, true);
-    if(err_code != NRF_SUCCESS)
+    NRF_LOG_DEBUG("Setting MBR irq forward address: 0x%08x", start_addr);
+    err_code = nrf_dfu_mbr_irq_forward_address_set(start_addr);
+    if (err_code != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("Failed running nrf_dfu_mbr_vector_table_set\r\n");
+        NRF_LOG_ERROR("Failed running nrf_dfu_mbr_irq_forward_address_set");
         return;
     }
 

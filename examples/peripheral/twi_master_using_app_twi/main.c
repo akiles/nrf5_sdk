@@ -59,9 +59,10 @@
 #include "lm75b.h"
 #include "mma7660.h"
 #include "compiler_abstraction.h"
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define TWI_INSTANCE_ID             0
 
@@ -135,7 +136,7 @@ void read_all_cb(ret_code_t result, void * p_user_data)
 {
     if (result != NRF_SUCCESS)
     {
-        NRF_LOG_INFO("read_all_cb - error: %d\r\n", (int)result);
+        NRF_LOG_WARNING("read_all_cb - error: %d", (int)result);
         return;
     }
 
@@ -187,7 +188,7 @@ void read_all_cb(ret_code_t result, void * p_user_data)
             default:                        orientation = "?";     break;
         }
 
-        NRF_LOG_INFO("Temp: " NRF_LOG_FLOAT_MARKER " | X: %3d, Y: %3d, Z: %3d ",
+        NRF_LOG_RAW_INFO("Temp: " NRF_LOG_FLOAT_MARKER " | X: %3d, Y: %3d, Z: %3d ",
             NRF_LOG_FLOAT((float)((m_sum.temp * 0.125) / NUMBER_OF_SAMPLES)),
             m_sum.x / NUMBER_OF_SAMPLES,
             m_sum.y / NUMBER_OF_SAMPLES,
@@ -211,7 +212,7 @@ static void read_all(void)
         ,
         MMA7660_READ_XYZ_AND_TILT(&m_buffer[2])
     };
-    static app_twi_transaction_t const transaction =
+    static app_twi_transaction_t APP_TWI_BUFFER_LOC_IND transaction =
     {
         .callback            = read_all_cb,
         .p_user_data         = NULL,
@@ -232,12 +233,12 @@ static void read_lm75b_registers_cb(ret_code_t result, void * p_user_data)
 {
     if (result != NRF_SUCCESS)
     {
-        NRF_LOG_INFO("read_lm75b_registers_cb - error: %d\r\n", (int)result);
+        NRF_LOG_WARNING("read_lm75b_registers_cb - error: %d", (int)result);
         return;
     }
 
-    NRF_LOG_INFO("LM75B:\r\n");
-    NRF_LOG_HEXDUMP_INFO(m_buffer, 7);
+    NRF_LOG_DEBUG("LM75B:");
+    NRF_LOG_HEXDUMP_DEBUG(m_buffer, 7);
 }
 static void read_lm75b_registers(void)
 {
@@ -251,7 +252,7 @@ static void read_lm75b_registers(void)
         LM75B_READ(&lm75b_tos_reg_addr,   &m_buffer[3], 2),
         LM75B_READ(&lm75b_thyst_reg_addr, &m_buffer[5], 2)
     };
-    static app_twi_transaction_t const transaction =
+    static app_twi_transaction_t APP_TWI_BUFFER_LOC_IND transaction =
     {
         .callback            = read_lm75b_registers_cb,
         .p_user_data         = NULL,
@@ -270,12 +271,12 @@ static void read_mma7660_registers_cb(ret_code_t result, void * p_user_data)
 {
     if (result != NRF_SUCCESS)
     {
-        NRF_LOG_INFO("read_mma7660_registers_cb - error: %d\r\n", (int)result);
+        NRF_LOG_WARNING("read_mma7660_registers_cb - error: %d", (int)result);
         return;
     }
 
-    NRF_LOG_INFO("MMA7660:\r\n");
-    NRF_LOG_HEXDUMP_INFO(m_buffer, MMA7660_NUMBER_OF_REGISTERS);
+    NRF_LOG_DEBUG("MMA7660:");
+    NRF_LOG_HEXDUMP_DEBUG(m_buffer, MMA7660_NUMBER_OF_REGISTERS);
 }
 static void read_mma7660_registers(void)
 {
@@ -287,7 +288,7 @@ static void read_mma7660_registers(void)
         MMA7660_READ(&mma7660_xout_reg_addr,
             m_buffer, MMA7660_NUMBER_OF_REGISTERS)
     };
-    static app_twi_transaction_t const transaction =
+    static app_twi_transaction_t APP_TWI_BUFFER_LOC_IND transaction =
     {
         .callback            = read_mma7660_registers_cb,
         .p_user_data         = NULL,
@@ -391,8 +392,9 @@ int main(void)
     APP_ERROR_CHECK(err_code);
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("TWI master example\r\n");
+    NRF_LOG_RAW_INFO("\r\nTWI master example\r\n");
     NRF_LOG_FLUSH();
     twi_config();
 

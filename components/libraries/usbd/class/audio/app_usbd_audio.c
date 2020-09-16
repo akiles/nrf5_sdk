@@ -264,7 +264,7 @@ static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
 
 static ret_code_t audio_req_out_data_cb(nrf_drv_usbd_ep_status_t status, void * p_context)
 {
-    if(status == NRF_USBD_EP_OK)
+    if (status == NRF_USBD_EP_OK)
     {
         app_usbd_audio_t const * p_audio = p_context;
 
@@ -437,52 +437,6 @@ static inline nrf_drv_usbd_ep_t ep_iso_addr_get(app_usbd_class_inst_t const * p_
    return app_usbd_class_ep_address_get(ep_cfg);
 }
 
-static ret_code_t sof_event_handler(app_usbd_class_inst_t const * p_inst)
-{
-    app_usbd_audio_t const * p_audio = audio_get(p_inst);
-    app_usbd_audio_ctx_t *   p_audio_ctx = audio_ctx_get(p_audio);
-
-    nrf_drv_usbd_ep_t ep_addr = ep_iso_addr_get(p_inst);
-
-    if (app_usbd_core_state_get() != APP_USB_STATE_BASE(APP_USBD_STATE_Configured))
-    {
-        return NRF_SUCCESS;
-    }
-
-    if (!p_audio_ctx->streaming)
-    {
-        return NRF_SUCCESS;
-    }
-
-    /*OUT transfers*/
-    if (p_audio_ctx->rx_size && NRF_USBD_EPOUT_CHECK(ep_addr))
-    {
-
-        ASSERT(NRF_USBD_EPISO_CHECK(ep_addr));
-
-        uint32_t isoout = nrf_usbd_epout_size_get(ep_addr);
-        if (isoout)
-        {
-            ASSERT(isoout == p_audio_ctx->rx_size);
-            NRF_DRV_USBD_TRANSFER_OUT(transfer, p_audio_ctx->p_rx_buff, p_audio_ctx->rx_size);
-            return app_usbd_core_ep_transfer(ep_addr, &transfer);
-        }
-    }
-
-    /*IN transfers*/
-    if (p_audio_ctx->tx_size && NRF_USBD_EPIN_CHECK(ep_addr))
-    {
-        ASSERT(NRF_USBD_EPISO_CHECK(ep_addr));
-        NRF_DRV_USBD_TRANSFER_IN(transfer, p_audio_ctx->p_tx_buff, p_audio_ctx->tx_size);
-        return app_usbd_core_ep_transfer(ep_addr, &transfer);
-    }
-
-    return NRF_SUCCESS;
-}
-
-
-
-
 /**
  * @brief @ref app_usbd_class_methods_t::event_handler
  */
@@ -495,9 +449,6 @@ static ret_code_t audio_event_handler(app_usbd_class_inst_t const * p_inst,
     ret_code_t ret = NRF_SUCCESS;
     switch (p_event->app_evt.type)
     {
-        case APP_USBD_EVT_DRV_SOF:
-            ret = sof_event_handler(p_inst);
-            break;
         case APP_USBD_EVT_DRV_RESET:
             break;
         case APP_USBD_EVT_DRV_SETUP:
@@ -518,18 +469,12 @@ static ret_code_t audio_event_handler(app_usbd_class_inst_t const * p_inst,
         case APP_USBD_EVT_DRV_RESUME:
             break;
         case APP_USBD_EVT_INST_APPEND:
-        {
-            ret = app_usbd_class_sof_register(p_inst);
             break;
-        }
         case APP_USBD_EVT_INST_REMOVE:
-        {
-            ret = app_usbd_class_sof_unregister(p_inst);
             break;
-        }
-        case APP_USBD_EVT_START:
+        case APP_USBD_EVT_STARTED:
             break;
-        case APP_USBD_EVT_STOP:
+        case APP_USBD_EVT_STOPPED:
             break;
         default:
             ret = NRF_ERROR_NOT_SUPPORTED;
@@ -559,36 +504,38 @@ const app_usbd_class_methods_t app_usbd_audio_class_methods = {
         .get_descriptors = audio_get_descriptors,
 };
 
-void app_usbd_audio_class_tx_buf_set(app_usbd_class_inst_t const * p_inst,
-                                     const void * p_buff,
-                                     size_t size)
+
+size_t app_usbd_audio_class_rx_size_get(app_usbd_class_inst_t const * p_inst)
 {
-    ASSERT(p_inst != NULL);
+    nrf_drv_usbd_ep_t ep_addr;
+    ep_addr = ep_iso_addr_get(p_inst);
+    ASSERT(NRF_USBD_EPISO_CHECK(ep_addr));
 
-    app_usbd_audio_t const * p_audio = audio_get(p_inst);
-    app_usbd_audio_ctx_t *   p_audio_ctx = audio_ctx_get(p_audio);
-    CRITICAL_REGION_ENTER();
-
-    p_audio_ctx->p_tx_buff = p_buff;
-    p_audio_ctx->tx_size = size;
-
-    CRITICAL_REGION_EXIT();
+    return (size_t)nrf_drv_usbd_epout_size_get(ep_addr);
 }
 
-void app_usbd_audio_class_rx_buf_set(app_usbd_class_inst_t const * p_inst,
-                                     void * p_buff,
-                                     size_t size)
+ret_code_t app_usbd_audio_class_rx_start(app_usbd_class_inst_t const * p_inst,
+                                         void * p_buff,
+                                         size_t size)
 {
-    ASSERT(p_inst != NULL);
+    nrf_drv_usbd_ep_t ep_addr;
+    ep_addr = ep_iso_addr_get(p_inst);
+    ASSERT(NRF_USBD_EPISO_CHECK(ep_addr));
 
-    app_usbd_audio_t const * p_audio = audio_get(p_inst);
-    app_usbd_audio_ctx_t *   p_audio_ctx = audio_ctx_get(p_audio);
-    CRITICAL_REGION_ENTER();
+    NRF_DRV_USBD_TRANSFER_OUT(transfer, p_buff, size);
+    return app_usbd_core_ep_transfer(ep_addr, &transfer);
+}
 
-    p_audio_ctx->p_rx_buff = p_buff;
-    p_audio_ctx->rx_size = size;
+ret_code_t app_usbd_audio_class_tx_start(app_usbd_class_inst_t const * p_inst,
+                                         const void * p_buff,
+                                         size_t size)
+{
+    nrf_drv_usbd_ep_t ep_addr;
+    ep_addr = ep_iso_addr_get(p_inst);
+    ASSERT(NRF_USBD_EPISO_CHECK(ep_addr));
 
-    CRITICAL_REGION_EXIT();
+    NRF_DRV_USBD_TRANSFER_IN(transfer, p_buff, size);
+    return app_usbd_core_ep_transfer(ep_addr, &transfer);
 }
 
 #endif //APP_USBD_CLASS_AUDIO_ENABLED

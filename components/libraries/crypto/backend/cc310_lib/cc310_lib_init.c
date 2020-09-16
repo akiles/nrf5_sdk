@@ -71,7 +71,7 @@ CRYS_RND_WorkBuff_t * gp_rnd_work_buffer        = &g_rnd_work_buffer;
 static uint32_t init_result_get(uint32_t crys_error)
 {
     uint32_t ret_val = NRF_ERROR_INTERNAL;
-    switch(crys_error)
+    switch (crys_error)
     {
         case CRYS_OK:
             ret_val = NRF_SUCCESS;
@@ -90,7 +90,7 @@ static uint32_t uninit_result_get(uint32_t crys_error)
 {
     uint32_t ret_val;
 
-    switch(crys_error)
+    switch (crys_error)
     {
         default:
             ret_val = NRF_ERROR_INTERNAL;

@@ -43,7 +43,7 @@
 #include "ant_bsc_combined_page_0.h"
 #include "ant_bsc_utils.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_BCS_COMBINED_PAGE_0"
+#define NRF_LOG_MODULE_NAME ant_bcs_combined_page_0
 #if ANT_BSC_COMBINED_PAGE_0_LOG_ENABLED
 #define NRF_LOG_LEVEL       ANT_BSC_COMBINED_PAGE_0_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  ANT_BSC_COMBINED_PAGE_0_INFO_COLOR
@@ -51,6 +51,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // ANT_BSC_COMBINED_PAGE_0_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 /**@brief BSC page 0 data layout structure. */
 typedef struct
@@ -68,14 +69,14 @@ typedef struct
 /**@brief Function for printing combined speed and cadence page0 data. */
 static void comb_page0_data_log(ant_bsc_combined_page0_data_t const * p_page_data)
 {
-    NRF_LOG_INFO("Cadence Revolution count: %u\r\n",
+    NRF_LOG_INFO("Cadence Revolution count: %u",
                    (unsigned int)p_page_data->cadence_rev_count);
 
-    NRF_LOG_INFO("Cadence event time:       %u.%03us\r\n",
+    NRF_LOG_INFO("Cadence event time:       %u.%03us",
                    (unsigned int)ANT_BSC_EVENT_TIME_SEC(p_page_data->cadence_event_time),
                    (unsigned int)ANT_BSC_EVENT_TIME_MSEC(p_page_data->cadence_event_time));
 
-    NRF_LOG_INFO("Speed Revolution count:   %u\r\n",
+    NRF_LOG_INFO("Speed Revolution count:   %u",
                    (unsigned int)p_page_data->speed_rev_count);
 
     NRF_LOG_INFO("Speed event time:         %u.%03us\r\n\n",

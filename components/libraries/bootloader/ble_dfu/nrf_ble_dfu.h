@@ -46,7 +46,7 @@
  *
  * @details  The Device Firmware Update (DFU) Service is a GATT-based service that can be used for
  *           performing firmware updates over BLE. Note that this implementation uses
- *           vendor-specific UUIDs for the service and characteristics and is intended to demonstrate
+ *           vendor-specific UUIDs for the service and characteristics, and is intended to demonstrate
  *           firmware updates over BLE. See @ref lib_dfu_transport_ble "DFU Transport: BLE" for more information on the service and the profile.
  */
 
@@ -63,11 +63,11 @@ extern "C" {
 #endif
 
 // This is a 16-bit UUID.
-#define BLE_DFU_SERVICE_UUID                 0xFE59                       //!< The UUID of the DFU Service.
+#define BLE_DFU_SERVICE_UUID                 0xFE59                       //!< UUID of the DFU Service.
 
 // These UUIDs are used with the Nordic base address to create a 128-bit UUID (0x8EC9XXXXF3154F609FB8838830DAEA50).
-#define BLE_DFU_CTRL_PT_UUID                 0x0001                       //!< The UUID of the DFU Control Point.
-#define BLE_DFU_PKT_CHAR_UUID                0x0002                       //!< The UUID of the DFU Packet Characteristic.
+#define BLE_DFU_CTRL_PT_UUID                 0x0001                       //!< UUID of the DFU Control Point.
+#define BLE_DFU_PKT_CHAR_UUID                0x0002                       //!< UUID of the DFU Packet Characteristic.
 
 
 /**@brief   BLE DFU opcodes.
@@ -111,6 +111,7 @@ uint32_t ble_dfu_transport_init(void);
  * @retval     NRF_SUCCESS If the DFU Service was correctly closed down.
  */
 uint32_t ble_dfu_transport_close(void);
+
 
 #ifdef __cplusplus
 }

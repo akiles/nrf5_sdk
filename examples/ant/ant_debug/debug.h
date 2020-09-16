@@ -59,13 +59,10 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "ant_stack_handler_types.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#define DEBUG_CHANNEL                           ((uint8_t) 1)       /**< Debug channel number. */
 
 // Debug field definitions
 #define ANT_DEBUG_FIELD_BUTTON_A_STATUS         ((uint8_t) 0)       /**< Status button A. */
@@ -84,7 +81,6 @@ extern "C" {
 
 /**@brief Function prototype for handler of reverse direction commands on debug channel*/
 typedef void (*custom_command_handler_t)(uint8_t const * const p_command);
-
 
 /** @brief Function to initialize the debug channel.
  *
@@ -130,16 +126,6 @@ void ad_debug_field_increment(uint8_t index);
  * @param[in] fdb_value       Value to assign to the fast debug byte
  */
 void ad_fast_debug_byte_set(uint8_t fdb_value);
-
-/**
- * @brief Handles ANT events coming in on the DEBUG_CHANNEL
- *
- * Handles any filter commands sent from the debug tool.
- * Sends the debug messages on the debug channel.
- *
- * @param[in] p_ant_event     Event to be handled
- */
-void ad_ant_event_process(ant_evt_t * p_ant_evt);
 
 /**
  * @brief Forces debug channel to transmit to this error code, file name and line number.

@@ -319,6 +319,19 @@ uint32_t ble_gap_evt_phy_update_enc(ble_evt_t const * const p_event,
 
     SER_EVT_ENC_END;
 }
+
+uint32_t ble_gap_evt_phy_update_request_enc(ble_evt_t const * const p_event,
+                                            uint32_t                event_len,
+                                            uint8_t * const         p_buf,
+                                            uint32_t * const        p_buf_len)
+{
+    SER_EVT_ENC_BEGIN(BLE_GAP_EVT_PHY_UPDATE_REQUEST);
+
+    SER_PUSH_uint16(&p_event->evt.gap_evt.conn_handle);
+    SER_PUSH_FIELD(&p_event->evt.gap_evt.params.phy_update_request, ble_gap_phys_t_enc);
+
+    SER_EVT_ENC_END;
+}
 #endif
 #if NRF_SD_BLE_API_VERSION >= 4
 uint32_t ble_gap_evt_data_length_update_request_enc(ble_evt_t const * const p_event,

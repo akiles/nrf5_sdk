@@ -41,7 +41,7 @@
  *
  * @defgroup sdk_nrf_dfu_types DFU types
  * @{
- * @ingroup  sdk_nrf_dfu
+ * @ingroup  nrf_dfu
  */
 
 #ifndef NRF_DFU_TYPES_H__
@@ -52,8 +52,11 @@
 
 #include "nrf.h"
 #include "nrf_mbr.h"
+#include "nrf_dfu_svci.h"
+
 #ifdef SOFTDEVICE_PRESENT
 #include "nrf_sdm.h"
+#include "ble_gap.h"
 #endif
 
 
@@ -122,7 +125,6 @@ extern "C" {
 #endif
 
 
-
 #if defined(NRF52832_XXAA)
 
 /**
@@ -138,7 +140,12 @@ extern "C" {
 /** @brief Page location of the MBR parameters page address.
  *
  */
+
+#if !defined(NRF52840_XXAA_ENGA)
 #define NRF_MBR_PARAMS_PAGE_ADDRESS         (0x0007E000UL)
+#else
+#define NRF_MBR_PARAMS_PAGE_ADDRESS         (0x000FE000UL)
+#endif
 
 #endif
 
@@ -248,7 +255,7 @@ typedef struct
 typedef struct
 {
     uint32_t            crc;                /**< CRC for the stored DFU settings, not including the CRC itself. If 0xFFFFFFF, the CRC has never been calculated. */
-    uint32_t            settings_version;   /**< Version of the currect dfu settings struct layout.*/
+    uint32_t            settings_version;   /**< Version of the currect DFU settings struct layout. */
     uint32_t            app_version;        /**< Version of the last stored application. */
     uint32_t            bootloader_version; /**< Version of the last stored bootloader. */
 
@@ -265,7 +272,18 @@ typedef struct
 
     uint32_t            enter_buttonless_dfu;
     uint8_t             init_command[INIT_COMMAND_MAX_SIZE];  /**< Buffer for storing the init command. */
+
+    nrf_dfu_peer_data_t peer_data;          /**< Not included in calculated CRC. */
+    nrf_dfu_adv_name_t  adv_name;           /**< Not included in calculated CRC. */
 } nrf_dfu_settings_t;
+
+
+#ifdef SOFTDEVICE_PRESENT
+
+
+#endif // SYSTEM_SERVICE_ATT_SIZE
+
+
 #pragma pack() // revert pack settings
 
 

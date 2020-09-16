@@ -53,6 +53,7 @@
 #include <stdint.h>
 
 #include "nrf.h"
+#include "nrf_peripherals.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -127,7 +128,16 @@ typedef enum
     NRF_SPIM_FREQ_4M   = SPIM_FREQUENCY_FREQUENCY_M4,     ///< 4 Mbps.
     // [conversion to 'int' needed to prevent compilers from complaining
     //  that the provided value (0x80000000UL) is out of range of "int"]
-    NRF_SPIM_FREQ_8M   = (int)SPIM_FREQUENCY_FREQUENCY_M8 ///< 8 Mbps.
+    NRF_SPIM_FREQ_8M   = (int)SPIM_FREQUENCY_FREQUENCY_M8,///< 8 Mbps.
+#ifndef SPI_PRESENT
+    NRF_SPI_FREQ_125K =  NRF_SPIM_FREQ_125K,
+    NRF_SPI_FREQ_250K =  NRF_SPIM_FREQ_250K,
+    NRF_SPI_FREQ_500K =  NRF_SPIM_FREQ_500K,
+    NRF_SPI_FREQ_1M   =  NRF_SPIM_FREQ_1M,
+    NRF_SPI_FREQ_2M   =  NRF_SPIM_FREQ_2M,
+    NRF_SPI_FREQ_4M   =  NRF_SPIM_FREQ_4M,
+    NRF_SPI_FREQ_8M   =  NRF_SPIM_FREQ_8M,
+#endif
 } nrf_spim_frequency_t;
 
 /**
@@ -138,7 +148,13 @@ typedef enum
     NRF_SPIM_MODE_0, ///< SCK active high, sample on leading edge of clock.
     NRF_SPIM_MODE_1, ///< SCK active high, sample on trailing edge of clock.
     NRF_SPIM_MODE_2, ///< SCK active low, sample on leading edge of clock.
-    NRF_SPIM_MODE_3  ///< SCK active low, sample on trailing edge of clock.
+    NRF_SPIM_MODE_3, ///< SCK active low, sample on trailing edge of clock.
+#ifndef SPI_PRESENT
+    NRF_SPI_MODE_0 = NRF_SPIM_MODE_0,
+    NRF_SPI_MODE_1 = NRF_SPIM_MODE_1,
+    NRF_SPI_MODE_2 = NRF_SPIM_MODE_2,
+    NRF_SPI_MODE_3 = NRF_SPIM_MODE_3,
+#endif
 } nrf_spim_mode_t;
 
 /**
@@ -147,7 +163,11 @@ typedef enum
 typedef enum
 {
     NRF_SPIM_BIT_ORDER_MSB_FIRST = SPIM_CONFIG_ORDER_MsbFirst, ///< Most significant bit shifted out first.
-    NRF_SPIM_BIT_ORDER_LSB_FIRST = SPIM_CONFIG_ORDER_LsbFirst  ///< Least significant bit shifted out first.
+    NRF_SPIM_BIT_ORDER_LSB_FIRST = SPIM_CONFIG_ORDER_LsbFirst, ///< Least significant bit shifted out first.
+#ifndef SPI_PRESENT
+    NRF_SPI_BIT_ORDER_MSB_FIRST  = NRF_SPIM_BIT_ORDER_MSB_FIRST,
+    NRF_SPI_BIT_ORDER_LSB_FIRST  = NRF_SPIM_BIT_ORDER_LSB_FIRST,
+#endif
 } nrf_spim_bit_order_t;
 
 

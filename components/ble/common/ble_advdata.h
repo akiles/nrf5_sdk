@@ -60,29 +60,30 @@ extern "C" {
 #endif
 
 
-#define ADV_LENGTH_FIELD_SIZE              1UL                                 /**< Advertising Data and Scan Response format contains 1 octet for the length. */
-#define ADV_AD_TYPE_FIELD_SIZE             1UL                                 /**< Advertising Data and Scan Response format contains 1 octet for the AD type. */
-#define ADV_AD_DATA_OFFSET                 (ADV_LENGTH_FIELD_SIZE + \
-                                            ADV_AD_TYPE_FIELD_SIZE)            /**< Offset for the AD data field of the Advertising Data and Scan Response format. */
+#define AD_LENGTH_FIELD_SIZE               1UL                                         /**< Advertising Data and Scan Response format contains 1 octet for the length. */
+#define AD_TYPE_FIELD_SIZE                 1UL                                         /**< Advertising Data and Scan Response format contains 1 octet for the AD type. */
+#define AD_DATA_OFFSET                     (AD_LENGTH_FIELD_SIZE + AD_TYPE_FIELD_SIZE) /**< Offset for the AD data field of the Advertising Data and Scan Response format. */
+
 #define AD_TYPE_BLE_DEVICE_ADDR_TYPE_SIZE  1UL                                 /**< Data size (in octets) of the Address type of the LE Bluetooth Device Address AD type. */
 #define AD_TYPE_BLE_DEVICE_ADDR_DATA_SIZE  (BLE_GAP_ADDR_LEN + \
                                             AD_TYPE_BLE_DEVICE_ADDR_TYPE_SIZE) /**< Data size (in octets) of the LE Bluetooth Device Address AD type. */
-#define AD_TYPE_BLE_DEVICE_ADDR_SIZE       (ADV_AD_DATA_OFFSET + \
+#define AD_TYPE_BLE_DEVICE_ADDR_SIZE       (AD_DATA_OFFSET + \
                                             AD_TYPE_BLE_DEVICE_ADDR_DATA_SIZE) /**< Size (in octets) of the LE Bluetooth Device Address AD type. */
 #define AD_TYPE_APPEARANCE_DATA_SIZE       2UL                                 /**< Data size (in octets) of the Appearance AD type. */
-#define AD_TYPE_APPEARANCE_SIZE            (ADV_AD_DATA_OFFSET + \
+#define AD_TYPE_APPEARANCE_SIZE            (AD_DATA_OFFSET + \
                                             AD_TYPE_APPEARANCE_DATA_SIZE)      /**< Size (in octets) of the Appearance AD type. */
 #define AD_TYPE_FLAGS_DATA_SIZE            1UL                                 /**< Data size (in octets) of the Flags AD type. */
-#define AD_TYPE_FLAGS_SIZE                 (ADV_AD_DATA_OFFSET + \
+#define AD_TYPE_FLAGS_SIZE                 (AD_DATA_OFFSET + \
                                             AD_TYPE_FLAGS_DATA_SIZE)           /**< Size (in octets) of the Flags AD type. */
 #define AD_TYPE_TX_POWER_LEVEL_DATA_SIZE   1UL                                 /**< Data size (in octets) of the TX Power Level AD type. */
-#define AD_TYPE_TX_POWER_LEVEL_SIZE        (ADV_AD_DATA_OFFSET + \
+#define AD_TYPE_TX_POWER_LEVEL_SIZE        (AD_DATA_OFFSET + \
                                             AD_TYPE_TX_POWER_LEVEL_DATA_SIZE)  /**< Size (in octets) of the TX Power Level AD type. */
 #define AD_TYPE_CONN_INT_DATA_SIZE         4UL                                 /**< Data size (in octets) of the Slave Connection Interval Range AD type. */
-#define AD_TYPE_CONN_INT_SIZE              (ADV_AD_DATA_OFFSET + \
+#define AD_TYPE_CONN_INT_SIZE              (AD_DATA_OFFSET + \
                                             AD_TYPE_CONN_INT_DATA_SIZE)        /**< Data size (in octets) of the Slave Connection Interval Range AD type. */
 #define AD_TYPE_MANUF_SPEC_DATA_ID_SIZE    2UL                                 /**< Size (in octets) of the Company Identifier Code, which is a part of the Manufacturer Specific Data AD type. */
 #define AD_TYPE_SERV_DATA_16BIT_UUID_SIZE  2UL                                 /**< Size (in octets) of the 16-bit UUID, which is a part of the Service Data AD type. */
+
 
 /**@brief Security Manager TK value. */
 typedef struct
@@ -191,9 +192,9 @@ typedef struct
  * However, it should be noted that this is just a preference that the application can specify, and
  * if the preference is too large to fit in the provided buffer, the name can be truncated further.
  */
-uint32_t adv_data_encode(ble_advdata_t const * const p_advdata,
-                         uint8_t             * const p_encoded_data,
-                         uint16_t            * const p_len);
+uint32_t ble_advdata_encode(ble_advdata_t const * const p_advdata,
+                            uint8_t             * const p_encoded_data,
+                            uint16_t            * const p_len);
 
 /**@brief Function for encoding and setting the advertising data and/or scan response data.
  *

@@ -58,9 +58,10 @@
 #include "nrf_drv_timer.h"
 #include "nordic_common.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 const nrf_drv_timer_t timer0 = NRF_DRV_TIMER_INSTANCE(0);
 const nrf_drv_timer_t timer1 = NRF_DRV_TIMER_INSTANCE(1);
@@ -172,6 +173,8 @@ int main(void)
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
     // Enabling constant latency as indicated by PAN 11 "HFCLK: Base current with HFCLK
     // running is too high" found at Product Anomaly document found at
     // https://www.nordicsemi.com/eng/Products/Bluetooth-R-low-energy/nRF51822/#Downloads
@@ -190,7 +193,7 @@ int main(void)
     while (true)
     {
 
-        NRF_LOG_INFO("Current count: %d\r\n", (int)nrf_drv_timer_capture(&timer0, NRF_TIMER_CC_CHANNEL0));
+        NRF_LOG_INFO("Current count: %d", (int)nrf_drv_timer_capture(&timer0, NRF_TIMER_CC_CHANNEL0));
 
         /* increment the counter */
         nrf_drv_timer_increment(&timer0);

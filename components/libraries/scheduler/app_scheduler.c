@@ -161,7 +161,7 @@ uint16_t app_sched_queue_utilization_get(void)
 #endif // APP_SCHEDULER_WITH_PROFILER
 
 
-uint32_t app_sched_event_put(void                    * p_event_data,
+uint32_t app_sched_event_put(void const              * p_event_data,
                              uint16_t                  event_data_size,
                              app_sched_event_handler_t handler)
 {

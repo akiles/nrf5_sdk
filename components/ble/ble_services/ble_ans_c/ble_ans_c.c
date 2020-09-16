@@ -38,20 +38,20 @@
  * 
  */
 /* Attention!
-*  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
-*  qualification listings, this section of source code must not be modified.
-*/
+ * To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
+ * qualification listings, this section of source code must not be modified.
+ */
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(BLE_ANS_C)
 #include "ble_ans_c.h"
 #include <string.h>
 #include <stdbool.h>
 #include "ble_err.h"
-#include "ble_srv_common.h"
 #include "nrf_assert.h"
 #include "ble_db_discovery.h"
-#define NRF_LOG_MODULE_NAME "BLE_ANS_C"
+#define NRF_LOG_MODULE_NAME ble_ans_c
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #define NOTIFICATION_DATA_LENGTH 2                              /**< The mandatory length of notification data. After the mandatory data, the optional message is located. */
 #define READ_DATA_LENGTH_MIN     1                              /**< Minimum data length in a valid Alert Notification Read Response message. */
@@ -124,19 +124,19 @@ static void tx_buffer_process(void)
 
 /** @brief Function for copying a characteristic.
  */
-static void char_set(ble_gattc_char_t * p_dest_char, const ble_gattc_char_t * p_source_char)
+static void char_set(ble_gattc_char_t * p_dest_char, ble_gattc_char_t const * p_source_char)
 {
     memcpy(p_dest_char, p_source_char, sizeof(ble_gattc_char_t));
 }
 
-static void char_cccd_set(ble_gattc_desc_t * p_cccd, const uint16_t cccd_handle)
+static void char_cccd_set(ble_gattc_desc_t * p_cccd, uint16_t cccd_handle)
 {
     p_cccd->handle = cccd_handle;
 }
 
 /** @brief Function to check that all handles required by the client to use the server are present.
  */
-static bool is_valid_ans_srv_discovered(const ble_ans_c_service_t * p_srv)
+static bool is_valid_ans_srv_discovered(ble_ans_c_service_t const * p_srv)
 {
     if ((p_srv->alert_notif_ctrl_point.handle_value == BLE_GATT_HANDLE_INVALID)    ||
         (p_srv->suported_new_alert_cat.handle_value == BLE_GATT_HANDLE_INVALID)    ||
@@ -154,7 +154,7 @@ static bool is_valid_ans_srv_discovered(const ble_ans_c_service_t * p_srv)
 }
 
 
-void ble_ans_c_on_db_disc_evt(ble_ans_c_t * p_ans, const ble_db_discovery_evt_t * p_evt)
+void ble_ans_c_on_db_disc_evt(ble_ans_c_t * p_ans, ble_db_discovery_evt_t const * p_evt)
 {
     ble_ans_c_evt_t evt;
 
@@ -172,7 +172,7 @@ void ble_ans_c_on_db_disc_evt(ble_ans_c_t * p_ans, const ble_db_discovery_evt_t 
         // Find the characteristics inside the service.
         for (uint8_t i = 0; i < p_evt->params.discovered_db.char_count; i++)
         {
-            const ble_gatt_db_char_t * p_char = &(p_evt->params.discovered_db.charateristics[i]);
+            ble_gatt_db_char_t const * p_char = &(p_evt->params.discovered_db.charateristics[i]);
 
             switch (p_char->characteristic.uuid.uuid)
             {
@@ -221,12 +221,12 @@ void ble_ans_c_on_db_disc_evt(ble_ans_c_t * p_ans, const ble_db_discovery_evt_t 
 
 /**@brief Function for receiving and validating notifications received from the central.
  */
-static void event_notify(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt)
+static void event_notify(ble_ans_c_t * p_ans, ble_evt_t const * p_ble_evt)
 {
     uint32_t                       message_length;
     ble_ans_c_evt_t                event;
     ble_ans_alert_notification_t * p_alert        = &event.data.alert;
-    const ble_gattc_evt_hvx_t    * p_notification = &p_ble_evt->evt.gattc_evt.params.hvx;
+    ble_gattc_evt_hvx_t const    * p_notification = &p_ble_evt->evt.gattc_evt.params.hvx;
 
     // Message is not valid -> ignore.
     event.evt_type = BLE_ANS_C_EVT_NOTIFICATION;
@@ -267,7 +267,7 @@ static void event_notify(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt)
 
 /**@brief Function for handling write response events.
  */
-static void event_write_rsp(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt)
+static void event_write_rsp(ble_ans_c_t * p_ans, ble_evt_t const * p_ble_evt)
 {
     tx_buffer_process();
 }
@@ -276,10 +276,10 @@ static void event_write_rsp(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt)
 /**@brief Function for validating and passing the response to the application,
  *        when a read response is received.
  */
-static void event_read_rsp(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt)
+static void event_read_rsp(ble_ans_c_t * p_ans, ble_evt_t const * p_ble_evt)
 {
     ble_ans_c_evt_t                  event;
-    const ble_gattc_evt_read_rsp_t * p_response;
+    ble_gattc_evt_read_rsp_t const * p_response;
 
     p_response     = &p_ble_evt->evt.gattc_evt.params.read_rsp;
     event.evt_type = BLE_ANS_C_EVT_READ_RESP;
@@ -341,10 +341,11 @@ static void event_disconnect(ble_ans_c_t * p_ans, ble_evt_t const * p_ble_evt)
 }
 
 
-/**@brief Function for handling of BLE stack events.
- */
-void ble_ans_c_on_ble_evt(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt)
+/**@brief Function for handling of BLE stack events. */
+void ble_ans_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
+    ble_ans_c_t * p_ans = (ble_ans_c_t *)p_context;
+
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GATTC_EVT_HVX:
@@ -366,7 +367,7 @@ void ble_ans_c_on_ble_evt(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt)
 }
 
 
-uint32_t ble_ans_c_init(ble_ans_c_t * p_ans, const ble_ans_c_init_t * p_ans_init)
+uint32_t ble_ans_c_init(ble_ans_c_t * p_ans, ble_ans_c_init_t const * p_ans_init)
 {
     VERIFY_PARAM_NOT_NULL(p_ans);
     VERIFY_PARAM_NOT_NULL(p_ans_init);
@@ -405,7 +406,7 @@ uint32_t ble_ans_c_init(ble_ans_c_t * p_ans, const ble_ans_c_init_t * p_ans_init
 static uint32_t cccd_configure(uint16_t conn_handle, uint16_t handle_cccd, bool enable)
 {
     ans_tx_message_t * p_msg;
-    uint16_t       cccd_val = enable ? BLE_GATT_HVX_NOTIFICATION : 0;
+    uint16_t           cccd_val = enable ? BLE_GATT_HVX_NOTIFICATION : 0;
 
     p_msg              = &m_tx_buffer[m_tx_insert_index++];
     m_tx_insert_index &= TX_BUFFER_MASK;
@@ -425,7 +426,7 @@ static uint32_t cccd_configure(uint16_t conn_handle, uint16_t handle_cccd, bool 
 }
 
 
-uint32_t ble_ans_c_enable_notif_new_alert(const ble_ans_c_t * p_ans)
+uint32_t ble_ans_c_enable_notif_new_alert(ble_ans_c_t const * p_ans)
 {
     if (p_ans->conn_handle == BLE_CONN_HANDLE_INVALID)
     {
@@ -440,7 +441,7 @@ uint32_t ble_ans_c_enable_notif_new_alert(const ble_ans_c_t * p_ans)
 }
 
 
-uint32_t ble_ans_c_disable_notif_new_alert(const ble_ans_c_t * p_ans)
+uint32_t ble_ans_c_disable_notif_new_alert(ble_ans_c_t const * p_ans)
 {
     return cccd_configure(p_ans->conn_handle,
                           p_ans->service.new_alert_cccd.handle,
@@ -448,7 +449,7 @@ uint32_t ble_ans_c_disable_notif_new_alert(const ble_ans_c_t * p_ans)
 }
 
 
-uint32_t ble_ans_c_enable_notif_unread_alert(const ble_ans_c_t * p_ans)
+uint32_t ble_ans_c_enable_notif_unread_alert(ble_ans_c_t const * p_ans)
 {
     if ( p_ans->conn_handle == BLE_CONN_HANDLE_INVALID)
     {
@@ -460,7 +461,7 @@ uint32_t ble_ans_c_enable_notif_unread_alert(const ble_ans_c_t * p_ans)
 }
 
 
-uint32_t ble_ans_c_disable_notif_unread_alert(const ble_ans_c_t * p_ans)
+uint32_t ble_ans_c_disable_notif_unread_alert(ble_ans_c_t const * p_ans)
 {
     return cccd_configure(p_ans->conn_handle,
                           p_ans->service.unread_alert_cccd.handle,
@@ -468,8 +469,8 @@ uint32_t ble_ans_c_disable_notif_unread_alert(const ble_ans_c_t * p_ans)
 }
 
 
-uint32_t ble_ans_c_control_point_write(const ble_ans_c_t             * p_ans,
-                                       const ble_ans_control_point_t * p_control_point)
+uint32_t ble_ans_c_control_point_write(ble_ans_c_t const             * p_ans,
+                                       ble_ans_control_point_t const * p_control_point)
 {
     ans_tx_message_t * p_msg;
 
@@ -491,7 +492,7 @@ uint32_t ble_ans_c_control_point_write(const ble_ans_c_t             * p_ans,
 }
 
 
-uint32_t ble_ans_c_new_alert_read(const ble_ans_c_t * p_ans)
+uint32_t ble_ans_c_new_alert_read(ble_ans_c_t const * p_ans)
 {
     ans_tx_message_t * msg;
 
@@ -507,7 +508,7 @@ uint32_t ble_ans_c_new_alert_read(const ble_ans_c_t * p_ans)
 }
 
 
-uint32_t ble_ans_c_unread_alert_read(const ble_ans_c_t * p_ans)
+uint32_t ble_ans_c_unread_alert_read(ble_ans_c_t const * p_ans)
 {
     ans_tx_message_t * msg;
 
@@ -523,7 +524,7 @@ uint32_t ble_ans_c_unread_alert_read(const ble_ans_c_t * p_ans)
 }
 
 
-uint32_t ble_ans_c_new_alert_notify(const ble_ans_c_t * p_ans, ble_ans_category_id_t category_id)
+uint32_t ble_ans_c_new_alert_notify(ble_ans_c_t const * p_ans, ble_ans_category_id_t category_id)
 {
     ble_ans_control_point_t control_point;
 
@@ -534,7 +535,7 @@ uint32_t ble_ans_c_new_alert_notify(const ble_ans_c_t * p_ans, ble_ans_category_
 }
 
 
-uint32_t ble_ans_c_unread_alert_notify(const ble_ans_c_t * p_ans, ble_ans_category_id_t category_id)
+uint32_t ble_ans_c_unread_alert_notify(ble_ans_c_t const * p_ans, ble_ans_category_id_t category_id)
 {
     ble_ans_control_point_t control_point;
 
@@ -546,8 +547,8 @@ uint32_t ble_ans_c_unread_alert_notify(const ble_ans_c_t * p_ans, ble_ans_catego
 
 
 uint32_t ble_ans_c_handles_assign(ble_ans_c_t               * p_ans,
-                                  const uint16_t              conn_handle,
-                                  const ble_ans_c_service_t * p_peer_handles)
+                                  uint16_t                    conn_handle,
+                                  ble_ans_c_service_t const * p_peer_handles)
 {
     VERIFY_PARAM_NOT_NULL(p_ans);
 

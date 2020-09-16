@@ -260,35 +260,6 @@ __STATIC_INLINE uint32_t nrf_drv_clock_ppi_task_addr(nrf_clock_task_t task);
  * @return     Event address.
  */
 __STATIC_INLINE uint32_t nrf_drv_clock_ppi_event_addr(nrf_clock_event_t event);
-
-
-#ifdef SOFTDEVICE_PRESENT
-/**
- * @brief Function called by the SoftDevice handler if an @ref nrf_soc event is received from the SoftDevice.
- *
- * @param[in] evt_id One of NRF_SOC_EVTS values.
- */
-void nrf_drv_clock_on_soc_event(uint32_t evt_id);
-
-/**
- * @brief Function called by the SoftDevice handler when the SoftDevice has been enabled.
- *
- * This function is called just after the SoftDevice has been properly enabled.
- * Its main purpose is to mark that LFCLK has been requested by SD.
- */
-void nrf_drv_clock_on_sd_enable(void);
-
-/**
- * @brief Function called by the SoftDevice handler when the SoftDevice has been disabled.
- *
- * This function is called just after the SoftDevice has been properly disabled.
- * It has two purposes:
- * 1. Releases the LFCLK from the SD.
- * 2. Reinitializes an interrupt after the SD releases POWER_CLOCK_IRQ.
- */
-void nrf_drv_clock_on_sd_disable(void);
-
-#endif
 /**
  *@}
  **/

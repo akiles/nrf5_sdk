@@ -56,13 +56,13 @@ uint32_t ble_gatts_evt_rw_authorize_request_enc(ble_evt_t const * const p_event,
     SER_PUSH_uint16(&p_event->evt.gatts_evt.conn_handle);
     SER_PUSH_FIELD(&p_event->evt.gatts_evt.params.authorize_request, ble_gatts_evt_rw_authorize_request_t_enc);
 
-    if((p_event->evt.gatts_evt.params.authorize_request.type == BLE_GATTS_AUTHORIZE_TYPE_WRITE) &&
+    if ((p_event->evt.gatts_evt.params.authorize_request.type == BLE_GATTS_AUTHORIZE_TYPE_WRITE) &&
        ((p_event->evt.gatts_evt.params.authorize_request.request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW) ||
         (p_event->evt.gatts_evt.params.authorize_request.request.write.op == BLE_GATTS_OP_PREP_WRITE_REQ)))
     {
         uint32_t conn_index;
 
-        if(conn_ble_user_mem_context_find(p_event->evt.gatts_evt.conn_handle, &conn_index) != NRF_ERROR_NOT_FOUND)
+        if (conn_ble_user_mem_context_find(p_event->evt.gatts_evt.conn_handle, &conn_index) != NRF_ERROR_NOT_FOUND)
         {
             err_code = len16data_enc(m_conn_user_mem_table[conn_index].mem_block.p_mem, m_conn_user_mem_table[conn_index].mem_block.len, p_buf, *p_buf_len, &index);
             SER_ASSERT(err_code == NRF_SUCCESS, err_code);
@@ -136,10 +136,10 @@ uint32_t ble_gatts_evt_write_enc(ble_evt_t const * const p_event,
     SER_PUSH_uint16(&p_event->evt.gatts_evt.conn_handle);
     SER_PUSH_FIELD(&p_event->evt.gatts_evt.params.write, ble_gatts_evt_write_t_enc);
 
-    if((p_event->evt.gatts_evt.params.write.op == BLE_GATTS_OP_WRITE_REQ) || (p_event->evt.gatts_evt.params.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW))
+    if ((p_event->evt.gatts_evt.params.write.op == BLE_GATTS_OP_WRITE_REQ) || (p_event->evt.gatts_evt.params.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW))
     {
         uint32_t conn_index;
-        if(conn_ble_user_mem_context_find(p_event->evt.gatts_evt.conn_handle, &conn_index) != NRF_ERROR_NOT_FOUND)
+        if (conn_ble_user_mem_context_find(p_event->evt.gatts_evt.conn_handle, &conn_index) != NRF_ERROR_NOT_FOUND)
         {
             SER_PUSH_len16data(m_conn_user_mem_table[conn_index].mem_block.p_mem, m_conn_user_mem_table[conn_index].mem_block.len);
         }

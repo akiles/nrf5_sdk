@@ -44,8 +44,9 @@
 #include "ble_m.h"
 #include "peer_manager.h"
 
-#define NRF_LOG_MODULE_NAME "BUTTONS_M"
+#define NRF_LOG_MODULE_NAME BUTTONS_M
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #define APP_BTN_EVT_DISCONNECT  BSP_EVENT_KEY_2 /**< Event used to terminate connection with BLE peripheral device. */
 #define APP_BTN_EVT_PAIR        BSP_EVENT_KEY_3 /**< Event used to initiate NFC pairing with BLE peripheral device. */
@@ -62,22 +63,22 @@ static void bsp_event_handler(bsp_event_t event)
     switch (event)
     {
         case APP_BTN_EVT_DISCONNECT:
-            if(ble_is_connected())
+            if (ble_is_connected())
             {
-                NRF_LOG_INFO("Terminating BLE connection.\r\n");
+                NRF_LOG_INFO("Terminating BLE connection.");
                 nfc_oob_pairing_tag_invalidate();
                 ble_disconnect();
             }
             else
             {
-                NRF_LOG_INFO("Releasing bondings.\r\n");
+                NRF_LOG_INFO("Releasing bondings.");
                 err_code = pm_peers_delete();
                 APP_ERROR_CHECK(err_code);
             }
             break;
 
         case APP_BTN_EVT_PAIR:
-            NRF_LOG_INFO("Initiate NFC pairing.\r\n");
+            NRF_LOG_INFO("Initiate NFC pairing.");
             nfc_pair_start();
             break;
 

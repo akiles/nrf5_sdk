@@ -54,66 +54,76 @@
 
 #include <stdint.h>
 #include <string.h>
-#include "nordic_common.h"
 #include "nrf.h"
-#include "app_error.h"
+#include "nrf_soc.h"
 #include "ble.h"
 #include "ble_hci.h"
+#include "bsp.h"
 #include "ble_srv_common.h"
 #include "ble_advdata.h"
-#include "softdevice_handler.h"
-#include "app_timer.h"
-#include "bsp.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ble.h"
 #include "nrf_ble_gatt.h"
+#include "app_timer.h"
+#include "app_error.h"
+#include "nordic_common.h"
 
 
-
-#define APP_FEATURE_NOT_SUPPORTED           BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2    /**< Reply when unsupported features are requested. */
+#define APP_FEATURE_NOT_SUPPORTED       BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2    /**< Reply when unsupported features are requested. */
 
 // User-modifiable configuration parameters.
 //      The following values shall be altered when doing power profiling.
 
-#define APP_CFG_NON_CONN_ADV_TIMEOUT  30                                            /**< Time for which the device must be advertising in non-connectable mode (in seconds). */
-#define APP_CFG_CHAR_NOTIF_TIMEOUT    5000                                          /**< Time for which the device must continue to send notifications once connected to central (in milli seconds). */
-#define APP_CFG_ADV_DATA_LEN          31                                            /**< Required length of the complete advertisement packet. This should be atleast 8 in order to accommodate flag field and other mandatory fields and one byte of manufacturer specific data. */
-#define APP_CFG_CONNECTION_INTERVAL   20                                            /**< Connection interval used by the central (in milli seconds). This application will be sending one notification per connection interval. A repeating timer will be started with timeout value equal to this value and one notification will be sent everytime this timer expires. */
-#define APP_CFG_CHAR_LEN              20                                            /**< Size of the characteristic value being notified (in bytes). */
+#define APP_CFG_NON_CONN_ADV_TIMEOUT    30                                            /**< Time for which the device must be advertising in non-connectable mode (in seconds). */
+#define APP_CFG_CHAR_NOTIF_TIMEOUT      5000                                          /**< Time for which the device must continue to send notifications once connected to central (in milli seconds). */
+#define APP_CFG_ADV_DATA_LEN            31                                            /**< Required length of the complete advertisement packet. This should be atleast 8 in order to accommodate flag field and other mandatory fields and one byte of manufacturer specific data. */
+#define APP_CFG_CONNECTION_INTERVAL     20                                            /**< Connection interval used by the central (in milli seconds). This application will be sending one notification per connection interval. A repeating timer will be started with timeout value equal to this value and one notification will be sent everytime this timer expires. */
+#define APP_CFG_CHAR_LEN                20                                            /**< Size of the characteristic value being notified (in bytes). */
 
 // Fixed configuration parameters:
 //      The following parameters are not meant to be changed while using this application for power
 //      profiling.
 
-#define NOTIF_BUTTON_ID               0                                             /**< Button used for initializing the application in connectable mode. */
-#define NON_CONN_ADV_BUTTON_ID        1                                             /**< Button used for initializing the application in non-connectable mode. */
+#define NOTIF_BUTTON_ID                 0                                             /**< Button used for initializing the application in connectable mode. */
+#define NON_CONN_ADV_BUTTON_ID          1                                             /**< Button used for initializing the application in non-connectable mode. */
 
-#define DEVICE_NAME                   "Nordic_Power_Mgmt"                           /**< Name of device. Will be included in the advertising data. */
+#define DEVICE_NAME                     "Nordic_Power_Mgmt"                           /**< Name of device. Will be included in the advertising data. */
+#define COMPANY_IDENTIFIER              0x0059                                        /**< Company identifier for Nordic Semiconductor ASA as per www.bluetooth.org. */
 
-#define CHAR_NOTIF_TIMEOUT_IN_TKS     APP_TIMER_TICKS(APP_CFG_CHAR_NOTIF_TIMEOUT)          /**< Time for which the device must continue to send notifications once connected to central (in ticks). */
+#define APP_BLE_OBSERVER_PRIO           1                                             /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_CONN_CFG_TAG            1                                             /**< A tag identifying the SoftDevice BLE configuration. */
 
-#define CONNECTABLE_ADV_INTERVAL      MSEC_TO_UNITS(20, UNIT_0_625_MS)              /**< The advertising interval for connectable advertisement (20 ms). This value can vary between 20ms to 10.24s. */
-#define NON_CONNECTABLE_ADV_INTERVAL  MSEC_TO_UNITS(100, UNIT_0_625_MS)             /**< The advertising interval for non-connectable advertisement (100 ms). This value can vary between 100ms to 10.24s). */
-#define CONNECTABLE_ADV_TIMEOUT       30                                            /**< Time for which the device must be advertising in connectable mode (in seconds). */
+#define LOCAL_SERVICE_UUID              0x1523                                        /**< Proprietary UUID for local service. */
+#define LOCAL_CHAR_UUID                 0x1524                                        /**< Proprietary UUID for local characteristic. */
 
-#define SLAVE_LATENCY                 0                                             /**< Slave latency. */
-#define CONN_SUP_TIMEOUT              MSEC_TO_UNITS(4000, UNIT_10_MS)               /**< Connection supervisory timeout (4 seconds). */
+#define DEAD_BEEF                       0xDEADBEEF                                    /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
-#define ADV_ENCODED_AD_TYPE_LEN       1                                             /**< Length of encoded ad type in advertisement data. */
-#define ADV_ENCODED_AD_TYPE_LEN_LEN   1                                             /**< Length of the 'length field' of each ad type in advertisement data. */
-#define ADV_FLAGS_LEN                 1                                             /**< Length of flags field that will be placed in advertisement data. */
-#define ADV_ENCODED_FLAGS_LEN         (ADV_ENCODED_AD_TYPE_LEN +       \
-                                       ADV_ENCODED_AD_TYPE_LEN_LEN +   \
-                                       ADV_FLAGS_LEN)                               /**< Length of flags field in advertisement packet. (1 byte for encoded ad type plus 1 byte for length of flags plus the length of the flags itself). */
-#define ADV_ENCODED_COMPANY_ID_LEN    2                                             /**< Length of the encoded Company Identifier in the Manufacturer Specific Data part of the advertisement data. */
-#define ADV_ADDL_MANUF_DATA_LEN       (APP_CFG_ADV_DATA_LEN -                \
-                                       (                                     \
-                                           ADV_ENCODED_FLAGS_LEN +           \
-                                           (                                 \
-                                               ADV_ENCODED_AD_TYPE_LEN +     \
-                                               ADV_ENCODED_AD_TYPE_LEN_LEN + \
-                                               ADV_ENCODED_COMPANY_ID_LEN    \
-                                           )                                 \
-                                       )                                     \
-                                      )                                             /**< Length of Manufacturer Specific Data field that will be placed on the air during advertisement. This is computed based on the value of APP_CFG_ADV_DATA_LEN (required advertisement data length). */
+#define CHAR_NOTIF_TIMEOUT_IN_TKS       APP_TIMER_TICKS(APP_CFG_CHAR_NOTIF_TIMEOUT)   /**< Time for which the device must continue to send notifications once connected to central (in ticks). */
+
+#define CONNECTABLE_ADV_INTERVAL        MSEC_TO_UNITS(20, UNIT_0_625_MS)              /**< The advertising interval for connectable advertisement (20 ms). This value can vary between 20ms to 10.24s. */
+#define NON_CONNECTABLE_ADV_INTERVAL    MSEC_TO_UNITS(100, UNIT_0_625_MS)             /**< The advertising interval for non-connectable advertisement (100 ms). This value can vary between 100ms to 10.24s). */
+#define CONNECTABLE_ADV_TIMEOUT         30                                            /**< Time for which the device must be advertising in connectable mode (in seconds). */
+
+#define SLAVE_LATENCY                   0                                             /**< Slave latency. */
+#define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(4000, UNIT_10_MS)               /**< Connection supervisory timeout (4 seconds). */
+
+#define ADV_ENCODED_AD_TYPE_LEN         1                                             /**< Length of encoded ad type in advertisement data. */
+#define ADV_ENCODED_AD_TYPE_LEN_LEN     1                                             /**< Length of the 'length field' of each ad type in advertisement data. */
+#define ADV_FLAGS_LEN                   1                                             /**< Length of flags field that will be placed in advertisement data. */
+#define ADV_ENCODED_FLAGS_LEN           (ADV_ENCODED_AD_TYPE_LEN +       \
+                                        ADV_ENCODED_AD_TYPE_LEN_LEN +   \
+                                        ADV_FLAGS_LEN)                               /**< Length of flags field in advertisement packet. (1 byte for encoded ad type plus 1 byte for length of flags plus the length of the flags itself). */
+#define ADV_ENCODED_COMPANY_ID_LEN      2                                            /**< Length of the encoded Company Identifier in the Manufacturer Specific Data part of the advertisement data. */
+#define ADV_ADDL_MANUF_DATA_LEN         (APP_CFG_ADV_DATA_LEN -                \
+                                        (                                     \
+                                            ADV_ENCODED_FLAGS_LEN +           \
+                                            (                                 \
+                                                ADV_ENCODED_AD_TYPE_LEN +     \
+                                                ADV_ENCODED_AD_TYPE_LEN_LEN + \
+                                                ADV_ENCODED_COMPANY_ID_LEN    \
+                                            )                                 \
+                                        )                                     \
+                                        )                                             /**< Length of Manufacturer Specific Data field that will be placed on the air during advertisement. This is computed based on the value of APP_CFG_ADV_DATA_LEN (required advertisement data length). */
 
 #if APP_CFG_ADV_DATA_LEN > BLE_GAP_ADV_MAX_SIZE
     #error "The required advertisement data size (APP_CFG_ADV_DATA_LEN) is greater than the value allowed by stack (BLE_GAP_ADV_MAX_SIZE). Reduce the value of APP_CFG_ADV_DATA_LEN and recompile."
@@ -129,21 +139,10 @@
     #error "The required length of additional manufacturer specific data computed based on the user configured values is computed to be less than 1. Consider increasing the value of APP_CFG_ADV_DATA_LEN."
 #endif
 
-#define COMPANY_IDENTIFIER            0x0059                                        /**< Company identifier for Nordic Semiconductor ASA as per www.bluetooth.org. */
 
-#define LOCAL_SERVICE_UUID            0x1523                                        /**< Proprietary UUID for local service. */
-#define LOCAL_CHAR_UUID               0x1524                                        /**< Proprietary UUID for local characteristic. */
-
-#define DEAD_BEEF                     0xDEADBEEF                                    /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
-
-/**@brief 128-bit UUID base List. */
-static const ble_uuid128_t m_base_uuid128 =
-{
-   {
-       0x23, 0xD1, 0xBC, 0xEA, 0x5F, 0x78, 0x23, 0x15,
-       0xDE, 0xEF, 0x12, 0x12, 0x00, 0x00, 0x00, 0x00
-   }
-};
+NRF_BLE_GATT_DEF(m_gatt);                                                           /**< GATT module instance. */
+APP_TIMER_DEF(m_conn_int_timer_id);                                                 /**< Connection interval timer. */
+APP_TIMER_DEF(m_notif_timer_id);                                                    /**< Notification timer. */
 
 static ble_gap_adv_params_t     m_adv_params;                                       /**< Parameters to be passed to the stack when starting advertising. */
 static uint8_t                  m_char_value[APP_CFG_CHAR_LEN];                     /**< Value of the characteristic that will be sent as a notification to the central. */
@@ -152,10 +151,15 @@ static ble_gatts_char_handles_t m_char_handles;                                 
 static uint16_t                 m_conn_handle = BLE_CONN_HANDLE_INVALID;            /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection).*/
 static uint16_t                 m_service_handle;                                   /**< Handle of local service (as provided by the BLE stack).*/
 static bool                     m_is_notifying_enabled = false;                     /**< Variable to indicate whether the notification is enabled by the peer.*/
-static nrf_ble_gatt_t           m_gatt;                                             /**< GATT module instance. */
 
-APP_TIMER_DEF(m_conn_int_timer_id);                                                 /**< Connection interval timer. */
-APP_TIMER_DEF(m_notif_timer_id);                                                    /**< Notification timer. */
+/**@brief 128-bit UUID base List. */
+static ble_uuid128_t const m_base_uuid128 =
+{
+   {
+       0x23, 0xD1, 0xBC, 0xEA, 0x5F, 0x78, 0x23, 0x15,
+       0xDE, 0xEF, 0x12, 0x12, 0x00, 0x00, 0x00, 0x00
+   }
+};
 
 
 /**@brief Callback function for asserts in the SoftDevice.
@@ -489,7 +493,7 @@ static void advertising_start(void)
 {
     ret_code_t err_code;
 
-    err_code = sd_ble_gap_adv_start(&m_adv_params,BLE_CONN_CFG_TAG_DEFAULT);
+    err_code = sd_ble_gap_adv_start(&m_adv_params, APP_BLE_CONN_CFG_TAG);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -536,9 +540,9 @@ static void buttons_init(void)
  *
  * @param[in]   p_ble_evt   Bluetooth stack event.
  */
-static void on_write(ble_evt_t * p_ble_evt)
+static void on_write(ble_evt_t const * p_ble_evt)
 {
-    ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
+    ble_gatts_evt_write_t const * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
 
     if ((p_evt_write->handle == m_char_handles.cccd_handle) && (p_evt_write->len == 2))
     {
@@ -558,11 +562,12 @@ static void on_write(ble_evt_t * p_ble_evt)
 }
 
 
-/**@brief Function for handling the Application's BLE Stack events.
+/**@brief Function for handling BLE events.
  *
  * @param[in]   p_ble_evt   Bluetooth stack event.
+ * @param[in]   p_context   Unused.
  */
-static void on_ble_evt(ble_evt_t * p_ble_evt)
+static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 {
     ret_code_t err_code;
 
@@ -570,17 +575,28 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
     {
         case BLE_GAP_EVT_CONNECTED:
             m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
-            break; // BLE_GAP_EVT_CONNECTED
+            break;
 
         case BLE_GAP_EVT_DISCONNECTED:
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
-
             application_timers_stop();
-
             // Go to system-off mode
             err_code = sd_power_system_off();
             APP_ERROR_CHECK(err_code);
-            break; // BLE_GAP_EVT_DISCONNECTED
+            break;
+
+#if defined(S132)
+        case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
+        {
+            ble_gap_phys_t const phys =
+            {
+                .rx_phys = BLE_GAP_PHY_AUTO,
+                .tx_phys = BLE_GAP_PHY_AUTO,
+            };
+            err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
+            APP_ERROR_CHECK(err_code);
+        } break;
+#endif
 
         case BLE_GATTS_EVT_SYS_ATTR_MISSING:
             err_code = sd_ble_gatts_sys_attr_set(m_conn_handle,
@@ -588,7 +604,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                                                  0,
                                                  BLE_GATTS_SYS_ATTR_FLAG_SYS_SRVCS | BLE_GATTS_SYS_ATTR_FLAG_USR_SRVCS);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_GATTS_EVT_SYS_ATTR_MISSING
+            break;
 
         case BLE_GAP_EVT_TIMEOUT:
             if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
@@ -597,30 +613,30 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                 err_code = sd_power_system_off();
                 APP_ERROR_CHECK(err_code);
             }
-            break; // BLE_GAP_EVT_TIMEOUT
+            break;
 
         case BLE_GATTC_EVT_TIMEOUT:
             // Disconnect on GATT Client timeout event.
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gattc_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_GATTC_EVT_TIMEOUT
+            break;
 
         case BLE_GATTS_EVT_TIMEOUT:
             // Disconnect on GATT Server timeout event.
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gatts_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_GATTS_EVT_TIMEOUT
+            break;
 
         case BLE_GATTS_EVT_WRITE:
             on_write(p_ble_evt);
-            break; // BLE_GATTS_EVT_WRITE
+            break;
 
         case BLE_EVT_USER_MEM_REQUEST:
             err_code = sd_ble_user_mem_reply(p_ble_evt->evt.gattc_evt.conn_handle, NULL);
             APP_ERROR_CHECK(err_code);
-            break; // BLE_EVT_USER_MEM_REQUEST
+            break;
 
         case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
         {
@@ -658,33 +674,6 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 }
 
 
-/**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
- *
- * @details This function is called from the BLE Stack event interrupt handler after a BLE stack
- *          event has been received.
- *
- * @param[in]   p_ble_evt   Bluetooth stack event.
- */
-static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
-{
-    on_ble_evt(p_ble_evt);
-    nrf_ble_gatt_on_ble_evt(&m_gatt, p_ble_evt);
-}
-
-
-/**@brief Function for dispatching a system event to interested modules.
- *
- * @details This function is called from the System event interrupt handler after a system
- *          event has been received.
- *
- * @param[in]   sys_evt   System stack event.
- */
-static void sys_evt_dispatch(uint32_t sys_evt)
-{
-
-}
-
-
 /**@brief Function for initializing the BLE stack.
  *
  * @details Initializes the SoftDevice and the BLE event interrupt.
@@ -693,38 +682,21 @@ static void ble_stack_init(void)
 {
     ret_code_t err_code;
 
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
-
-    // Fetch the start address of the application RAM.
-    uint32_t ram_start = 0;
-    err_code = softdevice_app_ram_start_get(&ram_start);
+    err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    // Overwrite some of the default configurations for the BLE stack.
-    ble_cfg_t ble_cfg;
-
-    // Configure the maximum number of connections.
-    memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = BLE_GAP_ROLE_COUNT_PERIPH_DEFAULT;
-    ble_cfg.gap_cfg.role_count_cfg.central_role_count = 0;
-    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = 0;
-    err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start);
+    // Configure the BLE stack using the default settings.
+    // Fetch the start address of the application RAM.
+    uint32_t ram_start = 0;
+    err_code = nrf_sdh_ble_default_cfg_set(APP_BLE_CONN_CFG_TAG, &ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Enable BLE stack.
-    err_code = softdevice_enable(&ram_start);
+    err_code = nrf_sdh_ble_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
 
-    // Register with the SoftDevice handler module for BLE events.
-    err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
-
-    // Register with the SoftDevice handler module for BLE events.
-    err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
+    // Register a handler for BLE events.
+    NRF_SDH_BLE_OBSERVER(m_ble_observer, APP_BLE_OBSERVER_PRIO, ble_evt_handler, NULL);
 }
 
 

@@ -12,7 +12,7 @@
       <TargetOption>
         <TargetCommonOption>          <Device>nRF52840_xxAA</Device>
           <Vendor>Nordic Semiconductor</Vendor>
-          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.12.0</PackID>
+          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.14.1</PackID>
           <PackURL>http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/</PackURL>          <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x10000) CPUTYPE("Cortex-M4") FPU2 CLOCK(64000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -364,7 +364,7 @@
               <MiscControls>--reduce_paths</MiscControls>
               <Define> BLE_STACK_SUPPORT_REQD BOARD_PCA10056 CONFIG_GPIO_AS_PINRESET NRF52840_XXAA NRF_DFU_DEBUG_VERSION NRF_DFU_SETTINGS_VERSION=1 NRF_SD_BLE_API_VERSION=5 S140 SOFTDEVICE_PRESENT SVC_INTERFACE_CALL_AS_NORMAL_FUNCTION SWI_DISABLE0 __HEAP_SIZE=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\config\secure_dfu_ble_s140_pca10056_debug;..\..\config;..\..\..\..\..\components;..\..\..\..\..\components\ble\common;..\..\..\..\..\components\boards;..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\drivers_nrf\rng;..\..\..\..\..\components\libraries\bootloader;..\..\..\..\..\components\libraries\bootloader\ble_dfu;..\..\..\..\..\components\libraries\bootloader\dfu;..\..\..\..\..\components\libraries\crc32;..\..\..\..\..\components\libraries\crypto;..\..\..\..\..\components\libraries\crypto\backend\micro_ecc;..\..\..\..\..\components\libraries\crypto\backend\nrf_crypto_sw;..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\components\libraries\hci;..\..\..\..\..\components\libraries\log;..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\components\libraries\mem_manager;..\..\..\..\..\components\libraries\queue;..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\components\libraries\sha256;..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\components\libraries\svc;..\..\..\..\..\components\libraries\timer;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\components\softdevice\s140\headers;..\..\..\..\..\components\softdevice\s140\headers\nrf52;..\..\..\..\..\components\toolchain;..\..;..\..\..\dfu_req_handling;..\..\..\..\..\external\micro-ecc\micro-ecc;..\..\..\..\..\external\nano-pb;..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
+              <IncludePath>..\..\config;..\..\..\..\..\components\ble\common;..\..\..\..\..\components\boards;..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\drivers_nrf\rng;..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\components\libraries\bootloader;..\..\..\..\..\components\libraries\bootloader\ble_dfu;..\..\..\..\..\components\libraries\bootloader\dfu;..\..\..\..\..\components\libraries\crc32;..\..\..\..\..\components\libraries\crypto;..\..\..\..\..\components\libraries\crypto\backend\micro_ecc;..\..\..\..\..\components\libraries\crypto\backend\nrf_crypto_sw;..\..\..\..\..\components\libraries\experimental_log;..\..\..\..\..\components\libraries\experimental_log\src;..\..\..\..\..\components\libraries\experimental_memobj;..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\components\libraries\hci;..\..\..\..\..\components\libraries\mem_manager;..\..\..\..\..\components\libraries\queue;..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\components\libraries\sha256;..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\components\libraries\svc;..\..\..\..\..\components\libraries\timer;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\softdevice\common;..\..\..\..\..\components\softdevice\s140\headers;..\..\..\..\..\components\softdevice\s140\headers\nrf52;..\..\..\..\..\components\toolchain;..\..;..\..\..\dfu_req_handling;..\..\..\..\..\external\fprintf;..\..\..\..\..\external\micro-ecc\micro-ecc;..\..\..\..\..\external\nano-pb;..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -381,7 +381,7 @@
               <MiscControls> --cpreproc_opts=-DBLE_STACK_SUPPORT_REQD,-DBOARD_PCA10056,-DCONFIG_GPIO_AS_PINRESET,-DNRF52840_XXAA,-DNRF_DFU_DEBUG_VERSION,-DNRF_DFU_SETTINGS_VERSION=1,-DNRF_SD_BLE_API_VERSION=5,-DS140,-DSOFTDEVICE_PRESENT,-DSVC_INTERFACE_CALL_AS_NORMAL_FUNCTION,-DSWI_DISABLE0,-D__HEAP_SIZE=0</MiscControls>
               <Define> BLE_STACK_SUPPORT_REQD BOARD_PCA10056 CONFIG_GPIO_AS_PINRESET NRF52840_XXAA NRF_DFU_DEBUG_VERSION NRF_DFU_SETTINGS_VERSION=1 NRF_SD_BLE_API_VERSION=5 S140 SOFTDEVICE_PRESENT SVC_INTERFACE_CALL_AS_NORMAL_FUNCTION SWI_DISABLE0 __HEAP_SIZE=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\config\secure_dfu_ble_s140_pca10056_debug;..\..\config;..\..\..\..\..\components;..\..\..\..\..\components\ble\common;..\..\..\..\..\components\boards;..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\drivers_nrf\rng;..\..\..\..\..\components\libraries\bootloader;..\..\..\..\..\components\libraries\bootloader\ble_dfu;..\..\..\..\..\components\libraries\bootloader\dfu;..\..\..\..\..\components\libraries\crc32;..\..\..\..\..\components\libraries\crypto;..\..\..\..\..\components\libraries\crypto\backend\micro_ecc;..\..\..\..\..\components\libraries\crypto\backend\nrf_crypto_sw;..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\components\libraries\hci;..\..\..\..\..\components\libraries\log;..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\components\libraries\mem_manager;..\..\..\..\..\components\libraries\queue;..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\components\libraries\sha256;..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\components\libraries\svc;..\..\..\..\..\components\libraries\timer;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\components\softdevice\s140\headers;..\..\..\..\..\components\softdevice\s140\headers\nrf52;..\..\..\..\..\components\toolchain;..\..;..\..\..\dfu_req_handling;..\..\..\..\..\external\micro-ecc\micro-ecc;..\..\..\..\..\external\nano-pb;..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
+              <IncludePath>..\..\config;..\..\..\..\..\components\ble\common;..\..\..\..\..\components\boards;..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\drivers_nrf\rng;..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\components\libraries\bootloader;..\..\..\..\..\components\libraries\bootloader\ble_dfu;..\..\..\..\..\components\libraries\bootloader\dfu;..\..\..\..\..\components\libraries\crc32;..\..\..\..\..\components\libraries\crypto;..\..\..\..\..\components\libraries\crypto\backend\micro_ecc;..\..\..\..\..\components\libraries\crypto\backend\nrf_crypto_sw;..\..\..\..\..\components\libraries\experimental_log;..\..\..\..\..\components\libraries\experimental_log\src;..\..\..\..\..\components\libraries\experimental_memobj;..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\components\libraries\hci;..\..\..\..\..\components\libraries\mem_manager;..\..\..\..\..\components\libraries\queue;..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\components\libraries\sha256;..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\components\libraries\svc;..\..\..\..\..\components\libraries\timer;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\softdevice\common;..\..\..\..\..\components\softdevice\s140\headers;..\..\..\..\..\components\softdevice\s140\headers\nrf52;..\..\..\..\..\components\toolchain;..\..;..\..\..\dfu_req_handling;..\..\..\..\..\external\fprintf;..\..\..\..\..\external\micro-ecc\micro-ecc;..\..\..\..\..\external\nano-pb;..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -433,12 +433,6 @@
         </Group>        <Group>
           <GroupName>nRF_BLE</GroupName>
           <Files>            <File>
-              <FileName>ble_advdata.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\ble\common\ble_advdata.c</FilePath>            </File>            <File>
-              <FileName>ble_conn_params.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\ble\common\ble_conn_params.c</FilePath>            </File>            <File>
               <FileName>ble_srv_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\ble\common\ble_srv_common.c</FilePath>            </File>          </Files>
@@ -485,8 +479,59 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_utils.c</FilePath>            </File>          </Files>
         </Group>        <Group>
+          <GroupName>nRF_Crypto</GroupName>
+          <Files>            <File>
+              <FileName>nrf_crypto_ecdh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecdh.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_ecdsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecdsa.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_hash.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_init.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_keys.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_mem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_mem.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_rng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_rng.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_Crypto backends</GroupName>
+          <Files>            <File>
+              <FileName>micro_ecc_lib_ecdh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_lib_ecdh.c</FilePath>            </File>            <File>
+              <FileName>micro_ecc_lib_ecdsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_lib_ecdsa.c</FilePath>            </File>            <File>
+              <FileName>micro_ecc_lib_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_lib_init.c</FilePath>            </File>            <File>
+              <FileName>micro_ecc_lib_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_lib_keys.c</FilePath>            </File>            <File>
+              <FileName>micro_ecc_lib_shared.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_lib_shared.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_sw_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\nrf_crypto_sw\nrf_crypto_sw_hash.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_sw_rng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\nrf_crypto_sw\nrf_crypto_sw_rng.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
           <GroupName>nRF_Drivers</GroupName>
           <Files>            <File>
+              <FileName>nrf_drv_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\drivers_nrf\clock\nrf_drv_clock.c</FilePath>            </File>            <File>
               <FileName>nrf_drv_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</FilePath>            </File>            <File>
@@ -514,9 +559,6 @@
               <FileName>crc32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\libraries\crc32\crc32.c</FilePath>            </File>            <File>
-              <FileName>fstorage.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\fstorage\fstorage.c</FilePath>            </File>            <File>
               <FileName>hci_mem_pool.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\libraries\hci\hci_mem_pool.c</FilePath>            </File>            <File>
@@ -526,9 +568,33 @@
               <FileName>nrf_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\libraries\util\nrf_assert.c</FilePath>            </File>            <File>
+              <FileName>nrf_balloc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\balloc\nrf_balloc.c</FilePath>            </File>            <File>
+              <FileName>nrf_fprintf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\external\fprintf\nrf_fprintf.c</FilePath>            </File>            <File>
+              <FileName>nrf_fprintf_format.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\external\fprintf\nrf_fprintf_format.c</FilePath>            </File>            <File>
+              <FileName>nrf_fstorage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\fstorage\nrf_fstorage.c</FilePath>            </File>            <File>
+              <FileName>nrf_fstorage_nvmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\fstorage\nrf_fstorage_nvmc.c</FilePath>            </File>            <File>
+              <FileName>nrf_fstorage_sd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\fstorage\nrf_fstorage_sd.c</FilePath>            </File>            <File>
+              <FileName>nrf_memobj.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\experimental_memobj\nrf_memobj.c</FilePath>            </File>            <File>
               <FileName>nrf_queue.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\libraries\queue\nrf_queue.c</FilePath>            </File>            <File>
+              <FileName>nrf_section_iter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</FilePath>            </File>            <File>
               <FileName>nrf_strerror.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</FilePath>            </File>            <File>
@@ -538,12 +604,30 @@
         </Group>        <Group>
           <GroupName>nRF_Log</GroupName>
           <Files>            <File>
+              <FileName>nrf_log_backend_rtt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_rtt.c</FilePath>            </File>            <File>
               <FileName>nrf_log_backend_serial.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\log\src\nrf_log_backend_serial.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_serial.c</FilePath>            </File>            <File>
+              <FileName>nrf_log_default_backends.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_default_backends.c</FilePath>            </File>            <File>
               <FileName>nrf_log_frontend.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\log\src\nrf_log_frontend.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_frontend.c</FilePath>            </File>            <File>
+              <FileName>nrf_log_str_formatter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_str_formatter.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_SVC</GroupName>
+          <Files>            <File>
+              <FileName>nrf_dfu_svci_handler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_svci_handler.c</FilePath>            </File>            <File>
+              <FileName>nrf_svc_handler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\svc\nrf_svc_handler.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Segger_RTT</GroupName>
           <Files>            <File>
@@ -559,62 +643,17 @@
         </Group>        <Group>
           <GroupName>nRF_SoftDevice</GroupName>
           <Files>            <File>
-              <FileName>softdevice_handler.c</FileName>
+              <FileName>nrf_sdh.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\softdevice\common\softdevice_handler\softdevice_handler.c</FilePath>            </File>            <File>
-              <FileName>softdevice_handler_appsh.c</FileName>
+              <FilePath>..\..\..\..\..\components\softdevice\common\nrf_sdh.c</FilePath>            </File>            <File>
+              <FileName>nrf_sdh_ble.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\softdevice\common\softdevice_handler\softdevice_handler_appsh.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\components\softdevice\common\nrf_sdh_ble.c</FilePath>            </File>            <File>
+              <FileName>nrf_sdh_soc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\softdevice\common\nrf_sdh_soc.c</FilePath>            </File>          </Files>
         </Group>        <Group>
-          <GroupName>nRF_crypto</GroupName>
-          <Files>            <File>
-              <FileName>nrf_crypto_ecdh.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecdh.c</FilePath>            </File>            <File>
-              <FileName>nrf_crypto_ecdsa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecdsa.c</FilePath>            </File>            <File>
-              <FileName>nrf_crypto_hash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_hash.c</FilePath>            </File>            <File>
-              <FileName>nrf_crypto_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_init.c</FilePath>            </File>            <File>
-              <FileName>nrf_crypto_keys.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_keys.c</FilePath>            </File>            <File>
-              <FileName>nrf_crypto_mem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_mem.c</FilePath>            </File>            <File>
-              <FileName>nrf_crypto_rng.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\nrf_crypto_rng.c</FilePath>            </File>          </Files>
-        </Group>        <Group>
-          <GroupName>nRF_crypto_backend</GroupName>
-          <Files>            <File>
-              <FileName>micro_ecc_lib_ecdh.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_lib_ecdh.c</FilePath>            </File>            <File>
-              <FileName>micro_ecc_lib_ecdsa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_lib_ecdsa.c</FilePath>            </File>            <File>
-              <FileName>micro_ecc_lib_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_lib_init.c</FilePath>            </File>            <File>
-              <FileName>micro_ecc_lib_keys.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_lib_keys.c</FilePath>            </File>            <File>
-              <FileName>micro_ecc_lib_shared.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_lib_shared.c</FilePath>            </File>            <File>
-              <FileName>nrf_crypto_sw_hash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\nrf_crypto_sw\nrf_crypto_sw_hash.c</FilePath>            </File>            <File>
-              <FileName>nrf_crypto_sw_rng.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\crypto\backend\nrf_crypto_sw\nrf_crypto_sw_rng.c</FilePath>            </File>          </Files>
-        </Group>        <Group>
-          <GroupName>nRF_micro_ecc</GroupName>
+          <GroupName>nRF_micro-ecc</GroupName>
           <Files>            <File>
               <FileName>micro_ecc_lib_nrf52.lib</FileName>
               <FileType>4</FileType>
@@ -636,7 +675,7 @@
     </filter>    <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0">
       <targetInfos>        <targetInfo name="nrf52840_xxaa_s140" versionMatchMode="fixed"/>      </targetInfos>
     </package>
-    <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.12.0">
+    <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.14.1">
       <targetInfos>        <targetInfo name="nrf52840_xxaa_s140" versionMatchMode="fixed"/>      </targetInfos>
     </package>  </packages>
   <apis/>
@@ -644,8 +683,8 @@
       <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
       <targetInfos>        <targetInfo name="nrf52840_xxaa_s140" versionMatchMode="fixed"/>      </targetInfos>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="8.12.0" condition="nRF5x Series CMSIS Device">
-      <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.12.0"/>
+    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="8.14.1" condition="nRF5x Series CMSIS Device">
+      <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.14.1"/>
       <targetInfos>        <targetInfo name="nrf52840_xxaa_s140" versionMatchMode="fixed"/>      </targetInfos>
     </component>  </components>
   <files>  </files>

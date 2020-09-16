@@ -40,7 +40,7 @@
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(NRF_CRYPTO)
 
-#if defined(NRF_CRYPTO_BACKEND_MICRO_ECC) && (NRF_CRYPTO_BACKEND_MICRO_ECC == 1)
+#if NRF_CRYPTO_BACKEND_MICRO_ECC
 
 #include "nrf_crypto_hash.h"
 #include "nrf_crypto_ecdsa.h"
@@ -52,7 +52,7 @@
 
 #include "uECC.h"
 
-#if defined(NRF_CRYPTO_SUPPORTS_RNG) && NRF_CRYPTO_SUPPORTS_RNG == 1
+#if NRF_CRYPTO_BACKEND_MICRO_ECC_RNG
 
 uint32_t nrf_crypto_ecdsa_sign_hash(nrf_crypto_signature_info_t  sig_info,
                                     nrf_value_length_t   const * p_private_key,
@@ -118,7 +118,7 @@ uint32_t nrf_crypto_ecdsa_sign_hash(nrf_crypto_signature_info_t  sig_info,
     }
 
     // Create a signature of the hash data.
-    if(uECC_sign(p_private_key->p_value, p_hash->p_value, p_hash->length, p_signature->p_value, p_curve))
+    if (uECC_sign(p_private_key->p_value, p_hash->p_value, p_hash->length, p_signature->p_value, p_curve))
     {
         return NRF_ERROR_INTERNAL;
     }
@@ -126,7 +126,8 @@ uint32_t nrf_crypto_ecdsa_sign_hash(nrf_crypto_signature_info_t  sig_info,
     return NRF_SUCCESS;
 }
 
-#endif
+#endif // NRF_CRYPTO_BACKEND_MICRO_ECC_RNG
+
 
 uint32_t nrf_crypto_ecdsa_verify_hash(nrf_crypto_signature_info_t  sig_info,
                                       nrf_value_length_t   const * p_public_key,
@@ -210,5 +211,4 @@ uint32_t nrf_crypto_ecdsa_verify_hash(nrf_crypto_signature_info_t  sig_info,
 }
 
 #endif // NRF_CRYPTO_BACKEND_MICRO_ECC
-
 #endif // NRF_MODULE_ENABLED(NRF_CRYPTO)

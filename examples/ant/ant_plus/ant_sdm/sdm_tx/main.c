@@ -62,26 +62,23 @@
  * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
  */
 
-#include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
-#include "app_error.h"
 #include "nrf.h"
-#include "nrf_soc.h"
-#include "nrf_sdm.h"
 #include "bsp.h"
 #include "hardfault.h"
+#include "app_error.h"
 #include "app_timer.h"
-#include "nordic_common.h"
-#include "softdevice_handler.h"
-#include "ant_sdm.h"
+#include "nrf_pwr_mgmt.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 #include "ant_key_manager.h"
-#include "ant_state_indicator.h"
+#include "ant_sdm.h"
 #include "ant_sdm_simulator.h"
+#include "ant_state_indicator.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define MODIFICATION_TYPE_BUTTON 0 /* predefined value, MUST REMAIN UNCHANGED */
 #define MODIFICATION_TYPE_AUTO   1 /* predefined value, MUST REMAIN UNCHANGED */
@@ -91,17 +88,14 @@
     #error Unsupported value of MODIFICATION_TYPE.
 #endif
 
-#define SDM_CHANNEL_NUMBER      0x00 /**< Channel number assigned to SDM Profile. */
-#define ANTPLUS_NETWORK_NUMBER  0x00 /**< Network number. */
-
 /** @snippet [ANT SDM TX Instance] */
 void ant_sdm_evt_handler(ant_sdm_profile_t * p_profile, ant_sdm_evt_t event);
 
 SDM_SENS_CHANNEL_CONFIG_DEF(m_ant_sdm,
-                            SDM_CHANNEL_NUMBER,
+                            SDM_CHANNEL_NUM,
                             CHAN_ID_TRANS_TYPE,
                             CHAN_ID_DEV_NUM,
-                            ANTPLUS_NETWORK_NUMBER);
+                            ANTPLUS_NETWORK_NUM);
 SDM_SENS_PROFILE_CONFIG_DEF(m_ant_sdm,
                             ANT_SDM_PAGE_2,
                             ant_sdm_evt_handler);
@@ -109,8 +103,11 @@ SDM_SENS_PROFILE_CONFIG_DEF(m_ant_sdm,
 static ant_sdm_profile_t m_ant_sdm;
 /** @snippet [ANT SDM TX Instance] */
 
-static ant_sdm_simulator_t m_ant_sdm_simulator;    /**< Simulator used to simulate cadence. */
 
+NRF_SDH_ANT_OBSERVER(m_ant_observer, ANT_SDM_ANT_OBSERVER_PRIO, ant_sdm_sens_evt_handler, &m_ant_sdm);
+
+
+static ant_sdm_simulator_t m_ant_sdm_simulator;    /**< Simulator used to simulate cadence. */
 
 #if MODIFICATION_TYPE == MODIFICATION_TYPE_BUTTON
 /**@brief Function for handling bsp events.
@@ -135,29 +132,14 @@ void bsp_evt_handler(bsp_event_t evt)
 /** @snippet [ANT SDM simulator button] */
 #endif // MODIFICATION_TYPE == MODIFICATION_TYPE_BUTTON
 
-
-/**@brief Function for dispatching an ANT stack event to all modules with an ANT stack event handler.
- *
- * @details This function is called from the ANT stack event interrupt handler after an ANT stack
- *          event has been received.
- *
- * @param[in] p_ant_evt  ANT stack event.
- */
-void ant_evt_dispatch(ant_evt_t * p_ant_evt)
-{
-    ant_sdm_sens_evt_handler(&m_ant_sdm, p_ant_evt);
-    ant_state_indicator_evt_handler(p_ant_evt);
-}
-
-
 /**@brief Function for the timer, tracer, and BSP initialization.
  */
 static void utils_setup(void)
 {
-    uint32_t err_code;
-
-    err_code = NRF_LOG_INIT(NULL);
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
@@ -168,9 +150,15 @@ static void utils_setup(void)
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                         bsp_evt_handler);
 #endif
+
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
+
+    APP_ERROR_CHECK(err_code);
+
+    err_code = ant_state_indicator_init(m_ant_sdm.channel_number, SDM_SENS_CHANNEL_TYPE);
     APP_ERROR_CHECK(err_code);
 }
-
 
 /**@brief Function for the SDM simulator initialization.
  */
@@ -197,33 +185,31 @@ static void simulator_setup(void)
 #endif
 }
 
-
 /**@brief Function for ANT stack initialization.
  *
  * @details Initializes the SoftDevice and the ANT event interrupt.
  */
 static void softdevice_setup(void)
 {
-    uint32_t err_code;
-
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
-    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
+    ret_code_t err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
+    ASSERT(nrf_sdh_is_enabled());
+
+    err_code = nrf_sdh_ant_enable();
     APP_ERROR_CHECK(err_code);
 
-    err_code = ant_plus_key_set(ANTPLUS_NETWORK_NUMBER);
+    err_code = ant_plus_key_set(ANTPLUS_NETWORK_NUM);
     APP_ERROR_CHECK(err_code);
 }
-
 
 /**@brief Function for handling ANT SDM events.
  */
 /** @snippet [ANT SDM simulator call] */
 void ant_sdm_evt_handler(ant_sdm_profile_t * p_profile, ant_sdm_evt_t event)
 {
+    nrf_pwr_mgmt_feed();
+
     switch (event)
     {
         case ANT_SDM_PAGE_1_UPDATED:
@@ -246,10 +232,7 @@ void ant_sdm_evt_handler(ant_sdm_profile_t * p_profile, ant_sdm_evt_t event)
             break;
     }
 }
-
-
 /** @snippet [ANT SDM simulator call] */
-
 
 /**@brief Function for SDM Profile initialization.
  *
@@ -296,30 +279,18 @@ static void profile_setup(void)
 /** @snippet [ANT SDM TX Profile Setup] */
 }
 
-
 /**@brief Function for application main entry, does not return.
  */
 int main(void)
 {
-    uint32_t err_code;
-
     utils_setup();
     softdevice_setup();
-    ant_state_indicator_init(m_ant_sdm.channel_number, SDM_SENS_CHANNEL_TYPE);
     simulator_setup();
     profile_setup();
 
-    for (;; )
+    for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            err_code = sd_app_evt_wait();
-            APP_ERROR_CHECK(err_code);
-        }
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }
-
-
-/**
- *@}
- **/

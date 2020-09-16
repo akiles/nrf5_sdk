@@ -90,14 +90,6 @@ uint32_t bsp_btn_ble_init(bsp_btn_ble_error_handler_t error_handler, bsp_event_t
  */
 uint32_t bsp_btn_ble_sleep_mode_prepare(void);
 
-/**@brief Function for handling the application's BLE stack events.
- *
- * @details This function handles all events from the BLE stack that are of interest to this module.
- *
- * @param[in] p_ble_evt BLE stack event.
- */
-void bsp_btn_ble_on_ble_evt(ble_evt_t * p_ble_evt);
-
 
 #ifdef __cplusplus
 }

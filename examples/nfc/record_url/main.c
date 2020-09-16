@@ -52,6 +52,7 @@
 #include "app_error.h"
 #include "hardfault.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 /** @snippet [NFC URI usage_0] */
 static const uint8_t m_url[] =
@@ -92,6 +93,8 @@ int main(void)
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
     /* Configure LED-pins as outputs */
     bsp_board_leds_init();
 
@@ -124,6 +127,7 @@ int main(void)
     while (1)
     {
         NRF_LOG_FLUSH();
+        __WFE();
     }
 }
 

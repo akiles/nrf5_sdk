@@ -66,7 +66,7 @@ static ret_code_t send_write_reply(nrf_ble_escs_t * p_escs, ble_gatts_rw_authori
  * @retval true If length is valid.
  * @retval false If length is not valid.
  */
-static bool length_is_valid(uint8_t * p_data, uint8_t length)
+static bool length_is_valid(uint8_t const * p_data, uint8_t length)
 {
     if (length == 0 || (length == 1 && p_data[0] == 0))
     {
@@ -100,7 +100,7 @@ static bool length_is_valid(uint8_t * p_data, uint8_t length)
 ret_code_t es_gatts_write_handle_unlocked_write(nrf_ble_escs_t * p_escs,
                                                 uint16_t         uuid,
                                                 uint16_t         val_handle,
-                                                uint8_t *        p_data,
+                                                uint8_t const  * p_data,
                                                 uint16_t         length,
                                                 uint8_t          active_slot)
 {
@@ -149,7 +149,7 @@ ret_code_t es_gatts_write_handle_unlocked_write(nrf_ble_escs_t * p_escs,
                      *p_data == NRF_BLE_ESCS_LOCK_BYTE_LOCK)
             {
                 // 0x00 + key[16] : transition to lock state and update the lock code.
-                err_code = es_security_lock_code_update((p_data) + 1);
+                err_code = es_security_lock_code_update((uint8_t*)(p_data) + 1);
                 RETURN_IF_ERROR(err_code);
 
                 // Only write the lock byte (0x00) to the characteristic, so set length to 1.
@@ -158,7 +158,7 @@ ret_code_t es_gatts_write_handle_unlocked_write(nrf_ble_escs_t * p_escs,
             else
             {
                 // Any invalid values locks the characteristic by default.
-                *p_data = NRF_BLE_ESCS_LOCK_BYTE_LOCK;
+                (*(uint8_t*)p_data) = NRF_BLE_ESCS_LOCK_BYTE_LOCK;
                 length  = 1;
             }
             break;
@@ -220,7 +220,7 @@ ret_code_t es_gatts_write_handle_unlocked_write(nrf_ble_escs_t * p_escs,
 
 
 ret_code_t es_gatts_write_handle_unlock(nrf_ble_escs_t * p_escs,
-                                        uint8_t *        p_data,
+                                        uint8_t const  * p_data,
                                         uint16_t         length,
                                         uint16_t         val_handle)
 {
@@ -229,7 +229,7 @@ ret_code_t es_gatts_write_handle_unlock(nrf_ble_escs_t * p_escs,
 
     ret_code_t                            err_code;
     ble_gatts_rw_authorize_reply_params_t reply = {0};
-    ble_gatts_value_t                     value = {.len = length, .offset = 0, .p_value = p_data};
+    ble_gatts_value_t                     value = {.len = length, .offset = 0, .p_value = (uint8_t*)p_data};
 
     if (length == ESCS_AES_KEY_SIZE)
     {

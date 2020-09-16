@@ -40,9 +40,7 @@
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(NRF_CRYPTO)
 
-#if defined(NRF_CRYPTO_BACKEND_MICRO_ECC) && (NRF_CRYPTO_BACKEND_MICRO_ECC == 1)
-
-#if defined(NRF_CRYPTO_SUPPORTS_RNG) && NRF_CRYPTO_SUPPORTS_RNG == 1
+#if (NRF_CRYPTO_BACKEND_MICRO_ECC && NRF_CRYPTO_BACKEND_MICRO_ECC_RNG)
 
 #include "nrf_crypto.h"
 #include "micro_ecc_lib_ecdh.h"
@@ -56,7 +54,7 @@
 static void swap_array_endian(uint8_t * p_in, uint32_t len, uint8_t * p_out)
 {
     uint32_t i;
-    for(i = 0; i < len; i++)
+    for (i = 0; i < len; i++)
     {
         p_out[len-i-1] = p_in[i];
     }
@@ -163,8 +161,5 @@ uint32_t nrf_crypto_ecdh_shared_secret_compute(nrf_crypto_curve_info_t    curve_
     return NRF_SUCCESS;
 }
 
-#endif // Supports RNG
-
-#endif // NRF_CRYPTO_BACKEND_MICRO_ECC
-
+#endif // NRF_CRYPTO_BACKEND_MICRO_ECC && NRF_CRYPTO_BACKEND_MICRO_ECC_RNG
 #endif // NRF_MODULE_ENABLED(NRF_CRYPTO)

@@ -955,12 +955,12 @@ uint32_t ble_gap_data_length_update_rsp_enc(uint32_t                            
 }
 #endif
 #if NRF_SD_BLE_API_VERSION >= 5
-uint32_t ble_gap_phy_request_req_dec(uint8_t const * const          p_buf,
+uint32_t ble_gap_phy_update_req_dec(uint8_t const * const          p_buf,
                                       uint32_t                       packet_len,
                                       uint16_t * const               p_conn_handle,
                                       ble_gap_phys_t * * const pp_gap_phys)
 {
-    SER_REQ_DEC_BEGIN(SD_BLE_GAP_PHY_REQUEST);
+    SER_REQ_DEC_BEGIN(SD_BLE_GAP_PHY_UPDATE);
 
     SER_ASSERT_NOT_NULL(p_conn_handle);
     SER_ASSERT_NOT_NULL(pp_gap_phys);
@@ -972,10 +972,10 @@ uint32_t ble_gap_phy_request_req_dec(uint8_t const * const          p_buf,
 }
 
 
-uint32_t ble_gap_phy_request_rsp_enc(uint32_t         return_code,
+uint32_t ble_gap_phy_update_rsp_enc(uint32_t         return_code,
                                       uint8_t * const  p_buf,
                                       uint32_t * const p_buf_len)
 {
-    SER_RSP_ENC_RESULT_ONLY(SD_BLE_GAP_PHY_REQUEST);
+    SER_RSP_ENC_RESULT_ONLY(SD_BLE_GAP_PHY_UPDATE);
 }
 #endif

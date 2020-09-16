@@ -72,7 +72,7 @@ extern "C" {
  *                                      Size of the generated message as output.
  *
  * @retval NRF_SUCCESS                  If the description was successfully created.
- * @retval NRF_ERROR_INVALID_PARAM      If the URI string was invalid (equal to NULL).
+ * @retval NRF_ERROR_NULL               If the URI string was invalid (equal to NULL).
  * @retval NRF_ERROR_NO_MEM             If the predicted message size is bigger than the provided
  *                                      buffer space.
  * @retval Other                        Other codes might be returned depending on

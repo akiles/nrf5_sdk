@@ -46,9 +46,10 @@
 #include "nordic_common.h"
 #include "app_util_platform.h"
 #ifdef SOFTDEVICE_PRESENT
-#include "softdevice_handler.h"
 #include "nrf_sdm.h"
 #include "nrf_soc.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_soc.h"
 #endif
 
 /* Validate configuration */
@@ -117,7 +118,7 @@ ret_code_t nrf_drv_power_init(nrf_drv_power_config_t const * p_config)
         return NRF_ERROR_MODULE_ALREADY_INITIALIZED;
     }
 #ifdef SOFTDEVICE_PRESENT
-    if (softdevice_handler_is_enabled())
+    if (nrf_sdh_is_enabled())
     {
         return NRF_ERROR_INVALID_STATE;
     }
@@ -156,7 +157,7 @@ ret_code_t nrf_drv_power_pof_init(nrf_drv_power_pofwarn_config_t const * p_confi
     nrf_drv_power_pof_uninit();
 
 #ifdef SOFTDEVICE_PRESENT
-    if (softdevice_handler_is_enabled())
+    if (nrf_sdh_is_enabled())
     {
         /* Currently when SD is enabled - the configuration can be changed
          * in very limited range.
@@ -175,7 +176,7 @@ ret_code_t nrf_drv_power_pof_init(nrf_drv_power_pofwarn_config_t const * p_confi
              * the values taken by SD is different than the one in hardware
              */
             uint8_t thr;
-            switch(p_config->thr)
+            switch (p_config->thr)
             {
                 case NRF_POWER_POFTHR_V21:
                     thr = NRF_POWER_THRESHOLD_V21;
@@ -193,7 +194,7 @@ ret_code_t nrf_drv_power_pof_init(nrf_drv_power_pofwarn_config_t const * p_confi
                     /* Cannot configure */
                     return NRF_ERROR_INVALID_STATE;
             }
-            sd_power_pof_threshold_set(thr);
+            ASSERT(sd_power_pof_threshold_set(thr));
         }
     }
     else
@@ -209,9 +210,9 @@ ret_code_t nrf_drv_power_pof_init(nrf_drv_power_pofwarn_config_t const * p_confi
     {
         m_pofwarn_handler = p_config->handler;
 #ifdef SOFTDEVICE_PRESENT
-        if (softdevice_handler_is_enabled())
+        if (nrf_sdh_is_enabled())
         {
-            sd_power_pof_enable(true);
+            (void) sd_power_pof_enable(true);
         }
         else
 #endif
@@ -225,9 +226,9 @@ ret_code_t nrf_drv_power_pof_init(nrf_drv_power_pofwarn_config_t const * p_confi
 void nrf_drv_power_pof_uninit(void)
 {
 #ifdef SOFTDEVICE_PRESENT
-    if (softdevice_handler_is_enabled())
+    if (nrf_sdh_is_enabled())
     {
-        sd_power_pof_enable(false);
+        (void) sd_power_pof_enable(false);
     }
     else
 #endif
@@ -258,7 +259,7 @@ ret_code_t nrf_drv_power_sleepevt_init(nrf_drv_power_sleepevt_config_t const * p
             nrf_power_event_clear(NRF_POWER_EVENT_SLEEPEXIT);
         }
 #ifdef SOFTDEVICE_PRESENT
-        if (softdevice_handler_is_enabled())
+        if (nrf_sdh_is_enabled())
         {
             if (enmask != 0)
             {
@@ -278,7 +279,7 @@ ret_code_t nrf_drv_power_sleepevt_init(nrf_drv_power_sleepevt_config_t const * p
 void nrf_drv_power_sleepevt_uninit(void)
 {
 #ifdef SOFTDEVICE_PRESENT
-    if (softdevice_handler_is_enabled())
+    if (nrf_sdh_is_enabled())
     {
         /* Nothing to do */
     }
@@ -301,7 +302,7 @@ ret_code_t nrf_drv_power_usbevt_init(nrf_drv_power_usbevt_config_t const * p_con
     {
         m_usbevt_handler = p_config->handler;
 #ifdef SOFTDEVICE_PRESENT
-        if (softdevice_handler_is_enabled())
+        if (nrf_sdh_is_enabled())
         {
             /** @todo Implement USB power events when SD support it */
             return NRF_ERROR_INVALID_STATE;
@@ -321,7 +322,7 @@ ret_code_t nrf_drv_power_usbevt_init(nrf_drv_power_usbevt_config_t const * p_con
 void nrf_drv_power_usbevt_uninit(void)
 {
 #ifdef SOFTDEVICE_PRESENT
-    if (softdevice_handler_is_enabled())
+    if (nrf_sdh_is_enabled())
     {
         /** @todo Implement USB power events when SD support it */
     }
@@ -347,7 +348,7 @@ void nrf_drv_power_usbevt_uninit(void)
 #if NRF_DRV_COMMON_POWER_CLOCK_ISR
 void nrf_drv_power_onIRQ(void)
 #else
-void POWER_POWER_IRQHandler(void)
+void POWER_CLOCK_IRQHandler(void)
 #endif
 {
     uint32_t enabled = nrf_power_int_enable_get();
@@ -401,7 +402,19 @@ void POWER_POWER_IRQHandler(void)
 
 #ifdef SOFTDEVICE_PRESENT
 
-void nrf_drv_power_on_soc_event(uint32_t evt_id)
+static void nrf_drv_power_sdh_soc_evt_handler(uint32_t evt_id, void * p_context);
+static void nrf_drv_power_sdh_state_evt_handler(nrf_sdh_state_evt_t state, void * p_context);
+
+NRF_SDH_SOC_OBSERVER(m_soc_observer, POWER_CONFIG_SOC_OBSERVER_PRIO,
+                     nrf_drv_power_sdh_soc_evt_handler, NULL);
+
+NRF_SDH_STATE_OBSERVER(m_sd_observer, POWER_CONFIG_STATE_OBSERVER_PRIO) =
+{
+    .handler   = nrf_drv_power_sdh_state_evt_handler,
+    .p_context = NULL
+};
+
+static void nrf_drv_power_sdh_soc_evt_handler(uint32_t evt_id, void * p_context)
 {
     if (evt_id == NRF_EVT_POWER_FAILURE_WARNING)
     {
@@ -411,18 +424,18 @@ void nrf_drv_power_on_soc_event(uint32_t evt_id)
     }
 }
 
-void nrf_drv_power_on_sd_enable(void)
+static void nrf_drv_power_on_sd_enable(void)
 {
     ASSERT(m_initialized); /* This module has to be enabled first */
     CRITICAL_REGION_ENTER();
     if (m_pofwarn_handler != NULL)
     {
-        sd_power_pof_enable(true);
+        (void) sd_power_pof_enable(true);
     }
     CRITICAL_REGION_EXIT();
 }
 
-void nrf_drv_power_on_sd_disable(void)
+static void nrf_drv_power_on_sd_disable(void)
 {
     /* Reinit interrupts */
     ASSERT(m_initialized);
@@ -440,6 +453,23 @@ void nrf_drv_power_on_sd_disable(void)
            NRF_POWER_INT_USBPWRRDY_MASK);
     }
 #endif
+}
+
+static void nrf_drv_power_sdh_state_evt_handler(nrf_sdh_state_evt_t state, void * p_context)
+{
+    switch (state)
+    {
+        case NRF_SDH_EVT_STATE_ENABLED:
+            nrf_drv_power_on_sd_enable();
+            break;
+
+        case NRF_SDH_EVT_STATE_DISABLED:
+            nrf_drv_power_on_sd_disable();
+            break;
+
+        default:
+            break;
+    }
 }
 
 #endif // SOFTDEVICE_PRESENT

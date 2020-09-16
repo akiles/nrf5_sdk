@@ -42,7 +42,7 @@
 
 #include "ant_bpwr_page_17.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_BPWR_PAGE_17"
+#define NRF_LOG_MODULE_NAME ant_bpwr_page_17
 #if ANT_BPWR_PAGE_17_LOG_ENABLED
 #define NRF_LOG_LEVEL       ANT_BPWR_PAGE_17_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  ANT_BPWR_PAGE_17_INFO_COLOR
@@ -50,10 +50,11 @@
 #define NRF_LOG_LEVEL       0
 #endif // ANT_BPWR_PAGE_17_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 static void page17_data_log(ant_bpwr_page17_data_t const * p_page_data)
 {
-    NRF_LOG_INFO("Wheel:\r\n");
+    NRF_LOG_INFO("Wheel:");
     ant_bpwr_page_torque_log((ant_bpwr_page_torque_data_t *) p_page_data);
 }
 

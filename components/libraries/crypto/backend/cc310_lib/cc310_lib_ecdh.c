@@ -54,7 +54,7 @@
 
 static void swap_array_endian(uint8_t * p_in, uint32_t len, uint8_t * p_out)
 {
-    for(uint32_t i = 0; i < len; i++)
+    for (uint32_t i = 0; i < len; i++)
     {
         p_out[len-i-1] = p_in[i];
     }
@@ -64,7 +64,7 @@ static uint32_t ecdh_shared_secret_compute_result_get(CRYSError_t error)
 {
     uint32_t ret_val;
 
-    switch(error)
+    switch (error)
     {
         case CRYS_OK:
             ret_val = NRF_SUCCESS;

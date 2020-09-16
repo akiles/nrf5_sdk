@@ -207,7 +207,11 @@ static void ant_encrypt_user_handler_try_to_run(uint8_t ant_channel, ant_encrypt
     }
 }
 
-void ant_encrypt_event_handler(ant_evt_t * p_ant_evt)
+/**@brief Function for handling an ANT stack event.
+ * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
+ */
+static void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
     uint8_t const ant_channel = p_ant_evt->channel;
 
@@ -230,6 +234,8 @@ void ant_encrypt_event_handler(ant_evt_t * p_ant_evt)
             break;
     }
 }
+
+NRF_SDH_ANT_OBSERVER(m_ant_observer, ANT_ENCRYPT_ANT_OBSERVER_PRIO, ant_evt_handler, NULL);
 
 void ant_enc_event_handler_register(ant_encryp_user_handler_t user_handler_func)
 {

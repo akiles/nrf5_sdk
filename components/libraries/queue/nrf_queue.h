@@ -93,16 +93,16 @@ typedef struct
  * @param[in]   _size       Size of the queue.
  * @param[in]   _mode       Mode of the queue.
  */
-#define NRF_QUEUE_DEF(_type, _name, _size, _mode)                   \
-    static _type             _name##_nrf_queue_buffer[(_size) + 1]; \
-    static nrf_queue_cb_t    _name##_nrf_queue_cb;                  \
-    static const nrf_queue_t _name =                                \
-        {                                                           \
-            .p_cb           = &_name##_nrf_queue_cb,                \
-            .p_buffer       = _name##_nrf_queue_buffer,             \
-            .size           = (_size),                              \
-            .element_size   = sizeof(_type),                        \
-            .mode           = _mode,                                \
+#define NRF_QUEUE_DEF(_type, _name, _size, _mode)                             \
+    static _type             CONCAT_2(_name, _nrf_queue_buffer[(_size) + 1]); \
+    static nrf_queue_cb_t    CONCAT_2(_name, _nrf_queue_cb);                  \
+    static const nrf_queue_t _name =                                          \
+        {                                                                     \
+            .p_cb           = &CONCAT_2(_name, _nrf_queue_cb),                \
+            .p_buffer       = CONCAT_2(_name,_nrf_queue_buffer),              \
+            .size           = (_size),                                        \
+            .element_size   = sizeof(_type),                                  \
+            .mode           = _mode,                                          \
         }
 
 /**@brief Declare a queue interface.

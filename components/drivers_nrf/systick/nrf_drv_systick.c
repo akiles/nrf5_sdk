@@ -146,7 +146,7 @@ void nrf_drv_systick_delay_ticks(uint32_t ticks)
     ASSERT(ticks <= NRF_DRV_SYSTICK_TICKS_MAX)
 
     const uint32_t start = nrf_systick_val_get();
-    while((NRF_SYSTICK_VAL_MASK & (start - nrf_systick_val_get())) < ticks)
+    while ((NRF_SYSTICK_VAL_MASK & (start - nrf_systick_val_get())) < ticks)
     {
         /* Nothing to do */
     }
@@ -162,7 +162,7 @@ void nrf_drv_systick_delay_ms(uint32_t ms)
 {
     uint32_t n = ms / NRF_DRV_SYSTICK_MS_STEP;
     uint32_t r = ms % NRF_DRV_SYSTICK_MS_STEP;
-    while(0 != (n--))
+    while (0 != (n--))
     {
         nrf_drv_systick_delay_ticks(nrf_drv_systick_ms_tick(NRF_DRV_SYSTICK_MS_STEP));
     }

@@ -133,11 +133,11 @@ __isr_vector:
     .long   UARTE1_IRQHandler
     .long   QSPI_IRQHandler
     .long   CRYPTOCELL_IRQHandler
-    .long   SPIM3_IRQHandler
+    .long   0                           /*Reserved */
     .long   0                           /*Reserved */
     .long   PWM3_IRQHandler
     .long   0                           /*Reserved */
-    .long   0                           /*Reserved */
+    .long   SPIM3_IRQHandler
     .long   0                           /*Reserved */
     .long   0                           /*Reserved */
     .long   0                           /*Reserved */
@@ -404,7 +404,7 @@ Default_Handler:
     IRQ  UARTE1_IRQHandler
     IRQ  QSPI_IRQHandler
     IRQ  CRYPTOCELL_IRQHandler
-    IRQ  SPIM3_IRQHandler
     IRQ  PWM3_IRQHandler
+    IRQ  SPIM3_IRQHandler
 
   .end

@@ -239,19 +239,6 @@ ret_code_t pm_register(pm_evt_handler_t event_handler);
 ret_code_t pm_sec_params_set(ble_gap_sec_params_t * p_sec_params);
 
 
-/**@brief Function for passing BLE events to the Peer Manager.
- *
- * @details For the module to work as expected, this function must be called with each BLE event
- *          from the SoftDevice. It must be called after @ref ble_conn_state_on_ble_evt, but before
- *          the application processes the event.
- *
- *          Calling this function before @ref pm_init is safe, but without effect.
- *
- * @param[in]  p_ble_evt  BLE stack event that is dispatched to the function.
- */
-void pm_on_ble_evt(ble_evt_t * p_ble_evt);
-
-
 /**@brief Function for establishing encryption on a connection, and optionally establishing a bond.
  *
  * @details This function attempts to secure the link that is specified by @p conn_handle. It uses

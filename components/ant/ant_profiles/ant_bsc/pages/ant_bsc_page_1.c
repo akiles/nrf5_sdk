@@ -45,7 +45,7 @@
 #include "app_util.h"
 #include "nordic_common.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_BCS_PAGE_1"
+#define NRF_LOG_MODULE_NAME ant_bcs_page_1
 #if ANT_BSC_PAGE_1_LOG_ENABLED
 #define NRF_LOG_LEVEL       ANT_BSC_PAGE_1_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  ANT_BSC_PAGE_1_INFO_COLOR
@@ -53,6 +53,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // ANT_BSC_PAGE_1_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 /**@brief BSC page 1 data layout structure. */
 typedef struct
@@ -64,7 +65,7 @@ typedef struct
 /**@brief Function for printing speed or cadence page1 data. */
 static void page1_data_log(ant_bsc_page1_data_t const * p_page_data)
 {
-    NRF_LOG_INFO("Cumulative operating time: %ud %uh %um %us\r\n",
+    NRF_LOG_INFO("Cumulative operating time: %ud %uh %um %us",
               (unsigned int)ANT_BSC_OPERATING_DAYS(p_page_data->operating_time),
               (unsigned int)ANT_BSC_OPERATING_HOURS(p_page_data->operating_time),
               (unsigned int)ANT_BSC_OPERATING_MINUTES(p_page_data->operating_time),

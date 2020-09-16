@@ -46,7 +46,7 @@
 #include "nordic_common.h"
 #include "app_util.h"
 
-#define NRF_LOG_MODULE_NAME "NFC_T4T_CC_FILE_PARSER"
+#define NRF_LOG_MODULE_NAME nfc_t4t_cc_file_parser
 #if NFC_T4T_CC_FILE_PARSER_LOG_ENABLED
 #define NRF_LOG_LEVEL       NFC_T4T_CC_FILE_PARSER_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  NFC_T4T_CC_FILE_PARSER_INFO_COLOR
@@ -54,6 +54,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // NFC_T4T_CC_FILE_PARSER_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 /**
  * @brief Valid value range for CCLEN field.
@@ -243,21 +244,20 @@ ret_code_t nfc_t4t_file_content_set(nfc_t4t_capability_container_t * p_t4t_cc_fi
 
 void nfc_t4t_cc_file_printout(nfc_t4t_capability_container_t * p_t4t_cc_file)
 {
-    NRF_LOG_INFO("Capability Container File content: \r\n")
-    NRF_LOG_INFO("CCLEN: %d \r\n", p_t4t_cc_file->len);
-    NRF_LOG_INFO("Mapping Version: %d.%d \r\n",
+    NRF_LOG_INFO("Capability Container File content: ")
+    NRF_LOG_INFO("CCLEN: %d ", p_t4t_cc_file->len);
+    NRF_LOG_INFO("Mapping Version: %d.%d ",
                  p_t4t_cc_file->major_version,
                  p_t4t_cc_file->minor_version);
-    NRF_LOG_INFO("MLe: %d \r\n", p_t4t_cc_file->max_rapdu_size)
-    NRF_LOG_INFO("MLc: %d \r\n\r\n", p_t4t_cc_file->max_capdu_size)
+    NRF_LOG_INFO("MLe: %d ", p_t4t_cc_file->max_rapdu_size)
+    NRF_LOG_INFO("MLc: %d ", p_t4t_cc_file->max_capdu_size)
 
-    NRF_LOG_INFO("Capability Container File contains %d File Control TLV block(s).\r\n",
+    NRF_LOG_INFO("Capability Container File contains %d File Control TLV block(s).",
                  p_t4t_cc_file->tlv_count);
     for (uint8_t i = 0; i < p_t4t_cc_file->tlv_count; i++)
     {
         nfc_t4t_file_control_tlv_printout(i, &p_t4t_cc_file->p_tlv_block_array[i]);
     }
-    NRF_LOG_RAW_INFO("\r\n");
 }
 
 

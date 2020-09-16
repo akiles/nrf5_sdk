@@ -60,9 +60,6 @@
 #include "ant_search_config.h"
 #include "ant_encrypt_negotiation_slave.h"
 
-// Channel configuration.
-#define ANT_EXT_ASSIGN              0x00                    /**< ANT Ext Assign. */
-#define ANT_CHANNEL_DEFAULT_NETWORK 0x00                    /**< ANT channel network. */
 #define ANT_MSG_IDX_ID              1u                      /**< ANT message ID index. */
 
 /** Encryption key. */
@@ -70,7 +67,7 @@
                                      0x05, 0x08, 0x09, 0x07, 0x09, 0x03}
 
 /** Number of channels to open <1,ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED>. */
-#define NUMBER_OF_CHANNELS_TO_OPEN  ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED
+#define NUMBER_OF_CHANNELS_TO_OPEN  NRF_SDH_ANT_TOTAL_CHANNELS_ALLOCATED
 
 
 /**@brief Function to display the bottom nibble of the input byte on the board's LEDs.
@@ -137,12 +134,12 @@ void ant_se_channel_rx_broadcast_setup(void)
     ant_channel_config_t m_channel_config =
     {
         .channel_type      = CHANNEL_TYPE_SLAVE,
-        .ext_assign        = ANT_EXT_ASSIGN,
+        .ext_assign        = 0x00,
         .rf_freq           = RF_FREQ,
         .transmission_type = CHAN_ID_TRANS_TYPE,
         .device_type       = CHAN_ID_DEV_TYPE,
         .channel_period    = CHAN_PERIOD,
-        .network_number    = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number    = ANT_NETWORK_NUM,
         .p_crypto_settings = &channel_crypto_settings
         // .device_number and .channel_number structure members are set below separately.
     };
@@ -183,11 +180,3 @@ void ant_se_channel_rx_broadcast_setup(void)
 
     }
 }
-
-
-void ant_se_event_handler(ant_evt_t * p_ant_event)
-{
-    ant_encrypt_event_handler(p_ant_event);
-}
-
-

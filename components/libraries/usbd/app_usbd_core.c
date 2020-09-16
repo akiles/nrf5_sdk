@@ -55,16 +55,14 @@
 #error APP_USBD_VID not properly defined.
 #endif
 
-/* USBD device version creating if defined in major/minor form */
-#ifndef APP_USBD_DEVICE_VER
-    #if defined(APP_USBD_DEVICE_VER_MAJOR) && defined(APP_USBD_DEVICE_VER_MINOR)
-        #if ((APP_USBD_DEVICE_VER_MAJOR)) > 99 || ((APP_USBD_DEVICE_VER_MINOR) > 99)
-            #error Major and minor device version value have to be limited to 99.
-        #endif
-        #define APP_USBD_DEVICE_VER (((APP_USBD_DEVICE_VER_MAJOR)*100UL) + (APP_USBD_DEVICE_VER_MINOR))
-    #else
-        #error The definition of APP_USBD_DEVICE_VER or a pair APP_USBD_DEVICE_VER_MAJOR and APP_USBD_DEVICE_VER_MINOR required.
+
+/* Device version checking */
+#if defined(APP_USBD_DEVICE_VER_MAJOR) && defined(APP_USBD_DEVICE_VER_MINOR)
+    #if ((APP_USBD_DEVICE_VER_MAJOR)) > 99 || ((APP_USBD_DEVICE_VER_MINOR) > 99)
+        #error Major and minor device version value have to be limited to 99.
     #endif
+#else
+    #error The definition of a pair APP_USBD_DEVICE_VER_MAJOR and APP_USBD_DEVICE_VER_MINOR required.
 #endif
 
 /**
@@ -76,38 +74,29 @@
  * @{
  */
 
-/** @brief Make USB BCD version */
-#define APP_USBD_VERSION_BCD_MAKE(major, minor) (((0x##major) << 8) | (0x##minor))
-
 /** @brief Make USB power value */
 #define APP_USBD_POWER_MAKE(ma) (((ma) + 1) / 2)
-
-/** @brief Convert device version to BCD notation */
-#define APP_USBD_BCD_DEVICE (                             \
-    ((((APP_USBD_DEVICE_VER) % 10000) / 1000) * 0x1000) + \
-    ((((APP_USBD_DEVICE_VER) %  1000) /  100) *  0x100) + \
-    ((((APP_USBD_DEVICE_VER) %  100) /    10) *   0x10) + \
-    ((((APP_USBD_DEVICE_VER) %   10) /     1) *    0x1)   \
-    )
 
 /**
  @brief Default device descriptor initializer @ref app_usbd_descriptor_device_t
 * */
-#define APP_USBD_CORE_DEVICE_DESCRIPTOR  {                                                                      \
-   .bLength = sizeof(app_usbd_descriptor_device_t),    /* descriptor size */                                    \
-   .bDescriptorType = APP_USBD_DESCRIPTOR_DEVICE,      /* descriptor type */                                    \
-   .bcdUSB = APP_USBD_VERSION_BCD_MAKE(2,0),           /* USB BCD version: 2.0 */                               \
-   .bDeviceClass = 0,                                  /* device class: 0 - specified by interface */           \
-   .bDeviceSubClass = 0,                               /* device subclass: 0 - specified by interface */        \
-   .bDeviceProtocol = 0,                               /* device protocol: 0 - specified by interface */        \
-   .bMaxPacketSize0 = NRF_DRV_USBD_EPSIZE,             /* endpoint size: fixed to: NRF_DRV_USBD_EPSIZE*/        \
-   .idVendor = APP_USBD_VID,                           /* Vendor ID*/                                           \
-   .idProduct = APP_USBD_PID,                          /* Product ID*/                                          \
-   .bcdDevice = APP_USBD_BCD_DEVICE,                   /* Device version BCD */                                 \
-   .iManufacturer = APP_USBD_STRING_ID_MANUFACTURER,   /* String ID: manufacturer */                            \
-   .iProduct = APP_USBD_STRING_ID_PRODUCT,             /* String ID: product */                                 \
-   .iSerialNumber = APP_USBD_STRING_ID_SERIAL,         /* String ID: serial */                                  \
-   .bNumConfigurations = 1,                            /* Fixed value: only one configuration supported*/       \
+#define APP_USBD_CORE_DEVICE_DESCRIPTOR  {                                                               \
+   .bLength = sizeof(app_usbd_descriptor_device_t),    /* descriptor size */                             \
+   .bDescriptorType = APP_USBD_DESCRIPTOR_DEVICE,      /* descriptor type */                             \
+   .bcdUSB = APP_USBD_BCD_VER_MAKE(2,0),               /* USB BCD version: 2.0 */                        \
+   .bDeviceClass = 0,                                  /* device class: 0 - specified by interface */    \
+   .bDeviceSubClass = 0,                               /* device subclass: 0 - specified by interface */ \
+   .bDeviceProtocol = 0,                               /* device protocol: 0 - specified by interface */ \
+   .bMaxPacketSize0 = NRF_DRV_USBD_EPSIZE,             /* endpoint size: fixed to: NRF_DRV_USBD_EPSIZE*/ \
+   .idVendor = APP_USBD_VID,                           /* Vendor ID*/                                    \
+   .idProduct = APP_USBD_PID,                          /* Product ID*/                                   \
+   .bcdDevice = APP_USBD_BCD_VER_MAKE(                 /* Device version BCD */                          \
+       APP_USBD_DEVICE_VER_MAJOR,                                                                        \
+       APP_USBD_DEVICE_VER_MINOR),                                                                       \
+   .iManufacturer = APP_USBD_STRING_ID_MANUFACTURER,   /* String ID: manufacturer */                     \
+   .iProduct = APP_USBD_STRING_ID_PRODUCT,             /* String ID: product */                          \
+   .iSerialNumber = APP_USBD_STRING_ID_SERIAL,         /* String ID: serial */                           \
+   .bNumConfigurations = 1                             /* Fixed value: only one configuration supported*/\
 }
 
 
@@ -154,7 +143,7 @@ static ret_code_t app_usbd_core_event_handler(app_usbd_class_inst_t const * cons
  *
  * This variable is updated automatically by core library.
  */
-static app_usbd_state_t app_usbd_state = APP_USBD_STATE_Disabled;
+static app_usbd_state_t m_app_usbd_state = APP_USBD_STATE_Disabled;
 
 /**
  * @brief Active device features
@@ -162,15 +151,6 @@ static app_usbd_state_t app_usbd_state = APP_USBD_STATE_Disabled;
  * @note Only @ref APP_USBD_SETUP_STDFEATURE_DEVICE_REMOTE_WAKEUP is supported for device
  */
 static uint8_t m_device_features_state;
-
-/**
- * @brief Remote wake-up register/unregister
- *
- * Counter incremented when appended instance required remote wake-up functionality.
- * It should be decremented when the class is removed.
- * When this counter is not zero, remote wake-up functionality is activated inside core.
- */
-static uint8_t m_rwu_counter;
 
 /**
  * @brief Remote wake-up pending flag
@@ -370,7 +350,7 @@ static bool usbd_descriptor_conf_feeder(
             if (0 < p_data->desc_left)
             {
                 size_t to_copy = MIN(tx_size, p_data->desc_left);
-                memcpy(p_tx_buff+size, p_data->p_desc, to_copy);
+                memcpy(p_tx_buff + size, p_data->p_desc, to_copy);
                 p_data->desc_left  -= to_copy;
                 p_data->total_left -= to_copy;
                 tx_size            -= to_copy;
@@ -493,7 +473,7 @@ static ret_code_t setup_req_get_descriptor(app_usbd_class_inst_t const * const p
 
             p_trans_buff->bNumInterfaces = iface_count;
             p_trans_buff->wTotalLength   = total_length;
-            if (m_rwu_counter)
+            if (app_usbd_class_rwu_enabled_check())
             {
                 p_trans_buff->bmAttributes |=
                     APP_USBD_DESCRIPTOR_CONFIGURATION_ATTRIBUTE_REMOTE_WAKEUP_MASK;
@@ -551,11 +531,11 @@ static ret_code_t setup_req_get_configuration(app_usbd_class_inst_t const * cons
 {
     size_t max_size;
     uint8_t * p_trans_buff = app_usbd_core_setup_transfer_buff_get(&max_size);
-    if (APP_USB_STATE_BASE(app_usbd_state) == APP_USBD_STATE_Configured)
+    if (APP_USB_STATE_BASE(m_app_usbd_state) == APP_USBD_STATE_Configured)
     {
         p_trans_buff[0] = 1;
     }
-    else if (APP_USB_STATE_BASE(app_usbd_state) == APP_USBD_STATE_Addressed)
+    else if (APP_USB_STATE_BASE(m_app_usbd_state) == APP_USBD_STATE_Addressed)
     {
         p_trans_buff[0] = 0;
     }
@@ -604,13 +584,13 @@ static ret_code_t setup_req_std_in(app_usbd_class_inst_t const * const p_inst,
 static ret_code_t setup_req_std_set_configuration(app_usbd_class_inst_t const * const p_inst,
                                                   app_usbd_setup_evt_t const * const  p_setup_ev)
 {
-    if (!((app_usbd_state == APP_USBD_STATE_Configured) ||
-          (app_usbd_state == APP_USBD_STATE_Addressed)))
+    if (!((m_app_usbd_state == APP_USBD_STATE_Configured) ||
+          (m_app_usbd_state == APP_USBD_STATE_Addressed)))
     {
         return NRF_ERROR_INVALID_STATE;
     }
 
-    app_usbd_state_t new_state = app_usbd_state;
+    app_usbd_state_t new_state = m_app_usbd_state;
 
     if (p_setup_ev->setup.wValue.lb == 0)
     {
@@ -661,9 +641,9 @@ static ret_code_t setup_req_std_set_configuration(app_usbd_class_inst_t const * 
 
 
 
-    if (app_usbd_state != new_state)
+    if (m_app_usbd_state != new_state)
     {
-        app_usbd_state = new_state;
+        m_app_usbd_state = new_state;
         /** @todo RK A way to notify class that state was changed */
     }
 
@@ -685,14 +665,14 @@ static ret_code_t setup_req_std_out(app_usbd_class_inst_t const * const p_inst,
     {
         case APP_USBD_SETUP_STDREQ_SET_ADDRESS:
         {
-            if ((app_usbd_state != APP_USBD_STATE_Default)   &&
-                (app_usbd_state != APP_USBD_STATE_Addressed) &&
-                (app_usbd_state != APP_USBD_STATE_Configured))
+            if ((m_app_usbd_state != APP_USBD_STATE_Default)   &&
+                (m_app_usbd_state != APP_USBD_STATE_Addressed) &&
+                (m_app_usbd_state != APP_USBD_STATE_Configured))
             {
                 return NRF_ERROR_INVALID_STATE;
             }
 
-            app_usbd_state = APP_USBD_STATE_Addressed;
+            m_app_usbd_state = APP_USBD_STATE_Addressed;
             return NRF_SUCCESS;
         }
         case APP_USBD_SETUP_STDREQ_SET_FEATURE:
@@ -775,8 +755,7 @@ static ret_code_t setup_device_event_handler(app_usbd_class_inst_t const * const
  *
  * Auxiliary function for SETUP command processing
  */
-static inline ret_code_t app_usbd_core_setup_req_handler(app_usbd_class_inst_t const * const p_inst,
-                                                         nrf_drv_usbd_evt_t const * const p_event)
+static inline ret_code_t app_usbd_core_setup_req_handler(app_usbd_class_inst_t const * const p_inst)
 {
     app_usbd_setup_evt_t setup_ev;
     ret_code_t ret = NRF_ERROR_INTERNAL;         /* Final result of request processing function */
@@ -877,17 +856,17 @@ static ret_code_t app_usbd_core_event_handler(app_usbd_class_inst_t const * cons
                                               app_usbd_complex_evt_t const * const p_event)
 {
     ret_code_t ret = NRF_ERROR_NOT_SUPPORTED;
-    switch(p_event->type)
+    switch (p_event->type)
     {
         case APP_USBD_EVT_DRV_RESET:
         {
-            app_usbd_state = APP_USBD_STATE_Default;
+            m_app_usbd_state = APP_USBD_STATE_Default;
             break;
         }
         case APP_USBD_EVT_DRV_SUSPEND:
         {
-            ASSERT(app_usbd_state >= APP_USBD_STATE_Unattached);
-            app_usbd_state |= APP_USBD_STATE_SuspendedMask;
+            ASSERT(m_app_usbd_state >= APP_USBD_STATE_Unattached);
+            m_app_usbd_state |= (app_usbd_state_t)(APP_USBD_STATE_SUSPENDED_MASK);
             ret = NRF_SUCCESS;
             break;
         }
@@ -898,50 +877,50 @@ static ret_code_t app_usbd_core_event_handler(app_usbd_class_inst_t const * cons
                 nrf_usbd_task_trigger(NRF_USBD_TASK_NODRIVEDPDM);
             }
 
-            ASSERT(APP_USB_STATE_BASE(app_usbd_state) >= APP_USBD_STATE_Unattached);
-            app_usbd_state &= (app_usbd_state_t)(~APP_USBD_STATE_SuspendedMask);
+            ASSERT(APP_USB_STATE_BASE(m_app_usbd_state) >= APP_USBD_STATE_Unattached);
+            m_app_usbd_state &= (app_usbd_state_t)(~APP_USBD_STATE_SUSPENDED_MASK);
             ret = NRF_SUCCESS;
             break;
         }
         case APP_USBD_EVT_DRV_SETUP:
         {
-            ret = app_usbd_core_setup_req_handler(p_inst, &(p_event->drv_evt));
+            ret = app_usbd_core_setup_req_handler(p_inst);
             break;
         }
         case APP_USBD_EVT_INST_APPEND:
         {
-            ASSERT(app_usbd_state == APP_USBD_STATE_Disabled);
-            app_usbd_state = APP_USBD_STATE_Unattached;
+            ASSERT(m_app_usbd_state == APP_USBD_STATE_Disabled);
+            m_app_usbd_state = APP_USBD_STATE_Unattached;
             ret = NRF_SUCCESS;
             break;
         }
         case APP_USBD_EVT_INST_REMOVE:
         {
-            ASSERT(app_usbd_state == APP_USBD_STATE_Unattached);
-            app_usbd_state = APP_USBD_STATE_Disabled;
+            ASSERT(m_app_usbd_state == APP_USBD_STATE_Unattached);
+            m_app_usbd_state = APP_USBD_STATE_Disabled;
             ret = NRF_SUCCESS;
             break;
         }
-        case APP_USBD_EVT_START:
+        case APP_USBD_EVT_STARTED:
         {
-            app_usbd_state = APP_USBD_STATE_Powered;
+            m_app_usbd_state = APP_USBD_STATE_Powered;
             if (usbd_core_power_is_detected())
             {
-                app_usbd_state = APP_USBD_STATE_Default;
+                m_app_usbd_state = APP_USBD_STATE_Default;
             }
             ret = NRF_SUCCESS;
             break;
         }
-        case APP_USBD_EVT_STOP:
+        case APP_USBD_EVT_STOPPED:
         {
-            ASSERT(APP_USB_STATE_BASE(app_usbd_state) > APP_USBD_STATE_Powered);
-            if (app_usbd_state & APP_USBD_STATE_SuspendedMask)
+            ASSERT(APP_USB_STATE_BASE(m_app_usbd_state) > APP_USBD_STATE_Powered);
+            if (((uint32_t)m_app_usbd_state) & APP_USBD_STATE_SUSPENDED_MASK)
             {
-                app_usbd_state = APP_USBD_STATE_SuspendedPowered;
+                m_app_usbd_state = APP_USBD_STATE_SuspendedPowered;
             }
             else
             {
-                app_usbd_state = APP_USBD_STATE_Powered;
+                m_app_usbd_state = APP_USBD_STATE_Powered;
             }
             ret = NRF_SUCCESS;
             break;
@@ -954,9 +933,9 @@ static ret_code_t app_usbd_core_event_handler(app_usbd_class_inst_t const * cons
                    (p_event->drv_evt.data.eptransfer.ep == NRF_DRV_USBD_EPIN0));
             ret = usbd_core_ep0_handler_call_and_clear(p_event->drv_evt.data.eptransfer.status);
             /* Processing result */
-            if(ret == NRF_SUCCESS)
+            if (ret == NRF_SUCCESS)
             {
-                if(usb_core_ep0_handler_check())
+                if (usb_core_ep0_handler_check())
                 {
                     /* Request processed successfully and requires SETUP data */
                     nrf_drv_usbd_setup_data_clear();
@@ -966,9 +945,12 @@ static ret_code_t app_usbd_core_event_handler(app_usbd_class_inst_t const * cons
                     /* Request processed successfully */
                     /* Clear setup only for a write transfer - for a read transfer,
                      * it is cleared inside the driver */
-                    if(p_event->drv_evt.data.eptransfer.ep == NRF_DRV_USBD_EPOUT0)
+                    if (p_event->drv_evt.data.eptransfer.ep == NRF_DRV_USBD_EPOUT0)
                     {
-                        nrf_drv_usbd_setup_clear();
+                        if (!nrf_drv_usbd_errata_154())
+                        {
+                            nrf_drv_usbd_setup_clear();
+                        }
                     }
                 }
             }
@@ -1032,7 +1014,7 @@ ret_code_t app_usbd_core_ep_transfer(
     nrf_drv_usbd_ep_t                                  ep,
     nrf_drv_usbd_transfer_t              const * const p_transfer)
 {
-    if (APP_USB_STATE_BASE(app_usbd_state) != APP_USBD_STATE_Configured)
+    if (APP_USB_STATE_BASE(m_app_usbd_state) != APP_USBD_STATE_Configured)
     {
         return NRF_ERROR_INVALID_STATE;
     }
@@ -1045,9 +1027,9 @@ ret_code_t app_usbd_core_setup_data_transfer(
 {
     ASSERT(0 == NRF_USBD_EP_NR_GET(ep));
 
-    if (!((APP_USB_STATE_BASE(app_usbd_state) == APP_USBD_STATE_Configured) ||
-          (APP_USB_STATE_BASE(app_usbd_state) == APP_USBD_STATE_Addressed ) ||
-          (APP_USB_STATE_BASE(app_usbd_state) == APP_USBD_STATE_Default   ) ))
+    if (!((APP_USB_STATE_BASE(m_app_usbd_state) == APP_USBD_STATE_Configured) ||
+          (APP_USB_STATE_BASE(m_app_usbd_state) == APP_USBD_STATE_Addressed ) ||
+          (APP_USB_STATE_BASE(m_app_usbd_state) == APP_USBD_STATE_Default   ) ))
     {
         return NRF_ERROR_INVALID_STATE;
     }
@@ -1058,7 +1040,7 @@ ret_code_t app_usbd_ep_handled_transfer(
     nrf_drv_usbd_ep_t                         ep,
     nrf_drv_usbd_handler_desc_t const * const p_handler)
 {
-    if (APP_USB_STATE_BASE(app_usbd_state) != APP_USBD_STATE_Configured)
+    if (APP_USB_STATE_BASE(m_app_usbd_state) != APP_USBD_STATE_Configured)
     {
         return NRF_ERROR_INVALID_STATE;
     }
@@ -1071,9 +1053,9 @@ ret_code_t app_usbd_setup_data_handled_transfer(
 {
     ASSERT(0 == NRF_USBD_EP_NR_GET(ep));
 
-    if (!((APP_USB_STATE_BASE(app_usbd_state) == APP_USBD_STATE_Configured) ||
-          (APP_USB_STATE_BASE(app_usbd_state) == APP_USBD_STATE_Addressed ) ||
-          (APP_USB_STATE_BASE(app_usbd_state) == APP_USBD_STATE_Default   ) ))
+    if (!((APP_USB_STATE_BASE(m_app_usbd_state) == APP_USBD_STATE_Configured) ||
+          (APP_USB_STATE_BASE(m_app_usbd_state) == APP_USBD_STATE_Addressed ) ||
+          (APP_USB_STATE_BASE(m_app_usbd_state) == APP_USBD_STATE_Default   ) ))
     {
         return NRF_ERROR_INVALID_STATE;
     }
@@ -1090,48 +1072,15 @@ void * app_usbd_core_setup_transfer_buff_get(size_t * p_size)
 
 app_usbd_state_t app_usbd_core_state_get(void)
 {
-    return app_usbd_state;
+    return m_app_usbd_state;
 }
 
-void app_usbd_core_class_rwu_register(app_usbd_class_inst_t const * const p_inst)
+
+bool app_usbd_core_feature_state_get(app_usbd_setup_stdfeature_t feature)
 {
-    ASSERT(p_inst != NULL);
-    ++m_rwu_counter;
-    /*Overflow check*/
-    ASSERT(m_rwu_counter != 0);
+    return IS_SET(m_device_features_state, feature) ? true : false;
 }
 
-void app_usbd_core_class_rwu_unregister(app_usbd_class_inst_t const * const p_inst)
-{
-    ASSERT(p_inst != NULL);
-    /* Usage validation. If counter is 0 unregister is not possible.*/
-    ASSERT(m_rwu_counter != 0);
-    --m_rwu_counter;
-}
-
-void app_usbd_core_class_rwu_pend(void)
-{
-    if (m_rwu_counter == 0)
-    {
-        /* No class registered on remote wake-up */
-        return;
-    }
-
-    if (IS_SET(m_device_features_state, APP_USBD_SETUP_STDFEATURE_DEVICE_REMOTE_WAKEUP) == 0)
-    {
-        /* Feature remote wake-up hasn't been set by host*/
-        return;
-    }
-
-    if (nrf_atomic_flag_set_fetch(&m_rwu_pending) != 0)
-    {
-        /* Remote wake-up pending */
-        return;
-    }
-
-    nrf_usbd_dpdmvalue_set(NRF_USBD_DPDMVALUE_RESUME);
-    nrf_usbd_task_trigger(NRF_USBD_TASK_DRIVEDPDM);
-}
 
 /** @} */
 #endif // APP_USBD_ENABLED

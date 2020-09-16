@@ -48,23 +48,14 @@
 #ifndef BLE_M_H__
 #define BLE_M_H__
 
+#include <stdint.h>
 #include <stdbool.h>
-#include "sdk_errors.h"
-#include "ble.h"
-#include "softdevice_handler.h"
-#include "ble_gap.h"
 
-/**@brief Variable length data encapsulation in terms of length and pointer to data.
- */
-typedef struct
-{
-    uint8_t * p_data;   /**< Pointer to data. */
-    uint16_t  data_len; /**< Length of data. */
-} data_t;
 
 /**@brief Function for terminating connection with a BLE peripheral device.
  */
 void ble_disconnect(void);
+
 
 /**@brief Function for initializing the BLE stack.
  *
@@ -72,9 +63,11 @@ void ble_disconnect(void);
  */
 void ble_stack_init(void);
 
+
 /**@brief Function for starting the scanning.
  */
 void scan_start(void);
+
 
 /**@brief Function for checking the connection state.
  *
@@ -83,10 +76,12 @@ void scan_start(void);
  */
 bool ble_is_connected(void);
 
+
 /**@brief Function for obtaining connection handle.
  *
  * @return Returns connection handle.
  */
 uint16_t ble_get_conn_handle(void);
+
 
 #endif // BLE_M_H__

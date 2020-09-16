@@ -52,19 +52,13 @@
 #include <stdlib.h>
 #include "app_error.h"
 #include "boards.h"
-#include "nrf_sdm.h"
 #include "ant_interface.h"
-#include "nordic_common.h"
 #include "ant_parameters.h"
 #include "ant_multi_channels_encrypted_tx.h"
 #include "ant_channel_config.h"
 #include "ant_encrypt_config.h"
 #include "sdk_config.h"
-
-#define ANT_EXT_ASSIGN     0x00                    /**< ANT Ext Assign. */
-
-/** ANT channel network. */
-#define ANT_CHANNEL_DEFAULT_NETWORK 0x00
+#include "nrf_sdh_ant.h"
 
 /** Size of the broadcast data buffer. */
 #define BROADCAST_DATA_BUFFER_SIZE  ANT_STANDARD_DATA_PAYLOAD_SIZE
@@ -73,8 +67,11 @@
 #define CRYPTO_KEY                 {0x03, 0x01, 0x04, 0x01, 0x05, 0x09, 0x02, 0x06, 0x05, 0x03, \
                                     0x05, 0x08, 0x09, 0x07, 0x09, 0x03}
 
-/** Number of channels to open <1,ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED>. */
-#define NUMBER_OF_CHANNELS_TO_OPEN ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED
+/** Number of channels to open <1,NRF_SDH_ANT_TOTAL_CHANNELS_ALLOCATED>. */
+#define NUMBER_OF_CHANNELS_TO_OPEN NRF_SDH_ANT_TOTAL_CHANNELS_ALLOCATED
+
+/** Application's ANT observer priority. You shouldn't need to modify this value. */
+#define APP_ANT_OBSERVER_PRIO      1
 
 // Private variables.
 /** Counters to increment the ANT broadcast data payload. */
@@ -130,12 +127,12 @@ void ant_multi_channels_encrypted_channel_tx_broadcast_setup(void)
     ant_channel_config_t m_channel_config =
     {
         .channel_type      = CHANNEL_TYPE_MASTER,
-        .ext_assign        = ANT_EXT_ASSIGN,
+        .ext_assign        = 0x00,
         .rf_freq           = RF_FREQ,
         .transmission_type = CHAN_ID_TRANS_TYPE,
         .device_type       = CHAN_ID_DEV_TYPE,
         .channel_period    = CHAN_PERIOD,
-        .network_number    = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number    = ANT_NETWORK_NUM,
         .p_crypto_settings = &channel_crypto_settings
         // .device_number and .channel_number structure members are set below separately.
     };
@@ -162,8 +159,12 @@ void ant_multi_channels_encrypted_channel_tx_broadcast_setup(void)
     low_nibble_on_leds_display(m_num_open_channels);
 }
 
-
-void ant_multi_channels_encrypted_event_handler(ant_evt_t * p_ant_evt)
+/**@brief Function for handling a ANT stack event.
+ *
+ * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
+ */
+static void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
     uint32_t err_code;
 
@@ -190,4 +191,4 @@ void ant_multi_channels_encrypted_event_handler(ant_evt_t * p_ant_evt)
     }
 }
 
-
+NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_evt_handler, NULL);

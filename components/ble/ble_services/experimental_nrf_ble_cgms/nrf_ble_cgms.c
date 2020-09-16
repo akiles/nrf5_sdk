@@ -322,9 +322,9 @@ ret_code_t nrf_ble_cgms_init(nrf_ble_cgms_t * p_cgms, const nrf_ble_cgms_init_t 
  * @param[in]   p_cgms      Glucose Service structure.
  * @param[in]   p_ble_evt  Event received from the BLE stack.
  */
-static void on_write(nrf_ble_cgms_t * p_cgms, ble_evt_t * p_ble_evt)
+static void on_write(nrf_ble_cgms_t * p_cgms, ble_evt_t const * p_ble_evt)
 {
-    ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
+    ble_gatts_evt_write_t const * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
 
     cgms_meas_on_write(p_cgms, p_evt_write);
 }
@@ -337,7 +337,7 @@ static void on_write(nrf_ble_cgms_t * p_cgms, ble_evt_t * p_ble_evt)
  * @param[in]   p_cgms      Glucose Service structure.
  * @param[in]   p_ble_evt  Event received from the BLE stack.
  */
-static void on_tx_complete(nrf_ble_cgms_t * p_cgms, ble_evt_t * p_ble_evt)
+static void on_tx_complete(nrf_ble_cgms_t * p_cgms, ble_evt_t const * p_ble_evt)
 {
     p_cgms->racp_data.racp_proc_records_reported_since_txcomplete = 0;
 
@@ -353,9 +353,9 @@ static void on_tx_complete(nrf_ble_cgms_t * p_cgms, ble_evt_t * p_ble_evt)
  * @param[in]   p_cgms      Glucose Service structure.
  * @param[in]   p_ble_evt  Event received from the BLE stack.
  */
-static void on_hvc(nrf_ble_cgms_t * p_cgms, ble_evt_t * p_ble_evt)
+static void on_hvc(nrf_ble_cgms_t * p_cgms, ble_evt_t const * p_ble_evt)
 {
-    ble_gatts_evt_hvc_t * p_hvc = &p_ble_evt->evt.gatts_evt.params.hvc;
+    ble_gatts_evt_hvc_t const * p_hvc = &p_ble_evt->evt.gatts_evt.params.hvc;
 
     if (p_hvc->handle == p_cgms->char_handles.racp.value_handle)
     {
@@ -392,9 +392,10 @@ static void on_hvc(nrf_ble_cgms_t * p_cgms, ble_evt_t * p_ble_evt)
 }
 
 
-static void on_rw_authorize_request(nrf_ble_cgms_t * p_cgms, ble_gatts_evt_t * p_gatts_evt)
+static void on_rw_authorize_request(nrf_ble_cgms_t * p_cgms, ble_gatts_evt_t const * p_gatts_evt)
 {
-    ble_gatts_evt_rw_authorize_request_t * p_auth_req = &p_gatts_evt->params.authorize_request;
+    ble_gatts_evt_rw_authorize_request_t const * p_auth_req =
+        &p_gatts_evt->params.authorize_request;
 
     cgms_racp_on_rw_auth_req(p_cgms, p_auth_req);
     cgms_socp_on_rw_auth_req(p_cgms, p_auth_req);
@@ -402,8 +403,9 @@ static void on_rw_authorize_request(nrf_ble_cgms_t * p_cgms, ble_gatts_evt_t * p
 }
 
 
-void nrf_ble_cgms_on_ble_evt(nrf_ble_cgms_t * p_cgms, ble_evt_t * p_ble_evt)
+void nrf_ble_cgms_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
+    nrf_ble_cgms_t * p_cgms = (nrf_ble_cgms_t *)p_context;
 
     switch (p_ble_evt->header.evt_id)
     {

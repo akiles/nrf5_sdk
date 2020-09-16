@@ -97,11 +97,11 @@ ret_code_t es_gatts_send_op_not_permitted(nrf_ble_escs_t * p_escs, bool read)
 
 
 
-void es_gatts_handle_write(nrf_ble_escs_t * p_escs,
-                                uint16_t    uuid,
-                                uint16_t    val_handle,
-                                uint8_t   * p_data,
-                                uint16_t    length)
+void es_gatts_handle_write(nrf_ble_escs_t     * p_escs,
+                                uint16_t        uuid,
+                                uint16_t        val_handle,
+                                uint8_t const * p_data,
+                                uint16_t        length)
 {
     ret_code_t err_code;
 

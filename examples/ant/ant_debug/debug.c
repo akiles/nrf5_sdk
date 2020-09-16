@@ -56,17 +56,15 @@
 #include "ant_parameters.h"
 #include "ant_interface.h"
 #include "app_error.h"
-#include "nrf_soc.h"
 #include "ant_channel_config.h"
-
-// Channel parameters
-#define ANT_CHANNEL_DEFAULT_NETWORK           ((uint8_t) 0)                         /**< Network number. */
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 
 // This index will not be displayed in ObservANT
 #define ANT_DEBUG_FIELD_INVALID               ((uint8_t) 0xFF)                      /**< Invalid field. */
 
 // Indexes within a message
-#define ANT_PAGE_INDEX                        (uint8_t)  0)                         /**< Page index. */
+#define ANT_PAGE_INDEX                        ((uint8_t) 0)                         /**< Page index. */
 #define ANT_FAST_DEBUG_BYTE_INDEX             ((uint8_t) 1)                         /**< Fast debug byte index. */
 
 // ANT Pages
@@ -176,7 +174,7 @@ static void ad_debug_page_get(uint8_t * p_data, uint8_t * p_current_index)
 static void ad_update_tx(void)
 {
     ad_debug_page_get(m_tx_buffer, &m_current_index_debug_channel);
-    UNUSED_VARIABLE(sd_ant_broadcast_message_tx(DEBUG_CHANNEL,
+    UNUSED_VARIABLE(sd_ant_broadcast_message_tx(DEBUG_CHANNEL_NUMBER,
                                                 ANT_STANDARD_DATA_PAYLOAD_SIZE,
                                                 m_tx_buffer));
 }
@@ -197,36 +195,34 @@ static void ad_update_tx(void)
  */
 static void ad_decode_debug_command(ant_evt_t * p_ant_evt)
 {
-    ANT_MESSAGE * p_ant_message = (ANT_MESSAGE*) p_ant_evt->msg.evt_buffer;
-
-    switch (p_ant_message->ANT_MESSAGE_aucPayload[1])
+    switch (p_ant_evt->message.ANT_MESSAGE_aucPayload[1])
     {
         case ANT_DEBUG_FILTER_COMMAND:
         {
-            if (p_ant_message->ANT_MESSAGE_aucPayload[2] == ANT_DEBUG_SUB_COMMAND_FILTER_ADD) // Set Filter
+            if (p_ant_evt->message.ANT_MESSAGE_aucPayload[2] == ANT_DEBUG_SUB_COMMAND_FILTER_ADD) // Set Filter
             {
                 m_selective_debug = true;
 
                 for (uint8_t index = 3; index < 8; index++) // For each arguement in the debug event (4)
                 {
-                    if (p_ant_message->ANT_MESSAGE_aucPayload[index] != ANT_DEBUG_FIELD_INVALID)
+                    if (p_ant_evt->message.ANT_MESSAGE_aucPayload[index] != ANT_DEBUG_FIELD_INVALID)
                     {
-                        uint8_t key = m_hash_lookup[p_ant_message->ANT_MESSAGE_aucPayload[index]];
+                        uint8_t key = m_hash_lookup[p_ant_evt->message.ANT_MESSAGE_aucPayload[index]];
 
                         if (key == ANT_DEBUG_FIELD_INVALID)
                         {
                             // If key doesn't exist yet then add it to the buffer with a max value.
-                            ad_debug_field_set(p_ant_message->ANT_MESSAGE_aucPayload[index],
+                            ad_debug_field_set(p_ant_evt->message.ANT_MESSAGE_aucPayload[index],
                                                0xFFFF);
 
-                            key = m_hash_lookup[p_ant_message->ANT_MESSAGE_aucPayload[index]];
+                            key = m_hash_lookup[p_ant_evt->message.ANT_MESSAGE_aucPayload[index]];
                         }
 
                         m_debug_queue[key].output = true;
                     }
                 }
             }
-            else if (p_ant_message->ANT_MESSAGE_aucPayload[2]
+            else if (p_ant_evt->message.ANT_MESSAGE_aucPayload[2]
                      == ANT_DEBUG_SUB_COMMAND_FILTER_CLEAR)   // Clear filter
             {
                 m_selective_debug = false;
@@ -267,21 +263,21 @@ void ad_init(void)
 
     ant_channel_config_t channel_config =
     {
-        .channel_number    = DEBUG_CHANNEL,
+        .channel_number    = DEBUG_CHANNEL_NUMBER,
         .channel_type      = CHANNEL_TYPE_MASTER,
-        .ext_assign        = 0,
+        .ext_assign        = 0x00,
         .rf_freq           = DEBUG_RF_FREQ,
         .transmission_type = DEBUG_CHAN_ID_TRANS_TYPE,
         .device_type       = DEBUG_CHAN_ID_DEV_TYPE,
         .device_number     = (uint16_t) (NRF_FICR->DEVICEID[0]),
         .channel_period    = DEBUG_CHAN_PERIOD,
-        .network_number    = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number    = ANT_NETWORK_NUM,
     };
 
     err_code = ant_channel_init(&channel_config);
     APP_ERROR_CHECK(err_code);
 
-    err_code = sd_ant_channel_open(DEBUG_CHANNEL);
+    err_code = sd_ant_channel_open(DEBUG_CHANNEL_NUMBER);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -356,14 +352,26 @@ void ad_error_page_force(uint8_t error_code, uint16_t error_line, const char * f
     m_tx_buffer[6] = (uint8_t)(error_line >> 0);
     m_tx_buffer[7] = (uint8_t)(error_line >> 8);
 
-    UNUSED_VARIABLE(sd_ant_broadcast_message_tx(DEBUG_CHANNEL,
+    UNUSED_VARIABLE(sd_ant_broadcast_message_tx(DEBUG_CHANNEL_NUMBER,
                                                 ANT_STANDARD_DATA_PAYLOAD_SIZE,
                                                 m_tx_buffer));
 }
 
-
-void ad_ant_event_process(ant_evt_t * p_ant_evt)
+/**@brief Function for handling a ANT stack event.
+ *
+ * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
+ */
+static void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
+    if (p_ant_evt->channel != DEBUG_CHANNEL_NUMBER)
+    {
+        return;
+    }
+    // Transmit GPIO register values on debug channel
+    ad_debug_field_set(ANT_DEBUG_FIELD_GPIO_REGISTER_LOW, (uint16_t)(NRF_GPIO->IN));
+    ad_debug_field_set(ANT_DEBUG_FIELD_GPIO_REGISTER_HIGH, (uint16_t)(NRF_GPIO->IN >> 16));
+
     switch (p_ant_evt->event)
     {
         case EVENT_CHANNEL_COLLISION:   // Intentional fall through
@@ -373,7 +381,7 @@ void ad_ant_event_process(ant_evt_t * p_ant_evt)
             break;
 
         case EVENT_RX:
-            switch (p_ant_evt->msg.evt_buffer[3])
+            switch (p_ant_evt->message.aucMessage[3])
             {
                 case ANT_DEBUG_PAGE_MESSAGE: // Filter message
                     ad_decode_debug_command(p_ant_evt);
@@ -382,7 +390,7 @@ void ad_ant_event_process(ant_evt_t * p_ant_evt)
                 default: // Custom debug command
                     if (m_custom_command_callback != NULL) // Check if callback has been registered
                     {
-                        m_custom_command_callback(&p_ant_evt->msg.evt_buffer[3]);
+                        m_custom_command_callback(&p_ant_evt->message.aucMessage[3]);
                     }
                     break;
             }
@@ -393,6 +401,8 @@ void ad_ant_event_process(ant_evt_t * p_ant_evt)
             break;
     }
 }
+
+NRF_SDH_ANT_OBSERVER(m_ant_observer, DEBUG_ANT_OBSERVER_PRIO, ant_evt_handler, NULL);
 
 
 #endif // DEBUG_CHANNEL_INCLUDED

@@ -66,9 +66,10 @@
 #include "nfc_t4t_hl_detection_procedures.h"
 #include "nfc_ndef_msg_parser.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
+
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define SEL_RES_CASCADE_BIT_NUM            3                                              /// Number of Cascade bit within SEL_RES byte.
 #define SEL_RES_TAG_PLATFORM_MASK          0x60                                           /// Mask of Tag Platform bit group within SEL_RES byte.
@@ -113,6 +114,7 @@ void utils_setup(void)
     bsp_board_leds_init();
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 }
 
 
@@ -133,7 +135,7 @@ void ndef_data_analyze(uint8_t * p_ndef_msg_buff, uint32_t nfc_data_len)
                                &nfc_data_len);
     if (err_code != NRF_SUCCESS)
     {
-        NRF_LOG_INFO("Error during parsing a NDEF message.\r\n");
+        NRF_LOG_INFO("Error during parsing a NDEF message.");
     }
 
     ndef_msg_printout((nfc_ndef_msg_desc_t *) desc_buf);
@@ -163,7 +165,7 @@ ret_code_t t2t_data_read(nfc_a_tag_info * p_tag_info, uint8_t * buffer, uint32_t
     err_code = adafruit_pn532_tag2_read(block_num, buffer);
     if (err_code)
     {
-        NRF_LOG_INFO("Failed to read blocks: %d-%d\r\n", block_num,
+        NRF_LOG_INFO("Failed to read blocks: %d-%d", block_num,
                      block_num + T2T_END_PAGE_OFFSET);
         return NRF_ERROR_INTERNAL;
     }
@@ -186,7 +188,7 @@ ret_code_t t2t_data_read(nfc_a_tag_info * p_tag_info, uint8_t * buffer, uint32_t
         err_code = adafruit_pn532_tag2_read(block_num, buffer + offset_for_block);
         if (err_code)
         {
-            NRF_LOG_INFO("Failed to read blocks: %d-%d\r\n",
+            NRF_LOG_INFO("Failed to read blocks: %d-%d",
                          block_num,
                          block_num + T2T_END_PAGE_OFFSET);
             return NRF_ERROR_INTERNAL;
@@ -213,11 +215,11 @@ void t2t_data_analyze(uint8_t * buffer)
     err_code = type_2_tag_parse(test_type_2_tag, buffer);
     if (err_code == NRF_ERROR_NO_MEM)
     {
-        NRF_LOG_INFO("Not enough memory to read whole tag. Printing what've been read.\r\n\r\n");
+        NRF_LOG_INFO("Not enough memory to read whole tag. Printing what've been read.");
     }
     else if (err_code != NRF_SUCCESS)
     {
-        NRF_LOG_INFO("Error during parsing a tag. Printing what could've been read.\r\n\r\n");
+        NRF_LOG_INFO("Error during parsing a tag. Printing what could've been read.");
     }
 
     type_2_tag_printout(test_type_2_tag);
@@ -269,14 +271,14 @@ ret_code_t t4t_data_read_and_analyze(nfc_a_tag_info * p_tag_info)
     static uint8_t ndef_files_buffs[MAX_TLV_BLOCKS][TAG_TYPE_4_NDEF_FILE_SIZE];
 
     err_code = nfc_t4t_ndef_tag_app_select();
-    T4T_ERROR_HANDLE(err_code, "Error (0x%X) during NDEF Tag Application Select Procedure.\r\n");
+    T4T_ERROR_HANDLE(err_code, "Error (0x%X) during NDEF Tag Application Select Procedure.");
 
     err_code = nfc_t4t_cc_select();
-    T4T_ERROR_HANDLE(err_code, "Error (0x%X) during CC Select Procedure.\r\n");
+    T4T_ERROR_HANDLE(err_code, "Error (0x%X) during CC Select Procedure.");
 
     nfc_t4t_capability_container_t * cc_file = &NFC_T4T_CC_DESC(cc_file);
     err_code = nfc_t4t_cc_read(cc_file);
-    T4T_ERROR_HANDLE(err_code, "Error (0x%X) during CC Read Procedure.\r\n");
+    T4T_ERROR_HANDLE(err_code, "Error (0x%X) during CC Read Procedure.");
 
     nfc_t4t_tlv_block_t * p_tlv_block = cc_file->p_tlv_block_array;
     uint32_t              i;
@@ -287,10 +289,10 @@ ret_code_t t4t_data_read_and_analyze(nfc_a_tag_info * p_tag_info)
             (p_tlv_block->value.read_access == CONTROL_FILE_READ_ACCESS_GRANTED))
         {
             err_code = nfc_t4t_file_select(p_tlv_block->value.file_id);
-            T4T_ERROR_HANDLE(err_code, "Error (0x%X) during NDEF Select Procedure.\r\n");
+            T4T_ERROR_HANDLE(err_code, "Error (0x%X) during NDEF Select Procedure.");
 
             err_code = nfc_t4t_ndef_read(cc_file, ndef_files_buffs[i], TAG_TYPE_4_NDEF_FILE_SIZE);
-            T4T_ERROR_HANDLE(err_code, "Error (0x%X) during NDEF Read Procedure.\r\n");
+            T4T_ERROR_HANDLE(err_code, "Error (0x%X) during NDEF Read Procedure.");
         }
 
         p_tlv_block++;
@@ -364,11 +366,11 @@ ret_code_t tag_detect_and_read(void)
     switch (tag_type)
     {
         case NFC_T2T:
-            NRF_LOG_INFO("Type 2 Tag Platform detected. \r\n");
+            NRF_LOG_INFO("Type 2 Tag Platform detected. ");
             return t2t_data_read_and_analyze(&tag_info);
 
         case NFC_T4T:
-            NRF_LOG_INFO("Type 4 Tag Platform detected. \r\n");
+            NRF_LOG_INFO("Type 4 Tag Platform detected. ");
             return t4t_data_read_and_analyze(&tag_info);
 
         default:
@@ -410,22 +412,22 @@ int main(void)
                 break;
 
             case NRF_ERROR_NO_MEM:
-                NRF_LOG_INFO("Declared buffer for T2T is to small to store tag data.\r\n");
+                NRF_LOG_INFO("Declared buffer for T2T is to small to store tag data.");
                 after_read_delay();
                 break;
 
             case NRF_ERROR_NOT_FOUND:
-                NRF_LOG_INFO("No Tag found.\r\n");
+                NRF_LOG_INFO("No Tag found.");
                 // No delay here as we want to search for another tag immediately.
                 break;
 
             case NRF_ERROR_NOT_SUPPORTED:
-                NRF_LOG_INFO("Tag not supported.\r\n");
+                NRF_LOG_INFO("Tag not supported.");
                 after_read_delay();
                 break;
 
             default:
-                NRF_LOG_INFO("Error during tag read.\r\n");
+                NRF_LOG_INFO("Error during tag read.");
                 err_code = adafruit_pn532_field_off();
                 break;
         }

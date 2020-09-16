@@ -43,7 +43,7 @@
 #include "ant_bsc_page_0.h"
 #include "ant_bsc_utils.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_BCS_PAGE_0"
+#define NRF_LOG_MODULE_NAME ant_bcs_page_0
 #if ANT_BSC_PAGE_0_LOG_ENABLED
 #define NRF_LOG_LEVEL       ANT_BSC_PAGE_0_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  ANT_BSC_PAGE_0_INFO_COLOR
@@ -51,6 +51,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // ANT_BSC_PAGE_0_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 /**@brief BSC page 0 data layout structure. */
 typedef struct
@@ -65,13 +66,13 @@ typedef struct
 /**@brief Function for printing speed or cadence page0 data. */
 static void page0_data_log(ant_bsc_page0_data_t const * p_page_data)
 {
-    NRF_LOG_INFO("Revolution count:          %u\r\n", (unsigned int)p_page_data->rev_count);
+    NRF_LOG_INFO("Revolution count:          %u", (unsigned int)p_page_data->rev_count);
 
-    NRF_LOG_INFO("BSC event time:            %u.%03us\r\n",
+    NRF_LOG_INFO("BSC event time:            %u.%03us",
               (unsigned int)ANT_BSC_EVENT_TIME_SEC(p_page_data->event_time),
               (unsigned int)ANT_BSC_EVENT_TIME_MSEC(p_page_data->event_time));
 
-//    NRF_LOG_INFO("%03us\r\n", (unsigned int)ANT_BSC_EVENT_TIME_MSEC(p_page_data->event_time));
+//    NRF_LOG_INFO("%03us", (unsigned int)ANT_BSC_EVENT_TIME_MSEC(p_page_data->event_time));
 }
 
 void ant_bsc_page_0_encode(uint8_t * p_page_buffer, ant_bsc_page0_data_t const * p_page_data)

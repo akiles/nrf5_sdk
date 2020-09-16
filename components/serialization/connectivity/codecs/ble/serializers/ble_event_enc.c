@@ -139,6 +139,9 @@ uint32_t ble_event_enc(ble_evt_t const * const p_event,
         case BLE_GAP_EVT_PHY_UPDATE:
             ret_val = ble_gap_evt_phy_update_enc(p_event, event_len, p_buf, p_buf_len);
             break;
+        case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
+            ret_val = ble_gap_evt_phy_update_request_enc(p_event, event_len, p_buf, p_buf_len);
+            break;
 #endif
 #if NRF_SD_BLE_API_VERSION >= 4
         case BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST:
@@ -239,6 +242,38 @@ uint32_t ble_event_enc(ble_evt_t const * const p_event,
 #if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION < 4
         case BLE_L2CAP_EVT_RX:
             ret_val = ble_l2cap_evt_rx_enc(p_event, event_len, p_buf, p_buf_len);
+            break;
+#endif
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION >= 5
+        case BLE_L2CAP_EVT_CH_SETUP_REQUEST:
+            ret_val = ble_l2cap_evt_ch_setup_request_enc(p_event, event_len, p_buf, p_buf_len);
+            break;
+        case BLE_L2CAP_EVT_CH_SETUP_REFUSED:
+            ret_val = ble_l2cap_evt_ch_setup_refused_enc(p_event, event_len, p_buf, p_buf_len);
+            break;
+
+        case BLE_L2CAP_EVT_CH_SETUP:
+            ret_val = ble_l2cap_evt_ch_setup_enc(p_event, event_len, p_buf, p_buf_len);
+            break;
+
+        case BLE_L2CAP_EVT_CH_RELEASED:
+            ret_val = ble_l2cap_evt_ch_released_enc(p_event, event_len, p_buf, p_buf_len);
+            break;
+
+        case BLE_L2CAP_EVT_CH_SDU_BUF_RELEASED:
+            ret_val = ble_l2cap_evt_ch_sdu_buf_released_enc(p_event, event_len, p_buf, p_buf_len);
+            break;
+
+        case BLE_L2CAP_EVT_CH_CREDIT:
+            ret_val = ble_l2cap_evt_ch_credit_enc(p_event, event_len, p_buf, p_buf_len);
+            break;
+
+        case BLE_L2CAP_EVT_CH_RX:
+            ret_val = ble_l2cap_evt_ch_rx_enc(p_event, event_len, p_buf, p_buf_len);
+            break;
+
+        case BLE_L2CAP_EVT_CH_TX:
+            ret_val = ble_l2cap_evt_ch_tx_enc(p_event, event_len, p_buf, p_buf_len);
             break;
 #endif
         case BLE_GAP_EVT_ADV_REPORT:

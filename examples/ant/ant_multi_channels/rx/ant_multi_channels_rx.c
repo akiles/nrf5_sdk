@@ -57,15 +57,15 @@
 #include "ant_channel_config.h"
 #include "ant_search_config.h"
 #include "ant_multi_channels_rx.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 
 
-#define ANT_EXT_ASSIGN                 0x00                               /**< ANT Ext Assign. */
-#define ANT_CHANNEL_DEFAULT_NETWORK    0x00                               /**< ANT Channel Network. */
+#define APP_ANT_OBSERVER_PRIO   1   /**< Application's ANT observer priority. You shouldn't need to modify this value. */
+
 
 // Private variables
-static bool m_tracking_channels[ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED] = { false };     /**< Array to keep track of which channels are currently tracking */
-
-
+static bool m_tracking_channels[NRF_SDH_ANT_TOTAL_CHANNELS_ALLOCATED] = { false };     /**< Array to keep track of which channels are currently tracking */
 
 /**@brief Function to display the bottom nibble of the input byte on the board's LEDs
  *
@@ -106,11 +106,9 @@ static void goto_search_handler(uint8_t channel)
 /**@brief Function for handling ANT RX events
  *
  */
-static void message_received_handler(uint8_t ant_channel, uint8_t const * const p_event_message_buffer)
+static void message_received_handler(uint8_t ant_channel, ant_evt_t * p_ant_evt)
 {
-    ANT_MESSAGE * p_ant_message = (ANT_MESSAGE*)p_event_message_buffer;
-
-    switch (p_ant_message->ANT_MESSAGE_ucMesgID)
+    switch (p_ant_evt->message.ANT_MESSAGE_ucMesgID)
     {
         // Broadcast data received
         case MESG_BROADCAST_DATA_ID:
@@ -129,7 +127,7 @@ void ant_scaleable_display_num_tracking_channels()
     uint8_t  num_tracking_channels = 0;
     uint32_t i;
 
-    for (i = 0; i < ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED; i++)
+    for (i = 0; i < NRF_SDH_ANT_TOTAL_CHANNELS_ALLOCATED; i++)
     {
         if (m_tracking_channels[i])
         {
@@ -149,19 +147,19 @@ void ant_scaleable_channel_rx_broadcast_setup(void)
     {
         .channel_number     = i,
         .channel_type       = CHANNEL_TYPE_SLAVE,
-        .ext_assign         = ANT_EXT_ASSIGN,
+        .ext_assign         = 0x00,
         .rf_freq            = RF_FREQ,
         .transmission_type  = CHAN_ID_TRANS_TYPE,
         .device_type        = CHAN_ID_DEV_TYPE,
         .device_number      = i + 1,
         .channel_period     = CHAN_PERIOD,
-        .network_number     = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number     = ANT_NETWORK_NUM,
     };
 
     ant_search_config_t ant_search_config   = DEFAULT_ANT_SEARCH_CONFIG(i);
     ant_search_config.high_priority_timeout = ANT_HIGH_PRIORITY_TIMEOUT_DISABLE;
 
-    for (i = 0; i < ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED; i++)
+    for (i = 0; i < NRF_SDH_ANT_TOTAL_CHANNELS_ALLOCATED; i++)
     {
         // Configure channel
         channel_config.channel_number = i;
@@ -181,8 +179,12 @@ void ant_scaleable_channel_rx_broadcast_setup(void)
     }
 }
 
-
-void ant_scaleable_event_handler(ant_evt_t * p_ant_evt)
+/**@brief Function for handling a ANT stack event.
+ *
+ * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
+ */
+void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
     switch (p_ant_evt->event)
     {
@@ -191,10 +193,12 @@ void ant_scaleable_event_handler(ant_evt_t * p_ant_evt)
             break;
 
         case EVENT_RX:
-            message_received_handler(p_ant_evt->channel, p_ant_evt->msg.evt_buffer);
+            message_received_handler(p_ant_evt->channel, p_ant_evt);
             break;
 
         default:
             break;
     }
 }
+
+NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_evt_handler, NULL);

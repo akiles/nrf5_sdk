@@ -12,8 +12,12 @@ $(OUTPUT_DIRECTORY)/nrf52832_xxaa.out: \
 SRC_FILES += \
   $(SDK_ROOT)/components/libraries/bsp/bsp.c \
   $(SDK_ROOT)/components/libraries/bsp/bsp_nfc.c \
-  $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_serial.c \
-  $(SDK_ROOT)/components/libraries/log/src/nrf_log_frontend.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_backend_rtt.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_backend_serial.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_backend_uart.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_default_backends.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_frontend.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_str_formatter.c \
   $(SDK_ROOT)/components/boards/boards.c \
   $(SDK_ROOT)/components/libraries/button/app_button.c \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
@@ -22,7 +26,11 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/timer/app_timer.c \
   $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
+  $(SDK_ROOT)/components/libraries/balloc/nrf_balloc.c \
+  $(SDK_ROOT)/external/fprintf/nrf_fprintf.c \
+  $(SDK_ROOT)/external/fprintf/nrf_fprintf_format.c \
   $(SDK_ROOT)/components/libraries/gfx/nrf_gfx.c \
+  $(SDK_ROOT)/components/libraries/experimental_memobj/nrf_memobj.c \
   $(SDK_ROOT)/components/libraries/pwr_mgmt/nrf_pwr_mgmt.c \
   $(SDK_ROOT)/components/libraries/queue/nrf_queue.c \
   $(SDK_ROOT)/components/libraries/experimental_section_vars/nrf_section_iter.c \
@@ -49,6 +57,7 @@ SRC_FILES += \
 INC_FOLDERS += \
   $(SDK_ROOT)/components \
   $(SDK_ROOT)/components/libraries/scheduler \
+  $(SDK_ROOT)/components/libraries/experimental_log \
   $(SDK_ROOT)/components/drivers_nrf/spi_master \
   $(SDK_ROOT)/components/libraries/queue \
   $(SDK_ROOT)/components/libraries/pwr_mgmt \
@@ -58,14 +67,15 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/timer \
   $(SDK_ROOT)/components/libraries/util \
   $(SDK_ROOT)/components/drivers_nrf/uart \
+  $(SDK_ROOT)/components/libraries/balloc \
   $(SDK_ROOT)/components/libraries/bsp \
   $(SDK_ROOT)/components/device \
-  $(SDK_ROOT)/components/libraries/log \
   $(SDK_ROOT)/components/libraries/button \
   $(SDK_ROOT)/components/libraries/experimental_section_vars \
   $(SDK_ROOT)/components/libraries/mutex \
   $(PROJ_DIR) \
   $(SDK_ROOT)/components/libraries/gfx \
+  $(SDK_ROOT)/components/libraries/experimental_log/src \
   $(SDK_ROOT)/components/drivers_nrf/gpiote \
   $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
@@ -74,74 +84,70 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/boards \
   $(SDK_ROOT)/components/libraries/spi_mngr \
   $(SDK_ROOT)/components/drivers_nrf/hal \
+  $(SDK_ROOT)/components/libraries/experimental_memobj \
   $(SDK_ROOT)/components/toolchain/gcc \
   $(SDK_ROOT)/components/toolchain \
   $(SDK_ROOT)/components/drivers_nrf/common \
-  $(SDK_ROOT)/components/drivers_nrf/clock \
   $(SDK_ROOT)/external/thedotfactory_fonts \
-  $(SDK_ROOT)/components/libraries/log/src \
+  $(SDK_ROOT)/components/drivers_nrf/clock \
+  $(SDK_ROOT)/external/fprintf \
 
 # Libraries common to all targets
 LIB_FILES += \
 
+# Optimization flags
+OPT = -O3 -g3
+# Uncomment the line below to enable link time optimization
+#OPT += -flto
+
 # C flags common to all targets
+CFLAGS += $(OPT)
 CFLAGS += -DBOARD_PCA10040
 CFLAGS += -DCONFIG_GPIO_AS_PINRESET
 CFLAGS += -DNRF52
 CFLAGS += -DNRF52832_XXAA
-CFLAGS += -DNRF52_PAN_12
-CFLAGS += -DNRF52_PAN_15
-CFLAGS += -DNRF52_PAN_20
-CFLAGS += -DNRF52_PAN_31
-CFLAGS += -DNRF52_PAN_36
-CFLAGS += -DNRF52_PAN_51
-CFLAGS += -DNRF52_PAN_54
-CFLAGS += -DNRF52_PAN_55
-CFLAGS += -DNRF52_PAN_58
-CFLAGS += -DNRF52_PAN_64
 CFLAGS += -DNRF52_PAN_74
 CFLAGS += -DSWI_DISABLE0
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
-CFLAGS +=  -Wall -Werror -O3 -g3
+CFLAGS +=  -Wall -Werror
 CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
-# keep every function in separate section, this allows linker to discard unused ones
+# keep every function in a separate section, this allows linker to discard unused ones
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -fno-builtin --short-enums 
+CFLAGS += -fno-builtin -fshort-enums 
 
 # C++ flags common to all targets
-CXXFLAGS += \
+CXXFLAGS += $(OPT)
 
 # Assembler flags common to all targets
-ASMFLAGS += -x assembler-with-cpp
+ASMFLAGS += -g3
+ASMFLAGS += -mcpu=cortex-m4
+ASMFLAGS += -mthumb -mabi=aapcs
+ASMFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 ASMFLAGS += -DBOARD_PCA10040
 ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
 ASMFLAGS += -DNRF52
 ASMFLAGS += -DNRF52832_XXAA
-ASMFLAGS += -DNRF52_PAN_12
-ASMFLAGS += -DNRF52_PAN_15
-ASMFLAGS += -DNRF52_PAN_20
-ASMFLAGS += -DNRF52_PAN_31
-ASMFLAGS += -DNRF52_PAN_36
-ASMFLAGS += -DNRF52_PAN_51
-ASMFLAGS += -DNRF52_PAN_54
-ASMFLAGS += -DNRF52_PAN_55
-ASMFLAGS += -DNRF52_PAN_58
-ASMFLAGS += -DNRF52_PAN_64
 ASMFLAGS += -DNRF52_PAN_74
 ASMFLAGS += -DSWI_DISABLE0
 
 # Linker flags
+LDFLAGS += $(OPT)
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)
 LDFLAGS += -mcpu=cortex-m4
 LDFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
-# let linker to dump unused sections
+# let linker dump unused sections
 LDFLAGS += -Wl,--gc-sections
 # use newlib in nano version
-LDFLAGS += --specs=nano.specs -lc -lnosys
+LDFLAGS += --specs=nano.specs
 
 
-.PHONY: $(TARGETS) default all clean help flash 
+# Add standard libraries at the very end of the linker input, after all objects
+# that may need symbols provided by these libraries.
+LIB_FILES += -lc -lnosys -lm
+
+
+.PHONY: default help
 
 # Default target - first one defined
 default: nrf52832_xxaa
@@ -157,11 +163,13 @@ include $(TEMPLATE_PATH)/Makefile.common
 
 $(foreach target, $(TARGETS), $(call define_target, $(target)))
 
+.PHONY: flash erase
+
 # Flash the program
 flash: $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex
 	@echo Flashing: $<
-	nrfjprog --program $< -f nrf52 --sectorerase
-	nrfjprog --reset -f nrf52
+	nrfjprog -f nrf52 --program $< --sectorerase
+	nrfjprog -f nrf52 --reset
 
 erase:
-	nrfjprog --eraseall -f nrf52
+	nrfjprog -f nrf52 --eraseall

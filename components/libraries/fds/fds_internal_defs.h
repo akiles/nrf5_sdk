@@ -66,15 +66,18 @@ extern "C" {
 #define FDS_OFFSET_TL           (0) // Offset of TL from the record base address, in 4-byte words.
 #define FDS_OFFSET_IC           (1) // Offset of IC from the record base address, in 4-byte words.
 #define FDS_OFFSET_ID           (2) // Offset of ID from the record base address, in 4-byte words.
-#define FDS_OFFSET_DATA         (3) // Offset of the data (chunks) from the record base address, in 4-byte words.
+#define FDS_OFFSET_DATA         (3) // Offset of the data from the record base address, in 4-byte words.
 
 #define FDS_HEADER_SIZE_TL      (1) // Size of the TL part of the header, in 4-byte words.
 #define FDS_HEADER_SIZE_IC      (1) // Size of the IC part of the header, in 4-byte words.
 #define FDS_HEADER_SIZE_ID      (1) // Size of the record ID in the header, in 4-byte words.
 #define FDS_HEADER_SIZE         (3) // Size of the whole header, in 4-byte words.
 
-#define FDS_OP_EXECUTING        (FS_SUCCESS)
+#define FDS_OP_EXECUTING        (NRF_SUCCESS)
 #define FDS_OP_COMPLETED        (0x1D1D)
+
+#define NRF_FSTORAGE_NVMC       1
+#define NRF_FSTORAGE_SD         2
 
 // The size of a physical page, in 4-byte words.
 #if     defined(NRF51)
@@ -90,7 +93,7 @@ extern "C" {
 #define FDS_PHY_PAGES_IN_VPAGE      (FDS_VIRTUAL_PAGE_SIZE / FDS_PHY_PAGE_SIZE)
 
 // The number of pages available to store data; which is the total minus one (the swap).
-#define FDS_MAX_PAGES               (FDS_VIRTUAL_PAGES - 1)
+#define FDS_DATA_PAGES              (FDS_VIRTUAL_PAGES - 1)
 
  // Just a shorter name for the size, in words, of a virtual page.
 #define FDS_PAGE_SIZE               (FDS_VIRTUAL_PAGE_SIZE)
@@ -111,7 +114,6 @@ typedef enum
     FDS_FLAG_INITIALIZING   = (1 << 0),  // The module is initializing.
     FDS_FLAG_INITIALIZED    = (1 << 1),  // The module is initialized.
     FDS_FLAG_PROCESSING     = (1 << 2),  // The queue is being processed.
-    FDS_FLAG_VERIFY_CRC     = (1 << 3),  // Verify CRC upon writing a record.
 } fds_flags_t;
 
 
@@ -170,7 +172,7 @@ typedef enum
     FDS_OP_WRITE_HEADER_BEGIN,      // Write the record key and length.
     FDS_OP_WRITE_HEADER_FINALIZE,   // Write the file ID and CRC.
     FDS_OP_WRITE_RECORD_ID,         // Write the record ID.
-    FDS_OP_WRITE_CHUNKS,            // Write the record data.
+    FDS_OP_WRITE_DATA,              // Write the record data.
     FDS_OP_WRITE_FIND_RECORD,
     FDS_OP_WRITE_FLAG_DIRTY,        // Flag a record as dirty (as part of an update operation).
     FDS_OP_WRITE_DONE,
@@ -205,12 +207,11 @@ typedef struct
         } init;
         struct
         {
-            fds_header_t     header;
-            fds_write_step_t step;              // The current step the operation is at.
-            uint16_t         page;              // The page the flash space for this command was reserved.
-            uint16_t         chunk_offset;      // Offset used for writing record chunks, in 4-byte words.
-            uint8_t          chunk_count;       // Number of chunks to be written.
-            uint32_t         record_to_delete;  // The record to delete in case this is an update.
+            fds_header_t      header;
+            void const      * p_data;
+            uint16_t          page;             // The page the flash space for this command was reserved.
+            fds_write_step_t  step;             // The current step the operation is at.
+            uint32_t          record_to_delete; // The record to delete in case this is an update.
         } write;
         struct
         {
@@ -237,14 +238,6 @@ typedef struct
     uint32_t rp;                       // The index of the command being executed.
     uint32_t count;                    // Number of elements in the queue.
 } fds_op_queue_t;
-
-
-typedef struct
-{
-    fds_record_chunk_t chunk[FDS_CHUNK_QUEUE_SIZE];
-    uint32_t           rp;
-    uint32_t           count;
-} fds_chunk_queue_t;
 
 
 enum
@@ -313,12 +306,12 @@ typedef enum
 // Holds garbage collection status and related data.
 typedef struct
 {
-    fds_gc_state_t   state;                     // The current GC step.
-    uint16_t         cur_page;                  // The current page being garbage collected.
-    uint32_t const * p_record_src;              // The current record being copied to swap.
-    uint16_t         run_count;                 // Total number of times GC was run.
-    bool             do_gc_page[FDS_MAX_PAGES]; // Controls which pages to garbage collect.
-    bool             resume;                    // Whether or not GC should be resumed.
+    fds_gc_state_t   state;                      // The current GC step.
+    uint16_t         cur_page;                   // The current page being garbage collected.
+    uint32_t const * p_record_src;               // The current record being copied to swap.
+    uint16_t         run_count;                  // Total number of times GC was run.
+    bool             do_gc_page[FDS_DATA_PAGES]; // Controls which pages to garbage collect.
+    bool             resume;                     // Whether or not GC should be resumed.
 } fds_gc_data_t;
 
 

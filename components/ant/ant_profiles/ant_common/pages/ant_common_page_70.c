@@ -43,7 +43,7 @@
 #include <string.h>
 #include "ant_common_page_70.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_COMMON_PAGE_70"
+#define NRF_LOG_MODULE_NAME ant_common_page_70
 #if ANT_COMMON_PAGE_70_LOG_ENABLED
 #define NRF_LOG_LEVEL       ANT_COMMON_PAGE_70_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  ANT_COMMON_PAGE_70_INFO_COLOR
@@ -51,6 +51,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // ANT_COMMON_PAGE_70_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 /**@brief ANT+ common page 70 data layout structure. */
 typedef struct
@@ -68,40 +69,40 @@ typedef struct
  */
 static void page70_data_log(volatile ant_common_page70_data_t const * p_page_data)
 {
-    NRF_LOG_INFO("Page %d request\r\n", p_page_data->page_number);
+    NRF_LOG_INFO("Page %d request", p_page_data->page_number);
 
     switch (p_page_data->transmission_response.specyfic)
     {
         case ANT_PAGE70_RESPONSE_TRANSMIT_UNTIL_SUCCESS:
-            NRF_LOG_INFO("Try to send until ACK\r\n");
+            NRF_LOG_INFO("Try to send until ACK");
             break;
 
         case ANT_PAGE70_RESPONSE_INVALID:
-            NRF_LOG_INFO("Invalid requested transmission response\r\n");
+            NRF_LOG_INFO("Invalid requested transmission response");
             break;
 
         default:
 
             if (p_page_data->transmission_response.items.ack_resposne)
             {
-                NRF_LOG_INFO("Answer with acknowledged messages\r\n");
+                NRF_LOG_INFO("Answer with acknowledged messages");
             }
-            NRF_LOG_INFO("Requested number of transmissions: %d\r\n",
+            NRF_LOG_INFO("Requested number of transmissions: %d",
                        p_page_data->transmission_response.items.transmit_count);
     }
 
     switch (p_page_data->command_type)
     {
         case ANT_PAGE70_COMMAND_PAGE_DATA_REQUEST:
-            NRF_LOG_INFO("Request Data Page\r\n");
+            NRF_LOG_INFO("Request Data Page");
             break;
 
         case ANT_PAGE70_COMMAND_ANT_FS_SESSION_REQUEST:
-            NRF_LOG_INFO("Request ANT-FS Session\r\n");
+            NRF_LOG_INFO("Request ANT-FS Session");
             break;
 
         default:
-            NRF_LOG_INFO("Invalid request\r\n");
+            NRF_LOG_INFO("Invalid request");
     }
     NRF_LOG_INFO("Descriptor %x\r\n\n", p_page_data->descriptor);
 }

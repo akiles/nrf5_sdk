@@ -69,7 +69,7 @@ typedef struct {
 
 
 /**@name Incremental SHA-256 generator.
- * 
+ *
  * This group of functions can be used to incrementally compute the SHA-256
  * hash for a given message.
  *

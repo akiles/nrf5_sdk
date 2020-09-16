@@ -45,8 +45,9 @@
 #include "ble_types.h"
 #include "ble_srv_common.h"
 #include "ble_gattc.h"
-#define NRF_LOG_MODULE_NAME "BLE_LBS_C"
+#define NRF_LOG_MODULE_NAME ble_lbs_c
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #define TX_BUFFER_MASK         0x07                  /**< TX Buffer mask, must be a mask of continuous zeroes, followed by continuous sequence of ones: 000...111. */
 #define TX_BUFFER_SIZE         (TX_BUFFER_MASK + 1)  /**< Size of send buffer, which is 1 higher than the mask. */
@@ -108,14 +109,14 @@ static void tx_buffer_process(void)
         }
         if (err_code == NRF_SUCCESS)
         {
-            NRF_LOG_DEBUG("SD Read/Write API returns Success..\r\n");
+            NRF_LOG_DEBUG("SD Read/Write API returns Success..");
             m_tx_index++;
             m_tx_index &= TX_BUFFER_MASK;
         }
         else
         {
             NRF_LOG_DEBUG("SD Read/Write API returns error. This message sending will be "
-                "attempted again..\r\n");
+                "attempted again..");
         }
     }
 }
@@ -126,7 +127,7 @@ static void tx_buffer_process(void)
  * @param[in] p_ble_lbs_c Pointer to the Led Button Client structure.
  * @param[in] p_ble_evt   Pointer to the BLE event received.
  */
-static void on_write_rsp(ble_lbs_c_t * p_ble_lbs_c, const ble_evt_t * p_ble_evt)
+static void on_write_rsp(ble_lbs_c_t * p_ble_lbs_c, ble_evt_t const * p_ble_evt)
 {
     // Check if the event if on the link for this instance
     if (p_ble_lbs_c->conn_handle != p_ble_evt->evt.gattc_evt.conn_handle)
@@ -148,7 +149,7 @@ static void on_write_rsp(ble_lbs_c_t * p_ble_lbs_c, const ble_evt_t * p_ble_evt)
  * @param[in] p_ble_lbs_c Pointer to the Led Button Client structure.
  * @param[in] p_ble_evt   Pointer to the BLE event received.
  */
-static void on_hvx(ble_lbs_c_t * p_ble_lbs_c, const ble_evt_t * p_ble_evt)
+static void on_hvx(ble_lbs_c_t * p_ble_lbs_c, ble_evt_t const * p_ble_evt)
 {
     // Check if the event is on the link for this instance
     if (p_ble_lbs_c->conn_handle != p_ble_evt->evt.gattc_evt.conn_handle)
@@ -180,7 +181,7 @@ static void on_hvx(ble_lbs_c_t * p_ble_lbs_c, const ble_evt_t * p_ble_evt)
  * @param[in] p_ble_lbs_c Pointer to the Led Button Client structure.
  * @param[in] p_ble_evt   Pointer to the BLE event received.
  */
-static void on_disconnected(ble_lbs_c_t * p_ble_lbs_c, const ble_evt_t * p_ble_evt)
+static void on_disconnected(ble_lbs_c_t * p_ble_lbs_c, ble_evt_t const * p_ble_evt)
 {
     if (p_ble_lbs_c->conn_handle == p_ble_evt->evt.gap_evt.conn_handle)
     {
@@ -192,7 +193,7 @@ static void on_disconnected(ble_lbs_c_t * p_ble_lbs_c, const ble_evt_t * p_ble_e
 }
 
 
-void ble_lbs_on_db_disc_evt(ble_lbs_c_t * p_ble_lbs_c, const ble_db_discovery_evt_t * p_evt)
+void ble_lbs_on_db_disc_evt(ble_lbs_c_t * p_ble_lbs_c, ble_db_discovery_evt_t const * p_evt)
 {
     // Check if the Led Button Service was discovered.
     if (p_evt->evt_type == BLE_DB_DISCOVERY_COMPLETE &&
@@ -204,8 +205,7 @@ void ble_lbs_on_db_disc_evt(ble_lbs_c_t * p_ble_lbs_c, const ble_db_discovery_ev
         evt.evt_type    = BLE_LBS_C_EVT_DISCOVERY_COMPLETE;
         evt.conn_handle = p_evt->conn_handle;
 
-        uint32_t i;
-        for (i = 0; i < p_evt->params.discovered_db.char_count; i++)
+        for (uint32_t i = 0; i < p_evt->params.discovered_db.char_count; i++)
         {
             const ble_gatt_db_char_t * p_char = &(p_evt->params.discovered_db.charateristics[i]);
             switch (p_char->characteristic.uuid.uuid)
@@ -223,7 +223,7 @@ void ble_lbs_on_db_disc_evt(ble_lbs_c_t * p_ble_lbs_c, const ble_db_discovery_ev
             }
         }
 
-        NRF_LOG_DEBUG("Led Button Service discovered at peer.\r\n");
+        NRF_LOG_DEBUG("Led Button Service discovered at peer.");
         //If the instance has been assigned prior to db_discovery, assign the db_handles
         if (p_ble_lbs_c->conn_handle != BLE_CONN_HANDLE_INVALID)
         {
@@ -270,12 +270,14 @@ uint32_t ble_lbs_c_init(ble_lbs_c_t * p_ble_lbs_c, ble_lbs_c_init_t * p_ble_lbs_
     return ble_db_discovery_evt_register(&lbs_uuid);
 }
 
-void ble_lbs_c_on_ble_evt(ble_lbs_c_t * p_ble_lbs_c, const ble_evt_t * p_ble_evt)
+void ble_lbs_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
-    if ((p_ble_lbs_c == NULL) || (p_ble_evt == NULL))
+    if ((p_context == NULL) || (p_ble_evt == NULL))
     {
         return;
     }
+
+    ble_lbs_c_t * p_ble_lbs_c = (ble_lbs_c_t *)p_context;
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -307,7 +309,7 @@ void ble_lbs_c_on_ble_evt(ble_lbs_c_t * p_ble_lbs_c, const ble_evt_t * p_ble_evt
  */
 static uint32_t cccd_configure(uint16_t conn_handle, uint16_t handle_cccd, bool enable)
 {
-    NRF_LOG_DEBUG("Configuring CCCD. CCCD Handle = %d, Connection Handle = %d\r\n",
+    NRF_LOG_DEBUG("Configuring CCCD. CCCD Handle = %d, Connection Handle = %d",
         handle_cccd,conn_handle);
 
     tx_message_t * p_msg;
@@ -355,7 +357,7 @@ uint32_t ble_lbs_led_status_send(ble_lbs_c_t * p_ble_lbs_c, uint8_t status)
         return NRF_ERROR_INVALID_STATE;
     }
 
-    NRF_LOG_DEBUG("writing LED status 0x%x\r\n", status);
+    NRF_LOG_DEBUG("writing LED status 0x%x", status);
 
     tx_message_t * p_msg;
 

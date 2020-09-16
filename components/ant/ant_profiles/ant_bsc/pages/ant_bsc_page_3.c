@@ -42,7 +42,7 @@
 
 #include "ant_bsc_page_3.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_BCS_PAGE_3"
+#define NRF_LOG_MODULE_NAME ant_bcs_page_3
 #if ANT_BSC_PAGE_3_LOG_ENABLED
 #define NRF_LOG_LEVEL       ANT_BSC_PAGE_3_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  ANT_BSC_PAGE_3_INFO_COLOR
@@ -50,6 +50,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // ANT_BSC_PAGE_3_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 /**@brief BSC page 3 data layout structure. */
 typedef struct
@@ -63,9 +64,9 @@ typedef struct
 /**@brief Function for printing speed or cadence page3 data. */
 static void page3_data_log(ant_bsc_page3_data_t const * p_page_data)
 {
-    NRF_LOG_INFO("Hardware Rev ID:           %u\r\n", (unsigned int)p_page_data->hw_version);
-    NRF_LOG_INFO("Model Number:              %u\r\n", (unsigned int)p_page_data->model_num);
-    NRF_LOG_INFO("Software Ver ID:           %u\r\n", (unsigned int)p_page_data->sw_version);
+    NRF_LOG_INFO("Hardware Rev ID:           %u", (unsigned int)p_page_data->hw_version);
+    NRF_LOG_INFO("Model Number:              %u", (unsigned int)p_page_data->model_num);
+    NRF_LOG_INFO("Software Ver ID:           %u", (unsigned int)p_page_data->sw_version);
 }
 
 void ant_bsc_page_3_encode(uint8_t * p_page_buffer, ant_bsc_page3_data_t const * p_page_data)

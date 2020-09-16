@@ -49,6 +49,19 @@
 extern "C" {
 #endif
 
+//If TWIM is present buffers can only be in RAM
+/*lint -save -e491*/
+#ifndef APP_TWI_BUFFERS_IN_RAM
+  #define APP_TWI_BUFFERS_IN_RAM defined(TWIM_PRESENT)
+#endif
+
+#if APP_TWI_BUFFERS_IN_RAM
+  #define APP_TWI_BUFFER_LOC_IND
+#else
+  #define APP_TWI_BUFFER_LOC_IND const
+#endif
+/*lint -restore*/
+
 /**
  * @defgroup app_twi TWI transaction manager
  * @{

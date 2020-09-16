@@ -39,7 +39,7 @@
  */
 
 #include "ant_parameters.h"
-#include "ant_stack_handler_types.h"
+#include "nrf_sdh_ant.h"
 #include "ant_struct_serialization.h"
 #include "ble_serialization.h"
 #include "ant_event_rx.h"

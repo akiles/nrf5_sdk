@@ -160,7 +160,9 @@ ret_code_t hal_nfc_start(void);
   * valid until the HAL_NFC_EVENT_DATA_TRANSMITTED event is received by the
   * callback.
   *
-  * @param[in] p_data       The data packet to send.
+  * @note Provided pointer must point to RAM region.
+  *
+  * @param[in] p_data       Pointer to the memory area in RAM containing data packet to send.
   * @param[in] data_length  Size of the packet in bytes.
   *
   * @retval NRF_SUCCESS If the packet was sent. Otherwise, an error code is returned.

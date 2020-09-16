@@ -43,6 +43,7 @@
 
 #include "nrf_drv_qspi.h"
 #include "nrf_drv_common.h"
+#include "app_util.h"
 #include "nrf_gpio.h"
 #include "nrf_assert.h"
 
@@ -60,7 +61,7 @@
 
 #define QSPI_WAIT_READY() do {                                         \
         while (!nrf_qspi_event_check(NRF_QSPI, NRF_QSPI_EVENT_READY)); \
-    } while(0)
+    } while (0)
 
 /**
   * @brief Control block - driver instance local data.
@@ -184,6 +185,7 @@ ret_code_t nrf_drv_qspi_cinstr_xfer(nrf_qspi_cinstr_conf_t const * p_config,
     nrf_qspi_cinstr_transfer_start(NRF_QSPI, p_config);
 
     QSPI_WAIT_READY();
+    nrf_qspi_event_clear(NRF_QSPI, NRF_QSPI_EVENT_READY);
     nrf_qspi_int_enable(NRF_QSPI, NRF_QSPI_INT_READY_MASK);
 
     if (p_rx_buffer)
@@ -246,6 +248,8 @@ ret_code_t nrf_drv_qspi_write(void const * p_tx_buffer,
 {
     ASSERT(m_cb.state != NRF_DRV_STATE_UNINITIALIZED);
     ASSERT(p_tx_buffer != NULL);
+    /* Checking word alignment. */
+    ASSERT(is_word_aligned(p_tx_buffer));
 
     if (!nrf_drv_is_in_RAM(p_tx_buffer))
     {
@@ -263,6 +267,8 @@ ret_code_t nrf_drv_qspi_read(void *   p_rx_buffer,
 {
     ASSERT(m_cb.state != NRF_DRV_STATE_UNINITIALIZED);
     ASSERT(p_rx_buffer != NULL);
+    /* Checking word alignment. */
+    ASSERT(is_word_aligned(p_rx_buffer));
 
     if (!nrf_drv_is_in_RAM(p_rx_buffer))
     {
@@ -277,6 +283,8 @@ ret_code_t nrf_drv_qspi_erase(nrf_qspi_erase_len_t length,
                               uint32_t             start_address)
 {
     ASSERT(m_cb.state != NRF_DRV_STATE_UNINITIALIZED);
+    /* Checking word alignment. */
+    ASSERT(is_word_aligned((void *)start_address));
     nrf_qspi_erase_ptr_set(NRF_QSPI, start_address, length);
     return qspi_task_perform(NRF_QSPI_TASK_ERASESTART);
 }

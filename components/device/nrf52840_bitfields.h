@@ -143,15 +143,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Peripheral: ACL */
 /* Description: Access control lists */
 
-/* Register: ACL_DISABLEINDEBUG */
-/* Description: Disable all ACL protection mechanisms for regions while in debug mode */
-
-/* Bit 0 : Disable the protection mechanism for regions while in debug mode. */
-#define ACL_DISABLEINDEBUG_DISABLEINDEBUG_Pos (0UL) /*!< Position of DISABLEINDEBUG field. */
-#define ACL_DISABLEINDEBUG_DISABLEINDEBUG_Msk (0x1UL << ACL_DISABLEINDEBUG_DISABLEINDEBUG_Pos) /*!< Bit mask of DISABLEINDEBUG field. */
-#define ACL_DISABLEINDEBUG_DISABLEINDEBUG_Enabled (0UL) /*!< ACL is enabled in debug mode */
-#define ACL_DISABLEINDEBUG_DISABLEINDEBUG_Disabled (1UL) /*!< ACL is disabled in debug mode */
-
 /* Register: ACL_ACL_ADDR */
 /* Description: Description cluster[0]:  Configure the word-aligned start address of region 0 to protect */
 
@@ -266,8 +257,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Bit 24 : Packet length configuration */
 #define CCM_MODE_LENGTH_Pos (24UL) /*!< Position of LENGTH field. */
 #define CCM_MODE_LENGTH_Msk (0x1UL << CCM_MODE_LENGTH_Pos) /*!< Bit mask of LENGTH field. */
-#define CCM_MODE_LENGTH_Default (0UL) /*!< Default length. Effective length of LENGTH field in encrypted/decrypted packet is 5 bits. A key-stream for packets up to 27 bytes will be generated. */
-#define CCM_MODE_LENGTH_Extended (1UL) /*!< Extended length. Effective length of LENGTH field in encrypted/decrypted packet is 8 bits. A key-stream for packets up to MAXPACKETSIZE bytes will be generated. */
+#define CCM_MODE_LENGTH_Default (0UL) /*!< Default length. Effective length of LENGTH field in encrypted/decrypted packet is 5 bits. A key-stream for packet payloads up to 27 bytes will be generated. */
+#define CCM_MODE_LENGTH_Extended (1UL) /*!< Extended length. Effective length of LENGTH field in encrypted/decrypted packet is 8 bits. A key-stream for packet payloads up to MAXPACKETSIZE bytes will be generated. */
 
 /* Bits 17..16 : Radio data rate that the CCM shall run synchronous with */
 #define CCM_MODE_DATARATE_Pos (16UL) /*!< Position of DATARATE field. */
@@ -314,7 +305,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Register: CCM_MAXPACKETSIZE */
 /* Description: Length of key-stream generated when MODE.LENGTH = Extended. */
 
-/* Bits 7..0 : Length of key-stream generated when MODE.LENGTH = Extended. This value must be greater or equal to the subsequent packet to be encrypted/decrypted. */
+/* Bits 7..0 : Length of key-stream generated when MODE.LENGTH = Extended. This value must be greater or equal to the subsequent packet payload to be encrypted/decrypted. */
 #define CCM_MAXPACKETSIZE_MAXPACKETSIZE_Pos (0UL) /*!< Position of MAXPACKETSIZE field. */
 #define CCM_MAXPACKETSIZE_MAXPACKETSIZE_Msk (0xFFUL << CCM_MAXPACKETSIZE_MAXPACKETSIZE_Pos) /*!< Bit mask of MAXPACKETSIZE field. */
 
@@ -476,6 +467,13 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define CLOCK_LFCLKSRC_SRC_Xtal (1UL) /*!< 32.768 kHz crystal oscillator */
 #define CLOCK_LFCLKSRC_SRC_Synth (2UL) /*!< 32.768 kHz synthesized from HFCLK */
 
+/* Register: CLOCK_HFXODEBOUNCE */
+/* Description: HFXO debounce time. The HFXO is started by triggering the TASKS_HFCLKSTART task. */
+
+/* Bits 7..0 : HFXO debounce time. Debounce time = HFXODEBOUNCE * 16 us. */
+#define CLOCK_HFXODEBOUNCE_HFXODEBOUNCE_Pos (0UL) /*!< Position of HFXODEBOUNCE field. */
+#define CLOCK_HFXODEBOUNCE_HFXODEBOUNCE_Msk (0xFFUL << CLOCK_HFXODEBOUNCE_HFXODEBOUNCE_Pos) /*!< Bit mask of HFXODEBOUNCE field. */
+
 /* Register: CLOCK_CTIV */
 /* Description: Calibration timer interval */
 
@@ -486,12 +484,12 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Register: CLOCK_TRACECONFIG */
 /* Description: Clocking options for the Trace Port debug interface */
 
-/* Bits 17..16 : Pin multiplexing of trace signals. */
+/* Bits 17..16 : Pin multiplexing of trace signals. See pin assignment chapter for more details. */
 #define CLOCK_TRACECONFIG_TRACEMUX_Pos (16UL) /*!< Position of TRACEMUX field. */
 #define CLOCK_TRACECONFIG_TRACEMUX_Msk (0x3UL << CLOCK_TRACECONFIG_TRACEMUX_Pos) /*!< Bit mask of TRACEMUX field. */
-#define CLOCK_TRACECONFIG_TRACEMUX_GPIO (0UL) /*!< GPIOs multiplexed onto all trace-pins */
-#define CLOCK_TRACECONFIG_TRACEMUX_Serial (1UL) /*!< SWO multiplexed onto P0.18, GPIO multiplexed onto other trace pins */
-#define CLOCK_TRACECONFIG_TRACEMUX_Parallel (2UL) /*!< TRACECLK and TRACEDATA multiplexed onto P0.20, P0.18, P0.16, P0.15 and P0.14. */
+#define CLOCK_TRACECONFIG_TRACEMUX_GPIO (0UL) /*!< No trace signals routed to pins. All pins can be used as regular GPIOs. */
+#define CLOCK_TRACECONFIG_TRACEMUX_Serial (1UL) /*!< SWO trace signal routed to pin. Remaining pins can be used as regular GPIOs. */
+#define CLOCK_TRACECONFIG_TRACEMUX_Parallel (2UL) /*!< All trace signals (TRACECLK and TRACEDATA[n]) routed to pins. */
 
 /* Bits 1..0 : Speed of Trace Port clock. Note that the TRACECLK pin will output this clock divided by two. */
 #define CLOCK_TRACECONFIG_TRACEPORTSPEED_Pos (0UL) /*!< Position of TRACEPORTSPEED field. */
@@ -685,7 +683,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define COMP_REFSEL_REFSEL_Int1V8 (1UL) /*!< VREF = internal 1.8 V reference (VDD &gt;= VREF + 0.2 V) */
 #define COMP_REFSEL_REFSEL_Int2V4 (2UL) /*!< VREF = internal 2.4 V reference (VDD &gt;= VREF + 0.2 V) */
 #define COMP_REFSEL_REFSEL_VDD (4UL) /*!< VREF = VDD */
-#define COMP_REFSEL_REFSEL_ARef (7UL) /*!< VREF = AREF (VDD &gt;= VREF &gt;= AREFMIN) */
+#define COMP_REFSEL_REFSEL_ARef (5UL) /*!< VREF = AREF (VDD &gt;= VREF &gt;= AREFMIN) */
 
 /* Register: COMP_EXTREFSEL */
 /* Description: External reference select */
@@ -1837,8 +1835,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define I2S_PSEL_MCK_CONNECT_Connected (0UL) /*!< Connect */
 #define I2S_PSEL_MCK_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
-#define I2S_PSEL_MCK_PORT_Pos (5UL) /*!< Position of PORT field. */
+/* Bit 8 : Port number */
+#define I2S_PSEL_MCK_PORT_Pos (8UL) /*!< Position of PORT field. */
 #define I2S_PSEL_MCK_PORT_Msk (0x1UL << I2S_PSEL_MCK_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
@@ -1854,8 +1852,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define I2S_PSEL_SCK_CONNECT_Connected (0UL) /*!< Connect */
 #define I2S_PSEL_SCK_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
-#define I2S_PSEL_SCK_PORT_Pos (5UL) /*!< Position of PORT field. */
+/* Bit 8 : Port number */
+#define I2S_PSEL_SCK_PORT_Pos (8UL) /*!< Position of PORT field. */
 #define I2S_PSEL_SCK_PORT_Msk (0x1UL << I2S_PSEL_SCK_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
@@ -1871,8 +1869,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define I2S_PSEL_LRCK_CONNECT_Connected (0UL) /*!< Connect */
 #define I2S_PSEL_LRCK_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
-#define I2S_PSEL_LRCK_PORT_Pos (5UL) /*!< Position of PORT field. */
+/* Bit 8 : Port number */
+#define I2S_PSEL_LRCK_PORT_Pos (8UL) /*!< Position of PORT field. */
 #define I2S_PSEL_LRCK_PORT_Msk (0x1UL << I2S_PSEL_LRCK_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
@@ -1888,8 +1886,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define I2S_PSEL_SDIN_CONNECT_Connected (0UL) /*!< Connect */
 #define I2S_PSEL_SDIN_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
-#define I2S_PSEL_SDIN_PORT_Pos (5UL) /*!< Position of PORT field. */
+/* Bit 8 : Port number */
+#define I2S_PSEL_SDIN_PORT_Pos (8UL) /*!< Position of PORT field. */
 #define I2S_PSEL_SDIN_PORT_Msk (0x1UL << I2S_PSEL_SDIN_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
@@ -1905,8 +1903,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define I2S_PSEL_SDOUT_CONNECT_Connected (0UL) /*!< Connect */
 #define I2S_PSEL_SDOUT_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
-#define I2S_PSEL_SDOUT_PORT_Pos (5UL) /*!< Position of PORT field. */
+/* Bit 8 : Port number */
+#define I2S_PSEL_SDOUT_PORT_Pos (8UL) /*!< Position of PORT field. */
 #define I2S_PSEL_SDOUT_PORT_Msk (0x1UL << I2S_PSEL_SDOUT_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
@@ -3860,9 +3858,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Register: NFCT_FRAMEDELAYMAX */
 /* Description: Maximum frame delay */
 
-/* Bits 15..0 : Maximum frame delay in number of 13.56 MHz clocks */
+/* Bits 19..0 : Maximum frame delay in number of 13.56 MHz clocks */
 #define NFCT_FRAMEDELAYMAX_FRAMEDELAYMAX_Pos (0UL) /*!< Position of FRAMEDELAYMAX field. */
-#define NFCT_FRAMEDELAYMAX_FRAMEDELAYMAX_Msk (0xFFFFUL << NFCT_FRAMEDELAYMAX_FRAMEDELAYMAX_Pos) /*!< Bit mask of FRAMEDELAYMAX field. */
+#define NFCT_FRAMEDELAYMAX_FRAMEDELAYMAX_Msk (0xFFFFFUL << NFCT_FRAMEDELAYMAX_FRAMEDELAYMAX_Pos) /*!< Bit mask of FRAMEDELAYMAX field. */
 
 /* Register: NFCT_FRAMEDELAYMODE */
 /* Description: Configuration register for the Frame Delay Timer */
@@ -4039,7 +4037,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define NFCT_SENSRES_RFU5_Pos (5UL) /*!< Position of RFU5 field. */
 #define NFCT_SENSRES_RFU5_Msk (0x1UL << NFCT_SENSRES_RFU5_Pos) /*!< Bit mask of RFU5 field. */
 
-/* Bits 4..0 : Bit frame SDD as defined by the b5:b1 of byte 1 in SENS_RES response in the <i>NFC Forum, NFC Digital Protocol Technical Specification</i> */
+/* Bits 4..0 : Bit frame SDD as defined by the b5:b1 of byte 1 in SENS_RES response in the NFC Forum, NFC Digital Protocol Technical Specification */
 #define NFCT_SENSRES_BITFRAMESDD_Pos (0UL) /*!< Position of BITFRAMESDD field. */
 #define NFCT_SENSRES_BITFRAMESDD_Msk (0x1FUL << NFCT_SENSRES_BITFRAMESDD_Pos) /*!< Bit mask of BITFRAMESDD field. */
 #define NFCT_SENSRES_BITFRAMESDD_SDD00000 (0UL) /*!< SDD pattern 00000 */
@@ -6296,7 +6294,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Register: POWER_POFCON */
 /* Description: Power failure comparator configuration */
 
-/* Bits 11..8 : Power failure comparator threshold setting for voltage supply on VDDH */
+/* Bits 11..8 : Power failure comparator threshold setting for high voltage mode (supply connected to VDDH only). This setting does not apply for normal voltage mode (supply connected to both VDD and VDDH). */
 #define POWER_POFCON_THRESHOLDVDDH_Pos (8UL) /*!< Position of THRESHOLDVDDH field. */
 #define POWER_POFCON_THRESHOLDVDDH_Msk (0xFUL << POWER_POFCON_THRESHOLDVDDH_Pos) /*!< Bit mask of THRESHOLDVDDH field. */
 #define POWER_POFCON_THRESHOLDVDDH_V27 (0UL) /*!< Set threshold to 2.7 V */
@@ -6316,7 +6314,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define POWER_POFCON_THRESHOLDVDDH_V41 (14UL) /*!< Set threshold to 4.1 V */
 #define POWER_POFCON_THRESHOLDVDDH_V42 (15UL) /*!< Set threshold to 4.2 V */
 
-/* Bits 4..1 : Power failure comparator threshold setting */
+/* Bits 4..1 : Power failure comparator threshold setting. This setting applies both for normal voltage mode (supply connected to both VDD and VDDH) and high voltage mode (supply connected to VDDH only). */
 #define POWER_POFCON_THRESHOLD_Pos (1UL) /*!< Position of THRESHOLD field. */
 #define POWER_POFCON_THRESHOLD_Msk (0xFUL << POWER_POFCON_THRESHOLD_Pos) /*!< Bit mask of THRESHOLD field. */
 #define POWER_POFCON_THRESHOLD_V17 (4UL) /*!< Set threshold to 1.7 V */
@@ -8559,6 +8557,12 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Register: QSPI_IFCONFIG0 */
 /* Description: Interface configuration. */
 
+/* Bit 12 : Page size for commands PP, PP2O, PP4O and PP4IO. */
+#define QSPI_IFCONFIG0_PPSIZE_Pos (12UL) /*!< Position of PPSIZE field. */
+#define QSPI_IFCONFIG0_PPSIZE_Msk (0x1UL << QSPI_IFCONFIG0_PPSIZE_Pos) /*!< Bit mask of PPSIZE field. */
+#define QSPI_IFCONFIG0_PPSIZE_256Bytes (0UL) /*!< 256 bytes. */
+#define QSPI_IFCONFIG0_PPSIZE_512Bytes (1UL) /*!< 512 bytes. */
+
 /* Bit 7 : Enable deep power-down mode (DPM) feature. */
 #define QSPI_IFCONFIG0_DPMENABLE_Pos (7UL) /*!< Position of DPMENABLE field. */
 #define QSPI_IFCONFIG0_DPMENABLE_Msk (0x1UL << QSPI_IFCONFIG0_DPMENABLE_Pos) /*!< Bit mask of DPMENABLE field. */
@@ -8679,6 +8683,17 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Register: QSPI_CINSTRCONF */
 /* Description: Custom instruction configuration register. */
 
+/* Bit 17 : Stop (finalize) long frame transaction */
+#define QSPI_CINSTRCONF_LFSTOP_Pos (17UL) /*!< Position of LFSTOP field. */
+#define QSPI_CINSTRCONF_LFSTOP_Msk (0x1UL << QSPI_CINSTRCONF_LFSTOP_Pos) /*!< Bit mask of LFSTOP field. */
+#define QSPI_CINSTRCONF_LFSTOP_Stop (1UL) /*!< Stop */
+
+/* Bit 16 : Enable long frame mode. When enabled, a custom instruction transaction has to be ended by writing the LFSTOP field. */
+#define QSPI_CINSTRCONF_LFEN_Pos (16UL) /*!< Position of LFEN field. */
+#define QSPI_CINSTRCONF_LFEN_Msk (0x1UL << QSPI_CINSTRCONF_LFEN_Pos) /*!< Bit mask of LFEN field. */
+#define QSPI_CINSTRCONF_LFEN_Disable (0UL) /*!< Long frame mode disabled */
+#define QSPI_CINSTRCONF_LFEN_Enable (1UL) /*!< Long frame mode enabled */
+
 /* Bit 15 : Send WREN (write enable opcode 0x06) before instruction. */
 #define QSPI_CINSTRCONF_WREN_Pos (15UL) /*!< Position of WREN field. */
 #define QSPI_CINSTRCONF_WREN_Msk (0x1UL << QSPI_CINSTRCONF_WREN_Pos) /*!< Bit mask of WREN field. */
@@ -8767,6 +8782,18 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /* Register: RADIO_SHORTS */
 /* Description: Shortcut register */
+
+/* Bit 21 : Shortcut between PHYEND event and START task */
+#define RADIO_SHORTS_PHYEND_START_Pos (21UL) /*!< Position of PHYEND_START field. */
+#define RADIO_SHORTS_PHYEND_START_Msk (0x1UL << RADIO_SHORTS_PHYEND_START_Pos) /*!< Bit mask of PHYEND_START field. */
+#define RADIO_SHORTS_PHYEND_START_Disabled (0UL) /*!< Disable shortcut */
+#define RADIO_SHORTS_PHYEND_START_Enabled (1UL) /*!< Enable shortcut */
+
+/* Bit 20 : Shortcut between PHYEND event and DISABLE task */
+#define RADIO_SHORTS_PHYEND_DISABLE_Pos (20UL) /*!< Position of PHYEND_DISABLE field. */
+#define RADIO_SHORTS_PHYEND_DISABLE_Msk (0x1UL << RADIO_SHORTS_PHYEND_DISABLE_Pos) /*!< Bit mask of PHYEND_DISABLE field. */
+#define RADIO_SHORTS_PHYEND_DISABLE_Disabled (0UL) /*!< Disable shortcut */
+#define RADIO_SHORTS_PHYEND_DISABLE_Enabled (1UL) /*!< Enable shortcut */
 
 /* Bit 19 : Shortcut between RXREADY event and START task */
 #define RADIO_SHORTS_RXREADY_START_Pos (19UL) /*!< Position of RXREADY_START field. */
@@ -8872,6 +8899,13 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /* Register: RADIO_INTENSET */
 /* Description: Enable interrupt */
+
+/* Bit 27 : Write '1' to Enable interrupt for PHYEND event */
+#define RADIO_INTENSET_PHYEND_Pos (27UL) /*!< Position of PHYEND field. */
+#define RADIO_INTENSET_PHYEND_Msk (0x1UL << RADIO_INTENSET_PHYEND_Pos) /*!< Bit mask of PHYEND field. */
+#define RADIO_INTENSET_PHYEND_Disabled (0UL) /*!< Read: Disabled */
+#define RADIO_INTENSET_PHYEND_Enabled (1UL) /*!< Read: Enabled */
+#define RADIO_INTENSET_PHYEND_Set (1UL) /*!< Enable */
 
 /* Bit 23 : Write '1' to Enable interrupt for MHRMATCH event */
 #define RADIO_INTENSET_MHRMATCH_Pos (23UL) /*!< Position of MHRMATCH field. */
@@ -9022,6 +9056,13 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /* Register: RADIO_INTENCLR */
 /* Description: Disable interrupt */
+
+/* Bit 27 : Write '1' to Disable interrupt for PHYEND event */
+#define RADIO_INTENCLR_PHYEND_Pos (27UL) /*!< Position of PHYEND field. */
+#define RADIO_INTENCLR_PHYEND_Msk (0x1UL << RADIO_INTENCLR_PHYEND_Pos) /*!< Bit mask of PHYEND field. */
+#define RADIO_INTENCLR_PHYEND_Disabled (0UL) /*!< Read: Disabled */
+#define RADIO_INTENCLR_PHYEND_Enabled (1UL) /*!< Read: Enabled */
+#define RADIO_INTENCLR_PHYEND_Clear (1UL) /*!< Disable */
 
 /* Bit 23 : Write '1' to Disable interrupt for MHRMATCH event */
 #define RADIO_INTENCLR_MHRMATCH_Pos (23UL) /*!< Position of MHRMATCH field. */
@@ -9200,6 +9241,21 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define RADIO_DAI_DAI_Pos (0UL) /*!< Position of DAI field. */
 #define RADIO_DAI_DAI_Msk (0x7UL << RADIO_DAI_DAI_Pos) /*!< Bit mask of DAI field. */
 
+/* Register: RADIO_PDUSTAT */
+/* Description: Payload status */
+
+/* Bits 2..1 : Status on what rate packet is received with in Long Range */
+#define RADIO_PDUSTAT_CISTAT_Pos (1UL) /*!< Position of CISTAT field. */
+#define RADIO_PDUSTAT_CISTAT_Msk (0x3UL << RADIO_PDUSTAT_CISTAT_Pos) /*!< Bit mask of CISTAT field. */
+#define RADIO_PDUSTAT_CISTAT_LR125kbit (0UL) /*!< Frame is received at 125kbps */
+#define RADIO_PDUSTAT_CISTAT_LR500kbit (1UL) /*!< Frame is received at 500kbps */
+
+/* Bit 0 : Status on payload length vs. PCNF1.MAXLEN */
+#define RADIO_PDUSTAT_PDUSTAT_Pos (0UL) /*!< Position of PDUSTAT field. */
+#define RADIO_PDUSTAT_PDUSTAT_Msk (0x1UL << RADIO_PDUSTAT_PDUSTAT_Pos) /*!< Bit mask of PDUSTAT field. */
+#define RADIO_PDUSTAT_PDUSTAT_LessThan (0UL) /*!< Payload less than PCNF1.MAXLEN */
+#define RADIO_PDUSTAT_PDUSTAT_GreaterThan (1UL) /*!< Payload greater than PCNF1.MAXLEN */
+
 /* Register: RADIO_PACKETPTR */
 /* Description: Packet pointer */
 
@@ -9234,7 +9290,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define RADIO_TXPOWER_TXPOWER_Pos6dBm (0x6UL) /*!< +6 dBm */
 #define RADIO_TXPOWER_TXPOWER_Pos7dBm (0x7UL) /*!< +7 dBm */
 #define RADIO_TXPOWER_TXPOWER_Pos8dBm (0x8UL) /*!< +8 dBm */
-#define RADIO_TXPOWER_TXPOWER_Pos9dBm (0x9UL) /*!< +9 dBm */
 #define RADIO_TXPOWER_TXPOWER_Neg30dBm (0xD8UL) /*!< Deprecated enumerator -  -40 dBm */
 #define RADIO_TXPOWER_TXPOWER_Neg40dBm (0xD8UL) /*!< -40 dBm */
 #define RADIO_TXPOWER_TXPOWER_Neg20dBm (0xECUL) /*!< -20 dBm */
@@ -9630,7 +9685,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Register: RADIO_SFD */
 /* Description: IEEE 802.15.4 Start of Frame Delimiter */
 
-/* Bits 7..0 : IEEE 802.15.4 Start of Frame Delimiter */
+/* Bits 7..0 : IEEE 802.15.4 Start of Frame Delimiter. Note, the least significant 4-bits of the SFD cannot all be zeros. */
 #define RADIO_SFD_SFD_Pos (0UL) /*!< Position of SFD field. */
 #define RADIO_SFD_SFD_Msk (0xFFUL << RADIO_SFD_SFD_Pos) /*!< Bit mask of SFD field. */
 
@@ -10461,7 +10516,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SAADC_CH_PSELP_PSELP_AnalogInput6 (7UL) /*!< AIN6 */
 #define SAADC_CH_PSELP_PSELP_AnalogInput7 (8UL) /*!< AIN7 */
 #define SAADC_CH_PSELP_PSELP_VDD (9UL) /*!< VDD */
-#define SAADC_CH_PSELP_PSELP_VDDHDIV5 (0x11UL) /*!< VDDH/5 */
+#define SAADC_CH_PSELP_PSELP_VDDHDIV5 (0x0DUL) /*!< VDDH/5 */
 
 /* Register: SAADC_CH_PSELN */
 /* Description: Description cluster[0]:  Input negative pin selection for CH[0] */
@@ -10479,7 +10534,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SAADC_CH_PSELN_PSELN_AnalogInput6 (7UL) /*!< AIN6 */
 #define SAADC_CH_PSELN_PSELN_AnalogInput7 (8UL) /*!< AIN7 */
 #define SAADC_CH_PSELN_PSELN_VDD (9UL) /*!< VDD */
-#define SAADC_CH_PSELN_PSELN_VDDHDIV5 (0x11UL) /*!< VDDH/5 */
+#define SAADC_CH_PSELN_PSELN_VDDHDIV5 (0x0DUL) /*!< VDDH/5 */
 
 /* Register: SAADC_CH_CONFIG */
 /* Description: Description cluster[0]:  Input configuration for CH[0] */
@@ -13223,7 +13278,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Register: UICR_APPROTECT */
 /* Description: Access port protection */
 
-/* Bits 7..0 : Enable or disable Access Port protection. */
+/* Bits 7..0 : Enable or disable access port protection. */
 #define UICR_APPROTECT_PALL_Pos (0UL) /*!< Position of PALL field. */
 #define UICR_APPROTECT_PALL_Msk (0xFFUL << UICR_APPROTECT_PALL_Pos) /*!< Bit mask of PALL field. */
 #define UICR_APPROTECT_PALL_Enabled (0x00UL) /*!< Enable */
@@ -13237,6 +13292,21 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UICR_NFCPINS_PROTECT_Msk (0x1UL << UICR_NFCPINS_PROTECT_Pos) /*!< Bit mask of PROTECT field. */
 #define UICR_NFCPINS_PROTECT_Disabled (0UL) /*!< Operation as GPIO pins. Same protection as normal GPIO pins */
 #define UICR_NFCPINS_PROTECT_NFC (1UL) /*!< Operation as NFC antenna pins. Configures the protection for NFC operation */
+
+/* Register: UICR_DEBUGCTRL */
+/* Description: Processor debug control */
+
+/* Bits 15..8 : Configure CPU flash patch and breakpoint (FPB) unit behavior */
+#define UICR_DEBUGCTRL_CPUFPBEN_Pos (8UL) /*!< Position of CPUFPBEN field. */
+#define UICR_DEBUGCTRL_CPUFPBEN_Msk (0xFFUL << UICR_DEBUGCTRL_CPUFPBEN_Pos) /*!< Bit mask of CPUFPBEN field. */
+#define UICR_DEBUGCTRL_CPUFPBEN_Disabled (0x00UL) /*!< Disable CPU FPB unit. Writes into the FPB registers will be ignored. */
+#define UICR_DEBUGCTRL_CPUFPBEN_Enabled (0xFFUL) /*!< Enable CPU FPB unit (default behavior) */
+
+/* Bits 7..0 : Configure CPU non-intrusive debug features */
+#define UICR_DEBUGCTRL_CPUNIDEN_Pos (0UL) /*!< Position of CPUNIDEN field. */
+#define UICR_DEBUGCTRL_CPUNIDEN_Msk (0xFFUL << UICR_DEBUGCTRL_CPUNIDEN_Pos) /*!< Bit mask of CPUNIDEN field. */
+#define UICR_DEBUGCTRL_CPUNIDEN_Disabled (0x00UL) /*!< Disable CPU ITM and ETM functionality */
+#define UICR_DEBUGCTRL_CPUNIDEN_Enabled (0xFFUL) /*!< Enable CPU ITM and ETM functionality (default behavior) */
 
 /* Register: UICR_EXTSUPPLY */
 /* Description: Enable external circuitry to be supplied from VDD pin. Applicable in high voltage mode only. */
@@ -14392,6 +14462,15 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Bits 10..0 : Returns the current value of the start of frame counter */
 #define USBD_FRAMECNTR_FRAMECNTR_Pos (0UL) /*!< Position of FRAMECNTR field. */
 #define USBD_FRAMECNTR_FRAMECNTR_Msk (0x7FFUL << USBD_FRAMECNTR_FRAMECNTR_Pos) /*!< Bit mask of FRAMECNTR field. */
+
+/* Register: USBD_LOWPOWER */
+/* Description: First silicon only: Controls USBD peripheral low-power mode during USB suspend */
+
+/* Bit 0 : Controls USBD peripheral low-power mode during USB suspend */
+#define USBD_LOWPOWER_LOWPOWER_Pos (0UL) /*!< Position of LOWPOWER field. */
+#define USBD_LOWPOWER_LOWPOWER_Msk (0x1UL << USBD_LOWPOWER_LOWPOWER_Pos) /*!< Bit mask of LOWPOWER field. */
+#define USBD_LOWPOWER_LOWPOWER_ForceNormal (0UL) /*!< Software must write this value to exit low power mode and before performing a remote wake-up */
+#define USBD_LOWPOWER_LOWPOWER_LowPower (1UL) /*!< Software must write this value to enter low power mode after DMA and software have finished interacting with the USB peripheral */
 
 /* Register: USBD_ISOINCONFIG */
 /* Description: Controls the response of the ISO IN endpoint to an IN token when no data is ready to be sent */

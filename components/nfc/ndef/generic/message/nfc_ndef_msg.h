@@ -55,6 +55,9 @@ extern "C" {
  *
  */
 
+#define TYPE_4_TAG      4U                       ///< Type 4 Tag identifier.
+#define NLEN_FIELD_SIZE 2U                       ///< Size of NLEN field, used to encode NDEF message for Type 4 Tag.
+
  /**
   * @brief NDEF message descriptor.
   */
@@ -108,22 +111,25 @@ ret_code_t nfc_ndef_msg_record_add(nfc_ndef_msg_desc_t    * const p_msg,
 
 /**@brief Macro for creating and initializing an NFC NDEF message descriptor.
  *
- * This macro creates and initializes a static instance of type @ref nfc_ndef_msg_desc_t
- * and a static array of pointers to record descriptors (@ref nfc_ndef_record_desc_t) used
+ * This macro creates and initializes an instance of type @ref nfc_ndef_msg_desc_t
+ * and an array of pointers to record descriptors (@ref nfc_ndef_record_desc_t) used
  * by the message.
  *
  * Use the macro @ref NFC_NDEF_MSG to access the NDEF message descriptor instance.
+ *
+ * @note The message descriptor is declared as automatic variable, which implies that
+ *       the NDEF message encoding must be done in the same variable scope.
  *
  * @param[in]  NAME                 Name of the related instance.
  * @param[in]  MAX_RECORD_CNT       Maximal count of records in the message.
  */
 #define NFC_NDEF_MSG_DEF(NAME, MAX_RECORD_CNT)                                             \
-    static nfc_ndef_record_desc_t   * NAME##_nfc_ndef_p_record_desc_array[MAX_RECORD_CNT]; \
-    static nfc_ndef_msg_desc_t  NAME##_nfc_ndef_msg_desc =                                 \
+    nfc_ndef_record_desc_t   * NAME##_nfc_ndef_p_record_desc_array[MAX_RECORD_CNT];        \
+    nfc_ndef_msg_desc_t  NAME##_nfc_ndef_msg_desc =                                        \
         {                                                                                  \
             .pp_record = NAME##_nfc_ndef_p_record_desc_array,                              \
-            .record_count = 0,                                                             \
-            .max_record_count = MAX_RECORD_CNT                                             \
+            .max_record_count = MAX_RECORD_CNT,                                            \
+            .record_count = 0                                                              \
         }
 
 /** @brief Macro for accessing the NFC NDEF message descriptor instance
@@ -141,6 +147,9 @@ ret_code_t nfc_ndef_msg_record_add(nfc_ndef_msg_desc_t    * const p_msg,
  *
  * Use the macro @ref NFC_NDEF_NESTED_NDEF_MSG_RECORD to access the NDEF record descriptor instance.
  *
+ * @note The message descriptor is declared as automatic variable, which implies that
+ *       the NDEF message encoding must be done in the same variable scope.
+ *
  * @param[in] NAME             Name of the created record descriptor instance.
  * @param[in] TNF              Type Name Format (TNF) value for the record.
  * @param[in] P_ID             Pointer to the ID string.
@@ -157,7 +166,7 @@ ret_code_t nfc_ndef_msg_record_add(nfc_ndef_msg_desc_t    * const p_msg,
                                              P_TYPE,                           \
                                              TYPE_LEN,                         \
                                              P_NESTED_MESSAGE )                \
-    static nfc_ndef_record_desc_t NAME##_ndef_record_nested_desc =             \
+    nfc_ndef_record_desc_t NAME##_ndef_record_nested_desc =                    \
     {                                                                          \
         .tnf = TNF,                                                            \
                                                                                \
@@ -184,5 +193,5 @@ ret_code_t nfc_ndef_msg_record_add(nfc_ndef_msg_desc_t    * const p_msg,
 }
 #endif
 
- #endif
+#endif
 

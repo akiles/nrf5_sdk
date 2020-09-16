@@ -65,19 +65,19 @@
 #include "bsp.h"
 #include "boards.h"
 #include "hardfault.h"
-#include "softdevice_handler.h"
-#include "ant_stack_config.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
+#include "nrf_pwr_mgmt.h"
 #include "ant_channel_config.h"
-#include "ant_stack_handler_types.h"
 #include "ant_interface.h"
 #include "ant_parameters.h"
 #include "commands.h"
 
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
-#define ANT_SCAN_CHANNEL_NUMBER     ((uint8_t) 0)                                   /**< Scanning channel number. */
-#define ANT_RESPONSE_CHANNEL_NUMBER ((uint8_t) 1)                                   /**< Response channel number. */
-
-#define ANT_NETWORK_NUMBER          ((uint8_t) 0)                                   /**< Default public network number. */
+#define APP_TIMER_PRESCALER           0                                             /**< Value of the RTC1 PRESCALER register. */
+#define APP_TIMER_OP_QUEUE_SIZE       2u                                            /**< Size of timer operation queues. */
 
 #define SCAN_TIMER_TICKS            APP_TIMER_TICKS(500u)                           /**< Scan timer ticks. */
 
@@ -85,6 +85,8 @@
 #define MAX_DEVICES                 ((uint8_t) 16)                                  /**< Maximum number of nodes supported in this network. */
 
 #define CONVERT_DEVICE_NUM_TO_INDEX(device_number) (device_number % MAX_DEVICES)    /**< Hash function. */
+
+#define APP_ANT_OBSERVER_PRIO       1                                               /**< Application's ANT observer priority. You shouldn't need to modify this value. */
 
 typedef struct
 {
@@ -258,13 +260,22 @@ static void bsp_evt_handler(bsp_event_t evt)
  */
 static void utils_setup(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                         bsp_evt_handler);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = app_timer_create(&m_scan_timer_id,
+                                APP_TIMER_MODE_SINGLE_SHOT,
+                                scan_timeout_event);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -292,7 +303,7 @@ static void continuous_scan_init()
         .device_type       = CHAN_ID_DEV_TYPE,
         .device_number     = 0x00,          // Wildcard
         .channel_period    = 0x00,          // Not used, since this is going to be scanning
-        .network_number    = ANT_NETWORK_NUMBER,
+        .network_number    = ANT_NETWORK_NUM,
     };
 
     err_code = ant_channel_init(&channel_config);
@@ -304,7 +315,7 @@ static void continuous_scan_init()
     // continuous scanning mode.
     err_code = sd_ant_channel_assign(ANT_RESPONSE_CHANNEL_NUMBER,
                                      CHANNEL_TYPE_SLAVE,
-                                     ANT_NETWORK_NUMBER,
+                                     ANT_NETWORK_NUM,
                                      0x00);
     APP_ERROR_CHECK(err_code);
 }
@@ -343,18 +354,18 @@ void node_to_list_add(uint16_t device_number, uint8_t rssi)
     m_node_list[index].rssi          = rssi;
 }
 
-
-/**@brief Process ANT message on ANT scanner
+/**@brief Function for handling a ANT stack event.
  *
- * @param[in] p_ant_event ANT message content.
+ * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
  */
-void continuous_scan_event_handler(ant_evt_t * p_ant_evt)
+void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
     uint32_t err_code;
     uint8_t  message_rssi;
     uint16_t message_device_number;
 
-    ANT_MESSAGE * p_ant_message = (ANT_MESSAGE *) p_ant_evt->msg.evt_buffer;
+    ANT_MESSAGE * p_ant_message = (ANT_MESSAGE *) &p_ant_evt->message;
 
     switch (p_ant_evt->event)
     {
@@ -401,37 +412,34 @@ void continuous_scan_event_handler(ant_evt_t * p_ant_evt)
     }
 }
 
+NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_evt_handler, NULL);
+
+/**@brief Function for ANT stack initialization.
+ */
+static void softdevice_setup(void)
+{
+    ret_code_t err_code = nrf_sdh_enable_request();
+    APP_ERROR_CHECK(err_code);
+
+    ASSERT(nrf_sdh_is_enabled());
+
+    err_code = nrf_sdh_ant_enable();
+    APP_ERROR_CHECK(err_code);
+}
+
 
 /* Main function */
 int main(void)
 {
-    uint32_t           err_code;
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-
     utils_setup();
-
-    // Setup SoftDevice and events handler
-    err_code = softdevice_ant_evt_handler_set(continuous_scan_event_handler);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = ant_stack_static_config();
-    APP_ERROR_CHECK(err_code);
-
+    softdevice_setup();
     continuous_scan_init();
-
-    err_code = app_timer_create(&m_scan_timer_id,
-                                APP_TIMER_MODE_SINGLE_SHOT,
-                                scan_timeout_event);
-    APP_ERROR_CHECK(err_code);
 
     // Enter main loop
     for (;;)
     {
-        err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }
 

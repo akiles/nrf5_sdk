@@ -55,7 +55,7 @@
  */
 
 #include <stdint.h>
-#include "ant_stack_handler_types.h"
+#include "nrf_sdh_ant.h"
 #include "ant_encrypt_config.h"
 
 #ifdef __cplusplus

@@ -54,23 +54,27 @@
 #include "bsp.h"
 #include "ble_conn_params.h"
 #include "ble_advertising.h"
-#include "softdevice_handler.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ble.h"
 #include "app_timer.h"
 #include "es_app_config.h"
 #include "app_scheduler.h"
 #include "nrf_ble_es.h"
-#include "fstorage.h"
 #include "nrf_ble_gatt.h"
 
 
+#define DEAD_BEEF                       0xDEADBEEF          //!< Value used as error code on stack dump, can be used to identify stack location on stack unwind.
+#define NON_CONNECTABLE_ADV_LED_PIN     BSP_BOARD_LED_0     //!< Toggles when non-connectable advertisement is sent.
+#define CONNECTED_LED_PIN               BSP_BOARD_LED_1     //!< Is on when device has connected.
+#define CONNECTABLE_ADV_LED_PIN         BSP_BOARD_LED_2     //!< Is on when device is advertising connectable advertisements.
 
-#define DEAD_BEEF                   0xDEADBEEF          //!< Value used as error code on stack dump, can be used to identify stack location on stack unwind.
-#define NON_CONNECTABLE_ADV_LED_PIN BSP_BOARD_LED_0     //!< Toggles when non-connectable advertisement is sent.
-#define CONNECTED_LED_PIN           BSP_BOARD_LED_1     //!< Is on when device has connected.
-#define CONNECTABLE_ADV_LED_PIN     BSP_BOARD_LED_2     //!< Is on when device is advertising connectable advertisements.
+/**@brief   Priority of the application BLE event handler.
+ * @note    You shouldn't need to modify this value.
+ */
+#define APP_BLE_OBSERVER_PRIO           1
 
 
-static nrf_ble_gatt_t m_gatt;                           //!< GATT module instance.
+NRF_BLE_GATT_DEF(m_gatt);                                   //!< GATT module instance.
 
 
 /**@brief Callback function for asserts in the SoftDevice.
@@ -90,11 +94,12 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 }
 
 
-/**@brief Function for the application's SoftDevice event handler.
+/**@brief Function for handling BLE events.
  *
- * @param[in] p_ble_evt SoftDevice event.
+ * @param[in]   p_ble_evt   Bluetooth stack event.
+ * @param[in]   p_context   Unused.
  */
-static void on_ble_evt(ble_evt_t * p_ble_evt)
+static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 {
     ret_code_t err_code;
 
@@ -124,38 +129,23 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             bsp_board_led_off(CONNECTED_LED_PIN);
             break;
 
+#if defined(S132)
+        case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
+        {
+            ble_gap_phys_t const phys =
+            {
+                .rx_phys = BLE_GAP_PHY_AUTO,
+                .tx_phys = BLE_GAP_PHY_AUTO,
+            };
+            err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
+            APP_ERROR_CHECK(err_code);
+        } break;
+#endif
+
         default:
             // No implementation needed.
             break;
     }
-}
-
-
-/**@brief Function for dispatching a SoftDevice event to all modules with a SoftDevice
- *        event handler.
- *
- * @details This function is called from the SoftDevice event interrupt handler after a
- *          SoftDevice event has been received.
- *
- * @param[in] p_ble_evt  SoftDevice event.
- */
-static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
-{
-    ble_conn_params_on_ble_evt(p_ble_evt);
-    on_ble_evt(p_ble_evt);
-    nrf_ble_es_on_ble_evt(p_ble_evt);
-    ble_advertising_on_ble_evt(p_ble_evt);
-    nrf_ble_gatt_on_ble_evt(&m_gatt, p_ble_evt);
-}
-
-
-/**@brief Function for handling system events from the SoftDevice.
- *
- * @param[in] evt SoftDevice system event.
- */
-static void sys_evt_dispatch(uint32_t evt)
-{
-    fs_sys_event_handler(evt);
 }
 
 
@@ -206,20 +196,13 @@ static void gatt_init(void)
  */
 static void ble_stack_init(void)
 {
-    ret_code_t         err_code;
-    nrf_clock_lf_cfg_t lf_clock_config;
+    ret_code_t err_code;
 
-    lf_clock_config.source        = NRF_CLOCK_LF_SRC_XTAL;
-    lf_clock_config.rc_ctiv       = 0;
-    lf_clock_config.rc_temp_ctiv  = 0;
-    lf_clock_config.xtal_accuracy = NRF_CLOCK_LF_XTAL_ACCURACY_20_PPM;
+    err_code = nrf_sdh_enable_request();
+    APP_ERROR_CHECK(err_code);
 
-    // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(&lf_clock_config, NULL);
-
-    // Fetch the start address of the application RAM.
     uint32_t ram_start = 0;
-    err_code = softdevice_app_ram_start_get(&ram_start);
+    err_code = nrf_sdh_ble_app_ram_start_get(&ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Overwrite some of the default configurations for the BLE stack.
@@ -227,23 +210,18 @@ static void ble_stack_init(void)
 
     // Configure the maximum number of connections.
     memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = BLE_GAP_ROLE_COUNT_PERIPH_DEFAULT;
+    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = 1;
     ble_cfg.gap_cfg.role_count_cfg.central_role_count = 0;
     ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = 0;
     err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Enable BLE stack.
-    err_code = softdevice_enable(&ram_start);
+    err_code = nrf_sdh_ble_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
 
-    // Subscribe for BLE events.
-    err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
-
-    // Subscribe for system events.
-    err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
+    // Register a handler for BLE events.
+    NRF_SDH_BLE_OBSERVER(m_ble_observer, APP_BLE_OBSERVER_PRIO, ble_evt_handler, NULL);
 }
 
 
@@ -284,7 +262,7 @@ static void power_manage(void)
  */
 static void on_es_evt(nrf_ble_es_evt_t evt)
 {
-    switch(evt)
+    switch (evt)
     {
         case NRF_BLE_ES_EVT_ADVERTISEMENT_SENT:
             bsp_board_led_invert(NON_CONNECTABLE_ADV_LED_PIN);

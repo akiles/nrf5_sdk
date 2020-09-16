@@ -59,11 +59,11 @@
 #include "ant_channel_config.h"
 #include "ant_search_config.h"
 #include "nrf_soc.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 
 #define WILDCARD_DEVICE_NUMBER          0x00                    /**< Wildcard device number. */
-// Miscellaneous defines.
-#define ANT_CHANNEL_DEFAULT_NETWORK     0x00                    /**< ANT Channel Network. */
-#define ANT_CHANNEL_NUMBER              0x00                    /**< ANT Channel Number. */
+#define APP_ANT_OBSERVER_PRIO           1                       /**< Application's ANT observer priority. You shouldn't need to modify this value. */
 
 // Operation modes
 static enum
@@ -97,14 +97,14 @@ static void uplink_message_send(uint16_t device_number)
     if (device_number != WILDCARD_DEVICE_NUMBER)
     {
         // Set the channel ID of the specific device to send message to
-        err_code = sd_ant_channel_id_set(ANT_CHANNEL_NUMBER,
+        err_code = sd_ant_channel_id_set(ANT_CHANNEL_NUM,
                                          device_number,
                                          CHAN_ID_DEV_TYPE,
                                          CHAN_ID_TRANS_TYPE);
         APP_ERROR_CHECK(err_code);
     }
 
-    err_code = sd_ant_broadcast_message_tx(ANT_CHANNEL_NUMBER,
+    err_code = sd_ant_broadcast_message_tx(ANT_CHANNEL_NUM,
                                            ANT_STANDARD_DATA_PAYLOAD_SIZE,
                                            m_tx_buffer);
     APP_ERROR_CHECK(err_code);
@@ -122,17 +122,17 @@ void ant_search_uplink_setup(void)
 
     ant_channel_config_t channel_config =
     {
-        .channel_number    = ANT_CHANNEL_NUMBER,
+        .channel_number    = ANT_CHANNEL_NUM,
         .channel_type      = CHANNEL_TYPE_SLAVE,
         .ext_assign        = EXT_PARAM_ALWAYS_SEARCH,
         .rf_freq           = RF_FREQ,
         .transmission_type = CHAN_ID_TRANS_TYPE,
         .device_type       = CHAN_ID_DEV_TYPE,
         .device_number     = WILDCARD_DEVICE_NUMBER,
-        .network_number    = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number    = ANT_NETWORK_NUM,
     };
 
-    ant_search_config_t search_config = DEFAULT_ANT_SEARCH_CONFIG(ANT_CHANNEL_NUMBER);
+    ant_search_config_t search_config = DEFAULT_ANT_SEARCH_CONFIG(ANT_CHANNEL_NUM);
 
     // Keep searching always
     search_config.low_priority_timeout = ANT_LOW_PRIORITY_TIMEOUT_DISABLE;
@@ -153,7 +153,7 @@ void ant_search_uplink_setup(void)
     APP_ERROR_CHECK(err_code);
 
     // Open background scanning channel
-    err_code = sd_ant_channel_open(ANT_CHANNEL_NUMBER);
+    err_code = sd_ant_channel_open(ANT_CHANNEL_NUM);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -180,7 +180,7 @@ void ant_search_uplink_bsp_evt_handler(bsp_event_t evt)
 }
 
 
-void ant_search_uplink_event_handler(ant_evt_t * p_ant_evt)
+void ant_search_uplink_event_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
     switch (p_ant_evt->event)
     {
@@ -193,7 +193,7 @@ void ant_search_uplink_event_handler(ant_evt_t * p_ant_evt)
             else if (m_mode == MODE_SEND_UPLINK_SPECIFIC)
             {
                 // Reset the channel ID to wild card to continue receiving messages from any device
-                uint32_t err_code = sd_ant_channel_id_set(ANT_CHANNEL_NUMBER,
+                uint32_t err_code = sd_ant_channel_id_set(ANT_CHANNEL_NUM,
                                                           WILDCARD_DEVICE_NUMBER,
                                                           CHAN_ID_DEV_TYPE,
                                                           CHAN_ID_TRANS_TYPE);
@@ -205,11 +205,10 @@ void ant_search_uplink_event_handler(ant_evt_t * p_ant_evt)
             bsp_board_led_invert(BSP_BOARD_LED_0);
             if (m_mode == MODE_SEND_UPLINK_SPECIFIC && !m_sent)
             {
-                ANT_MESSAGE * p_message = (ANT_MESSAGE *) p_ant_evt->msg.evt_buffer;
                 // Decode extended data to get channel ID of the received message and send message to that specific device
-                if (p_message->ANT_MESSAGE_stExtMesgBF.bANTDeviceID)
+                if (p_ant_evt->message.ANT_MESSAGE_stExtMesgBF.bANTDeviceID)
                 {
-                    uint16_t device_number = uint16_decode(p_message->ANT_MESSAGE_aucExtData);
+                    uint16_t device_number = uint16_decode(p_ant_evt->message.ANT_MESSAGE_aucExtData);
                     uplink_message_send(device_number);
                     m_sent = true;
                 }
@@ -221,4 +220,4 @@ void ant_search_uplink_event_handler(ant_evt_t * p_ant_evt)
     }
 }
 
-
+NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_search_uplink_event_handler, NULL);

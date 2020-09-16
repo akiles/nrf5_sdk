@@ -48,11 +48,11 @@
 #include "ancs_app_attr_get.h"
 #include "ble_err.h"
 #include "ble_srv_common.h"
-#include "nrf_assert.h"
 #include "ble_db_discovery.h"
 #include "app_error.h"
-#define NRF_LOG_MODULE_NAME "BLE_ANCS_C"
+#define NRF_LOG_MODULE_NAME ble_ancs_c
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 #define BLE_ANCS_NOTIF_EVT_ID_INDEX       0     /**< Index of the Event ID field when parsing notifications. */
 #define BLE_ANCS_NOTIF_FLAGS_INDEX        1     /**< Index of the Flags field when parsing notifications. */
@@ -65,9 +65,8 @@
 #define TIME_STRING_LEN                  15     /**< Unicode Technical Standard (UTS) #35 date format pattern "yyyyMMdd'T'HHmmSS" + "'\0'". */
 
 
-/**@brief 128-bit service UUID for the Apple Notification Center Service.
- */
-const ble_uuid128_t ble_ancs_base_uuid128 =
+/**@brief 128-bit service UUID for the Apple Notification Center Service. */
+ble_uuid128_t const ble_ancs_base_uuid128 =
 {
     {
         // 7905F431-B5CE-4E99-A40F-4B1E122D00D0
@@ -77,9 +76,8 @@ const ble_uuid128_t ble_ancs_base_uuid128 =
 };
 
 
-/**@brief 128-bit control point UUID.
- */
-const ble_uuid128_t ble_ancs_cp_base_uuid128 =
+/**@brief 128-bit control point UUID. */
+ble_uuid128_t const ble_ancs_cp_base_uuid128 =
 {
     {
         // 69d1d8f3-45e1-49a8-9821-9BBDFDAAD9D9
@@ -88,9 +86,8 @@ const ble_uuid128_t ble_ancs_cp_base_uuid128 =
     }
 };
 
-/**@brief 128-bit notification source UUID.
-*/
-const ble_uuid128_t ble_ancs_ns_base_uuid128 =
+/**@brief 128-bit notification source UUID. */
+ble_uuid128_t const ble_ancs_ns_base_uuid128 =
 {
     {
         // 9FBF120D-6301-42D9-8C58-25E699A21DBD
@@ -100,9 +97,8 @@ const ble_uuid128_t ble_ancs_ns_base_uuid128 =
     }
 };
 
-/**@brief 128-bit data source UUID.
-*/
-const ble_uuid128_t ble_ancs_ds_base_uuid128 =
+/**@brief 128-bit data source UUID. */
+ble_uuid128_t const ble_ancs_ds_base_uuid128 =
 {
     {
         // 22EAC6E9-24D6-4BB5-BE44-B36ACE7C7BFB
@@ -121,7 +117,7 @@ const ble_uuid128_t ble_ancs_ds_base_uuid128 =
  * @param[in] p_ancs    Pointer to the ANCS client structure.
  * @param[in] p_ble_evt Pointer to the BLE event received.
  */
-static void on_disconnected(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_evt)
+static void on_disconnected(ble_ancs_c_t * p_ancs, ble_evt_t const * p_ble_evt)
 {
     if (p_ancs->conn_handle == p_ble_evt->evt.gap_evt.conn_handle)
     {
@@ -132,7 +128,7 @@ static void on_disconnected(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_evt)
 
 void ble_ancs_c_on_db_disc_evt(ble_ancs_c_t * p_ancs, ble_db_discovery_evt_t * p_evt)
 {
-    NRF_LOG_INFO("Database Discovery handler called with event 0x%x\r\n", p_evt->evt_type);
+    NRF_LOG_INFO("Database Discovery handler called with event 0x%x", p_evt->evt_type);
 
     ble_ancs_c_evt_t     evt;
     ble_gatt_db_char_t * p_chars;
@@ -140,26 +136,24 @@ void ble_ancs_c_on_db_disc_evt(ble_ancs_c_t * p_ancs, ble_db_discovery_evt_t * p
     p_chars = p_evt->params.discovered_db.charateristics;
 
     // Check if the ANCS Service was discovered.
-    if (p_evt->evt_type == BLE_DB_DISCOVERY_COMPLETE &&
-        p_evt->params.discovered_db.srv_uuid.uuid == ANCS_UUID_SERVICE &&
-        p_evt->params.discovered_db.srv_uuid.type == p_ancs->service.service.uuid.type)
+    if (   (p_evt->evt_type == BLE_DB_DISCOVERY_COMPLETE)
+        && (p_evt->params.discovered_db.srv_uuid.uuid == ANCS_UUID_SERVICE)
+        && (p_evt->params.discovered_db.srv_uuid.type == p_ancs->service.service.uuid.type))
     {
         // Find the handles of the ANCS characteristic.
-        uint32_t i;
-
-        for (i = 0; i < p_evt->params.discovered_db.char_count; i++)
+        for (uint32_t i = 0; i < p_evt->params.discovered_db.char_count; i++)
         {
             switch (p_chars[i].characteristic.uuid.uuid)
             {
                 case ANCS_UUID_CHAR_CONTROL_POINT:
-                    NRF_LOG_INFO("Control Point Characteristic found.\r\n");
+                    NRF_LOG_INFO("Control Point Characteristic found.");
                     memcpy(&evt.service.control_point_char,
                            &p_chars[i].characteristic,
                            sizeof(ble_gattc_char_t));
                     break;
 
                 case ANCS_UUID_CHAR_DATA_SOURCE:
-                    NRF_LOG_INFO("Data Source Characteristic found.\r\n");
+                    NRF_LOG_INFO("Data Source Characteristic found.");
                     memcpy(&evt.service.data_source_char,
                            &p_chars[i].characteristic,
                            sizeof(ble_gattc_char_t));
@@ -167,7 +161,7 @@ void ble_ancs_c_on_db_disc_evt(ble_ancs_c_t * p_ancs, ble_db_discovery_evt_t * p
                     break;
 
                 case ANCS_UUID_CHAR_NOTIFICATION_SOURCE:
-                    NRF_LOG_INFO("Notification point Characteristic found.\r\n");
+                    NRF_LOG_INFO("Notification point Characteristic found.");
                     memcpy(&evt.service.notif_source_char,
                            &p_chars[i].characteristic,
                            sizeof(ble_gattc_char_t));
@@ -197,9 +191,9 @@ void ble_ancs_c_on_db_disc_evt(ble_ancs_c_t * p_ancs, ble_db_discovery_evt_t * p
  * @retval NRF_SUCCESS             If the notification is within bounds.
  * @retval NRF_ERROR_INVALID_PARAM If the notification is out of bounds.
  */
-static uint32_t ble_ancs_verify_notification_format(const ble_ancs_c_evt_notif_t * notif)
+static uint32_t ble_ancs_verify_notification_format(ble_ancs_c_evt_notif_t const * notif)
 {
-    if(   (notif->evt_id >= BLE_ANCS_NB_OF_EVT_ID)
+    if (   (notif->evt_id >= BLE_ANCS_NB_OF_EVT_ID)
        || (notif->category_id >= BLE_ANCS_NB_OF_CATEGORY_ID))
     {
         return NRF_ERROR_INVALID_PARAM;
@@ -213,9 +207,9 @@ static uint32_t ble_ancs_verify_notification_format(const ble_ancs_c_evt_notif_t
  * @param[in] p_data_src Pointer to data that was received from the Notification Provider.
  * @param[in] hvx_len    Length of the data that was received by the Notification Provider.
  */
-static void parse_notif(const ble_ancs_c_t * p_ancs,
-                        const uint8_t      * p_data_src,
-                        const uint16_t       hvx_data_len)
+static void parse_notif(ble_ancs_c_t const * p_ancs,
+                        uint8_t      const * p_data_src,
+                        uint16_t     const   hvx_data_len)
 {
     ble_ancs_c_evt_t ancs_evt;
     uint32_t         err_code;
@@ -266,7 +260,7 @@ static void parse_notif(const ble_ancs_c_t * p_ancs,
 
 
 ret_code_t nrf_ble_ancs_c_app_attr_request(ble_ancs_c_t  * p_ancs,
-                                           const uint8_t * p_app_id,
+                                           uint8_t const * p_app_id,
                                            uint32_t        len)
 {
     return ancs_c_app_attr_request(p_ancs, p_app_id, len);
@@ -278,11 +272,11 @@ ret_code_t nrf_ble_ancs_c_app_attr_request(ble_ancs_c_t  * p_ancs,
  * @param[in] p_ancs    Pointer to an ANCS instance to which the event belongs.
  * @param[in] p_ble_evt Bluetooth stack event.
  */
-static void on_evt_gattc_notif(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_evt)
+static void on_evt_gattc_notif(ble_ancs_c_t * p_ancs, ble_evt_t const * p_ble_evt)
 {
-    const ble_gattc_evt_hvx_t * p_notif = &p_ble_evt->evt.gattc_evt.params.hvx;
+    ble_gattc_evt_hvx_t const * p_notif = &p_ble_evt->evt.gattc_evt.params.hvx;
 
-    if(p_ble_evt->evt.gattc_evt.conn_handle != p_ancs->conn_handle)
+    if (p_ble_evt->evt.gattc_evt.conn_handle != p_ancs->conn_handle)
     {
         return;
     }
@@ -306,7 +300,7 @@ static void on_evt_gattc_notif(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_ev
  * @param[in] p_ancs_c   Pointer to the Battery Service Client Structure.
  * @param[in] p_ble_evt Pointer to the SoftDevice event.
  */
-static void on_ctrlpt_error_rsp(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_evt)
+static void on_ctrlpt_error_rsp(ble_ancs_c_t * p_ancs, ble_evt_t const * p_ble_evt)
 {
     ble_ancs_c_evt_t ancs_evt;
 
@@ -321,7 +315,7 @@ static void on_ctrlpt_error_rsp(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_e
  * @param[in] p_ancs_c   Pointer to the Battery Service Client Structure.
  * @param[in] p_ble_evt Pointer to the SoftDevice event.
  */
-static void on_write_rsp(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_evt)
+static void on_write_rsp(ble_ancs_c_t * p_ancs, ble_evt_t const* p_ble_evt)
 {
     // Check if the event if on the link for this instance
     if (p_ancs->conn_handle != p_ble_evt->evt.gattc_evt.conn_handle)
@@ -338,9 +332,10 @@ static void on_write_rsp(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_evt)
 }
 
 
-void ble_ancs_c_on_ble_evt(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_evt)
+void ble_ancs_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
-    uint16_t evt = p_ble_evt->header.evt_id;
+    ble_ancs_c_t * p_ancs = (ble_ancs_c_t *)p_context;
+    uint16_t        evt   = p_ble_evt->header.evt_id;
 
     switch (evt)
     {
@@ -351,16 +346,18 @@ void ble_ancs_c_on_ble_evt(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_evt)
         case BLE_GATTC_EVT_HVX:
             on_evt_gattc_notif(p_ancs, p_ble_evt);
             break;
+
         case BLE_GAP_EVT_DISCONNECTED:
             on_disconnected(p_ancs, p_ble_evt);
             break;
+
         default:
             break;
     }
 }
 
 
-ret_code_t ble_ancs_c_init(ble_ancs_c_t * p_ancs, const ble_ancs_c_init_t * p_ancs_init)
+ret_code_t ble_ancs_c_init(ble_ancs_c_t * p_ancs, ble_ancs_c_init_t const * p_ancs_init)
 {
     uint32_t err_code;
 
@@ -375,9 +372,9 @@ ret_code_t ble_ancs_c_init(ble_ancs_c_t * p_ancs, const ble_ancs_c_init_t * p_an
     p_ancs->parse_info.current_attr_index   = 0;
     p_ancs->parse_info.current_app_id_index = 0;
 
-    p_ancs->evt_handler    = p_ancs_init->evt_handler;
-    p_ancs->error_handler  = p_ancs_init->error_handler;
-    p_ancs->conn_handle    = BLE_CONN_HANDLE_INVALID;
+    p_ancs->evt_handler   = p_ancs_init->evt_handler;
+    p_ancs->error_handler = p_ancs_init->error_handler;
+    p_ancs->conn_handle   = BLE_CONN_HANDLE_INVALID;
 
     p_ancs->service.data_source_cccd.uuid.uuid  = BLE_UUID_DESCRIPTOR_CLIENT_CHAR_CONFIG;
     p_ancs->service.notif_source_cccd.uuid.uuid = BLE_UUID_DESCRIPTOR_CLIENT_CHAR_CONFIG;
@@ -439,36 +436,36 @@ static uint32_t cccd_configure(const uint16_t conn_handle, const uint16_t handle
 }
 
 
-ret_code_t ble_ancs_c_notif_source_notif_enable(const ble_ancs_c_t * p_ancs)
+ret_code_t ble_ancs_c_notif_source_notif_enable(ble_ancs_c_t const * p_ancs)
 {
-    NRF_LOG_INFO("Enable Notification Source notifications. writing to handle: %i \r\n",
+    NRF_LOG_INFO("Enable Notification Source notifications. writing to handle: %i ",
          p_ancs->service.notif_source_cccd.handle);
     return cccd_configure(p_ancs->conn_handle, p_ancs->service.notif_source_cccd.handle, true);
 }
 
 
-ret_code_t ble_ancs_c_notif_source_notif_disable(const ble_ancs_c_t * p_ancs)
+ret_code_t ble_ancs_c_notif_source_notif_disable(ble_ancs_c_t const * p_ancs)
 {
     return cccd_configure(p_ancs->conn_handle, p_ancs->service.notif_source_cccd.handle, false);
 }
 
 
-ret_code_t ble_ancs_c_data_source_notif_enable(const ble_ancs_c_t * p_ancs)
+ret_code_t ble_ancs_c_data_source_notif_enable(ble_ancs_c_t const * p_ancs)
 {
-    NRF_LOG_INFO("Enable Data Source notifications. Writing to handle: %i \r\n",
+    NRF_LOG_INFO("Enable Data Source notifications. Writing to handle: %i ",
         p_ancs->service.data_source_cccd.handle);
     return cccd_configure(p_ancs->conn_handle, p_ancs->service.data_source_cccd.handle, true);
 }
 
 
-ret_code_t ble_ancs_c_data_source_notif_disable(const ble_ancs_c_t * p_ancs)
+ret_code_t ble_ancs_c_data_source_notif_disable(ble_ancs_c_t const * p_ancs)
 {
     return cccd_configure(p_ancs->conn_handle, p_ancs->service.data_source_cccd.handle, false);
 }
 
 
 uint32_t ble_ancs_get_notif_attrs(ble_ancs_c_t * p_ancs,
-                                  const uint32_t p_uid)
+                                  uint32_t const p_uid)
 {
     tx_message_t p_msg;
     memset(&p_msg, 0, sizeof(tx_message_t));
@@ -518,13 +515,13 @@ uint32_t ble_ancs_get_notif_attrs(ble_ancs_c_t * p_ancs,
 
 
 ret_code_t nrf_ble_ancs_c_attr_add(ble_ancs_c_t                       * p_ancs,
-                                   const ble_ancs_c_notif_attr_id_val_t id,
+                                   ble_ancs_c_notif_attr_id_val_t const id,
                                    uint8_t                            * p_data,
-                                   const uint16_t                       len)
+                                   uint16_t const                      len)
 {
     VERIFY_PARAM_NOT_NULL(p_data);
 
-    if((len == 0) || (len > BLE_ANCS_ATTR_DATA_MAX))
+    if ((len == 0) || (len > BLE_ANCS_ATTR_DATA_MAX))
     {
         return NRF_ERROR_INVALID_LENGTH;
     }
@@ -538,14 +535,14 @@ ret_code_t nrf_ble_ancs_c_attr_add(ble_ancs_c_t                       * p_ancs,
 
 
 ret_code_t nrf_ble_ancs_c_app_attr_add(ble_ancs_c_t                     * p_ancs,
-                                       const ble_ancs_c_app_attr_id_val_t id,
+                                       ble_ancs_c_app_attr_id_val_t const id,
                                        uint8_t                          * p_data,
-                                       const uint16_t                     len)
+                                       uint16_t const                     len)
 {
     VERIFY_PARAM_NOT_NULL(p_ancs);
     VERIFY_PARAM_NOT_NULL(p_data);
 
-    if((len == 0) || (len > BLE_ANCS_ATTR_DATA_MAX))
+    if ((len == 0) || (len > BLE_ANCS_ATTR_DATA_MAX))
     {
         return NRF_ERROR_INVALID_LENGTH;
     }
@@ -558,7 +555,7 @@ ret_code_t nrf_ble_ancs_c_app_attr_add(ble_ancs_c_t                     * p_ancs
 }
 
 ret_code_t ble_ancs_c_app_attr_remove(ble_ancs_c_t                     * p_ancs,
-                                      const ble_ancs_c_app_attr_id_val_t id)
+                                      ble_ancs_c_app_attr_id_val_t const id)
 {
     p_ancs->ancs_app_attr_list[id].get         = false;
     p_ancs->ancs_app_attr_list[id].attr_len    = 0;
@@ -567,7 +564,7 @@ ret_code_t ble_ancs_c_app_attr_remove(ble_ancs_c_t                     * p_ancs,
 }
 
 ret_code_t ble_ancs_c_notif_attr_remove(ble_ancs_c_t                          * p_ancs,
-                                        const ble_ancs_c_notif_attr_id_val_t id)
+                                        ble_ancs_c_notif_attr_id_val_t const id)
 {
     p_ancs->ancs_notif_attr_list[id].get         = false;
     p_ancs->ancs_notif_attr_list[id].attr_len    = 0;
@@ -584,7 +581,7 @@ ret_code_t nrf_ble_ancs_c_attr_req_clear_all(ble_ancs_c_t * p_ancs)
 
 
 ret_code_t nrf_ble_ancs_c_request_attrs(ble_ancs_c_t * p_ancs,
-                                        const ble_ancs_c_evt_notif_t * p_notif)
+                                        ble_ancs_c_evt_notif_t const * p_notif)
 {
     uint32_t err_code;
     err_code = ble_ancs_verify_notification_format(p_notif);
@@ -615,18 +612,16 @@ ret_code_t nrf_ancs_perform_notif_action(ble_ancs_c_t * p_ancs, uint32_t uid, bl
     tx_message_t msg;
     memset(&msg, 0, sizeof(tx_message_t));
 
-    uint16_t len = 0;
-
-    len = encode_notif_action(msg.req.write_req.gattc_value, uid, action_id);
+    uint16_t len = encode_notif_action(msg.req.write_req.gattc_value, uid, action_id);
 
     msg.req.write_req.gattc_params.handle   = p_ancs->service.control_point_char.handle_value;
     msg.req.write_req.gattc_params.p_value  = msg.req.write_req.gattc_value;
     msg.req.write_req.gattc_params.offset   = 0;
     msg.req.write_req.gattc_params.write_op = BLE_GATT_OP_WRITE_REQ;
 
-    msg.req.write_req.gattc_params.len       = len;
-    msg.conn_handle                          = p_ancs->conn_handle;
-    msg.type                                 = WRITE_REQ;
+    msg.req.write_req.gattc_params.len      = len;
+    msg.conn_handle                         = p_ancs->conn_handle;
+    msg.type                                = WRITE_REQ;
 
     tx_buffer_insert(&msg);
     tx_buffer_process();
@@ -635,14 +630,14 @@ ret_code_t nrf_ancs_perform_notif_action(ble_ancs_c_t * p_ancs, uint32_t uid, bl
 }
 
 ret_code_t nrf_ble_ancs_c_handles_assign(ble_ancs_c_t * p_ancs,
-                                         const uint16_t conn_handle,
-                                         const ble_ancs_c_service_t * p_peer_handles)
+                                         uint16_t const conn_handle,
+                                         ble_ancs_c_service_t const * p_peer_handles)
 {
     VERIFY_PARAM_NOT_NULL(p_ancs);
 
     p_ancs->conn_handle = conn_handle;
 
-    if(p_peer_handles != NULL)
+    if (p_peer_handles != NULL)
     {
         p_ancs->service.control_point_char.handle_value = p_peer_handles->control_point_char.handle_value;
         p_ancs->service.data_source_cccd.handle         = p_peer_handles->data_source_cccd.handle;
@@ -655,4 +650,3 @@ ret_code_t nrf_ble_ancs_c_handles_assign(ble_ancs_c_t * p_ancs,
 }
 
 #endif// NRF_MODULE_ENABLED(BLE_ANCS_C)
-

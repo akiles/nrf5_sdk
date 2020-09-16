@@ -56,9 +56,13 @@
  *           Heart Rate Measurement Value (both 8 bit and 16 bit) field from it and provide it to
  *           the application.
  *
- * @note     The application must propagate BLE stack events to this module by calling
- *           ble_hrs_c_on_ble_evt().
- *
+ * @note    The application must register this module as BLE event observer using the
+ *          NRF_SDH_BLE_OBSERVER macro. Example:
+ *          @code
+ *              ble_hrs_c_t instance;
+ *              NRF_SDH_BLE_OBSERVER(anything, BLE_HRS_C_BLE_OBSERVER_PRIO,
+ *                                   ble_hrs_c_on_ble_evt, &instance);
+ *          @endcode
  */
 
 #ifndef BLE_HRS_C_H__
@@ -68,11 +72,22 @@
 #include "ble.h"
 #include "ble_db_discovery.h"
 #include "sdk_config.h"
+#include "nrf_sdh_ble.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/**@brief   Macro for defining a ble_hrs_c instance.
+ *
+ * @param   _name   Name of the instance.
+ * @hideinitializer
+ */
+#define BLE_HRS_C_DEF(_name)                                                                        \
+static ble_hrs_c_t _name;                                                                           \
+NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
+                     BLE_HRS_C_BLE_OBSERVER_PRIO,                                                   \
+                     ble_hrs_c_on_ble_evt, &_name)
 
 /** @brief  Maximum number of RR intervals to be decoded for each HRM notifications (any extra RR intervals will be ignored).
  *
@@ -110,14 +125,12 @@ typedef struct
     uint16_t rr_intervals[BLE_HRS_C_RR_INTERVALS_MAX_CNT];    /**< RR intervals. */
 } ble_hrm_t;
 
-
 /**@brief Structure containing the handles related to the Heart Rate Service found on the peer. */
 typedef struct
 {
     uint16_t hrm_cccd_handle;  /**< Handle of the CCCD of the Heart Rate Measurement characteristic. */
     uint16_t hrm_handle;       /**< Handle of the Heart Rate Measurement characteristic as provided by the SoftDevice. */
 } hrs_db_t;
-
 
 /**@brief Heart Rate Event structure. */
 typedef struct
@@ -173,6 +186,7 @@ typedef struct
 
 /** @} */
 
+
 /**
  * @defgroup hrs_c_functions Functions
  * @{
@@ -195,16 +209,17 @@ typedef struct
  */
 uint32_t ble_hrs_c_init(ble_hrs_c_t * p_ble_hrs_c, ble_hrs_c_init_t * p_ble_hrs_c_init);
 
+
 /**@brief     Function for handling BLE events from the SoftDevice.
  *
  * @details   This function will handle the BLE events received from the SoftDevice. If a BLE
  *            event is relevant to the Heart Rate Client module, then it uses it to update
  *            interval variables and, if necessary, send events to the application.
  *
- * @param[in] p_ble_hrs_c Pointer to the heart rate client structure.
- * @param[in] p_ble_evt   Pointer to the BLE event.
+ * @param[in] p_ble_evt     Pointer to the BLE event.
+ * @param[in] p_context     Pointer to the heart rate client structure.
  */
-void ble_hrs_c_on_ble_evt(ble_hrs_c_t * p_ble_hrs_c, const ble_evt_t * p_ble_evt);
+void ble_hrs_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 
 
 /**@brief   Function for requesting the peer to start sending notification of Heart Rate

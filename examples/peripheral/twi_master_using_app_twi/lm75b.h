@@ -64,11 +64,10 @@ extern "C" {
     ((((int16_t)temp_hi << 8) | temp_lo) / 32)
 
 
-extern uint8_t const lm75b_conf_reg_addr;
-extern uint8_t const lm75b_temp_reg_addr;
-extern uint8_t const lm75b_tos_reg_addr;
-extern uint8_t const lm75b_thyst_reg_addr;
-
+extern uint8_t APP_TWI_BUFFER_LOC_IND lm75b_conf_reg_addr;
+extern uint8_t APP_TWI_BUFFER_LOC_IND lm75b_temp_reg_addr;
+extern uint8_t APP_TWI_BUFFER_LOC_IND lm75b_tos_reg_addr;
+extern uint8_t APP_TWI_BUFFER_LOC_IND lm75b_thyst_reg_addr;
 
 #define LM75B_READ(p_reg_addr, p_buffer, byte_cnt) \
     APP_TWI_WRITE(LM75B_ADDR, p_reg_addr, 1,        APP_TWI_NO_STOP), \
@@ -78,9 +77,8 @@ extern uint8_t const lm75b_thyst_reg_addr;
     LM75B_READ(&lm75b_temp_reg_addr, p_buffer, 2)
 
 #define LM75B_INIT_TRANSFER_COUNT 1
+
 extern app_twi_transfer_t const lm75b_init_transfers[LM75B_INIT_TRANSFER_COUNT];
-
-
 
 #ifdef __cplusplus
 }

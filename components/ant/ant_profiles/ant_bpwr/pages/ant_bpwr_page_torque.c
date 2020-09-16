@@ -44,7 +44,7 @@
 #include "ant_bpwr_page_torque.h"
 #include "ant_bpwr_utils.h"
 
-#define NRF_LOG_MODULE_NAME "ANT_BPWR_PAGE_TORQUE"
+#define NRF_LOG_MODULE_NAME ant_bpwr_page_torque
 #if ANT_BPWR_PAGE_TORQUE_LOG_ENABLED
 #define NRF_LOG_LEVEL       ANT_BPWR_PAGE_TORQUE_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  ANT_BPWR_PAGE_TORQUE_INFO_COLOR
@@ -52,6 +52,7 @@
 #define NRF_LOG_LEVEL       0
 #endif // ANT_BPWR_PAGE_TORQUE_LOG_ENABLED
 #include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 /**@brief bicycle power page torque data layout structure. */
 typedef struct
@@ -71,12 +72,12 @@ void ant_bpwr_page_torque_log(ant_bpwr_page_torque_data_t const * p_page_data)
     uint16_t period     = ANT_BPWR_TORQUE_PERIOD_RESCALE(p_page_data->period);
     uint32_t acc_torque = ANT_BPWR_ACC_TORQUE_RESCALE(p_page_data->accumulated_torque);
 
-    NRF_LOG_INFO("event count:                    %u\r\n", p_page_data->update_event_count);
-    NRF_LOG_INFO("tick:                           %u\r\n", p_page_data->tick);
-    NRF_LOG_INFO("period:                         %u.%03us\r\n",
+    NRF_LOG_INFO("event count:                    %u", p_page_data->update_event_count);
+    NRF_LOG_INFO("tick:                           %u", p_page_data->tick);
+    NRF_LOG_INFO("period:                         %u.%03us",
                   (unsigned int)(period / ANT_BPWR_TORQUE_PERIOD_DISP_PRECISION),
                   (unsigned int)(period % ANT_BPWR_TORQUE_PERIOD_DISP_PRECISION));
-    NRF_LOG_INFO("accumulated torque:             %u.%01uNm\r\n",
+    NRF_LOG_INFO("accumulated torque:             %u.%01uNm",
                   (unsigned int)(acc_torque / ANT_BPWR_ACC_TORQUE_DISP_PRECISION),
                   (unsigned int)(acc_torque % ANT_BPWR_ACC_TORQUE_DISP_PRECISION));
 }

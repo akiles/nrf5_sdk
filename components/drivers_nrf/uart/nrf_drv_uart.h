@@ -53,7 +53,12 @@
 #ifndef NRF_DRV_UART_H
 #define NRF_DRV_UART_H
 
+#include "nrf_peripherals.h"
+
+#ifdef UART_PRESENT
 #include "nrf_uart.h"
+#endif
+
 #ifdef UARTE_PRESENT
 #include "nrf_uarte.h"
 #endif
@@ -77,19 +82,21 @@ extern "C" {
 #define UART1_INSTANCE_INDEX UART0_ENABLED
 #define UART_ENABLED_COUNT UART0_ENABLED + UART1_ENABLED
 
-#if defined(UARTE_PRESENT)
+#if defined(UARTE_PRESENT) && defined(UART_PRESENT)
     #define NRF_DRV_UART_PERIPHERAL(id)           \
         (CONCAT_3(UART, id, _CONFIG_USE_EASY_DMA) == 1 ? \
             (void *)CONCAT_2(NRF_UARTE, id)       \
           : (void *)CONCAT_2(NRF_UART, id))
-#else
+#elif defined(UART_PRESENT)
     #define NRF_DRV_UART_PERIPHERAL(id)  (void *)CONCAT_2(NRF_UART, id)
+#else //UARTE_PRESENT !UART_PRESENT
+    #define NRF_DRV_UART_PERIPHERAL(id)  (void *)CONCAT_2(NRF_UARTE, id)
 #endif
 
 // This set of macros makes it possible to exclude parts of code, when one type
 // of supported peripherals is not used.
 
-#if defined(UARTE_PRESENT)
+#if defined(UARTE_PRESENT) && defined(UART_PRESENT)
 
 #if (UART_EASY_DMA_SUPPORT == 1)
 #define UARTE_IN_USE
@@ -105,6 +112,20 @@ extern "C" {
 
 #elif defined(UART_PRESENT)
 #define UART_IN_USE
+#elif defined(UARTE_PRESENT)
+#define UARTE_IN_USE
+#endif
+
+#if defined(UARTE_PRESENT) && !defined(UART_PRESENT)
+typedef nrf_uarte_hwfc_t       nrf_uart_hwfc_t;
+typedef nrf_uarte_parity_t     nrf_uart_parity_t;
+typedef nrf_uarte_baudrate_t   nrf_uart_baudrate_t;
+typedef nrf_uarte_error_mask_t nrf_uart_error_mask_t;
+typedef nrf_uarte_task_t       nrf_uart_task_t;
+typedef nrf_uarte_event_t      nrf_uart_event_t;
+#ifndef NRF_UART_PSEL_DISCONNECTED
+#define NRF_UART_PSEL_DISCONNECTED 0xFFFFFFFF
+#endif
 #endif
 
 /**
@@ -120,6 +141,7 @@ typedef struct
 #if (defined(UART_IN_USE) || (UART_ENABLED == 0))
     NRF_UART_Type * p_uart;   ///< Pointer to a structure with UART registers.
 #endif
+    void * p_reg;
     } reg;
     uint8_t drv_inst_idx;     ///< Driver instance index.
 } nrf_drv_uart_t;
@@ -237,7 +259,7 @@ typedef void (*nrf_uart_event_handler_t)(nrf_drv_uart_event_t * p_event, void * 
  * This function configures and enables UART. After this function GPIO pins are controlled by UART.
  *
  * @param[in] p_instance    Pointer to the driver instance structure.
- * @param[in] p_config      Initial configuration. Default configuration used if NULL.
+ * @param[in] p_config      Initial configuration.
  * @param[in] event_handler Event handler provided by the user. If not provided driver works in
  *                          blocking mode.
  *

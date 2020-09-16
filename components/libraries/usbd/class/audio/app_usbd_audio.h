@@ -172,26 +172,55 @@ app_usbd_audio_class_get(app_usbd_class_inst_t const * p_inst)
 }
 
 /**
- * @brief Set transmit buffer
+ * @brief Get the size of last received transfer.
  *
- * @param[in] p_inst    Base class instance
- * @param[in] p_buff    Transmit buffer
- * @param[in] size      Transmit buffer size
- * */
-void app_usbd_audio_class_tx_buf_set(app_usbd_class_inst_t const * p_inst,
-                                     const void * p_buff,
-                                     size_t size);
+ * @note Call this function in reaction to a SOF event to check if there is any data to process.
+ *
+ * @param p_inst Base class instance.
+ *
+ * @return Number of bytes received in the last transmission.
+ */
+size_t app_usbd_audio_class_rx_size_get(app_usbd_class_inst_t const * p_inst);
 
 /**
- * @brief Set receive buffer
+ * @brief Start audio data copying from the endpoint buffer.
  *
- * @param[in] p_inst    Base class instance
- * @param[in] p_buff    Receive buffer
- * @param[in] size      Receive buffer size
- * */
-void app_usbd_audio_class_rx_buf_set(app_usbd_class_inst_t const * p_inst,
-                                     void * p_buff,
-                                     size_t size);
+ * Function to be used to copy data from an audio OUT endpoint to a given buffer.
+ * When it finishes, an @ref APP_USBD_AUDIO_USER_EVT_RX_DONE event is generated.
+ *
+ * @param p_inst Base class instance.
+ * @param p_buff Target buffer.
+ * @param size   Size of the requested data.
+ *
+ * @return Result of the endpoint transmission start.
+ *
+ * @sa app_usbd_audio_class_rx_size_get
+ *
+ * @note This function should be called in reaction to a SOF event.
+ *       Isochronous endpoints are double buffered and they are automatically switched at every SOF.
+ */
+ret_code_t app_usbd_audio_class_rx_start(app_usbd_class_inst_t const * p_inst,
+                                         void * p_buff,
+                                         size_t size);
+
+/**
+ * @brief Start copying audio data to the endpoint buffer.
+ *
+ * Function to be used to copy data to an audio IN endpoint from a given buffer.
+ * When it finishes, an @ref APP_USBD_AUDIO_USER_EVT_TX_DONE event is generated.
+ *
+ * @param p_inst Base class instance.
+ * @param p_buff Source buffer.
+ * @param size   Size of the data to be sent.
+ *
+ * @return Result of the endpoint transsmision start.
+ *
+ * @note This function should be called in reaction to a SOF event.
+ *       Isochronous endpoints are double buffered and they are automatically switched at every SOF.
+ */
+ret_code_t app_usbd_audio_class_tx_start(app_usbd_class_inst_t const * p_inst,
+                                         const void * p_buff,
+                                         size_t size);
 
 /** @} */
 

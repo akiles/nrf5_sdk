@@ -41,7 +41,7 @@
  *
  * @defgroup sdk_nrf_dfu_mbr MBR functions
  * @{
- * @ingroup  sdk_nrf_dfu
+ * @ingroup  nrf_dfu
  */
 
 #ifndef NRF_DFU_MBR_H__
@@ -102,14 +102,24 @@ uint32_t nrf_dfu_mbr_compare(uint32_t * p_ptr1, uint32_t * p_ptr2, uint32_t len)
 
 /** @brief Function for setting the address of the vector table using an MBR command.
  *
- * @param[in]   address       Address of the new vector table.
- * @param[in]   is_temporary  If set to 1 the new forwarding address will not be stored
- *                            in flash.
+ * @param[in]  address   Address of the new vector table.
  *
- * @retval  NRF_SUCCESS     If the address of the new vector table was set. Any other
- *                          return value indicates that the address could not be set.
+ * @retval  NRF_SUCCESS  If the address of the new vector table was set. Any other
+ *                       return value indicates that the address could not be set.
  */
-uint32_t nrf_dfu_mbr_vector_table_set(uint32_t address, uint8_t is_temporary);
+uint32_t nrf_dfu_mbr_vector_table_set(uint32_t address);
+
+
+#ifndef SOFTDEVICE_PRESENT
+/** @brief Function for setting the address of the irq table using an MBR command.
+ *
+ * @param[in]  address   Address of the new irq table.
+ *
+ * @retval  NRF_SUCCESS  If the address of the new irq table was set. Any other
+ *                       return value indicates that the address could not be set.
+ */
+uint32_t nrf_dfu_mbr_irq_forward_address_set(uint32_t address);
+#endif
 
 
 #ifdef __cplusplus

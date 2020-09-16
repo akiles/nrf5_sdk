@@ -79,6 +79,7 @@ __stackless void HardFault_Handler(void)
     "   ldr r3, 103f                           \n"
     "   bx r3                                  \n"
 
+    "DATA                                      \n"
     "100:                                      \n"
     "   DC32 0xFFFFFFFD                        \n"
     "101:                                      \n"

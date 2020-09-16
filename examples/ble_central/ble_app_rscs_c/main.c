@@ -51,50 +51,53 @@
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_db_discovery.h"
-#include "softdevice_handler.h"
+#include "ble_srv_common.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ble.h"
+#include "nrf_sdh_soc.h"
+#include "nrf_pwr_mgmt.h"
 #include "app_util.h"
 #include "app_error.h"
-#include "boards.h"
-#include "nrf_gpio.h"
 #include "ble_rscs_c.h"
 #include "app_util.h"
 #include "app_timer.h"
-#include "bsp.h"
 #include "bsp_btn_ble.h"
 #include "peer_manager.h"
 #include "fds.h"
-#include "fstorage.h"
+#include "nrf_fstorage.h"
 #include "ble_conn_state.h"
 #include "nrf_ble_gatt.h"
 
-#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
-#define CENTRAL_LINK_COUNT        1                                     /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
-#define PERIPHERAL_LINK_COUNT     0                                     /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 
-#define SEC_PARAM_BOND            1                                     /**< Perform bonding. */
-#define SEC_PARAM_MITM            0                                     /**< Man In The Middle protection not required. */
-#define SEC_PARAM_LESC            0                                     /**< LE Secure Connections not enabled. */
-#define SEC_PARAM_KEYPRESS        0                                     /**< Keypress notifications not enabled. */
-#define SEC_PARAM_IO_CAPABILITIES BLE_GAP_IO_CAPS_NONE                  /**< No I/O capabilities. */
-#define SEC_PARAM_OOB             0                                     /**< Out Of Band data not available. */
-#define SEC_PARAM_MIN_KEY_SIZE    7                                     /**< Minimum encryption key size. */
-#define SEC_PARAM_MAX_KEY_SIZE    16                                    /**< Maximum encryption key size. */
+#define APP_BLE_CONN_CFG_TAG        1                                   /**< A tag identifying the SoftDevice BLE configuration. */
+#define APP_BLE_OBSERVER_PRIO       1                                   /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_SOC_OBSERVER_PRIO       1                                   /**< Applications' SoC observer priority. You shoulnd't need to modify this value. */
 
-#define SCAN_INTERVAL             0x00A0                                /**< Determines scan interval in units of 0.625 millisecond. */
-#define SCAN_WINDOW               0x0050                                /**< Determines scan window in units of 0.625 millisecond. */
+#define SEC_PARAM_BOND              1                                   /**< Perform bonding. */
+#define SEC_PARAM_MITM              0                                   /**< Man In The Middle protection not required. */
+#define SEC_PARAM_LESC              0                                   /**< LE Secure Connections not enabled. */
+#define SEC_PARAM_KEYPRESS          0                                   /**< Keypress notifications not enabled. */
+#define SEC_PARAM_IO_CAPABILITIES   BLE_GAP_IO_CAPS_NONE                /**< No I/O capabilities. */
+#define SEC_PARAM_OOB               0                                   /**< Out Of Band data not available. */
+#define SEC_PARAM_MIN_KEY_SIZE      7                                   /**< Minimum encryption key size. */
+#define SEC_PARAM_MAX_KEY_SIZE      16                                  /**< Maximum encryption key size. */
 
-#define MIN_CONNECTION_INTERVAL   MSEC_TO_UNITS(7.5, UNIT_1_25_MS)      /**< Determines minimum connection interval in millisecond. */
-#define MAX_CONNECTION_INTERVAL   MSEC_TO_UNITS(30, UNIT_1_25_MS)       /**< Determines maximum connection interval in millisecond. */
-#define SLAVE_LATENCY             0                                     /**< Determines slave latency in counts of connection events. */
-#define SUPERVISION_TIMEOUT       MSEC_TO_UNITS(4000, UNIT_10_MS)       /**< Determines supervision time-out in units of 10 millisecond. */
+#define SCAN_INTERVAL               0x00A0                              /**< Determines scan interval in units of 0.625 millisecond. */
+#define SCAN_WINDOW                 0x0050                              /**< Determines scan window in units of 0.625 millisecond. */
 
-#define TARGET_UUID               BLE_UUID_RUNNING_SPEED_AND_CADENCE    /**< Target device name that application is looking for. */
-#define UUID16_SIZE               2                                     /**< Size of 16 bit UUID */
+#define MIN_CONNECTION_INTERVAL     MSEC_TO_UNITS(7.5, UNIT_1_25_MS)    /**< Determines minimum connection interval in millisecond. */
+#define MAX_CONNECTION_INTERVAL     MSEC_TO_UNITS(30, UNIT_1_25_MS)     /**< Determines maximum connection interval in millisecond. */
+#define SLAVE_LATENCY               0                                   /**< Determines slave latency in counts of connection events. */
+#define SUPERVISION_TIMEOUT         MSEC_TO_UNITS(4000, UNIT_10_MS)     /**< Determines supervision time-out in units of 10 millisecond. */
 
-/**@breif Macro to unpack 16bit unsigned UUID from octet stream. */
+#define TARGET_UUID                 BLE_UUID_RUNNING_SPEED_AND_CADENCE  /**< Target device name that application is looking for. */
+#define UUID16_SIZE                 2                                   /**< Size of 16 bit UUID */
+
+/**@brief Macro to unpack 16bit unsigned UUID from octet stream. */
 #define UUID16_EXTRACT(DST, SRC) \
     do                           \
     {                            \
@@ -112,17 +115,17 @@ typedef struct
 }data_t;
 
 
-static ble_db_discovery_t    m_ble_db_discovery;            /**< Structure used to identify the DB Discovery module. */
-static ble_rscs_c_t          m_ble_rsc_c;                   /**< Structure used to identify the Running Speed and Cadence client module. */
-static ble_gap_scan_params_t m_scan_param;                  /**< Scan parameters requested for scanning and connection. */
+BLE_RSCS_C_DEF(m_rscs_c);                                   /**< Running speed and cadence service client instance. */
+NRF_BLE_GATT_DEF(m_gatt);                                   /**< GATT module instance. */
+BLE_DB_DISCOVERY_DEF(m_db_disc);                            /**< DB discovery module instance. */
+
 static uint16_t              m_conn_handle;                 /**< Current connection handle. */
 static bool                  m_whitelist_disabled;          /**< True if whitelist has been temporarily disabled. */
 static bool                  m_memory_access_in_progress;   /**< Flag to keep track of ongoing operations on persistent memory. */
-static nrf_ble_gatt_t        m_gatt;                        /**< GATT module instance. */
+static ble_gap_scan_params_t m_scan_param;                  /**< Scan parameters requested for scanning and connection. */
 
-/**
- * @brief Connection parameters requested for connection.
- */
+
+/**@brief Connection parameters requested for connection. */
 static ble_gap_conn_params_t const m_connection_param =
 {
     (uint16_t)MIN_CONNECTION_INTERVAL, // Minimum connection.
@@ -162,7 +165,7 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
  */
 static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
 {
-    ble_rscs_on_db_disc_evt(&m_ble_rsc_c, p_evt);
+    ble_rscs_on_db_disc_evt(&m_rscs_c, p_evt);
 }
 
 
@@ -178,12 +181,12 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
     {
         case PM_EVT_BONDED_PEER_CONNECTED:
         {
-            NRF_LOG_INFO("Connected to a previously bonded device.\r\n");
+            NRF_LOG_INFO("Connected to a previously bonded device.");
         } break;
 
         case PM_EVT_CONN_SEC_SUCCEEDED:
         {
-            NRF_LOG_INFO("Connection secured: role: %d, conn_handle: 0x%x, procedure: %d.\r\n",
+            NRF_LOG_INFO("Connection secured: role: %d, conn_handle: 0x%x, procedure: %d.",
                          ble_conn_state_role(p_evt->conn_handle),
                          p_evt->conn_handle,
                          p_evt->params.conn_sec_succeeded.procedure);
@@ -303,32 +306,42 @@ static uint32_t adv_report_parse(uint8_t type, data_t * p_advdata, data_t * p_ty
 }
 
 
-/**@brief Function for putting the chip into sleep mode.
+/**
+ * @brief Function for shutdown events.
  *
- * @note This function will not return.
+ * @param[in]   event       Shutdown type.
  */
-static void sleep_mode_enter(void)
+static bool shutdown_handler(nrf_pwr_mgmt_evt_t event)
 {
     ret_code_t err_code;
 
     err_code = bsp_indication_set(BSP_INDICATE_IDLE);
     APP_ERROR_CHECK(err_code);
 
-    // Prepare wakeup buttons.
-    err_code = bsp_btn_ble_sleep_mode_prepare();
-    APP_ERROR_CHECK(err_code);
+    switch (event)
+    {
+        case NRF_PWR_MGMT_EVT_PREPARE_WAKEUP:
+            // Prepare wakeup buttons.
+            err_code = bsp_btn_ble_sleep_mode_prepare();
+            APP_ERROR_CHECK(err_code);
+            break;
 
-    // Go to system-off mode (this function will not return; wakeup will cause a reset).
-    err_code = sd_power_system_off();
-    APP_ERROR_CHECK(err_code);
+        default:
+            break;
+    }
+
+    return true;
 }
 
+NRF_PWR_MGMT_HANDLER_REGISTER(shutdown_handler, APP_SHUTDOWN_HANDLER_PRIORITY);
 
-/**@brief Function for handling the Application's BLE Stack events.
+
+/**@brief Function for handling BLE events.
  *
  * @param[in]   p_ble_evt   Bluetooth stack event.
+ * @param[in]   p_context   Unused.
  */
-static void on_ble_evt(ble_evt_t * p_ble_evt)
+static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 {
     ret_code_t            err_code;
     ble_gap_evt_t const * p_gap_evt = &p_ble_evt->evt.gap_evt;
@@ -338,15 +351,14 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
         case BLE_GAP_EVT_CONNECTED:
         {
             // Discover peer's services.
-            memset(&m_ble_db_discovery, 0x00, sizeof(ble_db_discovery_t));
-            err_code = ble_db_discovery_start(&m_ble_db_discovery,
-                                              p_ble_evt->evt.gap_evt.conn_handle);
+            memset(&m_db_disc, 0x00, sizeof(ble_db_discovery_t));
+            err_code = ble_db_discovery_start(&m_db_disc, p_ble_evt->evt.gap_evt.conn_handle);
             APP_ERROR_CHECK(err_code);
 
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
 
-            if (ble_conn_state_n_centrals() < CENTRAL_LINK_COUNT)
+            if (ble_conn_state_n_centrals() < NRF_SDH_BLE_CENTRAL_LINK_COUNT)
             {
                 scan_start();
             }
@@ -402,13 +414,13 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                         err_code = sd_ble_gap_connect(&p_gap_evt->params.adv_report.peer_addr,
                                                       &m_scan_param,
                                                       &m_connection_param,
-                                                      BLE_CONN_CFG_TAG_DEFAULT);
+                                                      APP_BLE_CONN_CFG_TAG);
 
                         m_whitelist_disabled = false;
 
                         if (err_code != NRF_SUCCESS)
                         {
-                            NRF_LOG_DEBUG("Connection Request Failed, reason 0x%x\r\n", err_code);
+                            NRF_LOG_DEBUG("Connection Request Failed, reason 0x%x", err_code);
                         }
                         break;
                     }
@@ -420,12 +432,12 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
         {
             if (p_gap_evt->params.timeout.src == BLE_GAP_TIMEOUT_SRC_SCAN)
             {
-                NRF_LOG_INFO("Scan timed out.\r\n");
+                NRF_LOG_INFO("Scan timed out.");
                 scan_start();
             }
             else if (p_gap_evt->params.timeout.src == BLE_GAP_TIMEOUT_SRC_CONN)
             {
-                NRF_LOG_DEBUG("Connection Request timed out.\r\n");
+                NRF_LOG_DEBUG("Connection Request timed out.");
             }
         } break;
 
@@ -439,16 +451,30 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
         case BLE_GAP_EVT_DISCONNECTED:
         {
-            if (ble_conn_state_n_centrals() < CENTRAL_LINK_COUNT)
+            if (ble_conn_state_n_centrals() < NRF_SDH_BLE_CENTRAL_LINK_COUNT)
             {
                 scan_start();
             }
         } break;
 
+#if defined(S132)
+        case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
+        {
+            NRF_LOG_DEBUG("PHY update request.");
+            ble_gap_phys_t const phys =
+            {
+                .rx_phys = BLE_GAP_PHY_AUTO,
+                .tx_phys = BLE_GAP_PHY_AUTO,
+            };
+            err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
+            APP_ERROR_CHECK(err_code);
+        } break;
+#endif
+
         case BLE_GATTC_EVT_TIMEOUT:
         {
             // Disconnect on GATT Client timeout event.
-            NRF_LOG_DEBUG("GATT Client Timeout.\r\n");
+            NRF_LOG_DEBUG("GATT Client Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gattc_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
@@ -457,7 +483,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
         case BLE_GATTS_EVT_TIMEOUT:
         {
             // Disconnect on GATT Server timeout event.
-            NRF_LOG_DEBUG("GATT Server Timeout.\r\n");
+            NRF_LOG_DEBUG("GATT Server Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gatts_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
@@ -469,13 +495,15 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 }
 
 
-/**@brief Function for handling the Application's system events.
+/**
+ * @brief SoftDevice SoC event handler.
  *
- * @param[in]   sys_evt   system event.
+ * @param[in] evt_id    SoC event.
+ * @param[in] p_context Context.
  */
-static void on_sys_evt(uint32_t sys_evt)
+static void soc_evt_handler(uint32_t evt_id, void * p_context)
 {
-    switch (sys_evt)
+    switch (evt_id)
     {
         case NRF_EVT_FLASH_OPERATION_SUCCESS:
         /* fall through */
@@ -486,7 +514,7 @@ static void on_sys_evt(uint32_t sys_evt)
                 m_memory_access_in_progress = false;
                 scan_start();
             }
-            break; // NRF_EVT_FLASH_OPERATION_SUCCESS and NRF_EVT_FLASH_OPERATION_ERROR
+            break;
 
         default:
             // No implementation needed.
@@ -495,92 +523,31 @@ static void on_sys_evt(uint32_t sys_evt)
 }
 
 
-/**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
- *
- * @details This function is called from the scheduler in the main loop after a BLE stack event has
- *  been received.
- *
- * @param[in]   p_ble_evt   Bluetooth stack event.
- */
-static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
-{
-    ble_conn_state_on_ble_evt(p_ble_evt);
-    pm_on_ble_evt(p_ble_evt);
-    ble_db_discovery_on_ble_evt(&m_ble_db_discovery, p_ble_evt);
-    ble_rscs_c_on_ble_evt(&m_ble_rsc_c, p_ble_evt);
-    bsp_btn_ble_on_ble_evt(p_ble_evt);
-    on_ble_evt(p_ble_evt);
-    nrf_ble_gatt_on_ble_evt(&m_gatt, p_ble_evt);
-}
-
-
-/**@brief Function for dispatching a system event to interested modules.
- *
- * @details This function is called from the System event interrupt handler after a system
- *          event has been received.
- *
- * @param[in]   sys_evt   System stack event.
- */
-static void sys_evt_dispatch(uint32_t sys_evt)
-{
-    fs_sys_event_handler(sys_evt);
-    on_sys_evt(sys_evt);
-}
-
-
 /**@brief Function for initializing the BLE stack.
  *
  * @details Initializes the SoftDevice and the BLE event interrupt.
- */
+  */
 static void ble_stack_init(void)
 {
     ret_code_t err_code;
 
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    err_code = nrf_sdh_enable_request();
+    APP_ERROR_CHECK(err_code);
 
-    // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
-
+    // Configure the BLE stack using the default settings.
     // Fetch the start address of the application RAM.
     uint32_t ram_start = 0;
-    err_code = softdevice_app_ram_start_get(&ram_start);
-    APP_ERROR_CHECK(err_code);
-
-    // Overwrite some of the default configurations for the BLE stack.
-    ble_cfg_t ble_cfg;
-
-    // Configure the number of custom UUIDS.
-    memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.common_cfg.vs_uuid_cfg.vs_uuid_count = 0;
-    err_code = sd_ble_cfg_set(BLE_COMMON_CFG_VS_UUID, &ble_cfg, ram_start);
-    APP_ERROR_CHECK(err_code);
-
-    // Configure the maximum number of connections.
-    memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = 0;
-    ble_cfg.gap_cfg.role_count_cfg.central_role_count = CENTRAL_LINK_COUNT;
-    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = 1;
-    err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start);
-    APP_ERROR_CHECK(err_code);
-
-    memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.gatts_cfg.attr_tab_size.attr_tab_size = BLE_GATTS_ATTR_TAB_SIZE_MIN;
-    err_code = sd_ble_cfg_set(BLE_GATTS_CFG_ATTR_TAB_SIZE, &ble_cfg, ram_start);
+    err_code = nrf_sdh_ble_default_cfg_set(APP_BLE_CONN_CFG_TAG, &ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Enable BLE stack.
-    err_code = softdevice_enable(&ram_start);
+    err_code = nrf_sdh_ble_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
 
-    // Register with the SoftDevice handler module for BLE events.
-    err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
-
-    // Register with the SoftDevice handler module for BLE events.
-    err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
+    // Register handlers for BLE and SoC events.
+    NRF_SDH_BLE_OBSERVER(m_ble_observer, APP_BLE_OBSERVER_PRIO, ble_evt_handler, NULL);
+    NRF_SDH_SOC_OBSERVER(m_soc_observer, APP_SOC_OBSERVER_PRIO, soc_evt_handler, NULL);
 }
-
 
 /**@brief Function for disabling the use of whitelist for scanning.
  */
@@ -588,7 +555,7 @@ static void whitelist_disable(void)
 {
     if (!m_whitelist_disabled)
     {
-        NRF_LOG_INFO("Whitelist temporarily disabled.\r\n");
+        NRF_LOG_INFO("Whitelist temporarily disabled.");
         m_whitelist_disabled = true;
         (void) sd_ble_gap_scan_stop();
         scan_start();
@@ -607,7 +574,7 @@ void bsp_event_handler(bsp_event_t event)
     switch (event)
     {
         case BSP_EVENT_SLEEP:
-            sleep_mode_enter();
+            nrf_pwr_mgmt_shutdown(NRF_PWR_MGMT_SHUTDOWN_GOTO_SYSOFF);
             break;
 
         case BSP_EVENT_DISCONNECT:
@@ -639,7 +606,7 @@ static void rscs_c_evt_handler(ble_rscs_c_t * p_rsc_c, ble_rscs_c_evt_t * p_rsc_
     {
         case BLE_RSCS_C_EVT_DISCOVERY_COMPLETE:
             // Initiate bonding.
-            err_code = ble_rscs_c_handles_assign(&m_ble_rsc_c,
+            err_code = ble_rscs_c_handles_assign(&m_rscs_c,
                                                  p_rsc_c_evt->conn_handle,
                                                  &p_rsc_c_evt->params.rscs_db);
             APP_ERROR_CHECK(err_code);
@@ -651,33 +618,33 @@ static void rscs_c_evt_handler(ble_rscs_c_t * p_rsc_c, ble_rscs_c_evt_t * p_rsc_
             err_code = ble_rscs_c_rsc_notif_enable(p_rsc_c);
             APP_ERROR_CHECK(err_code);
 
-            NRF_LOG_INFO("Running Speed and Cadence service discovered.\r\n");
+            NRF_LOG_INFO("Running Speed and Cadence service discovered.");
             break;
 
         case BLE_RSCS_C_EVT_RSC_NOTIFICATION:
         {
-            NRF_LOG_INFO("\r\n");
-            NRF_LOG_DEBUG("RSC Measurement received %d \r\n",
+            NRF_LOG_INFO("");
+            NRF_LOG_DEBUG("RSC Measurement received %d ",
                      p_rsc_c_evt->params.rsc.inst_speed);
 
-            NRF_LOG_INFO("Instantanious Speed   = %d\r\n", p_rsc_c_evt->params.rsc.inst_speed);
+            NRF_LOG_INFO("Instantanious Speed   = %d", p_rsc_c_evt->params.rsc.inst_speed);
             if (p_rsc_c_evt->params.rsc.is_inst_stride_len_present)
             {
-                NRF_LOG_INFO("Stride Length         = %d\r\n",
+                NRF_LOG_INFO("Stride Length         = %d",
                        p_rsc_c_evt->params.rsc.inst_stride_length);
             }
             if (p_rsc_c_evt->params.rsc.is_total_distance_present)
             {
-                NRF_LOG_INFO("Total Distance = %u\r\n",
+                NRF_LOG_INFO("Total Distance = %u",
                        (unsigned int)p_rsc_c_evt->params.rsc.total_distance);
             }
-            NRF_LOG_INFO("Instantanious Cadence = %d\r\n", p_rsc_c_evt->params.rsc.inst_cadence);
-            NRF_LOG_INFO("Flags\r\n");
-            NRF_LOG_INFO("  Stride Length Present = %d\r\n",
+            NRF_LOG_INFO("Instantanious Cadence = %d", p_rsc_c_evt->params.rsc.inst_cadence);
+            NRF_LOG_INFO("Flags");
+            NRF_LOG_INFO("  Stride Length Present = %d",
                    p_rsc_c_evt->params.rsc.is_inst_stride_len_present);
-            NRF_LOG_INFO("  Total Distance Present= %d\r\n",
+            NRF_LOG_INFO("  Total Distance Present= %d",
                    p_rsc_c_evt->params.rsc.is_total_distance_present);
-            NRF_LOG_INFO("  Is Running            = %d\r\n", p_rsc_c_evt->params.rsc.is_running);
+            NRF_LOG_INFO("  Is Running            = %d", p_rsc_c_evt->params.rsc.is_running);
             break;
         }
 
@@ -696,7 +663,7 @@ static void rscs_c_init(void)
 
     rscs_c_init_obj.evt_handler = rscs_c_evt_handler;
 
-    ret_code_t err_code = ble_rscs_c_init(&m_ble_rsc_c, &rscs_c_init_obj);
+    ret_code_t err_code = ble_rscs_c_init(&m_rscs_c, &rscs_c_init_obj);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -743,7 +710,7 @@ static void peer_manager_init()
 static void delete_bonds(void){
     ret_code_t err_code;
 
-    NRF_LOG_INFO("Erase bonds\r\n");
+    NRF_LOG_INFO("Erase bonds");
     err_code = pm_peers_delete();
     APP_ERROR_CHECK(err_code);
 }
@@ -813,12 +780,8 @@ static void whitelist_load()
  */
 static void scan_start(void)
 {
-    uint32_t flash_busy;
-
     // If there is any pending write to flash, defer scanning until it completes.
-    (void) fs_queued_op_count_get(&flash_busy);
-
-    if (flash_busy != 0)
+    if (nrf_fstorage_is_busy(NULL))
     {
         m_memory_access_in_progress = true;
         return;
@@ -896,7 +859,7 @@ static void scan_start(void)
         m_scan_param.timeout  = 0x001E; // 30 seconds.
     }
 
-    NRF_LOG_INFO("Starting scan.\r\n");
+    NRF_LOG_INFO("Starting scan.");
 
     ret = sd_ble_gap_scan_start(&m_scan_param);
     APP_ERROR_CHECK(ret);
@@ -925,16 +888,17 @@ static void buttons_leds_init(bool * p_erase_bonds)
 }
 
 
-/**@brief Function for initializing logging.
- */
+/**@brief Function for initializing logging. */
 static void log_init(void)
 {
     ret_code_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 }
 
-/**@brief Function for initializing the timer.
- */
+
+/**@brief Function for initializing the timer. */
 static void timer_init(void)
 {
     ret_code_t err_code = app_timer_init();
@@ -942,8 +906,7 @@ static void timer_init(void)
 }
 
 
-/**@brief Function for initializing the GATT module.
- */
+/**@brief Function for initializing the GATT module. */
 static void gatt_init(void)
 {
     ret_code_t err_code = nrf_ble_gatt_init(&m_gatt, NULL);
@@ -951,11 +914,10 @@ static void gatt_init(void)
 }
 
 
-/** @brief Function for the Power manager.
- */
-static void power_manage(void)
+/** @brief Function for initializing the Power manager. */
+static void power_init(void)
 {
-    ret_code_t err_code = sd_app_evt_wait();
+    ret_code_t err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -967,6 +929,7 @@ int main(void)
     // Initialize.
     log_init();
     timer_init();
+    power_init();
     buttons_leds_init(&erase_bonds);
     ble_stack_init();
     gatt_init();
@@ -988,13 +951,11 @@ int main(void)
         scan_start();
     }
 
-    NRF_LOG_INFO("Running Speed Collector example started.\r\n");
+    NRF_LOG_INFO("Running Speed Collector example started.");
 
     for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            power_manage();
-        }
+        NRF_LOG_FLUSH();
+        nrf_pwr_mgmt_run();
     }
 }

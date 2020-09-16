@@ -54,18 +54,19 @@
 #include "ble_advdata.h"
 #include "ble_dtm_app.h"
 #include "nordic_common.h"
-#include "softdevice_handler.h"
+#include "nrf_sdm.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ble.h"
 #include "bsp.h"
 
-#define IS_SRVC_CHANGED_CHARACT_PRESENT 0 /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
+#define DEVICE_NAME                 "Nordic_DTM"    /**< Name of device. Will be included in the advertising data. */
 
-#define DTM_INIT_BUTTON_ID 0              /**< Button to initializing DTM mode on connectivity chip. */
-#define DTM_TX_PIN_NO      TX_PIN_NUMBER  /**< Pin used by DTM to transmitting a data. */
-#define DTM_RX_PIN_NO      RX_PIN_NUMBER  /**< Pin used by DTM to receiving a data. */
+#define APP_ADV_INTERVAL            64              /**< The advertising interval (in units of 0.625 ms. This value corresponds to 40 ms). */
+#define APP_ADV_TIMEOUT_IN_SECONDS  180             /**< The advertising timeout (in units of seconds). */
 
-#define DEVICE_NAME                "Nordic_DTM" /**< Name of device. Will be included in the advertising data. */
-#define APP_ADV_INTERVAL           64           /**< The advertising interval (in units of 0.625 ms. This value corresponds to 40 ms). */
-#define APP_ADV_TIMEOUT_IN_SECONDS 180          /**< The advertising timeout (in units of seconds). */
+#define DTM_INIT_BUTTON_ID          0               /**< Button to initializing DTM mode on connectivity chip. */
+#define DTM_TX_PIN_NO               TX_PIN_NUMBER   /**< Pin used by DTM to transmitting a data. */
+#define DTM_RX_PIN_NO               RX_PIN_NUMBER   /**< Pin used by DTM to receiving a data. */
 
 #define DEAD_BEEF 0xDEADBEEF /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
@@ -168,7 +169,7 @@ static void dtm_init(void)
         APP_ERROR_CHECK(err_code);
 
         // Close serialization transport layer.
-        err_code = sd_softdevice_disable();
+        err_code = nrf_sdh_disable_request();
         APP_ERROR_CHECK(err_code);
 
         // Enter to infinite loop.
@@ -206,13 +207,17 @@ static void bsp_event_handler(bsp_event_t event)
  */
 static void ble_stack_init(void)
 {
-    uint32_t err_code;
-    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    ret_code_t err_code;
 
-    // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
+    err_code = nrf_sdh_enable_request();
+    APP_ERROR_CHECK(err_code);
 
-    err_code = sd_ble_enable(NULL);
+    // Fetch the start address of the application RAM.
+    uint32_t ram_start = 0;
+    err_code = nrf_sdh_ble_app_ram_start_get(&ram_start);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_sdh_ble_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
 }
 

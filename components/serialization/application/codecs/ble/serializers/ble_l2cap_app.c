@@ -41,6 +41,7 @@
 #include "ble_l2cap_app.h"
 #include "ble_serialization.h"
 #include "ble_struct_serialization.h"
+#include "ble_l2cap_struct_serialization.h"
 #include "ble_gap.h"
 #include "app_util.h"
 #include "cond_field_serialization.h"
@@ -145,3 +146,134 @@ uint32_t ble_l2cap_tx_rsp_dec(uint8_t const * const p_buf,
     return ser_ble_cmd_rsp_dec(p_buf, packet_len, SD_BLE_L2CAP_TX, p_result_code);
 }
 #endif
+
+#if NRF_SD_BLE_API_VERSION >= 5
+uint32_t ble_l2cap_ch_setup_req_enc(uint16_t conn_handle,
+                                    uint16_t * p_local_cid,
+                                    ble_l2cap_ch_setup_params_t const *p_params,
+                                    uint8_t * const  p_buf,
+                                    uint32_t * const p_buf_len)
+{
+    SER_REQ_ENC_BEGIN(SD_BLE_L2CAP_CH_SETUP);
+
+    SER_PUSH_uint16(&conn_handle);
+    SER_PUSH_COND(p_local_cid, uint16_t_enc);
+    SER_PUSH_COND(p_params, ble_l2cap_ch_setup_params_t_enc);
+
+    SER_REQ_ENC_END;
+}
+
+uint32_t ble_l2cap_ch_setup_rsp_dec(uint8_t const * const p_buf,
+                                    uint32_t              packet_len,
+                                    uint16_t *            p_local_cid,
+                                    uint32_t * const      p_result_code)
+{
+    SER_RSP_DEC_BEGIN(SD_BLE_L2CAP_CH_SETUP);
+    SER_PULL_COND((void **)&p_local_cid, uint16_t_dec);
+    SER_RSP_DEC_END;
+}
+
+uint32_t ble_l2cap_ch_release_req_enc(uint16_t conn_handle,
+                                      uint16_t local_cid,
+                                      uint8_t * const  p_buf,
+                                      uint32_t * const p_buf_len)
+{
+    SER_REQ_ENC_BEGIN(SD_BLE_L2CAP_CH_RELEASE);
+
+    SER_PUSH_uint16(&conn_handle);
+    SER_PUSH_uint16(&local_cid);
+
+    SER_REQ_ENC_END;
+}
+
+uint32_t ble_l2cap_ch_release_rsp_dec(uint8_t const * const p_buf,
+                                     uint32_t              packet_len,
+                                     uint32_t * const      p_result_code)
+{
+    SER_RSP_DEC_RESULT_ONLY(SD_BLE_L2CAP_CH_RELEASE);
+}
+
+uint32_t ble_l2cap_ch_rx_req_enc(uint16_t conn_handle,
+                                 uint16_t local_cid,
+                                 ble_data_t const *p_sdu_buf,
+                                 uint8_t * const  p_buf,
+                                 uint32_t * const p_buf_len)
+{
+    SER_REQ_ENC_BEGIN(SD_BLE_L2CAP_CH_RX);
+
+    SER_PUSH_uint16(&conn_handle);
+    SER_PUSH_uint16(&local_cid);
+
+    SER_PUSH_COND(p_sdu_buf, NULL);
+    if (p_sdu_buf)
+    {
+       SER_PUSH_uint16(&p_sdu_buf->len);
+       SER_PUSH_uint32(&p_sdu_buf->p_data);
+    }
+
+    SER_REQ_ENC_END;
+}
+
+uint32_t ble_l2cap_ch_rx_rsp_dec(uint8_t const * const p_buf,
+                                 uint32_t              packet_len,
+                                 uint32_t * const      p_result_code)
+{
+    SER_RSP_DEC_RESULT_ONLY(SD_BLE_L2CAP_CH_RX);
+}
+
+uint32_t ble_l2cap_ch_tx_req_enc(uint16_t conn_handle,
+                                 uint16_t local_cid,
+                                 ble_data_t const *p_sdu_buf,
+                                 uint8_t * const  p_buf,
+                                 uint32_t * const p_buf_len)
+{
+    SER_REQ_ENC_BEGIN(SD_BLE_L2CAP_CH_TX);
+
+    SER_PUSH_uint16(&conn_handle);
+    SER_PUSH_uint16(&local_cid);
+
+    SER_PUSH_COND(p_sdu_buf, NULL);
+    if (p_sdu_buf)
+    {
+       SER_PUSH_uint32(&p_sdu_buf->p_data);
+       SER_PUSH_uint16(&p_sdu_buf->len);
+       SER_PUSH_buf(p_sdu_buf->p_data, p_sdu_buf->len);
+    }
+
+    SER_REQ_ENC_END;
+}
+
+uint32_t ble_l2cap_ch_tx_rsp_dec(uint8_t const * const p_buf,
+                                 uint32_t              packet_len,
+                                 uint32_t * const      p_result_code)
+{
+    SER_RSP_DEC_RESULT_ONLY(SD_BLE_L2CAP_CH_TX);
+}
+
+uint32_t ble_l2cap_ch_flow_control_req_enc(uint16_t conn_handle,
+                                           uint16_t local_cid,
+                                           uint16_t credits,
+                                           uint16_t *p_credits,
+                                           uint8_t * const  p_buf,
+                                           uint32_t * const p_buf_len)
+{
+    SER_REQ_ENC_BEGIN(SD_BLE_L2CAP_CH_FLOW_CONTROL);
+
+    SER_PUSH_uint16(&conn_handle);
+    SER_PUSH_uint16(&local_cid);
+    SER_PUSH_uint16(&credits);
+    SER_PUSH_COND(p_credits, NULL);
+
+    SER_REQ_ENC_END;
+}
+
+uint32_t ble_l2cap_ch_flow_control_rsp_dec(uint8_t const * const p_buf,
+                                           uint32_t              packet_len,
+                                           uint16_t *            p_credits,
+                                           uint32_t * const      p_result_code)
+{
+    SER_RSP_DEC_BEGIN(SD_BLE_L2CAP_CH_FLOW_CONTROL);
+    SER_PULL_COND((void **)&p_credits, uint16_t_dec);
+    SER_RSP_DEC_END;
+}
+#endif //NRF_SD_BLE_API_VERSION >= 5

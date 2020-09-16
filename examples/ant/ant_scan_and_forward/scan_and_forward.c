@@ -68,12 +68,15 @@
 #include "nrf_delay.h"
 #include "ant_channel_config.h"
 #include "ant_search_config.h"
-#include "nordic_common.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 
-#define ANT_NETWORK_NUMBER          ((uint8_t) 0)       /**< Default public network number. */
 #define ANT_SF_NETWORK_ID           ((uint8_t) 1)       /**< Network Number for Scan and Forward Application */
 #define CHAN_ID_TRANS_TYPE          ((uint8_t) ((ANT_SF_NETWORK_ID << 4) | 0x05))   /**< Transmission type is comprised of ANT_SF_NETWORK_ID and 0x05 */
 #define DEFAULT_CMD_PG_INTLV_PCT    30                  /**< Default percentage internal command pages should be transmitted */
+
+#define ANT_BS_ANT_OBSERVER_PRIO    1                   /**< BS ANT observer priority. */
+#define ANT_MS_ANT_OBSERVER_PRIO    1                   /**< MS ANT observer priority. */
 
 static uint8_t m_node_address;                                          /**< Unique address of node within the network */
 static uint8_t m_counter = 0;                                           /**< Index of next device */
@@ -117,7 +120,7 @@ static void sf_ant_channels_setup(void)
 
     const ant_channel_config_t ms_channel_config =
     {
-        .channel_number    = SF_ANT_MS_CHANNEL_NUMBER,
+        .channel_number    = ANT_MS_CHANNEL_NUMBER,
         .channel_type      = CHANNEL_TYPE_MASTER,
         .ext_assign        = 0x00,
         .rf_freq           = RF_FREQ,
@@ -125,12 +128,12 @@ static void sf_ant_channels_setup(void)
         .device_type       = CHAN_ID_DEV_TYPE,
         .device_number     = m_node_address,
         .channel_period    = CHAN_PERIOD,
-        .network_number    = ANT_NETWORK_NUMBER,
+        .network_number    = ANT_NETWORK_NUM,
     };
 
     const ant_channel_config_t bs_channel_config =
     {
-        .channel_number    = SF_ANT_BS_CHANNEL_NUMBER,
+        .channel_number    = ANT_BS_CHANNEL_NUMBER,
         .channel_type      = CHANNEL_TYPE_SLAVE,
         .ext_assign        = EXT_PARAM_ALWAYS_SEARCH,
         .rf_freq           = RF_FREQ,
@@ -138,12 +141,12 @@ static void sf_ant_channels_setup(void)
         .device_type       = CHAN_ID_DEV_TYPE,
         .device_number     = 0x00,              // Wild card
         .channel_period    = 0x00,              // This is not taken into account.
-        .network_number    = ANT_NETWORK_NUMBER,
+        .network_number    = ANT_NETWORK_NUM,
     };
 
     const ant_search_config_t bs_search_config =
     {
-        .channel_number        = SF_ANT_BS_CHANNEL_NUMBER,
+        .channel_number        = ANT_BS_CHANNEL_NUMBER,
         .low_priority_timeout  = ANT_LOW_PRIORITY_TIMEOUT_DISABLE,
         .high_priority_timeout = ANT_HIGH_PRIORITY_SEARCH_DISABLE,
         .search_sharing_cycles = ANT_SEARCH_SHARING_CYCLES_DISABLE,
@@ -164,11 +167,11 @@ static void sf_ant_channels_setup(void)
     sf_master_beacon_message_send();
 
     // Open master beacon channel
-    err_code = sd_ant_channel_open(SF_ANT_MS_CHANNEL_NUMBER);
+    err_code = sd_ant_channel_open(ANT_MS_CHANNEL_NUMBER);
     APP_ERROR_CHECK(err_code);
 
     // Open background scanning channel
-    err_code = sd_ant_channel_open(SF_ANT_BS_CHANNEL_NUMBER);
+    err_code = sd_ant_channel_open(ANT_BS_CHANNEL_NUMBER);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -256,27 +259,35 @@ void sf_bsp_evt_handler(bsp_event_t evt)
 }
 
 
-void sf_background_scanner_process(ant_evt_t * p_ant_evt)
+/**@brief Processes ANT message on ANT background scanning channel
+ *
+ * @param[in] p_ant_evt   ANT message content.
+ * @param[in] p_context     Context.
+ */
+void sf_background_scanner_process(ant_evt_t * p_ant_evt, void * p_context)
 {
-    device_t    * p_device;
-    ANT_MESSAGE * p_ant_message = (ANT_MESSAGE *)p_ant_evt->msg.evt_buffer;
+    if (p_ant_evt->channel != ANT_BS_CHANNEL_NUMBER)
+    {
+        return;
+    }
 
+    device_t * p_device;
     switch (p_ant_evt->event)
     {
         case EVENT_RX:
 
             // Device Status Page
-            if (p_ant_message->ANT_MESSAGE_aucPayload[DATA_PAGE_IND] == DEVICE_STATUS_PAGE)
+            if (p_ant_evt->message.ANT_MESSAGE_aucPayload[DATA_PAGE_IND] == DEVICE_STATUS_PAGE)
             {
-                uint8_t node            = p_ant_message->ANT_MESSAGE_aucPayload[DEVICE_STATUS_NODE_IND]; // Origin
-                uint8_t sequence_number = p_ant_message->ANT_MESSAGE_aucPayload[DEVICE_STATUS_SEQ_NUM_IND];
-                uint8_t device_state    = p_ant_message->ANT_MESSAGE_aucPayload[DEVICE_STATUS_STATE_IND];
+                uint8_t node            = p_ant_evt->message.ANT_MESSAGE_aucPayload[DEVICE_STATUS_NODE_IND]; // Origin
+                uint8_t sequence_number = p_ant_evt->message.ANT_MESSAGE_aucPayload[DEVICE_STATUS_SEQ_NUM_IND];
+                uint8_t device_state    = p_ant_evt->message.ANT_MESSAGE_aucPayload[DEVICE_STATUS_STATE_IND];
 
                 // Has this device been seen before?
                 if (dr_device_exists(node))
                 {
                     // Is this a new message?
-                    if (!msg_already_received(p_ant_message->ANT_MESSAGE_aucPayload))
+                    if (!msg_already_received(p_ant_evt->message.ANT_MESSAGE_aucPayload))
                     {
                         // Update status device registry
                         p_device = dr_device_get(node);
@@ -299,16 +310,16 @@ void sf_background_scanner_process(ant_evt_t * p_ant_evt)
                 }
             }
             // Internal Network Command Page
-            else if (p_ant_message->ANT_MESSAGE_aucPayload[DATA_PAGE_IND] == INTERNAL_COMMAND_PAGE)
+            else if (p_ant_evt->message.ANT_MESSAGE_aucPayload[DATA_PAGE_IND] == INTERNAL_COMMAND_PAGE)
             {
                 // Is this a new message?
-                if (!msg_already_received(p_ant_message->ANT_MESSAGE_aucPayload))
+                if (!msg_already_received(p_ant_evt->message.ANT_MESSAGE_aucPayload))
                 {
-                    uint8_t node                    = p_ant_message->ANT_MESSAGE_aucPayload[INTERNAL_CMD_DST_IND]; // Destination
-                    uint8_t sequence_number         = p_ant_message->ANT_MESSAGE_aucPayload[INTERNAL_CMD_SEQ_NUM_IND];
-                    uint8_t cmd_page_interleave_pct = p_ant_message->ANT_MESSAGE_aucPayload[INTERNAL_CMD_CMD_DATA1_IND];
-                    uint8_t high_priority_cmd_enable= p_ant_message->ANT_MESSAGE_aucPayload[INTERNAL_CMD_CMD_DATA2_IND];
-                    uint8_t node_command            = p_ant_message->ANT_MESSAGE_aucPayload[INTERNAL_CMD_CMD_IND];
+                    uint8_t node                    = p_ant_evt->message.ANT_MESSAGE_aucPayload[INTERNAL_CMD_DST_IND]; // Destination
+                    uint8_t sequence_number         = p_ant_evt->message.ANT_MESSAGE_aucPayload[INTERNAL_CMD_SEQ_NUM_IND];
+                    uint8_t cmd_page_interleave_pct = p_ant_evt->message.ANT_MESSAGE_aucPayload[INTERNAL_CMD_CMD_DATA1_IND];
+                    uint8_t high_priority_cmd_enable= p_ant_evt->message.ANT_MESSAGE_aucPayload[INTERNAL_CMD_CMD_DATA2_IND];
+                    uint8_t node_command            = p_ant_evt->message.ANT_MESSAGE_aucPayload[INTERNAL_CMD_CMD_IND];
 
                     // Update command buffer
                     set_cmd_buffer_seq(node, node_command, cmd_page_interleave_pct, high_priority_cmd_enable, sequence_number);
@@ -347,6 +358,8 @@ void sf_background_scanner_process(ant_evt_t * p_ant_evt)
 
     }
 }
+
+NRF_SDH_ANT_OBSERVER(m_ant_bs_observer, ANT_BS_ANT_OBSERVER_PRIO, sf_background_scanner_process, NULL);
 
 
 static void sf_master_beacon_message_send(void)
@@ -402,7 +415,7 @@ static void sf_master_beacon_message_send(void)
         // Add the message we are transmitting to the cache
         mc_add(&m_rcvd_messages, m_tx_buffer);
 
-        err_code = sd_ant_broadcast_message_tx(SF_ANT_MS_CHANNEL_NUMBER,
+        err_code = sd_ant_broadcast_message_tx(ANT_MS_CHANNEL_NUMBER,
                                                ANT_STANDARD_DATA_PAYLOAD_SIZE,
                                                m_tx_buffer);
         APP_ERROR_CHECK(err_code);
@@ -413,7 +426,7 @@ static void sf_master_beacon_message_send(void)
         // Add the message we are transmitting to the cache
         mc_add(&m_rcvd_messages, m_cmd_tx_buffer);
 
-        err_code = sd_ant_broadcast_message_tx(SF_ANT_MS_CHANNEL_NUMBER,
+        err_code = sd_ant_broadcast_message_tx(ANT_MS_CHANNEL_NUMBER,
                                                ANT_STANDARD_DATA_PAYLOAD_SIZE,
                                                m_cmd_tx_buffer);
         APP_ERROR_CHECK(err_code);
@@ -430,10 +443,38 @@ static void sf_master_beacon_message_send(void)
     }
 }
 
-
-void sf_master_beacon_process(ant_evt_t * p_ant_evt)
+/**@brief Processes ANT message on ANT master beacon channel
+ *
+ * @details   This function handles all events on the master beacon channel.
+ *            On EVENT_TX an DEVICE_STATUS_PAGE message is queued. The format is:
+ *            byte[0]   = page (0x20 = DEVICE_STATUS_PAGE)
+ *            byte[1]   = Node Address (Source)
+ *            byte[2]   = Reserved
+ *            byte[3]   = Reserved
+ *            byte[4]   = Reserved
+ *            byte[5]   = Reserved
+ *            byte[6]   = Sequence Number
+ *            byte[7]   = Application State
+ *
+ *            This channel may also reseive commands sent from a mobile device such as a phone, controller, or ANTwareII in the format:
+ *            byte[0]   = page (0x10 = MOBILE_COMMAND_PAGE)
+ *            byte[1]   = Originating node (Set to 0xFF for mobile device)
+ *            byte[2]   = Destination node (0 for all nodes)
+ *            byte[3]   = Reserved (0x0F)
+ *            byte[4]   = Reserved (0xFF)
+ *            byte[5]   = Reserved (0xFF)
+ *            byte[6]   = Reserved (0xFF)
+ *            byte[7]   = Command (Turn Off: 0x00, Turn On: 0x01)
+ *
+ * @param[in] p_ant_evt ANT message content.
+ * @param[in] p_context  Context.
+ */
+void sf_master_beacon_process(ant_evt_t * p_ant_evt, void * p_context)
 {
-    ANT_MESSAGE * p_ant_message = (ANT_MESSAGE *)p_ant_evt->msg.evt_buffer;
+    if (p_ant_evt->channel != ANT_MS_CHANNEL_NUMBER)
+    {
+        return;
+    }
 
     switch (p_ant_evt->event)
     {
@@ -442,17 +483,19 @@ void sf_master_beacon_process(ant_evt_t * p_ant_evt)
             break;
 
         case EVENT_RX:
-            sf_external_received_message_process(   p_ant_message->ANT_MESSAGE_aucPayload[DATA_PAGE_IND],
-                                                    p_ant_message->ANT_MESSAGE_aucPayload[MOBILE_CMD_DST_IND],
-                                                    p_ant_message->ANT_MESSAGE_aucPayload[MOBILE_CMD_CMD_IND],
-                                                    p_ant_message->ANT_MESSAGE_aucPayload[MOBILE_CMD_CMD_DATA1_IND],
-                                                    p_ant_message->ANT_MESSAGE_aucPayload[MOBILE_CMD_CMD_DATA2_IND]);
+            sf_external_received_message_process(p_ant_evt->message.ANT_MESSAGE_aucPayload[DATA_PAGE_IND],
+                                                 p_ant_evt->message.ANT_MESSAGE_aucPayload[MOBILE_CMD_DST_IND],
+                                                 p_ant_evt->message.ANT_MESSAGE_aucPayload[MOBILE_CMD_CMD_IND],
+                                                 p_ant_evt->message.ANT_MESSAGE_aucPayload[MOBILE_CMD_CMD_DATA1_IND],
+                                                 p_ant_evt->message.ANT_MESSAGE_aucPayload[MOBILE_CMD_CMD_DATA2_IND]);
             break;
 
         default:
             break;
     }
 }
+
+NRF_SDH_ANT_OBSERVER(m_ant_ms_observer, ANT_MS_ANT_OBSERVER_PRIO, sf_master_beacon_process, NULL);
 
 
 static bool msg_already_received(uint8_t * p_buffer)

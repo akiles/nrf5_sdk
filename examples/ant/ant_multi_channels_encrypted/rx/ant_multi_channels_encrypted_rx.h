@@ -52,7 +52,6 @@
 #define ANT_MULTI_CHANNELS_ENCRYPTED_RX_H__
 
 #include <stdint.h>
-#include "softdevice_handler.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -77,12 +76,6 @@ void ant_se_num_of_decrypted_channels_display(void);
  *      - Open channel
  */
 void ant_se_channel_rx_broadcast_setup(void);
-
-/**@brief Function for handling application specific events.
- *
- * @param[in] p_ant_evt  Pointer to ANT stack event message structure.
- */
-void ant_se_event_handler(ant_evt_t * p_ant_event);
 
 
 

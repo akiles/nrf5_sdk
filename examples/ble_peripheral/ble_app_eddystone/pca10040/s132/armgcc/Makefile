@@ -10,8 +10,7 @@ $(OUTPUT_DIRECTORY)/nrf52832_xxaa.out: \
 
 # Source files common to all targets
 SRC_FILES += \
-  $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_serial.c \
-  $(SDK_ROOT)/components/libraries/log/src/nrf_log_frontend.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_frontend.c \
   $(SDK_ROOT)/external/tiny-AES128/aes.c \
   $(SDK_ROOT)/components/libraries/button/app_button.c \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
@@ -39,32 +38,37 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/eddystone/es_stopwatch.c \
   $(SDK_ROOT)/components/libraries/eddystone/es_tlm.c \
   $(SDK_ROOT)/components/libraries/fds/fds.c \
-  $(SDK_ROOT)/components/libraries/fstorage/fstorage.c \
   $(SDK_ROOT)/external/cifra_AES128-EAX/gf128.c \
   $(SDK_ROOT)/components/libraries/hardfault/hardfault_implementation.c \
   $(SDK_ROOT)/external/cifra_AES128-EAX/modes.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
+  $(SDK_ROOT)/components/libraries/atomic_fifo/nrf_atfifo.c \
+  $(SDK_ROOT)/components/libraries/balloc/nrf_balloc.c \
   $(SDK_ROOT)/components/libraries/eddystone/nrf_ble_es.c \
+  $(SDK_ROOT)/components/libraries/fstorage/nrf_fstorage.c \
+  $(SDK_ROOT)/components/libraries/fstorage/nrf_fstorage_sd.c \
+  $(SDK_ROOT)/components/libraries/experimental_memobj/nrf_memobj.c \
+  $(SDK_ROOT)/components/libraries/experimental_section_vars/nrf_section_iter.c \
   $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
+  $(SDK_ROOT)/components/libraries/util/sdk_mapped_flags.c \
   $(SDK_ROOT)/components/libraries/sensorsim/sensorsim.c \
   $(SDK_ROOT)/components/boards/boards.c \
   $(SDK_ROOT)/components/drivers_nrf/clock/nrf_drv_clock.c \
   $(SDK_ROOT)/components/drivers_nrf/common/nrf_drv_common.c \
   $(SDK_ROOT)/components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
   $(SDK_ROOT)/components/drivers_nrf/saadc/nrf_drv_saadc.c \
-  $(SDK_ROOT)/components/drivers_nrf/uart/nrf_drv_uart.c \
   $(SDK_ROOT)/components/drivers_nrf/hal/nrf_saadc.c \
-  $(SDK_ROOT)/components/softdevice/common/softdevice_handler/softdevice_handler.c \
+  $(SDK_ROOT)/components/softdevice/common/nrf_sdh.c \
+  $(SDK_ROOT)/components/softdevice/common/nrf_sdh_ble.c \
+  $(SDK_ROOT)/components/softdevice/common/nrf_sdh_soc.c \
   $(SDK_ROOT)/components/libraries/bsp/bsp.c \
   $(SDK_ROOT)/components/libraries/bsp/bsp_btn_ble.c \
   $(SDK_ROOT)/components/libraries/bsp/bsp_nfc.c \
   $(PROJ_DIR)/main.c \
-  $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
-  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
-  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
   $(SDK_ROOT)/components/ble/common/ble_advdata.c \
   $(SDK_ROOT)/components/ble/ble_advertising/ble_advertising.c \
   $(SDK_ROOT)/components/ble/common/ble_conn_params.c \
+  $(SDK_ROOT)/components/ble/common/ble_conn_state.c \
   $(SDK_ROOT)/components/ble/common/ble_srv_common.c \
   $(SDK_ROOT)/components/ble/nrf_ble_gatt/nrf_ble_gatt.c \
   $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf52.S \
@@ -74,6 +78,7 @@ SRC_FILES += \
 # Include folders common to all targets
 INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/comp \
+  $(SDK_ROOT)/components/libraries/experimental_cli \
   $(SDK_ROOT)/components/drivers_nrf/twi_master \
   $(SDK_ROOT)/components/ble/ble_services/ble_ancs_c \
   $(SDK_ROOT)/components/ble/ble_services/ble_ias_c \
@@ -85,14 +90,16 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/usbd/class/msc \
   $(SDK_ROOT)/components/libraries/usbd/class/hid \
   $(PROJ_DIR)/occ/occ/OberonHAPCrypto \
-  $(SDK_ROOT)/components/libraries/log \
+  $(SDK_ROOT)/components/ble/ble_services/ble_lbs \
   $(SDK_ROOT)/components/ble/ble_services/ble_gls \
   $(SDK_ROOT)/components/libraries/fstorage \
   $(SDK_ROOT)/components/drivers_nrf/i2s \
   $(PROJ_DIR) \
   $(SDK_ROOT)/components/libraries/gpiote \
+  $(SDK_ROOT)/components/libraries/experimental_log/src \
   $(SDK_ROOT)/components/drivers_nrf/gpiote \
   $(SDK_ROOT)/components/boards \
+  $(SDK_ROOT)/components/libraries/experimental_memobj \
   $(SDK_ROOT)/components/drivers_nrf/common \
   $(SDK_ROOT)/components/ble/ble_advertising \
   $(SDK_ROOT)/components/ble/ble_services/ble_bas_c \
@@ -114,20 +121,21 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/slip \
   $(SDK_ROOT)/components/libraries/mem_manager \
   $(PROJ_DIR)/occ/occ/OberonHAPCrypto/include \
-  $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/libraries/usbd/class/cdc \
   $(SDK_ROOT)/components/drivers_nrf/hal \
   $(SDK_ROOT)/components/ble/ble_services/ble_nus_c \
   $(SDK_ROOT)/components/drivers_nrf/rtc \
+  $(SDK_ROOT)/components/softdevice/common \
   $(SDK_ROOT)/components/ble/ble_services/ble_ias \
   $(SDK_ROOT)/components/libraries/usbd/class/hid/mouse \
   $(SDK_ROOT)/components/libraries/ecc \
   $(SDK_ROOT)/components/drivers_nrf/ppi \
   $(SDK_ROOT)/components/ble/ble_services/ble_dfu \
   $(SDK_ROOT)/components/drivers_nrf/twis_slave \
+  $(SDK_ROOT)/components/libraries/atomic \
   $(SDK_ROOT)/components \
   $(SDK_ROOT)/components/libraries/scheduler \
-  $(SDK_ROOT)/components/ble/ble_services/ble_lbs \
+  $(SDK_ROOT)/components/libraries/experimental_log \
   $(SDK_ROOT)/components/ble/ble_services/ble_hts \
   $(SDK_ROOT)/components/drivers_nrf/delay \
   $(SDK_ROOT)/components/libraries/crc16 \
@@ -137,7 +145,7 @@ INC_FOLDERS += \
   ../config \
   $(SDK_ROOT)/components/libraries/csense_drv \
   $(SDK_ROOT)/components/libraries/csense \
-  $(SDK_ROOT)/components/drivers_nrf/rng \
+  $(SDK_ROOT)/components/libraries/balloc \
   $(SDK_ROOT)/components/libraries/low_power_pwm \
   $(SDK_ROOT)/components/libraries/hardfault \
   $(SDK_ROOT)/components/ble/ble_services/ble_cscs \
@@ -148,6 +156,7 @@ INC_FOLDERS += \
   $(PROJ_DIR)/occ/occ/OberonHAPCryptoP256 \
   $(SDK_ROOT)/components/drivers_nrf/lpcomp \
   $(SDK_ROOT)/components/libraries/timer \
+  $(SDK_ROOT)/components/drivers_nrf/rng \
   $(SDK_ROOT)/components/drivers_nrf/power \
   $(SDK_ROOT)/components/libraries/usbd/config \
   $(SDK_ROOT)/components/toolchain \
@@ -172,6 +181,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/button \
   $(SDK_ROOT)/components/libraries/usbd \
   $(SDK_ROOT)/components/drivers_nrf/saadc \
+  $(SDK_ROOT)/components/libraries/atomic_fifo \
   $(SDK_ROOT)/components/ble/ble_services/ble_lbs_c \
   $(PROJ_DIR)/occ/occ/OberonHAPCryptoP256/include \
   $(SDK_ROOT)/components/ble/ble_services/ble_escs \
@@ -183,80 +193,71 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/eddystone \
   $(SDK_ROOT)/components/ble/ble_services/ble_rscs \
   $(SDK_ROOT)/components/drivers_nrf/usbd \
-  $(SDK_ROOT)/components/softdevice/common/softdevice_handler \
   $(SDK_ROOT)/components/ble/ble_services/ble_hrs \
-  $(SDK_ROOT)/components/libraries/log/src \
 
 # Libraries common to all targets
 LIB_FILES += \
   $(PROJ_DIR)/occ/occ_lib_nrf52.a \
 
+# Optimization flags
+OPT = -O3 -g3
+# Uncomment the line below to enable link time optimization
+#OPT += -flto
+
 # C flags common to all targets
-CFLAGS += -DBLE_STACK_SUPPORT_REQD
+CFLAGS += $(OPT)
 CFLAGS += -DBOARD_PCA10040
 CFLAGS += -DCONFIG_GPIO_AS_PINRESET
 CFLAGS += -DNRF52
 CFLAGS += -DNRF52832_XXAA
-CFLAGS += -DNRF52_PAN_12
-CFLAGS += -DNRF52_PAN_15
-CFLAGS += -DNRF52_PAN_20
-CFLAGS += -DNRF52_PAN_31
-CFLAGS += -DNRF52_PAN_36
-CFLAGS += -DNRF52_PAN_51
-CFLAGS += -DNRF52_PAN_54
-CFLAGS += -DNRF52_PAN_55
-CFLAGS += -DNRF52_PAN_58
-CFLAGS += -DNRF52_PAN_64
 CFLAGS += -DNRF52_PAN_74
-CFLAGS += -DNRF_SD_BLE_API_VERSION=4
+CFLAGS += -DNRF_SD_BLE_API_VERSION=5
 CFLAGS += -DS132
 CFLAGS += -DSOFTDEVICE_PRESENT
 CFLAGS += -DSWI_DISABLE0
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
-CFLAGS +=  -Wall -Werror -O3 -g3
+CFLAGS +=  -Wall -Werror
 CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
-# keep every function in separate section, this allows linker to discard unused ones
+# keep every function in a separate section, this allows linker to discard unused ones
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -fno-builtin --short-enums 
+CFLAGS += -fno-builtin -fshort-enums 
 
 # C++ flags common to all targets
-CXXFLAGS += \
+CXXFLAGS += $(OPT)
 
 # Assembler flags common to all targets
-ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DBLE_STACK_SUPPORT_REQD
+ASMFLAGS += -g3
+ASMFLAGS += -mcpu=cortex-m4
+ASMFLAGS += -mthumb -mabi=aapcs
+ASMFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 ASMFLAGS += -DBOARD_PCA10040
 ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
 ASMFLAGS += -DNRF52
 ASMFLAGS += -DNRF52832_XXAA
-ASMFLAGS += -DNRF52_PAN_12
-ASMFLAGS += -DNRF52_PAN_15
-ASMFLAGS += -DNRF52_PAN_20
-ASMFLAGS += -DNRF52_PAN_31
-ASMFLAGS += -DNRF52_PAN_36
-ASMFLAGS += -DNRF52_PAN_51
-ASMFLAGS += -DNRF52_PAN_54
-ASMFLAGS += -DNRF52_PAN_55
-ASMFLAGS += -DNRF52_PAN_58
-ASMFLAGS += -DNRF52_PAN_64
 ASMFLAGS += -DNRF52_PAN_74
-ASMFLAGS += -DNRF_SD_BLE_API_VERSION=4
+ASMFLAGS += -DNRF_SD_BLE_API_VERSION=5
 ASMFLAGS += -DS132
 ASMFLAGS += -DSOFTDEVICE_PRESENT
 ASMFLAGS += -DSWI_DISABLE0
 
 # Linker flags
+LDFLAGS += $(OPT)
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)
 LDFLAGS += -mcpu=cortex-m4
 LDFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
-# let linker to dump unused sections
+# let linker dump unused sections
 LDFLAGS += -Wl,--gc-sections
 # use newlib in nano version
-LDFLAGS += --specs=nano.specs -lc -lnosys
+LDFLAGS += --specs=nano.specs
 
 
-.PHONY: $(TARGETS) default all clean help flash flash_softdevice
+# Add standard libraries at the very end of the linker input, after all objects
+# that may need symbols provided by these libraries.
+LIB_FILES += -lc -lnosys -lm
+
+
+.PHONY: default help
 
 # Default target - first one defined
 default: nrf52832_xxaa
@@ -272,17 +273,19 @@ include $(TEMPLATE_PATH)/Makefile.common
 
 $(foreach target, $(TARGETS), $(call define_target, $(target)))
 
+.PHONY: flash flash_softdevice erase
+
 # Flash the program
 flash: $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex
 	@echo Flashing: $<
-	nrfjprog --program $< -f nrf52 --sectorerase
-	nrfjprog --reset -f nrf52
+	nrfjprog -f nrf52 --program $< --sectorerase
+	nrfjprog -f nrf52 --reset
 
 # Flash softdevice
 flash_softdevice:
-	@echo Flashing: s132_nrf52_4.0.2_softdevice.hex
-	nrfjprog --program $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_4.0.2_softdevice.hex -f nrf52 --sectorerase 
-	nrfjprog --reset -f nrf52
+	@echo Flashing: s132_nrf52_5.0.0_softdevice.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_5.0.0_softdevice.hex --sectorerase
+	nrfjprog -f nrf52 --reset
 
 erase:
-	nrfjprog --eraseall -f nrf52
+	nrfjprog -f nrf52 --eraseall

@@ -1,3 +1,209 @@
+nRF5 SDK v14.0.0
+------------------------
+Release Date: Week 31, 2017
+
+Highlights:
+- Added nRF52810 peripheral driver support.
+- Added support for the latest SoftDevice (S132 v5.0.0).
+- Added a new BLE example, Object Transfer Service, that shows how to set up and use the L2CAP Connection Oriented Channels feature of S132 v5.0.0.
+- Updated Direct Test Mode (DTM) to support the new features of Bluetooth 5.
+- Added a new NFC example: ISO-DEP raw mode.
+- Buttonless DFU feature is now in production quality.
+- Added USB CDC as a transport layer for DFU (Experimental, only nRF52840).
+- Added a library and examples that show how to integrate and use the Infineon OPTIGA Trust E hardware security module.
+- Refactored the logging system (nrf_log) to support multiple independent backends and dynamic logs filtering.
+- Refactored the console (nrf_cli). The console can now act as one of the logger backends. Bluetooth UART is now a supported transport (using the ble_nus service).
+ 
+The following toolchains/devices have been used for testing and
+verification:
+- ARM: MDK-ARM version 5.18a
+- GCC: GCC ARM Embedded 4.9 2015q3
+- IAR: IAR Workbench 7.80.4
+   
+Supported SoftDevices:
+- S132 v5.0.x
+- S140 v5.0.0-2.alpha
+- S212 v4.0.x
+    
+Supported boards:
+- PCA10040
+- PCA10056 (limited support; see the "Scope for the nRF52840 chip" section)
+- Dynastream's D52DK1 (only for ANT examples)
+    
+For other devices and boards, see the SDK documentation, section "Using
+the SDK with other boards".
+    
+    
+*** Scope for the nRF52840 chip
+********************************
+All examples and libraries for the new chip must be treated as
+experimental.
+Some examples have not been ported to run on nRF52840. Check the
+existing example projects to see which targets are supported.
+    
+The following SDK features are supported on the new nRF52840 chip:
+  - IEEE 802.15.4 stack library with an example
+  - Most BLE, hardware peripheral, and NFC examples (with some
+    exceptions; see the available example projects for details)
+  - Peripheral HAL and drivers (both for existing and new peripherals)
+  - Cryptography library including CryptoCell CC310 backend
+  - NFC Type 2 Tag and Type 4 Tag 
+  - Secure DFU (only with micro-ecc backend)
+  - DTM including support for the new Bluetooth 5 features
+   
+The following SDK features are not supported on the new nRF52840 chip:
+   - ANT
+   - ESB and Gazell
+   - FreeRTOS
+   - Eddystone
+   - Serialization of the S140 SoftDevice v5.0.0-2.alpha
+       
+       
+*** New features
+*****************
+
+** Common **  
+ - SoftDevice Handler:
+    - Can now register 'state event observers' that are notified when the SoftDevice state changes.
+    - Can now register 'request event observers' that are notified when a change of the SoftDevice state is requested.
+ - Console:
+    - Advanced cooperation with the Logger module (nrf_log). Console can work as a logger backend.
+    - Added support for static and dynamic subcommands.
+    - Easy-to-use macros for creating commands and subcommands.
+    - Added a smart auto-completion feature for commands and subcommands.
+    - Added a convenient help handler.
+    - Added support for multiline commands.
+    - Added support for text edition using the following keys: Left, Right, End, Home, and Insert.
+    - Implemented transport layers include: Bluetooth, USB CDC ACM, UART, RTT.
+
+** BLE **
+ - Added support the for the latest SoftDevice (S132 v5.0.0).
+ - Object Transfer Service added as experimental. The Object Transfer service uses L2CAP Connection Oriented Channels to transfer data between devices.
+     - Client implementation added to components\ble\ble_services.
+     - Server implementation added to components\ble\ble_services.
+     - Central client example application added to examples\ble_central\experimental\ble_ots_c.
+     - Peripheral server example application added to examples\ble_peripheral\experimental\ble_app_ots.
+ - GATT Service client added as experimental. The GATT Service client is used to receive Service Changed indications from the connected peer.
+ - Services featured in the Proximity example are now also accessible as stand-alone service examples.
+    - Immediate Alert Service client example application added as experimental.
+    - Immediate Alert Service server example application added as experimental.
+    - Link Loss Service server example application added as experimental.
+ - Added BLE transport Command Line Interface. An example "ble_app_cli" can be found in the 'experimental' folder.
+ 
+** NFC **
+ - Added a new example showing how to use the NFC Type 4 Tag library in raw ISO-DEP mode: NFC UART Example.
+ - Added a new pairing mode in the NFC BLE pairing library that supports OOB pairing in both "Secure Connections" and "Legacy" modes.
+ - Added flash support in the Writable NDEF Message Example - after the NDEF update operation, the new tag content is stored in flash.
+     
+** DFU **
+ - Added production quality buttonless bootloader with support for bond sharing.
+ - Added configurable inactivity timeout timer that automatically resets the device in case no new commands are received before the timeout triggers. Default value is 120 seconds.
+ - Added support for USB CDC as a new transport layer for DFU (Experimental, only for nRF52840).
+ 
+** DTM **
+ - Added support for new Bluetooth 5 features LE 2M and LE Coded PHY.
+ - Added support for nRF52840 devices.
+ 
+** Drivers and libraries **
+ - Added a new example that demonstrates strong cryptographic authentication using the Infineon OPTIGA Trust E hardware security module.
+    This example uses the following two new libraries located in the 'external' folder: 
+     - Infineon OPTIGA Trust E command library that provides a high-level API to access cryptographic and security-related functions.
+     - Infineon I2C Protocol Stack library that enables communication with Infineon OPTIGA Trust E and is placed on top of the TWI transaction manager (app_twi).
+ - Added Stack guard module that allows for enabling stack violation control.
+ - Added Task Manager module, a simple co-operative scheduler. 
+ - Added fprintf module that can be used for writing C strings.
+ - Added Ring Buffer module that provides functions to manage a ring buffer.
+ - Added Memory Object module that allows for creating and managing memory object pools.
+ 
+*** Changes
+************
+** Common **
+ - All examples are modified to use the new SoftDevice Handler (nrf_sdh).
+ 
+** BLE **
+ - BLE Connection Parameter module supports multiple peripheral links.
+ - BLE ATT MTU example uses nrf_cli for the user interface.
+
+** NFC **
+ - Improved the Type 4 Tag library interoperability (added support for fragmented command APDUs and fixed DID field handling).
+ - NDEF record and message definition macros are defined as automatic data (used to be static).
+  
+** DFU **
+ - Serial DFU has been updated to be production quality.
+ 
+** Proprietary **
+ - ESB: Added workarounds for several anomalies that were impacting performance for certain addresses.
+ - ESB: Added functionality to update certain radio parameters while ESB is running:
+	- uint32_t nrf_esb_set_retransmit_delay(uint16_t delay);
+	- uint32_t nrf_esb_set_retransmit_count(uint16_t count);
+	- uint32_t nrf_esb_set_bitrate(nrf_esb_bitrate_t bitrate);
+	- uint32_t nrf_esb_reuse_pid(uint8_t pipe); 
+ - Gazell: Released in production quality, added workarounds for RADIO anomalies.
+ 
+** Serialization **
+ - Added S132 v5.0.0 support. Removed support for S140 5.0.0-2.alpha.
+ 
+** Drivers and libraries **
+- Reworked and improved the fstorage library (now called nrf_fstorage).
+    - Now supports operation with no SoftDevice.
+    - Now supports operation when the SoftDevice is present and its state changes.
+- Refactored nrf_log to support multiple backends. Each backend has independent, dynamic filtering of logs.
+- Refactored nrf_cli to act as the logger backend. Improved user interface with smart auto-completion and easy commands addition.
+- Updated drivers to work with the nRF52810 device.
+- Updated Flash data storage (FDS).
+    - Can now work with no SoftDevice by using the nrf_fstorage_nvmc backend.
+    - The 'Chunk' functionality has been removed.
+ 
+*** Bugfixes
+****************
+ 
+** BLE **
+ - Fixed a bug where the multiperipheral example would not be able to connect to more than one link.
+ 
+** NFC **
+ - Implemented several fixes in Type 2 and Type 4 libraries (fixed nfc_t4t_parameter_set function, removed nRF52 startup code and FPU support from library compilation).
+ 
+** Drivers and libraries **
+ - Fixed potential overflow in the watchdog timer (WDT) driver initialization.
+ - Fixed wrong header guard in nrf_nvic.h (https://devzone.nordicsemi.com/question/121041/incorrect-header-guard-in-nrf_nvich/).
+ - Fixed a bug where nrf_drv_spi_uninit did not clear an event (https://devzone.nordicsemi.com/question/116308/spi-init-triggers-old-nrf_spim_event_end).
+ - Implemented a fix for nrf_drv_spi - no pulldown on MISO line.
+ 
+*** Known Issues
+****************
+
+** Overall **
+ - In the UART peripheral example, only a line feed (LF) is output on startup and when resetting the board.
+ - Serialized Direct Test Mode does not report RX packet count correctly.
+
+** BLE **
+ - It is possible that the Peer Manager may return corrupt data when attempting to read the GATT attributes table under some circumstances when FDS CRC checks are enabled.
+ - In the Multiperipheral Example, LED 3 will toggle when writing any non-zero value to it. Also, two notifications instead of one are received on the Button Characteristic (0x1524) when pressing Button 1.
+ - For all serialized applications, the MTU size (NRF_SDH_BLE_GATT_MAX_MTU_SIZE in sdk_config.h) should be kept at the default level. Changing this value makes the application non-functional as the connectivity application uses static size buffers.
+ - Eddystone Beacon Application - LED indication might differ from what is described in documentation under the Testing section.
+ 
+** ANT **
+- Most ANT examples do not have the nrf_log backend in the project files, so enabling logging does not have any effect.
+ 
+** NFC **
+ - NFC Type 2 and Type 4 Tag HAL modules require using TIMER4 on nRF52832.
+ - Some mobile phone apps cannot write Type 4 Tag (the "NFC Tools" app seems to
+   be okay to use).
+ - BLE peripheral examples with NFC pairing work as expected only with Android 7.1.2.
+ 
+** DFU **
+ - Downgrading from nRF5 SDK v14.0.0 to nRF5 SDK v13.0.0 has been observed to cause the v13.0.0 bootloader to corrupt itself (Upgrading works as expected).
+ - The S140 SoftDevice currently does not support updating of the bootloader.
+ - The CTX pin (P0.07) should be grounded to run the Serial Secure DFU on both nRF52832 and nRF52840 boards.
+ - BLE/Serial Secure DFU only supports nrfutil 2.3.0.
+ - For nRF52840, a combined SoftDevice and application update on Serial transport fails when using nrfutil 2.3.0. Running a single SoftDevice and application update sequentially works as expected.
+
+ ** USB **
+ - USB driver Anomaly 104 solution is very unstable in IAR compilation with high optimization level.
+
+ 
+========================================================================
+
 nRF5 SDK v13.1.0
 ------------------------
 Release Date: Week 27, 2017

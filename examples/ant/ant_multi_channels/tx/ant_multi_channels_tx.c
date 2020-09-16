@@ -56,18 +56,20 @@
 #include "sdk_config.h"
 #include "ant_channel_config.h"
 #include "ant_multi_channels_tx.h"
+#include "nrf_sdh.h"
+#include "nrf_sdh_ant.h"
 
 
-#define ANT_EXT_ASSIGN                  0x00                            /**< ANT Ext Assign. */
-#define ANT_CHANNEL_DEFAULT_NETWORK     0x00                            /**< ANT Channel Network. */
+#define APP_ANT_OBSERVER_PRIO   1   /**< Application's ANT observer priority. You shouldn't need to modify this value. */
+
 
 // Private variables
-static uint8_t m_counter[ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED]   = {0};  /**< Counters to increment the ANT broadcast data payload. */
+static uint8_t m_counter[NRF_SDH_ANT_TOTAL_CHANNELS_ALLOCATED]  = {0};  /**< Counters to increment the ANT broadcast data payload. */
 static uint8_t m_broadcast_data[ANT_STANDARD_DATA_PAYLOAD_SIZE] = {0};  /**< Primary data transmit buffers. */
 static uint8_t m_num_open_channels                              = 0;    /**< Number of channels open */
 
-/**@brief Function to display the bottom nibble of the input byte
- */
+
+/**@brief Function to display the bottom nibble of the input byte */
 static void ant_scaleable_display_byte_on_leds(uint8_t byte_to_display)
 {
     bsp_board_leds_off();
@@ -100,16 +102,16 @@ void ant_scaleable_channel_tx_broadcast_setup(void)
     {
         .channel_number     = i,
         .channel_type       = CHANNEL_TYPE_MASTER,
-        .ext_assign         = ANT_EXT_ASSIGN,
+        .ext_assign         = 0x00,
         .rf_freq            = RF_FREQ,
         .transmission_type  = CHAN_ID_TRANS_TYPE,
         .device_type        = CHAN_ID_DEV_TYPE,
         .device_number      = i + 1,
         .channel_period     = CHAN_PERIOD,
-        .network_number     = ANT_CHANNEL_DEFAULT_NETWORK,
+        .network_number     = ANT_NETWORK_NUM,
     };
 
-    for (i = 0; i < ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED; i++)
+    for (i = 0; i < NRF_SDH_ANT_TOTAL_CHANNELS_ALLOCATED; i++)
     {
         // Configure channel
         channel_config.channel_number = i;
@@ -128,7 +130,12 @@ void ant_scaleable_channel_tx_broadcast_setup(void)
 }
 
 
-void ant_scaleable_event_handler(ant_evt_t * p_ant_evt)
+/**@brief Function for handling a ANT stack event.
+ *
+ * @param[in] p_ant_evt  ANT stack event.
+ * @param[in] p_context  Context.
+ */
+void ant_evt_handler(ant_evt_t * p_ant_evt, void * p_context)
 {
     uint32_t err_code;
 
@@ -155,3 +162,5 @@ void ant_scaleable_event_handler(ant_evt_t * p_ant_evt)
             break;
     }
 }
+
+NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_evt_handler, NULL);

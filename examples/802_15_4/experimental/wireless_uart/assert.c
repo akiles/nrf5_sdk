@@ -51,10 +51,10 @@ void sys_assert_handler(const char * condition, const int line, const char * fil
         APP_ERROR_HANDLER(NRF_ERROR_NULL);
     }
 
-    NRF_LOG_ERROR("Assertion fault: !(%s) line: %i file: %s \r\n",
-                  nrf_log_push((char *) condition),
+    NRF_LOG_ERROR("Assertion fault: !(%s) line: %i file: %s ",
+                  NRF_LOG_PUSH((char *) condition),
                   line,
-                  nrf_log_push((char *) file));
+                  NRF_LOG_PUSH((char *) file));
 
     assert_info_t assert_info =
     {
@@ -89,6 +89,6 @@ void sys_assert_info_handler(const char * condition,
     }
     va_end(args);
 
-    NRF_LOG_INFO("Assertion info: %s\r\n", nrf_log_push(msg_buf));
+    NRF_LOG_INFO("Assertion info: %s", NRF_LOG_PUSH(msg_buf));
     sys_assert_handler(condition, line, file);
 }

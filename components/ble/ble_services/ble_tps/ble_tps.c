@@ -38,9 +38,9 @@
  * 
  */
 /* Attention!
-*  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
-*  qualification listings, this section of source code must not be modified.
-*/
+ * To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
+ * qualification listings, this section of source code must not be modified.
+ */
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(BLE_TPS)
 #include "ble_tps.h"
@@ -53,14 +53,16 @@
  * @param[in]   p_tps       TX Power Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_connect(ble_tps_t * p_tps, ble_evt_t * p_ble_evt)
+static void on_connect(ble_tps_t * p_tps, ble_evt_t const * p_ble_evt)
 {
     p_tps->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
 }
 
 
-void ble_tps_on_ble_evt(ble_tps_t * p_tps, ble_evt_t * p_ble_evt)
+void ble_tps_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
+    ble_tps_t * p_tps = (ble_tps_t *)p_context;
+
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:

@@ -38,9 +38,9 @@
  * 
  */
 /* Attention!
-*  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
-*  qualification listings, this section of source code must not be modified.
-*/
+ * To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
+ * qualification listings, this section of source code must not be modified.
+ */
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(BLE_IAS)
 #include "ble_ias.h"
@@ -56,7 +56,7 @@
  * @param[in]   p_ias       Immediate Alert Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_connect(ble_ias_t * p_ias, ble_evt_t * p_ble_evt)
+static void on_connect(ble_ias_t * p_ias, ble_evt_t const * p_ble_evt)
 {
     p_ias->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
 }
@@ -66,9 +66,9 @@ static void on_connect(ble_ias_t * p_ias, ble_evt_t * p_ble_evt)
  * @param[in]   p_ias       Immediate Alert Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_write(ble_ias_t * p_ias, ble_evt_t * p_ble_evt)
+static void on_write(ble_ias_t * p_ias, ble_evt_t const * p_ble_evt)
 {
-    ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
+    ble_gatts_evt_write_t const * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
 
     if ((p_evt_write->handle == p_ias->alert_level_handles.value_handle) && (p_evt_write->len == 1))
     {
@@ -83,8 +83,10 @@ static void on_write(ble_ias_t * p_ias, ble_evt_t * p_ble_evt)
 }
 
 
-void ble_ias_on_ble_evt(ble_ias_t * p_ias, ble_evt_t * p_ble_evt)
+void ble_ias_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 {
+    ble_ias_t * p_ias = (ble_ias_t *)p_context;
+
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
