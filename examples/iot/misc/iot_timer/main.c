@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -247,6 +247,8 @@ int main(void)
                                APP_TIMER_TICKS(IOT_TIMER_RESOLUTION_IN_MS),
                                NULL);
     APP_ERROR_CHECK(err_code);
+
+    APPL_LOG("Application started.");
 
     //Enter main loop.
     for (;;)

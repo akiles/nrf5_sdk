@@ -314,15 +314,11 @@
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\clock</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
@@ -338,9 +334,16 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\text</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_lib</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_lib\hal_t2t</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk</state>
           <state>$PROJ_DIR$\..\config</state>
         </option>
         <option>
@@ -604,15 +607,11 @@
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\clock</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
@@ -628,9 +627,16 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\text</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_lib</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_lib\hal_t2t</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk</state>
           <state>$PROJ_DIR$\..\config</state>
         </option>
         <option>
@@ -1016,11 +1022,17 @@
     </settings>
   </configuration>  <group>
   <name>nRF_Log</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_frontend.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_rtt.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_serial.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_backend_uart.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_default_backends.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_frontend.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_str_formatter.c</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Libraries</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_handler_iar.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</name>    </file>    <file>
@@ -1028,21 +1040,32 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault\nrf52\handler\hardfault_handler_iar.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault\hardfault_implementation.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic\nrf_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc\nrf_balloc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf\nrf_fprintf.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf\nrf_fprintf_format.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj\nrf_memobj.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\clock\nrf_drv_clock.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_clock.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_nvic.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</name>    </file>  </group>  <group>
   <name>Application</name>    <file>
     <name>$PROJ_DIR$\..\..\..\main.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\config\sdk_config.h</name>    </file>  </group>  <group>
-  <name>Device</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\iar\iar_startup_nrf52.s</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\system_nrf52.c</name>    </file>  </group>  <group>
+  <name>nRF_Segger_RTT</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_Syscalls_IAR.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_printf.c</name>    </file>  </group>  <group>
+  <name>None</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk\iar_startup_nrf52.s</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk\system_nrf52.c</name>    </file>  </group>  <group>
   <name>nRF_NFC</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_lib\hal_t2t\hal_nfc_t2t.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\generic\message\nfc_ndef_msg.c</name>    </file>    <file>

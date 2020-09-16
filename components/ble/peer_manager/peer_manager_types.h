@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -147,9 +147,9 @@ typedef enum
  */
 typedef enum
 {
-    PM_LINK_SECURED_PROCEDURE_ENCRYPTION, /**< @brief Using an LTK that was shared during a previous bonding procedure to encrypt the link. */
-    PM_LINK_SECURED_PROCEDURE_BONDING,    /**< @brief A pairing procedure, followed by a bonding procedure. */
-    PM_LINK_SECURED_PROCEDURE_PAIRING,    /**< @brief A pairing procedure with no bonding. */
+    PM_CONN_SEC_PROCEDURE_ENCRYPTION, /**< @brief Using an LTK that was shared during a previous bonding procedure to encrypt the link. */
+    PM_CONN_SEC_PROCEDURE_BONDING,    /**< @brief A pairing procedure, followed by a bonding procedure. */
+    PM_CONN_SEC_PROCEDURE_PAIRING,    /**< @brief A pairing procedure with no bonding. */
 } pm_conn_sec_procedure_t;
 
 
@@ -198,30 +198,7 @@ typedef struct
  *        The IRK distributed during bonding procedure is the device IRK that is active when @ref
  *        sd_ble_gap_sec_params_reply is called.
  */
-#if (NRF_SD_BLE_API_VERSION < 3)
-
-typedef struct
-{
-    uint8_t         privacy_mode;           /**< Privacy mode, see @ref BLE_GAP_PRIVACY_MODES. Default is @ref BLE_GAP_PRIVACY_MODE_OFF. */
-    uint8_t         private_addr_type;      /**< The private address type must be either @ref BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE or @ref BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE. */
-    uint16_t        private_addr_cycle_s;   /**< Private address cycle interval in seconds. Providing an address cycle value of 0 will use the default value defined by @ref BLE_GAP_DEFAULT_PRIVATE_ADDR_CYCLE_INTERVAL_S. */
-    ble_gap_irk_t * p_device_irk;           /**< When used as input, pointer to IRK structure that will be used as the default IRK. If NULL, the device default IRK will be used.
-                                                 When used as output, pointer to IRK structure where the current default IRK will be written to. If NULL, this argument is ignored.
-                                                 By default, the default IRK is used to generate random private resolvable addresses for the local device unless instructed otherwise. */
-} pm_privacy_params_t;
-
-
-/**@defgroup BLE_GAP_PRIVACY_MODES Privacy modes
- * @{ */
-#define BLE_GAP_PRIVACY_MODE_OFF                0x00 /**< Device will send and accept its identity address for its own address. */
-#define BLE_GAP_PRIVACY_MODE_DEVICE_PRIVACY     0x01 /**< Device will send and accept only private addresses for its own address. */
-/**@} */
-
-#else
-
 typedef ble_gap_privacy_params_t pm_privacy_params_t;
-
-#endif
 
 
 /**@brief Types of events that can come from the @ref peer_manager module.

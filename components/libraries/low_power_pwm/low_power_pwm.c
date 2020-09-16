@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -107,7 +107,7 @@ static void pwm_timeout_handler(void * p_context)
         {
             p_pwm_instance->handler(p_pwm_instance);
 
-            if (p_pwm_instance->pwm_state != NRF_DRV_STATE_POWERED_ON)
+            if (p_pwm_instance->pwm_state != NRFX_DRV_STATE_POWERED_ON)
             {
                 return;
             }
@@ -142,7 +142,7 @@ static void pwm_timeout_handler(void * p_context)
                                     p_pwm_instance->period)>>8) + APP_TIMER_MIN_TIMEOUT_TICKS;
     }
 
-    if (p_pwm_instance->pwm_state == NRF_DRV_STATE_POWERED_ON)
+    if (p_pwm_instance->pwm_state == NRFX_DRV_STATE_POWERED_ON)
     {
         err_code = app_timer_start(*p_pwm_instance->p_timer_id, p_pwm_instance->timeout_ticks, p_pwm_instance);
         APP_ERROR_CHECK(err_code);
@@ -154,7 +154,7 @@ ret_code_t low_power_pwm_init(low_power_pwm_t * p_pwm_instance,
                             low_power_pwm_config_t const * p_pwm_config,
                             app_timer_timeout_handler_t handler)
 {
-    ASSERT(p_pwm_instance->pwm_state == NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(p_pwm_instance->pwm_state == NRFX_DRV_STATE_UNINITIALIZED);
     ASSERT(p_pwm_config->bit_mask != 0);
     ASSERT(p_pwm_config->p_port != NULL);
     ASSERT(p_pwm_config->period != 0);
@@ -193,7 +193,7 @@ ret_code_t low_power_pwm_init(low_power_pwm_t * p_pwm_instance,
     }
 
     pin_off(p_pwm_instance);
-    p_pwm_instance->pwm_state = NRF_DRV_STATE_INITIALIZED;
+    p_pwm_instance->pwm_state = NRFX_DRV_STATE_INITIALIZED;
 
     return NRF_SUCCESS;
 }
@@ -202,10 +202,10 @@ ret_code_t low_power_pwm_init(low_power_pwm_t * p_pwm_instance,
 ret_code_t low_power_pwm_start(low_power_pwm_t * p_pwm_instance,
                                uint32_t          pin_bit_mask)
 {
-    ASSERT(p_pwm_instance->pwm_state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(p_pwm_instance->pwm_state != NRFX_DRV_STATE_UNINITIALIZED);
     ASSERT(((p_pwm_instance->bit_mask) & pin_bit_mask) != 0x00);
 
-    p_pwm_instance->pwm_state = NRF_DRV_STATE_POWERED_ON;
+    p_pwm_instance->pwm_state = NRFX_DRV_STATE_POWERED_ON;
     p_pwm_instance->bit_mask_toggle = pin_bit_mask;
 
     pin_off(p_pwm_instance);
@@ -224,7 +224,7 @@ ret_code_t low_power_pwm_start(low_power_pwm_t * p_pwm_instance,
 
 ret_code_t low_power_pwm_stop(low_power_pwm_t * p_pwm_instance)
 {
-    ASSERT(p_pwm_instance->pwm_state == NRF_DRV_STATE_POWERED_ON);
+    ASSERT(p_pwm_instance->pwm_state == NRFX_DRV_STATE_POWERED_ON);
 
     ret_code_t err_code;
 
@@ -237,7 +237,7 @@ ret_code_t low_power_pwm_stop(low_power_pwm_t * p_pwm_instance)
         return err_code;
     }
 
-    p_pwm_instance->pwm_state = NRF_DRV_STATE_INITIALIZED;
+    p_pwm_instance->pwm_state = NRFX_DRV_STATE_INITIALIZED;
 
 
     return NRF_SUCCESS;

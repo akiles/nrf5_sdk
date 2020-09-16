@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -49,7 +49,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "nrf_fstorage.h"
+#include "sdk_errors.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -60,7 +60,7 @@ extern "C" {
  *
  * This function will be called after a flash operation has completed.
  */
-typedef nrf_fstorage_evt_handler_t dfu_flash_callback_t;
+typedef void (*nrf_dfu_flash_callback_t)(void * p_buf);
 
 
 /**@brief Function for initializing the flash module.
@@ -99,7 +99,7 @@ ret_code_t nrf_dfu_flash_init(bool sd_irq_initialized);
 ret_code_t nrf_dfu_flash_store(uint32_t                     dest,
                                void                 const * p_src,
                                uint32_t                     len,
-                               dfu_flash_callback_t         callback);
+                               nrf_dfu_flash_callback_t     callback);
 
 
 /**@brief Function for erasing data from flash.
@@ -120,7 +120,7 @@ ret_code_t nrf_dfu_flash_store(uint32_t                     dest,
  * @retval  NRF_ERROR_NULL              If @p page_addr is NULL.
  * @retval  NRF_ERROR_NO_MEM            If the queue of nrf_fstorage is full.
  */
-ret_code_t nrf_dfu_flash_erase(uint32_t page_addr, uint32_t num_pages, dfu_flash_callback_t callback);
+ret_code_t nrf_dfu_flash_erase(uint32_t page_addr, uint32_t num_pages, nrf_dfu_flash_callback_t callback);
 
 
 #ifdef __cplusplus

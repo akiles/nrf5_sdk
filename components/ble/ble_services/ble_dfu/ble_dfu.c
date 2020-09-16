@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -51,7 +51,8 @@
 #include "nrf_sdm.h"
 #include "nrf_soc.h"
 #include "nrf_log.h"
-#include "nrf_dfu_svci.h"
+#include "nrf_dfu_ble_svci_bond_sharing.h"
+#include "nrf_bootloader_info.h"
 #include "nrf_svci_async_function.h"
 #include "nrf_pwr_mgmt.h"
 #include "peer_manager.h"

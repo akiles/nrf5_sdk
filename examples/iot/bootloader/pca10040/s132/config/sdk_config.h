@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -49,49 +49,881 @@
 // <h> nRF_Bootloader 
 
 //==========================================================
-// <h> nrf_dfu - DFU Bootloader
+// <h> nrf_bootloader - Bootloader settings
 
 //==========================================================
-// <o> NRF_DFU_INACTIVITY_TIMEOUT_MS - Timeout in ms before automatically starting a valid application due to inactivity  <100-60000000> 
+// <h> Application integrity checks 
 
-
-#ifndef NRF_DFU_INACTIVITY_TIMEOUT_MS
-#define NRF_DFU_INACTIVITY_TIMEOUT_MS 120000
-#endif
-
-// <o> NRF_DFU_POST_SD_BL_TIMEOUT_MS - Timeout in ms before automatically starting a valid application after a bootloader or SoftDevice update  <100-60000000> 
-
-
-#ifndef NRF_DFU_POST_SD_BL_TIMEOUT_MS
-#define NRF_DFU_POST_SD_BL_TIMEOUT_MS 10000
-#endif
-
-// <q> NRF_DFU_WORKAROUND_PRE_SDK_14_1_0_SD_BL_UPDATE  - Workaround for updating SD+BL with a SD that has increased size. Only valid for updates of SD+BL with BL from SDK 12.x.y - 14.0.x. This workaround has no effect in 14.1.x
+//==========================================================
+// <q> NRF_BL_APP_CRC_CHECK_SKIPPED_ON_GPREGRET2  - Skip integrity check of the application when bit 1 (0-indexed) is set in the GPREGRET2 register.
  
 
-#ifndef NRF_DFU_WORKAROUND_PRE_SDK_14_1_0_SD_BL_UPDATE
-#define NRF_DFU_WORKAROUND_PRE_SDK_14_1_0_SD_BL_UPDATE 1
+#ifndef NRF_BL_APP_CRC_CHECK_SKIPPED_ON_GPREGRET2
+#define NRF_BL_APP_CRC_CHECK_SKIPPED_ON_GPREGRET2 1
 #endif
 
-// <h> DFU flash buffers 
+// <q> NRF_BL_APP_CRC_CHECK_SKIPPED_ON_SYSTEMOFF_RESET  - Skip integrity check of the application when waking up from the System Off state.
+ 
 
-//==========================================================
-// <o> FLASH_BUFFER_COUNT - Number of flash buffers. 
-// <i> Must be a power of two.
-
-#ifndef FLASH_BUFFER_COUNT
-#define FLASH_BUFFER_COUNT 4
-#endif
-
-// <o> FLASH_BUFFER_LENGTH - Length of a flash buffer, in bytes. 
-// <i> Must be a multiple of the word size.
-
-#ifndef FLASH_BUFFER_LENGTH
-#define FLASH_BUFFER_LENGTH 128
+#ifndef NRF_BL_APP_CRC_CHECK_SKIPPED_ON_SYSTEMOFF_RESET
+#define NRF_BL_APP_CRC_CHECK_SKIPPED_ON_SYSTEMOFF_RESET 1
 #endif
 
 // </h> 
 //==========================================================
+
+// <h> DFU mode enter method 
+
+//==========================================================
+// <e> NRF_BL_DFU_ENTER_METHOD_BUTTON - Enter DFU mode on button press.
+//==========================================================
+#ifndef NRF_BL_DFU_ENTER_METHOD_BUTTON
+#define NRF_BL_DFU_ENTER_METHOD_BUTTON 0
+#endif
+// <o> NRF_BL_DFU_ENTER_METHOD_BUTTON_PIN  - Button for entering DFU mode.
+ 
+// <0=> 0 (P0.0) 
+// <1=> 1 (P0.1) 
+// <2=> 2 (P0.2) 
+// <3=> 3 (P0.3) 
+// <4=> 4 (P0.4) 
+// <5=> 5 (P0.5) 
+// <6=> 6 (P0.6) 
+// <7=> 7 (P0.7) 
+// <8=> 8 (P0.8) 
+// <9=> 9 (P0.9) 
+// <10=> 10 (P0.10) 
+// <11=> 11 (P0.11) 
+// <12=> 12 (P0.12) 
+// <13=> 13 (P0.13) 
+// <14=> 14 (P0.14) 
+// <15=> 15 (P0.15) 
+// <16=> 16 (P0.16) 
+// <17=> 17 (P0.17) 
+// <18=> 18 (P0.18) 
+// <19=> 19 (P0.19) 
+// <20=> 20 (P0.20) 
+// <21=> 21 (P0.21) 
+// <22=> 22 (P0.22) 
+// <23=> 23 (P0.23) 
+// <24=> 24 (P0.24) 
+// <25=> 25 (P0.25) 
+// <26=> 26 (P0.26) 
+// <27=> 27 (P0.27) 
+// <28=> 28 (P0.28) 
+// <29=> 29 (P0.29) 
+// <30=> 30 (P0.30) 
+// <31=> 31 (P0.31) 
+
+#ifndef NRF_BL_DFU_ENTER_METHOD_BUTTON_PIN
+#define NRF_BL_DFU_ENTER_METHOD_BUTTON_PIN 16
+#endif
+
+// </e>
+
+// <q> NRF_BL_DFU_ENTER_METHOD_PINRESET  - Enter DFU mode on pin reset.
+ 
+
+#ifndef NRF_BL_DFU_ENTER_METHOD_PINRESET
+#define NRF_BL_DFU_ENTER_METHOD_PINRESET 0
+#endif
+
+// <q> NRF_BL_DFU_ENTER_METHOD_GPREGRET  - Enter DFU mode when bit 1 (0-indexed) is set in the NRF_POWER_GPREGRET register.
+ 
+
+#ifndef NRF_BL_DFU_ENTER_METHOD_GPREGRET
+#define NRF_BL_DFU_ENTER_METHOD_GPREGRET 0
+#endif
+
+// <q> NRF_BL_DFU_ENTER_METHOD_BUTTONLESS  - Enter DFU mode when the Boolean enter_buttonless_dfu in DFU settings is true.
+ 
+
+#ifndef NRF_BL_DFU_ENTER_METHOD_BUTTONLESS
+#define NRF_BL_DFU_ENTER_METHOD_BUTTONLESS 0
+#endif
+
+// </h> 
+//==========================================================
+
+// <h> DFU timers 
+
+//==========================================================
+// <o> NRF_BL_DFU_CONTINUATION_TIMEOUT_MS - Timeout in ms when expecting an update immediately.  <100-60000000> 
+
+
+// <i> This timeout is used after updating the SoftDevice, when there is
+// <i> already a valid application present. The bootloader will enter DFU mode
+// <i> for a short time instead of booting the old application to allow the host
+// <i> to immediately transfer a new application if it wishes.
+
+#ifndef NRF_BL_DFU_CONTINUATION_TIMEOUT_MS
+#define NRF_BL_DFU_CONTINUATION_TIMEOUT_MS 10000
+#endif
+
+// <o> NRF_BL_DFU_INACTIVITY_TIMEOUT_MS - Timeout in ms before automatically starting a valid application due to inactivity.  <0-60000000> 
+
+
+// <i> If 0, no inactivity timer will be used. Values 1-99 are invalid.
+
+#ifndef NRF_BL_DFU_INACTIVITY_TIMEOUT_MS
+#define NRF_BL_DFU_INACTIVITY_TIMEOUT_MS 120000
+#endif
+
+// </h> 
+//==========================================================
+
+// <h> Watchdog timer 
+
+//==========================================================
+// <o> NRF_BL_WDT_MAX_SCHEDULER_LATENCY_MS - Maximum latency of the scheduler in miliseconds 
+// <i> Maximum latency of the scheduler is compared with
+// <i> watchdog counter reload value (CRV). If latency is big
+// <i> enough, the watchdog will be fed from internal app_timer
+// <i> handler along with feed from user function. If latency
+// <i> is smaller than CRV, the watchdog will not be internally fed once
+// <i> it will be externally fed. Maximum latency is mainly affected
+// <i> by flash operations.
+
+#ifndef NRF_BL_WDT_MAX_SCHEDULER_LATENCY_MS
+#define NRF_BL_WDT_MAX_SCHEDULER_LATENCY_MS 10000
+#endif
+
+// </h> 
+//==========================================================
+
+// <h> Misc Bootloader settings 
+
+//==========================================================
+// <o> NRF_BL_FW_COPY_PROGRESS_STORE_STEP - Number of pages copied after which progress in the settings page is updated. 
+// <i> Progress stored in the settings page allows the bootloader to resume
+// <i> copying the new firmware in case of interruption (reset).
+// <i> If the value is small, then the resume point is more accurate. However,
+// <i>  it also impacts negatively on flash wear.
+
+#ifndef NRF_BL_FW_COPY_PROGRESS_STORE_STEP
+#define NRF_BL_FW_COPY_PROGRESS_STORE_STEP 8
+#endif
+
+// <q> NRF_BL_SETTINGS_PAGE_PROTECT  - Write-protect the settings page before starting the application.
+ 
+
+// <i> The settings page may be used to exchange information between the bootloader and the application.
+// <i> In that case it should not be protected.
+
+#ifndef NRF_BL_SETTINGS_PAGE_PROTECT
+#define NRF_BL_SETTINGS_PAGE_PROTECT 0
+#endif
+
+// </h> 
+//==========================================================
+
+// </h> 
+//==========================================================
+
+// </h> 
+//==========================================================
+
+// <h> nRF_Crypto 
+
+//==========================================================
+// <e> NRF_CRYPTO_ENABLED - nrf_crypto - Cryptography library
+//==========================================================
+#ifndef NRF_CRYPTO_ENABLED
+#define NRF_CRYPTO_ENABLED 1
+#endif
+// <o> NRF_CRYPTO_ALLOCATOR  - Memory allocator
+ 
+
+// <i> Choose memory allocator used by nrf_crypto. Default is alloca if possible or nrf_malloc otherwise. If 'User macros' are selected then user have to create 'nrf_crypto_allocator.h' file containing NRF_CRYPTO_ALLOC, NRF_CRYPTO_FREE and NRF_CRYPTO_ALLOC_ON_STACK
+// <0=> Default 
+// <1=> User macros 
+// <2=> On stack (alloca) 
+// <3=> C dynamic memory (malloc) 
+// <4=> SDK Memory Manager (nrf_malloc) 
+
+#ifndef NRF_CRYPTO_ALLOCATOR
+#define NRF_CRYPTO_ALLOCATOR 0
+#endif
+
+// <e> NRF_CRYPTO_BACKEND_CC310_BL_ENABLED - Enable the ARM Cryptocell CC310 reduced backend.
+
+// <i> The CC310 hardware-accelerated cryptography backend with reduced functionality and footprint (only available on nRF52840).
+//==========================================================
+#ifndef NRF_CRYPTO_BACKEND_CC310_BL_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_BL_ENABLED 0
+#endif
+// <q> NRF_CRYPTO_BACKEND_CC310_BL_ECC_SECP224R1_ENABLED  - Enable the secp224r1 elliptic curve support using CC310_BL.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_BL_ECC_SECP224R1_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_BL_ECC_SECP224R1_ENABLED 0
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_BL_ECC_SECP256R1_ENABLED  - Enable the secp256r1 elliptic curve support using CC310_BL.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_BL_ECC_SECP256R1_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_BL_ECC_SECP256R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_BL_HASH_SHA256_ENABLED  - CC310_BL SHA-256 hash functionality.
+ 
+
+// <i> CC310_BL backend implementation for hardware-accelerated SHA-256.
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_BL_HASH_SHA256_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_BL_HASH_SHA256_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_BL_HASH_LITTLE_ENDIAN_DIGEST_ENABLED  - nrf_cc310_bl hash outputs digests in little endian
+ 
+
+// <i> Makes the nRF SH hash functions output digests in little endian format. Only for use in nRF SDK DFU!
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_BL_HASH_LITTLE_ENDIAN_DIGEST_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_BL_HASH_LITTLE_ENDIAN_DIGEST_ENABLED 0
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_BL_HASH_AUTOMATIC_RAM_BUFFER_ENABLED  - nrf_cc310_bl buffers to RAM before running hash operation
+ 
+
+// <i> Enabling this makes hashing of addresses in FLASH range possible. Size of buffer allocated for hashing is set by NRF_CRYPTO_BACKEND_CC310_BL_HASH_AUTOMATIC_RAM_BUFFER_SIZE
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_BL_HASH_AUTOMATIC_RAM_BUFFER_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_BL_HASH_AUTOMATIC_RAM_BUFFER_ENABLED 0
+#endif
+
+// <o> NRF_CRYPTO_BACKEND_CC310_BL_HASH_AUTOMATIC_RAM_BUFFER_SIZE - nrf_cc310_bl hash outputs digests in little endian 
+// <i> Makes the nrf_cc310_bl hash functions output digests in little endian format. Only for use in nRF SDK DFU!
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_BL_HASH_AUTOMATIC_RAM_BUFFER_SIZE
+#define NRF_CRYPTO_BACKEND_CC310_BL_HASH_AUTOMATIC_RAM_BUFFER_SIZE 4096
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_BL_ECC_LITTLE_ENDIAN_ENABLED  - Enable non-standard little endian byte order in nrf_cc310_bl ECC functions.
+ 
+
+// <i> This affects parameters for all nrf_cc310_bl ECC APIs (raw keys, signature, digest). Only for use in nRF SDK DFU!
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_BL_ECC_LITTLE_ENDIAN_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_BL_ECC_LITTLE_ENDIAN_ENABLED 0
+#endif
+
+// </e>
+
+// <e> NRF_CRYPTO_BACKEND_CC310_ENABLED - Enable the ARM Cryptocell CC310 backend.
+
+// <i> The CC310 hardware-accelerated cryptography backend (only available on nRF52840).
+//==========================================================
+#ifndef NRF_CRYPTO_BACKEND_CC310_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_ENABLED 0
+#endif
+// <q> NRF_CRYPTO_BACKEND_CC310_AES_CBC_ENABLED  - Enable the AES CBC mode using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_AES_CBC_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_AES_CBC_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_AES_CTR_ENABLED  - Enable the AES CTR mode using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_AES_CTR_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_AES_CTR_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_AES_ECB_ENABLED  - Enable the AES ECB mode using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_AES_ECB_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_AES_ECB_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_AES_CBC_MAC_ENABLED  - Enable the AES CBC_MAC mode using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_AES_CBC_MAC_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_AES_CBC_MAC_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_AES_CMAC_ENABLED  - Enable the AES CMAC mode using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_AES_CMAC_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_AES_CMAC_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_AES_CCM_ENABLED  - Enable the AES CCM mode using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_AES_CCM_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_AES_CCM_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_AES_CCM_STAR_ENABLED  - Enable the AES CCM* mode using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_AES_CCM_STAR_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_AES_CCM_STAR_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_CHACHA_POLY_ENABLED  - Enable the CHACHA-POLY mode using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_CHACHA_POLY_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_CHACHA_POLY_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_ECC_SECP160R1_ENABLED  - Enable the secp160r1 elliptic curve support using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_ECC_SECP160R1_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_ECC_SECP160R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_ECC_SECP160R2_ENABLED  - Enable the secp160r2 elliptic curve support using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_ECC_SECP160R2_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_ECC_SECP160R2_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_ECC_SECP192R1_ENABLED  - Enable the secp192r1 elliptic curve support using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_ECC_SECP192R1_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_ECC_SECP192R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_ECC_SECP224R1_ENABLED  - Enable the secp224r1 elliptic curve support using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_ECC_SECP224R1_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_ECC_SECP224R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_ECC_SECP256R1_ENABLED  - Enable the secp256r1 elliptic curve support using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_ECC_SECP256R1_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_ECC_SECP256R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_ECC_SECP384R1_ENABLED  - Enable the secp384r1 elliptic curve support using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_ECC_SECP384R1_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_ECC_SECP384R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_ECC_SECP521R1_ENABLED  - Enable the secp521r1 elliptic curve support using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_ECC_SECP521R1_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_ECC_SECP521R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_ECC_SECP160K1_ENABLED  - Enable the secp160k1 elliptic curve support using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_ECC_SECP160K1_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_ECC_SECP160K1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_ECC_SECP192K1_ENABLED  - Enable the secp192k1 elliptic curve support using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_ECC_SECP192K1_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_ECC_SECP192K1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_ECC_SECP224K1_ENABLED  - Enable the secp224k1 elliptic curve support using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_ECC_SECP224K1_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_ECC_SECP224K1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_ECC_SECP256K1_ENABLED  - Enable the secp256k1 elliptic curve support using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_ECC_SECP256K1_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_ECC_SECP256K1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_HASH_SHA256_ENABLED  - CC310 SHA-256 hash functionality.
+ 
+
+// <i> CC310 backend implementation for hardware-accelerated SHA-256.
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_HASH_SHA256_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_HASH_SHA256_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_HASH_SHA512_ENABLED  - CC310 SHA-512 hash functionality
+ 
+
+// <i> CC310 backend implementation for SHA-512 (in software).
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_HASH_SHA512_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_HASH_SHA512_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_HMAC_SHA256_ENABLED  - CC310 HMAC using SHA-256
+ 
+
+// <i> CC310 backend implementation for HMAC using hardware-accelerated SHA-256.
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_HMAC_SHA256_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_HMAC_SHA256_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_HMAC_SHA512_ENABLED  - CC310 HMAC using SHA-512
+ 
+
+// <i> CC310 backend implementation for HMAC using SHA-512 (in software).
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_HMAC_SHA512_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_HMAC_SHA512_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_RNG_ENABLED  - Enable RNG support using CC310.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_RNG_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_RNG_ENABLED 1
+#endif
+
+// </e>
+
+// <e> NRF_CRYPTO_BACKEND_CIFRA_ENABLED - Enable the Cifra backend.
+//==========================================================
+#ifndef NRF_CRYPTO_BACKEND_CIFRA_ENABLED
+#define NRF_CRYPTO_BACKEND_CIFRA_ENABLED 0
+#endif
+// <q> NRF_CRYPTO_BACKEND_CIFRA_AES_EAX_ENABLED  - Enable the AES EAX mode using Cifra.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_CIFRA_AES_EAX_ENABLED
+#define NRF_CRYPTO_BACKEND_CIFRA_AES_EAX_ENABLED 1
+#endif
+
+// </e>
+
+// <e> NRF_CRYPTO_BACKEND_MBEDTLS_ENABLED - Enable the mbed TLS backend.
+//==========================================================
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ENABLED 0
+#endif
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_CBC_ENABLED  - Enable the AES CBC mode mbed TLS.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_CBC_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CBC_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_CTR_ENABLED  - Enable the AES CTR mode using mbed TLS.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_CTR_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CTR_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_CFB_ENABLED  - Enable the AES CFB mode using mbed TLS.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_CFB_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CFB_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_ECB_ENABLED  - Enable the AES ECB mode using mbed TLS.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_ECB_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_ECB_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_CBC_MAC_ENABLED  - Enable the AES CBC MAC mode using mbed TLS.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_CBC_MAC_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CBC_MAC_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_CMAC_ENABLED  - Enable the AES CMAC mode using mbed TLS.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_CMAC_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CMAC_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_CCM_ENABLED  - Enable the AES CCM mode using mbed TLS.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_CCM_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_CCM_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_AES_GCM_ENABLED  - Enable the AES GCM mode using mbed TLS.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_AES_GCM_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_AES_GCM_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192R1_ENABLED  - Enable secp192r1 (NIST 192-bit) curve
+ 
+
+// <i> Enable this setting if you need secp192r1 (NIST 192-bit) support using MBEDTLS
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192R1_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224R1_ENABLED  - Enable secp224r1 (NIST 224-bit) curve
+ 
+
+// <i> Enable this setting if you need secp224r1 (NIST 224-bit) support using MBEDTLS
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224R1_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256R1_ENABLED  - Enable secp256r1 (NIST 256-bit) curve
+ 
+
+// <i> Enable this setting if you need secp256r1 (NIST 256-bit) support using MBEDTLS
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256R1_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP384R1_ENABLED  - Enable secp384r1 (NIST 384-bit) curve
+ 
+
+// <i> Enable this setting if you need secp384r1 (NIST 384-bit) support using MBEDTLS
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP384R1_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP384R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP521R1_ENABLED  - Enable secp521r1 (NIST 521-bit) curve
+ 
+
+// <i> Enable this setting if you need secp521r1 (NIST 521-bit) support using MBEDTLS
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP521R1_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP521R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192K1_ENABLED  - Enable secp192k1 (Koblitz 192-bit) curve
+ 
+
+// <i> Enable this setting if you need secp192k1 (Koblitz 192-bit) support using MBEDTLS
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192K1_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP192K1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224K1_ENABLED  - Enable secp224k1 (Koblitz 224-bit) curve
+ 
+
+// <i> Enable this setting if you need secp224k1 (Koblitz 224-bit) support using MBEDTLS
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224K1_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP224K1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256K1_ENABLED  - Enable secp256k1 (Koblitz 256-bit) curve
+ 
+
+// <i> Enable this setting if you need secp256k1 (Koblitz 256-bit) support using MBEDTLS
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256K1_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_SECP256K1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP256R1_ENABLED  - Enable bp256r1 (Brainpool 256-bit) curve
+ 
+
+// <i> Enable this setting if you need bp256r1 (Brainpool 256-bit) support using MBEDTLS
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP256R1_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP256R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP384R1_ENABLED  - Enable bp384r1 (Brainpool 384-bit) curve
+ 
+
+// <i> Enable this setting if you need bp384r1 (Brainpool 384-bit) support using MBEDTLS
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP384R1_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP384R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP512R1_ENABLED  - Enable bp512r1 (Brainpool 512-bit) curve
+ 
+
+// <i> Enable this setting if you need bp512r1 (Brainpool 512-bit) support using MBEDTLS
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP512R1_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_BP512R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_ECC_CURVE25519_ENABLED  - Enable Curve25519 curve
+ 
+
+// <i> Enable this setting if you need Curve25519 support using MBEDTLS
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_ECC_CURVE25519_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_ECC_CURVE25519_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA256_ENABLED  - Enable mbed TLS SHA-256 hash functionality.
+ 
+
+// <i> mbed TLS backend implementation for SHA-256.
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA256_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA256_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA512_ENABLED  - Enable mbed TLS SHA-512 hash functionality.
+ 
+
+// <i> mbed TLS backend implementation for SHA-512.
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA512_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_HASH_SHA512_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA256_ENABLED  - Enable mbed TLS HMAC using SHA-256.
+ 
+
+// <i> mbed TLS backend implementation for HMAC using SHA-256.
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA256_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA256_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA512_ENABLED  - Enable mbed TLS HMAC using SHA-512.
+ 
+
+// <i> mbed TLS backend implementation for HMAC using SHA-512.
+
+#ifndef NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA512_ENABLED
+#define NRF_CRYPTO_BACKEND_MBEDTLS_HMAC_SHA512_ENABLED 1
+#endif
+
+// </e>
+
+// <e> NRF_CRYPTO_BACKEND_MICRO_ECC_ENABLED - Enable the micro-ecc backend.
+//==========================================================
+#ifndef NRF_CRYPTO_BACKEND_MICRO_ECC_ENABLED
+#define NRF_CRYPTO_BACKEND_MICRO_ECC_ENABLED 1
+#endif
+// <q> NRF_CRYPTO_BACKEND_MICRO_ECC_ECC_SECP192R1_ENABLED  - Enable secp192r1 (NIST 192-bit) curve
+ 
+
+// <i> Enable this setting if you need secp192r1 (NIST 192-bit) support using micro-ecc
+
+#ifndef NRF_CRYPTO_BACKEND_MICRO_ECC_ECC_SECP192R1_ENABLED
+#define NRF_CRYPTO_BACKEND_MICRO_ECC_ECC_SECP192R1_ENABLED 0
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MICRO_ECC_ECC_SECP224R1_ENABLED  - Enable secp224r1 (NIST 224-bit) curve
+ 
+
+// <i> Enable this setting if you need secp224r1 (NIST 224-bit) support using micro-ecc
+
+#ifndef NRF_CRYPTO_BACKEND_MICRO_ECC_ECC_SECP224R1_ENABLED
+#define NRF_CRYPTO_BACKEND_MICRO_ECC_ECC_SECP224R1_ENABLED 0
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MICRO_ECC_ECC_SECP256R1_ENABLED  - Enable secp256r1 (NIST 256-bit) curve
+ 
+
+// <i> Enable this setting if you need secp256r1 (NIST 256-bit) support using micro-ecc
+
+#ifndef NRF_CRYPTO_BACKEND_MICRO_ECC_ECC_SECP256R1_ENABLED
+#define NRF_CRYPTO_BACKEND_MICRO_ECC_ECC_SECP256R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MICRO_ECC_ECC_SECP256K1_ENABLED  - Enable secp256k1 (Koblitz 256-bit) curve
+ 
+
+// <i> Enable this setting if you need secp256k1 (Koblitz 256-bit) support using micro-ecc
+
+#ifndef NRF_CRYPTO_BACKEND_MICRO_ECC_ECC_SECP256K1_ENABLED
+#define NRF_CRYPTO_BACKEND_MICRO_ECC_ECC_SECP256K1_ENABLED 0
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MICRO_ECC_PUBLIC_KEY_TRUSTED_ENABLED  - Always trust raw public key (it will cause a security issue if the public key comes from an untrusted source)
+ 
+
+// <i> Enable this setting if you want to reduce flash usage. Only for use in nRF SDK DFU! Never enable it if the raw public key comes from an untrusted source.
+
+#ifndef NRF_CRYPTO_BACKEND_MICRO_ECC_PUBLIC_KEY_TRUSTED_ENABLED
+#define NRF_CRYPTO_BACKEND_MICRO_ECC_PUBLIC_KEY_TRUSTED_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_MICRO_ECC_LITTLE_ENDIAN_ENABLED  - Enable non-standard little endian byte order.
+ 
+
+// <i> This affects parameters for all ECC API (raw keys, signature, digest, shared secret). Only for use in nRF SDK DFU!
+
+#ifndef NRF_CRYPTO_BACKEND_MICRO_ECC_LITTLE_ENDIAN_ENABLED
+#define NRF_CRYPTO_BACKEND_MICRO_ECC_LITTLE_ENDIAN_ENABLED 1
+#endif
+
+// </e>
+
+// <e> NRF_CRYPTO_BACKEND_NRF_HW_RNG_ENABLED - Enable the nRF HW RNG backend.
+
+// <i> The nRF HW backend provide access to RNG peripheral in nRF5x devices.
+//==========================================================
+#ifndef NRF_CRYPTO_BACKEND_NRF_HW_RNG_ENABLED
+#define NRF_CRYPTO_BACKEND_NRF_HW_RNG_ENABLED 0
+#endif
+// <q> NRF_CRYPTO_BACKEND_NRF_HW_RNG_MBEDTLS_CTR_DRBG_ENABLED  - Enable mbed TLS CTR-DRBG algorithm.
+ 
+
+// <i> Enable mbed TLS CTR-DRBG standardized by NIST (NIST SP 800-90A Rev. 1). The nRF HW RNG is used as an entropy source for seeding.
+
+#ifndef NRF_CRYPTO_BACKEND_NRF_HW_RNG_MBEDTLS_CTR_DRBG_ENABLED
+#define NRF_CRYPTO_BACKEND_NRF_HW_RNG_MBEDTLS_CTR_DRBG_ENABLED 1
+#endif
+
+// </e>
+
+// <e> NRF_CRYPTO_BACKEND_NRF_SW_ENABLED - Enable the legacy nRFx sw for crypto.
+
+// <i> The nRF SW cryptography backend (only used in bootloader context).
+//==========================================================
+#ifndef NRF_CRYPTO_BACKEND_NRF_SW_ENABLED
+#define NRF_CRYPTO_BACKEND_NRF_SW_ENABLED 1
+#endif
+// <q> NRF_CRYPTO_BACKEND_NRF_SW_HASH_SHA256_ENABLED  - nRF SW hash backend support for SHA-256
+ 
+
+// <i> The nRF SW backend provide access to nRF SDK legacy hash implementation of SHA-256.
+
+#ifndef NRF_CRYPTO_BACKEND_NRF_SW_HASH_SHA256_ENABLED
+#define NRF_CRYPTO_BACKEND_NRF_SW_HASH_SHA256_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_NRF_SW_HASH_LITTLE_ENDIAN_DIGEST_ENABLED  - nRF SW hash outputs digests in little endian
+ 
+
+// <i> Makes the nRF SH hash functions output digests in little endian format. Only for use in nRF SDK DFU!
+
+#ifndef NRF_CRYPTO_BACKEND_NRF_SW_HASH_LITTLE_ENDIAN_DIGEST_ENABLED
+#define NRF_CRYPTO_BACKEND_NRF_SW_HASH_LITTLE_ENDIAN_DIGEST_ENABLED 1
+#endif
+
+// </e>
+
+// <e> NRF_CRYPTO_BACKEND_OBERON_ENABLED - Enable the Oberon backend
+
+// <i> The Oberon backend
+//==========================================================
+#ifndef NRF_CRYPTO_BACKEND_OBERON_ENABLED
+#define NRF_CRYPTO_BACKEND_OBERON_ENABLED 0
+#endif
+// <q> NRF_CRYPTO_BACKEND_OBERON_CHACHA_POLY_ENABLED  - Enable the CHACHA-POLY mode using Oberon.
+ 
+
+#ifndef NRF_CRYPTO_BACKEND_OBERON_CHACHA_POLY_ENABLED
+#define NRF_CRYPTO_BACKEND_OBERON_CHACHA_POLY_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_OBERON_ECC_SECP256R1_ENABLED  - Enable secp256r1 curve
+ 
+
+// <i> Enable this setting if you need secp256r1 curve support using Oberon library
+
+#ifndef NRF_CRYPTO_BACKEND_OBERON_ECC_SECP256R1_ENABLED
+#define NRF_CRYPTO_BACKEND_OBERON_ECC_SECP256R1_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_OBERON_ECC_CURVE25519_ENABLED  - Enable Curve25519 ECDH
+ 
+
+// <i> Enable this setting if you need Curve25519 ECDH support using Oberon library
+
+#ifndef NRF_CRYPTO_BACKEND_OBERON_ECC_CURVE25519_ENABLED
+#define NRF_CRYPTO_BACKEND_OBERON_ECC_CURVE25519_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_OBERON_ECC_ED25519_ENABLED  - Enable Ed25519 signature scheme
+ 
+
+// <i> Enable this setting if you need Ed25519 support using Oberon library
+
+#ifndef NRF_CRYPTO_BACKEND_OBERON_ECC_ED25519_ENABLED
+#define NRF_CRYPTO_BACKEND_OBERON_ECC_ED25519_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_OBERON_HASH_SHA256_ENABLED  - Oberon SHA-256 hash functionality
+ 
+
+// <i> Oberon backend implementation for SHA-256.
+
+#ifndef NRF_CRYPTO_BACKEND_OBERON_HASH_SHA256_ENABLED
+#define NRF_CRYPTO_BACKEND_OBERON_HASH_SHA256_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_OBERON_HASH_SHA512_ENABLED  - Oberon SHA-512 hash functionality
+ 
+
+// <i> Oberon backend implementation for SHA-512.
+
+#ifndef NRF_CRYPTO_BACKEND_OBERON_HASH_SHA512_ENABLED
+#define NRF_CRYPTO_BACKEND_OBERON_HASH_SHA512_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_OBERON_HMAC_SHA256_ENABLED  - Oberon HMAC using SHA-256
+ 
+
+// <i> Oberon backend implementation for HMAC using SHA-256.
+
+#ifndef NRF_CRYPTO_BACKEND_OBERON_HMAC_SHA256_ENABLED
+#define NRF_CRYPTO_BACKEND_OBERON_HMAC_SHA256_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_OBERON_HMAC_SHA512_ENABLED  - Oberon HMAC using SHA-512
+ 
+
+// <i> Oberon backend implementation for HMAC using SHA-512.
+
+#ifndef NRF_CRYPTO_BACKEND_OBERON_HMAC_SHA512_ENABLED
+#define NRF_CRYPTO_BACKEND_OBERON_HMAC_SHA512_ENABLED 1
+#endif
+
+// </e>
+
+// </e>
+
+// <h> nrf_crypto_rng - RNG Configuration
+
+//==========================================================
+// <q> NRF_CRYPTO_RNG_STATIC_MEMORY_BUFFERS_ENABLED  - Use static memory buffers for context and temporary init buffer.
+ 
+
+// <i> Always recommended when using the nRF HW RNG as the context and temporary buffers are small. Consider disabling if using the CC310 RNG in a RAM constrained application. In this case, memory must be provided to nrf_crypto_rng_init, or it can be allocated internally provided that NRF_CRYPTO_ALLOCATOR does not allocate memory on the stack.
+
+#ifndef NRF_CRYPTO_RNG_STATIC_MEMORY_BUFFERS_ENABLED
+#define NRF_CRYPTO_RNG_STATIC_MEMORY_BUFFERS_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_RNG_AUTO_INIT_ENABLED  - Initialize the RNG module automatically when nrf_crypto is initialized.
+ 
+
+// <i> Automatic initialization is only supported with static or internally allocated context and temporary memory.
+
+#ifndef NRF_CRYPTO_RNG_AUTO_INIT_ENABLED
+#define NRF_CRYPTO_RNG_AUTO_INIT_ENABLED 1
+#endif
 
 // </h> 
 //==========================================================
@@ -102,19 +934,11 @@
 // <h> nRF_Drivers 
 
 //==========================================================
-// <e> CLOCK_ENABLED - nrf_drv_clock - CLOCK peripheral driver
+// <e> CLOCK_ENABLED - nrf_drv_clock - CLOCK peripheral driver - legacy layer
 //==========================================================
 #ifndef CLOCK_ENABLED
 #define CLOCK_ENABLED 1
 #endif
-// <o> CLOCK_CONFIG_XTAL_FREQ  - HF XTAL Frequency
- 
-// <0=> Default (64 MHz) 
-
-#ifndef CLOCK_CONFIG_XTAL_FREQ
-#define CLOCK_CONFIG_XTAL_FREQ 0
-#endif
-
 // <o> CLOCK_CONFIG_LF_SRC  - LF Clock Source
  
 // <0=> RC 
@@ -144,7 +968,7 @@
 
 // </e>
 
-// <e> GPIOTE_ENABLED - nrf_drv_gpiote - GPIOTE peripheral driver
+// <e> GPIOTE_ENABLED - nrf_drv_gpiote - GPIOTE peripheral driver - legacy layer
 //==========================================================
 #ifndef GPIOTE_ENABLED
 #define GPIOTE_ENABLED 1
@@ -173,12 +997,166 @@
 
 // </e>
 
-// <q> PERIPHERAL_RESOURCE_SHARING_ENABLED  - nrf_drv_common - Peripheral drivers common module
- 
-
-#ifndef PERIPHERAL_RESOURCE_SHARING_ENABLED
-#define PERIPHERAL_RESOURCE_SHARING_ENABLED 0
+// <e> NRFX_CLOCK_ENABLED - nrfx_clock - CLOCK peripheral driver
+//==========================================================
+#ifndef NRFX_CLOCK_ENABLED
+#define NRFX_CLOCK_ENABLED 1
 #endif
+// <o> NRFX_CLOCK_CONFIG_LF_SRC  - LF Clock Source
+ 
+// <0=> RC 
+// <1=> XTAL 
+// <2=> Synth 
+
+#ifndef NRFX_CLOCK_CONFIG_LF_SRC
+#define NRFX_CLOCK_CONFIG_LF_SRC 1
+#endif
+
+// <o> NRFX_CLOCK_CONFIG_IRQ_PRIORITY  - Interrupt priority
+ 
+// <0=> 0 (highest) 
+// <1=> 1 
+// <2=> 2 
+// <3=> 3 
+// <4=> 4 
+// <5=> 5 
+// <6=> 6 
+// <7=> 7 
+
+#ifndef NRFX_CLOCK_CONFIG_IRQ_PRIORITY
+#define NRFX_CLOCK_CONFIG_IRQ_PRIORITY 7
+#endif
+
+// <e> NRFX_CLOCK_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRFX_CLOCK_CONFIG_LOG_ENABLED
+#define NRFX_CLOCK_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRFX_CLOCK_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRFX_CLOCK_CONFIG_LOG_LEVEL
+#define NRFX_CLOCK_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRFX_CLOCK_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_CLOCK_CONFIG_INFO_COLOR
+#define NRFX_CLOCK_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRFX_CLOCK_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_CLOCK_CONFIG_DEBUG_COLOR
+#define NRFX_CLOCK_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// </e>
+
+// <e> NRFX_GPIOTE_ENABLED - nrfx_gpiote - GPIOTE peripheral driver
+//==========================================================
+#ifndef NRFX_GPIOTE_ENABLED
+#define NRFX_GPIOTE_ENABLED 1
+#endif
+// <o> NRFX_GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS - Number of lower power input pins 
+#ifndef NRFX_GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS
+#define NRFX_GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS 1
+#endif
+
+// <o> NRFX_GPIOTE_CONFIG_IRQ_PRIORITY  - Interrupt priority
+ 
+// <0=> 0 (highest) 
+// <1=> 1 
+// <2=> 2 
+// <3=> 3 
+// <4=> 4 
+// <5=> 5 
+// <6=> 6 
+// <7=> 7 
+
+#ifndef NRFX_GPIOTE_CONFIG_IRQ_PRIORITY
+#define NRFX_GPIOTE_CONFIG_IRQ_PRIORITY 7
+#endif
+
+// <e> NRFX_GPIOTE_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRFX_GPIOTE_CONFIG_LOG_ENABLED
+#define NRFX_GPIOTE_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRFX_GPIOTE_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRFX_GPIOTE_CONFIG_LOG_LEVEL
+#define NRFX_GPIOTE_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRFX_GPIOTE_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_GPIOTE_CONFIG_INFO_COLOR
+#define NRFX_GPIOTE_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRFX_GPIOTE_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_GPIOTE_CONFIG_DEBUG_COLOR
+#define NRFX_GPIOTE_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// </e>
 
 // </h> 
 //==========================================================
@@ -256,14 +1234,7 @@
  
 
 #ifndef APP_TIMER_CONFIG_USE_SCHEDULER
-#define APP_TIMER_CONFIG_USE_SCHEDULER 1
-#endif
-
-// <q> APP_TIMER_WITH_PROFILER  - Enable app_timer profiling
- 
-
-#ifndef APP_TIMER_WITH_PROFILER
-#define APP_TIMER_WITH_PROFILER 0
+#define APP_TIMER_CONFIG_USE_SCHEDULER 0
 #endif
 
 // <q> APP_TIMER_KEEPS_RTC_ACTIVE  - Enable RTC always on
@@ -276,23 +1247,27 @@
 #define APP_TIMER_KEEPS_RTC_ACTIVE 0
 #endif
 
-// <o> APP_TIMER_CONFIG_SWI_NUMBER  - Configure SWI instance used.
+// <h> App Timer Legacy configuration - Legacy configuration.
+
+//==========================================================
+// <q> APP_TIMER_WITH_PROFILER  - Enable app_timer profiling
  
-// <0=> 0 
-// <1=> 1 
+
+#ifndef APP_TIMER_WITH_PROFILER
+#define APP_TIMER_WITH_PROFILER 0
+#endif
+
+// <q> APP_TIMER_CONFIG_SWI_NUMBER  - Configure SWI instance used.
+ 
 
 #ifndef APP_TIMER_CONFIG_SWI_NUMBER
 #define APP_TIMER_CONFIG_SWI_NUMBER 0
 #endif
 
+// </h> 
+//==========================================================
+
 // </e>
-
-// <q> BUTTON_ENABLED  - app_button - buttons handling module
- 
-
-#ifndef BUTTON_ENABLED
-#define BUTTON_ENABLED 1
-#endif
 
 // <q> CRC32_ENABLED  - crc32 - CRC32 calculation routines
  
@@ -300,6 +1275,169 @@
 #ifndef CRC32_ENABLED
 #define CRC32_ENABLED 1
 #endif
+
+// <e> MEM_MANAGER_ENABLED - mem_manager - Dynamic memory allocator
+//==========================================================
+#ifndef MEM_MANAGER_ENABLED
+#define MEM_MANAGER_ENABLED 1
+#endif
+// <o> MEMORY_MANAGER_SMALL_BLOCK_COUNT - Size of each memory blocks identified as 'small' block.  <0-255> 
+
+
+#ifndef MEMORY_MANAGER_SMALL_BLOCK_COUNT
+#define MEMORY_MANAGER_SMALL_BLOCK_COUNT 1
+#endif
+
+// <o> MEMORY_MANAGER_SMALL_BLOCK_SIZE -  Size of each memory blocks identified as 'small' block. 
+// <i>  Size of each memory blocks identified as 'small' block. Memory block are recommended to be word-sized.
+
+#ifndef MEMORY_MANAGER_SMALL_BLOCK_SIZE
+#define MEMORY_MANAGER_SMALL_BLOCK_SIZE 32
+#endif
+
+// <o> MEMORY_MANAGER_MEDIUM_BLOCK_COUNT - Size of each memory blocks identified as 'medium' block.  <0-255> 
+
+
+#ifndef MEMORY_MANAGER_MEDIUM_BLOCK_COUNT
+#define MEMORY_MANAGER_MEDIUM_BLOCK_COUNT 0
+#endif
+
+// <o> MEMORY_MANAGER_MEDIUM_BLOCK_SIZE -  Size of each memory blocks identified as 'medium' block. 
+// <i>  Size of each memory blocks identified as 'medium' block. Memory block are recommended to be word-sized.
+
+#ifndef MEMORY_MANAGER_MEDIUM_BLOCK_SIZE
+#define MEMORY_MANAGER_MEDIUM_BLOCK_SIZE 256
+#endif
+
+// <o> MEMORY_MANAGER_LARGE_BLOCK_COUNT - Size of each memory blocks identified as 'large' block.  <0-255> 
+
+
+#ifndef MEMORY_MANAGER_LARGE_BLOCK_COUNT
+#define MEMORY_MANAGER_LARGE_BLOCK_COUNT 0
+#endif
+
+// <o> MEMORY_MANAGER_LARGE_BLOCK_SIZE -  Size of each memory blocks identified as 'large' block. 
+// <i>  Size of each memory blocks identified as 'large' block. Memory block are recommended to be word-sized.
+
+#ifndef MEMORY_MANAGER_LARGE_BLOCK_SIZE
+#define MEMORY_MANAGER_LARGE_BLOCK_SIZE 256
+#endif
+
+// <o> MEMORY_MANAGER_XLARGE_BLOCK_COUNT - Size of each memory blocks identified as 'extra large' block.  <0-255> 
+
+
+#ifndef MEMORY_MANAGER_XLARGE_BLOCK_COUNT
+#define MEMORY_MANAGER_XLARGE_BLOCK_COUNT 0
+#endif
+
+// <o> MEMORY_MANAGER_XLARGE_BLOCK_SIZE -  Size of each memory blocks identified as 'extra large' block. 
+// <i>  Size of each memory blocks identified as 'extra large' block. Memory block are recommended to be word-sized.
+
+#ifndef MEMORY_MANAGER_XLARGE_BLOCK_SIZE
+#define MEMORY_MANAGER_XLARGE_BLOCK_SIZE 1320
+#endif
+
+// <o> MEMORY_MANAGER_XXLARGE_BLOCK_COUNT - Size of each memory blocks identified as 'extra extra large' block.  <0-255> 
+
+
+#ifndef MEMORY_MANAGER_XXLARGE_BLOCK_COUNT
+#define MEMORY_MANAGER_XXLARGE_BLOCK_COUNT 0
+#endif
+
+// <o> MEMORY_MANAGER_XXLARGE_BLOCK_SIZE -  Size of each memory blocks identified as 'extra extra large' block. 
+// <i>  Size of each memory blocks identified as 'extra extra large' block. Memory block are recommended to be word-sized.
+
+#ifndef MEMORY_MANAGER_XXLARGE_BLOCK_SIZE
+#define MEMORY_MANAGER_XXLARGE_BLOCK_SIZE 3444
+#endif
+
+// <o> MEMORY_MANAGER_XSMALL_BLOCK_COUNT - Size of each memory blocks identified as 'extra small' block.  <0-255> 
+
+
+#ifndef MEMORY_MANAGER_XSMALL_BLOCK_COUNT
+#define MEMORY_MANAGER_XSMALL_BLOCK_COUNT 0
+#endif
+
+// <o> MEMORY_MANAGER_XSMALL_BLOCK_SIZE -  Size of each memory blocks identified as 'extra small' block. 
+// <i>  Size of each memory blocks identified as 'extra large' block. Memory block are recommended to be word-sized.
+
+#ifndef MEMORY_MANAGER_XSMALL_BLOCK_SIZE
+#define MEMORY_MANAGER_XSMALL_BLOCK_SIZE 64
+#endif
+
+// <o> MEMORY_MANAGER_XXSMALL_BLOCK_COUNT - Size of each memory blocks identified as 'extra extra small' block.  <0-255> 
+
+
+#ifndef MEMORY_MANAGER_XXSMALL_BLOCK_COUNT
+#define MEMORY_MANAGER_XXSMALL_BLOCK_COUNT 0
+#endif
+
+// <o> MEMORY_MANAGER_XXSMALL_BLOCK_SIZE -  Size of each memory blocks identified as 'extra extra small' block. 
+// <i>  Size of each memory blocks identified as 'extra extra small' block. Memory block are recommended to be word-sized.
+
+#ifndef MEMORY_MANAGER_XXSMALL_BLOCK_SIZE
+#define MEMORY_MANAGER_XXSMALL_BLOCK_SIZE 32
+#endif
+
+// <e> MEM_MANAGER_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef MEM_MANAGER_CONFIG_LOG_ENABLED
+#define MEM_MANAGER_CONFIG_LOG_ENABLED 0
+#endif
+// <o> MEM_MANAGER_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef MEM_MANAGER_CONFIG_LOG_LEVEL
+#define MEM_MANAGER_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> MEM_MANAGER_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef MEM_MANAGER_CONFIG_INFO_COLOR
+#define MEM_MANAGER_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> MEM_MANAGER_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef MEM_MANAGER_CONFIG_DEBUG_COLOR
+#define MEM_MANAGER_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <q> MEM_MANAGER_DISABLE_API_PARAM_CHECK  - Disable API parameter checks in the module.
+ 
+
+#ifndef MEM_MANAGER_DISABLE_API_PARAM_CHECK
+#define MEM_MANAGER_DISABLE_API_PARAM_CHECK 0
+#endif
+
+// </e>
 
 // <e> NRF_BALLOC_ENABLED - nrf_balloc - Block allocator module
 //==========================================================
@@ -346,6 +1484,13 @@
 #define NRF_BALLOC_CONFIG_DATA_TRASHING_CHECK_ENABLED 0
 #endif
 
+// <q> NRF_BALLOC_CLI_CMDS  - Enable CLI commands specific to the module
+ 
+
+#ifndef NRF_BALLOC_CLI_CMDS
+#define NRF_BALLOC_CLI_CMDS 0
+#endif
+
 // </e>
 
 // </e>
@@ -362,18 +1507,36 @@
 #ifndef NRF_FSTORAGE_ENABLED
 #define NRF_FSTORAGE_ENABLED 1
 #endif
-// <h> nrf_fstorage_sd - Implementation using the SoftDevice.
+// <h> nrf_fstorage - Common settings
 
-// <i> Configuration options for the fstorage implementation using the SoftDevice.
+// <i> Common settings to all fstorage implementations
 //==========================================================
-// <o> NRF_FSTORAGE_SD_QUEUE_SIZE - Size of the internal queue of operations. 
+// <q> NRF_FSTORAGE_PARAM_CHECK_DISABLED  - Disable user input validation
+ 
+
+// <i> If selected, use ASSERT to validate user input.
+// <i> This effectively removes user input validation in production code.
+// <i> Recommended setting: OFF, only enable this setting if size is a major concern.
+
+#ifndef NRF_FSTORAGE_PARAM_CHECK_DISABLED
+#define NRF_FSTORAGE_PARAM_CHECK_DISABLED 0
+#endif
+
+// </h> 
+//==========================================================
+
+// <h> nrf_fstorage_sd - Implementation using the SoftDevice
+
+// <i> Configuration options for the fstorage implementation using the SoftDevice
+//==========================================================
+// <o> NRF_FSTORAGE_SD_QUEUE_SIZE - Size of the internal queue of operations 
 // <i> Increase this value if API calls frequently return the error @ref NRF_ERROR_NO_MEM.
 
 #ifndef NRF_FSTORAGE_SD_QUEUE_SIZE
 #define NRF_FSTORAGE_SD_QUEUE_SIZE 4
 #endif
 
-// <o> NRF_FSTORAGE_SD_MAX_RETRIES - Maximum number of attempts at executing an operation when the SoftDevice is busy. 
+// <o> NRF_FSTORAGE_SD_MAX_RETRIES - Maximum number of attempts at executing an operation when the SoftDevice is busy 
 // <i> Increase this value if events frequently return the @ref NRF_ERROR_TIMEOUT error.
 // <i> The SoftDevice might fail to schedule flash access due to high BLE activity.
 
@@ -381,7 +1544,7 @@
 #define NRF_FSTORAGE_SD_MAX_RETRIES 8
 #endif
 
-// <o> NRF_FSTORAGE_SD_MAX_WRITE_SIZE - Maximum number of bytes to be written to flash in a single operation. 
+// <o> NRF_FSTORAGE_SD_MAX_WRITE_SIZE - Maximum number of bytes to be written to flash in a single operation 
 // <i> This value must be a multiple of four.
 // <i> Lowering this value can increase the chances of the SoftDevice being able to execute flash operations in between radio activity.
 // <i> This value is bound by the maximum number of bytes that can be written to flash in a single call to @ref sd_flash_write.
@@ -403,6 +1566,20 @@
 #define NRF_MEMOBJ_ENABLED 1
 #endif
 
+// <e> NRF_QUEUE_ENABLED - nrf_queue - Queue module
+//==========================================================
+#ifndef NRF_QUEUE_ENABLED
+#define NRF_QUEUE_ENABLED 1
+#endif
+// <q> NRF_QUEUE_CLI_CMDS  - Enable CLI commands specific to the module
+ 
+
+#ifndef NRF_QUEUE_CLI_CMDS
+#define NRF_QUEUE_CLI_CMDS 0
+#endif
+
+// </e>
+
 // <q> NRF_SECTION_ITER_ENABLED  - nrf_section_iter - Section iterator
  
 
@@ -416,6 +1593,26 @@
 #ifndef NRF_STRERROR_ENABLED
 #define NRF_STRERROR_ENABLED 1
 #endif
+
+// <h> app_button - buttons handling module
+
+//==========================================================
+// <q> BUTTON_ENABLED  - Enables Button module
+ 
+
+#ifndef BUTTON_ENABLED
+#define BUTTON_ENABLED 1
+#endif
+
+// <q> BUTTON_HIGH_ACCURACY_ENABLED  - Enables GPIOTE high accuracy for buttons
+ 
+
+#ifndef BUTTON_HIGH_ACCURACY_ENABLED
+#define BUTTON_HIGH_ACCURACY_ENABLED 0
+#endif
+
+// </h> 
+//==========================================================
 
 // </h> 
 //==========================================================
@@ -438,7 +1635,30 @@
 #define NRF_LOG_BACKEND_RTT_TEMP_BUFFER_SIZE 64
 #endif
 
+// <o> NRF_LOG_BACKEND_RTT_TX_RETRY_DELAY_MS - Period before retrying writing to RTT 
+#ifndef NRF_LOG_BACKEND_RTT_TX_RETRY_DELAY_MS
+#define NRF_LOG_BACKEND_RTT_TX_RETRY_DELAY_MS 1
+#endif
+
+// <o> NRF_LOG_BACKEND_RTT_TX_RETRY_CNT - Writing to RTT retries. 
+// <i> If RTT fails to accept any new data after retries
+// <i> module assumes that host is not active and on next
+// <i> request it will perform only one write attempt.
+// <i> On successful writing, module assumes that host is active
+// <i> and scheme with retry is applied again.
+
+#ifndef NRF_LOG_BACKEND_RTT_TX_RETRY_CNT
+#define NRF_LOG_BACKEND_RTT_TX_RETRY_CNT 3
+#endif
+
 // </e>
+
+// <q> NRF_LOG_STR_FORMATTER_TIMESTAMP_FORMAT_ENABLED  - nrf_log_str_formatter - Log string formatter
+ 
+
+#ifndef NRF_LOG_STR_FORMATTER_TIMESTAMP_FORMAT_ENABLED
+#define NRF_LOG_STR_FORMATTER_TIMESTAMP_FORMAT_ENABLED 1
+#endif
 
 // <h> nrf_log - Logger
 
@@ -552,14 +1772,19 @@
 #define NRF_LOG_ALLOW_OVERFLOW 1
 #endif
 
-// <q> NRF_LOG_USES_TIMESTAMP  - Enable timestamping
- 
+// <e> NRF_LOG_USES_TIMESTAMP - Enable timestamping
 
 // <i> Function for getting the timestamp is provided by the user
-
+//==========================================================
 #ifndef NRF_LOG_USES_TIMESTAMP
 #define NRF_LOG_USES_TIMESTAMP 0
 #endif
+// <o> NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY - Default frequency of the timestamp (in Hz) 
+#ifndef NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY
+#define NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY 32768
+#endif
+
+// </e>
 
 // <q> NRF_LOG_FILTERS_ENABLED  - Enable dynamic filtering of logs.
  
@@ -819,57 +2044,6 @@
 
 // </e>
 
-// <e> COMMON_CONFIG_LOG_ENABLED - Enables logging in the module.
-//==========================================================
-#ifndef COMMON_CONFIG_LOG_ENABLED
-#define COMMON_CONFIG_LOG_ENABLED 0
-#endif
-// <o> COMMON_CONFIG_LOG_LEVEL  - Default Severity level
- 
-// <0=> Off 
-// <1=> Error 
-// <2=> Warning 
-// <3=> Info 
-// <4=> Debug 
-
-#ifndef COMMON_CONFIG_LOG_LEVEL
-#define COMMON_CONFIG_LOG_LEVEL 3
-#endif
-
-// <o> COMMON_CONFIG_INFO_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef COMMON_CONFIG_INFO_COLOR
-#define COMMON_CONFIG_INFO_COLOR 0
-#endif
-
-// <o> COMMON_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef COMMON_CONFIG_DEBUG_COLOR
-#define COMMON_CONFIG_DEBUG_COLOR 0
-#endif
-
-// </e>
-
 // <e> COMP_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef COMP_CONFIG_LOG_ENABLED
@@ -968,57 +2142,6 @@
 
 #ifndef GPIOTE_CONFIG_DEBUG_COLOR
 #define GPIOTE_CONFIG_DEBUG_COLOR 0
-#endif
-
-// </e>
-
-// <e> I2S_CONFIG_LOG_ENABLED - Enables logging in the module.
-//==========================================================
-#ifndef I2S_CONFIG_LOG_ENABLED
-#define I2S_CONFIG_LOG_ENABLED 0
-#endif
-// <o> I2S_CONFIG_LOG_LEVEL  - Default Severity level
- 
-// <0=> Off 
-// <1=> Error 
-// <2=> Warning 
-// <3=> Info 
-// <4=> Debug 
-
-#ifndef I2S_CONFIG_LOG_LEVEL
-#define I2S_CONFIG_LOG_LEVEL 3
-#endif
-
-// <o> I2S_CONFIG_INFO_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef I2S_CONFIG_INFO_COLOR
-#define I2S_CONFIG_INFO_COLOR 0
-#endif
-
-// <o> I2S_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef I2S_CONFIG_DEBUG_COLOR
-#define I2S_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -1540,57 +2663,6 @@
 
 // </e>
 
-// <e> SWI_CONFIG_LOG_ENABLED - Enables logging in the module.
-//==========================================================
-#ifndef SWI_CONFIG_LOG_ENABLED
-#define SWI_CONFIG_LOG_ENABLED 0
-#endif
-// <o> SWI_CONFIG_LOG_LEVEL  - Default Severity level
- 
-// <0=> Off 
-// <1=> Error 
-// <2=> Warning 
-// <3=> Info 
-// <4=> Debug 
-
-#ifndef SWI_CONFIG_LOG_LEVEL
-#define SWI_CONFIG_LOG_LEVEL 3
-#endif
-
-// <o> SWI_CONFIG_INFO_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef SWI_CONFIG_INFO_COLOR
-#define SWI_CONFIG_INFO_COLOR 0
-#endif
-
-// <o> SWI_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef SWI_CONFIG_DEBUG_COLOR
-#define SWI_CONFIG_DEBUG_COLOR 0
-#endif
-
-// </e>
-
 // <e> TIMER_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef TIMER_CONFIG_LOG_ENABLED
@@ -1903,6 +2975,73 @@
 // <h> nrf_log in nRF_Libraries 
 
 //==========================================================
+// <e> APP_TIMER_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef APP_TIMER_CONFIG_LOG_ENABLED
+#define APP_TIMER_CONFIG_LOG_ENABLED 0
+#endif
+// <o> APP_TIMER_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef APP_TIMER_CONFIG_LOG_LEVEL
+#define APP_TIMER_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> APP_TIMER_CONFIG_INITIAL_LOG_LEVEL  - Initial severity level if dynamic filtering is enabled.
+ 
+
+// <i> If module generates a lot of logs, initial log level can
+// <i> be decreased to prevent flooding. Severity level can be
+// <i> increased on instance basis.
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef APP_TIMER_CONFIG_INITIAL_LOG_LEVEL
+#define APP_TIMER_CONFIG_INITIAL_LOG_LEVEL 3
+#endif
+
+// <o> APP_TIMER_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_TIMER_CONFIG_INFO_COLOR
+#define APP_TIMER_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> APP_TIMER_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_TIMER_CONFIG_DEBUG_COLOR
+#define APP_TIMER_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
 // <e> APP_USBD_CDC_ACM_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef APP_USBD_CDC_ACM_CONFIG_LOG_ENABLED
@@ -1950,6 +3089,57 @@
 
 #ifndef APP_USBD_CDC_ACM_CONFIG_DEBUG_COLOR
 #define APP_USBD_CDC_ACM_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> APP_USBD_DUMMY_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef APP_USBD_DUMMY_CONFIG_LOG_ENABLED
+#define APP_USBD_DUMMY_CONFIG_LOG_ENABLED 0
+#endif
+// <o> APP_USBD_DUMMY_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef APP_USBD_DUMMY_CONFIG_LOG_LEVEL
+#define APP_USBD_DUMMY_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> APP_USBD_DUMMY_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_USBD_DUMMY_CONFIG_INFO_COLOR
+#define APP_USBD_DUMMY_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> APP_USBD_DUMMY_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_USBD_DUMMY_CONFIG_DEBUG_COLOR
+#define APP_USBD_DUMMY_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -2005,6 +3195,120 @@
 
 // </e>
 
+// <e> APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_ENABLED
+#define APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_ENABLED 0
+#endif
+// <o> APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_LEVEL
+#define APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> APP_USBD_NRF_DFU_TRIGGER_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_USBD_NRF_DFU_TRIGGER_CONFIG_INFO_COLOR
+#define APP_USBD_NRF_DFU_TRIGGER_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> APP_USBD_NRF_DFU_TRIGGER_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_USBD_NRF_DFU_TRIGGER_CONFIG_DEBUG_COLOR
+#define APP_USBD_NRF_DFU_TRIGGER_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_ATFIFO_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_ATFIFO_CONFIG_LOG_ENABLED
+#define NRF_ATFIFO_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_ATFIFO_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_ATFIFO_CONFIG_LOG_LEVEL
+#define NRF_ATFIFO_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_ATFIFO_CONFIG_LOG_INIT_FILTER_LEVEL  - Initial severity level if dynamic filtering is enabled
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_ATFIFO_CONFIG_LOG_INIT_FILTER_LEVEL
+#define NRF_ATFIFO_CONFIG_LOG_INIT_FILTER_LEVEL 3
+#endif
+
+// <o> NRF_ATFIFO_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_ATFIFO_CONFIG_INFO_COLOR
+#define NRF_ATFIFO_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_ATFIFO_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_ATFIFO_CONFIG_DEBUG_COLOR
+#define NRF_ATFIFO_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
 // <e> NRF_BALLOC_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_BALLOC_CONFIG_LOG_ENABLED
@@ -2020,6 +3324,22 @@
 
 #ifndef NRF_BALLOC_CONFIG_LOG_LEVEL
 #define NRF_BALLOC_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_BALLOC_CONFIG_INITIAL_LOG_LEVEL  - Initial severity level if dynamic filtering is enabled.
+ 
+
+// <i> If module generates a lot of logs, initial log level can
+// <i> be decreased to prevent flooding. Severity level can be
+// <i> increased on instance basis.
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_BALLOC_CONFIG_INITIAL_LOG_LEVEL
+#define NRF_BALLOC_CONFIG_INITIAL_LOG_LEVEL 3
 #endif
 
 // <o> NRF_BALLOC_CONFIG_INFO_COLOR  - ANSI escape code prefix.
@@ -2107,6 +3427,57 @@
 
 // </e>
 
+// <e> NRF_CLI_LIBUARTE_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_CLI_LIBUARTE_CONFIG_LOG_ENABLED
+#define NRF_CLI_LIBUARTE_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_CLI_LIBUARTE_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_CLI_LIBUARTE_CONFIG_LOG_LEVEL
+#define NRF_CLI_LIBUARTE_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_CLI_LIBUARTE_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_CLI_LIBUARTE_CONFIG_INFO_COLOR
+#define NRF_CLI_LIBUARTE_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_CLI_LIBUARTE_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_CLI_LIBUARTE_CONFIG_DEBUG_COLOR
+#define NRF_CLI_LIBUARTE_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
 // <e> NRF_CLI_UART_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_CLI_UART_CONFIG_LOG_ENABLED
@@ -2154,6 +3525,57 @@
 
 #ifndef NRF_CLI_UART_CONFIG_DEBUG_COLOR
 #define NRF_CLI_UART_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_LIBUARTE_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_LIBUARTE_CONFIG_LOG_ENABLED
+#define NRF_LIBUARTE_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_LIBUARTE_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_LIBUARTE_CONFIG_LOG_LEVEL
+#define NRF_LIBUARTE_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_LIBUARTE_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_LIBUARTE_CONFIG_INFO_COLOR
+#define NRF_LIBUARTE_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_LIBUARTE_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_LIBUARTE_CONFIG_DEBUG_COLOR
+#define NRF_LIBUARTE_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -2256,6 +3678,69 @@
 
 #ifndef NRF_PWR_MGMT_CONFIG_DEBUG_COLOR
 #define NRF_PWR_MGMT_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_QUEUE_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_QUEUE_CONFIG_LOG_ENABLED
+#define NRF_QUEUE_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_QUEUE_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_QUEUE_CONFIG_LOG_LEVEL
+#define NRF_QUEUE_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_QUEUE_CONFIG_LOG_INIT_FILTER_LEVEL  - Initial severity level if dynamic filtering is enabled
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_QUEUE_CONFIG_LOG_INIT_FILTER_LEVEL
+#define NRF_QUEUE_CONFIG_LOG_INIT_FILTER_LEVEL 3
+#endif
+
+// <o> NRF_QUEUE_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_QUEUE_CONFIG_INFO_COLOR
+#define NRF_QUEUE_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_QUEUE_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_QUEUE_CONFIG_DEBUG_COLOR
+#define NRF_QUEUE_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -2515,6 +4000,114 @@
 
 // </e>
 
+// <e> NRF_TWI_SENSOR_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_TWI_SENSOR_CONFIG_LOG_ENABLED
+#define NRF_TWI_SENSOR_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_TWI_SENSOR_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_TWI_SENSOR_CONFIG_LOG_LEVEL
+#define NRF_TWI_SENSOR_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_TWI_SENSOR_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_TWI_SENSOR_CONFIG_INFO_COLOR
+#define NRF_TWI_SENSOR_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_TWI_SENSOR_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_TWI_SENSOR_CONFIG_DEBUG_COLOR
+#define NRF_TWI_SENSOR_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// </h> 
+//==========================================================
+
+// <h> nrf_log in nRF_Serialization 
+
+//==========================================================
+// <e> SER_HAL_TRANSPORT_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef SER_HAL_TRANSPORT_CONFIG_LOG_ENABLED
+#define SER_HAL_TRANSPORT_CONFIG_LOG_ENABLED 0
+#endif
+// <o> SER_HAL_TRANSPORT_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef SER_HAL_TRANSPORT_CONFIG_LOG_LEVEL
+#define SER_HAL_TRANSPORT_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> SER_HAL_TRANSPORT_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef SER_HAL_TRANSPORT_CONFIG_INFO_COLOR
+#define SER_HAL_TRANSPORT_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> SER_HAL_TRANSPORT_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef SER_HAL_TRANSPORT_CONFIG_DEBUG_COLOR
+#define SER_HAL_TRANSPORT_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
 // </h> 
 //==========================================================
 
@@ -2632,19 +4225,23 @@
 #define NRF_SDH_CLOCK_LF_RC_TEMP_CTIV 0
 #endif
 
-// <o> NRF_SDH_CLOCK_LF_XTAL_ACCURACY  - External crystal clock accuracy used in the LL to compute timing windows.
+// <o> NRF_SDH_CLOCK_LF_ACCURACY  - External clock accuracy used in the LL to compute timing.
  
-// <0=> NRF_CLOCK_LF_XTAL_ACCURACY_250_PPM 
-// <1=> NRF_CLOCK_LF_XTAL_ACCURACY_500_PPM 
-// <2=> NRF_CLOCK_LF_XTAL_ACCURACY_150_PPM 
-// <3=> NRF_CLOCK_LF_XTAL_ACCURACY_100_PPM 
-// <4=> NRF_CLOCK_LF_XTAL_ACCURACY_75_PPM 
-// <5=> NRF_CLOCK_LF_XTAL_ACCURACY_50_PPM 
-// <6=> NRF_CLOCK_LF_XTAL_ACCURACY_30_PPM 
-// <7=> NRF_CLOCK_LF_XTAL_ACCURACY_20_PPM 
+// <0=> NRF_CLOCK_LF_ACCURACY_250_PPM 
+// <1=> NRF_CLOCK_LF_ACCURACY_500_PPM 
+// <2=> NRF_CLOCK_LF_ACCURACY_150_PPM 
+// <3=> NRF_CLOCK_LF_ACCURACY_100_PPM 
+// <4=> NRF_CLOCK_LF_ACCURACY_75_PPM 
+// <5=> NRF_CLOCK_LF_ACCURACY_50_PPM 
+// <6=> NRF_CLOCK_LF_ACCURACY_30_PPM 
+// <7=> NRF_CLOCK_LF_ACCURACY_20_PPM 
+// <8=> NRF_CLOCK_LF_ACCURACY_10_PPM 
+// <9=> NRF_CLOCK_LF_ACCURACY_5_PPM 
+// <10=> NRF_CLOCK_LF_ACCURACY_2_PPM 
+// <11=> NRF_CLOCK_LF_ACCURACY_1_PPM 
 
-#ifndef NRF_SDH_CLOCK_LF_XTAL_ACCURACY
-#define NRF_SDH_CLOCK_LF_XTAL_ACCURACY 7
+#ifndef NRF_SDH_CLOCK_LF_ACCURACY
+#define NRF_SDH_CLOCK_LF_ACCURACY 7
 #endif
 
 // </h> 

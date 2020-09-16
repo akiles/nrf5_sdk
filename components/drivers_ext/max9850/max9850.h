@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -57,7 +57,7 @@ extern "C" {
 #define MAX9850_DEFAULT_TWI_CONFIG(scl_pin, sda_pin)     {      \
         .scl                = scl_pin,                          \
         .sda                = sda_pin,                          \
-        .frequency          = NRF_TWI_FREQ_100K,                \
+        .frequency          = NRF_DRV_TWI_FREQ_100K,            \
         .interrupt_priority = APP_IRQ_PRIORITY_HIGH,            \
         .clear_bus_init     = false,                            \
         .hold_bus_uninit    = false                             \

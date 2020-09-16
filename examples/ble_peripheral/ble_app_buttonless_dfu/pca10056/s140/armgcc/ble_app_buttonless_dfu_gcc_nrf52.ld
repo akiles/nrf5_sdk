@@ -5,13 +5,19 @@ GROUP(-lgcc -lc -lnosys)
 
 MEMORY
 {
-  FLASH (rx) : ORIGIN = 0x22000, LENGTH = 0xce000
-  RAM (rwx) :  ORIGIN = 0x20002128, LENGTH = 0x3ded8
-  
+  FLASH (rx) : ORIGIN = 0x26000, LENGTH = 0xca000
+  RAM (rwx) :  ORIGIN = 0x20002220, LENGTH = 0x3dde0
+  uicr_bootloader_start_address (r) : ORIGIN = 0x10001014, LENGTH = 0x4
 }
 
 SECTIONS
 {
+  .uicr_bootloader_start_address :
+  {
+    PROVIDE(__start_uicr_bootloader_start_address = .);
+    KEEP(*(SORT(.uicr_bootloader_start_address*)))
+    PROVIDE(__stop_uicr_bootloader_start_address = .);
+  } > uicr_bootloader_start_address
 }
 
 SECTIONS
@@ -64,17 +70,17 @@ SECTIONS
     KEEP(*(SORT(.log_const_data*)))
     PROVIDE(__stop_log_const_data = .);
   } > FLASH
+    .nrf_balloc :
+  {
+    PROVIDE(__start_nrf_balloc = .);
+    KEEP(*(.nrf_balloc))
+    PROVIDE(__stop_nrf_balloc = .);
+  } > FLASH
     .svc_data :
   {
     PROVIDE(__start_svc_data = .);
     KEEP(*(.svc_data))
     PROVIDE(__stop_svc_data = .);
-  } > FLASH
-  .sdh_req_observers :
-  {
-    PROVIDE(__start_sdh_req_observers = .);
-    KEEP(*(SORT(.sdh_req_observers*)))
-    PROVIDE(__stop_sdh_req_observers = .);
   } > FLASH
   .sdh_state_observers :
   {
@@ -88,8 +94,13 @@ SECTIONS
     KEEP(*(SORT(.sdh_stack_observers*)))
     PROVIDE(__stop_sdh_stack_observers = .);
   } > FLASH
-  
+  .sdh_req_observers :
+  {
+    PROVIDE(__start_sdh_req_observers = .);
+    KEEP(*(SORT(.sdh_req_observers*)))
+    PROVIDE(__stop_sdh_req_observers = .);
+  } > FLASH
 
 } INSERT AFTER .text
 
-INCLUDE "nrf5x_common.ld"
+INCLUDE "nrf_common.ld"

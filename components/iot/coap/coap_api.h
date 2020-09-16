@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -259,6 +259,7 @@ typedef struct
 struct coap_message_t
 {
     coap_remote_t            remote;                              /**< Public. Structure containing address information and port number to the remote. */
+    coap_remote_t            local;                               /**< Public. Structure containing local destination address information and port number. */
     coap_message_header_t    header;                              /**< Public. Header structure containing the mandatory CoAP 4-byte header fields. */
     uint8_t *                p_payload;                           /**< Public. Pointer to the payload buffer in the message. */
     uint16_t                 payload_len;                         /**< Public. Size of the payload in the message. */
@@ -593,6 +594,7 @@ uint32_t coap_message_ct_match_select(coap_content_type_t * p_ct, coap_message_t
  */
 uint32_t coap_time_tick(void);
 
+#if (COAP_DISABLE_DTLS_API == 0)
 /**@brief Setup secure DTLS session.
  *
  * @details For the client role, this API triggers a DTLS handshake. Until the handshake is complete
@@ -640,6 +642,8 @@ uint32_t coap_security_setup(uint16_t                       local_port,
  */
 uint32_t coap_security_destroy(uint16_t              local_port,
                                coap_remote_t * const p_remote);
+
+#endif // COAP_DISABLE_DTLS_API
 
 /**@brief Process loop when using coap BSD socket transport implementation.
  *

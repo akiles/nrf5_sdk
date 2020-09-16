@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -277,7 +277,7 @@ int main(void)
     log_init();
     cli_init();
 
-    NRF_LOG_INFO("fds example started!")
+    NRF_LOG_INFO("FDS example started.")
 
     /* Register first to receive an event when initialization is complete. */
     (void) fds_register(fds_evt_handler);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -40,19 +40,20 @@
 #include "sdk_common.h"
  #if NRF_MODULE_ENABLED(NRF_BALLOC)
 
+#include "nrf_section.h"
 #include "nrf_balloc.h"
 #include "app_util_platform.h"
 
-#define NRF_LOG_MODULE_NAME balloc
+
 #if NRF_BALLOC_CONFIG_LOG_ENABLED
-    #define NRF_LOG_LEVEL       NRF_BALLOC_CONFIG_LOG_LEVEL
-    #define NRF_LOG_INFO_COLOR  NRF_BALLOC_CONFIG_INFO_COLOR
-    #define NRF_LOG_DEBUG_COLOR NRF_BALLOC_CONFIG_DEBUG_COLOR
+    #define NRF_LOG_LEVEL             NRF_BALLOC_CONFIG_LOG_LEVEL
+    #define NRF_LOG_INITIAL_LEVEL     NRF_BALLOC_CONFIG_INITIAL_LOG_LEVEL
+    #define NRF_LOG_INFO_COLOR        NRF_BALLOC_CONFIG_INFO_COLOR
+    #define NRF_LOG_DEBUG_COLOR       NRF_BALLOC_CONFIG_DEBUG_COLOR
 #else
     #define NRF_LOG_LEVEL       0
 #endif // NRF_BALLOC_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
-NRF_LOG_MODULE_REGISTER();
 
 #define HEAD_GUARD_FILL     0xBAADF00D      /**< Magic number used to mark head guard.*/
 #define TAIL_GUARD_FILL     0xBAADCAFE      /**< Magic number used to mark tail guard.*/
@@ -66,8 +67,61 @@ NRF_LOG_MODULE_REGISTER();
 #define POOL_MARKER     "0x%08X"
 #endif
 
-#if NRF_BALLOC_CONFIG_DEBUG_ENABLED
+NRF_SECTION_DEF(nrf_balloc, nrf_balloc_t);
 
+#if NRF_BALLOC_CLI_CMDS
+#include "nrf_cli.h"
+
+static void nrf_balloc_status(nrf_cli_t const * p_cli, size_t argc, char **argv)
+{
+    UNUSED_PARAMETER(argv);
+
+    if (nrf_cli_help_requested(p_cli))
+    {
+        nrf_cli_help_print(p_cli, NULL, 0);
+        return;
+    }
+
+    if (argc > 1)
+    {
+        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "Bad argument count");
+        return;
+    }
+
+    uint32_t num_of_instances = NRF_SECTION_ITEM_COUNT(nrf_balloc, nrf_balloc_t);
+    uint32_t i;
+
+    for (i = 0; i < num_of_instances; i++)
+    {
+        const nrf_balloc_t * p_instance = NRF_SECTION_ITEM_GET(nrf_balloc, nrf_balloc_t, i);
+
+        uint32_t element_size = NRF_BALLOC_ELEMENT_SIZE(p_instance);
+        uint32_t dbg_addon  = p_instance->block_size - element_size;
+        uint32_t pool_size  = p_instance->p_stack_limit - p_instance->p_stack_base;
+        uint32_t max_util   = nrf_balloc_max_utilization_get(p_instance);
+        uint32_t util       = nrf_balloc_utilization_get(p_instance);
+        const char * p_name = p_instance->p_name;
+        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL,
+                        "%s\r\n\t- Element size:\t%d + %d bytes of debug information\r\n"
+                        "\t- Usage:\t%u%% (%u out of %u elements)\r\n"
+                        "\t- Maximum:\t%u%% (%u out of %u elements)\r\n\r\n",
+                        p_name, element_size, dbg_addon,
+                        100ul * util/pool_size, util,pool_size,
+                        100ul * max_util/pool_size, max_util,pool_size);
+
+    }
+}
+// Register "balloc" command and its subcommands in CLI.
+NRF_CLI_CREATE_STATIC_SUBCMD_SET(nrf_balloc_commands)
+{
+     NRF_CLI_CMD(status, NULL, "Print status of balloc instances.", nrf_balloc_status),
+     NRF_CLI_SUBCMD_SET_END
+};
+
+NRF_CLI_CMD_REGISTER(balloc, &nrf_balloc_commands, "Commands for BALLOC management", nrf_balloc_status);
+#endif //NRF_BALLOC_CLI_CMDS
+
+#if NRF_BALLOC_CONFIG_DEBUG_ENABLED
 /**@brief  Validate block memory, prepare block guards, and calculate pointer to the element.
  *
  * @param[in]   p_pool  Pointer to the memory pool.
@@ -92,8 +146,9 @@ __STATIC_INLINE void * nrf_balloc_block_unwrap(nrf_balloc_t const * p_pool, void
         {
             if (*ptr != FREE_MEM_FILL)
             {
-                NRF_LOG_ERROR("Detected free memory corruption at 0x%08X (0x%08X != 0x%08X, pool: '" POOL_MARKER "')",
-                              ptr, *ptr, FREE_MEM_FILL, POOL_ID(p_pool));
+                NRF_LOG_INST_ERROR(p_pool->p_log,
+                                   "Detected free memory corruption at 0x%08X (0x%08X != 0x%08X)",
+                                   ptr, *ptr, FREE_MEM_FILL);
                 APP_ERROR_CHECK_BOOL(false);
             }
         }
@@ -134,8 +189,9 @@ __STATIC_INLINE void * nrf_balloc_element_wrap(nrf_balloc_t const * p_pool, void
     {
         if (*ptr != HEAD_GUARD_FILL)
         {
-            NRF_LOG_ERROR("Detected Head Guard corruption at 0x%08X (0x%08X != 0x%08X, pool: '" POOL_MARKER "')",
-                          ptr, *ptr, HEAD_GUARD_FILL, POOL_ID(p_pool));
+            NRF_LOG_INST_ERROR(p_pool->p_log,
+                               "Detected Head Guard corruption at 0x%08X (0x%08X != 0x%08X)",
+                               ptr, *ptr, HEAD_GUARD_FILL);
             APP_ERROR_CHECK_BOOL(false);
         }
     }
@@ -144,8 +200,9 @@ __STATIC_INLINE void * nrf_balloc_element_wrap(nrf_balloc_t const * p_pool, void
     {
         if (*ptr != TAIL_GUARD_FILL)
         {
-            NRF_LOG_ERROR("Detected Tail Guard corruption at 0x%08X (0x%08X != 0x%08X, pool: '" POOL_MARKER "')",
-                          ptr, *ptr, TAIL_GUARD_FILL, POOL_ID(p_pool));
+            NRF_LOG_INST_ERROR(p_pool->p_log,
+                               "Detected Tail Guard corruption at 0x%08X (0x%08X != 0x%08X)",
+                               ptr, *ptr, TAIL_GUARD_FILL);
             APP_ERROR_CHECK_BOOL(false);
         }
     }
@@ -214,11 +271,10 @@ ret_code_t nrf_balloc_init(nrf_balloc_t const * p_pool)
     }
 #endif
 
-    NRF_LOG_INFO("Pool '" POOL_MARKER "' initialized (size: %u x %u = %u bytes)",
-                 POOL_ID(p_pool),
-                 pool_size,
-                 p_pool->block_size,
-                 pool_size * p_pool->block_size);
+    NRF_LOG_INST_INFO(p_pool->p_log, "Initialized (size: %u x %u = %u bytes)",
+                      pool_size,
+                      p_pool->block_size,
+                      pool_size * p_pool->block_size);
 
     p_pool->p_cb->p_stack_pointer = p_pool->p_stack_base;
     while (pool_size--)
@@ -261,8 +317,7 @@ void * nrf_balloc_alloc(nrf_balloc_t const * p_pool)
     }
 #endif
 
-    NRF_LOG_DEBUG("nrf_balloc_alloc(pool: '" POOL_MARKER "', element: 0x%08X)",
-                  POOL_ID(p_pool), p_block);
+    NRF_LOG_INST_DEBUG(p_pool->p_log, "Allocating element: 0x%08X", p_block);
 
     return p_block;
 }
@@ -272,8 +327,7 @@ void nrf_balloc_free(nrf_balloc_t const * p_pool, void * p_element)
     ASSERT(p_pool != NULL);
     ASSERT(p_element != NULL)
 
-    NRF_LOG_DEBUG("nrf_balloc_free(pool: '" POOL_MARKER "', element: 0x%08X)",
-                     POOL_ID(p_pool), p_element);
+    NRF_LOG_INST_DEBUG(p_pool->p_log, "Freeing element: 0x%08X", p_element);
 
 #if NRF_BALLOC_CONFIG_DEBUG_ENABLED
     void * p_block = nrf_balloc_element_wrap(p_pool, p_element);
@@ -287,16 +341,17 @@ void nrf_balloc_free(nrf_balloc_t const * p_pool, void * p_element)
         // Check if the element belongs to this pool.
         if ((p_block < p_pool->p_memory_begin) || (p_block >= p_memory_end))
         {
-            NRF_LOG_ERROR("Attempted to free element that does belong to the pool (pool: '" POOL_MARKER "', element: 0x%08X)",
-                    POOL_ID(p_pool), p_element);
+            NRF_LOG_INST_ERROR(p_pool->p_log,
+                              "Attempted to free element (0x%08X) that does not belong to the pool.",
+                              p_element);
             APP_ERROR_CHECK_BOOL(false);
         }
 
         // Check if the pointer is valid.
         if ((((size_t)(p_block) - (size_t)(p_pool->p_memory_begin)) % p_pool->block_size) != 0)
         {
-            NRF_LOG_ERROR("Atempted to free corrupted element address (pool: '" POOL_MARKER "', element: 0x%08X)",
-                    POOL_ID(p_pool), p_element);
+            NRF_LOG_INST_ERROR(p_pool->p_log,
+                               "Attempted to free corrupted element address (0x%08X).", p_element);
             APP_ERROR_CHECK_BOOL(false);
         }
     }
@@ -313,8 +368,9 @@ void nrf_balloc_free(nrf_balloc_t const * p_pool, void * p_element)
         // Check for allocated/free ballance.
         if (p_pool->p_cb->p_stack_pointer >= p_pool->p_stack_limit)
         {
-            NRF_LOG_ERROR("Attempted to free an element while the pool is full (pool: '" POOL_MARKER "', element: 0x%08X)",
-                            POOL_ID(p_pool), p_element);
+            NRF_LOG_INST_ERROR(p_pool->p_log,
+                               "Attempted to free an element (0x%08X) while the pool is full.",
+                               p_element);
             APP_ERROR_CHECK_BOOL(false);
         }
     }
@@ -326,8 +382,8 @@ void nrf_balloc_free(nrf_balloc_t const * p_pool, void * p_element)
         {
             if (nrf_balloc_idx2block(p_pool, *p_idx) == p_block)
             {
-                NRF_LOG_ERROR("Attempted to double-free an element (pool: '" POOL_MARKER "', element: 0x%08X)",
-                               POOL_ID(p_pool), p_element);
+                NRF_LOG_INST_ERROR(p_pool->p_log, "Attempted to double-free an element (0x%08X).",
+                                   p_element);
                 APP_ERROR_CHECK_BOOL(false);
             }
         }

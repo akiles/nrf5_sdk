@@ -507,15 +507,10 @@ static void softdevice_setup(void)
  */
 static void utils_setup(void)
 {
-    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    ret_code_t err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
-    NRF_LOG_DEFAULT_BACKENDS_INIT();
-
-    err_code = app_timer_init();
-    APP_ERROR_CHECK(err_code);
-
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS,
                         bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 
@@ -524,10 +519,23 @@ static void utils_setup(void)
 }
 
 
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
+
 /**@brief Function for application main entry, does not return.
  */
 int main(void)
 {
+    log_init();
     utils_setup();
     softdevice_setup();
 
@@ -537,13 +545,15 @@ int main(void)
         CLIENT_DEV_TYPE,
         CLIENT_MANUF_ID,
         ANTFS_LINK_FREQ,
-        ANTFS_DEFAULT_BEACON | DATA_AVAILABLE_FLAG_MASK,
+        {ANTFS_DEFAULT_BEACON | DATA_AVAILABLE_FLAG_MASK},
         m_pass_key,
         m_friendly_name
     };
 
     antfs_init(&params, nrf_pwr_mgmt_run);
     antfs_channel_setup();
+
+    NRF_LOG_INFO("ANT-FS Client example started.");
 
     for (;; )
     {

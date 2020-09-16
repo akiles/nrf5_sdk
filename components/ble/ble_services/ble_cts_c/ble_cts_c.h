@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -96,6 +96,18 @@ static ble_cts_c_t _name;                                                       
 NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
                      BLE_CTS_C_BLE_OBSERVER_PRIO,                                                   \
                      ble_cts_c_on_ble_evt, &_name)
+
+/** @brief Macro for defining multiple ble_cts_c instances.
+ *
+ * @param   _name   Name of the array of instances.
+ * @param   _cnt    Number of instances to define.
+ * @hideinitializer
+ */
+#define BLE_CTS_C_ARRAY_DEF(_name, _cnt)                 \
+static ble_cts_c_t _name[_cnt];                          \
+NRF_SDH_BLE_OBSERVERS(_name ## _obs,                     \
+                      BLE_CTS_C_BLE_OBSERVER_PRIO,       \
+                      ble_cts_c_on_ble_evt, &_name, _cnt)
 
 
 /**@brief "Day Date Time" field of the "Exact Time 256" field of the Current Time Characteristic. */

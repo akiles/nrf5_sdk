@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -51,6 +51,10 @@
 #include "nfc_ndef_record.h"
 #include "nfc_ac_rec.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Function for parsing general record description as Alternative Carrier record.
  *
@@ -74,6 +78,10 @@
  */
 ret_code_t nfc_ac_rec_parse(nfc_ndef_record_desc_t    const * const p_rec_desc,
                             nfc_ac_rec_payload_desc_t       * const p_ac_rec_payload_data);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // __NFC_AC_REC_PARSER_H__
 

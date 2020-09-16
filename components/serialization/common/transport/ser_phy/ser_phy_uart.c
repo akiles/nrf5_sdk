@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -65,7 +65,7 @@ static const nrf_drv_uart_config_t m_uart_config = {
     .pselcts            = SER_PHY_UART_CTS,
     .p_context          = NULL,
     .interrupt_priority = UART_IRQ_PRIORITY,
-#ifdef UARTE_PRESENT
+#if defined(UARTE_PRESENT) && defined(UART_PRESENT)
     .use_easy_dma       = true,
 #endif
     // These values are common for application and connectivity, they are

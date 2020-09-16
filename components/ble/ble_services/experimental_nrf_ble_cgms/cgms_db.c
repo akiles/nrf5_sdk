@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -76,11 +76,10 @@ uint16_t cgms_db_num_records_get(void)
 
 ret_code_t cgms_db_record_get(uint8_t record_num, ble_cgms_rec_t * p_rec)
 {
-    if (record_num >= m_num_records)
+    if ((record_num >= m_num_records) || (m_num_records == 0))
     {
         return NRF_ERROR_NOT_FOUND;
     }
-
     // copy record to the specified memory
     *p_rec = m_database[m_database_crossref[record_num]].record;
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -247,10 +247,10 @@ __STATIC_INLINE void sdc_spi_transfer(uint8_t const * const p_txb,
 __STATIC_INLINE void sdc_spi_hispeed(void)
 {
 #ifdef SPI_PRESENT
-    nrf_spi_frequency_set((NRF_SPI_Type *)m_spi.p_registers,
+    nrf_spi_frequency_set(m_spi.u.spi.p_reg,
                           (nrf_spi_frequency_t) APP_SDCARD_FREQ_DATA);
 #else
-    nrf_spim_frequency_set((NRF_SPIM_Type *)m_spi.p_registers,
+    nrf_spim_frequency_set(m_spi.u.spim.p_reg,
                            (nrf_spi_frequency_t) APP_SDCARD_FREQ_DATA);
 #endif
 }

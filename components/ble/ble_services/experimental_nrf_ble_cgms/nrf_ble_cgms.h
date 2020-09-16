@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -316,10 +316,11 @@ typedef struct
 typedef struct
 {
     uint8_t          racp_proc_operator;                                                    /**< Operator of the current request. */
-    uint8_t          racp_proc_record_ndx;                                                  /**< Current record index. */
-    uint8_t          racp_proc_records_reported;                                            /**< Number of reported records. */
-    uint8_t          racp_proc_records_reported_since_txcomplete;                           /**< Number of reported records since the last TX_COMPLETE event. */
-    ble_racp_value_t racp_request;
+    uint16_t         racp_proc_record_ndx;                                                  /**< Current record index. */
+    uint16_t         racp_proc_records_ndx_last_to_send;                                    /**< The last record to send, can be used together with racp_proc_record_ndx to determine a range of records to send. (used by greater/less filters). */
+    uint16_t         racp_proc_records_reported;                                            /**< Number of reported records. */
+    uint16_t         racp_proc_records_reported_since_txcomplete;                           /**< Number of reported records since the last TX_COMPLETE event. */
+    ble_racp_value_t racp_request;                                                          /**< RACP procedure that has been requested from the peer. */
     ble_racp_value_t pending_racp_response;                                                 /**< RACP response to be sent. */
     uint8_t          pending_racp_response_operand[NRF_BLE_CGMS_RACP_PENDING_OPERANDS_MAX]; /**< Operand of the RACP response to be sent. */
 } nrf_ble_cgms_racp_t;

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -59,20 +59,18 @@
 #include "nrf_log.h"
 NRF_LOG_MODULE_REGISTER();
 
+#if NRF_CLI_BLE_UART_MAX_CLIENTS > NRF_SDH_BLE_TOTAL_LINK_COUNT
+    #error "Too few BLE peripheral links are supported by the BLE SDH module for the maximal number \
+            of BLE transport instances"
+#endif
 
 #define NRF_CLI_BLE_UART_TIMEOUT_MS 50
 #define OVERHEAD_LENGTH (OPCODE_LENGTH + HANDLE_LENGTH)
 
-static nrf_cli_ble_uart_internal_t * mp_instance;
-
-static ble_nus_t m_nus;
-NRF_SDH_BLE_OBSERVER(m_nus_ble_obs, BLE_NUS_BLE_OBSERVER_PRIO, ble_nus_on_ble_evt, &m_nus);
-
-
-void nrf_cli_ble_uart_on_ble_evt(ble_evt_t *p_ble_evt)
-{
-    ble_nus_on_ble_evt(p_ble_evt, &m_nus);
-}
+BLE_NUS_DEF(m_nus, NRF_CLI_BLE_UART_MAX_CLIENTS);
+BLE_LINK_CTX_MANAGER_DEF(m_link_ctx_storage,
+                         NRF_CLI_BLE_UART_MAX_CLIENTS,
+                         sizeof(nrf_cli_ble_uart_internal_t *));
 
 static void tx_try(nrf_cli_ble_uart_internal_t * p_instance, uint32_t threshold)
 {
@@ -91,9 +89,10 @@ static void tx_try(nrf_cli_ble_uart_internal_t * p_instance, uint32_t threshold)
         if (out_data_len >= threshold)
         {
             size_t req_data_len = out_data_len;
-            err_code = ble_nus_string_send(&m_nus,
-                                           p_out_data,
-                                           (uint16_t*)&out_data_len);
+            err_code = ble_nus_data_send(&m_nus,
+                                         p_out_data,
+                                         (uint16_t*)&out_data_len,
+                                         p_instance->p_cb->conn_handle);
 
             if ((err_code == NRF_ERROR_BUSY) || (err_code == NRF_ERROR_RESOURCES))
             {
@@ -112,22 +111,28 @@ static void tx_try(nrf_cli_ble_uart_internal_t * p_instance, uint32_t threshold)
         }
     }
 }
-static void nus_data_handler(ble_nus_evt_t * p_evt)
-{
-    nrf_cli_ble_uart_internal_t * p_instance = mp_instance;
-    ret_code_t err_code = NRF_SUCCESS;
-    UNUSED_VARIABLE(err_code);
 
-    switch (p_evt->type)
+static void nus_data_handler(ble_nus_evt_t * p_nus_evt)
+{
+    ret_code_t                     err_code = NRF_SUCCESS;
+    nrf_cli_ble_uart_internal_t *  p_instance;
+    nrf_cli_ble_uart_internal_t ** pp_instance;
+
+    err_code = blcm_link_ctx_get(&m_link_ctx_storage, p_nus_evt->conn_handle, (void *) &pp_instance);
+    ASSERT(err_code == NRF_SUCCESS);
+
+    p_instance = *pp_instance;
+
+    switch (p_nus_evt->type)
     {
         case BLE_NUS_EVT_RX_DATA:
         {
             NRF_LOG_INFO("Conn_handle:%d, Received: %d",
-                     p_instance->p_cb->conn_handle, p_evt->params.rx_data.length);
-            NRF_LOG_HEXDUMP_DEBUG(p_evt->params.rx_data.p_data, p_evt->params.rx_data.length);
-            size_t len = (size_t)p_evt->params.rx_data.length;
+                     p_instance->p_cb->conn_handle, p_nus_evt->params.rx_data.length);
+            NRF_LOG_HEXDUMP_DEBUG(p_nus_evt->params.rx_data.p_data, p_nus_evt->params.rx_data.length);
+            size_t len = ((size_t) p_nus_evt->params.rx_data.length) & 0x0000FFFF;
             err_code = nrf_ringbuf_cpy_put(p_instance->p_rx_ringbuf,
-                                           p_evt->params.rx_data.p_data,
+                                           p_nus_evt->params.rx_data.p_data,
                                            (size_t *)&len);
             ASSERT(err_code == NRF_SUCCESS);
 
@@ -150,12 +155,12 @@ static void nus_data_handler(ble_nus_evt_t * p_evt)
                                        APP_TIMER_TICKS(NRF_CLI_BLE_UART_TIMEOUT_MS),
                                        p_instance);
             ASSERT(err_code == NRF_SUCCESS);
-            NRF_LOG_INFO("BLE UART service started");
+            NRF_LOG_INFO("Conn_handle:%d, communication started", p_instance->p_cb->conn_handle);
             break;
         case BLE_NUS_EVT_COMM_STOPPED:
             (void)app_timer_stop(*p_instance->p_timer);
             p_instance->p_cb->service_started = false;
-            NRF_LOG_INFO("BLE UART service stopped");
+            NRF_LOG_INFO("Conn_handle:%d, communication stopped", p_instance->p_cb->conn_handle);
             break;
         default:
             break;
@@ -164,7 +169,7 @@ static void nus_data_handler(ble_nus_evt_t * p_evt)
 
 static void timer_handler(void * p_context)
 {
-    nrf_cli_ble_uart_internal_t * p_instance = mp_instance;
+    nrf_cli_ble_uart_internal_t * p_instance = (nrf_cli_ble_uart_internal_t *) p_context;
     tx_try(p_instance, 1);
 
     ret_code_t err_code = app_timer_start(*p_instance->p_timer,
@@ -189,7 +194,9 @@ static ret_code_t cli_ble_uart_init(nrf_cli_transport_t const * p_transport,
                                     nrf_cli_transport_handler_t evt_handler,
                                     void * p_context)
 {
-    nrf_cli_ble_uart_internal_t * p_instance =
+    ret_code_t                     err_code;
+    nrf_cli_ble_uart_internal_t ** pp_instance;
+    nrf_cli_ble_uart_internal_t  * p_instance =
                              CONTAINER_OF(p_transport, nrf_cli_ble_uart_internal_t, transport);
     nrf_cli_ble_uart_config_t * p_ble_uart_config = (nrf_cli_ble_uart_config_t *)p_config;
 
@@ -202,7 +209,13 @@ static ret_code_t cli_ble_uart_init(nrf_cli_transport_t const * p_transport,
     nrf_ringbuf_init(p_instance->p_rx_ringbuf);
     nrf_ringbuf_init(p_instance->p_tx_ringbuf);
 
-    mp_instance = p_instance;
+    err_code = blcm_link_ctx_get(&m_link_ctx_storage,
+                                 p_ble_uart_config->conn_handle,
+                                 (void *) &pp_instance);
+    VERIFY_SUCCESS(err_code);
+
+    *pp_instance = p_instance;
+
     return NRF_SUCCESS;
 }
 
@@ -216,7 +229,6 @@ static ret_code_t cli_ble_uart_uninit(nrf_cli_transport_t const * p_transport)
 
     return ret;
 }
-
 
 static ret_code_t cli_ble_uart_enable(nrf_cli_transport_t const * p_transport, bool blocking)
 {

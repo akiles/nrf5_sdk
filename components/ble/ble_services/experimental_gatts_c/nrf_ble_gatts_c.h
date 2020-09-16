@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -84,6 +84,17 @@ NRF_SDH_BLE_OBSERVER(_name ## _obs,                                             
                      NRF_BLE_GATTS_C_BLE_OBSERVER_PRIO,                                             \
                      nrf_ble_gatts_c_on_ble_evt, &_name)
 
+/** @brief Macro for defining multiple nrf_ble_gatts_c instances.
+ *
+ * @param   _name   Name of the array of instances.
+ * @param   _cnt    Number of instances to define.
+ * @hideinitializer
+ */
+#define NRF_BLE_GATTS_C_ARRAY_DEF(_name, _cnt)                 \
+static nrf_ble_gatts_c_t _name[_cnt];                          \
+NRF_SDH_BLE_OBSERVERS(_name ## _obs,                           \
+                      NRF_BLE_GATTS_C_BLE_OBSERVER_PRIO,       \
+                      nrf_ble_gatts_c_on_ble_evt, &_name, _cnt)
 
 /**@brief   Type of the GATT Service client event. */
 typedef enum
@@ -98,12 +109,12 @@ typedef enum
  */
 typedef struct
 {
-    nrf_ble_gatts_c_evt_type_t evt_type;    /**< Type of event. See @ref nrf_ble_gatts_c_evt_type_t. */
-    uint16_t                   conn_handle; /**< Handle of the connection for which this event has occurred. */
+    nrf_ble_gatts_c_evt_type_t evt_type;           /**< Type of event. See @ref nrf_ble_gatts_c_evt_type_t. */
+    uint16_t                   conn_handle;        /**< Handle of the connection for which this event has occurred. */
     union
     {
-        ble_gatt_db_srv_t        service;      /**< Handles that the GATT service occupies in the peer device. Will be filled if the event type is @ref NRF_BLE_GATTS_C_EVT_DISCOVERY_COMPLETE.*/
-        ble_gattc_handle_range_t handle_range; /**< The affected attribute handle range where the service has changed. Will be provided if the event type is @ref NRF_BLE_GATTS_C_EVT_SRV_CHANGED.*/
+        ble_gatt_db_char_t       srv_changed_char;   /**< Handles for the Service Changed characteristic. Will be filled if the event type is @ref NRF_BLE_GATTS_C_EVT_DISCOVERY_COMPLETE. */
+        ble_gattc_handle_range_t handle_range;       /**< The affected attribute handle range where the service has changed. Will be provided if the event type is @ref NRF_BLE_GATTS_C_EVT_SRV_CHANGED.*/
     } params;
 } nrf_ble_gatts_c_evt_t;
 

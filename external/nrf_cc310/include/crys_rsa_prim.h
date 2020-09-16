@@ -1,13 +1,37 @@
-// Copyright (c) 2016-2017, ARM Limited or its affiliates. All rights reserved 
-// 
-// This file and the related binary are licensed under the ARM Object Code and 
-// Headers License; you may not use these files except in compliance with this 
-// license. 
-// 
-// You may obtain a copy of the License at <.../external/nrf_cc310/license.txt> 
-// 
-// See the License for the specific language governing permissions and 
-// limitations under the License.
+/**************************************************************************************
+* Copyright (c) 2016-2017, ARM Limited or its affiliates. All rights reserved         *
+*                                                                                     *
+* This file and the related binary are licensed under the following license:          *
+*                                                                                     *
+* ARM Object Code and Header Files License, v1.0 Redistribution.                      *
+*                                                                                     *
+* Redistribution and use of object code, header files, and documentation, without     *
+* modification, are permitted provided that the following conditions are met:         *
+*                                                                                     *
+* 1) Redistributions must reproduce the above copyright notice and the                *
+*    following disclaimer in the documentation and/or other materials                 *
+*    provided with the distribution.                                                  *
+*                                                                                     *
+* 2) Unless to the extent explicitly permitted by law, no reverse                     *
+*    engineering, decompilation, or disassembly of is permitted.                      *
+*                                                                                     *
+* 3) Redistribution and use is permitted solely for the purpose of                    *
+*    developing or executing applications that are targeted for use                   *
+*    on an ARM-based product.                                                         *
+*                                                                                     *
+* DISCLAIMER. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND                  *
+* CONTRIBUTORS "AS IS." ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT             *
+* NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT,        *
+* AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE          *
+* COPYRIGHT HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,   *
+* SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED            *
+* TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR              *
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF              *
+* LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING                *
+* NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS                  *
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                        *
+**************************************************************************************/
+
 
 
 #ifndef CRYS_RSA_PRIM_H
@@ -23,6 +47,10 @@ extern "C"
 /*!
 @file
 @brief This module defines the API that implements the [PKCS1_2.1] primitive functions.
+@defgroup crys_rsa_prim CryptoCell RSA primitive APIs
+@{
+@ingroup crys_rsa
+
 
 \note Direct use of primitive functions, rather than schemes to protect data, is strongly discouraged as primitive functions are
 susceptible to well-known attacks.
@@ -41,12 +69,12 @@ CIMPORT_C CRYSError_t CRYS_RSA_PRIM_Encrypt(
                                 CRYS_RSAUserPubKey_t *UserPubKey_ptr,       /*!< [in]  Pointer to the public key data structure. */
                                 CRYS_RSAPrimeData_t  *PrimeData_ptr,        /*!< [in]  Pointer to a temporary structure containing internal buffers. */
                                 uint8_t              *Data_ptr,             /*!< [in]  Pointer to the data to encrypt. */
-                                uint16_t              DataSize,             /*!< [in]  The size (in bytes) of the data to encrypt. Data size must be &le; Modulus size.
-										       It can be smaller than the modulus size but it is not recommended.
-                                                                                       If smaller, the data is zero-padded up to the modulus size.
-                                                                                       Since the result of decryption is always the size of the modulus,
-                                                                                       this will cause the size of the decrypted data to be larger than the
-										       originally encrypted data. */
+                                uint16_t              DataSize,             /*!< [in]  The size (in bytes) of input data must be &le; modulus size. If is smaller,
+                                                                                       then the function padds it by zeros on left side up to the modulus size
+                                                                                   and therefore, after further decrypt operation, its result will contain
+                                                                                       zero-padding also. If the function is used for recovering the plain data
+                                                                                       from result of inverse function (CRYS_RSA_PRIM_Decrypt), the input size
+                                                                                       must be equal to modulus size exactly. */
                                 uint8_t              *Output_ptr            /*!< [out] Pointer to the encrypted data. The buffer size must be &ge; the modulus size. */
 );
 
@@ -61,14 +89,18 @@ CIMPORT_C CRYSError_t CRYS_RSA_PRIM_Encrypt(
 */
 CIMPORT_C CRYSError_t CRYS_RSA_PRIM_Decrypt(
                             CRYS_RSAUserPrivKey_t *UserPrivKey_ptr,     /*!< [in]  Pointer to the private key data structure.
-                                                                                    The representation (pair or quintuple) and hence the algorithm (CRT or not-CRT)
-                                                                                    is determined by the Private Key data structure - using
-										    ::CRYS_RSA_Build_PrivKey or ::CRYS_RSA_Build_PrivKeyCRT
-                                                                                    to determine which algorithm is used.*/
+                                                                                   The key representation (pair or quintuple) and hence the RSA algorithm
+                                                                                   (CRT or not-CRT) is determined by enum value in the structure
+                                           ::CRYS_RSA_Build_PrivKey or ::CRYS_RSA_Build_PrivKeyCRT. */
                             CRYS_RSAPrimeData_t   *PrimeData_ptr,       /*!< [in]  Pointer to a temporary structure containing internal buffers required for
-										   the RSA operation. */
+                                           the RSA operation. */
                             uint8_t     *Data_ptr,                      /*!< [in]  Pointer to the data to be decrypted. */
-                            uint16_t     DataSize,                      /*!< [in]  The size (in bytes) of the data to decrypt. Must be equal to the modulus size. */
+                            uint16_t     DataSize,                      /*!< [in]  The size (in bytes) of input data must be &le; modulus size.
+                                                                                   If the size is smaller (not recommendet), then the data will be zero-padded
+                                                                                   by the function on left side up to the modulus size and therefore, after further
+                                                                                   decrypt operation,its result will contain zero-padding also. If the function is used
+                                                                                   for recovering the plain data from result of inverse function (CRYS_RSA_PRIM_Encrypt),
+                                                                                   the input size must be equal to modulus size exactly. */
                             uint8_t     *Output_ptr                     /*!< [out] Pointer to the decrypted data. The buffer size must be &le; the modulus size. */
 );
 
@@ -87,5 +119,7 @@ since the signature primitive is identical to the decryption primitive.
 #ifdef __cplusplus
 }
 #endif
-
+/**
+@}
+ */
 #endif

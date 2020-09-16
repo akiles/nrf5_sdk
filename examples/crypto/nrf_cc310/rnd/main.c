@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -49,7 +49,7 @@
 extern rndDataStuct rndVectors[];
 
 /*RND global variables*/
-extern CRYS_RND_Context_t*   rndContext_ptr;
+extern CRYS_RND_State_t*     rndState_ptr;
 extern CRYS_RND_WorkBuff_t*  rndWorkBuff_ptr;
 
 
@@ -60,7 +60,7 @@ int rnd_tests(void)
 	int                             test_index = 0;
 
 	/*Set additional input for rng seed*/
-	ret = CRYS_RND_AddAdditionalInput(rndContext_ptr,
+	ret = CRYS_RND_AddAdditionalInput(rndState_ptr,
 		rndVectors[test_index].rndTest_AddInputData,
 		rndVectors[test_index].rndTest_AddInputSize);
 
@@ -72,7 +72,7 @@ int rnd_tests(void)
 	INTEG_TEST_PRINT("\n CRYS_RND_AddAdditionalInput passed\n");
 
 	/*Reseed rnd using added input (new seed will be generated using additional input)*/
-	ret = CRYS_RND_Reseeding (rndContext_ptr,
+	ret = CRYS_RND_Reseeding (rndState_ptr,
 		rndWorkBuff_ptr);
 	if (ret != SA_SILIB_RET_OK){
 		INTEG_TEST_PRINT("\n CRYS_RND_Reseeding failed with 0x%x \n",ret);
@@ -81,7 +81,7 @@ int rnd_tests(void)
 	INTEG_TEST_PRINT("\n CRYS_RND_Reseeding passed\n");
 
 	/*Generate random vector 1*/
-	ret = CRYS_RND_GenerateVector(&rndContext_ptr->rndState,
+	ret = CRYS_RND_GenerateVector(rndState_ptr,
 		rndVectors[test_index].rndTest_RandomVectorSize,
 		rndVectors[test_index].rndTest_RandomVectorData1);
 	if (ret != SA_SILIB_RET_OK){
@@ -91,7 +91,7 @@ int rnd_tests(void)
 
 	INTEG_TEST_PRINT("\n CRYS_RND_GenerateVector for first vector passed\n");
 	/*Generate rnadom vector 2*/
-	ret = CRYS_RND_GenerateVector(&rndContext_ptr->rndState,
+	ret = CRYS_RND_GenerateVector(rndState_ptr,
 		rndVectors[test_index].rndTest_RandomVectorSize,
 		rndVectors[test_index].rndTest_RandomVectorData2);
 
@@ -115,7 +115,7 @@ int rnd_tests(void)
 	INTEG_TEST_PRINT("\n Two generated vectors are different as expected\n");
 
 	/*Generate random vector in range when max value is NULL*/
-	ret = CRYS_RND_GenerateVectorInRange(rndContext_ptr,
+	ret = CRYS_RND_GenerateVectorInRange(rndState_ptr, CRYS_RND_GenerateVector,
 		rndVectors[test_index].rndTest_RandomVectorInRangeSize1,
 		NULL,
 		rndVectors[test_index].rndTest_RandomVectorInRangeData);
@@ -129,7 +129,7 @@ int rnd_tests(void)
 	INTEG_TEST_PRINT("\n CRYS_RND_GenerateVectorInRange 1 passed\n");
 
 	/*Generate random vector in range with max vector */
-	ret = CRYS_RND_GenerateVectorInRange(rndContext_ptr,
+	ret = CRYS_RND_GenerateVectorInRange(rndState_ptr, CRYS_RND_GenerateVector,
 		rndVectors[test_index].rndTest_RandomVectorInRangeSize2,
 		rndVectors[test_index].rndTest_MaxVectorInRange2,
 		rndVectors[test_index].rndTest_RandomVectorInRangeData2);
@@ -142,7 +142,7 @@ int rnd_tests(void)
 
 
 	/*Perform UnInstantiation*/
-	ret = CRYS_RND_UnInstantiation(rndContext_ptr);
+	ret = CRYS_RND_UnInstantiation(rndState_ptr);
 
 	if (ret != SA_SILIB_RET_OK){
 		INTEG_TEST_PRINT("\n CRYS_RND_UnInstantiation failed with 0x%x \n",ret);
@@ -152,7 +152,7 @@ int rnd_tests(void)
 	INTEG_TEST_PRINT("\n CRYS_RND_UnInstantiation passed\n");
 
 	/*Try to create random vector without instantiation - should fail*/
-	ret = CRYS_RND_GenerateVector(&rndContext_ptr->rndState,
+	ret = CRYS_RND_GenerateVector(rndState_ptr,
 		rndVectors[test_index].rndTest_RandomVectorSize,
 		rndVectors[test_index].rndTest_RandomVectorData2);
 
@@ -164,7 +164,7 @@ int rnd_tests(void)
 	INTEG_TEST_PRINT("\n CRYS_RND_GenerateVector failed as expected\n");
 
 	/*Set additional input for RND seed*/
-	ret = CRYS_RND_AddAdditionalInput(rndContext_ptr,
+	ret = CRYS_RND_AddAdditionalInput(rndState_ptr,
 		rndVectors[test_index].rndTest_AddInputData,
 		rndVectors[test_index].rndTest_AddInputSize);
 
@@ -176,7 +176,7 @@ int rnd_tests(void)
 	INTEG_TEST_PRINT("\n CRYS_RND_AddAdditionalInput passed\n");
 
 	/*Perform instantiation for new seed*/
-	ret = CRYS_RND_Instantiation(rndContext_ptr,
+	ret = CRYS_RND_Instantiation(rndState_ptr,
 		rndWorkBuff_ptr);
 
 	if (ret != SA_SILIB_RET_OK){
@@ -186,7 +186,7 @@ int rnd_tests(void)
 	INTEG_TEST_PRINT("\n CRYS_RND_Instantiation passed\n");
 
 	/*Try to create two vectors and check that the vectors are different*/
-	ret = CRYS_RND_GenerateVector(&rndContext_ptr->rndState,
+	ret = CRYS_RND_GenerateVector(rndState_ptr,
 		rndVectors[test_index].rndTest_RandomVectorSize,
 		rndVectors[test_index].rndTest_RandomVectorData1);
 	if (ret != SA_SILIB_RET_OK){
@@ -195,7 +195,7 @@ int rnd_tests(void)
 	}
 	INTEG_TEST_PRINT("\n CRYS_RND_GenerateVector 1 passed\n");
 
-	ret = CRYS_RND_GenerateVector(&rndContext_ptr->rndState,
+	ret = CRYS_RND_GenerateVector(rndState_ptr,
 		rndVectors[test_index].rndTest_RandomVectorSize,
 		rndVectors[test_index].rndTest_RandomVectorData2);
 
@@ -236,9 +236,15 @@ int main(void)
 
 
         /*Init SaSi library*/
-	ret = SaSi_LibInit(rndContext_ptr, rndWorkBuff_ptr);
+    ret = SaSi_LibInit();
+    if (ret != SA_SILIB_RET_OK) {
+        INTEG_TEST_PRINT("Failed SaSi_LibInit - ret = 0x%x\n", ret);
+        goto exit_1;
+    }
+
+    ret = CRYS_RndInit(rndState_ptr, rndWorkBuff_ptr);
 	if (ret != SA_SILIB_RET_OK) {
-	    INTEG_TEST_PRINT("Failed SaSi_SiLibInit - ret = 0x%x\n", ret);
+        INTEG_TEST_PRINT("Failed CRYS_RndInit - ret = 0x%x\n", ret);
 	    goto exit_1;
 	}
 
@@ -253,7 +259,13 @@ int main(void)
 
 exit_0:
 	/*Finish SaSi library*/
-	SaSi_LibFini(rndContext_ptr);
+    SaSi_LibFini();
+
+    ret = CRYS_RND_UnInstantiation(rndState_ptr);
+
+    if (ret) {
+        INTEG_TEST_PRINT("Failure in CRYS_RND_UnInstantiation,ret = 0x%x\n", ret);
+    }
 
 exit_1:
 	/*Unmap memory*/

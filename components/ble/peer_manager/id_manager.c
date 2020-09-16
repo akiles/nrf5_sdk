@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -87,10 +87,6 @@ static ble_conn_state_user_flag_id_t    m_conn_state_user_flag_id;
 
 static uint8_t                          m_wlisted_peer_cnt;
 static pm_peer_id_t                     m_wlisted_peers[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
-
-#if (NRF_SD_BLE_API_VERSION <= 2)
-    static ble_gap_addr_t               m_current_id_addr;
-#endif
 
 
 static void internal_state_reset()
@@ -405,14 +401,6 @@ ret_code_t im_init(void)
         return NRF_ERROR_INTERNAL;
     }
 
-    #if (NRF_SD_BLE_API_VERSION <= 2)
-        ret_code_t ret_code = sd_ble_gap_address_get(&m_current_id_addr);
-        if (ret_code != NRF_SUCCESS)
-        {
-            return NRF_ERROR_INTERNAL;
-        }
-    #endif
-
     m_module_initialized = true;
 
     return NRF_SUCCESS;
@@ -668,130 +656,62 @@ static ret_code_t peers_id_keys_get(pm_peer_id_t   const * p_peers,
 ret_code_t im_device_identities_list_set(pm_peer_id_t const * p_peers,
                                          uint32_t             peer_cnt)
 {
-    #if (NRF_SD_BLE_API_VERSION >= 3)
+    ret_code_t             ret;
+    pm_peer_data_t         peer_data;
+    pm_peer_data_bonding_t bond_data;
 
-        ret_code_t             ret;
-        pm_peer_data_t         peer_data;
-        pm_peer_data_bonding_t bond_data;
+    ble_gap_id_key_t         keys[BLE_GAP_DEVICE_IDENTITIES_MAX_COUNT];
+    ble_gap_id_key_t const * key_ptrs[BLE_GAP_DEVICE_IDENTITIES_MAX_COUNT];
 
-        ble_gap_id_key_t         keys[BLE_GAP_DEVICE_IDENTITIES_MAX_COUNT];
-        ble_gap_id_key_t const * key_ptrs[BLE_GAP_DEVICE_IDENTITIES_MAX_COUNT];
-
-        if ((p_peers == NULL) || (peer_cnt == 0))
-        {
-            // Clear the device identities list.
-            return sd_ble_gap_device_identities_set(NULL, NULL, 0);
-        }
-
-        peer_data.p_bonding_data = &bond_data;
-        uint32_t const buf_size  = sizeof(bond_data);
-
-        memset(keys, 0x00, sizeof(keys));
-        for (uint32_t i = 0; i < BLE_GAP_DEVICE_IDENTITIES_MAX_COUNT; i++)
-        {
-            key_ptrs[i] = &keys[i];
-        }
-
-        for (uint32_t i = 0; i < peer_cnt; i++)
-        {
-            memset(&bond_data, 0x00, sizeof(bond_data));
-
-            // Read peer data from flash.
-            ret = pds_peer_data_read(p_peers[i], PM_PEER_DATA_ID_BONDING,
-                                     &peer_data, &buf_size);
-
-            if ((ret == NRF_ERROR_NOT_FOUND) || (ret == NRF_ERROR_INVALID_PARAM))
-            {
-                // Peer data coulnd't be found in flash or peer ID is not valid.
-                return NRF_ERROR_NOT_FOUND;
-            }
-
-            uint8_t const addr_type = bond_data.peer_ble_id.id_addr_info.addr_type;
-
-            if ((addr_type != BLE_GAP_ADDR_TYPE_PUBLIC) &&
-                (addr_type != BLE_GAP_ADDR_TYPE_RANDOM_STATIC))
-            {
-                // The address shared by the peer during bonding can't be whitelisted.
-                return BLE_ERROR_GAP_INVALID_BLE_ADDR;
-            }
-
-            // Copy data to the buffer.
-            memcpy(&keys[i], &bond_data.peer_ble_id, sizeof(ble_gap_id_key_t));
-        }
-
-        return sd_ble_gap_device_identities_set(key_ptrs, NULL, peer_cnt);
-
-    #else
-
-        return NRF_ERROR_NOT_SUPPORTED;
-
-    #endif
-}
-
-
-#if (NRF_SD_BLE_API_VERSION <= 2)
-
-static ret_code_t address_set_v2(uint8_t cycle_mode, ble_gap_addr_t * p_addr)
-{
-    NRF_PM_DEBUG_CHECK(p_addr != NULL);
-
-    ret_code_t ret = sd_ble_gap_address_set(cycle_mode, p_addr);
-
-    switch (ret)
+    if ((p_peers == NULL) || (peer_cnt == 0))
     {
-        case NRF_SUCCESS:
-        case NRF_ERROR_BUSY:
-        case NRF_ERROR_INVALID_STATE:
-        case NRF_ERROR_INVALID_PARAM:           // If cycle_mode is not AUTO or NONE.
-        case BLE_ERROR_GAP_INVALID_BLE_ADDR:    // If the GAP address is not valid.
-            return ret;
-
-        default:
-            return NRF_ERROR_INTERNAL;
+        // Clear the device identities list.
+        return sd_ble_gap_device_identities_set(NULL, NULL, 0);
     }
-}
 
-#endif
+    peer_data.p_bonding_data = &bond_data;
+    uint32_t const buf_size  = sizeof(bond_data);
+
+    memset(keys, 0x00, sizeof(keys));
+    for (uint32_t i = 0; i < BLE_GAP_DEVICE_IDENTITIES_MAX_COUNT; i++)
+    {
+        key_ptrs[i] = &keys[i];
+    }
+
+    for (uint32_t i = 0; i < peer_cnt; i++)
+    {
+        memset(&bond_data, 0x00, sizeof(bond_data));
+
+        // Read peer data from flash.
+        ret = pds_peer_data_read(p_peers[i], PM_PEER_DATA_ID_BONDING,
+                                 &peer_data, &buf_size);
+
+        if ((ret == NRF_ERROR_NOT_FOUND) || (ret == NRF_ERROR_INVALID_PARAM))
+        {
+            // Peer data coulnd't be found in flash or peer ID is not valid.
+            return NRF_ERROR_NOT_FOUND;
+        }
+
+        uint8_t const addr_type = bond_data.peer_ble_id.id_addr_info.addr_type;
+
+        if ((addr_type != BLE_GAP_ADDR_TYPE_PUBLIC) &&
+            (addr_type != BLE_GAP_ADDR_TYPE_RANDOM_STATIC))
+        {
+            // The address shared by the peer during bonding can't be whitelisted.
+            return BLE_ERROR_GAP_INVALID_BLE_ADDR;
+        }
+
+        // Copy data to the buffer.
+        memcpy(&keys[i], &bond_data.peer_ble_id, sizeof(ble_gap_id_key_t));
+    }
+
+    return sd_ble_gap_device_identities_set(key_ptrs, NULL, peer_cnt);
+}
 
 
 ret_code_t im_id_addr_set(ble_gap_addr_t const * p_addr)
 {
-    #if (NRF_SD_BLE_API_VERSION <= 2)
-
-        ret_code_t     ret;
-        ble_gap_addr_t current_addr;
-
-        NRF_PM_DEBUG_CHECK(p_addr != NULL);
-
-        (void) sd_ble_gap_address_get(&current_addr);
-
-        ret = address_set_v2(BLE_GAP_ADDR_CYCLE_MODE_NONE, (ble_gap_addr_t *)p_addr);
-        if (ret != NRF_SUCCESS)
-        {
-            return ret;
-        }
-
-        if (   current_addr.addr_type == BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE
-            || current_addr.addr_type == BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE)
-        {
-            // If currently using privacy, it must be re-enabled.
-            // We force AUTO when privacy is enabled.
-            ret = address_set_v2(BLE_GAP_ADDR_CYCLE_MODE_AUTO, &current_addr);
-            if (ret != NRF_SUCCESS)
-            {
-                return ret;
-            }
-        }
-
-        memcpy(&m_current_id_addr, p_addr, sizeof(ble_gap_addr_t));
-
-        return NRF_SUCCESS;
-
-    #else
-
-        return sd_ble_gap_addr_set(p_addr);
-
-    #endif
+    return sd_ble_gap_addr_set(p_addr);
 }
 
 
@@ -799,102 +719,19 @@ ret_code_t im_id_addr_get(ble_gap_addr_t * p_addr)
 {
     NRF_PM_DEBUG_CHECK(p_addr != NULL);
 
-    #if (NRF_SD_BLE_API_VERSION <= 2)
-        memcpy(p_addr, &m_current_id_addr, sizeof(ble_gap_addr_t));
-        return NRF_SUCCESS;
-    #else
-        return sd_ble_gap_addr_get(p_addr);
-    #endif
+    return sd_ble_gap_addr_get(p_addr);
 }
 
 
 ret_code_t im_privacy_set(pm_privacy_params_t const * p_privacy_params)
 {
-    #if (NRF_SD_BLE_API_VERSION <= 2)
-
-        ret_code_t     ret;
-        ble_gap_addr_t privacy_addr;
-        ble_gap_irk_t  current_irk;
-        ble_opt_t      privacy_options;
-        ble_opt_t      current_privacy_options;
-
-        NRF_PM_DEBUG_CHECK(p_privacy_params != NULL);
-
-        privacy_addr.addr_type                        = p_privacy_params->private_addr_type;
-        privacy_options.gap_opt.privacy.p_irk         = p_privacy_params->p_device_irk;
-        privacy_options.gap_opt.privacy.interval_s    = p_privacy_params->private_addr_cycle_s;
-        current_privacy_options.gap_opt.privacy.p_irk = &current_irk;
-
-        // Can not fail.
-        (void) sd_ble_opt_get(BLE_GAP_OPT_PRIVACY, &current_privacy_options);
-        (void) sd_ble_opt_set(BLE_GAP_OPT_PRIVACY, &privacy_options);
-
-        if (p_privacy_params->privacy_mode == BLE_GAP_PRIVACY_MODE_OFF)
-        {
-            ret = address_set_v2(BLE_GAP_ADDR_CYCLE_MODE_NONE, &m_current_id_addr);
-        }
-        else
-        {
-            ret = address_set_v2(BLE_GAP_ADDR_CYCLE_MODE_AUTO, &privacy_addr);
-        }
-
-        if (ret != NRF_SUCCESS)
-        {
-            // Restore previous settings.
-            (void) sd_ble_opt_set(BLE_GAP_OPT_PRIVACY, &current_privacy_options);
-        }
-
-        // NRF_ERROR_BUSY,
-        // NRF_ERROR_INVALID_STATE,
-        // NRF_ERROR_INVALID_PARAM, if address type is not valid.
-        return ret;
-
-    #else
-
-        return sd_ble_gap_privacy_set(p_privacy_params);
-
-    #endif
+    return sd_ble_gap_privacy_set(p_privacy_params);
 }
 
 
 ret_code_t im_privacy_get(pm_privacy_params_t * p_privacy_params)
 {
-    #if (NRF_SD_BLE_API_VERSION <= 2)
-
-        ble_gap_addr_t cur_addr;
-        ble_opt_t      cur_privacy_opt;
-
-        NRF_PM_DEBUG_CHECK(p_privacy_params               != NULL);
-        NRF_PM_DEBUG_CHECK(p_privacy_params->p_device_irk != NULL);
-
-        cur_privacy_opt.gap_opt.privacy.p_irk = p_privacy_params->p_device_irk;
-
-        // Can not fail.
-        (void) sd_ble_gap_address_get(&cur_addr);
-
-        if (   cur_addr.addr_type == BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE
-            || cur_addr.addr_type == BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE)
-        {
-            p_privacy_params->privacy_mode      = BLE_GAP_PRIVACY_MODE_DEVICE_PRIVACY;
-            p_privacy_params->private_addr_type = cur_addr.addr_type;
-        }
-        else
-        {
-            p_privacy_params->privacy_mode = BLE_GAP_PRIVACY_MODE_OFF;
-        }
-
-        // Can not fail.
-        (void) sd_ble_opt_get(BLE_GAP_OPT_PRIVACY, &cur_privacy_opt);
-
-        p_privacy_params->private_addr_cycle_s = cur_privacy_opt.gap_opt.privacy.interval_s;
-
-        return NRF_SUCCESS;
-
-    #else
-
-        return sd_ble_gap_privacy_get(p_privacy_params);
-
-    #endif
+    return sd_ble_gap_privacy_get(p_privacy_params);
 }
 
 
@@ -941,14 +778,10 @@ ret_code_t im_whitelist_set(pm_peer_id_t const * p_peers,
     {
         // Clear the current whitelist.
         m_wlisted_peer_cnt = 0;
-        #if (NRF_SD_BLE_API_VERSION >= 3)
-            // NRF_SUCCESS, or
-            // BLE_GAP_ERROR_WHITELIST_IN_USE
-            return sd_ble_gap_whitelist_set(NULL, 0);
-        #else
-            // The cached list of whitelisted peers is already cleared; nothing to do.
-            return NRF_SUCCESS;
-        #endif
+
+        // NRF_SUCCESS, or
+        // BLE_GAP_ERROR_WHITELIST_IN_USE
+        return sd_ble_gap_whitelist_set(NULL, 0);
     }
 
     // @todo emdi: should not ever cache more than BLE_GAP_WHITELIST_ADDR_MAX_COUNT...
@@ -957,40 +790,32 @@ ret_code_t im_whitelist_set(pm_peer_id_t const * p_peers,
     m_wlisted_peer_cnt = peer_cnt;
     memcpy(m_wlisted_peers, p_peers, sizeof(pm_peer_id_t) * peer_cnt);
 
-    #if (NRF_SD_BLE_API_VERSION >= 3)
+    ret_code_t ret;
+    uint32_t   wlist_addr_cnt = 0;
 
-        ret_code_t ret;
-        uint32_t   wlist_addr_cnt = 0;
+    ble_gap_addr_t const * addr_ptrs[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
+    ble_gap_addr_t         addrs[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
 
-        ble_gap_addr_t const * addr_ptrs[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
-        ble_gap_addr_t         addrs[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
+    memset(addrs, 0x00, sizeof(addrs));
 
-        memset(addrs, 0x00, sizeof(addrs));
+    // Fetch GAP addresses for these peers, but don't fetch IRKs.
+    ret = peers_id_keys_get(p_peers, peer_cnt, addrs, &wlist_addr_cnt, NULL, NULL);
 
-        // Fetch GAP addresses for these peers, but don't fetch IRKs.
-        ret = peers_id_keys_get(p_peers, peer_cnt, addrs, &wlist_addr_cnt, NULL, NULL);
+    if (ret != NRF_SUCCESS)
+    {
+        // NRF_ERROR_NOT_FOUND,            if a peer or its data were not found.
+        // BLE_ERROR_GAP_INVALID_BLE_ADDR, if a peer address can not be used for whitelisting.
+        return ret;
+    }
 
-        if (ret != NRF_SUCCESS)
-        {
-            // NRF_ERROR_NOT_FOUND,            if a peer or its data were not found.
-            // BLE_ERROR_GAP_INVALID_BLE_ADDR, if a peer address can not be used for whitelisting.
-            return ret;
-        }
+    for (uint32_t i = 0; i < BLE_GAP_WHITELIST_ADDR_MAX_COUNT; i++)
+    {
+        addr_ptrs[i] = &addrs[i];
+    }
 
-        for (uint32_t i = 0; i < BLE_GAP_WHITELIST_ADDR_MAX_COUNT; i++)
-        {
-            addr_ptrs[i] = &addrs[i];
-        }
-
-        // NRF_ERROR_DATA_SIZE,             if peer_cnt > BLE_GAP_WHITELIST_ADDR_MAX_COUNT.
-        // BLE_ERROR_GAP_WHITELIST_IN_USE,  if a whitelist is in use.
-        return sd_ble_gap_whitelist_set(addr_ptrs, peer_cnt);
-
-    #else
-
-        return NRF_SUCCESS;
-
-    #endif
+    // NRF_ERROR_DATA_SIZE,             if peer_cnt > BLE_GAP_WHITELIST_ADDR_MAX_COUNT.
+    // BLE_ERROR_GAP_WHITELIST_IN_USE,  if a whitelist is in use.
+    return sd_ble_gap_whitelist_set(addr_ptrs, peer_cnt);
 }
 
 

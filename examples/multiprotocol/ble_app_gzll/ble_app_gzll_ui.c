@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -48,7 +48,7 @@ void bsp_init_app(void)
 {
     uint32_t err_code;
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, NULL);
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS, NULL);
     APP_ERROR_CHECK(err_code);
 }
 

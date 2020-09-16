@@ -12,6 +12,7 @@ SRC_FILES += \
 
 # Include folders common to all targets
 INC_FOLDERS += \
+  $(SDK_ROOT)/components/toolchain/cmsis/include \
 
 # Libraries common to all targets
 LIB_FILES += \
@@ -24,19 +25,18 @@ OPT = -Os -g2
 # C flags common to all targets
 CFLAGS += $(OPT)
 CFLAGS += -DFLOAT_ABI_SOFT
-CFLAGS += -DuECC_ENABLE_VLI_API
+CFLAGS += -DuECC_ENABLE_VLI_API=0
 CFLAGS += -DuECC_OPTIMIZATION_LEVEL=3
-CFLAGS += -DuECC_SQUARE_FUNC=1
-CFLAGS += -DuECC_SUPPORTS_secp256r1=1
+CFLAGS += -DuECC_SQUARE_FUNC=0
 CFLAGS += -DuECC_SUPPORT_COMPRESSED_POINT=0
 CFLAGS += -DuECC_VLI_NATIVE_LITTLE_ENDIAN=1
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
-CFLAGS +=  -Wall -Werror
+CFLAGS += -Wall -Werror
 CFLAGS += -mfloat-abi=soft
 # keep every function in a separate section, this allows linker to discard unused ones
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -fno-builtin -fshort-enums 
+CFLAGS += -fno-builtin -fshort-enums -Wno-unused-function
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
@@ -47,14 +47,17 @@ ASMFLAGS += -mcpu=cortex-m4
 ASMFLAGS += -mthumb -mabi=aapcs
 ASMFLAGS += -mfloat-abi=soft
 ASMFLAGS += -DFLOAT_ABI_SOFT
-ASMFLAGS += -DuECC_ENABLE_VLI_API
+ASMFLAGS += -DuECC_ENABLE_VLI_API=0
 ASMFLAGS += -DuECC_OPTIMIZATION_LEVEL=3
-ASMFLAGS += -DuECC_SQUARE_FUNC=1
-ASMFLAGS += -DuECC_SUPPORTS_secp256r1=1
+ASMFLAGS += -DuECC_SQUARE_FUNC=0
 ASMFLAGS += -DuECC_SUPPORT_COMPRESSED_POINT=0
 ASMFLAGS += -DuECC_VLI_NATIVE_LITTLE_ENDIAN=1
 
 
+micro_ecc_lib: CFLAGS += -D__HEAP_SIZE=4096
+micro_ecc_lib: CFLAGS += -D__STACK_SIZE=4096
+micro_ecc_lib: ASMFLAGS += -D__HEAP_SIZE=4096
+micro_ecc_lib: ASMFLAGS += -D__STACK_SIZE=4096
 
 # Add standard libraries at the very end of the linker input, after all objects
 # that may need symbols provided by these libraries.

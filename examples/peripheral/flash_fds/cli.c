@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -306,7 +306,7 @@ static void print_cfg_cmd(nrf_cli_t const * p_cli, size_t argc, char ** argv)
             }
         }
 
-        configuration_t * p_cfg = (configuration_t*)frec.p_data;
+        configuration_t * p_cfg = (configuration_t *)(frec.p_data);
 
         nrf_cli_fprintf(p_cli, NRF_CLI_DEFAULT,
                         "config1:\t%s\r\n"
@@ -427,6 +427,8 @@ static void update_cmd(nrf_cli_t const * p_cli, size_t argc, char ** argv)
     {
         /* Must be statically allocated, because it is going to be written in flash. */
         static configuration_t cfg = {0};
+
+        memset(&cfg, 0x00, sizeof(configuration_t));
 
         cfg.config1_on = !strcmp(argv[1], "on");
         cfg.config2_on = !strcmp(argv[2], "on");

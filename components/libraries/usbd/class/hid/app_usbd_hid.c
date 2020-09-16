@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -37,8 +37,9 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-#include "sdk_config.h"
-#if APP_USBD_CLASS_HID_ENABLED
+#include "sdk_common.h"
+#if NRF_MODULE_ENABLED(APP_USBD_HID)
+
 #include "app_usbd.h"
 #include "app_usbd_core.h"
 #include "app_usbd_hid.h"
@@ -133,34 +134,53 @@ static ret_code_t setup_req_std_in(app_usbd_class_inst_t const * p_inst,
         (p_setup_ev->setup.bmRequest == APP_USBD_SETUP_STDREQ_GET_DESCRIPTOR))
     {
         size_t dsc_len = 0;
+        size_t max_size;
+
+        uint8_t * p_trans_buff = app_usbd_core_setup_transfer_buff_get(&max_size);
 
         /* Try to find descriptor in class internals*/
-        void const * p_dsc = app_usbd_class_descriptor_find(
+        ret_code_t ret = app_usbd_class_descriptor_find(
             p_inst,
             p_setup_ev->setup.wValue.hb,
             p_setup_ev->setup.wValue.lb,
+            p_trans_buff,
             &dsc_len);
-        if (p_dsc != NULL)
+
+        if (ret != NRF_ERROR_NOT_FOUND)
         {
-            return app_usbd_core_setup_rsp(&(p_setup_ev->setup), p_dsc, dsc_len);
+            ASSERT(dsc_len < NRF_DRV_USBD_EPSIZE);
+            return app_usbd_core_setup_rsp(&(p_setup_ev->setup), p_trans_buff, dsc_len);
         }
+
         /* HID specific descriptors*/
-        switch (p_setup_ev->setup.wValue.hb)
+
+        app_usbd_class_descriptor_ctx_t desiz;
+        APP_USBD_CLASS_DESCRIPTOR_INIT(&desiz);
+        uint32_t report_size = 0;
+
+        while(p_hinst->p_hid_methods->feed_subclass_descriptor(&desiz,
+                                                               p_inst,
+                                                               NULL,
+                                                               sizeof(uint8_t),
+                                                               p_setup_ev->setup.wValue.lb)
+              )
         {
-            case APP_USBD_HID_DESCRIPTOR_REPORT:
-            {
-                return app_usbd_core_setup_rsp(
-                    &p_setup_ev->setup,
-                    p_hinst->p_report_dsc,
-                    p_hinst->report_dsc_size);
-            }
-            case APP_USBD_HID_DESCRIPTOR_PHYSICAL:
-                /*Not supported*/
-                break;
-            default:
-                /*Not supported*/
-                break;
+            report_size++;
         }
+
+        ASSERT(report_size <= max_size);
+
+        UNUSED_RETURN_VALUE(
+            p_hinst->p_hid_methods->feed_subclass_descriptor(&desiz,
+                                                             p_inst,
+                                                             p_trans_buff,
+                                                             report_size,
+                                                             p_setup_ev->setup.wValue.lb));
+
+        return app_usbd_core_setup_rsp(
+            &p_setup_ev->setup,
+            p_trans_buff,
+            report_size);
     }
 
     return NRF_ERROR_NOT_SUPPORTED;
@@ -205,13 +225,15 @@ static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
     {
         case APP_USBD_HID_REQ_GET_REPORT:
         {
-            /*Only input report is supported. Same format as over IN pipe.*/
-            if (p_setup_ev->setup.wValue.hb != APP_USBD_HID_REPORT_TYPE_INPUT)
+            if ((p_setup_ev->setup.wValue.hb == APP_USBD_HID_REPORT_TYPE_INPUT) ||
+                (p_setup_ev->setup.wValue.hb == APP_USBD_HID_REPORT_TYPE_OUTPUT))
+            {
+                return p_hinst->p_hid_methods->on_get_report(p_inst, p_setup_ev);
+            }
+            else
             {
                 break;
             }
-
-            return p_hinst->p_hid_methods->on_get_report(p_inst, p_setup_ev);
         }
         case APP_USBD_HID_REQ_GET_IDLE:
         {
@@ -222,8 +244,8 @@ static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
         case APP_USBD_HID_REQ_GET_PROTOCOL:
         {
             return app_usbd_core_setup_rsp(&p_setup_ev->setup,
-                                           &p_hid_ctx->protocol,
-                                           sizeof(p_hid_ctx->protocol));
+                                           &p_hid_ctx->boot_active,
+                                           sizeof(p_hid_ctx->boot_active));
         }
         default:
             break;
@@ -266,9 +288,9 @@ static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
             p_hid_ctx->idle_rate = p_setup_ev->setup.wValue.hb;
             return NRF_SUCCESS;
         case APP_USBD_HID_REQ_SET_PROTOCOL:
-            p_hid_ctx->protocol = p_setup_ev->setup.wValue.w;
+            p_hid_ctx->boot_active = p_setup_ev->setup.wValue.w;
             {
-                app_usbd_hid_user_event_t ev = (p_hid_ctx->protocol == 0) ?
+                app_usbd_hid_user_event_t ev = (p_hid_ctx->boot_active == 0) ?
                     APP_USBD_HID_USER_EVT_SET_BOOT_PROTO :
                     APP_USBD_HID_USER_EVT_SET_REPORT_PROTO;
 
@@ -483,5 +505,4 @@ app_usbd_hid_report_buffer_t * app_usbd_hid_rep_buff_in_get(app_usbd_hid_inst_t 
     return p_hinst->p_rep_buffer_in;
 }
 
-
-#endif // APP_USBD_CLASS_HID_ENABLED
+#endif //NRF_MODULE_ENABLED(APP_USBD_HID)

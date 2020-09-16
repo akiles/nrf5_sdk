@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -56,51 +56,62 @@
 
 /** @brief Select DFU object.
  *
- *  @param[in]  object_type    Object type which should be selected.
- *  @param[out] p_max_obj_size Returns max size of an object of the selected type.
- *  @param[out] p_offset       Returns current offset (size) of an object of the selected type.
+ *  @param[in]  object_type  Object type which should be selected.
+ *  @param[in]  callback     A callback function to be executed after operation is completed.
+ *  @param[in]  p_context    A pointer to the operation context.
  *
  *  @return Operation result code.
  */
-nrf_dfu_res_code_t background_dfu_op_select(uint32_t   object_type,
-                                            uint32_t * p_max_obj_size,
-                                            uint32_t * p_offset);
+ret_code_t background_dfu_op_select(uint32_t                    object_type,
+                                    nrf_dfu_response_callback_t callback,
+                                    void                      * p_context);
 
 /** @brief Create DFU object.
  *
- *  @param[in] object_type  Object type which should be selected.
- *  @param[in] object_size  Size of an object to create.
+ *  @param[in]  object_type  Object type which should be selected.
+ *  @param[in]  object_size  Size of an object to create.
+ *  @param[in]  callback     A callback function to be executed after operation is completed.
+ *  @param[in]  p_context    A pointer to the operation context.
  *
  *  @return Operation result code.
  */
-nrf_dfu_res_code_t background_dfu_op_create(uint32_t object_type, uint32_t object_size);
+ret_code_t background_dfu_op_create(uint32_t                    object_type,
+                                    uint32_t                    object_size,
+                                    nrf_dfu_response_callback_t callback,
+                                    void                      * p_context);
 
 /** @brief Write DFU object.
  *
- *  @param[in] object_type     Object type which should be selected.
- *  @param[in] p_payload       A pointer to data which should be written to the object.
- *  @param[in] payload_length  Length, in bytes, of data which should be written to the object.
+ *  @param[in]  p_payload       A pointer to data which should be written to the object.
+ *  @param[in]  payload_length  Length, in bytes, of data which should be written to the object.
+ *  @param[in]  callback        A callback function to be executed after operation is completed.
+ *  @param[in]  p_context       A pointer to the operation context.
  *
  *  @return Operation result code.
  */
-nrf_dfu_res_code_t background_dfu_op_write(uint32_t        object_type,
-                                           const uint8_t * p_payload,
-                                           uint16_t        payload_length);
+ret_code_t background_dfu_op_write(const uint8_t             * p_payload,
+                                   uint16_t                    payload_length,
+                                   nrf_dfu_response_callback_t callback,
+                                   void                      * p_context);
 
 /** @brief Calculate DFU object CRC.
  *
- *  @param[in] object_type Object type which should be selected.
+ *  @param[in]  callback     A callback function to be executed after operation is completed.
+ *  @param[in]  p_context    A pointer to the operation context.
  *
  *  @return Operation result code.
  */
-nrf_dfu_res_code_t background_dfu_op_crc(uint32_t object_type);
+ret_code_t background_dfu_op_crc(nrf_dfu_response_callback_t callback,
+                                 void                      * p_context);
 
 /** @brief Execute selected DFU.
  *
- *  @param[in] object_type Object type which should be selected.
+ *  @param[in]  callback     A callback function to be executed after operation is completed.
+ *  @param[in]  p_context    A pointer to the operation context.
  *
  *  @return Operation result code.
  */
-nrf_dfu_res_code_t background_dfu_op_execute(uint32_t object_type);
+ret_code_t background_dfu_op_execute(nrf_dfu_response_callback_t callback,
+                                     void                      * p_context);
 
 #endif /* BACKGROUND_DFU_OPERATION_H_ */

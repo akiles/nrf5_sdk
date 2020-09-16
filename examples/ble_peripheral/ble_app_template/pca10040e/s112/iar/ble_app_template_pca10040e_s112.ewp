@@ -182,7 +182,7 @@
           <state>FLOAT_ABI_SOFT</state>
           <state>NRF52810_XXAA</state>
           <state>NRF52_PAN_74</state>
-          <state>NRF_SD_BLE_API_VERSION=5</state>
+          <state>NRF_SD_BLE_API_VERSION=6</state>
           <state>S112</state>
           <state>SOFTDEVICE_PRESENT</state>
           <state>SWI_DISABLE0</state>
@@ -347,49 +347,33 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\nrf_ble_qwr</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\clock</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\comp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\i2s</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\lpcomp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pdm</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\power</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\ppi</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pwm</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\qdec</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\rng</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\rtc</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\saadc</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_master</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_slave</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\swi</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\timer</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\twi_master</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\twis_slave</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\usbd</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\wdt</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_flags</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bootloader\ble_dfu</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crc16</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crc32</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense_drv</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ecc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_mpu</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_ringbuf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_stack_guard</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_task_manager</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fds</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\gfx</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hci</state>
@@ -401,13 +385,15 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\pwr_mgmt</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\queue</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sdcard</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\slip</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sortlist</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\spi_mngr</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\twi</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\twi_mngr</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\twi_sensor</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\audio</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc</state>
@@ -422,10 +408,15 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s112\headers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s112\headers\nrf52</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk</state>
           <state>$PROJ_DIR$\..\config</state>
         </option>
         <option>
@@ -590,7 +581,7 @@
           <state>FLOAT_ABI_SOFT</state>
           <state>NRF52810_XXAA</state>
           <state>NRF52_PAN_74</state>
-          <state>NRF_SD_BLE_API_VERSION=5</state>
+          <state>NRF_SD_BLE_API_VERSION=6</state>
           <state>S112</state>
           <state>SOFTDEVICE_PRESENT</state>
           <state>SWI_DISABLE0</state>
@@ -722,49 +713,33 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\nrf_ble_qwr</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\clock</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\comp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\i2s</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\lpcomp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pdm</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\power</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\ppi</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pwm</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\qdec</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\rng</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\rtc</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\saadc</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_master</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_slave</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\swi</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\timer</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\twi_master</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\twis_slave</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\usbd</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\wdt</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_flags</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bootloader\ble_dfu</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\cli</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crc16</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crc32</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense_drv</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ecc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_log\src</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_memobj</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_mpu</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_ringbuf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_stack_guard</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_task_manager</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fds</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\gfx</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hci</state>
@@ -776,13 +751,15 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\pwr_mgmt</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\queue</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sdcard</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\slip</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sortlist</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\spi_mngr</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\twi</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\twi_mngr</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\twi_sensor</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\audio</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc</state>
@@ -797,10 +774,15 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s112\headers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s112\headers\nrf52</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk</state>
           <state>$PROJ_DIR$\..\config</state>
         </option>
         <option>
@@ -1195,6 +1177,7 @@
   <name>nRF_Libraries</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button\app_button.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_handler_iar.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer.c</name>    </file>    <file>
@@ -1204,6 +1187,8 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault\hardfault_implementation.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo\nrf_atfifo.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_flags\nrf_atflags.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic\nrf_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc\nrf_balloc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf\nrf_fprintf.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf\nrf_fprintf_format.c</name>    </file>    <file>
@@ -1213,19 +1198,23 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\pwr_mgmt\nrf_pwr_mgmt.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\sdk_mapped_flags.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim\sensorsim.c</name>    </file>  </group>  <group>
+  <name>None</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk\iar_startup_nrf52810.s</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk\system_nrf52810.c</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\clock\nrf_drv_clock.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_clock.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_gpiote.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</name>    </file>  </group>  <group>
   <name>Board Support</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp\bsp.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp\bsp_btn_ble.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp\bsp_nfc.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp\bsp_btn_ble.c</name>    </file>  </group>  <group>
   <name>Application</name>    <file>
     <name>$PROJ_DIR$\..\..\..\main.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\config\sdk_config.h</name>    </file>  </group>  <group>
@@ -1243,6 +1232,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\gatts_cache_manager.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\id_manager.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\nrf_ble_gatt\nrf_ble_gatt.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\nrf_ble_qwr\nrf_ble_qwr.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\peer_data_storage.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\peer_database.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\peer_id.c</name>    </file>    <file>
@@ -1251,9 +1241,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\pm_mutex.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\security_dispatcher.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\security_manager.c</name>    </file>  </group>  <group>
-  <name>Device</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\iar\iar_startup_nrf52810.s</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\system_nrf52810.c</name>    </file>  </group>  <group>
   <name>nRF_SoftDevice</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\nrf_sdh.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\nrf_sdh_ble.c</name>    </file>    <file>

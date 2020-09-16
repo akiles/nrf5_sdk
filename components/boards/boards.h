@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -41,6 +41,7 @@
 #define BOARDS_H
 
 #include "nrf_gpio.h"
+#include "nordic_common.h"
 
 #if defined(BOARD_NRF6310)
   #include "nrf6310.h"
@@ -64,6 +65,10 @@
   #include "pca10040.h"
 #elif defined(BOARD_PCA10056)
   #include "pca10056.h"
+#elif defined(BOARD_PCA20020)
+  #include "pca20020.h"
+#elif defined(BOARD_PCA10059)
+  #include "pca10059.h"
 #elif defined(BOARD_WT51822)
   #include "wt51822.h"
 #elif defined(BOARD_N5DK1)
@@ -72,6 +77,8 @@
   #include "d52_starterkit.h"
 #elif defined (BOARD_ARDUINO_PRIMO)
   #include "arduino_primo.h"
+#elif defined (CUSTOM_BOARD_INC)
+  #include STRINGIFY(CUSTOM_BOARD_INC.h)
 #elif defined(BOARD_CUSTOM)
   #include "custom_board.h"
 #else
@@ -82,6 +89,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**@defgroup BSP_BOARD_INIT_FLAGS Board initialization flags.
+ * @{ */
+#define BSP_INIT_NONE    0        /**< No initialization of LEDs or buttons (@ref bsp_board_init).*/
+#define BSP_INIT_LEDS    (1 << 0) /**< Enable LEDs during initialization (@ref bsp_board_init).*/
+#define BSP_INIT_BUTTONS (1 << 1) /**< Enable buttons during initialization (@ref bsp_board_init).*/
+/**@} */
 
 /**
  * Function for returning the state of an LED.
@@ -123,9 +137,14 @@ void bsp_board_leds_off(void);
 void bsp_board_leds_on(void);
 
 /**
- * Function for initializing LEDs.
+ * Function for initializing the BSP handling for the board.
+ *
+ * @note This also initializes the USB DFU trigger library if @ref BOARDS_WITH_USB_DFU_TRIGGER is 1.
+ *
+ * @param[in]  init_flags  Flags specifying what to initialize (LEDs/buttons).
+ *                         See @ref BSP_BOARD_INIT_FLAGS.
  */
-void bsp_board_leds_init(void);
+void bsp_board_init(uint32_t init_flags);
 
 /**
  * Function for converting pin number to LED index.
@@ -155,11 +174,6 @@ uint32_t bsp_board_led_idx_to_pin(uint32_t led_idx);
 bool bsp_board_button_state_get(uint32_t button_idx);
 
 /**
- * Function for initializing buttons.
- */
-void bsp_board_buttons_init(void);
-
-/**
  * Function for converting pin number to button index.
  *
  * @param pin_number Pin number.
@@ -187,45 +201,67 @@ uint32_t bsp_board_button_idx_to_pin(uint32_t button_idx);
 #define BSP_BOARD_LED_6 6
 #define BSP_BOARD_LED_7 7
 
+#define PIN_MASK(_pin)  /*lint -save -e504 */                     \
+                        (1u << (uint32_t)((_pin) & (~P0_PIN_NUM))) \
+                        /*lint -restore    */
+
+#define PIN_PORT(_pin) (((_pin) >= P0_PIN_NUM) ? NRF_P1 : NRF_GPIO)
+
 #ifdef BSP_LED_0
-#define BSP_LED_0_MASK (1<<BSP_LED_0)
+#define BSP_LED_0_MASK PIN_MASK(BSP_LED_0)
+#define BSP_LED_0_PORT PIN_PORT(BSP_LED_0)
 #else
 #define BSP_LED_0_MASK 0
+#define BSP_LED_0_PORT 0
 #endif
 #ifdef BSP_LED_1
-#define BSP_LED_1_MASK (1<<BSP_LED_1)
+#define BSP_LED_1_MASK PIN_MASK(BSP_LED_1)
+#define BSP_LED_1_PORT PIN_PORT(BSP_LED_1)
 #else
 #define BSP_LED_1_MASK 0
+#define BSP_LED_1_PORT 0
 #endif
 #ifdef BSP_LED_2
-#define BSP_LED_2_MASK (1<<BSP_LED_2)
+#define BSP_LED_2_MASK PIN_MASK(BSP_LED_2)
+#define BSP_LED_2_PORT PIN_PORT(BSP_LED_2)
 #else
 #define BSP_LED_2_MASK 0
+#define BSP_LED_2_PORT 0
 #endif
 #ifdef BSP_LED_3
-#define BSP_LED_3_MASK (1<<BSP_LED_3)
+#define BSP_LED_3_MASK PIN_MASK(BSP_LED_3)
+#define BSP_LED_3_PORT PIN_PORT(BSP_LED_3)
 #else
 #define BSP_LED_3_MASK 0
+#define BSP_LED_3_PORT 0
 #endif
 #ifdef BSP_LED_4
-#define BSP_LED_4_MASK (1<<BSP_LED_4)
+#define BSP_LED_4_MASK PIN_MASK(BSP_LED_4)
+#define BSP_LED_4_PORT PIN_PORT(BSP_LED_4)
 #else
 #define BSP_LED_4_MASK 0
+#define BSP_LED_4_PORT 0
 #endif
 #ifdef BSP_LED_5
-#define BSP_LED_5_MASK (1<<BSP_LED_5)
+#define BSP_LED_5_MASK PIN_MASK(BSP_LED_5)
+#define BSP_LED_5_PORT PIN_PORT(BSP_LED_5)
 #else
 #define BSP_LED_5_MASK 0
+#define BSP_LED_5_PORT 0
 #endif
 #ifdef BSP_LED_6
-#define BSP_LED_6_MASK (1<<BSP_LED_6)
+#define BSP_LED_6_MASK PIN_MASK(BSP_LED_6)
+#define BSP_LED_6_PORT PIN_PORT(BSP_LED_6)
 #else
 #define BSP_LED_6_MASK 0
+#define BSP_LED_6_PORT 0
 #endif
 #ifdef BSP_LED_7
-#define BSP_LED_7_MASK (1<<BSP_LED_7)
+#define BSP_LED_7_MASK PIN_MASK(BSP_LED_7)
+#define BSP_LED_7_PORT PIN_PORT(BSP_LED_7)
 #else
 #define BSP_LED_7_MASK 0
+#define BSP_LED_7_PORT 0
 #endif
 
 

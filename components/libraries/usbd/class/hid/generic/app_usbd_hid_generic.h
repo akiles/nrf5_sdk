@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -92,22 +92,20 @@ APP_USBD_CLASS_TYPEDEF(app_usbd_hid_generic,                                    
  * @param interface_number          Unique interface index.
  * @param user_ev_handler           User event handler (optional).
  * @param endpoint_list             Input endpoint list (@ref nrf_drv_usbd_ep_t).
- * @param class_descriptors         HID class descriptors.
- * @param report_descriptor         Report descriptor.
+ * @param subclass_descriptors      HID subclass descriptors.
  * @param report_in_queue_size      IN report queue size.
  * @param report_out_maxsize        Maximum output report size.
+ * @param subclass_boot             Subclass boot. (@ref app_usbd_hid_subclass_t)
+ * @param protocol                  HID protocol. (@ref app_usbd_hid_protocol_t)
  *
  * @note This macro is just simplified version of @ref APP_USBD_HID_GENERIC_GLOBAL_DEF_INTERNAL.
  *
  * Example class definition:
  * @code
 
-       static uint8_t m_generic_rep_dsc[] = APP_USBD_HID_MOUSE_REPORT_DSC_BUTTON(2);
+       APP_USBD_HID_GENERIC_SUBCLASS_REPORT_DESC(mouse_desc,APP_USBD_HID_MOUSE_REPORT_DSC_BUTTON(2));
 
-       #define HID_DESCRIPTOR_ITEM_LIST                             \
-       (                                                            \
-               m_generic_rep_dsc,                                   \
-       )
+       static const app_usbd_hid_subclass_desc_t * reps[] = {&mouse_desc};
 
        #define ENDPOINT_LIST                                        \
        (                                                            \
@@ -120,10 +118,12 @@ APP_USBD_CLASS_TYPEDEF(app_usbd_hid_generic,                                    
        APP_USBD_HID_GENERIC_GLOBAL_DEF(m_app_hid_generic,
                                        0,
                                        hid_user_ev_handler,
-                                       ENDPOINT_LIST,
-                                       HID_DESCRIPTOR_ITEM_LIST,
+                                       ENDPOINT_LIST(),
+                                       reps,
                                        REPORT_IN_QUEUE_SIZE,
-                                       REPORT_OUT_MAXSIZE);
+                                       REPORT_OUT_MAXSIZE,
+                                       APP_USBD_HID_SUBCLASS_BOOT,
+                                       APP_USBD_HID_PROTO_MOUSE);
   @endcode
  *
  */
@@ -131,18 +131,20 @@ APP_USBD_CLASS_TYPEDEF(app_usbd_hid_generic,                                    
                                         interface_number,           \
                                         user_ev_handler,            \
                                         endpoint_list,              \
-                                        class_descriptors,          \
-                                        report_descriptor,          \
+                                        subclass_descriptors,       \
                                         report_in_queue_size,       \
-                                        report_out_maxsize)         \
+                                        report_out_maxsize,         \
+                                        subclass_boot,              \
+                                        protocol)                   \
     APP_USBD_HID_GENERIC_GLOBAL_DEF_INTERNAL(instance_name,         \
                                              interface_number,      \
                                              user_ev_handler,       \
                                              endpoint_list,         \
-                                             class_descriptors,     \
-                                             report_descriptor,     \
+                                             subclass_descriptors,  \
                                              report_in_queue_size,  \
-                                             report_out_maxsize)
+                                             report_out_maxsize,    \
+                                             subclass_boot,         \
+                                             protocol)
 
 
 /**

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -56,7 +56,6 @@
 static ser_app_hal_flash_op_done_handler_t m_flash_op_handler;
 uint32_t ser_app_hal_hw_init(ser_app_hal_flash_op_done_handler_t handler)
 {
-
     nrf_gpio_cfg_output(CONN_CHIP_RESET_PIN_NO);
 
     if (NRF_SUCCESS != nrf_drv_clock_init())
@@ -69,6 +68,8 @@ uint32_t ser_app_hal_hw_init(ser_app_hal_flash_op_done_handler_t handler)
 
     while (false == nrf_drv_clock_hfclk_is_running());
     while (false == nrf_drv_clock_lfclk_is_running());
+
+    m_flash_op_handler = handler;
 
     return NRF_SUCCESS;
 }

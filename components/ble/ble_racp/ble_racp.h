@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -77,7 +77,8 @@ extern "C" {
 #define RACP_OPERATOR_RFU_START              7       /**< Record Access Control Point operator - Start of Reserved for Future Use area. */
 
 /**@brief Record Access Control Point Operand Filter Type Value. */
-#define RACP_OPERAND_FILTER_TYPE_TIME_OFFSET 1       /**< Record Access Control Point Operand Filter Type Value - Time Offset- */
+#define RACP_OPERAND_FILTER_TYPE_TIME_OFFSET 1       /**< Record Access Control Point Operand Filter Type Value - Time Offset. */
+#define RACP_OPERAND_FILTER_TYPE_FACING_TIME 2       /**< Record Access Control Point Operand Filter Type Value - User Facing Time. */
 
 /**@brief Record Access Control Point response codes. */
 #define RACP_RESPONSE_RESERVED               0       /**< Record Access Control Point response code - Reserved for future use. */

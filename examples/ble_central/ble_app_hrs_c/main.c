@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -71,6 +71,7 @@
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
+#include "ble_advdata.h"
 
 
 #define APP_BLE_CONN_CFG_TAG        1                                   /**< A tag identifying the SoftDevice BLE configuration. */
@@ -89,7 +90,8 @@
 
 #define SCAN_INTERVAL               0x00A0                              /**< Determines scan interval in units of 0.625 millisecond. */
 #define SCAN_WINDOW                 0x0050                              /**< Determines scan window in units of 0.625 millisecond. */
-
+#define SCAN_DURATION               0x0000                              /**< Duration of the scanning in units of 10 milliseconds. If set to 0x0000, scanning will continue until it is explicitly disabled. */
+#define SCAN_DURATION_WITELIST      3000                                /**< Duration of the scanning in units of 10 milliseconds. */
 #define MIN_CONNECTION_INTERVAL     MSEC_TO_UNITS(7.5, UNIT_1_25_MS)    /**< Determines minimum connection interval in millisecond. */
 #define MAX_CONNECTION_INTERVAL     MSEC_TO_UNITS(30, UNIT_1_25_MS)     /**< Determines maximum connection interval in millisecond. */
 #define SLAVE_LATENCY               0                                   /**< Determines slave latency in counts of connection events. */
@@ -107,14 +109,6 @@
     } while (0)
 
 
-/**@brief Variable length data encapsulation in terms of length and pointer to data */
-typedef struct
-{
-    uint8_t  * p_data;      /**< Pointer to data. */
-    uint16_t   data_len;    /**< Length of data. */
-} data_t;
-
-
 BLE_HRS_C_DEF(m_hrs_c);                                             /**< Structure used to identify the heart rate client module. */
 BLE_BAS_C_DEF(m_bas_c);                                             /**< Structure used to identify the Battery Service client module. */
 NRF_BLE_GATT_DEF(m_gatt);                                           /**< GATT module instance. */
@@ -124,7 +118,15 @@ static uint16_t m_conn_handle;                                      /**< Current
 static bool     m_whitelist_disabled;                               /**< True if whitelist has been temporarily disabled. */
 static bool     m_memory_access_in_progress;                        /**< Flag to keep track of ongoing operations on persistent memory. */
 
-static ble_gap_scan_params_t m_scan_param;                          /**< Scan parameters requested for scanning and connection. */
+static ble_gap_scan_params_t m_scan_param;                                /**< Scan parameters requested for scanning and connection. */
+static uint8_t               m_scan_buffer_data[BLE_GAP_SCAN_BUFFER_MIN]; /**< buffer where advertising reports will be stored by the SoftDevice. */
+
+/**@brief Pointer to the buffer where advertising reports will be stored by the SoftDevice. */
+static ble_data_t m_scan_buffer =
+{
+    m_scan_buffer_data,
+    BLE_GAP_SCAN_BUFFER_MIN
+};
 
 /**@brief Connection parameters requested for connection. */
 static ble_gap_conn_params_t const m_connection_param =
@@ -232,7 +234,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         {
             // Run garbage collection on the flash.
             err_code = fds_gc();
-            if (err_code == FDS_ERR_BUSY || err_code == FDS_ERR_NO_SPACE_IN_QUEUES)
+            if (err_code == FDS_ERR_NO_SPACE_IN_QUEUES)
             {
                 // Retry.
             }
@@ -246,12 +248,6 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         {
             // Bonds are deleted. Start scanning.
             scan_start();
-        } break;
-
-        case PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED:
-        {
-            // The local database has likely changed, send service changed indications.
-            pm_local_database_has_changed();
         } break;
 
         case PM_EVT_PEER_DATA_UPDATE_FAILED:
@@ -282,47 +278,13 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         case PM_EVT_PEER_DATA_UPDATE_SUCCEEDED:
         case PM_EVT_PEER_DELETE_SUCCEEDED:
         case PM_EVT_LOCAL_DB_CACHE_APPLIED:
+        case PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED:
+            // This can happen when the local DB has changed.
         case PM_EVT_SERVICE_CHANGED_IND_SENT:
         case PM_EVT_SERVICE_CHANGED_IND_CONFIRMED:
         default:
             break;
     }
-}
-
-
-/**
- * @brief Parses advertisement data, providing length and location of the field in case
- *        matching data is found.
- *
- * @param[in]  Type of data to be looked for in advertisement data.
- * @param[in]  Advertisement report length and pointer to report.
- * @param[out] If data type requested is found in the data report, type data length and
- *             pointer to data will be populated here.
- *
- * @retval NRF_SUCCESS if the data type is found in the report.
- * @retval NRF_ERROR_NOT_FOUND if the data type could not be found.
- */
-static uint32_t adv_report_parse(uint8_t type, data_t * p_advdata, data_t * p_typedata)
-{
-    uint32_t  index = 0;
-    uint8_t * p_data;
-
-    p_data = p_advdata->p_data;
-
-    while (index < p_advdata->data_len)
-    {
-        uint8_t field_length = p_data[index];
-        uint8_t field_type   = p_data[index + 1];
-
-        if (field_type == type)
-        {
-            p_typedata->p_data   = &p_data[index + 2];
-            p_typedata->data_len = field_length - 1;
-            return NRF_SUCCESS;
-        }
-        index += field_length + 1;
-    }
-    return NRF_ERROR_NOT_FOUND;
 }
 
 
@@ -355,51 +317,6 @@ static bool shutdown_handler(nrf_pwr_mgmt_evt_t event)
 NRF_PWR_MGMT_HANDLER_REGISTER(shutdown_handler, APP_SHUTDOWN_HANDLER_PRIORITY);
 
 
-/**@brief Function for searching a given name in the advertisement packets.
- *
- * @details Use this function to parse received advertising data and to find a given
- * name in them either as 'complete_local_name' or as 'short_local_name'.
- *
- * @param[in]   p_adv_report   advertising data to parse.
- * @param[in]   name_to_find   name to search.
- * @return   true if the given name was found, false otherwise.
- */
-static bool find_adv_name(ble_gap_evt_adv_report_t const * p_adv_report, char const * name_to_find)
-{
-    ret_code_t err_code;
-    data_t     adv_data;
-    data_t     dev_name;
-
-    // Initialize advertisement report for parsing
-    adv_data.p_data   = (uint8_t *)p_adv_report->data;
-    adv_data.data_len = p_adv_report->dlen;
-
-    //search for advertising names
-    err_code = adv_report_parse(BLE_GAP_AD_TYPE_COMPLETE_LOCAL_NAME, &adv_data, &dev_name);
-    if (err_code == NRF_SUCCESS)
-    {
-        if (memcmp(name_to_find, dev_name.p_data, dev_name.data_len) == 0)
-        {
-            return true;
-        }
-    }
-    else
-    {
-        // Look for the short local name if it was not found as complete
-        err_code = adv_report_parse(BLE_GAP_AD_TYPE_SHORT_LOCAL_NAME, &adv_data, &dev_name);
-        if (err_code != NRF_SUCCESS)
-        {
-            return false;
-        }
-        if (memcmp(m_target_periph_name, dev_name.p_data, dev_name.data_len )== 0)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-
 /**@brief Function for searching a given addr in the advertisement packets.
  *
  * @details Use this function to parse received advertising data and to find a given
@@ -422,56 +339,66 @@ static bool find_peer_addr(const ble_gap_evt_adv_report_t *p_adv_report, const b
 }
 
 
-/**@brief Function for searching a UUID in the advertisement packets.
+/**@brief Function for handling the advertising report BLE event.
  *
- * @details Use this function to parse received advertising data and to find a given
- * UUID in them.
- *
- * @param[in]   p_adv_report   advertising data to parse.
- * @param[in]   uuid_to_find   UUIID to search.
- * @return   true if the given UUID was found, false otherwise.
+ * @param[in] p_adv_report  Advertising report from the SoftDevice.
  */
-static bool find_adv_uuid(const ble_gap_evt_adv_report_t *p_adv_report, const uint16_t uuid_to_find)
+static void on_adv_report(ble_gap_evt_adv_report_t const * p_adv_report)
 {
     ret_code_t err_code;
-    data_t     adv_data;
-    data_t     type_data;
+    ble_uuid_t target_uuid = {.uuid = TARGET_UUID, .type = BLE_UUID_TYPE_BLE};
+    bool       do_connect  = false;
 
-    // Initialize advertisement report for parsing.
-    adv_data.p_data     = (uint8_t *)p_adv_report->data;
-    adv_data.data_len   = p_adv_report->dlen;
-
-    err_code = adv_report_parse(BLE_GAP_AD_TYPE_16BIT_SERVICE_UUID_MORE_AVAILABLE,
-                                &adv_data,
-                                &type_data);
-
-    if (err_code != NRF_SUCCESS)
+    if (is_connect_per_addr)
     {
-        // Look for the services in 'complete' if it was not found in 'more available'.
-        err_code = adv_report_parse(BLE_GAP_AD_TYPE_16BIT_SERVICE_UUID_COMPLETE,
-                                    &adv_data,
-                                    &type_data);
+        if (find_peer_addr(p_adv_report, &m_target_periph_addr))
+        {
+            NRF_LOG_INFO("Address match send connect_request.");
+            do_connect = true;
+        }
+    }
+    else if (strlen(m_target_periph_name) != 0)
+    {
+        if (ble_advdata_name_find(p_adv_report->data.p_data,
+                                  p_adv_report->data.len,
+                                  m_target_periph_name))
+        {
+            do_connect = true;
+            NRF_LOG_INFO("Name match send connect_request.");
+        }
+    }
+    else
+    {
+        if (ble_advdata_uuid_find(p_adv_report->data.p_data, p_adv_report->data.len, &target_uuid))
+        {
+            do_connect = true;
+            NRF_LOG_INFO("UUID match send connect_request.");
+        }
+    }
+    if (do_connect)
+    {
+        // Stop scanning.
+        (void) sd_ble_gap_scan_stop();
+        m_scan_param.filter_policy = BLE_GAP_SCAN_FP_ACCEPT_ALL,
+
+        // Initiate connection.
+        err_code = sd_ble_gap_connect(&p_adv_report->peer_addr,
+                                      &m_scan_param,
+                                      &m_connection_param,
+                                      APP_BLE_CONN_CFG_TAG);
+
+        m_whitelist_disabled = false;
 
         if (err_code != NRF_SUCCESS)
         {
-            // If we can't parse the data, then exit.
-            return false;
+            NRF_LOG_ERROR("Connection Request Failed, reason %d.", err_code);
         }
     }
-
-    // Verify if any UUID match the given UUID.
-    for (uint32_t u_index = 0; u_index < (type_data.data_len / sizeof(uint16_t)); u_index++)
+    else
     {
-        uint16_t extracted_uuid;
-
-        UUID16_EXTRACT(&extracted_uuid, &type_data.p_data[u_index * sizeof(uint16_t)]);
-
-        if (extracted_uuid == uuid_to_find)
-        {
-            return true;
-        }
+        err_code = sd_ble_gap_scan_start(NULL, &m_scan_buffer);
+        APP_ERROR_CHECK(err_code);
     }
-    return false;
 }
 
 
@@ -498,7 +425,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
 
-            if (ble_conn_state_n_centrals() < NRF_SDH_BLE_CENTRAL_LINK_COUNT)
+            if (ble_conn_state_central_conn_count() < NRF_SDH_BLE_CENTRAL_LINK_COUNT)
             {
                 scan_start();
             }
@@ -506,67 +433,18 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GAP_EVT_ADV_REPORT:
         {
-            bool do_connect = false;
-            if (is_connect_per_addr)
-            {
-                if (find_peer_addr(&p_gap_evt->params.adv_report, &m_target_periph_addr))
-                {
-                    NRF_LOG_INFO("Address match send connect_request.");
-                    do_connect = true;
-                }
-            }
-            else if (strlen(m_target_periph_name) != 0)
-            {
-                if (find_adv_name(&p_gap_evt->params.adv_report, m_target_periph_name))
-                {
-                    do_connect = true;
-                    NRF_LOG_INFO("Name match send connect_request.");
-                }
-            }
-            else
-            {
-                if (find_adv_uuid(&p_gap_evt->params.adv_report, TARGET_UUID))
-                {
-                    do_connect = true;
-                    NRF_LOG_INFO("UUID match send connect_request.");
-                }
-            }
-            if (do_connect)
-            {
-                // Stop scanning.
-                (void) sd_ble_gap_scan_stop();
-
-                #if (NRF_SD_BLE_API_VERSION <= 2)
-                    m_scan_param.selective = 0;
-                #endif
-                #if (NRF_SD_BLE_API_VERSION >= 3)
-                    m_scan_param.use_whitelist = 0;
-                #endif
-
-                // Initiate connection.
-                err_code = sd_ble_gap_connect(&p_gap_evt->params.adv_report.peer_addr,
-                                              &m_scan_param,
-                                              &m_connection_param,
-                                              APP_BLE_CONN_CFG_TAG);
-
-                m_whitelist_disabled = false;
-
-                if (err_code != NRF_SUCCESS)
-                {
-                    NRF_LOG_ERROR("Connection Request Failed, reason %d.", err_code);
-                }
-            }
+            on_adv_report(&p_gap_evt->params.adv_report);
         } break; // BLE_GAP_EVT_ADV_REPORT
 
         case BLE_GAP_EVT_DISCONNECTED:
         {
             NRF_LOG_INFO("Disconnected, reason 0x%x.",
-                         p_ble_evt->evt.gap_evt.params.disconnected.reason);
+                         p_gap_evt->params.disconnected.reason);
 
             err_code = bsp_indication_set(BSP_INDICATE_IDLE);
             APP_ERROR_CHECK(err_code);
 
-            if (ble_conn_state_n_centrals() < NRF_SDH_BLE_CENTRAL_LINK_COUNT)
+            if (ble_conn_state_central_conn_count() < NRF_SDH_BLE_CENTRAL_LINK_COUNT)
             {
                 scan_start();
             }
@@ -592,7 +470,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
             break;
 
-#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -604,7 +481,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
             APP_ERROR_CHECK(err_code);
         } break;
-#endif
 
         case BLE_GATTC_EVT_TIMEOUT:
             // Disconnect on GATT Client timeout event.
@@ -983,25 +859,6 @@ static void scan_start(void)
     uint32_t addr_cnt = (sizeof(whitelist_addrs) / sizeof(ble_gap_addr_t));
     uint32_t irk_cnt  = (sizeof(whitelist_irks)  / sizeof(ble_gap_irk_t));
 
-    #if (NRF_SD_BLE_API_VERSION <= 2)
-
-        ble_gap_addr_t * p_whitelist_addrs[8];
-        ble_gap_irk_t  * p_whitelist_irks[8];
-
-        for (uint32_t i = 0; i < 8; i++)
-        {
-            p_whitelist_addrs[i] = &whitelist_addrs[i];
-            p_whitelist_irks[i]  = &whitelist_irks[i];
-        }
-
-        ble_gap_whitelist_t whitelist =
-        {
-            .pp_addrs = p_whitelist_addrs,
-            .pp_irks  = p_whitelist_irks,
-        };
-
-    #endif
-
     // Reload the whitelist and whitelist all peers.
     whitelist_load();
 
@@ -1019,35 +876,21 @@ static void scan_start(void)
         (m_whitelist_disabled))
     {
         // Don't use whitelist.
-        #if (NRF_SD_BLE_API_VERSION <= 2)
-            m_scan_param.selective   = 0;
-            m_scan_param.p_whitelist = NULL;
-        #endif
-        #if (NRF_SD_BLE_API_VERSION >= 3)
-            m_scan_param.use_whitelist  = 0;
-            m_scan_param.adv_dir_report = 0;
-        #endif
-        m_scan_param.timeout  = 0x0000; // No timeout.
+        m_scan_param.timeout       = SCAN_DURATION;
+        m_scan_param.scan_phys     = BLE_GAP_PHY_1MBPS;
+        m_scan_param.filter_policy = BLE_GAP_SCAN_FP_ACCEPT_ALL;
     }
     else
     {
         // Use whitelist.
-        #if (NRF_SD_BLE_API_VERSION <= 2)
-            whitelist.addr_count     = addr_cnt;
-            whitelist.irk_count      = irk_cnt;
-            m_scan_param.selective   = 1;
-            m_scan_param.p_whitelist = &whitelist;
-        #endif
-        #if (NRF_SD_BLE_API_VERSION >= 3)
-            m_scan_param.use_whitelist  = 1;
-            m_scan_param.adv_dir_report = 0;
-        #endif
-        m_scan_param.timeout  = 0x001E; // 30 seconds.
+        m_scan_param.scan_phys     = BLE_GAP_PHY_1MBPS;
+        m_scan_param.filter_policy = BLE_GAP_SCAN_FP_WHITELIST;
+        m_scan_param.timeout       = SCAN_DURATION_WITELIST;
     }
 
     NRF_LOG_INFO("Starting scan.");
 
-    ret = sd_ble_gap_scan_start(&m_scan_param);
+    ret = sd_ble_gap_scan_start(&m_scan_param, &m_scan_buffer);
     APP_ERROR_CHECK(ret);
 
     ret = bsp_indication_set(BSP_INDICATE_SCANNING);
@@ -1064,7 +907,7 @@ static void buttons_leds_init(bool * p_erase_bonds)
     ret_code_t err_code;
     bsp_event_t startup_event;
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, bsp_event_handler);
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS, bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_btn_ble_init(NULL, &startup_event);
@@ -1086,9 +929,10 @@ static void log_init(void)
 
 
 /**@brief Function for initializing the power management module. */
-static void pwr_mgmt_init(void)
+static void power_management_init(void)
 {
-    ret_code_t err_code = nrf_pwr_mgmt_init();
+    ret_code_t err_code;
+    err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -1137,15 +981,47 @@ static void gatt_init(void)
 }
 
 
+/**@brief Function for handling the idle state (main loop).
+ *
+ * @details Handle any pending log operation(s), then sleep until the next event occurs.
+ */
+static void idle_state_handle(void)
+{
+    NRF_LOG_FLUSH();
+    nrf_pwr_mgmt_run();
+}
+
+
+/**@brief Function for starting a scan, or instead trigger it from peer manager (after
+ *        deleting bonds).
+ *
+ * @param[in] p_erase_bonds Pointer to a bool to determine if bonds will be deleted before scanning.
+ */
+void scanning_start(bool * p_erase_bonds)
+{
+    // Start scanning for peripherals and initiate connection
+    // with devices that advertise GATT Service UUID.
+    if (*p_erase_bonds == true)
+    {
+        // Scan is started by the PM_EVT_PEERS_DELETE_SUCCEEDED event.
+        delete_bonds();
+    }
+    else
+    {
+        scan_start();
+    }
+}
+
+
 int main(void)
 {
     bool erase_bonds;
 
     // Initialize.
-    timer_init();
-    pwr_mgmt_init();
-    buttons_leds_init(&erase_bonds);
     log_init();
+    timer_init();
+    power_management_init();
+    buttons_leds_init(&erase_bonds);
     ble_stack_init();
     gatt_init();
     peer_manager_init();
@@ -1153,23 +1029,14 @@ int main(void)
     hrs_c_init();
     bas_c_init();
 
-    // Start scanning for peripherals and initiate connection
-    // with devices that advertise Heart Rate UUID.
+    // Start execution.
     NRF_LOG_INFO("Heart Rate collector example started.");
-    if (erase_bonds == true)
-    {
-        delete_bonds();
-        // Scanning is started by PM_EVT_PEERS_DELETE_SUCCEEDED
-    }
-    else
-    {
-        scan_start();
-    }
+    scanning_start(&erase_bonds);
 
+    // Enter main loop.
     for (;;)
     {
-        NRF_LOG_FLUSH();
-        nrf_pwr_mgmt_run();
+        idle_state_handle();
     }
 }
 

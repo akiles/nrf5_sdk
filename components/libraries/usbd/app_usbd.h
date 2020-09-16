@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -65,17 +65,24 @@ extern "C" {
  *
  * SOF timestamping is really provided if it was requested and if the logger is enabled.
  */
-#if ((APP_USBD_CONFIG_PROVIDE_SOF_TIMESTAMP) && (NRF_LOG_ENABLED))
+#if ((APP_USBD_CONFIG_SOF_TIMESTAMP_PROVIDE) && (NRF_LOG_ENABLED))
 #define APP_USBD_PROVIDE_SOF_TIMESTAMP 1
 #else
 #define APP_USBD_PROVIDE_SOF_TIMESTAMP 0
 #endif
 
 /**
+ * @brief SOF event handling modes.
+ */
+#define APP_USBD_SOF_HANDLING_NORMAL_QUEUE    0 //!< Push SOF events into event queue.
+#define APP_USBD_SOF_HANDLING_COMPRESS_QUEUE  1 //!< Compress SOF events.
+#define APP_USBD_SOF_HANDLING_INTERRUPT       2 //!< Handle SOF events in interrupt.
+
+/**
  * @brief Configuration passed to @ref app_usbd_init.
  */
 typedef struct {
-#if (!(APP_USBD_EVENT_QUEUE_ENABLE)) || defined(__SDK_DOXYGEN__)
+#if (!(APP_USBD_CONFIG_EVENT_QUEUE_ENABLE)) || defined(__SDK_DOXYGEN__)
     /**
      * @brief User defined event handler.
      *
@@ -87,12 +94,12 @@ typedef struct {
      * @param p_event The event structure pointer.
      *
      * @note This field is available only when USB internal queue is disabled
-     *       (see @ref APP_USBD_EVENT_QUEUE_ENABLE).
+     *       (see @ref APP_USBD_CONFIG_EVENT_QUEUE_ENABLE).
      */
     void (*ev_handler)(app_usbd_internal_evt_t const * const p_event);
 #endif
 
-#if (APP_USBD_EVENT_QUEUE_ENABLE) || defined(__SDK_DOXYGEN__)
+#if (APP_USBD_CONFIG_EVENT_QUEUE_ENABLE) || defined(__SDK_DOXYGEN__)
     /**
      * @brief User defined event handler.
      *
@@ -105,7 +112,7 @@ typedef struct {
      *                See @ref nrf_atfifo for more details.
      *
      * @note This field is available only when USBD internal queue is configured
-     *       (see @ref APP_USBD_EVENT_QUEUE_ENABLE).
+     *       (see @ref APP_USBD_CONFIG_EVENT_QUEUE_ENABLE).
      *
      * @note If is set to NULL no event would be called from interrupt.
      * @note This function is called before event is processed.
@@ -121,7 +128,7 @@ typedef struct {
      * This function is called while state event is processed.
      *
      * * @note This field is available only when USBD internal queue is configured
-     *       (see @ref APP_USBD_EVENT_QUEUE_ENABLE).
+     *       (see @ref APP_USBD_CONFIG_EVENT_QUEUE_ENABLE).
      *
      * @param event Event type.
      *              Only following events are sent into this function:
@@ -176,6 +183,20 @@ ret_code_t app_usbd_init(app_usbd_config_t const * p_config);
  */
 ret_code_t app_usbd_uninit(void);
 
+#if (APP_USBD_CONFIG_POWER_EVENTS_PROCESS) || defined(__SDK_DOXYGEN__)
+/**
+ * @brief Function to start USB related power events processing
+ *
+ * This function should be called after @ref app_usbd_init and after all the
+ * required classes were appended (@ref app_usbd_class_append).
+ *
+ * @retval NRF_SUCCESS             Power events successfully initialized
+ * @retval NRF_ERROR_INVALID_STATE The state of the driver does not allow to enable
+ *                                 the power events processing.
+ */
+ret_code_t app_usbd_power_events_enable(void);
+#endif
+
 /**
  * @brief Enable USBD
  *
@@ -198,7 +219,7 @@ void app_usbd_disable(void);
  * @brief Request USBD to start
  *
  * The function sends start request to the event queue.
- * If the queue is enabled (@ref APP_USBD_EVENT_QUEUE_ENABLE) it would be processed
+ * If the queue is enabled (@ref APP_USBD_CONFIG_EVENT_QUEUE_ENABLE) it would be processed
  * when the queue is processed.
  * If queue is disabled it would be processed immediately inside this function.
  * It means that if queue is disabled this function cannot be called from interrupt with priority
@@ -227,7 +248,7 @@ void app_usbd_start(void);
  * @brief Stop USB to work
  *
  * The function sends stop request to the event queue.
- * If the queue is enabled (@ref APP_USBD_EVENT_QUEUE_ENABLE) it would be processed
+ * If the queue is enabled (@ref APP_USBD_CONFIG_EVENT_QUEUE_ENABLE) it would be processed
  * when the queue is processed.
  * If queue is disabled it would be processed immediately inside this function.
  * It means that if queue is disabled this function cannot be called from interrupt with priority
@@ -284,7 +305,7 @@ bool app_usbd_active_check(void);
 void app_usbd_event_execute(app_usbd_internal_evt_t const * const p_event);
 
 
-#if (APP_USBD_EVENT_QUEUE_ENABLE) || defined(__SDK_DOXYGEN__)
+#if (APP_USBD_CONFIG_EVENT_QUEUE_ENABLE) || defined(__SDK_DOXYGEN__)
 /**
  * @brief Function that process events from the queue
  *
@@ -432,19 +453,23 @@ ret_code_t app_usbd_class_rwu_unregister(app_usbd_class_inst_t const * const p_i
 bool app_usbd_class_rwu_enabled_check(void);
 
 /**
- * @brief Function finds a given descriptor type in class descriptors payload
+ * @brief Find a specified descriptor
  *
- * @param[in] p_cinst     Instance of a class
- * @param[in] desc_type   Descriptor type (@ref APP_USBD_SETUP_STDREQ_GET_DESCRIPTOR)
- * @param[in] desc_index  Descriptor index (@ref APP_USBD_SETUP_STDREQ_GET_DESCRIPTOR)
- * @param[out] p_desc_len Descriptor length
+ * @param[in] p_cinst Class instance
+ * @param[in] desc_type Descriptor type @ref app_usbd_descriptor_t
+ * @param[in] desc_index Descriptor index
+ * @param[out] p_desc Pointer to escriptor
+ * @param[out] p_desc_len Length of descriptor
  *
- * @return Address of the descriptor (NULL if not found)
+ * @return Standard error code @ref ret_code_t
+ * @retval NRF_SUCCESS descriptor successfully found
+ * @retval NRF_ERROR_NOT_FOUND descriptor not found
  * */
-const void * app_usbd_class_descriptor_find(app_usbd_class_inst_t const * const p_cinst,
-                                            uint8_t  desc_type,
-                                            uint8_t  desc_index,
-                                            size_t * p_desc_len);
+ret_code_t app_usbd_class_descriptor_find(app_usbd_class_inst_t const * const p_cinst,
+                                          uint8_t                             desc_type,
+                                          uint8_t                             desc_index,
+                                          uint8_t                           * p_desc,
+                                          size_t                            * p_desc_len);
 
 /**
  * @brief Standard set interface request handle

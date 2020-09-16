@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -148,7 +148,7 @@ int main(void)
     // Initialize quadrature encoder simulator
     qenc_init((nrf_qdec_ledpol_t)nrf_qdec_ledpol_get());
 
-    NRF_LOG_INFO("QDEC testing started");
+    NRF_LOG_INFO("QDEC testing started.");
 
     while (true)
     {

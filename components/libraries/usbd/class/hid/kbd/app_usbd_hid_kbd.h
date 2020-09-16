@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -220,17 +220,21 @@ APP_USBD_CLASS_TYPEDEF(app_usbd_hid_kbd,                        \
  * @param interface_number  Unique interface index.
  * @param endpoint          Input endpoint (@ref nrf_drv_usbd_ep_t).
  * @param user_ev_handler   User event handler (optional parameter: NULL might be passed here).
+ * @param subclass_boot     Subclass boot. (@ref app_usbd_hid_subclass_t)
  *
  * Example class definition:
  * @code
-   APP_USBD_HID_KBD_GLOBAL_DEF(my_awesome_kbd, 0, NRF_DRV_USBD_EPIN1, NULL);
+   APP_USBD_HID_KBD_GLOBAL_DEF(my_awesome_kbd, 0, NRF_DRV_USBD_EPIN1, NULL, APP_USBD_HID_SUBCLASS_BOOT);
  * @endcode
  */
-#define APP_USBD_HID_KBD_GLOBAL_DEF(instance_name, interface_number, endpoint, user_ev_handler) \
-        APP_USBD_HID_KBD_GLOBAL_DEF_INTERNAL(instance_name,                                     \
-                                             interface_number,                                  \
-                                             endpoint,                                          \
-                                             user_ev_handler)
+#define APP_USBD_HID_KBD_GLOBAL_DEF(instance_name, interface_number, endpoint, user_ev_handler, subclass_boot)  \
+        APP_USBD_HID_GENERIC_SUBCLASS_REPORT_DESC(keyboard_desc, APP_USBD_HID_KBD_REPORT_DSC());                \
+        static const app_usbd_hid_subclass_desc_t * keyboard_descs[] = {&keyboard_desc};                        \
+        APP_USBD_HID_KBD_GLOBAL_DEF_INTERNAL(instance_name,                                                     \
+                                             interface_number,                                                  \
+                                             endpoint,                                                          \
+                                             user_ev_handler,                                                   \
+                                             subclass_boot)
 
 /**
  * @brief Helper function to get class instance from HID keyboard internals.

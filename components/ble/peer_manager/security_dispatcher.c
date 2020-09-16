@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -210,8 +210,8 @@ static void pairing_failure(uint16_t            conn_handle,
 {
     ret_code_t              err_code  = NRF_SUCCESS;
     pm_peer_id_t            peer_id   = im_peer_id_get_by_conn_handle(conn_handle);
-    pm_conn_sec_procedure_t procedure = bonding(conn_handle) ? PM_LINK_SECURED_PROCEDURE_BONDING
-                                                             : PM_LINK_SECURED_PROCEDURE_PAIRING;
+    pm_conn_sec_procedure_t procedure = bonding(conn_handle) ? PM_CONN_SEC_PROCEDURE_BONDING
+                                                             : PM_CONN_SEC_PROCEDURE_PAIRING;
 
     if (peer_created(conn_handle))
     {
@@ -245,7 +245,7 @@ static __INLINE void encryption_failure(uint16_t            conn_handle,
                                         pm_sec_error_code_t error,
                                         uint8_t             error_src)
 {
-    conn_sec_failure(conn_handle, PM_LINK_SECURED_PROCEDURE_ENCRYPTION, error, error_src);
+    conn_sec_failure(conn_handle, PM_CONN_SEC_PROCEDURE_ENCRYPTION, error, error_src);
 
     return;
 }
@@ -290,10 +290,10 @@ static void sec_proc_start(uint16_t                conn_handle,
     {
         ble_conn_state_user_flag_set(conn_handle,
                                      m_flag_sec_proc_pairing,
-                                     (procedure != PM_LINK_SECURED_PROCEDURE_ENCRYPTION));
+                                     (procedure != PM_CONN_SEC_PROCEDURE_ENCRYPTION));
         ble_conn_state_user_flag_set(conn_handle,
                                      m_flag_sec_proc_bonding,
-                                     (procedure == PM_LINK_SECURED_PROCEDURE_BONDING));
+                                     (procedure == PM_CONN_SEC_PROCEDURE_BONDING));
         ble_conn_state_user_flag_set(conn_handle, m_flag_sec_proc_new_peer, false);
         sec_start_send(conn_handle, procedure);
     }
@@ -356,7 +356,7 @@ static void sec_info_request_process(ble_gap_evt_t const * p_gap_evt)
         im_new_peer_id(p_gap_evt->conn_handle, peer_id);
     }
 
-    sec_proc_start(p_gap_evt->conn_handle, true, PM_LINK_SECURED_PROCEDURE_ENCRYPTION);
+    sec_proc_start(p_gap_evt->conn_handle, true, PM_CONN_SEC_PROCEDURE_ENCRYPTION);
 
     if (peer_id != PM_PEER_ID_INVALID)
     {
@@ -393,7 +393,6 @@ static void sec_info_request_process(ble_gap_evt_t const * p_gap_evt)
 
     return;
 }
-
 
 
 /**@brief Function for sending a CONFIG_REQ event.
@@ -473,8 +472,8 @@ static void sec_params_request_process(ble_gap_evt_t const * p_gap_evt)
         sec_proc_start(p_gap_evt->conn_handle,
                        true,
                        p_gap_evt->params.sec_params_request.peer_params.bond
-                                               ? PM_LINK_SECURED_PROCEDURE_BONDING
-                                               : PM_LINK_SECURED_PROCEDURE_PAIRING);
+                                               ? PM_CONN_SEC_PROCEDURE_BONDING
+                                               : PM_CONN_SEC_PROCEDURE_PAIRING);
     }
 
     send_params_req(p_gap_evt->conn_handle, &p_gap_evt->params.sec_params_request.peer_params);
@@ -491,19 +490,12 @@ static void auth_status_success_process(ble_gap_evt_t const * p_gap_evt)
 {
     ret_code_t           err_code    = NRF_SUCCESS;
     uint16_t             conn_handle = p_gap_evt->conn_handle;
-    uint8_t              role        = ble_conn_state_role(conn_handle);
     pm_peer_id_t         peer_id     = im_peer_id_get_by_conn_handle(conn_handle);
     pm_peer_id_t         new_peer_id = peer_id;
     pm_peer_data_t       peer_data;
     bool                 data_stored = false;
 
     ble_conn_state_user_flag_set(conn_handle, m_flag_sec_proc, false);
-
-    if (role == BLE_GAP_ROLE_INVALID)
-    {
-        /* Unlikely, but maybe possible? */
-        return;
-    }
 
     if (p_gap_evt->params.auth_status.bonded)
     {
@@ -573,8 +565,8 @@ static void auth_status_success_process(ble_gap_evt_t const * p_gap_evt)
     pairing_success_evt.evt_id                                = PM_EVT_CONN_SEC_SUCCEEDED;
     pairing_success_evt.conn_handle                           = conn_handle;
     pairing_success_evt.params.conn_sec_succeeded.procedure   = p_gap_evt->params.auth_status.bonded
-                                                              ? PM_LINK_SECURED_PROCEDURE_BONDING
-                                                              : PM_LINK_SECURED_PROCEDURE_PAIRING;
+                                                              ? PM_CONN_SEC_PROCEDURE_BONDING
+                                                              : PM_CONN_SEC_PROCEDURE_PAIRING;
     pairing_success_evt.params.conn_sec_succeeded.data_stored = data_stored;
 
     evt_send(&pairing_success_evt);
@@ -639,7 +631,7 @@ static void conn_sec_update_process(ble_gap_evt_t const * p_gap_evt)
 
             evt.evt_id                                = PM_EVT_CONN_SEC_SUCCEEDED;
             evt.conn_handle                           = p_gap_evt->conn_handle;
-            evt.params.conn_sec_succeeded.procedure   = PM_LINK_SECURED_PROCEDURE_ENCRYPTION;
+            evt.params.conn_sec_succeeded.procedure   = PM_CONN_SEC_PROCEDURE_ENCRYPTION;
             evt.params.conn_sec_succeeded.data_stored = false;
 
             evt_send(&evt);
@@ -907,7 +899,7 @@ static ret_code_t link_secure_central_encryption(uint16_t     conn_handle,
                                     &(p_existing_key->enc_info));
     }
 
-    sec_proc_start(conn_handle, err_code == NRF_SUCCESS, PM_LINK_SECURED_PROCEDURE_ENCRYPTION);
+    sec_proc_start(conn_handle, err_code == NRF_SUCCESS, PM_CONN_SEC_PROCEDURE_ENCRYPTION);
     sec_proc_housekeeping(conn_handle, peer_id, (err_code == NRF_SUCCESS), false);
 
     return err_code;
@@ -920,7 +912,7 @@ static ret_code_t link_secure_central_pairing(uint16_t               conn_handle
                                               pm_peer_id_t           peer_id,
                                               ble_gap_sec_params_t * p_sec_params)
 {
-    pm_conn_sec_procedure_t procedure        = PM_LINK_SECURED_PROCEDURE_PAIRING;
+    pm_conn_sec_procedure_t procedure        = PM_CONN_SEC_PROCEDURE_PAIRING;
     bool                    new_peer_created = false;
     ret_code_t              err_code         = NRF_SUCCESS;
     pm_peer_data_t          dummy_peer_data;
@@ -933,7 +925,7 @@ static ret_code_t link_secure_central_pairing(uint16_t               conn_handle
     {
         if (p_sec_params->bond)
         {
-            procedure = PM_LINK_SECURED_PROCEDURE_BONDING;
+            procedure = PM_CONN_SEC_PROCEDURE_BONDING;
 
             if (peer_id == PM_PEER_ID_INVALID)
             {
@@ -1019,7 +1011,6 @@ static ret_code_t link_secure_central(uint16_t conn_handle,
 
     return err_code;
 }
-
 
 /**@brief Function for processing the @ref BLE_GAP_EVT_SEC_REQUEST event from the SoftDevice.
  *

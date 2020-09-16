@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -41,29 +41,30 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include "compiler_abstraction.h"
-#include "nrf_dfu_svci.h"
+#include "nrf_dfu_ble_svci_bond_sharing.h"
 #include "nordic_common.h"
-#include "nrf_dfu_svci.h"
 #include "nrf_error.h"
 #include "ble_dfu.h"
 #include "nrf_log.h"
 #include "nrf_sdh_soc.h"
 
-#if !defined(NRF_DFU_BLE_BUTTONLESS_SUPPORTS_BONDS) || (NRF_DFU_BLE_BUTTONLESS_SUPPORTS_BONDS == 0)
+#if (!NRF_DFU_BLE_BUTTONLESS_SUPPORTS_BONDS)
 
 #define NRF_DFU_ADV_NAME_MAX_LENGTH     (20)
 
 
+void ble_dfu_buttonless_on_sys_evt(uint32_t, void * );
+uint32_t nrf_dfu_svci_vector_table_set(void);
+uint32_t nrf_dfu_svci_vector_table_unset(void);
+
 /**@brief Define functions for async interface to set new advertisement name for DFU mode.  */
 NRF_SVCI_ASYNC_FUNC_DEFINE(NRF_DFU_SVCI_SET_ADV_NAME, nrf_dfu_set_adv_name, nrf_dfu_adv_name_t);
 
-ble_dfu_buttonless_t      * mp_dfu = NULL;
-static nrf_dfu_adv_name_t   m_adv_name;
-
-void ble_dfu_buttonless_on_sys_evt(uint32_t, void * );
 // Register SoC observer for the Buttonless Secure DFU service
 NRF_SDH_SOC_OBSERVER(m_dfu_buttonless_soc_obs, BLE_DFU_SOC_OBSERVER_PRIO, ble_dfu_buttonless_on_sys_evt, NULL);
+
+ble_dfu_buttonless_t      * mp_dfu = NULL;
+static nrf_dfu_adv_name_t   m_adv_name;
 
 
 /**@brief Function for setting an advertisement name.
@@ -88,6 +89,11 @@ static uint32_t set_adv_name(nrf_dfu_adv_name_t * p_adv_name)
     {
         // The request was accepted.
         mp_dfu->is_waiting_for_svci = true;
+    }
+    else if (err_code == NRF_ERROR_FORBIDDEN)
+    {
+        NRF_LOG_ERROR("The bootloader has write protected its settings page. This prohibits setting the advertising name. "\
+                      "The bootloader must be compiled with NRF_BL_SETTINGS_PAGE_PROTECT=0 to allow setting the advertising name.");
     }
 
     return err_code;
@@ -125,18 +131,15 @@ static uint32_t enter_bootloader()
 }
 
 
-uint32_t nrf_dfu_svci_vector_table_set(void);
-uint32_t nrf_dfu_svci_vector_table_unset(void);
-
-
 uint32_t ble_dfu_buttonless_backend_init(ble_dfu_buttonless_t * p_dfu)
 {
     VERIFY_PARAM_NOT_NULL(p_dfu);
-    
+
     mp_dfu = p_dfu;
-    
+
     return NRF_SUCCESS;
 }
+
 
 uint32_t ble_dfu_buttonless_async_svci_init(void)
 {
@@ -164,11 +167,10 @@ void ble_dfu_buttonless_on_sys_evt(uint32_t sys_evt, void * p_context)
     }
 
     err_code = nrf_dfu_set_adv_name_on_sys_evt(sys_evt);
-    if (err_code == NRF_ERROR_BUSY)
+    if (err_code == NRF_ERROR_INVALID_STATE)
     {
-        // Async operations are ongoing.
-        // No action is taken, and nothing is reported
-
+        // The system event is not from an operation started by buttonless DFU.
+        // No action is taken, and nothing is reported.
     }
     else if (err_code == NRF_SUCCESS)
     {
@@ -189,11 +191,14 @@ void ble_dfu_buttonless_on_sys_evt(uint32_t sys_evt, void * p_context)
         // Invalid error code reported back.
         mp_dfu->is_waiting_for_svci = false;
 
-        err_code = ble_dfu_buttonless_resp_send(DFU_OP_SET_ADV_NAME, DFU_RSP_OPERATION_FAILED);
+        err_code = ble_dfu_buttonless_resp_send(DFU_OP_SET_ADV_NAME, DFU_RSP_BUSY);
         if (err_code != NRF_SUCCESS)
         {
             mp_dfu->evt_handler(BLE_DFU_EVT_RESPONSE_SEND_ERROR);
         }
+
+        // Report the failure to enter DFU mode
+        mp_dfu->evt_handler(BLE_DFU_EVT_BOOTLOADER_ENTER_FAILED);
     }
 }
 
@@ -260,12 +265,15 @@ void ble_dfu_buttonless_on_ctrl_pt_write(ble_gatts_evt_write_t const * p_evt_wri
             {
                 rsp_code = DFU_RSP_SUCCESS;
             }
+            else if (err_code == NRF_ERROR_BUSY)
+            {
+                rsp_code = DFU_RSP_BUSY;
+            }
             break;
 
         case DFU_OP_SET_ADV_NAME:
-
-            if(p_evt_write->data[1] > NRF_DFU_ADV_NAME_MAX_LENGTH ||
-               p_evt_write->data[1] == 0                          )
+            if(    (p_evt_write->data[1] > NRF_DFU_ADV_NAME_MAX_LENGTH)
+                || (p_evt_write->data[1] == 0))
             {
                 // New advertisement name too short or too long.
                 rsp_code = DFU_RSP_ADV_NAME_INVALID;
@@ -280,7 +288,6 @@ void ble_dfu_buttonless_on_ctrl_pt_write(ble_gatts_evt_write_t const * p_evt_wri
                     rsp_code = DFU_RSP_SUCCESS;
                 }
             }
-
             break;
 
         default:
@@ -297,7 +304,10 @@ void ble_dfu_buttonless_on_ctrl_pt_write(ble_gatts_evt_write_t const * p_evt_wri
         if (err_code != NRF_SUCCESS)
         {
             mp_dfu->evt_handler(BLE_DFU_EVT_RESPONSE_SEND_ERROR);
+
         }
+        // Report the error to the main application
+        mp_dfu->evt_handler(BLE_DFU_EVT_BOOTLOADER_ENTER_FAILED);
     }
 }
 
@@ -312,4 +322,4 @@ uint32_t ble_dfu_buttonless_bootloader_start_prepare(void)
     return err_code;
 }
 
-#endif // #if defined(NRF_DFU_BOTTONLESS_SUPPORT_BOND) && (NRF_DFU_BOTTONLESS_SUPPORT_BOND == 1)
+#endif // NRF_DFU_BOTTONLESS_SUPPORT_BOND

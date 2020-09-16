@@ -205,31 +205,36 @@ void ant_bpwr_calib_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_page1_data_
 /**
  * @brief Function for setup all thinks not directly associated with ANT stack/protocol.
  * @desc Initialization of: @n
- *         - app_tarce for debug.
  *         - app_timer, pre-setup for bsp.
  *         - bsp for signaling LEDs and user buttons.
  */
 static void utils_setup(void)
 {
-    ret_code_t err_code = NRF_LOG_INIT(NULL);
-    APP_ERROR_CHECK(err_code);
-
     // Initialize and start a single continuous mode timer, which is used to update the event time
     // on the main data page.
-    err_code = app_timer_init();
+    ret_code_t err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
     err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
 
-    NRF_LOG_DEFAULT_BACKENDS_INIT();
-
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS,
                         bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 
     err_code = ant_state_indicator_init(m_ant_bpwr.channel_number, BPWR_SENS_CHANNEL_TYPE);
     APP_ERROR_CHECK(err_code);
+}
+
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 }
 
 /**@brief Function for the BPWR simulator initialization.
@@ -312,10 +317,13 @@ static void profile_setup(void)
  */
 int main(void)
 {
+    log_init();
     utils_setup();
     softdevice_setup();
     simulator_setup();
     profile_setup();
+
+    NRF_LOG_INFO("ANT+ Bicycle Power TX example started.");
 
     for (;;)
     {

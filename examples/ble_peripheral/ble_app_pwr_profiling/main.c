@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -65,12 +65,11 @@
 #include "nrf_sdh.h"
 #include "nrf_sdh_ble.h"
 #include "nrf_ble_gatt.h"
+#include "nrf_ble_qwr.h"
 #include "app_timer.h"
 #include "app_error.h"
 #include "nordic_common.h"
-
-
-#define APP_FEATURE_NOT_SUPPORTED       BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2    /**< Reply when unsupported features are requested. */
+#include "nrf_pwr_mgmt.h"
 
 // User-modifiable configuration parameters.
 //      The following values shall be altered when doing power profiling.
@@ -103,7 +102,8 @@
 
 #define CONNECTABLE_ADV_INTERVAL        MSEC_TO_UNITS(20, UNIT_0_625_MS)              /**< The advertising interval for connectable advertisement (20 ms). This value can vary between 20ms to 10.24s. */
 #define NON_CONNECTABLE_ADV_INTERVAL    MSEC_TO_UNITS(100, UNIT_0_625_MS)             /**< The advertising interval for non-connectable advertisement (100 ms). This value can vary between 100ms to 10.24s). */
-#define CONNECTABLE_ADV_TIMEOUT         30                                            /**< Time for which the device must be advertising in connectable mode (in seconds). */
+
+#define APP_ADV_DURATION                3000                                          /**< The advertising duration (30 seconds) in units of 10 milliseconds. */
 
 #define SLAVE_LATENCY                   0                                             /**< Slave latency. */
 #define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(4000, UNIT_10_MS)               /**< Connection supervisory timeout (4 seconds). */
@@ -126,7 +126,8 @@
                                         )                                     \
                                         )                                             /**< Length of Manufacturer Specific Data field that will be placed on the air during advertisement. This is computed based on the value of APP_CFG_ADV_DATA_LEN (required advertisement data length). */
 
-#if APP_CFG_ADV_DATA_LEN > BLE_GAP_ADV_MAX_SIZE
+
+#if APP_CFG_ADV_DATA_LEN > BLE_GAP_ADV_SET_DATA_SIZE_MAX
     #error "The required advertisement data size (APP_CFG_ADV_DATA_LEN) is greater than the value allowed by stack (BLE_GAP_ADV_MAX_SIZE). Reduce the value of APP_CFG_ADV_DATA_LEN and recompile."
 #endif
 
@@ -142,6 +143,7 @@
 
 
 NRF_BLE_GATT_DEF(m_gatt);                                                           /**< GATT module instance. */
+NRF_BLE_QWR_DEF(m_qwr);                                                             /**< Context for the Queued Write module.*/
 APP_TIMER_DEF(m_conn_int_timer_id);                                                 /**< Connection interval timer. */
 APP_TIMER_DEF(m_notif_timer_id);                                                    /**< Notification timer. */
 
@@ -152,6 +154,28 @@ static ble_gatts_char_handles_t m_char_handles;                                 
 static uint16_t                 m_conn_handle = BLE_CONN_HANDLE_INVALID;            /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection).*/
 static uint16_t                 m_service_handle;                                   /**< Handle of local service (as provided by the BLE stack).*/
 static bool                     m_is_notifying_enabled = false;                     /**< Variable to indicate whether the notification is enabled by the peer.*/
+
+static bool    m_is_notification_mode    = false;                                   /**< Flag to keep track of if the application is connectable and will have a service with notifications, or if it will advertise in non-connectable mode. */
+static bool    m_is_non_connectable_mode = false;                                   /**< Flag to keep track of if the application is connectable and will have a service with notifications, or if it will advertise in non-connectable mode. */
+
+static uint8_t m_adv_handle = BLE_GAP_ADV_SET_HANDLE_NOT_SET;                       /**< Advertising handle used to identify an advertising set. */
+static uint8_t m_enc_advdata[BLE_GAP_ADV_SET_DATA_SIZE_MAX];                        /**< Buffer for storing an encoded advertising set. */
+
+/**@brief Struct that contains pointers to the encoded advertising data. */
+static ble_gap_adv_data_t m_adv_data =
+{
+    .adv_data =
+    {
+        .p_data = m_enc_advdata,
+        .len    = BLE_GAP_ADV_SET_DATA_SIZE_MAX
+    },
+    .scan_rsp_data =
+    {
+        .p_data = NULL,
+        .len    = 0
+
+    }
+};
 
 /**@brief 128-bit UUID base List. */
 static ble_uuid128_t const m_base_uuid128 =
@@ -259,6 +283,34 @@ static void gatt_init(void)
 }
 
 
+/**@brief Function for handling Queued Write Module errors.
+ *
+ * @details A pointer to this function will be passed to each service which may need to inform the
+ *          application about an error.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void nrf_qwr_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
+}
+
+
+/**@brief Function for initializing the Queued Write module.
+ */
+static void qwr_init(void)
+{
+    ret_code_t         err_code;
+    nrf_ble_qwr_init_t qwr_init_obj = {0};
+
+    // Initialize Queued Write Module.
+    qwr_init_obj.error_handler = nrf_qwr_error_handler;
+
+    err_code = nrf_ble_qwr_init(&m_qwr, &qwr_init_obj);
+    APP_ERROR_CHECK(err_code);
+}
+
+
 /**@brief Function for initializing the connectable advertisement parameters.
  *
  * @details This function initializes the advertisement parameters to values that will put
@@ -270,11 +322,13 @@ static void connectable_adv_init(void)
     // Initialize advertising parameters (used when starting advertising).
     memset(&m_adv_params, 0, sizeof(m_adv_params));
 
-    m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_IND ;
-    m_adv_params.p_peer_addr = NULL;                               // Undirected advertisement
-    m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
-    m_adv_params.interval    = CONNECTABLE_ADV_INTERVAL;
-    m_adv_params.timeout     = CONNECTABLE_ADV_TIMEOUT;
+    m_adv_params.properties.type = BLE_GAP_ADV_TYPE_CONNECTABLE_SCANNABLE_UNDIRECTED;
+    m_adv_params.duration        = APP_ADV_DURATION;
+
+    m_adv_params.p_peer_addr   = NULL;
+    m_adv_params.filter_policy = BLE_GAP_ADV_FP_ANY;
+    m_adv_params.interval      = CONNECTABLE_ADV_INTERVAL;
+    m_adv_params.primary_phy   = BLE_GAP_PHY_1MBPS;
 }
 
 
@@ -289,11 +343,12 @@ static void non_connectable_adv_init(void)
     // Initialize advertising parameters (used when starting advertising).
     memset(&m_adv_params, 0, sizeof(m_adv_params));
 
-    m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_NONCONN_IND;
-    m_adv_params.p_peer_addr = NULL;                               // Undirected advertisement
-    m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
-    m_adv_params.interval    = NON_CONNECTABLE_ADV_INTERVAL;
-    m_adv_params.timeout     = APP_CFG_NON_CONN_ADV_TIMEOUT;
+    m_adv_params.properties.type = BLE_GAP_ADV_TYPE_NONCONNECTABLE_SCANNABLE_UNDIRECTED; // BLE_GAP_ADV_TYPE_CONNECTABLE_NONSCANNABLE_DIRECTED; //
+    m_adv_params.duration        = APP_ADV_DURATION;
+    m_adv_params.p_peer_addr     = NULL;
+    m_adv_params.filter_policy   = BLE_GAP_ADV_FP_ANY;
+    m_adv_params.interval        = NON_CONNECTABLE_ADV_INTERVAL;
+    m_adv_params.primary_phy     = BLE_GAP_PHY_1MBPS;
 }
 
 
@@ -303,7 +358,7 @@ static void non_connectable_adv_init(void)
  *          both connectable and non-connectable modes.
  *
  */
-static void advertising_data_init(void)
+static void advertising_init(void)
 {
     ret_code_t               err_code;
     ble_advdata_t            advdata;
@@ -321,8 +376,19 @@ static void advertising_data_init(void)
     advdata.flags                 = flags;
     advdata.p_manuf_specific_data = &manuf_data;
 
-    err_code = ble_advdata_set(&advdata, NULL);
+    err_code = ble_advdata_encode(&advdata, m_adv_data.adv_data.p_data, &m_adv_data.adv_data.len);
     APP_ERROR_CHECK(err_code);
+
+    if(m_is_non_connectable_mode)
+    {
+        err_code = sd_ble_gap_adv_set_configure(&m_adv_handle, NULL, &m_adv_params);
+        APP_ERROR_CHECK(err_code);
+    }
+    else
+    {
+        err_code = sd_ble_gap_adv_set_configure(&m_adv_handle, &m_adv_data, &m_adv_params);
+        APP_ERROR_CHECK(err_code);
+    }
 }
 
 
@@ -494,7 +560,7 @@ static void advertising_start(void)
 {
     ret_code_t err_code;
 
-    err_code = sd_ble_gap_adv_start(&m_adv_params, APP_BLE_CONN_CFG_TAG);
+    err_code = sd_ble_gap_adv_start(m_adv_handle, APP_BLE_CONN_CFG_TAG);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -528,7 +594,7 @@ static void timers_init(void)
  */
 static void buttons_init(void)
 {
-    ret_code_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, NULL);
+    ret_code_t err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS, NULL);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -576,6 +642,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
     {
         case BLE_GAP_EVT_CONNECTED:
             m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
+            err_code = nrf_ble_qwr_conn_handle_assign(&m_qwr, m_conn_handle);
+            APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
@@ -586,7 +654,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
             break;
 
-#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             ble_gap_phys_t const phys =
@@ -597,7 +664,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
             APP_ERROR_CHECK(err_code);
         } break;
-#endif
 
         case BLE_GATTS_EVT_SYS_ATTR_MISSING:
             err_code = sd_ble_gatts_sys_attr_set(m_conn_handle,
@@ -607,8 +673,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
             break;
 
-        case BLE_GAP_EVT_TIMEOUT:
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
+        case BLE_GAP_EVT_ADV_SET_TERMINATED:
+            if (p_ble_evt->evt.gap_evt.params.adv_set_terminated.reason == BLE_GAP_EVT_ADV_SET_TERMINATED_REASON_TIMEOUT)
             {
                 // Go to system-off mode (this function will not return; wakeup will cause a reset).
                 err_code = sd_power_system_off();
@@ -633,40 +699,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         case BLE_GATTS_EVT_WRITE:
             on_write(p_ble_evt);
             break;
-
-        case BLE_EVT_USER_MEM_REQUEST:
-            err_code = sd_ble_user_mem_reply(p_ble_evt->evt.gattc_evt.conn_handle, NULL);
-            APP_ERROR_CHECK(err_code);
-            break;
-
-        case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
-        {
-            ble_gatts_evt_rw_authorize_request_t  req;
-            ble_gatts_rw_authorize_reply_params_t auth_reply;
-
-            req = p_ble_evt->evt.gatts_evt.params.authorize_request;
-
-            if (req.type != BLE_GATTS_AUTHORIZE_TYPE_INVALID)
-            {
-                if ((req.request.write.op == BLE_GATTS_OP_PREP_WRITE_REQ)     ||
-                    (req.request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW) ||
-                    (req.request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL))
-                {
-                    if (req.type == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
-                    {
-                        auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
-                    }
-                    else
-                    {
-                        auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_READ;
-                    }
-                    auth_reply.params.write.gatt_status = APP_FEATURE_NOT_SUPPORTED;
-                    err_code = sd_ble_gatts_rw_authorize_reply(p_ble_evt->evt.gatts_evt.conn_handle,
-                                                               &auth_reply);
-                    APP_ERROR_CHECK(err_code);
-                }
-            }
-        } break; // BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST
 
         default:
             // No implementation needed.
@@ -701,12 +733,23 @@ static void ble_stack_init(void)
 }
 
 
-/**@brief Function for the Power manager.
+/**@brief Function for initializing power management.
  */
-static void power_manage(void)
+static void power_management_init(void)
 {
-    ret_code_t err_code = sd_app_evt_wait();
+    ret_code_t err_code;
+    err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for handling the idle state (main loop).
+ *
+ * @details Sleep until next the next event occurs.
+ */
+static void idle_state_handle(void)
+{
+    nrf_pwr_mgmt_run();
 }
 
 
@@ -714,48 +757,45 @@ static void power_manage(void)
  */
 int main(void)
 {
-    ret_code_t err_code;
-    bool is_notification_mode    = false;
-    bool is_non_connectable_mode = false;
-
     timers_init();
     buttons_init();
+    power_management_init();
 
 #if BUTTONS_NUMBER > 2
     // Check button states.
     // Notification Start button.
-    is_notification_mode = bsp_board_button_state_get(NOTIF_BUTTON_ID);
+    m_is_notification_mode = bsp_board_button_state_get(NOTIF_BUTTON_ID);
 
     // Non-connectable advertisement start button.
-    if (!is_notification_mode)
+    if (!m_is_notification_mode)
     {
-        is_non_connectable_mode = bsp_board_button_state_get(NON_CONN_ADV_BUTTON_ID);
+        m_is_non_connectable_mode = bsp_board_button_state_get(NON_CONN_ADV_BUTTON_ID);
     }
     else
     {
         // Un-configured button.
     }
 #else
-    is_notification_mode = true;
+    m_is_notification_mode = true;
 #endif
 
     // Initialize SoftDevice.
     ble_stack_init();
 
-    if (!is_notification_mode && !is_non_connectable_mode)
+    if (!m_is_notification_mode && !m_is_non_connectable_mode)
     {
         // The startup was not because of button presses. This is the first start.
         // Go into System-Off mode. Button presses will wake the chip up.
-        err_code = sd_power_system_off();
-        APP_ERROR_CHECK(err_code);
+        nrf_pwr_mgmt_shutdown(NRF_PWR_MGMT_SHUTDOWN_GOTO_SYSOFF);
     }
 
     // If we reach this point, the application was woken up
     // by pressing one of the two configured buttons.
     gap_params_init();
     gatt_init();
+    qwr_init();
 
-    if (is_notification_mode)
+    if (m_is_notification_mode)
     {
         // Notification button is pressed. Start connectable advertisement.
         connectable_adv_init();
@@ -766,13 +806,13 @@ int main(void)
         non_connectable_adv_init();
     }
 
-    advertising_data_init();
+    advertising_init();
     advertising_start();
 
     // Enter main loop.
     for (;;)
     {
-        power_manage();
+        idle_state_handle();
     }
 }
 

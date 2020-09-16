@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -51,7 +51,7 @@
 extern hmacDataStuct hmacVectors[];
 
 /*RND global variables*/
-extern CRYS_RND_Context_t*   rndContext_ptr;
+extern CRYS_RND_State_t*     rndState_ptr;
 extern CRYS_RND_WorkBuff_t*  rndWorkBuff_ptr;
 
 
@@ -150,7 +150,7 @@ end:
 /*hmac_wrap_tests creates thread with defined stack address to and calls to AES HMAC test */
 void* hash_thread(void)
 {
-   uint32_t* threadReturnValue = malloc(sizeof(uint32_t));
+   uint32_t* threadReturnValue = SaSi_PalMemMalloc(sizeof(uint32_t));
 
    *threadReturnValue = hmac_tests();
     if (*threadReturnValue != SA_SILIB_RET_OK) {
@@ -199,7 +199,7 @@ int hmac_wrap_tests(void){
 
 	rc =*((uint32_t *)*&threadRet);
 
-    free(threadRet);
+    SaSi_PalMemFree(threadRet);
 	threadRc = pthread_attr_destroy(&threadAttr);
 	if (threadRc != 0) {
 		INTEG_TEST_PRINT("pthread_attr_destroy failed\n");
@@ -223,9 +223,15 @@ int main(void)
 	}
 
         /*Init SaSi library*/
-	ret = SaSi_LibInit(rndContext_ptr, rndWorkBuff_ptr);
+    ret = SaSi_LibInit();
+    if (ret != SA_SILIB_RET_OK) {
+        INTEG_TEST_PRINT("Failed SaSi_LibInit - ret = 0x%x\n", ret);
+        goto exit_1;
+    }
+
+    ret = CRYS_RndInit(rndState_ptr, rndWorkBuff_ptr);
 	if (ret != SA_SILIB_RET_OK) {
-	    INTEG_TEST_PRINT("Failed SaSi_SiLibInit - ret = 0x%x\n", ret);
+        INTEG_TEST_PRINT("Failed CRYS_RndInit - ret = 0x%x\n", ret);
 	    goto exit_1;
 	}
 
@@ -244,7 +250,13 @@ int main(void)
 
 exit_0:
 	/*Finish SaSi library*/
-	SaSi_LibFini(rndContext_ptr);
+    SaSi_LibFini();
+
+    ret = CRYS_RND_UnInstantiation(rndState_ptr);
+
+    if (ret) {
+        INTEG_TEST_PRINT("Failure in CRYS_RND_UnInstantiation,ret = 0x%x\n", ret);
+    }
 
 exit_1:
 	integration_tests_clear();

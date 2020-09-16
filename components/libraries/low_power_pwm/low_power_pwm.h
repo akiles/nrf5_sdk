@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -55,10 +55,8 @@
 #ifndef LOW_POWER_PWM_H__
 #define LOW_POWER_PWM_H__
 
-#include <stdbool.h>
-#include <stdint.h>
+#include <nrfx.h>
 #include "app_timer.h"
-#include "nrf_drv_common.h"
 #include "sdk_errors.h"
 
 #ifdef __cplusplus
@@ -132,7 +130,7 @@ typedef struct
         bool                        pin_is_on;          /**< Indicates the current state of the pin. */
         uint8_t                     period;             /**< Width of the low_power_pwm period. */
         uint8_t                     duty_cycle;         /**< Width of high pulse. */
-        nrf_drv_state_t             pwm_state;          /**< Indicates the current state of the PWM instance. */
+        nrfx_drv_state_t            pwm_state;          /**< Indicates the current state of the PWM instance. */
         uint32_t                    bit_mask;           /**< Pins to be initialized. */
         uint32_t                    bit_mask_toggle;    /**< Pins to be toggled. */
         uint32_t                    timeout_ticks;      /**< Value to start the next app_timer. */

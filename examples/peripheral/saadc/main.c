@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -61,8 +61,6 @@
 #include "nrf_delay.h"
 #include "app_util_platform.h"
 #include "nrf_pwr_mgmt.h"
-#include "nrf_drv_power.h"
-
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -179,16 +177,13 @@ int main(void)
 
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    err_code = nrf_drv_power_init(NULL);
-    APP_ERROR_CHECK(err_code);
-
     ret_code_t ret_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(ret_code);
 
-    NRF_LOG_INFO("SAADC HAL simple example.");
     saadc_init();
     saadc_sampling_event_init();
     saadc_sampling_event_enable();
+    NRF_LOG_INFO("SAADC HAL simple example started.");
 
     while (1)
     {

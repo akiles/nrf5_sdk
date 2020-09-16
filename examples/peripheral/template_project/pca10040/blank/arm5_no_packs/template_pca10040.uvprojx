@@ -12,7 +12,7 @@
       <TargetOption>
         <TargetCommonOption>          <Device>nRF52832_xxAA</Device>
           <Vendor>Nordic Semiconductor</Vendor>
-          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.15.0</PackID>
+          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.16.0</PackID>
           <PackURL>http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/</PackURL>          <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x10000) CPUTYPE("Cortex-M4") FPU2 CLOCK(64000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -28,7 +28,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>..\..\..\..\..\..\svd\nrf52.svd</SFDFile>
+          <SFDFile>..\..\..\..\..\..\modules\nrfx\mdk\nrf52.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -362,9 +362,9 @@
             <vShortWch>0</vShortWch>
             <VariousControls>
               <MiscControls>--reduce_paths</MiscControls>
-              <Define> BOARD_PCA10040 CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD NRF52 NRF52832_XXAA NRF52_PAN_74 SWI_DISABLE0</Define>
+              <Define> BOARD_PCA10040 CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD MBEDTLS_CONFIG_FILE=&lt;nrf_crypto_mbedtls_config.h&gt; NRF52 NRF52832_XXAA NRF52_PAN_74 NRF_CRYPTO_MAX_INSTANCE_COUNT=1 SWI_DISABLE0 __HEAP_SIZE=8192 __STACK_SIZE=8192 uECC_ENABLE_VLI_API=0 uECC_OPTIMIZATION_LEVEL=3 uECC_SQUARE_FUNC=0 uECC_SUPPORT_COMPRESSED_POINT=0 uECC_VLI_NATIVE_LITTLE_ENDIAN=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\comp;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\i2s;..\..\..\..\..\..\components\drivers_nrf\lpcomp;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\pdm;..\..\..\..\..\..\components\drivers_nrf\power;..\..\..\..\..\..\components\drivers_nrf\ppi;..\..\..\..\..\..\components\drivers_nrf\pwm;..\..\..\..\..\..\components\drivers_nrf\qdec;..\..\..\..\..\..\components\drivers_nrf\rng;..\..\..\..\..\..\components\drivers_nrf\rtc;..\..\..\..\..\..\components\drivers_nrf\saadc;..\..\..\..\..\..\components\drivers_nrf\spi_master;..\..\..\..\..\..\components\drivers_nrf\spi_slave;..\..\..\..\..\..\components\drivers_nrf\swi;..\..\..\..\..\..\components\drivers_nrf\timer;..\..\..\..\..\..\components\drivers_nrf\twi_master;..\..\..\..\..\..\components\drivers_nrf\twis_slave;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\drivers_nrf\wdt;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\crc16;..\..\..\..\..\..\components\libraries\crc32;..\..\..\..\..\..\components\libraries\csense;..\..\..\..\..\..\components\libraries\csense_drv;..\..\..\..\..\..\components\libraries\ecc;..\..\..\..\..\..\components\libraries\experimental_log;..\..\..\..\..\..\components\libraries\experimental_log\src;..\..\..\..\..\..\components\libraries\experimental_memobj;..\..\..\..\..\..\components\libraries\experimental_ringbuf;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\hci;..\..\..\..\..\..\components\libraries\led_softblink;..\..\..\..\..\..\components\libraries\low_power_pwm;..\..\..\..\..\..\components\libraries\mem_manager;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwm;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\slip;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\twi;..\..\..\..\..\..\components\libraries\twi_mngr;..\..\..\..\..\..\components\libraries\uart;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\toolchain;..\..\..;..\..\..\..\..\..\external\fprintf;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\crc16;..\..\..\..\..\..\components\libraries\crc32;..\..\..\..\..\..\components\libraries\crypto;..\..\..\..\..\..\components\libraries\crypto\backend\cc310;..\..\..\..\..\..\components\libraries\crypto\backend\cc310_bl;..\..\..\..\..\..\components\libraries\crypto\backend\cifra;..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls;..\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc;..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw;..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw;..\..\..\..\..\..\components\libraries\crypto\backend\oberon;..\..\..\..\..\..\components\libraries\csense;..\..\..\..\..\..\components\libraries\csense_drv;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\ecc;..\..\..\..\..\..\components\libraries\experimental_log;..\..\..\..\..\..\components\libraries\experimental_log\src;..\..\..\..\..\..\components\libraries\experimental_memobj;..\..\..\..\..\..\components\libraries\experimental_mpu;..\..\..\..\..\..\components\libraries\experimental_ringbuf;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\experimental_stack_guard;..\..\..\..\..\..\components\libraries\experimental_task_manager;..\..\..\..\..\..\components\libraries\fds;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\..\components\libraries\gfx;..\..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\hci;..\..\..\..\..\..\components\libraries\led_softblink;..\..\..\..\..\..\components\libraries\low_power_pwm;..\..\..\..\..\..\components\libraries\mem_manager;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwm;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\sdcard;..\..\..\..\..\..\components\libraries\slip;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\spi_mngr;..\..\..\..\..\..\components\libraries\stack_info;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\twi_mngr;..\..\..\..\..\..\components\libraries\twi_sensor;..\..\..\..\..\..\components\libraries\uart;..\..\..\..\..\..\components\libraries\util;..\..\..;..\..\..\..\..\..\external\cifra_AES128-EAX;..\..\..\..\..\..\external\fnmatch;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\mbedtls\include;..\..\..\..\..\..\external\micro-ecc\micro-ecc;..\..\..\..\..\..\external\nrf_cc310\include;..\..\..\..\..\..\external\nrf_oberon;..\..\..\..\..\..\external\nrf_oberon\include;..\..\..\..\..\..\external\nrf_tls\mbedtls\nrf_crypto\config;..\..\..\..\..\..\external\protothreads;..\..\..\..\..\..\external\protothreads\pt-1.4;..\..\..\..\..\..\external\thedotfactory_fonts;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -378,10 +378,10 @@
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DBOARD_PCA10040,-DCONFIG_GPIO_AS_PINRESET,-DFLOAT_ABI_HARD,-DNRF52,-DNRF52832_XXAA,-DNRF52_PAN_74,-DSWI_DISABLE0</MiscControls>
-              <Define> BOARD_PCA10040 CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD NRF52 NRF52832_XXAA NRF52_PAN_74 SWI_DISABLE0</Define>
+              <MiscControls> --cpreproc_opts=-DBOARD_PCA10040,-DCONFIG_GPIO_AS_PINRESET,-DFLOAT_ABI_HARD,-DNRF52,-DNRF52832_XXAA,-DNRF52_PAN_74,-DNRF_CRYPTO_MAX_INSTANCE_COUNT=1,-DSWI_DISABLE0,-D__HEAP_SIZE=8192,-D__STACK_SIZE=8192,-DuECC_ENABLE_VLI_API=0,-DuECC_OPTIMIZATION_LEVEL=3,-DuECC_SQUARE_FUNC=0,-DuECC_SUPPORT_COMPRESSED_POINT=0,-DuECC_VLI_NATIVE_LITTLE_ENDIAN=1</MiscControls>
+              <Define> BOARD_PCA10040 CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD NRF52 NRF52832_XXAA NRF52_PAN_74 NRF_CRYPTO_MAX_INSTANCE_COUNT=1 SWI_DISABLE0 __HEAP_SIZE=8192 __STACK_SIZE=8192 uECC_ENABLE_VLI_API=0 uECC_OPTIMIZATION_LEVEL=3 uECC_SQUARE_FUNC=0 uECC_SUPPORT_COMPRESSED_POINT=0 uECC_VLI_NATIVE_LITTLE_ENDIAN=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\comp;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\i2s;..\..\..\..\..\..\components\drivers_nrf\lpcomp;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\pdm;..\..\..\..\..\..\components\drivers_nrf\power;..\..\..\..\..\..\components\drivers_nrf\ppi;..\..\..\..\..\..\components\drivers_nrf\pwm;..\..\..\..\..\..\components\drivers_nrf\qdec;..\..\..\..\..\..\components\drivers_nrf\rng;..\..\..\..\..\..\components\drivers_nrf\rtc;..\..\..\..\..\..\components\drivers_nrf\saadc;..\..\..\..\..\..\components\drivers_nrf\spi_master;..\..\..\..\..\..\components\drivers_nrf\spi_slave;..\..\..\..\..\..\components\drivers_nrf\swi;..\..\..\..\..\..\components\drivers_nrf\timer;..\..\..\..\..\..\components\drivers_nrf\twi_master;..\..\..\..\..\..\components\drivers_nrf\twis_slave;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\drivers_nrf\wdt;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\crc16;..\..\..\..\..\..\components\libraries\crc32;..\..\..\..\..\..\components\libraries\csense;..\..\..\..\..\..\components\libraries\csense_drv;..\..\..\..\..\..\components\libraries\ecc;..\..\..\..\..\..\components\libraries\experimental_log;..\..\..\..\..\..\components\libraries\experimental_log\src;..\..\..\..\..\..\components\libraries\experimental_memobj;..\..\..\..\..\..\components\libraries\experimental_ringbuf;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\hci;..\..\..\..\..\..\components\libraries\led_softblink;..\..\..\..\..\..\components\libraries\low_power_pwm;..\..\..\..\..\..\components\libraries\mem_manager;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwm;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\slip;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\twi;..\..\..\..\..\..\components\libraries\twi_mngr;..\..\..\..\..\..\components\libraries\uart;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\toolchain;..\..\..;..\..\..\..\..\..\external\fprintf;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\crc16;..\..\..\..\..\..\components\libraries\crc32;..\..\..\..\..\..\components\libraries\crypto;..\..\..\..\..\..\components\libraries\crypto\backend\cc310;..\..\..\..\..\..\components\libraries\crypto\backend\cc310_bl;..\..\..\..\..\..\components\libraries\crypto\backend\cifra;..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls;..\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc;..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw;..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw;..\..\..\..\..\..\components\libraries\crypto\backend\oberon;..\..\..\..\..\..\components\libraries\csense;..\..\..\..\..\..\components\libraries\csense_drv;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\ecc;..\..\..\..\..\..\components\libraries\experimental_log;..\..\..\..\..\..\components\libraries\experimental_log\src;..\..\..\..\..\..\components\libraries\experimental_memobj;..\..\..\..\..\..\components\libraries\experimental_mpu;..\..\..\..\..\..\components\libraries\experimental_ringbuf;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\experimental_stack_guard;..\..\..\..\..\..\components\libraries\experimental_task_manager;..\..\..\..\..\..\components\libraries\fds;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\..\components\libraries\gfx;..\..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\hci;..\..\..\..\..\..\components\libraries\led_softblink;..\..\..\..\..\..\components\libraries\low_power_pwm;..\..\..\..\..\..\components\libraries\mem_manager;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwm;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\sdcard;..\..\..\..\..\..\components\libraries\slip;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\spi_mngr;..\..\..\..\..\..\components\libraries\stack_info;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\twi_mngr;..\..\..\..\..\..\components\libraries\twi_sensor;..\..\..\..\..\..\components\libraries\uart;..\..\..\..\..\..\components\libraries\util;..\..\..;..\..\..\..\..\..\external\cifra_AES128-EAX;..\..\..\..\..\..\external\fnmatch;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\mbedtls\include;..\..\..\..\..\..\external\micro-ecc\micro-ecc;..\..\..\..\..\..\external\nrf_cc310\include;..\..\..\..\..\..\external\nrf_oberon;..\..\..\..\..\..\external\nrf_oberon\include;..\..\..\..\..\..\external\nrf_tls\mbedtls\nrf_crypto\config;..\..\..\..\..\..\external\protothreads;..\..\..\..\..\..\external\protothreads\pt-1.4;..\..\..\..\..\..\external\thedotfactory_fonts;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -404,12 +404,6 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>        <Group>
-          <GroupName>None</GroupName>
-          <Files>            <File>
-              <FileName>nrf_drv_spis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\spi_slave\nrf_drv_spis.c</FilePath>            </File>          </Files>
-        </Group>        <Group>
           <GroupName>Application</GroupName>
           <Files>            <File>
               <FileName>main.c</FileName>
@@ -429,85 +423,268 @@
           <Files>            <File>
               <FileName>bsp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\bsp\bsp.c</FilePath>            </File>            <File>
-              <FileName>bsp_nfc.c</FileName>
+              <FilePath>..\..\..\..\..\..\components\libraries\bsp\bsp.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_Core</GroupName>
+          <Files>            <File>
+              <FileName>nrf_mpu.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\bsp\bsp_nfc.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_mpu\nrf_mpu.c</FilePath>            </File>            <File>
+              <FileName>nrf_stack_guard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_stack_guard\nrf_stack_guard.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_Crypto</GroupName>
+          <Files>            <File>
+              <FileName>nrf_crypto_aead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_aead.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_aes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_aes.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_aes_shared.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_aes_shared.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_ecc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecc.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_ecdh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecdh.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_ecdsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecdsa.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_error.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_error.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_hash.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_hkdf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_hkdf.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_hmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_hmac.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_init.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_rng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_rng.c</FilePath>            </File>            <File>
+              <FileName>nrf_crypto_shared.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_shared.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_Crypto backend Oberon</GroupName>
+          <Files>            <File>
+              <FileName>oberon_backend_chacha_poly_aead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_chacha_poly_aead.c</FilePath>            </File>            <File>
+              <FileName>oberon_backend_ecc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_ecc.c</FilePath>            </File>            <File>
+              <FileName>oberon_backend_ecdh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_ecdh.c</FilePath>            </File>            <File>
+              <FileName>oberon_backend_ecdsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_ecdsa.c</FilePath>            </File>            <File>
+              <FileName>oberon_backend_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_hash.c</FilePath>            </File>            <File>
+              <FileName>oberon_backend_hmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_hmac.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_Crypto backend cifra</GroupName>
+          <Files>            <File>
+              <FileName>cifra_backend_aes_aead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\cifra\cifra_backend_aes_aead.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_Crypto backend mbed TLS</GroupName>
+          <Files>            <File>
+              <FileName>mbedtls_backend_aes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls\mbedtls_backend_aes.c</FilePath>            </File>            <File>
+              <FileName>mbedtls_backend_aes_aead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls\mbedtls_backend_aes_aead.c</FilePath>            </File>            <File>
+              <FileName>mbedtls_backend_ecc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls\mbedtls_backend_ecc.c</FilePath>            </File>            <File>
+              <FileName>mbedtls_backend_ecdh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls\mbedtls_backend_ecdh.c</FilePath>            </File>            <File>
+              <FileName>mbedtls_backend_ecdsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls\mbedtls_backend_ecdsa.c</FilePath>            </File>            <File>
+              <FileName>mbedtls_backend_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls\mbedtls_backend_hash.c</FilePath>            </File>            <File>
+              <FileName>mbedtls_backend_hmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls\mbedtls_backend_hmac.c</FilePath>            </File>            <File>
+              <FileName>mbedtls_backend_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls\mbedtls_backend_init.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_Crypto backend nRF HW</GroupName>
+          <Files>            <File>
+              <FileName>nrf_hw_backend_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw\nrf_hw_backend_init.c</FilePath>            </File>            <File>
+              <FileName>nrf_hw_backend_rng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw\nrf_hw_backend_rng.c</FilePath>            </File>            <File>
+              <FileName>nrf_hw_backend_rng_mbedtls.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw\nrf_hw_backend_rng_mbedtls.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_Crypto backend uECC</GroupName>
+          <Files>            <File>
+              <FileName>micro_ecc_backend_ecc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_backend_ecc.c</FilePath>            </File>            <File>
+              <FileName>micro_ecc_backend_ecdh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_backend_ecdh.c</FilePath>            </File>            <File>
+              <FileName>micro_ecc_backend_ecdsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_backend_ecdsa.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Drivers</GroupName>
           <Files>            <File>
               <FileName>nrf_drv_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\clock\nrf_drv_clock.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_comp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\comp\nrf_drv_comp.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_gpiote.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_i2s.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\i2s\nrf_drv_i2s.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_lpcomp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\lpcomp\nrf_drv_lpcomp.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_pdm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\pdm\nrf_drv_pdm.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_clock.c</FilePath>            </File>            <File>
               <FileName>nrf_drv_power.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\power\nrf_drv_power.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_power.c</FilePath>            </File>            <File>
               <FileName>nrf_drv_ppi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\ppi\nrf_drv_ppi.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_pwm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\pwm\nrf_drv_pwm.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_qdec.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\qdec\nrf_drv_qdec.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_ppi.c</FilePath>            </File>            <File>
               <FileName>nrf_drv_rng.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\rng\nrf_drv_rng.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_rtc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\rtc\nrf_drv_rtc.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_saadc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\saadc\nrf_drv_saadc.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_rng.c</FilePath>            </File>            <File>
               <FileName>nrf_drv_spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\spi_master\nrf_drv_spi.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_spi.c</FilePath>            </File>            <File>
+              <FileName>nrf_drv_spis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_spis.c</FilePath>            </File>            <File>
               <FileName>nrf_drv_swi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\swi\nrf_drv_swi.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\timer\nrf_drv_timer.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_swi.c</FilePath>            </File>            <File>
               <FileName>nrf_drv_twi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\twi_master\nrf_drv_twi.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_twis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\twis_slave\nrf_drv_twis.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_twi.c</FilePath>            </File>            <File>
               <FileName>nrf_drv_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_wdt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\wdt\nrf_drv_wdt.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</FilePath>            </File>            <File>
               <FileName>nrf_nvic.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_nvic.c</FilePath>            </File>            <File>
-              <FileName>nrf_saadc.c</FileName>
+              <FileName>nrf_nvmc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\hal\nrf_saadc.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\hal\nrf_nvmc.c</FilePath>            </File>            <File>
               <FileName>nrf_soc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</FilePath>            </File>            <File>
+              <FileName>nrfx_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</FilePath>            </File>            <File>
+              <FileName>nrfx_comp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_comp.c</FilePath>            </File>            <File>
+              <FileName>nrfx_gpiote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_gpiote.c</FilePath>            </File>            <File>
+              <FileName>nrfx_i2s.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_i2s.c</FilePath>            </File>            <File>
+              <FileName>nrfx_lpcomp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_lpcomp.c</FilePath>            </File>            <File>
+              <FileName>nrfx_pdm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_pdm.c</FilePath>            </File>            <File>
+              <FileName>nrfx_power.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power.c</FilePath>            </File>            <File>
+              <FileName>nrfx_power_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</FilePath>            </File>            <File>
+              <FileName>nrfx_ppi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_ppi.c</FilePath>            </File>            <File>
+              <FileName>nrfx_prs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</FilePath>            </File>            <File>
+              <FileName>nrfx_pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_pwm.c</FilePath>            </File>            <File>
+              <FileName>nrfx_qdec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_qdec.c</FilePath>            </File>            <File>
+              <FileName>nrfx_rng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_rng.c</FilePath>            </File>            <File>
+              <FileName>nrfx_rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_rtc.c</FilePath>            </File>            <File>
+              <FileName>nrfx_saadc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_saadc.c</FilePath>            </File>            <File>
+              <FileName>nrfx_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_spi.c</FilePath>            </File>            <File>
+              <FileName>nrfx_spim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_spim.c</FilePath>            </File>            <File>
+              <FileName>nrfx_spis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_spis.c</FilePath>            </File>            <File>
+              <FileName>nrfx_swi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_swi.c</FilePath>            </File>            <File>
+              <FileName>nrfx_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_timer.c</FilePath>            </File>            <File>
+              <FileName>nrfx_twi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_twi.c</FilePath>            </File>            <File>
+              <FileName>nrfx_twim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_twim.c</FilePath>            </File>            <File>
+              <FileName>nrfx_twis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_twis.c</FilePath>            </File>            <File>
+              <FileName>nrfx_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</FilePath>            </File>            <File>
+              <FileName>nrfx_uarte.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</FilePath>            </File>            <File>
+              <FileName>nrfx_wdt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_wdt.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_Drivers_External</GroupName>
+          <Files>            <File>
+              <FileName>nrf_twi_sensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\twi_sensor\nrf_twi_sensor.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_External</GroupName>
+          <Files>            <File>
+              <FileName>orkney24pts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\thedotfactory_fonts\orkney24pts.c</FilePath>            </File>            <File>
+              <FileName>orkney8pts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\thedotfactory_fonts\orkney8pts.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Libraries</GroupName>
           <Files>            <File>
@@ -517,6 +694,9 @@
               <FileName>app_error.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\app_error.c</FilePath>            </File>            <File>
+              <FileName>app_error_handler_keil.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\util\app_error_handler_keil.c</FilePath>            </File>            <File>
               <FileName>app_error_weak.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\app_error_weak.c</FilePath>            </File>            <File>
@@ -532,6 +712,9 @@
               <FileName>app_scheduler.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</FilePath>            </File>            <File>
+              <FileName>app_sdcard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\sdcard\app_sdcard.c</FilePath>            </File>            <File>
               <FileName>app_timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\timer\app_timer.c</FilePath>            </File>            <File>
@@ -541,12 +724,33 @@
               <FileName>app_util_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\app_util_platform.c</FilePath>            </File>            <File>
+              <FileName>blockwise.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\cifra_AES128-EAX\blockwise.c</FilePath>            </File>            <File>
+              <FileName>cifra_cmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\cifra_AES128-EAX\cifra_cmac.c</FilePath>            </File>            <File>
+              <FileName>cifra_eax_aes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\cifra_AES128-EAX\cifra_eax_aes.c</FilePath>            </File>            <File>
               <FileName>crc16.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\crc16\crc16.c</FilePath>            </File>            <File>
               <FileName>crc32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\crc32\crc32.c</FilePath>            </File>            <File>
+              <FileName>eax.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\cifra_AES128-EAX\eax.c</FilePath>            </File>            <File>
+              <FileName>fds.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\fds\fds.c</FilePath>            </File>            <File>
+              <FileName>fnmatch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\fnmatch\fnmatch.c</FilePath>            </File>            <File>
+              <FileName>gf128.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\cifra_AES128-EAX\gf128.c</FilePath>            </File>            <File>
               <FileName>hardfault_handler_keil.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\hardfault\nrf52\handler\hardfault_handler_keil.c</FilePath>            </File>            <File>
@@ -571,9 +775,18 @@
               <FileName>mem_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\mem_manager\mem_manager.c</FilePath>            </File>            <File>
+              <FileName>modes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\cifra_AES128-EAX\modes.c</FilePath>            </File>            <File>
               <FileName>nrf_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\nrf_assert.c</FilePath>            </File>            <File>
+              <FileName>nrf_atfifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\atomic_fifo\nrf_atfifo.c</FilePath>            </File>            <File>
+              <FileName>nrf_atomic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\atomic\nrf_atomic.c</FilePath>            </File>            <File>
               <FileName>nrf_balloc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\balloc\nrf_balloc.c</FilePath>            </File>            <File>
@@ -595,6 +808,15 @@
               <FileName>nrf_fprintf_format.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\external\fprintf\nrf_fprintf_format.c</FilePath>            </File>            <File>
+              <FileName>nrf_fstorage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\fstorage\nrf_fstorage.c</FilePath>            </File>            <File>
+              <FileName>nrf_fstorage_nvmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\fstorage\nrf_fstorage_nvmc.c</FilePath>            </File>            <File>
+              <FileName>nrf_gfx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\gfx\nrf_gfx.c</FilePath>            </File>            <File>
               <FileName>nrf_memobj.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\experimental_memobj\nrf_memobj.c</FilePath>            </File>            <File>
@@ -610,6 +832,12 @@
               <FileName>nrf_section_iter.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</FilePath>            </File>            <File>
+              <FileName>nrf_sortlist.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\sortlist\nrf_sortlist.c</FilePath>            </File>            <File>
+              <FileName>nrf_spi_mngr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\spi_mngr\nrf_spi_mngr.c</FilePath>            </File>            <File>
               <FileName>nrf_strerror.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</FilePath>            </File>            <File>
@@ -618,7 +846,13 @@
               <FilePath>..\..\..\..\..\..\components\libraries\twi_mngr\nrf_twi_mngr.c</FilePath>            </File>            <File>
               <FileName>slip.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\slip\slip.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\components\libraries\slip\slip.c</FilePath>            </File>            <File>
+              <FileName>task_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_task_manager\task_manager.c</FilePath>            </File>            <File>
+              <FileName>task_manager_core_keil.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\experimental_task_manager\task_manager_core_keil.s</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Log</GroupName>
           <Files>            <File>
@@ -628,6 +862,225 @@
               <FileName>nrf_log_str_formatter.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_str_formatter.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_Oberon_Crypto</GroupName>
+          <Files>            <File>
+              <FileName>oberon_short_wchar_2.0.4.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\..\..\..\..\..\external\nrf_oberon\lib\nrf52\oberon_short_wchar_2.0.4.lib</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_TLS</GroupName>
+          <Files>            <File>
+              <FileName>aes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\aes.c</FilePath>            </File>            <File>
+              <FileName>aesni.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\aesni.c</FilePath>            </File>            <File>
+              <FileName>arc4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\arc4.c</FilePath>            </File>            <File>
+              <FileName>asn1parse.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\asn1parse.c</FilePath>            </File>            <File>
+              <FileName>asn1write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\nrf_tls\mbedtls\replacements\asn1write.c</FilePath>            </File>            <File>
+              <FileName>base64.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\base64.c</FilePath>            </File>            <File>
+              <FileName>bignum.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\bignum.c</FilePath>            </File>            <File>
+              <FileName>blowfish.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\blowfish.c</FilePath>            </File>            <File>
+              <FileName>camellia.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\camellia.c</FilePath>            </File>            <File>
+              <FileName>ccm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\ccm.c</FilePath>            </File>            <File>
+              <FileName>certs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\certs.c</FilePath>            </File>            <File>
+              <FileName>cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\cipher.c</FilePath>            </File>            <File>
+              <FileName>cipher_wrap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\cipher_wrap.c</FilePath>            </File>            <File>
+              <FileName>cmac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\cmac.c</FilePath>            </File>            <File>
+              <FileName>ctr_drbg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\ctr_drbg.c</FilePath>            </File>            <File>
+              <FileName>debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\debug.c</FilePath>            </File>            <File>
+              <FileName>des.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\des.c</FilePath>            </File>            <File>
+              <FileName>dhm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\dhm.c</FilePath>            </File>            <File>
+              <FileName>ecdh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\ecdh.c</FilePath>            </File>            <File>
+              <FileName>ecdsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\ecdsa.c</FilePath>            </File>            <File>
+              <FileName>ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\ecp.c</FilePath>            </File>            <File>
+              <FileName>ecp_curves.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\ecp_curves.c</FilePath>            </File>            <File>
+              <FileName>entropy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\entropy.c</FilePath>            </File>            <File>
+              <FileName>entropy_poll.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\entropy_poll.c</FilePath>            </File>            <File>
+              <FileName>error.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\error.c</FilePath>            </File>            <File>
+              <FileName>gcm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\gcm.c</FilePath>            </File>            <File>
+              <FileName>havege.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\havege.c</FilePath>            </File>            <File>
+              <FileName>hmac_drbg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\hmac_drbg.c</FilePath>            </File>            <File>
+              <FileName>md.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\md.c</FilePath>            </File>            <File>
+              <FileName>md2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\md2.c</FilePath>            </File>            <File>
+              <FileName>md4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\md4.c</FilePath>            </File>            <File>
+              <FileName>md5.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\md5.c</FilePath>            </File>            <File>
+              <FileName>md_wrap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\md_wrap.c</FilePath>            </File>            <File>
+              <FileName>memory_buffer_alloc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\memory_buffer_alloc.c</FilePath>            </File>            <File>
+              <FileName>oid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\oid.c</FilePath>            </File>            <File>
+              <FileName>padlock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\padlock.c</FilePath>            </File>            <File>
+              <FileName>pem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\pem.c</FilePath>            </File>            <File>
+              <FileName>pk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\pk.c</FilePath>            </File>            <File>
+              <FileName>pk_wrap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\pk_wrap.c</FilePath>            </File>            <File>
+              <FileName>pkcs11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\pkcs11.c</FilePath>            </File>            <File>
+              <FileName>pkcs12.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\pkcs12.c</FilePath>            </File>            <File>
+              <FileName>pkcs5.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\pkcs5.c</FilePath>            </File>            <File>
+              <FileName>pkparse.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\pkparse.c</FilePath>            </File>            <File>
+              <FileName>pkwrite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\pkwrite.c</FilePath>            </File>            <File>
+              <FileName>platform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\platform.c</FilePath>            </File>            <File>
+              <FileName>ripemd160.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\ripemd160.c</FilePath>            </File>            <File>
+              <FileName>rsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\rsa.c</FilePath>            </File>            <File>
+              <FileName>sha1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\sha1.c</FilePath>            </File>            <File>
+              <FileName>sha256.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\sha256.c</FilePath>            </File>            <File>
+              <FileName>sha512.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\sha512.c</FilePath>            </File>            <File>
+              <FileName>ssl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\ssl_cache.c</FilePath>            </File>            <File>
+              <FileName>ssl_ciphersuites.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\ssl_ciphersuites.c</FilePath>            </File>            <File>
+              <FileName>ssl_cli.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\ssl_cli.c</FilePath>            </File>            <File>
+              <FileName>ssl_cookie.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\ssl_cookie.c</FilePath>            </File>            <File>
+              <FileName>ssl_srv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\nrf_tls\mbedtls\replacements\ssl_srv.c</FilePath>            </File>            <File>
+              <FileName>ssl_ticket.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\ssl_ticket.c</FilePath>            </File>            <File>
+              <FileName>ssl_tls.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\ssl_tls.c</FilePath>            </File>            <File>
+              <FileName>threading.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\threading.c</FilePath>            </File>            <File>
+              <FileName>version.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\version.c</FilePath>            </File>            <File>
+              <FileName>version_features.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\version_features.c</FilePath>            </File>            <File>
+              <FileName>x509.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\x509.c</FilePath>            </File>            <File>
+              <FileName>x509_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\x509_create.c</FilePath>            </File>            <File>
+              <FileName>x509_crl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\x509_crl.c</FilePath>            </File>            <File>
+              <FileName>x509_crt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\x509_crt.c</FilePath>            </File>            <File>
+              <FileName>x509_csr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\x509_csr.c</FilePath>            </File>            <File>
+              <FileName>xtea.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\mbedtls\library\xtea.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_micro-ecc</GroupName>
+          <Files>            <File>
+              <FileName>micro_ecc_lib_nrf52.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\..\..\..\..\..\external\micro-ecc\nrf52hf_keil\armgcc\micro_ecc_lib_nrf52.lib</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nrf_cc310</GroupName>
+          <Files>            <File>
+              <FileName>nrf_cc310_keil_0.9.9.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\..\..\..\..\..\external\nrf_cc310\lib\nrf_cc310_keil_0.9.9.lib</FilePath>            </File>          </Files>
         </Group>      </Groups>
     </Target>  </Targets><RTE>
   <packages>
@@ -636,7 +1089,7 @@
     </filter>    <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0">
       <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>      </targetInfos>
     </package>
-    <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.15.0">
+    <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.16.0">
       <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>      </targetInfos>
     </package>  </packages>
   <apis/>
@@ -644,8 +1097,8 @@
       <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
       <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>      </targetInfos>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="8.15.0" condition="nRF5x Series CMSIS Device">
-      <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.15.0"/>
+    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="8.16.0" condition="nRF5x Series CMSIS Device">
+      <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.16.0"/>
       <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>      </targetInfos>
     </component>  </components>
   <files>  </files>

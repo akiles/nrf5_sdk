@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -49,8 +49,10 @@
 #ifndef BLE_H__
 #define BLE_H__
 
-#include "ble_ranges.h"
-#include "ble_types.h"
+#include <stdint.h>
+#include "nrf_svc.h"
+#include "nrf_error.h"
+#include "ble_err.h"
 #include "ble_gap.h"
 #include "ble_gatt.h"
 #include "ble_gattc.h"
@@ -136,13 +138,9 @@ enum BLE_COMMON_OPTS
  * @note The highest value used for @ref ble_gatt_conn_cfg_t::att_mtu in any connection configuration shall be used as a parameter.
  * If that value has not been configured for any connections then @ref BLE_GATT_ATT_MTU_DEFAULT must be used instead.
 */
-#define BLE_EVT_LEN_MAX(ATT_MTU) (BLE_MAX( \
-  sizeof(ble_evt_t), \
-  BLE_MAX( \
-    offsetof(ble_evt_t, evt.gattc_evt.params.rel_disc_rsp.includes) + ((ATT_MTU) - 2) / 6 * sizeof(ble_gattc_include_t), \
-    offsetof(ble_evt_t, evt.gattc_evt.params.attr_info_disc_rsp.info.attr_info16) + ((ATT_MTU) - 2) / 4 * sizeof(ble_gattc_attr_info16_t) \
-  ) \
-))
+#define BLE_EVT_LEN_MAX(ATT_MTU) ( \
+    offsetof(ble_evt_t, evt.gattc_evt.params.prim_srvc_disc_rsp.services) + ((ATT_MTU) - 1) / 4 * sizeof(ble_gattc_service_t) \
+)
 
 /** @defgroup BLE_USER_MEM_TYPES User Memory Types
  * @{ */
@@ -301,7 +299,9 @@ typedef union
  * In the case that no configurations has been set, or fewer connection configurations has been set than enabled connections,
  * the default connection configuration will be automatically added for the remaining connections.
  * When creating connections with the default configuration, @ref BLE_CONN_CFG_TAG_DEFAULT should be used in
- * place of @ref ble_conn_cfg_t::conn_cfg_tag. See @ref sd_ble_gap_adv_start() and sd_ble_gap_connect()"
+ * place of @ref ble_conn_cfg_t::conn_cfg_tag.
+ *
+ * @sa sd_ble_gap_adv_start()
  *
  * @mscs
  * @mmsc{@ref BLE_CONN_CFG}
@@ -310,8 +310,9 @@ typedef union
  */
 typedef struct
 {
-  uint8_t              conn_cfg_tag;        /**< The application chosen tag it can use with the @ref sd_ble_gap_adv_start() and sd_ble_gap_connect()
-                                                 calls to select this configuration when creating a connection.
+  uint8_t              conn_cfg_tag;        /**< The application chosen tag it can use with the
+                                                 @ref sd_ble_gap_adv_start() call
+                                                 to select this configuration when creating a connection.
                                                  Must be different for all connection configurations added and not @ref BLE_CONN_CFG_TAG_DEFAULT. */
   union {
     ble_gap_conn_cfg_t   gap_conn_cfg;      /**< GAP connection configuration, cfg_id is @ref BLE_CONN_CFG_GAP. */

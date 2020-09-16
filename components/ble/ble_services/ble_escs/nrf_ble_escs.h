@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -175,8 +175,6 @@ typedef struct
     nrf_ble_escs_adv_tx_pwr_t     adv_tx_pwr;
     nrf_ble_escs_factory_reset_t  factory_reset;
     nrf_ble_escs_remain_conntbl_t remain_connectable;
-
-
 } nrf_ble_escs_init_params_t;
 
 // Forward Declaration of nrf_ble_escs_t type.

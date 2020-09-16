@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -39,14 +39,11 @@
  */
 /**@file
  *
- * @defgroup sdk_nrf_bootloader Bootloader modules
- * @ingroup app_common
- * @brief Modules for creating a bootloader.
  *
- * @defgroup sdk_bootloader Bootloader
+ * @defgroup nrf_bootloader Bootloader modules
  * @{
- * @ingroup sdk_nrf_bootloader
- * @brief Basic bootloader.
+ * @ingroup app_common
+ * @brief Bootloader and DFU modules
  *
  * The bootloader module can be used to implement a basic bootloader that
  * can be extended with, for example, Device Firmware Update (DFU) support
@@ -57,7 +54,7 @@
 #define NRF_BOOTLOADER_H__
 
 #include <stdint.h>
-
+#include "nrf_dfu.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -68,21 +65,11 @@ extern "C" {
  *          If DFU functionality is compiled in, the DFU process is initialized
  *          when running this function.
  *
- * @retval  NRF_SUCCESS     If the bootloader was successfully initialized.
- *                          Any other return code indicates that the operation failed.
- */
-uint32_t nrf_bootloader_init(void);
-
-
-/** @brief Function for customizing the bootloader initialization.
+ * @note This function does not return unless an error occurred.
  *
- * @details This function is called during the initialization of the bootloader.
- *          It is implemented as weak function that can be overridden in the main file of the application.
- *
- * @retval  NRF_SUCCESS     If the user initialization was run successfully.
+ * @retval NRF_ERROR_INTERNAL  Something went wrong.
  */
-uint32_t nrf_bootloader_user_init(void);
-
+ret_code_t nrf_bootloader_init(nrf_dfu_observer_t observer);
 
 #ifdef __cplusplus
 }

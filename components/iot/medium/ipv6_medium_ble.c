@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015-2018 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -104,6 +104,25 @@ static commissioning_poweroff_cb_t       m_commissioning_power_off_cb;
 static bool                              m_adv_params_applied = false;                              /**< Indicates if advertising (and GAP) parameters have been applied. */
 #endif // COMMISSIONING_ENABLED
 
+static uint8_t                           m_adv_handle = BLE_GAP_ADV_SET_HANDLE_NOT_SET;             /**< Advertising handle used to identify an advertising set. */
+static uint8_t                           m_enc_advdata[BLE_GAP_ADV_SET_DATA_SIZE_MAX];              /**< Buffer for storing an encoded advertising set. */
+
+/**@brief Struct that contains pointers to the encoded advertising data. */
+static ble_gap_adv_data_t m_adv_data =
+{
+    .adv_data =
+    {
+        .p_data = m_enc_advdata,
+        .len    = BLE_GAP_ADV_SET_DATA_SIZE_MAX
+    },
+    .scan_rsp_data =
+    {
+        .p_data = NULL,
+        .len    = 0
+        
+    }
+};
+
 #if IPV6_MEDIUM_CONFIG_LOG_ENABLED
 
 #define NRF_LOG_MODULE_NAME ipv6_medium
@@ -151,11 +170,11 @@ static void adv_params_set(void)
     m_adv_params.advdata.uuids_complete.uuid_cnt = sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
     m_adv_params.advdata.uuids_complete.p_uuids  = m_adv_uuids;
 
-    m_adv_params.advparams.type        = BLE_GAP_ADV_TYPE_ADV_IND;
-    m_adv_params.advparams.p_peer_addr = NULL;                             // Undirected advertisement.
-    m_adv_params.advparams.fp          = BLE_GAP_ADV_FP_ANY;
-    m_adv_params.advparams.interval    = APP_ADV_ADV_INTERVAL;
-    m_adv_params.advparams.timeout     = APP_ADV_TIMEOUT;
+    m_adv_params.advparams.properties.type = BLE_GAP_ADV_TYPE_CONNECTABLE_SCANNABLE_UNDIRECTED;
+    m_adv_params.advparams.p_peer_addr     = NULL; // Undirected advertisement.
+    m_adv_params.advparams.filter_policy   = BLE_GAP_ADV_FP_ANY;
+    m_adv_params.advparams.interval        = APP_ADV_ADV_INTERVAL;
+    m_adv_params.advparams.duration        = APP_ADV_DURATION;
 
     IPV6M_EXIT();
 }
@@ -193,8 +212,16 @@ static void adv_params_apply(void)
 {
     uint32_t err_code;
 
-    err_code = ble_advdata_set(&m_p_node_adv_params->advdata, &m_p_node_adv_params->srdata);
+
+    err_code = ble_advdata_encode(&m_p_node_adv_params->advdata, m_adv_data.adv_data.p_data, &m_adv_data.adv_data.len);
     APP_ERROR_CHECK(err_code);
+#ifndef COMMISSIONING_ENABLED
+    err_code = sd_ble_gap_adv_set_configure(&m_adv_handle, &m_adv_data, &m_adv_params.advparams);
+    APP_ERROR_CHECK(err_code);
+#else
+    err_code = sd_ble_gap_adv_set_configure(&m_adv_handle, &m_adv_data, &m_p_node_adv_params->advparams);
+    APP_ERROR_CHECK(err_code);
+#endif
 }
 
 
@@ -264,9 +291,9 @@ static void on_ble_evt(ble_evt_t const * p_ble_evt)
 
             break;
         }
-        case BLE_GAP_EVT_TIMEOUT:
+        case BLE_GAP_EVT_ADV_SET_TERMINATED:
         {
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
+            if (p_ble_evt->evt.gap_evt.params.adv_set_terminated.reason == BLE_GAP_EVT_ADV_SET_TERMINATED_REASON_TIMEOUT)
             {
                 ipv6_medium_evt.ipv6_medium_evt_id = IPV6_MEDIUM_EVT_CONNECTABLE_MODE_EXIT;
                 do_notify_event = true;
@@ -433,7 +460,9 @@ uint32_t ipv6_medium_connectable_mode_enter(ipv6_medium_instance_id_t ipv6_mediu
     m_adv_params_applied = false;
 #endif // COMMISSIONING_ENABLED
 
-    uint32_t err_code = sd_ble_gap_adv_start(&m_p_node_adv_params->advparams, BLE_IPSP_TAG);
+    adv_params_apply();
+
+    uint32_t err_code = sd_ble_gap_adv_start(m_adv_handle, BLE_IPSP_TAG);
 #ifdef COMMISSIONING_ENABLED
     if (err_code == NRF_SUCCESS)
     {
@@ -452,7 +481,7 @@ uint32_t ipv6_medium_connectable_mode_exit(ipv6_medium_instance_id_t ipv6_medium
         return NRF_ERROR_INVALID_PARAM;
     }
 
-    uint32_t err_code = sd_ble_gap_adv_stop();
+    uint32_t err_code = sd_ble_gap_adv_stop(m_adv_handle);
 #ifdef COMMISSIONING_ENABLED
     if (err_code == NRF_SUCCESS)
     {
@@ -641,7 +670,6 @@ uint32_t ipv6_medium_init(ipv6_medium_init_params_t * p_init_param,          \
     m_p_node_gap_params = &m_gap_params;
     m_p_node_adv_params = &m_adv_params;
     gap_params_apply();
-    adv_params_apply();
 #else // COMMISSIONING_ENABLED
     m_commissioning_id_mode_cb   = p_init_param->commissioning_id_mode_cb;
     m_commissioning_power_off_cb = p_init_param->commissioning_power_off_cb;

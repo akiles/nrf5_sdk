@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -52,6 +52,7 @@
 #include <assert.h>
 
 #include "sdk_config.h"
+#include "app_scheduler.h"
 #include "background_dfu_operation.h"
 #include "compiler_abstraction.h"
 #include "nrf_dfu_handling_error.h"
@@ -65,7 +66,9 @@
 #include "nrf_log.h"
 
 #define BITMAP_BYTE_FROM_INDEX(index) ((index) / 8)
-#define BITMAP_BIT_FROM_INDEX(index)  ((index) % 8)
+#define BITMAP_BIT_FROM_INDEX(index)  (7 - ((index) % 8))
+
+static void block_buffer_store(background_dfu_block_manager_t * p_bm);
 
 /**@brief Convert block number to bitmap index.
  *
@@ -110,6 +113,197 @@ static __INLINE bool is_block_present(const uint8_t * p_bitmap, uint16_t index)
     return (p_bitmap[BITMAP_BYTE_FROM_INDEX(index)] >> BITMAP_BIT_FROM_INDEX(index)) & 0x01;
 }
 
+/**
+ * @brief A callback function for DFU operation.
+ */
+static void dfu_operation_callback(nrf_dfu_response_t * p_res, void * p_context)
+{
+    background_dfu_block_manager_t * p_bm = (background_dfu_block_manager_t *)p_context;
+    ret_code_t res_code;
+
+    if (p_res->result != NRF_DFU_RES_CODE_SUCCESS)
+    {
+        p_bm->result_handler(BACKGROUND_DFU_BLOCK_STORE_ERROR, p_bm->p_context);
+    }
+    else
+    {
+        switch (p_res->request)
+        {
+            case NRF_DFU_OP_OBJECT_CREATE:
+            {
+                // Object created, write respective block.
+                uint32_t current_size = p_bm->currently_stored_block * DEFAULT_BLOCK_SIZE;
+                uint16_t data_offset  = block_num_to_index(p_bm->currently_stored_block) * DEFAULT_BLOCK_SIZE;
+                uint16_t store_size   = MIN(DEFAULT_BLOCK_SIZE, (p_bm->image_size - current_size));
+                res_code = background_dfu_op_write(p_bm->data + data_offset,
+                                                   store_size,
+                                                   dfu_operation_callback,
+                                                   p_bm);
+
+                if (res_code != NRF_SUCCESS)
+                {
+                    NRF_LOG_ERROR("Failed to store block (b:%d c:%d).",
+                                    p_bm->currently_stored_block,
+                                    p_bm->current_block);
+                    p_bm->result_handler(BACKGROUND_DFU_BLOCK_STORE_ERROR, p_bm->p_context);
+                }
+
+                break;
+            }
+
+            case NRF_DFU_OP_OBJECT_WRITE:
+                if (!((p_bm->currently_stored_block + 1) % BLOCKS_PER_DFU_OBJECT) ||
+                    ((p_bm->currently_stored_block + 1) == BLOCKS_PER_SIZE(p_bm->image_size)))
+                {
+                    res_code = background_dfu_op_crc(dfu_operation_callback, p_bm);
+
+                    if (res_code != NRF_SUCCESS)
+                    {
+                        NRF_LOG_ERROR("Failed to store block (b:%d c:%d).",
+                                        p_bm->currently_stored_block,
+                                        p_bm->current_block);
+                        p_bm->result_handler(BACKGROUND_DFU_BLOCK_STORE_ERROR, p_bm->p_context);
+                    }
+                }
+                else
+                {
+                    p_bm->last_block_stored = p_bm->currently_stored_block;
+                    clear_bitmap_bit(p_bm->bitmap, block_num_to_index(p_bm->currently_stored_block));
+                    p_bm->currently_stored_block = INVALID_BLOCK_NUMBER;
+
+                    p_bm->result_handler(BACKGROUND_DFU_BLOCK_SUCCESS, p_bm->p_context);
+
+                    block_buffer_store(p_bm);
+                }
+
+                break;
+
+            case NRF_DFU_OP_CRC_GET:
+                res_code = background_dfu_op_execute(dfu_operation_callback, p_bm);
+
+                if (res_code != NRF_SUCCESS)
+                {
+                    NRF_LOG_ERROR("Failed to store block (b:%d c:%d).",
+                                    p_bm->currently_stored_block,
+                                    p_bm->current_block);
+                    p_bm->result_handler(BACKGROUND_DFU_BLOCK_STORE_ERROR, p_bm->p_context);
+                }
+
+                break;
+
+            case NRF_DFU_OP_OBJECT_EXECUTE:
+                p_bm->last_block_stored = p_bm->currently_stored_block;
+                clear_bitmap_bit(p_bm->bitmap, block_num_to_index(p_bm->currently_stored_block));
+                p_bm->currently_stored_block = INVALID_BLOCK_NUMBER;
+
+                p_bm->result_handler(BACKGROUND_DFU_BLOCK_SUCCESS, p_bm->p_context);
+
+                block_buffer_store(p_bm);
+
+                break;
+
+            default:
+                ASSERT(false);
+        }
+    }
+}
+
+/**@brief Store a block from the buffer in a flash.
+ *
+ * @param[inout] p_bm    A pointer to the block manager.
+ * @param[in]    p_block A block number to store.
+ *
+ * @return NRF_SUCCESS on success, an error code is returned otherwise.
+ */
+static ret_code_t block_store(background_dfu_block_manager_t * p_bm, uint32_t block_num)
+{
+    p_bm->currently_stored_block = block_num;
+
+    ret_code_t res_code = NRF_SUCCESS;
+    uint32_t current_size = block_num * DEFAULT_BLOCK_SIZE;
+
+    do
+    {
+        // Initialize DFU object if needed.
+        if (!(block_num % BLOCKS_PER_DFU_OBJECT))
+        {
+            uint32_t object_size = MIN(DEFAULT_DFU_OBJECT_SIZE, (p_bm->image_size - current_size));
+
+            res_code = background_dfu_op_create(p_bm->image_type,
+                                                object_size,
+                                                dfu_operation_callback,
+                                                p_bm);
+            break;
+        }
+
+        // Store block.
+        uint16_t data_offset = block_num_to_index(block_num) * DEFAULT_BLOCK_SIZE;
+        uint16_t store_size = MIN(DEFAULT_BLOCK_SIZE, (p_bm->image_size - current_size));
+        res_code = background_dfu_op_write(p_bm->data + data_offset,
+                                           store_size,
+                                           dfu_operation_callback,
+                                           p_bm);
+
+    } while (0);
+    return res_code;
+}
+
+/**@brief Check if block manager is busy storing a block.
+ *
+ * @param[inout] p_bm A pointer to the block manager.
+ *
+ */
+static bool is_block_manager_busy(background_dfu_block_manager_t * p_bm)
+{
+    return p_bm->currently_stored_block >= 0;
+}
+
+/**@brief Store any valid blocks from the buffer in a flash.
+ *
+ * @param[inout] p_bm A pointer to the block manager.
+ *
+ */
+static void block_buffer_store(background_dfu_block_manager_t * p_bm)
+{
+    ret_code_t res_code = NRF_SUCCESS;
+
+    if (!is_block_manager_busy(p_bm))
+    {
+        if (p_bm->last_block_stored < p_bm->current_block)
+        {
+            int32_t block = p_bm->last_block_stored + 1;
+
+            if (is_block_present(p_bm->bitmap, block_num_to_index(block)))
+            {
+                NRF_LOG_INFO("Storing block (b:%d c:%d).", block, p_bm->current_block);
+
+                // There is a block to store.
+                res_code = block_store(p_bm, block);
+                if (res_code != NRF_SUCCESS)
+                {
+                    NRF_LOG_ERROR("Failed to store block (b:%d c:%d).", block, p_bm->current_block);
+                    p_bm->result_handler(BACKGROUND_DFU_BLOCK_STORE_ERROR, p_bm->p_context);
+                }
+            }
+            else
+            {
+                NRF_LOG_WARNING("Gap encountered - quit (b:%d c:%d).", block, p_bm->current_block);
+            }
+        }
+    }
+}
+
+/**
+ * @brief A callback function for scheduling DFU block operations.
+ */
+static void block_store_scheduled(void * p_evt, uint16_t event_length)
+{
+    UNUSED_PARAMETER(event_length);
+
+    background_dfu_block_manager_t * p_bm = *((background_dfu_block_manager_t **)p_evt);
+    block_buffer_store(p_bm);
+}
+
 /**@brief Copy block data to the buffer.
  *
  * @param[inout] p_bm    A pointer to the block manager.
@@ -127,100 +321,9 @@ static void block_buffer_add(background_dfu_block_manager_t * p_bm,
     {
         p_bm->current_block = (int32_t)p_block->number;
     }
-}
 
-/**@brief Store a block from the buffer in a flash.
- *
- * @param[inout] p_bm    A pointer to the block manager.
- * @param[in]    p_block A block number to store.
- *
- * @return NRF_SUCCESS on success, an error code is returned otherwise.
- */
-static nrf_dfu_res_code_t block_store(background_dfu_block_manager_t * p_bm, uint32_t block_num)
-{
-    nrf_dfu_res_code_t res_code = NRF_DFU_RES_CODE_SUCCESS;
-    uint32_t current_size = block_num * DEFAULT_BLOCK_SIZE;
-
-    do
-    {
-        // Initialize DFU object if needed.
-        if (!(block_num % BLOCKS_PER_DFU_OBJECT))
-        {
-            uint32_t object_size = MIN(DEFAULT_DFU_OBJECT_SIZE, (p_bm->image_size - current_size));
-
-            res_code = background_dfu_op_create(p_bm->image_type, object_size);
-            if (res_code != NRF_DFU_RES_CODE_SUCCESS)
-            {
-                break;
-            }
-        }
-
-        // Store block.
-        uint16_t data_offset = block_num_to_index(block_num) * DEFAULT_BLOCK_SIZE;
-        uint16_t store_size = MIN(DEFAULT_BLOCK_SIZE, (p_bm->image_size - current_size));
-        res_code = background_dfu_op_write(p_bm->image_type, p_bm->data + data_offset, store_size);
-        if (res_code != NRF_DFU_RES_CODE_SUCCESS)
-        {
-            break;
-        }
-
-        // Execute if object is completed (last block in object or last block in image).
-        if (!((block_num + 1) % BLOCKS_PER_DFU_OBJECT) ||
-            ((block_num + 1) == BLOCKS_PER_SIZE(p_bm->image_size)))
-        {
-            res_code = background_dfu_op_crc(p_bm->image_type);
-            if (res_code != NRF_DFU_RES_CODE_SUCCESS)
-            {
-                break;
-            }
-
-            res_code = background_dfu_op_execute(p_bm->image_type);
-        }
-    } while (0);
-
-    return res_code;
-}
-
-/**@brief Store any valid blocks from the buffer in a flash.
- *
- * @param[inout] p_bm A pointer to the block manager.
- *
- * @return NRF_SUCCESS on success, an error code is returned otherwise.
- */
-static nrf_dfu_res_code_t block_buffer_store(background_dfu_block_manager_t * p_bm)
-{
-    nrf_dfu_res_code_t res_code = NRF_DFU_RES_CODE_SUCCESS;
-
-    while (p_bm->last_block_stored < p_bm->current_block)
-    {
-        int32_t block = p_bm->last_block_stored + 1;
-        uint16_t index = block_num_to_index(block);
-
-        if (is_block_present(p_bm->bitmap, index))
-        {
-            NRF_LOG_INFO("Storing block (b:%d c:%d).", block, p_bm->current_block);
-
-            // There is a block to store.
-            res_code = block_store(p_bm, block);
-            if (res_code != NRF_DFU_RES_CODE_SUCCESS)
-            {
-                NRF_LOG_ERROR("Failed to store block (b:%d c:%d).", block, p_bm->current_block);
-                break;
-            }
-
-            p_bm->last_block_stored = block;
-            clear_bitmap_bit(p_bm->bitmap, index);
-        }
-        else
-        {
-            NRF_LOG_WARNING("Gap encountered - quit (b:%d c:%d).", block, p_bm->current_block);
-
-            // Gap encountered, quit!.
-            break;
-        }
-    }
-
-    return res_code;
+    // Schedule block store.
+    UNUSED_RETURN_VALUE(app_sched_event_put(&p_bm, sizeof(p_bm), block_store_scheduled));
 }
 
 /***************************************************************************************************
@@ -230,11 +333,16 @@ static nrf_dfu_res_code_t block_buffer_store(background_dfu_block_manager_t * p_
 void block_manager_init(background_dfu_block_manager_t * p_bm,
                         uint32_t                         object_type,
                         uint32_t                         object_size,
-                        int32_t                          initial_block)
+                        int32_t                          initial_block,
+                        block_manager_result_notify_t    result_handler,
+                        void                           * p_context)
 {
-    p_bm->image_type        = object_type;
-    p_bm->image_size        = object_size;
-    p_bm->last_block_stored = p_bm->current_block = initial_block - 1;
+    p_bm->image_type             = object_type;
+    p_bm->image_size             = object_size;
+    p_bm->last_block_stored      = p_bm->current_block = initial_block - 1;
+    p_bm->result_handler         = result_handler;
+    p_bm->p_context              = p_context;
+    p_bm->currently_stored_block = INVALID_BLOCK_NUMBER;
 
     memset(p_bm->bitmap, 0, sizeof(p_bm->bitmap));
 }
@@ -273,13 +381,6 @@ background_dfu_block_result_t block_manager_block_process(background_dfu_block_m
     // Block fits within current buffer - copy it into the buffer and update the current block if most
     // recent block was received.
     block_buffer_add(p_bm, p_block);
-
-
-    // Store any block in the buffer that can be stored at this point.
-    if (block_buffer_store(p_bm) != NRF_DFU_RES_CODE_SUCCESS)
-    {
-        return BACKGROUND_DFU_BLOCK_STORE_ERROR;
-    }
 
     return BACKGROUND_DFU_BLOCK_SUCCESS;
 }

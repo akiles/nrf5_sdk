@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -213,13 +213,13 @@ int main(void)
 
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("Capacitive sensing library example.");
-
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
     err_code = clock_config();
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_INFO("Capacitive sensing library example started.");
 
     csense_start();
 

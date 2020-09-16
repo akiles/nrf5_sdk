@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -52,29 +52,13 @@
 #define DFU_HANDLING_ERROR_H__
 
 #include "nrf_dfu_types.h"
+#include "nrf_dfu_req_handler.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-/**@brief DFU request result codes.
- *
- * @details The DFU transport layer creates request events of type @ref nrf_dfu_req_op_t. Such events return one of these result codes.
- */
-typedef enum
-{
-    NRF_DFU_RES_CODE_INVALID                 = 0x00,     /**< Invalid opcode. */
-    NRF_DFU_RES_CODE_SUCCESS                 = 0x01,     /**< Operation successful. */
-    NRF_DFU_RES_CODE_OP_CODE_NOT_SUPPORTED   = 0x02,     /**< Opcode not supported. */
-    NRF_DFU_RES_CODE_INVALID_PARAMETER       = 0x03,     /**< Missing or invalid parameter value. */
-    NRF_DFU_RES_CODE_INSUFFICIENT_RESOURCES  = 0x04,     /**< Not enough memory for the data object. */
-    NRF_DFU_RES_CODE_INVALID_OBJECT          = 0x05,     /**< Data object does not match the firmware and hardware requirements, the signature is wrong, or parsing the command failed. */
-    NRF_DFU_RES_CODE_UNSUPPORTED_TYPE        = 0x07,     /**< Not a valid object type for a Create request. */
-    NRF_DFU_RES_CODE_OPERATION_NOT_PERMITTED = 0x08,     /**< The state of the DFU process does not allow this operation. */
-    NRF_DFU_RES_CODE_OPERATION_FAILED        = 0x0A,     /**< Operation failed. */
-    NRF_DFU_RES_CODE_EXT_ERROR               = 0x0B,     /**< Extended error. The next byte of the response contains the error code of the extended error (see @ref nrf_dfu_ext_error_code_t). */
-} nrf_dfu_res_code_t;
 
 /**@brief DFU request extended result codes.
  *
@@ -120,7 +104,7 @@ typedef enum
  *
  * @retval NRF_DFU_RES_CODE_EXT_ERROR
  */
-nrf_dfu_res_code_t ext_error_set(nrf_dfu_ext_error_code_t error_code);
+nrf_dfu_result_t ext_error_set(nrf_dfu_ext_error_code_t error_code);
 
 /**@brief Function for getting the most recent extended error code.
  *

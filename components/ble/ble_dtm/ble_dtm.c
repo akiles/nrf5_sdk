@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -640,7 +640,10 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
 
 #ifdef NRF52840_XXAA
             // Workaround for Errata ID 164
-            *(volatile uint32_t *)0x4000173C &= ~0x80000000; 
+            *(volatile uint32_t *)0x4000173C &= ~0x80000000;
+
+            // Workaround for Errata ID 191
+            *(volatile uint32_t *) 0x40001740 = ((*((volatile uint32_t *) 0x40001740)) & 0x7FFFFFFF);
 #endif
         }
         else if (freq == LE_TEST_SETUP_SET_UPPER)
@@ -662,7 +665,10 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
 
 #ifdef NRF52840_XXAA
                     // Workaround for Errata ID 164
-                    *(volatile uint32_t *)0x4000173C &= ~0x80000000; 
+                    *(volatile uint32_t *)0x4000173C &= ~0x80000000;
+
+                    // Workaround for Errata ID 191
+                    *(volatile uint32_t *) 0x40001740 = ((*((volatile uint32_t *) 0x40001740)) & 0x7FFFFFFF);
 #endif
                 
                     return radio_init();
@@ -674,6 +680,9 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
 #ifdef NRF52840_XXAA
                     // Workaround for Errata ID 164
                     *(volatile uint32_t *)0x4000173C &= ~0x80000000; 
+
+                    // Workaround for Errata ID 191
+                    *(volatile uint32_t *) 0x40001740 = ((*((volatile uint32_t *) 0x40001740)) & 0x7FFFFFFF);
 #endif
                 
                     return radio_init();
@@ -686,6 +695,9 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
                     // Workaround for Errata ID 164
                     *(volatile uint32_t *)0x4000173C |= 0x80000000;
                     *(volatile uint32_t *)0x4000173C = ((*(volatile uint32_t *)0x4000173C & 0xFFFFFF00) | 0x5C);
+
+                    //  Workaround for Errata ID 191
+                    *(volatile uint32_t *) 0x40001740 = ((*((volatile uint32_t *) 0x40001740)) & 0x7FFF00FF) | 0x80000000 | (((uint32_t)(196)) << 8);
 
                     return radio_init();
 #else
@@ -700,6 +712,9 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
                     // Workaround for Errata ID 164
                     *(volatile uint32_t *)0x4000173C |= 0x80000000;
                     *(volatile uint32_t *)0x4000173C = ((*(volatile uint32_t *)0x4000173C & 0xFFFFFF00) | 0x5C);
+
+                    //  Workaround for Errata ID 191
+                    *(volatile uint32_t *) 0x40001740 = ((*((volatile uint32_t *) 0x40001740)) & 0x7FFF00FF) | 0x80000000 | (((uint32_t)(196)) << 8);
 
                     return radio_init();
 #else

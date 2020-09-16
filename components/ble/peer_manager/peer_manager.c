@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -53,6 +53,9 @@
 #include "peer_manager_internal.h"
 #include "nrf_sdh_ble.h"
 
+#ifndef PM_PEER_RANKS_ENABLED
+    #define PM_PEER_RANKS_ENABLED 1
+#endif
 
 #define MODULE_INITIALIZED      (m_module_initialized)                  /**< Macro indicating whether the module has been initialized properly. */
 
@@ -65,7 +68,6 @@ static uint32_t                      m_current_highest_peer_rank;       /**< The
 static pm_peer_id_t                  m_highest_ranked_peer;             /**< The peer with the highest peer rank. Used by @ref pm_peer_rank_highest. */
 static pm_evt_handler_t              m_evt_handlers[PM_MAX_REGISTRANTS];/**< The subscribers to Peer Manager events, as registered through @ref pm_register. */
 static uint8_t                       m_n_registrants;                   /**< The number of event handlers registered through @ref pm_register. */
-static ble_conn_state_user_flag_id_t m_bonded_flag_id;                  /**< The flag ID for which connections are with a peer with which we are bonded. */
 
 
 /**@brief Function for sending a Peer Manager event to all subscribers.
@@ -81,6 +83,7 @@ static void evt_send(pm_evt_t const * p_pm_evt)
 }
 
 
+#if PM_PEER_RANKS_ENABLED == 1
 /**@brief Function for initializing peer rank static variables.
  */
 static void rank_vars_update(void)
@@ -92,6 +95,7 @@ static void rank_vars_update(void)
 
     m_peer_rank_initialized = ((err_code == NRF_SUCCESS) || (err_code == NRF_ERROR_NOT_FOUND));
 }
+#endif
 
 
 /**@brief Event handler for events from the Peer Database module.
@@ -107,6 +111,7 @@ void pm_pdb_evt_handler(pm_evt_t * p_pdb_evt)
 
     switch (p_pdb_evt->evt_id)
     {
+#if PM_PEER_RANKS_ENABLED == 1
         case PM_EVT_PEER_DATA_UPDATE_SUCCEEDED:
             if (p_pdb_evt->params.peer_data_update_succeeded.action == PM_PEER_DATA_OP_UPDATE)
             {
@@ -152,6 +157,7 @@ void pm_pdb_evt_handler(pm_evt_t * p_pdb_evt)
                 }
             }
             break;
+#endif
 
         case PM_EVT_PEER_DELETE_SUCCEEDED:
             // Check that no peers marked for deletion are left.
@@ -175,11 +181,13 @@ void pm_pdb_evt_handler(pm_evt_t * p_pdb_evt)
                 evt_send(&pm_delete_all_evt);
             }
 
+#if PM_PEER_RANKS_ENABLED == 1
             if (m_peer_rank_initialized && (p_pdb_evt->peer_id == m_highest_ranked_peer))
             {
                 // Update peer rank variable if highest ranked peer has been deleted.
                 rank_vars_update();
             }
+#endif
             break;
 
         case PM_EVT_PEER_DELETE_FAILED:
@@ -227,21 +235,6 @@ void pm_sm_evt_handler(pm_evt_t * p_sm_evt)
 {
     VERIFY_PARAM_NOT_NULL_VOID(p_sm_evt);
 
-    switch (p_sm_evt->evt_id)
-    {
-        case PM_EVT_CONN_SEC_SUCCEEDED:
-        {
-            bool bonded = p_sm_evt->params.conn_sec_succeeded.procedure
-                                == PM_LINK_SECURED_PROCEDURE_BONDING;
-            ble_conn_state_user_flag_set(p_sm_evt->conn_handle, m_bonded_flag_id, bonded);
-            break;
-        }
-
-        default:
-            /* No action */
-            break;
-    }
-
     // Forward the event to all registered Peer Manager event handlers.
     evt_send(p_sm_evt);
 }
@@ -266,16 +259,6 @@ void pm_gcm_evt_handler(pm_evt_t * p_gcm_evt)
  */
 void pm_im_evt_handler(pm_evt_t * p_im_evt)
 {
-    switch (p_im_evt->evt_id)
-    {
-        case PM_EVT_BONDED_PEER_CONNECTED:
-            ble_conn_state_user_flag_set(p_im_evt->conn_handle, m_bonded_flag_id, true);
-            break;
-        default:
-            /* No action. */
-            break;
-    }
-
     // Forward the event to all registered Peer Manager event handlers.
     evt_send(p_im_evt);
 }
@@ -304,7 +287,6 @@ static void internal_state_reset()
 {
     m_highest_ranked_peer = PM_PEER_ID_INVALID;
     m_peer_rank_token     = PM_STORE_TOKEN_INVALID;
-    m_bonded_flag_id      = BLE_CONN_STATE_USER_FLAG_INVALID;
 }
 
 
@@ -356,14 +338,14 @@ ret_code_t pm_init(void)
 
     internal_state_reset();
 
-    m_bonded_flag_id = ble_conn_state_user_flag_acquire();
-    if (m_bonded_flag_id == BLE_CONN_STATE_USER_FLAG_INVALID)
-    {
-        return NRF_ERROR_INTERNAL;
-    }
-
     m_peer_rank_initialized = false;
     m_module_initialized    = true;
+
+    // If PM_PEER_RANKS_ENABLED is 0, these variables are unused.
+    UNUSED_VARIABLE(m_peer_rank_initialized);
+    UNUSED_VARIABLE(m_peer_rank_token);
+    UNUSED_VARIABLE(m_current_highest_peer_rank);
+    UNUSED_VARIABLE(m_highest_ranked_peer);
 
     return NRF_SUCCESS;
 }
@@ -407,6 +389,11 @@ ret_code_t pm_conn_secure(uint16_t conn_handle, bool force_repairing)
 
     err_code = sm_link_secure(conn_handle, force_repairing);
 
+    if (err_code == NRF_ERROR_INVALID_STATE)
+    {
+        err_code = NRF_ERROR_BUSY;
+    }
+
     return err_code;
 }
 
@@ -432,8 +419,11 @@ ret_code_t pm_conn_sec_params_reply(uint16_t               conn_handle,
 
 void pm_local_database_has_changed(void)
 {
+#if !defined(PM_SERVICE_CHANGED_ENABLED) || (PM_SERVICE_CHANGED_ENABLED == 1)
     VERIFY_MODULE_INITIALIZED_VOID();
+
     gcm_local_database_has_changed();
+#endif
 }
 
 
@@ -532,7 +522,7 @@ ret_code_t pm_conn_sec_status_get(uint16_t conn_handle, pm_conn_sec_status_t * p
     }
 
     p_conn_sec_status->connected      = (status == BLE_CONN_STATUS_CONNECTED);
-    p_conn_sec_status->bonded         = ble_conn_state_user_flag_get(conn_handle, m_bonded_flag_id);
+    p_conn_sec_status->bonded         = (im_peer_id_get_by_conn_handle(conn_handle) != PM_PEER_ID_INVALID);
     p_conn_sec_status->encrypted      = ble_conn_state_encrypted(conn_handle);
     p_conn_sec_status->mitm_protected = ble_conn_state_mitm_protected(conn_handle);
     return NRF_SUCCESS;
@@ -655,6 +645,17 @@ ret_code_t pm_peer_data_store(pm_peer_id_t       peer_id,
     if (ALIGN_NUM(4, length) != length)
     {
         return NRF_ERROR_INVALID_PARAM;
+    }
+
+    if (data_id == PM_PEER_DATA_ID_BONDING)
+    {
+        pm_peer_id_t dupl_peer_id;
+        dupl_peer_id = im_find_duplicate_bonding_data((pm_peer_data_bonding_t *) p_data, peer_id);
+
+        if (dupl_peer_id != PM_PEER_ID_INVALID)
+        {
+            return NRF_ERROR_FORBIDDEN;
+        }
     }
 
     pm_peer_data_flash_t peer_data;
@@ -829,6 +830,9 @@ ret_code_t pm_peer_ranks_get(pm_peer_id_t * p_highest_ranked_peer,
                              pm_peer_id_t * p_lowest_ranked_peer,
                              uint32_t     * p_lowest_rank)
 {
+#if PM_PEER_RANKS_ENABLED == 0
+    return NRF_ERROR_NOT_SUPPORTED;
+#else
     VERIFY_MODULE_INITIALIZED();
 
     pm_peer_id_t         peer_id      = pdb_next_peer_id_get(PM_PEER_ID_INVALID);
@@ -893,19 +897,25 @@ ret_code_t pm_peer_ranks_get(pm_peer_id_t * p_highest_ranked_peer,
         err_code = NRF_ERROR_INTERNAL;
     }
     return err_code;
+#endif
 }
 
 
+#if PM_PEER_RANKS_ENABLED == 1
 /**@brief Function for initializing peer rank functionality.
  */
 static void rank_init(void)
 {
     rank_vars_update();
 }
+#endif
 
 
 ret_code_t pm_peer_rank_highest(pm_peer_id_t peer_id)
 {
+#if PM_PEER_RANKS_ENABLED == 0
+    return NRF_ERROR_NOT_SUPPORTED;
+#else
     VERIFY_MODULE_INITIALIZED();
 
     ret_code_t err_code;
@@ -947,19 +957,27 @@ ret_code_t pm_peer_rank_highest(pm_peer_id_t peer_id)
         }
         else
         {
-            m_current_highest_peer_rank += 1;
-            err_code = pdb_raw_store(peer_id, &peer_data, &m_peer_rank_token);
-            if (err_code != NRF_SUCCESS)
+            if (m_current_highest_peer_rank == UINT32_MAX)
             {
-                m_peer_rank_token    = PM_STORE_TOKEN_INVALID;
-                m_current_highest_peer_rank -= 1;
+                err_code = NRF_ERROR_RESOURCES;
+            }
+            else
+            {
+                m_current_highest_peer_rank += 1;
+                err_code = pdb_raw_store(peer_id, &peer_data, &m_peer_rank_token);
+                if (err_code != NRF_SUCCESS)
                 {
-                if ((err_code != NRF_ERROR_BUSY) && (err_code != NRF_ERROR_STORAGE_FULL))
-                    err_code = NRF_ERROR_INTERNAL;
+                    m_peer_rank_token    = PM_STORE_TOKEN_INVALID;
+                    m_current_highest_peer_rank -= 1;
+                    {
+                    if ((err_code != NRF_ERROR_BUSY) && (err_code != NRF_ERROR_STORAGE_FULL))
+                        err_code = NRF_ERROR_INTERNAL;
+                    }
                 }
             }
         }
     }
     return err_code;
+#endif
 }
 #endif // NRF_MODULE_ENABLED(PEER_MANAGER)

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -39,6 +39,7 @@
  */
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(NFC_CH_COMMON)
+#include "nfc_ble_pair_common.h"
 
 #include <stdint.h>
 

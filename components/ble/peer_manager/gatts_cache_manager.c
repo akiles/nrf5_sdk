@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -65,9 +65,13 @@ static void internal_state_reset()
 {
     m_module_initialized       = false;
     m_current_sc_store_peer_id = PM_PEER_ID_INVALID;
+
+    // If PM_SERVICE_CHANGED_ENABLED is 0, this variable is unused.
+    UNUSED_VARIABLE(m_current_sc_store_peer_id);
 }
 
 
+#if !defined(PM_SERVICE_CHANGED_ENABLED) || (PM_SERVICE_CHANGED_ENABLED == 1)
 //lint -save -e550
 /**@brief Function for storing service_changed_pending = true to flash for all peers, in sequence.
  *
@@ -114,6 +118,7 @@ void gscm_pdb_evt_handler(pm_evt_t * p_event)
         service_changed_pending_set();
     }
 }
+#endif
 
 
 ret_code_t gscm_init()
@@ -262,6 +267,7 @@ ret_code_t gscm_local_db_cache_apply(uint16_t conn_handle)
     return err_code;
 }
 
+#if !defined(PM_SERVICE_CHANGED_ENABLED) || (PM_SERVICE_CHANGED_ENABLED == 1)
 void gscm_local_database_has_changed(void)
 {
     NRF_PM_DEBUG_CHECK(m_module_initialized);
@@ -337,4 +343,5 @@ void gscm_db_change_notification_done(pm_peer_id_t peer_id)
     (void) pdb_raw_store(peer_id, &peer_data, NULL);
     //lint -restore
 }
+#endif
 #endif // NRF_MODULE_ENABLED(PEER_MANAGER)

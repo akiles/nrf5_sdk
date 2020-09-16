@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -50,11 +50,12 @@
 #if NFC_T4T_TLV_BLOCK_PARSER_LOG_ENABLED
 #define NRF_LOG_LEVEL       NFC_T4T_TLV_BLOCK_PARSER_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  NFC_T4T_TLV_BLOCK_PARSER_INFO_COLOR
-#else // NFC_T4T_TLV_BLOCK_PARSER_LOG_ENABLED
-#define NRF_LOG_LEVEL       0
-#endif // NFC_T4T_TLV_BLOCK_PARSER_LOG_ENABLED
 #include "nrf_log.h"
 NRF_LOG_MODULE_REGISTER();
+#else // NFC_T4T_TLV_BLOCK_PARSER_LOG_ENABLED
+#define NRF_LOG_LEVEL       0
+#include "nrf_log.h"
+#endif // NFC_T4T_TLV_BLOCK_PARSER_LOG_ENABLED
 
 #define TLV_TYPE_FIELD_LEN                  1U    ///< Length of a type field.
 

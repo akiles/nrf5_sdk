@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -64,19 +64,100 @@
 
 #include "ser_phy_debug_comm.h"
 
+#if defined(APP_USBD_ENABLED) && APP_USBD_ENABLED
+#include "app_usbd_serial_num.h"
+#ifdef BOARD_PCA10059
+#include "nrf_dfu_trigger_usb.h"
+#endif
+#include "app_usbd.h"
+
+static volatile bool m_usb_started;
+
+
+static void usbd_user_evt_handler(app_usbd_event_type_t event)
+{
+    switch (event)
+    {
+        case APP_USBD_EVT_DRV_SUSPEND:
+            break;
+        case APP_USBD_EVT_DRV_RESUME:
+            break;
+        case APP_USBD_EVT_STARTED:
+            m_usb_started = true;
+            break;
+        case APP_USBD_EVT_STOPPED:
+            app_usbd_disable();
+            break;
+        case APP_USBD_EVT_POWER_DETECTED:
+            NRF_LOG_INFO("USB power detected");
+
+            if (!nrf_drv_usbd_is_enabled())
+            {
+                app_usbd_enable();
+            }
+            break;
+        case APP_USBD_EVT_POWER_REMOVED:
+            NRF_LOG_INFO("USB power removed");
+            app_usbd_stop();
+            break;
+        case APP_USBD_EVT_POWER_READY:
+            NRF_LOG_INFO("USB ready");
+            app_usbd_start();
+            break;
+        default:
+            break;
+    }
+}
+
+static void usbd_init(void)
+{
+    app_usbd_serial_num_generate();
+    static const app_usbd_config_t usbd_config = {
+        .ev_state_proc = usbd_user_evt_handler
+    };
+    APP_ERROR_CHECK(app_usbd_init(&usbd_config));
+}
+
+static void usbd_enable(void)
+{
+#ifdef BOARD_PCA10059
+    APP_ERROR_CHECK(nrf_dfu_trigger_usb_init());
+#endif
+    APP_ERROR_CHECK(app_usbd_power_events_enable()); 
+
+    /* Process USB events until USB is started. This is related to the fact that
+     * current version of softdevice does not handle USB POWER events. */
+    while (m_usb_started == false)
+    {
+        while (app_usbd_event_queue_process())
+        {
+            /* Nothing to do */
+        }
+    }
+
+}
+#endif //APP_USBD_ENABLED
+
+static void on_idle(void)
+{
+#if defined(APP_USBD_ENABLED) && APP_USBD_ENABLED
+    while (app_usbd_event_queue_process())
+    {
+        /* Nothing to do */
+    }
+#endif
+    if (!NRF_LOG_PROCESS())
+    {
+        /* Sleep waiting for an application event. */
+        uint32_t err_code = sd_app_evt_wait();
+        APP_ERROR_CHECK(err_code);
+    }
+}
+
 /**@brief Main function of the connectivity application. */
 int main(void)
 {
     uint32_t err_code = NRF_SUCCESS;
-
-    if (nrf_drv_clock_init() != NRF_SUCCESS)
-    {
-        return NRF_ERROR_INTERNAL;
-    }
-
-    nrf_drv_clock_hfclk_request(NULL);
-    while (!nrf_drv_clock_hfclk_is_running())
-    {}
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
 
@@ -92,19 +173,41 @@ int main(void)
     NRF_POWER->TASKS_CONSTLAT = 1;
 
     /* Initialize scheduler queue. */
-    //lint -save -e666
+    //lint -save -e666 -e587
     APP_SCHED_INIT(SER_CONN_SCHED_MAX_EVENT_DATA_SIZE, SER_CONN_SCHED_QUEUE_SIZE);
     //lint -restore
 
     /* Initialize SoftDevice.
      * SoftDevice Event IRQ is not scheduled but immediately copies BLE events to the application
      * scheduler queue */
-    err_code = nrf_sdh_enable_request();
-    APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_drv_clock_init();
+    if ((err_code != NRF_SUCCESS) &&
+        (err_code != NRF_ERROR_MODULE_ALREADY_INITIALIZED))
+    {
+        APP_ERROR_CHECK(err_code);
+    }
+
+    nrf_drv_clock_hfclk_request(NULL);
+    while (!nrf_drv_clock_hfclk_is_running())
+    {}
+
+#if defined(APP_USBD_ENABLED) && APP_USBD_ENABLED
+    usbd_init();
+#endif
 
     /* Open serialization HAL Transport layer and subscribe for HAL Transport events. */
     err_code = ser_hal_transport_open(ser_conn_hal_transport_event_handle);
     APP_ERROR_CHECK(err_code);
+
+#if defined(APP_USBD_ENABLED) && APP_USBD_ENABLED
+    usbd_enable();
+#endif
+
+    err_code = nrf_sdh_enable_request();
+    APP_ERROR_CHECK(err_code);
+
+    ser_conn_on_no_mem_handler_set(on_idle);
 
     /* Enter main loop. */
     for (;;)
@@ -127,12 +230,7 @@ int main(void)
         err_code = ser_conn_rx_process();
         APP_ERROR_CHECK(err_code);
 
-        if (!NRF_LOG_PROCESS())
-        {
-            /* Sleep waiting for an application event. */
-            err_code = sd_app_evt_wait();
-            APP_ERROR_CHECK(err_code);
-        }
+        on_idle();
     }
 }
 /** @} */

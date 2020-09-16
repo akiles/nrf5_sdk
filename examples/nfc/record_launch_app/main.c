@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -93,6 +93,18 @@ static void nfc_callback(void * p_context, nfc_t2t_event_t event, const uint8_t 
 
 
 /**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
+
+/**
  * @brief Function for application main entry.
  */
 int main(void)
@@ -102,13 +114,10 @@ int main(void)
     uint32_t err_code;
     /** @snippet [NFC Launch App usage_1] */
 
-    err_code = NRF_LOG_INIT(NULL);
-    APP_ERROR_CHECK(err_code);
-
-    NRF_LOG_DEFAULT_BACKENDS_INIT();
+    log_init();
 
     /* Configure LED-pins as outputs */
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 
     /* Set up NFC */
     err_code = nfc_t2t_setup(nfc_callback, NULL);

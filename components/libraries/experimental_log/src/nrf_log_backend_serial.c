@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -69,6 +69,7 @@ void nrf_log_backend_serial_put(nrf_log_backend_t const * p_backend,
 
     params.timestamp = header.timestamp;
     params.module_id = header.module_id;
+    params.dropped   = header.dropped;
     params.use_colors = NRF_LOG_USES_COLORS;
 
     /*lint -save -e438*/
@@ -76,7 +77,6 @@ void nrf_log_backend_serial_put(nrf_log_backend_t const * p_backend,
     {
         char const * p_log_str = (char const *)((uint32_t)header.base.std.addr);
         params.severity  = (nrf_log_severity_t)header.base.std.severity;
-        params.raw       = header.base.std.raw;
         uint32_t nargs = header.base.std.nargs;
         uint32_t args[NRF_LOG_MAX_NUM_OF_ARGS];
 
@@ -94,7 +94,6 @@ void nrf_log_backend_serial_put(nrf_log_backend_t const * p_backend,
     {
         uint32_t data_len = header.base.hexdump.len;
         params.severity   = (nrf_log_severity_t)header.base.hexdump.severity;
-        params.raw        = header.base.hexdump.raw;
         uint8_t data_buf[8];
         uint32_t chunk_len;
         do

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -51,7 +51,7 @@
 extern hashDataStuct hashVectors[];
 
 /*RNG Global variables*/
-extern CRYS_RND_Context_t*   rndContext_ptr;
+extern CRYS_RND_State_t*     rndState_ptr;
 extern CRYS_RND_WorkBuff_t*  rndWorkBuff_ptr;
 
 
@@ -126,7 +126,7 @@ int hash_tests(void)
                 goto end;
 			}
 
-			INTEG_TEST_PRINT("\nPassed \n ==========================\n");
+			INTEG_TEST_PRINT("\n  ======= Passed =============\n");
 		}
 	}
 end:
@@ -135,21 +135,6 @@ end:
 }
 
 #ifdef DX_LINUX_PLATFORM /*for linux platform only  -> we need to use contiguous memory for stack !!*/
-/*hash_wrap_tests creates thread with defined stack address to and calls to hash test */
-void* hash_thread(void)
-{
-   uint32_t* threadReturnValue = malloc(sizeof(uint32_t));
-
-   *threadReturnValue = hash_tests();
-    if (*threadReturnValue != SA_SILIB_RET_OK) {
-        INTEG_TEST_PRINT("Failure in hash_tests,ret = 0x%x\n", *threadReturnValue);
-        goto exit;
-    }
-
-exit:
-	pthread_exit(threadReturnValue);
-}
-
 int hash_wrap_tests(void){
 	uint32_t rc = 0;
 
@@ -185,15 +170,17 @@ int hash_wrap_tests(void){
 		return -1;
 	}
 
-	rc =*((uint32_t *)*&threadRet);
+	if (threadRet != NULL)
+	{
+		INTEG_TEST_PRINT("pthread_join retval is %x\n",(size_t)threadRet);
+	}
 
-    free(threadRet);
 	threadRc = pthread_attr_destroy(&threadAttr);
 	if (threadRc != 0) {
 		INTEG_TEST_PRINT("pthread_attr_destroy failed\n");
 	}
 
-	return rc;
+	return (rc + (uint32_t)threadRet);
 }
 #endif
 
@@ -210,9 +197,15 @@ int main(void)
 	}
 
         /*Init SaSi library*/
-	ret = SaSi_LibInit(rndContext_ptr, rndWorkBuff_ptr);
+    ret = SaSi_LibInit();
+    if (ret != SA_SILIB_RET_OK) {
+        INTEG_TEST_PRINT("Failed SaSi_LibInit - ret = 0x%x\n", ret);
+        goto exit_1;
+    }
+
+    ret = CRYS_RndInit(rndState_ptr, rndWorkBuff_ptr);
 	if (ret != SA_SILIB_RET_OK) {
-	    INTEG_TEST_PRINT("Failed SaSi_SiLibInit - ret = 0x%x\n", ret);
+        INTEG_TEST_PRINT("Failed CRYS_RndInit - ret = 0x%x\n", ret);
 	    goto exit_1;
 	}
 
@@ -231,7 +224,13 @@ int main(void)
 
 exit_0:
 	/*Finish SaSi library*/
-	SaSi_LibFini(rndContext_ptr);
+    SaSi_LibFini();
+
+    ret = CRYS_RND_UnInstantiation(rndState_ptr);
+
+    if (ret) {
+        INTEG_TEST_PRINT("Failure in CRYS_RND_UnInstantiation,ret = 0x%x\n", ret);
+    }
 
 exit_1:
 	integration_tests_clear();

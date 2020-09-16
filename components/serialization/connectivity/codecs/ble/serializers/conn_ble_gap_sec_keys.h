@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -109,6 +109,17 @@ uint32_t conn_ble_gap_sec_context_destroy(uint16_t conn_handle);
 uint32_t conn_ble_gap_sec_context_find(uint16_t conn_handle, uint32_t *p_index);
 /** @} */
 
+/** @brief Function allocates data from the pool.
+ *
+ * @param id ID used for buffer identification. If buffer with given ID is already allocated the pointer to that buffer is returned.
+ * @return   Allocated buffer of NULL.
+ */
+uint8_t * conn_ble_gap_ble_data_buf_alloc(uint32_t id);
+
+/** @brief Function for freeing the buffer.
+ * @param p_data Buffer to be freed.
+ */
+void conn_ble_gap_ble_data_buf_free(uint8_t * p_data);
 
 #ifdef __cplusplus
 }

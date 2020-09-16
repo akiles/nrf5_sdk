@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -208,8 +208,8 @@ static bool parse_trigger(background_dfu_context_t       * p_dfu_ctx,
 }
 
 bool background_dfu_validate_trigger(background_dfu_context_t * p_dfu_ctx,
-                                     const uint8_t * p_payload,
-                                     uint32_t        payload_len)
+                                     const uint8_t            * p_payload,
+                                     uint32_t                   payload_len)
 {
     if (payload_len != sizeof(background_dfu_trigger_t))
     {
@@ -237,8 +237,8 @@ bool background_dfu_validate_trigger(background_dfu_context_t * p_dfu_ctx,
 }
 
 bool background_dfu_process_trigger(background_dfu_context_t * p_dfu_ctx,
-                                    const uint8_t * p_payload,
-                                    uint32_t        payload_len)
+                                    const uint8_t            * p_payload,
+                                    uint32_t                   payload_len)
 {
     bool result = false;
 
@@ -288,32 +288,7 @@ background_dfu_block_result_t background_dfu_process_block(background_dfu_contex
             break;
 
         case BACKGROUND_DFU_BLOCK_SUCCESS:
-            if (p_dfu_ctx->dfu_mode == BACKGROUND_DFU_MODE_MULTICAST)
-            {
-                restart_block_timeout_timer(p_dfu_ctx);
-            }
-
-            if (block_manager_is_image_complete(&p_dfu_ctx->block_manager))
-            {
-                err_code = background_dfu_handle_event(p_dfu_ctx,
-                                                       BACKGROUND_DFU_EVENT_TRANSFER_COMPLETE);
-                if (err_code != NRF_SUCCESS)
-                {
-                    NRF_LOG_ERROR("Error in background_dfu_handle_event (%d)", err_code);
-                }
-            }
-            else
-            {
-                // FIXME I don't like it here.
-                p_dfu_ctx->block_num++;
-
-                err_code = background_dfu_handle_event(p_dfu_ctx,
-                                                       BACKGROUND_DFU_EVENT_TRANSFER_CONTINUE);
-                if (err_code != NRF_SUCCESS)
-                {
-                    NRF_LOG_ERROR("Error in background_dfu_handle_event (%d)", err_code);
-                }
-            }
+            // Intentionally empty.
             break;
 
         default:
@@ -353,46 +328,176 @@ static bool is_image_different(const background_dfu_context_t * p_dfu_ctx)
     return false;
 }
 
-/**@brief Check if stored init command is valid.
- *
- * @param[in]  p_dfu_ctx A pointer to DFU client context.
- * @param[out] p_offset  An offset of completed data if init command is incomplete.
- *
- * @return True if init command is valid, false otherwise.
- *
+/**
+ * @brief A callback function for block manager.
  */
-static bool is_init_command_valid(background_dfu_context_t * p_dfu_ctx, uint32_t * p_offset)
+static void dfu_block_manager_result_handler(background_dfu_block_result_t result, void * p_context)
 {
-    nrf_dfu_res_code_t res_code;
+    background_dfu_context_t * p_dfu_ctx = p_context;
+    uint32_t                   err_code;
 
-    res_code = background_dfu_op_select(NRF_DFU_OBJ_TYPE_COMMAND,
-                                        &p_dfu_ctx->max_obj_size,
-                                        p_offset);
-
-    if (res_code != NRF_DFU_RES_CODE_SUCCESS)
+    if (result == BACKGROUND_DFU_BLOCK_SUCCESS)
     {
-        NRF_LOG_WARNING("Select failed");
-        return false;
+        if (p_dfu_ctx->dfu_mode == BACKGROUND_DFU_MODE_MULTICAST)
+        {
+            restart_block_timeout_timer(p_dfu_ctx);
+        }
+
+        if (block_manager_is_image_complete(&p_dfu_ctx->block_manager))
+        {
+            err_code = background_dfu_handle_event(p_dfu_ctx,
+                                                   BACKGROUND_DFU_EVENT_TRANSFER_COMPLETE);
+            if (err_code != NRF_SUCCESS)
+            {
+                NRF_LOG_ERROR("Error in background_dfu_handle_event (%d)", err_code);
+            }
+        }
+        else
+        {
+            // FIXME I don't like it here.
+            p_dfu_ctx->block_num++;
+
+            err_code = background_dfu_handle_event(p_dfu_ctx,
+                                                   BACKGROUND_DFU_EVENT_TRANSFER_CONTINUE);
+            if (err_code != NRF_SUCCESS)
+            {
+                NRF_LOG_ERROR("Error in background_dfu_handle_event (%d)", err_code);
+            }
+        }
+    }
+    else
+    {
+        err_code = background_dfu_handle_event(p_dfu_ctx, BACKGROUND_DFU_EVENT_PROCESSING_ERROR);
+        if (err_code != NRF_SUCCESS)
+        {
+            NRF_LOG_ERROR("Error in background_dfu_handle_event (%d)", err_code);
+        }
+    }
+}
+
+/**
+ * @brief Prepare state machine to download init command.
+ */
+static void setup_download_init_command(background_dfu_context_t * p_dfu_ctx)
+{
+    p_dfu_ctx->p_resource_size = &p_dfu_ctx->init_cmd_size;
+    p_dfu_ctx->retry_count     = DEFAULT_RETRIES;
+    p_dfu_ctx->block_num       = 0;
+
+    background_dfu_transport_state_update(p_dfu_ctx);
+
+    block_manager_init(&p_dfu_ctx->block_manager,
+                       p_dfu_ctx->dfu_state,
+                       *p_dfu_ctx->p_resource_size,
+                       p_dfu_ctx->block_num,
+                       dfu_block_manager_result_handler,
+                       p_dfu_ctx);
+
+    if (p_dfu_ctx->dfu_mode == BACKGROUND_DFU_MODE_MULTICAST)
+    {
+        NRF_LOG_INFO("Init complete. Multicast Mode.");
+        uint32_t jitter = block_request_jitter_get();
+        uint32_t err_code = app_timer_start(m_missing_block_timer,
+                                            APP_TIMER_TICKS(jitter),
+                                            p_dfu_ctx);
+        if (err_code != NRF_SUCCESS)
+        {
+            NRF_LOG_ERROR("Error in app_timer_start (%d)", err_code);
+        }
+    }
+    else
+    {
+        NRF_LOG_INFO("Init complete. Unicast Mode.");
+    }
+}
+
+/**
+ * @brief A callback function for DFU command operations.
+ */
+static void dfu_init_check_callback(nrf_dfu_response_t * p_res, void * p_context)
+{
+    background_dfu_context_t * p_dfu_ctx = (background_dfu_context_t *)p_context;
+
+    switch (p_res->request)
+    {
+        case NRF_DFU_OP_OBJECT_SELECT:
+            if (p_res->result != NRF_DFU_RES_CODE_SUCCESS)
+            {
+                NRF_LOG_ERROR("No valid init command - select failed");
+                setup_download_init_command((background_dfu_context_t *)p_context);
+
+                UNUSED_RETURN_VALUE(background_dfu_handle_event(p_dfu_ctx, BACKGROUND_DFU_EVENT_TRANSFER_CONTINUE));
+            }
+
+            p_dfu_ctx->max_obj_size = p_res->select.max_size;
+            p_dfu_ctx->block_num    = p_res->select.offset / DEFAULT_BLOCK_SIZE;
+
+            if (background_dfu_op_execute(dfu_init_check_callback, p_context) != NRF_SUCCESS)
+            {
+                NRF_LOG_ERROR("No valid init command - execute error");
+                setup_download_init_command((background_dfu_context_t *)p_context);
+
+                UNUSED_RETURN_VALUE(background_dfu_handle_event(p_dfu_ctx, BACKGROUND_DFU_EVENT_TRANSFER_CONTINUE));
+            }
+
+            break;
+
+        case NRF_DFU_OP_OBJECT_EXECUTE:
+            if ((p_res->result != NRF_DFU_RES_CODE_SUCCESS) ||
+                (s_dfu_settings.progress.command_crc != p_dfu_ctx->init_cmd_crc))
+            {
+                NRF_LOG_ERROR("Init commad has changed");
+                p_dfu_ctx->remaining_size = 0;
+                setup_download_init_command((background_dfu_context_t *)p_context);
+
+                UNUSED_RETURN_VALUE(background_dfu_handle_event(p_dfu_ctx, BACKGROUND_DFU_EVENT_TRANSFER_CONTINUE));
+            }
+            else
+            {
+                // Valid init command stored, download firmware.
+                p_dfu_ctx->dfu_diag.state = BACKGROUND_DFU_DOWNLOAD_INIT_CMD;
+
+                UNUSED_RETURN_VALUE(background_dfu_handle_event(p_dfu_ctx, BACKGROUND_DFU_EVENT_TRANSFER_COMPLETE));
+            }
+
+            break;
+
+        default:
+            ASSERT(false);
+    }
+}
+
+/**
+ * @brief A callback function for DFU data operation.
+ */
+static void dfu_data_select_callback(nrf_dfu_response_t * p_res, void * p_context)
+{
+    ASSERT(p_res->request == NRF_DFU_OP_OBJECT_SELECT);
+
+    background_dfu_context_t * p_dfu_ctx = (background_dfu_context_t *)p_context;
+    if (p_res->result != NRF_DFU_RES_CODE_SUCCESS)
+    {
+        NRF_LOG_ERROR("Select failed");
+        dfu_handle_error(p_dfu_ctx);
+        return;
     }
 
-    // Check if a valid init command is present.
-    res_code = background_dfu_op_execute(NRF_DFU_OBJ_TYPE_COMMAND);
-    if (res_code != NRF_DFU_RES_CODE_SUCCESS)
-    {
-        NRF_LOG_ERROR("No valid init command");
-        return false;
-    }
+    p_dfu_ctx->dfu_state       = BACKGROUND_DFU_DOWNLOAD_FIRMWARE;
+    p_dfu_ctx->p_resource_size = &p_dfu_ctx->firmware_size;
+    p_dfu_ctx->retry_count     = DEFAULT_RETRIES;
+    p_dfu_ctx->block_num       = (p_res->select.offset / DEFAULT_BLOCK_SIZE);
+    p_dfu_ctx->max_obj_size    = p_res->select.max_size;
 
-    // Check if init command is the same as before.
-    if (s_dfu_settings.progress.command_crc != p_dfu_ctx->init_cmd_crc)
-    {
-        NRF_LOG_ERROR("Init commad has changed");
-        *p_offset = 0;
-        p_dfu_ctx->remaining_size = 0;
-        return false;
-    }
+    background_dfu_transport_state_update(p_dfu_ctx);
 
-    return true;
+    block_manager_init(&p_dfu_ctx->block_manager,
+                       p_dfu_ctx->dfu_state,
+                       *p_dfu_ctx->p_resource_size,
+                       p_dfu_ctx->block_num,
+                       dfu_block_manager_result_handler,
+                       p_dfu_ctx);
+
+    UNUSED_RETURN_VALUE(background_dfu_handle_event(p_dfu_ctx, BACKGROUND_DFU_EVENT_TRANSFER_CONTINUE));
 }
 
 /***************************************************************************************************
@@ -483,7 +588,7 @@ const char * background_dfu_state_to_string(const background_dfu_state_t state)
  *
  *  @return A pointer to null terminated string with event name.
  */
-const char * background_dfu_event_to_string(const background_dfu_even_t event)
+const char * background_dfu_event_to_string(const background_dfu_event_t event)
 {
     static const char * const names[] = {
         "DFU_EVENT_TRANSFER_COMPLETE",
@@ -496,7 +601,7 @@ const char * background_dfu_event_to_string(const background_dfu_even_t event)
 }
 
 uint32_t background_dfu_handle_event(background_dfu_context_t * p_dfu_ctx,
-                                     background_dfu_even_t      event)
+                                     background_dfu_event_t     event)
 {
     uint32_t err_code = NRF_SUCCESS;
 
@@ -536,48 +641,25 @@ uint32_t background_dfu_handle_event(background_dfu_context_t * p_dfu_ctx,
                 p_dfu_ctx->dfu_diag.prev_state = BACKGROUND_DFU_DOWNLOAD_TRIG;
 
                 p_dfu_ctx->dfu_state = BACKGROUND_DFU_DOWNLOAD_INIT_CMD;
-                uint32_t offset = 0;
 
-                if (!is_init_command_valid(p_dfu_ctx, &offset))
+                // Initiate init command check procedure.
+                if (background_dfu_op_select(NRF_DFU_OBJ_TYPE_COMMAND,
+                                             dfu_init_check_callback,
+                                             p_dfu_ctx) != NRF_SUCCESS)
                 {
-                    p_dfu_ctx->p_resource_size = &p_dfu_ctx->init_cmd_size;
-                    p_dfu_ctx->block_num       = (offset / DEFAULT_BLOCK_SIZE);
-                    p_dfu_ctx->retry_count     = DEFAULT_RETRIES;
-
-                    background_dfu_transport_state_update(p_dfu_ctx);
-
-                    block_manager_init(&p_dfu_ctx->block_manager,
-                                       p_dfu_ctx->dfu_state,
-                                       *p_dfu_ctx->p_resource_size,
-                                       p_dfu_ctx->block_num);
-
-                    if (p_dfu_ctx->dfu_mode == BACKGROUND_DFU_MODE_MULTICAST)
-                    {
-                        NRF_LOG_INFO("Init complete. Multicast Mode.");
-                        uint32_t jitter = block_request_jitter_get();
-                        err_code = app_timer_start(m_missing_block_timer,
-                                                   APP_TIMER_TICKS(jitter),
-                                                   p_dfu_ctx);
-                        if (err_code != NRF_SUCCESS)
-                        {
-                            NRF_LOG_ERROR("Error in app_timer_start (%d)", err_code);
-                        }
-                    }
-                    else
-                    {
-                        NRF_LOG_INFO("Init complete. Unicast Mode.");
-                    }
-
-                    break;
+                    NRF_LOG_ERROR("No valid init command - select error");
+                    setup_download_init_command(p_dfu_ctx);
                 }
-
-                NRF_LOG_INFO("Valid init command found. Continue with firmware download.");
-                // fallthrough - init command is completed and we should
-                //               continue with firmware download
+                else
+                {
+                    // We wait for dfu request to finish - do not send anything.
+                    return NRF_SUCCESS;
+                }
             }
+
+            break;
         }
 
-        /* no break */
         case BACKGROUND_DFU_DOWNLOAD_INIT_CMD:
         {
             if (event == BACKGROUND_DFU_EVENT_TRANSFER_COMPLETE)
@@ -589,31 +671,18 @@ uint32_t background_dfu_handle_event(background_dfu_context_t * p_dfu_ctx,
                     stop_block_timeout_timer(p_dfu_ctx);
                 }
 
-                uint32_t offset = 0;
-                nrf_dfu_res_code_t res_code;
-                res_code = background_dfu_op_select(NRF_DFU_OBJ_TYPE_DATA,
-                                                    &p_dfu_ctx->max_obj_size,
-                                                    &offset);
-
-                if (res_code != NRF_DFU_RES_CODE_SUCCESS)
+                if (background_dfu_op_select(NRF_DFU_OBJ_TYPE_DATA,
+                                             dfu_data_select_callback,
+                                             p_dfu_ctx) != NRF_SUCCESS)
                 {
                     NRF_LOG_ERROR("Select failed");
-                    p_dfu_ctx->dfu_state = BACKGROUND_DFU_ERROR;
+                    dfu_handle_error(p_dfu_ctx);
                     err_code = NRF_ERROR_INTERNAL;
-                    break;
                 }
-
-                p_dfu_ctx->dfu_state       = BACKGROUND_DFU_DOWNLOAD_FIRMWARE;
-                p_dfu_ctx->p_resource_size = &p_dfu_ctx->firmware_size;
-                p_dfu_ctx->block_num       = (offset / DEFAULT_BLOCK_SIZE);
-                p_dfu_ctx->retry_count     = DEFAULT_RETRIES;
-
-                background_dfu_transport_state_update(p_dfu_ctx);
-
-                block_manager_init(&p_dfu_ctx->block_manager,
-                                   p_dfu_ctx->dfu_state,
-                                   *p_dfu_ctx->p_resource_size,
-                                   p_dfu_ctx->block_num);
+                else
+                {
+                    return NRF_SUCCESS;
+                }
             }
             else if (event == BACKGROUND_DFU_EVENT_PROCESSING_ERROR)
             {
@@ -643,10 +712,7 @@ uint32_t background_dfu_handle_event(background_dfu_context_t * p_dfu_ctx,
                     stop_block_timeout_timer(p_dfu_ctx);
                 }
 
-                if (!p_dfu_ctx->reset_suppress)
-                {
-                    nrf_dfu_req_handler_reset_if_dfu_complete();
-                }
+                background_dfu_transport_state_update(p_dfu_ctx);
             }
             else if (event == BACKGROUND_DFU_EVENT_PROCESSING_ERROR)
             {

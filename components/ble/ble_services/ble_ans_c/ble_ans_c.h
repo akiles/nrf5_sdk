@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -85,6 +85,17 @@ NRF_SDH_BLE_OBSERVER(_name ## _obs,                                             
                      BLE_ANS_C_BLE_OBSERVER_PRIO,                                                   \
                      ble_ans_c_on_ble_evt, &_name)
 
+/** @brief Macro for defining multiple ble_ans_c instances.
+ *
+ * @param   _name   Name of the array of instances.
+ * @param   _cnt    Number of instances to define.
+ * @hideinitializer
+ */
+#define BLE_ANS_C_ARRAY_DEF(_name, _cnt)                \
+static ble_ans_c_t _name[_cnt];                         \
+NRF_SDH_BLE_OBSERVERS(_name ## _obs,                     \
+                      BLE_ANS_C_BLE_OBSERVER_PRIO,       \
+                      ble_ans_c_on_ble_evt, &_name, _cnt)
 
 // Forward declaration of the ble_ans_c_t type.
 typedef struct ble_ans_c_s ble_ans_c_t;

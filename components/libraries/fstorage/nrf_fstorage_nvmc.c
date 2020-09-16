@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -69,6 +69,7 @@ static nrf_atomic_flag_t m_flash_operation_ongoing;
 /* Send event to the event handler. */
 static void event_send(nrf_fstorage_t        const * p_fs,
                        nrf_fstorage_evt_id_t         evt_id,
+                       void const *                  p_src,
                        uint32_t                      addr,
                        uint32_t                      len,
                        void                        * p_param)
@@ -84,6 +85,7 @@ static void event_send(nrf_fstorage_t        const * p_fs,
         .result  = NRF_SUCCESS,
         .id      = evt_id,
         .addr    = addr,
+        .p_src   = p_src,
         .len     = len,
         .p_param = p_param,
     };
@@ -139,7 +141,7 @@ static ret_code_t write(nrf_fstorage_t const * p_fs,
     /* Clear the flag before sending the event, to allow API calls in the event context. */
     (void) nrf_atomic_flag_clear(&m_flash_operation_ongoing);
 
-    event_send(p_fs, NRF_FSTORAGE_EVT_WRITE_RESULT, dest, len, p_param);
+    event_send(p_fs, NRF_FSTORAGE_EVT_WRITE_RESULT, p_src, dest, len, p_param);
 
     return NRF_SUCCESS;
 }
@@ -166,7 +168,7 @@ static ret_code_t erase(nrf_fstorage_t const * p_fs,
     /* Clear the flag before sending the event, to allow API calls in the event context. */
     (void) nrf_atomic_flag_clear(&m_flash_operation_ongoing);
 
-    event_send(p_fs, NRF_FSTORAGE_EVT_ERASE_RESULT, page_addr, len, p_param);
+    event_send(p_fs, NRF_FSTORAGE_EVT_ERASE_RESULT, NULL, page_addr, len, p_param);
 
     return NRF_SUCCESS;
 }

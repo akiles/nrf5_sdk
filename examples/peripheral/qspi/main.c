@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -136,7 +136,7 @@ int main(void)
 
     err_code = nrf_drv_qspi_init(&config, qspi_handler, NULL);
     APP_ERROR_CHECK(err_code);
-    NRF_LOG_INFO("QSPI Initialized");
+    NRF_LOG_INFO("QSPI example started.");
 
     configure_memory();
 

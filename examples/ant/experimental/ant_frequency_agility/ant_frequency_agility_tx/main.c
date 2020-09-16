@@ -60,6 +60,10 @@
 #include "nrf_sdh_ant.h"
 #include "ant_frequency_agility_tx.h"
 
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
+
 #define APP_TIMER_PRESCALER             0                    /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE         2u                   /**< Size of timer operation queues. */
 
@@ -73,8 +77,20 @@ static void utils_setup(void)
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, NULL);
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS, NULL);
     APP_ERROR_CHECK(err_code);
+}
+
+
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 }
 
 
@@ -82,11 +98,10 @@ static void utils_setup(void)
  */
 int main(void)
 {
-    uint32_t err_code;
-
+    log_init();
     utils_setup();
 
-    err_code = nrf_sdh_enable_request();
+    ret_code_t err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
     ASSERT(nrf_sdh_is_enabled());
@@ -97,9 +112,13 @@ int main(void)
     // Setup and start ANT channel
     ant_freq_ag_setup();
 
+    NRF_LOG_INFO("ANT Frequency Agility TX example started.");
+
     // Enter main loop.
     for (;;)
     {
+        NRF_LOG_FLUSH();
+
         err_code = sd_app_evt_wait();
         APP_ERROR_CHECK(err_code);
     }

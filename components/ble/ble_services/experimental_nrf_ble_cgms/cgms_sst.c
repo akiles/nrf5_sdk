@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -192,6 +192,7 @@ ret_code_t cgms_sst_char_add(nrf_ble_cgms_t * p_cgms)
     add_char_params.write_access     = SEC_JUST_WORKS;
     add_char_params.is_defered_write = 1;
     add_char_params.char_props.write = true;
+    add_char_params.char_props.read  = true;
 
     return characteristic_add(p_cgms->service_handle,
                               &add_char_params,

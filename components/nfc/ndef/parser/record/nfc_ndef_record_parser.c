@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -51,11 +51,12 @@
 #if NFC_NDEF_RECORD_PARSER_LOG_ENABLED
 #define NRF_LOG_LEVEL       NFC_NDEF_RECORD_PARSER_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  NFC_NDEF_RECORD_PARSER_INFO_COLOR
-#else // NFC_NDEF_RECORD_PARSER_LOG_ENABLED
-#define NRF_LOG_LEVEL       0
-#endif // NFC_NDEF_RECORD_PARSER_LOG_ENABLED
 #include "nrf_log.h"
 NRF_LOG_MODULE_REGISTER();
+#else // NFC_NDEF_RECORD_PARSER_LOG_ENABLED
+#define NRF_LOG_LEVEL       0
+#include "nrf_log.h"
+#endif // NFC_NDEF_RECORD_PARSER_LOG_ENABLED
 
 /* Sum of sizes of fields: TNF-flags, Type Length, Payload Length in short NDEF record. */
 #define NDEF_RECORD_BASE_LONG_SHORT (2 + NDEF_RECORD_PAYLOAD_LEN_SHORT_SIZE)
@@ -205,8 +206,8 @@ void ndef_record_printout(uint32_t num, nfc_ndef_record_desc_t * const p_rec_des
 
         if (p_bin_pay_desc->p_payload != NULL)
         {
-            NRF_LOG_INFO("Payload data (%d bytes):", p_bin_pay_desc->payload_length);
-            NRF_LOG_HEXDUMP_INFO((uint8_t *)p_bin_pay_desc->p_payload, p_bin_pay_desc->payload_length);
+            NRF_LOG_INFO("Payload length: %d bytes", p_bin_pay_desc->payload_length);
+            NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_bin_pay_desc->p_payload, p_bin_pay_desc->payload_length);
         }
         else
         {

@@ -69,6 +69,7 @@
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 // Arbitrary Page Numbers
 #define TIME_SYNC_PAGE                  0x01
@@ -259,15 +260,25 @@ static void rtc_config(void)
     nrf_drv_rtc_enable(&m_rtc);
 }
 
-/**@brief Function for the Logger and Power Manager initialization.
+
+/**@brief Function for the Power Manager initialization.
  */
 static void utils_setup(void)
+{
+    ret_code_t err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
 {
     ret_code_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
-    err_code = nrf_pwr_mgmt_init();
-    APP_ERROR_CHECK(err_code);
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 }
 
 
@@ -275,11 +286,14 @@ static void utils_setup(void)
  */
 int main(void)
 {
+    log_init();
     utils_setup();
     softdevice_setup();
     rtc_config();
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
     ant_channel_rx_broadcast_setup();
+
+    NRF_LOG_INFO("ANT Time Synchronization RX example started.");
 
     // Main loop.
     for (;;)

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -514,6 +514,17 @@ static ret_code_t on_rw_authorize_req(nrf_ble_escs_t * p_escs, ble_evt_t const *
              || ar->request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW)
         {
             on_long_write(p_escs, p_ble_evt);
+        }
+        else if (ar->request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL)
+        {
+            ble_gatts_rw_authorize_reply_params_t auth_reply;
+            memset(&auth_reply, 0, sizeof(auth_reply));
+
+            auth_reply.type                     = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
+            auth_reply.params.write.gatt_status = BLE_GATT_STATUS_SUCCESS;
+
+            err_code = sd_ble_gatts_rw_authorize_reply(p_ble_evt->evt.gatts_evt.conn_handle, &auth_reply);
+            VERIFY_SUCCESS(err_code);
         }
         else
         {

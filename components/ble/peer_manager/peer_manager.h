@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -145,8 +145,8 @@ ret_code_t pm_sec_params_set(ble_gap_sec_params_t * p_sec_params);
  *
  *          If the connection is a slave connection, the function sends a security request to
  *          the peer (master). It is up to the peer then to initiate pairing or encryption.
- *          If the peer ignores the request, a @ref BLE_GAP_EVT_TIMEOUT event occurs
- *          with the source @ref BLE_GAP_TIMEOUT_SRC_SECURITY_REQUEST. Otherwise, the peer initiates
+ *          If the peer ignores the request, a @ref BLE_GAP_EVT_AUTH_STATUS event occurs
+ *          with the status @ref BLE_GAP_SEC_STATUS_TIMEOUT. Otherwise, the peer initiates
  *          security, in which case things happen as if the peer had initiated security itself.
  *          See @ref PM_EVT_CONN_SEC_START for information about peer-initiated security.
  *
@@ -156,16 +156,19 @@ ret_code_t pm_sec_params_set(ble_gap_sec_params_t * p_sec_params);
  *                              the central role. Recommended value: false.
  *
  * @retval NRF_SUCCESS                    If the operation completed successfully.
+ * @retval NRF_ERROR_BUSY                 If a security procedure is already in progress on the link,
+ *                                        or if the link is disconnecting or disconnected.
  * @retval NRF_ERROR_TIMEOUT              If there was an SMP time-out, so that no more security
  *                                        operations can be performed on this link.
  * @retval BLE_ERROR_INVALID_CONN_HANDLE  If the connection handle is invalid.
  * @retval NRF_ERROR_NOT_FOUND            If the security parameters have not been set, either by
  *                                        @ref pm_sec_params_set or by @ref pm_conn_sec_params_reply.
+ * @retval NRF_ERROR_INVALID_DATA         If the peer is bonded, but no LTK was found in the stored
+ *                                        bonding data. Repairing was not requested.
  * @retval NRF_ERROR_STORAGE_FULL         If there is no more space in persistent storage.
  * @retval NRF_ERROR_NO_MEM               If no more authentication procedures can run in parallel
  *                                        for the given role. See @ref sd_ble_gap_authenticate.
- * @retval NRF_ERROR_INVALID_STATE        If the Peer Manager is not initialized, or the peer is
- *                                        disconnected or in the process of disconnecting.
+ * @retval NRF_ERROR_INVALID_STATE        If the Peer Manager is not initialized.
  * @retval NRF_ERROR_INTERNAL             If an internal error occurred.
  */
 ret_code_t pm_conn_secure(uint16_t conn_handle, bool force_repairing);
@@ -214,8 +217,9 @@ ret_code_t pm_conn_sec_params_reply(uint16_t               conn_handle,
  *          PM_EVT_SERVICE_CHANGED_IND_CONFIRMED when the peer sends its confirmation. Peers that
  *          are not subscribed to the service changed indication when this function is called do not
  *          receive an indication, and no events are sent to the user. Likewise, if the service
- *          changed characteristic is not present in the local database, this no indications are
- *          sent peers, and no events are sent to the user.
+ *          changed characteristic is not present in the local database, or if the @ref
+ *          PM_SERVICE_CHANGED_ENABLED is set to 0, no indications are sent peers, and no events are
+ *          sent to the user.
  */
 void pm_local_database_has_changed(void);
 
@@ -348,6 +352,8 @@ ret_code_t pm_device_identities_list_set(pm_peer_id_t const * p_peers,
  * The identity address is distributed to the peer during bonding. Changing the identity address
  * means bonded devices might not recognize us.
  *
+ * @note The SoftDevice functions @ref sd_ble_gap_addr_set and @ref sd_ble_gap_privacy_set must not
+ *       be called when using the Peer Manager. Use the Peer Manager equivalents instead.
  *
  * @param[in] p_addr The GAP address to be set.
  *
@@ -569,6 +575,9 @@ ret_code_t pm_peer_data_app_data_load(pm_peer_id_t peer_id,
  * @retval NRF_ERROR_NOT_FOUND      If no peer was found for the peer ID.
  * @retval NRF_ERROR_BUSY           If the underlying flash handler is busy with other flash
  *                                  operations. Try again after receiving a Peer Manager event.
+ * @retval NRF_ERROR_FORBIDDEN      If data ID is @ref PM_PEER_DATA_ID_BONDING and the new bonding
+ *                                  data also corresponds to another bonded peer. No data is written
+ *                                  so duplicate entries are avoided.
  * @retval NRF_ERROR_INVALID_STATE  If the Peer Manager is not initialized.
  */
 ret_code_t pm_peer_data_store(pm_peer_id_t       peer_id,
@@ -719,6 +728,8 @@ ret_code_t pm_peers_delete(void);
  * @retval NRF_ERROR_NOT_FOUND      If no peers were found.
  * @retval NRF_ERROR_INVALID_STATE  If the Peer Manager is not initialized.
  * @retval NRF_ERROR_INTERNAL       If an internal error occurred.
+ * @retval NRF_ERROR_NOT_SUPPORTED  If peer rank functionality has been disabled via the @ref
+ *                                  PM_PEER_RANKS_ENABLED configuration option.
  */
 ret_code_t pm_peer_ranks_get(pm_peer_id_t * p_highest_ranked_peer,
                              uint32_t     * p_highest_rank,
@@ -747,7 +758,12 @@ ret_code_t pm_peer_ranks_get(pm_peer_id_t * p_highest_ranked_peer,
  *                                  operations, or if a previous call to this function has not
  *                                  completed. Try again after receiving a Peer Manager event.
  * @retval NRF_ERROR_INVALID_STATE  If the Peer Manager is not initialized.
+ * @retval NRF_ERROR_RESOURCES      If the highest rank is UINT32_MAX, so the new rank would wrap
+ *                                  around to 0. To fix this, manually update all ranks to smaller
+ *                                  values, while still keeping their order.
  * @retval NRF_ERROR_INTERNAL       If an internal error occurred.
+ * @retval NRF_ERROR_NOT_SUPPORTED  If peer rank functionality has been disabled via the @ref
+ *                                  PM_PEER_RANKS_ENABLED configuration option.
  */
 ret_code_t pm_peer_rank_highest(pm_peer_id_t peer_id);
 

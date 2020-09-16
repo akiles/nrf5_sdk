@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -74,21 +74,31 @@
 #include <stdint.h>
 #include "ble.h"
 #include "nrf_sdh_ble.h"
+#include "ble_link_ctx_manager.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+    
 /**@brief   Macro for defining a ble_ias instance.
  *
- * @param   _name   Name of the instance.
+ * @param     _name            Name of the instance.
+ * @param[in] _ias_max_clients Maximum number of IAS clients connected at a time.
  * @hideinitializer
  */
-#define BLE_IAS_DEF(_name)                                                                          \
-static ble_ias_t _name;                                                                             \
-NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
-                     BLE_IAS_BLE_OBSERVER_PRIO,                                                     \
-                     ble_ias_on_ble_evt, &_name)
+#define BLE_IAS_DEF(_name, _ias_max_clients)                      \
+    BLE_LINK_CTX_MANAGER_DEF(CONCAT_2(_name, _link_ctx_storage),  \
+                             (_ias_max_clients),                  \
+                             sizeof(ble_ias_client_context_t));   \
+    static ble_ias_t _name =                                      \
+    {                                                             \
+        .p_link_ctx_storage = &CONCAT_2(_name, _link_ctx_storage) \
+    };                                                            \
+    NRF_SDH_BLE_OBSERVER(_name ## _obs,                           \
+                         BLE_IAS_BLE_OBSERVER_PRIO,               \
+                         ble_ias_on_ble_evt,                      \
+                         &_name)
 
 
 /**@brief Immediate Alert Service event type. */
@@ -97,21 +107,33 @@ typedef enum
     BLE_IAS_EVT_ALERT_LEVEL_UPDATED                     /**< Alert Level Updated event. */
 } ble_ias_evt_type_t;
 
+
+/**@brief Immediate Alert Service client context structure.
+ *
+ * @details This structure contains state context related to hosts.
+ */
+typedef struct
+{
+    uint8_t alert_level; /**< New Alert Level value. */
+} ble_ias_client_context_t;
+
+
 /**@brief Immediate Alert Service event. */
 typedef struct
 {
-    ble_ias_evt_type_t evt_type;                        /**< Type of event. */
-    union
-    {
-        uint8_t alert_level;                            /**< New Alert Level value. */
-    } params;
+    ble_ias_evt_type_t         evt_type;    /**< Type of event. */
+    uint16_t                   conn_handle; /**< Connection handle. */
+    ble_ias_client_context_t * p_link_ctx;  /**< A pointer to the link context. */
 } ble_ias_evt_t;
+
 
 // Forward declaration of the ble_ias_t type.
 typedef struct ble_ias_s ble_ias_t;
 
+
 /**@brief Immediate Alert Service event handler type. */
 typedef void (*ble_ias_evt_handler_t) (ble_ias_t * p_ias, ble_ias_evt_t * p_evt);
+
 
 /**@brief Immediate Alert Service init structure. This contains all options and data needed for
  *        initialization of the service. */
@@ -120,14 +142,15 @@ typedef struct
     ble_ias_evt_handler_t evt_handler;                  /**< Event handler to be called for handling events in the Immediate Alert Service. */
 } ble_ias_init_t;
 
+
 /**@brief Immediate Alert Service structure. This contains various status information for the
  *        service. */
 struct ble_ias_s
 {
-    ble_ias_evt_handler_t     evt_handler;              /**< Event handler to be called for handling events in the Immediate Alert Service. */
-    uint16_t                  service_handle;           /**< Handle of Immediate Alert Service (as provided by the BLE stack). */
-    ble_gatts_char_handles_t  alert_level_handles;      /**< Handles related to the Alert Level characteristic. */
-    uint16_t                  conn_handle;              /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
+    ble_ias_evt_handler_t           evt_handler;         /**< Event handler to be called for handling events in the Immediate Alert Service. */
+    uint16_t                        service_handle;      /**< Handle of Immediate Alert Service (as provided by the BLE stack). */
+    ble_gatts_char_handles_t        alert_level_handles; /**< Handles related to the Alert Level characteristic. */
+    blcm_link_ctx_storage_t * const p_link_ctx_storage;  /**< Pointer to link context storage with handles of all current connections and its context. */
 };
 
 
@@ -153,12 +176,13 @@ uint32_t ble_ias_init(ble_ias_t * p_ias, const ble_ias_init_t * p_ias_init);
 void ble_ias_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 
 
-/**@brief Function for getting current value of the Alert Level characteristic.
+/**@brief Function for getting value of the Alert Level characteristic.
  *
  * @param[in]   p_ias          Immediate Alert Service structure.
- * @param[out]  p_alert_level  Current Alert Level value.
+ * @param[in]   conn_handle    Connection handle of the destination client.
+ * @param[out]  p_alert_level  Alert Level value which has been set by the specific client.
  */
-uint32_t ble_ias_alert_level_get(ble_ias_t * p_ias, uint8_t * p_alert_level);
+uint32_t ble_ias_alert_level_get(ble_ias_t * p_ias, uint16_t conn_handle, uint8_t * p_alert_level);
 
 
 #ifdef __cplusplus

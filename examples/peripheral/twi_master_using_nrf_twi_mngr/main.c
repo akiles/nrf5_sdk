@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -340,7 +340,7 @@ static void twi_config(void)
     nrf_drv_twi_config_t const config = {
        .scl                = ARDUINO_SCL_PIN,
        .sda                = ARDUINO_SDA_PIN,
-       .frequency          = NRF_TWI_FREQ_100K,
+       .frequency          = NRF_DRV_TWI_FREQ_100K,
        .interrupt_priority = APP_IRQ_PRIORITY_LOWEST,
        .clear_bus_init     = false
     };
@@ -375,11 +375,22 @@ void read_init(void)
     APP_ERROR_CHECK(err_code);
 }
 
+void log_init(void)
+{
+    ret_code_t err_code;
+
+    err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
 int main(void)
 {
     ret_code_t err_code;
 
-    bsp_board_leds_init();
+    log_init();
+    bsp_board_init(BSP_INIT_LEDS);
 
     // Start internal LFCLK XTAL oscillator - it is needed by BSP to handle
     // buttons with the use of APP_TIMER and for "read_all" ticks generation
@@ -391,10 +402,7 @@ int main(void)
     err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
 
-    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
-    NRF_LOG_DEFAULT_BACKENDS_INIT();
-
-    NRF_LOG_RAW_INFO("\r\nTWI master example\r\n");
+    NRF_LOG_RAW_INFO("\r\nTWI master example started. \r\n");
     NRF_LOG_FLUSH();
     twi_config();
 

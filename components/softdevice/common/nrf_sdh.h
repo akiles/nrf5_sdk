@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -49,6 +49,7 @@
 #ifndef NRF_SDH_H__
 #define NRF_SDH_H__
 
+#include <stdbool.h>
 #include "sdk_config.h"
 #include "sdk_errors.h"
 #include "nrf_section_iter.h"

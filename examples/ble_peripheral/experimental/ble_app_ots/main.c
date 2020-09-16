@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -57,6 +57,8 @@
 #include "nrf_sdh.h"
 #include "nrf_sdh_ble.h"
 #include "nrf_sdh_soc.h"
+#include "nrf_ble_qwr.h"
+#include "nrf_pwr_mgmt.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -68,8 +70,7 @@
 #define APP_BLE_OBSERVER_PRIO                3                                          /**< Application's BLE observer priority. You shoulnd't need to modify this value. */
 
 #define APP_ADV_INTERVAL                     40                                         /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
-#define APP_ADV_TIMEOUT_IN_SECONDS           180                                        /**< The advertising timeout in units of seconds. */
-
+#define APP_ADV_DURATION                     18000                                      /**< The advertising duration (180 seconds) in units of 10 milliseconds. */
 #define MIN_CONN_INTERVAL                    MSEC_TO_UNITS(10, UNIT_1_25_MS)           /**< Minimum acceptable connection interval (0.5 seconds). */
 #define MAX_CONN_INTERVAL                    MSEC_TO_UNITS(1000, UNIT_1_25_MS)          /**< Maximum acceptable connection interval (1 second). */
 #define SLAVE_LATENCY                        0                                          /**< Slave latency. */
@@ -80,7 +81,7 @@
 #define MAX_CONN_PARAMS_UPDATE_COUNT         3                                          /**< Number of attempts before giving up the connection parameter negotiation. */
 
 #define DEAD_BEEF                            0xDEADBEEF                                 /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
-#define APP_CONN_CFG_TAG                     1
+#define APP_BLE_CONN_CFG_TAG                 1
 #define MAX_ALLOCATED_OBJECT_SIZE            256
 #define L2CAP_RX_MPS                         60                                        /**< Size of L2CAP Rx MPS (must be at least BLE_L2CAP_MPS_MIN).*/
 #define L2CAP_TX_MPS                         40                                        /**< Size of L2CAP Tx MPS (must be at least BLE_L2CAP_MPS_MIN).*/
@@ -89,6 +90,7 @@
 
 BLE_ADVERTISING_DEF(m_advertising);         /**< Advertising module instance. */
 BLE_OTS_DEF(m_ots);                         /**< Object transfer service instance. */
+NRF_BLE_QWR_DEF(m_qwr);                     /**< Context for the Queued Write module.*/
 
 static uint16_t         m_conn_handle;
 static ble_ots_object_t m_ots_object;
@@ -151,11 +153,24 @@ static void gap_params_init(void)
 }
 
 
+/**@brief Function for handling Queued Write Module errors.
+ *
+ * @details A pointer to this function will be passed to each service which may need to inform the
+ *          application about an error.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void nrf_qwr_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
+}
+
 
 static void ble_ots_error_handler(uint32_t nrf_error)
 {
     APP_ERROR_HANDLER(nrf_error);
 }
+
 
 static void print_object_data(ble_ots_object_t * p_ots_obj)
 {
@@ -175,6 +190,7 @@ static void print_object_data(ble_ots_object_t * p_ots_obj)
         NRF_LOG_HEXDUMP_INFO(p_ots_obj->data, size_to_display);
     }
 }
+
 
 static void ble_ots_evt_handler(ble_ots_t * p_ots, ble_ots_evt_t * p_evt)
 {
@@ -219,22 +235,27 @@ static void ble_ots_evt_handler(ble_ots_t * p_ots, ble_ots_evt_t * p_evt)
 
 /**@brief Function for initializing services that will be used by the application.
  *
- * @details Initialize the Heart Rate, Battery and Device Information services.
+ * @details Initialize the Object Transfer service.
  */
 static void services_init(void)
 {
-    uint32_t       err_code;
+    uint32_t           err_code;
+    ble_ots_init_t     ots_init;
+    nrf_ble_qwr_init_t qwr_init = {0};
+
+    // Initialize Queued Write Module.
+    qwr_init.error_handler = nrf_qwr_error_handler;
+
+    err_code = nrf_ble_qwr_init(&m_qwr, &qwr_init);
+    APP_ERROR_CHECK(err_code);
 
     // Initialize OTS.
 
-    ble_ots_init_t ots_init;
     memset(&ots_init, 0x00, sizeof(ots_init));
 
     ots_init.error_handler     = ble_ots_error_handler;
     ots_init.evt_handler       = ble_ots_evt_handler;
     ots_init.p_object          = &m_ots_object;
-
-
 
     ots_init.feature_char_read_access = SEC_OPEN;
 
@@ -361,14 +382,14 @@ static void advertising_init(void)
 
     init.config.ble_adv_fast_enabled  = true;
     init.config.ble_adv_fast_interval = APP_ADV_INTERVAL;
-    init.config.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;
+    init.config.ble_adv_fast_timeout  = APP_ADV_DURATION;
 
     init.evt_handler = on_adv_evt;
 
     err_code = ble_advertising_init(&m_advertising, &init);
     APP_ERROR_CHECK(err_code);
 
-    ble_advertising_conn_cfg_tag_set(&m_advertising, APP_CONN_CFG_TAG);
+    ble_advertising_conn_cfg_tag_set(&m_advertising, APP_BLE_CONN_CFG_TAG);
 }
 
 
@@ -388,6 +409,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
             m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
+            err_code = nrf_ble_qwr_conn_handle_assign(&m_qwr, m_conn_handle);
+            APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
@@ -395,7 +418,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
             break;
 
-#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -407,7 +429,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
             APP_ERROR_CHECK(err_code);
         } break;
-#endif
 
         default:
             // No implementation needed.
@@ -429,7 +450,7 @@ static void ble_stack_init(void)
 
     // Fetch the start address of the application RAM.
     uint32_t ram_start = 0;
-    err_code = nrf_sdh_ble_default_cfg_set(APP_CONN_CFG_TAG, &ram_start);
+    err_code = nrf_sdh_ble_default_cfg_set(APP_BLE_CONN_CFG_TAG, &ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Overwrite some of the default configurations for the BLE stack.
@@ -440,7 +461,7 @@ static void ble_stack_init(void)
     ble_cfg.common_cfg.vs_uuid_cfg.vs_uuid_count = 0;
 
     // Set l2cap channel configuration
-    ble_cfg.conn_cfg.conn_cfg_tag                        = APP_CONN_CFG_TAG;
+    ble_cfg.conn_cfg.conn_cfg_tag                        = APP_BLE_CONN_CFG_TAG;
     ble_cfg.conn_cfg.params.l2cap_conn_cfg.rx_mps        = L2CAP_RX_MPS;
     ble_cfg.conn_cfg.params.l2cap_conn_cfg.rx_queue_size = 1;
     ble_cfg.conn_cfg.params.l2cap_conn_cfg.tx_mps        = L2CAP_TX_MPS;
@@ -521,17 +542,33 @@ static void timers_init(void)
  */
 static void buttons_leds_init(void)
 {
-    uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, bsp_event_handler);
+    uint32_t err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS, bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 }
 
-/**@brief Function for the Power manager.
+
+/**@brief Function for initializing power management.
  */
-static void power_manage(void)
+static void power_management_init(void)
 {
-    uint32_t err_code = sd_app_evt_wait();
+    ret_code_t err_code;
+    err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
 }
+
+
+/**@brief Function for handling the idle state (main loop).
+ *
+ * @details If there is no pending log operation, then sleep until next the next event occurs.
+ */
+static void idle_state_handle(void)
+{
+    if (NRF_LOG_PROCESS() == false)
+    {
+        nrf_pwr_mgmt_run();
+    }
+}
+
 
 static void advertising_start(void)
 {
@@ -544,27 +581,25 @@ static void advertising_start(void)
  */
 int main(void)
 {
+    // Initialize.
     log_init();
     timers_init();
     buttons_leds_init();
-
+    power_management_init();
     ble_stack_init();
     gap_params_init();
     advertising_init();
     services_init();
     conn_params_init();
 
-    advertising_start();
-
+    // Start execution.
     NRF_LOG_INFO("Object transfer service started.");
+    advertising_start();
 
     // Enter main loop.
     for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            power_manage();
-        }
+        idle_state_handle();
     }
 }
 

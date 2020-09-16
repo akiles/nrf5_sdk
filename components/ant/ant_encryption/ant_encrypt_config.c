@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -149,7 +149,7 @@ ret_code_t ant_channel_encrypt_config(uint8_t                          channel_t
         // encryption of the stack should be initialized previously
         if (m_stack_encryption_configured == false)
         {
-            return NRF_ERROR_MODULE_NOT_INITIALZED;
+            return NRF_ERROR_MODULE_NOT_INITIALIZED;
         }
 
         switch (channel_type)

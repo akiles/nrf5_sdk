@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -38,31 +38,26 @@
  * 
  */
 #include <stdint.h>
+#include "nrf.h"
 #include "nrf_bootloader_app_start.h"
+#include "nrf_bootloader_info.h"
 #include "nrf_log.h"
 #include "nrf_dfu_mbr.h"
+#include "nrf_log_ctrl.h"
+#include "nrf_bootloader_info.h"
 
-#if defined(SOFTDEVICE_PRESENT)
-#include "nrf_sdm.h"
-#endif
+// Do the final stages of app_start. Protect flash and run app. See nrf_bootloader_app_start_final.c
+void nrf_bootloader_app_start_final(uint32_t start_addr);
 
-extern void nrf_bootloader_app_start_impl(uint32_t start_addr);
-
-void nrf_bootloader_app_start(uint32_t start_addr)
+void nrf_bootloader_app_start(void)
 {
+    uint32_t start_addr = MBR_SIZE; // Always boot from end of MBR. If a SoftDevice is present, it will boot the app.
     NRF_LOG_DEBUG("Running nrf_bootloader_app_start with address: 0x%08x", start_addr);
     uint32_t err_code;
 
-    //NRF_LOG_INFO("Initializing SD in mbr");
-    err_code = nrf_dfu_mbr_init_sd();
-    if (err_code != NRF_SUCCESS)
-    {
-        NRF_LOG_ERROR("Failed running nrf_dfu_mbr_init_sd");
-        return;
-    }
-
     // Disable and clear interrupts
-    NRF_LOG_DEBUG("Disabling interrupts");
+    // Notice that this disables only 'external' interrupts (positive IRQn).
+    NRF_LOG_DEBUG("Disabling interrupts. NVIC->ICER[0]: 0x%x", NVIC->ICER[0]);
 
     NVIC->ICER[0]=0xFFFFFFFF;
     NVIC->ICPR[0]=0xFFFFFFFF;
@@ -71,16 +66,12 @@ void nrf_bootloader_app_start(uint32_t start_addr)
     NVIC->ICPR[1]=0xFFFFFFFF;
 #endif
 
-    // Set the sd softdevice vector table base address
-    NRF_LOG_DEBUG("Setting SD vector table base: 0x%08x", start_addr);
-    err_code = sd_softdevice_vector_table_base_set(start_addr);
+    err_code = nrf_dfu_mbr_irq_forward_address_set();
     if (err_code != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("Failed running sd_softdevice_vector_table_base_set");
-        return;
+        NRF_LOG_ERROR("Failed running nrf_dfu_mbr_irq_forward_address_set()");
     }
 
-    // Run application
-    nrf_bootloader_app_start_impl(start_addr);
+    NRF_LOG_FLUSH();
+    nrf_bootloader_app_start_final(start_addr);
 }
-

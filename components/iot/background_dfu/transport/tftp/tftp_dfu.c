@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -65,6 +65,7 @@
 #include "nrf_dfu_req_handler.h"
 #include "nrf_dfu_settings.h"
 #include "nrf_dfu_utils.h"
+#include "nrf_log_ctrl.h"
 
 #define NRF_LOG_LEVEL 4
 #define NRF_LOG_MODULE_NAME TFTP_DFU
@@ -159,8 +160,6 @@ typedef struct
 
 static background_dfu_context_t m_dfu_ctx;                                                         /**< Background DFU context. */
 static tftp_dfu_context_t       m_tftp_dfu_ctx;                                                    /**< TFTP DFU context. */
-
-extern const app_timer_id_t nrf_dfu_inactivity_timeout_timer_id;                                   /**< DFU inactivity timer that is created out of DFU module. */
 
 /***************************************************************************************************
  * @section Common operations
@@ -755,6 +754,27 @@ static void tftp_dfu_tftp_handler(iot_tftp_t * p_tftp, iot_tftp_evt_t * p_evt)
     }
 }
 
+static void dfu_observer(nrf_dfu_evt_type_t evt_type)
+{
+    switch (evt_type)
+    {
+        case NRF_DFU_EVT_DFU_COMPLETED:
+            NRF_LOG_FINAL_FLUSH();
+
+#if NRF_MODULE_ENABLED(NRF_LOG_BACKEND_RTT)
+            // To allow the buffer to be flushed by the host.
+            nrf_delay_ms(100);
+#endif
+
+            NVIC_SystemReset();
+            break;
+
+        default:
+            break;
+    }
+}
+
+
 /***************************************************************************************************
  * @section Private API
  **************************************************************************************************/
@@ -800,6 +820,10 @@ void background_dfu_transport_state_update(background_dfu_context_t * p_dfu_ctx)
             send_request(NULL);
             break;
 
+        case BACKGROUND_DFU_WAIT_FOR_RESET:
+            // Do nothing.
+            break;
+
         default:
             NRF_LOG_WARNING("Unhandled state in background_dfu_transport_state_update (s: %s).",
                     (uint32_t)background_dfu_state_to_string(p_dfu_ctx->dfu_state));
@@ -822,15 +846,12 @@ uint32_t tftp_dfu_init(void)
 
     memset(&m_tftp_dfu_ctx, 0, sizeof(m_tftp_dfu_ctx));
 
-    err_code = app_timer_create(&nrf_dfu_inactivity_timeout_timer_id, APP_TIMER_MODE_SINGLE_SHOT, nrf_dfu_reset_timeout_handler);
+    err_code = nrf_dfu_settings_init(true);
     if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
-
-    nrf_dfu_settings_init(true);
-
-    err_code = nrf_dfu_req_handler_init();
+    err_code = nrf_dfu_req_handler_init(dfu_observer);
     if (err_code != NRF_SUCCESS)
     {
         return err_code;

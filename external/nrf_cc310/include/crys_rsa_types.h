@@ -1,13 +1,37 @@
-// Copyright (c) 2016-2017, ARM Limited or its affiliates. All rights reserved 
-// 
-// This file and the related binary are licensed under the ARM Object Code and 
-// Headers License; you may not use these files except in compliance with this 
-// license. 
-// 
-// You may obtain a copy of the License at <.../external/nrf_cc310/license.txt> 
-// 
-// See the License for the specific language governing permissions and 
-// limitations under the License.
+/**************************************************************************************
+* Copyright (c) 2016-2017, ARM Limited or its affiliates. All rights reserved         *
+*                                                                                     *
+* This file and the related binary are licensed under the following license:          *
+*                                                                                     *
+* ARM Object Code and Header Files License, v1.0 Redistribution.                      *
+*                                                                                     *
+* Redistribution and use of object code, header files, and documentation, without     *
+* modification, are permitted provided that the following conditions are met:         *
+*                                                                                     *
+* 1) Redistributions must reproduce the above copyright notice and the                *
+*    following disclaimer in the documentation and/or other materials                 *
+*    provided with the distribution.                                                  *
+*                                                                                     *
+* 2) Unless to the extent explicitly permitted by law, no reverse                     *
+*    engineering, decompilation, or disassembly of is permitted.                      *
+*                                                                                     *
+* 3) Redistribution and use is permitted solely for the purpose of                    *
+*    developing or executing applications that are targeted for use                   *
+*    on an ARM-based product.                                                         *
+*                                                                                     *
+* DISCLAIMER. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND                  *
+* CONTRIBUTORS "AS IS." ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT             *
+* NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT,        *
+* AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE          *
+* COPYRIGHT HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,   *
+* SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED            *
+* TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR              *
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF              *
+* LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING                *
+* NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS                  *
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                        *
+**************************************************************************************/
+
 
 #ifndef CRYS_RSA_TYPES_H
 #define CRYS_RSA_TYPES_H
@@ -27,9 +51,9 @@ extern "C"
 {
 #endif
 /*!
-@file
-@brief This file contains all of the enums and definitions that are used for the CRYS RSA APIs.
-@defgroup crys_rsa_types_f CryptoCell RSA used definitions and enums
+@file 
+@brief This file contains all of the enums and definitions that are used for the CRYS RSA APIs. 
+@defgroup crys_rsa_types CryptoCell RSA used definitions and enums
 @{
 @ingroup crys_rsa
 */
@@ -89,20 +113,20 @@ extern "C"
 /*! MGF1 definitions */
 #define CRYS_RSA_MGF_2_POWER_32              			65535 /*!< \internal 0xFFFF This is the 2^32 of the 2^32*hLen boundary check */
 /*! MGF1 definitions */
-#define CRYS_RSA_SIZE_OF_T_STRING_BYTES	    			(CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS*sizeof(uint32_t))
+#define CRYS_RSA_SIZE_OF_T_STRING_BYTES	    			(CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS*sizeof(uint32_t)) 
 
 /***********************************************************
  *
  * RSA PKCS#1 v2.1 DEFINES
  *
- ***********************************************************/
+ ***********************************************************/     
 /*! Size of OEAP seed. */
 #define CRYS_RSA_OAEP_ENCODE_MAX_SEEDMASK_SIZE 			CRYS_RSA_OAEP_MAX_HLEN
 /*! Maximal PSS salt size. */
 #define CRYS_RSA_PSS_SALT_LENGTH 				CRYS_RSA_OAEP_MAX_HLEN
 /*! PSS padding length. */
 #define CRYS_RSA_PSS_PAD1_LEN					8
-
+	 
 /*! OAEP encode mask size. */
 #define CRYS_RSA_OAEP_ENCODE_MAX_MASKDB_SIZE  			(CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS*sizeof(uint32_t)) /*!< \internal For OAEP Encode; the max size is emLen */
 /*! OAEP decode mask size. */
@@ -125,14 +149,14 @@ typedef enum
 	CRYS_RSA_After_SHA256_mode = 9,	/*!< The input data is a digest of SHA256 and will not be hashed. */
 	CRYS_RSA_After_SHA384_mode = 10,	/*!< The input data is a digest of SHA384 and will not be hashed. */
 	CRYS_RSA_After_SHA512_mode = 11,	/*!< The input data is a digest of SHA512 and will not be hashed. */
-	CRYS_RSA_After_HASH_NOT_KNOWN_mode = 12,    /*!< \internal used only for PKCS#1 Ver 1.5 - possible to perform verify operation without hash mode input,
+	CRYS_RSA_After_HASH_NOT_KNOWN_mode = 12,    /*!< \internal used only for PKCS#1 Ver 1.5 - possible to perform verify operation without hash mode input, 
 						the hash mode is derived from the signature.*/
 	CRYS_RSA_HASH_NO_HASH_mode = 13,	/*!< Used for PKCS1 v1.5 Encrypt and Decrypt.*/
 	CRYS_RSA_HASH_NumOfModes,		/*!< Maximal number of hash operations modes. */
-
+	
 	CRYS_RSA_HASH_OpModeLast  = 0x7FFFFFFF, /*! Reserved.*/
 
-}CRYS_RSA_HASH_OpMode_t;
+}CRYS_RSA_HASH_OpMode_t;   
 
 
 /*! Defines the enum of the RSA decryption mode. */
@@ -140,9 +164,9 @@ typedef enum
 {
 	CRYS_RSA_NoCrt = 10, /*!< Decryption no CRT mode.*/
 	CRYS_RSA_Crt   = 11, /*!< Decryption CRT mode.*/
-
+	
 	CRYS_RSADecryptionNumOfOptions, /*! Reserved.*/
-
+	
 	CRYS_RSA_DecryptionModeLast= 0x7FFFFFFF, /*! Reserved.*/
 
 }CRYS_RSA_DecryptionMode_t;
@@ -152,10 +176,10 @@ typedef enum
 {
 	CRYS_RSA_ExternalKey = 1, /*!< External key.*/
 	CRYS_RSA_InternalKey = 2, /*!< Internal key.*/
-
+	
 	CRYS_RSA_KeySourceLast= 0x7FFFFFFF, /*!< Reserved. */
 
-}CRYS_RSA_KeySource_t;
+}CRYS_RSA_KeySource_t;     
 
 /*! MGF values. */
 typedef enum
@@ -173,26 +197,26 @@ typedef enum
 {
 	CRYS_PKCS1_VER15 = 0, /*! PKCS1 version 15. */
 	CRYS_PKCS1_VER21 = 1, /*! PKCS1 version 21. */
-
+	
 	CRYS_RSA_NumOf_PKCS1_versions, /*! Maximal number of PKCS versions. */
-
+	
 	CRYS_PKCS1_versionLast= 0x7FFFFFFF, /*! Reserved.*/
 
 }CRYS_PKCS1_version;
 
 
-/*! Enum defining primality testing mode in Rabin-Miller
-   and Lucas-Lehmer tests (internal tests). */
+/*! Enum defining primality testing mode in Rabin-Miller 
+   and Lucas-Lehmer tests (internal tests). */					 
 typedef enum
 {
         /* P and Q primes */
 	CRYS_RSA_PRIME_TEST_MODE     = 0, /*!< PRIME test. */
-        /* FFC (DH, DSA) primes */
+        /* FFC (DH, DSA) primes */ 
 	CRYS_DH_PRIME_TEST_MODE      = 1, /*!< DH Prime test. */
 
-	CRYS_RSA_DH_PRIME_TEST_OFF_MODE /*!< Reserved.*/
-
-}CRYS_RSA_DH_PrimeTestMode_t;
+	CRYS_RSA_DH_PRIME_TEST_OFF_MODE /*!< Reserved.*/ 
+	
+}CRYS_RSA_DH_PrimeTestMode_t;					 
 
 /************************ Public and private key database Structs ******************************/
 
@@ -200,32 +224,32 @@ typedef enum
 /* --------------------------------------------------------------------- */
 
 /*! Public key data structure (used internally). */
-typedef struct
-{
+typedef struct 
+{ 
 	/*! RSA modulus buffer. */
 	uint32_t n[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS];
 	/*! RSA modulus size in bits. */
 	uint32_t nSizeInBits;
-
+	
 	/*! RSA public exponent buffer. */
 	uint32_t e[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS];
 	/*! RSA public exponent buffer. */
 	uint32_t eSizeInBits;
-
+	
 	/*! Buffer for internal usage.*/
 	uint32_t crysRSAIntBuff[CRYS_PKA_BARRETT_MOD_TAG_BUFF_SIZE_IN_WORDS];
-
+   
 }CRYSRSAPubKey_t;
 
-/*! The public key's user structure prototype. This structure must be saved by the user, and is used as input to the RSA functions
+/*! The public key's user structure prototype. This structure must be saved by the user, and is used as input to the RSA functions 
 (such as ::SaSi_RsaSchemesEncrypt etc.) */
-typedef struct CRYS_RSAUserPubKey_t
+typedef struct CRYS_RSAUserPubKey_t 
 {
 	/*! Validation tag. */
-	uint32_t valid_tag;
-	/*! Public key data. */
-	uint32_t  PublicKeyDbBuff[ sizeof(CRYSRSAPubKey_t)/sizeof(uint32_t) + 1 ];
-
+	uint32_t valid_tag;   
+	/*! Public key data. */        
+	uint32_t  PublicKeyDbBuff[ sizeof(CRYSRSAPubKey_t)/sizeof(uint32_t) + 1 ]; 
+   
 
 }CRYS_RSAUserPubKey_t;
 
@@ -233,72 +257,72 @@ typedef struct CRYS_RSAUserPubKey_t
 /* --------------------------------------------------------------------- */
 
 /*! Private key on non-CRT mode data structure (used internally). */
-typedef struct
-{
+typedef struct 
+{    
 	/*! RSA private exponent buffer. */
 	uint32_t d[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS];
 	/*! RSA private exponent size in bits. */
 	uint32_t dSizeInBits;
-
+	
 	/*! RSA public exponent buffer. */
 	uint32_t e[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS];
 	/*! RSA public exponent size in bits. */
 	uint32_t eSizeInBits;
-
+      
 }CRYSRSAPrivNonCRTKey_t;
 
 /*! Private key on CRT mode data structure (used internally). */
 #ifndef CRYS_NO_RSA_SMALL_CRT_BUFFERS_SUPPORT
 /* use small CRT buffers */
-typedef struct
+typedef struct 
 {
 	/*! First factor buffer. */
-	uint32_t P[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS/2];
+	uint32_t P[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS/2]; 
 	/*! First factor size in bits. */
 	uint32_t PSizeInBits;
-
+	
 	/*! Second factor buffer. */
-	uint32_t Q[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS/2];
+	uint32_t Q[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS/2]; 
 	/*! Second factor size in bits. */
 	uint32_t QSizeInBits;
-
+	
 	/*! First CRT exponent buffer. */
-	uint32_t dP[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS/2];
+	uint32_t dP[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS/2]; 
 	/*! First CRT exponent size in bits. */
 	uint32_t dPSizeInBits;
-
+	
 	/*! Second CRT exponent buffer. */
-	uint32_t dQ[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS/2];
+	uint32_t dQ[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS/2]; 
 	/*! Second CRT exponent size in bits. */
 	uint32_t dQSizeInBits;
-
+	
 	/*! First CRT coefficient buffer. */
 	uint32_t qInv[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS/2];
 	/*! First CRT coefficient size in bits. */
 	uint32_t qInvSizeInBits;
-
+   
 }CRYSRSAPrivCRTKey_t;
 
 /*! Size of CRYSRSAPrivCRTKey_t structure in words (used for temp buffers allocation). */
 #define CRYS_RSA_SIZE_IN_WORDS_OF_CRYSRSAPrivCRTKey_t  (CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS*7/2 + 5)
 
 #else /* use large CRT buffers */
-typedef struct
-{
+typedef struct 
+{ 
 	/* The first factor buffer and size in bits */
-	uint32_t P[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS];
+	uint32_t P[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS]; 
 	uint32_t PSizeInBits;
 
 	/* The second factor buffer and its size in bits */
-	uint32_t Q[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS];
+	uint32_t Q[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS]; 
 	uint32_t QSizeInBits;
 
 	/* The first CRT exponent buffer and its size in bits */
-	uint32_t dP[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS];
+	uint32_t dP[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS]; 
 	uint32_t dPSizeInBits;
 
 	/* The second CRT exponent buffer and its size in bits */
-	uint32_t dQ[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS];
+	uint32_t dQ[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS]; 
 	uint32_t dQSizeInBits;
 
 	/* The first CRT coefficient buffer and its size in bits */
@@ -318,35 +342,35 @@ typedef struct
 	/*! RSA modulus buffer. */
 	uint32_t n[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS];
 	/*! RSA modulus size in bits. */
-	uint32_t nSizeInBits;
-
+	uint32_t nSizeInBits;   
+	
 	/*! Decryption operation mode. */
 	CRYS_RSA_DecryptionMode_t OperationMode;
-
+	
 	/*! Key source ( internal or external ). */
-	CRYS_RSA_KeySource_t KeySource;
-
-
+	CRYS_RSA_KeySource_t KeySource;  
+	
+	
 	/*! Union between the CRT and non-CRT data structures. */
-	union
-	{
+	union 
+	{ 
 		CRYSRSAPrivNonCRTKey_t NonCrt; /*!< Non CRT data structure. */
 		CRYSRSAPrivCRTKey_t    Crt;    /*!< CRT data structure. */
 	}PriveKeyDb;
-
+      
 	/*! Internal buffer. */
 	uint32_t crysRSAPrivKeyIntBuff[CRYS_PKA_PRIV_KEY_BUFF_SIZE_IN_WORDS];
 
 }CRYSRSAPrivKey_t;
 
-/*! The private key's user structure prototype. This structure must be saved by the user, and is used as input to the RSA functions
+/*! The private key's user structure prototype. This structure must be saved by the user, and is used as input to the RSA functions 
 (such as ::SaSi_RsaSchemesDecrypt etc.). */
-typedef struct CRYS_RSAUserPrivKey_t
+typedef struct CRYS_RSAUserPrivKey_t 
 {
 	/*! Validation tag.*/
-	uint32_t valid_tag;
-	/*! Private key data. */
-	uint32_t  PrivateKeyDbBuff[ sizeof(CRYSRSAPrivKey_t)/sizeof(uint32_t) + 1 ] ;
+	uint32_t valid_tag;  
+	/*! Private key data. */         
+	uint32_t  PrivateKeyDbBuff[ sizeof(CRYSRSAPrivKey_t)/sizeof(uint32_t) + 1 ] ; 
 
 }CRYS_RSAUserPrivKey_t;
 
@@ -357,9 +381,9 @@ typedef struct CRYS_RSAPrimeData_t
 	uint32_t DataIn[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS];  /*!< Temporary buffer for data in.*/
 	uint32_t DataOut[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS]; /*!< Temporary buffer for data out.*/
 	/*! Temporary buffer for internal data.*/
-	SASI_PAL_COMPILER_ALIGN(4) uint8_t  InternalBuff[CRYS_RSA_TMP_BUFF_SIZE];
+	SASI_PAL_COMPILER_ALIGN(4) uint8_t  InternalBuff[CRYS_RSA_TMP_BUFF_SIZE]; 
 
-}CRYS_RSAPrimeData_t;
+}CRYS_RSAPrimeData_t; 
 
 /*! KG data type. */
 typedef union CRYS_RSAKGData_t
@@ -373,7 +397,7 @@ typedef union CRYS_RSAKGData_t
 		/*! Second factor buffer. */
 		uint32_t q[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS / 2];
 		union {
-			/*! Internal buffer. */
+			/*! Internal buffer. */			
 			uint32_t crysRSAKGDataIntBuff[CRYS_PKA_KGDATA_BUFF_SIZE_IN_WORDS];
 			#ifdef DX_SOFT_KEYGEN
 			/* # added for compatibility with size of KGData SW type */
@@ -392,33 +416,33 @@ typedef union CRYS_RSAKGData_t
 		/* # added for compatibility with size of SW CRYSRSAPrivKey_t type */
 	        SW_Shared_CRYS_RSAPrimeData_t SW_Shared_PrimData;
 		#endif
-	}prim;
-}CRYS_RSAKGData_t;
+	}prim; 
+}CRYS_RSAKGData_t; 
 
  /*************
- *	RSA contexts
+ *	RSA contexts 
  **************/
 /************************ CRYS RSA struct for Private Key ******************************/
 
 /*! Context definition for operations that use the RSA private key. */
-typedef struct
+typedef struct 
 {
 
 	/*! Private key data.  */
 	CRYS_RSAUserPrivKey_t PrivUserKey;
-
+	
 	/*! RSA PKCS#1 Version 1.5 or 2.1 */
 	uint8_t   PKCS1_Version;
-
+	
 	/*! MGF to be used for the PKCS1 Ver 2.1 sign or verify operations. */
 	uint8_t MGF_2use;
-
+	   
 	/*! Salt random length for PKCS#1 PSS Ver 2.1*/
 	uint16_t SaltLen;
-
+		   
 	/*! Internal buffer. */
 	CRYS_RSAPrimeData_t  PrimeData;
-
+	   
 	/*! HASH context buffer. */
 	uint32_t CRYSPKAHashCtxBuff[CRYS_PKA_RSA_HASH_CTX_SIZE_IN_WORDS];
 	/*! HASH result buffer. */
@@ -433,68 +457,68 @@ typedef struct
 	uint16_t                  HashBlockSize;        /*in words*/
 	/*! HASH flag. */
 	bool doHash;
-
+	
 	/* Used for sensitive data manipulation in the context space, which is safer and which saves stack space */
 	/*! Internal buffer.*/
 	uint32_t EBD[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS];
 	/*! Internal bufffer used size in bits. */
 	uint32_t EBDSizeInBits;
-
+	   
 	/* Used for sensitive data manipulation in the context space, which is safer and which saves stack space */
 	/*! Internal buffer.*/
 	uint8_t  T_Buf[CRYS_RSA_SIZE_OF_T_STRING_BYTES];
 	/*! Internal buffer used size.*/
 	uint16_t T_BufSize;
-
+	   
 	/*! Buffer for the use of the Ber encoder in the case of PKCS#1 Ver 1.5. */
 	uint32_t  BER[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS];
 	/*! Ber encoder buffer size.*/
 	uint16_t  BERSize;
-
+	
 	/*! Internal buffer.*/
 	uint8_t DummyBufAESBlockSize[16];
-
+    
 }RSAPrivContext_t;
 
 /*! The user's context prototype - the argument type that is passed by the user
-   to the RSA APIs. The context saves the state of the operation and must be saved by the user
+   to the RSA APIs. The context saves the state of the operation and must be saved by the user 
    till the end of the APIs flow . */
-typedef struct CRYS_RSAPrivUserContext_t
+typedef struct CRYS_RSAPrivUserContext_t 
 {
 	/*! Validation tag. */
-	uint32_t valid_tag;
+	uint32_t valid_tag; 
 	/*! Internally used value.*/
-	uint32_t AES_iv;
+	uint32_t AES_iv; 
 	/*! Private data context buffer. */
 	SASI_PAL_COMPILER_ALIGN(4) uint8_t  context_buff[ sizeof(RSAPrivContext_t) + sizeof(uint32_t)];  /* must be aligned to 4 */
-
+ 
 }CRYS_RSAPrivUserContext_t;
 
 
-/************************ CRYS RSA struct for Public Key ******************************/
-
+/************************ CRYS RSA struct for Public Key ******************************/   
+   
 /*! Context definition for operations that use the RSA public key. */
-typedef struct
+typedef struct 
 {
 
 	/*! RSA public key structure. */
 	CRYS_RSAUserPubKey_t PubUserKey;
-
+	
 	/*! Public key size in bytes */
 	uint32_t nSizeInBytes;
-
+	
 	/*! RSA PKCS#1 Version 1.5 or 2.1 */
 	uint8_t   PKCS1_Version;
-
+	
 	/*! MGF to be used for the PKCS1 Ver 2.1 Sign or Verify operations */
 	uint8_t MGF_2use;
-
+	   
 	/*! Salt random length for PKCS#1 PSS Ver 2.1*/
 	uint16_t SaltLen;
-
+	   
 	/*! Internal buffer. */
 	CRYS_RSAPrimeData_t  PrimeData;
-
+	   
 	/*! HASH context. */
 	uint32_t CRYSPKAHashCtxBuff[CRYS_PKA_RSA_HASH_CTX_SIZE_IN_WORDS];
 	/*! HASH result buffer. */
@@ -509,39 +533,39 @@ typedef struct
 	uint16_t                  HashBlockSize; /*in words*/
 	/*! HASH flag.*/
 	bool doHash;
-
+	
 	/* Used for sensitive data manipulation in the context space, which is safer and which saves stack space */
 	/*! Internal buffer.*/
 	uint32_t EBD[CRYS_RSA_MAXIMUM_MOD_BUFFER_SIZE_IN_WORDS];
 	/*! Internal bufffer used size in bits. */
 	uint32_t EBDSizeInBits;
-
+	   
 	/* Used for sensitive data manipulation in the context space, which is safer and which saves stack space */
 	/*! Internal buffer.*/
 	uint8_t T_Buf[CRYS_RSA_SIZE_OF_T_STRING_BYTES];
 	/*! Internal buffer used size.*/
 	uint16_t T_BufSize;
-
+	
 	/*! Internal buffer.*/
 	uint8_t DummyBufAESBlockSize[16];
 
 }RSAPubContext_t;
 
 /*! Temporary buffers for the RSA usage. */
-typedef struct CRYS_RSAPubUserContext_t
+typedef struct CRYS_RSAPubUserContext_t 
 {
 	/*! Validation tag. */
-	uint32_t valid_tag;
+	uint32_t valid_tag; 
 	/*! Internally used value.*/
-	uint32_t AES_iv; /* For the use of the AES CBC mode of Encryption and Decryption of the context in CCM */
+	uint32_t AES_iv; /* For the use of the AES CBC mode of Encryption and Decryption of the context in CCM */              
 	/*! Public data context buffer. */
-	uint32_t  context_buff[ sizeof(RSAPubContext_t)/sizeof(uint32_t) + 1] ;
-
+	uint32_t  context_buff[ sizeof(RSAPubContext_t)/sizeof(uint32_t) + 1] ; 
+ 
 }CRYS_RSAPubUserContext_t;
 
 
 
-/*! Required for internal FIPS verification for RSA key generation. */
+/*! Required for internal FIPS verification for RSA key generation. */ 
 typedef struct CRYS_RSAKGFipsContext_t{
 	/*! Internal buffer. */
 	CRYS_RSAPrimeData_t 	primData;
@@ -586,7 +610,7 @@ typedef struct CRYS_RSAFipsKatContext_t{
 #ifdef __cplusplus
 }
 #endif
-/**
+/** 
 @}
  */
 #endif

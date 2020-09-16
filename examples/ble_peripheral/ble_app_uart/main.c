@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -49,7 +49,6 @@
  */
 
 
-
 #include <stdint.h>
 #include <string.h>
 #include "nordic_common.h"
@@ -62,11 +61,13 @@
 #include "nrf_sdh_soc.h"
 #include "nrf_sdh_ble.h"
 #include "nrf_ble_gatt.h"
+#include "nrf_ble_qwr.h"
 #include "app_timer.h"
 #include "ble_nus.h"
 #include "app_uart.h"
 #include "app_util_platform.h"
 #include "bsp_btn_ble.h"
+#include "nrf_pwr_mgmt.h"
 
 #if defined (UART_PRESENT)
 #include "nrf_uart.h"
@@ -81,15 +82,14 @@
 
 #define APP_BLE_CONN_CFG_TAG            1                                           /**< A tag identifying the SoftDevice BLE configuration. */
 
-#define APP_FEATURE_NOT_SUPPORTED       BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2        /**< Reply when unsupported features are requested. */
-
 #define DEVICE_NAME                     "Nordic_UART"                               /**< Name of device. Will be included in the advertising data. */
 #define NUS_SERVICE_UUID_TYPE           BLE_UUID_TYPE_VENDOR_BEGIN                  /**< UUID type for the Nordic UART Service (vendor specific). */
 
 #define APP_BLE_OBSERVER_PRIO           3                                           /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 
 #define APP_ADV_INTERVAL                64                                          /**< The advertising interval (in units of 0.625 ms. This value corresponds to 40 ms). */
-#define APP_ADV_TIMEOUT_IN_SECONDS      180                                         /**< The advertising timeout (in units of seconds). */
+
+#define APP_ADV_DURATION                18000                                       /**< The advertising duration (180 seconds) in units of 10 milliseconds. */
 
 #define MIN_CONN_INTERVAL               MSEC_TO_UNITS(20, UNIT_1_25_MS)             /**< Minimum acceptable connection interval (20 ms), Connection interval uses 1.25 ms units. */
 #define MAX_CONN_INTERVAL               MSEC_TO_UNITS(75, UNIT_1_25_MS)             /**< Maximum acceptable connection interval (75 ms), Connection interval uses 1.25 ms units. */
@@ -105,8 +105,9 @@
 #define UART_RX_BUF_SIZE                256                                         /**< UART RX buffer size. */
 
 
-BLE_NUS_DEF(m_nus);                                                                 /**< BLE NUS service instance. */
+BLE_NUS_DEF(m_nus, NRF_SDH_BLE_TOTAL_LINK_COUNT);                                   /**< BLE NUS service instance. */
 NRF_BLE_GATT_DEF(m_gatt);                                                           /**< GATT module instance. */
+NRF_BLE_QWR_DEF(m_qwr);                                                             /**< Context for the Queued Write module.*/
 BLE_ADVERTISING_DEF(m_advertising);                                                 /**< Advertising module instance. */
 
 static uint16_t   m_conn_handle          = BLE_CONN_HANDLE_INVALID;                 /**< Handle of the current connection. */
@@ -133,6 +134,13 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
     app_error_handler(DEAD_BEEF, line_num, p_file_name);
 }
 
+/**@brief Function for initializing the timer module.
+ */
+static void timers_init(void)
+{
+    ret_code_t err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+}
 
 /**@brief Function for the GAP initialization.
  *
@@ -164,14 +172,25 @@ static void gap_params_init(void)
 }
 
 
+/**@brief Function for handling Queued Write Module errors.
+ *
+ * @details A pointer to this function will be passed to each service which may need to inform the
+ *          application about an error.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void nrf_qwr_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
+}
+
+
 /**@brief Function for handling the data from the Nordic UART Service.
  *
  * @details This function will process the data received from the Nordic UART BLE Service and send
  *          it to the UART module.
  *
- * @param[in] p_nus    Nordic UART Service structure.
- * @param[in] p_data   Data to be send to UART module.
- * @param[in] length   Length of the data.
+ * @param[in] p_evt       Nordic UART Service event.
  */
 /**@snippet [Handling the data received over BLE] */
 static void nus_data_handler(ble_nus_evt_t * p_evt)
@@ -196,7 +215,7 @@ static void nus_data_handler(ble_nus_evt_t * p_evt)
                 }
             } while (err_code == NRF_ERROR_BUSY);
         }
-        if (p_evt->params.rx_data.p_data[p_evt->params.rx_data.length-1] == '\r')
+        if (p_evt->params.rx_data.p_data[p_evt->params.rx_data.length - 1] == '\r')
         {
             while (app_uart_put('\n') == NRF_ERROR_BUSY);
         }
@@ -210,9 +229,17 @@ static void nus_data_handler(ble_nus_evt_t * p_evt)
  */
 static void services_init(void)
 {
-    uint32_t       err_code;
-    ble_nus_init_t nus_init;
+    uint32_t           err_code;
+    ble_nus_init_t     nus_init;
+    nrf_ble_qwr_init_t qwr_init = {0};
 
+    // Initialize Queued Write Module.
+    qwr_init.error_handler = nrf_qwr_error_handler;
+
+    err_code = nrf_ble_qwr_init(&m_qwr, &qwr_init);
+    APP_ERROR_CHECK(err_code);
+
+    // Initialize NUS.
     memset(&nus_init, 0, sizeof(nus_init));
 
     nus_init.data_handler = nus_data_handler;
@@ -338,6 +365,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
             m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
+            err_code = nrf_ble_qwr_conn_handle_assign(&m_qwr, m_conn_handle);
+            APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
@@ -346,7 +375,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
             break;
 
-#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -358,24 +386,13 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
             APP_ERROR_CHECK(err_code);
         } break;
-#endif
 
         case BLE_GAP_EVT_SEC_PARAMS_REQUEST:
             // Pairing not supported
             err_code = sd_ble_gap_sec_params_reply(m_conn_handle, BLE_GAP_SEC_STATUS_PAIRING_NOT_SUPP, NULL, NULL);
             APP_ERROR_CHECK(err_code);
             break;
-#if !defined (S112)
-         case BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST:
-        {
-            ble_gap_data_length_params_t dl_params;
 
-            // Clearing the struct will effectivly set members to @ref BLE_GAP_DATA_LENGTH_AUTO
-            memset(&dl_params, 0, sizeof(ble_gap_data_length_params_t));
-            err_code = sd_ble_gap_data_length_update(p_ble_evt->evt.gap_evt.conn_handle, &dl_params, NULL);
-            APP_ERROR_CHECK(err_code);
-        } break;
-#endif //!defined (S112)
         case BLE_GATTS_EVT_SYS_ATTR_MISSING:
             // No system attributes have been stored.
             err_code = sd_ble_gatts_sys_attr_set(m_conn_handle, NULL, 0, 0);
@@ -395,40 +412,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
             break;
-
-        case BLE_EVT_USER_MEM_REQUEST:
-            err_code = sd_ble_user_mem_reply(p_ble_evt->evt.gattc_evt.conn_handle, NULL);
-            APP_ERROR_CHECK(err_code);
-            break;
-
-        case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
-        {
-            ble_gatts_evt_rw_authorize_request_t  req;
-            ble_gatts_rw_authorize_reply_params_t auth_reply;
-
-            req = p_ble_evt->evt.gatts_evt.params.authorize_request;
-
-            if (req.type != BLE_GATTS_AUTHORIZE_TYPE_INVALID)
-            {
-                if ((req.request.write.op == BLE_GATTS_OP_PREP_WRITE_REQ)     ||
-                    (req.request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW) ||
-                    (req.request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL))
-                {
-                    if (req.type == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
-                    {
-                        auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
-                    }
-                    else
-                    {
-                        auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_READ;
-                    }
-                    auth_reply.params.write.gatt_status = APP_FEATURE_NOT_SUPPORTED;
-                    err_code = sd_ble_gatts_rw_authorize_reply(p_ble_evt->evt.gatts_evt.conn_handle,
-                                                               &auth_reply);
-                    APP_ERROR_CHECK(err_code);
-                }
-            }
-        } break; // BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST
 
         default:
             // No implementation needed.
@@ -485,7 +468,7 @@ void gatt_init(void)
     err_code = nrf_ble_gatt_init(&m_gatt, gatt_evt_handler);
     APP_ERROR_CHECK(err_code);
 
-    err_code = nrf_ble_gatt_att_mtu_periph_set(&m_gatt, 64);
+    err_code = nrf_ble_gatt_att_mtu_periph_set(&m_gatt, NRF_SDH_BLE_GATT_MAX_MTU_SIZE);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -555,8 +538,9 @@ void uart_event_handle(app_uart_evt_t * p_event)
                 do
                 {
                     uint16_t length = (uint16_t)index;
-                    err_code = ble_nus_string_send(&m_nus, data_array, &length);
-                    if ( (err_code != NRF_ERROR_INVALID_STATE) && (err_code != NRF_ERROR_BUSY) )
+                    err_code = ble_nus_data_send(&m_nus, data_array, &length, m_conn_handle);
+                    if ( (err_code != NRF_ERROR_INVALID_STATE) && (err_code != NRF_ERROR_BUSY) &&
+                         (err_code != NRF_ERROR_NOT_FOUND) )
                     {
                         APP_ERROR_CHECK(err_code);
                     }
@@ -595,7 +579,11 @@ static void uart_init(void)
         .cts_pin_no   = CTS_PIN_NUMBER,
         .flow_control = APP_UART_FLOW_CONTROL_DISABLED,
         .use_parity   = false,
+#if defined (UART_PRESENT)
         .baud_rate    = NRF_UART_BAUDRATE_115200
+#else
+        .baud_rate    = NRF_UARTE_BAUDRATE_115200
+#endif
     };
 
     APP_UART_FIFO_INIT(&comm_params,
@@ -627,8 +615,7 @@ static void advertising_init(void)
 
     init.config.ble_adv_fast_enabled  = true;
     init.config.ble_adv_fast_interval = APP_ADV_INTERVAL;
-    init.config.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;
-
+    init.config.ble_adv_fast_timeout  = APP_ADV_DURATION;
     init.evt_handler = on_adv_evt;
 
     err_code = ble_advertising_init(&m_advertising, &init);
@@ -646,7 +633,7 @@ static void buttons_leds_init(bool * p_erase_bonds)
 {
     bsp_event_t startup_event;
 
-    uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, bsp_event_handler);
+    uint32_t err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS, bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_btn_ble_init(NULL, &startup_event);
@@ -667,11 +654,32 @@ static void log_init(void)
 }
 
 
-/**@brief Function for placing the application in low power state while waiting for events.
+/**@brief Function for initializing power management.
  */
-static void power_manage(void)
+static void power_management_init(void)
 {
-    uint32_t err_code = sd_app_evt_wait();
+    ret_code_t err_code;
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for handling the idle state (main loop).
+ *
+ * @details If there is no pending log operation, then sleep until next the next event occurs.
+ */
+static void idle_state_handle(void)
+{
+    UNUSED_RETURN_VALUE(NRF_LOG_PROCESS());
+    nrf_pwr_mgmt_run();
+}
+
+
+/**@brief Function for starting advertising.
+ */
+static void advertising_start(void)
+{
+    uint32_t err_code = ble_advertising_start(&m_advertising, BLE_ADV_MODE_FAST);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -680,17 +688,14 @@ static void power_manage(void)
  */
 int main(void)
 {
-    uint32_t err_code;
-    bool     erase_bonds;
+    bool erase_bonds;
 
     // Initialize.
-    err_code = app_timer_init();
-    APP_ERROR_CHECK(err_code);
-
     uart_init();
     log_init();
-
+    timers_init();
     buttons_leds_init(&erase_bonds);
+    power_management_init();
     ble_stack_init();
     gap_params_init();
     gatt_init();
@@ -698,16 +703,15 @@ int main(void)
     advertising_init();
     conn_params_init();
 
-    printf("\r\nUART Start!\r\n");
-    NRF_LOG_INFO("UART Start!");
-    err_code = ble_advertising_start(&m_advertising, BLE_ADV_MODE_FAST);
-    APP_ERROR_CHECK(err_code);
+    // Start execution.
+    printf("\r\nUART started.\r\n");
+    NRF_LOG_INFO("Debug logging for UART over RTT started.");
+    advertising_start();
 
     // Enter main loop.
     for (;;)
     {
-        UNUSED_RETURN_VALUE(NRF_LOG_PROCESS());
-        power_manage();
+        idle_state_handle();
     }
 }
 

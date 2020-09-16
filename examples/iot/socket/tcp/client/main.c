@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -78,6 +78,7 @@ int main(void)
         else
         {
             printf("Socket created.\r\n");
+            printf("Application started.\r\n");
 
             errno = 0;
             ret = connect(s, (struct sockaddr *)&dest, sizeof(dest));

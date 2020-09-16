@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -48,6 +48,7 @@
 
 extern ser_ble_gap_conn_keyset_t m_conn_keys_table[];
 
+#ifndef S112
 uint32_t ble_gap_evt_adv_report_enc(ble_evt_t const * const p_event,
                                     uint32_t                event_len,
                                     uint8_t * const         p_buf,
@@ -60,6 +61,7 @@ uint32_t ble_gap_evt_adv_report_enc(ble_evt_t const * const p_event,
 
     SER_EVT_ENC_END;
 }
+#endif //!S112
 
 uint32_t ble_gap_evt_auth_key_request_enc(ble_evt_t const * const p_event,
                                           uint32_t                event_len,
@@ -116,6 +118,7 @@ uint32_t ble_gap_evt_conn_param_update_enc(ble_evt_t const * const p_event,
     SER_EVT_ENC_END;
 }
 
+#ifndef S112
 uint32_t ble_gap_evt_conn_param_update_request_enc(ble_evt_t const * const p_event,
                                                    uint32_t                event_len,
                                                    uint8_t * const         p_buf,
@@ -129,6 +132,7 @@ uint32_t ble_gap_evt_conn_param_update_request_enc(ble_evt_t const * const p_eve
 
     SER_EVT_ENC_END;
 }
+#endif //!S112
 
 uint32_t ble_gap_evt_conn_sec_update_enc(ble_evt_t const * const p_event,
                                          uint32_t                event_len,
@@ -234,6 +238,9 @@ uint32_t ble_gap_evt_rssi_changed_enc(ble_evt_t const * const p_event,
 
     SER_PUSH_uint16(&p_event->evt.gap_evt.conn_handle);
     SER_PUSH_int8(&p_event->evt.gap_evt.params.rssi_changed.rssi);
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION > 5
+    SER_PUSH_uint8(&p_event->evt.gap_evt.params.rssi_changed.ch_index);
+#endif
 
     SER_EVT_ENC_END;
 }
@@ -246,6 +253,9 @@ uint32_t ble_gap_evt_scan_req_report_enc(ble_evt_t const * const p_event,
     SER_EVT_ENC_BEGIN(BLE_GAP_EVT_SCAN_REQ_REPORT);
 
     SER_PUSH_uint16(&p_event->evt.gap_evt.conn_handle);
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION > 5
+    SER_PUSH_uint8(&p_event->evt.gap_evt.params.scan_req_report.adv_handle);
+#endif
     SER_PUSH_FIELD(&p_event->evt.gap_evt.params.scan_req_report.peer_addr, ble_gap_addr_t_enc);
     SER_PUSH_int8(&p_event->evt.gap_evt.params.scan_req_report.rssi);
 
@@ -300,7 +310,12 @@ uint32_t ble_gap_evt_timeout_enc(ble_evt_t const * const p_event,
 
     SER_PUSH_uint16(&p_event->evt.gap_evt.conn_handle);
     SER_PUSH_uint8(&p_event->evt.gap_evt.params.timeout.src);
-
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION > 5 && !defined(S112)
+    if (p_event->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_SCAN)
+    {
+        SER_PUSH_uint16(&p_event->evt.gap_evt.params.timeout.params.adv_report_buffer.len);
+    }
+#endif
     SER_EVT_ENC_END;
 }
 
@@ -333,7 +348,7 @@ uint32_t ble_gap_evt_phy_update_request_enc(ble_evt_t const * const p_event,
     SER_EVT_ENC_END;
 }
 #endif
-#if NRF_SD_BLE_API_VERSION >= 4
+#if NRF_SD_BLE_API_VERSION >= 4 && !defined(S112)
 uint32_t ble_gap_evt_data_length_update_request_enc(ble_evt_t const * const p_event,
                                  uint32_t                event_len,
                                  uint8_t * const         p_buf,
@@ -355,6 +370,31 @@ uint32_t ble_gap_evt_data_length_update_enc(ble_evt_t const * const p_event,
 
     SER_PUSH_uint16(&p_event->evt.gap_evt.conn_handle);
     SER_PUSH_FIELD(&p_event->evt.gap_evt.params.data_length_update.effective_params, ble_gap_data_length_params_t_enc);
+
+    SER_EVT_ENC_END;
+}
+#endif // NRF_SD_BLE_API_VERSION >= 4 && !defined(S112)
+
+#if NRF_SD_BLE_API_VERSION > 5
+uint32_t ble_gap_evt_adv_set_terminated_enc(ble_evt_t const * const p_event,
+                                 uint32_t                event_len,
+                                 uint8_t * const         p_buf,
+                                 uint32_t * const        p_buf_len)
+{
+    SER_EVT_ENC_BEGIN(BLE_GAP_EVT_ADV_SET_TERMINATED);
+
+    SER_PUSH_uint16(&p_event->evt.gap_evt.conn_handle);
+    SER_PUSH_FIELD(&p_event->evt.gap_evt.params.adv_set_terminated, ble_gap_evt_adv_set_terminated_t_enc);
+
+    if (p_event->evt.gap_evt.params.adv_set_terminated.adv_data.adv_data.p_data)
+    {
+        conn_ble_gap_ble_data_buf_free(p_event->evt.gap_evt.params.adv_set_terminated.adv_data.adv_data.p_data);
+    }
+
+    if (p_event->evt.gap_evt.params.adv_set_terminated.adv_data.scan_rsp_data.p_data)
+    {
+        conn_ble_gap_ble_data_buf_free(p_event->evt.gap_evt.params.adv_set_terminated.adv_data.scan_rsp_data.p_data);
+    }
 
     SER_EVT_ENC_END;
 }

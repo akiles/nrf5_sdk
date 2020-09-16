@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -406,7 +406,7 @@ NRF_LOG_MODULE_REGISTER();
                            MEMORY_MANAGER_MEDIUM_BLOCK_COUNT  +                                     \
                            MEMORY_MANAGER_LARGE_BLOCK_COUNT   +                                     \
                            MEMORY_MANAGER_XLARGE_BLOCK_COUNT  +                                     \
-                           MEMORY_MANAGER_XLARGE_BLOCK_COUNT)
+                           MEMORY_MANAGER_XXLARGE_BLOCK_COUNT)
 
 
 /**@brief Total memory managed by the module. */

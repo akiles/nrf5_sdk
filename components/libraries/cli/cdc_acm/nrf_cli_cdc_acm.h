@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -60,12 +60,12 @@ extern "C" {
 
 /**
  * @brief Command line interface transport.
- * */
+ */
 extern const nrf_cli_transport_api_t nrf_cli_cdc_acm_transport_api;
 
 /**
  * @brief Command line interface class instance.
- * */
+ */
 extern const app_usbd_cdc_acm_t nrf_cli_cdc_acm;
 
 typedef struct {
@@ -85,11 +85,6 @@ typedef struct {
         .transport = {.p_api = &nrf_cli_cdc_acm_transport_api}, \
         .p_cb = &CONCAT_2(_name_, _cb),                         \
     }
-
-/**
- * @brief Get CDC ACM port status.
- * */
-bool nrf_cli_cdc_acm_port_is_open(void);
 
 /** @} */
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -43,7 +43,6 @@
 #include <stdint.h>
 #include "sdk_errors.h"
 #include "app_timer.h"
-#include "nrf_drv_common.h"
 
 /** @file
  *

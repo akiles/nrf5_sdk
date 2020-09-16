@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2011 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -41,9 +41,12 @@
 #define NRF_ATFIFO_H__
 
 #include <stdint.h>
+#include <stdbool.h>
+#include "sdk_config.h"
 #include "nordic_common.h"
 #include "nrf_assert.h"
-
+#include "sdk_errors.h"
+#include "nrf_log_instance.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -133,11 +136,12 @@ typedef union nrf_atfifo_postag_u
  */
 typedef struct nrf_atfifo_s
 {
-    void                * p_buf;     //!< Pointer to the data buffer
-    nrf_atfifo_postag_t   tail;      //!< Read and write tail position tag
-    nrf_atfifo_postag_t   head;      //!< Read and write head position tag
-    uint16_t              buf_size;  //!< FIFO size in number of bytes (has to be divisible by @c item_size)
-    uint16_t              item_size; //!< Size of a single FIFO item
+    void                * p_buf;        //!< Pointer to the data buffer
+    nrf_atfifo_postag_t   tail;         //!< Read and write tail position tag
+    nrf_atfifo_postag_t   head;         //!< Read and write head position tag
+    uint16_t              buf_size;     //!< FIFO size in number of bytes (has to be divisible by @c item_size)
+    uint16_t              item_size;    //!< Size of a single FIFO item
+    NRF_LOG_INSTANCE_PTR_DECLARE(p_log) //!< Pointer to instance of the logger object (Conditionally compiled).
 }nrf_atfifo_t;
 
 /**
@@ -162,6 +166,10 @@ typedef struct nrf_atfifo_rcontext_s
     nrf_atfifo_postag_t last_head; //!< Head tag value that was here when opening the FIFO to read
 }nrf_atfifo_item_get_t;
 
+
+/** @brief Name of the module used for logger messaging.
+ */
+#define NRF_ATFIFO_LOG_NAME atfifo
 
 /**
  * @defgroup nrf_atfifo_instmacros FIFO instance macros
@@ -227,9 +235,18 @@ typedef struct nrf_atfifo_rcontext_s
      * @param[in] item_cnt     Capacity of the created FIFO in maximum number of items that may be stored.
      *                         The phisical size of the buffer will be 1 element bigger.
      */
-    #define NRF_ATFIFO_DEF(fifo_id, storage_type, item_cnt)                 \
-        static storage_type NRF_ATFIFO_BUF_NAME(fifo_id)[(item_cnt)+1];     \
-        static nrf_atfifo_t NRF_ATFIFO_INST_NAME(fifo_id);                  \
+    #define NRF_ATFIFO_DEF(fifo_id, storage_type, item_cnt)                                     \
+        static storage_type NRF_ATFIFO_BUF_NAME(fifo_id)[(item_cnt)+1];                         \
+        NRF_LOG_INSTANCE_REGISTER(NRF_ATFIFO_LOG_NAME, fifo_id,                                 \
+                                  NRF_ATFIFO_CONFIG_INFO_COLOR,                                 \
+                                  NRF_ATFIFO_CONFIG_DEBUG_COLOR,                                \
+                                  NRF_ATFIFO_CONFIG_LOG_INIT_FILTER_LEVEL,                      \
+                                  NRF_ATFIFO_CONFIG_LOG_ENABLED ?                               \
+                                          NRF_ATFIFO_CONFIG_LOG_LEVEL : NRF_LOG_SEVERITY_NONE); \
+        static nrf_atfifo_t NRF_ATFIFO_INST_NAME(fifo_id) = {                                   \
+                .p_buf = NULL,                                                                  \
+                NRF_LOG_INSTANCE_PTR_INIT(p_log, NRF_ATFIFO_LOG_NAME, fifo_id)                  \
+        };                                                                                      \
         static nrf_atfifo_t * const fifo_id = &NRF_ATFIFO_INST_NAME(fifo_id)
 
     /**

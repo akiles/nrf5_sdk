@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -47,7 +47,7 @@
  * @details Macros for creating module logs which can be useful in understanding the handling
  *          of events or actions on API requests. These are intended for debugging purposes and
  *          can be disabled by defining the SOCKET_CONFIG_LOG_ENABLED.
- * @note If ENABLE_DEBUG_LOG_SUPPORT is disabled, SOCKET_CONFIG_LOG_ENABLED has no effect.
+ * @note If NRF_LOG_ENABLED is disabled, SOCKET_CONFIG_LOG_ENABLED has no effect.
  */
 #ifndef SOCKET_TRACE_H__
 #define SOCKET_TRACE_H__

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -46,6 +46,7 @@
 #include "nordic_common.h"
 #include "sdk_errors.h"
 #include "nrf.h"
+#include "sdk_config.h"
 #include "ble_ipsp.h"
 #include "ble_srv_common.h"
 #include "sdk_os.h"
@@ -56,7 +57,7 @@
  * @details Macros used for creating module logs which can be useful in understanding handling
  *          of events or actions on API requests. These are intended for debugging purposes and
  *          can be enabled by defining the IOT_BLE_IPSP_CONFIG_LOG_ENABLED to 1.
- * @note That if ENABLE_DEBUG_LOG_SUPPORT is disabled, having IOT_BLE_IPSP_CONFIG_LOG_ENABLED
+ * @note If NRF_LOG_ENABLED is disabled, having IOT_BLE_IPSP_CONFIG_LOG_ENABLED
  *       has no effect.
  * @{
  */
@@ -109,7 +110,7 @@ NRF_LOG_MODULE_REGISTER();
 #define VERIFY_MODULE_IS_INITIALIZED()                                                             \
         if (m_evt_handler == NULL)                                                                 \
         {                                                                                          \
-            return (NRF_ERROR_MODULE_NOT_INITIALZED + NRF_ERROR_BLE_IPSP_ERR_BASE);                \
+            return (NRF_ERROR_MODULE_NOT_INITIALIZED + NRF_ERROR_BLE_IPSP_ERR_BASE);               \
         }
 
 /**@brief Macro to check is module is initialized before requesting one of the module
@@ -338,6 +339,24 @@ static __INLINE void app_notify(ble_ipsp_handle_t * p_handle, ble_ipsp_evt_t * p
     UNUSED_VARIABLE(m_evt_handler(p_handle, p_event));
 
     BLE_IPSP_MUTEX_LOCK();
+}
+
+
+/**@brief Verifies if the buffer is TX buffer on the channel or not.
+ *
+ * @param[in] ch_id    Identifies the IPSP channel for which the procedure is requested.
+ * @param[in] p_buffer Address of the buffer being verified to be TX or not.
+ */
+static __INLINE bool is_tx_buffer(uint32_t ch_id, const uint8_t * p_buffer)
+{
+    // If the buffer is in the RX buffer list, then it is not TX!
+    if ((p_buffer >= (uint8_t *)&m_channel[ch_id].p_rx_buffer) &&
+        (p_buffer <  (uint8_t *)&m_channel[ch_id].p_rx_buffer[RX_BUFFER_TOTAL_SIZE]))
+    {
+        return false;
+    }
+
+    return true;
 }
 
 
@@ -660,6 +679,33 @@ void ble_ipsp_evt_handler(ble_evt_t const * p_evt)
             {
                 // Initialize the event.
                 ipsp_event.evt_id = BLE_IPSP_EVT_CHANNEL_DATA_TX_COMPLETE;
+
+                // Initialize the handle.
+                handle.conn_handle = m_channel[ch_id].conn_handle;
+                handle.cid         = m_channel[ch_id].cid;
+
+                // Notify the event to the application.
+                notify_event = true;
+            }
+            break;
+        }
+        case BLE_L2CAP_EVT_CH_SDU_BUF_RELEASED:
+        {
+            BLE_IPSP_TRC("BLE_L2CAP_EVT_CH_SDU_BUF_RELEASED --> p_sdu_buf = %p, p_sdu_buf.p_data = %p",
+                    &p_evt->evt.l2cap_evt.params.ch_sdu_buf_released.sdu_buf,
+                    p_evt->evt.l2cap_evt.params.ch_sdu_buf_released.sdu_buf.p_data);
+
+            retval = channel_search(p_evt->evt.l2cap_evt.conn_handle,
+                                    p_evt->evt.l2cap_evt.local_cid,
+                                    &ch_id);
+
+            if ((ch_id != INVALID_CHANNEL_INSTANCE) &&
+                (p_evt->evt.l2cap_evt.local_cid == m_channel[ch_id].cid) &&
+                (is_tx_buffer(ch_id, p_evt->evt.l2cap_evt.params.ch_sdu_buf_released.sdu_buf.p_data)))
+            {
+                // Initialize the event.
+                ipsp_event.evt_id     = BLE_IPSP_EVT_CHANNEL_DATA_TX_COMPLETE;
+                ipsp_event.evt_result = NRF_ERROR_BLE_IPSP_LINK_DISCONNECTED;
 
                 // Initialize the handle.
                 handle.conn_handle = m_channel[ch_id].conn_handle;

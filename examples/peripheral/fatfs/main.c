@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -183,12 +183,12 @@ static void fatfs_example()
  */
 int main(void)
 {
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("FATFS example.");
+    NRF_LOG_INFO("FATFS example started.");
 
     fatfs_example();
 

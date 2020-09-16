@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -37,13 +37,22 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+#include "sdk_common.h"
+#if NRF_MODULE_ENABLED(NFC_BLE_OOB_ADVDATA_PARSER)
 #include "nfc_ble_oob_advdata_parser.h"
 #include "app_util.h"
-#include "sdk_common.h"
-#include "nrf_log.h"
+#include "nfc_ble_pair_common.h"
 
-#define BLE_GAP_AD_TYPE_LESC_CONFIRM_VALUE  0x22
-#define BLE_GAP_AD_TYPE_LESC_RANDOM_VALUE   0x23
+#define NRF_LOG_MODULE_NAME ble_oob_ad_parser
+#include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
+
+/* Workaround for using NRF_LOG_RAW_INFO() macro only when logging level is "DEBUG" */
+#if (NRF_LOG_LEVEL > 3)
+#define NRF_BLE_OOB_AD_PARSER_LOG_DEBUG(...) NRF_LOG_RAW_INFO(__VA_ARGS__)
+#else // (NRF_LOG_LEVEL > 3)
+#define NRF_BLE_OOB_AD_PARSER_LOG_DEBUG(...)
+#endif // (NRF_LOG_LEVEL > 3)
 
 #define EARLY_TERMINATOR     0   /* Value of AD Structure Length field indicating an early
                                     termination of Advertising or Scan Response Data. */
@@ -53,7 +62,7 @@
 typedef enum
 {
     AD_TYPE_NOT_PRESENT = 0,    /* Value indicating that AD type is not present. */
-    AD_TYPE_OCCUR_THRES = 1     /* Maximal occurance number of any AD type within the buffer */
+    AD_TYPE_OCCUR_THRES = 1     /* Maximal occurrence number of any AD type within the buffer */
 } ad_type_counter_values_t;
 
 /**@brief Internal module structure indicating how many BLE AD fields of the same type are in the buffer. */
@@ -89,7 +98,7 @@ void nfc_oob_data_printout(nfc_ble_oob_pairing_data_t const * const p_pairing_da
 {
     NRF_LOG_RAW_INFO("\r\n");
     NRF_LOG_INFO("BLE Advertising data contents");
-    NRF_LOG_INFO("Device name: %s", NRF_LOG_PUSH((char *)p_pairing_data->device_name.p_name));
+    NRF_LOG_INFO("Device name: \"%s\"", NRF_LOG_PUSH((char *)p_pairing_data->device_name.p_name));
     NRF_LOG_INFO("Device Address: ");
 
     for (int i=0; i < BLE_GAP_ADDR_LEN; ++i)
@@ -100,12 +109,12 @@ void nfc_oob_data_printout(nfc_ble_oob_pairing_data_t const * const p_pairing_da
 
     if (p_pairing_data->p_tk_value != NULL)
     {
-        NRF_LOG_INFO("Device Temporary Key: ");
+        NRF_LOG_INFO("Device Temporary Key present.");
         for (int i=0; i < BLE_GAP_SEC_KEY_LEN; ++i)
         {
-            NRF_LOG_RAW_INFO("%02X ", p_pairing_data->p_tk_value->tk[i]);
+            NRF_BLE_OOB_AD_PARSER_LOG_DEBUG("%02X ", p_pairing_data->p_tk_value->tk[i]);
         }
-        NRF_LOG_RAW_INFO("\r\n");
+        NRF_BLE_OOB_AD_PARSER_LOG_DEBUG("\r\n");
     }
     else
     {
@@ -114,19 +123,19 @@ void nfc_oob_data_printout(nfc_ble_oob_pairing_data_t const * const p_pairing_da
 
     if (p_pairing_data->p_lesc_confirm_value != NULL && p_pairing_data->p_lesc_random_value)
     {
-        NRF_LOG_INFO("LESC Confirmation Value: ");
+        NRF_LOG_INFO("LESC Confirmation Value present.");
         for (int i=0; i < BLE_GAP_SEC_KEY_LEN; ++i)
         {
-            NRF_LOG_RAW_INFO("%02X ", p_pairing_data->p_lesc_confirm_value[i]);
+            NRF_BLE_OOB_AD_PARSER_LOG_DEBUG("%02X ", p_pairing_data->p_lesc_confirm_value[i]);
         }
-        NRF_LOG_RAW_INFO("\r\n");
+        NRF_BLE_OOB_AD_PARSER_LOG_DEBUG("\r\n");
 
-        NRF_LOG_INFO("LESC Random Value: ");
+        NRF_LOG_INFO("LESC Random Value present.");
         for (int i=0; i < BLE_GAP_SEC_KEY_LEN; ++i)
         {
-            NRF_LOG_RAW_INFO("%02X ", p_pairing_data->p_lesc_random_value[i]);
+            NRF_BLE_OOB_AD_PARSER_LOG_DEBUG("%02X ", p_pairing_data->p_lesc_random_value[i]);
         }
-        NRF_LOG_RAW_INFO("\r\n");
+        NRF_BLE_OOB_AD_PARSER_LOG_DEBUG("\r\n");
     }
     else
     {
@@ -456,7 +465,7 @@ ret_code_t nfc_ble_oob_advdata_parse(uint8_t              const * p_advdata,
                                            p_nfc_ble_pairing_data);
                 break;
 
-            case BLE_GAP_AD_TYPE_LESC_CONFIRM_VALUE:
+            case BLE_GAP_AD_TYPE_LESC_CONFIRMATION_VALUE:
                 ++ad_type_counter.lesc_confirm_type;
                 err_code = lesc_confirm_value_decode(p_field_data,
                                                     field_data_len,
@@ -512,37 +521,4 @@ ret_code_t nfc_ble_oob_advdata_parse(uint8_t              const * p_advdata,
     return err_code;
 }
 
-ret_code_t nfc_ble_oob_advdata_parser_field_find(uint8_t    type,
-                                                 uint8_t *  p_advdata,
-                                                 uint8_t *  p_len,
-                                                 uint8_t ** pp_field_data)
-{
-    uint8_t    index    = 0;
-    ret_code_t err_code = NRF_SUCCESS;
-
-    if ( (pp_field_data == NULL) || (p_len == NULL) || (p_advdata == NULL) )
-    {
-        return NRF_ERROR_NULL;
-    }
-
-    while (index < *p_len)
-    {
-        uint8_t field_length = p_advdata[index];
-        if (field_length == EARLY_TERMINATOR)
-        {
-            return NRF_ERROR_NOT_FOUND;
-        }
-        err_code = field_length_validate(field_length, index, *p_len);
-        VERIFY_SUCCESS(err_code);
-
-        uint8_t field_type   = p_advdata[index + AD_LENGTH_FIELD_SIZE];
-        if (field_type == type)
-        {
-            *pp_field_data  = &p_advdata[index + AD_DATA_OFFSET];
-            *p_len          = field_length - AD_TYPE_FIELD_SIZE;
-            return NRF_SUCCESS;
-        }
-        index += field_length + AD_LENGTH_FIELD_SIZE;
-    }
-    return NRF_ERROR_NOT_FOUND;
-}
+#endif // NRF_MODULE_ENABLED(NFC_BLE_OOB_ADVDATA_PARSER)

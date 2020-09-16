@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -232,7 +232,7 @@ int main(void)
     log_init();
     cli_init();
 
-    NRF_LOG_INFO("fstorage example started!");
+    NRF_LOG_INFO("fstorage example started.");
 
     nrf_fstorage_api_t * p_fs_api;
 

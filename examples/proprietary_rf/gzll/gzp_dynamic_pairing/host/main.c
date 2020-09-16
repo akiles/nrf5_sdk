@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -86,17 +86,16 @@ static void ui_init(void)
     err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
-    err_code = bsp_init(BSP_INIT_LED, NULL);
+    err_code = bsp_init(BSP_INIT_LEDS, NULL);
     APP_ERROR_CHECK(err_code);
 
     // Set up logger
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
+    
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("Gazell dynamic pairing example. Host mode.");
-    NRF_LOG_FLUSH();
-
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 }
 
 
@@ -158,6 +157,10 @@ int main(void)
 
     result_value = nrf_gzll_enable();
     GAZELLE_ERROR_CODE_CHECK(result_value);
+
+    NRF_LOG_INFO("Gazell dynamic pairing example started. Host mode.");
+    NRF_LOG_FLUSH();
+
 
     for (;;)
     {

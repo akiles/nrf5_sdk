@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -128,7 +128,7 @@ static void on_disconnected(ble_ancs_c_t * p_ancs, ble_evt_t const * p_ble_evt)
 
 void ble_ancs_c_on_db_disc_evt(ble_ancs_c_t * p_ancs, ble_db_discovery_evt_t * p_evt)
 {
-    NRF_LOG_INFO("Database Discovery handler called with event 0x%x", p_evt->evt_type);
+    NRF_LOG_DEBUG("Database Discovery handler called with event 0x%x", p_evt->evt_type);
 
     ble_ancs_c_evt_t     evt;
     ble_gatt_db_char_t * p_chars;

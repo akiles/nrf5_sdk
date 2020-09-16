@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -104,7 +104,7 @@ extern "C" {
 #endif
 
 // Validate peripheral sharing feature
-#if ((defined(PERIPHERAL_RESOURCE_SHARING_ENABLED)) && (!PERIPHERAL_RESOURCE_SHARING_ENABLED))
+#if !NRFX_CHECK(NRFX_PRS_ENABLED)
 
 #if ((defined(TWIM0_ENABLED) && defined(TWIS0_ENABLED)) &&\
     ((TWIM0_ENABLED + TWIS0_ENABLED) > 1))
@@ -271,7 +271,7 @@ extern "C" {
 #error "Peripherals overlap. SPIM2, SPI2 - only one of these can be enabled."
 #endif
 
-#endif
+#endif // !NRFX_CHECK(NRFX_PRS_ENABLED)
 
 #ifdef NFCT_PRESENT
 
@@ -289,10 +289,10 @@ extern "C" {
 // Complex driver validation
 #ifdef LPCOMP_PRESENT
 
-#if ((defined(COMP_ENABLED) && defined(LPCOMP_ENABLED)) &&\
-    (!PERIPHERAL_RESOURCE_SHARING_ENABLED) && \
-    ((COMP_ENABLED + LPCOMP_ENABLED) > 1))
-#error "Peripherals overlap. SPIM2, SPI2 - only one of these can be enabled."
+#if ((defined(COMP_ENABLED) && defined(LPCOMP_ENABLED)) && \
+     (!NRFX_CHECK(NRFX_PRS_ENABLED)) && \
+     ((COMP_ENABLED + LPCOMP_ENABLED) > 1))
+#error "Peripherals overlap. COMP, LPCOMP - only one of these can be enabled."
 #endif
 
 #endif

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -77,10 +77,10 @@ int main(void)
     timer_init();
     buttons_init();
     ble_stack_init();
-    peer_manager_init(true);
+    peer_manager_init(false);
     nfc_init();
 
-    NRF_LOG_INFO("Heart Rate Monitor Start!");
+    NRF_LOG_INFO("Heart Rate Monitor started.");
 
     while (true)
     {

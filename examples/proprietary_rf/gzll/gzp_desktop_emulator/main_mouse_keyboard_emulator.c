@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -166,8 +166,7 @@ int main()
     GAZELLE_ERROR_CODE_CHECK(result_value);
 
     // Ensure Gazell parameters are configured.
-    result_value = nrf_gzll_set_max_tx_attempts(150);
-    GAZELLE_ERROR_CODE_CHECK(result_value);
+    nrf_gzll_set_max_tx_attempts(150);
 
     result_value = nrf_gzll_set_device_channel_selection_policy(
         NRF_GZLLDE_DEVICE_CHANNEL_SELECTION_POLICY);

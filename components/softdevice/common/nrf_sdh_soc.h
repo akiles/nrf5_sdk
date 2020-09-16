@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -50,7 +50,7 @@
 #ifndef NRF_SDH_SOC_H__
 #define NRF_SDH_SOC_H__
 
-#include "app_util.h"
+#include "sdk_common.h"
 #include "nrf_section_iter.h"
 #include "nrf_soc.h"
 

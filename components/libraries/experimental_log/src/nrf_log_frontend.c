@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -44,6 +44,7 @@
 #include "nrf_log.h"
 #include "nrf_log_internal.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_str_formatter.h"
 #include "nrf_section.h"
 #include "nrf_memobj.h"
 #include "nrf_atomic.h"
@@ -58,7 +59,7 @@ STATIC_ASSERT(IS_POWER_OF_TWO(NRF_LOG_BUFSIZE));
 #warning "NRF_LOG_BUFSIZE too small, significant number of logs may be lost."
 #endif
 
-NRF_MEMOBJ_POOL_DEF(mempool, NRF_LOG_MSGPOOL_ELEMENT_SIZE, NRF_LOG_MSGPOOL_ELEMENT_COUNT);
+NRF_MEMOBJ_POOL_DEF(log_mempool, NRF_LOG_MSGPOOL_ELEMENT_SIZE, NRF_LOG_MSGPOOL_ELEMENT_COUNT);
 
 #define NRF_LOG_BACKENDS_FULL           0xFF
 #define NRF_LOG_FILTER_BITS_PER_BACKEND 3
@@ -83,29 +84,31 @@ typedef struct
     nrf_log_backend_t *       p_backend_head;
     nrf_atomic_flag_t         log_skipping;
     nrf_atomic_flag_t         log_skipped;
+    nrf_atomic_u32_t          log_dropped_cnt;
     bool                      autoflush;
 } log_data_t;
 
 static log_data_t   m_log_data;
-static const char * m_overflow_info = "Overflow";
+
 /*lint -save -esym(526,log_const_data*) -esym(526,log_dynamic_data*)*/
-NRF_SECTION_DEF(log_dynamic_data, nrf_log_module_dynamic_data_t);
+NRF_SECTION_DEF(log_dynamic_data, NRF_LOG_DYNAMIC_STRUCT_NAME);
 NRF_SECTION_DEF(log_const_data, nrf_log_module_const_data_t);
 /*lint -restore*/
 NRF_LOG_MODULE_REGISTER();
 // Helper macros for section variables.
-#define NRF_LOG_DYNAMIC_SECTION_VARS_GET(i)          NRF_SECTION_ITEM_GET(log_dynamic_data, nrf_log_module_dynamic_data_t, (i))
+#define NRF_LOG_DYNAMIC_SECTION_VARS_GET(i)          NRF_SECTION_ITEM_GET(log_dynamic_data, NRF_LOG_DYNAMIC_STRUCT_NAME, (i))
 
 #define NRF_LOG_CONST_SECTION_VARS_GET(i)          NRF_SECTION_ITEM_GET(log_const_data, nrf_log_module_const_data_t, (i))
 #define NRF_LOG_CONST_SECTION_VARS_COUNT           NRF_SECTION_ITEM_COUNT(log_const_data, nrf_log_module_const_data_t)
 
 #define PUSHED_HEADER_FILL(P_HDR, OFFSET, LENGTH)                   \
+    (P_HDR)->base.raw             = 0;                              \
     (P_HDR)->base.pushed.type     = HEADER_TYPE_PUSHED;             \
     (P_HDR)->base.pushed.offset   = OFFSET;                         \
     (P_HDR)->base.pushed.len      = LENGTH
 
 
-ret_code_t nrf_log_init(nrf_log_timestamp_func_t timestamp_func)
+ret_code_t nrf_log_init(nrf_log_timestamp_func_t timestamp_func, uint32_t timestamp_freq)
 {
     if (NRF_LOG_USES_TIMESTAMP && (timestamp_func == NULL))
     {
@@ -120,10 +123,11 @@ ret_code_t nrf_log_init(nrf_log_timestamp_func_t timestamp_func)
     m_log_data.autoflush    = NRF_LOG_DEFERRED ? false : true;
     if (NRF_LOG_USES_TIMESTAMP)
     {
+        nrf_log_str_formatter_timestamp_freq_set(timestamp_freq);
         m_log_data.timestamp_func = timestamp_func;
     }
 
-    ret_code_t err_code = nrf_memobj_pool_init(&mempool);
+    ret_code_t err_code = nrf_memobj_pool_init(&log_mempool);
     if (err_code != NRF_SUCCESS)
     {
         return err_code;
@@ -152,7 +156,8 @@ ret_code_t nrf_log_init(nrf_log_timestamp_func_t timestamp_func)
                 }
 
             }
-            nrf_log_module_dynamic_data_t * p_module_ddata = NRF_LOG_DYNAMIC_SECTION_VARS_GET(i);
+            nrf_log_module_dynamic_data_t * p_module_ddata =
+                              (nrf_log_module_dynamic_data_t *)NRF_LOG_DYNAMIC_SECTION_VARS_GET(i);
             p_module_ddata->filter = 0;
             p_module_ddata->module_id = i;
             p_module_ddata->order_idx = idx;
@@ -162,7 +167,8 @@ ret_code_t nrf_log_init(nrf_log_timestamp_func_t timestamp_func)
     {
         for(i = 0; i < modules_cnt; i++)
         {
-            nrf_log_module_dynamic_data_t * p_module_ddata = NRF_LOG_DYNAMIC_SECTION_VARS_GET(i);
+            nrf_log_module_reduced_dynamic_data_t * p_module_ddata =
+                       (nrf_log_module_reduced_dynamic_data_t *)NRF_LOG_DYNAMIC_SECTION_VARS_GET(i);
             p_module_ddata->module_id = i;
         }
     }
@@ -183,7 +189,8 @@ static ret_code_t module_idx_get(uint32_t * p_idx, bool ordered_idx)
         uint32_t i;
         for (i = 0; i < module_cnt; i++)
         {
-            nrf_log_module_dynamic_data_t * p_module_data = NRF_LOG_DYNAMIC_SECTION_VARS_GET(i);
+            nrf_log_module_dynamic_data_t * p_module_data =
+                               (nrf_log_module_dynamic_data_t *)NRF_LOG_DYNAMIC_SECTION_VARS_GET(i);
             if (p_module_data->order_idx == *p_idx)
             {
                 *p_idx = i;
@@ -257,11 +264,19 @@ void nrf_log_module_filter_set(uint32_t backend_id, uint32_t module_id, nrf_log_
 {
     if (NRF_LOG_FILTERS_ENABLED)
     {
-        nrf_log_module_dynamic_data_t * p_module_filter = NRF_LOG_DYNAMIC_SECTION_VARS_GET(module_id);
+        nrf_log_module_dynamic_data_t * p_module_filter =
+                       (nrf_log_module_dynamic_data_t *)NRF_LOG_DYNAMIC_SECTION_VARS_GET(module_id);
         p_module_filter->filter_lvls &= ~(NRF_LOG_LEVEL_MASK << (NRF_LOG_LEVEL_BITS * backend_id));
         p_module_filter->filter_lvls |= (severity & NRF_LOG_LEVEL_MASK) << (NRF_LOG_LEVEL_BITS * backend_id);
         p_module_filter->filter = higher_lvl_get(p_module_filter->filter_lvls);
     }
+}
+
+static nrf_log_severity_t nrf_log_module_init_filter_get(uint32_t module_id)
+{
+    nrf_log_module_const_data_t * p_module_data =
+                                        NRF_LOG_CONST_SECTION_VARS_GET(module_id);
+    return NRF_LOG_FILTERS_ENABLED ? p_module_data->initial_lvl : p_module_data->compiled_lvl;
 }
 
 nrf_log_severity_t nrf_log_module_filter_get(uint32_t backend_id,
@@ -275,7 +290,7 @@ nrf_log_severity_t nrf_log_module_filter_get(uint32_t backend_id,
         if (module_idx_get(&module_id, ordered_idx) == NRF_SUCCESS)
         {
             nrf_log_module_dynamic_data_t * p_module_filter =
-                                                NRF_LOG_DYNAMIC_SECTION_VARS_GET(module_id);
+                       (nrf_log_module_dynamic_data_t *)NRF_LOG_DYNAMIC_SECTION_VARS_GET(module_id);
             severity = (nrf_log_severity_t)((p_module_filter->filter_lvls >> (NRF_LOG_LEVEL_BITS * backend_id)) &
                                                                         NRF_LOG_LEVEL_MASK);
         }
@@ -291,14 +306,47 @@ nrf_log_severity_t nrf_log_module_filter_get(uint32_t backend_id,
     }
     return severity;
 }
-
+/**
+ * Function examines current header and omits pushed strings and packets which are in progress.
+ */
+static bool invalid_packets_pushed_str_omit(nrf_log_header_t const * p_header, uint32_t * p_rd_idx)
+{
+    bool ret = false;
+    if ((p_header->base.generic.type == HEADER_TYPE_PUSHED) || (p_header->base.generic.in_progress == 1))
+    {
+        if (p_header->base.generic.in_progress == 1)
+        {
+            switch (p_header->base.generic.type)
+            {
+            case HEADER_TYPE_STD:
+                *p_rd_idx += (HEADER_SIZE + p_header->base.std.nargs);
+                break;
+            case HEADER_TYPE_HEXDUMP:
+                *p_rd_idx += (HEADER_SIZE + p_header->base.hexdump.len);
+                break;
+            default:
+                ASSERT(0);
+                break;
+            }
+        }
+        else
+        {
+            *p_rd_idx +=
+                    (PUSHED_HEADER_SIZE + p_header->base.pushed.len + p_header->base.pushed.offset);
+        }
+        ret = true;
+    }
+    return ret;
+}
 /**
  * @brief Skips the oldest, not pushed logs to make space for new logs.
  * @details This function moves forward read index to prepare space for new logs.
  */
 
-static void log_skip(void)
+static uint32_t log_skip(void)
 {
+    uint16_t dropped = 0;
+
     (void)nrf_atomic_flag_set(&m_log_data.log_skipped);
     (void)nrf_atomic_flag_set(&m_log_data.log_skipping);
 
@@ -308,12 +356,17 @@ static void log_skip(void)
     nrf_log_header_t   header;
 
     // Skip any string that is pushed to the circular buffer.
-    while (p_header->base.generic.type == HEADER_TYPE_PUSHED)
-    {
-        rd_idx       += PUSHED_HEADER_SIZE;
-        rd_idx       += (p_header->base.pushed.len + p_header->base.pushed.offset);
-        p_header = (nrf_log_header_t *)&m_log_data.buffer[rd_idx & mask];
-    }
+    do {
+        if (invalid_packets_pushed_str_omit(p_header, &rd_idx))
+        {
+            //something was omitted. Point to new header and try again.
+            p_header = (nrf_log_header_t *)&m_log_data.buffer[rd_idx & mask];
+        }
+        else
+        {
+            break;
+        }
+    } while (true);
 
     uint32_t i;
     for (i = 0; i < HEADER_SIZE; i++)
@@ -324,9 +377,11 @@ static void log_skip(void)
     switch (header.base.generic.type)
     {
         case HEADER_TYPE_HEXDUMP:
+            dropped = header.dropped;
             rd_idx += CEIL_DIV(header.base.hexdump.len, sizeof(uint32_t));
             break;
         case HEADER_TYPE_STD:
+            dropped = header.dropped;
             rd_idx += header.base.std.nargs;
             break;
         default:
@@ -340,6 +395,19 @@ static void log_skip(void)
     {
         m_log_data.rd_idx = rd_idx;
     }
+
+    return (uint32_t)dropped;
+}
+
+/**
+ * @brief Function for getting number of dropped logs. Dropped counter is reset after reading.
+ *
+ * @return Number of dropped logs saturated to 16 bits.
+ */
+static inline uint32_t dropped_sat16_get(void)
+{
+    uint32_t dropped = nrf_atomic_u32_fetch_store(&m_log_data.log_dropped_cnt, 0);
+    return __USAT(dropped, 16); //Saturate to 16 bits
 }
 
 
@@ -352,21 +420,22 @@ static inline void std_header_set(uint32_t severity_mid,
 
 
     //Prepare header - in reverse order to ensure that packet type is validated (set to STD as last action)
-    uint16_t module_id = severity_mid >> NRF_LOG_MODULE_ID_POS;
+    uint32_t module_id = severity_mid >> NRF_LOG_MODULE_ID_POS;
+    uint32_t dropped   = dropped_sat16_get();
     ASSERT(module_id < nrf_log_module_cnt_get());
-    m_log_data.buffer[(wr_idx + 1) & mask] = module_id;
+    m_log_data.buffer[(wr_idx + 1) & mask] = module_id | (dropped << 16);
 
     if (NRF_LOG_USES_TIMESTAMP)
     {
         m_log_data.buffer[(wr_idx + 2) & mask] = m_log_data.timestamp_func();
     }
 
-    nrf_log_header_t * p_header = (nrf_log_header_t *)&m_log_data.buffer[wr_idx & mask];
-    p_header->base.std.raw      = (severity_mid & NRF_LOG_RAW) ? 1 : 0;
-    p_header->base.std.severity = severity_mid & NRF_LOG_LEVEL_MASK;
-    p_header->base.std.nargs    = nargs;
-    p_header->base.std.addr     = ((uint32_t)(p_str) & STD_ADDR_MASK);
-    p_header->base.std.type     = HEADER_TYPE_STD;
+    nrf_log_header_t * p_header    = (nrf_log_header_t *)&m_log_data.buffer[wr_idx & mask];
+    p_header->base.std.severity    = severity_mid & NRF_LOG_LEVEL_MASK;
+    p_header->base.std.nargs       = nargs;
+    p_header->base.std.addr        = ((uint32_t)(p_str) & STD_ADDR_MASK);
+    p_header->base.std.type        = HEADER_TYPE_STD;
+    p_header->base.std.in_progress = 0;
 }
 
 /**
@@ -380,45 +449,53 @@ static inline void std_header_set(uint32_t severity_mid,
  * @return True if successful allocation, false otherwise.
  *
  */
-static inline bool buf_prealloc(uint32_t content_len, uint32_t * p_wr_idx)
+static inline bool buf_prealloc(uint32_t content_len, uint32_t * p_wr_idx, bool std)
 {
     uint32_t req_len = content_len + HEADER_SIZE;
-    uint32_t ovflw_tag_size = HEADER_SIZE;
     bool     ret            = true;
     CRITICAL_REGION_ENTER();
     *p_wr_idx = m_log_data.wr_idx;
     uint32_t available_words = (m_log_data.mask + 1) - (m_log_data.wr_idx - m_log_data.rd_idx);
-    uint32_t required_words  = req_len + ovflw_tag_size; // room for current entry and overflow
-    while (required_words > available_words)
+    while (req_len > available_words)
     {
+        UNUSED_RETURN_VALUE(nrf_atomic_u32_add(&m_log_data.log_dropped_cnt, 1));
         if (NRF_LOG_ALLOW_OVERFLOW)
         {
-            log_skip();
+            uint32_t dropped_in_skip = log_skip();
+            UNUSED_RETURN_VALUE(nrf_atomic_u32_add(&m_log_data.log_dropped_cnt, dropped_in_skip));
             available_words = (m_log_data.mask + 1) - (m_log_data.wr_idx - m_log_data.rd_idx);
         }
         else
         {
-            if (available_words >= HEADER_SIZE)
-            {
-                // Overflow entry is injected
-                std_header_set(NRF_LOG_LEVEL_WARNING, m_overflow_info, 0, m_log_data.wr_idx, m_log_data.mask);
-                req_len = HEADER_SIZE;
-            }
-            else
-            {
-                // No more room for any logs.
-                req_len = 0;
-            }
             ret = false;
             break;
         }
-
     }
-    /* Mark header as invalid.*/
-    nrf_log_generic_header_t * p_header = (nrf_log_generic_header_t *)&m_log_data.buffer[m_log_data.wr_idx & m_log_data.mask];
-    p_header->type = HEADER_TYPE_INVALID;
 
-    m_log_data.wr_idx += req_len;
+    if (ret)
+    {
+        nrf_log_main_header_t invalid_header;
+        invalid_header.raw = 0;
+
+        if (std)
+        {
+            invalid_header.std.type        = HEADER_TYPE_STD;
+            invalid_header.std.in_progress = 1;
+            invalid_header.std.nargs       = content_len;
+        }
+        else
+        {
+            invalid_header.hexdump.type = HEADER_TYPE_HEXDUMP;
+            invalid_header.hexdump.in_progress = 1;
+            invalid_header.hexdump.len = content_len;
+        }
+
+        nrf_log_main_header_t * p_header = (nrf_log_main_header_t *)&m_log_data.buffer[m_log_data.wr_idx & m_log_data.mask];
+
+        p_header->raw = invalid_header.raw;
+
+        m_log_data.wr_idx += req_len;
+    }
 
     CRITICAL_REGION_EXIT();
     return ret;
@@ -443,6 +520,8 @@ static inline uint32_t * cont_buf_prealloc(uint32_t len32,
                                            uint32_t * p_offset,
                                            uint32_t * p_wr_idx)
 {
+    //allocation algorithm relies on that assumption
+    STATIC_ASSERT(PUSHED_HEADER_SIZE == 1);
     uint32_t * p_buf = NULL;
 
     len32 += PUSHED_HEADER_SIZE; // Increment because 32bit header is needed to be stored.
@@ -451,26 +530,25 @@ static inline uint32_t * cont_buf_prealloc(uint32_t len32,
     *p_wr_idx = m_log_data.wr_idx;
     uint32_t available_words = (m_log_data.mask + 1) -
                                 (m_log_data.wr_idx - m_log_data.rd_idx);
-    if (len32 <= available_words)
+    uint32_t tail_words =  (m_log_data.mask + 1) - (m_log_data.wr_idx & m_log_data.mask);
+
+    //available space is continuous
+    uint32_t curr_pos_available = (available_words <= tail_words) ? available_words : tail_words;
+    uint32_t start_pos_available = (available_words <= tail_words) ? 0 : (available_words - tail_words);
+
+    if ((len32 <= curr_pos_available) ||
+        ((len32 - PUSHED_HEADER_SIZE) <= start_pos_available))
     {
-        // buffer will fit as is
-        p_buf              = &m_log_data.buffer[(m_log_data.wr_idx + 1) & m_log_data.mask];
-        m_log_data.wr_idx += len32;
-        *p_offset          = 0;
+        // buffer will fit in the tail or in the begining
+        // non zero offset is set if string is put at the beginning of the buffer
+        *p_offset = (len32 <= curr_pos_available) ? 0 : (tail_words - PUSHED_HEADER_SIZE);
+        uint32_t str_start_idx =
+                    (m_log_data.wr_idx + PUSHED_HEADER_SIZE + *p_offset) & m_log_data.mask;
+        p_buf = &m_log_data.buffer[str_start_idx];
+        // index is incremented by payload and offset
+        m_log_data.wr_idx += (len32 + *p_offset);
     }
-    else if (len32 < (m_log_data.rd_idx & m_log_data.mask))
-    {
-        // wraping to the begining of the buffer
-        m_log_data.wr_idx += (len32 + available_words - 1);
-        *p_offset          = available_words - 1;
-        p_buf              = m_log_data.buffer;
-    }
-    available_words = (m_log_data.mask + 1) - (m_log_data.wr_idx - m_log_data.rd_idx);
-    // If there is no more room for even overflow tag indicate failed allocation.
-    if (available_words < HEADER_SIZE)
-    {
-        p_buf = NULL;
-    }
+
     CRITICAL_REGION_EXIT();
 
     return p_buf;
@@ -504,7 +582,7 @@ static inline void std_n(uint32_t severity_mid, char const * const p_str, uint32
     uint32_t mask   = m_log_data.mask;
     uint32_t wr_idx;
 
-    if (buf_prealloc(nargs, &wr_idx))
+    if (buf_prealloc(nargs, &wr_idx, true))
     {
         // Proceed only if buffer was successfully preallocated.
 
@@ -605,7 +683,7 @@ void nrf_log_frontend_hexdump(uint32_t           severity_mid,
     uint32_t mask   = m_log_data.mask;
 
     uint32_t wr_idx;
-    if (buf_prealloc(CEIL_DIV(length, sizeof(uint32_t)), &wr_idx))
+    if (buf_prealloc(CEIL_DIV(length, sizeof(uint32_t)), &wr_idx, false))
     {
         uint32_t header_wr_idx = wr_idx;
         wr_idx += HEADER_SIZE;
@@ -618,8 +696,7 @@ void nrf_log_frontend_hexdump(uint32_t           severity_mid,
         else
         {
             memcpy(&m_log_data.buffer[wr_idx & mask], p_data, space0);
-            length -= space0;
-            memcpy(&m_log_data.buffer[0], &((uint8_t *)p_data)[space0], length);
+            memcpy(&m_log_data.buffer[0], &((uint8_t *)p_data)[space0], length - space0);
         }
 
         //Prepare header - in reverse order to ensure that packet type is validated (set to HEXDUMP as last action)
@@ -628,14 +705,16 @@ void nrf_log_frontend_hexdump(uint32_t           severity_mid,
            m_log_data.buffer[(header_wr_idx + 2) & mask] = m_log_data.timestamp_func();
         }
 
-        m_log_data.buffer[(header_wr_idx + 1) & mask] = severity_mid >> NRF_LOG_MODULE_ID_POS;
+        uint32_t module_id = severity_mid >> NRF_LOG_MODULE_ID_POS;
+        uint32_t dropped   = dropped_sat16_get();
+        m_log_data.buffer[(header_wr_idx + 1) & mask] = module_id | (dropped << 16);
         //Header prepare
         nrf_log_header_t * p_header = (nrf_log_header_t *)&m_log_data.buffer[header_wr_idx & mask];
-        p_header->base.hexdump.raw      = (severity_mid & NRF_LOG_RAW) ? 1 : 0;
-        p_header->base.hexdump.severity = severity_mid & NRF_LOG_LEVEL_MASK;
-        p_header->base.hexdump.offset   = 0;
-        p_header->base.hexdump.len      = length;
-        p_header->base.hexdump.type     = HEADER_TYPE_HEXDUMP;
+        p_header->base.hexdump.severity    = severity_mid & NRF_LOG_LEVEL_MASK;
+        p_header->base.hexdump.offset      = 0;
+        p_header->base.hexdump.len         = length;
+        p_header->base.hexdump.type        = HEADER_TYPE_HEXDUMP;
+        p_header->base.hexdump.in_progress = 0;
 
 
 
@@ -653,9 +732,9 @@ bool buffer_is_empty(void)
     return (m_log_data.rd_idx == m_log_data.wr_idx);
 }
 
-
 bool nrf_log_frontend_dequeue(void)
 {
+
     if (buffer_is_empty())
     {
         return false;
@@ -672,12 +751,23 @@ bool nrf_log_frontend_dequeue(void)
     uint32_t           severity = 0;
 
     // Skip any string that is pushed to the circular buffer.
-    while (p_header->base.generic.type == HEADER_TYPE_PUSHED)
-    {
-        rd_idx       += PUSHED_HEADER_SIZE;
-        rd_idx       += (p_header->base.pushed.len + p_header->base.pushed.offset);
-        p_header = (nrf_log_header_t *)&m_log_data.buffer[rd_idx & mask];
-    }
+    do {
+        if (invalid_packets_pushed_str_omit(p_header, &rd_idx))
+        {
+            //Check if end of data is not reached.
+            if (rd_idx >= m_log_data.wr_idx)
+            {
+                m_log_data.rd_idx     = m_log_data.wr_idx;
+                return false;
+            }
+            //something was omitted. Point to new header and try again.
+            p_header = (nrf_log_header_t *)&m_log_data.buffer[rd_idx & mask];
+        }
+        else
+        {
+            break;
+        }
+    } while (true);
 
     uint32_t i;
     for (i = 0; i < HEADER_SIZE; i++)
@@ -692,7 +782,7 @@ bool nrf_log_frontend_dequeue(void)
         header.base.hexdump.len = data_len;
         uint32_t msg_buf_size8  = sizeof(uint32_t)*HEADER_SIZE + data_len;
         severity = header.base.hexdump.severity;
-        p_msg_buf = nrf_memobj_alloc(&mempool, msg_buf_size8);
+        p_msg_buf = nrf_memobj_alloc(&log_mempool, msg_buf_size8);
 
         if (p_msg_buf)
         {
@@ -732,7 +822,7 @@ bool nrf_log_frontend_dequeue(void)
         uint32_t msg_buf_size32 = HEADER_SIZE + header.base.std.nargs;
         severity = header.base.std.severity;
 
-        p_msg_buf = nrf_memobj_alloc(&mempool, msg_buf_size32*sizeof(uint32_t));
+        p_msg_buf = nrf_memobj_alloc(&log_mempool, msg_buf_size32*sizeof(uint32_t));
 
         if (p_msg_buf)
         {
@@ -747,13 +837,6 @@ bool nrf_log_frontend_dequeue(void)
                 memobj_offset += sizeof(uint32_t);
             }
         }
-    }
-    else if (header.base.generic.type == HEADER_TYPE_INVALID && (m_log_data.log_skipped == 0))
-    {
-        //invalid type can only occur if log entry was interrupted by log_process. It is likly final flush
-        // and finding invalid type means that last entry in the buffer was reached (the one that was interrupted).
-        // Stop processing immediately.
-        return false;
     }
     else
     {
@@ -779,9 +862,13 @@ bool nrf_log_frontend_dequeue(void)
                     if (NRF_LOG_FILTERS_ENABLED)
                     {
                         uint8_t backend_id = nrf_log_backend_id_get(p_backend);
-                        uint32_t filter_lvls = NRF_LOG_DYNAMIC_SECTION_VARS_GET(header.module_id)->filter_lvls;
+                        nrf_log_module_dynamic_data_t * p_module_filter =
+                (nrf_log_module_dynamic_data_t *)NRF_LOG_DYNAMIC_SECTION_VARS_GET(header.module_id);
+                        uint32_t filter_lvls = p_module_filter->filter_lvls;
                         uint32_t backend_lvl = (filter_lvls >> (backend_id*NRF_LOG_LEVEL_BITS))
                                                 & NRF_LOG_LEVEL_MASK;
+                        //Degrade INFO_RAW level to INFO.
+                        severity = (severity == NRF_LOG_SEVERITY_INFO_RAW) ? NRF_LOG_SEVERITY_INFO : severity;
                         if (backend_lvl >= severity)
                         {
                             entry_accepted = true;
@@ -795,7 +882,7 @@ bool nrf_log_frontend_dequeue(void)
                 }
                 if (entry_accepted)
                 {
-                 nrf_log_backend_put(p_backend, p_msg_buf);
+                    nrf_log_backend_put(p_backend, p_msg_buf);
                 }
                 p_backend = p_backend->p_next;
             }
@@ -820,6 +907,18 @@ bool nrf_log_frontend_dequeue(void)
                 m_log_data.rd_idx = rd_idx;
             }
         }
+    }
+    else
+    {
+        //Could not allocate memobj - backends are not freeing them on time.
+        nrf_log_backend_t * p_backend = m_log_data.p_backend_head;
+        //Flush all backends
+        while (p_backend)
+        {
+            nrf_log_backend_flush(p_backend);
+            p_backend = p_backend->p_next;
+        }
+        NRF_LOG_WARNING("Backends flushed");
     }
 
     return buffer_is_empty() ? false : true;
@@ -877,7 +976,7 @@ int32_t nrf_log_backend_add(nrf_log_backend_t * p_backend, nrf_log_severity_t se
         uint32_t i;
         for (i = 0; i < nrf_log_module_cnt_get(); i++)
         {
-            nrf_log_severity_t buildin_lvl = nrf_log_module_filter_get(id, i, false, false);
+            nrf_log_severity_t buildin_lvl = nrf_log_module_init_filter_get(i);
             nrf_log_severity_t actual_severity = MIN(buildin_lvl, severity);
             nrf_log_module_filter_set(nrf_log_backend_id_get(p_backend), i, actual_severity);
         }
@@ -947,14 +1046,14 @@ static void log_status(nrf_cli_t const * p_cli, size_t argc, char **argv)
     {
         nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "Logs are halted!\r\n");
     }
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%-24s | current | buildin \r\n", "module_name");
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "------------------------------------------\r\n");
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%-40s | current | built-in \r\n", "module_name");
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "----------------------------------------------------------\r\n");
     for (i = 0; i < modules_cnt; i++)
     {
         nrf_log_severity_t module_dynamic_lvl = nrf_log_module_filter_get(backend_id, i, true, true);
         nrf_log_severity_t module_compiled_lvl = nrf_log_module_filter_get(backend_id, i, true, false);
         nrf_log_severity_t actual_compiled_lvl = MIN(module_compiled_lvl, (nrf_log_severity_t)NRF_LOG_DEFAULT_LEVEL);
-        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%-24s | %-7s | %s%s\r\n",
+        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%-40s | %-7s | %s%s\r\n",
                                   nrf_log_module_name_get(i, true),
                                   m_severity_lvls[module_dynamic_lvl],
                                   m_severity_lvls[actual_compiled_lvl],

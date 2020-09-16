@@ -1,3 +1,438 @@
+nRF5 SDK v15.0.0
+------------------------
+Release Date: Week 12, 2018
+
+Highlights: 
+- Full support for nRF52840 and production quality of libraries and examples for this device.
+- Support for the new SoftDevices S140, S132, and S112 v6.0.0.
+- Peripheral drivers now use nrfx.
+- Extensive rework of the DFU functionality.
+- Extensive rework of the cryptography library (nrf_crypto).
+- USB firmware is now in production quality.
+- Serialization of SoftDevices S140, S132, and S112 v6.0.0.
+- IEEE 802.15.4 protocol in production quality.
+- Included nrf_oberon crypto library with standard Nordic 5-clause license.
+
+The following toolchains/devices have been used for testing and
+verification:
+- ARM: MDK-ARM version 5.18a
+- GCC: GCC ARM Embedded 6.3 2017-q2-update 
+- IAR: IAR Workbench 7.80.4 (IAR 8 - see note below)
+- SES: SES 3.34
+- Linux: Ubuntu 17.04, Kernel 4.10.0.
+- Jlink: 6.22g
+    
+*****
+Note for IAR 8 users:
+Libraries for IAR 8 require wchar_t to be of size 32 bits while IAR 7 requires 16 bits.
+To run a project using IAR 8, follow these intructions:
+ - Open the IAR project in IAR 8. The IAR workbench will automatically generate an IAR 8 compatible project file.
+ - If the project contains one of the precompiled libraries listed below, replace it with the IAR 8 compatible alternative
+   (there are no projects targeting nRF51 in this SDK).
+ - Save the project.
+ - When building the project, you might get the warning: "The header file 'cmsis_iar.h' is obsolete and should not be used. ....".
+   The problem is described in DevZone post: https://devzone.nordicsemi.com/f/nordic-q-a/31123/iar-ewarm-8-22-1-complains-about-cmsis_iar-h
+   The solution is to remove all occurrences of #include <cmsis_iar.h>.
+
+The affected libraries are
+- micro-ecc crypto:
+    - IAR 7: Includes the library located in the folder named "…_iar\…".
+    - IAR 8: Switch to using the library from the folder named "…_armgcc\…".
+- nrf_cc310, nrf_cc310_bl, and nrf_oberon:
+    - IAR 7: Includes the library where "_short_wchar_" is part of the file name.
+    - IAR 8: Switch to using the library with similar naming, but where the "short_wchar" is removed.
+- Gazell, NFC Tag, and 802.15.4:
+    - IAR 7: Includes the library where the file name ends with "_iar".
+    - IAR 8: Switch to using the library with similar file name that ends with "_gcc".
+*****
+ 
+Supported SoftDevices:
+- S112 v6.0.x
+- S132 v6.0.x
+- S140 v6.0.0
+- S212 v5.0.x
+     
+Supported boards:
+- PCA10040
+- PCA10040E (nRF52810 emulation on PCA10040)
+- PCA10056
+- PCA10059 (support in selected examples)
+- Dynastream's D52DK1 (only for ANT examples)
+     
+For other devices and boards, see the SDK documentation, section "Using
+the SDK with other boards".
+     
+ 
+*** New features
+***************** 
+ 
+** IEEE 802.15.4 **
+ - Added support for SES toolchain.
+ 
+** ANT **
+ - Added support for SES and GCC toolchains in the following examples:
+    - ANT-FS Client
+    - ANT Bootloader/DFU
+ 
+** BLE **
+ - Added support for the new SoftDevices S140, S132, and S112 v6.0.0. For more information about SoftDevice v6.0.0, refer to the SoftDevice documentation.
+ - Extended advertising and selection of advertising PHYs can now be configured using the advertising module (ble_advertising).
+ - Running Speed and Cadence Service Application (ble_app_rscs) now advertises using extended advertising. Note that this makes it incompatible with devices that do not support extended advertising.
+ - Added multilink support for a selected group of BLE services (including separate GATT context for each connected client).
+    - Affected services:
+        - Human Interface Device Service: ble_hids.
+        - Nordic UART Service: ble_nus.
+        - Immediate Alert Service: ble_ias.
+        - Battery Service: ble_bas.
+    - Added BLE Link Context Manager module
+    - Modified the Immediate Alert Application to show this feature. 
+ - Added a new application: BLE Interactive Command Line Interface Example.
+ - Added Device Information Service client. This module can be used to read any characteristic of Device Information Service.
+    - Modified the Running Speed and Cadence Collector example application (ble_app_rscs) to show the use of this module.
+ - Immediate Alert Service client example application (ble_app_ias_c) is no longer experimental.
+ - Immediate Alert Service server example application (ble_app_ias) is no longer experimental.
+ - GATT Service Client Example Application (ble_app_gatts_c) is no longer experimental.
+ - GATT Service Server Example Application (ble_app_gatts) is no longer experimental.
+ - Improved the test description documentation for Continuous Glucose Monitoring Service Example Application (ble_app_cgms). It now showcases more capabilities of the application and how to test them.
+ - ble_conn_state: Added new function ble_conn_state_for_each_set_user_flag() which calls a function for each flag in a collection that is set.
+ - Peer Manager:
+    - Two new configuration parameters to disable functionality to save space:
+        - PM_SERVICE_CHANGED_ENABLED to enable/disable Service Changed sending. This must be enabled if Service Changed is enabled in the GATT database.
+        - PM_PEER_RANKS_ENABLED to enable/disable the tracking of peer ranks.
+    - The relevant APIs have gained the error code NRF_ERROR_NOT_SUPPORTED if the function is called when the configuration is disabled.
+ - Added NRF_SDH_BLE_GAP_DATA_LENGTH configuration (under nrf_sdh_ble) to configure BLE data length negotiated by the nrf_ble_gatt module.
+ - Added BLE LESC module as experimental.
+ 
+** BLE IOT **
+ - Added support for the nRF52840 (PCA10056 board) with the use of the S140 SoftDevice.
+ 
+** NFC **
+ - Added support for SES toolchain in the Adafruit Tag Reader Example.
+
+** Crypto **
+ - Production quality nrf_crypto interface that supports software and hardware backends (using the CC310 hardware accelarator in nRF52840 devices).
+ - nrf_crypto API supports the following cryptographic family of algorithms (subject to support in nrf_crypto backends):
+    - AES (CBC, CTR, CFB, ECB, CBC_MAC, CMAC)
+    - AEAD (CCM, CCM*, EAX, GCM, ChaCha-Poly)
+    - ECC (Elliptic Curve Cryptography)
+        - Key generation
+        - Key validation
+        - Key conversions (from/to raw format)
+    - ECDH (multiple curves)
+    - ECDSA (multiple curves)
+    - SHA-2 family hash
+    - HMAC
+    - HKDF
+    - RNG using AES CTR or through dedicated hardware/sofware (on nRF52840)
+    - Experimental Ed25519 support (available through the nrf_crypto_ecdsa API)
+ - nrf_crypto API support for dynamic memory management by configuration:
+    - User-specified macros to NRF_CRYPTO_ALLOC and NRF_CRYPTO_FREE
+    - Stack allocation (using alloca)
+    - C dynamic allocation (malloc)
+    - SDK Memory Manager (nrf_malloc)
+ - nrf_crypto backends include the following:
+    - Cifra
+    - mbed TLS
+    - micro-ecc
+    - nrf_cc310
+    - nrf_cc310_bl (code size optimized, to use in Secure DFU)
+    - nRF HW (for RNG)
+    - nrf_oberon
+    - nRF software (legacy)
+ - Examples of nrf_crypto usage with the option to change the nrf_crypto backends.
+ - Test example to verify the cryptographic routines and APIs through standardized test vectors.
+ 
+** DFU/Bootloader **
+ - SoftDevice independence:
+     - Only the BLE bootloader is now dependent on the SoftDevice. The others depend only on the MBR (which is now part of the SDK).
+     - The DFU now supports updating applications that do not use the SoftDevice. Such an application must be compiled to be placed above the MBR.
+ - The DFU protocol has been extended to support new messages:
+     - Protocol version - To retrieve information about the protocol version.
+     - Firmware version - To retrieve information (size, version) about each piece of firmware on the chip.
+     - Hardware version - To retrieve information (flash/RAM size, page size) about the hardware.
+     - DFU Abort - To instruct the bootloader to abort the DFU procedure and reset the device.
+ - Configurable security: New configuration parameters to turn on and off version checking and signature checking of application transfers. Added a new example using the new configurations (open_bootloader).
+ - DFU Trigger (USB): Added a library to allow DFU mode to be triggered through USB in the application. The library is used in the new ble_connectivity example that uses USB CDC ACM.
+ - Added optional skipping of application CRC check. CRC check can be skipped on wakeup from System Off or on special value written to GPREGRET2 register.
+ - Added watchdog support to the bootloader. If application had enabled watchdog before resetting to the bootloader, it is fed in the bootloader.
+ 
+ ** Drivers and libraries **
+ - Added support for wildcards in the CLI module.
+ - Added TWI sensor module.
+ - Added drivers for sensors on Thingy:52 (LPS22HB, BH1745, HTS221, CCS811, SX1509B, LIS2DH12).
+ - Added the nrfx project as a set of default drivers and provided a legacy layer for supporting deprecated API.
+ - Added support for filtering log messages on instance level in the logger module. Instance level logging added to nrf_balloc, nrf_queue, and nrf_atfifo.
+ - Added new logger backends for writing logs to flash: flashlog backend for storing logs in standard operation, crashlog backend for dumping logs on error condition. Added CLI commands for controlling data stored in flash.
+ - Added optional timestamp formatting in the logger.  
+ - Added new implementation of app_timer (libraries/timer/experimental/app_timer2.c) which does not use SWI, uses less RAM and flash, and has modular, simpler design. It shares the same API as the legacy implementation. The new implementation is used by bootloaders and peripheral/CLI.
+ - Added bsp_cli module to send BSP events through CLI.
+ - Added nrf_atflags module for atomic manipulation of bit fields.
+ - Added improved CLI UART backend called libUARTE. This backend is recommended when the CLI must exchange big amounts of data fast, for example when CLI is used with a script.
+ 
+** Serialization **
+ - Added serialization of the S112, S132, and S140 v6.0.0 SoftDevices.
+ - Added serialization connectivity application for PCA10059 using USB CDC ACM as the transport layer.
+ 
+** USB **
+ - Added example with the SoftDevice and USB (usbd_ble_uart).
+ - Added configuration of the self-powered descriptor bit (APP_USBD_CONFIG_SELF_POWERED).
+ - Added buffering of transfers in CDC.
+ - Added configuration of power in a descriptor (APP_USBD_CONFIG_MAX_POWER).
+ - Added option to specify the CDC ACM protocol.
+ - Added dummy interface class.
+ - Implemented USBD power event processing in app_usbd event queue.
+ - Implemented different ways of processing SOF events:
+    - Normal - SOF events are pushed normally into the event queue.
+    - Compress - SOF events are counted and bound with other events or executed when the queue is empty. This prevents the queue from filling up with SOF events.
+    - Interrupt - SOF events are processed in the interrupt.
+ - Implemented Get Output Report in HID class.
+ - New SoftDevice API used for USB power events.
+ - Button events can now be sent through CLI in the usbd_cdc_acm, usbd_hid_composide, and usbd_hid generic examples.
+ 
+ 
+*** Changes
+************
+ 
+** ANT **
+ - Added welcome message to all ANT examples. Logging is enabled by default in all of them.
+ - Removed obsolete module: ant_stack_config. The ANT SoftDevice Handler module has taken over its functionality.
+ 
+** BLE **
+ - Minor improvements to consistency of BLE examples main functions (comments, function call ordering, function names).
+ - BLE examples changed to use the Queued Write module (nrf_ble_qwr). Applications must explicitly configure characteristics to accept long writes. See app_ble_qwr for an example of this. This fixes a problem where peers could cause our devices to assert by issuing long writes.
+ - BLE examples changed to use the Power Management library. Most examples now call nrf_pwr_mgmt_run() instead of sd_app_evt_wait().
+ - Eddystone modules have been moved from components/libraries to components/ble.
+ - ble_app_uart changed to have 247-byte MTU, up from 64.
+ - Peer Manager:
+     - The members of pm_conn_sec_procedure_t have been renamed from PM_LINK_SECURED_PROCEDURE_* to PM_CONN_SEC_PROCEDURE_*.
+     - The following functions have gained new error codes:
+         - pm_conn_secure()
+         - pm_peer_data_store()
+         - pm_peer_ranks_get()
+         - pm_peer_rank_highest()
+ 
+** BLE IOT **
+ - Minor updates in TFTP background DFU modules to align with changed DFU libraries.
+ 
+** Crypto **
+ - nrf_crypto APIs have been changed to use big-endian only.
+    - Previous versions of nrf_crypto used little-endian ordering to conform to BLE requirements in LESC.
+      This has now been changed to big-endian everywhere. There are conversion functions available to 
+      change between little-endian and big-endian input/output. 
+    - See the Migration Guide for details.
+ - nrf_crypto memory management has changed extensively. 
+    - See the Migration Guide for details.
+ - nrf_crypto configuration of frontends and backends is now primarily done through sdk_config.h.
+    - See the Migration Guide for details.
+ 
+** DFU/Bootloader **
+ - Configuration parameters (sdk_config) have changed. See the Migration Guide for details.
+ - Refactoring: The DFU/bootloader code has been extensively refactored.
+     - The split between DFU and bootloader has been improved.
+        - New events from DFU.
+        - Resetting has been moved from DFU to bootloader, based on DFU events.
+        - Much of the code in nrf_dfu_utils has been extracted into the new nrf_bootloader_fw_activation and nrf_bootloader_dfu_timers modules.
+     - Request handling module:
+        - The dfu_req_handling module has been renamed to nrf_dfu_req_handler and moved to components/libraries/bootloader/dfu.
+        - The request handling now uses app_scheduler and is entirely asynchronous and executed in the main context.
+        - The init command validation was refactored out and into two new modules nrf_dfu_validation and nrf_dfu_ver_validation.
+     - The Serial transport is now called UART.
+     - The shared parts of the USB and UART transports have been placed in a separate module nrf_dfu_serial.
+     - Most of the assembly code in bootloader_app_start has been replaced with C code and extracted into a separate file nrf_bootloader_app_start_final.
+     - Examples:
+        - The secure bootloader examples have been moved into a 'secure_bootloader' folder.
+        - The experimental ANT bootloader has been moved into an 'experimental' folder.
+        - The USB secure bootloader is no longer experimental.
+ - Bootloader examples have been reorganized. Examples "bootloader_secure_ble", "bootloader_secure_serial", and "experimental_bootloader_secure_usb" have been merged into "secure_bootloader" with projects for each transport and board.
+ - Write protection of the bootloader: Before booting the app, the bootloader will write-protect the flash areas of the bootloader and MBR (using BPROT on nRF52832/nRF52810 and ACL on nRF52840).
+     - The BLE Buttonless SVCI interface needs access to the bootloader settings page from the application, so there is a new configuration parameter to specify whether that page should be part of the protection.
+     - The SVCI interface will now return NRF_ERROR_FORBIDDEN if using the interface when the page is protected.
+ - WDT compatibility: The bootloader will feed the WDT if the app has started it.
+ - BLE DFU:
+     - The BLE DFU bootloader now explicitly requests the preferred connection interval upon connection. The minimum and maximum connection intervals can be set in sdk_config.h.
+     - The BLE DFU bootloader will use long ATT MTUs and data length extension when the host supports these features. This increases DFU transfer speed considerably.
+     - Several stability improvements over different transport configurations.
+ - USB serial number: The serial number of the USB bootloaders has changed to be the same as the default BLE address (found under DEVICEADDR in FICR).
+ - New crypto backend for nRF52840: The bootloaders for nRF52840 use the hardware crypto backend (CC310) instead of micro-ecc.
+ 
+** Drivers and libraries **
+ - The way peripheral drivers are handled in the SDK has been reorganized:
+     - Replaced existing drivers with the "external" drivers from nrfx project. See https://github.com/NordicSemiconductor/nrfx/blob/master/README.md for more information on nrfx.
+     - New drivers from nrfx are located in "..\modules\nrfx".
+     - Drivers replaced by nrfx are removed from "..\components\driver_nrf".
+     - A glue layer is added to make the nrfx driver compatible with SDK and the SoftDevice.
+ - Refactored I2S driver.
+ - New reliable delay implementation.
+ - Added CLI commands to nrf_balloc and nrf_queue which print out the status of all instances present in the system.
+ - CLI built-in root commands: cli_stats, colors, and echo have been changed to subcommands: cli colors, cli echo, and cli stats.
+ - The CMSIS-SVD files with device descriptions have been moved from the "..\svd" folder to the "..\modules\nrfx\mdk" folder.
+ - Infineon OPTIGA: 
+     - Replaced "crypto\ifx_optiga_auth" example with the new one: "crypto\ifx_optiga_ecdsa_simple".
+     - Updated related libraries from the "external\infineon" directory.
+     - Replaced support for Infineon OPTIGA Trust E HSM with Infineon OPTIGA Trust X HSM.
+     - Added support for IAR toolchain.
+ 
+** Proprietary **
+ - New Gazell functionalities:
+     - Transmission statistics gathering - counts successful packet transactions and timeouts on each of the RF channels.
+     - External analog frontend module control - generates TX/RX signals during transmission/receiving, which can be used to control the external PA/LNA module.
+ - Updated gzll_ack_payload examples with the example usage of the new Gazell features.
+ - Dynamic changes of TX attempts and TX power parameters are now allowed when the Gazell stack is enabled.
+ - Removed the nRF52840 project from ble_app_gzll example (removed "pca10056" folder).
+ 
+** NFC **
+ - Type 2 Tag Library:
+    - Modified Dynamic Memory structure of the Tag. Added Terminator TLV to indicate that there is no more relevant user data after NDEF TLV.
+ - Type 4 Tag HAL:
+    - Modified Frame Wait Time setting to support full range available on the nRF52840 Rev. 1 chip.
+ - Type 4 Tag Library:
+    - Modified behavior of the NFC_T4T_EVENT_NDEF_READ event: the event is always triggered when the last byte of the NDEF File is sent to an NFC Reader device - even if the Reader repeats the read operation multiple times in one session, i.e. before the Reader sends a DESELECT or SLP_REQ frame.
+ - NFC BLE pairing library: modified to support multiple connections.
+ - BLE/NFC examples: updated application behavior to comply with NFC Forum user experience recommendations.
+ - NFC libraries which can enable nrf_log independently (using sdk_config.h) register the logger instance conditionally, i.e. only if nrf_log is enabled in the sdk_config.h
+ 
+** USB **
+ - app_usbd_init: when called with NULL configuration structure or NULL ev_handler member of a structure, the default event handler will be used.
+ - app_usbd_init: removed clock initialization.
+ - Descriptors are now generated on the fly using simple stackless thread code.
+ - Added a warning for wrong interface order.
+ - Combined USB CDC ACM driver for all examples into one.
+ 
+   
+*** Bugfixes
+****************
+ 
+** ANT **
+ - Added missing logger backends to all examples.
+ 
+** BLE **
+  - Fixed a bug in ble_app_uart where Data Length update requests would be handled twice.
+  - Fixed a bug in ble_app_uart and ble_app_uart_c where the "start" message in the main function was not followed by a line feed. This could make the applications seem unresponsive.
+  - Fixed a bug in ble_app_cgms where properties of the characteristics were not configured.
+  - Fixed a bug in ble_app_cgms where directed advertising was enabled by the advertising module but was ignored by the application. Directed advertising is now disabled.
+  - Fixed a bug in ble_app_cgms where advertising was triggered twice when deleting bonds. The second call to advertising start would cause the example to assert on the busy error.
+  - Fixed a bug in ble_app_gls  where the seconds field of the glucose measurement was never updated.
+  - Fixed a bug in ble_tps where documentation for ble_tps_tx_power_level_set() was describing another unrelated function.
+  - Fixed a bug in most main.c files where fds garbage collection fds_gc() would retry upon returning FDS_ERR_BUSY. However, this function call will never return FDS_ERR_BUSY.
+  - Fixed a bug in nrf_ble_gatts_c where setting NRF_LOG_DEFAULT_LEVEL to debug (4) would cause an assert because it was not registered with the logger module (NRF_LOG_MODULE_REGISTER();)
+  - Added missing Errata workaround to Direct Test Mode (DTM) on nRF52840.
+  - Peer Manager:
+      - Fixed the bonded flag in pm_conn_sec_status_get().
+      - Fixed a performance bug in peer_database.c.
+      - Split the error code NRF_ERROR_INVALID_STATE from pm_conn_secure() that could have two different meanings.
+ 
+** BLE IOT **
+  - Corrected logging module name, such that logs could be enabled in the LWIP platform module.
+  - Fixed a reassembly bug in BSD socket module.
+  - Fixed flushing of ports when the kit disconnects. Added API to flush the ports.
+  - Added handling of BLE_L2CAP_EVT_CH_SDU_BUF_RELEASED event to generate the BLE_IPSP_EVT_CHANNEL_DATA_TX_COMPLETE in case link disconnection occured before the TX was complete.
+  - Resolved an issue with MQTT/lwIP packets stuck in a TX queue. Now forcing out enqueued data before close.
+  - Conformed to MQTT specification in the use of QoS flag in MQTT connect.
+ 
+** DFU/Bootloader **
+  - Bootloaders for nRF52840 now support bootloader updates (if used with the new MBR or SoftDevice).
+  
+** Drivers and libraries **
+  - Extended input pin configuration in the GPIOTE driver: configuration of GPIOTE INPUT pin added, which does not change the current GPIO configuration.
+  - CLI module - fixed echo command behavior. When echo is off, the command will not be printed after log print.
+  - Logger modules - stability fixes (including https://devzone.nordicsemi.com/f/nordic-q-a/31178/bug-nrf_log_frontend-m_log_data-buffer-overflow).
+  - More changes in drivers can be found in the modules/nrfx directory in the CHANGELOG.md file.
+
+** Proprietary **
+ - Gazell stack:
+    - Fixed a bug with high current consumption in disabled state, related with TIMER issue 78.
+    - Fixed a bug with reenabling Gazell stack after the SoftDevice activity.
+ - Gazell Pairing Library:
+    - Fixed a bug with unreserved flash memory region for the Host ID.
+    - Fixed a bug with wrong initialization of database flash memory page on nRF52 chips.
+ 
+** NFC **
+ - Type 2 Tag Library:
+    - Modified Dynamic Memory content of the Tag. Dynamic Lock Bytes use proper values now.
+    - Updated CC1 byte setting (one of the Type 2 Tag Reserved bytes) according to the new NFC Forum Type 2 Tag Technical Specification v1.0.
+ - Type 2 Tag HAL:
+    - Handling of erroneous NFC-A data frames (with parity and CRC errors) has been improved. 
+
+** USB **
+ - Fixed a bug in USB CDC ACM class where the APP_USBD_CDC_ACM_USER_EVT_PORT_OPEN event was not raised.
+ - Fixed a bug in USB CDC ACM class where RX stopped working after the port was closed or the cable was detached.
+ - Fixed a bug in USB MSC where it could not satisfy the number of required bytes by the host.
+ - Fixed a bug in app_usbd.c where APP_USBD_EVT_DRV_RESUME event was raised after a reset instead of APP_USBD_EVT_DRV_RESET.
+ - Fixed a bug in HID class where Remote Wake Up was not properly handled.
+ - Fixed a bug in nrf_drv_usbd_transfer_out_drop() where it was clearing an isochronous endpoint.
+ - Fixed a bug in app_usbd_core.c where transfer status was not checked during EP0 processing.
+ - FTPAN-171 workaround has been implemented.
+ - FTPAN-199 workaround has been implemented.
+ - Fixed minor issues.
+ 
+
+*** Known Issues
+****************
+ 
+** Missing feature on nRF52840 **
+  - ANT protocol support is missing due to ANT SoftDevices not available for this device.
+  - FreeRTOS
+  - ESB
+ 
+** BLE **
+ - BLE LESC module should be treated as experimental, even though it has not been marked as such.
+ - Eddystone example should be treated as experimental on nRF52840. 
+ 
+** BLE IOT **
+ - Neighbor discovery module for lwIP requires the on-link flag in the 
+   router advertisement to be set in order to create a SLAAC address 
+   from the prefix. However, RFC 7668 (https://tools.ietf.org/html/rfc7668) 
+   requires this bit to be zero. Therefore, the nd6.c from lwIP source 
+   has been modified to relax this check.
+ - There are some issues when using the IoT examples against Linux 
+   Kernel 4.12+ which causes the kernel to only work with one 6LoWPAN 
+   connection. If more than one kit is connected using 6LoWPAN, none of 
+   the nodes will be accessible.
+ - Scheduler has been included in most IoT examples to avoid race 
+   conditions found when using the lwIP stack, more precisely the TCP 
+   examples.
+   The issue was that the TCP client stopped working after about 15
+   hours. However, when using mbed TLS, the use of scheduler is not 
+   possible.
+   Therefore, the MQTT client examples might be affected by this issue.
+ - The use of security, both with TLS and DTLS, should be treated as 
+   experimental.
+ - MQTT examples cannot be used with commissioning on nRF52832. There is not enough
+   RAM to accommodate both TLS and the commissioning service.
+ - If enabled, RTT logs in IoT bootloader might not be printed before resetting.
+ 
+** DFU/Bootloader **
+ - Changing the backend for nrf_crypto in sdk_config.h alone is not sufficient
+   because the relevant files are not included in the build and include paths.
+   See the Migration Guide for a walkthrough of changing from the µECC to the
+   Oberon backend.
+ - ble_app_buttonless_dfu will silently hang during bootup if a compatible
+   bootloader, i.e. the BLE bootloader, is not present.
+ - SES will not detect whether the debug bootloader is too large, instead it will place the code in the MBR params page. To make SES detect this, add the following line in flash_placement.xml:
+   <ProgramSection load="no" name=".reserved_flash_tail" start="$(FLASH_START)+$(FLASH_SIZE)" size="$(FLASH_PH_SIZE)-$(FLASH_START)-$(FLASH_SIZE)" />
+   Place this line immediately after:
+   <ProgramSection alignment="4" load="Yes" runin=".tdata_run" name=".tdata" />
+   The production bootloader is not affected by this issue.
+ - nrfutil version 3.5.0  has an optional argument to increase the time delay "--connect-delay <seconds>". 
+   It is recommended to set this value to 10 when Serial DFU (UART / USB) is performed for large images (SoftDevice + Application or SoftDevice + Bootloader + Application). 
+ - You may experience some instability with the µECC library in IAR due to faulty decoding of symbol information. Compile the µECC library without symbol information to fix these issues.
+   
+** Proprietary **
+ - Gazell stack for all devices is working with sensitivity reduced by 3 dB due to the RADIO issues 102, 106, 107, and 143. 
+ 
+** NFC **
+ - NFC Type 2 and Type 4 Tag HAL modules require using TIMER 4 on nRF52840 and nRF52832 chips.
+ 
+** USBD **
+ - For the sake of stability, the USBD driver blocks code execution during EasyDMA transfer.
+ - Isochronous transfers must be processed as fast as possible, but using the event queue may postpone SOF processing too long if the CPU is busy. In such situations, isochronous transfers should be started inside a SOF interrupt. Configure APP_USBD_CONFIG_SOF_HANDLING_MODE as interrupt. The implementation of special SOF interrupt callbacks is subject of the future updates.
+ 
+** Drivers and Libraries **
+ - SAADC driver is not handling detection limits: high and low correctly if SAADC resolution is greater than 10 bits.
+ - The following examples do not have Keil 4 support: nrf_cc310, nrf_cc310_bl, ifx_optiga_ecdsa_simple.
+
+========================================================================
+
 nRF5 SDK v14.2.0
 ------------------------
 Release Date: Week 46, 2017
@@ -172,7 +607,6 @@ The following SDK features are not supported on the new nRF52840 chip:
 ** Drivers and libraries **
  - SAADC driver is not handling detection limits 'high' and 'low' 
    correctly if SAADC resolution is greater than 10 bits.
-
 
 ========================================================================
 

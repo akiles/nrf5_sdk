@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -59,7 +59,7 @@
 int main(void)
 {
     /* Configure LED-pins as outputs. */
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 
     /* Init systick driver */
     nrf_drv_systick_init();

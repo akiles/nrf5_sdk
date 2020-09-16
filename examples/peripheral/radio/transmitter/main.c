@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -181,7 +181,7 @@ int main(void)
 
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, bsp_evt_handler);
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS, bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 
     // Set radio configuration parameters
@@ -191,6 +191,7 @@ int main(void)
     NRF_RADIO->PACKETPTR = (uint32_t)&packet;
 
     err_code = bsp_indication_set(BSP_INDICATE_USER_STATE_OFF);
+    NRF_LOG_INFO("Radio transmitter example started.");
     NRF_LOG_INFO("Press Any Button");
     APP_ERROR_CHECK(err_code);
 

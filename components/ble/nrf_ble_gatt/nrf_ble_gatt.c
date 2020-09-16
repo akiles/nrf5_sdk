@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -43,16 +43,17 @@
 
 #include "nrf_ble_gatt.h"
 
-#define NRF_LOG_MODULE_NAME ble_gatt
+#define NRF_LOG_MODULE_NAME nrf_ble_gatt
 #include "nrf_log.h"
 NRF_LOG_MODULE_REGISTER();
 
+#include "nrf_strerror.h"
 
-#define L2CAP_HDR_LEN   4   //!< Length of a L2CAP header, in bytes.
+#define BLE_GAP_DATA_LENGTH_DEFAULT     27          //!< The stack's default data length.
+#define BLE_GAP_DATA_LENGTH_MAX         251         //!< Maximum data length.
 
 
-STATIC_ASSERT(NRF_SDH_BLE_GATT_MAX_MTU_SIZE <= 251);
-STATIC_ASSERT(NRF_SDH_BLE_GATT_MAX_MTU_SIZE + L2CAP_HDR_LEN <= 255);
+STATIC_ASSERT(NRF_SDH_BLE_GAP_DATA_LENGTH < 252);
 
 
 /**@brief Initialize a link's parameters to defaults. */
@@ -63,43 +64,57 @@ static void link_init(nrf_ble_gatt_link_t * p_link)
     p_link->att_mtu_exchange_pending   = false;
     p_link->att_mtu_exchange_requested = false;
 #if !defined (S112)
-    p_link->data_length_desired        = NRF_SDH_BLE_GATT_MAX_MTU_SIZE + L2CAP_HDR_LEN;
-    p_link->data_length_effective      = BLE_GATT_ATT_MTU_DEFAULT + L2CAP_HDR_LEN;
+    p_link->data_length_desired        = NRF_SDH_BLE_GAP_DATA_LENGTH;
+    p_link->data_length_effective      = BLE_GAP_DATA_LENGTH_DEFAULT;
 #endif // !defined (S112)
 }
 
-/**@brief   Start a data length update request.
- * @details This function is called to request a data length update upon connection.
- *          When the peer requests a data length update, sd_ble_gap_data_length_update()
- *          is called directly in response to the BLE_GAP_EVT_DATA_LENGTH_UPDATE event in
- *          on_data_length_update_evt().
- */
+/**@brief   Start a data length update request procedure on a given connection. */
 #if !defined (S112)
-static void data_length_update(uint16_t conn_handle, nrf_ble_gatt_t const * p_gatt)
+static ret_code_t data_length_update(uint16_t conn_handle, uint16_t data_length)
 {
-    NRF_LOG_DEBUG("Requesting to update data length to %u on connection 0x%x.",
-                  p_gatt->links[conn_handle].data_length_desired, conn_handle);
+    NRF_LOG_DEBUG("Updating data length to %u on connection 0x%x.",
+                  data_length, conn_handle);
 
     ble_gap_data_length_params_t const dlp =
     {
-        .max_rx_octets  = p_gatt->links[conn_handle].data_length_desired,
-        .max_tx_octets  = p_gatt->links[conn_handle].data_length_desired,
+        .max_rx_octets  = data_length,
+        .max_tx_octets  = data_length,
         .max_rx_time_us = BLE_GAP_DATA_LENGTH_AUTO,
         .max_tx_time_us = BLE_GAP_DATA_LENGTH_AUTO,
     };
 
-    ret_code_t err_code = sd_ble_gap_data_length_update(conn_handle, &dlp, NULL);
+    ble_gap_data_length_limitation_t dll = {0};
+
+    ret_code_t err_code = sd_ble_gap_data_length_update(conn_handle, &dlp, &dll);
     if (err_code != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("sd_ble_gap_data_length_update() (request)"
-                      " on connection 0x%x returned unexpected value 0x%x.",
-                      conn_handle, err_code);
+        NRF_LOG_ERROR("sd_ble_gap_data_length_update() (request) on connection 0x%x returned %s.",
+                      conn_handle, nrf_strerror_get(err_code));
+
+        if (   (dll.tx_payload_limited_octets != 0)
+            || (dll.rx_payload_limited_octets != 0))
+        {
+            NRF_LOG_ERROR("The requested TX/RX packet length is too long by %u/%u octets.",
+                          dll.tx_payload_limited_octets, dll.rx_payload_limited_octets);
+        }
+
+        if (dll.tx_rx_time_limited_us != 0)
+        {
+            NRF_LOG_ERROR("The requested combination of TX and RX packet lengths "
+                          "is too long by %u microseconds.",
+                          dll.tx_rx_time_limited_us);
+        }
     }
+
+    return err_code;
 }
 #endif // !defined (S112)
 
 
 /**@brief Handle a connected event.
+ *
+ * Begins an ATT MTU exchange procedure, followed by a data length update request as necessary.
  *
  * @param[in]   p_gatt      GATT structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
@@ -114,16 +129,19 @@ static void on_connected_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const * p_ble_ev
 #if !defined (S112)
     p_link->data_length_desired = p_gatt->data_length;
 #endif // !defined (S112)
+
     switch (p_ble_evt->evt.gap_evt.params.connected.role)
     {
         case BLE_GAP_ROLE_PERIPH:
             p_link->att_mtu_desired = p_gatt->att_mtu_desired_periph;
             break;
+
 #if !defined (S112)
         case BLE_GAP_ROLE_CENTRAL:
             p_link->att_mtu_desired = p_gatt->att_mtu_desired_central;
             break;
 #endif // !defined (S112)
+
         default:
             // Ignore.
             break;
@@ -149,9 +167,8 @@ static void on_connected_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const * p_ble_ev
         }
         else
         {
-            NRF_LOG_ERROR("sd_ble_gattc_exchange_mtu_request()"
-                          " returned unexpected value 0x%x.",
-                          err_code);
+            NRF_LOG_ERROR("sd_ble_gattc_exchange_mtu_request() returned %s.",
+                          nrf_strerror_get(err_code));
         }
     }
 
@@ -159,7 +176,7 @@ static void on_connected_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const * p_ble_ev
     // Send a data length update request if necessary.
     if (p_link->data_length_desired > p_link->data_length_effective)
     {
-        data_length_update(conn_handle, p_gatt);
+        (void) data_length_update(conn_handle, p_link->data_length_desired);
     }
 #endif // !defined (S112)
 }
@@ -242,8 +259,7 @@ static void on_exchange_mtu_request_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const
 
     if (err_code != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("sd_ble_gatts_exchange_mtu_reply() returned unexpected value 0x%x.",
-                      err_code);
+        NRF_LOG_ERROR("sd_ble_gatts_exchange_mtu_reply() returned %s.", nrf_strerror_get(err_code));
     }
 
     // If an ATT_MTU exchange was requested to the peer, defer sending
@@ -283,6 +299,7 @@ static void on_data_length_update_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const *
     uint16_t      const conn_handle = gap_evt.conn_handle;
 
     // Update the connection data length.
+    // The SoftDevice only supports symmetric RX/TX data length settings.
     p_gatt->links[conn_handle].data_length_effective =
         gap_evt.params.data_length_update.effective_params.max_tx_octets;
 
@@ -311,7 +328,6 @@ static void on_data_length_update_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const *
         p_gatt->evt_handler(p_gatt, &evt);
     }
 }
-#endif // !defined (S112)
 
 
 /**@brief   Handle a BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST event.
@@ -320,7 +336,7 @@ static void on_data_length_update_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const *
  *          link's preferred data length, and what requested by the peer.
  *          The link preferred data length is set to the global preferred data length
  *          upon connection and can be overridden by calling nrf_ble_gatt_data_length_set().
- *          The default is NRF_SDH_BLE_GATT_MAX_MTU_SIZE + L2CAP_HDR_LEN.
+ *          The default is NRF_SDH_BLE_GAP_DATA_LENGTH.
  *
  *@note     The SoftDevice will not send any BLE_GAP_EVT_DATA_LENGTH_UPDATE events on this side.
  *          Therefore, the connection data length is updated immediately and an event is sent
@@ -329,39 +345,21 @@ static void on_data_length_update_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const *
  * @param[in]   p_gatt      GATT structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-#if !defined (S112)
 static void on_data_length_update_request_evt(nrf_ble_gatt_t * p_gatt, ble_evt_t const * p_ble_evt)
 {
-    ret_code_t err_code;
-
     ble_gap_evt_t       const * p_gap_evt = &p_ble_evt->evt.gap_evt;
     nrf_ble_gatt_link_t       * p_link    = &p_gatt->links[p_gap_evt->conn_handle];
 
-    uint8_t const data_length_peer =
+    // The SoftDevice only supports symmetric RX/TX data length settings.
+    uint8_t const data_length_requested =
         p_gap_evt->params.data_length_update_request.peer_params.max_tx_octets;
 
     NRF_LOG_DEBUG("Peer on connection 0x%x requested a data length of %u bytes.",
-                  p_gap_evt->conn_handle, data_length_peer);
+                  p_gap_evt->conn_handle, data_length_requested);
 
-    uint8_t const data_length = MIN(p_link->data_length_desired, data_length_peer);
+    uint8_t const data_length_effective = MIN(p_link->data_length_desired, data_length_requested);
 
-    ble_gap_data_length_params_t const dlp =
-    {
-        .max_rx_octets = data_length,
-        .max_tx_octets = data_length,
-    };
-
-    NRF_LOG_DEBUG("Updating data length to %u bytes on connection 0x%x.",
-                  data_length, p_gap_evt->conn_handle);
-
-    err_code = sd_ble_gap_data_length_update(p_gap_evt->conn_handle, &dlp, NULL);
-
-    if (err_code != NRF_SUCCESS)
-    {
-        NRF_LOG_ERROR("sd_ble_gap_data_length_update() (reply)"
-                      " returned unexpected value 0x%x.",
-                      err_code);
-    }
+    (void) data_length_update(p_gap_evt->conn_handle, data_length_effective);
 }
 #endif // !defined (S112)
 
@@ -373,7 +371,7 @@ ret_code_t nrf_ble_gatt_init(nrf_ble_gatt_t * p_gatt, nrf_ble_gatt_evt_handler_t
     p_gatt->evt_handler             = evt_handler;
     p_gatt->att_mtu_desired_periph  = NRF_SDH_BLE_GATT_MAX_MTU_SIZE;
     p_gatt->att_mtu_desired_central = NRF_SDH_BLE_GATT_MAX_MTU_SIZE;
-    p_gatt->data_length             = NRF_SDH_BLE_GATT_MAX_MTU_SIZE + L2CAP_HDR_LEN;
+    p_gatt->data_length             = NRF_SDH_BLE_GAP_DATA_LENGTH;
 
     for (uint32_t i = 0; i < NRF_BLE_GATT_LINK_COUNT; i++)
     {
@@ -427,16 +425,22 @@ ret_code_t nrf_ble_gatt_data_length_set(nrf_ble_gatt_t * p_gatt,
                                         uint16_t         conn_handle,
                                         uint8_t          data_length)
 {
-    ret_code_t err_code;
-
     if (p_gatt == NULL)
     {
         return NRF_ERROR_NULL;
     }
 
+    // Check early to avoid requesting an invalid data length for upcoming connections.
+    if (   (data_length > BLE_GAP_DATA_LENGTH_MAX)
+        || (data_length < BLE_GAP_DATA_LENGTH_DEFAULT))
+    {
+        return NRF_ERROR_INVALID_PARAM;
+    }
+
     if (conn_handle == BLE_CONN_HANDLE_INVALID)
     {
-        p_gatt->data_length = MIN(data_length, NRF_SDH_BLE_GATT_MAX_MTU_SIZE + L2CAP_HDR_LEN);
+        // Save value and request upon connection.
+        p_gatt->data_length = data_length;
         return NRF_SUCCESS;
     }
 
@@ -445,21 +449,13 @@ ret_code_t nrf_ble_gatt_data_length_set(nrf_ble_gatt_t * p_gatt,
         return NRF_ERROR_INVALID_PARAM;
     }
 
+    // Request data length on existing link.
     p_gatt->links[conn_handle].data_length_desired = data_length;
 
-    ble_gap_data_length_params_t const dlp =
-    {
-        .max_rx_octets = data_length,
-        .max_tx_octets = data_length,
-    };
-
-    err_code = sd_ble_gap_data_length_update(conn_handle, &dlp, NULL);
-    return err_code;
+    return data_length_update(conn_handle, data_length);
 }
-#endif // !defined (S112)
 
 
-#if !defined (S112)
 ret_code_t nrf_ble_gatt_data_length_get(nrf_ble_gatt_t const * p_gatt,
                                         uint16_t               conn_handle,
                                         uint8_t              * p_data_length)
@@ -513,6 +509,7 @@ void nrf_ble_gatt_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
         case BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST:
             on_exchange_mtu_request_evt(p_gatt, p_ble_evt);
             break;
+
 #if !defined (S112)
         case BLE_GAP_EVT_DATA_LENGTH_UPDATE:
             on_data_length_update_evt(p_gatt, p_ble_evt);
@@ -522,6 +519,7 @@ void nrf_ble_gatt_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
             on_data_length_update_request_evt(p_gatt, p_ble_evt);
             break;
 #endif // !defined (S112)
+
         default:
             break;
     }
@@ -543,8 +541,8 @@ void nrf_ble_gatt_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
         }
         else if (err_code != NRF_ERROR_BUSY)
         {
-            NRF_LOG_ERROR("sd_ble_gattc_exchange_mtu_request() returned unexpected value 0x%x.",
-                          err_code);
+            NRF_LOG_ERROR("sd_ble_gattc_exchange_mtu_request() returned %s.",
+                          nrf_strerror_get(err_code));
         }
     }
 }

@@ -150,11 +150,11 @@ typedef union
 
     struct
     {
-        uint32_t    link_period         : 3;                    /**< Beacon period (0.5 - 8 Hz). */
+        uint8_t     link_period         : 3;                    /**< Beacon period (0.5 - 8 Hz). */
         bool        is_pairing_enabled  : 1;                    /**< Pairing is enabled/disabled. */
         bool        is_upload_enabled   : 1;                    /**< Upload is enabled/disabled. */
         bool        is_data_available   : 1;                    /**< Data is available for download / no data available. */
-        bool        reserved            : 2;                    /**< Reserved. */
+        uint8_t     reserved            : 2;                    /**< Reserved. */
     } parameters;
 } antfs_beacon_status_byte1_t;
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -58,7 +58,7 @@ extern eccSignDataStuct eccSignVectors[];
 extern eccDHDataStuct eccDHVectors[];
 
 /*RNG Global variables*/
-extern CRYS_RND_Context_t*   rndContext_ptr;
+extern CRYS_RND_State_t*     rndState_ptr;
 extern CRYS_RND_WorkBuff_t*  rndWorkBuff_ptr;
 
 
@@ -86,6 +86,7 @@ extern CRYS_RND_WorkBuff_t*  rndWorkBuff_ptr;
 	CRYS_ECPKI_KG_TempData_t        TempECCKGBuff;
 	uint32_t                        sharedSecret1Size = SHARED_SECRET_MAX_LENGHT;
 	uint32_t                        sharedSecret2Size = SHARED_SECRET_MAX_LENGHT;
+	SaSiRndGenerateVectWorkFunc_t 	rndGenerateVectFunc = CRYS_RND_GenerateVector;
 
 	/*Run all ECC tests*/
 	for (test_index = 0; test_index < ECC_DH_TESTS_NUMBER; test_index++)
@@ -114,7 +115,7 @@ extern CRYS_RND_WorkBuff_t*  rndWorkBuff_ptr;
 
 		if (test_index > 0){
 			/*Generate first key pair*/
-			ret = CRYS_ECPKI_GenKeyPair (rndContext_ptr,
+			ret = CRYS_ECPKI_GenKeyPair (rndState_ptr, rndGenerateVectFunc,
 				pDomain,
 				&UserPrivKey1,
 				&UserPublKey1,
@@ -126,7 +127,7 @@ extern CRYS_RND_WorkBuff_t*  rndWorkBuff_ptr;
 			}
 
 			/*Generate second key pair*/
-			ret = CRYS_ECPKI_GenKeyPair (rndContext_ptr,
+			ret = CRYS_ECPKI_GenKeyPair (rndState_ptr, rndGenerateVectFunc,
 				pDomain,
 				&UserPrivKey2,
 				&UserPublKey2,
@@ -246,6 +247,7 @@ int ecc_sign_tests(void)
 	CRYS_ECPKI_KG_TempData_t        TempECCKGBuff;
 	CRYS_ECPKI_KG_FipsContext_t   	FipsBuff;
 	const CRYS_ECPKI_Domain_t       *pDomain;
+	SaSiRndGenerateVectWorkFunc_t 	rndGenerateVectFunc = CRYS_RND_GenerateVector;
 
 
 	/*Run all ECC tests*/
@@ -270,7 +272,7 @@ int ecc_sign_tests(void)
 
 		if (test_index > 0){
 			/*Generate first key pair*/
-			ret = CRYS_ECPKI_GenKeyPair (rndContext_ptr,
+			ret = CRYS_ECPKI_GenKeyPair (rndState_ptr, rndGenerateVectFunc,
 				pDomain,
 				&UserPrivKey,
 				&UserPublKey,
@@ -306,7 +308,7 @@ int ecc_sign_tests(void)
 		}
 
 		/*Call CRYS_ECDSA_Sign to create signature from input buffer using created private key*/
-		ret = CRYS_ECDSA_Sign (rndContext_ptr,
+		ret = CRYS_ECDSA_Sign (rndState_ptr, rndGenerateVectFunc,
 			&SignUserContext,
 			&UserPrivKey,
 			eccSignVectors[test_index].eccTest_HashMode,
@@ -345,7 +347,7 @@ return ret;
 /*ecc_wrap_tests creates thread with defined stack address to and calls to ecc tests */
 void* ecc_thread(void)
 {
-   uint32_t* threadReturnValue = malloc(sizeof(uint32_t));
+   uint32_t* threadReturnValue = SaSi_PalMemMalloc(sizeof(uint32_t));
 
    *threadReturnValue =ecc_sign_tests();
     if (*threadReturnValue != SA_SILIB_RET_OK) {
@@ -401,7 +403,7 @@ int ecc_wrap_tests(void){
 
 	rc =*((uint32_t *)*&threadRet);
 
-    free(threadRet);
+    	SaSi_PalMemFree(threadRet);
 	threadRc = pthread_attr_destroy(&threadAttr);
 	if (threadRc != 0) {
 		INTEG_TEST_PRINT("pthread_attr_destroy failed\n");
@@ -424,11 +426,18 @@ int main(void)
 	}
 
         /*Init SaSi library*/
-	ret = SaSi_LibInit(rndContext_ptr, rndWorkBuff_ptr);
+    ret = SaSi_LibInit();
 	if (ret != SA_SILIB_RET_OK) {
-	    INTEG_TEST_PRINT("Failed SaSi_SiLibInit - ret = 0x%x\n", ret);
+        INTEG_TEST_PRINT("Failed SaSi_LibInit - ret = 0x%x\n", ret);
 	    goto exit_1;
 	}
+
+    ret = CRYS_RndInit(rndState_ptr, rndWorkBuff_ptr);
+    if (ret != SA_SILIB_RET_OK) {
+        INTEG_TEST_PRINT("Failed CRYS_RndInit - ret = 0x%x\n", ret);
+        goto exit_1;
+    }
+
 #ifdef DX_LINUX_PLATFORM
     ret = ecc_wrap_tests();
 	if (ret != SA_SILIB_RET_OK) {
@@ -454,7 +463,13 @@ int main(void)
 
 exit_0:
 	/*Finish SaSi library*/
-	SaSi_LibFini(rndContext_ptr);
+    SaSi_LibFini();
+
+    ret = CRYS_RND_UnInstantiation(rndState_ptr);
+
+    if (ret) {
+        INTEG_TEST_PRINT("Failure in CRYS_RND_UnInstantiation,ret = 0x%x\n", ret);
+    }
 
 exit_1:
 	integration_tests_clear();

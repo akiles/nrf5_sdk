@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -40,9 +40,21 @@
 #include <stdbool.h>
 #include <string.h>
 #include "app_error.h"
+#include "sdk_config.h"
 #include "ser_config.h"
 #include "ser_phy.h"
 #include "ser_hal_transport.h"
+
+#define NRF_LOG_MODULE_NAME ser_hal_transport
+#if SER_HAL_TRANSPORT_CONFIG_LOG_ENABLED
+    #define NRF_LOG_LEVEL       SER_HAL_TRANSPORT_CONFIG_LOG_LEVEL
+    #define NRF_LOG_INFO_COLOR  SER_HAL_TRANSPORT_CONFIG_INFO_COLOR
+    #define NRF_LOG_DEBUG_COLOR SER_HAL_TRANSPORT_CONFIG_DEBUG_COLOR
+#else //SER_HAL_TRANSPORT_CONFIG_LOG_ENABLED
+    #define NRF_LOG_LEVEL       0
+#endif //SER_HAL_TRANSPORT_CONFIG_LOG_ENABLED
+#include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 /**
  * @brief States of the RX state machine.
@@ -108,6 +120,7 @@ static void phy_events_handler(ser_phy_evt_t phy_event)
     memset(&hal_transp_event, 0, sizeof (ser_hal_transport_evt_t));
     hal_transp_event.evt_type = SER_HAL_TRANSP_EVT_TYPE_MAX;
 
+    NRF_LOG_INFO("phy evt:%d", phy_event.evt_type);
     switch (phy_event.evt_type)
     {
         case SER_PHY_EVT_TX_PKT_SENT:
@@ -115,6 +128,7 @@ static void phy_events_handler(ser_phy_evt_t phy_event)
             if (HAL_TRANSP_TX_STATE_TRANSMITTING == m_tx_state)
             {
                 m_tx_state = HAL_TRANSP_TX_STATE_TRANSMITTED;
+                NRF_LOG_INFO("tx free");
                 err_code   = ser_hal_transport_tx_pkt_free(m_tx_buffer);
                 APP_ERROR_CHECK(err_code);
                 /* An event to an upper layer that a packet has been transmitted. */
@@ -340,6 +354,8 @@ void ser_hal_transport_close(void)
 
 uint32_t ser_hal_transport_rx_pkt_free(uint8_t * p_buffer)
 {
+
+    NRF_LOG_INFO("rx pkt free:%d", p_buffer);
     uint32_t err_code = NRF_SUCCESS;
 
     ser_phy_interrupts_disable();

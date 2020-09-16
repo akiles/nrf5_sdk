@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -37,6 +37,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+#include "sdk_common.h"
+#if NRF_MODULE_ENABLED(NFC_LE_OOB_REC_PARSER)
 #include "nfc_le_oob_rec_parser.h"
 #include "sdk_errors.h"
 
@@ -98,3 +100,5 @@ ret_code_t nfc_le_oob_rec_parse(nfc_ndef_record_desc_t     const * const p_rec_d
 
     return err_code;
 }
+
+#endif // NRF_MODULE_ENABLED(NFC_LE_OOB_REC_PARSER)

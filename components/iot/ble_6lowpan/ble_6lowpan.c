@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -65,7 +65,7 @@
  * @details Macros used for creating module logs which can be useful in understanding handling
  *          of events or actions on API requests. These are intended for debugging purposes and
  *          can be enabled by defining the IOT_BLE_6LOWPAN_CONFIG_LOG_ENABLED.
- * @note That if ENABLE_DEBUG_LOG_SUPPORT is disabled, having IOT_BLE_6LOWPAN_CONFIG_LOG_ENABLED
+ * @note If NRF_LOG_ENABLED is disabled, having IOT_BLE_6LOWPAN_CONFIG_LOG_ENABLED
  *       has no effect.
  * @{
  */
@@ -130,7 +130,7 @@ NRF_LOG_MODULE_REGISTER();
 #define VERIFY_MODULE_IS_INITIALIZED()                                                             \
     if (m_event_handler == NULL)                                                                   \
     {                                                                                              \
-        return (SDK_ERR_MODULE_NOT_INITIALZED | BLE_6LOWPAN_ERR_BASE);                             \
+        return (SDK_ERR_MODULE_NOT_INITIALIZED | BLE_6LOWPAN_ERR_BASE);                            \
     }
 
 /**@brief Verify NULL parameters are not passed to API by application. */

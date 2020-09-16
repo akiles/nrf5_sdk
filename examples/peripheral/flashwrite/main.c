@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -155,7 +155,7 @@ int main(void)
     err_code = nrf_cli_start(&m_cli_uart);
     APP_ERROR_CHECK(err_code);
 
-    NRF_LOG_RAW_INFO("Flashwrite example.\r\n");
+    NRF_LOG_RAW_INFO("Flashwrite example started.\r\n");
     NRF_LOG_RAW_INFO("Execute: <flash -h> for more information "
                      "or press the Tab button to see all available commands.\r\n");
 

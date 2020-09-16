@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -147,10 +147,14 @@ static inline bool is_reset(coap_message_t * p_message)
     return (p_message->header.type == COAP_TYPE_RST);
 }
 
-static inline bool is_con_response(coap_message_t * p_message)
+static inline bool is_con(coap_message_t * p_message)
 {
-    return (p_message->header.code == COAP_CODE_205_CONTENT) &&
-           (p_message->header.type == COAP_TYPE_CON);
+    return (p_message->header.type == COAP_TYPE_CON);
+}
+
+static inline bool is_non(coap_message_t * p_message)
+{
+    return (p_message->header.type == COAP_TYPE_NON);
 }
 
 static inline bool is_request(uint8_t message_code)
@@ -278,8 +282,9 @@ uint32_t internal_coap_message_send(uint32_t * p_handle, coap_message_t * p_mess
 
     if (err_code == NRF_SUCCESS)
     {
-        if (is_request(p_message->header.code) ||
-            is_con_response(p_message))
+        if (is_con(p_message) || (is_non(p_message) &&
+                                  is_request(p_message->header.code) &&
+                                  (p_message->response_callback != NULL)))
         {
             coap_queue_item_t item;
             item.p_arg         = p_message->p_arg;
@@ -440,6 +445,7 @@ static uint32_t send_error_response(coap_message_t * p_message, uint8_t code)
 
 uint32_t coap_transport_read(const coap_port_t    * p_port,
                              const coap_remote_t  * p_remote,
+                             const coap_remote_t  * p_local,
                              uint32_t               result,
                              const uint8_t        * p_data,
                              uint16_t               datalen)
@@ -477,6 +483,12 @@ uint32_t coap_transport_read(const coap_port_t    * p_port,
 
     // Copy the remote address information.
     memcpy(&p_message->remote, p_remote, sizeof(coap_remote_t));
+
+    // Copy the destination address information.
+    if (p_local)
+    {
+        memcpy(&p_message->local, p_local, sizeof(coap_remote_t));
+    }
 
     // Copy the local port information.
     memcpy(&p_message->port, p_port, sizeof(coap_port_t));

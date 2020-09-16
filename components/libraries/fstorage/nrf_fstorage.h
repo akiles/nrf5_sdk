@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -99,6 +99,7 @@ typedef struct
     nrf_fstorage_evt_id_t   id;         //!< The event ID.
     ret_code_t              result;     //!< Result of the operation.
     uint32_t                addr;       //!< Address at which the operation was performed.
+    void            const * p_src;      //!< Buffer written to flash.
     uint32_t                len;        //!< Length of the operation.
     void                  * p_param;    //!< User-defined parameter passed to the event handler.
 } nrf_fstorage_evt_t;

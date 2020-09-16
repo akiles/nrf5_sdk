@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -73,6 +73,18 @@ static nrf_ble_ots_c_t _name;                                                   
 NRF_SDH_BLE_OBSERVER(_name ## _ble_obs,                                                             \
                      BLE_OTS_C_BLE_OBSERVER_PRIO,                                                   \
                      nrf_ble_ots_c_on_ble_evt, &_name)                                              \
+
+/** @brief Macro for defining multiple ble_ots instances.
+ *
+ * @param   _name   Name of the array of instances.
+ * @param   _cnt    Number of instances to define.
+ * @hideinitializer
+ */
+#define NRF_BLE_OTS_C_ARRAY_DEF(_name, _cnt)                 \
+static nrf_ble_ots_c_t _name[_cnt];                          \
+NRF_SDH_BLE_OBSERVERS(_name ## _ble_obs,                     \
+                      BLE_OTS_C_BLE_OBSERVER_PRIO,           \
+                      nrf_ble_ots_c_on_ble_evt, &_name, _cnt)
 
 
 /** @brief Types of Object Action Control Point Procedures. */

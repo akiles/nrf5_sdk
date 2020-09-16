@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -65,6 +65,8 @@ typedef struct
     uint32_t number;                                /**< Block number. */
 } coap_block_opt_block1_t;
 
+typedef coap_block_opt_block1_t coap_block_opt_block2_t;
+
 /**@brief Encode block1 option into its uint binary counter part.
  *
  * @param[out] p_encoded Encoded version of the coap block1 option value. Must not be NULL.
@@ -92,9 +94,32 @@ uint32_t coap_block_opt_block1_encode(uint32_t * p_encoded, coap_block_opt_block
  */
 uint32_t coap_block_opt_block1_decode(coap_block_opt_block1_t * p_opt, uint32_t encoded);
 
-#ifdef __cplusplus
-}
-#endif
+/**@brief Encode block2 option into its uint binary counter part.
+ *
+ * @param[out] p_encoded Encoded version of the coap block2 option value. Must not be NULL.
+ * @param[in]  p_opt     Pointer to block2 option structure to be decoded into uint format. Must
+ *                       not be NULL.
+ *
+ * @retval NRF_SUCCESS             If encoding of option was successful.
+ * @retval NRF_ERROR_NULL          If one of the parameters supplied is a null pointer.
+ * @retval NRF_ERROR_INVALID_PARAM If one of the fields in the option structure has an illegal
+ *                                 value.
+ */
+uint32_t coap_block_opt_block2_encode(uint32_t * p_encoded, coap_block_opt_block2_t * p_opt);
+
+/**@brief Decode block2 option from a uint to its structure counter part.
+ *
+ * @param[out] p_opt     Pointer to block2 option structure to be filled by the function. Must not
+ *                       be NULL.
+ * @param[in]  encoded   Encoded version of the coap block2 option value.
+ *
+ * @retval NRF_SUCCESS             If decoding of the option was successful.
+ * @retval NRF_ERROR_NULL          If p_opt parameter is NULL.
+ * @retval NRF_ERROR_INVALID_PARAM If the block number is higher then allowed by spec (more than
+                                   20 bits).
+ * @retval NRF_ERROR_INVALID_DATA  If the size has the value of the reserved 2048 value (7).
+ */
+uint32_t coap_block_opt_block2_decode(coap_block_opt_block2_t * p_opt, uint32_t encoded);
 
 #endif // COAP_BLOCK_H__
 

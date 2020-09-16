@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -191,7 +191,7 @@ static void write_character(nrf_lcd_t const * p_instance,
 ret_code_t nrf_gfx_init(nrf_lcd_t const * p_instance)
 {
     ASSERT(p_instance != NULL);
-    ASSERT(p_instance->p_lcd_cb->state == NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(p_instance->p_lcd_cb->state == NRFX_DRV_STATE_UNINITIALIZED);
     ASSERT(p_instance->lcd_init != NULL);
     ASSERT(p_instance->lcd_uninit != NULL);
     ASSERT(p_instance->lcd_pixel_draw != NULL);
@@ -207,7 +207,7 @@ ret_code_t nrf_gfx_init(nrf_lcd_t const * p_instance)
 
     if (err_code == NRF_SUCCESS)
     {
-        p_instance->p_lcd_cb->state = NRF_DRV_STATE_INITIALIZED;
+        p_instance->p_lcd_cb->state = NRFX_DRV_STATE_INITIALIZED;
     }
 
     return err_code;
@@ -216,9 +216,9 @@ ret_code_t nrf_gfx_init(nrf_lcd_t const * p_instance)
 void nrf_gfx_uninit(nrf_lcd_t const * p_instance)
 {
     ASSERT(p_instance != NULL);
-    ASSERT(p_instance->p_lcd_cb->state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(p_instance->p_lcd_cb->state != NRFX_DRV_STATE_UNINITIALIZED);
 
-    p_instance->p_lcd_cb->state = NRF_DRV_STATE_UNINITIALIZED;
+    p_instance->p_lcd_cb->state = NRFX_DRV_STATE_UNINITIALIZED;
 
     p_instance->lcd_uninit();
 }
@@ -228,7 +228,7 @@ void nrf_gfx_point_draw(nrf_lcd_t const * p_instance,
                         uint32_t color)
 {
     ASSERT(p_instance != NULL);
-    ASSERT(p_instance->p_lcd_cb->state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(p_instance->p_lcd_cb->state != NRFX_DRV_STATE_UNINITIALIZED);
     ASSERT(p_point != NULL);
 
     pixel_draw(p_instance, p_point->x, p_point->y, color);
@@ -239,7 +239,7 @@ ret_code_t nrf_gfx_line_draw(nrf_lcd_t const * p_instance,
                              uint32_t color)
 {
     ASSERT(p_instance != NULL);
-    ASSERT(p_instance->p_lcd_cb->state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(p_instance->p_lcd_cb->state != NRFX_DRV_STATE_UNINITIALIZED);
     ASSERT(p_line != NULL);
 
     uint16_t x_thick = 0;
@@ -317,7 +317,7 @@ ret_code_t nrf_gfx_circle_draw(nrf_lcd_t const * p_instance,
                                bool fill)
 {
     ASSERT(p_instance != NULL);
-    ASSERT(p_instance->p_lcd_cb->state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(p_instance->p_lcd_cb->state != NRFX_DRV_STATE_UNINITIALIZED);
     ASSERT(p_circle != NULL);
 
     int16_t y = 0;
@@ -383,7 +383,7 @@ ret_code_t nrf_gfx_rect_draw(nrf_lcd_t const * p_instance,
                              bool fill)
 {
     ASSERT(p_instance != NULL);
-    ASSERT(p_instance->p_lcd_cb->state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(p_instance->p_lcd_cb->state != NRFX_DRV_STATE_UNINITIALIZED);
     ASSERT(p_rect != NULL);
 
     uint16_t rect_width = p_rect->width - thickness;
@@ -453,7 +453,7 @@ ret_code_t nrf_gfx_bmp565_draw(nrf_lcd_t const * p_instance,
                                uint16_t const * img_buf)
 {
     ASSERT(p_instance != NULL);
-    ASSERT(p_instance->p_lcd_cb->state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(p_instance->p_lcd_cb->state != NRFX_DRV_STATE_UNINITIALIZED);
     ASSERT(p_rect != NULL);
     ASSERT(img_buf != NULL);
 
@@ -484,7 +484,7 @@ ret_code_t nrf_gfx_bmp565_draw(nrf_lcd_t const * p_instance,
 void nrf_gfx_background_set(nrf_lcd_t const * p_instance, uint16_t const * img_buf)
 {
     ASSERT(p_instance != NULL);
-    ASSERT(p_instance->p_lcd_cb->state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(p_instance->p_lcd_cb->state != NRFX_DRV_STATE_UNINITIALIZED);
     ASSERT(img_buf != NULL);
 
     const nrf_gfx_rect_t rectangle =
@@ -508,7 +508,7 @@ void nrf_gfx_display(nrf_lcd_t const * p_instance)
 void nrf_gfx_rotation_set(nrf_lcd_t const * p_instance, nrf_lcd_rotation_t rotation)
 {
     ASSERT(p_instance != NULL);
-    ASSERT(p_instance->p_lcd_cb->state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(p_instance->p_lcd_cb->state != NRFX_DRV_STATE_UNINITIALIZED);
 
     bool rotated = (bool)(p_instance->p_lcd_cb->rotation % 2);
 
@@ -558,7 +558,7 @@ ret_code_t nrf_gfx_print(nrf_lcd_t const * p_instance,
                          bool wrap)
 {
     ASSERT(p_instance != NULL);
-    ASSERT(p_instance->p_lcd_cb->state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(p_instance->p_lcd_cb->state != NRFX_DRV_STATE_UNINITIALIZED);
     ASSERT(p_point != NULL);
     ASSERT(string != NULL);
     ASSERT(p_font != NULL);

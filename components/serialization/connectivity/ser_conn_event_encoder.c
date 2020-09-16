@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -45,7 +45,7 @@
 #include "ser_config.h"
 #include "ser_hal_transport.h"
 #include "ser_conn_event_encoder.h"
-
+#include "ser_conn_handlers.h"
 #ifdef BLE_STACK_SUPPORT_REQD
 #include "ble_conn.h"
 #endif // BLE_STACK_SUPPORT_REQD
@@ -73,6 +73,10 @@ void ser_conn_ble_event_encoder(void * p_event_data, uint16_t event_size)
     do
     {
         err_code = ser_hal_transport_tx_pkt_alloc(&p_tx_buf, (uint16_t *)&tx_buf_len);
+        if (err_code == NRF_ERROR_NO_MEM)
+        {
+            ser_conn_on_no_mem_handler();
+        }
     }
     while (err_code == NRF_ERROR_NO_MEM);
     APP_ERROR_CHECK(err_code);

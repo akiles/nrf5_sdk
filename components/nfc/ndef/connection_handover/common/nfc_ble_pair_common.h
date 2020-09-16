@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -37,7 +37,15 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+#ifndef NFC_BLE_PAIR_COMMON_H__
+#define NFC_BLE_PAIR_COMMON_H__
+
 #include <stdint.h>
+#include "ble_advdata.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
  *
@@ -46,7 +54,53 @@
  * @ingroup nfc_ble_pair_msg
  */
 
-/* Record Payload Type for Bluetooth Carrier Configuration LE record */
+#define AD_TYPE_LE_ROLE_DATA_SIZE       1UL                                     /**< Data size (in octets) of the LE Role AD type. */
+#define AD_TYPE_LE_ROLE_SIZE            (AD_DATA_OFFSET + \
+                                            AD_TYPE_LE_ROLE_DATA_SIZE)          /**< Size (in octets) of the LE Role AD type. */
+#define AD_TYPE_TK_VALUE_DATA_SIZE      (sizeof(ble_advdata_tk_value_t))        /**< Data size (in octets) of the Security Manager TK value AD type. */
+#define AD_TYPE_TK_VALUE_SIZE           (AD_DATA_OFFSET + \
+                                            AD_TYPE_TK_VALUE_DATA_SIZE)         /**< Size (in octets) of the Security Manager TK value AD type. */
+#define AD_TYPE_OOB_FLAGS_DATA_SIZE     1UL                                     /**< Data size (in octets) of the Security Manager OOB Flags AD type. */
+#define AD_TYPE_OOB_FLAGS_SIZE          (AD_DATA_OFFSET + \
+                                            AD_TYPE_OOB_FLAGS_DATA_SIZE)        /**< Size (in octets) of the Security Manager OOB Flags AD type. */
+
+#define AD_TYPE_CONFIRM_VALUE_DATA_SIZE 16UL                                    /**< Data size (in octets) of the LESC Confirmation value. */
+#define AD_TYPE_CONFIRM_VALUE_SIZE      (AD_DATA_OFFSET + \
+                                            AD_TYPE_CONFIRM_VALUE_DATA_SIZE)    /**< Size (in octets) of the LESC Confirmation value AD type. */
+#define AD_TYPE_RANDOM_VALUE_DATA_SIZE  16UL                                    /**< Data size (in octets) of the LESC Random value. */
+#define AD_TYPE_RANDOM_VALUE_SIZE       (AD_DATA_OFFSET + \
+                                            AD_TYPE_RANDOM_VALUE_DATA_SIZE)     /**< Size (in octets) of the LESC Random value AD type. */
+#define AD_TYPE_LESC_SIZE               (AD_TYPE_RANDOM_VALUE_SIZE + \
+                                            AD_TYPE_CONFIRM_VALUE_SIZE)         /**< Total size (in octets) of the LESC OOB AD data fields in NDEF message. */
+
+#define AD_TYPE_SEC_MGR_OOB_FLAG_SET                   1U                       /**< Security Manager OOB Flag set. Flag selection is done using _POS defines */
+#define AD_TYPE_SEC_MGR_OOB_FLAG_CLEAR                 0U                       /**< Security Manager OOB Flag clear. Flag selection is done using _POS defines */
+#define AD_TYPE_SEC_MGR_OOB_FLAG_OOB_DATA_PRESENT_POS  0UL                      /**< Security Manager OOB Data Present Flag position. */
+#define AD_TYPE_SEC_MGR_OOB_FLAG_OOB_LE_SUPPORTED_POS  1UL                      /**< Security Manager OOB Low Energy Supported Flag position. */
+#define AD_TYPE_SEC_MGR_OOB_FLAG_SIM_LE_AND_EP_POS     2UL                      /**< Security Manager OOB Simultaneous LE and BR/EDR to Same Device Capable Flag position. */
+#define AD_TYPE_SEC_MGR_OOB_ADDRESS_TYPE_PUBLIC        0UL                      /**< Security Manager OOB Public Address type. */
+#define AD_TYPE_SEC_MGR_OOB_ADDRESS_TYPE_RANDOM        1UL                      /**< Security Manager OOB Random Address type. */
+#define AD_TYPE_SEC_MGR_OOB_FLAG_ADDRESS_TYPE_POS      3UL                      /**< Security Manager OOB Address type Flag (0 = Public Address, 1 = Random Address) position. */
+
+/**@brief Payload field values of LE Role BLE GAP AD Type. Corresponds with @ref ble_advdata_le_role_t enum. */
+typedef enum
+{
+    NFC_BLE_ADVDATA_ROLE_ENCODED_ONLY_PERIPH = 0,                      /**< Only Peripheral Role supported. */
+    NFC_BLE_ADVDATA_ROLE_ENCODED_ONLY_CENTRAL,                         /**< Only Central Role supported. */
+    NFC_BLE_ADVDATA_ROLE_ENCODED_BOTH_PERIPH_PREFERRED,                /**< Peripheral and Central Role supported. Peripheral Role preferred for connection establishment. */
+    NFC_BLE_ADVDATA_ROLE_ENCODED_BOTH_CENTRAL_PREFERRED                /**< Peripheral and Central Role supported. Central Role preferred for connection establishment */
+} nfc_ble_advdata_le_role_encoded_t;
+
+/**
+ * @brief External reference to the type field of the Bluetooth LE Carrier Configuration NDEF record, defined
+ * in the file @c nfc_ble_pair_common.c
+ */
 extern const uint8_t le_oob_rec_type_field[32];
 
 /** @} */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // NFC_BLE_PAIR_COMMON_H__

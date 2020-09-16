@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -97,20 +97,19 @@
 #define BLOCK_MORE_BIT_MAX        BLOCK_MORE_BIT_SET                       /**< Maximum more bit value. */
 #define BLOCK_NUMBER_MAX          0xFFFFF                                  /**< Maximum block number. 20 bits max value is (1 << 20) - 1. */
 
-
-uint32_t coap_block_opt_block1_encode(uint32_t * p_encoded, coap_block_opt_block1_t * p_opt)
+static uint32_t block_opt_encode(uint8_t    more,
+		                         uint16_t   size,
+		                         uint32_t   number,
+		                         uint32_t * p_encoded)
 {
-    NULL_PARAM_CHECK(p_encoded);
-    NULL_PARAM_CHECK(p_opt);
-
-    if ((p_opt->number > BLOCK_NUMBER_MAX) || (p_opt->more > BLOCK_MORE_BIT_MAX))
+    if ((number > BLOCK_NUMBER_MAX) || (more > BLOCK_MORE_BIT_MAX))
     {
         return (NRF_ERROR_INVALID_PARAM | IOT_COAP_ERR_BASE);
     }
 
     uint32_t val = 0;
 
-    switch (p_opt->size)
+    switch (size)
     {
         case 16:
             val = BLOCK_SIZE_16;
@@ -148,19 +147,18 @@ uint32_t coap_block_opt_block1_encode(uint32_t * p_encoded, coap_block_opt_block
     }
 
     // Value has been initialized.
-    val |= (p_opt->more) << BLOCK_MORE_BIT_POS;
-    val |= (p_opt->number) << BLOCK_NUMBER_POS;
+    val |= (more) << BLOCK_MORE_BIT_POS;
+    val |= (number) << BLOCK_NUMBER_POS;
 
     *p_encoded = val;
-
     return NRF_SUCCESS;
 }
 
-
-uint32_t coap_block_opt_block1_decode(coap_block_opt_block1_t * p_opt, uint32_t encoded)
+static uint32_t block_opt_decode(uint32_t encoded,
+		                         uint8_t  * p_more,
+                                 uint16_t * p_size,
+                                 uint32_t * p_number)
 {
-    NULL_PARAM_CHECK(p_opt);
-
     if ((encoded & BLOCK_SIZE_MASK) == BLOCK_SIZE_2048_RESERVED)
     {
         return (NRF_ERROR_INVALID_DATA | IOT_COAP_ERR_BASE);
@@ -171,9 +169,35 @@ uint32_t coap_block_opt_block1_decode(coap_block_opt_block1_t * p_opt, uint32_t 
         return (NRF_ERROR_INVALID_PARAM | IOT_COAP_ERR_BASE);
     }
 
-    p_opt->size   = (1 << ((BLOCK_SIZE_BASE_CONSTANT + (encoded & BLOCK_SIZE_MASK))));
-    p_opt->more   = (encoded & BLOCK_MORE_BIT_MASK) >> BLOCK_MORE_BIT_POS;
-    p_opt->number = (encoded & BLOCK_NUMBER_MASK) >> BLOCK_NUMBER_POS;
+    *p_size   = (1 << ((BLOCK_SIZE_BASE_CONSTANT + (encoded & BLOCK_SIZE_MASK))));
+    *p_more   = (encoded & BLOCK_MORE_BIT_MASK) >> BLOCK_MORE_BIT_POS;
+    *p_number = (encoded & BLOCK_NUMBER_MASK) >> BLOCK_NUMBER_POS;
 
     return NRF_SUCCESS;
+}
+
+uint32_t coap_block_opt_block1_encode(uint32_t * p_encoded, coap_block_opt_block1_t * p_opt)
+{
+    NULL_PARAM_CHECK(p_encoded);
+    NULL_PARAM_CHECK(p_opt);
+    return block_opt_encode(p_opt->more, p_opt->size, p_opt->number, p_encoded);
+}
+
+uint32_t coap_block_opt_block1_decode(coap_block_opt_block1_t * p_opt, uint32_t encoded)
+{
+    NULL_PARAM_CHECK(p_opt);
+    return block_opt_decode(encoded, &p_opt->more, &p_opt->size, &p_opt->number);
+}
+
+uint32_t coap_block_opt_block2_encode(uint32_t * p_encoded, coap_block_opt_block2_t * p_opt)
+{
+    NULL_PARAM_CHECK(p_encoded);
+    NULL_PARAM_CHECK(p_opt);
+    return block_opt_encode(p_opt->more, p_opt->size, p_opt->number, p_encoded);
+}
+
+uint32_t coap_block_opt_block2_decode(coap_block_opt_block2_t * p_opt, uint32_t encoded)
+{
+    NULL_PARAM_CHECK(p_opt);
+    return block_opt_decode(encoded, &p_opt->more, &p_opt->size, &p_opt->number);
 }

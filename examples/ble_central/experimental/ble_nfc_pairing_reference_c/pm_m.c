@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -82,7 +82,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
                            p_evt->conn_handle,
                            p_evt->params.conn_sec_succeeded.procedure);
 
-            if (p_evt->params.conn_sec_succeeded.procedure == PM_LINK_SECURED_PROCEDURE_BONDING)
+            if (p_evt->params.conn_sec_succeeded.procedure == PM_CONN_SEC_PROCEDURE_ENCRYPTION)
             {
                 err_code = pm_peer_rank_highest(p_evt->peer_id);
                 if (err_code != NRF_ERROR_BUSY)

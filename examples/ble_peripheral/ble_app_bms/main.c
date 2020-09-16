@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -70,6 +70,7 @@
 #include "ble_dis.h"
 #include "nrf_ble_bms.h"
 #include "nrf_ble_gatt.h"
+#include "nrf_pwr_mgmt.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -104,8 +105,7 @@
 #define SEC_PARAM_MAX_KEY_SIZE          16                                      //!< Maximum encryption key size.
 
 #define APP_ADV_FAST_INTERVAL           0x0028                                  //!< Fast advertising interval (in units of 0.625 ms. This value corresponds to 25 ms.).
-#define APP_ADV_SLOW_INTERVAL           0x0C80                                  //!< Slow advertising interval (in units of 0.625 ms. This value corrsponds to 2 seconds).
-#define APP_ADV_FAST_TIMEOUT            180                                     //!< The duration of the fast advertising period (in seconds).
+#define APP_ADV_DURATION                18000                                   //!< The advertising duration (180 seconds) in units of 10 milliseconds.
 
 #define MEM_BUFF_SIZE                   512
 #define DEAD_BEEF                       0xDEADBEEF                              //!< Value used as error code on stack dump, can be used to identify stack location on stack unwind.
@@ -143,6 +143,19 @@ static int m_auth_code_len = sizeof(m_auth_code);
 void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 {
     app_error_handler(DEAD_BEEF, line_num, p_file_name);
+}
+
+
+/**@brief Function for handling Queued Write Module errors.
+ *
+ * @details A pointer to this function will be passed to each service which may need to inform the
+ *          application about an error.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void nrf_qwr_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
 }
 
 
@@ -320,32 +333,44 @@ uint16_t qwr_evt_handler(nrf_ble_qwr_t * p_qwr, nrf_ble_qwr_evt_t * p_evt)
 }
 
 
-static void delete_disconnected_bonds(void)
+/**@brief Function for deleting a single bond if it does not belong to a connected peer.
+ *
+ * This will mark the bond for deferred deletion if the peer is connected.
+ */
+static void bond_delete(uint16_t conn_handle, void * p_context)
 {
-    ret_code_t err_code;
-    sdk_mapped_flags_key_list_t conn_handle_list = ble_conn_state_conn_handles();
+    UNUSED_PARAMETER(p_context);
+    ret_code_t   err_code;
+    pm_peer_id_t peer_id;
 
-    for (uint32_t i = 0; i < conn_handle_list.len; i++)
+    if (ble_conn_state_status(conn_handle) == BLE_CONN_STATUS_CONNECTED)
     {
-        pm_peer_id_t peer_id;
-        uint16_t conn_handle = conn_handle_list.flag_keys[i];
-        bool pending         = ble_conn_state_user_flag_get(conn_handle, m_bms_bonds_to_delete);
-
-        if (pending)
+        ble_conn_state_user_flag_set(conn_handle, m_bms_bonds_to_delete, true);
+    }
+    else
+    {
+        NRF_LOG_DEBUG("Attempting to delete bond.");
+        err_code = pm_peer_id_get(conn_handle, &peer_id);
+        if (err_code == NRF_SUCCESS)
         {
-            NRF_LOG_DEBUG("Attempting to delete bond.");
-            err_code = pm_peer_id_get(conn_handle, &peer_id);
-            if (err_code == NRF_SUCCESS)
-            {
-                err_code = pm_peer_delete(peer_id);
-                APP_ERROR_CHECK(err_code);
-            }
+            err_code = pm_peer_delete(peer_id);
+            APP_ERROR_CHECK(err_code);
+            ble_conn_state_user_flag_set(conn_handle, m_bms_bonds_to_delete, false);
         }
     }
 }
 
 
-/**@brief Function for deleting the current bond
+/**@brief Function for performing deferred deletions.
+*/
+static void delete_disconnected_bonds(void)
+{
+    uint32_t n_calls = ble_conn_state_for_each_set_user_flag(m_bms_bonds_to_delete, bond_delete, NULL);
+    UNUSED_RETURN_VALUE(n_calls);
+}
+
+
+/**@brief Function for marking the requester's bond for deletion.
 */
 static void delete_requesting_bond(nrf_ble_bms_t const * p_bms)
 {
@@ -369,16 +394,7 @@ static void delete_all_bonds(nrf_ble_bms_t const * p_bms)
         err_code = pm_conn_handle_get(peer_id, &conn_handle);
         APP_ERROR_CHECK(err_code);
 
-        if (conn_handle != BLE_CONN_HANDLE_INVALID)
-        {
-            /* Defer the deletion since this connection is active. */
-            ble_conn_state_user_flag_set(conn_handle, m_bms_bonds_to_delete, true);
-        }
-        else
-        {
-            err_code = pm_peer_delete(peer_id);
-            APP_ERROR_CHECK(err_code);
-        }
+        bond_delete(conn_handle, NULL);
 
         peer_id = pm_next_peer_id_get(peer_id);
     }
@@ -403,17 +419,7 @@ static void delete_all_except_requesting_bond(nrf_ble_bms_t const * p_bms)
         /* Do nothing if this is our own bond. */
         if (conn_handle != p_bms->conn_handle)
         {
-            if (conn_handle != BLE_CONN_HANDLE_INVALID)
-            {
-                /* Defer the deletion since this connection is active. */
-                ble_conn_state_user_flag_set(conn_handle, m_bms_bonds_to_delete, true);
-            }
-            else
-            {
-                /* Delete immediately. */
-                err_code = pm_peer_delete(peer_id);
-                APP_ERROR_CHECK(err_code);
-            }
+            bond_delete(conn_handle, NULL);
         }
 
         peer_id = pm_next_peer_id_get(peer_id);
@@ -438,6 +444,7 @@ static void services_init(void)
     qwr_init.mem_buffer.len   = MEM_BUFF_SIZE;
     qwr_init.mem_buffer.p_mem = m_qwr_mem;
     qwr_init.callback         = qwr_evt_handler;
+    qwr_init.error_handler    = nrf_qwr_error_handler;
 
     err_code = nrf_ble_qwr_init(&m_qwr, &qwr_init);
     APP_ERROR_CHECK(err_code);
@@ -614,7 +621,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
             break;
 
-#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -626,7 +632,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
             APP_ERROR_CHECK(err_code);
         } break;
-#endif
 
         case BLE_GATTC_EVT_TIMEOUT:
             // Disconnect on GATT Client timeout event.
@@ -745,7 +750,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         {
             // Run garbage collection on the flash.
             err_code = fds_gc();
-            if (err_code == FDS_ERR_BUSY || err_code == FDS_ERR_NO_SPACE_IN_QUEUES)
+            if (err_code == FDS_ERR_NO_SPACE_IN_QUEUES)
             {
                 // Retry.
             }
@@ -764,12 +769,6 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         {
             NRF_LOG_INFO("Peer Manager: All bonds deleted.");
             advertising_start(false);
-        } break;
-
-        case PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED:
-        {
-            // The local database has likely changed, send service changed indications.
-            pm_local_database_has_changed();
         } break;
 
         case PM_EVT_PEER_DATA_UPDATE_FAILED:
@@ -799,6 +798,8 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         case PM_EVT_CONN_SEC_START:
         case PM_EVT_PEER_DATA_UPDATE_SUCCEEDED:
         case PM_EVT_LOCAL_DB_CACHE_APPLIED:
+        case PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED:
+            // This can happen when the local DB has changed.
         case PM_EVT_SERVICE_CHANGED_IND_SENT:
         case PM_EVT_SERVICE_CHANGED_IND_CONFIRMED:
         default:
@@ -861,7 +862,7 @@ static void advertising_init(void)
     init.config.ble_adv_whitelist_enabled = false;
     init.config.ble_adv_fast_enabled      = true;
     init.config.ble_adv_fast_interval     = APP_ADV_FAST_INTERVAL;
-    init.config.ble_adv_fast_timeout      = APP_ADV_FAST_TIMEOUT;
+    init.config.ble_adv_fast_timeout      = APP_ADV_DURATION;
     init.config.ble_adv_slow_enabled      = false;
 
     init.evt_handler   = on_adv_evt;
@@ -883,7 +884,7 @@ static void buttons_leds_init(bool * p_erase_bonds)
     ret_code_t err_code;
     bsp_event_t startup_event;
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, bsp_event_handler);
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS, bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_btn_ble_init(NULL, &startup_event);
@@ -904,12 +905,26 @@ static void log_init(void)
 }
 
 
-/**@brief Function for the Power manager.
+/**@brief Function for initializing power management.
  */
-static void power_manage(void)
+static void power_management_init(void)
 {
-    ret_code_t err_code = sd_app_evt_wait();
+    ret_code_t err_code;
+    err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for handling the idle state (main loop).
+ *
+ * @details If there is no pending log operation, then sleep until next the next event occurs.
+ */
+static void idle_state_handle(void)
+{
+    if (NRF_LOG_PROCESS() == false)
+    {
+        nrf_pwr_mgmt_run();
+    }
 }
 
 
@@ -923,6 +938,7 @@ int main(void)
     log_init();
     timers_init();
     buttons_leds_init(&erase_bonds);
+    power_management_init();
     ble_stack_init();
     gap_params_init();
     gatt_init();
@@ -939,10 +955,7 @@ int main(void)
     // Enter main loop.
     for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            power_manage();
-        }
+        idle_state_handle();
     }
 }
 

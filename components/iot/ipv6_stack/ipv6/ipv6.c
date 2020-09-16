@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -109,7 +109,7 @@ NRF_LOG_MODULE_REGISTER();
 #define VERIFY_MODULE_IS_INITIALIZED()                                                             \
     if (m_event_handler == NULL)                                                                   \
     {                                                                                              \
-        return (SDK_ERR_MODULE_NOT_INITIALZED | IOT_IPV6_ERR_BASE);                                \
+        return (SDK_ERR_MODULE_NOT_INITIALIZED | IOT_IPV6_ERR_BASE);                               \
     }
 
 /**@brief Verify NULL parameters are not passed to API by application. */

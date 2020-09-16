@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -48,6 +48,7 @@
 #include "buttons_m.h"
 #include "nfc_ble_pair_lib.h"
 #include "app_timer.h"
+#include "nrf_pwr_mgmt.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -63,12 +64,34 @@
 
 /**@brief Function for initializing nrf logger.
  */
-static void logs_init()
+static void log_init()
 {
     ret_code_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
     NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
+
+/**@brief Function for initializing power management.
+ */
+static void power_management_init(void)
+{
+    ret_code_t err_code;
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for handling the idle state (main loop). If there is no pending log operation,
+          then sleep until next the next event occurs.
+ */
+static void idle_state_handle(void)
+{
+    if (NRF_LOG_PROCESS() == false)
+    {
+        nrf_pwr_mgmt_run();
+    }
 }
 
 
@@ -86,7 +109,7 @@ static void timer_init()
 static void nfc_pairing_init()
 {
     ble_advertising_t * const p_advertising = ble_adv_instance_ptr_get();
-    
+
     ret_code_t err_code = nfc_ble_pair_init(p_advertising, (nfc_pairing_mode_t)NFC_PAIRING_MODE);
     APP_ERROR_CHECK(err_code);
 }
@@ -96,28 +119,35 @@ static void nfc_pairing_init()
  */
 int main(void)
 {
-    logs_init();
+    // Initialize.
+    log_init();
     timer_init();
     bool erase_bonds = buttons_init();
+    power_management_init();
     ble_stack_init();
 
-    /* Set BLE device name. */
+    // Set BLE device name.
     ble_set_device_name(DEVICE_NAME);
 
     gap_params_init();
     gatt_init();
+    qwr_init();
     advertising_init();
     conn_params_init();
     peer_manager_init(erase_bonds);
+    if (erase_bonds)
+    {
+        NRF_LOG_INFO("Bonds erased!");
+    }
     nfc_pairing_init();
 
     // Start execution.
-    NRF_LOG_INFO("NFC Connection Handover BLE peripheral device example.");
+    NRF_LOG_INFO("NFC Connection Handover BLE peripheral device example started.");
 
     // Enter main loop.
-    while (true)
+    for (;;)
     {
-        UNUSED_RETURN_VALUE(NRF_LOG_PROCESS());
+        idle_state_handle();
     }
 }
 

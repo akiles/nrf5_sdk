@@ -289,7 +289,7 @@ typedef struct
   uint16_t          handle;             /**< Characteristic Value Handle. */
   uint8_t           type;               /**< Indication or Notification, see @ref BLE_GATT_HVX_TYPES. */
   uint16_t          offset;             /**< Offset within the attribute value. */
-  uint16_t         *p_len;              /**< Length in bytes to be written, length in bytes written after successful return. */
+  uint16_t         *p_len;              /**< Length in bytes to be written, length in bytes written after return. */
   uint8_t const    *p_data;             /**< Actual data content, use NULL to use the current attribute value. */
 } ble_gatts_hvx_params_t;
 
@@ -549,8 +549,8 @@ SVCALL(SD_BLE_GATTS_VALUE_SET, uint32_t, sd_ble_gatts_value_set(uint16_t conn_ha
 /**@brief Get the value of a given attribute.
  *
  * @note                 If the attribute value is longer than the size of the supplied buffer,
- *                       p_len will return the total attribute value length (excluding offset),
- *                       and not the number of bytes actually returned in p_data.
+ *                       @ref ble_gatts_value_t::len will return the total attribute value length (excluding offset),
+ *                       and not the number of bytes actually returned in @ref ble_gatts_value_t::p_value.
  *                       The application may use this information to allocate a suitable buffer size.
  *
  * @note                 When retrieving system attribute values with this function, the connection handle
@@ -579,7 +579,7 @@ SVCALL(SD_BLE_GATTS_VALUE_GET, uint32_t, sd_ble_gatts_value_get(uint16_t conn_ha
  * @note    The local attribute value may be updated even if an outgoing packet is not sent to the peer due to an error during execution.
  *          The Attribute Table has been updated if one of the following error codes is returned: @ref NRF_ERROR_INVALID_STATE, @ref NRF_ERROR_BUSY,
  *          @ref NRF_ERROR_FORBIDDEN, @ref BLE_ERROR_GATTS_SYS_ATTR_MISSING and @ref NRF_ERROR_RESOURCES.
- *          The caller can check whether the value has been updated by looking at the contents of *(p_hvx_params->p_len).
+ *          The caller can check whether the value has been updated by looking at the contents of *(@ref ble_gatts_hvx_params_t::p_len).
  *
  * @note    Only one indication procedure can be ongoing per connection at a time.
  *          If the application tries to indicate an attribute value while another indication procedure is ongoing,
@@ -607,9 +607,12 @@ SVCALL(SD_BLE_GATTS_VALUE_GET, uint32_t, sd_ble_gatts_value_get(uint16_t conn_ha
  * @mmsc{@ref BLE_GATTS_HVX_DISABLED_MSC}
  * @endmscs
  *
- * @param[in] conn_handle  Connection handle.
- * @param[in] p_hvx_params Pointer to an HVx parameters structure. If the p_data member contains a non-NULL pointer the attribute value will be updated with
- *                         the contents pointed by it before sending the notification or indication.
+ * @param[in] conn_handle      Connection handle.
+ * @param[in,out] p_hvx_params Pointer to an HVx parameters structure. If @ref ble_gatts_hvx_params_t::p_data
+ *                             contains a non-NULL pointer the attribute value will be updated with the contents
+ *                             pointed by it before sending the notification or indication. If the attribute value
+ *                             is updated, @ref ble_gatts_hvx_params_t::p_len is updated by the SoftDevice to
+ *                             contain the number of actual bytes written, else it will be set to 0.
  *
  * @retval ::NRF_SUCCESS Successfully queued a notification or indication for transmission, and optionally updated the attribute value.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
@@ -624,12 +627,11 @@ SVCALL(SD_BLE_GATTS_VALUE_GET, uint32_t, sd_ble_gatts_value_get(uint16_t conn_ha
  * @retval ::NRF_ERROR_NOT_FOUND Attribute not found.
  * @retval ::NRF_ERROR_FORBIDDEN The connection's current security level is lower than the one required by the write permissions of the CCCD associated with this characteristic.
  * @retval ::NRF_ERROR_DATA_SIZE Invalid data size(s) supplied.
- * @retval ::NRF_ERROR_BUSY For @ref BLE_GATT_HVX_INDICATION, GATT Server procedure already in progress or blocked because of a previous GATT procedure timeout.
-                            Wait for a @ref BLE_GATTS_EVT_HVC event and retry.
-                            For @ref BLE_GATT_HVX_NOTIFICATION it can only mean GATT procedure timeout.
+ * @retval ::NRF_ERROR_BUSY For @ref BLE_GATT_HVX_INDICATION Procedure already in progress. Wait for a @ref BLE_GATTS_EVT_HVC event and retry.
  * @retval ::BLE_ERROR_GATTS_SYS_ATTR_MISSING System attributes missing, use @ref sd_ble_gatts_sys_attr_set to set them to a known value.
  * @retval ::NRF_ERROR_RESOURCES Too many notifications queued.
  *                               Wait for a @ref BLE_GATTS_EVT_HVN_TX_COMPLETE event and retry.
+ * @retval ::NRF_ERROR_TIMEOUT There has been a GATT procedure timeout. No new GATT procedure can be performed without reestablishing the connection.
  */
 SVCALL(SD_BLE_GATTS_HVX, uint32_t, sd_ble_gatts_hvx(uint16_t conn_handle, ble_gatts_hvx_params_t const *p_hvx_params));
 
@@ -663,8 +665,9 @@ SVCALL(SD_BLE_GATTS_HVX, uint32_t, sd_ble_gatts_hvx(uint16_t conn_handle, ble_ga
  *                                   - An ATT_MTU exchange is ongoing
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
  * @retval ::BLE_ERROR_INVALID_ATTR_HANDLE Invalid attribute handle(s) supplied, handles must be in the range populated by the application.
- * @retval ::NRF_ERROR_BUSY GATT Server procedure already in progress or blocked because of a previous GATT procedure timeout.
+ * @retval ::NRF_ERROR_BUSY Procedure already in progress.
  * @retval ::BLE_ERROR_GATTS_SYS_ATTR_MISSING System attributes missing, use @ref sd_ble_gatts_sys_attr_set to set them to a known value.
+ * @retval ::NRF_ERROR_TIMEOUT There has been a GATT procedure timeout. No new GATT procedure can be performed without reestablishing the connection.
  */
 SVCALL(SD_BLE_GATTS_SERVICE_CHANGED, uint32_t, sd_ble_gatts_service_changed(uint16_t conn_handle, uint16_t start_handle, uint16_t end_handle));
 
@@ -697,6 +700,7 @@ SVCALL(SD_BLE_GATTS_SERVICE_CHANGED, uint32_t, sd_ble_gatts_service_changed(uint
  * @retval ::NRF_ERROR_INVALID_PARAM   Authorization op invalid,
  *                                         handle supplied does not match requested handle,
  *                                         or invalid data to be written provided by the application.
+ * @retval ::NRF_ERROR_TIMEOUT There has been a GATT procedure timeout. No new GATT procedure can be performed without reestablishing the connection.
  */
 SVCALL(SD_BLE_GATTS_RW_AUTHORIZE_REPLY, uint32_t, sd_ble_gatts_rw_authorize_reply(uint16_t conn_handle, ble_gatts_rw_authorize_reply_params_t const *p_rw_authorize_reply_params));
 
@@ -826,7 +830,7 @@ SVCALL(SD_BLE_GATTS_ATTR_GET, uint32_t, sd_ble_gatts_attr_get(uint16_t handle, b
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
  * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection State or no ATT_MTU exchange request pending.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid Server RX MTU size supplied.
- * @retval ::NRF_ERROR_BUSY GATT Blocked because of a previous GATT procedure timeout.
+ * @retval ::NRF_ERROR_TIMEOUT There has been a GATT procedure timeout. No new GATT procedure can be performed without reestablishing the connection.
  */
 SVCALL(SD_BLE_GATTS_EXCHANGE_MTU_REPLY, uint32_t, sd_ble_gatts_exchange_mtu_reply(uint16_t conn_handle, uint16_t server_rx_mtu));
 /** @} */

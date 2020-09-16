@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -46,7 +46,12 @@
 #include "conn_mw.h"
 #include "ser_hal_transport.h"
 #include "ser_conn_cmd_decoder.h"
+#include "ser_conn_handlers.h"
+#include "nrf_log_ctrl.h"
 
+#define NRF_LOG_MODULE_NAME ser_conn_dec
+#include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 uint32_t ser_conn_command_process(uint8_t * p_command, uint16_t command_len)
 {
@@ -61,12 +66,18 @@ uint32_t ser_conn_command_process(uint8_t * p_command, uint16_t command_len)
 
     /* Allocate a memory buffer from HAL Transport layer for transmitting the Command Response.
      * Loop until a buffer is available. */
+    NRF_LOG_INFO("Command process start");
     do
     {
         err_code = ser_hal_transport_tx_pkt_alloc(&p_tx_buf, (uint16_t *)&tx_buf_len);
+        if (err_code == NRF_ERROR_NO_MEM)
+        {
+            ser_conn_on_no_mem_handler();
+        }
     }
     while (NRF_ERROR_NO_MEM == err_code);
 
+    NRF_LOG_INFO("Tx buffer allocated");
     if (NRF_SUCCESS == err_code)
     {
         /* Create a new response packet. */
@@ -77,9 +88,11 @@ uint32_t ser_conn_command_process(uint8_t * p_command, uint16_t command_len)
         err_code = conn_mw_handler
                        (p_command, command_len, &p_tx_buf[SER_PKT_OP_CODE_POS], &tx_buf_len);
 
+
         /* Command decoder not found. */
         if (NRF_ERROR_NOT_SUPPORTED == err_code)
         {
+            NRF_LOG_ERROR("Command not supported opcode:%d", p_tx_buf[SER_PKT_OP_CODE_POS]);
             APP_ERROR_CHECK(SER_WARNING_CODE);
             err_code = op_status_enc
                            (opcode, NRF_ERROR_NOT_SUPPORTED,
@@ -112,6 +125,7 @@ uint32_t ser_conn_command_process(uint8_t * p_command, uint16_t command_len)
         }
         else
         {
+            NRF_LOG_ERROR("Internal error during command decoding.");
             err_code = NRF_ERROR_INTERNAL;
         }
     }

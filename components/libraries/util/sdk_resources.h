@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -41,14 +41,14 @@
  * @brief Definition file for resource usage by SoftDevice, ESB and Gazell.
  */
 
-#ifndef APP_RESOURCES_H__
-#define APP_RESOURCES_H__
+#ifndef SDK_RESOURCES_H__
+#define SDK_RESOURCES_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifdef SOFTDEVICE_PRESENT
+#if defined(SOFTDEVICE_PRESENT) || defined (BLE_STACK_SUPPORT_REQD) || defined (ANT_STACK_SUPPORT_REQD)
     #include "nrf_sd_def.h"
 #else
     #define SD_PPI_RESTRICTED         0uL /**< 1 if PPI peripheral is restricted, 0 otherwise. */
@@ -83,4 +83,4 @@ extern "C" {
 }
 #endif
 
-#endif // APP_RESOURCES_H__
+#endif // SDK_RESOURCES_H__

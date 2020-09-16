@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -47,6 +47,7 @@
 #include "peer_database.h"
 #include "ble_conn_state.h"
 #include "id_manager.h"
+#include "sdk_common.h"
 
 
 // The number of registered event handlers.
@@ -181,8 +182,8 @@ static void events_send_from_err_code(uint16_t               conn_handle,
         {
             evt.evt_id = PM_EVT_CONN_SEC_FAILED;
             evt.params.conn_sec_failed.procedure = ((p_sec_params != NULL) && p_sec_params->bond)
-                                                 ? PM_LINK_SECURED_PROCEDURE_BONDING
-                                                 : PM_LINK_SECURED_PROCEDURE_PAIRING;
+                                                 ? PM_CONN_SEC_PROCEDURE_BONDING
+                                                 : PM_CONN_SEC_PROCEDURE_PAIRING;
             evt.params.conn_sec_failed.error_src = BLE_GAP_SEC_STATUS_SOURCE_LOCAL;
             evt.params.conn_sec_failed.error     = PM_CONN_SEC_ERROR_SMP_TIMEOUT;
         }
@@ -292,6 +293,7 @@ static ret_code_t link_secure(uint16_t conn_handle,
         case NRF_ERROR_TIMEOUT:
         case BLE_ERROR_INVALID_CONN_HANDLE:
         case NRF_ERROR_INVALID_STATE:
+        case NRF_ERROR_INVALID_DATA:
             return_err_code = err_code;
             break;
         default:
@@ -399,59 +401,27 @@ void sm_smd_evt_handler(pm_evt_t * p_event)
 }
 
 
-/**@brief Function for checking our user flags for pending calls to @ref smd_link_secure.
- *
- * @details This function will attempt to perform any pending calls.
- *
- * @param[in]  flag_id  The user flag to check. Must be either @ref m_flag_link_secure_pending_busy
- *                      or @ref m_flag_link_secure_pending_flash_full.
+/**@brief Function handling a pending params_reply. See @ref ble_conn_state_user_function_t.
  */
-static void link_secure_pending_process(ble_conn_state_user_flag_id_t flag_id)
+static void params_reply_pending_handle(uint16_t conn_handle, void * p_context)
 {
-    sdk_mapped_flags_t flag_collection = ble_conn_state_user_flag_collection(flag_id);
-    if (sdk_mapped_flags_any_set(flag_collection))
-    {
-        sdk_mapped_flags_key_list_t conn_handle_list = ble_conn_state_conn_handles();
-
-        for (uint32_t i = 0; i < conn_handle_list.len; i++)
-        {
-            bool pending = ble_conn_state_user_flag_get(conn_handle_list.flag_keys[i], flag_id);
-            if (pending)
-            {
-                bool force_repairing = ble_conn_state_user_flag_get(conn_handle_list.flag_keys[i], m_flag_link_secure_force_repairing);
-                bool null_params     = ble_conn_state_user_flag_get(conn_handle_list.flag_keys[i], m_flag_link_secure_null_params);
-
-                ret_code_t err_code = link_secure(conn_handle_list.flag_keys[i], null_params, force_repairing, true); // If this fails, it will be automatically retried.
-                UNUSED_VARIABLE(err_code);
-            }
-        }
-    }
+    UNUSED_PARAMETER(p_context);
+    smd_params_reply_perform(conn_handle, NULL);
 }
 
 
-/**@brief Function for checking our user flags for pending calls to @ref smd_params_reply.
- *
- * @details This function will attempt to perform any pending calls.
- *
- * @param[in]  flag_id  The user flag to check. Must be either @ref m_flag_params_reply_pending_busy
- *                      or @ref m_flag_params_reply_pending_flash_full.
+/**@brief Function handling a pending link_secure. See @ref ble_conn_state_user_function_t.
  */
-static void params_reply_pending_process(ble_conn_state_user_flag_id_t flag_id)
+static void link_secure_pending_handle(uint16_t conn_handle, void * p_context)
 {
-    sdk_mapped_flags_t flag_collection = ble_conn_state_user_flag_collection(flag_id);
-    if (sdk_mapped_flags_any_set(flag_collection))
-    {
-        sdk_mapped_flags_key_list_t conn_handle_list = ble_conn_state_conn_handles();
+    UNUSED_PARAMETER(p_context);
 
-        for (uint32_t i = 0; i < conn_handle_list.len; i++)
-        {
-            bool pending = ble_conn_state_user_flag_get(conn_handle_list.flag_keys[i], flag_id);
-            if (pending)
-            {
-                smd_params_reply_perform(conn_handle_list.flag_keys[i], NULL);
-            }
-        }
-    }
+    bool force_repairing = ble_conn_state_user_flag_get(conn_handle, m_flag_link_secure_force_repairing);
+    bool null_params     = ble_conn_state_user_flag_get(conn_handle, m_flag_link_secure_null_params);
+
+    // If this fails, it will be automatically retried.
+    ret_code_t err_code = link_secure(conn_handle, null_params, force_repairing, true);
+    UNUSED_VARIABLE(err_code);
 }
 
 
@@ -465,15 +435,23 @@ void sm_pdb_evt_handler(pm_evt_t * p_event)
     switch (p_event->evt_id)
     {
         case PM_EVT_FLASH_GARBAGE_COLLECTED:
-            params_reply_pending_process(m_flag_params_reply_pending_flash_full);
-            link_secure_pending_process(m_flag_link_secure_pending_flash_full);
+            (void) ble_conn_state_for_each_set_user_flag(m_flag_params_reply_pending_flash_full,
+                                                         params_reply_pending_handle,
+                                                         NULL);
+            (void) ble_conn_state_for_each_set_user_flag(m_flag_link_secure_pending_flash_full,
+                                                         link_secure_pending_handle,
+                                                         NULL);
             /* fallthrough */
         case PM_EVT_PEER_DATA_UPDATE_SUCCEEDED:
         case PM_EVT_PEER_DATA_UPDATE_FAILED:
         case PM_EVT_PEER_DELETE_SUCCEEDED:
         case PM_EVT_PEER_DELETE_FAILED:
-            params_reply_pending_process(m_flag_params_reply_pending_busy);
-            link_secure_pending_process(m_flag_link_secure_pending_busy);
+            (void) ble_conn_state_for_each_set_user_flag(m_flag_params_reply_pending_busy,
+                                                         params_reply_pending_handle,
+                                                         NULL);
+            (void) ble_conn_state_for_each_set_user_flag(m_flag_link_secure_pending_busy,
+                                                         link_secure_pending_handle,
+                                                         NULL);
             break;
         default:
             // Do nothing.
@@ -522,7 +500,9 @@ void sm_ble_evt_handler(ble_evt_t const * p_ble_evt)
     NRF_PM_DEBUG_CHECK(p_ble_evt != NULL);
 
     smd_ble_evt_handler(p_ble_evt);
-    link_secure_pending_process(m_flag_link_secure_pending_busy);
+    (void) ble_conn_state_for_each_set_user_flag(m_flag_link_secure_pending_busy,
+                                                 link_secure_pending_handle,
+                                                 NULL);
 }
 
 

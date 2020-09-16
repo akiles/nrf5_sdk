@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -54,20 +54,12 @@
 #include "sdk_errors.h"
 #include <stdint.h>
 #include <stdbool.h>
+#include "nrf_log_types.h"
 #include "nrf_log_ctrl_internal.h"
 #include "nrf_log_backend_interface.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-typedef enum
-{
-    NRF_LOG_SEVERITY_NONE,
-    NRF_LOG_SEVERITY_ERROR,
-    NRF_LOG_SEVERITY_WARNING,
-    NRF_LOG_SEVERITY_INFO,
-    NRF_LOG_SEVERITY_DEBUG,
-} nrf_log_severity_t;
 
 /**
  * @brief Timestamp function prototype.
@@ -78,14 +70,14 @@ typedef uint32_t (*nrf_log_timestamp_func_t)(void);
 
 /**@brief Macro for initializing the logs.
  *
- * @note If timestamps are disabled in the configuration, then the provided pointer
- * can be NULL. Otherwise, it is expected that timestamp_getter is not NULL.
- *
- * @param timestamp_func Function that returns the timestamp.
+ * Macro has one or two parameters. First parameter (obligatory) is the timestamp function (@ref nrf_log_timestamp_func_t).
+ * Additionally, as the second parameter timestamp frequency in Hz can be provided. If not provided then default
+ * frequency is used (@ref  NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY). Frequency is used to format timestamp prefix if
+ * @ref NRF_LOG_STR_FORMATTER_TIMESTAMP_FORMAT_ENABLED is set.
  *
  * @return  NRF_SUCCESS after successful initialization, otherwise an error code.
  */
-#define NRF_LOG_INIT(timestamp_func) NRF_LOG_INTERNAL_INIT(timestamp_func)
+#define NRF_LOG_INIT(...) NRF_LOG_INTERNAL_INIT(__VA_ARGS__)
 
 
 /**@brief Macro for processing a single log entry from a queue of deferred logs.
@@ -123,11 +115,12 @@ typedef uint32_t (*nrf_log_timestamp_func_t)(void);
  * Instead, frontend and user backend should be verbosely initialized.
  *
  * @param timestamp_func Function for getting a 32-bit timestamp.
+ * @param timestamp_freq Frequency of the timestamp.
  *
  * @return Error status.
  *
  */
-ret_code_t nrf_log_init(nrf_log_timestamp_func_t timestamp_func);
+ret_code_t nrf_log_init(nrf_log_timestamp_func_t timestamp_func, uint32_t timestamp_freq);
 
 /**
  * @brief Function for adding new backend interface to the logger.

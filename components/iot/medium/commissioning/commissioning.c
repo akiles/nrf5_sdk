@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015-2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -285,11 +285,11 @@ static void config_mode_adv_params_set(void)
         m_config_mode_adv_params.srdata.p_manuf_specific_data = NULL;
     }
 
-    m_config_mode_adv_params.advparams.type        = BLE_GAP_ADV_TYPE_ADV_IND;
-    m_config_mode_adv_params.advparams.p_peer_addr = NULL;                             // Undirected advertisement.
-    m_config_mode_adv_params.advparams.fp          = BLE_GAP_ADV_FP_ANY;
-    m_config_mode_adv_params.advparams.interval    = CONFIG_MODE_ADV_ADV_INTERVAL;
-    m_config_mode_adv_params.advparams.timeout     = CONFIG_MODE_ADV_TIMEOUT;
+    m_config_mode_adv_params.advparams.properties.type = BLE_GAP_ADV_TYPE_CONNECTABLE_SCANNABLE_UNDIRECTED;
+    m_config_mode_adv_params.advparams.p_peer_addr     = NULL;                             // Undirected advertisement.
+    m_config_mode_adv_params.advparams.filter_policy   = BLE_GAP_ADV_FP_ANY;
+    m_config_mode_adv_params.advparams.interval        = CONFIG_MODE_ADV_ADV_INTERVAL;
+    m_config_mode_adv_params.advparams.duration        = CONFIG_MODE_ADV_TIMEOUT;
 
     COMM_EXIT();
 }
@@ -370,11 +370,11 @@ static void joining_mode_adv_params_set(void)
         m_joining_mode_adv_params.srdata.p_manuf_specific_data = NULL;
     }
 
-    m_joining_mode_adv_params.advparams.type        = BLE_GAP_ADV_TYPE_ADV_IND;
-    m_joining_mode_adv_params.advparams.p_peer_addr = NULL;                             // Undirected advertisement.
-    m_joining_mode_adv_params.advparams.fp          = BLE_GAP_ADV_FP_ANY;
-    m_joining_mode_adv_params.advparams.interval    = APP_ADV_ADV_INTERVAL;
-    m_joining_mode_adv_params.advparams.timeout     = APP_ADV_TIMEOUT;
+    m_joining_mode_adv_params.advparams.properties.type = BLE_GAP_ADV_TYPE_CONNECTABLE_SCANNABLE_UNDIRECTED;
+    m_joining_mode_adv_params.advparams.p_peer_addr     = NULL;                             // Undirected advertisement.
+    m_joining_mode_adv_params.advparams.filter_policy   = BLE_GAP_ADV_FP_ANY;
+    m_joining_mode_adv_params.advparams.interval        = APP_ADV_ADV_INTERVAL;
+    m_joining_mode_adv_params.advparams.duration        = APP_ADV_DURATION;
 
     COMM_EXIT();
 }

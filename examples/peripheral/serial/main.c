@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -111,8 +111,8 @@ int main(void)
     ret = app_timer_init();
     APP_ERROR_CHECK(ret);
 
-    bsp_board_leds_init();
-    bsp_board_buttons_init();
+    // Initialize LEDs and buttons.
+    bsp_board_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS);
 
     ret = nrf_serial_init(&serial_uart, &m_uart0_drv_config, &serial_config);
     APP_ERROR_CHECK(ret);

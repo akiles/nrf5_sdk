@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -55,7 +55,7 @@
 #include "ble_app_gzll_common.h"
 #include "app_timer.h"
 #include "bsp.h"
-
+#include "nrf_pwr_mgmt.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -64,30 +64,14 @@
 // Store current mode
 volatile radio_mode_t running_mode = BLE;
 
-/**
- * @brief Function for the Power Management.
+
+/**@brief Function for initializing power management.
  */
-static void power_manage(void)
+static void power_management_init(void)
 {
-    if (running_mode == GAZELL)
-    {
-        // Use directly __WFE and __SEV macros since the SoftDevice is not available in proprietary
-        // mode.
-        // Wait for event.
-        __WFE();
-
-        // Clear Event Register.
-        __SEV();
-        __WFE();
-    }
-    else if (running_mode == BLE)
-    {
-        uint32_t err_code;
-
-        // Use SoftDevice API for power_management when in Bluetooth Mode.
-        err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
-    }
+    ret_code_t err_code;
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -105,9 +89,10 @@ int main(void)
 
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("Multiprotocol application example");
+    NRF_LOG_INFO("Multiprotocol application example started.");
     NRF_LOG_INFO("BLE mode");
 
+    power_management_init();
     ble_stack_start();
     NRF_LOG_FLUSH();
 
@@ -122,7 +107,7 @@ int main(void)
     for (;;)
     {
         NRF_LOG_FLUSH();
-        power_manage();
+        nrf_pwr_mgmt_run();
 
         if (bsp_button_is_pressed(BLE_BUTTON_ID))
         {

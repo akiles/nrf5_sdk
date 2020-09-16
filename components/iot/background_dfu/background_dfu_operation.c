@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -60,114 +60,82 @@
 
 #include "nrf_log.h"
 
-nrf_dfu_res_code_t background_dfu_op_select(uint32_t   object_type,
-                                            uint32_t * p_max_obj_size,
-                                            uint32_t * p_offset)
+ret_code_t background_dfu_op_select(uint32_t                    object_type,
+                                    nrf_dfu_response_callback_t callback,
+                                    void                      * p_context)
 {
-    nrf_dfu_res_code_t  res_code;
-    nrf_dfu_req_t       dfu_req;
-    nrf_dfu_res_t       dfu_res;
+    nrf_dfu_request_t  dfu_req;
 
     memset(&dfu_req, 0, sizeof(dfu_req));
 
-    dfu_req.req_type = NRF_DFU_OBJECT_OP_SELECT;
-    dfu_req.obj_type = object_type;
+    dfu_req.request            = NRF_DFU_OP_OBJECT_SELECT;
+    dfu_req.select.object_type = object_type;
+    dfu_req.p_context          = p_context;
+    dfu_req.callback.response  = callback;
 
-    res_code = nrf_dfu_req_handler_on_req(NULL, &dfu_req, &dfu_res);
-    if (res_code == NRF_DFU_RES_CODE_SUCCESS)
-    {
-        NRF_LOG_DEBUG("Object selected max_size: %u offs: %u crc: %x",
-                         dfu_res.max_size, dfu_res.offset, dfu_res.crc);
-
-        *p_max_obj_size = dfu_res.max_size;
-        *p_offset       = dfu_res.offset;
-    }
-
-    return res_code;
+    return nrf_dfu_req_handler_on_req(&dfu_req);
 }
 
-nrf_dfu_res_code_t background_dfu_op_create(uint32_t object_type, uint32_t object_size)
+ret_code_t background_dfu_op_create(uint32_t                    object_type,
+                                    uint32_t                    object_size,
+                                    nrf_dfu_response_callback_t callback,
+                                    void                      * p_context)
 {
-    nrf_dfu_res_code_t  res_code;
-    nrf_dfu_req_t       dfu_req;
-    nrf_dfu_res_t       dfu_res;
+    nrf_dfu_request_t  dfu_req;
 
     memset(&dfu_req, 0, sizeof(dfu_req));
 
-    dfu_req.req_type    = NRF_DFU_OBJECT_OP_CREATE;
-    dfu_req.object_size = object_size;
-    dfu_req.obj_type    = object_type;
+    dfu_req.request            = NRF_DFU_OP_OBJECT_CREATE;
+    dfu_req.create.object_size = object_size;
+    dfu_req.create.object_type = object_type;
+    dfu_req.p_context          = p_context;
+    dfu_req.callback.response  = callback;
 
-    res_code = nrf_dfu_req_handler_on_req(NULL, &dfu_req, &dfu_res);
-    if (res_code == NRF_DFU_RES_CODE_SUCCESS)
-    {
-        NRF_LOG_DEBUG("Object created [type=%u, size=%u]", object_type, object_size);
-    }
-
-    return res_code;
+    return nrf_dfu_req_handler_on_req(&dfu_req);
 }
 
-nrf_dfu_res_code_t background_dfu_op_write(uint32_t        object_type,
-                                           const uint8_t * p_payload,
-                                           uint16_t        payload_length)
+ret_code_t background_dfu_op_write(const uint8_t             * p_payload,
+                                   uint16_t                    payload_length,
+                                   nrf_dfu_response_callback_t callback,
+                                   void                      * p_context)
 {
-    nrf_dfu_res_code_t  res_code;
-    nrf_dfu_req_t       dfu_req;
-    nrf_dfu_res_t       dfu_res;
+    nrf_dfu_request_t  dfu_req;
 
     memset(&dfu_req, 0, sizeof(dfu_req));
 
-    dfu_req.obj_type = object_type;
-    dfu_req.req_type = NRF_DFU_OBJECT_OP_WRITE;
-    dfu_req.p_req    = (uint8_t *)p_payload;
-    dfu_req.req_len  = payload_length;
+    dfu_req.request           = NRF_DFU_OP_OBJECT_WRITE;
+    dfu_req.write.p_data      = (uint8_t *)p_payload;
+    dfu_req.write.len         = payload_length;
+    dfu_req.p_context         = p_context;
+    dfu_req.callback.response = callback;
 
-    res_code = nrf_dfu_req_handler_on_req(NULL, &dfu_req, &dfu_res);
-    if (res_code == NRF_DFU_RES_CODE_SUCCESS)
-    {
-        NRF_LOG_DEBUG("Object written: %u", payload_length);
-    }
-
-    return res_code;
+    return nrf_dfu_req_handler_on_req(&dfu_req);
 }
 
-nrf_dfu_res_code_t background_dfu_op_crc(uint32_t object_type)
+ret_code_t background_dfu_op_crc(nrf_dfu_response_callback_t callback,
+                                 void                      * p_context)
 {
-    nrf_dfu_res_code_t  res_code;
-    nrf_dfu_req_t       dfu_req;
-    nrf_dfu_res_t       dfu_res;
+    nrf_dfu_request_t  dfu_req;
 
     memset(&dfu_req, 0, sizeof(dfu_req));
 
-    // Calculate CRC of the object
-    dfu_req.obj_type = object_type;
-    dfu_req.req_type = NRF_DFU_OBJECT_OP_CRC;
+    dfu_req.request            = NRF_DFU_OP_CRC_GET;
+    dfu_req.p_context          = p_context;
+    dfu_req.callback.response  = callback;
 
-    res_code = nrf_dfu_req_handler_on_req(NULL, &dfu_req, &dfu_res);
-    if (res_code == NRF_DFU_RES_CODE_SUCCESS)
-    {
-        NRF_LOG_DEBUG("Object CRC: %x", dfu_res.crc);
-    }
-
-    return res_code;
+    return nrf_dfu_req_handler_on_req(&dfu_req);
 }
 
-nrf_dfu_res_code_t background_dfu_op_execute(uint32_t object_type)
+ret_code_t background_dfu_op_execute(nrf_dfu_response_callback_t callback,
+                                     void                      * p_context)
 {
-    nrf_dfu_res_code_t  res_code;
-    nrf_dfu_req_t       dfu_req;
-    nrf_dfu_res_t       dfu_res;
+    nrf_dfu_request_t  dfu_req;
 
     memset(&dfu_req, 0, sizeof(dfu_req));
 
-    dfu_req.obj_type = object_type;
-    dfu_req.req_type = NRF_DFU_OBJECT_OP_EXECUTE;
+    dfu_req.request            = NRF_DFU_OP_OBJECT_EXECUTE;
+    dfu_req.p_context          = p_context;
+    dfu_req.callback.response  = callback;
 
-    res_code = nrf_dfu_req_handler_on_req(NULL, &dfu_req, &dfu_res);
-    if (res_code == NRF_DFU_RES_CODE_SUCCESS)
-    {
-        NRF_LOG_DEBUG("Object executed");
-    }
-
-    return res_code;
+    return nrf_dfu_req_handler_on_req(&dfu_req);
 }

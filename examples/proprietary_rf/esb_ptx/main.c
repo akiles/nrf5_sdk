@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -99,7 +99,7 @@ void clocks_start( void )
 void gpio_init( void )
 {
     nrf_gpio_range_cfg_output(8, 15);
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 }
 
 
@@ -151,9 +151,7 @@ int main(void)
     err_code = esb_init();
     APP_ERROR_CHECK(err_code);
 
-    bsp_board_leds_init();
-
-    NRF_LOG_DEBUG("Enhanced ShockBurst Transmitter Example running.");
+    NRF_LOG_DEBUG("Enhanced ShockBurst Transmitter Example started.");
 
     while (true)
     {

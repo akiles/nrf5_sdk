@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -206,6 +206,8 @@ int main(void)
     timer0_init(); // Timer used to increase m_counter every 100ms.
     timer1_init(); // Timer to generate events on even number of seconds - stopping Timer 0
     timer2_init(); // Timer to generate events on odd number of seconds - starting Timer 0
+
+    NRF_LOG_INFO("PPI example started.");
 
     // Start clock.
     nrf_drv_timer_enable(&m_timer0);

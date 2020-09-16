@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -60,6 +60,7 @@
 #include "app_timer.h"
 #include "sdk_config.h"
 #include "mem_manager.h"
+#include "nrf_pwr_mgmt.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -67,7 +68,7 @@
 
 #define APP_IPSP_TAG                        35                                                      /**< Identifier for L2CAP configuration with the softdevice. */
 #define APP_IPSP_INITIATOR_PRIO             1                                                       /**< Priority with the SDH on receiving events from the softdevice. */
-#define SCANNING_LED                        BSP_LED_0_MASK                                          /**< Is on when device is advertising. */
+#define SCANNING_LED                        BSP_LED_0_MASK                                          /**< Is on when device is scanning. */
 #define CONNECTED_LED                       BSP_LED_1_MASK                                          /**< Is on when device is connected. */
 #define BUTTON_DETECTION_DELAY              APP_TIMER_TICKS(50)
 #define SCAN_INTERVAL                       0x00A0                                                  /**< Determines scan interval in units of 0.625 millisecond. */
@@ -108,12 +109,12 @@ static const ble_gap_addr_t m_peer_addr =
  */
 static const ble_gap_scan_params_t m_scan_param =
 {
-     .active         = 0,                       // Passive scanning.
-     .use_whitelist  = 0,                       // White-list not used.
-     .adv_dir_report = 0,                       // No filtering on directed advertising.
-     .interval       = (uint16_t)SCAN_INTERVAL, // Scan interval.
-     .window         = (uint16_t)SCAN_WINDOW,   // Scan window.
-     .timeout        = 0                        // Never stop scanning unless explicit asked to.
+     .active         = 0,                          // Passive scanning.
+     .filter_policy  = BLE_GAP_SCAN_FP_ACCEPT_ALL, // Do not use whitelist.
+     .interval       = (uint16_t)SCAN_INTERVAL,    // Scan interval.
+     .window         = (uint16_t)SCAN_WINDOW,      // Scan window.
+     .timeout        = 0,                          // Never stop scanning unless explicit asked to.
+     .scan_phys      = BLE_GAP_PHY_AUTO            // Automatic PHY selection.
 };
 
 
@@ -251,7 +252,7 @@ static void buttons_init(void)
         {BSP_BUTTON_3, false, BUTTON_PULL, button_event_handler}
     };
 
-    err_code = app_button_init(buttons, sizeof(buttons) / sizeof(buttons[0]), BUTTON_DETECTION_DELAY);
+    err_code = app_button_init(buttons, ARRAY_SIZE(buttons), BUTTON_DETECTION_DELAY);
     APP_ERROR_CHECK(err_code);
 
     err_code = app_button_enable();
@@ -493,9 +494,9 @@ static void services_init()
     uint32_t err_code = ble_ipsp_init(&init_param);
     APP_ERROR_CHECK(err_code);
 
-	ble_gap_addr_t m_my_addr;
+    ble_gap_addr_t m_my_addr;
 
-	m_my_addr.addr[5]   = 0x00;
+    m_my_addr.addr[5]   = 0x00;
     m_my_addr.addr[4]   = 0x11;
     m_my_addr.addr[3]   = 0x22;
     m_my_addr.addr[2]   = 0x33;
@@ -519,22 +520,47 @@ static void log_init(void)
 }
 
 
+/**@brief Function for initializing power management.
+ */
+static void power_management_init(void)
+{
+    ret_code_t err_code;
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for handling the idle state (main loop).
+ *
+ * @details Handle any pending log operation(s), then sleep until the next event occurs.
+ */
+static void idle_state_handle(void)
+{
+    if (NRF_LOG_PROCESS() == false)
+    {
+        nrf_pwr_mgmt_run();
+    }
+}
+
+
 /**
  * @brief Function for application main entry.
  */
 int main(void)
 {
+    // Initialize.
     log_init();
     timers_init();
     buttons_init();
     leds_init();
+    power_management_init();
     ble_stack_init();
     services_init();
 
     uint32_t err_code = nrf_mem_init();
     APP_ERROR_CHECK(err_code);
 
-    APPL_LOG("ble_app_ipsp_initiator initialized.");
+    APPL_LOG("ble_app_ipsp_initiator started.");
     APPL_LOG("    Press button 1 to create physical link.");
     APPL_LOG("    Press button 2 to create IPSP link.");
     APPL_LOG("    Press button 3 to tear down IPSP link.");
@@ -546,12 +572,7 @@ int main(void)
     // Enter main loop.
     for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            // Sleep waiting for an application event.
-            err_code = sd_app_evt_wait();
-            APP_ERROR_CHECK(err_code);
-        }
+        idle_state_handle();
     }
 }
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -121,8 +121,6 @@ static void ui_init(void)
 
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("Gazell dynamic pairing example. Device mode.");
-    NRF_LOG_FLUSH();
 }
 
 
@@ -150,8 +148,7 @@ int main(void)
     GAZELLE_ERROR_CODE_CHECK(result_value);
 
     // Attempt sending every packet up to MAX_TX_ATTEMPTS times
-    result_value = nrf_gzll_set_max_tx_attempts(MAX_TX_ATTEMPTS);
-    GAZELLE_ERROR_CODE_CHECK(result_value);
+    nrf_gzll_set_max_tx_attempts(MAX_TX_ATTEMPTS);
 
     result_value = nrf_gzll_set_timeslot_period(NRF_GZLLDE_RXPERIOD_DIV_2); // Half RX period on nRF24Lxx device
     GAZELLE_ERROR_CODE_CHECK(result_value);
@@ -165,6 +162,9 @@ int main(void)
 
     result_value = nrf_gzll_enable();
     GAZELLE_ERROR_CODE_CHECK(result_value);
+
+    NRF_LOG_INFO("Gazell dynamic pairing example started. Device mode.");
+    NRF_LOG_FLUSH();
 
     for (;;)
     {

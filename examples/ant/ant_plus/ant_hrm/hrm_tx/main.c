@@ -153,21 +153,15 @@ static void app_tick_handler(void * p_context)
 /**
  * @brief Function for setup all thinks not directly associated witch ANT stack/protocol.
  * @desc Initialization of: @n
- *         - app_tarce for debug.
  *         - app_timer, presetup for bsp and ant pulse simulation.
  *         - bsp for signaling leds and user buttons (if use button is enabled in example).
  *         - ant pulse simulate for task of filling hrm profile data.
  */
 static void utils_setup(void)
 {
-    ret_code_t err_code = NRF_LOG_INIT(NULL);
-    APP_ERROR_CHECK(err_code);
-
-    NRF_LOG_DEFAULT_BACKENDS_INIT();
-
     // Initialize and start a single continuous mode timer, which is used to update the event time
     // on the main data page.
-    err_code = app_timer_init();
+    ret_code_t err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
     err_code = nrf_pwr_mgmt_init();
@@ -175,11 +169,11 @@ static void utils_setup(void)
 
 #if (MODIFICATION_TYPE == MODIFICATION_TYPE_BUTTON)
     /** @snippet [ANT Pulse simulator button init] */
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS,
                         bsp_evt_handler);
     /** @snippet [ANT Pulse simulator button init] */
 #else
-    err_code = bsp_init(BSP_INIT_LED, NULL);
+    err_code = bsp_init(BSP_INIT_LEDS, NULL);
 #endif
     APP_ERROR_CHECK(err_code);
 
@@ -291,14 +285,28 @@ static void profile_setup(void)
 /** @snippet [ANT HRM TX Profile Setup] */
 }
 
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
 /**@brief Function for application main entry, does not return.
  */
 int main(void)
 {
+    log_init();
     utils_setup();
     softdevice_setup();
     simulator_setup();
     profile_setup();
+
+    NRF_LOG_INFO("ANT+ Heart Rate TX example started.");
 
     for (;;)
     {

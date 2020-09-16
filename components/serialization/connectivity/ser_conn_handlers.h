@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -77,7 +77,7 @@ extern "C" {
 #endif
 
 /** Maximum number of events in the application scheduler queue. */
-#define SER_CONN_SCHED_QUEUE_SIZE             16u
+#define SER_CONN_SCHED_QUEUE_SIZE             4u
 
 /** Maximum size of events data in the application scheduler queue aligned to 32 bits - this is
  *  size of the buffers of the SoftDevice handler, which stores events pulled from the SoftDevice.
@@ -91,10 +91,29 @@ extern "C" {
 #define STACK_EVENT_MAX_SIZE    NRF_SDH_ANT_EVT_BUF_SIZE
 #endif
 
+
 #define SER_CONN_SCHED_MAX_EVENT_DATA_SIZE    ((CEIL_DIV(MAX(STACK_EVENT_MAX_SIZE,              \
                                                              sizeof(uint32_t)),                 \
-                                                         sizeof(uint32_t))) *                   \
-                                               sizeof(uint32_t))
+                                                             sizeof(uint32_t))) *               \
+                                                             sizeof(uint32_t))
+
+/** @brief Prototype for function called when there is no free TX buffer and system is blocked */
+typedef void (*ser_conn_on_no_mem_t)(void);
+
+/**
+ * @brief A function for setting handler which should be called when serialization
+ * is blocked waiting for TX buffer.
+ *
+ * @param handler Handler to be called whenever serialization failed to allocate TX buffer
+ *
+ */
+void ser_conn_on_no_mem_handler_set(ser_conn_on_no_mem_t handler);
+
+/**
+ * @brief A function called when TX buffer allocation failed. Serialization is always allocating TX
+ * buffer in main context expecting that it will be freed from interrupt context.
+ */
+void ser_conn_on_no_mem_handler(void);
 
 
 /**@brief A function for processing the HAL Transport layer events.
@@ -111,6 +130,7 @@ void ser_conn_hal_transport_event_handle(ser_hal_transport_evt_t event);
  * @retval    NRF_ERROR_INTERNAL    Operation failure. Internal error ocurred.
  */
 uint32_t ser_conn_rx_process(void);
+
 
 #ifdef BLE_STACK_SUPPORT_REQD
 /**@brief A function for processing BLE SoftDevice events.

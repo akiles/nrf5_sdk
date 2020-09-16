@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -134,6 +134,18 @@ static ble_ancs_c_t _name;                                                      
 NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
                      BLE_ANCS_C_BLE_OBSERVER_PRIO,                                                  \
                      ble_ancs_c_on_ble_evt, &_name)
+
+/** @brief Macro for defining multiple ble_ancs_c instances.
+ *
+ * @param   _name   Name of the array of instances.
+ * @param   _cnt    Number of instances to define.
+ * @hideinitializer
+ */
+#define BLE_ANCS_C_ARRAY_DEF(_name, _cnt)                       \
+sstatic ble_ancs_c_t _name[_cnt];                               \
+NRF_SDH_BLE_OBSERVERS(_name ## _obs,                            \
+                      BLE_ANCS_C_BLE_OBSERVER_PRIO,             \
+                      ble_ancs_c_on_ble_evt, &_name, _cnt)
 
 #define BLE_ANCS_ATTR_DATA_MAX              32  //!< Maximum data length of an iOS notification attribute.
 #define BLE_ANCS_NB_OF_CATEGORY_ID          12  //!< Number of iOS notification categories: Other, Incoming Call, Missed Call, Voice Mail, Social, Schedule, Email, News, Health And Fitness, Business And Finance, Location, Entertainment.

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -44,6 +44,11 @@
 #include <SEGGER_RTT.h>
 #include "nrf_cli_rtt.h"
 #include "nrf_assert.h"
+#include "nrf_delay.h"
+
+#define RTT_RX_TIMEOUT   100
+
+static bool m_host_present;
 
 static void timer_handler(void * p_context)
 {
@@ -54,7 +59,9 @@ static void timer_handler(void * p_context)
     }
     p_internal->p_cb->handler(NRF_CLI_TRANSPORT_EVT_TX_RDY, p_internal->p_cb->p_context);
 
-    ret_code_t err_code = app_timer_start(*p_internal->p_timer, APP_TIMER_TICKS(10), p_context);
+    ret_code_t err_code = app_timer_start(*p_internal->p_timer,
+                                          APP_TIMER_TICKS(RTT_RX_TIMEOUT),
+                                          p_context);
     ASSERT(err_code == NRF_SUCCESS);
     UNUSED_VARIABLE(err_code);
 }
@@ -73,6 +80,8 @@ static ret_code_t cli_rtt_init(nrf_cli_transport_t const * p_transport,
     p_internal->p_cb->timer_created = false;
 
     SEGGER_RTT_Init();
+
+    m_host_present = true;
 
     return NRF_SUCCESS;
 }
@@ -115,7 +124,9 @@ static ret_code_t cli_rtt_enable(nrf_cli_transport_t const * p_transport,
         }
         if (err_code == NRF_SUCCESS)
         {
-            err_code = app_timer_start(*p_internal->p_timer, APP_TIMER_TICKS(10), p_internal);
+            err_code = app_timer_start(*p_internal->p_timer,
+                                       APP_TIMER_TICKS(RTT_RX_TIMEOUT),
+                                       p_internal);
             SEGGER_RTT_Init();
         }
     }
@@ -145,25 +156,58 @@ static ret_code_t cli_rtt_write(nrf_cli_transport_t const * p_transport,
 
     if (!(CoreDebug->DHCSR & CoreDebug_DHCSR_C_DEBUGEN_Msk))
     {
-        /* If RTT session is not active but RTT console is processed program may stuck.
-         * Workaround: If debugger is not connected always return NRF_SUCCESS
+        /* If an RTT session is not active, but the RTT console is processed, the program may hang.
+         * Workaround: If the debugger is not connected, always return NRF_SUCCESS.
          */
          *p_cnt = length;
         return NRF_SUCCESS;
     }
 
-    size_t wcnt;
-    size_t acc = 0;
+    size_t idx = 0;
+    uint32_t processed;
+    uint32_t watchdog_counter = NRF_CLI_RTT_TX_RETRY_CNT;
+    const uint8_t * p_buffer = (const uint8_t *)p_data;
     do {
-        wcnt = SEGGER_RTT_Write(NRF_CLI_RTT_TERMINAL_ID, p_data, length);
-
-        acc += wcnt;
-        length -= wcnt;
+        processed = SEGGER_RTT_Write(NRF_CLI_RTT_TERMINAL_ID, &p_buffer[idx], length);
+        if (processed == 0)
+        {
+            /* There are two possible reasons for not writing any data to RTT:
+             * - The host is not connected and not reading the data.
+             * - The buffer got full and will be read by the host.
+             * These two situations are distinguished using the following algorithm.
+             * At the begining, the module assumes that the host is active,
+             * so when no data is read, it busy waits and retries. 
+             * If, after retrying, the host reads the data, the module assumes that the host is active.
+             * If it fails, the module assumes that the host is inactive and stores that information. On next
+             * call, only one attempt takes place. The host is marked as active if the attempt is successful.
+             */
+            if (!m_host_present)
+            {
+                break;
+            }
+            else
+            {
+                nrf_delay_ms(NRF_CLI_RTT_TX_RETRY_DELAY_MS);
+                watchdog_counter--;
+                if (watchdog_counter == 0)
+                {
+                    m_host_present = false;
+                    break;
+                }
+            }
+        }
+        m_host_present = true;
+        idx += processed;
+        length -= processed;
     } while (length);
 
-    if (p_cnt)
+    if (idx > 0)
     {
-        *p_cnt = acc;
+        *p_cnt = idx;
+    }
+    else
+    {
+        *p_cnt = length;
     }
     return NRF_SUCCESS;
 }

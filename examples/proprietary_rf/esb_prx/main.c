@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -98,7 +98,7 @@ void clocks_start( void )
 
 void gpio_init( void )
 {
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 }
 
 
@@ -148,7 +148,7 @@ int main(void)
     err_code = esb_init();
     APP_ERROR_CHECK(err_code);
 
-    NRF_LOG_DEBUG("Enhanced ShockBurst Receiver Example running.");
+    NRF_LOG_DEBUG("Enhanced ShockBurst Receiver Example started.");
 
     err_code = nrf_esb_start_rx();
     APP_ERROR_CHECK(err_code);

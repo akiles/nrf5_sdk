@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -133,6 +133,9 @@ ret_code_t pdb_peer_data_ptr_get(pm_peer_id_t                 peer_id,
  * @retval NRF_SUCCESS              Data retrieved successfully.
  * @retval NRF_ERROR_INVALID_PARAM  Data ID or Peer ID was invalid or unallocated, or n_bufs was 0
  *                                  or more than the total available buffers.
+ * @retval NRF_ERROR_FORBIDDEN      n_bufs was higher or lower than the existing buffer. If needed,
+ *                                  release the existing buffer with @ref pdb_write_buf_release, and
+ *                                  call this function again.
  * @retval NRF_ERROR_NULL           p_peer_data was NULL.
  * @retval NRF_ERROR_BUSY           Not enough buffer(s) available.
  * @retval NRF_ERROR_INTERNAL       Unexpected internal error.

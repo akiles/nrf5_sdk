@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -63,11 +63,8 @@ extern "C" {
 #endif
 
 /** @brief  Size of the buffer for a BLE event. */
-#if (defined(NRF_SD_BLE_API_VERSION) && (NRF_SD_BLE_API_VERSION < 3))
-#define NRF_SDH_BLE_EVT_BUF_SIZE (sizeof(ble_evt_t) + (NRF_SDH_BLE_GATT_MAX_MTU_SIZE))
-#else
 #define NRF_SDH_BLE_EVT_BUF_SIZE BLE_EVT_LEN_MAX(NRF_SDH_BLE_GATT_MAX_MTU_SIZE)
-#endif
+
 
 #if !(defined(__LINT__))
 /**@brief   Macro for registering @ref nrf_sdh_soc_evt_observer_t. Modules that want to be

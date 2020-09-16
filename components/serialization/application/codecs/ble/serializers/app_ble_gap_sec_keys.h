@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -50,15 +50,14 @@
  */
 
 #include "ble_gap.h"
+#include "ble_types.h"
+
 #include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef SER_MAX_CONNECTIONS
-#define SER_MAX_CONNECTIONS 8
-#endif
 /**@brief GAP connection - keyset mapping structure.
  *
  * @note  This structure is used to map keysets to connection instances and store them in a static table.
@@ -101,7 +100,50 @@ uint32_t app_ble_gap_sec_context_destroy(uint16_t conn_handle);
 uint32_t app_ble_gap_sec_context_find(uint16_t conn_handle, uint32_t *p_index);
 /** @} */
 
+#if NRF_SD_BLE_API_VERSION >= 6
+/**
+ * @brief Stores buffer for adv report data.
+ *
+ * @param p_data Pointer to the buffer.
+ *
+ * @return NRF_SUCCESS or error in case pointer is already set.
+ */
+uint32_t app_ble_gap_scan_data_set(ble_data_t const * p_data);
 
+/**
+ * @brief Returns pointer to the buffer for storing report data. Returns error if not paired with
+ *        @ref app_ble_gap_scan_data_set call.
+ *
+ * @param[out] p_data Stored data.
+ * @return NRF_SUCCESS or error in case pointer is already cleared.
+ */
+uint32_t app_ble_gap_scan_data_fetch_clear(ble_data_t * p_data);
+
+/**
+ * @brief Function for registering data pointers related with given adv_handle.
+ *
+ * @param adv_handle      Handle.
+ * @param p_adv_data      Adv_data buffer.
+ * @param p_scan_rsp_data Scan_rsp_data buffer.
+ *
+ * @return NRF_SUCCESS or error.
+ *
+ */
+uint32_t app_ble_gap_adv_set_register(uint8_t adv_handle, uint8_t * p_adv_data, uint8_t * p_scan_rsp_data);
+
+
+/**
+ * @brief Function for unregistering given .
+ *
+ * @param[in]  adv_handle       Handle.
+ * @param[out] pp_adv_data      Pointer to adv_data buffer associated with given adv_handle.
+ * @param[out] pp_scan_rsp_data Pointer to adv_data buffer associated with given adv_handle.
+ *
+ * @return NRF_SUCCESS or error.
+ *
+ */
+uint32_t app_ble_gap_adv_set_unregister(uint8_t adv_handle, uint8_t * * pp_adv_data, uint8_t **pp_scan_rsp_data);
+#endif
 #ifdef __cplusplus
 }
 #endif

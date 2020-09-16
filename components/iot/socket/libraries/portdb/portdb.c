@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -50,22 +50,36 @@
 static uint16_t * m_portdb;                                                                         /**< A pointer to the port database. */
 static uint32_t   m_portdb_len;                                                                     /**< Length of the port database. */
 
+
+
+static __INLINE uint32_t db_size_get(void)
+{
+    return m_portdb_len * sizeof(uint16_t);
+}
+
+
+static __INLINE void db_reset(void)
+{
+    memset(&m_portdb[0], 0, db_size_get());
+}
+
+
 uint32_t portdb_init(uint32_t max_ports)
 {
     uint32_t err_code = NRF_SUCCESS;
     m_portdb_len = max_ports;
-    uint32_t sz = max_ports * sizeof(uint16_t);
-    m_portdb = nrf_malloc(sz);
+    m_portdb = nrf_malloc(db_size_get());
     if (m_portdb == NULL)
     {
         err_code = NRF_ERROR_NO_MEM;
     }
     else
     {
-        memset(&m_portdb[0], 0, sz);
+        db_reset();
     }
     return err_code;
 }
+
 
 void portdb_deinit(void)
 {
@@ -73,6 +87,13 @@ void portdb_deinit(void)
     m_portdb = NULL;
     m_portdb_len = 0;
 }
+
+
+void portdb_reset(void)
+{
+    db_reset();
+}
+
 
 static inline uint32_t check_port_in_use(uint16_t port)
 {

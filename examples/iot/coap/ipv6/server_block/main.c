@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -359,7 +359,7 @@ static void buttons_init(void)
     #define BUTTON_DETECTION_DELAY APP_TIMER_TICKS(50)
 
     err_code = app_button_init(buttons,
-                               sizeof(buttons) / sizeof(buttons[0]),
+                               ARRAY_SIZE(buttons),
                                BUTTON_DETECTION_DELAY);
     APP_ERROR_CHECK(err_code);
 
@@ -809,7 +809,7 @@ int main(void)
 
     iot_timer_init();
 
-    APPL_LOG("Init complete.");
+    APPL_LOG("Application started.");
 
     // Start execution
     connectable_mode_enter();

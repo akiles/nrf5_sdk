@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -66,8 +66,8 @@ extern "C" {
 
 /** Max packets size in serialization HAL Transport layer (packets before adding PHY header i.e.
  *  packet length). */
-#define SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE    (384UL)
-#define SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE    (384UL)
+#define SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE    (512UL)
+#define SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE    (512UL)
 
 #define SER_HAL_TRANSPORT_MAX_PKT_SIZE ((SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE) >= \
                                         (SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE)    \
@@ -110,7 +110,10 @@ extern "C" {
 
 #define SER_MAX_CONNECTIONS 8
 
-
+#ifndef SER_MAX_ADV_DATA
+#define SER_MAX_ADV_DATA 256
+#endif
+ 
 #ifdef __cplusplus
 }
 #endif

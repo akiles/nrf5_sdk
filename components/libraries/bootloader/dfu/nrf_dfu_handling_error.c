@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -45,7 +45,7 @@
 
 static nrf_dfu_ext_error_code_t m_last_error = NRF_DFU_EXT_ERROR_NO_ERROR;
 
-nrf_dfu_res_code_t ext_error_set(nrf_dfu_ext_error_code_t error_code)
+nrf_dfu_result_t ext_error_set(nrf_dfu_ext_error_code_t error_code)
 {
     m_last_error = error_code;
 

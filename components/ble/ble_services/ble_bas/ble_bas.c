@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -46,32 +46,21 @@
 #include "ble_bas.h"
 #include <string.h>
 #include "ble_srv_common.h"
+#include "ble_conn_state.h"
+
+#define NRF_LOG_MODULE_NAME ble_bas
+#if BLE_BAS_CONFIG_LOG_ENABLED
+#define NRF_LOG_LEVEL       BLE_BAS_CONFIG_LOG_LEVEL
+#define NRF_LOG_INFO_COLOR  BLE_BAS_CONFIG_INFO_COLOR
+#define NRF_LOG_DEBUG_COLOR BLE_BAS_CONFIG_DEBUG_COLOR
+#else // BLE_BAS_CONFIG_LOG_ENABLED
+#define NRF_LOG_LEVEL       0
+#endif // BLE_BAS_CONFIG_LOG_ENABLED
+#include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
 
 
 #define INVALID_BATTERY_LEVEL 255
-
-
-/**@brief Function for handling the Connect event.
- *
- * @param[in]   p_bas       Battery Service structure.
- * @param[in]   p_ble_evt   Event received from the BLE stack.
- */
-static void on_connect(ble_bas_t * p_bas, ble_evt_t const * p_ble_evt)
-{
-    p_bas->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
-}
-
-
-/**@brief Function for handling the Disconnect event.
- *
- * @param[in]   p_bas       Battery Service structure.
- * @param[in]   p_ble_evt   Event received from the BLE stack.
- */
-static void on_disconnect(ble_bas_t * p_bas, ble_evt_t const * p_ble_evt)
-{
-    UNUSED_PARAMETER(p_ble_evt);
-    p_bas->conn_handle = BLE_CONN_HANDLE_INVALID;
-}
 
 
 /**@brief Function for handling the Write event.
@@ -106,6 +95,7 @@ static void on_write(ble_bas_t * p_bas, ble_evt_t const * p_ble_evt)
         {
             evt.evt_type = BLE_BAS_EVT_NOTIFICATION_DISABLED;
         }
+        evt.conn_handle = p_ble_evt->evt.gatts_evt.conn_handle;
 
         // CCCD written, call application event handler.
         p_bas->evt_handler(p_bas, &evt);
@@ -124,14 +114,6 @@ void ble_bas_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 
     switch (p_ble_evt->header.evt_id)
     {
-        case BLE_GAP_EVT_CONNECTED:
-            on_connect(p_bas, p_ble_evt);
-            break;
-
-        case BLE_GAP_EVT_DISCONNECTED:
-            on_disconnect(p_bas, p_ble_evt);
-            break;
-
         case BLE_GATTS_EVT_WRITE:
             on_write(p_bas, p_ble_evt);
             break;
@@ -150,9 +132,9 @@ void ble_bas_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
  *
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
-static uint32_t battery_level_char_add(ble_bas_t * p_bas, const ble_bas_init_t * p_bas_init)
+static ret_code_t battery_level_char_add(ble_bas_t * p_bas, const ble_bas_init_t * p_bas_init)
 {
-    uint32_t            err_code;
+    ret_code_t          err_code;
     ble_gatts_char_md_t char_md;
     ble_gatts_attr_md_t cccd_md;
     ble_gatts_attr_t    attr_char_value;
@@ -257,19 +239,18 @@ static uint32_t battery_level_char_add(ble_bas_t * p_bas, const ble_bas_init_t *
 }
 
 
-uint32_t ble_bas_init(ble_bas_t * p_bas, const ble_bas_init_t * p_bas_init)
+ret_code_t ble_bas_init(ble_bas_t * p_bas, const ble_bas_init_t * p_bas_init)
 {
     if (p_bas == NULL || p_bas_init == NULL)
     {
         return NRF_ERROR_NULL;
     }
 
-    uint32_t   err_code;
+    ret_code_t err_code;
     ble_uuid_t ble_uuid;
 
     // Initialize service structure
     p_bas->evt_handler               = p_bas_init->evt_handler;
-    p_bas->conn_handle               = BLE_CONN_HANDLE_INVALID;
     p_bas->is_notification_supported = p_bas_init->support_notification;
     p_bas->battery_level_last        = INVALID_BATTERY_LEVEL;
 
@@ -277,25 +258,50 @@ uint32_t ble_bas_init(ble_bas_t * p_bas, const ble_bas_init_t * p_bas_init)
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_BATTERY_SERVICE);
 
     err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY, &ble_uuid, &p_bas->service_handle);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     // Add battery level characteristic
-    return battery_level_char_add(p_bas, p_bas_init);
+    err_code = battery_level_char_add(p_bas, p_bas_init);
+    return err_code;
 }
 
 
-uint32_t ble_bas_battery_level_update(ble_bas_t * p_bas, uint8_t battery_level)
+/**@brief Function for sending notifications with the Battery Level characteristic.
+ *
+ * @param[in]   p_hvx_params Pointer to structure with notification data.
+ * @param[in]   conn_handle  Connection handle.
+ *
+ * @return      NRF_SUCCESS on success, otherwise an error code.
+ */
+static ret_code_t battery_notification_send(ble_gatts_hvx_params_t * const p_hvx_params,
+                                            uint16_t                       conn_handle)
+{
+    ret_code_t err_code = sd_ble_gatts_hvx(conn_handle, p_hvx_params);
+    if (err_code == NRF_SUCCESS)
+    {
+        NRF_LOG_INFO("Battery notification has been sent using conn_handle: 0x%04X", conn_handle);
+    }
+    else
+    {
+        NRF_LOG_DEBUG("Error: 0x%08X while sending notification with conn_handle: 0x%04X",
+                      err_code,
+                      conn_handle);
+    }
+    return err_code;
+}
+
+
+ret_code_t ble_bas_battery_level_update(ble_bas_t * p_bas,
+                                        uint8_t     battery_level,
+                                        uint16_t    conn_handle)
 {
     if (p_bas == NULL)
     {
         return NRF_ERROR_NULL;
     }
 
-    uint32_t err_code = NRF_SUCCESS;
-    ble_gatts_value_t gatts_value;
+    ret_code_t         err_code = NRF_SUCCESS;
+    ble_gatts_value_t  gatts_value;
 
     if (battery_level != p_bas->battery_level_last)
     {
@@ -307,21 +313,25 @@ uint32_t ble_bas_battery_level_update(ble_bas_t * p_bas, uint8_t battery_level)
         gatts_value.p_value = &battery_level;
 
         // Update database.
-        err_code = sd_ble_gatts_value_set(p_bas->conn_handle,
+        err_code = sd_ble_gatts_value_set(BLE_CONN_HANDLE_INVALID,
                                           p_bas->battery_level_handles.value_handle,
                                           &gatts_value);
         if (err_code == NRF_SUCCESS)
         {
+            NRF_LOG_INFO("Battery level has been updated: %d%%", battery_level)
+
             // Save new battery value.
             p_bas->battery_level_last = battery_level;
         }
         else
         {
+            NRF_LOG_DEBUG("Error during battery level update: 0x%08X", err_code)
+
             return err_code;
         }
 
         // Send value if connected and notifying.
-        if ((p_bas->conn_handle != BLE_CONN_HANDLE_INVALID) && p_bas->is_notification_supported)
+        if (p_bas->is_notification_supported)
         {
             ble_gatts_hvx_params_t hvx_params;
 
@@ -333,7 +343,33 @@ uint32_t ble_bas_battery_level_update(ble_bas_t * p_bas, uint8_t battery_level)
             hvx_params.p_len  = &gatts_value.len;
             hvx_params.p_data = gatts_value.p_value;
 
-            err_code = sd_ble_gatts_hvx(p_bas->conn_handle, &hvx_params);
+            if (conn_handle == BLE_CONN_HANDLE_ALL)
+            {
+                ble_conn_state_conn_handle_list_t conn_handles = ble_conn_state_conn_handles();
+
+                // Try sending notifications to all valid connection handles.
+                for (uint32_t i = 0; i < conn_handles.len; i++)
+                {
+                    if (ble_conn_state_status(conn_handles.conn_handles[i]) == BLE_CONN_STATUS_CONNECTED)
+                    {
+                        if (err_code == NRF_SUCCESS)
+                        {
+                            err_code = battery_notification_send(&hvx_params,
+                                                                 conn_handles.conn_handles[i]);
+                        }
+                        else
+                        {
+                            // Preserve the first non-zero error code
+                            UNUSED_RETURN_VALUE(battery_notification_send(&hvx_params,
+                                                                          conn_handles.conn_handles[i]));
+                        }
+                    }
+                }
+            }
+            else
+            {
+                err_code = battery_notification_send(&hvx_params, conn_handle);
+            }
         }
         else
         {
@@ -343,4 +379,6 @@ uint32_t ble_bas_battery_level_update(ble_bas_t * p_bas, uint8_t battery_level)
 
     return err_code;
 }
+
+
 #endif // NRF_MODULE_ENABLED(BLE_BAS)

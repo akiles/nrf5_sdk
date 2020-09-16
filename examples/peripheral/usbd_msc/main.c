@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -102,34 +102,36 @@
 
 /**
  * @brief SD card enable/disable
- * */
+ */
 #define USE_SD_CARD       0
 
 /**
  * @brief FatFS for QPSI enable/disable
- * */
+ */
 #define USE_FATFS_QSPI    1
 
 /**
  * @brief Mass storage class user event handler
- * */
+ */
 static void msc_user_ev_handler(app_usbd_class_inst_t const * p_inst,
                                 app_usbd_msc_user_event_t     event);
 
 
 /**
  * @brief Ram block device size
- * */
-#define RAM_BLOCK_DEVICE_SIZE (256 * 512)
+ *
+ * @note Windows fails to format volumes smaller than 190KB
+ */
+#define RAM_BLOCK_DEVICE_SIZE (380 * 512)
 
 /**
  * @brief  RAM block device work buffer
- * */
+ */
 static uint8_t m_block_dev_ram_buff[RAM_BLOCK_DEVICE_SIZE];
 
 /**
  * @brief  RAM block device definition
- * */
+ */
 NRF_BLOCK_DEV_RAM_DEFINE(
     m_block_dev_ram,
     NRF_BLOCK_DEV_RAM_CONFIG(512, m_block_dev_ram_buff, sizeof(m_block_dev_ram_buff)),
@@ -139,7 +141,7 @@ NRF_BLOCK_DEV_RAM_DEFINE(
 
 /**
  * @brief Empty block device definition
- * */
+ */
 NRF_BLOCK_DEV_EMPTY_DEFINE(
     m_block_dev_empty,
     NRF_BLOCK_DEV_EMPTY_CONFIG(512, 1024 * 1024),
@@ -149,7 +151,7 @@ NRF_BLOCK_DEV_EMPTY_DEFINE(
 
 /**
  * @brief  QSPI block device definition
- * */
+ */
 NRF_BLOCK_DEV_QSPI_DEFINE(
     m_block_dev_qspi,
     NRF_BLOCK_DEV_QSPI_CONFIG(
@@ -169,7 +171,7 @@ NRF_BLOCK_DEV_QSPI_DEFINE(
 
 /**
  * @brief  SDC block device definition
- * */
+ */
 NRF_BLOCK_DEV_SDC_DEFINE(
     m_block_dev_sdc,
     NRF_BLOCK_DEV_SDC_CONFIG(
@@ -182,7 +184,7 @@ NRF_BLOCK_DEV_SDC_DEFINE(
 
 /**
  * @brief Block devices list passed to @ref APP_USBD_MSC_GLOBAL_DEF
- * */
+ */
 #define BLOCKDEV_LIST() (                                   \
     NRF_BLOCKDEV_BASE_ADDR(m_block_dev_ram, block_dev),     \
     NRF_BLOCKDEV_BASE_ADDR(m_block_dev_empty, block_dev),   \
@@ -200,18 +202,18 @@ NRF_BLOCK_DEV_SDC_DEFINE(
 
 /**
  * @brief Endpoint list passed to @ref APP_USBD_MSC_GLOBAL_DEF
- * */
+ */
 #define ENDPOINT_LIST() APP_USBD_MSC_ENDPOINT_LIST(1, 1)
 
 /**
  * @brief Mass storage class work buffer size
- * */
+ */
 #define MSC_WORKBUFFER_SIZE (1024)
 
 /*lint -save -e26 -e64 -e123 -e505 -e651*/
 /**
  * @brief Mass storage class instance
- * */
+ */
 APP_USBD_MSC_GLOBAL_DEF(m_app_msc,
                         0,
                         msc_user_ev_handler,
@@ -228,46 +230,9 @@ static nrf_atomic_u32_t m_key_events;
 
 /**
  * @brief  USB connection status
- * */
+ */
 static bool m_usb_connected = false;
 
-/**
- * @brief Class specific event handler.
- *
- * @param p_inst    Class instance.
- * @param event     Class specific event.
- * */
-static void msc_user_ev_handler(app_usbd_class_inst_t const * p_inst,
-                                app_usbd_msc_user_event_t     event)
-{
-}
-
-/**
- * @brief USBD library specific event handler.
- *
- * @param event     USBD library event.
- * */
-static void usbd_user_ev_handler(app_usbd_event_type_t event)
-{
-    switch (event)
-    {
-        case APP_USBD_EVT_DRV_SUSPEND:
-            bsp_board_led_off(LED_USB_RESUME);
-            break;
-        case APP_USBD_EVT_DRV_RESUME:
-            bsp_board_led_on(LED_USB_RESUME);
-            break;
-        case APP_USBD_EVT_STARTED:
-            bsp_board_led_on(LED_USB_START);
-            break;
-        case APP_USBD_EVT_STOPPED:
-            app_usbd_disable();
-            bsp_board_leds_off();
-            break;
-        default:
-            break;
-    }
-}
 
 #if USE_FATFS_QSPI
 
@@ -442,74 +407,64 @@ static void fatfs_uninit(void)
 #define fatfs_uninit()      do { } while (0)
 #endif
 
+/**
+ * @brief Class specific event handler.
+ *
+ * @param p_inst    Class instance.
+ * @param event     Class specific event.
+ */
+static void msc_user_ev_handler(app_usbd_class_inst_t const * p_inst,
+                                app_usbd_msc_user_event_t     event)
+{
+    UNUSED_PARAMETER(p_inst);
+    UNUSED_PARAMETER(event);
+}
 
-static void power_usb_event_handler(nrf_drv_power_usb_evt_t event)
+/**
+ * @brief USBD library specific event handler.
+ *
+ * @param event     USBD library event.
+ */
+static void usbd_user_ev_handler(app_usbd_event_type_t event)
 {
     switch (event)
     {
-        case NRF_DRV_POWER_USB_EVT_DETECTED:
+        case APP_USBD_EVT_DRV_SUSPEND:
+            bsp_board_led_off(LED_USB_RESUME);
+            break;
+        case APP_USBD_EVT_DRV_RESUME:
+            bsp_board_led_on(LED_USB_RESUME);
+            break;
+        case APP_USBD_EVT_STARTED:
+            bsp_board_led_on(LED_USB_START);
+            break;
+        case APP_USBD_EVT_STOPPED:
+            UNUSED_RETURN_VALUE(fatfs_init());
+            app_usbd_disable();
+            bsp_board_leds_off();
+            break;
+        case APP_USBD_EVT_POWER_DETECTED:
             NRF_LOG_INFO("USB power detected");
 
             if (!nrf_drv_usbd_is_enabled())
             {
+                fatfs_uninit();
                 app_usbd_enable();
             }
             break;
-        case NRF_DRV_POWER_USB_EVT_REMOVED:
+        case APP_USBD_EVT_POWER_REMOVED:
             NRF_LOG_INFO("USB power removed");
+            app_usbd_stop();
             m_usb_connected = false;
             break;
-        case NRF_DRV_POWER_USB_EVT_READY:
+        case APP_USBD_EVT_POWER_READY:
             NRF_LOG_INFO("USB ready");
+            app_usbd_start();
             m_usb_connected = true;
             break;
         default:
-            ASSERT(false);
+            break;
     }
-}
-
-
-static void usb_start(void)
-{
-    if (USBD_POWER_DETECTION)
-    {
-        static const nrf_drv_power_usbevt_config_t config =
-        {
-            .handler = power_usb_event_handler
-        };
-
-        ret_code_t ret;
-        ret = nrf_drv_power_usbevt_init(&config);
-        APP_ERROR_CHECK(ret);
-    }
-    else
-    {
-        NRF_LOG_INFO("No USB power detection enabled\r\nStarting USB now");
-
-        app_usbd_enable();
-        app_usbd_start();
-        m_usb_connected = true;
-    }
-}
-
-static bool usb_connection_handle(bool last_usb_conn_status)
-{
-    if (last_usb_conn_status != m_usb_connected)
-    {
-        last_usb_conn_status = m_usb_connected;
-        if (m_usb_connected)
-        {
-            fatfs_uninit();
-            app_usbd_start();
-        }
-        else
-        {
-            app_usbd_stop();
-            UNUSED_RETURN_VALUE(fatfs_init());
-        }
-    }
-
-    return last_usb_conn_status;
 }
 
 static void bsp_event_callback(bsp_event_t ev)
@@ -541,15 +496,12 @@ int main(void)
         .ev_state_proc = usbd_user_ev_handler
     };
 
-    ret = nrf_drv_clock_init();
-    APP_ERROR_CHECK(ret);
-    ret = nrf_drv_power_init(NULL);
-    APP_ERROR_CHECK(ret);
-
     ret = NRF_LOG_INIT(app_usbd_sof_timestamp_get);
     APP_ERROR_CHECK(ret);
     NRF_LOG_DEFAULT_BACKENDS_INIT();
-    NRF_LOG_INFO("Hello USB!");
+
+    ret = nrf_drv_clock_init();
+    APP_ERROR_CHECK(ret);
 
     /* Fill whole RAM block device buffer */
     for (size_t i = 0; i < sizeof(m_block_dev_ram_buff); ++i)
@@ -563,14 +515,13 @@ int main(void)
     APP_ERROR_CHECK(ret);
     ret = bsp_init(BSP_INIT_BUTTONS, bsp_event_callback);
     APP_ERROR_CHECK(ret);
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 
     if (fatfs_init())
     {
         fatfs_ls();
         fatfs_file_create();
     }
-    fatfs_uninit();
 
     ret = app_usbd_init(&usbd_config);
     APP_ERROR_CHECK(ret);
@@ -579,8 +530,21 @@ int main(void)
     ret = app_usbd_class_append(class_inst_msc);
     APP_ERROR_CHECK(ret);
 
-    bool last_usb_conn_status = false;
-    usb_start();
+    NRF_LOG_INFO("USBD MSC example started.");
+
+    if (USBD_POWER_DETECTION)
+    {
+        ret = app_usbd_power_events_enable();
+        APP_ERROR_CHECK(ret);
+    }
+    else
+    {
+        NRF_LOG_INFO("No USB power detection enabled\r\nStarting USB now");
+
+        app_usbd_enable();
+        app_usbd_start();
+        m_usb_connected = true;
+    }
 
     while (true)
     {
@@ -588,7 +552,6 @@ int main(void)
         {
             /* Nothing to do */
         }
-        last_usb_conn_status = usb_connection_handle(last_usb_conn_status);
 
         /* Process BSP key events flags.*/
         uint32_t events = nrf_atomic_u32_fetch_store(&m_key_events, 0);

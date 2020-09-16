@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -92,6 +92,6 @@ void buttons_init(void)
     ret_code_t err_code;
 
     // Initialize buttons and add bsp buttons task to the application timer.
-    err_code = bsp_init(BSP_INIT_BUTTONS | BSP_INIT_LED, bsp_event_handler);
+    err_code = bsp_init(BSP_INIT_BUTTONS | BSP_INIT_LEDS, bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 }

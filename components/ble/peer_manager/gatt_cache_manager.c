@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -72,6 +72,12 @@ static ble_conn_state_user_flag_id_t  m_flag_local_db_apply_pending;  /**< Flag 
 static ble_conn_state_user_flag_id_t  m_flag_service_changed_pending; /**< Flag ID for flag collection to keep track of which connections need to be sent a service changed indication. */
 static ble_conn_state_user_flag_id_t  m_flag_service_changed_sent;    /**< Flag ID for flag collection to keep track of which connections have been sent a service changed indication and are waiting for a handle value confirmation. */
 
+#ifdef PM_SERVICE_CHANGED_ENABLED
+    STATIC_ASSERT(PM_SERVICE_CHANGED_ENABLED || !NRF_SDH_BLE_SERVICE_CHANGED,
+                 "PM_SERVICE_CHANGED_ENABLED should be enabled if NRF_SDH_BLE_SERVICE_CHANGED is enabled.");
+#else
+    #define PM_SERVICE_CHANGED_ENABLED 1
+#endif
 
 /**@brief Function for resetting the module variable(s) of the GSCM module.
  *
@@ -251,7 +257,7 @@ static bool local_db_update_in_evt(uint16_t conn_handle)
     return success;
 }
 
-
+#if PM_SERVICE_CHANGED_ENABLED
 /**@brief Function for sending a service changed indication in an event context, where no return
  *        code can be given.
  *
@@ -312,74 +318,67 @@ static void service_changed_send_in_evt(uint16_t conn_handle)
     ble_conn_state_user_flag_set(conn_handle, m_flag_service_changed_pending, sc_pending_state);
     ble_conn_state_user_flag_set(conn_handle, m_flag_service_changed_sent, sc_sent_state);
 }
+#endif
 
-
-/**@brief Function for checking all flags for one id, and handling the ones that are set.
- *
- * @param[in]  flag_id  The flag id to check flags for.
- */
-static void pending_flags_check(ble_conn_state_user_flag_id_t flag_id)
+static void apply_pending_handle(uint16_t conn_handle, void * p_context)
 {
-    // Quickly check if any flags are set.
-    if (sdk_mapped_flags_any_set(ble_conn_state_user_flag_collection(flag_id)))
-    {
-        sdk_mapped_flags_key_list_t conn_handle_list = ble_conn_state_conn_handles();
-
-        // Check each flag.
-        for (uint32_t i = 0; i < conn_handle_list.len; i++)
-        {
-            uint16_t conn_handle = conn_handle_list.flag_keys[i];
-            if (ble_conn_state_user_flag_get(conn_handle, flag_id))
-            {
-                // This flag is set. Handle depending on which flags we are checking.
-                if      (flag_id == m_flag_local_db_apply_pending)
-                {
-                    local_db_apply_in_evt(conn_handle);
-                }
-                else if (flag_id == m_flag_local_db_update_pending)
-                {
-                    if (pm_mutex_lock(&m_db_update_in_progress_mutex, 0))
-                    {
-                        if (local_db_update_in_evt(conn_handle))
-                        {
-                            // Successfully started writing to flash.
-                            return;
-                        }
-                        else
-                        {
-                            pm_mutex_unlock(&m_db_update_in_progress_mutex, 0);
-                        }
-                    }
-                }
-                else if (flag_id == m_flag_service_changed_pending)
-                {
-                    if (!ble_conn_state_user_flag_get(conn_handle, m_flag_service_changed_sent))
-                    {
-                        service_changed_send_in_evt(conn_handle);
-                    }
-                }
-            }
-        }
-    }
+    UNUSED_PARAMETER(p_context);
+    local_db_apply_in_evt(conn_handle);
 }
 
 
 static __INLINE void apply_pending_flags_check(void)
 {
-    pending_flags_check(m_flag_local_db_apply_pending);
+    UNUSED_RETURN_VALUE(ble_conn_state_for_each_set_user_flag(m_flag_local_db_apply_pending,
+                                                              apply_pending_handle,
+                                                              NULL));
+}
+
+
+static void db_update_pending_handle(uint16_t conn_handle, void * p_context)
+{
+    UNUSED_PARAMETER(p_context);
+    if (pm_mutex_lock(&m_db_update_in_progress_mutex, 0))
+    {
+        if (local_db_update_in_evt(conn_handle))
+        {
+            // Successfully started writing to flash.
+            return;
+        }
+        else
+        {
+            pm_mutex_unlock(&m_db_update_in_progress_mutex, 0);
+        }
+    }
 }
 
 
 static __INLINE void update_pending_flags_check(void)
 {
-    pending_flags_check(m_flag_local_db_update_pending);
+    UNUSED_RETURN_VALUE(ble_conn_state_for_each_set_user_flag(m_flag_local_db_update_pending,
+                                                              db_update_pending_handle,
+                                                              NULL));
+}
+
+
+#if PM_SERVICE_CHANGED_ENABLED
+static void sc_send_pending_handle(uint16_t conn_handle, void * p_context)
+{
+    UNUSED_PARAMETER(p_context);
+    if (!ble_conn_state_user_flag_get(conn_handle, m_flag_service_changed_sent))
+    {
+        service_changed_send_in_evt(conn_handle);
+    }
 }
 
 
 static __INLINE void service_changed_pending_flags_check(void)
 {
-    pending_flags_check(m_flag_service_changed_pending);
+    UNUSED_RETURN_VALUE(ble_conn_state_for_each_set_user_flag(m_flag_service_changed_pending,
+                                                              sc_send_pending_handle,
+                                                              NULL));
 }
+#endif
 
 
 /**@brief Callback function for events from the ID Manager module.
@@ -393,10 +392,12 @@ void gcm_im_evt_handler(pm_evt_t * p_event)
     {
         case PM_EVT_BONDED_PEER_CONNECTED:
             local_db_apply_in_evt(p_event->conn_handle);
+#if (PM_SERVICE_CHANGED_ENABLED == 1)
             if (gscm_service_changed_ind_needed(p_event->conn_handle))
             {
                 ble_conn_state_user_flag_set(p_event->conn_handle, m_flag_service_changed_pending, true);
             }
+#endif
             break;
         default:
             break;
@@ -427,6 +428,7 @@ void gcm_pdb_evt_handler(pm_evt_t * p_event)
                 break;
             }
 
+#if PM_SERVICE_CHANGED_ENABLED
             case PM_PEER_DATA_ID_SERVICE_CHANGED_PENDING:
             {
                 ret_code_t           err_code;
@@ -450,6 +452,7 @@ void gcm_pdb_evt_handler(pm_evt_t * p_event)
                 }
                 break;
             }
+#endif
 
             case PM_PEER_DATA_ID_GATT_LOCAL:
                 pm_mutex_unlock(&m_db_update_in_progress_mutex, 0);
@@ -480,7 +483,8 @@ ret_code_t gcm_init()
     if  ((m_flag_local_db_update_pending  == BLE_CONN_STATE_USER_FLAG_INVALID)
       || (m_flag_local_db_apply_pending   == BLE_CONN_STATE_USER_FLAG_INVALID)
       || (m_flag_service_changed_pending  == BLE_CONN_STATE_USER_FLAG_INVALID)
-      || (m_flag_service_changed_sent     == BLE_CONN_STATE_USER_FLAG_INVALID))
+      || (m_flag_service_changed_sent     == BLE_CONN_STATE_USER_FLAG_INVALID)
+      )
     {
         return NRF_ERROR_INTERNAL;
     }
@@ -507,6 +511,7 @@ void gcm_ble_evt_handler(ble_evt_t const * p_ble_evt)
             local_db_apply_in_evt(conn_handle);
             break;
 
+#if PM_SERVICE_CHANGED_ENABLED
         case BLE_GATTS_EVT_SC_CONFIRM:
         {
             pm_evt_t event =
@@ -523,6 +528,7 @@ void gcm_ble_evt_handler(ble_evt_t const * p_ble_evt)
             evt_send(&event);
             break;
         }
+#endif
 
         case BLE_GATTS_EVT_WRITE:
             if (cccd_written(&p_ble_evt->evt.gatts_evt.params.write))
@@ -534,7 +540,9 @@ void gcm_ble_evt_handler(ble_evt_t const * p_ble_evt)
     }
 
     apply_pending_flags_check();
+#if PM_SERVICE_CHANGED_ENABLED
     service_changed_pending_flags_check();
+#endif
 }
 
 
@@ -549,20 +557,22 @@ ret_code_t gcm_local_db_cache_update(uint16_t conn_handle)
 }
 
 
+#if PM_SERVICE_CHANGED_ENABLED
 void gcm_local_database_has_changed(void)
 {
     gscm_local_database_has_changed();
 
-    sdk_mapped_flags_key_list_t conn_handles = ble_conn_state_conn_handles();
+    ble_conn_state_conn_handle_list_t conn_handles = ble_conn_state_conn_handles();
 
     for (uint16_t i = 0; i < conn_handles.len; i++)
     {
-        if (im_peer_id_get_by_conn_handle(conn_handles.flag_keys[i]) == PM_PEER_ID_INVALID)
+        if (im_peer_id_get_by_conn_handle(conn_handles.conn_handles[i]) == PM_PEER_ID_INVALID)
         {
-            ble_conn_state_user_flag_set(conn_handles.flag_keys[i], m_flag_service_changed_pending, true);
+            ble_conn_state_user_flag_set(conn_handles.conn_handles[i], m_flag_service_changed_pending, true);
         }
     }
 
     service_changed_pending_flags_check();
 }
+#endif
 #endif // NRF_MODULE_ENABLED(PEER_MANAGER)

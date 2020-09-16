@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -108,7 +108,7 @@
 
 #define APP_CFG_NON_CONN_ADV_TIMEOUT                        0                           //!< Time for which the device must be advertising in non-connectable mode (in seconds). 0 disables the time-out.
 #define APP_CFG_NON_CONN_ADV_INTERVAL_MS                    1000                        //!< The advertising interval for non-connectable advertisement (in milliseconds). This value can vary between 100 ms and 10.24 s.
-#define APP_CFG_CONNECTABLE_ADV_TIMEOUT                     60                          //!< Time for which the device must be advertising in connectable mode (in seconds). 0 disables the time-out.
+#define APP_CFG_CONNECTABLE_ADV_TIMEOUT                     6000                        //!< Time for which the device must be advertising in connectable mode (in milliseconds). 0 disables the time-out.
 #define APP_CFG_CONNECTABLE_ADV_INTERVAL_MS                 100                         //!< The advertising interval for connectable advertisement (in milliseconds). This value can vary between 20 ms and 10.24 s.
 
 #define APP_CFG_DEFAULT_RADIO_TX_POWER                      0x00                        //!< Default TX power of the radio.

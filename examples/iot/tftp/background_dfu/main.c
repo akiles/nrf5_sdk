@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -52,6 +52,7 @@
 #include "tftp_dfu.h"
 #include "boards.h"
 #include "nordic_common.h"
+#include "nrf_dfu_req_handler.h"
 #include "nrf_delay.h"
 #include "nrf_sdm.h"
 #include "mem_manager.h"
@@ -74,7 +75,8 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
-#define SCHED_MAX_EVENT_DATA_SIZE       16                                                          /**< Maximum size of scheduler events. */
+#define SCHED_MAX_EVENT_DATA_SIZE       MAX(sizeof(nrf_dfu_request_t), \
+                                            APP_TIMER_SCHED_EVENT_DATA_SIZE)                        /**< Maximum size of scheduler events. */
 #define SCHED_QUEUE_SIZE                192                                                         /**< Maximum number of events in the scheduler queue. */
 
 #define LED_ONE                         BSP_LED_0_MASK
@@ -323,7 +325,7 @@ static void buttons_init(void)
         {START_BUTTON_PIN_NO, false, BUTTON_PULL, button_event_handler}
     };
 
-    err_code = app_button_init(buttons, sizeof(buttons) / sizeof(buttons[0]), BUTTON_DETECTION_DELAY);
+    err_code = app_button_init(buttons, ARRAY_SIZE(buttons), BUTTON_DETECTION_DELAY);
     APP_ERROR_CHECK(err_code);
 
     err_code = app_button_enable();
@@ -348,9 +350,6 @@ static void iot_timer_tick_callback(void * p_context)
 static void timers_init(void)
 {
     uint32_t err_code;
-
-    // Initialize timer module.
-    APP_ERROR_CHECK(app_timer_init());
 
     // Initialize timer instance as a tick source for IoT timer.
     err_code = app_timer_create(&m_iot_timer_tick_src_id,
@@ -559,8 +558,18 @@ int main(void)
     uint32_t err_code;
 
     // Initialize
-    scheduler_init();
     log_init();
+
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
+    err_code = tftp_dfu_init();
+    if (err_code != NRF_SUCCESS)
+    {
+        NRF_LOG_ERROR("Error in tftp_dfu_init (%d)", err_code);
+    }
+
+    scheduler_init();
     leds_init();
     timers_init();
     buttons_init();
@@ -592,13 +601,7 @@ int main(void)
     ip_stack_init();
     ip_stack_timer_init();
 
-    err_code = tftp_dfu_init();
-    if (err_code != NRF_SUCCESS)
-    {
-        NRF_LOG_ERROR("Error in tftp_dfu_init (%d)", err_code);
-    }
-
-    APPL_LOG("Init complete.");
+    APPL_LOG("Application started.");
 
     // Start execution
     connectable_mode_enter();

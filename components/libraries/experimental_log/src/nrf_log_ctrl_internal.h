@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -48,9 +48,9 @@
 
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(NRF_LOG)
-
-#define NRF_LOG_INTERNAL_INIT(timestamp_func) \
-    nrf_log_init(timestamp_func)
+#define NRF_LOG_INTERNAL_INIT(...)               \
+        nrf_log_init(GET_VA_ARG_1(__VA_ARGS__),  \
+                     GET_VA_ARG_1(GET_ARGS_AFTER_1(__VA_ARGS__, NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY)))
 
 #define NRF_LOG_INTERNAL_PROCESS() nrf_log_frontend_dequeue()
 #define NRF_LOG_INTERNAL_FLUSH()            \

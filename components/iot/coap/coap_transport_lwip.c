@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -93,6 +93,7 @@ static void udp_recv_data_handler(void                 * p_arg,
 
             UNUSED_VARIABLE(coap_transport_read(&local_port,
                                          &remote_endpoint,
+                                         NULL,
                                          NRF_SUCCESS,
                                          (uint8_t *)p_buffer->payload,
                                          (uint32_t)p_buffer->len));

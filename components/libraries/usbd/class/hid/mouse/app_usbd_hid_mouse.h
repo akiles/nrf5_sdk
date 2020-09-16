@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -86,6 +86,7 @@ APP_USBD_CLASS_TYPEDEF(app_usbd_hid_mouse,                      \
  * @param endpoint          Input endpoint (@ref nrf_drv_usbd_ep_t).
  * @param bcnt              Mouse button count (from 1 to 8).
  * @param user_ev_handler   User event handler (optional).
+ * @param subclass_boot     Subclass boot. (@ref app_usbd_hid_subclass_t)
  *
  * @note This macro is just simplified version of @ref APP_USBD_HID_MOUSE_GLOBAL_DEF_INTERNAL.
  *
@@ -93,16 +94,20 @@ APP_USBD_CLASS_TYPEDEF(app_usbd_hid_mouse,                      \
    APP_USBD_HID_MOUSE_GLOBAL_DEF(my_awesome_mouse, 0, NRF_DRV_USBD_EPIN1, 3, NULL);
  * @endcode
  */
-#define APP_USBD_HID_MOUSE_GLOBAL_DEF(instance_name,         \
-                                      interface_number,      \
-                                      endpoint,              \
-                                      bcnt,                  \
-                                      user_ev_handler)       \
-    APP_USBD_HID_MOUSE_GLOBAL_DEF_INTERNAL(instance_name,    \
-                                           interface_number, \
-                                           endpoint,         \
-                                           bcnt,             \
-                                           user_ev_handler)
+#define APP_USBD_HID_MOUSE_GLOBAL_DEF(instance_name,                                                    \
+                                      interface_number,                                                 \
+                                      endpoint,                                                         \
+                                      bcnt,                                                             \
+                                      user_ev_handler,                                                  \
+                                      subclass_boot)                                                    \
+    APP_USBD_HID_GENERIC_SUBCLASS_REPORT_DESC(mouse_desc, APP_USBD_HID_MOUSE_REPORT_DSC_BUTTON(bcnt));  \
+    static const app_usbd_hid_subclass_desc_t * mouse_descs[] = {&mouse_desc};                          \
+    APP_USBD_HID_MOUSE_GLOBAL_DEF_INTERNAL(instance_name,                                               \
+                                           interface_number,                                            \
+                                           endpoint,                                                    \
+                                           bcnt,                                                        \
+                                           user_ev_handler,                                             \
+                                           subclass_boot)
 
 
 /**

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -95,6 +95,9 @@ static void hp_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
                                      app_usbd_audio_user_event_t   event);
 static void mic_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
                                       app_usbd_audio_user_event_t   event);
+
+/* Channels and feature controls configuration */
+
 /**
  * @brief   Input terminal channel configuration
  */
@@ -108,60 +111,11 @@ static void mic_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
  *      channel 0
  *      channel 1
  */
-#define HP_FEATURE_CONTROLS()                                                                         \
-        APP_USBD_U16_TO_RAW_DSC(APP_USBD_AUDIO_FEATURE_UNIT_CONTROL_MUTE),                         \
-        APP_USBD_U16_TO_RAW_DSC(APP_USBD_AUDIO_FEATURE_UNIT_CONTROL_MUTE),                         \
+#define HP_FEATURE_CONTROLS()                                               \
+        APP_USBD_U16_TO_RAW_DSC(APP_USBD_AUDIO_FEATURE_UNIT_CONTROL_MUTE),  \
+        APP_USBD_U16_TO_RAW_DSC(APP_USBD_AUDIO_FEATURE_UNIT_CONTROL_MUTE),  \
         APP_USBD_U16_TO_RAW_DSC(APP_USBD_AUDIO_FEATURE_UNIT_CONTROL_MUTE)
-/**
- * @brief Audio control interface descriptor list:
- *  - input terminal 1
- *  - feature unit descriptor
- *  - output terminal
- */
-#define HP_AUDIO_CONTROL_DSC_LIST() (                                                                           \
-        APP_USBD_AUDIO_INPUT_TERMINAL_DSC(1, APP_USBD_AUDIO_TERMINAL_USB_STREAMING, 2, HP_TERMINAL_CH_CONFIG()) \
-        APP_USBD_AUDIO_FEATURE_UNIT_DSC(2, 1, HP_FEATURE_CONTROLS())                                            \
-        APP_USBD_AUDIO_OUTPUT_TERMINAL_DSC(3, APP_USBD_AUDIO_TERMINAL_OUT_HEADPHONES, 2)                     \
-)
 
-/**
- * @brief Raw array of audio descriptors for headphones
- *
- *  AUDIO_CONTROL_INTERFACE
- *  AUDIO_CONTROL_HEADER
- *     INPUT_TERMINAL
- *     FEATURE_UNIT
- *     OUTPUT_TERMINAL
- *  AUDIO_STREAMING_INTERFACE_ALTERNATE0
- *  AUDIO_STREAMING_INTERFACE_ALTERNATE1
- *     AS_FORMAT_III
- *     EP_GENERAL
- *     ISO_EP_OUT
- *
- */
-static const uint8_t m_hp_audio_class_descriptors[] = {
-    /* Audio control interface descriptor descriptor: 0
-     * + descriptors defined by AUDIO_CONTROL_DSC_LIST*/
-    APP_USBD_AUDIO_CONTROL_DSC(0, HP_AUDIO_CONTROL_DSC_LIST(), (1))
-
-    /*Audio streaming interface descriptor descriptor: 1, setting: 0*/
-    APP_USBD_AUDIO_STREAMING_DSC(1, 0, 0)
-
-    /*Audio streaming interface descriptor descriptor: 1, setting: 1*/
-    APP_USBD_AUDIO_STREAMING_DSC(1, 1, 1)
-
-    /*Audio class specific interface descriptor*/
-    APP_USBD_AUDIO_AS_IFACE_DSC(1, 0, APP_USBD_AUDIO_AS_IFACE_FORMAT_PCM)
-
-    /*Audio class specific format I descriptor*/
-    APP_USBD_AUDIO_AS_FORMAT_III_DSC(2, 2, 16, 1, APP_USBD_U24_TO_RAW_DSC(48000))
-
-    /*Audio class specific endpoint general descriptor*/
-    APP_USBD_AUDIO_EP_GENERAL_DSC(0x00, 0, 0)
-
-    /*Standard ISO endpoint descriptor*/
-    APP_USBD_AUDIO_ISO_EP_OUT_DSC(192)
-};
 
 
 /**
@@ -182,57 +136,98 @@ static const uint8_t m_hp_audio_class_descriptors[] = {
         APP_USBD_U16_TO_RAW_DSC(APP_USBD_AUDIO_FEATURE_UNIT_CONTROL_MUTE),                         \
         APP_USBD_U16_TO_RAW_DSC(APP_USBD_AUDIO_FEATURE_UNIT_CONTROL_MUTE)
 
-/**
- * @brief Audio control interface descriptor list:
- *  - input terminal 1
- *  - feature unit descriptor
- *  - output terminal
- */
-#define MIC_AUDIO_CONTROL_DSC_LIST() (                                                                           \
-        APP_USBD_AUDIO_INPUT_TERMINAL_DSC(1, APP_USBD_AUDIO_TERMINAL_IN_MICROPHONE, 2, MIC_TERMINAL_CH_CONFIG()) \
-        APP_USBD_AUDIO_FEATURE_UNIT_DSC(2, 1, MIC_FEATURE_CONTROLS())                                            \
-        APP_USBD_AUDIO_OUTPUT_TERMINAL_DSC(3, APP_USBD_AUDIO_TERMINAL_USB_STREAMING, 2)                          \
-)
+
+/* Microphone descriptors */
 
 /**
- * @brief Raw array of audio descriptors for Microphone
- *
- *  AUDIO_CONTROL_INTERFACE
- *  AUDIO_CONTROL_HEADER
- *     INPUT_TERMINAL
- *     FEATURE_UNIT
- *     OUTPUT_TERMINAL
- *  AUDIO_STREAMING_INTERFACE_ALTERNATE0
- *  AUDIO_STREAMING_INTERFACE_ALTERNATE1
- *     AS_FORMAT_III
- *     EP_GENERAL
- *     ISO_EP_IN
- *
+ * @brief   Audio class specific format descriptor
  */
-static const uint8_t m_mic_audio_class_descriptors[] = {
-    /* Audio control interface descriptor descriptor: 2
-     * + descriptors defined by AUDIO_CONTROL_DSC_LIST*/
-    APP_USBD_AUDIO_CONTROL_DSC(2, MIC_AUDIO_CONTROL_DSC_LIST(), (3))
+APP_USBD_AUDIO_FORMAT_DESCRIPTOR(mic_form_desc, 
+                                 APP_USBD_AUDIO_AS_FORMAT_I_DSC(    /* Format type 1 descriptor */
+                                    2,                              /* Number of channels */
+                                    2,                              /* Subframe size */
+                                    16,                             /* Bit resolution */
+                                    1,                              /* Frequency type */
+                                    APP_USBD_U24_TO_RAW_DSC(48000)) /* Frequency */
+                                );
 
-    /*Audio streaming interface descriptor descriptor: 3, setting: 0*/
-    APP_USBD_AUDIO_STREAMING_DSC(3, 0, 0)
+/**
+ * @brief   Audio class input terminal descriptor
+ */
+APP_USBD_AUDIO_INPUT_DESCRIPTOR(mic_inp_desc, 
+                                APP_USBD_AUDIO_INPUT_TERMINAL_DSC(
+                                    1,                                     /* Terminal ID */
+                                    APP_USBD_AUDIO_TERMINAL_IN_MICROPHONE, /* Terminal type */
+                                    2,                                     /* Number of channels */
+                                    MIC_TERMINAL_CH_CONFIG())              /* Channels config */
+                                );
 
-    /*Audio streaming interface descriptor descriptor: 3, setting: 1*/
-    APP_USBD_AUDIO_STREAMING_DSC(3, 1, 1)
+/**
+ * @brief   Audio class output terminal descriptor
+ */
+APP_USBD_AUDIO_OUTPUT_DESCRIPTOR(mic_out_desc, 
+                                 APP_USBD_AUDIO_OUTPUT_TERMINAL_DSC(
+                                    3,                                     /* Terminal ID */
+                                    APP_USBD_AUDIO_TERMINAL_USB_STREAMING, /* Terminal type */
+                                    2)                                     /* Source ID */
+                                );
 
-    /*Audio class specific interface descriptor*/
-    APP_USBD_AUDIO_AS_IFACE_DSC(3, 0, APP_USBD_AUDIO_AS_IFACE_FORMAT_PCM)
+/**
+ * @brief   Audio class feature unit descriptor
+ */
+APP_USBD_AUDIO_FEATURE_DESCRIPTOR(mic_fea_desc, 
+                                  APP_USBD_AUDIO_FEATURE_UNIT_DSC(
+                                    2,                      /* Unit ID */
+                                    1,                      /* Source ID */
+                                    MIC_FEATURE_CONTROLS()) /* List of controls */
+                                 );
 
-    /*Audio class specific format I descriptor*/
-    APP_USBD_AUDIO_AS_FORMAT_I_DSC(2, 2, 16, 1, APP_USBD_U24_TO_RAW_DSC(48000))
+/* Headphones descriptors */
 
-    /*Audio class specific endpoint general descriptor*/
-    APP_USBD_AUDIO_EP_GENERAL_DSC(0x00, 0, 0)
+/**
+ * @brief   Audio class specific format III descriptor
+ */
+APP_USBD_AUDIO_FORMAT_DESCRIPTOR(hp_form_desc, 
+                                    APP_USBD_AUDIO_AS_FORMAT_III_DSC( /* Format type 3 descriptor */
+                                    2,                                /* Number of channels */
+                                    2,                                /* Subframe size */
+                                    16,                               /* Bit resolution */
+                                    1,                                /* Frequency type */
+                                    APP_USBD_U24_TO_RAW_DSC(48000))   /* Frequency */
+                                );
 
-    /*Standard ISO endpoint descriptor*/
-    APP_USBD_AUDIO_ISO_EP_IN_DSC(192)
-};
+/**
+ * @brief   Audio class input terminal descriptor
+ */
+APP_USBD_AUDIO_INPUT_DESCRIPTOR(hp_inp_desc, 
+                                APP_USBD_AUDIO_INPUT_TERMINAL_DSC(
+                                    1,                                     /* Terminal ID */
+                                    APP_USBD_AUDIO_TERMINAL_USB_STREAMING, /* Terminal type */
+                                    2,                                     /* Number of channels */
+                                    HP_TERMINAL_CH_CONFIG())               /* Channels config */
+                               );
 
+/**
+ * @brief   Audio class output terminal descriptor
+ */
+APP_USBD_AUDIO_OUTPUT_DESCRIPTOR(hp_out_desc, 
+                                 APP_USBD_AUDIO_OUTPUT_TERMINAL_DSC(
+                                    3,                                      /* Terminal ID */
+                                    APP_USBD_AUDIO_TERMINAL_OUT_HEADPHONES, /* Terminal type */
+                                    2)                                      /* Source ID */
+                                );
+
+/**
+ * @brief   Audio class feature unit descriptor
+ */
+APP_USBD_AUDIO_FEATURE_DESCRIPTOR(hp_fea_desc, 
+                                  APP_USBD_AUDIO_FEATURE_UNIT_DSC(
+                                    2,                     /* Unit ID */
+                                    1,                     /* Source ID */
+                                    HP_FEATURE_CONTROLS()) /* List of controls */
+                                 );
+
+/* Interfaces lists */
 
 /**
  * @brief Interfaces list passed to @ref APP_USBD_AUDIO_GLOBAL_DEF
@@ -246,22 +241,39 @@ static const uint8_t m_mic_audio_class_descriptors[] = {
 
 /*lint -save -e26 -e64 -e123 -e505 -e651*/
 
+
 /**
  * @brief Headphone Audio class instance
  */
 APP_USBD_AUDIO_GLOBAL_DEF(m_app_audio_headphone,
                           HP_INTERFACES_CONFIG(),
                           hp_audio_user_ev_handler,
-                          m_hp_audio_class_descriptors
+                          &hp_form_desc,
+                          &hp_inp_desc,
+                          &hp_out_desc,
+                          &hp_fea_desc,
+                          0,
+                          APP_USBD_AUDIO_AS_IFACE_FORMAT_PCM,
+                          192,
+                          APP_USBD_AUDIO_SUBCLASS_AUDIOSTREAMING
 );
 
+
+
 /**
- * @brief Headphone Audio class instance
+ * @brief Microphone Audio class instance
  */
 APP_USBD_AUDIO_GLOBAL_DEF(m_app_audio_microphone,
                           MIC_INTERFACES_CONFIG(),
                           mic_audio_user_ev_handler,
-                          m_mic_audio_class_descriptors
+                          &mic_form_desc,
+                          &mic_inp_desc,
+                          &mic_out_desc,
+                          &mic_fea_desc,
+                          0,
+                          APP_USBD_AUDIO_AS_IFACE_FORMAT_PCM,
+                          192,
+                          APP_USBD_AUDIO_SUBCLASS_AUDIOSTREAMING
 );
 
 
@@ -298,12 +310,6 @@ static uint8_t  m_mute_mic;
  * @brief Actual microphone sampling frequency
  */
 static uint32_t m_freq_mic;
-
-/**
- * @brief  USB connection status
- */
-static bool m_usb_connected = false;
-
 
 /**
  * @brief Audio class specific request handle (headphones)
@@ -494,16 +500,7 @@ static void usbd_user_ev_handler(app_usbd_event_type_t event)
             app_usbd_disable();
             bsp_board_leds_off();
             break;
-        default:
-            break;
-    }
-}
-
-static void power_usb_event_handler(nrf_drv_power_usb_evt_t event)
-{
-    switch (event)
-    {
-        case NRF_DRV_POWER_USB_EVT_DETECTED:
+        case APP_USBD_EVT_POWER_DETECTED:
             NRF_LOG_INFO("USB power detected");
 
             if (!nrf_drv_usbd_is_enabled())
@@ -511,50 +508,17 @@ static void power_usb_event_handler(nrf_drv_power_usb_evt_t event)
                 app_usbd_enable();
             }
             break;
-        case NRF_DRV_POWER_USB_EVT_REMOVED:
+        case APP_USBD_EVT_POWER_REMOVED:
             NRF_LOG_INFO("USB power removed");
-            m_usb_connected = false;
+            app_usbd_stop();
             break;
-        case NRF_DRV_POWER_USB_EVT_READY:
+        case APP_USBD_EVT_POWER_READY:
             NRF_LOG_INFO("USB ready");
-            m_usb_connected = true;
+            app_usbd_start();
             break;
         default:
-            ASSERT(false);
+            break;
     }
-}
-
-static void usb_start(void)
-{
-    if (USBD_POWER_DETECTION)
-    {
-        static const nrf_drv_power_usbevt_config_t config =
-        {
-            .handler = power_usb_event_handler
-        };
-        ret_code_t ret;
-        ret = nrf_drv_power_usbevt_init(&config);
-        APP_ERROR_CHECK(ret);
-    }
-    else
-    {
-        NRF_LOG_INFO("No USB power detection enabled\r\nStarting USB now");
-
-        app_usbd_enable();
-        app_usbd_start();
-        m_usb_connected = true;
-    }
-}
-
-static bool usb_connection_handle(bool last_usb_conn_status)
-{
-    if (last_usb_conn_status != m_usb_connected)
-    {
-        last_usb_conn_status = m_usb_connected;
-        m_usb_connected ? app_usbd_start() : app_usbd_stop();
-    }
-
-    return last_usb_conn_status;
 }
 
 int main(void)
@@ -565,19 +529,17 @@ int main(void)
         .enable_sof = true
     };
 
-    ret = nrf_drv_clock_init();
-    APP_ERROR_CHECK(ret);
-    ret = nrf_drv_power_init(NULL);
-    APP_ERROR_CHECK(ret);
-
     ret = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(ret);
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("Hello USB!");
+    ret = nrf_drv_clock_init();
+    APP_ERROR_CHECK(ret);
 
-    bsp_board_leds_init();
-    bsp_board_buttons_init();
+    NRF_LOG_INFO("USBD audio example started.");
+
+    // Initialize LEDs and buttons
+    bsp_board_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS);
 
     ret = app_usbd_init(&usbd_config);
     APP_ERROR_CHECK(ret);
@@ -591,9 +553,19 @@ int main(void)
         app_usbd_audio_class_inst_get(&m_app_audio_microphone);
     ret = app_usbd_class_append(class_inst_mic);
     APP_ERROR_CHECK(ret);
+    
+    if (USBD_POWER_DETECTION)
+    {
+        ret = app_usbd_power_events_enable();
+        APP_ERROR_CHECK(ret);
+    }
+    else
+    {
+        NRF_LOG_INFO("No USB power detection enabled\r\nStarting USB now");
 
-    bool last_usb_conn_status = false;
-    usb_start();
+        app_usbd_enable();
+        app_usbd_start();
+    }
 
     while (true)
     {
@@ -601,7 +573,6 @@ int main(void)
         {
             /* Nothing to do */
         }
-        last_usb_conn_status = usb_connection_handle(last_usb_conn_status);
 
         UNUSED_RETURN_VALUE(NRF_LOG_PROCESS());
         /* Sleep CPU only if there was no interrupt since last loop processing */

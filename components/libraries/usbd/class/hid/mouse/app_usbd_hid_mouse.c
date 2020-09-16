@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -37,11 +37,10 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-#include "sdk_config.h"
-#if APP_USBD_HID_MOUSE_ENABLED
-#include <string.h>
-
 #include "sdk_common.h"
+#if NRF_MODULE_ENABLED(APP_USBD_HID_MOUSE)
+
+#include <string.h>
 #include "app_usbd_hid_mouse.h"
 #include "app_util_platform.h"
 
@@ -67,6 +66,7 @@ static inline app_usbd_hid_mouse_ctx_t * hid_mouse_ctx_get(app_usbd_hid_mouse_t 
     return &p_mouse->specific.p_data->ctx;
 }
 
+
 /**
  * @brief Auxiliary function to access HID mouse instance data.
  *
@@ -80,6 +80,7 @@ static inline app_usbd_hid_mouse_t const * hid_mouse_get(app_usbd_class_inst_t c
     return (app_usbd_hid_mouse_t const *)p_inst;
 }
 
+
 /**
  * @brief Returns mouse report buffer handle.
  *
@@ -91,16 +92,17 @@ static inline
 app_usbd_hid_report_buffer_t const * hid_mouse_rep_buffer_get(app_usbd_hid_mouse_t const * p_mouse)
 {
     ASSERT(p_mouse != NULL);
-    app_usbd_hid_inst_t const * p_hinst = &p_mouse->specific.inst.hid_inst;
-    app_usbd_hid_mouse_ctx_t *            p_mouse_ctx = hid_mouse_ctx_get(p_mouse);
-    app_usbd_hid_report_buffer_t *        p_rep_buff = app_usbd_hid_rep_buff_in_get(p_hinst);
+    app_usbd_hid_inst_t const    * p_hinst     = &p_mouse->specific.inst.hid_inst;
+    app_usbd_hid_mouse_ctx_t     * p_mouse_ctx = hid_mouse_ctx_get(p_mouse);
+    app_usbd_hid_report_buffer_t * p_rep_buff  = app_usbd_hid_rep_buff_in_get(p_hinst);
 
     p_rep_buff->p_buff = p_mouse_ctx->report_buff;
-    p_rep_buff->size = sizeof(p_mouse_ctx->report_buff);
+    p_rep_buff->size   = sizeof(p_mouse_ctx->report_buff);
 
     /*Mouse has only one report input report buffer */
     return app_usbd_hid_rep_buff_in_get(p_hinst);
 }
+
 
 /**@brief Auxiliary function to get report value from internal accumulated value.
  *
@@ -123,6 +125,7 @@ static inline int8_t hid_mouse_axis_acc_get(int16_t acc)
     return acc;
 }
 
+
 /**@brief Auxiliary function to prepare report transfer buffer to next transfer.
  *
  * @param[in] p_mouse_ctx Mouse internal context.
@@ -133,8 +136,8 @@ static inline int8_t hid_mouse_axis_acc_get(int16_t acc)
 static inline bool hid_mouse_transfer_next(app_usbd_hid_mouse_t const * p_mouse)
 {
 
-    app_usbd_hid_mouse_ctx_t *            p_mouse_ctx = hid_mouse_ctx_get(p_mouse);
-    app_usbd_hid_report_buffer_t const *  p_rep_buffer = hid_mouse_rep_buffer_get(p_mouse);
+    app_usbd_hid_mouse_ctx_t           * p_mouse_ctx  = hid_mouse_ctx_get(p_mouse);
+    app_usbd_hid_report_buffer_t const * p_rep_buffer = hid_mouse_rep_buffer_get(p_mouse);
 
     uint8_t * p_buff = p_rep_buffer->p_buff;
 
@@ -147,17 +150,17 @@ static inline bool hid_mouse_transfer_next(app_usbd_hid_mouse_t const * p_mouse)
     /*Axis X*/
     int8_t val_x = hid_mouse_axis_acc_get(p_mouse_ctx->acc_x_axis);
     p_mouse_ctx->acc_x_axis -= val_x;
-    p_buff[1] = val_x;
+    p_buff[1]                = val_x;
 
     /*Axis Y*/
     int8_t val_y = hid_mouse_axis_acc_get(p_mouse_ctx->acc_y_axis);
     p_mouse_ctx->acc_y_axis -= val_y;
-    p_buff[2] = val_y;
+    p_buff[2]                = val_y;
 
     /*Scroll*/
     int8_t val_scroll = hid_mouse_axis_acc_get(p_mouse_ctx->acc_scroll);
     p_mouse_ctx->acc_scroll -= val_scroll;
-    p_buff[3] = val_scroll;
+    p_buff[3]                = val_scroll;
 
     if (val_x || val_y || val_scroll)
     {
@@ -174,6 +177,7 @@ static inline bool hid_mouse_transfer_next(app_usbd_hid_mouse_t const * p_mouse)
     return false;
 }
 
+
 /**
  * @brief Triggers IN endpoint transfer.
  *
@@ -183,8 +187,8 @@ static inline bool hid_mouse_transfer_next(app_usbd_hid_mouse_t const * p_mouse)
  */
 static inline ret_code_t hid_mouse_transfer_set(app_usbd_hid_mouse_t const * p_mouse)
 {
-    app_usbd_class_inst_t const * p_inst = (app_usbd_class_inst_t const *)p_mouse;
-    app_usbd_hid_mouse_ctx_t *    p_mouse_ctx = hid_mouse_ctx_get(p_mouse);
+    app_usbd_class_inst_t const * p_inst      = (app_usbd_class_inst_t const *)p_mouse;
+    app_usbd_hid_mouse_ctx_t    * p_mouse_ctx = hid_mouse_ctx_get(p_mouse);
 
     nrf_drv_usbd_ep_t ep_addr = app_usbd_hid_epin_addr_get(p_inst);
 
@@ -214,6 +218,7 @@ static inline ret_code_t hid_mouse_transfer_set(app_usbd_hid_mouse_t const * p_m
     return ret;
 }
 
+
 /**
  * @brief Checks if adding would cause 16 bit signed integer overflow.
  *
@@ -238,9 +243,11 @@ static inline bool hid_mouse_acc_overflow_check(int16_t acc, int8_t val)
     return false;
 }
 
+
 ret_code_t app_usbd_hid_mouse_x_move(app_usbd_hid_mouse_t const * p_mouse, int8_t offset)
 {
     app_usbd_hid_mouse_ctx_t * p_mouse_ctx = hid_mouse_ctx_get(p_mouse);
+
     if (!app_usbd_hid_state_valid(&p_mouse_ctx->hid_ctx))
     {
         return NRF_ERROR_INVALID_STATE;
@@ -271,9 +278,11 @@ ret_code_t app_usbd_hid_mouse_x_move(app_usbd_hid_mouse_t const * p_mouse, int8_
     return NRF_SUCCESS;
 }
 
+
 ret_code_t app_usbd_hid_mouse_y_move(app_usbd_hid_mouse_t const * p_mouse, int8_t offset)
 {
     app_usbd_hid_mouse_ctx_t * p_mouse_ctx = hid_mouse_ctx_get(p_mouse);
+
     if (!app_usbd_hid_state_valid(&p_mouse_ctx->hid_ctx))
     {
         return NRF_ERROR_INVALID_STATE;
@@ -304,9 +313,11 @@ ret_code_t app_usbd_hid_mouse_y_move(app_usbd_hid_mouse_t const * p_mouse, int8_
     return NRF_SUCCESS;
 }
 
+
 ret_code_t app_usbd_hid_mouse_scroll_move(app_usbd_hid_mouse_t const * p_mouse, int8_t offset)
 {
     app_usbd_hid_mouse_ctx_t * p_mouse_ctx = hid_mouse_ctx_get(p_mouse);
+
     if (!app_usbd_hid_state_valid(&p_mouse_ctx->hid_ctx))
     {
         return NRF_ERROR_INVALID_STATE;
@@ -337,9 +348,10 @@ ret_code_t app_usbd_hid_mouse_scroll_move(app_usbd_hid_mouse_t const * p_mouse, 
     return NRF_SUCCESS;
 }
 
+
 ret_code_t app_usbd_hid_mouse_button_state(app_usbd_hid_mouse_t const * p_mouse,
-                                           uint8_t button_id,
-                                           bool state)
+                                           uint8_t                      button_id,
+                                           bool                         state)
 {
     ASSERT(button_id < 8);
     app_usbd_hid_mouse_ctx_t * p_mouse_ctx = hid_mouse_ctx_get(p_mouse);
@@ -379,26 +391,34 @@ ret_code_t app_usbd_hid_mouse_button_state(app_usbd_hid_mouse_t const * p_mouse,
     return NRF_SUCCESS;
 }
 
+
 /**
  * @brief @ref app_usbd_hid_interface_t::on_get_report
  */
 static ret_code_t hid_mouse_on_get_report(app_usbd_class_inst_t const * p_inst,
-                                        app_usbd_setup_evt_t const * p_setup_ev)
+                                          app_usbd_setup_evt_t const  * p_setup_ev)
 {
+    if (p_setup_ev->setup.wValue.hb != APP_USBD_HID_REPORT_TYPE_INPUT)
+    {
+        return NRF_ERROR_NOT_SUPPORTED;
+    }
+
     app_usbd_hid_mouse_t const * p_mouse = hid_mouse_get(p_inst);
     app_usbd_hid_report_buffer_t const * p_rep_buffer = hid_mouse_rep_buffer_get(p_mouse);
 
     return app_usbd_core_setup_rsp(&(p_setup_ev->setup), p_rep_buffer->p_buff, p_rep_buffer->size);
 }
 
+
 /**
  * @brief @ref app_usbd_hid_interface_t::on_set_report
  */
 static ret_code_t hid_mouse_on_set_report(app_usbd_class_inst_t const * p_inst,
-                                        app_usbd_setup_evt_t const * p_setup_ev)
+                                          app_usbd_setup_evt_t const  * p_setup_ev)
 {
     return NRF_ERROR_NOT_SUPPORTED;
 }
+
 
 /**
  * @brief @ref app_usbd_hid_interface_t::ep_transfer_set
@@ -408,23 +428,25 @@ static ret_code_t hid_mouse_ep_transfer_in(app_usbd_class_inst_t const * p_inst)
     return hid_mouse_transfer_set((app_usbd_hid_mouse_t const *)p_inst);
 }
 
+
 /**
  * @brief @ref app_usbd_class_interface_t::event_handler
  */
-static ret_code_t hid_mouse_event_handler(app_usbd_class_inst_t const * p_inst,
+static ret_code_t hid_mouse_event_handler(app_usbd_class_inst_t const  * p_inst,
                                           app_usbd_complex_evt_t const * p_event)
 {
     ASSERT(p_inst != NULL);
     ASSERT(p_event != NULL);
 
     app_usbd_hid_mouse_t const * p_mouse = hid_mouse_get(p_inst);
-    app_usbd_hid_inst_t const * p_hinst = &p_mouse->specific.inst.hid_inst;
+    app_usbd_hid_inst_t const  * p_hinst = &p_mouse->specific.inst.hid_inst;
 
     app_usbd_hid_mouse_ctx_t * p_mouse_ctx = hid_mouse_ctx_get(p_mouse);
-    app_usbd_hid_ctx_t * p_hid_ctx = &p_mouse_ctx->hid_ctx;
+    app_usbd_hid_ctx_t       * p_hid_ctx   = &p_mouse_ctx->hid_ctx;
 
 
     ret_code_t ret = NRF_SUCCESS;
+
     switch (p_event->app_evt.type)
     {
         default:
@@ -442,32 +464,157 @@ static ret_code_t hid_mouse_event_handler(app_usbd_class_inst_t const * p_inst,
     return app_usbd_hid_event_handler(p_inst, p_hinst, p_hid_ctx, p_event);
 }
 
-/**
- * @brief @ref app_usbd_class_interface_t::get_descriptors
- */
-static const void * hid_mouse_get_descriptors(app_usbd_class_inst_t const * p_inst,
-                                              size_t * p_size)
-{
-    ASSERT(p_size != NULL);
-    app_usbd_hid_mouse_t const * p_mouse = hid_mouse_get(p_inst);
-    app_usbd_hid_inst_t const * p_hinst = &p_mouse->specific.inst.hid_inst;
 
-    *p_size = p_hinst->raw_desc_size;
-    return p_hinst->p_raw_desc;
+static uint8_t hid_mouse_get_class_descriptors_count(app_usbd_class_inst_t const * p_inst)
+{
+    app_usbd_hid_mouse_t const * p_mouse = hid_mouse_get(p_inst);
+    app_usbd_hid_inst_t const  * p_hinst = &p_mouse->specific.inst.hid_inst;
+
+    return p_hinst->subclass_desc_count;
+}
+
+
+static app_usbd_descriptor_t hid_mouse_get_class_descriptors_type(
+    app_usbd_class_inst_t const * p_inst,
+    uint8_t                       desc_num)
+{
+    app_usbd_hid_mouse_t const * p_mouse = hid_mouse_get(p_inst);
+    app_usbd_hid_inst_t const  * p_hinst = &p_mouse->specific.inst.hid_inst;
+
+    return p_hinst->p_subclass_desc[desc_num]->type;
+}
+
+
+static size_t hid_mouse_get_class_descriptors_length(app_usbd_class_inst_t const * p_inst,
+                                                     uint8_t                       desc_num)
+{
+    app_usbd_hid_mouse_t const * p_mouse = hid_mouse_get(p_inst);
+    app_usbd_hid_inst_t const  * p_hinst = &p_mouse->specific.inst.hid_inst;
+
+    return p_hinst->p_subclass_desc[desc_num]->size;
+}
+
+
+static uint8_t hid_mouse_get_class_descriptors_data(app_usbd_class_inst_t const * p_inst,
+                                                    uint8_t                       desc_num,
+                                                    uint32_t                      cur_byte)
+{
+    app_usbd_hid_mouse_t const * p_mouse = hid_mouse_get(p_inst);
+    app_usbd_hid_inst_t const  * p_hinst = &p_mouse->specific.inst.hid_inst;
+
+    return p_hinst->p_subclass_desc[desc_num]->p_data[cur_byte];
+}
+
+
+static bool hid_mouse_feed_descriptors(app_usbd_class_descriptor_ctx_t  * p_ctx,
+                                       app_usbd_class_inst_t const      * p_inst,
+                                       uint8_t                          * p_buff,
+                                       size_t                             max_size)
+{
+    static uint8_t ifaces   = 0;
+
+    ifaces = app_usbd_class_iface_count_get(p_inst);
+    app_usbd_hid_mouse_t const * p_mouse = hid_mouse_get(p_inst);
+
+    APP_USBD_CLASS_DESCRIPTOR_BEGIN(p_ctx, p_buff, max_size);
+
+    static uint8_t i = 0;
+
+    for (i = 0; i < ifaces; i++)
+    {
+        /* INTERFACE DESCRIPTOR */
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(0x09); // bLength
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(APP_USBD_DESCRIPTOR_INTERFACE); // bDescriptorType = Interface
+
+        static app_usbd_class_iface_conf_t const * p_cur_iface = NULL;
+        p_cur_iface = app_usbd_class_iface_get(p_inst, i);
+
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(app_usbd_class_iface_number_get(p_cur_iface)); // bInterfaceNumber
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(0x00); // bAlternateSetting
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(app_usbd_class_iface_ep_count_get(p_cur_iface)); // bNumEndpoints
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(APP_USBD_HID_CLASS); // bInterfaceClass = HID
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(p_mouse->specific.inst.hid_inst.subclass_boot); // bInterfaceSubclass (Boot Interface)
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(p_mouse->specific.inst.hid_inst.protocol); // bInterfaceProtocol
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(0x00); // iInterface
+
+        /* HID DESCRIPTOR */
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(0x09); // bLength
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(APP_USBD_HID_DESCRIPTOR_HID);  // bDescriptorType = HID
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(LSB_16(APP_USBD_HID_BCD_VER)); // bcdHID LSB
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(MSB_16(APP_USBD_HID_BCD_VER)); // bcdHID MSB
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(APP_USBD_HID_COUNTRY_NOT_SUPPORTED); // bCountryCode
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(hid_mouse_get_class_descriptors_count(p_inst)); // bNumDescriptors
+
+        static uint8_t class_desc_cnt = 0;
+        class_desc_cnt = hid_mouse_get_class_descriptors_count(p_inst);
+        static uint8_t  j              = 0;
+        static uint16_t class_desc_len = 0;
+
+        for (j = 0; j < class_desc_cnt; j++)
+        {
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(hid_mouse_get_class_descriptors_type(p_inst, j)); // bDescriptorType
+
+            class_desc_len = hid_mouse_get_class_descriptors_length(p_inst, j);
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(LSB_16(class_desc_len)); // wDescriptorLength LSB
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(MSB_16(class_desc_len)); // wDescriptorLength MSB
+        }
+
+        static uint8_t endpoints = 0;
+        endpoints = app_usbd_class_iface_ep_count_get(p_cur_iface);
+
+        for (j = 0; j < endpoints; j++)
+        {
+            /* ENDPOINT DESCRIPTOR */
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(0x07); // bLengths
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(APP_USBD_DESCRIPTOR_ENDPOINT); // bDescriptorType = Endpoint
+
+            static app_usbd_class_ep_conf_t const * p_cur_ep = NULL;
+            p_cur_ep = app_usbd_class_iface_ep_get(p_cur_iface, i);
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(app_usbd_class_ep_address_get(p_cur_ep)); // bEndpointAddress
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(APP_USBD_DESCRIPTOR_EP_ATTR_TYPE_INTERRUPT); // bmAttributes
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(LSB_16(NRF_DRV_USBD_EPSIZE)); // wMaxPacketSize LSB
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(MSB_16(NRF_DRV_USBD_EPSIZE)); // wMaxPacketSize MSB
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(0x01); // bInterval
+        }
+    }
+
+    APP_USBD_CLASS_DESCRIPTOR_END();
+}
+
+static bool hid_mouse_feed_subclass_descriptor(app_usbd_class_descriptor_ctx_t  * p_ctx,
+                                               app_usbd_class_inst_t const      * p_inst,
+                                               uint8_t                          * p_buff,
+                                               size_t                             max_size,
+                                               uint8_t                            index)
+{
+    APP_USBD_CLASS_DESCRIPTOR_BEGIN(p_ctx, p_buff, max_size);
+
+    /* PHYSICAL AND REPORT DESCRIPTORS */
+    static uint32_t cur_byte      = 0;
+    static size_t   sub_desc_size = 0;
+    sub_desc_size = hid_mouse_get_class_descriptors_length(p_inst, index);
+
+    for (cur_byte = 0; cur_byte <= sub_desc_size; cur_byte++)
+    {
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(hid_mouse_get_class_descriptors_data(p_inst, index, cur_byte));
+    }
+
+    APP_USBD_CLASS_DESCRIPTOR_END();
 }
 
 /** @} */
 
 const app_usbd_hid_methods_t app_usbd_hid_mouse_methods = {
-        .on_get_report = hid_mouse_on_get_report,
-        .on_set_report = hid_mouse_on_set_report,
-        .ep_transfer_in = hid_mouse_ep_transfer_in,
-        .ep_transfer_out = NULL,
+    .on_get_report   = hid_mouse_on_get_report,
+    .on_set_report   = hid_mouse_on_set_report,
+    .ep_transfer_in  = hid_mouse_ep_transfer_in,
+    .ep_transfer_out = NULL,
+    .feed_subclass_descriptor = hid_mouse_feed_subclass_descriptor,
 };
 
 const app_usbd_class_methods_t app_usbd_hid_mouse_class_methods = {
-        .event_handler = hid_mouse_event_handler,
-        .get_descriptors = hid_mouse_get_descriptors,
+    .event_handler            = hid_mouse_event_handler,
+    .feed_descriptors         = hid_mouse_feed_descriptors,
 };
 
-#endif // APP_USBD_HID_MOUSE_ENABLED
+#endif //NRF_MODULE_ENABLED(APP_USBD_HID_MOUSE)

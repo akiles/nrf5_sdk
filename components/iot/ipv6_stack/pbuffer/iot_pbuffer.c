@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -87,15 +87,15 @@ NRF_LOG_MODULE_REGISTER();
 
 /**@brief Macro to check is module is initialized before requesting one of the module procedures. */
 #define VERIFY_MODULE_IS_INITIALIZED()                                                             \
-        if (m_initialization_state == false)                                                        \
+        if (m_initialization_state == false)                                                       \
         {                                                                                          \
-            return (SDK_ERR_MODULE_NOT_INITIALZED | IOT_PBUFFER_ERR_BASE);                         \
+            return (SDK_ERR_MODULE_NOT_INITIALIZED | IOT_PBUFFER_ERR_BASE);                        \
         }
 
 /**@brief Macro to check is module is initialized before requesting one of the module
          procedures but does not use any return code. */
 #define VERIFY_MODULE_IS_INITIALIZED_VOID()                                                        \
-        if (m_initialization_state == false)                                                        \
+        if (m_initialization_state == false)                                                       \
         {                                                                                          \
             return;                                                                                \
         }

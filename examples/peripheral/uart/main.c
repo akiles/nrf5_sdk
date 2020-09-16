@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -137,7 +137,7 @@ int main(void)
 {
     uint32_t err_code;
 
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 
     const app_uart_comm_params_t comm_params =
       {
@@ -147,7 +147,11 @@ int main(void)
           CTS_PIN_NUMBER,
           UART_HWFC,
           false,
+#if defined (UART_PRESENT)
           NRF_UART_BAUDRATE_115200
+#else
+          NRF_UARTE_BAUDRATE_115200
+#endif
       };
 
     APP_UART_FIFO_INIT(&comm_params,
@@ -160,7 +164,7 @@ int main(void)
     APP_ERROR_CHECK(err_code);
 
 #ifndef ENABLE_LOOPBACK_TEST
-    printf("\r\nStart: \r\n");
+    printf("\r\nUART example started.\r\n");
 
     while (true)
     {

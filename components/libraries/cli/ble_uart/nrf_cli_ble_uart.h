@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -61,7 +61,7 @@ extern "C" {
 
 /**
  * @brief Command line interface transport.
- * */
+ */
 
 ret_code_t nrf_cli_ble_uart_service_init(void);
 

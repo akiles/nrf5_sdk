@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -42,46 +42,9 @@
 #include <stdbool.h>
 #include "nrf_log.h"
 #include "nrf_sdm.h"
+#include "app_util.h"
 
-/** @brief External definitions of symbols for the start of the application image.
- */
-#if (__LINT__ == 1)
-    // No implementation
-#elif defined ( __CC_ARM )
-    extern uint32_t* Image$$ER_IROM1$$Base   __attribute__((used));
-#elif defined (__SES_ARM) && defined (__GNUC__)
-    extern uint32_t * _vectors;
-#elif defined ( __GNUC__ )
-    extern uint32_t * __isr_vector;
-#elif defined ( __ICCARM__ )
-    extern void * __vector_table;
-#else
-    #error Not a valid compiler/linker for application image symbols.
-#endif
-
-
-/** @brief Macro for getting the start address of the application image.
- *
- * This macro is valid only when absolute placement is used for the application
- * image. The macro is not a compile time symbol. It cannot be used as a
- * constant expression, for example, inside a static assert or linker script
- * at-placement.
- */
-#if (__LINT__ == 1)
-    #define APP_START_ADDR        (0x1F000)
-#elif APP_START_ADDR
-    // Bootloader start address is defined at project level
-#elif defined (__CC_ARM)
-    #define APP_START_ADDR        (uint32_t)&Image$$ER_IROM1$$Base
-#elif defined (__SES_ARM) && defined (__GNUC__)
-    #define APP_START_ADDR        (uint32_t)&_vectors
-#elif defined (__GNUC__)
-    #define APP_START_ADDR        (uint32_t)&__isr_vector
-#elif defined (__ICCARM__)
-    #define APP_START_ADDR        (uint32_t)&__vector_table
-#else
-    #error Not a valid compiler/linker for APP_START_ADDR.
-#endif
+#define APP_START_ADDR CODE_START
 
 
 uint32_t nrf_dfu_svci_vector_table_set(void)

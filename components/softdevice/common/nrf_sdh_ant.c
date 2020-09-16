@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -45,6 +45,7 @@
 
 #include "nrf_sdh.h"
 #include "app_error.h"
+#include "nrf_strerror.h"
 #include "ant_interface.h"
 
 
@@ -70,6 +71,9 @@ NRF_SECTION_SET_DEF(sdh_ant_observers, nrf_sdh_ant_evt_observer_t, NRF_SDH_ANT_O
 __ALIGN(4) static uint8_t m_ant_stack_buffer[NRF_SDH_ANT_BUF_SIZE];
 
 
+static bool m_stack_is_enabled;
+
+
 ret_code_t nrf_sdh_ant_enable(void)
 {
     ANT_ENABLE ant_enable_cfg =
@@ -82,6 +86,15 @@ ret_code_t nrf_sdh_ant_enable(void)
     };
 
     ret_code_t ret_code = sd_ant_enable(&ant_enable_cfg);
+    if (ret_code == NRF_SUCCESS)
+    {
+        m_stack_is_enabled = true;
+    }
+    else
+    {
+        NRF_LOG_ERROR("sd_ant_enable() returned %s.", nrf_strerror_get(ret_code));
+    }
+
     return ret_code;
 }
 
@@ -92,9 +105,18 @@ ret_code_t nrf_sdh_ant_enable(void)
  */
 static void nrf_sdh_ant_evts_poll(void * p_context)
 {
+    UNUSED_VARIABLE(p_context);
+
     ret_code_t ret_code;
 
-    UNUSED_VARIABLE(p_context);
+#ifndef SER_CONNECTIVITY
+    if (!m_stack_is_enabled)
+    {
+        return;
+    }
+#else
+    UNUSED_VARIABLE(m_stack_is_enabled);
+#endif // SER_CONNECTIVITY
 
     while (true)
     {

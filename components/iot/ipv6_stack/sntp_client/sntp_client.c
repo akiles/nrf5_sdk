@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -107,7 +107,7 @@ NRF_LOG_MODULE_REGISTER();
 #define VERIFY_MODULE_IS_INITIALIZED()                                                             \
         if (m_sntp_client_state == SNTP_CLIENT_STATE_UNINITIALIZED)                                \
         {                                                                                          \
-            return (SDK_ERR_MODULE_NOT_INITIALZED | IOT_NTP_ERR_BASE);                             \
+            return (SDK_ERR_MODULE_NOT_INITIALIZED | IOT_NTP_ERR_BASE);                            \
         }
 
 #else // SNTP_CLIENT_DISABLE_API_PARAM_CHECK

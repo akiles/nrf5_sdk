@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -229,1068 +229,6 @@
 #define APP_SPIS_IRQ_PRIORITY 7
 #endif
 
-// <o> APP_SPIS_SCK_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_SCK_PIN
-#define APP_SPIS_SCK_PIN 31
-#endif
-
-// <o> APP_SPIS_MISO_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_MISO_PIN
-#define APP_SPIS_MISO_PIN 31
-#endif
-
-// <o> APP_SPIS_MOSI_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_MOSI_PIN
-#define APP_SPIS_MOSI_PIN 31
-#endif
-
-// <o> APP_SPIS_CS_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_CS_PIN
-#define APP_SPIS_CS_PIN 31
-#endif
-
-// <o> APP_SPIS_IRQ_PRIORITY  - Interrupt priority
- 
-
-// <i> Priorities 0,2 (nRF51) and 0,1,4,5 (nRF52) are reserved for SoftDevice
-// <0=> 0 (highest) 
-// <1=> 1 
-// <2=> 2 
-// <3=> 3 
-// <4=> 4 
-// <5=> 5 
-// <6=> 6 
-// <7=> 7 
-
-#ifndef APP_SPIS_IRQ_PRIORITY
-#define APP_SPIS_IRQ_PRIORITY 7
-#endif
-
-// <o> APP_SPIS_SCK_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_SCK_PIN
-#define APP_SPIS_SCK_PIN 31
-#endif
-
-// <o> APP_SPIS_MISO_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_MISO_PIN
-#define APP_SPIS_MISO_PIN 31
-#endif
-
-// <o> APP_SPIS_MOSI_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_MOSI_PIN
-#define APP_SPIS_MOSI_PIN 31
-#endif
-
-// <o> APP_SPIS_CS_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_CS_PIN
-#define APP_SPIS_CS_PIN 31
-#endif
-
-// <o> APP_SPIS_IRQ_PRIORITY  - Interrupt priority
- 
-
-// <i> Priorities 0,2 (nRF51) and 0,1,4,5 (nRF52) are reserved for SoftDevice
-// <0=> 0 (highest) 
-// <1=> 1 
-// <2=> 2 
-// <3=> 3 
-// <4=> 4 
-// <5=> 5 
-// <6=> 6 
-// <7=> 7 
-
-#ifndef APP_SPIS_IRQ_PRIORITY
-#define APP_SPIS_IRQ_PRIORITY 7
-#endif
-
-// <o> APP_SPIS_SCK_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_SCK_PIN
-#define APP_SPIS_SCK_PIN 31
-#endif
-
-// <o> APP_SPIS_MISO_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_MISO_PIN
-#define APP_SPIS_MISO_PIN 31
-#endif
-
-// <o> APP_SPIS_MOSI_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_MOSI_PIN
-#define APP_SPIS_MOSI_PIN 31
-#endif
-
-// <o> APP_SPIS_CS_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_CS_PIN
-#define APP_SPIS_CS_PIN 31
-#endif
-
-// <o> APP_SPIS_IRQ_PRIORITY  - Interrupt priority
- 
-
-// <i> Priorities 0,2 (nRF51) and 0,1,4,5 (nRF52) are reserved for SoftDevice
-// <0=> 0 (highest) 
-// <1=> 1 
-// <2=> 2 
-// <3=> 3 
-// <4=> 4 
-// <5=> 5 
-// <6=> 6 
-// <7=> 7 
-
-#ifndef APP_SPIS_IRQ_PRIORITY
-#define APP_SPIS_IRQ_PRIORITY 7
-#endif
-
-// <o> APP_SPIS_SCK_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_SCK_PIN
-#define APP_SPIS_SCK_PIN 31
-#endif
-
-// <o> APP_SPIS_MISO_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_MISO_PIN
-#define APP_SPIS_MISO_PIN 31
-#endif
-
-// <o> APP_SPIS_MOSI_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_MOSI_PIN
-#define APP_SPIS_MOSI_PIN 31
-#endif
-
-// <o> APP_SPIS_CS_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_CS_PIN
-#define APP_SPIS_CS_PIN 31
-#endif
-
-// <o> APP_SPIS_IRQ_PRIORITY  - Interrupt priority
- 
-
-// <i> Priorities 0,2 (nRF51) and 0,1,4,5 (nRF52) are reserved for SoftDevice
-// <0=> 0 (highest) 
-// <1=> 1 
-// <2=> 2 
-// <3=> 3 
-// <4=> 4 
-// <5=> 5 
-// <6=> 6 
-// <7=> 7 
-
-#ifndef APP_SPIS_IRQ_PRIORITY
-#define APP_SPIS_IRQ_PRIORITY 7
-#endif
-
-// <o> APP_SPIS_SCK_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_SCK_PIN
-#define APP_SPIS_SCK_PIN 31
-#endif
-
-// <o> APP_SPIS_MISO_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_MISO_PIN
-#define APP_SPIS_MISO_PIN 31
-#endif
-
-// <o> APP_SPIS_MOSI_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_MOSI_PIN
-#define APP_SPIS_MOSI_PIN 31
-#endif
-
-// <o> APP_SPIS_CS_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_CS_PIN
-#define APP_SPIS_CS_PIN 31
-#endif
-
-// <o> APP_SPIS_IRQ_PRIORITY  - Interrupt priority
- 
-
-// <i> Priorities 0,2 (nRF51) and 0,1,4,5 (nRF52) are reserved for SoftDevice
-// <0=> 0 (highest) 
-// <1=> 1 
-// <2=> 2 
-// <3=> 3 
-// <4=> 4 
-// <5=> 5 
-// <6=> 6 
-// <7=> 7 
-
-#ifndef APP_SPIS_IRQ_PRIORITY
-#define APP_SPIS_IRQ_PRIORITY 7
-#endif
-
-// <o> APP_SPIS_SCK_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_SCK_PIN
-#define APP_SPIS_SCK_PIN 31
-#endif
-
-// <o> APP_SPIS_MISO_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_MISO_PIN
-#define APP_SPIS_MISO_PIN 31
-#endif
-
-// <o> APP_SPIS_MOSI_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_MOSI_PIN
-#define APP_SPIS_MOSI_PIN 31
-#endif
-
-// <o> APP_SPIS_CS_PIN  - Pin number
- 
-// <0=> 0 (P0.0) 
-// <1=> 1 (P0.1) 
-// <2=> 2 (P0.2) 
-// <3=> 3 (P0.3) 
-// <4=> 4 (P0.4) 
-// <5=> 5 (P0.5) 
-// <6=> 6 (P0.6) 
-// <7=> 7 (P0.7) 
-// <8=> 8 (P0.8) 
-// <9=> 9 (P0.9) 
-// <10=> 10 (P0.10) 
-// <11=> 11 (P0.11) 
-// <12=> 12 (P0.12) 
-// <13=> 13 (P0.13) 
-// <14=> 14 (P0.14) 
-// <15=> 15 (P0.15) 
-// <16=> 16 (P0.16) 
-// <17=> 17 (P0.17) 
-// <18=> 18 (P0.18) 
-// <19=> 19 (P0.19) 
-// <20=> 20 (P0.20) 
-// <21=> 21 (P0.21) 
-// <22=> 22 (P0.22) 
-// <23=> 23 (P0.23) 
-// <24=> 24 (P0.24) 
-// <25=> 25 (P0.25) 
-// <26=> 26 (P0.26) 
-// <27=> 27 (P0.27) 
-// <28=> 28 (P0.28) 
-// <29=> 29 (P0.29) 
-// <30=> 30 (P0.30) 
-// <31=> 31 (P0.31) 
-// <4294967295=> Not connected 
-
-#ifndef APP_SPIS_CS_PIN
-#define APP_SPIS_CS_PIN 31
-#endif
-
-// <o> APP_SPIS_IRQ_PRIORITY  - Interrupt priority
- 
-
-// <i> Priorities 0,2 (nRF51) and 0,1,4,5 (nRF52) are reserved for SoftDevice
-// <0=> 0 (highest) 
-// <1=> 1 
-// <2=> 2 
-// <3=> 3 
-// <4=> 4 
-// <5=> 5 
-// <6=> 6 
-// <7=> 7 
-
-#ifndef APP_SPIS_IRQ_PRIORITY
-#define APP_SPIS_IRQ_PRIORITY 7
-#endif
-
 // </h> 
 //==========================================================
 
@@ -1300,7 +238,7 @@
 // <h> nRF_Drivers 
 
 //==========================================================
-// <e> GPIOTE_ENABLED - nrf_drv_gpiote - GPIOTE peripheral driver
+// <e> GPIOTE_ENABLED - nrf_drv_gpiote - GPIOTE peripheral driver - legacy layer
 //==========================================================
 #ifndef GPIOTE_ENABLED
 #define GPIOTE_ENABLED 1
@@ -1329,14 +267,300 @@
 
 // </e>
 
-// <q> PERIPHERAL_RESOURCE_SHARING_ENABLED  - nrf_drv_common - Peripheral drivers common module
- 
-
-#ifndef PERIPHERAL_RESOURCE_SHARING_ENABLED
-#define PERIPHERAL_RESOURCE_SHARING_ENABLED 0
+// <e> NRFX_GPIOTE_ENABLED - nrfx_gpiote - GPIOTE peripheral driver
+//==========================================================
+#ifndef NRFX_GPIOTE_ENABLED
+#define NRFX_GPIOTE_ENABLED 1
+#endif
+// <o> NRFX_GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS - Number of lower power input pins 
+#ifndef NRFX_GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS
+#define NRFX_GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS 1
 #endif
 
-// <e> SPIS_ENABLED - nrf_drv_spis - SPI Slave driver
+// <o> NRFX_GPIOTE_CONFIG_IRQ_PRIORITY  - Interrupt priority
+ 
+// <0=> 0 (highest) 
+// <1=> 1 
+// <2=> 2 
+// <3=> 3 
+// <4=> 4 
+// <5=> 5 
+// <6=> 6 
+// <7=> 7 
+
+#ifndef NRFX_GPIOTE_CONFIG_IRQ_PRIORITY
+#define NRFX_GPIOTE_CONFIG_IRQ_PRIORITY 7
+#endif
+
+// <e> NRFX_GPIOTE_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRFX_GPIOTE_CONFIG_LOG_ENABLED
+#define NRFX_GPIOTE_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRFX_GPIOTE_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRFX_GPIOTE_CONFIG_LOG_LEVEL
+#define NRFX_GPIOTE_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRFX_GPIOTE_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_GPIOTE_CONFIG_INFO_COLOR
+#define NRFX_GPIOTE_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRFX_GPIOTE_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_GPIOTE_CONFIG_DEBUG_COLOR
+#define NRFX_GPIOTE_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// </e>
+
+// <e> NRFX_PRS_ENABLED - nrfx_prs - Peripheral Resource Sharing module
+//==========================================================
+#ifndef NRFX_PRS_ENABLED
+#define NRFX_PRS_ENABLED 0
+#endif
+// <q> NRFX_PRS_BOX_0_ENABLED  - Enables box 0 in the module.
+ 
+
+#ifndef NRFX_PRS_BOX_0_ENABLED
+#define NRFX_PRS_BOX_0_ENABLED 0
+#endif
+
+// <q> NRFX_PRS_BOX_1_ENABLED  - Enables box 1 in the module.
+ 
+
+#ifndef NRFX_PRS_BOX_1_ENABLED
+#define NRFX_PRS_BOX_1_ENABLED 0
+#endif
+
+// <q> NRFX_PRS_BOX_2_ENABLED  - Enables box 2 in the module.
+ 
+
+#ifndef NRFX_PRS_BOX_2_ENABLED
+#define NRFX_PRS_BOX_2_ENABLED 0
+#endif
+
+// <q> NRFX_PRS_BOX_3_ENABLED  - Enables box 3 in the module.
+ 
+
+#ifndef NRFX_PRS_BOX_3_ENABLED
+#define NRFX_PRS_BOX_3_ENABLED 0
+#endif
+
+// <q> NRFX_PRS_BOX_4_ENABLED  - Enables box 4 in the module.
+ 
+
+#ifndef NRFX_PRS_BOX_4_ENABLED
+#define NRFX_PRS_BOX_4_ENABLED 0
+#endif
+
+// <e> NRFX_PRS_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRFX_PRS_CONFIG_LOG_ENABLED
+#define NRFX_PRS_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRFX_PRS_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRFX_PRS_CONFIG_LOG_LEVEL
+#define NRFX_PRS_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRFX_PRS_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_PRS_CONFIG_INFO_COLOR
+#define NRFX_PRS_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRFX_PRS_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_PRS_CONFIG_DEBUG_COLOR
+#define NRFX_PRS_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// </e>
+
+// <e> NRFX_SPIS_ENABLED - nrfx_spis - SPIS peripheral driver
+//==========================================================
+#ifndef NRFX_SPIS_ENABLED
+#define NRFX_SPIS_ENABLED 1
+#endif
+// <q> NRFX_SPIS0_ENABLED  - Enable SPIS0 instance
+ 
+
+#ifndef NRFX_SPIS0_ENABLED
+#define NRFX_SPIS0_ENABLED 0
+#endif
+
+// <q> NRFX_SPIS1_ENABLED  - Enable SPIS1 instance
+ 
+
+#ifndef NRFX_SPIS1_ENABLED
+#define NRFX_SPIS1_ENABLED 0
+#endif
+
+// <q> NRFX_SPIS2_ENABLED  - Enable SPIS2 instance
+ 
+
+#ifndef NRFX_SPIS2_ENABLED
+#define NRFX_SPIS2_ENABLED 0
+#endif
+
+// <o> NRFX_SPIS_DEFAULT_CONFIG_IRQ_PRIORITY  - Interrupt priority
+ 
+// <0=> 0 (highest) 
+// <1=> 1 
+// <2=> 2 
+// <3=> 3 
+// <4=> 4 
+// <5=> 5 
+// <6=> 6 
+// <7=> 7 
+
+#ifndef NRFX_SPIS_DEFAULT_CONFIG_IRQ_PRIORITY
+#define NRFX_SPIS_DEFAULT_CONFIG_IRQ_PRIORITY 7
+#endif
+
+// <o> NRFX_SPIS_DEFAULT_DEF - SPIS default DEF character  <0-255> 
+
+
+#ifndef NRFX_SPIS_DEFAULT_DEF
+#define NRFX_SPIS_DEFAULT_DEF 255
+#endif
+
+// <o> NRFX_SPIS_DEFAULT_ORC - SPIS default ORC character  <0-255> 
+
+
+#ifndef NRFX_SPIS_DEFAULT_ORC
+#define NRFX_SPIS_DEFAULT_ORC 255
+#endif
+
+// <e> NRFX_SPIS_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRFX_SPIS_CONFIG_LOG_ENABLED
+#define NRFX_SPIS_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRFX_SPIS_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRFX_SPIS_CONFIG_LOG_LEVEL
+#define NRFX_SPIS_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRFX_SPIS_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_SPIS_CONFIG_INFO_COLOR
+#define NRFX_SPIS_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRFX_SPIS_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_SPIS_CONFIG_DEBUG_COLOR
+#define NRFX_SPIS_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <q> NRFX_SPIS_NRF52_ANOMALY_109_WORKAROUND_ENABLED  - Enables nRF52 Anomaly 109 workaround for SPIS.
+ 
+
+// <i> The workaround uses a GPIOTE channel to generate interrupts
+// <i> on falling edges detected on the CSN line. This will make
+// <i> the CPU active for the moment when SPIS starts DMA transfers,
+// <i> and this way the transfers will be protected.
+// <i> This workaround uses GPIOTE driver, so this driver must be
+// <i> enabled as well.
+
+#ifndef NRFX_SPIS_NRF52_ANOMALY_109_WORKAROUND_ENABLED
+#define NRFX_SPIS_NRF52_ANOMALY_109_WORKAROUND_ENABLED 0
+#endif
+
+// </e>
+
+// <e> SPIS_ENABLED - nrf_drv_spis - SPIS peripheral driver - legacy layer
 //==========================================================
 #ifndef SPIS_ENABLED
 #define SPIS_ENABLED 1
@@ -1508,13 +732,6 @@
 #define APP_TIMER_CONFIG_USE_SCHEDULER 0
 #endif
 
-// <q> APP_TIMER_WITH_PROFILER  - Enable app_timer profiling
- 
-
-#ifndef APP_TIMER_WITH_PROFILER
-#define APP_TIMER_WITH_PROFILER 0
-#endif
-
 // <q> APP_TIMER_KEEPS_RTC_ACTIVE  - Enable RTC always on
  
 
@@ -1525,23 +742,27 @@
 #define APP_TIMER_KEEPS_RTC_ACTIVE 0
 #endif
 
-// <o> APP_TIMER_CONFIG_SWI_NUMBER  - Configure SWI instance used.
+// <h> App Timer Legacy configuration - Legacy configuration.
+
+//==========================================================
+// <q> APP_TIMER_WITH_PROFILER  - Enable app_timer profiling
  
-// <0=> 0 
-// <1=> 1 
+
+#ifndef APP_TIMER_WITH_PROFILER
+#define APP_TIMER_WITH_PROFILER 0
+#endif
+
+// <q> APP_TIMER_CONFIG_SWI_NUMBER  - Configure SWI instance used.
+ 
 
 #ifndef APP_TIMER_CONFIG_SWI_NUMBER
 #define APP_TIMER_CONFIG_SWI_NUMBER 0
 #endif
 
+// </h> 
+//==========================================================
+
 // </e>
-
-// <q> BUTTON_ENABLED  - app_button - buttons handling module
- 
-
-#ifndef BUTTON_ENABLED
-#define BUTTON_ENABLED 1
-#endif
 
 // <e> NRF_BALLOC_ENABLED - nrf_balloc - Block allocator module
 //==========================================================
@@ -1588,9 +809,23 @@
 #define NRF_BALLOC_CONFIG_DATA_TRASHING_CHECK_ENABLED 0
 #endif
 
+// <q> NRF_BALLOC_CLI_CMDS  - Enable CLI commands specific to the module
+ 
+
+#ifndef NRF_BALLOC_CLI_CMDS
+#define NRF_BALLOC_CLI_CMDS 0
+#endif
+
 // </e>
 
 // </e>
+
+// <q> NRF_FPRINTF_ENABLED  - nrf_fprintf - fprintf function.
+ 
+
+#ifndef NRF_FPRINTF_ENABLED
+#define NRF_FPRINTF_ENABLED 1
+#endif
 
 // <q> NRF_MEMOBJ_ENABLED  - nrf_memobj - Linked memory allocator module
  
@@ -1606,12 +841,39 @@
 #define NRF_STRERROR_ENABLED 1
 #endif
 
+// <h> app_button - buttons handling module
+
+//==========================================================
+// <q> BUTTON_ENABLED  - Enables Button module
+ 
+
+#ifndef BUTTON_ENABLED
+#define BUTTON_ENABLED 1
+#endif
+
+// <q> BUTTON_HIGH_ACCURACY_ENABLED  - Enables GPIOTE high accuracy for buttons
+ 
+
+#ifndef BUTTON_HIGH_ACCURACY_ENABLED
+#define BUTTON_HIGH_ACCURACY_ENABLED 0
+#endif
+
+// </h> 
+//==========================================================
+
 // </h> 
 //==========================================================
 
 // <h> nRF_Log 
 
 //==========================================================
+// <q> NRF_LOG_STR_FORMATTER_TIMESTAMP_FORMAT_ENABLED  - nrf_log_str_formatter - Log string formatter
+ 
+
+#ifndef NRF_LOG_STR_FORMATTER_TIMESTAMP_FORMAT_ENABLED
+#define NRF_LOG_STR_FORMATTER_TIMESTAMP_FORMAT_ENABLED 1
+#endif
+
 // <h> nrf_log - Logger
 
 //==========================================================
@@ -1724,14 +986,19 @@
 #define NRF_LOG_ALLOW_OVERFLOW 1
 #endif
 
-// <q> NRF_LOG_USES_TIMESTAMP  - Enable timestamping
- 
+// <e> NRF_LOG_USES_TIMESTAMP - Enable timestamping
 
 // <i> Function for getting the timestamp is provided by the user
-
+//==========================================================
 #ifndef NRF_LOG_USES_TIMESTAMP
 #define NRF_LOG_USES_TIMESTAMP 0
 #endif
+// <o> NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY - Default frequency of the timestamp (in Hz) 
+#ifndef NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY
+#define NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY 32768
+#endif
+
+// </e>
 
 // <q> NRF_LOG_FILTERS_ENABLED  - Enable dynamic filtering of logs.
  
@@ -1991,57 +1258,6 @@
 
 // </e>
 
-// <e> COMMON_CONFIG_LOG_ENABLED - Enables logging in the module.
-//==========================================================
-#ifndef COMMON_CONFIG_LOG_ENABLED
-#define COMMON_CONFIG_LOG_ENABLED 0
-#endif
-// <o> COMMON_CONFIG_LOG_LEVEL  - Default Severity level
- 
-// <0=> Off 
-// <1=> Error 
-// <2=> Warning 
-// <3=> Info 
-// <4=> Debug 
-
-#ifndef COMMON_CONFIG_LOG_LEVEL
-#define COMMON_CONFIG_LOG_LEVEL 3
-#endif
-
-// <o> COMMON_CONFIG_INFO_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef COMMON_CONFIG_INFO_COLOR
-#define COMMON_CONFIG_INFO_COLOR 0
-#endif
-
-// <o> COMMON_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef COMMON_CONFIG_DEBUG_COLOR
-#define COMMON_CONFIG_DEBUG_COLOR 0
-#endif
-
-// </e>
-
 // <e> COMP_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef COMP_CONFIG_LOG_ENABLED
@@ -2140,57 +1356,6 @@
 
 #ifndef GPIOTE_CONFIG_DEBUG_COLOR
 #define GPIOTE_CONFIG_DEBUG_COLOR 0
-#endif
-
-// </e>
-
-// <e> I2S_CONFIG_LOG_ENABLED - Enables logging in the module.
-//==========================================================
-#ifndef I2S_CONFIG_LOG_ENABLED
-#define I2S_CONFIG_LOG_ENABLED 0
-#endif
-// <o> I2S_CONFIG_LOG_LEVEL  - Default Severity level
- 
-// <0=> Off 
-// <1=> Error 
-// <2=> Warning 
-// <3=> Info 
-// <4=> Debug 
-
-#ifndef I2S_CONFIG_LOG_LEVEL
-#define I2S_CONFIG_LOG_LEVEL 3
-#endif
-
-// <o> I2S_CONFIG_INFO_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef I2S_CONFIG_INFO_COLOR
-#define I2S_CONFIG_INFO_COLOR 0
-#endif
-
-// <o> I2S_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef I2S_CONFIG_DEBUG_COLOR
-#define I2S_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -2712,57 +1877,6 @@
 
 // </e>
 
-// <e> SWI_CONFIG_LOG_ENABLED - Enables logging in the module.
-//==========================================================
-#ifndef SWI_CONFIG_LOG_ENABLED
-#define SWI_CONFIG_LOG_ENABLED 0
-#endif
-// <o> SWI_CONFIG_LOG_LEVEL  - Default Severity level
- 
-// <0=> Off 
-// <1=> Error 
-// <2=> Warning 
-// <3=> Info 
-// <4=> Debug 
-
-#ifndef SWI_CONFIG_LOG_LEVEL
-#define SWI_CONFIG_LOG_LEVEL 3
-#endif
-
-// <o> SWI_CONFIG_INFO_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef SWI_CONFIG_INFO_COLOR
-#define SWI_CONFIG_INFO_COLOR 0
-#endif
-
-// <o> SWI_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef SWI_CONFIG_DEBUG_COLOR
-#define SWI_CONFIG_DEBUG_COLOR 0
-#endif
-
-// </e>
-
 // <e> TIMER_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef TIMER_CONFIG_LOG_ENABLED
@@ -3075,6 +2189,73 @@
 // <h> nrf_log in nRF_Libraries 
 
 //==========================================================
+// <e> APP_TIMER_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef APP_TIMER_CONFIG_LOG_ENABLED
+#define APP_TIMER_CONFIG_LOG_ENABLED 0
+#endif
+// <o> APP_TIMER_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef APP_TIMER_CONFIG_LOG_LEVEL
+#define APP_TIMER_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> APP_TIMER_CONFIG_INITIAL_LOG_LEVEL  - Initial severity level if dynamic filtering is enabled.
+ 
+
+// <i> If module generates a lot of logs, initial log level can
+// <i> be decreased to prevent flooding. Severity level can be
+// <i> increased on instance basis.
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef APP_TIMER_CONFIG_INITIAL_LOG_LEVEL
+#define APP_TIMER_CONFIG_INITIAL_LOG_LEVEL 3
+#endif
+
+// <o> APP_TIMER_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_TIMER_CONFIG_INFO_COLOR
+#define APP_TIMER_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> APP_TIMER_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_TIMER_CONFIG_DEBUG_COLOR
+#define APP_TIMER_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
 // <e> APP_USBD_CDC_ACM_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef APP_USBD_CDC_ACM_CONFIG_LOG_ENABLED
@@ -3122,6 +2303,57 @@
 
 #ifndef APP_USBD_CDC_ACM_CONFIG_DEBUG_COLOR
 #define APP_USBD_CDC_ACM_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> APP_USBD_DUMMY_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef APP_USBD_DUMMY_CONFIG_LOG_ENABLED
+#define APP_USBD_DUMMY_CONFIG_LOG_ENABLED 0
+#endif
+// <o> APP_USBD_DUMMY_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef APP_USBD_DUMMY_CONFIG_LOG_LEVEL
+#define APP_USBD_DUMMY_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> APP_USBD_DUMMY_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_USBD_DUMMY_CONFIG_INFO_COLOR
+#define APP_USBD_DUMMY_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> APP_USBD_DUMMY_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_USBD_DUMMY_CONFIG_DEBUG_COLOR
+#define APP_USBD_DUMMY_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -3177,6 +2409,120 @@
 
 // </e>
 
+// <e> APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_ENABLED
+#define APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_ENABLED 0
+#endif
+// <o> APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_LEVEL
+#define APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> APP_USBD_NRF_DFU_TRIGGER_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_USBD_NRF_DFU_TRIGGER_CONFIG_INFO_COLOR
+#define APP_USBD_NRF_DFU_TRIGGER_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> APP_USBD_NRF_DFU_TRIGGER_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_USBD_NRF_DFU_TRIGGER_CONFIG_DEBUG_COLOR
+#define APP_USBD_NRF_DFU_TRIGGER_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_ATFIFO_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_ATFIFO_CONFIG_LOG_ENABLED
+#define NRF_ATFIFO_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_ATFIFO_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_ATFIFO_CONFIG_LOG_LEVEL
+#define NRF_ATFIFO_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_ATFIFO_CONFIG_LOG_INIT_FILTER_LEVEL  - Initial severity level if dynamic filtering is enabled
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_ATFIFO_CONFIG_LOG_INIT_FILTER_LEVEL
+#define NRF_ATFIFO_CONFIG_LOG_INIT_FILTER_LEVEL 3
+#endif
+
+// <o> NRF_ATFIFO_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_ATFIFO_CONFIG_INFO_COLOR
+#define NRF_ATFIFO_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_ATFIFO_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_ATFIFO_CONFIG_DEBUG_COLOR
+#define NRF_ATFIFO_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
 // <e> NRF_BALLOC_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_BALLOC_CONFIG_LOG_ENABLED
@@ -3192,6 +2538,22 @@
 
 #ifndef NRF_BALLOC_CONFIG_LOG_LEVEL
 #define NRF_BALLOC_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_BALLOC_CONFIG_INITIAL_LOG_LEVEL  - Initial severity level if dynamic filtering is enabled.
+ 
+
+// <i> If module generates a lot of logs, initial log level can
+// <i> be decreased to prevent flooding. Severity level can be
+// <i> increased on instance basis.
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_BALLOC_CONFIG_INITIAL_LOG_LEVEL
+#define NRF_BALLOC_CONFIG_INITIAL_LOG_LEVEL 3
 #endif
 
 // <o> NRF_BALLOC_CONFIG_INFO_COLOR  - ANSI escape code prefix.
@@ -3279,6 +2641,57 @@
 
 // </e>
 
+// <e> NRF_CLI_LIBUARTE_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_CLI_LIBUARTE_CONFIG_LOG_ENABLED
+#define NRF_CLI_LIBUARTE_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_CLI_LIBUARTE_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_CLI_LIBUARTE_CONFIG_LOG_LEVEL
+#define NRF_CLI_LIBUARTE_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_CLI_LIBUARTE_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_CLI_LIBUARTE_CONFIG_INFO_COLOR
+#define NRF_CLI_LIBUARTE_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_CLI_LIBUARTE_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_CLI_LIBUARTE_CONFIG_DEBUG_COLOR
+#define NRF_CLI_LIBUARTE_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
 // <e> NRF_CLI_UART_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_CLI_UART_CONFIG_LOG_ENABLED
@@ -3326,6 +2739,57 @@
 
 #ifndef NRF_CLI_UART_CONFIG_DEBUG_COLOR
 #define NRF_CLI_UART_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_LIBUARTE_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_LIBUARTE_CONFIG_LOG_ENABLED
+#define NRF_LIBUARTE_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_LIBUARTE_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_LIBUARTE_CONFIG_LOG_LEVEL
+#define NRF_LIBUARTE_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_LIBUARTE_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_LIBUARTE_CONFIG_INFO_COLOR
+#define NRF_LIBUARTE_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_LIBUARTE_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_LIBUARTE_CONFIG_DEBUG_COLOR
+#define NRF_LIBUARTE_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -3428,6 +2892,69 @@
 
 #ifndef NRF_PWR_MGMT_CONFIG_DEBUG_COLOR
 #define NRF_PWR_MGMT_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_QUEUE_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_QUEUE_CONFIG_LOG_ENABLED
+#define NRF_QUEUE_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_QUEUE_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_QUEUE_CONFIG_LOG_LEVEL
+#define NRF_QUEUE_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_QUEUE_CONFIG_LOG_INIT_FILTER_LEVEL  - Initial severity level if dynamic filtering is enabled
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_QUEUE_CONFIG_LOG_INIT_FILTER_LEVEL
+#define NRF_QUEUE_CONFIG_LOG_INIT_FILTER_LEVEL 3
+#endif
+
+// <o> NRF_QUEUE_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_QUEUE_CONFIG_INFO_COLOR
+#define NRF_QUEUE_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_QUEUE_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_QUEUE_CONFIG_DEBUG_COLOR
+#define NRF_QUEUE_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -3683,6 +3210,114 @@
 
 #ifndef NRF_SORTLIST_CONFIG_DEBUG_COLOR
 #define NRF_SORTLIST_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_TWI_SENSOR_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_TWI_SENSOR_CONFIG_LOG_ENABLED
+#define NRF_TWI_SENSOR_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_TWI_SENSOR_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_TWI_SENSOR_CONFIG_LOG_LEVEL
+#define NRF_TWI_SENSOR_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_TWI_SENSOR_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_TWI_SENSOR_CONFIG_INFO_COLOR
+#define NRF_TWI_SENSOR_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_TWI_SENSOR_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_TWI_SENSOR_CONFIG_DEBUG_COLOR
+#define NRF_TWI_SENSOR_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// </h> 
+//==========================================================
+
+// <h> nrf_log in nRF_Serialization 
+
+//==========================================================
+// <e> SER_HAL_TRANSPORT_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef SER_HAL_TRANSPORT_CONFIG_LOG_ENABLED
+#define SER_HAL_TRANSPORT_CONFIG_LOG_ENABLED 0
+#endif
+// <o> SER_HAL_TRANSPORT_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef SER_HAL_TRANSPORT_CONFIG_LOG_LEVEL
+#define SER_HAL_TRANSPORT_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> SER_HAL_TRANSPORT_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef SER_HAL_TRANSPORT_CONFIG_INFO_COLOR
+#define SER_HAL_TRANSPORT_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> SER_HAL_TRANSPORT_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef SER_HAL_TRANSPORT_CONFIG_DEBUG_COLOR
+#define SER_HAL_TRANSPORT_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -84,6 +84,9 @@ NRF_SECTION_SET_DEF(sdh_ble_observers, nrf_sdh_ble_evt_observer_t, NRF_SDH_BLE_O
 #define APP_RAM_START   (uint32_t)m_ram_start
 
 
+static bool m_stack_is_enabled;
+
+
 ret_code_t nrf_sdh_ble_app_ram_start_get(uint32_t * p_app_ram_start)
 {
     if (p_app_ram_start == NULL)
@@ -136,8 +139,8 @@ ret_code_t nrf_sdh_ble_default_cfg_set(uint8_t conn_cfg_tag, uint32_t * p_ram_st
     ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = NRF_SDH_BLE_PERIPHERAL_LINK_COUNT;
 #ifndef S112
     ble_cfg.gap_cfg.role_count_cfg.central_role_count = NRF_SDH_BLE_CENTRAL_LINK_COUNT;
-    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = NRF_SDH_BLE_CENTRAL_LINK_COUNT ?
-                                                        BLE_GAP_ROLE_COUNT_CENTRAL_SEC_DEFAULT : 0;
+    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = MIN(NRF_SDH_BLE_CENTRAL_LINK_COUNT,
+                                                            BLE_GAP_ROLE_COUNT_CENTRAL_SEC_DEFAULT);
 #endif
 
     ret_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, *p_ram_start);
@@ -159,7 +162,7 @@ ret_code_t nrf_sdh_ble_default_cfg_set(uint8_t conn_cfg_tag, uint32_t * p_ram_st
         NRF_LOG_ERROR("sd_ble_cfg_set() returned %s when attempting to set BLE_CONN_CFG_GATT.",
                       nrf_strerror_get(ret_code));
     }
-#endif
+#endif  // NRF_SDH_BLE_GATT_MAX_MTU_SIZE != 23
 #endif  // NRF_SDH_BLE_TOTAL_LINK_COUNT != 0
 
     // Configure number of custom UUIDS.
@@ -220,19 +223,33 @@ ret_code_t nrf_sdh_ble_enable(uint32_t * const p_app_ram_start)
     // Start of RAM, obtained from linker symbol.
     uint32_t const app_ram_start_link = *p_app_ram_start;
 
-    NRF_LOG_DEBUG("RAM starts at 0x%x", app_ram_start_link);
-
     ret_code_t ret_code = sd_ble_enable(p_app_ram_start);
-    if (*p_app_ram_start != app_ram_start_link)
+    if (*p_app_ram_start > app_ram_start_link)
     {
-        NRF_LOG_WARNING("RAM starts at 0x%x, can be adjusted to 0x%x.",
-                        app_ram_start_link, *p_app_ram_start);
+        NRF_LOG_WARNING("Insufficient RAM allocated for the SoftDevice.");
 
-        NRF_LOG_WARNING("RAM size can be adjusted to 0x%x.",
+        NRF_LOG_WARNING("Change the RAM start location from 0x%x to 0x%x.",
+                        app_ram_start_link, *p_app_ram_start);
+        NRF_LOG_WARNING("Maximum RAM size for application is 0x%x.",
                         ram_end_address_get() - (*p_app_ram_start));
     }
+    else
+    {
+        NRF_LOG_DEBUG("RAM starts at 0x%x", app_ram_start_link);
+        if (*p_app_ram_start != app_ram_start_link)
+        {
+            NRF_LOG_DEBUG("RAM start location can be adjusted to 0x%x.", *p_app_ram_start);
 
-    if (ret_code != NRF_SUCCESS)
+            NRF_LOG_DEBUG("RAM size for application can be adjusted to 0x%x.",
+                          ram_end_address_get() - (*p_app_ram_start));
+        }
+    }
+
+    if (ret_code == NRF_SUCCESS)
+    {
+        m_stack_is_enabled = true;
+    }
+    else
     {
         NRF_LOG_ERROR("sd_ble_enable() returned %s.", nrf_strerror_get(ret_code));
     }
@@ -247,13 +264,20 @@ ret_code_t nrf_sdh_ble_enable(uint32_t * const p_app_ram_start)
  */
 static void nrf_sdh_ble_evts_poll(void * p_context)
 {
+    UNUSED_VARIABLE(p_context);
+
     ret_code_t ret_code;
 
-    UNUSED_VARIABLE(p_context);
+    if (!m_stack_is_enabled)
+    {
+        return;
+    }
 
     while (true)
     {
+        /*lint -save -e(587) */
         __ALIGN(4) uint8_t evt_buffer[NRF_SDH_BLE_EVT_BUF_SIZE];
+        /*lint -restore */
 
         ble_evt_t * p_ble_evt;
         uint16_t    evt_len = (uint16_t)sizeof(evt_buffer);

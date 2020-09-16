@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015-2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -487,6 +487,22 @@ void ble_ncfgs_ble_evt_handler(const ble_evt_t * p_ble_evt)
             // Clearing the struct will effectively set members to @ref BLE_GAP_DATA_LENGTH_AUTO.
             memset(&dl_params, 0, sizeof(ble_gap_data_length_params_t));
             UNUSED_RETURN_VALUE(sd_ble_gap_data_length_update(p_ble_evt->evt.gap_evt.conn_handle, &dl_params, NULL));
+            break;
+        }
+
+        case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
+        {
+            NCFGS_TRC("> PHY update request.");
+
+            ble_gap_phys_t const phys =
+            {
+                .rx_phys = BLE_GAP_PHY_AUTO,
+                .tx_phys = BLE_GAP_PHY_AUTO,
+            };
+
+            UNUSED_RETURN_VALUE(sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
+
+            NCFGS_TRC("< PHY update request.");
             break;
         }
 

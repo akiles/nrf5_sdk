@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -77,6 +77,9 @@
 /** @brief Number of blocks in DFU object. */
 #define BLOCKS_PER_DFU_OBJECT   (BLOCKS_PER_SIZE(DEFAULT_DFU_OBJECT_SIZE))
 
+/** @brief Value of invalid block number (for example to indicate that no block is being stored). */
+#define INVALID_BLOCK_NUMBER    (-1)
+
 /** @brief Result of a DFU block operation. */
 typedef enum
 {
@@ -85,6 +88,10 @@ typedef enum
     BACKGROUND_DFU_BLOCK_INVALID,       /**< Block is invalid in current context, indicates that DFU shall be aborted. */
     BACKGROUND_DFU_BLOCK_STORE_ERROR    /**< Block was not stored due to internal store error. */
 } background_dfu_block_result_t;
+
+/**@brief A function that module can register to receive block manager error notifications. */
+typedef void (* block_manager_result_notify_t)(background_dfu_block_result_t result,
+                                               void                        * p_context);
 
 /**@brief Block information structure. */
 typedef struct
@@ -102,12 +109,15 @@ typedef struct
  */
 typedef struct
 {
-    uint32_t image_size;                /**< Size of currently stored image. */
-    uint32_t image_type;                /**< Image type (init command or firmware). */
-    int32_t  last_block_stored;         /**< Number of the last block written in the flash. */
-    int32_t  current_block;             /**< Last received (or expected) block. */
-    uint8_t  data[BLOCK_BUFFER_SIZE];   /**< Block buffer. */
-    uint8_t  bitmap[BITMAP_SIZE];       /**< A bitmap indicating which blocks have been received. */
+    uint32_t                      image_size;                /**< Size of currently stored image. */
+    uint32_t                      image_type;                /**< Image type (init command or firmware). */
+    int32_t                       last_block_stored;         /**< Number of the last block written in the flash. */
+    int32_t                       current_block;             /**< Last received (or expected) block. */
+    uint8_t                       data[BLOCK_BUFFER_SIZE];   /**< Block buffer. */
+    uint8_t                       bitmap[BITMAP_SIZE];       /**< A bitmap indicating which blocks have been received. */
+    block_manager_result_notify_t result_handler;            /**< A callback function for error notification. */
+    void                        * p_context;                 /**< A context for result notification.*/
+    int32_t                       currently_stored_block;    /**< Number of block that is currently being stored. */
 } background_dfu_block_manager_t;
 
 /**@brief Bitmap structure used in bitmap requests. */
@@ -125,11 +135,15 @@ typedef struct
  * @param[in]    object_size   Size of the image to store.
  * @param[in]    initial_block Number of the first block to receive. Typically it would be 0, but
  *                             in case DFU restarted in the middle, it may differ.
+ * @param[in]    error_handler A callback for error notification.
+ * @param[in]    p_context     A context for error notification.
  */
 void block_manager_init(background_dfu_block_manager_t * p_bm,
                         uint32_t                         object_type,
                         uint32_t                         object_size,
-                        int32_t                          initial_block);
+                        int32_t                          initial_block,
+                        block_manager_result_notify_t    result_handler,
+                        void                           * p_context);
 
 /**@brief Process a single block.
  *

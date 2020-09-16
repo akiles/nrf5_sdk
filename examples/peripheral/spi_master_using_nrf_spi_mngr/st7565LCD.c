@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -300,7 +300,7 @@ ret_code_t st7565_init(void)
         {
             NRF_SPI_MNGR_TRANSFER(m_initialization, sizeof(m_initialization), NULL, 0)
         };
-        err_code = nrf_spi_mngr_perform(&m_nrf_spi_mngr, transfers, ARRAY_SIZE(transfers), NULL);
+        err_code = nrf_spi_mngr_perform(&m_nrf_spi_mngr, NULL, transfers, ARRAY_SIZE(transfers), NULL);
     }
 
     return err_code;

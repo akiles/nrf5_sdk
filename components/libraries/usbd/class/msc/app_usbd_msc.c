@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -37,13 +37,12 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-#include "sdk_config.h"
-#if APP_USBD_MSC_ENABLED
+#include "sdk_common.h"
+#if NRF_MODULE_ENABLED(APP_USBD_MSC)
+
 #include <string.h>
 #include <ctype.h>
-
 #include "app_usbd.h"
-#include "sdk_common.h"
 #include "app_usbd_msc.h"
 #include "app_usbd_string_desc.h"
 
@@ -78,15 +77,15 @@ STATIC_ASSERT(sizeof(app_usbd_msc_csw_t) == 13);
 #define NRF_LOG_LEVEL       APP_USBD_MSC_CONFIG_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  APP_USBD_MSC_CONFIG_INFO_COLOR
 #define NRF_LOG_DEBUG_COLOR APP_USBD_MSC_CONFIG_DEBUG_COLOR
-#else //APP_USBD_MSC_CONFIG_LOG_ENABLED
+#else // APP_USBD_MSC_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       0
-#endif //APP_USBD_MSC_CONFIG_LOG_ENABLED
+#endif  // APP_USBD_MSC_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
 NRF_LOG_MODULE_REGISTER();
 
-#define APP_USBD_MSC_IFACE_IDX 0    /**< Mass storage class interface index */
-#define APP_USBD_MSC_EPIN_IDX  0    /**< Mass storage class endpoint IN index */
-#define APP_USBD_MSC_EPOUT_IDX 1    /**< Mass storage class endpoint OUT index */
+#define APP_USBD_MSC_IFACE_IDX 0 /**< Mass storage class interface index */
+#define APP_USBD_MSC_EPIN_IDX  0 /**< Mass storage class endpoint IN index */
+#define APP_USBD_MSC_EPOUT_IDX 1 /**< Mass storage class endpoint OUT index */
 
 /**
  * @brief Set request buffer busy flag
@@ -104,9 +103,9 @@ NRF_LOG_MODULE_REGISTER();
  * */
 #define APP_USBD_MSC_REQ_BUSY_CLR(val, id) CLR_BIT(val, id)
 
-#define APP_USBD_MSC_REQ_BUSY_FULL_MASK (0x03)  /**< Request busy mask */
+#define APP_USBD_MSC_REQ_BUSY_FULL_MASK (0x03) /**< Request busy mask */
 
-static void msc_blockdev_ev_handler(nrf_block_dev_t const * p_blk_dev,
+static void msc_blockdev_ev_handler(nrf_block_dev_t const       * p_blk_dev,
                                     nrf_block_dev_event_t const * p_event);
 
 /**
@@ -122,6 +121,7 @@ static inline app_usbd_msc_t const * msc_get(app_usbd_class_inst_t const * p_ins
     return (app_usbd_msc_t const *)p_inst;
 }
 
+
 /**
  * @brief Auxiliary function to access MSC context data
  *
@@ -135,6 +135,7 @@ static inline app_usbd_msc_ctx_t * msc_ctx_get(app_usbd_msc_t const * p_msc)
     return &p_msc->specific.p_data->ctx;
 }
 
+
 /**
  * @brief Auxiliary function to access MSC IN endpoint address
  *
@@ -145,6 +146,7 @@ static inline app_usbd_msc_ctx_t * msc_ctx_get(app_usbd_msc_t const * p_msc)
 static inline nrf_drv_usbd_ep_t ep_in_addr_get(app_usbd_class_inst_t const * p_inst)
 {
     app_usbd_class_iface_conf_t const * class_iface;
+
     class_iface = app_usbd_class_iface_get(p_inst, APP_USBD_MSC_IFACE_IDX);
 
     app_usbd_class_ep_conf_t const * ep_cfg;
@@ -152,6 +154,7 @@ static inline nrf_drv_usbd_ep_t ep_in_addr_get(app_usbd_class_inst_t const * p_i
 
     return app_usbd_class_ep_address_get(ep_cfg);
 }
+
 
 /**
  * @brief Auxiliary function to access MSC OUT endpoint address
@@ -163,6 +166,7 @@ static inline nrf_drv_usbd_ep_t ep_in_addr_get(app_usbd_class_inst_t const * p_i
 static inline nrf_drv_usbd_ep_t ep_out_addr_get(app_usbd_class_inst_t const * p_inst)
 {
     app_usbd_class_iface_conf_t const * class_iface;
+
     class_iface = app_usbd_class_iface_get(p_inst, APP_USBD_MSC_IFACE_IDX);
 
     app_usbd_class_ep_conf_t const * ep_cfg;
@@ -170,6 +174,7 @@ static inline nrf_drv_usbd_ep_t ep_out_addr_get(app_usbd_class_inst_t const * p_
 
     return app_usbd_class_ep_address_get(ep_cfg);
 }
+
 
 /**
  * @brief Command Block Wrapper trigger
@@ -181,8 +186,8 @@ static inline nrf_drv_usbd_ep_t ep_out_addr_get(app_usbd_class_inst_t const * p_
  * */
 static ret_code_t cbw_wait_start(app_usbd_class_inst_t const * p_inst)
 {
-    app_usbd_msc_t const * p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_msc_t const * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
     nrf_drv_usbd_ep_t ep_addr_out = ep_out_addr_get(p_inst);
 
@@ -198,6 +203,7 @@ static ret_code_t cbw_wait_start(app_usbd_class_inst_t const * p_inst)
     return ret;
 }
 
+
 /**
  * @brief Command Status Wrapper trigger
  *
@@ -208,8 +214,8 @@ static ret_code_t cbw_wait_start(app_usbd_class_inst_t const * p_inst)
  * */
 static ret_code_t csw_wait_start(app_usbd_class_inst_t const * p_inst, uint8_t status)
 {
-    app_usbd_msc_t const * p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_msc_t const * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
     nrf_drv_usbd_ep_t ep_addr_in = ep_in_addr_get(p_inst);
 
@@ -229,6 +235,7 @@ static ret_code_t csw_wait_start(app_usbd_class_inst_t const * p_inst, uint8_t s
     return ret;
 }
 
+
 /**
  * @brief IN transfer trigger
  *
@@ -240,12 +247,12 @@ static ret_code_t csw_wait_start(app_usbd_class_inst_t const * p_inst, uint8_t s
  * @return Standard error code
  * */
 static ret_code_t transfer_in_start(app_usbd_class_inst_t const * p_inst,
-                                    void const *                  p_buff,
+                                    void const                  * p_buff,
                                     size_t                        size,
                                     app_usbd_msc_state_t          state)
 {
-    app_usbd_msc_t const * p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_msc_t const * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
     NRF_LOG_DEBUG("transfer_in_start: p_buff: %p, size: %u", (uint32_t)p_buff, size);
 
@@ -259,6 +266,7 @@ static ret_code_t transfer_in_start(app_usbd_class_inst_t const * p_inst,
     }
     return ret;
 }
+
 
 /**
  * @brief MSC reset request handler @ref  APP_USBD_MSC_REQ_BULK_RESET
@@ -287,12 +295,12 @@ static void bulk_ep_reset(app_usbd_class_inst_t const * p_inst)
  * @return Standard error code
  * */
 static ret_code_t transfer_out_start(app_usbd_class_inst_t const * p_inst,
-                                     void *                        p_buff,
+                                     void                        * p_buff,
                                      size_t                        size,
                                      app_usbd_msc_state_t          state)
 {
-    app_usbd_msc_t const * p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_msc_t const * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
     NRF_LOG_DEBUG("transfer_out_start: p_buff: %p, size: %u", (uint32_t)p_buff, size);
     nrf_drv_usbd_ep_t ep_addr_out = ep_out_addr_get(p_inst);
@@ -306,6 +314,7 @@ static ret_code_t transfer_out_start(app_usbd_class_inst_t const * p_inst,
     return ret;
 }
 
+
 /**
  * @brief Generic function to stall communication endpoints and mark error state
  *
@@ -314,10 +323,11 @@ static ret_code_t transfer_out_start(app_usbd_class_inst_t const * p_inst,
  * @param p_inst Generic class instance
  * @param state  State to set
  */
-static void status_generic_error_stall(app_usbd_class_inst_t const * p_inst, app_usbd_msc_state_t state)
+static void status_generic_error_stall(app_usbd_class_inst_t const * p_inst,
+                                       app_usbd_msc_state_t          state)
 {
     app_usbd_msc_t const * p_msc     = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
     nrf_drv_usbd_ep_t ep_in  = ep_in_addr_get(p_inst);
     nrf_drv_usbd_ep_t ep_out = ep_out_addr_get(p_inst);
@@ -329,6 +339,8 @@ static void status_generic_error_stall(app_usbd_class_inst_t const * p_inst, app
 
     p_msc_ctx->state = state;
 }
+
+
 /**
  * @brief Start status stage of unsupported SCSI command
  *
@@ -340,9 +352,9 @@ static void status_generic_error_stall(app_usbd_class_inst_t const * p_inst, app
  */
 static ret_code_t status_unsupported_start(app_usbd_class_inst_t const * p_inst)
 {
-    app_usbd_msc_t const * p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
-    bool data_stage = uint32_decode(p_msc_ctx->cbw.datlen) != 0;
+    app_usbd_msc_t const * p_msc      = msc_get(p_inst);
+    app_usbd_msc_ctx_t   * p_msc_ctx  = msc_ctx_get(p_msc);
+    bool                   data_stage = uint32_decode(p_msc_ctx->cbw.datlen) != 0;
 
     if (!data_stage)
     {
@@ -369,6 +381,7 @@ static ret_code_t status_unsupported_start(app_usbd_class_inst_t const * p_inst)
     return NRF_SUCCESS;
 }
 
+
 /**
  * @brief Start status stage of CBW invalid
  *
@@ -380,6 +393,7 @@ static void status_cbwinvalid_start(app_usbd_class_inst_t const * p_inst)
 {
     status_generic_error_stall(p_inst, APP_USBD_MSC_STATE_CBW_INVALID);
 }
+
 
 /**
  * @brief Start status stage of internal device error
@@ -396,6 +410,7 @@ static void status_deverror_start(app_usbd_class_inst_t const * p_inst)
     status_generic_error_stall(p_inst, APP_USBD_MSC_STATE_DEVICE_ERROR);
 }
 
+
 /**
  * @brief Internal SETUP standard IN request handler
  *
@@ -407,25 +422,35 @@ static void status_deverror_start(app_usbd_class_inst_t const * p_inst)
  * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
  */
 static ret_code_t setup_req_std_in(app_usbd_class_inst_t const * p_inst,
-                                   app_usbd_setup_evt_t const *  p_setup_ev)
+                                   app_usbd_setup_evt_t const  * p_setup_ev)
 {
-    /*Only Get Descriptor standard IN request is supported by MSC class*/
-    if (p_setup_ev->setup.bmRequest == APP_USBD_SETUP_STDREQ_GET_DESCRIPTOR)
+    /* Only Get Descriptor standard IN request is supported by MSC class */
+    if ((app_usbd_setup_req_rec(p_setup_ev->setup.bmRequestType) == APP_USBD_SETUP_REQREC_INTERFACE)
+        &&
+        (p_setup_ev->setup.bmRequest == APP_USBD_SETUP_STDREQ_GET_DESCRIPTOR))
     {
         size_t dsc_len = 0;
+        size_t max_size;
+
+        uint8_t * p_trans_buff = app_usbd_core_setup_transfer_buff_get(&max_size);
+
         /* Try to find descriptor in class internals*/
-        void const * p_dsc = app_usbd_class_descriptor_find(
+        ret_code_t ret = app_usbd_class_descriptor_find(
             p_inst,
             p_setup_ev->setup.wValue.hb,
             p_setup_ev->setup.wValue.lb,
+            p_trans_buff,
             &dsc_len);
-        if (p_dsc != NULL)
+
+        if (ret != NRF_ERROR_NOT_FOUND)
         {
-            return app_usbd_core_setup_rsp(&(p_setup_ev->setup), p_dsc, dsc_len);
+            ASSERT(dsc_len < NRF_DRV_USBD_EPSIZE);
+            return app_usbd_core_setup_rsp(&(p_setup_ev->setup), p_trans_buff, dsc_len);
         }
     }
     return NRF_ERROR_NOT_SUPPORTED;
 }
+
 
 /**
  * @brief Internal SETUP standard OUT request handler
@@ -439,14 +464,15 @@ static ret_code_t setup_req_std_in(app_usbd_class_inst_t const * p_inst,
  * @retval NRF_ERROR_FORBIDDEN if endpoint stall cannot be cleared because of internal state
  */
 static ret_code_t setup_req_std_out(app_usbd_class_inst_t const * p_inst,
-                                    app_usbd_setup_evt_t const *  p_setup_ev)
+                                    app_usbd_setup_evt_t const  * p_setup_ev)
 {
-    app_usbd_msc_t const * p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_msc_t const * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
-    app_usbd_setup_reqrec_t  req_rec = app_usbd_setup_req_rec(p_setup_ev->setup.bmRequestType);
-    if ((req_rec == APP_USBD_SETUP_REQREC_ENDPOINT                            ) &&
-        (p_setup_ev->setup.bmRequest == APP_USBD_SETUP_STDREQ_CLEAR_FEATURE   ) &&
+    app_usbd_setup_reqrec_t req_rec = app_usbd_setup_req_rec(p_setup_ev->setup.bmRequestType);
+
+    if ((req_rec == APP_USBD_SETUP_REQREC_ENDPOINT) &&
+        (p_setup_ev->setup.bmRequest == APP_USBD_SETUP_STDREQ_CLEAR_FEATURE) &&
         (p_setup_ev->setup.wValue.w == APP_USBD_SETUP_STDFEATURE_ENDPOINT_HALT))
     {
         if (p_msc_ctx->state == APP_USBD_MSC_STATE_CBW_INVALID)
@@ -473,6 +499,7 @@ static ret_code_t setup_req_std_out(app_usbd_class_inst_t const * p_inst,
                     }
                     break;
                 }
+
                 case APP_USBD_MSC_STATE_DEVICE_ERROR:
                 {
                     nrf_drv_usbd_ep_stall_clear(ep_out_addr_get(p_inst));
@@ -484,6 +511,7 @@ static ret_code_t setup_req_std_out(app_usbd_class_inst_t const * p_inst,
                     }
                     break;
                 }
+
                 default:
                     break;
             }
@@ -492,6 +520,7 @@ static ret_code_t setup_req_std_out(app_usbd_class_inst_t const * p_inst,
     }
     return NRF_ERROR_NOT_SUPPORTED;
 }
+
 
 /**
  * @brief Internal SETUP class IN request handler
@@ -504,7 +533,7 @@ static ret_code_t setup_req_std_out(app_usbd_class_inst_t const * p_inst,
  * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
  */
 static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
-                                     app_usbd_setup_evt_t const *  p_setup_ev)
+                                     app_usbd_setup_evt_t const  * p_setup_ev)
 {
     app_usbd_msc_t const * p_msc = msc_get(p_inst);
 
@@ -523,7 +552,7 @@ static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
                 break;
             }
 
-            size_t tx_size;
+            size_t     tx_size;
             uint16_t * p_tx_buff = app_usbd_core_setup_transfer_buff_get(&tx_size);
             ASSERT(p_msc->specific.inst.block_devs_count != 0);
             p_tx_buff[0] = p_msc->specific.inst.block_devs_count - 1;
@@ -532,6 +561,7 @@ static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
             UNUSED_VARIABLE(ret);
             return app_usbd_core_setup_rsp(&(p_setup_ev->setup), p_tx_buff, sizeof(uint8_t));
         }
+
         default:
             break;
 
@@ -539,6 +569,7 @@ static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
 
     return NRF_ERROR_NOT_SUPPORTED;
 }
+
 
 /**
  * @brief Internal SETUP class OUT request handler
@@ -551,10 +582,10 @@ static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
  * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
  */
 static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
-                                      app_usbd_setup_evt_t const *  p_setup_ev)
+                                      app_usbd_setup_evt_t const  * p_setup_ev)
 {
-    app_usbd_msc_t const * p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_msc_t const * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
     switch (p_setup_ev->setup.bmRequest)
     {
@@ -584,12 +615,14 @@ static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
 
             return NRF_SUCCESS;
         }
+
         default:
             break;
     }
 
     return NRF_ERROR_NOT_SUPPORTED;
 }
+
 
 /**
  * @brief Control endpoint handle
@@ -602,7 +635,7 @@ static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
  * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
  */
 static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
-                                      app_usbd_setup_evt_t const *  p_setup_ev)
+                                      app_usbd_setup_evt_t const  * p_setup_ev)
 {
     ASSERT(p_inst != NULL);
     ASSERT(p_setup_ev != NULL);
@@ -613,8 +646,10 @@ static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
         {
             case APP_USBD_SETUP_REQTYPE_STD:
                 return setup_req_std_in(p_inst, p_setup_ev);
+
             case APP_USBD_SETUP_REQTYPE_CLASS:
                 return setup_req_class_in(p_inst, p_setup_ev);
+
             default:
                 break;
         }
@@ -625,8 +660,10 @@ static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
         {
             case APP_USBD_SETUP_REQTYPE_STD:
                 return setup_req_std_out(p_inst, p_setup_ev);
+
             case APP_USBD_SETUP_REQTYPE_CLASS:
                 return setup_req_class_out(p_inst, p_setup_ev);
+
             default:
                 break;
         }
@@ -634,6 +671,7 @@ static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
 
     return NRF_ERROR_NOT_SUPPORTED;
 }
+
 
 /**
  * @brief Handle read6/read10 command data stage
@@ -646,8 +684,8 @@ static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
  */
 static ret_code_t state_data_in_handle(app_usbd_class_inst_t const * p_inst)
 {
-    app_usbd_msc_t const * p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_msc_t const * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
     ret_code_t ret = NRF_SUCCESS;
 
@@ -657,7 +695,7 @@ static ret_code_t state_data_in_handle(app_usbd_class_inst_t const * p_inst)
     if (p_msc_ctx->current.blk_datasize == 0 && p_msc_ctx->current.req_busy_mask == 0)
     {
         p_msc_ctx->current.blk_idx = p_msc_ctx->current.blk_size = 0;
-        ret = csw_wait_start(p_inst, p_msc_ctx->current.csw_status);
+        ret                        = csw_wait_start(p_inst, p_msc_ctx->current.csw_status);
         return ret;
     }
 
@@ -666,7 +704,7 @@ static ret_code_t state_data_in_handle(app_usbd_class_inst_t const * p_inst)
     if (p_msc_ctx->current.req_busy_mask == 0)
     {
         nrf_block_dev_t const * p_blkd =
-                                p_msc->specific.inst.pp_block_devs[p_msc_ctx->current.lun];
+            p_msc->specific.inst.pp_block_devs[p_msc_ctx->current.lun];
 
         /*Trigger new block read request*/
         p_msc_ctx->current.workbuff_pos ^= p_msc->specific.inst.block_buff_size;
@@ -677,7 +715,7 @@ static ret_code_t state_data_in_handle(app_usbd_class_inst_t const * p_inst)
                               p_msc_ctx->current.blk_idx,
                               p_msc_ctx->current.blk_count,
                               ((uint8_t *)p_msc->specific.inst.p_block_buff +
-                              p_msc_ctx->current.workbuff_pos));
+                               p_msc_ctx->current.workbuff_pos));
 
         NRF_LOG_DEBUG("nrf_blk_dev_read_req 3: id: %u, count: %u, left: %u, ptr: %p",
                       req.blk_id,
@@ -715,6 +753,7 @@ static ret_code_t state_data_in_handle(app_usbd_class_inst_t const * p_inst)
     return ret;
 }
 
+
 /**
  * @brief Endpoint IN event handler
  *
@@ -725,11 +764,11 @@ static ret_code_t state_data_in_handle(app_usbd_class_inst_t const * p_inst)
  * @retval NRF_SUCCESS if request handled correctly
  * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
  */
-static ret_code_t endpoint_in_event_handler(app_usbd_class_inst_t const *  p_inst,
+static ret_code_t endpoint_in_event_handler(app_usbd_class_inst_t const  * p_inst,
                                             app_usbd_complex_evt_t const * p_event)
 {
-    app_usbd_msc_t const * p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_msc_t const * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
     NRF_LOG_DEBUG("state: %d, ep in event, status: %d",
                   p_msc_ctx->state,
@@ -741,30 +780,37 @@ static ret_code_t endpoint_in_event_handler(app_usbd_class_inst_t const *  p_ins
     }
 
     ret_code_t ret = NRF_SUCCESS;
-    switch (p_msc_ctx->state) {
+
+    switch (p_msc_ctx->state)
+    {
         case APP_USBD_MSC_STATE_CMD_IN:
         {
             ret = csw_wait_start(p_inst, APP_USBD_MSC_CSW_STATUS_PASS);
             break;
         }
+
         case APP_USBD_MSC_STATE_DATA_IN:
         {
             ret = state_data_in_handle(p_inst);
             break;
         }
+
         case APP_USBD_MSC_STATE_CSW:
         {
             break;
         }
+
         case APP_USBD_MSC_STATE_DATA_OUT:
         {
             break;
         }
+
         case APP_USBD_MSC_STATE_UNSUPPORTED:
         {
             ret = NRF_ERROR_NOT_SUPPORTED;
             break;
         }
+
         default:
         {
             ret = NRF_ERROR_INTERNAL;
@@ -785,9 +831,10 @@ static ret_code_t endpoint_in_event_handler(app_usbd_class_inst_t const *  p_ins
  * @return Blocks to transfer
  * */
 static uint32_t next_transfer_blkcnt_calc(app_usbd_msc_t const * p_msc,
-                                          app_usbd_msc_ctx_t *   p_msc_ctx)
+                                          app_usbd_msc_ctx_t   * p_msc_ctx)
 {
     uint32_t blkcnt = p_msc->specific.inst.block_buff_size / p_msc_ctx->current.blk_size;
+
     if (blkcnt > (p_msc_ctx->current.blk_datasize / p_msc_ctx->current.blk_size))
     {
         blkcnt = p_msc_ctx->current.blk_datasize / p_msc_ctx->current.blk_size;
@@ -795,6 +842,7 @@ static uint32_t next_transfer_blkcnt_calc(app_usbd_msc_t const * p_msc,
 
     return blkcnt;
 }
+
 
 /**
  * @brief Helper function to calculate next transfer size
@@ -805,12 +853,13 @@ static uint32_t next_transfer_blkcnt_calc(app_usbd_msc_t const * p_msc,
  * */
 static uint32_t next_transfer_size_calc(app_usbd_msc_ctx_t * p_msc_ctx)
 {
-    uint32_t blk_cnt = p_msc_ctx->current.blk_count;
+    uint32_t blk_cnt  = p_msc_ctx->current.blk_count;
     uint32_t blk_size = p_msc_ctx->current.blk_size;
 
     return p_msc_ctx->current.blk_datasize > blk_size * blk_cnt ?
            blk_size * blk_cnt : p_msc_ctx->current.blk_datasize;
 }
+
 
 /**
  * @brief SCSI Command: @ref APP_USBD_SCSI_CMD_TESTUNITREADY handle
@@ -821,8 +870,8 @@ static uint32_t next_transfer_size_calc(app_usbd_msc_ctx_t * p_msc_ctx)
  * @return Standard error code
  * */
 static ret_code_t cmd_testunitready(app_usbd_class_inst_t const * p_inst,
-                                    app_usbd_msc_t const *        p_msc,
-                                    app_usbd_msc_ctx_t *          p_msc_ctx)
+                                    app_usbd_msc_t const        * p_msc,
+                                    app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: TESTUNITREADY");
     if (uint32_decode(p_msc_ctx->cbw.datlen) != 0)
@@ -843,6 +892,7 @@ static ret_code_t cmd_testunitready(app_usbd_class_inst_t const * p_inst,
     return csw_wait_start(p_inst, APP_USBD_MSC_CSW_STATUS_PASS);
 }
 
+
 /**
  * @brief SCSI Command: @ref APP_USBD_SCSI_CMD_REQUESTSENSE handle
  *
@@ -852,11 +902,11 @@ static ret_code_t cmd_testunitready(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_requestsense(app_usbd_class_inst_t const * p_inst,
-                                   app_usbd_msc_t const *        p_msc,
-                                   app_usbd_msc_ctx_t *          p_msc_ctx)
+                                   app_usbd_msc_t const        * p_msc,
+                                   app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: REQUESTSENSE");
-    app_usbd_scsi_cmd_requestsense_t const * p_reqs =  (const void *)p_msc_ctx->cbw.cdb;
+    app_usbd_scsi_cmd_requestsense_t const * p_reqs = (const void *)p_msc_ctx->cbw.cdb;
     UNUSED_VARIABLE(p_reqs);
 
     if ((p_msc_ctx->cbw.cdb_length < sizeof(app_usbd_scsi_cmd_requestsense_t)))
@@ -869,9 +919,12 @@ static ret_code_t cmd_requestsense(app_usbd_class_inst_t const * p_inst,
         return status_unsupported_start(p_inst);
     }
 
+    if (uint32_decode(p_msc_ctx->cbw.datlen) > sizeof(app_usbd_scsi_cmd_requestsense_resp_t))
+    {
+        return status_unsupported_start(p_inst);
+    }
+
     p_msc_ctx->resp_len = uint32_decode(p_msc_ctx->cbw.datlen);
-    p_msc_ctx->resp_len = MIN(p_msc_ctx->resp_len,
-                              sizeof(app_usbd_scsi_cmd_requestsense_resp_t));
 
     if (p_msc_ctx->resp_len == 0)
     {
@@ -901,29 +954,30 @@ static ret_code_t cmd_requestsense(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_formatunit(app_usbd_class_inst_t const * p_inst,
-                                 app_usbd_msc_t const *        p_msc,
-                                 app_usbd_msc_ctx_t *          p_msc_ctx)
+                                 app_usbd_msc_t const        * p_msc,
+                                 app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: FORMAT_UNIT");
     return status_unsupported_start(p_inst);
 }
 
+
 static ret_code_t cmd_read_start(app_usbd_class_inst_t const * p_inst,
-                                 app_usbd_msc_t const *        p_msc,
-                                 app_usbd_msc_ctx_t *          p_msc_ctx)
+                                 app_usbd_msc_t const        * p_msc,
+                                 app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     nrf_block_dev_t const * p_blkd = p_msc->specific.inst.pp_block_devs[p_msc_ctx->cbw.lun];
 
     p_msc_ctx->current.trans_in_progress = false;
-    p_msc_ctx->current.req_busy_mask = 0;
-    p_msc_ctx->current.workbuff_pos = 0;
+    p_msc_ctx->current.req_busy_mask     = 0;
+    p_msc_ctx->current.workbuff_pos      = 0;
 
     APP_USBD_MSC_REQ_BUSY_SET(p_msc_ctx->current.req_busy_mask, 0);
     NRF_BLOCK_DEV_REQUEST(req,
                           p_msc_ctx->current.blk_idx,
                           p_msc_ctx->current.blk_count,
                           ((uint8_t *)p_msc->specific.inst.p_block_buff +
-                          p_msc_ctx->current.workbuff_pos));
+                           p_msc_ctx->current.workbuff_pos));
 
     NRF_LOG_DEBUG("cmd_read_start");
     NRF_LOG_DEBUG("nrf_blk_dev_read_req 1: id: %u, count: %u, left: %u, ptr: %p",
@@ -938,6 +992,7 @@ static ret_code_t cmd_read_start(app_usbd_class_inst_t const * p_inst,
     return ret;
 }
 
+
 /**
  * @brief SCSI Command: @ref APP_USBD_SCSI_CMD_READ6 handle
  *
@@ -947,8 +1002,8 @@ static ret_code_t cmd_read_start(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_read6(app_usbd_class_inst_t const * p_inst,
-                            app_usbd_msc_t const *        p_msc,
-                            app_usbd_msc_ctx_t *          p_msc_ctx)
+                            app_usbd_msc_t const        * p_msc,
+                            app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: READ6");
     app_usbd_scsi_cmd_read6_t const * p_read6 = (const void *)p_msc_ctx->cbw.cdb;
@@ -964,12 +1019,12 @@ static ret_code_t cmd_read6(app_usbd_class_inst_t const * p_inst,
 
     nrf_block_dev_t const * p_blkd = p_msc->specific.inst.pp_block_devs[p_msc_ctx->cbw.lun];
 
-    p_msc_ctx->current.lun = p_msc_ctx->cbw.lun;
+    p_msc_ctx->current.lun     = p_msc_ctx->cbw.lun;
     p_msc_ctx->current.blk_idx = ((p_read6->mslba & 0x1F) << 16) |
-                                   uint16_big_decode(p_read6->lslba);
+                                 uint16_big_decode(p_read6->lslba);
     p_msc_ctx->current.blk_datasize = uint32_decode(p_msc_ctx->cbw.datlen);
-    p_msc_ctx->current.blk_size = nrf_blk_dev_geometry(p_blkd)->blk_size;
-    p_msc_ctx->current.blk_count = next_transfer_blkcnt_calc(p_msc, p_msc_ctx);
+    p_msc_ctx->current.blk_size     = nrf_blk_dev_geometry(p_blkd)->blk_size;
+    p_msc_ctx->current.blk_count    = next_transfer_blkcnt_calc(p_msc, p_msc_ctx);
 
     if (p_msc_ctx->current.blk_datasize > p_msc_ctx->current.blk_size * p_read6->xfrlen)
     {
@@ -980,14 +1035,15 @@ static ret_code_t cmd_read6(app_usbd_class_inst_t const * p_inst,
     return cmd_read_start(p_inst, p_msc, p_msc_ctx);
 }
 
+
 static ret_code_t cmd_write_start(app_usbd_class_inst_t const * p_inst,
-                                  app_usbd_msc_t const *        p_msc,
-                                  app_usbd_msc_ctx_t *          p_msc_ctx)
+                                  app_usbd_msc_t const        * p_msc,
+                                  app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("cmd_write_start");
     ret_code_t ret = transfer_out_start(p_inst,
                                         ((uint8_t *)p_msc->specific.inst.p_block_buff +
-                                        p_msc_ctx->current.workbuff_pos),
+                                         p_msc_ctx->current.workbuff_pos),
                                         next_transfer_size_calc(p_msc_ctx),
                                         APP_USBD_MSC_STATE_DATA_OUT);
 
@@ -996,12 +1052,13 @@ static ret_code_t cmd_write_start(app_usbd_class_inst_t const * p_inst,
         p_msc_ctx->current.trans_req_id = 0;
         APP_USBD_MSC_REQ_BUSY_SET(p_msc_ctx->current.req_busy_mask,
                                   p_msc_ctx->current.trans_req_id);
-        p_msc_ctx->current.workbuff_pos ^= p_msc->specific.inst.block_buff_size;
+        p_msc_ctx->current.workbuff_pos     ^= p_msc->specific.inst.block_buff_size;
         p_msc_ctx->current.trans_in_progress = true;
     }
 
     return ret;
 }
+
 
 /**
  * @brief SCSI Command: @ref APP_USBD_SCSI_CMD_WRITE6 handle
@@ -1012,8 +1069,8 @@ static ret_code_t cmd_write_start(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_write6(app_usbd_class_inst_t const * p_inst,
-                             app_usbd_msc_t const *        p_msc,
-                             app_usbd_msc_ctx_t *          p_msc_ctx)
+                             app_usbd_msc_t const        * p_msc,
+                             app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: WRITE6");
     app_usbd_scsi_cmd_write6_t const * p_write6 = (const void *)p_msc_ctx->cbw.cdb;
@@ -1029,12 +1086,12 @@ static ret_code_t cmd_write6(app_usbd_class_inst_t const * p_inst,
 
     nrf_block_dev_t const * p_blkd = p_msc->specific.inst.pp_block_devs[p_msc_ctx->cbw.lun];
 
-    p_msc_ctx->current.lun = p_msc_ctx->cbw.lun;
+    p_msc_ctx->current.lun     = p_msc_ctx->cbw.lun;
     p_msc_ctx->current.blk_idx = (p_write6->mslba & 0x1F << 16) |
-                                  uint16_big_decode(p_write6->lslba);
+                                 uint16_big_decode(p_write6->lslba);
     p_msc_ctx->current.blk_datasize = uint32_decode(p_msc_ctx->cbw.datlen);
-    p_msc_ctx->current.blk_size = nrf_blk_dev_geometry(p_blkd)->blk_size;
-    p_msc_ctx->current.blk_count = next_transfer_blkcnt_calc(p_msc, p_msc_ctx);
+    p_msc_ctx->current.blk_size     = nrf_blk_dev_geometry(p_blkd)->blk_size;
+    p_msc_ctx->current.blk_count    = next_transfer_blkcnt_calc(p_msc, p_msc_ctx);
 
     if (p_msc_ctx->current.blk_datasize > p_msc_ctx->current.blk_size * p_write6->xfrlen)
     {
@@ -1045,6 +1102,7 @@ static ret_code_t cmd_write6(app_usbd_class_inst_t const * p_inst,
     return cmd_write_start(p_inst, p_msc, p_msc_ctx);
 }
 
+
 /**
  * @brief SCSI Command: @ref APP_USBD_SCSI_CMD_INQUIRY handle
  *
@@ -1054,11 +1112,11 @@ static ret_code_t cmd_write6(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_inquiry(app_usbd_class_inst_t const * p_inst,
-                              app_usbd_msc_t const *        p_msc,
-                              app_usbd_msc_ctx_t *          p_msc_ctx)
+                              app_usbd_msc_t const        * p_msc,
+                              app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: INQUIRY");
-    app_usbd_scsi_cmd_inquiry_t const * p_inq =  (const void *)p_msc_ctx->cbw.cdb;
+    app_usbd_scsi_cmd_inquiry_t const * p_inq = (const void *)p_msc_ctx->cbw.cdb;
     if (p_inq->pagecode != 0)
     {
         NRF_LOG_WARNING("unsupported pagecode");
@@ -1071,9 +1129,12 @@ static ret_code_t cmd_inquiry(app_usbd_class_inst_t const * p_inst,
         return status_unsupported_start(p_inst);
     }
 
+    if (uint32_decode(p_msc_ctx->cbw.datlen) > sizeof(app_usbd_scsi_cmd_inquiry_resp_t))
+    {
+        return status_unsupported_start(p_inst);
+    }
+
     p_msc_ctx->resp_len = uint32_decode(p_msc_ctx->cbw.datlen);
-    p_msc_ctx->resp_len = MIN(p_msc_ctx->resp_len,
-                              sizeof(app_usbd_scsi_cmd_inquiry_resp_t));
 
     if (p_msc_ctx->resp_len == 0)
     {
@@ -1083,34 +1144,36 @@ static ret_code_t cmd_inquiry(app_usbd_class_inst_t const * p_inst,
 
     p_msc_ctx->scsi_resp.inquiry.qualtype = APP_USBD_MSC_SCSI_INQ_QUAL_CONNECTED |
                                             APP_USBD_MSC_SCSI_INQ_TYPE_DIR_ACCESS;
-    p_msc_ctx->scsi_resp.inquiry.flags1   = APP_USBD_MSC_SCSI_INQ_FLAG1_RMB;
-    p_msc_ctx->scsi_resp.inquiry.version  = APP_USBD_SCSI_INQ_VER_SPC4;
-    p_msc_ctx->scsi_resp.inquiry.flags2   = APP_USBD_MSC_SCSI_INQ_FLAG2_RSP_SPC2 |
-                                            APP_USBD_MSC_SCSI_INQ_FLAG2_HISUP;
-    p_msc_ctx->scsi_resp.inquiry.len      = sizeof(app_usbd_scsi_cmd_inquiry_resp_t) -
-                                            offsetof(app_usbd_scsi_cmd_inquiry_resp_t, len);
+    p_msc_ctx->scsi_resp.inquiry.flags1  = APP_USBD_MSC_SCSI_INQ_FLAG1_RMB;
+    p_msc_ctx->scsi_resp.inquiry.version = APP_USBD_SCSI_INQ_VER_SPC4;
+    p_msc_ctx->scsi_resp.inquiry.flags2  = APP_USBD_MSC_SCSI_INQ_FLAG2_RSP_SPC2 |
+                                           APP_USBD_MSC_SCSI_INQ_FLAG2_HISUP;
+    p_msc_ctx->scsi_resp.inquiry.len = sizeof(app_usbd_scsi_cmd_inquiry_resp_t) -
+                                       offsetof(app_usbd_scsi_cmd_inquiry_resp_t, len);
 
-    nrf_block_dev_t const * p_blkd = p_msc->specific.inst.pp_block_devs[p_msc_ctx->cbw.lun];
+    nrf_block_dev_t const * p_blkd =
+        p_msc->specific.inst.pp_block_devs[p_msc_ctx->cbw.lun];
     nrf_block_dev_info_strings_t * p_strings = NULL;
     UNUSED_RETURN_VALUE(nrf_blk_dev_ioctl(p_blkd,
-                        NRF_BLOCK_DEV_IOCTL_REQ_INFO_STRINGS,
-                        &p_strings));
+                                          NRF_BLOCK_DEV_IOCTL_REQ_INFO_STRINGS,
+                                          &p_strings));
 
     if (p_strings)
     {
         UNUSED_RETURN_VALUE(strncpy((char *)p_msc_ctx->scsi_resp.inquiry.vendorid,
-                            p_strings->p_vendor,
-                            sizeof(p_msc_ctx->scsi_resp.inquiry.vendorid)));
+                                    p_strings->p_vendor,
+                                    sizeof(p_msc_ctx->scsi_resp.inquiry.vendorid)));
 
         UNUSED_RETURN_VALUE(strncpy((char *)p_msc_ctx->scsi_resp.inquiry.productid,
-                            p_strings->p_product,
-                            sizeof(p_msc_ctx->scsi_resp.inquiry.productid)));
+                                    p_strings->p_product,
+                                    sizeof(p_msc_ctx->scsi_resp.inquiry.productid)));
 
         UNUSED_RETURN_VALUE(strncpy((char *)p_msc_ctx->scsi_resp.inquiry.revision,
-                            p_strings->p_revision,
-                            sizeof(p_msc_ctx->scsi_resp.inquiry.revision)));
+                                    p_strings->p_revision,
+                                    sizeof(p_msc_ctx->scsi_resp.inquiry.revision)));
     }
-    else {
+    else
+    {
         memset(p_msc_ctx->scsi_resp.inquiry.vendorid,
                0,
                sizeof(p_msc_ctx->scsi_resp.inquiry.vendorid));
@@ -1128,6 +1191,7 @@ static ret_code_t cmd_inquiry(app_usbd_class_inst_t const * p_inst,
                              APP_USBD_MSC_STATE_CMD_IN);
 }
 
+
 /**
  * @brief SCSI Command: @ref APP_USBD_SCSI_CMD_MODESELECT6 handle
  *
@@ -1137,8 +1201,8 @@ static ret_code_t cmd_inquiry(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_modeselect6(app_usbd_class_inst_t const * p_inst,
-                                  app_usbd_msc_t const *        p_msc,
-                                  app_usbd_msc_ctx_t *          p_msc_ctx)
+                                  app_usbd_msc_t const        * p_msc,
+                                  app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: MODESELECT6");
     return csw_wait_start(p_inst, APP_USBD_MSC_CSW_STATUS_PASS);
@@ -1154,8 +1218,8 @@ static ret_code_t cmd_modeselect6(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_modesense6(app_usbd_class_inst_t const * p_inst,
-                                 app_usbd_msc_t const *        p_msc,
-                                 app_usbd_msc_ctx_t *          p_msc_ctx)
+                                 app_usbd_msc_t const        * p_msc,
+                                 app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: MODESENSE6");
     app_usbd_scsi_cmd_modesense6_t const * p_sense6 = (const void *)p_msc_ctx->cbw.cdb;
@@ -1170,13 +1234,16 @@ static ret_code_t cmd_modesense6(app_usbd_class_inst_t const * p_inst,
         return status_unsupported_start(p_inst);
     }
 
+    if (uint32_decode(p_msc_ctx->cbw.datlen) > sizeof(app_usbd_scsi_cmd_modesense6_resp_t))
+    {
+        return status_unsupported_start(p_inst);
+    }
+
     p_msc_ctx->resp_len = uint32_decode(p_msc_ctx->cbw.datlen);
-    p_msc_ctx->resp_len = MIN(p_msc_ctx->resp_len,
-                              sizeof(app_usbd_scsi_cmd_modesense6_resp_t));
 
     app_usbd_scsi_cmd_modesense6_resp_t * p_resp = &p_msc_ctx->scsi_resp.modesense6;
     p_resp->mdlen = sizeof(app_usbd_scsi_cmd_modesense6_resp_t) - 1;
-    p_resp->type = 0;
+    p_resp->type  = 0;
     p_resp->param = 0;
     p_resp->bdlen = 0;
 
@@ -1185,6 +1252,7 @@ static ret_code_t cmd_modesense6(app_usbd_class_inst_t const * p_inst,
                              p_msc_ctx->resp_len,
                              APP_USBD_MSC_STATE_CMD_IN);
 }
+
 
 /**
  * @brief SCSI Command: @ref APP_USBD_SCSI_CMD_STARTSTOPUNIT handle
@@ -1195,8 +1263,8 @@ static ret_code_t cmd_modesense6(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_startstopunit(app_usbd_class_inst_t const * p_inst,
-                                    app_usbd_msc_t const *        p_msc,
-                                    app_usbd_msc_ctx_t *          p_msc_ctx)
+                                    app_usbd_msc_t const        * p_msc,
+                                    app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: STARTSTOPUNIT");
     return csw_wait_start(p_inst, APP_USBD_MSC_CSW_STATUS_PASS);
@@ -1212,12 +1280,13 @@ static ret_code_t cmd_startstopunit(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_senddiagnostic(app_usbd_class_inst_t const * p_inst,
-                                     app_usbd_msc_t const *        p_msc,
-                                     app_usbd_msc_ctx_t *          p_msc_ctx)
+                                     app_usbd_msc_t const        * p_msc,
+                                     app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: SENDDIAGNOSTIC");
     return csw_wait_start(p_inst, APP_USBD_MSC_CSW_STATUS_PASS);
 }
+
 
 /**
  * @brief SCSI Command: @ref APP_USBD_SCSI_CMD_PREVENTMEDIAREMOVAL handle
@@ -1228,12 +1297,13 @@ static ret_code_t cmd_senddiagnostic(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_preventremoval(app_usbd_class_inst_t const * p_inst,
-                                     app_usbd_msc_t const *        p_msc,
-                                     app_usbd_msc_ctx_t *          p_msc_ctx)
+                                     app_usbd_msc_t const        * p_msc,
+                                     app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: PREVENTMEDIAREMOVAL");
     return csw_wait_start(p_inst, APP_USBD_MSC_CSW_STATUS_PASS);
 }
+
 
 /**
  * @brief SCSI Command: @ref APP_USBD_SCSI_CMD_READCAPACITY10 handle
@@ -1244,8 +1314,8 @@ static ret_code_t cmd_preventremoval(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_readcapacity10(app_usbd_class_inst_t const * p_inst,
-                                     app_usbd_msc_t const *        p_msc,
-                                     app_usbd_msc_ctx_t *          p_msc_ctx)
+                                     app_usbd_msc_t const        * p_msc,
+                                     app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: READCAPACITY10");
 
@@ -1261,16 +1331,20 @@ static ret_code_t cmd_readcapacity10(app_usbd_class_inst_t const * p_inst,
         return status_unsupported_start(p_inst);
     }
 
+    if (uint32_decode(p_msc_ctx->cbw.datlen) > sizeof(app_usbd_scsi_cmd_readcapacity10_resp_t))
+    {
+        return status_unsupported_start(p_inst);
+    }
+
     p_msc_ctx->resp_len = uint32_decode(p_msc_ctx->cbw.datlen);
-    p_msc_ctx->resp_len = MIN(p_msc_ctx->resp_len,
-                              sizeof(app_usbd_scsi_cmd_readcapacity10_resp_t));
 
     if (p_msc_ctx->resp_len == 0)
     {
         return csw_wait_start(p_inst, APP_USBD_MSC_CSW_STATUS_PASS);
     }
 
-    nrf_block_dev_t const * p_blkd = p_msc->specific.inst.pp_block_devs[p_msc_ctx->cbw.lun];
+    nrf_block_dev_t const * p_blkd =
+        p_msc->specific.inst.pp_block_devs[p_msc_ctx->cbw.lun];
     nrf_block_dev_geometry_t const * p_geometry = nrf_blk_dev_geometry(p_blkd);
 
     (void)uint32_big_encode(p_geometry->blk_count - 1, p_msc_ctx->scsi_resp.readcapacity10.lba);
@@ -1282,6 +1356,7 @@ static ret_code_t cmd_readcapacity10(app_usbd_class_inst_t const * p_inst,
                              APP_USBD_MSC_STATE_CMD_IN);
 }
 
+
 /**
  * @brief SCSI Command: @ref APP_USBD_SCSI_CMD_READ10 handle
  *
@@ -1291,8 +1366,8 @@ static ret_code_t cmd_readcapacity10(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_read10(app_usbd_class_inst_t const * p_inst,
-                             app_usbd_msc_t const *        p_msc,
-                             app_usbd_msc_ctx_t *          p_msc_ctx)
+                             app_usbd_msc_t const        * p_msc,
+                             app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: READ10");
     app_usbd_scsi_cmd_read10_t const * p_read10 = (const void *)p_msc_ctx->cbw.cdb;
@@ -1318,16 +1393,16 @@ static ret_code_t cmd_read10(app_usbd_class_inst_t const * p_inst,
 
     nrf_block_dev_t const * p_blkd = p_msc->specific.inst.pp_block_devs[p_msc_ctx->cbw.lun];
 
-    p_msc_ctx->current.lun = p_msc_ctx->cbw.lun;
-    p_msc_ctx->current.blk_idx = uint32_big_decode(p_read10->lba);
+    p_msc_ctx->current.lun          = p_msc_ctx->cbw.lun;
+    p_msc_ctx->current.blk_idx      = uint32_big_decode(p_read10->lba);
     p_msc_ctx->current.blk_datasize = uint32_decode(p_msc_ctx->cbw.datlen);
-    p_msc_ctx->current.blk_size = nrf_blk_dev_geometry(p_blkd)->blk_size;
-    p_msc_ctx->current.blk_count = next_transfer_blkcnt_calc(p_msc, p_msc_ctx);
+    p_msc_ctx->current.blk_size     = nrf_blk_dev_geometry(p_blkd)->blk_size;
+    p_msc_ctx->current.blk_count    = next_transfer_blkcnt_calc(p_msc, p_msc_ctx);
 
     uint16_t blocks = uint16_big_decode(p_read10->xfrlen);
     p_msc_ctx->current.csw_status =
-            uint32_decode(p_msc_ctx->cbw.datlen) < p_msc_ctx->current.blk_size * blocks ?
-            APP_USBD_MSC_CSW_STATUS_FAIL : APP_USBD_MSC_CSW_STATUS_PASS;
+        uint32_decode(p_msc_ctx->cbw.datlen) < p_msc_ctx->current.blk_size * blocks ?
+        APP_USBD_MSC_CSW_STATUS_FAIL : APP_USBD_MSC_CSW_STATUS_PASS;
 
     if (p_msc_ctx->current.blk_datasize > p_msc_ctx->current.blk_size * blocks)
     {
@@ -1348,8 +1423,8 @@ static ret_code_t cmd_read10(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_write10(app_usbd_class_inst_t const * p_inst,
-                              app_usbd_msc_t const *        p_msc,
-                              app_usbd_msc_ctx_t *          p_msc_ctx)
+                              app_usbd_msc_t const        * p_msc,
+                              app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: WRITE10");
     app_usbd_scsi_cmd_write10_t const * p_write10 = (const void *)p_msc_ctx->cbw.cdb;
@@ -1376,16 +1451,16 @@ static ret_code_t cmd_write10(app_usbd_class_inst_t const * p_inst,
 
     nrf_block_dev_t const * p_blkd = p_msc->specific.inst.pp_block_devs[p_msc_ctx->cbw.lun];
 
-    p_msc_ctx->current.lun = p_msc_ctx->cbw.lun;
-    p_msc_ctx->current.blk_idx = uint32_big_decode(p_write10->lba);
+    p_msc_ctx->current.lun          = p_msc_ctx->cbw.lun;
+    p_msc_ctx->current.blk_idx      = uint32_big_decode(p_write10->lba);
     p_msc_ctx->current.blk_datasize = uint32_decode(p_msc_ctx->cbw.datlen);
-    p_msc_ctx->current.blk_size = nrf_blk_dev_geometry(p_blkd)->blk_size;
-    p_msc_ctx->current.blk_count = next_transfer_blkcnt_calc(p_msc, p_msc_ctx);
+    p_msc_ctx->current.blk_size     = nrf_blk_dev_geometry(p_blkd)->blk_size;
+    p_msc_ctx->current.blk_count    = next_transfer_blkcnt_calc(p_msc, p_msc_ctx);
 
     uint16_t blocks = uint16_big_decode(p_write10->xfrlen);
     p_msc_ctx->current.csw_status =
-            uint32_decode(p_msc_ctx->cbw.datlen) < p_msc_ctx->current.blk_size * blocks ?
-            APP_USBD_MSC_CSW_STATUS_FAIL : APP_USBD_MSC_CSW_STATUS_PASS;
+        uint32_decode(p_msc_ctx->cbw.datlen) < p_msc_ctx->current.blk_size * blocks ?
+        APP_USBD_MSC_CSW_STATUS_FAIL : APP_USBD_MSC_CSW_STATUS_PASS;
 
     if (p_msc_ctx->current.blk_datasize > p_msc_ctx->current.blk_size * blocks)
     {
@@ -1406,12 +1481,13 @@ static ret_code_t cmd_write10(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_modeselect10(app_usbd_class_inst_t const * p_inst,
-                                   app_usbd_msc_t const *        p_msc,
-                                   app_usbd_msc_ctx_t *          p_msc_ctx)
+                                   app_usbd_msc_t const        * p_msc,
+                                   app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: MODESELECT10");
     return csw_wait_start(p_inst, APP_USBD_MSC_CSW_STATUS_PASS);
 }
+
 
 /**
  * @brief SCSI Command: @ref APP_USBD_SCSI_CMD_MODESENSE10 handle
@@ -1422,8 +1498,8 @@ static ret_code_t cmd_modeselect10(app_usbd_class_inst_t const * p_inst,
  * @return Standard error code
  * */
 static ret_code_t cmd_modesense10(app_usbd_class_inst_t const * p_inst,
-                                  app_usbd_msc_t const *        p_msc,
-                                  app_usbd_msc_ctx_t *          p_msc_ctx)
+                                  app_usbd_msc_t const        * p_msc,
+                                  app_usbd_msc_ctx_t          * p_msc_ctx)
 {
     NRF_LOG_DEBUG("CMD: MODESENSE10");
     app_usbd_scsi_cmd_modesense10_t const * p_sense10 = (const void *)p_msc_ctx->cbw.cdb;
@@ -1438,9 +1514,12 @@ static ret_code_t cmd_modesense10(app_usbd_class_inst_t const * p_inst,
         return status_unsupported_start(p_inst);
     }
 
+    if (uint32_decode(p_msc_ctx->cbw.datlen) > sizeof(app_usbd_scsi_cmd_modesense6_resp_t))
+    {
+        return status_unsupported_start(p_inst);
+    }
+
     p_msc_ctx->resp_len = uint32_decode(p_msc_ctx->cbw.datlen);
-    p_msc_ctx->resp_len = MIN(p_msc_ctx->resp_len,
-                              sizeof(app_usbd_scsi_cmd_modesense6_resp_t));
 
     app_usbd_scsi_cmd_modesense10_resp_t * p_resp = &p_msc_ctx->scsi_resp.modesense10;
 
@@ -1455,6 +1534,7 @@ static ret_code_t cmd_modesense10(app_usbd_class_inst_t const * p_inst,
                              APP_USBD_MSC_STATE_CMD_IN);
 }
 
+
 /**
  * @brief Get the size of the last OUT transfer
  *
@@ -1465,8 +1545,9 @@ static ret_code_t cmd_modesense10(app_usbd_class_inst_t const * p_inst,
 static size_t get_last_out_size(app_usbd_class_inst_t const * p_inst)
 {
     nrf_drv_usbd_ep_t ep = ep_out_addr_get(p_inst);
-    size_t size;
-    ret_code_t ret = nrf_drv_usbd_ep_status_get(ep, &size);
+    size_t            size;
+    ret_code_t        ret = nrf_drv_usbd_ep_status_get(ep, &size);
+
     if (ret != NRF_SUCCESS)
     {
         size = 0;
@@ -1474,6 +1555,7 @@ static size_t get_last_out_size(app_usbd_class_inst_t const * p_inst)
 
     return size;
 }
+
 
 /**
  * @brief SCSI Command Block Wrapper handler
@@ -1483,8 +1565,8 @@ static size_t get_last_out_size(app_usbd_class_inst_t const * p_inst)
  * */
 static ret_code_t state_cbw(app_usbd_class_inst_t const * p_inst)
 {
-    app_usbd_msc_t const * p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_msc_t const * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
     memset(&p_msc_ctx->current, 0, sizeof(p_msc_ctx->current));
 
@@ -1502,64 +1584,81 @@ static ret_code_t state_cbw(app_usbd_class_inst_t const * p_inst)
                sizeof(p_msc_ctx->cbw.signature)) != 0)
     {
         NRF_LOG_DEBUG("CMD: header error: 0x%02x%02x%02x%02x",
-                                p_msc_ctx->cbw.signature[0], p_msc_ctx->cbw.signature[1],
-                                p_msc_ctx->cbw.signature[2], p_msc_ctx->cbw.signature[3]);
+                      p_msc_ctx->cbw.signature[0], p_msc_ctx->cbw.signature[1],
+                      p_msc_ctx->cbw.signature[2], p_msc_ctx->cbw.signature[3]);
 
         status_cbwinvalid_start(p_inst);
         return NRF_SUCCESS;
     }
 
     ret_code_t ret = NRF_SUCCESS;
+
     switch (p_msc_ctx->cbw.cdb[0])
     {
         case APP_USBD_SCSI_CMD_TESTUNITREADY:
             ret = cmd_testunitready(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_REQUESTSENSE:
             ret = cmd_requestsense(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_FORMAT_UNIT:
             ret = cmd_formatunit(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_READ6:
             ret = cmd_read6(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_WRITE6:
             ret = cmd_write6(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_INQUIRY:
             ret = cmd_inquiry(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_MODESELECT6:
             ret = cmd_modeselect6(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_MODESENSE6:
             ret = cmd_modesense6(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_STARTSTOPUNIT:
             ret = cmd_startstopunit(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_SENDDIAGNOSTIC:
             ret = cmd_senddiagnostic(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_PREVENTMEDIAREMOVAL:
             ret = cmd_preventremoval(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_READCAPACITY10:
             ret = cmd_readcapacity10(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_READ10:
             ret = cmd_read10(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_WRITE10:
             ret = cmd_write10(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_MODESELECT10:
             ret = cmd_modeselect10(p_inst, p_msc, p_msc_ctx);
             break;
+
         case APP_USBD_SCSI_CMD_MODESENSE10:
             ret = cmd_modesense10(p_inst, p_msc, p_msc_ctx);
             break;
+
         default:
             NRF_LOG_DEBUG("CMD: UNSUPPORTED");
             NRF_LOG_HEXDUMP_DEBUG(&(p_msc_ctx->cbw), sizeof(p_msc_ctx->cbw));
@@ -1589,10 +1688,10 @@ static ret_code_t state_cbw(app_usbd_class_inst_t const * p_inst)
  */
 static ret_code_t state_data_out_handle(app_usbd_class_inst_t const * p_inst)
 {
-    app_usbd_msc_t const * p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_msc_t const * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
-    ret_code_t ret = NRF_SUCCESS;
+    ret_code_t ret      = NRF_SUCCESS;
     uint32_t   blk_size = p_msc_ctx->current.blk_size;
 
     NRF_LOG_DEBUG("APP_USBD_MSC_STATE_DATA_OUT");
@@ -1611,7 +1710,7 @@ static ret_code_t state_data_out_handle(app_usbd_class_inst_t const * p_inst)
         {
             ret = transfer_out_start(p_inst,
                                      ((uint8_t *)p_msc->specific.inst.p_block_buff +
-                                     p_msc_ctx->current.workbuff_pos),
+                                      p_msc_ctx->current.workbuff_pos),
                                      size,
                                      APP_USBD_MSC_STATE_DATA_OUT);
             if (ret == NRF_SUCCESS)
@@ -1619,7 +1718,7 @@ static ret_code_t state_data_out_handle(app_usbd_class_inst_t const * p_inst)
                 p_msc_ctx->current.trans_req_id ^= 1;
                 APP_USBD_MSC_REQ_BUSY_SET(p_msc_ctx->current.req_busy_mask,
                                           p_msc_ctx->current.trans_req_id);
-                p_msc_ctx->current.workbuff_pos ^= p_msc->specific.inst.block_buff_size;
+                p_msc_ctx->current.workbuff_pos     ^= p_msc->specific.inst.block_buff_size;
                 p_msc_ctx->current.trans_in_progress = true;
             }
         }
@@ -1628,7 +1727,7 @@ static ret_code_t state_data_out_handle(app_usbd_class_inst_t const * p_inst)
     if (!p_msc_ctx->current.block_req_in_progress)
     {
         nrf_block_dev_t const * p_blkd =
-                                p_msc->specific.inst.pp_block_devs[p_msc_ctx->current.lun];
+            p_msc->specific.inst.pp_block_devs[p_msc_ctx->current.lun];
 
         size_t pos = p_msc_ctx->current.workbuff_pos;
         if (p_msc_ctx->current.req_busy_mask != APP_USBD_MSC_REQ_BUSY_FULL_MASK)
@@ -1655,6 +1754,7 @@ static ret_code_t state_data_out_handle(app_usbd_class_inst_t const * p_inst)
     return ret;
 }
 
+
 /**
  * @brief Endpoint OUT event handler
  *
@@ -1665,11 +1765,11 @@ static ret_code_t state_data_out_handle(app_usbd_class_inst_t const * p_inst)
  * @retval NRF_SUCCESS if request handled correctly
  * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
  */
-static ret_code_t endpoint_out_event_handler(app_usbd_class_inst_t const *  p_inst,
+static ret_code_t endpoint_out_event_handler(app_usbd_class_inst_t const  * p_inst,
                                              app_usbd_complex_evt_t const * p_event)
 {
-    app_usbd_msc_t const * p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_msc_t const * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
     NRF_LOG_DEBUG("state: %d, ep out event, status: %d",
                   p_msc_ctx->state,
@@ -1698,12 +1798,14 @@ static ret_code_t endpoint_out_event_handler(app_usbd_class_inst_t const *  p_in
     else if (p_event->drv_evt.data.eptransfer.status == NRF_USBD_EP_OVERLOAD)
     {
         NRF_LOG_ERROR("Data overload");
+
         switch (p_msc_ctx->state)
         {
             case APP_USBD_MSC_STATE_DATA_OUT:
             {
                 status_deverror_start(p_inst);
             }
+
             /* Default action is the same like CBW - stall totally until bulk reset */
             case APP_USBD_MSC_STATE_CBW:
             default:
@@ -1713,7 +1815,7 @@ static ret_code_t endpoint_out_event_handler(app_usbd_class_inst_t const *  p_in
         }
         return NRF_SUCCESS;
     }
-    else   /*NRF_USBD_EP_OK*/
+    else /*NRF_USBD_EP_OK*/
     {
         switch (p_msc_ctx->state)
         {
@@ -1722,11 +1824,13 @@ static ret_code_t endpoint_out_event_handler(app_usbd_class_inst_t const *  p_in
                 ret = state_cbw(p_inst);
                 break;
             }
+
             case APP_USBD_MSC_STATE_CMD_OUT:
             {
                 ret = csw_wait_start(p_inst, APP_USBD_MSC_CSW_STATUS_PASS);
                 break;
             }
+
             case APP_USBD_MSC_STATE_DATA_OUT:
             {
                 CRITICAL_REGION_ENTER();
@@ -1734,13 +1838,16 @@ static ret_code_t endpoint_out_event_handler(app_usbd_class_inst_t const *  p_in
                 CRITICAL_REGION_EXIT();
                 break;
             }
+
             case APP_USBD_MSC_STATE_UNSUPPORTED:
             {
                 ret = NRF_ERROR_NOT_SUPPORTED;
                 break;
             }
+
             case APP_USBD_MSC_STATE_CSW:
                 break;
+
             default:
             {
                 ASSERT(0);
@@ -1758,28 +1865,32 @@ static ret_code_t endpoint_out_event_handler(app_usbd_class_inst_t const *  p_in
 /**
  * @brief @ref app_usbd_class_methods_t::event_handler
  */
-static ret_code_t msc_event_handler(app_usbd_class_inst_t const * p_inst,
+static ret_code_t msc_event_handler(app_usbd_class_inst_t const  * p_inst,
                                     app_usbd_complex_evt_t const * p_event)
 {
     ASSERT(p_inst != NULL);
     ASSERT(p_event != NULL);
 
-    app_usbd_msc_t const * p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_msc_t const * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
     UNUSED_VARIABLE(p_msc);
     UNUSED_VARIABLE(p_msc_ctx);
 
     ret_code_t ret = NRF_SUCCESS;
+
     switch (p_event->app_evt.type)
     {
         case APP_USBD_EVT_DRV_SOF:
             break;
+
         case APP_USBD_EVT_DRV_RESET:
             break;
+
         case APP_USBD_EVT_DRV_SETUP:
-            ret  = setup_event_handler(p_inst, (app_usbd_setup_evt_t const *)p_event);
+            ret = setup_event_handler(p_inst, (app_usbd_setup_evt_t const *)p_event);
             break;
+
         case APP_USBD_EVT_DRV_EPTRANSFER:
             if (NRF_USBD_EPIN_CHECK(p_event->drv_evt.data.eptransfer.ep))
             {
@@ -1789,7 +1900,9 @@ static ret_code_t msc_event_handler(app_usbd_class_inst_t const * p_inst,
             {
                 ret = endpoint_out_event_handler(p_inst, p_event);
             }
+
             break;
+
         case APP_USBD_EVT_DRV_SUSPEND:
         {
             /*Flush all block devices cache on suspend*/
@@ -1802,8 +1915,10 @@ static ret_code_t msc_event_handler(app_usbd_class_inst_t const * p_inst,
 
             break;
         }
+
         case APP_USBD_EVT_DRV_RESUME:
             break;
+
         case APP_USBD_EVT_INST_APPEND:
         {
             /*Verify serial number string*/
@@ -1827,23 +1942,19 @@ static ret_code_t msc_event_handler(app_usbd_class_inst_t const * p_inst,
                 }
             }
 
-            ret = app_usbd_class_sof_register(p_inst);
-            if (ret != NRF_SUCCESS)
-            {
-                break;
-            }
-
             break;
         }
+
         case APP_USBD_EVT_INST_REMOVE:
         {
-            ret = app_usbd_class_sof_unregister(p_inst);
             break;
         }
+
         case APP_USBD_EVT_STARTED:
         {
             /*Initialize all block devices*/
             ASSERT(p_msc->specific.inst.block_devs_count <= 16);
+
             for (size_t i = 0; i < p_msc->specific.inst.block_devs_count; ++i)
             {
                 nrf_block_dev_t const * p_blk_dev = p_msc->specific.inst.pp_block_devs[i];
@@ -1860,11 +1971,13 @@ static ret_code_t msc_event_handler(app_usbd_class_inst_t const * p_inst,
 
             break;
         }
+
         case APP_USBD_EVT_STOPPED:
         {
             /*Un-initialize all block devices*/
             ASSERT(p_msc->specific.inst.block_devs_count <= 16);
             size_t i;
+
             for (i = 0; i < p_msc->specific.inst.block_devs_count; ++i)
             {
                 nrf_block_dev_t const * p_blk_dev = p_msc->specific.inst.pp_block_devs[i];
@@ -1879,6 +1992,7 @@ static ret_code_t msc_event_handler(app_usbd_class_inst_t const * p_inst,
 
             break;
         }
+
         default:
             ret = NRF_ERROR_NOT_SUPPORTED;
             break;
@@ -1887,21 +2001,70 @@ static ret_code_t msc_event_handler(app_usbd_class_inst_t const * p_inst,
     return ret;
 }
 
-/**
- * @brief @ref app_usbd_class_methods_t::get_descriptors
- */
-static const void * msc_get_descriptors(app_usbd_class_inst_t const * p_inst, size_t * p_size)
-{
-    ASSERT(p_size != NULL);
-    app_usbd_msc_t const *  p_msc = msc_get(p_inst);
 
-    *p_size = p_msc->specific.inst.raw_desc_size;
-    return p_msc->specific.inst.p_raw_desc;
+/**
+ * @brief @ref app_usbd_class_methods_t::feed_descriptors
+ */
+
+static bool msc_feed_descriptors(app_usbd_class_descriptor_ctx_t * p_ctx,
+                                 app_usbd_class_inst_t const     * p_inst,
+                                 uint8_t                         * p_buff,
+                                 size_t                            max_size)
+{
+    static uint8_t ifaces   = 0;
+    ifaces = app_usbd_class_iface_count_get(p_inst);
+    app_usbd_msc_t const * p_msc = msc_get(p_inst);
+
+    APP_USBD_CLASS_DESCRIPTOR_BEGIN(p_ctx, p_buff, max_size);
+
+    static uint8_t i = 0;
+
+    for (i = 0; i < ifaces; i++)
+    {
+        /* INTERFACE DESCRIPTOR */
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(0x09);                          // bLength
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(APP_USBD_DESCRIPTOR_INTERFACE); // bDescriptorType = Interface
+
+        static app_usbd_class_iface_conf_t const * p_cur_iface = NULL;
+        p_cur_iface = app_usbd_class_iface_get(p_inst, i);
+
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(app_usbd_class_iface_number_get(p_cur_iface)); // bInterfaceNumber
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(0x00); // bAlternateSetting
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(app_usbd_class_iface_ep_count_get(p_cur_iface)); // bNumEndpoints
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(APP_USBD_MSC_CLASS); // bInterfaceClass = MSC
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(p_msc->specific.inst.subclass); // bInterfaceSubclass (Industry Standard Command Block)
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(p_msc->specific.inst.protocol); // bInterfaceProtocol
+        APP_USBD_CLASS_DESCRIPTOR_WRITE(0x00); // iInterface
+
+
+        static uint8_t endpoints = 0;
+        endpoints = app_usbd_class_iface_ep_count_get(p_cur_iface);
+
+        static uint8_t j = 0;
+
+        for (j = 0; j < endpoints; j++)
+        {
+            // ENDPOINT DESCRIPTOR
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(0x07); // bLength
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(APP_USBD_DESCRIPTOR_ENDPOINT); // bDescriptorType = Endpoint
+
+            static app_usbd_class_ep_conf_t const * p_cur_ep = NULL;
+            p_cur_ep = app_usbd_class_iface_ep_get(p_cur_iface, j);
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(app_usbd_class_ep_address_get(p_cur_ep)); // bEndpointAddress
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(APP_USBD_DESCRIPTOR_EP_ATTR_TYPE_BULK); // bmAttributes
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(LSB_16(NRF_DRV_USBD_EPSIZE)); // wMaxPacketSize LSB
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(MSB_16(NRF_DRV_USBD_EPSIZE)); // wMaxPacketSize MSB
+            APP_USBD_CLASS_DESCRIPTOR_WRITE(0x00); // bInterval
+        }
+
+    }
+
+    APP_USBD_CLASS_DESCRIPTOR_END();
 }
 
 const app_usbd_class_methods_t app_usbd_msc_class_methods = {
-        .event_handler = msc_event_handler,
-        .get_descriptors = msc_get_descriptors,
+    .event_handler    = msc_event_handler,
+    .feed_descriptors = msc_feed_descriptors,
 };
 
 
@@ -1914,20 +2077,21 @@ const app_usbd_class_methods_t app_usbd_msc_class_methods = {
  * @param p_event       Block device event
  *
  * */
-static void msc_blockdev_read_done_handler(nrf_block_dev_t const * p_blk_dev,
+static void msc_blockdev_read_done_handler(nrf_block_dev_t const       * p_blk_dev,
                                            nrf_block_dev_event_t const * p_event)
 {
     ret_code_t ret;
 
-    app_usbd_class_inst_t const * p_inst = p_event->p_context;
-    app_usbd_msc_t const *        p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *          p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_class_inst_t const * p_inst    = p_event->p_context;
+    app_usbd_msc_t const        * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t          * p_msc_ctx = msc_ctx_get(p_msc);
 
-    uint32_t blk_cnt = p_msc_ctx->current.blk_count;
+    uint32_t blk_cnt  = p_msc_ctx->current.blk_count;
     uint32_t blk_size = p_msc_ctx->current.blk_size;
 
     /*Save actual request*/
     size_t req_pos = (p_msc_ctx->current.workbuff_pos != 0) ? 1 : 0;
+
     p_msc_ctx->current.req = *p_event->p_blk_req;
 
     p_msc_ctx->current.block_req_in_progress = false;
@@ -1990,7 +2154,7 @@ static void msc_blockdev_read_done_handler(nrf_block_dev_t const * p_blk_dev,
 
     /*Trigger new block read request*/
     p_msc_ctx->current.workbuff_pos ^= p_msc->specific.inst.block_buff_size;
-    req_pos = p_msc_ctx->current.workbuff_pos != 0 ? 1 : 0;
+    req_pos                          = p_msc_ctx->current.workbuff_pos != 0 ? 1 : 0;
 
     APP_USBD_MSC_REQ_BUSY_SET(p_msc_ctx->current.req_busy_mask, req_pos);
 
@@ -1998,7 +2162,7 @@ static void msc_blockdev_read_done_handler(nrf_block_dev_t const * p_blk_dev,
                           p_msc_ctx->current.blk_idx,
                           p_msc_ctx->current.blk_count,
                           ((uint8_t *)p_msc->specific.inst.p_block_buff +
-                          p_msc_ctx->current.workbuff_pos));
+                           p_msc_ctx->current.workbuff_pos));
 
 
     NRF_LOG_DEBUG("nrf_blk_dev_read_req 2: id: %u, count: %u, left: %u, ptr: %p",
@@ -2016,6 +2180,7 @@ static void msc_blockdev_read_done_handler(nrf_block_dev_t const * p_blk_dev,
     }
 }
 
+
 /**
  * @brief Block device write done event handler.
  *
@@ -2025,18 +2190,19 @@ static void msc_blockdev_read_done_handler(nrf_block_dev_t const * p_blk_dev,
  * @param p_event       Block device event
  *
  * */
-static void msc_blockdev_write_done_handler(nrf_block_dev_t const * p_blk_dev,
+static void msc_blockdev_write_done_handler(nrf_block_dev_t const       * p_blk_dev,
                                             nrf_block_dev_event_t const * p_event)
 {
-    app_usbd_class_inst_t const * p_inst = p_event->p_context;
-    app_usbd_msc_t const *        p_msc = msc_get(p_inst);
-    app_usbd_msc_ctx_t *          p_msc_ctx = msc_ctx_get(p_msc);
+    app_usbd_class_inst_t const * p_inst    = p_event->p_context;
+    app_usbd_msc_t const        * p_msc     = msc_get(p_inst);
+    app_usbd_msc_ctx_t          * p_msc_ctx = msc_ctx_get(p_msc);
 
-    uint32_t blk_cnt = p_msc_ctx->current.blk_count;
+    uint32_t blk_cnt  = p_msc_ctx->current.blk_count;
     uint32_t blk_size = p_msc_ctx->current.blk_size;
 
     /*Save actual request*/
     size_t req_pos = (p_event->p_blk_req->p_buff == p_msc->specific.inst.p_block_buff) ? 0 : 1;
+
     p_msc_ctx->current.req = *p_event->p_blk_req;
 
     APP_USBD_MSC_REQ_BUSY_CLR(p_msc_ctx->current.req_busy_mask, req_pos);
@@ -2061,7 +2227,7 @@ static void msc_blockdev_write_done_handler(nrf_block_dev_t const * p_blk_dev,
 
     if (p_msc_ctx->current.blk_datasize == 0)
     {
-        p_msc_ctx ->current.blk_idx = p_msc_ctx ->current.blk_size = 0;
+        p_msc_ctx->current.blk_idx = p_msc_ctx->current.blk_size = 0;
         UNUSED_RETURN_VALUE(csw_wait_start(p_inst, p_msc_ctx->current.csw_status));
         return;
     }
@@ -2098,7 +2264,7 @@ static void msc_blockdev_write_done_handler(nrf_block_dev_t const * p_blk_dev,
     }
 
     if (!p_msc_ctx->current.trans_in_progress &&
-        (p_msc_ctx->current.blk_datasize  > p_msc_ctx->current.blk_count * blk_size))
+        (p_msc_ctx->current.blk_datasize > p_msc_ctx->current.blk_count * blk_size))
     {
         size_t size = p_msc_ctx->current.blk_datasize - p_msc_ctx->current.blk_count * blk_size;
         if (size > p_msc_ctx->current.blk_count * blk_size)
@@ -2112,7 +2278,7 @@ static void msc_blockdev_write_done_handler(nrf_block_dev_t const * p_blk_dev,
             p_msc_ctx->current.blk_count = next_transfer_blkcnt_calc(p_msc, p_msc_ctx);
             ret_code_t ret = transfer_out_start(p_inst,
                                                 ((uint8_t *)p_msc->specific.inst.p_block_buff +
-                                                p_msc_ctx->current.workbuff_pos),
+                                                 p_msc_ctx->current.workbuff_pos),
                                                 size,
                                                 APP_USBD_MSC_STATE_DATA_OUT);
             if (ret == NRF_SUCCESS)
@@ -2120,7 +2286,7 @@ static void msc_blockdev_write_done_handler(nrf_block_dev_t const * p_blk_dev,
                 p_msc_ctx->current.trans_req_id ^= 1;
                 APP_USBD_MSC_REQ_BUSY_SET(p_msc_ctx->current.req_busy_mask,
                                           p_msc_ctx->current.trans_req_id);
-                p_msc_ctx->current.workbuff_pos ^= p_msc->specific.inst.block_buff_size;
+                p_msc_ctx->current.workbuff_pos     ^= p_msc->specific.inst.block_buff_size;
                 p_msc_ctx->current.trans_in_progress = true;
             }
             else
@@ -2142,39 +2308,45 @@ static void msc_blockdev_write_done_handler(nrf_block_dev_t const * p_blk_dev,
  * @param p_event       Block device event
  *
  * */
-static void msc_blockdev_ev_handler(nrf_block_dev_t const * p_blk_dev,
+static void msc_blockdev_ev_handler(nrf_block_dev_t const       * p_blk_dev,
                                     nrf_block_dev_event_t const * p_event)
 {
-    switch (p_event->ev_type) {
+    switch (p_event->ev_type)
+    {
         case NRF_BLOCK_DEV_EVT_INIT:
             break;
+
         case NRF_BLOCK_DEV_EVT_UNINIT:
             break;
+
         case NRF_BLOCK_DEV_EVT_BLK_READ_DONE:
             CRITICAL_REGION_ENTER();
             msc_blockdev_read_done_handler(p_blk_dev, p_event);
             CRITICAL_REGION_EXIT();
             break;
+
         case NRF_BLOCK_DEV_EVT_BLK_WRITE_DONE:
             CRITICAL_REGION_ENTER();
             msc_blockdev_write_done_handler(p_blk_dev, p_event);
             CRITICAL_REGION_EXIT();
             break;
+
         default:
             break;
     }
 }
 
+/** @} */
 
 bool app_usbd_msc_sync(app_usbd_msc_t const * p_msc)
 {
-    bool rc = true;
+    bool       rc  = true;
     ret_code_t ret = NRF_SUCCESS;
 
     for (size_t i = 0; i < p_msc->specific.inst.block_devs_count; ++i)
     {
-        nrf_block_dev_t const * p_blkd = p_msc->specific.inst.pp_block_devs[i];
-        bool flush_in_progress = true;
+        nrf_block_dev_t const * p_blkd            = p_msc->specific.inst.pp_block_devs[i];
+        bool                    flush_in_progress = true;
 
         ret = nrf_blk_dev_ioctl(p_blkd,
                                 NRF_BLOCK_DEV_IOCTL_REQ_CACHE_FLUSH,
@@ -2189,6 +2361,5 @@ bool app_usbd_msc_sync(app_usbd_msc_t const * p_msc)
     return rc;
 }
 
-/** @} */
 
-#endif // APP_USBD_MSC_ENABLED
+#endif //NRF_MODULE_ENABLED(APP_USBD_MSC)

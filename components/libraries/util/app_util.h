@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -59,25 +59,75 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+/**
+ * @cond (NODOX)
+ */
+/*lint -save -e27 -e10 -e19 */
+#if defined (__LINT__)
+#define STACK_BASE 0x1F000 // Arbitrary value.
+#define STACK_TOP  0x20000 // Arbitrary value.
 
-//lint -save -e27 -e10 -e19
-#if defined ( __CC_ARM ) && !defined (__LINT__)
+#elif defined ( __CC_ARM )
 extern char STACK$$Base;
 extern char STACK$$Length;
 #define STACK_BASE    &STACK$$Base
 #define STACK_TOP    ((void*)((uint32_t)STACK_BASE + (uint32_t)&STACK$$Length))
+
 #elif defined ( __ICCARM__ )
 extern char CSTACK$$Base;
 extern char CSTACK$$Length;
 #define STACK_BASE    &CSTACK$$Base
 #define STACK_TOP    ((void*)((uint32_t)STACK_BASE + (uint32_t)&CSTACK$$Length))
+
 #elif defined   ( __GNUC__ )
 extern uint32_t __StackTop;
 extern uint32_t __StackLimit;
 #define STACK_BASE    &__StackLimit
 #define STACK_TOP     &__StackTop
 #endif
-//lint -restore
+
+/* These macros are valid only when absolute placement is used for the application
+ * image. The macros are not compile time symbols. They cannot be used as a
+ * constant expression, for example, inside a static assert or linker script
+ * at-placement. */
+#if defined (__LINT__)
+#define CODE_START (0)      // Arbitrary value.
+#define CODE_END   (0x1000) // Arbitrary value.
+#define CODE_SIZE  (0x1000) // Arbitrary value.
+
+#elif defined ( __CC_ARM )
+extern char Load$$LR$$LR_IROM1$$Base;
+extern char Load$$LR$$LR_IROM1$$Length;
+extern char Load$$LR$$LR_IROM1$$Limit;
+#define CODE_START ((uint32_t)&Load$$LR$$LR_IROM1$$Base)
+#define CODE_END   ((uint32_t)&Load$$LR$$LR_IROM1$$Limit)
+#define CODE_SIZE  ((uint32_t)&Load$$LR$$LR_IROM1$$Length)
+
+#elif defined ( __ICCARM__ )
+extern void * __vector_table;
+extern char RO_END$$Base;
+#define CODE_START ((uint32_t)&__vector_table)
+#define CODE_END   ((uint32_t)&RO_END$$Base)
+#define CODE_SIZE  (CODE_END - CODE_START)
+
+#elif defined(__SES_ARM)
+extern uint32_t * _vectors;
+extern uint32_t __FLASH_segment_used_end__;
+#define CODE_START ((uint32_t)&_vectors)
+#define CODE_END   ((uint32_t)&__FLASH_segment_used_end__)
+#define CODE_SIZE  (CODE_END - CODE_START)
+
+#elif defined ( __GNUC__ )
+extern uint32_t __isr_vector;
+extern uint32_t __etext;
+#define CODE_START ((uint32_t)&__isr_vector)
+#define CODE_END   ((uint32_t)&__etext)
+#define CODE_SIZE  (CODE_END - CODE_START)
+#endif
+/** @}
+ * @endcond
+ */
+/* lint -restore */
 
 enum
 {
@@ -85,6 +135,44 @@ enum
     UNIT_1_25_MS  = 1250,       /**< Number of microseconds in 1.25 milliseconds. */
     UNIT_10_MS    = 10000       /**< Number of microseconds in 10 milliseconds. */
 };
+
+/**
+ * @brief Counts number of bits required for the given value
+ *
+ * The macro technically searches for the highest bit set.
+ * For value 0 it returns 0.
+ *
+ * @param val Value to be processed
+ *
+ * @return Number of bits required for the given value
+ */
+//lint -emacro(572,VBITS)
+#define VBITS(val) VBITS_32(val)
+
+/**
+ * @def VBITS_1
+ * @brief Internal macro used by @ref VBITS */
+/**
+ * @def VBITS_2
+ * @brief Internal macro used by @ref VBITS */
+/**
+ * @def VBITS_4
+ * @brief Internal macro used by @ref VBITS */
+/**
+ * @def VBITS_8
+ * @brief Internal macro used by @ref VBITS */
+/**
+ * @def VBITS_16
+ * @brief Internal macro used by @ref VBITS */
+/**
+ * @def VBITS_32
+ * @brief Internal macro used by @ref VBITS */
+#define VBITS_1( v) ((((v) & (0x0001U <<  0)) != 0) ? 1U : 0U)
+#define VBITS_2( v) ((((v) & (0x0001U <<  1)) != 0) ? VBITS_1 ((v) >>  1) +  1 : VBITS_1 (v))
+#define VBITS_4( v) ((((v) & (0x0003U <<  2)) != 0) ? VBITS_2 ((v) >>  2) +  2 : VBITS_2 (v))
+#define VBITS_8( v) ((((v) & (0x000fU <<  4)) != 0) ? VBITS_4 ((v) >>  4) +  4 : VBITS_4 (v))
+#define VBITS_16(v) ((((v) & (0x00ffU <<  8)) != 0) ? VBITS_8 ((v) >>  8) +  8 : VBITS_8 (v))
+#define VBITS_32(v) ((((v) & (0xffffU << 16)) != 0) ? VBITS_16((v) >> 16) + 16 : VBITS_16(v))
 
 
 /*Segger embedded studio originally has offsetof macro which cannot be used in macros (like STATIC_ASSERT).
@@ -297,7 +385,7 @@ typedef struct
  *
  * @return The aligned (increased) @p number.
  */
-#define ALIGN_NUM(alignment, number) ((number - 1) + alignment - ((number - 1) % alignment))
+#define ALIGN_NUM(alignment, number) (((number) - 1) + (alignment) - (((number) - 1) % (alignment)))
 
 /**@brief Macro for getting first of 2 parameters.
  *
@@ -861,6 +949,23 @@ static __INLINE uint8_t uint32_encode(uint32_t value, uint8_t * p_encoded_data)
     return sizeof(uint32_t);
 }
 
+/**@brief Function for encoding a uint40 value.
+ *
+ * @param[in]   value            Value to be encoded.
+ * @param[out]  p_encoded_data   Buffer where the encoded data is to be written.
+ *
+ * @return      Number of bytes written.
+ */
+static __INLINE uint8_t uint40_encode(uint64_t value, uint8_t * p_encoded_data)
+{
+    p_encoded_data[0] = (uint8_t) ((value & 0x00000000FF) >> 0);
+    p_encoded_data[1] = (uint8_t) ((value & 0x000000FF00) >> 8);
+    p_encoded_data[2] = (uint8_t) ((value & 0x0000FF0000) >> 16);
+    p_encoded_data[3] = (uint8_t) ((value & 0x00FF000000) >> 24);
+    p_encoded_data[4] = (uint8_t) ((value & 0xFF00000000) >> 32);
+    return 5;
+}
+
 /**@brief Function for encoding a uint48 value.
  *
  * @param[in]   value            Value to be encoded.
@@ -960,6 +1065,8 @@ static __INLINE uint8_t uint16_big_encode(uint16_t value, uint8_t * p_encoded_da
     return sizeof(uint16_t);
 }
 
+/*lint -esym(526, __rev) */
+/*lint -esym(628, __rev) */
 /**@brief Function for encoding a uint32 value in big-endian format.
  *
  * @param[in]   value            Value to be encoded.
@@ -971,6 +1078,21 @@ static __INLINE uint8_t uint32_big_encode(uint32_t value, uint8_t * p_encoded_da
 {
     *(uint32_t *)p_encoded_data = __REV(value);
     return sizeof(uint32_t);
+}
+
+/**@brief Function for decoding a uint40 value.
+ *
+ * @param[in]   p_encoded_data   Buffer where the encoded data is stored.
+ *
+ * @return      Decoded value. (uint64_t)
+ */
+static __INLINE uint64_t uint40_decode(const uint8_t * p_encoded_data)
+{
+    return ( (((uint64_t)((uint8_t *)p_encoded_data)[0]) << 0)  |
+             (((uint64_t)((uint8_t *)p_encoded_data)[1]) << 8)  |
+             (((uint64_t)((uint8_t *)p_encoded_data)[2]) << 16) |
+             (((uint64_t)((uint8_t *)p_encoded_data)[3]) << 24) |
+             (((uint64_t)((uint8_t *)p_encoded_data)[4]) << 32 ));
 }
 
 /**@brief Function for decoding a uint48 value.
@@ -1052,6 +1174,7 @@ static __INLINE bool is_word_aligned(void const* p)
     return (((uintptr_t)p & 0x03) == 0);
 }
 
+/*lint -e{568, 685} */
 /**
  * @brief Function for checking if provided address is located in stack space.
  *
@@ -1071,7 +1194,6 @@ static __INLINE bool is_address_from_stack(void * ptr)
         return false;
     }
 }
-
 
 #ifdef __cplusplus
 }

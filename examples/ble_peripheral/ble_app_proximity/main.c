@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -84,13 +84,13 @@
 #include "fds.h"
 #include "ble_conn_state.h"
 #include "nrf_ble_gatt.h"
+#include "nrf_ble_qwr.h"
+#include "nrf_pwr_mgmt.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
-
-#define APP_FEATURE_NOT_SUPPORTED       BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2    /**< Reply when unsupported features are requested. */
 
 #define DEVICE_NAME                     "Nordic_Prox"                           /**< Name of device. Will be included in the advertising data. */
 
@@ -104,8 +104,9 @@
 #define SLAVE_LATENCY                   0                                       /**< Slave latency. */
 #define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(4000, UNIT_10_MS)         /**< Connection supervisory timeout (4 seconds). */
 
-#define APP_ADV_INTERVAL               40                                       /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
-#define APP_ADV_TIMEOUT_IN_SECONDS     180                                      /**< The advertising timeout in units of seconds. */
+#define APP_ADV_INTERVAL                40                                       /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
+
+#define APP_ADV_DURATION                18000                                    /**< The advertising duration (180 seconds) in units of 10 milliseconds. */
 
 #define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(5000)                   /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
 #define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(30000)                  /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
@@ -143,11 +144,12 @@
 
 APP_TIMER_DEF(m_battery_timer_id);                      /**< Battery measurement timer. */
 BLE_TPS_DEF(m_tps);                                     /**< TX Power service instance. */
-BLE_IAS_DEF(m_ias);                                     /**< Immediate Alert service instance. */
+BLE_IAS_DEF(m_ias, NRF_SDH_BLE_TOTAL_LINK_COUNT);       /**< Immediate Alert service instance. */
 BLE_LLS_DEF(m_lls);                                     /**< Link Loss service instance. */
 BLE_BAS_DEF(m_bas);                                     /**< Battery service instance. */
 BLE_IAS_C_DEF(m_ias_c);                                 /**< Immediate Alert Service client instance. */
 NRF_BLE_GATT_DEF(m_gatt);                               /**< GATT module instance. */
+NRF_BLE_QWR_DEF(m_qwr);                                 /**< Context for the Queued Write module.*/
 BLE_ADVERTISING_DEF(m_advertising);                     /**< Advertising module instance. */
 BLE_DB_DISCOVERY_DEF(m_ble_db_discovery);               /**< DB discovery module instance. */
 
@@ -247,7 +249,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         {
             // Run garbage collection on the flash.
             err_code = fds_gc();
-            if (err_code == FDS_ERR_BUSY || err_code == FDS_ERR_NO_SPACE_IN_QUEUES)
+            if (err_code == FDS_ERR_NO_SPACE_IN_QUEUES)
             {
                 // Retry.
             }
@@ -260,12 +262,6 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         case PM_EVT_PEERS_DELETE_SUCCEEDED:
         {
             advertising_start(false);
-        } break;
-
-        case PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED:
-        {
-            // The local database has likely changed, send service changed indications.
-            pm_local_database_has_changed();
         } break;
 
         case PM_EVT_PEER_DATA_UPDATE_FAILED:
@@ -296,6 +292,8 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         case PM_EVT_PEER_DATA_UPDATE_SUCCEEDED:
         case PM_EVT_PEER_DELETE_SUCCEEDED:
         case PM_EVT_LOCAL_DB_CACHE_APPLIED:
+        case PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED:
+            // This can happen when the local DB has changed.
         case PM_EVT_SERVICE_CHANGED_IND_SENT:
         case PM_EVT_SERVICE_CHANGED_IND_CONFIRMED:
         default:
@@ -327,14 +325,11 @@ void saadc_event_handler(nrf_drv_saadc_evt_t const * p_event)
                                   DIODE_FWD_VOLT_DROP_MILLIVOLTS;
         percentage_batt_lvl = battery_level_in_percent(batt_lvl_in_milli_volts);
 
-        err_code = ble_bas_battery_level_update(&m_bas, percentage_batt_lvl);
-        if (
-            (err_code != NRF_SUCCESS)
-            &&
-            (err_code != NRF_ERROR_INVALID_STATE)
-            &&
-            (err_code != NRF_ERROR_RESOURCES)
-            &&
+        err_code = ble_bas_battery_level_update(&m_bas, percentage_batt_lvl, BLE_CONN_HANDLE_ALL);
+        if ((err_code != NRF_SUCCESS) &&
+            (err_code != NRF_ERROR_INVALID_STATE) &&
+            (err_code != NRF_ERROR_RESOURCES) &&
+            (err_code != NRF_ERROR_BUSY) &&
             (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
            )
         {
@@ -446,9 +441,6 @@ static void gap_params_init(void)
 
     err_code = sd_ble_gap_ppcp_set(&gap_conn_params);
     APP_ERROR_CHECK(err_code);
-
-    err_code = sd_ble_gap_tx_power_set(TX_POWER_LEVEL);
-    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -528,7 +520,7 @@ static void advertising_init(void)
 
     init.config.ble_adv_fast_enabled  = true;
     init.config.ble_adv_fast_interval = APP_ADV_INTERVAL;
-    init.config.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;
+    init.config.ble_adv_fast_timeout  = APP_ADV_DURATION;
 
     init.evt_handler = on_adv_evt;
 
@@ -536,6 +528,34 @@ static void advertising_init(void)
     APP_ERROR_CHECK(err_code);
 
     ble_advertising_conn_cfg_tag_set(&m_advertising, APP_BLE_CONN_CFG_TAG);
+}
+
+
+/**@brief Function for handling Queued Write Module errors.
+ *
+ * @details A pointer to this function will be passed to each service which may need to inform the
+ *          application about an error.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void nrf_qwr_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
+}
+
+
+/**@brief Function for initializing the Queued Write module.
+ */
+static void qwr_init(void)
+{
+    ret_code_t         err_code;
+    nrf_ble_qwr_init_t qwr_init_obj = {0};
+
+    // Initialize Queued Write Module.
+    qwr_init_obj.error_handler = nrf_qwr_error_handler;
+
+    err_code = nrf_ble_qwr_init(&m_qwr, &qwr_init_obj);
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -644,6 +664,7 @@ static void ias_client_init(void)
  */
 static void services_init(void)
 {
+    qwr_init();
     tps_init();
     ias_init();
     lls_init();
@@ -742,7 +763,10 @@ static void on_ias_evt(ble_ias_t * p_ias, ble_ias_evt_t * p_evt)
     switch (p_evt->evt_type)
     {
         case BLE_IAS_EVT_ALERT_LEVEL_UPDATED:
-            alert_signal(p_evt->params.alert_level);
+            if (p_evt->p_link_ctx != NULL)
+            {
+                alert_signal(p_evt->p_link_ctx->alert_level);
+            }
             break; // BLE_IAS_EVT_ALERT_LEVEL_UPDATED
 
         default:
@@ -868,13 +892,16 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
 
+            // Assign connection handle to the Queued Write module.
+            err_code = nrf_ble_qwr_conn_handle_assign(&m_qwr, p_ble_evt->evt.gap_evt.conn_handle);
+            APP_ERROR_CHECK(err_code);
+
             // Discover peer's services.
             err_code = ble_db_discovery_start(&m_ble_db_discovery,
                                               p_ble_evt->evt.gap_evt.conn_handle);
             APP_ERROR_CHECK(err_code);
         } break;
 
-#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -886,7 +913,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
             APP_ERROR_CHECK(err_code);
         } break;
-#endif
 
         case BLE_GATTC_EVT_TIMEOUT:
             // Disconnect on GATT Client timeout event.
@@ -903,40 +929,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
             break;
-
-        case BLE_EVT_USER_MEM_REQUEST:
-            err_code = sd_ble_user_mem_reply(p_ble_evt->evt.gattc_evt.conn_handle, NULL);
-            APP_ERROR_CHECK(err_code);
-            break;
-
-        case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
-        {
-            ble_gatts_evt_rw_authorize_request_t  req;
-            ble_gatts_rw_authorize_reply_params_t auth_reply;
-
-            req = p_ble_evt->evt.gatts_evt.params.authorize_request;
-
-            if (req.type != BLE_GATTS_AUTHORIZE_TYPE_INVALID)
-            {
-                if ((req.request.write.op == BLE_GATTS_OP_PREP_WRITE_REQ)     ||
-                    (req.request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW) ||
-                    (req.request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL))
-                {
-                    if (req.type == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
-                    {
-                        auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
-                    }
-                    else
-                    {
-                        auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_READ;
-                    }
-                    auth_reply.params.write.gatt_status = APP_FEATURE_NOT_SUPPORTED;
-                    err_code = sd_ble_gatts_rw_authorize_reply(p_ble_evt->evt.gatts_evt.conn_handle,
-                                                               &auth_reply);
-                    APP_ERROR_CHECK(err_code);
-                }
-            }
-        } break; // BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST
 
         default:
             // No implementation needed.
@@ -1080,7 +1072,7 @@ static void buttons_leds_init(bool * p_erase_bonds)
     ret_code_t err_code;
     bsp_event_t startup_event;
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, bsp_event_handler);
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS, bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_btn_ble_init(NULL, &startup_event);
@@ -1101,12 +1093,26 @@ static void log_init(void)
 }
 
 
-/**@brief Function for the Power manager.
+/**@brief Function for initializing power management.
  */
-static void power_manage(void)
+static void power_management_init(void)
 {
-    ret_code_t err_code = sd_app_evt_wait();
+    ret_code_t err_code;
+    err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for handling the idle state (main loop).
+ *
+ * @details If there is no pending log operation, then sleep until next the next event occurs.
+ */
+static void idle_state_handle(void)
+{
+    if (NRF_LOG_PROCESS() == false)
+    {
+        nrf_pwr_mgmt_run();
+    }
 }
 
 
@@ -1141,6 +1147,14 @@ static void advertising_start(bool erase_bonds)
 }
 
 
+/**@brief Function for changing the tx power.
+ */
+static void tx_power_set(void)
+{
+    ret_code_t err_code = sd_ble_gap_tx_power_set(BLE_GAP_TX_POWER_ROLE_ADV, m_advertising.adv_handle, TX_POWER_LEVEL);
+    APP_ERROR_CHECK(err_code);
+}
+
 /**@brief Function for application main entry.
  */
 int main(void)
@@ -1151,6 +1165,7 @@ int main(void)
     log_init();
     timers_init();
     buttons_leds_init(&erase_bonds);
+    power_management_init();
     ble_stack_init();
     adc_configure();
     gap_params_init();
@@ -1163,16 +1178,13 @@ int main(void)
 
     // Start execution.
     NRF_LOG_INFO("Proximity example started.");
-
     advertising_start(erase_bonds);
+    tx_power_set();
 
     // Enter main loop.
     for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            power_manage();
-        }
+        idle_state_handle();
     }
 }
 

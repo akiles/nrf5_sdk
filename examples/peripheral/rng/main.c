@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -95,6 +95,8 @@ int main(void)
 
     err_code = nrf_drv_rng_init(NULL);
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_INFO("RNG example started.");
 
     while (true)
     {

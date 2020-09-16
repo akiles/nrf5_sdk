@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -48,6 +48,7 @@
 #ifndef COAP_H__
 #define COAP_H__
 
+#include "iot_errors.h"
 #include "coap_api.h"
 #include "sdk_os.h"
 
@@ -56,7 +57,7 @@
  * @details Macros used for creating module logs which can be useful in understanding handling
  *          of events or actions on API requests. These are intended for debugging purposes and
  *          can be enabled by defining the COAP_ENABLE_LOGS to 1.
- * @note That if ENABLE_DEBUG_LOG_SUPPORT is disabled, having COAP_ENABLE_LOGS has no effect.
+ * @note If NRF_LOG_ENABLED is disabled, having COAP_ENABLE_LOGS has no effect.
  * @{
  */
 

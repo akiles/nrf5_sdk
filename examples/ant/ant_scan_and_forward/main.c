@@ -81,18 +81,16 @@
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 /**@brief Function for the Timer and BSP initialization.
  */
 static void utils_setup(void)
 {
-    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    ret_code_t err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
-    err_code = app_timer_init();
-    APP_ERROR_CHECK(err_code);
-
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS,
                         sf_bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 
@@ -129,14 +127,28 @@ void switch_init(void)
 #endif
 }
 
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
 /** @brief The main function
  */
 int main(void)
 {
+    log_init();
     utils_setup();
     switch_init();
     softdevice_setup();
     sf_init();
+
+    NRF_LOG_INFO("ANT Scan and Forward example started.");
 
     // Enter main loop
     for (;;)

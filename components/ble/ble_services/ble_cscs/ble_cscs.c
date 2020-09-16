@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -218,7 +218,7 @@ static uint32_t csc_measurement_char_add(ble_cscs_t * p_cscs, ble_cscs_init_t co
     ble_gatts_attr_t    attr_char_value;
     ble_uuid_t          ble_uuid;
     ble_gatts_attr_md_t attr_md;
-    ble_cscs_meas_t     initial_scm;
+    ble_cscs_meas_t     initial_scm = {0};
     uint8_t             encoded_scm[MAX_CSCM_LEN];
     memset(&cccd_md, 0, sizeof(cccd_md));
 

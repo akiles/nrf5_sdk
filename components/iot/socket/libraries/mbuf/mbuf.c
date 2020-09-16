@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -105,7 +105,10 @@ uint32_t mbuf_read(mbuf_t * p_mbuf, void * p_buf, uint32_t buf_size)
     {
         mbuf_load(p_mbuf);
         void * p_current = p_mbuf->p_current;
-        uint32_t copy_len = p_mbuf->read(p_current, p_mbuf->read_pos, p_buf, buf_size);
+        const uint32_t copy_len = p_mbuf->read(p_current,
+                                               p_mbuf->read_pos,
+                                               ((uint8_t *)p_buf) + nbytes,
+                                               buf_size - nbytes);
         p_mbuf->read_pos += copy_len;
         nbytes += copy_len;
         if (mbuf_empty_current(p_mbuf) == true)

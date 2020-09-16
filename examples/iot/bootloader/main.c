@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -54,7 +54,6 @@
 #include "nrf_dfu.h"
 #include "app_error.h"
 #include "app_error_weak.h"
-#include "nrf_bootloader_info.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -73,23 +72,6 @@ void app_error_handler_bare(uint32_t error_code)
     NVIC_SystemReset();
 }
 
-/**@brief Implementation to use button press to enter bootloader
- */
-bool nrf_dfu_button_enter_check(void)
-{
-    return false;
-}
-
-/*
- * This function is called by the library DFU implementation. Thread DFU
- * doesn't support boot loader transport at this time, hence
- * we just provide an empty implementation.
- */
-uint32_t nrf_dfu_req_handler_init(void)
-{
-    return NRF_SUCCESS;
-}
-
 /**@brief Function for initializing the nrf log module.
  */
 static void log_init(void)
@@ -104,10 +86,24 @@ static void log_init(void)
  */
 static void leds_init(void)
 {
-    bsp_board_leds_init();
-    bsp_board_led_on(BSP_BOARD_LED_2);
+    bsp_board_init(BSP_INIT_LEDS);
 }
 
+/**
+ * @brief Function notifies certain events in DFU process.
+ */
+static void dfu_observer(nrf_dfu_evt_type_t evt_type)
+{
+    switch (evt_type)
+    {
+        case NRF_DFU_EVT_DFU_INITIALIZED:
+            bsp_board_led_on(BSP_BOARD_LED_2);
+            break;
+
+        default:
+            break;
+    }
+}
 
 /**@brief Function for application main entry.
  */
@@ -121,13 +117,13 @@ int main(void)
 
     leds_init();
 
-    ret_val = nrf_bootloader_init();
+    ret_val = nrf_bootloader_init(dfu_observer);
     APP_ERROR_CHECK(ret_val);
 
     // Either there was no DFU functionality enabled in this project or the DFU module detected
     // no ongoing DFU operation and found a valid main application.
     // Boot the main application.
-    nrf_bootloader_app_start(MAIN_APPLICATION_START_ADDR);
+    nrf_bootloader_app_start();
 
     // Should never be reached.
     NRF_LOG_INFO("After main\r\n");

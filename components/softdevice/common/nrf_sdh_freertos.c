@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -60,12 +60,14 @@ static nrf_sdh_freertos_task_hook_t m_task_hook;        //!< A hook function run
 
 void SD_EVT_IRQHandler(void)
 {
-    BaseType_t yield_req = pdFALSE;
+     BaseType_t xYieldRequired;
 
-    vTaskNotifyGiveFromISR(m_softdevice_task, &yield_req);
+     xYieldRequired = xTaskResumeFromISR( m_softdevice_task );
 
-    /* Switch the task if required. */
-    portYIELD_FROM_ISR(yield_req);
+     if( xYieldRequired == pdTRUE )
+     {
+         portYIELD_FROM_ISR(xYieldRequired);
+     }
 }
 
 
@@ -81,11 +83,8 @@ static void softdevice_task(void * pvParameter)
 
     while (true)
     {
-
-        nrf_sdh_evts_poll();                    /* let the handlers run first, incase the EVENT occured before creating this task */
-
-        (void) ulTaskNotifyTake(pdTRUE,         /* Clear the notification value before exiting (equivalent to the binary semaphore). */
-                                portMAX_DELAY); /* Block indefinitely (INCLUDE_vTaskSuspend has to be enabled).*/
+        nrf_sdh_evts_poll(); // Let the handlers run first, in case the EVENT occured before creating this task.
+        vTaskSuspend(NULL);
     }
 }
 

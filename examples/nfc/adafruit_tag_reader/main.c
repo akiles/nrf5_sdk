@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -111,7 +111,7 @@ typedef enum
  */
 void utils_setup(void)
 {
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     NRF_LOG_DEFAULT_BACKENDS_INIT();
@@ -401,6 +401,8 @@ int main(void)
 
     err_code = adafruit_pn532_init(false);
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_INFO("NFC Adafruit tag reader example started.");
 
     for (;;)
     {

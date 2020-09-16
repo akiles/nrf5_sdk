@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -60,7 +60,7 @@ extern "C" {
  * @{
  */
 
-ANON_UNIONS_ENABLE
+ANON_UNIONS_ENABLE;
 
 /**@brief One piece of data associated with a peer, together with its type.
  *
@@ -103,7 +103,7 @@ typedef struct
     }; /**< @brief The data. */
 } pm_peer_data_const_t;
 
-ANON_UNIONS_DISABLE
+ANON_UNIONS_DISABLE;
 
 
 /**@brief Version of @ref pm_peer_data_t that reflects the structure of peer data in flash.

@@ -197,23 +197,18 @@ void ant_bpwr_evt_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_evt_t event)
  */
 static void utils_setup(void)
 {
-    ret_code_t err_code = NRF_LOG_INIT(NULL);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = app_timer_init();
+    ret_code_t err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
     err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS,
                         bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_btn_ant_init(m_ant_bpwr.channel_number, BPWR_DISP_CHANNEL_TYPE);
     APP_ERROR_CHECK(err_code);
-
-    NRF_LOG_DEFAULT_BACKENDS_INIT();
 
     err_code = ant_state_indicator_init(m_ant_bpwr.channel_number, BPWR_DISP_CHANNEL_TYPE);
     APP_ERROR_CHECK(err_code);
@@ -257,13 +252,27 @@ static void profile_setup(void)
 /** @snippet [ANT BPWR RX Profile Setup] */
 }
 
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
 /**@brief Function for application main entry, does not return.
  */
 int main(void)
 {
+    log_init();
     utils_setup();
     softdevice_setup();
     profile_setup();
+
+    NRF_LOG_INFO("ANT+ Bicycle Power RX example started.");
 
     for (;;)
     {

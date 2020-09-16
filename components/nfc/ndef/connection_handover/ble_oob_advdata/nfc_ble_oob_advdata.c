@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -43,10 +43,8 @@
 #include "nfc_ble_oob_advdata.h"
 #include "sdk_common.h"
 #include "nfc_ble_pair_msg.h"
+#include "nfc_ble_pair_common.h"
 
-// LESC OOB data AD_TYPE values.
-#define BLE_GAP_AD_TYPE_LESC_CONFIRM_VALUE  0x22
-#define BLE_GAP_AD_TYPE_LESC_RANDOM_VALUE   0x23
 
 /**
  * @brief Macro for verifying basic parameters used for encoding single BLE AD Type.
@@ -158,7 +156,7 @@ static ret_code_t lesc_value_encode(ble_gap_lesc_oob_data_t * p_lesc_value,
     // Encode LESC Confirm Value.
     p_encoded_data[*p_offset]  = (uint8_t)(AD_TYPE_FIELD_SIZE + AD_TYPE_CONFIRM_VALUE_DATA_SIZE);
     *p_offset                 += AD_LENGTH_FIELD_SIZE;
-    p_encoded_data[*p_offset]  = BLE_GAP_AD_TYPE_LESC_CONFIRM_VALUE;
+    p_encoded_data[*p_offset]  = BLE_GAP_AD_TYPE_LESC_CONFIRMATION_VALUE;
     *p_offset                 += AD_TYPE_FIELD_SIZE;
 
     memcpy(&p_encoded_data[*p_offset], p_lesc_value->c, sizeof(p_lesc_value->c));

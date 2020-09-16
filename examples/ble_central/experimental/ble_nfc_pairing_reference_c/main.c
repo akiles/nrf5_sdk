@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -78,10 +78,10 @@ int main(void)
     buttons_init();
     ble_stack_init();
     gatt_init();
-    peer_manager_init(true);
+    peer_manager_init(false);
     nfc_init();
 
-    NRF_LOG_INFO("NFC Connection Handover BLE Central device example.");
+    NRF_LOG_INFO("NFC Connection Handover BLE Central device example started.");
 
     while (true)
     {

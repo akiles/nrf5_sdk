@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -95,6 +95,25 @@ typedef struct
     app_usbd_class_inst_t const * p_sof_next;   //!< Pointer to the next SOF event requiring instance
 } app_usbd_class_data_t;
 
+/**
+ * @brief Class descriptor context
+ */
+typedef struct
+{
+    uint32_t   line;        //!< Number of line to resume writing descriptors from
+    uint8_t    data_buffer; //!< Data from last call of feeder
+} app_usbd_class_descriptor_ctx_t;
+
+/**
+ * @brief Class descriptor state
+ */
+typedef struct
+{
+    uint8_t  *                          p_buffer;     //!< Pointer to buffer
+    uint32_t                            current_size; //!< Current size of descriptor
+    uint32_t                            maximum_size; //!< Maximum size of descriptor
+    app_usbd_class_descriptor_ctx_t *   p_context;    //!< Pointer to context
+} app_usbd_class_descriptor_state_t;
 
 /**
  * @brief   Class interface function set
@@ -115,16 +134,21 @@ typedef struct {
                                  app_usbd_complex_evt_t const * const p_event);
 
     /**
-     * @brief Instance get descriptors
+     * @brief Instance feed descriptors
      *
-     * The function used by every class instance.
-     * @param[in,out] p_inst  Instance of the class
-     * @param[out]    p_size  Descriptor size
+     * Feeds whole descriptor of the instance
+     * @param[in]     p_ctx     Class descriptor context
+     * @param[in,out] p_inst    Instance of the class
+     * @param[out]    p_buff    Buffer for descriptor
+     * @param[in]     max_size  Requested size of the descriptor
      *
-     * @return Class descriptors start address
+     * @return True if not finished feeding the descriptor, false if done
      */
-    const void * (* get_descriptors)(app_usbd_class_inst_t const * const p_inst,
-                                     size_t * p_size);
+    bool (* feed_descriptors)(app_usbd_class_descriptor_ctx_t  * p_ctx,
+                              app_usbd_class_inst_t const      * p_inst,
+                              uint8_t                          * p_buff,
+                              size_t                             max_size);
+
 
     /**
      * @brief Select interface
@@ -664,6 +688,27 @@ static inline app_usbd_class_data_t * app_usbd_class_data_access(
     } APP_USBD_CLASS_INSTANCE_TYPE(type_name)
 
 /**
+ * @brief Same as @ref APP_USBD_CLASS_INSTANCE_TYPEDEF but for class with EP0 only.
+ */
+#define APP_USBD_CLASS_INSTANCE_NO_EP_TYPEDEF(type_name, interfaces_configs, class_config_dec)  \
+    typedef union CONCAT_2(type_name, _u)                                                       \
+    {                                                                                           \
+        app_usbd_class_inst_t base;                                                             \
+        struct                                                                                  \
+        {                                                                                       \
+            APP_USBD_CLASS_DATA_TYPE(type_name) * p_data;                                       \
+            app_usbd_class_methods_t const * p_class_methods;                                   \
+            struct                                                                              \
+            {                                                                                   \
+                uint8_t cnt;                                                                    \
+                app_usbd_class_iface_conf_t                                                     \
+                                config[NUM_VA_ARGS(BRACKET_EXTRACT(interfaces_configs))];       \
+            } iface;                                                                            \
+            class_config_dec                                                                    \
+        } specific;                                                                             \
+    } APP_USBD_CLASS_INSTANCE_TYPE(type_name)
+
+/**
  * @brief Writable data structure declaration
  *
  * The macro that declares a variable type that would be used to store given class writable data.
@@ -713,6 +758,16 @@ static inline app_usbd_class_data_t * app_usbd_class_data_access(
     APP_USBD_CLASS_INSTANCE_TYPEDEF(type_name, interface_configs, class_config_dec)
 
 /**
+ * @brief Same as @ref APP_USBD_CLASS_TYPEDEF but for class with EP0 only.
+ */
+#define APP_USBD_CLASS_NO_EP_TYPEDEF(type_name,                                                \
+                                     interface_configs,                                        \
+                                     class_config_dec,                                         \
+                                     class_data_dec)                                           \
+    APP_USBD_CLASS_DATA_TYPEDEF(type_name, class_data_dec);                                    \
+    APP_USBD_CLASS_INSTANCE_NO_EP_TYPEDEF(type_name, interface_configs, class_config_dec)
+
+/**
  * @brief Forward declaration of type defined by @ref APP_USBD_CLASS_TYPEDEF
  *
  * @param type_name          The name of the type without _t postfix.
@@ -750,6 +805,24 @@ static inline app_usbd_class_data_t * app_usbd_class_data_access(
         }                                                                               \
     }
 
+/**
+ * @brief Same as @ref APP_USBD_CLASS_INSTANCE_INITVAL but for class with EP0 only.
+ */
+#define APP_USBD_CLASS_INSTANCE_NO_EP_INITVAL(p_ram_data,                               \
+                                              class_methods,                            \
+                                              interfaces_configs,                       \
+                                              class_config_part)                        \
+    {                                                                                   \
+        .specific = {                                                                   \
+            .p_data = p_ram_data,                                                       \
+            .p_class_methods = class_methods,                                           \
+            .iface = {                                                                  \
+                .cnt    = NUM_VA_ARGS(BRACKET_EXTRACT(interfaces_configs)),             \
+                .config = { APP_USBD_CLASS_IFACES_CONFIG_EXTRACT(interfaces_configs) }  \
+            },                                                                          \
+            BRACKET_EXTRACT(class_config_part)                                          \
+        }                                                                               \
+    }
 
 /**
  * @brief Define the base class instance
@@ -868,6 +941,21 @@ static inline app_usbd_class_data_t * app_usbd_class_data_access(
             class_config_part)
 
 /**
+ * @brief Same as @ref APP_USBD_CLASS_INST_GLOBAL_DEF but for class with EP0 only.
+ */
+#define APP_USBD_CLASS_INST_NO_EP_GLOBAL_DEF(instance_name,                     \
+                                             type_name,                         \
+                                             class_methods,                     \
+                                             interfaces_configs,                \
+                                             class_config_part)                 \
+    static APP_USBD_CLASS_DATA_TYPE(type_name) CONCAT_2(instance_name, _data);  \
+    const APP_USBD_CLASS_INSTANCE_TYPE(type_name) instance_name =               \
+        APP_USBD_CLASS_INSTANCE_NO_EP_INITVAL(                                  \
+            &CONCAT_2(instance_name, _data),                                    \
+            class_methods,                                                      \
+            interfaces_configs,                                                 \
+            class_config_part)
+/**
  * @brief Access class specific configuration
  *
  * Macro that returns class specific configuration.
@@ -906,6 +994,96 @@ static inline app_usbd_class_data_t * app_usbd_class_data_access(
  * and would generate also error if this base member is wrong type.
  */
 #define APP_USBD_CLASS_BASE_INSTANCE(p_inst) (&((p_inst)->base))
+
+/*lint -emacro(142 438 616 646, APP_USBD_CLASS_DESCRIPTOR_INIT, APP_USBD_CLASS_DESCRIPTOR_BEGIN, APP_USBD_CLASS_DESCRIPTOR_YIELD, APP_USBD_CLASS_DESCRIPTOR_END, APP_USBD_CLASS_DESCRIPTOR_WRITE)*/
+
+/**
+ * @brief Initialize class descriptor
+ *
+ * @param[in] p_ctx Class descriptor context
+ */
+
+#define APP_USBD_CLASS_DESCRIPTOR_INIT(p_ctx)       \
+    (p_ctx)->line = 0;
+
+/**
+ * @brief Begin class descriptor
+ *
+ * @param[in] p_ctx    Class descriptor context
+ * @param[in] p_buff   Buffer to write into
+ * @param[in] max_size Size of the buffer
+ */
+
+#define APP_USBD_CLASS_DESCRIPTOR_BEGIN(p_ctx, p_buff, max_size)            \
+    ASSERT((p_ctx) != NULL);                                                \
+    app_usbd_class_descriptor_state_t this_descriptor_feed;                 \
+    this_descriptor_feed.p_buffer     = (p_buff);                           \
+    this_descriptor_feed.current_size = 0;                                  \
+    this_descriptor_feed.maximum_size = (max_size);                         \
+    this_descriptor_feed.p_context    = (p_ctx);                            \
+    switch ((this_descriptor_feed.p_context)->line)                         \
+    {                                                                       \
+        case 0:                                                             \
+            ;
+
+/**
+ * @brief Yield class descriptor
+ *
+ */
+
+#define APP_USBD_CLASS_DESCRIPTOR_YIELD()                   \
+do                                                          \
+{                                                           \
+        (this_descriptor_feed.p_context)->line = __LINE__;  \
+        return true;                                        \
+        case __LINE__:                                      \
+            ;                                               \
+} while (0)
+
+/*lint -emacro(438 527, APP_USBD_CLASS_DESCRIPTOR_END)*/
+
+/**
+ * @brief End class descriptor
+ *
+ * This function has to be called at the end of class descriptor feeder function.
+ * No other operations in feeder function can be done after calling it.
+ */
+
+#define APP_USBD_CLASS_DESCRIPTOR_END()             \
+        APP_USBD_CLASS_DESCRIPTOR_YIELD();          \
+    }                                               \
+    (this_descriptor_feed.p_context)->line = 0;     \
+    return false;
+
+
+/**
+ * @brief Write descriptor using protothreads
+ *
+ * This function writes one byte to the buffer with offset. If buffer is full
+ * it yields.
+ *
+ * It is used by the class descriptor feeders internally.
+ *
+ * @ref APP_USBD_CLASS_DESCRIPTOR_BEGIN has to be called before using this function.
+ * @ref APP_USBD_CLASS_DESCRIPTOR_END has to be called after last use of this function.
+ *
+ * @param data Byte to be written to buffer
+ */
+#define APP_USBD_CLASS_DESCRIPTOR_WRITE(data)                                           \
+do                                                                                      \
+{                                                                                       \
+    (this_descriptor_feed.p_context)->data_buffer = (data);                             \
+    if (this_descriptor_feed.current_size >= this_descriptor_feed.maximum_size)         \
+    {                                                                                   \
+        APP_USBD_CLASS_DESCRIPTOR_YIELD();                                              \
+    }                                                                                   \
+    if(this_descriptor_feed.p_buffer != NULL)                                           \
+    {                                                                                   \
+        *(this_descriptor_feed.p_buffer + this_descriptor_feed.current_size) =          \
+            (this_descriptor_feed.p_context)->data_buffer;                              \
+    }                                                                                   \
+    this_descriptor_feed.current_size++;                                                \
+} while(0);
 
 /** @} */
 

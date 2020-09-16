@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -97,9 +97,7 @@ static nfc_pairing_mode_t        m_pairing_mode;                        /**< Cur
 static ble_gap_lesc_oob_data_t   m_ble_lesc_oob_data;                   /**< LESC OOB data used in LESC OOB pairing mode. */
 static ble_gap_sec_params_t      m_sec_param;                           /**< Current Peer Manager secure parameters configuration. */
 
-static volatile bool m_connected         = false;                       /**< Indicates if device is connected. */
-static uint16_t      m_conn_handle       = BLE_CONN_HANDLE_INVALID;     /**< Handle of the current connection. */
-static bool          m_pending_advertise = false;                       /**< Flag used to indicate pending advertising that will be started after disconnection. */
+static uint8_t                   m_connections = 0;                     /**< Number of active connections. */
 
 __ALIGN(4) static ble_gap_lesc_p256_pk_t m_lesc_pk;                     /**< LESC ECC Public Key. */
 __ALIGN(4) static ble_gap_lesc_p256_sk_t m_lesc_sk;                     /**< LESC ECC Secret Key. */
@@ -186,20 +184,9 @@ static void nfc_callback(void            * p_context,
                 APP_ERROR_CHECK(err_code);
             }
 
-            // If device is connected, terminate connection and start advertising on BLE_GAP_EVT_DISCONNECTED event.
-            if (m_connected)
+            // Start advertising when NFC field is sensed and there is a place for another connection.
+            if (m_connections < NRF_SDH_BLE_PERIPHERAL_LINK_COUNT)
             {
-                m_pending_advertise = true;
-
-                err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
-                if (err_code != NRF_ERROR_INVALID_STATE)
-                {
-                    APP_ERROR_CHECK(err_code);
-                }
-            }
-            else
-            {
-                // Start advertising when NFC field is sensed.
                 err_code = ble_advertising_start(m_p_advertising, BLE_ADV_MODE_FAST);
                 if (err_code != NRF_ERROR_INVALID_STATE)
                 {
@@ -587,9 +574,12 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             break;
 
         case BLE_GAP_EVT_CONNECTED:
-            m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
-            m_connected = true;
+            m_connections++;
             break;
+
+        case BLE_GAP_EVT_DISCONNECTED:
+            m_connections--;
+            // Intentional fallthrough.
 
         case BLE_GAP_EVT_AUTH_STATUS:
             // Generate new LESC key pair and OOB data
@@ -599,41 +589,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             {
                 err_code = generate_lesc_keys();
                 APP_ERROR_CHECK(err_code);
-            }
-            break;
-
-        case BLE_GAP_EVT_DISCONNECTED:
-            // Start directed advertising if connection timeout occured
-            if (p_ble_evt->evt.gap_evt.params.disconnected.reason == BLE_HCI_CONNECTION_TIMEOUT)
-            {
-                err_code = ble_advertising_start(m_p_advertising, BLE_ADV_MODE_DIRECTED);
-                APP_ERROR_CHECK(err_code);
-            }
-
-            m_connected   = false;
-            m_conn_handle = BLE_CONN_HANDLE_INVALID;
-
-            if (m_pending_advertise)
-            {
-                m_pending_advertise = false;
-
-                // Start advertising when NFC field is sensed.
-                err_code = ble_advertising_start(m_p_advertising, BLE_ADV_MODE_FAST);
-                if (err_code != NRF_ERROR_INVALID_STATE)
-                {
-                    APP_ERROR_CHECK(err_code);
-                }
-            }
-            else
-            {
-                // Generate new LESC key pair and OOB data only when connection is not terminated because of reading a new tag
-                if ((m_pairing_mode == NFC_PAIRING_MODE_LESC_OOB) ||
-                    (m_pairing_mode == NFC_PAIRING_MODE_LESC_JUST_WORKS) ||
-                    (m_pairing_mode == NFC_PAIRING_MODE_GENERIC_OOB))
-                {
-                    err_code = generate_lesc_keys();
-                    APP_ERROR_CHECK(err_code);
-                }
             }
             break;
 

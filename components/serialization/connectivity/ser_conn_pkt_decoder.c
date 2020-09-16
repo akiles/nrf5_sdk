@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -111,6 +111,7 @@ uint32_t ser_conn_received_pkt_process(
         }
         else
         {
+            NRF_LOG_ERROR("Command processing error:%d", err_code);
             err_code = NRF_ERROR_INTERNAL;
         }
     }

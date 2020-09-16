@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -53,6 +53,8 @@ extern "C" {
 #define LED_2          NRF_GPIO_PIN_MAP(0,14)
 #define LED_3          NRF_GPIO_PIN_MAP(0,15)
 #define LED_4          NRF_GPIO_PIN_MAP(0,16)
+#define LED_START      LED_1
+#define LED_STOP       LED_4
 
 #define LEDS_ACTIVE_STATE 0
 
@@ -153,11 +155,6 @@ extern "C" {
 #define ARDUINO_A4_PIN              30    // Analog channel 4
 #define ARDUINO_A5_PIN              31    // Analog channel 5
 
-// Low frequency clock source to be used by the SoftDevice
-#define NRF_CLOCK_LFCLKSRC      {.source        = NRF_CLOCK_LF_SRC_XTAL,            \
-                                 .rc_ctiv       = 0,                                \
-                                 .rc_temp_ctiv  = 0,                                \
-                                 .xtal_accuracy = NRF_CLOCK_LF_XTAL_ACCURACY_20_PPM}
 
 #ifdef __cplusplus
 }

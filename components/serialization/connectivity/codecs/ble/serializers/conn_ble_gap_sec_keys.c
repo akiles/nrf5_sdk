@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -38,11 +38,23 @@
  * 
  */
 #include "conn_ble_gap_sec_keys.h"
+#include "ser_config.h"
 #include "nrf_error.h"
+#include "nordic_common.h"
 #include <stddef.h>
 
 ser_ble_gap_conn_keyset_t m_conn_keys_table[SER_MAX_CONNECTIONS];
+#if NRF_SD_BLE_API_VERSION >= 6
 
+typedef struct
+{
+    uint32_t id;
+    uint8_t  ble_data[SER_MAX_ADV_DATA];
+} ble_data_item_t;
+
+ble_data_item_t m_ble_data_pool[8];
+
+#endif
 uint32_t conn_ble_gap_sec_context_create(uint32_t *p_index)
 {
   uint32_t err_code = NRF_ERROR_NO_MEM;
@@ -97,4 +109,47 @@ uint32_t conn_ble_gap_sec_context_find(uint16_t conn_handle, uint32_t *p_index)
 
   return err_code;
 }
+
+#if NRF_SD_BLE_API_VERSION >= 6
+uint8_t * conn_ble_gap_ble_data_buf_alloc(uint32_t id)
+{
+    uint32_t i;
+
+    /* First find if given id already allocated the buffer. */
+    for (i = 0; i < ARRAY_SIZE(m_ble_data_pool); i++)
+    {
+        if (m_ble_data_pool[i].id == id)
+        {
+            return m_ble_data_pool[i].ble_data;
+        }
+    }
+
+    for (i = 0; i < ARRAY_SIZE(m_ble_data_pool); i++)
+    {
+        if (m_ble_data_pool[i].id == 0)
+        {
+            m_ble_data_pool[i].id = id;
+            return m_ble_data_pool[i].ble_data;
+        }
+    }
+
+    return NULL;
+}
+
+
+void conn_ble_gap_ble_data_buf_free(uint8_t * p_data)
+{
+    uint32_t i;
+
+    /* First find if given id already allocated the buffer. */
+    for (i = 0; i < ARRAY_SIZE(m_ble_data_pool); i++)
+    {
+        if (m_ble_data_pool[i].ble_data == p_data)
+        {
+            m_ble_data_pool[i].id = 0;
+            return;
+        }
+    }
+}
+#endif
 

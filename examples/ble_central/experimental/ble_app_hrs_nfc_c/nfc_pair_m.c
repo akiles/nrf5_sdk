@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -72,6 +72,7 @@ NRF_LOG_MODULE_REGISTER();
 #define TAG_TYPE_2_BLOCKS_PER_EXCHANGE     (T2T_MAX_DATA_EXCHANGE / T2T_BLOCK_SIZE)         /**< Number of blocks fetched in single Tag's Read command. */
 
 #define DEVICE_NAME_BUFF_SIZE              30                                               /**< Size of the buffer used to store BLE device name. */
+#define BLE_GAP_ADDR_TYPE_INVALID          0x04                                             /**< Invalid address type. */
 
 /**
  * @brief Possible Tag Types.
@@ -87,7 +88,6 @@ static ble_gap_addr_t           m_device_addr;                                  
 static ble_advdata_tk_value_t   m_device_tk;                                                /**< Value acquired by NFC. Holds Temporary Key of peer device. */
 
 static volatile bool            m_tag_match             = false;                            /**< Flag indicating that the read tag has valid Connection Handover information. */
-static bool                     m_same_tag_disconnected = false;                            /**< Flag indicating that peripheral device was disconnected because the same Connection Handover message was read. */
 static bool                     m_read_tag              = false;                            /**< Flag indicating that NFC reader is turned on. */
 
 static ble_gap_lesc_oob_data_t  m_ble_lesc_oob_peer_data;                                   /**< LESC OOB pairing data. */
@@ -124,7 +124,7 @@ void nfc_init(void)
     err_code = ecc_p256_keypair_gen(m_lesc_sk.pk, m_lesc_pk.pk);
     APP_ERROR_CHECK(err_code);
 
-    // Update Peer Manager with new LESC keys .
+    // Update Peer Manager with new LESC keys.
     err_code = pm_lesc_public_key_set(&m_lesc_pk);
     APP_ERROR_CHECK(err_code);
     
@@ -228,7 +228,8 @@ __STATIC_INLINE void nfc_oob_pairing_tag_appoint(void)
 
 void nfc_oob_pairing_tag_invalidate(void)
 {
-    m_tag_match = false;
+    m_device_addr.addr_type = BLE_GAP_ADDR_TYPE_INVALID;
+    m_tag_match             = false;
 }
 
 /**
@@ -299,15 +300,22 @@ void ch_ndef_msg_handle(nfc_ndef_msg_desc_t * p_ch_msg_desc)
             int mem_diff = memcmp(&m_device_addr,
                                   le_oob_record_pairing_data.p_device_addr,
                                   sizeof(ble_gap_addr_t));
-            if ((mem_diff != 0) || m_same_tag_disconnected)
-            {
+
+            if (mem_diff != 0) // NFC Tag of the currently disconnected peripheral has been read.
+            { 
+                if (m_device_addr.addr_type != BLE_GAP_ADDR_TYPE_INVALID)
+                {
+                     // Terminate the current connection, so the new peripheral will be able to connect.
+                    ble_disconnect();
+                    while (m_tag_match){};
+                }
                 nfc_essential_pairing_data_copy(&le_oob_record_pairing_data);
                 nfc_oob_pairing_tag_appoint();
-                m_same_tag_disconnected = false;
             }
-            else
+            else // NFC Tag of the currently connected peripheral has been read.
             {
-                m_same_tag_disconnected = true;
+                ble_disconnect();
+                while (m_tag_match){};
             }
             break;
         }
@@ -343,17 +351,6 @@ void ndef_data_analyze(tlv_block_t * p_tlv_block)
         }
         else
         {
-            // If tag was matched, disconnect after reading correctly next NDEF message.
-            if (m_tag_match)
-            {
-                ble_disconnect();
-                while (m_tag_match){};
-            }
-            else
-            {
-                m_same_tag_disconnected = true;
-            }
-
             ch_ndef_msg_handle((nfc_ndef_msg_desc_t *) desc_buf);
         }
     }
@@ -439,7 +436,7 @@ bool nfc_oob_pairing_tag_match(ble_gap_addr_t const * const p_peer_addr)
 {
     if (m_tag_match)
     {
-        if ( memcmp(p_peer_addr->addr, m_device_addr.addr, BLE_GAP_ADDR_LEN) == 0 )
+        if (memcmp(p_peer_addr->addr, m_device_addr.addr, BLE_GAP_ADDR_LEN) == 0)
         {
             return true;
         }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -59,19 +59,19 @@ NRF_LOG_MODULE_REGISTER();
  */
 #if defined (__CC_ARM )
 
-    uint8_t m_dfu_settings_buffer[CODE_PAGE_SIZE]
+    uint8_t m_dfu_settings_buffer[BOOTLOADER_SETTINGS_PAGE_SIZE]
         __attribute__((at(BOOTLOADER_SETTINGS_ADDRESS)))
         __attribute__((used));
 
 #elif defined ( __GNUC__ ) || defined ( __SES_ARM )
 
-    uint8_t m_dfu_settings_buffer[CODE_PAGE_SIZE]
+    uint8_t m_dfu_settings_buffer[BOOTLOADER_SETTINGS_PAGE_SIZE]
         __attribute__((section(".bootloader_settings_page")))
         __attribute__((used));
 
 #elif defined ( __ICCARM__ )
 
-    __no_init __root uint8_t m_dfu_settings_buffer[CODE_PAGE_SIZE]
+    __no_init __root uint8_t m_dfu_settings_buffer[BOOTLOADER_SETTINGS_PAGE_SIZE]
         @ BOOTLOADER_SETTINGS_ADDRESS;
 
 #else
@@ -88,18 +88,18 @@ NRF_LOG_MODULE_REGISTER();
  */
 #if defined ( __CC_ARM )
 
-    uint8_t m_mbr_params_page[CODE_PAGE_SIZE]
+    uint8_t m_mbr_params_page[NRF_MBR_PARAMS_PAGE_SIZE]
         __attribute__((at(NRF_MBR_PARAMS_PAGE_ADDRESS)))
         __attribute__((used));
 
 #elif defined ( __GNUC__ ) || defined ( __SES_ARM )
 
-    uint8_t m_mbr_params_page[CODE_PAGE_SIZE]
+    uint8_t m_mbr_params_page[NRF_MBR_PARAMS_PAGE_SIZE]
         __attribute__ ((section(".mbr_params_page")));
 
 #elif defined ( __ICCARM__ )
 
-    __no_init uint8_t m_mbr_params_page[CODE_PAGE_SIZE]
+    __no_init uint8_t m_mbr_params_page[NRF_MBR_PARAMS_PAGE_SIZE]
         @ NRF_MBR_PARAMS_PAGE_ADDRESS;
 
 #else
@@ -148,16 +148,15 @@ static uint32_t nrf_dfu_settings_crc_get(void)
 }
 
 
-void nrf_dfu_settings_init(bool sd_irq_initialized)
+ret_code_t nrf_dfu_settings_init(bool sd_irq_initialized)
 {
-    NRF_LOG_DEBUG("Running nrf_dfu_settings_init(sd_irq_initialized=%s).",
-                  sd_irq_initialized ? (uint32_t)"true" : (uint32_t)"false");
+    NRF_LOG_DEBUG("Calling nrf_dfu_settings_init()...");
 
     ret_code_t rc = nrf_dfu_flash_init(sd_irq_initialized);
     if (rc != NRF_SUCCESS)
     {
         NRF_LOG_ERROR("nrf_dfu_flash_init() failed with error: %x", rc);
-        APP_ERROR_HANDLER(rc);
+        return NRF_ERROR_INTERNAL;
     }
 
     // Copy the DFU settings out of flash and into a buffer in RAM.
@@ -169,7 +168,7 @@ void nrf_dfu_settings_init(bool sd_irq_initialized)
         uint32_t crc = nrf_dfu_settings_crc_get();
         if (crc == s_dfu_settings.crc)
         {
-            return;
+            return NRF_SUCCESS;
         }
     }
 
@@ -183,14 +182,26 @@ void nrf_dfu_settings_init(bool sd_irq_initialized)
     if (rc != NRF_SUCCESS)
     {
         NRF_LOG_ERROR("nrf_dfu_flash_write() failed with error: %x", rc);
-        APP_ERROR_HANDLER(rc);
+        return NRF_ERROR_INTERNAL;
     }
+    return NRF_SUCCESS;
 }
 
 
-ret_code_t nrf_dfu_settings_write(dfu_flash_callback_t callback)
+ret_code_t nrf_dfu_settings_write(nrf_dfu_flash_callback_t callback)
 {
     ret_code_t err_code;
+
+    if (memcmp(&s_dfu_settings, m_dfu_settings_buffer, sizeof(nrf_dfu_settings_t)) == 0)
+    {
+        NRF_LOG_DEBUG("New settings are identical to old, write not needed. Skipping.");
+        if (callback != NULL)
+        {
+            callback(NULL);
+        }
+        return NRF_SUCCESS;
+    }
+
     NRF_LOG_DEBUG("Writing settings...");
     NRF_LOG_DEBUG("Erasing old settings at: 0x%08x", (uint32_t)m_dfu_settings_buffer);
 

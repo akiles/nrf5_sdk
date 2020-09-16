@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -503,13 +503,13 @@ static void spi_slave_gpio_init(void)
 /* ser_phy API function */
 void ser_phy_interrupts_enable(void)
 {
-    NVIC_EnableIRQ(m_spis.irq);
+    NVIC_EnableIRQ(nrfx_get_irq_number(m_spis.p_reg));
 }
 
 /* ser_phy API function */
 void ser_phy_interrupts_disable(void)
 {
-    NVIC_DisableIRQ(m_spis.irq);
+    NVIC_DisableIRQ(nrfx_get_irq_number(m_spis.p_reg));
 }
 
 /* ser_phy API function */

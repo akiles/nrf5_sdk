@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -52,7 +52,7 @@
 #include "ant_parameters.h"
 #endif
 
-#if NRF_MODULE_ENABLED(NRF_LOG)
+#if NRF_MODULE_ENABLED(NRF_LOG) && defined(BLE_STACK_SUPPORT_REQD)
 static const char * sd_events[] = {
     "BLE_EVT_TX_COMPLETE",                     /*0x01*/
     "BLE_EVT_USER_MEM_REQUEST",                /*0x02*/
@@ -146,84 +146,92 @@ static const char * sd_functions[] = {
     /* 0x60 offset */
     "SD_BLE_ENABLE",                           /*0x60*/
     "SD_BLE_EVT_GET",                          /*0x61*/
-    "SD_BLE_TX_PACKET_COUNT_GET",              /*0x62*/
-    "SD_BLE_UUID_VS_ADD",                      /*0x63*/
-    "SD_BLE_UUID_DECODE",                      /*0x64*/
-    "SD_BLE_UUID_ENCODE",                      /*0x65*/
-    "SD_BLE_VERSION_GET",                      /*0x66*/
-    "SD_BLE_USER_MEM_REPLY",                   /*0x67*/
-    "SD_BLE_OPT_SET",                          /*0x68*/
-    "SD_BLE_OPT_GET",                          /*0x69*/
+    "SD_BLE_UUID_VS_ADD",                      /*0x62*/
+    "SD_BLE_UUID_DECODE",                      /*0x63*/
+    "SD_BLE_UUID_ENCODE",                      /*0x64*/
+    "SD_BLE_VERSION_GET",                      /*0x65*/
+    "SD_BLE_USER_MEM_REPLY",                   /*0x66*/
+    "SD_BLE_OPT_SET",                          /*0x67*/
+    "SD_BLE_OPT_GET",                          /*0x68*/
+    "SD_BLE_CFG_SET",                          /*0x69*/
     "SD_UNKNOWN",                              /*0x6A*/
     "SD_UNKNOWN",                              /*0x6B*/
-    "SD_BLE_GAP_ADDRESS_SET",                  /*0x6C*/
-    "SD_BLE_GAP_ADDRESS_GET",                  /*0x6D*/
-    "SD_BLE_GAP_WHITELIST_SET",                /*0x6E*/
-    "SD_BLE_GAP_DEVICE_IDENTITIES_SET",        /*0x6F*/
-    "SD_BLE_GAP_PRIVACY_SET",                  /*0x70*/
-    "SD_BLE_GAP_PRIVACY_GET",                  /*0x71*/
-    "SD_BLE_GAP_ADV_DATA_SET",                 /*0x72*/
-    "SD_BLE_GAP_ADV_START",                    /*0x73*/
-    "SD_BLE_GAP_ADV_STOP",                     /*0x74*/
-    "SD_BLE_GAP_CONN_PARAM_UPDATE",            /*0x75*/
-    "SD_BLE_GAP_DISCONNECT",                   /*0x76*/
-    "SD_BLE_GAP_TX_POWER_SET",                 /*0x77*/
-    "SD_BLE_GAP_APPEARANCE_SET",               /*0x78*/
-    "SD_BLE_GAP_APPEARANCE_GET",               /*0x79*/
-    "SD_BLE_GAP_PPCP_SET",                     /*0x7a*/
-    "SD_BLE_GAP_PPCP_GET",                     /*0x7b*/
-    "SD_BLE_GAP_DEVICE_NAME_SET",              /*0x7c*/
-    "SD_BLE_GAP_DEVICE_NAME_GET",              /*0x7d*/
-    "SD_BLE_GAP_AUTHENTICATE",                 /*0x7e*/
-    "SD_BLE_GAP_SEC_PARAMS_REPLY",             /*0x7f*/
-    "SD_BLE_GAP_AUTH_KEY_REPLY",               /*0x80*/
-    "SD_BLE_GAP_LESC_DHKEY_REPLY",             /*0x81*/
-    "SD_BLE_GAP_KEYPRESS_NOTIFY",              /*0x82*/
-    "SD_BLE_GAP_LESC_OOB_DATA_GET",            /*0x83*/
-    "SD_BLE_GAP_LESC_OOB_DATA_SET",            /*0x84*/
-    "SD_BLE_GAP_ENCRYPT",                      /*0x85*/
-    "SD_BLE_GAP_SEC_INFO_REPLY",               /*0x86*/
-    "SD_BLE_GAP_CONN_SEC_GET",                 /*0x87*/
-    "SD_BLE_GAP_RSSI_START",                   /*0x88*/
-    "SD_BLE_GAP_RSSI_STOP",                    /*0x89*/
-    "SD_BLE_GAP_SCAN_START",                   /*0x8a*/
-    "SD_BLE_GAP_SCAN_STOP",                    /*0x8b*/
-    "SD_BLE_GAP_CONNECT",                      /*0x8c*/
-    "SD_BLE_GAP_CONNECT_CANCEL",               /*0x8d*/
-    "SD_BLE_GAP_RSSI_GET",                     /*0x8e*/
-    "SD_UNKNOWN",                              /*0x8f*/
-    "SD_UNKNOWN",                              /*0x90*/
-    "SD_UNKNOWN",                              /*0x91*/
-    "SD_UNKNOWN",                              /*0x92*/
+    "SD_BLE_GAP_ADDR_SET"                ,     /*0x6C*/
+    "SD_BLE_GAP_ADDR_GET"                ,     /*0x6D*/
+    "SD_BLE_GAP_WHITELIST_SET"           ,     /*0x6E*/
+    "SD_BLE_GAP_DEVICE_IDENTITIES_SET"   ,     /*0x6F*/
+    "SD_BLE_GAP_PRIVACY_SET"             ,     /*0x70*/
+    "SD_BLE_GAP_PRIVACY_GET"             ,     /*0x71*/
+    "SD_BLE_GAP_ADV_SET_CONFIGURE"       ,     /*0x72*/
+    "SD_BLE_GAP_ADV_START"               ,     /*0x73*/
+    "SD_BLE_GAP_ADV_STOP"                ,     /*0x74*/
+    "SD_BLE_GAP_CONN_PARAM_UPDATE"       ,     /*0x75*/
+    "SD_BLE_GAP_DISCONNECT"              ,     /*0x76*/
+    "SD_BLE_GAP_TX_POWER_SET"            ,     /*0x77*/
+    "SD_BLE_GAP_APPEARANCE_SET"          ,     /*0x78*/
+    "SD_BLE_GAP_APPEARANCE_GET"          ,     /*0x79*/
+    "SD_BLE_GAP_PPCP_SET"                ,     /*0x7a*/
+    "SD_BLE_GAP_PPCP_GET"                ,     /*0x7b*/
+    "SD_BLE_GAP_DEVICE_NAME_SET"         ,     /*0x7c*/
+    "SD_BLE_GAP_DEVICE_NAME_GET"         ,     /*0x7d*/
+    "SD_BLE_GAP_AUTHENTICATE"            ,     /*0x7e*/
+    "SD_BLE_GAP_SEC_PARAMS_REPLY"        ,     /*0x7f*/
+    "SD_BLE_GAP_AUTH_KEY_REPLY"          ,     /*0x80*/
+    "SD_BLE_GAP_LESC_DHKEY_REPLY"        ,     /*0x81*/
+    "SD_BLE_GAP_KEYPRESS_NOTIFY"         ,     /*0x82*/
+    "SD_BLE_GAP_LESC_OOB_DATA_GET"       ,     /*0x83*/
+    "SD_BLE_GAP_LESC_OOB_DATA_SET"       ,     /*0x84*/
+    "SD_BLE_GAP_ENCRYPT"                 ,     /*0x85*/
+    "SD_BLE_GAP_SEC_INFO_REPLY"          ,     /*0x86*/
+    "SD_BLE_GAP_CONN_SEC_GET"            ,     /*0x87*/
+    "SD_BLE_GAP_RSSI_START"              ,     /*0x88*/
+    "SD_BLE_GAP_RSSI_STOP"               ,     /*0x89*/
+    "SD_BLE_GAP_SCAN_START"              ,     /*0x8a*/
+    "SD_BLE_GAP_SCAN_STOP"               ,     /*0x8b*/
+    "SD_BLE_GAP_CONNECT"                 ,     /*0x8c*/
+    "SD_BLE_GAP_CONNECT_CANCEL "         ,     /*0x8d*/
+    "SD_BLE_GAP_RSSI_GET"                ,     /*0x8e*/
+    "SD_BLE_GAP_PHY_UPDATE"              ,     /*0x8f*/
+    "SD_BLE_GAP_DATA_LENGTH_UPDATE"      ,     /*0x90*/
+    "SD_BLE_GAP_QOS_CHANNEL_SURVEY_START",     /*0x91*/
+    "SD_BLE_GAP_QOS_CHANNEL_SURVEY_STOP" ,     /*0x92*/
     "SD_UNKNOWN",                              /*0x93*/
-    "SD_BLE_GATTC_PRIMARY_SERVICES_DISCOVER",  /*0x94*/
-    "SD_BLE_GATTC_RELATIONSHIPS_DISCOVER",     /*0x95*/
-    "SD_BLE_GATTC_CHARACTERISTICS_DISCOVER",   /*0x96*/
-    "SD_BLE_GATTC_DESCRIPTORS_DISCOVER",       /*0x97*/
-    "SD_BLE_GATTC_ATTR_INFO_DISCOVER",         /*0x98*/
-    "SD_BLE_GATTC_CHAR_VALUE_BY_UUID_READ",    /*0x99*/
-    "SD_BLE_GATTC_READ",                       /*0x9A*/
-    "SD_BLE_GATTC_CHAR_VALUES_READ",           /*0x9b*/
-    "SD_BLE_GATTC_WRITE",                      /*0x9c*/
-    "SD_BLE_GATTC_HV_CONFIRM",                 /*0x9d*/
-    "SD_BLE_GATTC_EXCHANGE_MTU_REQUEST",       /*0x9e*/
-    "SD_UNKNOWN",                              /*0x9F*/
-    "SD_BLE_GATTS_SERVICE_ADD",                /*0xA0*/
-    "SD_BLE_GATTS_INCLUDE_ADD",                /*0xA1*/
-    "SD_BLE_GATTS_CHARACTERISTIC_ADD",         /*0xA2*/
-    "SD_BLE_GATTS_DESCRIPTOR_ADD",             /*0xA3*/
-    "SD_BLE_GATTS_VALUE_SET",                  /*0xA4*/
-    "SD_BLE_GATTS_VALUE_GET",                  /*0xA5*/
-    "SD_BLE_GATTS_HVX",                        /*0xA6*/
-    "SD_BLE_GATTS_SERVICE_CHANGED",            /*0xA7*/
-    "SD_BLE_GATTS_RW_AUTHORIZE_REPLY",         /*0xA8*/
-    "SD_BLE_GATTS_SYS_ATTR_SET",               /*0xA9*/
-    "SD_BLE_GATTS_SYS_ATTR_GET",               /*0xAa*/
-    "SD_BLE_GATTS_INITIAL_USER_HANDLE_GET",    /*0xAb*/
-    "SD_BLE_GATTS_ATTR_GET",                   /*0xAc*/
-    "SD_BLE_GATTS_EXCHANGE_MTU_REPLY",         /*0xAd*/
+    "SD_UNKNOWN",                              /*0x94*/
+    "SD_UNKNOWN",                              /*0x95*/
+    "SD_UNKNOWN",                              /*0x96*/
+    "SD_UNKNOWN",                              /*0x97*/
+    "SD_UNKNOWN",                              /*0x98*/
+    "SD_UNKNOWN",                              /*0x99*/
+    "SD_UNKNOWN",                              /*0x9A*/
+    "SD_BLE_GATTC_PRIMARY_SERVICES_DISCOVER",  /*0x9B*/
+    "SD_BLE_GATTC_RELATIONSHIPS_DISCOVER",     /*0x9C*/
+    "SD_BLE_GATTC_CHARACTERISTICS_DISCOVER",   /*0x9D*/
+    "SD_BLE_GATTC_DESCRIPTORS_DISCOVER",       /*0x9E*/
+    "SD_BLE_GATTC_ATTR_INFO_DISCOVER",         /*0x9F*/
+    "SD_BLE_GATTC_CHAR_VALUE_BY_UUID_READ",    /*0xA0*/
+    "SD_BLE_GATTC_READ",                       /*0xA1*/
+    "SD_BLE_GATTC_CHAR_VALUES_READ",           /*0xA2*/
+    "SD_BLE_GATTC_WRITE",                      /*0xA3*/
+    "SD_BLE_GATTC_HV_CONFIRM",                 /*0xA4*/
+    "SD_BLE_GATTC_EXCHANGE_MTU_REQUEST",       /*0xA5*/
+    "SD_UNKNOWN",                              /*0xA6*/
+    "SD_UNKNOWN",                              /*0xA7*/
+    "SD_BLE_GATTS_SERVICE_ADD",                /*0xA8*/
+    "SD_BLE_GATTS_INCLUDE_ADD",                /*0xA9*/
+    "SD_BLE_GATTS_CHARACTERISTIC_ADD",         /*0xAA*/
+    "SD_BLE_GATTS_DESCRIPTOR_ADD",             /*0xAB*/
+    "SD_BLE_GATTS_VALUE_SET",                  /*0xAC*/
+    "SD_BLE_GATTS_VALUE_GET",                  /*0xAD*/
+    "SD_BLE_GATTS_HVX",                        /*0xAE*/
+    "SD_BLE_GATTS_SERVICE_CHANGED",            /*0xAF*/
+    "SD_BLE_GATTS_RW_AUTHORIZE_REPLY",         /*0xB0*/
+    "SD_BLE_GATTS_SYS_ATTR_SET",               /*0xB1*/
+    "SD_BLE_GATTS_SYS_ATTR_GET",               /*0xB2*/
+    "SD_BLE_GATTS_INITIAL_USER_HANDLE_GET",    /*0xB3*/
+    "SD_BLE_GATTS_ATTR_GET",                   /*0xB4*/
+    "SD_BLE_GATTS_EXCHANGE_MTU_REPLY",         /*0xB5*/
 };
-#endif // NRF_MODULE_ENABLED(NRF_LOG)
+#endif // NRF_MODULE_ENABLED(NRF_LOG) && defined(BLE_STACK_SUPPORT_REQD)
 
 #ifdef ANT_STACK_SUPPORT_REQD
 const char * string[] =

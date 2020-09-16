@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -122,7 +122,7 @@ extern "C" {
  * @brief Codes reserved as identification for common errors.
  * @{
  */
-#define SDK_ERR_MODULE_NOT_INITIALZED      (NRF_ERROR_SDK_COMMON_ERROR_BASE+0x0000)
+#define SDK_ERR_MODULE_NOT_INITIALIZED     (NRF_ERROR_SDK_COMMON_ERROR_BASE+0x0000)
 #define SDK_ERR_MUTEX_INIT_FAILED          (NRF_ERROR_SDK_COMMON_ERROR_BASE+0x0001)
 #define SDK_ERR_MUTEX_LOCK_FAILED          (NRF_ERROR_SDK_COMMON_ERROR_BASE+0x0002)
 #define SDK_ERR_MUTEX_UNLOCK_FAILED        (NRF_ERROR_SDK_COMMON_ERROR_BASE+0x0003)

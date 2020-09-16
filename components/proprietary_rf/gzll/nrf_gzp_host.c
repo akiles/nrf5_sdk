@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2009 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -57,6 +57,7 @@
 
 
 //lint -esym(40, GZP_PARAMS_STORAGE_ADR) "Undeclared identifier"
+#define GZP_PARAMS_DB_ADR GZP_PARAMS_STORAGE_ADR    // Address of the GZP parameters flash page.
 
 
 /******************************************************************************/
@@ -241,6 +242,39 @@ static bool gzp_encrypted_user_data[GZP_ENCRYPTED_USER_DATA_MAX_LENGTH]; ///< Pl
 static uint8_t gzp_encrypted_user_data_length;                           ///< Length of gzp_encrypted_user_data. Zero implies no data received.
 
 static nrf_gzll_host_rx_info_t prev_gzp_rx_info = {0, 0};                ///< RSSI and status of ACK payload transmission of previous Gazell packet.
+
+// Define Macro to make array initialization nicer
+#define REP4(X) X X X X
+
+#if defined(__ICCARM__)
+  #if GZP_PARAMS_DB_ADR == 0x1000
+    static const uint32_t database[GZP_DEVICE_PARAMS_STORAGE_SIZE/4] @ "gzp_dev_data"
+  #elif GZP_PARAMS_DB_ADR == 0x15000
+    static const uint32_t database[GZP_DEVICE_PARAMS_STORAGE_SIZE/4] @ "gzp_dev_data_sd"
+  #else
+    #error
+  #endif
+#else
+static const uint32_t database[GZP_DEVICE_PARAMS_STORAGE_SIZE / 4] __attribute__((at(GZP_PARAMS_DB_ADR)))
+#endif
+= {
+    #define STATIC_INIT_VALUE    0xFFFFFFFF
+    #define STATIC_INIT_COUNT    (GZP_DEVICE_PARAMS_STORAGE_SIZE / 4)
+    #define INIT_1 STATIC_INIT_VALUE,
+    #define INIT_4 REP4(INIT_1)
+    #define INIT_16 REP4(INIT_4)
+    #define INIT_64 REP4(INIT_16)
+    #define INIT_256 REP4(INIT_64)
+    #define INIT_1024 REP4(INIT_256)
+
+    #if (STATIC_INIT_COUNT == 256)
+        INIT_256
+    #elif (STATIC_INIT_COUNT == 1024)
+        INIT_1024
+    #else
+        #error Gazell Pairing Library database not initialized properly!
+    #endif
+}; ///< Database for storing keys.
 
 /** @} */
 
@@ -568,7 +602,7 @@ static void gzp_get_session_counter(uint8_t* dst)
 
 static void gzp_set_host_id(const uint8_t* src)
 {
-  if (*((uint8_t*)GZP_PARAMS_STORAGE_ADR) == 0xff)
+  if (*((uint8_t*)database) == 0xff)
   {
     nrf_nvmc_write_bytes(GZP_PARAMS_STORAGE_ADR + 1, src, GZP_HOST_ID_LENGTH);
     nrf_nvmc_write_byte(GZP_PARAMS_STORAGE_ADR, 0x00);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -44,7 +44,6 @@
 extern "C" {
 #endif
 
-
 /**
  * @defgroup app_usbd_audio_internal USB Audio internals
  * @brief @tagAPI52840 USB Audio class internals.
@@ -77,12 +76,32 @@ enum app_usbd_audio_user_event_e;
 typedef void (*app_usbd_audio_user_ev_handler_t)(app_usbd_class_inst_t const *  p_inst,
                                                  enum app_usbd_audio_user_event_e event);
 
+
+/**
+* @brief Audio subclass descriptor.
+*/
+
+typedef struct {
+   size_t                size;
+   uint8_t               type;
+   uint8_t const * const p_data;
+} app_usbd_audio_subclass_desc_t;
+
 /**
  * @brief Audio class part of class instance data
  */
 typedef struct {
-    uint8_t const * p_raw_desc;         //!< Audio class descriptors
-    size_t          raw_desc_size;      //!< Audio class descriptors size
+
+    app_usbd_audio_subclass_desc_t const * const p_format_dsc;  //!< Audio class Format descriptor
+    app_usbd_audio_subclass_desc_t const * const p_input_dsc;   //!< Audio class Input Terminal descriptor
+    app_usbd_audio_subclass_desc_t const * const p_output_dsc;  //!< Audio class Output Terminal descriptor
+    app_usbd_audio_subclass_desc_t const * const p_feature_dsc; //!< Audio class Feature Unit descriptor
+
+    uint8_t  delay;     //!< Streaming delay
+    uint16_t format;    //!< FormatTag (@ref app_usbd_audio_as_iface_format_tag_t)
+    uint16_t ep_size;   //!< Endpoint size
+
+    app_usbd_audio_subclass_t type_streaming;   //Streaming type MIDISTREAMING/AUDIOSTREAMING (@ref app_usbd_audio_subclass_t)
 
     app_usbd_audio_user_ev_handler_t user_ev_handler; //!< User event handler
 } app_usbd_audio_inst_t;
@@ -162,18 +181,38 @@ typedef struct {
  */
 #define APP_USBD_AUDIO_INSTANCE_SPECIFIC_DEC app_usbd_audio_inst_t inst;
 
-
 /**
  * @brief Configures audio class instance
  *
- * @param descriptors           Mass storage class descriptors (raw table)
- * @param user_event_handler    User event handler
+ * @param user_event_handler        User event handler
+ * @param format_descriptor         Audio class Format descriptor
+ * @param input_descriptor          Audio class Input Terminal descriptor
+ * @param output_descriptor         Audio class Output Terminal descriptor
+ * @param feature_descriptor        Audio class Feature Unit descriptor
+ * @param dlay                      Streaming delay
+ * @param frmat                     FormatTag (@ref app_usbd_audio_as_iface_format_tag_t)
+ * @param ep_siz                    Endpoint size
+ * @param type_str                  Streaming type MIDISTREAMING/AUDIOSTREAMING
  */
-#define APP_USBD_AUDIO_INST_CONFIG(descriptors, user_event_handler) \
+ #define APP_USBD_AUDIO_INST_CONFIG(user_event_handler,             \
+                                    format_descriptor,              \
+                                    input_descriptor,               \
+                                    output_descriptor,              \
+                                    feature_descriptor,             \
+                                    dlay,                           \
+                                    frmat,                          \
+                                    ep_siz,                         \
+                                    type_str)                       \
     .inst = {                                                       \
-         .p_raw_desc = descriptors,                                 \
-         .raw_desc_size = sizeof(descriptors),                      \
          .user_ev_handler = user_event_handler,                     \
+         .p_format_dsc    = format_descriptor,                      \
+         .p_input_dsc     = input_descriptor,                       \
+         .p_output_dsc    = output_descriptor,                      \
+         .p_feature_dsc   = feature_descriptor,                     \
+         .delay           = dlay,                                   \
+         .format          = frmat,                                  \
+         .ep_size         = ep_siz,                                 \
+         .type_streaming  = type_str                                \
     }
 
 /**
@@ -207,17 +246,31 @@ extern const app_usbd_class_methods_t app_usbd_audio_class_methods;
  * @brief Global definition of @ref app_usbd_audio_t class
  *
  */
-#define APP_USBD_AUDIO_GLOBAL_DEF_INTERNAL(instance_name,       \
-                                           interfaces_configs,  \
-                                           user_ev_handler,     \
-                                           raw_descriptors)     \
-    APP_USBD_CLASS_INST_GLOBAL_DEF(                             \
-        instance_name,                                          \
-        app_usbd_audio,                                         \
-        &app_usbd_audio_class_methods,                          \
-        interfaces_configs,                                     \
-        (APP_USBD_AUDIO_INST_CONFIG(raw_descriptors,            \
-                                    user_ev_handler))           \
+ #define APP_USBD_AUDIO_GLOBAL_DEF_INTERNAL(instance_name,          \
+                                    interfaces_configs,             \
+                                    user_ev_handler,                \
+                                    format_descriptor,              \
+                                    input_descriptor,               \
+                                    output_descriptor,              \
+                                    feature_descriptor,             \
+                                    delay,                          \
+                                    format,                         \
+                                    ep_size,                        \
+                                    type_str)                       \
+    APP_USBD_CLASS_INST_GLOBAL_DEF(                                 \
+        instance_name,                                              \
+        app_usbd_audio,                                             \
+        &app_usbd_audio_class_methods,                              \
+        interfaces_configs,                                         \
+        (APP_USBD_AUDIO_INST_CONFIG(user_ev_handler,                \
+                                    format_descriptor,              \
+                                    input_descriptor,               \
+                                    output_descriptor,              \
+                                    feature_descriptor,             \
+                                    delay,                          \
+                                    format,                         \
+                                    ep_size,                        \
+                                    type_str))                      \
     )
 
 

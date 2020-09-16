@@ -79,6 +79,7 @@
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define APP_ANT_OBSERVER_PRIO   1    /**< Application's ANT observer priority. You shouldn't need to modify this value. */
 
@@ -117,13 +118,10 @@ NRF_SDH_ANT_OBSERVER(m_ant_observer, APP_ANT_OBSERVER_PRIO, ant_evt_handler, NUL
  */
 static void utils_setup(void)
 {
-    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    ret_code_t err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
-    err_code = app_timer_init();
-    APP_ERROR_CHECK(err_code);
-
-    err_code = bsp_init(BSP_INIT_LED,
+    err_code = bsp_init(BSP_INIT_LEDS,
                         NULL);
     APP_ERROR_CHECK(err_code);
 
@@ -169,13 +167,27 @@ static void ant_channel_rx_broadcast_setup(void)
     APP_ERROR_CHECK(err_code);
 }
 
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
 /**@brief Function for application main entry. Does not return.
  */
 int main(void)
 {
+    log_init();
     utils_setup();
     softdevice_setup();
     ant_channel_rx_broadcast_setup();
+
+    NRF_LOG_INFO("ANT Broadcast RX example started.");
 
     // Main loop.
     for (;;)

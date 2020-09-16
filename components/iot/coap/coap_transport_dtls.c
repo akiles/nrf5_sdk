@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -474,6 +474,7 @@ uint32_t non_secure_datagram_read (const coap_remote_t  * const p_remote,
 
     return coap_transport_read(&port,
                                p_remote,
+                               NULL,
                                read_result,
                                p_data,
                                datalen);

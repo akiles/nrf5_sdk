@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -63,7 +63,6 @@
 #include <stdint.h>
 #include "sdk_errors.h"
 #include "nrf_drv_timer.h"
-#include "nrf_drv_common.h"
 #include "nrf_drv_ppi.h"
 #include "nrf_peripherals.h"
 
@@ -181,7 +180,7 @@ typedef struct
         nrf_ppi_channel_t       ppi_channels[2];                            //!< PPI channels used temporary while changing duty
         nrf_ppi_channel_group_t ppi_group;                                  //!< PPI group used to synchronize changes on channels
 #endif
-        nrf_drv_state_t         state;                                      //!< Current driver status
+        nrfx_drv_state_t        state;                                      //!< Current driver status
     } app_pwm_cb_t;
 /** @}
  * @endcond

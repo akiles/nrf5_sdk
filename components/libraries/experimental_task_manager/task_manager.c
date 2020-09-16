@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -214,6 +214,7 @@ static void task_stack_protect(task_id_t task_id)
 #endif
 }
 
+PRAGMA_OPTIMIZATION_FORCE_START
 void task_manager_start(task_main_t idle_task, void *p_idle_task_context)
 {
     unsigned long control;
@@ -265,6 +266,7 @@ void task_manager_start(task_main_t idle_task, void *p_idle_task_context)
     // This should be never reached.
     APP_ERROR_CHECK_BOOL(false);
 }
+PRAGMA_OPTIMIZATION_FORCE_END
 
 task_id_t task_create(task_main_t task, char const * p_task_name, void *p_context)
 {

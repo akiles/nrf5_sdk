@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -67,7 +67,7 @@ typedef enum
     NRF_FSTORAGE_OP_ERASE   //!< Erase flash pages.
 } nrf_fstorage_sd_opcode_t;
 
-ANON_UNIONS_ENABLE
+ANON_UNIONS_ENABLE;
 /**@brief   fstorage operation queue element. */
 typedef struct
 {
@@ -91,7 +91,7 @@ typedef struct
         } erase;
     };
 } nrf_fstorage_sd_op_t;
-ANON_UNIONS_DISABLE
+ANON_UNIONS_DISABLE;
 
 typedef enum
 {
@@ -173,9 +173,10 @@ static void event_send(nrf_fstorage_sd_op_t const * p_op, ret_code_t result)
     switch (p_op->op_code)
     {
         case NRF_FSTORAGE_OP_WRITE:
-            evt.id   = NRF_FSTORAGE_EVT_WRITE_RESULT;
-            evt.addr = p_op->write.dest;
-            evt.len  = p_op->write.len;
+            evt.id    = NRF_FSTORAGE_EVT_WRITE_RESULT;
+            evt.addr  = p_op->write.dest;
+            evt.p_src = p_op->write.p_src;
+            evt.len   = p_op->write.len;
             break;
 
         case NRF_FSTORAGE_OP_ERASE:
@@ -235,6 +236,8 @@ static bool queue_load_next(void)
 /* Execute an operation in the queue. */
 static void queue_process(void)
 {
+    uint32_t rc;
+
     if (m_flags.state == NRF_FSTORAGE_STATE_IDLE)
     {
         if (!queue_load_next())
@@ -247,7 +250,6 @@ static void queue_process(void)
 
     m_flags.state = NRF_FSTORAGE_STATE_OP_EXECUTING;
 
-    uint32_t rc;
     switch (m_p_cur_op->op_code)
     {
         case NRF_FSTORAGE_OP_WRITE:
@@ -285,11 +287,13 @@ static void queue_process(void)
 
         default:
         {
-            /* An error has occurred. We cannot proceed further with this operation.
-             * Reset the internal state so we can accept other operations. */
+            /* An error has occurred. We cannot proceed further with this operation. */
             event_send(m_p_cur_op, NRF_ERROR_INTERNAL);
+            /* Reset the internal state so we can accept other operations. */
             m_flags.state         = NRF_FSTORAGE_STATE_IDLE;
             m_flags.queue_running = false;
+            /* Free the current queue element. */
+            queue_free();
         } break;
     }
 }
@@ -298,9 +302,7 @@ static void queue_process(void)
 /* Start processing the queue if it is not running and fstorage is not paused. */
 static void queue_start(void)
 {
-    nrf_atomic_flag_t queue_running = nrf_atomic_u32_fetch_store(&m_flags.queue_running, true);
-
-    if (   (!queue_running)
+    if (   (!nrf_atomic_flag_set_fetch(&m_flags.queue_running))
         && (!m_flags.paused))
     {
         queue_process();
@@ -372,14 +374,13 @@ static ret_code_t init(nrf_fstorage_t * p_fs, void * p_param)
 {
     UNUSED_PARAMETER(p_param);
 
+    p_fs->p_flash_info = &m_flash_info;
+
     if (!nrf_atomic_flag_set_fetch(&m_flags.initialized))
     {
-        p_fs->p_flash_info = &m_flash_info;
-
 #if NRF_SDH_ENABLED
         m_flags.sd_enabled = nrf_sdh_is_enabled();
 #endif
-
         (void) NRF_ATFIFO_INIT(m_fifo);
     }
 
@@ -511,8 +512,25 @@ void nrf_fstorage_sys_evt_handler(uint32_t sys_evt, void * p_context)
 {
     UNUSED_PARAMETER(p_context);
 
+    if (   (sys_evt != NRF_EVT_FLASH_OPERATION_SUCCESS)
+        && (sys_evt != NRF_EVT_FLASH_OPERATION_ERROR))
+    {
+        /* Ignore any non-flash events. */
+        return;
+    }
+
     switch (m_flags.state)
     {
+        case NRF_FSTORAGE_STATE_IDLE:
+            /* Ignore flash events if no flash operation was requested. */
+            return;
+
+        case NRF_FSTORAGE_STATE_OP_PENDING:
+            /* The SoftDevice has completed a flash operation that was not requested by fstorage.
+             * It should be possible to request an operation now.
+             * Process the queue at the end of this function. */
+            break;
+
         case NRF_FSTORAGE_STATE_OP_EXECUTING:
         {
             /* Handle the result of a flash operation initiated by this module. */
@@ -547,16 +565,6 @@ void nrf_fstorage_sys_evt_handler(uint32_t sys_evt, void * p_context)
                 queue_free();
             }
         } break;
-
-        case NRF_FSTORAGE_STATE_OP_PENDING:
-            /* The SoftDevice has completed a flash operation that was not requested by fstorage.
-             * It should be possible to request an operation now.
-             * Process the queue at the end of this function. */
-            break;
-
-        default:
-            /* If idle, return. */
-            return;
     }
 
     if (!m_flags.paused)
@@ -565,7 +573,7 @@ void nrf_fstorage_sys_evt_handler(uint32_t sys_evt, void * p_context)
     }
     else
     {
-        /* A flash operation has completed. Let the SoftDevice to change state. */
+        /* A flash operation has completed. Let the SoftDevice change state. */
         (void) nrf_sdh_request_continue();
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -46,6 +46,7 @@
 #include "cond_field_serialization.h"
 #include "conn_ble_l2cap_sdu_pool.h"
 #include "app_util.h"
+
 
 #if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION < 4
 uint32_t ble_l2cap_cid_register_req_dec(uint8_t const * const p_buf,

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -79,6 +79,7 @@ typedef struct
 typedef struct
 {
     coap_port_t     * p_port_table;                 /**< Information about the ports being registered. Count is assumed to be COAP_PORT_COUNT. */
+    void            * p_arg;                        /**< Public. Miscellaneous pointer to application provided data that should be passed to the transport. */
 } coap_transport_init_t;
 
 
@@ -113,21 +114,23 @@ uint32_t coap_transport_write(const coap_port_t    * p_port,
  * This API is not implemented by the transport layer, but assumed to exist. This approach
  * avoids unnecessary registering of callback and remembering it in the transport layer.
  *
- * @param[in] p_port    Port on which the data is to be sent.
- * @param[in] p_remote  Remote endpoint to which the data is targeted.
+ * @param[in] p_port    Port on which the data is received.
+ * @param[in] p_remote  Remote endpoint from which the data is received.
+ * @param[in] p_local   Local endpoint on which the data is received.
  * @param[in] result    Indicates if the data was processed successfully by lower layers.
  *                      Possible failures could be NRF_SUCCESS,
  *                                                 UDP_BAD_CHECKSUM,
  *                                                 UDP_TRUNCATED_PACKET, or
  *                                                 UDP_MALFORMED_PACKET.
- * @param[in] p_data    Pointer to the data to be sent.
- * @param[in] datalen   Length of the data to be sent.
+ * @param[in] p_data    Pointer to the data received.
+ * @param[in] datalen   Length of the data received.
  *
  * @retval NRF_SUCCESS If the data was handled successfully. Otherwise, an error code that indicates the reason for the failure is returned.
  *
  */
 uint32_t coap_transport_read(const coap_port_t    * p_port,
                              const coap_remote_t  * p_remote,
+                             const coap_remote_t  * p_local,
                              uint32_t               result,
                              const uint8_t        * p_data,
                              uint16_t               datalen);

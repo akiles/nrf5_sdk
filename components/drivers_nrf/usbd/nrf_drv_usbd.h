@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -41,7 +41,6 @@
 #ifndef NRF_DRV_USBD_H__
 #define NRF_DRV_USBD_H__
 
-#include "nrf_drv_common.h"
 #include "sdk_errors.h"
 #include "nrf_usbd.h"
 #include <stdint.h>
@@ -898,9 +897,6 @@ void nrf_drv_usbd_setup_data_clear(void);
  *
  * This function acknowledges setup when SETUP command was received and processed.
  * It has to be called if no data respond for the SETUP command is sent.
- *
- * When there is any data transmission after SETUP command the data transmission
- * itself would clear the endpoint.
  */
 void nrf_drv_usbd_setup_clear(void);
 

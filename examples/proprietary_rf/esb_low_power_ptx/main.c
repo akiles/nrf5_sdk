@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -220,7 +220,7 @@ void gpio_init( void )
     // Workaround for PAN_028 rev1.1 anomaly 22 - System: Issues with disable System OFF mechanism
     nrf_delay_ms(1);
 
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 }
 
 

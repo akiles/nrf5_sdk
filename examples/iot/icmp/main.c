@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -534,7 +534,7 @@ static void buttons_init(void)
 
     #define BUTTON_DETECTION_DELAY APP_TIMER_TICKS(50)
 
-    err_code = app_button_init(buttons, sizeof(buttons) / sizeof(buttons[0]), BUTTON_DETECTION_DELAY);
+    err_code = app_button_init(buttons, ARRAY_SIZE(buttons), BUTTON_DETECTION_DELAY);
     APP_ERROR_CHECK(err_code);
 
     err_code = app_button_enable();
@@ -819,7 +819,7 @@ int main(void)
 
     // Initialize IP Stack.
     ip_stack_init();
-    APPL_LOG("Init done.");
+    APPL_LOG("Application started.");
 
     // Start execution.
     connectable_mode_enter();

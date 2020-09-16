@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -116,6 +116,7 @@ static uint32_t connection_buttons_configure()
                                                  BSP_EVENT_WHITELIST_OFF);
     RETURN_ON_ERROR_NOT_INVALID_PARAM(err_code);
 
+
     err_code = bsp_event_to_button_action_assign(BTN_ID_DISCONNECT,
                                                  BTN_ACTION_DISCONNECT,
                                                  BSP_EVENT_DISCONNECT);
@@ -181,7 +182,9 @@ static void startup_event_extract(bsp_event_t * p_startup_event)
 
 uint32_t bsp_btn_ble_sleep_mode_prepare(void)
 {
-    uint32_t err_code = bsp_wakeup_button_enable(BTN_ID_WAKEUP);
+    uint32_t err_code;
+
+    err_code = bsp_wakeup_button_enable(BTN_ID_WAKEUP);
     RETURN_ON_ERROR_NOT_NOT_SUPPORTED(err_code);
 
     err_code = bsp_wakeup_button_enable(BTN_ID_WAKEUP_BOND_DELETE);

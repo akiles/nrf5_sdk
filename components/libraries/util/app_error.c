@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -51,6 +51,7 @@
 #include "app_error.h"
 #include "nordic_common.h"
 #include "sdk_errors.h"
+
 /**@brief Function for error handling, which is called when an error has occurred.
  *
  * @warning This handler is an example only and does not fit a final product. You need to analyze
@@ -60,22 +61,6 @@
  * @param[in] line_num    Line number where the handler is called.
  * @param[in] p_file_name Pointer to the file name.
  */
-
-/*lint -save -e14 */
-void app_error_handler(ret_code_t error_code, uint32_t line_num, const uint8_t * p_file_name)
-{
-    error_info_t error_info =
-    {
-        .line_num    = line_num,
-        .p_file_name = p_file_name,
-        .err_code    = error_code,
-    };
-    app_error_fault_handler(NRF_FAULT_ID_SDK_ERROR, 0, (uint32_t)(&error_info));
-
-    UNUSED_VARIABLE(error_info);
-}
-
-/*lint -save -e14 */
 void app_error_handler_bare(ret_code_t error_code)
 {
     error_info_t error_info =
@@ -89,7 +74,6 @@ void app_error_handler_bare(ret_code_t error_code)
 
     UNUSED_VARIABLE(error_info);
 }
-
 
 void app_error_save_and_stop(uint32_t id, uint32_t pc, uint32_t info)
 {
@@ -139,5 +123,3 @@ void app_error_save_and_stop(uint32_t id, uint32_t pc, uint32_t info)
 
     __enable_irq();
 }
-
-/*lint -restore */

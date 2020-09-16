@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ /**
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -69,6 +69,7 @@
 #include "ble.h"
 #include "ble_srv_common.h"
 #include "nrf_sdh_ble.h"
+#include "ble_link_ctx_manager.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -76,19 +77,27 @@ extern "C" {
 
 /**@brief   Macro for defining a ble_nus instance.
  *
- * @param   _name   Name of the instance.
+ * @param     _name            Name of the instance.
+ * @param[in] _nus_max_clients Maximum number of NUS clients connected at a time.
  * @hideinitializer
  */
-#define BLE_NUS_DEF(_name)                                                                          \
-static ble_nus_t _name;                                                                             \
-NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
-                     BLE_NUS_BLE_OBSERVER_PRIO,                                                     \
-                     ble_nus_on_ble_evt, &_name)
+#define BLE_NUS_DEF(_name, _nus_max_clients)                      \
+    BLE_LINK_CTX_MANAGER_DEF(CONCAT_2(_name, _link_ctx_storage),  \
+                             (_nus_max_clients),                  \
+                             sizeof(ble_nus_client_context_t));   \
+    static ble_nus_t _name =                                      \
+    {                                                             \
+        .p_link_ctx_storage = &CONCAT_2(_name, _link_ctx_storage) \
+    };                                                            \
+    NRF_SDH_BLE_OBSERVER(_name ## _obs,                           \
+                         BLE_NUS_BLE_OBSERVER_PRIO,               \
+                         ble_nus_on_ble_evt,                      \
+                         &_name)
 
-#define BLE_UUID_NUS_SERVICE 0x0001                      /**< The UUID of the Nordic UART Service. */
+#define BLE_UUID_NUS_SERVICE 0x0001 /**< The UUID of the Nordic UART Service. */
 
-#define OPCODE_LENGTH 1
-#define HANDLE_LENGTH 2
+#define OPCODE_LENGTH        1
+#define HANDLE_LENGTH        2
 
 /**@brief   Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
 #if defined(NRF_SDH_BLE_GATT_MAX_MTU_SIZE) && (NRF_SDH_BLE_GATT_MAX_MTU_SIZE != 0)
@@ -98,19 +107,20 @@ NRF_SDH_BLE_OBSERVER(_name ## _obs,                                             
     #warning NRF_SDH_BLE_GATT_MAX_MTU_SIZE is not defined.
 #endif
 
+
 /**@brief   Nordic UART Service event types. */
 typedef enum
 {
-    BLE_NUS_EVT_RX_DATA,           /**< Data received. */
-    BLE_NUS_EVT_TX_RDY,            /**< Service is ready to accept new data to be transmitted. */
-    BLE_NUS_EVT_COMM_STARTED,      /**< Notification has been enabled. */
-    BLE_NUS_EVT_COMM_STOPPED,      /**< Notification has been disabled. */
+    BLE_NUS_EVT_RX_DATA,      /**< Data received. */
+    BLE_NUS_EVT_TX_RDY,       /**< Service is ready to accept new data to be transmitted. */
+    BLE_NUS_EVT_COMM_STARTED, /**< Notification has been enabled. */
+    BLE_NUS_EVT_COMM_STOPPED, /**< Notification has been disabled. */
 } ble_nus_evt_type_t;
-
 
 
 /* Forward declaration of the ble_nus_t type. */
 typedef struct ble_nus_s ble_nus_t;
+
 
 /**@brief   Nordic UART Service @ref BLE_NUS_EVT_RX_DATA event data.
  *
@@ -118,9 +128,20 @@ typedef struct ble_nus_s ble_nus_t;
  */
 typedef struct
 {
-    uint8_t const * p_data;           /**< A pointer to the buffer with received data. */
-    uint16_t        length;           /**< Length of received data. */
+    uint8_t const * p_data; /**< A pointer to the buffer with received data. */
+    uint16_t        length; /**< Length of received data. */
 } ble_nus_evt_rx_data_t;
+
+
+/**@brief Nordic UART Service client context structure.
+ *
+ * @details This structure contains state context related to hosts.
+ */
+typedef struct
+{
+    bool is_notification_enabled; /**< Variable to indicate if the peer has enabled notification of the RX characteristic.*/
+} ble_nus_client_context_t;
+
 
 /**@brief   Nordic UART Service event structure.
  *
@@ -128,16 +149,20 @@ typedef struct
  */
 typedef struct
 {
-    ble_nus_evt_type_t type;           /**< Event type. */
-    ble_nus_t * p_nus;                 /**< A pointer to the instance. */
+    ble_nus_evt_type_t         type;        /**< Event type. */
+    ble_nus_t                * p_nus;       /**< A pointer to the instance. */
+    uint16_t                   conn_handle; /**< Connection handle. */
+    ble_nus_client_context_t * p_link_ctx;  /**< A pointer to the link context. */
     union
     {
         ble_nus_evt_rx_data_t rx_data; /**< @ref BLE_NUS_EVT_RX_DATA event data. */
     } params;
 } ble_nus_evt_t;
 
-/**@brief   Nordic UART Service event handler type. */
-typedef void (*ble_nus_data_handler_t) (ble_nus_evt_t * p_evt);
+
+/**@brief Nordic UART Service event handler type. */
+typedef void (* ble_nus_data_handler_t) (ble_nus_evt_t * p_evt);
+
 
 /**@brief   Nordic UART Service initialization structure.
  *
@@ -150,19 +175,19 @@ typedef struct
     ble_nus_data_handler_t data_handler; /**< Event handler to be called for handling received data. */
 } ble_nus_init_t;
 
+
 /**@brief   Nordic UART Service structure.
  *
  * @details This structure contains status information related to the service.
  */
 struct ble_nus_s
 {
-    uint8_t                  uuid_type;               /**< UUID type for Nordic UART Service Base UUID. */
-    uint16_t                 service_handle;          /**< Handle of Nordic UART Service (as provided by the SoftDevice). */
-    ble_gatts_char_handles_t tx_handles;              /**< Handles related to the TX characteristic (as provided by the SoftDevice). */
-    ble_gatts_char_handles_t rx_handles;              /**< Handles related to the RX characteristic (as provided by the SoftDevice). */
-    uint16_t                 conn_handle;             /**< Handle of the current connection (as provided by the SoftDevice). BLE_CONN_HANDLE_INVALID if not in a connection. */
-    bool                     is_notification_enabled; /**< Variable to indicate if the peer has enabled notification of the RX characteristic.*/
-    ble_nus_data_handler_t   data_handler;            /**< Event handler to be called for handling received data. */
+    uint8_t                         uuid_type;          /**< UUID type for Nordic UART Service Base UUID. */
+    uint16_t                        service_handle;     /**< Handle of Nordic UART Service (as provided by the SoftDevice). */
+    ble_gatts_char_handles_t        tx_handles;         /**< Handles related to the TX characteristic (as provided by the SoftDevice). */
+    ble_gatts_char_handles_t        rx_handles;         /**< Handles related to the RX characteristic (as provided by the SoftDevice). */
+    blcm_link_ctx_storage_t * const p_link_ctx_storage; /**< Pointer to link context storage with handles of all current connections and its context. */
+    ble_nus_data_handler_t          data_handler;       /**< Event handler to be called for handling received data. */
 };
 
 
@@ -192,18 +217,22 @@ uint32_t ble_nus_init(ble_nus_t * p_nus, ble_nus_init_t const * p_nus_init);
 void ble_nus_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 
 
-/**@brief   Function for sending a string to the peer.
+/**@brief   Function for sending a data to the peer.
  *
  * @details This function sends the input string as an RX characteristic notification to the
  *          peer.
  *
- * @param[in] p_nus       Pointer to the Nordic UART Service structure.
- * @param[in] p_string    String to be sent.
- * @param[inout] p_length Pointer Length of the string. Amount of sent bytes.
+ * @param[in]     p_nus       Pointer to the Nordic UART Service structure.
+ * @param[in]     p_data      String to be sent.
+ * @param[in,out] p_length    Pointer Length of the string. Amount of sent bytes.
+ * @param[in]     conn_handle Connection Handle of the destination client.
  *
  * @retval NRF_SUCCESS If the string was sent successfully. Otherwise, an error code is returned.
  */
-uint32_t ble_nus_string_send(ble_nus_t * p_nus, uint8_t * p_string, uint16_t * p_length);
+uint32_t ble_nus_data_send(ble_nus_t * p_nus,
+                           uint8_t   * p_data,
+                           uint16_t  * p_length,
+                           uint16_t    conn_handle);
 
 
 #ifdef __cplusplus

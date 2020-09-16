@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -55,7 +55,7 @@ extern  rsaEncDecDataStuct rsaEncDecDataVectors[];
 extern  rsaSignVerifyDataStuct rsaSignVerifyDataVectors[];
 
 /*RNG Global variables*/
-extern CRYS_RND_Context_t*   rndContext_ptr;
+extern CRYS_RND_State_t*     rndState_ptr;
 extern CRYS_RND_WorkBuff_t*  rndWorkBuff_ptr;
 
 
@@ -67,9 +67,15 @@ int rsa_tests(void){
 	uint32_t                        ret = 0;
 
         /*Init SaSi library*/
-	ret = SaSi_LibInit(rndContext_ptr, rndWorkBuff_ptr);
+    ret = SaSi_LibInit();
 	if (ret != SA_SILIB_RET_OK) {
-	    INTEG_TEST_PRINT("Failed SaSi_SiLibInit - ret = 0x%x\n", ret);
+        INTEG_TEST_PRINT("Failed SaSi_LibInit - ret = 0x%x\n", ret);
+        goto exit_1;
+    }
+
+    ret = CRYS_RndInit(rndState_ptr, rndWorkBuff_ptr);
+    if (ret != SA_SILIB_RET_OK) {
+        INTEG_TEST_PRINT("Failed CRYS_RndInit - ret = 0x%x\n", ret);
 	    goto exit_1;
 	}
 
@@ -87,7 +93,13 @@ int rsa_tests(void){
 
 endRSA:
 	/*Finish SaSi library*/
-	SaSi_LibFini(rndContext_ptr);
+    SaSi_LibFini();
+
+    ret = CRYS_RND_UnInstantiation(rndState_ptr);
+
+    if (ret) {
+        INTEG_TEST_PRINT("Failure in CRYS_RND_UnInstantiation,ret = 0x%x\n", ret);
+    }
 
 exit_1:
 	return ret;
@@ -105,7 +117,9 @@ int rsa_SignVerify_tests(void){
 	CRYS_RSAPrivUserContext_t       ContextPrivate;
 	CRYS_RSAPubUserContext_t        ContextPub;
 	uint16_t                        ActualSignatureSize;
+	SaSiRndGenerateVectWorkFunc_t rndGenerateVectFunc;
 
+	rndGenerateVectFunc = CRYS_RND_GenerateVector;
 	/*Run all RSA tests*/
 	for (RSA_mode = NON_CRT_MODE ; RSA_mode <= CRT_MODE; RSA_mode++) /* Check both CRT and non CRT modes*/
 	{
@@ -116,7 +130,7 @@ int rsa_SignVerify_tests(void){
 
 					INTEG_TEST_PRINT("CRYS_RSA_KG_GenerateKeyPair  \n");
 
-					ret = CRYS_RSA_KG_GenerateKeyPair(rndContext_ptr,
+					ret = CRYS_RSA_KG_GenerateKeyPair(rndState_ptr, rndGenerateVectFunc,
 						rsaSignVerifyDataVectors[test_index].rsaSignVerify_PublicExponent_E,
 						rsaSignVerifyDataVectors[test_index].rsaSignVerify_PubExponentSize,
 						rsaSignVerifyDataVectors[test_index].rsaSignVerify_KeySize*8,
@@ -136,7 +150,7 @@ int rsa_SignVerify_tests(void){
 
 					INTEG_TEST_PRINT("CRYS_RSA_KG_GenerateKeyPairCRT  \n");
 
-					ret = CRYS_RSA_KG_GenerateKeyPairCRT(rndContext_ptr,
+					ret = CRYS_RSA_KG_GenerateKeyPairCRT(rndState_ptr, rndGenerateVectFunc,
 						rsaSignVerifyDataVectors[test_index].rsaSignVerify_PublicExponent_E,
 						rsaSignVerifyDataVectors[test_index].rsaSignVerify_PubExponentSize,
 						rsaSignVerifyDataVectors[test_index].rsaSignVerify_KeySize*8,
@@ -217,7 +231,7 @@ int rsa_SignVerify_tests(void){
 			ActualSignatureSize = rsaSignVerifyDataVectors[test_index].rsaSignVerify_KeySize;
 
 			/*Call CRYS_RSA_PSS_Sign for PKCS#1 ver2.1 using SHA512*/
-			ret =  CRYS_RSA_PSS_Sign(rndContext_ptr,
+			ret =  CRYS_RSA_PSS_Sign(rndState_ptr, rndGenerateVectFunc,
 				&ContextPrivate,
 				&UserPrivKey,
 				CRYS_RSA_HASH_SHA512_mode,
@@ -257,7 +271,7 @@ int rsa_SignVerify_tests(void){
 			ActualSignatureSize = rsaSignVerifyDataVectors[test_index].rsaSignVerify_KeySize;
 
 			/*Call CRYS_RSA_PSS_SHA1_Sign PKCS#1 ver2.1 to sign on precalculated hash input using SHA1*/
-			ret =  CRYS_RSA_PSS_SHA1_Sign(rndContext_ptr,
+			ret =  CRYS_RSA_PSS_SHA1_Sign(rndState_ptr, rndGenerateVectFunc,
 				&ContextPrivate,
 				&UserPrivKey,
 				CRYS_PKCS1_MGF1,
@@ -292,7 +306,7 @@ int rsa_SignVerify_tests(void){
 			ActualSignatureSize = rsaSignVerifyDataVectors[test_index].rsaSignVerify_KeySize;
 
 			/*Call CRYS_RSA_PKCS1v15_Sign PKCS#1 ver1.5 to sign on input data*/
-			ret =  CRYS_RSA_PKCS1v15_Sign(rndContext_ptr,
+			ret =  CRYS_RSA_PKCS1v15_Sign(rndState_ptr, rndGenerateVectFunc,
 				&ContextPrivate,
 				&UserPrivKey,
 				CRYS_RSA_HASH_SHA256_mode,
@@ -326,7 +340,7 @@ int rsa_SignVerify_tests(void){
 			ActualSignatureSize = rsaSignVerifyDataVectors[test_index].rsaSignVerify_KeySize;
 
 			/*Call CRYS_RSA_PKCS1v15_SHA256_Sign PKCS#1 ver1.5 to sign on precalculated hash input using SHA256*/
-			ret =  CRYS_RSA_PKCS1v15_SHA256_Sign(rndContext_ptr,
+			ret =  CRYS_RSA_PKCS1v15_SHA256_Sign(rndState_ptr, rndGenerateVectFunc,
 				&ContextPrivate,
 				&UserPrivKey,
 				rsaSignVerifyDataVectors[test_index].rsaSignVerify_hash_SHA256,
@@ -357,7 +371,7 @@ int rsa_SignVerify_tests(void){
 			ActualSignatureSize = rsaSignVerifyDataVectors[test_index].rsaSignVerify_KeySize;
 
 			/*Call CRYS_RSA_PKCS1v15_SHA256_Sign PKCS#1 ver1.5 to sign on precalculated hash input using SHA512*/
-			ret =  CRYS_RSA_PKCS1v15_SHA512_Sign(rndContext_ptr,
+			ret =  CRYS_RSA_PKCS1v15_SHA512_Sign(rndState_ptr, rndGenerateVectFunc,
 				&ContextPrivate,
 				&UserPrivKey,
 				rsaSignVerifyDataVectors[test_index].rsaSignVerify_hash_SHA256,
@@ -406,7 +420,9 @@ int rsa_EncDec_tests(void){
 	CRYS_RSAPrimeData_t  	        PrimeData;
 	CRYS_RSA_HASH_OpMode_t          HASH_OpMode;
 	uint16_t                   	LessData_for_OAEP;
+	SaSiRndGenerateVectWorkFunc_t rndGenerateVectFunc;
 
+	rndGenerateVectFunc = CRYS_RND_GenerateVector;
 	/*Run all RSA tests*/
 	for (RSA_mode = NON_CRT_MODE ; RSA_mode <= CRT_MODE; RSA_mode++) /* Check both CRT and non CRT modes*/
 	{
@@ -436,7 +452,7 @@ int rsa_EncDec_tests(void){
 
 					INTEG_TEST_PRINT("CRYS_RSA_KG_GenerateKeyPair  \n");
 
-					ret = CRYS_RSA_KG_GenerateKeyPair(rndContext_ptr,
+					ret = CRYS_RSA_KG_GenerateKeyPair(rndState_ptr, rndGenerateVectFunc,
 						rsaEncDecDataVectors[test_index].rsaEncDec_PublicExponent_E,
 						rsaEncDecDataVectors[test_index].rsaEncDec_PubExponentSize,
 						rsaEncDecDataVectors[test_index].rsaEncDec_KeySize*8,
@@ -456,7 +472,7 @@ int rsa_EncDec_tests(void){
 
 					INTEG_TEST_PRINT("CRYS_RSA_KG_GenerateKeyPairCRT  \n");
 
-					ret = CRYS_RSA_KG_GenerateKeyPairCRT(rndContext_ptr,
+					ret = CRYS_RSA_KG_GenerateKeyPairCRT(rndState_ptr, rndGenerateVectFunc,
 						rsaEncDecDataVectors[test_index].rsaEncDec_PublicExponent_E,
 						rsaEncDecDataVectors[test_index].rsaEncDec_PubExponentSize,
 						rsaEncDecDataVectors[test_index].rsaEncDec_KeySize*8,
@@ -530,7 +546,8 @@ int rsa_EncDec_tests(void){
 			}
 
 			/*Call CRYS_RSA_OAEP_Encrypt to ecrypt data buffer */
-			ret =  CRYS_RSA_OAEP_Encrypt(rndContext_ptr,
+			ret =  CRYS_RSA_OAEP_Encrypt(rndState_ptr,
+                rndGenerateVectFunc,
 				&UserPubKey,
 				&PrimeData,
 				HASH_OpMode,
@@ -580,7 +597,7 @@ int rsa_EncDec_tests(void){
 			ActualDecDataSize = rsaEncDecDataVectors[test_index].rsaEncDec_KeySize*8;
 
 			/*CAll to CRYS_RSA_PKCS1v15_Encrypt to encrypt input buffer using PKCS#1 1.5*/
-			ret = CRYS_RSA_PKCS1v15_Encrypt(rndContext_ptr,
+			ret = CRYS_RSA_PKCS1v15_Encrypt(rndState_ptr, rndGenerateVectFunc,
 				&UserPubKey,
 				&PrimeData,
 				rsaEncDecDataVectors[test_index].rsaEncDec_input_data,
@@ -670,7 +687,7 @@ endRSA:
 /*rsa_wrap_tests creates thread with defined stack address to and calls to rsa test */
 void* rsa_thread(int (*funcPtr)(void))
 {
-   uint32_t* threadReturnValue = malloc(sizeof(uint32_t));
+   uint32_t* threadReturnValue = SaSi_PalMemMalloc(sizeof(uint32_t));
 
    *threadReturnValue =funcPtr();
     if (*threadReturnValue != SA_SILIB_RET_OK) {
@@ -717,7 +734,7 @@ int rsa_wrap_tests(int (*funcPtr)(void)){
 	}
 
 	rc =*((uint32_t *)*&threadRet);
-    free (threadRet);
+    SaSi_PalMemFree(threadRet);
 	threadRc = pthread_attr_destroy(&threadAttr);
 	if (threadRc != 0) {
 		INTEG_TEST_PRINT("pthread_attr_destroy failed\n");

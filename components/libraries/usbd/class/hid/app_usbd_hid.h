@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -60,9 +60,9 @@ extern "C" {
  * @{
  */
 
-#define APP_USBD_HID_IFACE_IDX 0    /**< HID instance interface index.   */
-#define APP_USBD_HID_EPIN_IDX  0    /**< HID instance endpoint IN index. */
-#define APP_USBD_HID_EPOUT_IDX 1    /**< HID instance endpoint OUT index.*/
+#define APP_USBD_HID_IFACE_IDX 0    /**< @brief HID instance interface index.   */
+#define APP_USBD_HID_EPIN_IDX  0    /**< @brief HID instance endpoint IN index. */
+#define APP_USBD_HID_EPOUT_IDX 1    /**< @brief HID instance endpoint OUT index.*/
 
 /**
  * @brief HID context state flags.
@@ -75,7 +75,6 @@ typedef enum {
     APP_USBD_HID_STATE_FLAG_SUSPENDED         = 2, /**< State flag SUSPENDED.         */
     APP_USBD_HID_STATE_FLAG_TRANS_IN_PROGRESS = 3, /**< State flag TRANS_IN_PROGRESS. */
 } app_usbd_hid_state_flag_t;
-
 
 /**
  * @brief Events passed to user event handler.
@@ -92,6 +91,7 @@ typedef enum {
     APP_USBD_HID_USER_EVT_OUT_REPORT_READY,  /**< Event OUT_REPORT_READY.   */
     APP_USBD_HID_USER_EVT_IN_REPORT_DONE,    /**< Event IN_REPORT_DONE.     */
 } app_usbd_hid_user_event_t;
+
 
 /**
  * @brief User event handler.
@@ -154,6 +154,24 @@ typedef struct {
      * @return                  Standard error code.
      */
     ret_code_t (*ep_transfer_out)(app_usbd_class_inst_t const * p_inst);
+
+    /**
+     * @brief Instance feed subclass descriptor
+     *
+     * Feeds whole descriptor of the instance
+     * @param[in]     p_ctx     Class descriptor context
+     * @param[in,out] p_inst    Instance of the class
+     * @param[out]    buff      Buffer for subclass descriptor
+     * @param[in]     max_size  Requested size of the subclass descriptor
+     * @param[in]     index     Index of the subclass descriptor
+     *
+     * @return True if not finished feeding the descriptor, false if done
+     */
+    bool (*feed_subclass_descriptor)(app_usbd_class_descriptor_ctx_t  * p_ctx,
+                                          app_usbd_class_inst_t const * p_inst,
+                                          uint8_t                     * buff,
+                                          size_t                        max_size,
+                                          uint8_t                       index);
 } app_usbd_hid_methods_t;
 
 /**
@@ -178,19 +196,66 @@ typedef struct {
             .size = sizeof(CONCAT_2(name, _buf)),                \
     }
 
+/**
+ * @brief HID subclass descriptor.
+ */
+
+typedef struct {
+    size_t                size;
+    app_usbd_descriptor_t type;
+    uint8_t const * const p_data;
+} app_usbd_hid_subclass_desc_t;
+
+/**
+ * @brief Initializer of HID report descriptor
+ *
+ * @param name  Report descriptor name
+ * @param ...   Report descriptor data
+ */
+
+#define APP_USBD_HID_GENERIC_SUBCLASS_REPORT_DESC(name, ...)    \
+    static uint8_t const CONCAT_2(name,  _data)[] =             \
+        __VA_ARGS__                                             \
+    ;                                                           \
+    static const app_usbd_hid_subclass_desc_t name =            \
+    {                                                           \
+        sizeof(CONCAT_2(name, _data)),                          \
+        APP_USBD_DESCRIPTOR_REPORT,                             \
+        CONCAT_2(name,_data)                                    \
+    }
+
+/**
+ * @brief Initializer of HID physical descriptor
+ *
+ * @param name  Physical descriptor name
+ * @param ...   Physical descriptor data
+ */
+
+#define APP_USBD_HID_GENERIC_SUBCLASS_PHYSICAL_DESC(name, ...)  \
+    static uint8_t const CONCAT_2(name,  _data)[] =             \
+        __VA_ARGS__                                             \
+    ;                                                           \
+    static const app_usbd_hid_subclass_desc_t name =            \
+    {                                                           \
+        sizeof(CONCAT_2(name, _data)),                          \
+        APP_USBD_DESCRIPTOR_PHYSICAL,                           \
+        CONCAT_2(name,_data)                                    \
+    }
+
 
 /**
  * @brief USB HID instance.
  */
 typedef struct {
-    uint8_t const * p_raw_desc;       //!< HID class descriptors, raw array.
-    size_t          raw_desc_size;    //!< HID class descriptors size, raw array size.
-    uint8_t const * p_report_dsc;     //!< Report descriptor, raw array.
-    size_t          report_dsc_size;  //!< Report descriptor, raw array size.
+    app_usbd_hid_subclass_desc_t const ** const p_subclass_desc; //!< HID subclass descriptors array.
+    size_t subclass_desc_count;                                  //!< HID subclass descriptors count.
 
-    app_usbd_hid_report_buffer_t *       p_rep_buffer_in;       //!< Report buffer IN.
+    app_usbd_hid_subclass_t subclass_boot;    //!< Boot device (see HID definition)
+    app_usbd_hid_protocol_t protocol;         //!< HID protocol (see HID definition)
+
+    app_usbd_hid_report_buffer_t       * p_rep_buffer_in;       //!< Report buffer IN.
     app_usbd_hid_report_buffer_t const * p_rep_buffer_out;       //!< Report buffer OUT (only one instance).
-    app_usbd_hid_methods_t const *       p_hid_methods;          //!< Hid interface methods.
+    app_usbd_hid_methods_t const       * p_hid_methods;          //!< Hid interface methods.
     app_usbd_hid_user_ev_handler_t       user_event_handler;     //!< User event handler.
 } app_usbd_hid_inst_t;
 
@@ -198,28 +263,31 @@ typedef struct {
 /**
  * @brief USB HID instance initializer @ref app_usbd_hid_inst_t.
  *
- * @param descriptors       Interface, hid, endpoint packed descriptor structure.
- * @param report_dsc        Report descriptor (raw uint8_t array).
+ * @param subclass_dsc      HID subclass descriptors.
+ * @param sub_boot          Subclass boot. (@ref app_usbd_hid_subclass_t)
+ * @param protocl           HID protocol. (@ref app_usbd_hid_protocol_t)
  * @param report_buff_in    Input report buffer list.
  * @param report_buff_out   Output report buffer.
  * @param user_ev_handler   @ref app_usbd_hid_user_ev_handler_t.
    @param hid_methods       @ref app_usbd_hid_methods_t.
  * */
-#define APP_USBD_HID_INST_CONFIG(descriptors,                \
-                                 report_dsc,                 \
+
+#define APP_USBD_HID_INST_CONFIG(subclass_dsc,               \
+                                 sub_boot,                   \
+                                 protocl,                    \
                                  report_buff_in,             \
                                  report_buff_out,            \
                                  user_ev_handler,            \
                                  hid_methods)                \
     {                                                        \
-        .p_raw_desc = descriptors,                           \
-        .raw_desc_size = ARRAY_SIZE(descriptors),            \
-        .p_report_dsc = report_dsc,                          \
-        .report_dsc_size = ARRAY_SIZE(report_dsc),           \
+        .p_subclass_desc = subclass_dsc,                     \
+        .subclass_desc_count = ARRAY_SIZE(subclass_dsc),     \
         .p_rep_buffer_in = report_buff_in,                   \
         .p_rep_buffer_out = report_buff_out,                 \
         .user_event_handler = user_ev_handler,               \
         .p_hid_methods = hid_methods,                        \
+        .subclass_boot = sub_boot,                           \
+        .protocol = protocl                                  \
     }
 
 /**
@@ -229,7 +297,7 @@ typedef struct {
     nrf_atomic_u32_t  state_flags;  //!< HID state flags @ref app_usbd_hid_state_flag_t.
     nrf_atomic_flag_t access_lock;  //!< Lock flag to internal data.
     uint8_t           idle_rate;    //!< HID idle rate (4ms units).
-    uint8_t           protocol;     //!< HID protocol type.
+    uint8_t           boot_active;  //!< HID using boot protocol.
 } app_usbd_hid_ctx_t;
 
 

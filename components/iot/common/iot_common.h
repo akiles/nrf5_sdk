@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -52,7 +52,6 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "ble_gap.h"
 #include "iot_defines.h"
 #include "iot_errors.h"
 #include "sdk_os.h"

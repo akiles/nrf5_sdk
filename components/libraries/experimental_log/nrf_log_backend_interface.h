@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -117,6 +117,8 @@ __STATIC_INLINE void nrf_log_backend_panic_set(nrf_log_backend_t const * p_backe
 /**
  * @brief Function for flushing backend.
  *
+ *        On flushing request backend should release log message(s).
+ *
  * @param[in] p_backend  Pointer to the backend instance.
  */
 __STATIC_INLINE void nrf_log_backend_flush(nrf_log_backend_t const * p_backend);
@@ -179,7 +181,7 @@ __STATIC_INLINE void nrf_log_backend_panic_set(nrf_log_backend_t const * p_backe
 
 __STATIC_INLINE void nrf_log_backend_flush(nrf_log_backend_t const * p_backend)
 {
-    p_backend->p_api->panic_set(p_backend);
+    p_backend->p_api->flush(p_backend);
 }
 
 __STATIC_INLINE void nrf_log_backend_id_set(nrf_log_backend_t * p_backend, uint8_t id)

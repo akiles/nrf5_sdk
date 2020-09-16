@@ -5,9 +5,8 @@ GROUP(-lgcc -lc -lnosys)
 
 MEMORY
 {
-  FLASH (rx) : ORIGIN = 0x18000, LENGTH = 0x18000
-  RAM (rwx) :  ORIGIN = 0x20001cd0, LENGTH = 0x4330
-  
+  FLASH (rx) : ORIGIN = 0x19000, LENGTH = 0x17000
+  RAM (rwx) :  ORIGIN = 0x20001c18, LENGTH = 0x43e8
 }
 
 SECTIONS
@@ -58,17 +57,29 @@ SECTIONS
     KEEP(*(SORT(.sdh_ble_observers*)))
     PROVIDE(__stop_sdh_ble_observers = .);
   } > FLASH
+  .pwr_mgmt_data :
+  {
+    PROVIDE(__start_pwr_mgmt_data = .);
+    KEEP(*(SORT(.pwr_mgmt_data*)))
+    PROVIDE(__stop_pwr_mgmt_data = .);
+  } > FLASH
   .log_const_data :
   {
     PROVIDE(__start_log_const_data = .);
     KEEP(*(SORT(.log_const_data*)))
     PROVIDE(__stop_log_const_data = .);
   } > FLASH
-  .sdh_req_observers :
+    .nrf_queue :
   {
-    PROVIDE(__start_sdh_req_observers = .);
-    KEEP(*(SORT(.sdh_req_observers*)))
-    PROVIDE(__stop_sdh_req_observers = .);
+    PROVIDE(__start_nrf_queue = .);
+    KEEP(*(.nrf_queue))
+    PROVIDE(__stop_nrf_queue = .);
+  } > FLASH
+    .nrf_balloc :
+  {
+    PROVIDE(__start_nrf_balloc = .);
+    KEEP(*(.nrf_balloc))
+    PROVIDE(__stop_nrf_balloc = .);
   } > FLASH
   .sdh_state_observers :
   {
@@ -82,14 +93,25 @@ SECTIONS
     KEEP(*(SORT(.sdh_stack_observers*)))
     PROVIDE(__stop_sdh_stack_observers = .);
   } > FLASH
+  .sdh_req_observers :
+  {
+    PROVIDE(__start_sdh_req_observers = .);
+    KEEP(*(SORT(.sdh_req_observers*)))
+    PROVIDE(__stop_sdh_req_observers = .);
+  } > FLASH
     .cli_command :
   {
     PROVIDE(__start_cli_command = .);
     KEEP(*(.cli_command))
     PROVIDE(__stop_cli_command = .);
   } > FLASH
-  
+  .crypto_data :
+  {
+    PROVIDE(__start_crypto_data = .);
+    KEEP(*(SORT(.crypto_data*)))
+    PROVIDE(__stop_crypto_data = .);
+  } > FLASH
 
 } INSERT AFTER .text
 
-INCLUDE "nrf5x_common.ld"
+INCLUDE "nrf_common.ld"

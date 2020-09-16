@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -67,7 +67,7 @@ static uint8_t m_gzll_packet[PAYLOAD_SIZE];
 void gzll_app_start(void)
 {
     GAZELLE_ERROR_CODE_CHECK(nrf_gzll_init(NRF_GZLL_MODE_DEVICE));
-    GAZELLE_ERROR_CODE_CHECK(nrf_gzll_set_max_tx_attempts(MAX_TX_ATTEMPTS));
+    nrf_gzll_set_max_tx_attempts(MAX_TX_ATTEMPTS);
     GAZELLE_ERROR_CODE_CHECK(nrf_gzll_enable());
 
     // Add a packet to the TX FIFO to start the data transfer.

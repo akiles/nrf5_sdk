@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -52,13 +52,27 @@
 #include "app_usbd_core.h"
 #include "app_usbd_hid_mouse.h"
 #include "app_usbd_hid_kbd.h"
+#include "app_usbd_dummy.h"
 #include "app_error.h"
 #include "bsp.h"
 
+#include "bsp_cli.h"
+#include "nrf_cli.h"
+#include "nrf_cli_uart.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
+
+/**
+ * @brief CLI interface over UART
+ */
+NRF_CLI_UART_DEF(m_cli_uart_transport, 0, 64, 16);
+NRF_CLI_DEF(m_cli_uart,
+            "uart_cli:~$ ",
+            &m_cli_uart_transport.transport,
+            '\r',
+            4);
 
 /**
  * @brief Enable USB power detection
@@ -128,13 +142,10 @@ enum {
 };
 
 /**
- * @brief USB composite interface enumerator
+ * @brief USB composite interfaces
  */
-enum {
-    APP_USBD_INTERFACE_MOUSE = 0,
-    APP_USBD_INTERFACE_KBD = APP_USBD_INTERFACE_MOUSE + CONFIG_HAS_MOUSE,
-    APP_USBD_INTERFACE_LAST = APP_USBD_INTERFACE_KBD + CONFIG_HAS_KBD,
-};
+#define APP_USBD_INTERFACE_MOUSE 0
+#define APP_USBD_INTERFACE_KBD   1
 
 /**
  * @brief User event handler, HID mouse
@@ -157,8 +168,11 @@ APP_USBD_HID_MOUSE_GLOBAL_DEF(m_app_hid_mouse,
                               APP_USBD_INTERFACE_MOUSE,
                               NRF_DRV_USBD_EPIN1,
                               CONFIG_MOUSE_BUTTON_COUNT,
-                              hid_mouse_user_ev_handler
+                              hid_mouse_user_ev_handler,
+                              APP_USBD_HID_SUBCLASS_BOOT
 );
+
+APP_USBD_DUMMY_GLOBAL_DEF(m_app_mouse_dummy, APP_USBD_INTERFACE_MOUSE);
 
 /**
  * @brief Global HID keyboard instance
@@ -166,15 +180,12 @@ APP_USBD_HID_MOUSE_GLOBAL_DEF(m_app_hid_mouse,
 APP_USBD_HID_KBD_GLOBAL_DEF(m_app_hid_kbd,
                             APP_USBD_INTERFACE_KBD,
                             NRF_DRV_USBD_EPIN2,
-                            hid_kbd_user_ev_handler
+                            hid_kbd_user_ev_handler,
+                            APP_USBD_HID_SUBCLASS_BOOT
 );
+APP_USBD_DUMMY_GLOBAL_DEF(m_app_kbd_dummy, APP_USBD_INTERFACE_KBD);
 
 /*lint -restore*/
-
-/**
- * @brief  USB connection status
- */
-static bool m_usb_connected = false;
 
 /**
  * @brief Timer to repeat mouse move
@@ -277,16 +288,7 @@ static void usbd_user_ev_handler(app_usbd_event_type_t event)
             app_usbd_disable();
             bsp_board_leds_off();
             break;
-        default:
-            break;
-    }
-}
-
-static void power_usb_event_handler(nrf_drv_power_usb_evt_t event)
-{
-    switch (event)
-    {
-        case NRF_DRV_POWER_USB_EVT_DETECTED:
+        case APP_USBD_EVT_POWER_DETECTED:
             NRF_LOG_INFO("USB power detected");
 
             if (!nrf_drv_usbd_is_enabled())
@@ -294,75 +296,19 @@ static void power_usb_event_handler(nrf_drv_power_usb_evt_t event)
                 app_usbd_enable();
             }
             break;
-        case NRF_DRV_POWER_USB_EVT_REMOVED:
+        case APP_USBD_EVT_POWER_REMOVED:
             NRF_LOG_INFO("USB power removed");
-            m_usb_connected = false;
+            app_usbd_stop();
             break;
-        case NRF_DRV_POWER_USB_EVT_READY:
+        case APP_USBD_EVT_POWER_READY:
             NRF_LOG_INFO("USB ready");
-            m_usb_connected = true;
+            app_usbd_start();
             break;
         default:
-            ASSERT(false);
+            break;
     }
 }
 
-
-static void usb_start(void)
-{
-    if (USBD_POWER_DETECTION)
-    {
-        static const nrf_drv_power_usbevt_config_t config =
-        {
-            .handler = power_usb_event_handler
-        };
-
-        ret_code_t ret;
-        ret = nrf_drv_power_usbevt_init(&config);
-        APP_ERROR_CHECK(ret);
-    }
-    else
-    {
-        NRF_LOG_INFO("No USB power detection enabled\r\nStarting USB now");
-
-        app_usbd_enable();
-        app_usbd_start();
-        m_usb_connected = true;
-    }
-}
-
-static bool usb_connection_handle(bool last_usb_conn_status)
-{
-    if (last_usb_conn_status != m_usb_connected)
-    {
-        last_usb_conn_status = m_usb_connected;
-        m_usb_connected ? app_usbd_start() : app_usbd_stop();
-        NRF_LOG_INFO("USB library %s.", (uint32_t)(m_usb_connected ? "started" : "stopped"));
-    }
-
-    return last_usb_conn_status;
-}
-
-static void init_power_clock(void)
-{
-    ret_code_t ret;
-    ret = nrf_drv_clock_init();
-    APP_ERROR_CHECK(ret);
-    ret = nrf_drv_power_init(NULL);
-    APP_ERROR_CHECK(ret);
-
-    nrf_drv_clock_lfclk_request(NULL);
-    while(!nrf_drv_clock_lfclk_is_running())
-    {
-        /* Just waiting */
-    }
-
-    ret = app_timer_init();
-    APP_ERROR_CHECK(ret);
-
-    /* Avoid warnings if assertion is disabled */
-    UNUSED_VARIABLE(ret);
-}
 
 static void mouse_move_timer_handler(void * p_context)
 {
@@ -433,7 +379,22 @@ static void init_bsp(void)
     INIT_BSP_ASSIGN_RELEASE_ACTION(BTN_KBD_LETTER );
 
     /* Configure LEDs */
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
+}
+
+static void init_cli(void)
+{
+    ret_code_t ret;
+    ret = bsp_cli_init(bsp_event_callback);
+    APP_ERROR_CHECK(ret);
+    nrf_drv_uart_config_t uart_config = NRF_DRV_UART_DEFAULT_CONFIG;
+    uart_config.pseltxd = TX_PIN_NUMBER;
+    uart_config.pselrxd = RX_PIN_NUMBER;
+    uart_config.hwfc    = NRF_UART_HWFC_DISABLED;
+    ret = nrf_cli_init(&m_cli_uart, &uart_config, true, true, NRF_LOG_SEVERITY_INFO);
+    APP_ERROR_CHECK(ret);
+    ret = nrf_cli_start(&m_cli_uart);
+    APP_ERROR_CHECK(ret);
 }
 
 int main(void)
@@ -443,37 +404,62 @@ int main(void)
         .ev_state_proc = usbd_user_ev_handler,
     };
 
-    init_power_clock();
-
     ret = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(ret);
-    NRF_LOG_DEFAULT_BACKENDS_INIT();
-    NRF_LOG_INFO("Hello USB!");
+
+    ret = nrf_drv_clock_init();
+    APP_ERROR_CHECK(ret);
+
+    nrf_drv_clock_lfclk_request(NULL);
+    while(!nrf_drv_clock_lfclk_is_running())
+    {
+        /* Just waiting */
+    }
+
+    ret = app_timer_init();
+    APP_ERROR_CHECK(ret);
 
     ret = app_timer_create(&m_mouse_move_timer, APP_TIMER_MODE_REPEATED, mouse_move_timer_handler);
     APP_ERROR_CHECK(ret);
 
     init_bsp();
+    init_cli();
 
     ret = app_usbd_init(&usbd_config);
     APP_ERROR_CHECK(ret);
 
-#if CONFIG_HAS_MOUSE
     app_usbd_class_inst_t const * class_inst_mouse;
+#if CONFIG_HAS_MOUSE
     class_inst_mouse = app_usbd_hid_mouse_class_inst_get(&m_app_hid_mouse);
+#else
+    class_inst_mouse = app_usbd_dummy_class_inst_get(&m_app_mouse_dummy);
+#endif
     ret = app_usbd_class_append(class_inst_mouse);
     APP_ERROR_CHECK(ret);
-#endif
 
-#if CONFIG_HAS_KBD
     app_usbd_class_inst_t const * class_inst_kbd;
+#if CONFIG_HAS_KBD
     class_inst_kbd = app_usbd_hid_kbd_class_inst_get(&m_app_hid_kbd);
+#else
+    class_inst_kbd = app_usbd_dummy_class_inst_get(&m_app_kbd_dummy);
+#endif
     ret = app_usbd_class_append(class_inst_kbd);
     APP_ERROR_CHECK(ret);
-#endif
 
-    bool last_usb_conn_status = false;
-    usb_start();
+    NRF_LOG_INFO("USBD HID composite example started.");
+    
+    if (USBD_POWER_DETECTION)
+    {
+        ret = app_usbd_power_events_enable();
+        APP_ERROR_CHECK(ret);
+    }
+    else
+    {
+        NRF_LOG_INFO("No USB power detection enabled\r\nStarting USB now");
+
+        app_usbd_enable();
+        app_usbd_start();
+    }
 
     while (true)
     {
@@ -481,7 +467,7 @@ int main(void)
         {
             /* Nothing to do */
         }
-        last_usb_conn_status = usb_connection_handle(last_usb_conn_status);
+        nrf_cli_process(&m_cli_uart);
 
         UNUSED_RETURN_VALUE(NRF_LOG_PROCESS());
         /* Sleep CPU only if there was no interrupt since last loop processing */

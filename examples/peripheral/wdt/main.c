@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -124,7 +124,7 @@ int main(void)
     APP_ERROR_CHECK(err_code);
 
     //Configure all LEDs on board.
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 
     //Configure WDT.
     nrf_drv_wdt_config_t config = NRF_DRV_WDT_DEAFULT_CONFIG;

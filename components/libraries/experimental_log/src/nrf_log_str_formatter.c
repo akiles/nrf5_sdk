@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -75,21 +75,54 @@ static const char * m_colors[] = {
         NRF_LOG_COLOR_CODE_WHITE,
 };
 
+static uint32_t m_freq;
+static uint32_t m_timestamp_div;
+
+static void timestamp_print(nrf_fprintf_ctx_t * p_ctx, uint32_t timestamp)
+{
+    if (NRF_LOG_USES_TIMESTAMP)
+    {
+        if (NRF_LOG_STR_FORMATTER_TIMESTAMP_FORMAT_ENABLED)
+        {
+            timestamp        /= m_timestamp_div;
+            uint32_t seconds  = timestamp/m_freq;
+            uint32_t hours    = seconds/3600;
+            seconds          -= hours * 3600;
+            uint32_t mins     = seconds/60;
+            seconds          -= mins * 60;
+
+            uint32_t reminder = timestamp % m_freq;
+            uint32_t ms       = (reminder * 1000)/m_freq;
+            uint32_t us       = (1000*(1000*reminder - (ms * m_freq)))/m_freq;
+
+            nrf_fprintf(p_ctx, "[%02d:%02d:%02d.%03d,%03d] ", hours, mins, seconds, ms, us);
+        }
+        else
+        {
+            nrf_fprintf(p_ctx, "[%08lu] ", timestamp);
+        }
+    }
+}
 static void prefix_process(nrf_log_str_formatter_entry_params_t * p_params,
                            nrf_fprintf_ctx_t * p_ctx)
 {
-    if (!(p_params->raw))
+    if (p_params->dropped)
+    {
+        nrf_fprintf(p_ctx,
+                    "%sLogs dropped (%d)%s\r\n",
+                    NRF_LOG_COLOR_CODE_RED,
+                    p_params->dropped,
+                    NRF_LOG_COLOR_CODE_DEFAULT);
+    }
+
+    if (!(p_params->severity == NRF_LOG_SEVERITY_INFO_RAW))
     {
         if (p_params->use_colors)
         {
             nrf_fprintf(p_ctx, "%s",
                           m_colors[nrf_log_color_id_get( p_params->module_id, p_params->severity)]);
         }
-
-        if (NRF_LOG_USES_TIMESTAMP)
-        {
-            nrf_fprintf(p_ctx, "[%08lu] ", p_params->timestamp);
-        }
+        timestamp_print(p_ctx, p_params->timestamp);
 
         nrf_fprintf(p_ctx, "<%s> %s: ",
            severity_names[p_params->severity], nrf_log_module_name_get(p_params->module_id, false));
@@ -100,7 +133,7 @@ static void postfix_process(nrf_log_str_formatter_entry_params_t * p_params,
                             nrf_fprintf_ctx_t * p_ctx,
                             bool newline)
 {
-    if (!p_params->raw)
+    if (!(p_params->severity == NRF_LOG_SEVERITY_INFO_RAW))
     {
         if (p_params->use_colors)
         {
@@ -205,5 +238,19 @@ void nrf_log_hexdump_entry_process(uint8_t * p_data,
     postfix_process(p_params, p_ctx, true);
 
     p_ctx->auto_flush = auto_flush;
+}
+
+void nrf_log_str_formatter_timestamp_freq_set(uint32_t freq)
+{
+    m_timestamp_div = 1;
+    /* There is no point to have frequency higher than 1MHz (ns are not printed) and too high
+     * frequency leads to overflows in calculations.
+     */
+    while (freq > 1000000)
+    {
+        freq /= 2;
+        m_timestamp_div *= 2;
+    }
+    m_freq = freq;
 }
 #endif //NRF_LOG_ENABLED

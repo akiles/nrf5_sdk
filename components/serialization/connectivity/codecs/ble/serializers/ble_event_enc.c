@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -81,11 +81,11 @@ uint32_t ble_event_enc(ble_evt_t const * const p_event,
         case BLE_GAP_EVT_CONN_PARAM_UPDATE:
             ret_val = ble_gap_evt_conn_param_update_enc(p_event, event_len, p_buf, p_buf_len);
             break;
-
+#ifndef S112
         case BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST:
             ret_val = ble_gap_evt_conn_param_update_request_enc(p_event, event_len, p_buf, p_buf_len);
             break;
-
+#endif //!S112
         case BLE_GAP_EVT_SEC_PARAMS_REQUEST:
             ret_val = ble_gap_evt_sec_params_request_enc(p_event, event_len, p_buf, p_buf_len);
             break;
@@ -143,14 +143,14 @@ uint32_t ble_event_enc(ble_evt_t const * const p_event,
             ret_val = ble_gap_evt_phy_update_request_enc(p_event, event_len, p_buf, p_buf_len);
             break;
 #endif
-#if NRF_SD_BLE_API_VERSION >= 4
+#if NRF_SD_BLE_API_VERSION >= 4 && !defined(S112)
         case BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST:
             ret_val = ble_gap_evt_data_length_update_request_enc(p_event, event_len, p_buf, p_buf_len);
             break;
         case BLE_GAP_EVT_DATA_LENGTH_UPDATE:
             ret_val = ble_gap_evt_data_length_update_enc(p_event, event_len, p_buf, p_buf_len);
             break;
-#endif
+#endif //NRF_SD_BLE_API_VERSION >= 4 && !defined(S112)
         case BLE_GATTC_EVT_CHAR_DISC_RSP:
             ret_val = ble_gattc_evt_char_disc_rsp_enc(p_event, event_len, p_buf, p_buf_len);
             break;
@@ -244,7 +244,7 @@ uint32_t ble_event_enc(ble_evt_t const * const p_event,
             ret_val = ble_l2cap_evt_rx_enc(p_event, event_len, p_buf, p_buf_len);
             break;
 #endif
-#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION >= 5
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION >= 5 && !defined(S112)
         case BLE_L2CAP_EVT_CH_SETUP_REQUEST:
             ret_val = ble_l2cap_evt_ch_setup_request_enc(p_event, event_len, p_buf, p_buf_len);
             break;
@@ -275,11 +275,12 @@ uint32_t ble_event_enc(ble_evt_t const * const p_event,
         case BLE_L2CAP_EVT_CH_TX:
             ret_val = ble_l2cap_evt_ch_tx_enc(p_event, event_len, p_buf, p_buf_len);
             break;
-#endif
+#endif //defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION >= 5 && !defined(S112)
+#ifndef S112
         case BLE_GAP_EVT_ADV_REPORT:
             ret_val = ble_gap_evt_adv_report_enc(p_event, event_len, p_buf, p_buf_len);
             break;
-
+#endif //!S112
         case BLE_GAP_EVT_SCAN_REQ_REPORT:
             ret_val = ble_gap_evt_scan_req_report_enc(p_event, event_len, p_buf, p_buf_len);
             break;

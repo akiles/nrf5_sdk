@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -62,6 +62,7 @@
 #include "ble_lbs_c.h"
 #include "ble_conn_state.h"
 #include "nrf_ble_gatt.h"
+#include "nrf_pwr_mgmt.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -80,14 +81,12 @@
 
 #define SCAN_INTERVAL             0x00A0                                /**< Determines scan interval in units of 0.625 millisecond. */
 #define SCAN_WINDOW               0x0050                                /**< Determines scan window in units of 0.625 millisecond. */
-#define SCAN_TIMEOUT              0x0000                                /**< Timout when scanning. 0x0000 disables timeout. */
+#define SCAN_DURATION             0x0000                                /**< Duration of the scanning in units of 10 milliseconds. If set to 0x0000, scanning will continue until it is explicitly disabled. */
 
 #define MIN_CONNECTION_INTERVAL   MSEC_TO_UNITS(7.5, UNIT_1_25_MS)      /**< Determines minimum connection interval in milliseconds. */
 #define MAX_CONNECTION_INTERVAL   MSEC_TO_UNITS(30, UNIT_1_25_MS)       /**< Determines maximum connection interval in milliseconds. */
 #define SLAVE_LATENCY             0                                     /**< Determines slave latency in terms of connection events. */
 #define SUPERVISION_TIMEOUT       MSEC_TO_UNITS(4000, UNIT_10_MS)       /**< Determines supervision time-out in units of 10 milliseconds. */
-
-#define UUID16_SIZE               2                                     /**< Size of a UUID, in bytes. */
 
 
 NRF_BLE_GATT_DEF(m_gatt);                                               /**< GATT module instance. */
@@ -96,21 +95,26 @@ BLE_DB_DISCOVERY_ARRAY_DEF(m_db_disc, NRF_SDH_BLE_CENTRAL_LINK_COUNT);  /**< Dat
 
 static char const m_target_periph_name[] = "Nordic_Blinky";             /**< Name of the device we try to connect to. This name is searched for in the scan report data*/
 
+static uint8_t m_scan_buffer_data[BLE_GAP_SCAN_BUFFER_MIN]; /**< buffer where advertising reports will be stored by the SoftDevice. */
+
+/**@brief Pointer to the buffer where advertising reports will be stored by the SoftDevice. */
+static ble_data_t m_scan_buffer =
+{
+    m_scan_buffer_data,
+    BLE_GAP_SCAN_BUFFER_MIN
+};
+
 /**@brief Scan parameters requested for scanning and connection. */
 static ble_gap_scan_params_t const m_scan_params =
 {
     .active   = 0,
     .interval = SCAN_INTERVAL,
     .window   = SCAN_WINDOW,
-    .timeout  = SCAN_TIMEOUT,
-    #if (NRF_SD_BLE_API_VERSION <= 2)
-        .selective   = 0,
-        .p_whitelist = NULL,
-    #endif
-    #if (NRF_SD_BLE_API_VERSION >= 3)
-        .use_whitelist  = 0,
-        .adv_dir_report = 0,
-    #endif
+
+    .timeout           = SCAN_DURATION,
+    .scan_phys         = BLE_GAP_PHY_1MBPS,
+    .filter_policy     = BLE_GAP_SCAN_FP_ACCEPT_ALL,
+
 };
 
 /**@brief Connection parameters requested for connection. */
@@ -146,43 +150,7 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
  */
 static void leds_init(void)
 {
-    bsp_board_leds_init();
-}
-
-
-/**
- * @brief Parses advertisement data, providing length and location of the field in case
- *        matching data is found.
- *
- * @param[in]  type       Type of data to be looked for in advertisement data.
- * @param[in]  p_advdata  Advertisement report length and pointer to report.
- * @param[out] p_typedata If data type requested is found in the data report, type data length and
- *                        pointer to data will be populated here.
- *
- * @retval NRF_SUCCESS if the data type is found in the report.
- * @retval NRF_ERROR_NOT_FOUND if the data type could not be found.
- */
-static uint32_t adv_report_parse(uint8_t type, uint8_array_t * p_advdata, uint8_array_t * p_typedata)
-{
-    uint32_t  index = 0;
-    uint8_t * p_data;
-
-    p_data = p_advdata->p_data;
-
-    while (index < p_advdata->size)
-    {
-        uint8_t field_length = p_data[index];
-        uint8_t field_type   = p_data[index + 1];
-
-        if (field_type == type)
-        {
-            p_typedata->p_data = &p_data[index + 2];
-            p_typedata->size   = field_length - 1;
-            return NRF_SUCCESS;
-        }
-        index += field_length + 1;
-    }
-    return NRF_ERROR_NOT_FOUND;
+    bsp_board_init(BSP_INIT_LEDS);
 }
 
 
@@ -194,11 +162,10 @@ static void scan_start(void)
     (void) sd_ble_gap_scan_stop();
 
     NRF_LOG_INFO("Start scanning for device name %s.", (uint32_t)m_target_periph_name);
-    ret = sd_ble_gap_scan_start(&m_scan_params);
+    ret = sd_ble_gap_scan_start(&m_scan_params, &m_scan_buffer);
     APP_ERROR_CHECK(ret);
-
-    ret = bsp_indication_set(BSP_INDICATE_SCANNING);
-    APP_ERROR_CHECK(ret);
+    // Turn on the LED to signal scanning.
+    bsp_board_led_on(CENTRAL_SCANNING_LED);
 }
 
 
@@ -248,68 +215,33 @@ static void lbs_c_evt_handler(ble_lbs_c_t * p_lbs_c, ble_lbs_c_evt_t * p_lbs_c_e
     }
 }
 
+
 /**@brief Function for handling the advertising report BLE event.
  *
- * @param[in] p_ble_evt  Bluetooth stack event.
+ * @param[in] p_adv_report  Advertising report from the SoftDevice.
  */
-static void on_adv_report(ble_evt_t const * p_ble_evt)
+static void on_adv_report(ble_gap_evt_adv_report_t const * p_adv_report)
 {
-    uint32_t      err_code;
-    uint8_array_t adv_data;
-    uint8_array_t dev_name;
-    bool          do_connect = false;
+    ret_code_t err_code;
 
-    // For readibility.
-    ble_gap_evt_t  const * p_gap_evt  = &p_ble_evt->evt.gap_evt;
-    ble_gap_addr_t const * peer_addr  = &p_gap_evt->params.adv_report.peer_addr;
-
-    // Prepare advertisement report for parsing.
-    adv_data.p_data = (uint8_t *)p_gap_evt->params.adv_report.data;
-    adv_data.size   = p_gap_evt->params.adv_report.dlen;
-
-    // Search for advertising names.
-    bool found_name = false;
-    err_code = adv_report_parse(BLE_GAP_AD_TYPE_COMPLETE_LOCAL_NAME,
-                                &adv_data,
-                                &dev_name);
-    if (err_code != NRF_SUCCESS)
+    if (ble_advdata_name_find(p_adv_report->data.p_data,
+                              p_adv_report->data.len,
+                              m_target_periph_name))
     {
-        // Look for the short local name if it was not found as complete.
-        err_code = adv_report_parse(BLE_GAP_AD_TYPE_SHORT_LOCAL_NAME, &adv_data, &dev_name);
-        if (err_code != NRF_SUCCESS)
-        {
-            // If we can't parse the data, then exit.
-            return;
-        }
-        else
-        {
-            found_name = true;
-        }
-    }
-    else
-    {
-        found_name = true;
-    }
-
-    if (found_name)
-    {
-        if (strlen(m_target_periph_name) != 0)
-        {
-            if (memcmp(m_target_periph_name, dev_name.p_data, dev_name.size) == 0)
-            {
-                do_connect = true;
-            }
-        }
-    }
-
-    if (do_connect)
-    {
-        // Initiate connection.
-        err_code = sd_ble_gap_connect(peer_addr, &m_scan_params, &m_connection_param, APP_BLE_CONN_CFG_TAG);
+        // Name is a match, initiate connection.
+        err_code = sd_ble_gap_connect(&p_adv_report->peer_addr,
+                                      &m_scan_params,
+                                      &m_connection_param,
+                                      APP_BLE_CONN_CFG_TAG);
         if (err_code != NRF_SUCCESS)
         {
             NRF_LOG_ERROR("Connection Request Failed, reason %d", err_code);
         }
+    }
+    else
+    {
+        err_code = sd_ble_gap_scan_start(NULL, &m_scan_buffer);
+        APP_ERROR_CHECK(err_code);
     }
 }
 
@@ -352,7 +284,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             // Update LEDs status, and check if we should be looking for more
             // peripherals to connect to.
             bsp_board_led_on(CENTRAL_CONNECTED_LED);
-            if (ble_conn_state_n_centrals() == NRF_SDH_BLE_CENTRAL_LINK_COUNT)
+            if (ble_conn_state_central_conn_count() == NRF_SDH_BLE_CENTRAL_LINK_COUNT)
             {
                 bsp_board_led_off(CENTRAL_SCANNING_LED);
             }
@@ -372,7 +304,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
                          p_gap_evt->conn_handle,
                          p_gap_evt->params.disconnected.reason);
 
-            if (ble_conn_state_n_centrals() == 0)
+            if (ble_conn_state_central_conn_count() == 0)
             {
                 err_code = app_button_disable();
                 APP_ERROR_CHECK(err_code);
@@ -390,7 +322,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         } break;
 
         case BLE_GAP_EVT_ADV_REPORT:
-            on_adv_report(p_ble_evt);
+            on_adv_report(&p_gap_evt->params.adv_report);
             break;
 
         case BLE_GAP_EVT_TIMEOUT:
@@ -411,7 +343,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
         } break;
 
-#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -423,7 +354,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
             APP_ERROR_CHECK(err_code);
         } break;
-#endif
 
         case BLE_GATTC_EVT_TIMEOUT:
         {
@@ -590,12 +520,26 @@ static void db_discovery_init(void)
 }
 
 
-/** @brief Function to sleep until a BLE event is received by the application.
+/**@brief Function for initializing power management.
  */
-static void power_manage(void)
+static void power_management_init(void)
 {
-    ret_code_t err_code = sd_app_evt_wait();
+    ret_code_t err_code;
+    err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for handling the idle state (main loop).
+ *
+ * @details Handle any pending log operation(s), then sleep until the next event occurs.
+ */
+static void idle_state_handle(void)
+{
+    if (NRF_LOG_PROCESS() == false)
+    {
+        nrf_pwr_mgmt_run();
+    }
 }
 
 
@@ -630,29 +574,24 @@ static void gatt_init(void)
 
 int main(void)
 {
+    // Initialize.
     log_init();
     timer_init();
     leds_init();
     buttons_init();
+    power_management_init();
     ble_stack_init();
     gatt_init();
     db_discovery_init();
     lbs_c_init();
     ble_conn_state_init();
 
+    // Start execution.
     NRF_LOG_INFO("Multilink example started.");
-
-    // Start scanning for peripherals and initiate connection to devices which  advertise.
     scan_start();
-
-    // Turn on the LED to signal scanning.
-    bsp_board_led_on(CENTRAL_SCANNING_LED);
 
     for (;;)
     {
-        if (!NRF_LOG_PROCESS())
-        {
-            power_manage();
-        }
+        idle_state_handle();
     }
 }

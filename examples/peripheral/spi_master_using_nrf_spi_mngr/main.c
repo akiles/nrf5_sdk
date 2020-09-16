@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -84,7 +84,7 @@ APP_TIMER_DEF(m_timer);
  * is based on ST7565 driver. It has width = 128 pixels and height = 32 pixels */
 static lcd_cb_t m_lcd_cb =
 {
-    .state    = NRF_DRV_STATE_UNINITIALIZED,
+    .state    = NRFX_DRV_STATE_UNINITIALIZED,
     .height   = ST7565_LCD_HEIGHT,
     .width    = ST7565_LCD_WIDTH,
     .rotation = NRF_LCD_ROTATE_0
@@ -292,18 +292,18 @@ static void text_display(void)
 
 int main(void)
 {
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+
     lfclk_config();
     APP_ERROR_CHECK(app_timer_init());
     timer_interrupt_init();
     APP_ERROR_CHECK(nrf_pwr_mgmt_init());
-    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
-    NRF_LOG_DEFAULT_BACKENDS_INIT();
-
     APP_ERROR_CHECK(bsp_init(BSP_INIT_BUTTONS, bsp_event_handler));
-
-    NRF_LOG_INFO("SPI transaction manager example\n\r");
-
     APP_ERROR_CHECK(nrf_gfx_init(&m_nrf_lcd));
+
+    NRF_LOG_INFO("SPI transaction manager example started. \n\r");
+
     text_display();
 
     while (true)

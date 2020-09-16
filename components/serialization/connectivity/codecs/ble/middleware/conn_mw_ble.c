@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -41,6 +41,9 @@
 #include "conn_mw_ble.h"
 #include "ble_serialization.h"
 #include "conn_ble_user_mem.h"
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION >= 5
+#include "nrf_sdh_ble.h"
+#endif
 #include <string.h>
 extern sercon_ble_user_mem_t m_conn_user_mem_table[];
 
@@ -265,6 +268,7 @@ uint32_t conn_mw_ble_opt_set(uint8_t const * const p_rx_buf,
     return err_code;
 }
 
+
 uint32_t conn_mw_ble_enable(uint8_t const * const p_rx_buf,
                             uint32_t              rx_buf_len,
                             uint8_t * const       p_tx_buf,
@@ -311,8 +315,13 @@ uint32_t conn_mw_ble_enable(uint8_t const * const p_rx_buf,
 #else
     err_code = ble_enable_req_dec(p_rx_buf, rx_buf_len);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
-
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION <= 4
+    //Enable BLE SDH to enable events from BLE.
     sd_err_code = sd_ble_enable(&app_ram_base);
+#else
+    //Enable BLE SDH to enable events from BLE.
+    sd_err_code = nrf_sdh_ble_enable(&app_ram_base);
+#endif
 #endif
 
     err_code = ble_enable_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);

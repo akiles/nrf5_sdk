@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -85,6 +85,18 @@ static ble_nus_c_t _name;                                                       
 NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
                      BLE_NUS_C_BLE_OBSERVER_PRIO,                                                   \
                      ble_nus_c_on_ble_evt, &_name)
+
+/** @brief Macro for defining multiple ble_nus_c instances.
+ *
+ * @param   _name   Name of the array of instances.
+ * @param   _cnt    Number of instances to define.
+ * @hideinitializer
+ */
+#define BLE_NUS_C_ARRAY_DEF(_name, _cnt)                 \
+static ble_nus_c_t _name[_cnt];                          \
+NRF_SDH_BLE_OBSERVERS(_name ## _obs,                     \
+                      BLE_NUS_C_BLE_OBSERVER_PRIO,       \
+                      ble_nus_c_on_ble_evt, &_name, _cnt)
 
 #define NUS_BASE_UUID                   {{0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0x00, 0x00, 0x40, 0x6E}} /**< Used vendor specific UUID. */
 

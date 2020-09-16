@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -86,16 +86,21 @@ static uint32_t port_data_callback(const udp6_socket_t * p_socket,
         if (m_port_table[index].socket_id == p_socket->socket_id)
         {
             coap_remote_t           remote_endpoint;
+            coap_remote_t           local_endpoint;
             const coap_port_t       port       = {p_udp_header->destport};
 
             memcpy (remote_endpoint.addr, p_ip_header->srcaddr.u8, IPV6_ADDR_SIZE);
             remote_endpoint.port_number = p_udp_header->srcport;
+
+            memcpy (local_endpoint.addr, p_ip_header->destaddr.u8, IPV6_ADDR_SIZE);
+            local_endpoint.port_number = p_udp_header->destport;
 
             COAP_MUTEX_LOCK();
 
             //Notify the module of received data.
             retval = coap_transport_read(&port,
                                          &remote_endpoint,
+                                         &local_endpoint,
                                          process_result,
                                          p_rx_packet->p_payload,
                                          p_rx_packet->length);

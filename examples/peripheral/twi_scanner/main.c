@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -60,7 +60,11 @@
 #include "nrf_log_default_backends.h"
 
 /* TWI instance ID. */
+#if TWI0_ENABLED
 #define TWI_INSTANCE_ID     0
+#elif TWI1_ENABLED
+#define TWI_INSTANCE_ID     1
+#endif
 
  /* Number of possible TWI addresses. */
  #define TWI_ADDRESSES      127
@@ -79,7 +83,7 @@ void twi_init (void)
     const nrf_drv_twi_config_t twi_config = {
        .scl                = ARDUINO_SCL_PIN,
        .sda                = ARDUINO_SDA_PIN,
-       .frequency          = NRF_TWI_FREQ_100K,
+       .frequency          = NRF_DRV_TWI_FREQ_100K,
        .interrupt_priority = APP_IRQ_PRIORITY_HIGH,
        .clear_bus_init     = false
     };
@@ -104,7 +108,7 @@ int main(void)
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("TWI scanner.");
+    NRF_LOG_INFO("TWI scanner started.");
     NRF_LOG_FLUSH();
     twi_init();
 

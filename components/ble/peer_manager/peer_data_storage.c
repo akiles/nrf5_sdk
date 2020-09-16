@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -72,9 +72,8 @@ static pm_evt_handler_internal_t const m_evt_handlers[] =
     pdb_pds_evt_handler,
 };
 
-static bool m_module_initialized  = false;
-static bool m_peer_delete_queued  = false;
-static bool m_peer_delete_ongoing = false;
+static bool          m_module_initialized   = false;
+static volatile bool m_peer_delete_deferred = false;
 
 // A token used for Flash Data Storage searches.
 static fds_find_token_t m_fds_ftok;
@@ -172,13 +171,15 @@ static void send_unexpected_error(pm_peer_id_t peer_id, ret_code_t err_code)
 
 // Function for deleting all data beloning to a peer.
 // These operations will be sent to FDS one at a time.
-static void peer_data_delete()
+static void peer_data_delete_process()
 {
     ret_code_t        ret;
     pm_peer_id_t      peer_id;
     uint16_t          file_id;
     fds_record_desc_t desc;
     fds_find_token_t  ftok;
+
+    m_peer_delete_deferred = false;
 
     memset(&ftok, 0x00, sizeof(fds_find_token_t));
     peer_id = peer_id_get_next_deleted(PM_PEER_ID_INVALID);
@@ -191,21 +192,17 @@ static void peer_data_delete()
         peer_id = peer_id_get_next_deleted(peer_id);
     }
 
-    if (!m_peer_delete_ongoing && (peer_id != PM_PEER_ID_INVALID))
+    if (peer_id != PM_PEER_ID_INVALID)
     {
-        m_peer_delete_ongoing = true;
-
         file_id = peer_id_to_file_id(peer_id);
         ret     = fds_file_delete(file_id);
 
         if (ret == FDS_ERR_NO_SPACE_IN_QUEUES)
         {
-            m_peer_delete_queued = true;
+            m_peer_delete_deferred = true;
         }
-        else if (ret != NRF_SUCCESS)
+        else if (ret != FDS_SUCCESS)
         {
-            m_peer_delete_ongoing = false;
-
             send_unexpected_error(peer_id, ret);
         }
     }
@@ -315,10 +312,7 @@ static void fds_evt_handler(fds_evt_t const * const p_fds_evt)
                     pds_evt.evt_id = PM_EVT_PEER_DELETE_FAILED;
                 }
 
-                m_peer_delete_queued  = false;
-                m_peer_delete_ongoing = false;
-
-                peer_data_delete();
+                m_peer_delete_deferred = true; // Trigger remaining deletes.
 
                 pds_evt_send(&pds_evt);
             }
@@ -336,10 +330,9 @@ static void fds_evt_handler(fds_evt_t const * const p_fds_evt)
             break;
     }
 
-    if (m_peer_delete_queued)
+    if (m_peer_delete_deferred)
     {
-        m_peer_delete_queued  = false;
-        peer_data_delete();
+        peer_data_delete_process();
     }
 }
 
@@ -650,7 +643,7 @@ ret_code_t pds_peer_id_free(pm_peer_id_t peer_id)
     VERIFY_PEER_ID_IN_RANGE(peer_id);
 
     (void)peer_id_delete(peer_id);
-    peer_data_delete();
+    peer_data_delete_process();
 
     return NRF_SUCCESS;
 }

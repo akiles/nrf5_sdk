@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -39,9 +39,9 @@
  */
 /**@file
  *
- * @defgroup sdk_bootloader_info Information
+ * @defgroup nrf_bootloader_info Bootloader Information
  * @{
- * @ingroup sdk_bootloader
+ * @ingroup nrf_bootloader
  */
 
 #ifndef NRF_BOOTLOADER_INFO_H__
@@ -51,53 +51,37 @@
 extern "C" {
 #endif
 
+#include "app_util.h"
 #include "nrf.h"
 #include "nrf_mbr.h"
 
-#if defined(SOFTDEVICE_PRESENT)
-#include "nrf_sdm.h"
-#else
-#include "nrf_mbr.h"
-#endif
-
-/** @brief External definitions of symbols for the start of the application image.
- */
-#if (__LINT__ == 1)
-    // No implementation
-#elif defined ( __CC_ARM )
-    extern uint32_t* Image$$ER_IROM1$$Base   __attribute__((used));
-#elif defined (__SES_ARM) && defined (__GNUC__)
-    extern uint32_t * _vectors;
-#elif defined ( __GNUC__ )
-    extern uint32_t * __isr_vector;
-#elif defined ( __ICCARM__ )
-    extern void * __vector_table;
-#else
-    #error Not a valid compiler/linker for application image symbols.
-#endif
-
-
-/** @brief Macro for getting the start address of the application image.
+/** @brief Macro for getting the start address of the bootloader image.
  *
- * This macro is valid only when absolute placement is used for the application
- * image. The macro is not a compile time symbol. It cannot be used as a
+ * The macro is not a compile time symbol. It cannot be used as a
  * constant expression, for example, inside a static assert or linker script
  * at-placement.
  */
+#ifndef BOOTLOADER_START_ADDR
 #if (__LINT__ == 1)
-    #define BOOTLOADER_START_ADDR        (0x3AC00)
-#elif BOOTLOADER_START_ADDR
-    // Bootloader start address is defined at project level
-#elif defined (__CC_ARM)
-    #define BOOTLOADER_START_ADDR        (uint32_t)&Image$$ER_IROM1$$Base
-#elif defined (__SES_ARM) && defined (__GNUC__)
-    #define BOOTLOADER_START_ADDR        (uint32_t)&_vectors
-#elif defined (__GNUC__)
-    #define BOOTLOADER_START_ADDR        (uint32_t)&__isr_vector
-#elif defined (__ICCARM__)
-    #define BOOTLOADER_START_ADDR        (uint32_t)&__vector_table
+    #define BOOTLOADER_START_ADDR (0x3AC00)
+#elif defined(CODE_START)
+    #define BOOTLOADER_START_ADDR (CODE_START)
 #else
     #error Not a valid compiler/linker for BOOTLOADER_START_ADDR.
+#endif
+#endif
+
+
+/** @brief Macro for getting the size of the bootloader image.
+ */
+#ifndef BOOTLOADER_SIZE
+#if defined ( NRF51 )
+    #define BOOTLOADER_SIZE (BOOTLOADER_SETTINGS_ADDRESS - BOOTLOADER_START_ADDR)
+#elif defined( NRF52_SERIES )
+    #define BOOTLOADER_SIZE (NRF_MBR_PARAMS_PAGE_ADDRESS - BOOTLOADER_START_ADDR)
+#elif (__LINT__ == 1)
+    #define BOOTLOADER_SIZE        (0x6000)
+#endif
 #endif
 
 
@@ -111,21 +95,89 @@ extern "C" {
 #define NRF_UICR_BOOTLOADER_START_ADDRESS       (NRF_UICR_BASE + 0x14)
 
 
-#ifndef MAIN_APPLICATION_START_ADDR
+// The following macros are for accessing the SoftDevice information structure,
+// which is found inside the SoftDevice binary.
 
-
-#if defined(SOFTDEVICE_PRESENT)
-
-/** @brief  Main application start address (if the project uses a SoftDevice).
- *
- * @note   The start address is equal to the end address of the SoftDevice.
+/** @brief Macro for converting an offset inside the SoftDevice information struct to an absolute address.
  */
-#define MAIN_APPLICATION_START_ADDR             (SD_SIZE_GET(MBR_SIZE))
+#define SD_INFO_ABS_OFFSET_GET(baseaddr, offset) ((baseaddr) + (SOFTDEVICE_INFO_STRUCT_OFFSET) + (offset))
 
+/** @brief Macros for reading a byte or a word at a particular offset inside a SoftDevice information struct.
+ *         Use MBR_SIZE as baseaddr when the SoftDevice is installed just above the MBR (the usual case).
+ */
+#define SD_OFFSET_GET_UINT32(baseaddr, offset) (*((uint32_t *) SD_INFO_ABS_OFFSET_GET(baseaddr, offset)))
+#define SD_OFFSET_GET_UINT16(baseaddr, offset) (*((uint16_t *) SD_INFO_ABS_OFFSET_GET(baseaddr, offset)))
+#define SD_OFFSET_GET_UINT8(baseaddr, offset)  (*((uint8_t *)  SD_INFO_ABS_OFFSET_GET(baseaddr, offset)))
+
+
+#ifdef BLE_STACK_SUPPORT_REQD
+#include "nrf_sdm.h"
 #else
-#define MAIN_APPLICATION_START_ADDR             MBR_SIZE
-#endif // #ifdef SOFTDEVICE_PRESENT
-#endif // #ifndef MAIN_APPLICATION_START_ADDR
+/** @brief The offset inside the SoftDevice at which the information struct is placed.
+ *         To see the layout of the information struct, see the SoftDevice specification.
+ */
+#define SOFTDEVICE_INFO_STRUCT_OFFSET (0x2000)
+
+#define SD_INFO_STRUCT_SIZE(baseaddr) SD_OFFSET_GET_UINT8(baseaddr,  0x00)
+
+/** @brief Macro for reading the size of a SoftDevice at a given base address.
+ */
+#ifndef SD_SIZE_GET
+#define SD_SIZE_GET(baseaddr)         SD_OFFSET_GET_UINT32(baseaddr, 0x08)
+#endif
+
+/** @brief Macro for reading the version of a SoftDevice at a given base address.
+ *         This expression checks the length of the information struct to see if the version is present.
+ *         The version number is constructed like this:
+ *             major_version * 1000000 + minor_version * 1000 + bugfix_version
+ */
+#ifndef SD_VERSION_GET
+#define SD_VERSION_GET(baseaddr)    ((SD_INFO_STRUCT_SIZE(baseaddr) > (0x14)) \
+                                    ? SD_OFFSET_GET_UINT32(baseaddr, 0x14)    \
+                                    : 0)
+#endif
+#endif
+
+
+/** @brief Macro for reading the magic number of a SoftDevice at a given base address.
+ */
+#ifndef SD_MAGIC_NUMBER_GET
+#define SD_MAGIC_NUMBER_GET(baseaddr) SD_OFFSET_GET_UINT32(baseaddr, 0x04)
+#endif
+
+/** @brief Macro for getting the absolute address of the magic number.
+ */
+#define SD_MAGIC_NUMBER_ABS_OFFSET_GET(baseaddr) SD_INFO_ABS_OFFSET_GET(baseaddr, 0x04)
+
+/** @brief The number present at a specific location in all SoftDevices.
+ */
+#define SD_MAGIC_NUMBER ((uint32_t)0x51B1E5DB)
+
+/** @brief Whether a SoftDevice is at its regular location.
+ */
+#ifndef SD_PRESENT
+#define SD_PRESENT ((SD_MAGIC_NUMBER_GET(MBR_SIZE)) == (SD_MAGIC_NUMBER))
+#endif
+
+/** @brief The multiplier for the major version of the SoftDevice. See \ref SD_VERSION_GET
+ */
+#define SD_MAJOR_VERSION_MULTIPLIER (1000000)
+
+/** @brief Read the major version of the SoftDevice from the raw version number. See \ref SD_VERSION_GET.
+ */
+#define SD_MAJOR_VERSION_EXTRACT(raw_version) ((raw_version)/SD_MAJOR_VERSION_MULTIPLIER)
+
+
+#define BOOTLOADER_DFU_GPREGRET_MASK            (0xB0)      /**< Magic pattern written to GPREGRET register to signal between main app and DFU. The 3 lower bits are assumed to be used for signalling purposes.*/
+#define BOOTLOADER_DFU_START_BIT_MASK           (0x01)      /**< Bit mask to signal from main application to enter DFU mode using a buttonless service. */
+
+#define BOOTLOADER_DFU_GPREGRET2_MASK           (0xA8)      /**< Magic pattern written to GPREGRET2 register to signal between main app and DFU. The 3 lower bits are assumed to be used for signalling purposes.*/
+#define BOOTLOADER_DFU_SKIP_CRC_BIT_MASK        (0x01)      /**< Bit mask to signal from main application that CRC-check is not needed for image verification. */
+
+
+#define BOOTLOADER_DFU_START    (BOOTLOADER_DFU_GPREGRET_MASK | BOOTLOADER_DFU_START_BIT_MASK)      /**< Magic number to signal that bootloader should enter DFU mode because of signal from Buttonless DFU in main app.*/
+#define BOOTLOADER_DFU_SKIP_CRC (BOOTLOADER_DFU_GPREGRET2_MASK | BOOTLOADER_DFU_SKIP_CRC_BIT_MASK)  /**< Magic number to signal that CRC can be skipped due to low power modes.*/
+
 
 
 #ifdef __cplusplus

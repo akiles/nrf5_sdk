@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -43,6 +43,7 @@
 #include "nrf_error.h"
 #include "nrf_sdm.h"
 #include "ser_conn_dtm_cmd_decoder.h"
+#include "ser_conn_handlers.h"
 #include "ser_hal_transport.h"
 
 static bool                          m_is_ready_to_enter_dtm = false;
@@ -61,6 +62,10 @@ uint32_t ser_conn_dtm_command_process(uint8_t * p_command, uint16_t command_len)
     do
     {
         err_code = ser_hal_transport_tx_pkt_alloc(&p_tx_buf, (uint16_t *)&tx_buf_len);
+        if (err_code == NRF_ERROR_NO_MEM)
+        {
+            ser_conn_on_no_mem_handler();
+        }
     }
     while (NRF_ERROR_NO_MEM == err_code);
 

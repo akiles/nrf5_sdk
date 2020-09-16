@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -70,7 +70,9 @@ do                                                                              
 // Peer Database event handlers in other Peer Manager submodules.
 extern void pm_pdb_evt_handler(pm_evt_t * p_event);
 extern void sm_pdb_evt_handler(pm_evt_t * p_event);
+#if !defined(PM_SERVICE_CHANGED_ENABLED) || (PM_SERVICE_CHANGED_ENABLED == 1)
 extern void gscm_pdb_evt_handler(pm_evt_t * p_event);
+#endif
 extern void gcm_pdb_evt_handler(pm_evt_t * p_event);
 
 // Peer Database events' handlers.
@@ -79,7 +81,9 @@ static pm_evt_handler_internal_t const m_evt_handlers[] =
 {
     pm_pdb_evt_handler,
     sm_pdb_evt_handler,
+#if !defined(PM_SERVICE_CHANGED_ENABLED) || (PM_SERVICE_CHANGED_ENABLED == 1)
     gscm_pdb_evt_handler,
+#endif
     gcm_pdb_evt_handler,
 };
 
@@ -101,9 +105,9 @@ typedef struct
 
 
 static bool                m_module_initialized;
-static pm_buffer_t         m_write_buffer;                                 /**< The state of the write buffer. */
+static pm_buffer_t         m_write_buffer;                                 /**< The internal states of the write buffer. */
 static pdb_buffer_record_t m_write_buffer_records[PM_FLASH_BUFFERS];       /**< The available write buffer records. */
-static uint32_t            m_n_pending_writes;                             /**< The number of pending (Not yet successfully requested in Peer Data Storage) store operations. */
+static bool                m_pending_store = false;                        /**< Whether there are any pending (Not yet successfully requested in Peer Data Storage) store operations. This flag is for convenience only. The real bookkeeping is in the records (@ref m_write_buffer_records). */
 
 
 
@@ -347,10 +351,6 @@ ret_code_t write_buf_store(pdb_buffer_record_t * p_write_buffer_record)
                                    p_write_buffer_record->prepare_token,
                                    &p_write_buffer_record->store_token);
 
-    if (p_write_buffer_record->store_busy && p_write_buffer_record->store_flash_full)
-    {
-        m_n_pending_writes--;
-    }
 
     switch (err_code)
     {
@@ -360,19 +360,17 @@ ret_code_t write_buf_store(pdb_buffer_record_t * p_write_buffer_record)
             break;
 
         case NRF_ERROR_BUSY:
-            m_n_pending_writes++;
-
             p_write_buffer_record->store_busy       = true;
             p_write_buffer_record->store_flash_full = false;
+            m_pending_store                         = true;
 
             err_code = NRF_SUCCESS;
             break;
 
         case NRF_ERROR_STORAGE_FULL:
-            m_n_pending_writes++;
-
             p_write_buffer_record->store_busy       = false;
             p_write_buffer_record->store_flash_full = true;
+            m_pending_store                         = true;
             break;
 
         case NRF_ERROR_INVALID_PARAM:
@@ -432,9 +430,9 @@ static bool write_buf_store_in_event(pdb_buffer_record_t * p_write_buffer_record
  */
 static void reattempt_previous_operations(bool retry_flash_full)
 {
-    // Reattempt previously rejected store operations.
+    bool found_pending_operation = false;
 
-    if (m_n_pending_writes == 0)
+    if (!m_pending_store)
     {
         return;
     }
@@ -444,13 +442,22 @@ static void reattempt_previous_operations(bool retry_flash_full)
         if  ((m_write_buffer_records[i].store_busy)
           || (m_write_buffer_records[i].store_flash_full && retry_flash_full))
         {
+            found_pending_operation = true;
+
             bool success = write_buf_store_in_event(&m_write_buffer_records[i]);
 
             if (!success)
             {
-                break;
+                return;
             }
         }
+    }
+
+    if (!found_pending_operation)
+    {
+        // All records have been searched and none were pending.
+        // Clear flag so records aren't searched.
+        m_pending_store = false;
     }
 }
 
@@ -484,9 +491,9 @@ void pdb_pds_evt_handler(pm_evt_t * p_event)
                 && (p_write_buffer_record != NULL))
             {
                 // The write came from PDB, retry.
-                m_n_pending_writes++;
                 p_write_buffer_record->store_token = PM_STORE_TOKEN_INVALID;
                 p_write_buffer_record->store_busy  = true;
+                m_pending_store                    = true;
                 evt_send                           = false;
             }
             break;
@@ -616,39 +623,10 @@ ret_code_t pdb_write_buf_get(pm_peer_id_t      peer_id,
     pdb_buffer_record_t * p_write_buffer_record;
     uint8_t             * p_buffer_memory;
     bool                  new_record = false;
-    bool                  find_new_buffer = false;
 
     p_write_buffer_record = write_buffer_record_find(peer_id, data_id);
 
     if (p_write_buffer_record == NULL)
-    {
-        find_new_buffer = true;
-    }
-    else if (p_write_buffer_record->n_bufs < n_bufs)
-    {
-        // @TODO: Copy?
-        // Existing buffer is too small.
-        for (uint8_t i = 0; i < p_write_buffer_record->n_bufs; i++)
-        {
-            pm_buffer_release(&m_write_buffer, p_write_buffer_record->buffer_block_id + i);
-        }
-        write_buffer_record_invalidate(p_write_buffer_record);
-        find_new_buffer = true;
-    }
-    else if (p_write_buffer_record->n_bufs > n_bufs)
-    {
-        // Release excess blocks.
-        for (uint8_t i = n_bufs; i < p_write_buffer_record->n_bufs; i++)
-        {
-            pm_buffer_release(&m_write_buffer, p_write_buffer_record->buffer_block_id + i);
-        }
-    }
-    else
-    {
-        // Do nothing.
-    }
-
-    if (find_new_buffer)
     {
         // No buffer exists.
         write_buffer_record_acquire(&p_write_buffer_record, peer_id, data_id);
@@ -656,6 +634,11 @@ ret_code_t pdb_write_buf_get(pm_peer_id_t      peer_id,
         {
             return NRF_ERROR_BUSY;
         }
+    }
+    else if (p_write_buffer_record->n_bufs != n_bufs)
+    {
+        // Buffer exists with a different n_bufs from what was requested.
+        return NRF_ERROR_FORBIDDEN;
     }
 
     if (p_write_buffer_record->buffer_block_id == PM_BUFFER_INVALID_ID)

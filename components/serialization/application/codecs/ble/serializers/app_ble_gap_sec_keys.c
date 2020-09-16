@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -38,9 +38,25 @@
  * 
  */
 #include "app_ble_gap_sec_keys.h"
+#include "ser_config.h"
 #include "nrf_error.h"
+#include "nordic_common.h"
 #include <stddef.h>
+#include <stdbool.h>
+#include <string.h>
 
+#if NRF_SD_BLE_API_VERSION >= 6
+typedef struct {
+    bool    active;
+    uint8_t adv_handle;
+    uint8_t * p_adv_data;
+    uint8_t * p_scan_rsp_data;
+} adv_set_t;
+
+static adv_set_t m_adv_sets[4]; //todo configurable number of adv sets.
+
+static ble_data_t m_scan_data = {0};
+#endif
 ser_ble_gap_app_keyset_t m_app_keys_table[SER_MAX_CONNECTIONS];
 
 uint32_t app_ble_gap_sec_context_create(uint16_t conn_handle, uint32_t *p_index)
@@ -98,3 +114,69 @@ uint32_t app_ble_gap_sec_context_find(uint16_t conn_handle, uint32_t *p_index)
 
   return err_code;
 }
+#if NRF_SD_BLE_API_VERSION >= 6
+uint32_t app_ble_gap_scan_data_set(ble_data_t const * p_data)
+{
+    if (m_scan_data.p_data)
+    {
+        return NRF_ERROR_BUSY;
+    }
+    else
+    {
+        memcpy(&m_scan_data, p_data, sizeof(ble_data_t));
+        return NRF_SUCCESS;
+    }
+}
+
+
+uint32_t app_ble_gap_scan_data_fetch_clear(ble_data_t * p_data)
+{
+    memcpy(p_data, &m_scan_data, sizeof(ble_data_t));
+    if (m_scan_data.p_data)
+    {
+        m_scan_data.p_data = NULL;
+        return NRF_SUCCESS;
+    }
+    else
+    {
+        return NRF_ERROR_NOT_FOUND;
+    }
+}
+
+uint32_t app_ble_gap_adv_set_register(uint8_t adv_handle, uint8_t * p_adv_data, uint8_t * p_scan_rsp_data)
+{
+    uint32_t err_code = NRF_ERROR_NO_MEM;
+    uint32_t i;
+    for (i = 0; i < ARRAY_SIZE(m_adv_sets); i++)
+    {
+        if (m_adv_sets[i].active == false)
+        {
+            m_adv_sets[i].active = true;
+            m_adv_sets[i].adv_handle = adv_handle;
+            m_adv_sets[i].p_adv_data = p_adv_data;
+            m_adv_sets[i].p_scan_rsp_data = p_scan_rsp_data;
+            err_code = NRF_SUCCESS;
+            break;
+        }
+    }
+    return err_code;
+}
+
+uint32_t app_ble_gap_adv_set_unregister(uint8_t adv_handle, uint8_t * * pp_adv_data, uint8_t **pp_scan_rsp_data)
+{
+    uint32_t err_code = NRF_ERROR_NOT_FOUND;
+    uint32_t i;
+    for (i = 0; i < ARRAY_SIZE(m_adv_sets); i++)
+    {
+        if ((m_adv_sets[i].active == true) && (m_adv_sets[i].adv_handle == adv_handle))
+        {
+            m_adv_sets[i].active = false;
+            *pp_adv_data = m_adv_sets[i].p_adv_data;
+            *pp_scan_rsp_data = m_adv_sets[i].p_scan_rsp_data;
+            err_code = NRF_SUCCESS;
+            break;
+        }
+    }
+    return err_code;
+}
+#endif

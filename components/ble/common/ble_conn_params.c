@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -52,9 +52,9 @@
 #include "app_util.h"
 
 
-#define NRF_BLE_CONN_PARAMS_N_INSTANCES     NRF_SDH_BLE_PERIPHERAL_LINK_COUNT   //!< The number of @ref ble_conn_params_instance_t instances kept by the conn_params module.
+#define NRF_BLE_CONN_PARAMS_INSTANCE_COUNT  NRF_SDH_BLE_PERIPHERAL_LINK_COUNT   //!< The number of @ref ble_conn_params_instance_t instances kept by the conn_params module.
 
-#if (NRF_BLE_CONN_PARAMS_N_INSTANCES < 1)
+#if (NRF_BLE_CONN_PARAMS_INSTANCE_COUNT < 1)
 #error Invalid NRF_SDH_BLE_PERIPHERAL_LINK_COUNT value. Set it in SDK config (nrf_sdh_ble).
 #endif
 
@@ -69,10 +69,10 @@ typedef struct
     ble_gap_conn_params_t preferred_conn_params; //!< The desired connection parameters for this link.
 } ble_conn_params_instance_t;
 
-static app_timer_t                m_timer_data[NRF_BLE_CONN_PARAMS_N_INSTANCES] = {{{0}}};          //!< Data needed for timers.
-static ble_conn_params_instance_t m_conn_params_instances[NRF_BLE_CONN_PARAMS_N_INSTANCES] = {{0}}; //!< Configuration data for each connection.
-static ble_conn_params_init_t     m_conn_params_config;                                             //!< Configuration as provided by the application during intialization.
-static ble_gap_conn_params_t      m_preferred_conn_params;                                          //!< The preferred connection parameters as specified during initialization.
+static app_timer_t                m_timer_data[NRF_BLE_CONN_PARAMS_INSTANCE_COUNT] = {{{0}}};          //!< Data needed for timers.
+static ble_conn_params_instance_t m_conn_params_instances[NRF_BLE_CONN_PARAMS_INSTANCE_COUNT] = {{0}}; //!< Configuration data for each connection.
+static ble_conn_params_init_t     m_conn_params_config;                                                //!< Configuration as provided by the application during intialization.
+static ble_gap_conn_params_t      m_preferred_conn_params;                                             //!< The preferred connection parameters as specified during initialization.
 //lint -esym(551, m_preferred_conn_params) "Not accessed"
 
 
@@ -84,8 +84,8 @@ static ble_gap_conn_params_t      m_preferred_conn_params;                      
  */
 static ble_conn_params_instance_t * instance_get(uint16_t conn_handle)
 {
-    //lint -save -e681 "Loop not entered" when NRF_BLE_CONN_PARAMS_N_INSTANCES is 0
-    for (uint32_t i = 0; i < NRF_BLE_CONN_PARAMS_N_INSTANCES; i++)
+    //lint -save -e681 "Loop not entered" when NRF_BLE_CONN_PARAMS_INSTANCE_COUNT is 0
+    for (uint32_t i = 0; i < NRF_BLE_CONN_PARAMS_INSTANCE_COUNT; i++)
     {
         if (m_conn_params_instances[i].conn_handle == conn_handle)
         {
@@ -279,8 +279,8 @@ ret_code_t ble_conn_params_init(const ble_conn_params_init_t * p_init)
         }
     }
 
-    //lint -save -e681 "Loop not entered" when NRF_BLE_CONN_PARAMS_N_INSTANCES is 0
-    for (uint32_t i = 0; i < NRF_BLE_CONN_PARAMS_N_INSTANCES; i++)
+    //lint -save -e681 "Loop not entered" when NRF_BLE_CONN_PARAMS_INSTANCE_COUNT is 0
+    for (uint32_t i = 0; i < NRF_BLE_CONN_PARAMS_INSTANCE_COUNT; i++)
     {
         ble_conn_params_instance_t * p_instance = &m_conn_params_instances[i];
 
@@ -305,8 +305,8 @@ ret_code_t ble_conn_params_stop(void)
 {
     ret_code_t err_code;
 
-    //lint -save -e681 "Loop not entered" when NRF_BLE_CONN_PARAMS_N_INSTANCES is 0
-    for (uint32_t i = 0; i < NRF_BLE_CONN_PARAMS_N_INSTANCES; i++)
+    //lint -save -e681 "Loop not entered" when NRF_BLE_CONN_PARAMS_INSTANCE_COUNT is 0
+    for (uint32_t i = 0; i < NRF_BLE_CONN_PARAMS_INSTANCE_COUNT; i++)
         {
         err_code = app_timer_stop(m_conn_params_instances[i].timer_id);
         switch (err_code)

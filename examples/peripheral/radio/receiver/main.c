@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -148,7 +148,7 @@ int main(void)
     APP_ERROR_CHECK(err_code);
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    err_code = bsp_init(BSP_INIT_LED, NULL);
+    err_code = bsp_init(BSP_INIT_LEDS, NULL);
     APP_ERROR_CHECK(err_code);
 
     // Set radio configuration parameters
@@ -156,6 +156,7 @@ int main(void)
     NRF_RADIO->PACKETPTR = (uint32_t)&packet;
 
     err_code = bsp_indication_set(BSP_INDICATE_USER_STATE_OFF);
+    NRF_LOG_INFO("Radio receiver example started.");
     NRF_LOG_INFO("Wait for first packet");
     APP_ERROR_CHECK(err_code);
     NRF_LOG_FLUSH();

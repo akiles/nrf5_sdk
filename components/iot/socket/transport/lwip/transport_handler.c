@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -165,6 +165,10 @@ static void lwip_error_handler(void * p_arg, err_t err)
 {
     (void) p_arg;
     SOCKET_TRACE("Error occured: %d\r\n", (int)err);
+    if(err == ERR_ABRT)
+    {
+        portdb_reset();
+    }
 }
 
 static err_t lwip_poll_handler(void * p_arg, struct tcp_pcb * p_pcb)

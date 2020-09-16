@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -53,10 +53,10 @@
 #include "nrf_sdh.h"
 #include "nrf_sdh_ble.h"
 #include "nrf_sdh_soc.h"
-#include "nrf_pwr_mgmt.h"
 #include "ble_advdata.h"
 #include "ble_nus_c.h"
 #include "nrf_ble_gatt.h"
+#include "nrf_pwr_mgmt.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -73,16 +73,12 @@
 
 #define SCAN_INTERVAL           0x00A0                                  /**< Determines scan interval in units of 0.625 millisecond. */
 #define SCAN_WINDOW             0x0050                                  /**< Determines scan window in units of 0.625 millisecond. */
-#define SCAN_TIMEOUT            0x0000                                  /**< Timout when scanning. 0x0000 disables timeout. */
+#define SCAN_DURATION           0x0000                                  /**< Timout when scanning. 0x0000 disables timeout. */
 
 #define MIN_CONNECTION_INTERVAL MSEC_TO_UNITS(20, UNIT_1_25_MS)         /**< Determines minimum connection interval in millisecond. */
 #define MAX_CONNECTION_INTERVAL MSEC_TO_UNITS(75, UNIT_1_25_MS)         /**< Determines maximum connection interval in millisecond. */
 #define SLAVE_LATENCY           0                                       /**< Determines slave latency in counts of connection events. */
 #define SUPERVISION_TIMEOUT     MSEC_TO_UNITS(4000, UNIT_10_MS)         /**< Determines supervision time-out in units of 10 millisecond. */
-
-#define UUID16_SIZE             2                                       /**< Size of 16 bit UUID */
-#define UUID32_SIZE             4                                       /**< Size of 32 bit UUID */
-#define UUID128_SIZE            16                                      /**< Size of 128 bit UUID */
 
 #define ECHOBACK_BLE_UART_DATA  1                                       /**< Echo the UART data that is received over the Nordic UART Service back to the sender. */
 
@@ -102,20 +98,24 @@ static ble_gap_conn_params_t const m_connection_param =
     (uint16_t)SUPERVISION_TIMEOUT       // Supervision time-out
 };
 
+static uint8_t m_scan_buffer_data[BLE_GAP_SCAN_BUFFER_MIN]; /**< buffer where advertising reports will be stored by the SoftDevice. */
+
+/**@brief Pointer to the buffer where advertising reports will be stored by the SoftDevice. */
+static ble_data_t m_scan_buffer =
+{
+    m_scan_buffer_data,
+    BLE_GAP_SCAN_BUFFER_MIN
+};
+
 /** @brief Parameters used when scanning. */
 static ble_gap_scan_params_t const m_scan_params =
 {
     .active   = 1,
     .interval = SCAN_INTERVAL,
     .window   = SCAN_WINDOW,
-    .timeout  = SCAN_TIMEOUT,
-    #if (NRF_SD_BLE_API_VERSION <= 2)
-        .selective   = 0,
-        .p_whitelist = NULL,
-    #endif
-    #if (NRF_SD_BLE_API_VERSION >= 3)
-        .use_whitelist = 0,
-    #endif
+    .timeout          = SCAN_DURATION,
+    .scan_phys        = BLE_GAP_PHY_1MBPS,
+    .filter_policy    = BLE_GAP_SCAN_FP_ACCEPT_ALL,
 };
 
 /**@brief NUS uuid. */
@@ -148,7 +148,7 @@ static void scan_start(void)
 {
     ret_code_t ret;
 
-    ret = sd_ble_gap_scan_start(&m_scan_params);
+    ret = sd_ble_gap_scan_start(&m_scan_params, &m_scan_buffer);
     APP_ERROR_CHECK(ret);
 
     ret = bsp_indication_set(BSP_INDICATE_SCANNING);
@@ -335,84 +335,42 @@ static bool shutdown_handler(nrf_pwr_mgmt_evt_t event)
 
 NRF_PWR_MGMT_HANDLER_REGISTER(shutdown_handler, APP_SHUTDOWN_HANDLER_PRIORITY);
 
-/**@brief Reads an advertising report and checks if a UUID is present in the service list.
+
+/**@brief Function for handling the advertising report BLE event.
  *
- * @details The function is able to search for 16-bit, 32-bit and 128-bit service UUIDs.
- *          To see the format of a advertisement packet, see
- *          https://www.bluetooth.org/Technical/AssignedNumbers/generic_access_profile.htm
- *
- * @param[in]   p_target_uuid The UUID to search for.
- * @param[in]   p_adv_report  Pointer to the advertisement report.
- *
- * @retval      true if the UUID is present in the advertisement report. Otherwise false
+ * @param[in] p_adv_report  Advertising report from the SoftDevice.
  */
-static bool is_uuid_present(ble_uuid_t               const * p_target_uuid,
-                            ble_gap_evt_adv_report_t const * p_adv_report)
+static void on_adv_report(ble_gap_evt_adv_report_t const * p_adv_report)
 {
-    ret_code_t   err_code;
-    ble_uuid_t   extracted_uuid;
-    uint16_t     index  = 0;
-    uint8_t    * p_data = (uint8_t *)p_adv_report->data;
+    ret_code_t err_code;
 
-    while (index < p_adv_report->dlen)
+    if (ble_advdata_uuid_find(p_adv_report->data.p_data, p_adv_report->data.len, &m_nus_uuid))
     {
-        uint8_t field_length = p_data[index];
-        uint8_t field_type   = p_data[index + 1];
+        err_code = sd_ble_gap_connect(&p_adv_report->peer_addr,
+                                      &m_scan_params,
+                                      &m_connection_param,
+                                      APP_BLE_CONN_CFG_TAG);
 
-        if (   (field_type == BLE_GAP_AD_TYPE_16BIT_SERVICE_UUID_MORE_AVAILABLE)
-            || (field_type == BLE_GAP_AD_TYPE_16BIT_SERVICE_UUID_COMPLETE))
+        if (err_code == NRF_SUCCESS)
         {
-            for (uint32_t i = 0; i < (field_length / UUID16_SIZE); i++)
-            {
-                err_code = sd_ble_uuid_decode(UUID16_SIZE,
-                                              &p_data[i * UUID16_SIZE + index + 2],
-                                              &extracted_uuid);
-
-                if (err_code == NRF_SUCCESS)
-                {
-                    if (extracted_uuid.uuid == p_target_uuid->uuid)
-                    {
-                        return true;
-                    }
-                }
-            }
+            // scan is automatically stopped by the connect
+            err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+            APP_ERROR_CHECK(err_code);
+            NRF_LOG_INFO("Connecting to target %02x%02x%02x%02x%02x%02x",
+                     p_adv_report->peer_addr.addr[0],
+                     p_adv_report->peer_addr.addr[1],
+                     p_adv_report->peer_addr.addr[2],
+                     p_adv_report->peer_addr.addr[3],
+                     p_adv_report->peer_addr.addr[4],
+                     p_adv_report->peer_addr.addr[5]
+                     );
         }
-        else if (   (field_type == BLE_GAP_AD_TYPE_32BIT_SERVICE_UUID_MORE_AVAILABLE)
-                 || (field_type == BLE_GAP_AD_TYPE_32BIT_SERVICE_UUID_COMPLETE))
-        {
-            for (uint32_t i = 0; i < (field_length / UUID32_SIZE); i++)
-            {
-                err_code = sd_ble_uuid_decode(UUID32_SIZE,
-                                              &p_data[i * UUID32_SIZE + index + 2],
-                                              &extracted_uuid);
-
-                if (err_code == NRF_SUCCESS)
-                {
-                    if (   (extracted_uuid.uuid == p_target_uuid->uuid)
-                        && (extracted_uuid.type == p_target_uuid->type))
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        else if (   (field_type == BLE_GAP_AD_TYPE_128BIT_SERVICE_UUID_MORE_AVAILABLE)
-                 || (field_type == BLE_GAP_AD_TYPE_128BIT_SERVICE_UUID_COMPLETE))
-        {
-            err_code = sd_ble_uuid_decode(UUID128_SIZE, &p_data[index + 2], &extracted_uuid);
-            if (err_code == NRF_SUCCESS)
-            {
-                if (   (extracted_uuid.uuid == p_target_uuid->uuid)
-                    && (extracted_uuid.type == p_target_uuid->type))
-                {
-                    return true;
-                }
-            }
-        }
-        index += field_length + 1;
     }
-    return false;
+    else
+    {
+        err_code = sd_ble_gap_scan_start(NULL, &m_scan_buffer);
+        APP_ERROR_CHECK(err_code);
+    }
 }
 
 
@@ -429,33 +387,8 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_ADV_REPORT:
-        {
-            ble_gap_evt_adv_report_t const * p_adv_report = &p_gap_evt->params.adv_report;
-
-            if (is_uuid_present(&m_nus_uuid, p_adv_report))
-            {
-
-                err_code = sd_ble_gap_connect(&p_adv_report->peer_addr,
-                                              &m_scan_params,
-                                              &m_connection_param,
-                                              APP_BLE_CONN_CFG_TAG);
-
-                if (err_code == NRF_SUCCESS)
-                {
-                    // scan is automatically stopped by the connect
-                    err_code = bsp_indication_set(BSP_INDICATE_IDLE);
-                    APP_ERROR_CHECK(err_code);
-                    NRF_LOG_INFO("Connecting to target %02x%02x%02x%02x%02x%02x",
-                             p_adv_report->peer_addr.addr[0],
-                             p_adv_report->peer_addr.addr[1],
-                             p_adv_report->peer_addr.addr[2],
-                             p_adv_report->peer_addr.addr[3],
-                             p_adv_report->peer_addr.addr[4],
-                             p_adv_report->peer_addr.addr[5]
-                             );
-                }
-            }
-        }break; // BLE_GAP_EVT_ADV_REPORT
+            on_adv_report(&p_gap_evt->params.adv_report);
+            break; // BLE_GAP_EVT_ADV_REPORT
 
         case BLE_GAP_EVT_CONNECTED:
             NRF_LOG_INFO("Connected to target");
@@ -495,7 +428,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
             break;
 
-#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -507,7 +439,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
             APP_ERROR_CHECK(err_code);
         } break;
-#endif
 
         case BLE_GATTC_EVT_TIMEOUT:
             // Disconnect on GATT Client timeout event.
@@ -656,7 +587,7 @@ static void buttons_leds_init(void)
     ret_code_t err_code;
     bsp_event_t startup_event;
 
-    err_code = bsp_init(BSP_INIT_LED, bsp_event_handler);
+    err_code = bsp_init(BSP_INIT_LEDS, bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_btn_ble_init(NULL, &startup_event);
@@ -682,10 +613,12 @@ static void log_init(void)
 }
 
 
-/**@brief Function for initializing the Power manager. */
-static void power_init(void)
+/**@brief Function for initializing power management.
+ */
+static void power_management_init(void)
 {
-    ret_code_t err_code = nrf_pwr_mgmt_init();
+    ret_code_t err_code;
+    err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -698,29 +631,40 @@ static void db_discovery_init(void)
 }
 
 
+/**@brief Function for handling the idle state (main loop).
+ *
+ * @details Handle any pending log operation(s), then sleep until the next event occurs.
+ */
+static void idle_state_handle(void)
+{
+    if (NRF_LOG_PROCESS() == false)
+    {
+        nrf_pwr_mgmt_run();
+    }
+}
+
+
 int main(void)
 {
+    // Initialize.
     log_init();
     timer_init();
-    power_init();
     uart_init();
     buttons_leds_init();
     db_discovery_init();
+    power_management_init();
     ble_stack_init();
     gatt_init();
     nus_c_init();
 
-    // Start scanning for peripherals and initiate connection
-    // with devices that advertise NUS UUID.
+    // Start execution.
     printf("BLE UART central example started.\r\n");
     NRF_LOG_INFO("BLE UART central example started.");
     scan_start();
 
+    // Enter main loop.
     for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            nrf_pwr_mgmt_run();
-        }
+        idle_state_handle();
     }
 }

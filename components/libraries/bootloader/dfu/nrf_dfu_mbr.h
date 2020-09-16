@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -64,62 +64,21 @@ extern "C" {
 uint32_t nrf_dfu_mbr_copy_bl(uint32_t * p_src, uint32_t len);
 
 
-/** @brief Function for copying the SoftDevice using an MBR command.
- *
- * @param[in]   p_dst       Target of the SoftDevice copy.
- * @param[in]   p_src       Source address of the SoftDevice image to copy.
- * @param[in]   len         Length of the data to copy in bytes.
- *
- * @retval NRF_SUCCESS indicates that the contents of the memory blocks where copied correctly.
- * @retval NRF_ERROR_INVALID_LENGTH Invalid len
- * @retval NRF_ERROR_NO_MEM if UICR.NRFFW[1] is not set (i.e. is 0xFFFFFFFF).
- * @retval NRF_ERROR_INVALID_PARAM if an invalid command is given.
- * @retval NRF_ERROR_INTERNAL indicates that the contents of the memory blocks where not verified correctly after copying.
- */
-uint32_t nrf_dfu_mbr_copy_sd(uint32_t * p_dst, uint32_t * p_src, uint32_t len);
-
-
 /** @brief Function for initializing the SoftDevice using an MBR command.
  *
- * @retval  NRF_SUCCESS     If the SoftDevice was copied successfully.
+ * @retval  NRF_SUCCESS     If the SoftDevice was initialized successfully.
  *                          Any other return value indicates that the SoftDevice
- *                          could not be copied.
+ *                          could not be initialized.
  */
 uint32_t nrf_dfu_mbr_init_sd(void);
 
 
-/** @brief Function for comparing source and target using an MBR command.
- *
- * @param[in]   p_ptr1      First pointer to data to compare.
- * @param[in]   p_ptr2      Second pointer to data to compare.
- * @param[in]   len         Length of the data to compare in bytes.
- *
- * @retval NRF_SUCCESS    If the content of both memory blocks is equal.
- * @retval NRF_ERROR_NULL If the content of the memory blocks differs.
- */
-uint32_t nrf_dfu_mbr_compare(uint32_t * p_ptr1, uint32_t * p_ptr2, uint32_t len);
-
-
-/** @brief Function for setting the address of the vector table using an MBR command.
- *
- * @param[in]  address   Address of the new vector table.
- *
- * @retval  NRF_SUCCESS  If the address of the new vector table was set. Any other
- *                       return value indicates that the address could not be set.
- */
-uint32_t nrf_dfu_mbr_vector_table_set(uint32_t address);
-
-
-#ifndef SOFTDEVICE_PRESENT
-/** @brief Function for setting the address of the irq table using an MBR command.
- *
- * @param[in]  address   Address of the new irq table.
+/** @brief Function for setting the address of the IRQ table to the app's using an MBR command.
  *
  * @retval  NRF_SUCCESS  If the address of the new irq table was set. Any other
  *                       return value indicates that the address could not be set.
  */
-uint32_t nrf_dfu_mbr_irq_forward_address_set(uint32_t address);
-#endif
+uint32_t nrf_dfu_mbr_irq_forward_address_set(void);
 
 
 #ifdef __cplusplus

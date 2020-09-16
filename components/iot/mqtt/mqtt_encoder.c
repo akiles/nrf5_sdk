@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -434,18 +434,12 @@ void connect_request_encode(const mqtt_client_t *  p_client,
 
     if (err_code == NRF_SUCCESS)
     {
-        uint8_t connect_pkt_qos = MQTT_QoS_0_AT_MOST_ONCE;
-        if (p_client->protocol_version == MQTT_VERSION_3_1_0)
-        {
-            connect_pkt_qos = MQTT_QoS_1_ATLEAST_ONCE;
-        }
-
         // Pack the connect flags.
         p_client->p_packet[connect_flag_offset] = connect_flags;
 
         const uint8_t message_type = MQTT_MESSAGES_OPTIONS(MQTT_PKT_TYPE_CONNECT,
                                                            0,  // Duplicate flag not set.
-                                                           connect_pkt_qos,
+                                                           0,  // QoS not set.
                                                            0); // Retain not set.
 
         offset = mqtt_encode_fixed_header(message_type,

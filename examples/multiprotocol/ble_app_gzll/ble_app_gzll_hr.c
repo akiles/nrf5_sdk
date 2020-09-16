@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -59,6 +59,7 @@
 #include "sensorsim.h"
 #include "nrf_sdh.h"
 #include "nrf_sdh_ble.h"
+#include "nrf_ble_qwr.h"
 #include "app_timer.h"
 #include "ble_app_gzll_ui.h"
 #include "app_button.h"
@@ -66,69 +67,89 @@
 #include "nrf_sdm.h"
 
 
-#define IS_SRVC_CHANGED_CHARACT_PRESENT     0                                       /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
+#define IS_SRVC_CHANGED_CHARACT_PRESENT     0                                 /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
-#define DEVICE_NAME                         "Nordic_BLE_GZL"                        /**< Name of device. Will be included in the advertising data. */
-#define MANUFACTURER_NAME                   "NordicSemiconductor"                   /**< Manufacturer. Will be passed to Device Information Service. */
+#define DEVICE_NAME                         "Nordic_BLE_GZL"                  /**< Name of device. Will be included in the advertising data. */
+#define MANUFACTURER_NAME                   "NordicSemiconductor"             /**< Manufacturer. Will be passed to Device Information Service. */
 
-#define APP_BLE_OBSERVER_PRIO               3                                       /**< Application's BLE observer priority. You shouldn't need to modify this value. */
-#define APP_BLE_CONN_CFG_TAG                1                                       /**< A tag for a Bluetooth stack configuration. */
+#define APP_BLE_OBSERVER_PRIO               3                                 /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_CONN_CFG_TAG                1                                 /**< A tag for a Bluetooth stack configuration. */
 
-#define APP_ADV_INTERVAL                    40                                      /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
-#define APP_ADV_TIMEOUT_IN_SECONDS          180                                     /**< The advertising timeout in units of seconds. */
+#define APP_ADV_INTERVAL                    40                                /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
+#define APP_ADV_DURATION                    18000                             /**< The advertising duration (180 seconds) in units of 10 milliseconds. */
 
-#define BATTERY_LEVEL_MEAS_INTERVAL         APP_TIMER_TICKS(2000)                   /**< Battery level measurement interval (ticks). */
-#define MIN_BATTERY_LEVEL                   81                                      /**< Minimum battery level as returned by the simulated measurement function. */
-#define MAX_BATTERY_LEVEL                   100                                     /**< Maximum battery level as returned by the simulated measurement function. */
-#define BATTERY_LEVEL_INCREMENT             1                                       /**< Value by which the battery level is incremented/decremented for each call to the simulated measurement function. */
+#define BATTERY_LEVEL_MEAS_INTERVAL         APP_TIMER_TICKS(2000)             /**< Battery level measurement interval (ticks). */
+#define MIN_BATTERY_LEVEL                   81                                /**< Minimum battery level as returned by the simulated measurement function. */
+#define MAX_BATTERY_LEVEL                   100                               /**< Maximum battery level as returned by the simulated measurement function. */
+#define BATTERY_LEVEL_INCREMENT             1                                 /**< Value by which the battery level is incremented/decremented for each call to the simulated measurement function. */
 
-#define HEART_RATE_MEAS_INTERVAL            APP_TIMER_TICKS(1000)                   /**< Heart rate measurement interval (ticks). */
-#define MIN_HEART_RATE                      140                                     /**< Minimum heart rate as returned by the simulated measurement function. */
-#define MAX_HEART_RATE                      160                                     /**< Maximum heart rate as returned by the simulated measurement function. */
-#define HEART_RATE_INCREMENT                1                                       /**< Value by which the heart rate is incremented/decremented for each call to the simulated measurement function. */
+#define HEART_RATE_MEAS_INTERVAL            APP_TIMER_TICKS(1000)             /**< Heart rate measurement interval (ticks). */
+#define MIN_HEART_RATE                      140                               /**< Minimum heart rate as returned by the simulated measurement function. */
+#define MAX_HEART_RATE                      160                               /**< Maximum heart rate as returned by the simulated measurement function. */
+#define HEART_RATE_INCREMENT                1                                 /**< Value by which the heart rate is incremented/decremented for each call to the simulated measurement function. */
 
-#define RR_INTERVAL_INTERVAL                APP_TIMER_TICKS(300)                    /**< RR interval interval (ticks). */
-#define MIN_RR_INTERVAL                     100                                     /**< Minimum RR interval as returned by the simulated measurement function. */
-#define MAX_RR_INTERVAL                     500                                     /**< Maximum RR interval as returned by the simulated measurement function. */
-#define RR_INTERVAL_INCREMENT               1                                       /**< Value by which the RR interval is incremented/decremented for each call to the simulated measurement function. */
+#define RR_INTERVAL_INTERVAL                APP_TIMER_TICKS(300)              /**< RR interval interval (ticks). */
+#define MIN_RR_INTERVAL                     100                               /**< Minimum RR interval as returned by the simulated measurement function. */
+#define MAX_RR_INTERVAL                     500                               /**< Maximum RR interval as returned by the simulated measurement function. */
+#define RR_INTERVAL_INCREMENT               1                                 /**< Value by which the RR interval is incremented/decremented for each call to the simulated measurement function. */
 
-#define SENSOR_CONTACT_DETECTED_INTERVAL    APP_TIMER_TICKS(5000)                   /**< Sensor Contact Detected toggle interval (ticks). */
+#define SENSOR_CONTACT_DETECTED_INTERVAL    APP_TIMER_TICKS(5000)             /**< Sensor Contact Detected toggle interval (ticks). */
 
-#define MIN_CONN_INTERVAL                   MSEC_TO_UNITS(500, UNIT_1_25_MS)        /**< Minimum acceptable connection interval (0.5 seconds). */
-#define MAX_CONN_INTERVAL                   MSEC_TO_UNITS(1000, UNIT_1_25_MS)       /**< Maximum acceptable connection interval (1 second). */
-#define SLAVE_LATENCY                       0                                       /**< Slave latency. */
-#define CONN_SUP_TIMEOUT                    MSEC_TO_UNITS(4000, UNIT_10_MS)         /**< Connection supervisory timeout (4 seconds). */
+#define MIN_CONN_INTERVAL                   MSEC_TO_UNITS(500, UNIT_1_25_MS)  /**< Minimum acceptable connection interval (0.5 seconds). */
+#define MAX_CONN_INTERVAL                   MSEC_TO_UNITS(1000, UNIT_1_25_MS) /**< Maximum acceptable connection interval (1 second). */
+#define SLAVE_LATENCY                       0                                 /**< Slave latency. */
+#define CONN_SUP_TIMEOUT                    MSEC_TO_UNITS(4000, UNIT_10_MS)   /**< Connection supervisory timeout (4 seconds). */
 
-#define FIRST_CONN_PARAMS_UPDATE_DELAY      APP_TIMER_TICKS(5000)                   /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
-#define NEXT_CONN_PARAMS_UPDATE_DELAY       APP_TIMER_TICKS(30000)                  /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
-#define MAX_CONN_PARAMS_UPDATE_COUNT        3                                       /**< Number of attempts before giving up the connection parameter negotiation. */
+#define FIRST_CONN_PARAMS_UPDATE_DELAY      APP_TIMER_TICKS(5000)             /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
+#define NEXT_CONN_PARAMS_UPDATE_DELAY       APP_TIMER_TICKS(30000)            /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
+#define MAX_CONN_PARAMS_UPDATE_COUNT        3                                 /**< Number of attempts before giving up the connection parameter negotiation. */
 
-#define SEC_PARAM_TIMEOUT                   30                                      /**< Timeout for Pairing Request or Security Request (in seconds). */
-#define SEC_PARAM_BOND                      1                                       /**< Perform bonding. */
-#define SEC_PARAM_MITM                      0                                       /**< Man In The Middle protection not required. */
-#define SEC_PARAM_IO_CAPABILITIES           BLE_GAP_IO_CAPS_NONE                    /**< No I/O capabilities. */
-#define SEC_PARAM_OOB                       0                                       /**< Out Of Band data not available. */
-#define SEC_PARAM_MIN_KEY_SIZE              7                                       /**< Minimum encryption key size. */
-#define SEC_PARAM_MAX_KEY_SIZE              16                                      /**< Maximum encryption key size. */
+#define SEC_PARAM_TIMEOUT                   30                                /**< Timeout for Pairing Request or Security Request (in seconds). */
+#define SEC_PARAM_BOND                      1                                 /**< Perform bonding. */
+#define SEC_PARAM_MITM                      0                                 /**< Man In The Middle protection not required. */
+#define SEC_PARAM_IO_CAPABILITIES           BLE_GAP_IO_CAPS_NONE              /**< No I/O capabilities. */
+#define SEC_PARAM_OOB                       0                                 /**< Out Of Band data not available. */
+#define SEC_PARAM_MIN_KEY_SIZE              7                                 /**< Minimum encryption key size. */
+#define SEC_PARAM_MAX_KEY_SIZE              16                                /**< Maximum encryption key size. */
 
-static ble_gap_sec_params_t m_sec_params;                                           /**< Security requirements for this application. */
-static ble_gap_adv_params_t m_adv_params;                                           /**< Parameters to be passed to the stack when starting advertising. */
+NRF_BLE_QWR_DEF(m_qwr);                                                             /**< Context for the Queued Write module.*/
+static ble_gap_sec_params_t m_sec_params;                                     /**< Security requirements for this application. */
+static ble_gap_adv_params_t m_adv_params;                                     /**< Parameters to be passed to the stack when starting advertising. */
 
-BLE_BAS_DEF(m_bas);                                                                 /**< Structure used to identify the battery service. */
-BLE_HRS_DEF(m_hrs);                                                                 /**< Heart rate service instance. */
-static bool m_rr_interval_enabled = true;                                           /**< Flag for enabling and disabling the registration of new RR interval measurements (the purpose of disabling this is just to test sending HRM without RR interval data. */
+BLE_BAS_DEF(m_bas);                                                           /**< Structure used to identify the battery service. */
+BLE_HRS_DEF(m_hrs);                                                           /**< Heart rate service instance. */
+static bool m_rr_interval_enabled = true;                                     /**< Flag for enabling and disabling the registration of new RR interval measurements (the purpose of disabling this is just to test sending HRM without RR interval data. */
 
-static sensorsim_cfg_t   m_battery_sim_cfg;                                         /**< Battery Level sensor simulator configuration. */
-static sensorsim_state_t m_battery_sim_state;                                       /**< Battery Level sensor simulator state. */
-static sensorsim_cfg_t   m_heart_rate_sim_cfg;                                      /**< Heart Rate sensor simulator configuration. */
-static sensorsim_state_t m_heart_rate_sim_state;                                    /**< Heart Rate sensor simulator state. */
-static sensorsim_cfg_t   m_rr_interval_sim_cfg;                                     /**< RR Interval sensor simulator configuration. */
-static sensorsim_state_t m_rr_interval_sim_state;                                   /**< RR Interval sensor simulator state. */
+static sensorsim_cfg_t   m_battery_sim_cfg;                                   /**< Battery Level sensor simulator configuration. */
+static sensorsim_state_t m_battery_sim_state;                                 /**< Battery Level sensor simulator state. */
+static sensorsim_cfg_t   m_heart_rate_sim_cfg;                                /**< Heart Rate sensor simulator configuration. */
+static sensorsim_state_t m_heart_rate_sim_state;                              /**< Heart Rate sensor simulator state. */
+static sensorsim_cfg_t   m_rr_interval_sim_cfg;                               /**< RR Interval sensor simulator configuration. */
+static sensorsim_state_t m_rr_interval_sim_state;                             /**< RR Interval sensor simulator state. */
 
-APP_TIMER_DEF(m_battery_timer_id);                                                  /**< Battery timer. */
-APP_TIMER_DEF(m_heart_rate_timer_id);                                               /**< Heart rate measurement timer. */
-APP_TIMER_DEF(m_rr_interval_timer_id);                                              /**< RR interval timer. */
-APP_TIMER_DEF(m_sensor_contact_timer_id);                                           /**< Sensor contact detected timer. */
+static uint8_t m_adv_handle = BLE_GAP_ADV_SET_HANDLE_NOT_SET;                 /**< Advertising handle used to identify an advertising set. */
+static uint8_t m_enc_advdata[BLE_GAP_ADV_SET_DATA_SIZE_MAX];                  /**< Buffer for storing an encoded advertising set. */
+
+/**@brief Struct that contains pointers to the encoded advertising data. */
+static ble_gap_adv_data_t m_adv_data =
+{
+    .adv_data =
+    {
+        .p_data = m_enc_advdata,
+        .len    = BLE_GAP_ADV_SET_DATA_SIZE_MAX
+    },
+    .scan_rsp_data =
+    {
+        .p_data = NULL,
+        .len    = 0
+        
+    }
+};
+
+APP_TIMER_DEF(m_battery_timer_id);                                            /**< Battery timer. */
+APP_TIMER_DEF(m_heart_rate_timer_id);                                         /**< Heart rate measurement timer. */
+APP_TIMER_DEF(m_rr_interval_timer_id);                                        /**< RR interval timer. */
+APP_TIMER_DEF(m_sensor_contact_timer_id);                                     /**< Sensor contact detected timer. */
 
 
 /**@brief Function for performing a battery measurement and updating
@@ -141,7 +162,7 @@ static void battery_level_update(void)
 
     battery_level = (uint8_t)sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
 
-    err_code = ble_bas_battery_level_update(&m_bas, battery_level);
+    err_code = ble_bas_battery_level_update(&m_bas, battery_level, BLE_CONN_HANDLE_ALL);
     if ((err_code != NRF_SUCCESS) &&
         (err_code != NRF_ERROR_INVALID_STATE) &&
         (err_code != NRF_ERROR_RESOURCES) &&
@@ -190,6 +211,7 @@ static void heart_rate_meas_timeout_handler(void * p_context)
     if ((err_code != NRF_SUCCESS) &&
         (err_code != NRF_ERROR_INVALID_STATE) &&
         (err_code != NRF_ERROR_RESOURCES) &&
+        (err_code != NRF_ERROR_BUSY) &&
         (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
        )
     {
@@ -304,17 +326,33 @@ static void advertising_init(void)
     advdata.uuids_complete.uuid_cnt = sizeof(adv_uuids) / sizeof(adv_uuids[0]);
     advdata.uuids_complete.p_uuids  = adv_uuids;
 
-    err_code = ble_advdata_set(&advdata, NULL);
+    err_code = ble_advdata_encode(&advdata, m_adv_data.adv_data.p_data, &m_adv_data.adv_data.len);
     APP_ERROR_CHECK(err_code);
 
     // Initialize advertising parameters (used when starting advertising).
     memset(&m_adv_params, 0, sizeof(m_adv_params));
 
-    m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_IND;
-    m_adv_params.p_peer_addr = NULL; // Undirected advertisement.
-    m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
-    m_adv_params.interval    = APP_ADV_INTERVAL;
-    m_adv_params.timeout     = APP_ADV_TIMEOUT_IN_SECONDS;
+    m_adv_params.properties.type = BLE_GAP_ADV_TYPE_CONNECTABLE_SCANNABLE_UNDIRECTED;
+    m_adv_params.p_peer_addr     = NULL; // Undirected advertisement.
+    m_adv_params.filter_policy   = BLE_GAP_ADV_FP_ANY;
+    m_adv_params.interval        = APP_ADV_INTERVAL;
+    m_adv_params.duration        = APP_ADV_DURATION;
+
+    err_code = sd_ble_gap_adv_set_configure(&m_adv_handle, &m_adv_data, &m_adv_params);
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for handling Queued Write Module errors.
+ *
+ * @details A pointer to this function will be passed to each service which may need to inform the
+ *          application about an error.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void nrf_qwr_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
 }
 
 
@@ -324,11 +362,26 @@ static void advertising_init(void)
  */
 static void services_init(void)
 {
-    uint32_t       err_code;
-    ble_hrs_init_t hrs_init;
-    ble_bas_init_t bas_init;
-    ble_dis_init_t dis_init;
-    uint8_t        body_sensor_location;
+    // Flag that prevents from Queued Write module reinitialization.
+    static bool        qwr_initialized = false;
+
+    uint32_t           err_code;
+    ble_hrs_init_t     hrs_init;
+    ble_bas_init_t     bas_init;
+    ble_dis_init_t     dis_init;
+    nrf_ble_qwr_init_t qwr_init = {0};
+    uint8_t            body_sensor_location;
+
+    if (!qwr_initialized)
+    {
+        // Initialize the Queued Write module.
+        qwr_init.error_handler = nrf_qwr_error_handler;
+
+        err_code = nrf_ble_qwr_init(&m_qwr, &qwr_init);
+        APP_ERROR_CHECK(err_code);
+
+        qwr_initialized = true;
+    }
 
     // Initialize Heart Rate Service.
     body_sensor_location = BLE_HRS_BODY_SENSOR_LOCATION_FINGER;
@@ -468,7 +521,7 @@ static void advertising_start(void)
 {
     uint32_t err_code;
 
-    err_code = sd_ble_gap_adv_start(&m_adv_params, APP_BLE_CONN_CFG_TAG);
+    err_code = sd_ble_gap_adv_start(m_adv_handle, APP_BLE_CONN_CFG_TAG);
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
@@ -517,7 +570,7 @@ static void conn_params_init(void)
 static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 {
     uint32_t                    err_code;
-    static uint16_t             s_conn_handle = BLE_CONN_HANDLE_INVALID;
+    static uint16_t             m_conn_handle = BLE_CONN_HANDLE_INVALID;
     static ble_gap_sec_keyset_t s_sec_keyset;
     ble_gap_enc_info_t        * p_enc_info;
 
@@ -526,7 +579,9 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         case BLE_GAP_EVT_CONNECTED:
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
-            s_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
+            m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
+            err_code = nrf_ble_qwr_conn_handle_assign(&m_qwr, m_conn_handle);
+            APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
@@ -539,7 +594,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             s_sec_keyset.keys_peer.p_enc_key  = NULL;
             s_sec_keyset.keys_peer.p_id_key   = NULL;
             s_sec_keyset.keys_peer.p_sign_key = NULL;
-            err_code                          = sd_ble_gap_sec_params_reply(s_conn_handle,
+            err_code                          = sd_ble_gap_sec_params_reply(m_conn_handle,
                                                                             BLE_GAP_SEC_STATUS_SUCCESS,
                                                                             &m_sec_params,
                                                                             &s_sec_keyset);
@@ -560,7 +615,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         } break;
 
         case BLE_GATTS_EVT_SYS_ATTR_MISSING:
-            err_code = sd_ble_gatts_sys_attr_set(s_conn_handle, NULL, 0, 0);
+            err_code = sd_ble_gatts_sys_attr_set(m_conn_handle, NULL, 0, 0);
             APP_ERROR_CHECK(err_code);
             break;
 
@@ -569,19 +624,30 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             {
                 p_enc_info = &s_sec_keyset.keys_own.p_enc_key->enc_info;
 
-                err_code = sd_ble_gap_sec_info_reply(s_conn_handle, p_enc_info, NULL, NULL);
+                err_code = sd_ble_gap_sec_info_reply(m_conn_handle, p_enc_info, NULL, NULL);
                 APP_ERROR_CHECK(err_code);
             }
             else
             {
                 // No keys found for this device.
-                err_code = sd_ble_gap_sec_info_reply(s_conn_handle, NULL, NULL, NULL);
+                err_code = sd_ble_gap_sec_info_reply(m_conn_handle, NULL, NULL, NULL);
                 APP_ERROR_CHECK(err_code);
             }
             break;
 
-        case BLE_GAP_EVT_TIMEOUT:
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
+        case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
+        {
+            ble_gap_phys_t const phys =
+            {
+                .rx_phys = BLE_GAP_PHY_AUTO,
+                .tx_phys = BLE_GAP_PHY_AUTO,
+            };
+            err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
+            APP_ERROR_CHECK(err_code);
+        } break;
+
+        case BLE_GAP_EVT_ADV_SET_TERMINATED:
+            if (p_ble_evt->evt.gap_evt.params.adv_set_terminated.reason == BLE_GAP_EVT_ADV_SET_TERMINATED_REASON_TIMEOUT)
             {
                 err_code = bsp_indication_set(BSP_INDICATE_IDLE);
                 APP_ERROR_CHECK(err_code);

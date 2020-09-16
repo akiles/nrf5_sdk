@@ -7,7 +7,6 @@ MEMORY
 {
   FLASH (rx) : ORIGIN = 0x0, LENGTH = 0x80000
   RAM (rwx) :  ORIGIN = 0x20000000, LENGTH = 0x10000
-  
 }
 
 SECTIONS
@@ -52,14 +51,25 @@ SECTIONS
     KEEP(*(SORT(.log_const_data*)))
     PROVIDE(__stop_log_const_data = .);
   } > FLASH
+    .nrf_balloc :
+  {
+    PROVIDE(__start_nrf_balloc = .);
+    KEEP(*(.nrf_balloc))
+    PROVIDE(__stop_nrf_balloc = .);
+  } > FLASH
   .pwr_mgmt_data :
   {
     PROVIDE(__start_pwr_mgmt_data = .);
     KEEP(*(SORT(.pwr_mgmt_data*)))
     PROVIDE(__stop_pwr_mgmt_data = .);
   } > FLASH
-  
+    .nrf_queue :
+  {
+    PROVIDE(__start_nrf_queue = .);
+    KEEP(*(.nrf_queue))
+    PROVIDE(__stop_nrf_queue = .);
+  } > FLASH
 
 } INSERT AFTER .text
 
-INCLUDE "nrf5x_common.ld"
+INCLUDE "nrf_common.ld"

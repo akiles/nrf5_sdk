@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -41,7 +41,7 @@
 #ifndef NRF_LCD_H__
 #define NRF_LCD_H__
 
-#include "nrf_drv_common.h"
+#include <nrfx.h>
 
 /** @file
  *
@@ -67,7 +67,7 @@ typedef enum{
  */
 typedef struct
 {
-    nrf_drv_state_t state;          /**< State of LCD instance. */
+    nrfx_drv_state_t state;         /**< State of LCD instance. */
     uint16_t height;                /**< LCD height. */
     uint16_t width;                 /**< LCD width. */
     nrf_lcd_rotation_t rotation;    /**< LCD rotation. */

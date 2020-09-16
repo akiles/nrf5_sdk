@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -39,6 +39,8 @@
  */
 #ifndef APP_ERROR_WEAK_H__
 #define APP_ERROR_WEAK_H__
+
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -191,22 +191,17 @@ static bool shutdown_handler(nrf_pwr_mgmt_evt_t event)
 
 NRF_PWR_MGMT_HANDLER_REGISTER(shutdown_handler,  APP_SHUTDOWN_HANDLER_PRIORITY);
 
-/**@brief Function for the timer, tracer, and BSP initialization.
+/**@brief Function for the timer and BSP initialization.
  */
 static void utils_setup(void)
 {
-    ret_code_t err_code = NRF_LOG_INIT(NULL);
-    APP_ERROR_CHECK(err_code);
-
-    NRF_LOG_DEFAULT_BACKENDS_INIT();
-
-    err_code = app_timer_init();
+    ret_code_t err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
     err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS,
                         bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 
@@ -257,13 +252,27 @@ static void profile_setup(void)
 /** @snippet [ANT SDM RX Profile Setup] */
 }
 
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
 /**@brief Function for application main entry, does not return.
  */
 int main(void)
 {
+    log_init();
     utils_setup();
     softdevice_setup();
     profile_setup();
+
+    NRF_LOG_INFO("ANT+ Stride Based Speed and Distance RX example started.");
 
     for (;;)
     {

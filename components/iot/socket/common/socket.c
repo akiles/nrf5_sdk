@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -84,9 +84,9 @@
 /**@brief Macro to check is module is initialized before requesting one of the module procedures. */
 #define VERIFY_MODULE_IS_INITIALIZED()                                    \
     do {                                                                  \
-        if (m_initialization_state == false)                               \
+        if (m_initialization_state == false)                              \
         {                                                                 \
-            return (SDK_ERR_MODULE_NOT_INITIALZED | IOT_SOCKET_ERR_BASE); \
+            return (SDK_ERR_MODULE_NOT_INITIALIZED | IOT_SOCKET_ERR_BASE);\
         }                                                                 \
     } while (0)
 

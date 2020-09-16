@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -49,7 +49,7 @@
 // <h> nRF_Drivers 
 
 //==========================================================
-// <e> GPIOTE_ENABLED - nrf_drv_gpiote - GPIOTE peripheral driver
+// <e> GPIOTE_ENABLED - nrf_drv_gpiote - GPIOTE peripheral driver - legacy layer
 //==========================================================
 #ifndef GPIOTE_ENABLED
 #define GPIOTE_ENABLED 1
@@ -78,12 +78,83 @@
 
 // </e>
 
-// <q> PERIPHERAL_RESOURCE_SHARING_ENABLED  - nrf_drv_common - Peripheral drivers common module
- 
-
-#ifndef PERIPHERAL_RESOURCE_SHARING_ENABLED
-#define PERIPHERAL_RESOURCE_SHARING_ENABLED 0
+// <e> NRFX_GPIOTE_ENABLED - nrfx_gpiote - GPIOTE peripheral driver
+//==========================================================
+#ifndef NRFX_GPIOTE_ENABLED
+#define NRFX_GPIOTE_ENABLED 1
 #endif
+// <o> NRFX_GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS - Number of lower power input pins 
+#ifndef NRFX_GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS
+#define NRFX_GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS 1
+#endif
+
+// <o> NRFX_GPIOTE_CONFIG_IRQ_PRIORITY  - Interrupt priority
+ 
+// <0=> 0 (highest) 
+// <1=> 1 
+// <2=> 2 
+// <3=> 3 
+// <4=> 4 
+// <5=> 5 
+// <6=> 6 
+// <7=> 7 
+
+#ifndef NRFX_GPIOTE_CONFIG_IRQ_PRIORITY
+#define NRFX_GPIOTE_CONFIG_IRQ_PRIORITY 7
+#endif
+
+// <e> NRFX_GPIOTE_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRFX_GPIOTE_CONFIG_LOG_ENABLED
+#define NRFX_GPIOTE_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRFX_GPIOTE_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRFX_GPIOTE_CONFIG_LOG_LEVEL
+#define NRFX_GPIOTE_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRFX_GPIOTE_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_GPIOTE_CONFIG_INFO_COLOR
+#define NRFX_GPIOTE_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRFX_GPIOTE_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_GPIOTE_CONFIG_DEBUG_COLOR
+#define NRFX_GPIOTE_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// </e>
 
 // </h> 
 //==========================================================
@@ -94,7 +165,7 @@
 // <e> NRF_BALLOC_ENABLED - nrf_balloc - Block allocator module
 //==========================================================
 #ifndef NRF_BALLOC_ENABLED
-#define NRF_BALLOC_ENABLED 1
+#define NRF_BALLOC_ENABLED 0
 #endif
 // <e> NRF_BALLOC_CONFIG_DEBUG_ENABLED - Enables debug mode in the module.
 //==========================================================
@@ -136,6 +207,13 @@
 #define NRF_BALLOC_CONFIG_DATA_TRASHING_CHECK_ENABLED 0
 #endif
 
+// <q> NRF_BALLOC_CLI_CMDS  - Enable CLI commands specific to the module
+ 
+
+#ifndef NRF_BALLOC_CLI_CMDS
+#define NRF_BALLOC_CLI_CMDS 0
+#endif
+
 // </e>
 
 // </e>
@@ -144,7 +222,7 @@
  
 
 #ifndef NRF_MEMOBJ_ENABLED
-#define NRF_MEMOBJ_ENABLED 1
+#define NRF_MEMOBJ_ENABLED 0
 #endif
 
 // <q> NRF_STRERROR_ENABLED  - nrf_strerror - Library for converting error code to string.
@@ -272,14 +350,19 @@
 #define NRF_LOG_ALLOW_OVERFLOW 1
 #endif
 
-// <q> NRF_LOG_USES_TIMESTAMP  - Enable timestamping
- 
+// <e> NRF_LOG_USES_TIMESTAMP - Enable timestamping
 
 // <i> Function for getting the timestamp is provided by the user
-
+//==========================================================
 #ifndef NRF_LOG_USES_TIMESTAMP
 #define NRF_LOG_USES_TIMESTAMP 0
 #endif
+// <o> NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY - Default frequency of the timestamp (in Hz) 
+#ifndef NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY
+#define NRF_LOG_TIMESTAMP_DEFAULT_FREQUENCY 32768
+#endif
+
+// </e>
 
 // <q> NRF_LOG_FILTERS_ENABLED  - Enable dynamic filtering of logs.
  
@@ -539,57 +622,6 @@
 
 // </e>
 
-// <e> COMMON_CONFIG_LOG_ENABLED - Enables logging in the module.
-//==========================================================
-#ifndef COMMON_CONFIG_LOG_ENABLED
-#define COMMON_CONFIG_LOG_ENABLED 0
-#endif
-// <o> COMMON_CONFIG_LOG_LEVEL  - Default Severity level
- 
-// <0=> Off 
-// <1=> Error 
-// <2=> Warning 
-// <3=> Info 
-// <4=> Debug 
-
-#ifndef COMMON_CONFIG_LOG_LEVEL
-#define COMMON_CONFIG_LOG_LEVEL 3
-#endif
-
-// <o> COMMON_CONFIG_INFO_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef COMMON_CONFIG_INFO_COLOR
-#define COMMON_CONFIG_INFO_COLOR 0
-#endif
-
-// <o> COMMON_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef COMMON_CONFIG_DEBUG_COLOR
-#define COMMON_CONFIG_DEBUG_COLOR 0
-#endif
-
-// </e>
-
 // <e> COMP_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef COMP_CONFIG_LOG_ENABLED
@@ -688,57 +720,6 @@
 
 #ifndef GPIOTE_CONFIG_DEBUG_COLOR
 #define GPIOTE_CONFIG_DEBUG_COLOR 0
-#endif
-
-// </e>
-
-// <e> I2S_CONFIG_LOG_ENABLED - Enables logging in the module.
-//==========================================================
-#ifndef I2S_CONFIG_LOG_ENABLED
-#define I2S_CONFIG_LOG_ENABLED 0
-#endif
-// <o> I2S_CONFIG_LOG_LEVEL  - Default Severity level
- 
-// <0=> Off 
-// <1=> Error 
-// <2=> Warning 
-// <3=> Info 
-// <4=> Debug 
-
-#ifndef I2S_CONFIG_LOG_LEVEL
-#define I2S_CONFIG_LOG_LEVEL 3
-#endif
-
-// <o> I2S_CONFIG_INFO_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef I2S_CONFIG_INFO_COLOR
-#define I2S_CONFIG_INFO_COLOR 0
-#endif
-
-// <o> I2S_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef I2S_CONFIG_DEBUG_COLOR
-#define I2S_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -1260,57 +1241,6 @@
 
 // </e>
 
-// <e> SWI_CONFIG_LOG_ENABLED - Enables logging in the module.
-//==========================================================
-#ifndef SWI_CONFIG_LOG_ENABLED
-#define SWI_CONFIG_LOG_ENABLED 0
-#endif
-// <o> SWI_CONFIG_LOG_LEVEL  - Default Severity level
- 
-// <0=> Off 
-// <1=> Error 
-// <2=> Warning 
-// <3=> Info 
-// <4=> Debug 
-
-#ifndef SWI_CONFIG_LOG_LEVEL
-#define SWI_CONFIG_LOG_LEVEL 3
-#endif
-
-// <o> SWI_CONFIG_INFO_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef SWI_CONFIG_INFO_COLOR
-#define SWI_CONFIG_INFO_COLOR 0
-#endif
-
-// <o> SWI_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef SWI_CONFIG_DEBUG_COLOR
-#define SWI_CONFIG_DEBUG_COLOR 0
-#endif
-
-// </e>
-
 // <e> TIMER_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef TIMER_CONFIG_LOG_ENABLED
@@ -1623,6 +1553,73 @@
 // <h> nrf_log in nRF_Libraries 
 
 //==========================================================
+// <e> APP_TIMER_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef APP_TIMER_CONFIG_LOG_ENABLED
+#define APP_TIMER_CONFIG_LOG_ENABLED 0
+#endif
+// <o> APP_TIMER_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef APP_TIMER_CONFIG_LOG_LEVEL
+#define APP_TIMER_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> APP_TIMER_CONFIG_INITIAL_LOG_LEVEL  - Initial severity level if dynamic filtering is enabled.
+ 
+
+// <i> If module generates a lot of logs, initial log level can
+// <i> be decreased to prevent flooding. Severity level can be
+// <i> increased on instance basis.
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef APP_TIMER_CONFIG_INITIAL_LOG_LEVEL
+#define APP_TIMER_CONFIG_INITIAL_LOG_LEVEL 3
+#endif
+
+// <o> APP_TIMER_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_TIMER_CONFIG_INFO_COLOR
+#define APP_TIMER_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> APP_TIMER_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_TIMER_CONFIG_DEBUG_COLOR
+#define APP_TIMER_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
 // <e> APP_USBD_CDC_ACM_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef APP_USBD_CDC_ACM_CONFIG_LOG_ENABLED
@@ -1670,6 +1667,57 @@
 
 #ifndef APP_USBD_CDC_ACM_CONFIG_DEBUG_COLOR
 #define APP_USBD_CDC_ACM_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> APP_USBD_DUMMY_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef APP_USBD_DUMMY_CONFIG_LOG_ENABLED
+#define APP_USBD_DUMMY_CONFIG_LOG_ENABLED 0
+#endif
+// <o> APP_USBD_DUMMY_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef APP_USBD_DUMMY_CONFIG_LOG_LEVEL
+#define APP_USBD_DUMMY_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> APP_USBD_DUMMY_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_USBD_DUMMY_CONFIG_INFO_COLOR
+#define APP_USBD_DUMMY_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> APP_USBD_DUMMY_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_USBD_DUMMY_CONFIG_DEBUG_COLOR
+#define APP_USBD_DUMMY_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -1725,6 +1773,120 @@
 
 // </e>
 
+// <e> APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_ENABLED
+#define APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_ENABLED 0
+#endif
+// <o> APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_LEVEL
+#define APP_USBD_NRF_DFU_TRIGGER_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> APP_USBD_NRF_DFU_TRIGGER_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_USBD_NRF_DFU_TRIGGER_CONFIG_INFO_COLOR
+#define APP_USBD_NRF_DFU_TRIGGER_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> APP_USBD_NRF_DFU_TRIGGER_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef APP_USBD_NRF_DFU_TRIGGER_CONFIG_DEBUG_COLOR
+#define APP_USBD_NRF_DFU_TRIGGER_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_ATFIFO_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_ATFIFO_CONFIG_LOG_ENABLED
+#define NRF_ATFIFO_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_ATFIFO_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_ATFIFO_CONFIG_LOG_LEVEL
+#define NRF_ATFIFO_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_ATFIFO_CONFIG_LOG_INIT_FILTER_LEVEL  - Initial severity level if dynamic filtering is enabled
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_ATFIFO_CONFIG_LOG_INIT_FILTER_LEVEL
+#define NRF_ATFIFO_CONFIG_LOG_INIT_FILTER_LEVEL 3
+#endif
+
+// <o> NRF_ATFIFO_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_ATFIFO_CONFIG_INFO_COLOR
+#define NRF_ATFIFO_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_ATFIFO_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_ATFIFO_CONFIG_DEBUG_COLOR
+#define NRF_ATFIFO_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
 // <e> NRF_BALLOC_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_BALLOC_CONFIG_LOG_ENABLED
@@ -1740,6 +1902,22 @@
 
 #ifndef NRF_BALLOC_CONFIG_LOG_LEVEL
 #define NRF_BALLOC_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_BALLOC_CONFIG_INITIAL_LOG_LEVEL  - Initial severity level if dynamic filtering is enabled.
+ 
+
+// <i> If module generates a lot of logs, initial log level can
+// <i> be decreased to prevent flooding. Severity level can be
+// <i> increased on instance basis.
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_BALLOC_CONFIG_INITIAL_LOG_LEVEL
+#define NRF_BALLOC_CONFIG_INITIAL_LOG_LEVEL 3
 #endif
 
 // <o> NRF_BALLOC_CONFIG_INFO_COLOR  - ANSI escape code prefix.
@@ -1827,6 +2005,57 @@
 
 // </e>
 
+// <e> NRF_CLI_LIBUARTE_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_CLI_LIBUARTE_CONFIG_LOG_ENABLED
+#define NRF_CLI_LIBUARTE_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_CLI_LIBUARTE_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_CLI_LIBUARTE_CONFIG_LOG_LEVEL
+#define NRF_CLI_LIBUARTE_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_CLI_LIBUARTE_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_CLI_LIBUARTE_CONFIG_INFO_COLOR
+#define NRF_CLI_LIBUARTE_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_CLI_LIBUARTE_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_CLI_LIBUARTE_CONFIG_DEBUG_COLOR
+#define NRF_CLI_LIBUARTE_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
 // <e> NRF_CLI_UART_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_CLI_UART_CONFIG_LOG_ENABLED
@@ -1874,6 +2103,57 @@
 
 #ifndef NRF_CLI_UART_CONFIG_DEBUG_COLOR
 #define NRF_CLI_UART_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_LIBUARTE_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_LIBUARTE_CONFIG_LOG_ENABLED
+#define NRF_LIBUARTE_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_LIBUARTE_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_LIBUARTE_CONFIG_LOG_LEVEL
+#define NRF_LIBUARTE_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_LIBUARTE_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_LIBUARTE_CONFIG_INFO_COLOR
+#define NRF_LIBUARTE_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_LIBUARTE_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_LIBUARTE_CONFIG_DEBUG_COLOR
+#define NRF_LIBUARTE_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -1976,6 +2256,69 @@
 
 #ifndef NRF_PWR_MGMT_CONFIG_DEBUG_COLOR
 #define NRF_PWR_MGMT_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_QUEUE_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_QUEUE_CONFIG_LOG_ENABLED
+#define NRF_QUEUE_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_QUEUE_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_QUEUE_CONFIG_LOG_LEVEL
+#define NRF_QUEUE_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_QUEUE_CONFIG_LOG_INIT_FILTER_LEVEL  - Initial severity level if dynamic filtering is enabled
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_QUEUE_CONFIG_LOG_INIT_FILTER_LEVEL
+#define NRF_QUEUE_CONFIG_LOG_INIT_FILTER_LEVEL 3
+#endif
+
+// <o> NRF_QUEUE_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_QUEUE_CONFIG_INFO_COLOR
+#define NRF_QUEUE_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_QUEUE_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_QUEUE_CONFIG_DEBUG_COLOR
+#define NRF_QUEUE_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -2231,6 +2574,114 @@
 
 #ifndef NRF_SORTLIST_CONFIG_DEBUG_COLOR
 #define NRF_SORTLIST_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_TWI_SENSOR_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_TWI_SENSOR_CONFIG_LOG_ENABLED
+#define NRF_TWI_SENSOR_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_TWI_SENSOR_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_TWI_SENSOR_CONFIG_LOG_LEVEL
+#define NRF_TWI_SENSOR_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_TWI_SENSOR_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_TWI_SENSOR_CONFIG_INFO_COLOR
+#define NRF_TWI_SENSOR_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_TWI_SENSOR_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_TWI_SENSOR_CONFIG_DEBUG_COLOR
+#define NRF_TWI_SENSOR_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// </h> 
+//==========================================================
+
+// <h> nrf_log in nRF_Serialization 
+
+//==========================================================
+// <e> SER_HAL_TRANSPORT_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef SER_HAL_TRANSPORT_CONFIG_LOG_ENABLED
+#define SER_HAL_TRANSPORT_CONFIG_LOG_ENABLED 0
+#endif
+// <o> SER_HAL_TRANSPORT_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef SER_HAL_TRANSPORT_CONFIG_LOG_LEVEL
+#define SER_HAL_TRANSPORT_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> SER_HAL_TRANSPORT_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef SER_HAL_TRANSPORT_CONFIG_INFO_COLOR
+#define SER_HAL_TRANSPORT_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> SER_HAL_TRANSPORT_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef SER_HAL_TRANSPORT_CONFIG_DEBUG_COLOR
+#define SER_HAL_TRANSPORT_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>

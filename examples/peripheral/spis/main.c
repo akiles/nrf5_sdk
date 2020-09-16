@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -79,7 +79,7 @@ int main(void)
     // (when the CPU is in sleep mode).
     NRF_POWER->TASKS_CONSTLAT = 1;
 
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     NRF_LOG_DEFAULT_BACKENDS_INIT();

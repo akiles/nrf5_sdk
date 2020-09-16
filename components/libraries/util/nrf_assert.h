@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2006 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2006 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -46,7 +46,6 @@
 
 #include <stdint.h>
 #include "nrf.h"
-#include "app_error.h"
 
 #ifdef __cplusplus
 extern "C" {

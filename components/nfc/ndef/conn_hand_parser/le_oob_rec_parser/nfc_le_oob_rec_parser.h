@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -52,6 +52,10 @@
 #include "nfc_ble_oob_advdata_parser.h"
 #include "nfc_ble_pair_common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Function for parsing general record description as LE OOB record.
  *
@@ -71,6 +75,10 @@
  */
 ret_code_t nfc_le_oob_rec_parse(nfc_ndef_record_desc_t     const * const p_rec_desc,
                                 nfc_ble_oob_pairing_data_t       * const p_nfc_ble_oob_pairing_data);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // __NFC_LE_OOB_REC_PARSER_H__
 

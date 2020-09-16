@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -46,7 +46,9 @@
 #include "ser_conn_pkt_decoder.h"
 #include "ser_conn_dtm_cmd_decoder.h"
 #include "nrf_sdh.h"
-
+#ifdef BLE_STACK_SUPPORT_REQD
+#include "conn_ble_gap_sec_keys.h"
+#endif
 
 /** @file
  *
@@ -66,7 +68,20 @@ static ser_hal_transport_evt_rx_pkt_received_params_t m_rx_pkt_received_params;
 /** Indicator of received packet that should be process. */
 static bool m_rx_pkt_to_process = false;
 
+static ser_conn_on_no_mem_t m_on_no_mem_handler;
 
+void ser_conn_on_no_mem_handler_set(ser_conn_on_no_mem_t handler)
+{
+    m_on_no_mem_handler = handler;
+}
+
+void ser_conn_on_no_mem_handler(void)
+{
+    if (m_on_no_mem_handler)
+    {
+        m_on_no_mem_handler();
+    }
+}
 void ser_conn_hal_transport_event_handle(ser_hal_transport_evt_t event)
 {
     switch (event.evt_type)

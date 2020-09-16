@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -55,7 +55,6 @@
 #include "app_error.h"
 #include "nrf_gzll_error.h"
 
-
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
@@ -63,14 +62,41 @@
 /*****************************************************************************/
 /** @name Configuration  */
 /*****************************************************************************/
-#define PIPE_NUMBER             0  ///< Pipe 0 is used in this example.
+#define PIPE_NUMBER             0  /**< Pipe 0 is used in this example. */
+#define TX_PAYLOAD_LENGTH       1  /**< 1-byte payload length is used when transmitting. */
 
-#define TX_PAYLOAD_LENGTH       1  ///< 1-byte payload length is used when transmitting.
+static uint8_t                  m_data_payload[NRF_GZLL_CONST_MAX_PAYLOAD_LENGTH]; /**< Placeholder for data payload received from host. */
+static uint8_t                  m_ack_payload[TX_PAYLOAD_LENGTH];                  /**< Payload to attach to ACK sent to device. */
 
-static uint8_t m_data_payload[NRF_GZLL_CONST_MAX_PAYLOAD_LENGTH]; ///< Placeholder for data payload received from host.
-static uint8_t m_ack_payload[TX_PAYLOAD_LENGTH];                  ///< Payload to attach to ACK sent to device.
+#if GZLL_TX_STATISTICS
+static nrf_gzll_tx_statistics_t m_statistics; /**< Struct containing transmission statistics. */
+#endif
 
-extern nrf_gzll_error_code_t nrf_gzll_error_code;                 ///< Error code.
+#if GZLL_PA_LNA_CONTROL
+
+#define GZLL_PA_LNA_TIMER       CONCAT_2(NRF_TIMER, GZLL_PA_LNA_TIMER_NUM) /**< Convert timer number into timer struct. */
+
+/**< PA/LNA structure configuration. */
+static nrf_gzll_pa_lna_cfg_t m_pa_lna_cfg = {
+    .lna_enabled        = GZLL_LNA_ENABLED,
+    .pa_enabled         = GZLL_PA_ENABLED,
+    .lna_active_high    = GZLL_LNA_ACTIVE_HIGH,
+    .pa_active_high     = GZLL_PA_ACTIVE_HIGH,
+    .lna_gpio_pin       = GZLL_PA_LNA_CRX_PIN,
+    .pa_gpio_pin        = GZLL_PA_LNA_CTX_PIN,
+    .pa_gpiote_channel  = GZLL_PA_LNA_TX_GPIOTE_CHAN,
+    .lna_gpiote_channel = GZLL_PA_LNA_RX_GPIOTE_CHAN,
+    .timer              = GZLL_PA_LNA_TIMER,
+    .ppi_channels[0]    = GZLL_PA_LNA_PPI_CHAN_1,
+    .ppi_channels[1]    = GZLL_PA_LNA_PPI_CHAN_2,
+    .ppi_channels[2]    = GZLL_PA_LNA_PPI_CHAN_3,
+    .ppi_channels[3]    = GZLL_PA_LNA_PPI_CHAN_4,
+    .ramp_up_time       = GZLL_PA_LNA_RAMP_UP_TIME
+};
+
+static int32_t m_rssi_sum    = 0; /**< Variable used to calculate average RSSI. */
+static int32_t m_packets_cnt = 0; /**< Transmitted packets counter. */
+#endif
 
 
 /**
@@ -128,7 +154,7 @@ static void ui_init(void)
     APP_ERROR_CHECK(err_code);
 
     // BSP initialization.
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, NULL);
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS, NULL);
     APP_ERROR_CHECK(err_code);
 
     // Set up logger.
@@ -140,7 +166,7 @@ static void ui_init(void)
     NRF_LOG_INFO("Gazell ACK payload example. Host mode.");
     NRF_LOG_FLUSH();
 
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 }
 
 
@@ -179,6 +205,11 @@ void nrf_gzll_host_rx_data_ready(uint32_t pipe, nrf_gzll_host_rx_info_t rx_info)
     {
         NRF_LOG_ERROR("TX fifo error ");
     }
+
+#if GZLL_PA_LNA_CONTROL
+    m_rssi_sum += rx_info.rssi;
+    m_packets_cnt++;
+#endif
 }
 
 
@@ -208,6 +239,32 @@ void nrf_gzll_disabled()
 {
 }
 
+#if GZLL_PA_LNA_CONTROL
+/**
+ * @brief Function for configuring front end control in Gazell.
+ */
+static bool front_end_control_setup(void)
+{
+    bool result_value = true;
+
+    // Configure pins controlling SKY66112 module.
+    nrf_gpio_cfg_output(GZLL_PA_LNA_CHL_PIN);
+    nrf_gpio_cfg_output(GZLL_PA_LNA_CPS_PIN);
+    nrf_gpio_cfg_output(GZLL_PA_LNA_ANT_SEL_PIN);
+    nrf_gpio_cfg_output(GZLL_PA_LNA_CSD_PIN);
+
+    // Turn on front end module.
+    nrf_gpio_pin_clear(GZLL_PA_LNA_CHL_PIN);
+    nrf_gpio_pin_clear(GZLL_PA_LNA_CPS_PIN);
+    nrf_gpio_pin_clear(GZLL_PA_LNA_ANT_SEL_PIN);
+    nrf_gpio_pin_set(GZLL_PA_LNA_CSD_PIN);
+
+    // PA/LNA configuration must be called after @ref nrf_gzll_init() and before @ref nrf_gzll_enable()
+    result_value = nrf_gzll_set_pa_lna_cfg(&m_pa_lna_cfg);
+
+    return result_value;
+}
+#endif
 
 /*****************************************************************************/
 /**
@@ -224,6 +281,18 @@ int main()
     bool result_value = nrf_gzll_init(NRF_GZLL_MODE_HOST);
     GAZELLE_ERROR_CODE_CHECK(result_value);
 
+#if GZLL_PA_LNA_CONTROL
+    // Initialize external PA/LNA control.
+    result_value = front_end_control_setup();
+    GAZELLE_ERROR_CODE_CHECK(result_value);
+#endif
+
+#if GZLL_TX_STATISTICS
+    // Turn on transmission statistics gathering.
+    result_value = nrf_gzll_tx_statistics_enable(&m_statistics);
+    GAZELLE_ERROR_CODE_CHECK(result_value);
+#endif
+
     // Load data into TX queue.
     m_ack_payload[0] = input_get();
 
@@ -237,12 +306,52 @@ int main()
     // Enable Gazell to start sending over the air.
     result_value = nrf_gzll_enable();
     GAZELLE_ERROR_CODE_CHECK(result_value);
+    
+    NRF_LOG_INFO("Gzll ack payload host example started.");
 
-    while (1)
+    while (true)
     {
         NRF_LOG_FLUSH();
         __WFE();
+
+#if GZLL_PA_LNA_CONTROL
+        if (m_packets_cnt >= 1000)
+        {
+            CRITICAL_REGION_ENTER();
+
+            // Print info about average RSSI.
+            NRF_LOG_RAW_INFO("\r\n");
+            NRF_LOG_INFO("Average RSSI: %d", (m_rssi_sum / m_packets_cnt));
+            m_packets_cnt = 0;
+            m_rssi_sum    = 0;
+
+            CRITICAL_REGION_EXIT();
+        }
+#endif
+
+#if GZLL_TX_STATISTICS
+        if (m_statistics.packets_num >= 1000)
+        {
+            CRITICAL_REGION_ENTER();
+
+            // Print all transmission statistics.
+            NRF_LOG_RAW_INFO("\r\n");
+            NRF_LOG_INFO("Total received packets:   %4u", m_statistics.packets_num);
+            NRF_LOG_INFO("Total CRC failures:       %03u\r\n", m_statistics.timeouts_num);
+
+            for (uint8_t i = 0; i < nrf_gzll_get_channel_table_size(); i++)
+            {
+                NRF_LOG_INFO("Channel %u: %03u packets received, %03u CRC failures.",
+                             i,
+                             m_statistics.channel_packets[i],
+                             m_statistics.channel_timeouts[i]);
+            }
+
+            CRITICAL_REGION_EXIT();
+
+            // Reset statistics buffers.
+            nrf_gzll_reset_tx_statistics();
+        }
+#endif
     }
 }
-
-

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -60,6 +60,7 @@
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define SEL_RES_CASCADE_BIT_NUM         3     /**< Number of Cascade bit within SEL_RES byte. */
 #define SEL_RES_TAG_PLATFORM_MASK       0x60  /**< Mask of Tag Platform bit group within SEL_RES byte. */
@@ -277,21 +278,31 @@ static ret_code_t nfc_turn_off_and_delay(void)
 }
 
 
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
 int main(void)
 {
     ret_code_t err_code;
 
-    err_code = NRF_LOG_INIT(NULL);
-    APP_ERROR_CHECK(err_code);
+    log_init();
 
-    NRF_LOG_INFO("NFC UART Poller example");
-
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
     err_code = adafruit_pn532_init(false);
     APP_ERROR_CHECK(err_code);
 
     err_code = uart_init();
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_INFO("NFC UART Poller example started.");
 
     while (1)
     {

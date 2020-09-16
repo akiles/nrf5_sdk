@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -77,6 +77,18 @@ static ble_rscs_c_t _name;                                                      
 NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
                      BLE_RSCS_C_BLE_OBSERVER_PRIO,                                                  \
                      ble_rscs_c_on_ble_evt, &_name)
+
+/** @brief Macro for defining multiple ble_rscs_c instances.
+ *
+ * @param   _name   Name of the array of instances.
+ * @param   _cnt    Number of instances to define.
+ * @hideinitializer
+ */
+#define BLE_RSCS_C_ARRAY_DEF(_name, _cnt)                 \
+static ble_rscs_c_t _name[_cnt];                          \
+NRF_SDH_BLE_OBSERVERS(_name ## _obs,                      \
+                      BLE_RSCS_C_BLE_OBSERVER_PRIO,       \
+                      ble_rscs_c_on_ble_evt, &_name, _cnt)
 
 #define BLE_RSCS_INSTANT_STRIDE_LEN_PRESENT     0x00  /**< Instantaneous Stride Length Measurement Supported bit. */
 #define BLE_RSCS_TOTAL_DISTANCE_PRESENT         0x01  /**< Total Distance Measurement Supported bit. */

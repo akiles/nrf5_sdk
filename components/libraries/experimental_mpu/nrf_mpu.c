@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -42,6 +42,7 @@
 #include "nrf.h"
 #include "nrf_mpu.h"
 #include "app_util_platform.h"
+#include "sdk_config.h"
 
 #if NRF_MPU_CLI_CMDS
 #include "nrf_cli.h"

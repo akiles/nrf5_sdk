@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -80,59 +80,59 @@
 extern "C" {
 #endif
 
-/**@brief   Macro for defining a ble_bas instance.
+/**@brief Macro for defining a ble_bas instance.
  *
- * @param   _name   Name of the instance.
+ * @param   _name  Name of the instance.
  * @hideinitializer
  */
-#define BLE_BAS_DEF(_name)                                                                          \
-static ble_bas_t _name;                                                                             \
-NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
-                     BLE_BAS_BLE_OBSERVER_PRIO,                                                     \
-                     ble_bas_on_ble_evt, &_name)
-
+#define BLE_BAS_DEF(_name)                          \
+    static ble_bas_t _name;                         \
+    NRF_SDH_BLE_OBSERVER(_name ## _obs,             \
+                         BLE_BAS_BLE_OBSERVER_PRIO, \
+                         ble_bas_on_ble_evt,        \
+                         &_name)
 
 /**@brief Battery Service event type. */
 typedef enum
 {
-    BLE_BAS_EVT_NOTIFICATION_ENABLED,   /**< Battery value notification enabled event. */
-    BLE_BAS_EVT_NOTIFICATION_DISABLED   /**< Battery value notification disabled event. */
+    BLE_BAS_EVT_NOTIFICATION_ENABLED, /**< Battery value notification enabled event. */
+    BLE_BAS_EVT_NOTIFICATION_DISABLED /**< Battery value notification disabled event. */
 } ble_bas_evt_type_t;
 
 /**@brief Battery Service event. */
 typedef struct
 {
-    ble_bas_evt_type_t evt_type;        /**< Type of event. */
+    ble_bas_evt_type_t evt_type;    /**< Type of event. */
+    uint16_t           conn_handle; /**< Connection handle. */
 } ble_bas_evt_t;
 
 // Forward declaration of the ble_bas_t type.
 typedef struct ble_bas_s ble_bas_t;
 
 /**@brief Battery Service event handler type. */
-typedef void (*ble_bas_evt_handler_t) (ble_bas_t * p_bas, ble_bas_evt_t * p_evt);
+typedef void (* ble_bas_evt_handler_t) (ble_bas_t * p_bas, ble_bas_evt_t * p_evt);
 
 /**@brief Battery Service init structure. This contains all options and data needed for
  *        initialization of the service.*/
 typedef struct
 {
-    ble_bas_evt_handler_t         evt_handler;                    /**< Event handler to be called for handling events in the Battery Service. */
-    bool                          support_notification;           /**< TRUE if notification of Battery Level measurement is supported. */
-    ble_srv_report_ref_t *        p_report_ref;                   /**< If not NULL, a Report Reference descriptor with the specified value will be added to the Battery Level characteristic */
-    uint8_t                       initial_batt_level;             /**< Initial battery level */
-    ble_srv_cccd_security_mode_t  battery_level_char_attr_md;     /**< Initial security level for battery characteristics attribute */
-    ble_gap_conn_sec_mode_t       battery_level_report_read_perm; /**< Initial security level for battery report read attribute */
+    ble_bas_evt_handler_t        evt_handler;                    /**< Event handler to be called for handling events in the Battery Service. */
+    bool                         support_notification;           /**< TRUE if notification of Battery Level measurement is supported. */
+    ble_srv_report_ref_t       * p_report_ref;                   /**< If not NULL, a Report Reference descriptor with the specified value will be added to the Battery Level characteristic */
+    uint8_t                      initial_batt_level;             /**< Initial battery level */
+    ble_srv_cccd_security_mode_t battery_level_char_attr_md;     /**< Initial security level for battery characteristics attribute */
+    ble_gap_conn_sec_mode_t      battery_level_report_read_perm; /**< Initial security level for battery report read attribute */
 } ble_bas_init_t;
 
 /**@brief Battery Service structure. This contains various status information for the service. */
 struct ble_bas_s
 {
-    ble_bas_evt_handler_t         evt_handler;                    /**< Event handler to be called for handling events in the Battery Service. */
-    uint16_t                      service_handle;                 /**< Handle of Battery Service (as provided by the BLE stack). */
-    ble_gatts_char_handles_t      battery_level_handles;          /**< Handles related to the Battery Level characteristic. */
-    uint16_t                      report_ref_handle;              /**< Handle of the Report Reference descriptor. */
-    uint8_t                       battery_level_last;             /**< Last Battery Level measurement passed to the Battery Service. */
-    uint16_t                      conn_handle;                    /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
-    bool                          is_notification_supported;      /**< TRUE if notification of Battery Level is supported. */
+    ble_bas_evt_handler_t    evt_handler;               /**< Event handler to be called for handling events in the Battery Service. */
+    uint16_t                 service_handle;            /**< Handle of Battery Service (as provided by the BLE stack). */
+    ble_gatts_char_handles_t battery_level_handles;     /**< Handles related to the Battery Level characteristic. */
+    uint16_t                 report_ref_handle;         /**< Handle of the Report Reference descriptor. */
+    uint8_t                  battery_level_last;        /**< Last Battery Level measurement passed to the Battery Service. */
+    bool                     is_notification_supported; /**< TRUE if notification of Battery Level is supported. */
 };
 
 
@@ -145,7 +145,7 @@ struct ble_bas_s
  *
  * @return      NRF_SUCCESS on successful initialization of service, otherwise an error code.
  */
-uint32_t ble_bas_init(ble_bas_t * p_bas, const ble_bas_init_t * p_bas_init);
+ret_code_t ble_bas_init(ble_bas_t * p_bas, const ble_bas_init_t * p_bas_init);
 
 
 /**@brief Function for handling the Application's BLE Stack events.
@@ -165,8 +165,10 @@ void ble_bas_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 
 /**@brief Function for updating the battery level.
  *
- * @details The application calls this function after having performed a battery measurement. If
- *          notification has been enabled, the battery level characteristic is sent to the client.
+ * @details The application calls this function after having performed a battery measurement.
+ *          The battery level characteristic will only be sent to the clients which have
+ *          enabled notifications. \ref BLE_CONN_HANDLE_ALL can be used as a connection handle
+ *          to send notifications to all connected devices.
  *
  * @note For the requirements in the BAS specification to be fulfilled,
  *       this function must be called upon reconnection if the battery level has changed
@@ -174,10 +176,13 @@ void ble_bas_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
  *
  * @param[in]   p_bas          Battery Service structure.
  * @param[in]   battery_level  New battery measurement value (in percent of full capacity).
+ * @param[in]   conn_handle    Connection handle.
  *
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
-uint32_t ble_bas_battery_level_update(ble_bas_t * p_bas, uint8_t battery_level);
+ret_code_t ble_bas_battery_level_update(ble_bas_t * p_bas,
+                                        uint8_t     battery_level,
+                                        uint16_t    conn_handle);
 
 
 #ifdef __cplusplus

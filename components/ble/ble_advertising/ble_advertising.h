@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -84,11 +84,11 @@ NRF_SDH_SOC_OBSERVER(_name ## _soc_obs,                                         
 /**@brief   Advertising modes. */
 typedef enum
 {
-    BLE_ADV_MODE_IDLE,          /**< Idle; no connectable advertising is ongoing. */
-    BLE_ADV_MODE_DIRECTED,      /**< Directed advertising attempts to connect to the most recently disconnected peer. */
-    BLE_ADV_MODE_DIRECTED_SLOW, /**< Directed advertising (low duty cycle) attempts to connect to the most recently disconnected peer. */
-    BLE_ADV_MODE_FAST,          /**< Fast advertising will connect to any peer device, or filter with a whitelist if one exists. */
-    BLE_ADV_MODE_SLOW,          /**< Slow advertising is similar to fast advertising. By default, it uses a longer advertising interval and time-out than fast advertising. However, these options are defined by the user. */
+    BLE_ADV_MODE_IDLE,               /**< Idle; no connectable advertising is ongoing. */
+    BLE_ADV_MODE_DIRECTED_HIGH_DUTY, /**< Directed advertising (high duty cycle) attempts to connect to the most recently disconnected peer. */
+    BLE_ADV_MODE_DIRECTED,           /**< Directed advertising (low duty cycle) attempts to connect to the most recently disconnected peer. */
+    BLE_ADV_MODE_FAST,               /**< Fast advertising will connect to any peer device, or filter with a whitelist if one exists. */
+    BLE_ADV_MODE_SLOW,               /**< Slow advertising is similar to fast advertising. By default, it uses a longer advertising interval and time-out than fast advertising. However, these options are defined by the user. */
 } ble_adv_mode_t;
 
 /**@brief   Advertising events.
@@ -101,8 +101,8 @@ typedef enum
 typedef enum
 {
     BLE_ADV_EVT_IDLE,                /**< Idle; no connectable advertising is ongoing.*/
-    BLE_ADV_EVT_DIRECTED,            /**< Direct advertising mode has started. */
-    BLE_ADV_EVT_DIRECTED_SLOW,       /**< Directed advertising (low duty cycle) has started. */
+    BLE_ADV_EVT_DIRECTED_HIGH_DUTY,  /**< Direct advertising mode has started. */
+    BLE_ADV_EVT_DIRECTED,            /**< Directed advertising (low duty cycle) has started. */
     BLE_ADV_EVT_FAST,                /**< Fast advertising mode has started. */
     BLE_ADV_EVT_SLOW,                /**< Slow advertising mode has started. */
     BLE_ADV_EVT_FAST_WHITELIST,      /**< Fast advertising mode using the whitelist has started. */
@@ -118,18 +118,21 @@ typedef enum
  */
 typedef struct
 {
-    bool     ble_adv_on_disconnect_disabled;  /**< Enable or disable automatic return to advertising upon disconnecting.*/
-    bool     ble_adv_whitelist_enabled;       /**< Enable or disable use of the whitelist. */
-    bool     ble_adv_directed_enabled;        /**< Enable or disable direct advertising mode. */
-    bool     ble_adv_directed_slow_enabled;   /**< Enable or disable direct advertising mode. */
-    bool     ble_adv_fast_enabled;            /**< Enable or disable fast advertising mode. */
-    bool     ble_adv_slow_enabled;            /**< Enable or disable slow advertising mode. */
-    uint32_t ble_adv_directed_slow_interval;  /**< Advertising interval for directed advertising. */
-    uint32_t ble_adv_directed_slow_timeout;   /**< Time-out (number of tries) for direct advertising. */
-    uint32_t ble_adv_fast_interval;           /**< Advertising interval for fast advertising. */
-    uint32_t ble_adv_fast_timeout;            /**< Time-out (in seconds) for fast advertising. */
-    uint32_t ble_adv_slow_interval;           /**< Advertising interval for slow advertising. */
-    uint32_t ble_adv_slow_timeout;            /**< Time-out (in seconds) for slow advertising. */
+    bool     ble_adv_on_disconnect_disabled;     /**< Enable or disable automatic return to advertising upon disconnecting.*/
+    bool     ble_adv_whitelist_enabled;          /**< Enable or disable use of the whitelist. */
+    bool     ble_adv_directed_high_duty_enabled; /**< Enable or disable direct advertising mode. can only be used if ble_adv_legacy_enabled is true. */
+    bool     ble_adv_directed_enabled;           /**< Enable or disable direct advertising mode. */
+    bool     ble_adv_fast_enabled;               /**< Enable or disable fast advertising mode. */
+    bool     ble_adv_slow_enabled;               /**< Enable or disable slow advertising mode. */
+    uint32_t ble_adv_directed_interval;          /**< Advertising interval for directed advertising. */
+    uint32_t ble_adv_directed_timeout;           /**< Time-out (number of tries) for direct advertising. */
+    uint32_t ble_adv_fast_interval;              /**< Advertising interval for fast advertising. */
+    uint32_t ble_adv_fast_timeout;               /**< Time-out (in seconds) for fast advertising. */
+    uint32_t ble_adv_slow_interval;              /**< Advertising interval for slow advertising. */
+    uint32_t ble_adv_slow_timeout;               /**< Time-out (in seconds) for slow advertising. */
+    bool     ble_adv_extended_enabled;           /**< Enable or disable extended advertising. */
+    uint32_t ble_adv_secondary_phy;              /**< PHY for the secondary (extended) advertising @ref BLE_GAP_PHYS (BLE_GAP_PHY_1MBPS, BLE_GAP_PHY_2MBPS or BLE_GAP_PHY_CODED). */
+    uint32_t ble_adv_primary_phy;                /**< PHY for the primary advertising. @ref BLE_GAP_PHYS (BLE_GAP_PHY_1MBPS, BLE_GAP_PHY_2MBPS or BLE_GAP_PHY_CODED). */
 } ble_adv_modes_config_t;
 
 /**@brief   BLE advertising event handler type. */
@@ -140,52 +143,29 @@ typedef void (*ble_adv_error_handler_t) (uint32_t nrf_error);
 
 typedef struct
 {
-    bool                        initialized;
-    bool                        advertising_start_pending;                /**< Flag to keep track of ongoing operations in flash. */
+    bool                    initialized;
+    bool                    advertising_start_pending;                        /**< Flag to keep track of ongoing operations in flash. */
+    ble_adv_mode_t          adv_mode_current;                                 /**< Variable to keep track of the current advertising mode. */
+    ble_adv_modes_config_t  adv_modes_config;                                 /**< Struct to keep track of disabled and enabled advertising modes, as well as time-outs and intervals.*/
+    uint8_t                 conn_cfg_tag;                                     /**< Variable to keep track of what connection settings will be used if the advertising results in a connection. */
 
-    ble_adv_evt_t               adv_evt;                                  /**< Advertising event propogated to the main application. The event is either a transaction to a new advertising mode, or a request for whitelist or peer address. */
+    ble_adv_evt_t           adv_evt;                                          /**< Advertising event propogated to the main application. The event is either a transaction to a new advertising mode, or a request for whitelist or peer address. */
+    ble_adv_evt_handler_t   evt_handler;                                      /**< Handler for the advertising events. Can be initialized as NULL if no handling is implemented on in the main application. */
+    ble_adv_error_handler_t error_handler;                                    /**< Handler for the advertising error events. */
 
-    ble_adv_mode_t              adv_mode_current;                         /**< Variable to keep track of the current advertising mode. */
-    ble_adv_modes_config_t      adv_modes_config;                         /**< Struct to keep track of disabled and enabled advertising modes, as well as time-outs and intervals.*/
-    uint8_t                     conn_cfg_tag;                             /**< Variable to keep track of what connection settings will be used if the advertising results in a connection. */
+    ble_gap_adv_params_t    adv_params;                                       /**< GAP advertising parameters. */
+    uint8_t                 adv_handle;                                       /**< Handle for the advertising set. */
+    uint8_t                 enc_advdata[BLE_GAP_ADV_SET_DATA_SIZE_MAX];       /**< Current advertising data in encoded form. */
+    uint8_t                 enc_scan_rsp_data[BLE_GAP_ADV_SET_DATA_SIZE_MAX]; /**< Current scan response data in encoded form. */
+    ble_gap_adv_data_t      adv_data;                                         /**< Advertising data. */
+    ble_gap_adv_data_t     *p_adv_data;                                       /**< Will be set to point to @ref ble_advertising_t::adv_data for undirected advertising, and will be set to NULL for directed advertising. */
 
-    ble_gap_addr_t              peer_address;                             /**< Address of the most recently connected peer, used for direct advertising. */
-    bool                        peer_addr_reply_expected;                 /**< Flag to verify that peer address is only set when requested. */
-
-    ble_advdata_t               advdata;                                  /**< Used by the initialization function to set name, appearance, and UUIDs and advertising flags visible to peer devices. */
-    ble_advdata_manuf_data_t    manuf_specific_data;                      /**< Manufacturer specific data structure*/
-    uint8_t                     manuf_data_array[BLE_GAP_ADV_MAX_SIZE];   /**< Array to store the Manufacturer specific data*/
-    ble_advdata_service_data_t  service_data;                             /**< Service data structure. */
-    uint8_t                     service_data_array[BLE_GAP_ADV_MAX_SIZE]; /**< Array to store the service data. */
-    ble_advdata_conn_int_t      slave_conn_int;                           /**< Connection interval range structure.*/
-    uint16_t                    current_slave_link_conn_handle;           /**< Connection handle for the active link. */
-
-    ble_adv_evt_handler_t       evt_handler;                              /**< Handler for the advertising events. Can be initialized as NULL if no handling is implemented on in the main application. */
-    ble_adv_error_handler_t     error_handler;                            /**< Handler for the advertising error events. */
-
-    bool                        whitelist_temporarily_disabled;           /**< Flag to keep track of temporary disabling of the whitelist. */
-    bool                        whitelist_reply_expected;
-
-#if (NRF_SD_BLE_API_VERSION <= 2)
-    // For SoftDevices v 2.x, this module caches a whitelist which is retrieved from the
-    // application using an event, and which is passed as a parameter when calling
-    // sd_ble_gap_adv_start().
-    ble_gap_addr_t * p_whitelist_addrs[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
-    ble_gap_irk_t  * p_whitelist_irks[BLE_GAP_WHITELIST_IRK_MAX_COUNT];
-    ble_gap_addr_t   whitelist_addrs[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
-    ble_gap_irk_t    whitelist_irks[BLE_GAP_WHITELIST_IRK_MAX_COUNT];
-
-    ble_gap_whitelist_t m_whitelist =
-    {
-        .pp_addrs = p_whitelist_addrs,
-        .pp_irks  = p_whitelist_irks
-    };
-#else
-    // For SoftDevices v 3.x, this module does not need to cache a whitelist, but it needs to
-    // be aware of whether or not a whitelist has been set (e.g. using the Peer Manager)
-    // in order to start advertising with the proper advertising params (filter policy).
-    bool whitelist_in_use;
-#endif
+    uint16_t                current_slave_link_conn_handle;                   /**< Connection handle for the active link. */
+    ble_gap_addr_t          peer_address;                                     /**< Address of the most recently connected peer, used for direct advertising. */
+    bool                    peer_addr_reply_expected;                         /**< Flag to verify that peer address is only set when requested. */
+    bool                    whitelist_temporarily_disabled;                   /**< Flag to keep track of temporary disabling of the whitelist. */
+    bool                    whitelist_reply_expected;                         /**< Flag to verify that the whitelist is only set when requested. */
+    bool                    whitelist_in_use;                                 /**< This module needs to be aware of whether or not a whitelist has been set (e.g. using the Peer Manager) in order to start advertising with the proper advertising params (filter policy). */
 } ble_advertising_t;
 
 typedef struct
@@ -245,7 +225,9 @@ void ble_advertising_on_sys_evt(uint32_t sys_evt, void * p_adv);
  *                           be used to identify this particular module instance.
  * @param[in] p_init         Information needed to initialize the module.
  *
- * @retval NRF_SUCCESS If initialization was successful. Otherwise, an error code is returned.
+ * @retval NRF_SUCCESS             If initialization was successful.
+ * @retval NRF_ERROR_INVALID_PARAM If the advertising configuration in \p p_init is invalid.
+ * @return If functions from other modules return errors to this function, the @ref nrf_error are propagated.
  */
 uint32_t ble_advertising_init(ble_advertising_t            * const p_advertising,
                               ble_advertising_init_t const * const p_init);
@@ -267,7 +249,7 @@ void ble_advertising_conn_cfg_tag_set(ble_advertising_t * const p_advertising, u
  *          during initialization.
  *
  * @param[in] p_advertising    Advertising module instance.
- * @param[in] advertising_mode  Advertising mode.
+ * @param[in] advertising_mode Advertising mode.
  *
  * @retval @ref NRF_SUCCESS On success, else an error code indicating reason for failure.
  * @retval @ref NRF_ERROR_INVALID_STATE If the module is not initialized.

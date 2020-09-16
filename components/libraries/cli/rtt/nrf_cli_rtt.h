@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -59,7 +59,7 @@ extern "C" {
 
 /**
  * @brief Command line interface transport.
- * */
+ */
 extern const nrf_cli_transport_api_t nrf_cli_rtt_transport_api;
 
 /**

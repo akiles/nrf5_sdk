@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -49,8 +49,12 @@
 #ifndef NFC_BLE_OOB_ADVDATA_PARSER_H_
 #define NFC_BLE_OOB_ADVDATA_PARSER_H_
 
-#include "nfc_ble_oob_advdata.h"
 #include "sdk_errors.h"
+#include "ble_advdata.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define BLE_ADVDATA_APPEARANCE_NOT_PRESENT    0    /**< Appearance AD structure not present. */
 
@@ -117,35 +121,16 @@ ret_code_t nfc_ble_oob_advdata_parse(uint8_t              const * p_advdata,
                                      uint8_t                      len,
                                      nfc_ble_oob_pairing_data_t * p_nfc_ble_pairing_data);
 
-/**@brief Function for finding BLE AD Type data within buffer encoded in AD Type format.
- *
- *        @details This function finds BLE AD Type data within buffer encoded in AD Type format
- *        The AD Data to be found can be specified by its AD Type - \p type.
- *
- *        @param[in]        type                AD Type of AD Structure to be found
- *                                              within \p p_advdata.
- *        @param[in]        p_advdata           Pointer to the data to be parsed.
- *        @param[in,out]    p_len               As input:  size of the data to be parsed.
- *                                              As output: size of the AD Data within
- *                                              found AD structure.
- *        @param[out]       pp_field_data       Pointer to AD Data within found AD Structure.
- *
- *        @retval           NRF_SUCCESS              If chosen AD Type was found successfully.
- *        @retval           NRF_ERROR_INVALID_LENGTH If any AD Structure Length field value indicates
- *                                                   that AD Structure exceeds provided buffer.
- *        @retval           NRF_ERROR_NULL           If any function pointer parameter is NULL.
- *        @retval           NRF_ERROR_NOT_FOUND      If chosen AD Type - \p type was not found.
- */
-ret_code_t nfc_ble_oob_advdata_parser_field_find(uint8_t    type,
-                                                 uint8_t *  p_advdata,
-                                                 uint8_t *  p_len,
-                                                 uint8_t ** pp_field_data);
 
 /**@brief Function for displaying values of basic BLE OOB Advertising data types.
  *
  *        @param[in]   p_pairing_data    Structure containing parsed data.
  */
 void nfc_oob_data_printout(nfc_ble_oob_pairing_data_t const * const p_pairing_data);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //NFC_BLE_OOB_ADVDATA_PARSER_H__
 

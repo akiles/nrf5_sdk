@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -80,9 +80,9 @@ extern "C" {
 #define NRF_FSTORAGE_SD         2
 
 // The size of a physical page, in 4-byte words.
-#if     defined(NRF51)
+#if defined(NRF51)
     #define FDS_PHY_PAGE_SIZE   (256)
- #elif defined(NRF52_SERIES)
+#else
     #define FDS_PHY_PAGE_SIZE   (1024)
 #endif
 

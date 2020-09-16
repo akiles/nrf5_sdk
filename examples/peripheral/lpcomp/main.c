@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -131,7 +131,7 @@ static void lpcomp_init(void)
 
 int main(void)
 {
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 
     nrf_gpio_cfg_output(WAVE_ON_PIN_NUMBER); // on this pin 2Hz wave will be generated
 
@@ -147,7 +147,7 @@ int main(void)
 
     lpcomp_init();
 
-    NRF_LOG_INFO("LPCOMP driver usage example");
+    NRF_LOG_INFO("LPCOMP driver usage example started.");
 
     while (true)
     {

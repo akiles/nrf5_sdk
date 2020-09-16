@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -230,6 +230,17 @@ static ret_code_t nfc_fifos_init(void)
     return err_code;
 }
 
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
 
 /**
  * @brief Function for application main entry.
@@ -238,15 +249,10 @@ int main(void)
 {
     ret_code_t err_code;
 
-    err_code = NRF_LOG_INIT(NULL);
-    APP_ERROR_CHECK(err_code);
-
-    NRF_LOG_DEFAULT_BACKENDS_INIT();
-
-    NRF_LOG_INFO("NFC UART Tag example");
+    log_init();
 
     /* Configure LED-pins as outputs */
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 
     /* Set up UART */
     err_code = uart_init();
@@ -259,6 +265,8 @@ int main(void)
     /* Set up NFC */
     err_code = nfc_t4t_setup(nfc_callback, NULL);
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_INFO("NFC UART Tag example started.");
 
     /* Start sensing NFC field */
     err_code = nfc_t4t_emulation_start();

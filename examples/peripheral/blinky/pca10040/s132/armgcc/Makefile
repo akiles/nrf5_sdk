@@ -10,11 +10,11 @@ $(OUTPUT_DIRECTORY)/nrf52832_xxaa.out: \
 
 # Source files common to all targets
 SRC_FILES += \
-  $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf52.S \
-  $(SDK_ROOT)/components/toolchain/system_nrf52.c \
+  $(SDK_ROOT)/modules/nrfx/mdk/gcc_startup_nrf52.S \
   $(PROJ_DIR)/main.c \
   $(SDK_ROOT)/components/boards/boards.c \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
+  $(SDK_ROOT)/components/libraries/util/app_error_handler_gcc.c \
   $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
   $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
@@ -22,6 +22,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/components/softdevice/common/nrf_sdh.c \
   $(SDK_ROOT)/components/softdevice/common/nrf_sdh_soc.c \
+  $(SDK_ROOT)/modules/nrfx/mdk/system_nrf52.c \
 
 # Include folders common to all targets
 INC_FOLDERS += \
@@ -29,23 +30,23 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/experimental_memobj \
   $(SDK_ROOT)/components/libraries/experimental_section_vars \
   $(SDK_ROOT)/components/softdevice/s132/headers \
-  $(SDK_ROOT)/components/libraries/util \
+  ../config \
   $(SDK_ROOT)/components/libraries/balloc \
   $(SDK_ROOT)/components/libraries/experimental_log \
-  $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/experimental_log/src \
-  $(PROJ_DIR) \
-  $(SDK_ROOT)/components/toolchain/gcc \
+  $(SDK_ROOT)/components/libraries/delay \
+  $(SDK_ROOT)/integration/nrfx \
   $(SDK_ROOT)/components/libraries/bsp \
-  ../config \
-  $(SDK_ROOT)/components/toolchain \
-  $(SDK_ROOT)/components/device \
-  $(SDK_ROOT)/components/softdevice/common \
-  $(SDK_ROOT)/components/boards \
-  $(SDK_ROOT)/components/drivers_nrf/delay \
-  $(SDK_ROOT)/components/softdevice/s132/headers/nrf52 \
-  $(SDK_ROOT)/components/drivers_nrf/hal \
+  $(SDK_ROOT)/modules/nrfx \
+  $(SDK_ROOT)/modules/nrfx/mdk \
   $(SDK_ROOT)/components/libraries/strerror \
+  $(SDK_ROOT)/components/boards \
+  $(SDK_ROOT)/components/softdevice/common \
+  $(SDK_ROOT)/components/softdevice/s132/headers/nrf52 \
+  $(SDK_ROOT)/modules/nrfx/hal \
+  $(SDK_ROOT)/components/toolchain/cmsis/include \
+  $(PROJ_DIR) \
+  $(SDK_ROOT)/components/libraries/util \
 
 # Libraries common to all targets
 LIB_FILES += \
@@ -64,16 +65,16 @@ CFLAGS += -DFLOAT_ABI_HARD
 CFLAGS += -DNRF52
 CFLAGS += -DNRF52832_XXAA
 CFLAGS += -DNRF52_PAN_74
-CFLAGS += -DNRF_SD_BLE_API_VERSION=5
+CFLAGS += -DNRF_SD_BLE_API_VERSION=6
 CFLAGS += -DS132
 CFLAGS += -DSOFTDEVICE_PRESENT
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
-CFLAGS +=  -Wall -Werror
+CFLAGS += -Wall -Werror
 CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 # keep every function in a separate section, this allows linker to discard unused ones
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -fno-builtin -fshort-enums 
+CFLAGS += -fno-builtin -fshort-enums
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
@@ -90,13 +91,13 @@ ASMFLAGS += -DFLOAT_ABI_HARD
 ASMFLAGS += -DNRF52
 ASMFLAGS += -DNRF52832_XXAA
 ASMFLAGS += -DNRF52_PAN_74
-ASMFLAGS += -DNRF_SD_BLE_API_VERSION=5
+ASMFLAGS += -DNRF_SD_BLE_API_VERSION=6
 ASMFLAGS += -DS132
 ASMFLAGS += -DSOFTDEVICE_PRESENT
 
 # Linker flags
 LDFLAGS += $(OPT)
-LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)
+LDFLAGS += -mthumb -mabi=aapcs -L$(SDK_ROOT)/modules/nrfx/mdk -T$(LINKER_SCRIPT)
 LDFLAGS += -mcpu=cortex-m4
 LDFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 # let linker dump unused sections
@@ -104,6 +105,10 @@ LDFLAGS += -Wl,--gc-sections
 # use newlib in nano version
 LDFLAGS += --specs=nano.specs
 
+nrf52832_xxaa: CFLAGS += -D__HEAP_SIZE=8192
+nrf52832_xxaa: CFLAGS += -D__STACK_SIZE=8192
+nrf52832_xxaa: ASMFLAGS += -D__HEAP_SIZE=8192
+nrf52832_xxaa: ASMFLAGS += -D__STACK_SIZE=8192
 
 # Add standard libraries at the very end of the linker input, after all objects
 # that may need symbols provided by these libraries.
@@ -140,8 +145,8 @@ flash: $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex
 
 # Flash softdevice
 flash_softdevice:
-	@echo Flashing: s132_nrf52_5.0.0_softdevice.hex
-	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_5.0.0_softdevice.hex --sectorerase
+	@echo Flashing: s132_nrf52_6.0.0_softdevice.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_6.0.0_softdevice.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

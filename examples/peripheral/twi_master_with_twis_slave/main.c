@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -240,7 +240,7 @@ static ret_code_t twi_master_init(void)
     {
        .scl                = TWI_SCL_M,
        .sda                = TWI_SDA_M,
-       .frequency          = NRF_TWI_FREQ_400K,
+       .frequency          = NRF_DRV_TWI_FREQ_400K,
        .interrupt_priority = APP_IRQ_PRIORITY_HIGH,
        .clear_bus_init     = false
     };
@@ -264,7 +264,7 @@ int main(void)
     bool epprom_error = 0;
     /* Initialization of UART */
 
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
 
@@ -295,7 +295,7 @@ int main(void)
 
     /* Welcome message */
     NRF_LOG_RAW_INFO(
-            "This is TWIS and TWI usage example.\r\n"
+            "TWIS and TWI usage example started.\r\n"
             "You can access simulated EEPROM memory using <eeprom> command.\r\n"
             "Execute: <eeprom -h> for more information or press the Tab button "
             "to see all available commands.\r\n"

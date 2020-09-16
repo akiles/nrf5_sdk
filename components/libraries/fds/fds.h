@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -196,7 +196,7 @@ typedef enum
 } fds_evt_id_t;
 
 
-ANON_UNIONS_ENABLE
+ANON_UNIONS_ENABLE;
 
 /**@brief   An FDS event. */
 typedef struct
@@ -221,7 +221,7 @@ typedef struct
     };
 } fds_evt_t;
 
-ANON_UNIONS_DISABLE
+ANON_UNIONS_DISABLE;
 
 
 /**@brief   File system statistics. */

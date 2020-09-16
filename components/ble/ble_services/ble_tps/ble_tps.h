@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -119,7 +119,7 @@ uint32_t ble_tps_init(ble_tps_t * p_hrs, const ble_tps_init_t * p_tps_init);
 void ble_tps_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 
 
-/**@brief Function for setting the state of the Sensor Contact Detected bit.
+/**@brief Function for setting the value of the TX Power Level characteristic.
  *
  * @param[in]   p_tps            TX Power Service structure.
  * @param[in]   tx_power_level   New TX Power Level (unit dBm, range -100 to 20).

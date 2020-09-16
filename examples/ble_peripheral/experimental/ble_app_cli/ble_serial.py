@@ -63,10 +63,11 @@ def ble_driver_init(conn_ic_id):
 
 ble_driver_init(args.family[0])  
 
-from pc_ble_driver_py.exceptions    import NordicSemiException, IllegalStateException
-from pc_ble_driver_py.ble_driver    import config,Flasher,BLEDriver, BLEDriverObserver, BLEEnableParams, BLEUUIDBase, BLEUUID, BLEAdvData, BLEGapConnParams, NordicSemiException
-from pc_ble_driver_py.ble_driver    import ATT_MTU_DEFAULT
-from pc_ble_driver_py.ble_adapter   import BLEAdapter, BLEAdapterObserver, EvtSync
+from nordicsemi.dfu.dfu_transport_ble import DFUAdapter
+from pc_ble_driver_py.exceptions      import NordicSemiException, IllegalStateException
+from pc_ble_driver_py.ble_driver      import config,Flasher,BLEDriver, BLEDriverObserver, BLEEnableParams, BLEUUIDBase, BLEUUID, BLEAdvData, BLEGapConnParams, NordicSemiException
+from pc_ble_driver_py.ble_driver      import ATT_MTU_DEFAULT
+from pc_ble_driver_py.ble_adapter     import BLEAdapter, BLEAdapterObserver, EvtSync
 
 global nrf_sd_ble_api_ver
 nrf_sd_ble_api_ver = config.sd_api_ver_get()

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -44,39 +44,23 @@
 
 // NOTE: For now, Security Manager Out of Band Flags (OOB) are omitted from the advertising data.
 
-#define AD_LENGTH_FIELD_SIZE               1UL                                         /**< Advertising Data and Scan Response format contains 1 octet for the length. */
-#define AD_TYPE_FIELD_SIZE                 1UL                                         /**< Advertising Data and Scan Response format contains 1 octet for the AD type. */
-#define AD_DATA_OFFSET                     (AD_LENGTH_FIELD_SIZE + AD_TYPE_FIELD_SIZE) /**< Offset for the AD data field of the Advertising Data and Scan Response format. */
-
-#define AD_TYPE_BLE_DEVICE_ADDR_TYPE_SIZE  1UL                                 /**< Data size (in octets) of the Address type of the LE Bluetooth Device Address AD type. */
-#define AD_TYPE_BLE_DEVICE_ADDR_DATA_SIZE  (BLE_GAP_ADDR_LEN + \
-                                            AD_TYPE_BLE_DEVICE_ADDR_TYPE_SIZE) /**< Data size (in octets) of the LE Bluetooth Device Address AD type. */
-#define AD_TYPE_BLE_DEVICE_ADDR_SIZE       (AD_DATA_OFFSET + \
-                                            AD_TYPE_BLE_DEVICE_ADDR_DATA_SIZE) /**< Size (in octets) of the LE Bluetooth Device Address AD type. */
-#define AD_TYPE_APPEARANCE_DATA_SIZE       2UL                                 /**< Data size (in octets) of the Appearance AD type. */
-#define AD_TYPE_APPEARANCE_SIZE            (AD_DATA_OFFSET + \
-                                            AD_TYPE_APPEARANCE_DATA_SIZE)      /**< Size (in octets) of the Appearance AD type. */
-#define AD_TYPE_FLAGS_DATA_SIZE            1UL                                 /**< Data size (in octets) of the Flags AD type. */
-#define AD_TYPE_FLAGS_SIZE                 (AD_DATA_OFFSET + \
-                                            AD_TYPE_FLAGS_DATA_SIZE)           /**< Size (in octets) of the Flags AD type. */
-#define AD_TYPE_TX_POWER_LEVEL_DATA_SIZE   1UL                                 /**< Data size (in octets) of the TX Power Level AD type. */
-#define AD_TYPE_TX_POWER_LEVEL_SIZE        (AD_DATA_OFFSET + \
-                                            AD_TYPE_TX_POWER_LEVEL_DATA_SIZE)  /**< Size (in octets) of the TX Power Level AD type. */
-#define AD_TYPE_CONN_INT_DATA_SIZE         4UL                                 /**< Data size (in octets) of the Slave Connection Interval Range AD type. */
-#define AD_TYPE_CONN_INT_SIZE              (AD_DATA_OFFSET + \
-                                            AD_TYPE_CONN_INT_DATA_SIZE)        /**< Data size (in octets) of the Slave Connection Interval Range AD type. */
-#define AD_TYPE_MANUF_SPEC_DATA_ID_SIZE    2UL                                 /**< Size (in octets) of the Company Identifier Code, which is a part of the Manufacturer Specific Data AD type. */
-#define AD_TYPE_SERV_DATA_16BIT_UUID_SIZE  2UL                                 /**< Size (in octets) of the 16-bit UUID, which is a part of the Service Data AD type. */
 
 // Types of LE Bluetooth Device Address AD type
 #define AD_TYPE_BLE_DEVICE_ADDR_TYPE_PUBLIC 0UL
 #define AD_TYPE_BLE_DEVICE_ADDR_TYPE_RANDOM 1UL
 
-static uint32_t ble_device_addr_encode(uint8_t  * p_encoded_data,
-                                       uint16_t * p_offset,
-                                       uint16_t   max_size)
+#define UUID16_SIZE     2   /**< Size of 16 bit UUID. */
+#define UUID32_SIZE     4   /**< Size of 32 bit UUID. */
+#define UUID128_SIZE    16  /**< Size of 128 bit UUID. */
+
+#define N_AD_TYPES      2   /**< The number of Advertising data types to search for at a time. */
+
+
+static ret_code_t ble_device_addr_encode(uint8_t  * p_encoded_data,
+                                         uint16_t * p_offset,
+                                         uint16_t   max_size)
 {
-    uint32_t err_code;
+    ret_code_t     err_code;
     ble_gap_addr_t device_addr;
 
     // Check for buffer overflow.
@@ -86,11 +70,7 @@ static uint32_t ble_device_addr_encode(uint8_t  * p_encoded_data,
     }
 
     // Get BLE address.
-    #if (NRF_SD_BLE_API_VERSION >= 3)
-        err_code = sd_ble_gap_addr_get(&device_addr);
-    #else
-        err_code = sd_ble_gap_address_get(&device_addr);
-    #endif
+    err_code = sd_ble_gap_addr_get(&device_addr);
     VERIFY_SUCCESS(err_code);
 
     // Encode LE Bluetooth Device Address.
@@ -114,15 +94,15 @@ static uint32_t ble_device_addr_encode(uint8_t  * p_encoded_data,
     return NRF_SUCCESS;
 }
 
-static uint32_t name_encode(const ble_advdata_t * p_advdata,
-                            uint8_t             * p_encoded_data,
-                            uint16_t            * p_offset,
-                            uint16_t              max_size)
+static ret_code_t name_encode(const ble_advdata_t * p_advdata,
+                              uint8_t             * p_encoded_data,
+                              uint16_t            * p_offset,
+                              uint16_t              max_size)
 {
-    uint32_t err_code;
-    uint16_t rem_adv_data_len;
-    uint16_t actual_length;
-    uint8_t  adv_data_format;
+    ret_code_t err_code;
+    uint16_t   rem_adv_data_len;
+    uint16_t   actual_length;
+    uint8_t    adv_data_format;
 
 
     // Validate parameters
@@ -190,12 +170,12 @@ static uint32_t name_encode(const ble_advdata_t * p_advdata,
 }
 
 
-static uint32_t appearance_encode(uint8_t  * p_encoded_data,
-                                  uint16_t * p_offset,
-                                  uint16_t   max_size)
+static ret_code_t appearance_encode(uint8_t  * p_encoded_data,
+                                    uint16_t * p_offset,
+                                    uint16_t   max_size)
 {
-    uint32_t err_code;
-    uint16_t appearance;
+    ret_code_t err_code;
+    uint16_t   appearance;
 
     // Check for buffer overflow.
     if (((*p_offset) + AD_TYPE_APPEARANCE_SIZE) > max_size)
@@ -217,10 +197,10 @@ static uint32_t appearance_encode(uint8_t  * p_encoded_data,
     return NRF_SUCCESS;
 }
 
-static uint32_t flags_encode(int8_t     flags,
-                             uint8_t  * p_encoded_data,
-                             uint16_t * p_offset,
-                             uint16_t   max_size)
+static ret_code_t flags_encode(int8_t     flags,
+                               uint8_t  * p_encoded_data,
+                               uint16_t * p_offset,
+                               uint16_t   max_size)
 {
     // Check for buffer overflow.
     if (((*p_offset) + AD_TYPE_FLAGS_SIZE) > max_size)
@@ -239,10 +219,10 @@ static uint32_t flags_encode(int8_t     flags,
     return NRF_SUCCESS;
 }
 
-static uint32_t tx_power_level_encode(int8_t     tx_power_level,
-                                      uint8_t  * p_encoded_data,
-                                      uint16_t * p_offset,
-                                      uint16_t   max_size)
+static ret_code_t tx_power_level_encode(int8_t     tx_power_level,
+                                        uint8_t  * p_encoded_data,
+                                        uint16_t * p_offset,
+                                        uint16_t   max_size)
 {
     // Check for buffer overflow.
     if (((*p_offset) + AD_TYPE_TX_POWER_LEVEL_SIZE) > max_size)
@@ -263,12 +243,12 @@ static uint32_t tx_power_level_encode(int8_t     tx_power_level,
 }
 
 
-static uint32_t uuid_list_sized_encode(const ble_advdata_uuid_list_t * p_uuid_list,
-                                       uint8_t                         adv_type,
-                                       uint8_t                         uuid_size,
-                                       uint8_t                       * p_encoded_data,
-                                       uint16_t                      * p_offset,
-                                       uint16_t                        max_size)
+static ret_code_t uuid_list_sized_encode(const ble_advdata_uuid_list_t * p_uuid_list,
+                                         uint8_t                         adv_type,
+                                         uint8_t                         uuid_size,
+                                         uint8_t                       * p_encoded_data,
+                                         uint16_t                      * p_offset,
+                                         uint16_t                        max_size)
 {
     int      i;
     bool     is_heading_written = false;
@@ -277,7 +257,7 @@ static uint32_t uuid_list_sized_encode(const ble_advdata_uuid_list_t * p_uuid_li
 
     for (i = 0; i < p_uuid_list->uuid_cnt; i++)
     {
-        uint32_t   err_code;
+        ret_code_t err_code;
         uint8_t    encoded_size;
         ble_uuid_t uuid = p_uuid_list->p_uuids[i];
 
@@ -328,14 +308,14 @@ static uint32_t uuid_list_sized_encode(const ble_advdata_uuid_list_t * p_uuid_li
 }
 
 
-static uint32_t uuid_list_encode(const ble_advdata_uuid_list_t * p_uuid_list,
-                                 uint8_t                         adv_type_16,
-                                 uint8_t                         adv_type_128,
-                                 uint8_t                       * p_encoded_data,
-                                 uint16_t                      * p_offset,
-                                 uint16_t                        max_size)
+static ret_code_t uuid_list_encode(const ble_advdata_uuid_list_t * p_uuid_list,
+                                   uint8_t                         adv_type_16,
+                                   uint8_t                         adv_type_128,
+                                   uint8_t                       * p_encoded_data,
+                                   uint16_t                      * p_offset,
+                                   uint16_t                        max_size)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     // Encode 16 bit UUIDs.
     err_code = uuid_list_sized_encode(p_uuid_list,
@@ -359,7 +339,7 @@ static uint32_t uuid_list_encode(const ble_advdata_uuid_list_t * p_uuid_list,
 }
 
 
-static uint32_t conn_int_check(const ble_advdata_conn_int_t *p_conn_int)
+static ret_code_t conn_int_check(const ble_advdata_conn_int_t *p_conn_int)
 {
     // Check Minimum Connection Interval.
     if ((p_conn_int->min_conn_interval < 0x0006) ||
@@ -396,12 +376,12 @@ static uint32_t conn_int_check(const ble_advdata_conn_int_t *p_conn_int)
 }
 
 
-static uint32_t conn_int_encode(const ble_advdata_conn_int_t * p_conn_int,
-                                uint8_t                      * p_encoded_data,
-                                uint16_t                     * p_offset,
-                                uint16_t                       max_size)
+static ret_code_t conn_int_encode(const ble_advdata_conn_int_t * p_conn_int,
+                                  uint8_t                      * p_encoded_data,
+                                  uint16_t                     * p_offset,
+                                  uint16_t                       max_size)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     // Check for buffer overflow.
     if (((*p_offset) + AD_TYPE_CONN_INT_SIZE) > max_size)
@@ -427,10 +407,10 @@ static uint32_t conn_int_encode(const ble_advdata_conn_int_t * p_conn_int,
 }
 
 
-static uint32_t manuf_specific_data_encode(const ble_advdata_manuf_data_t * p_manuf_sp_data,
-                                           uint8_t                        * p_encoded_data,
-                                           uint16_t                       * p_offset,
-                                           uint16_t                         max_size)
+static ret_code_t manuf_specific_data_encode(const ble_advdata_manuf_data_t * p_manuf_sp_data,
+                                             uint8_t                        * p_encoded_data,
+                                             uint16_t                       * p_offset,
+                                             uint16_t                         max_size)
 {
     uint32_t data_size = AD_TYPE_MANUF_SPEC_DATA_ID_SIZE + p_manuf_sp_data->data.size;
 
@@ -470,10 +450,10 @@ static uint32_t manuf_specific_data_encode(const ble_advdata_manuf_data_t * p_ma
 }
 
 // Implemented only for 16-bit UUIDs
-static uint32_t service_data_encode(const ble_advdata_t * p_advdata,
-                                    uint8_t             * p_encoded_data,
-                                    uint16_t            * p_offset,
-                                    uint16_t              max_size)
+static ret_code_t service_data_encode(const ble_advdata_t * p_advdata,
+                                      uint8_t             * p_encoded_data,
+                                      uint16_t            * p_offset,
+                                      uint16_t              max_size)
 {
     uint8_t i;
 
@@ -522,12 +502,12 @@ static uint32_t service_data_encode(const ble_advdata_t * p_advdata,
     return NRF_SUCCESS;
 }
 
-uint32_t ble_advdata_encode(ble_advdata_t const * const p_advdata,
-                            uint8_t             * const p_encoded_data,
-                            uint16_t            * const p_len)
+ret_code_t ble_advdata_encode(ble_advdata_t const * const p_advdata,
+                              uint8_t             * const p_encoded_data,
+                              uint16_t            * const p_len)
 {
-    uint32_t err_code = NRF_SUCCESS;
-    uint16_t max_size = *p_len;
+    ret_code_t err_code = NRF_SUCCESS;
+    uint16_t   max_size = *p_len;
     *p_len = 0;
 
     // Encode LE Bluetooth Device Address
@@ -632,74 +612,216 @@ uint32_t ble_advdata_encode(ble_advdata_t const * const p_advdata,
 }
 
 
-static uint32_t advdata_check(const ble_advdata_t * p_advdata)
+uint16_t ble_advdata_search(uint8_t const * p_encoded_data,
+                            uint16_t        data_len,
+                            uint16_t      * p_offset,
+                            uint8_t         ad_type)
 {
-    // Flags must be included in advertising data, and the BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED flag must be set.
-    if (
-        ((p_advdata->flags & BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED) == 0)
-       )
+    if ((p_encoded_data == NULL) || (p_offset == NULL))
     {
-        return NRF_ERROR_INVALID_PARAM;
+        return 0;
     }
 
-    return NRF_SUCCESS;
-}
+    uint16_t i = 0;
 
-
-static uint32_t srdata_check(const ble_advdata_t * p_srdata)
-{
-    // Flags shall not be included in the scan response data.
-    if (p_srdata->flags)
+    while (((i < *p_offset) || (p_encoded_data[i + 1] != ad_type)) && (i < data_len))
     {
-        return NRF_ERROR_INVALID_PARAM;
+        // Jump to next data.
+        i += (p_encoded_data[i] + 1);
     }
 
-    return NRF_SUCCESS;
-}
-
-
-uint32_t ble_advdata_set(const ble_advdata_t * p_advdata, const ble_advdata_t * p_srdata)
-{
-    uint32_t  err_code;
-    uint16_t  len_advdata = BLE_GAP_ADV_MAX_SIZE;
-    uint16_t  len_srdata  = BLE_GAP_ADV_MAX_SIZE;
-    uint8_t   encoded_advdata[BLE_GAP_ADV_MAX_SIZE];
-    uint8_t   encoded_srdata[BLE_GAP_ADV_MAX_SIZE];
-    uint8_t * p_encoded_advdata;
-    uint8_t * p_encoded_srdata;
-
-    // Encode advertising data (if supplied).
-    if (p_advdata != NULL)
+    if (i >= data_len)
     {
-        err_code = advdata_check(p_advdata);
-        VERIFY_SUCCESS(err_code);
-
-        err_code = ble_advdata_encode(p_advdata, encoded_advdata, &len_advdata);
-        VERIFY_SUCCESS(err_code);
-        p_encoded_advdata = encoded_advdata;
+        return 0;
     }
     else
     {
-        p_encoded_advdata = NULL;
-        len_advdata = 0;
+        *p_offset = i + 2;
+        return (p_encoded_data[i] - 1);
     }
+}
 
-    // Encode scan response data (if supplied).
-    if (p_srdata != NULL)
+
+uint8_t * ble_advdata_parse(uint8_t  * p_encoded_data,
+                            uint16_t   data_len,
+                            uint8_t    ad_type)
+{
+    uint16_t offset = 0;
+    uint16_t len    = ble_advdata_search(p_encoded_data, data_len, &offset, ad_type);
+
+    if (len == 0)
     {
-        err_code = srdata_check(p_srdata);
-        VERIFY_SUCCESS(err_code);
-
-        err_code = ble_advdata_encode(p_srdata, encoded_srdata, &len_srdata);
-        VERIFY_SUCCESS(err_code);
-        p_encoded_srdata = encoded_srdata;
+        return NULL;
     }
     else
     {
-        p_encoded_srdata = NULL;
-        len_srdata = 0;
+        return &p_encoded_data[offset];
+    }
+}
+
+
+bool ble_advdata_name_find(uint8_t const * p_encoded_data,
+                           uint16_t        data_len,
+                           char    const * p_target_name)
+{
+    uint16_t        parsed_name_len;
+    uint8_t const * p_parsed_name;
+    uint16_t        data_offset          = 0;
+
+    if (p_target_name == NULL)
+    {
+        return false;
     }
 
-    // Pass encoded advertising data and/or scan response data to the stack.
-    return sd_ble_gap_adv_data_set(p_encoded_advdata, len_advdata, p_encoded_srdata, len_srdata);
+
+    parsed_name_len = ble_advdata_search(p_encoded_data,
+                                         data_len,
+                                         &data_offset,
+                                         BLE_GAP_AD_TYPE_COMPLETE_LOCAL_NAME);
+
+    p_parsed_name = &p_encoded_data[data_offset];
+
+    if (   (data_offset != 0)
+        && (parsed_name_len != 0)
+        && (strlen(p_target_name) == parsed_name_len)
+        && (memcmp(p_target_name, p_parsed_name, parsed_name_len) == 0))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+bool ble_advdata_short_name_find(uint8_t const * p_encoded_data,
+                                 uint16_t        data_len,
+                                 char    const * p_target_name,
+                                 uint8_t const   short_name_min_len)
+{
+    uint16_t        parsed_name_len;
+    uint8_t const * p_parsed_name;
+    uint16_t        data_offset          = 0;
+
+    if (p_target_name == NULL)
+    {
+        return false;
+    }
+
+    parsed_name_len = ble_advdata_search(p_encoded_data,
+                                         data_len,
+                                         &data_offset,
+                                         BLE_GAP_AD_TYPE_SHORT_LOCAL_NAME);
+
+    p_parsed_name = &p_encoded_data[data_offset];
+
+    if (   (data_offset != 0)
+        && (parsed_name_len != 0)
+        && (parsed_name_len >= short_name_min_len)
+        && (parsed_name_len < strlen(p_target_name))
+        && (memcmp(p_target_name, p_parsed_name, parsed_name_len) == 0))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+bool ble_advdata_uuid_find(uint8_t    const * p_encoded_data,
+                           uint16_t           data_len,
+                           ble_uuid_t const * p_target_uuid)
+{
+
+    ret_code_t      err_code;
+    uint16_t        data_offset = 0;
+    uint8_t         raw_uuid_len    = UUID128_SIZE;
+    uint8_t const * p_parsed_uuid;
+    uint16_t        parsed_uuid_len = data_len;
+    uint8_t         raw_uuid[UUID128_SIZE];
+    uint8_t         ad_types[N_AD_TYPES];
+
+    err_code = sd_ble_uuid_encode(p_target_uuid, &raw_uuid_len, raw_uuid);
+
+    if ((p_encoded_data == NULL) || (err_code != NRF_SUCCESS))
+    {
+        // Invalid p_encoded_data or p_target_uuid.
+        return false;
+    }
+
+    switch (raw_uuid_len)
+    {
+        case UUID16_SIZE:
+            ad_types[0] = BLE_GAP_AD_TYPE_16BIT_SERVICE_UUID_COMPLETE;
+            ad_types[1] = BLE_GAP_AD_TYPE_16BIT_SERVICE_UUID_MORE_AVAILABLE;
+            break;
+
+        case UUID32_SIZE:
+            // Not currently supported by sd_ble_uuid_encode().
+            ad_types[0] = BLE_GAP_AD_TYPE_32BIT_SERVICE_UUID_COMPLETE;
+            ad_types[1] = BLE_GAP_AD_TYPE_32BIT_SERVICE_UUID_MORE_AVAILABLE;
+            break;
+
+        case UUID128_SIZE:
+            ad_types[0] = BLE_GAP_AD_TYPE_128BIT_SERVICE_UUID_COMPLETE;
+            ad_types[1] = BLE_GAP_AD_TYPE_128BIT_SERVICE_UUID_MORE_AVAILABLE;
+            break;
+
+        default:
+            return false;
+    }
+
+    for (uint8_t i = 0; (i < N_AD_TYPES) && (data_offset == 0); i++)
+    {
+        parsed_uuid_len = ble_advdata_search(p_encoded_data, data_len, &data_offset, ad_types[i]);
+    }
+
+    if (data_offset == 0)
+    {
+        // Could not find any relevant UUIDs in the encoded data.
+        return false;
+    }
+
+    p_parsed_uuid = &p_encoded_data[data_offset];
+
+    // Verify if any UUID matches the given UUID.
+    for (uint16_t list_offset = 0; list_offset < parsed_uuid_len; list_offset += raw_uuid_len)
+    {
+        if (memcmp(&p_parsed_uuid[list_offset], raw_uuid, raw_uuid_len) == 0)
+        {
+            return true;
+        }
+    }
+
+    // Could not find the UUID among the encoded data.
+    return false;
+}
+
+
+bool ble_advdata_appearance_find(uint8_t  const * p_encoded_data,
+                                 uint16_t         data_len,
+                                 uint16_t const * p_target_appearance)
+{
+    uint16_t        data_offset = 0;
+    uint8_t         appearance_len;
+    uint16_t        decoded_appearance;
+
+    appearance_len = ble_advdata_search(p_encoded_data, data_len, &data_offset, BLE_GAP_AD_TYPE_APPEARANCE);
+
+    if (   (data_offset == 0)
+        || (p_target_appearance == NULL)
+        || (appearance_len == 0))
+    {
+        // Could not find any Appearance in the encoded data, or invalid p_target_appearance.
+        return false;
+    }
+
+    decoded_appearance = uint16_decode(&p_encoded_data[data_offset]);
+
+    if (decoded_appearance == *p_target_appearance)
+    {
+        return true;
+    }
+
+    // Could not find the appearance among the encoded data.
+    return false;
 }

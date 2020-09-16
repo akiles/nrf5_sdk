@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -37,51 +37,104 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+
 #ifndef NRF_CRYPTO_INIT_H__
 #define NRF_CRYPTO_INIT_H__
 
 /** @file
  *
- * @defgroup nrf_crypto_initialization Initialization.
+ * @defgroup nrf_crypto_initialization Initialization
  * @{
  * @ingroup nrf_crypto
  *
- * @brief Provides nrf_crypto initialization related functions.
+ * @brief Initialization related functions for nrf_crypto .
+ *
+ * @details @ref lib_crypto is responsible for global initialization of the nrf_crypto
+ *          frontend and backends that are enabled in @ref sdk_config.
  */
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "nrf_section.h"
+#include "sdk_errors.h"
+#include "nrf_crypto_types.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <stdint.h>
-#include "nrf_crypto_types.h"
 
-/**@brief Function for initializing the cryptography library.
+/**@internal @brief  Macro for registering a nrf_crypto backend for initialization by using
+ *                   nrf_section.
  *
- * @retval  NRF_SUCCESS     If initialization was successful.
- * @retval  NRF_ERROR_INTERNAL  If an internal error occured in the nrf_crypt backend.
+ * @details     This macro places a variable in a section named "crypto_data", which
+ *              is initialized by @ref nrf_crypto_init.
+ *
+ * @note    This macro is used internally based on sdk_config.h configurations for nrf_crypto
  */
-uint32_t nrf_crypto_init(void);
+#define CRYPTO_BACKEND_REGISTER(crypto_var) NRF_SECTION_ITEM_REGISTER(crypto_data, crypto_var)
+
+/**@internal @brief Type definition of function pointer to initialize the nrf_crypto backend.
+ *
+ * This function type is used internally. See @nrf_crypto_init for documentation.
+ */
+typedef ret_code_t (*nrf_crypto_backend_init_fn_t)(void);
 
 
-/**@brief Function for uninitializing the cryptography library.
+/**@internal @brief Type definition of function pointer to uninitialize the nrf_crypto backend.
+ *
+ * This function type is used internally. Please see @nrf_crypto_uninit for documentation.
+ */
+typedef ret_code_t (*nrf_crypto_backend_uninit_fn_t)(void);
+
+
+
+/**@internal @brief Type definition for structure holding the calling interface to
+ *                  init, uninit, enable, or disable an nrf_crypto_backend
+ *
+ * @note    Some backends require no expressive init, uninit, enable, or disable.
+ *          In this case, the backend will not use this structure type or only select
+ *          to implement
+ */
+typedef struct
+{
+    nrf_crypto_backend_init_fn_t      const init_fn;
+    nrf_crypto_backend_uninit_fn_t    const uninit_fn;
+} nrf_crypto_backend_info_t;
+
+
+/**@brief Function for initializing nrf_crypto and all registered backends.
+ *
+ * @details Must always be called before any other @ref nrf_crypto function.
+ *
+ * @retval  NRF_SUCCESS         The initialization was successful.
+ * @retval  NRF_ERROR_INTERNAL  An internal error occured in the nrf_crypt backend init.
+ */
+ret_code_t nrf_crypto_init(void);
+
+
+/**@brief Function for uninitializing nrf_crypto and all registered backends.
  *
  * @retval  NRF_SUCCESS         If unititialization was successful.
- * @retval  NRF_ERROR_INTERNAL  If an internal error occured in the nrf_crypt backend.
+ * @retval  NRF_ERROR_INTERNAL  If an internal error occured in the nrf_crypt backend init.
  */
-uint32_t nrf_crypto_uninit(void);
+ret_code_t nrf_crypto_uninit(void);
 
 
 /**@brief Function reporting if nrf_crypto has been initialized.
  *
  * @retval  True    If cryptographic library is initialized.
- * @retval  False   If cryptographic library isn't initialized.
+ * @retval  False   If cryptographic library is not initialized.
  */
 bool nrf_crypto_is_initialized(void);
 
+
+/**@brief Function reporting if nrf_crypto is initialized or is in the process of being initialized.
+ *
+ * @retval  True    If cryptographic library is initializing or already initialized.
+ * @retval  False   If cryptographic library is not initialized.
+ */
+bool nrf_crypto_is_initializing(void);
 
 #ifdef __cplusplus
 }

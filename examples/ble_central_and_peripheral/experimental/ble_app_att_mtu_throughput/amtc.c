@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -112,7 +112,6 @@ static void tx_buffer_process(void)
 
         if (err_code == NRF_SUCCESS)
         {
-            NRF_LOG_DEBUG("SD Read/Write API returns Success.");
             m_tx_index++;
             m_tx_index &= TX_BUFFER_MASK;
         }
@@ -419,8 +418,6 @@ ret_code_t nrf_ble_amtc_rcb_read(nrf_ble_amtc_t * p_ctx)
     {
         return NRF_ERROR_INVALID_STATE;
     }
-
-    NRF_LOG_DEBUG("Reading RCB characteristic.");
 
     tx_message_t * p_msg = &m_tx_buffer[m_tx_insert_index++];
 

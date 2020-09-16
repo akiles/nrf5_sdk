@@ -7,7 +7,6 @@ MEMORY
 {
   FLASH (rx) : ORIGIN = 0x12000, LENGTH = 0x6e000
   RAM (rwx) :  ORIGIN = 0x20006b80, LENGTH = 0x9480
-  
 }
 
 SECTIONS
@@ -52,11 +51,11 @@ SECTIONS
     KEEP(*(SORT(.sdh_soc_observers*)))
     PROVIDE(__stop_sdh_soc_observers = .);
   } > FLASH
-  .sdh_req_observers :
+    .nrf_balloc :
   {
-    PROVIDE(__start_sdh_req_observers = .);
-    KEEP(*(SORT(.sdh_req_observers*)))
-    PROVIDE(__stop_sdh_req_observers = .);
+    PROVIDE(__start_nrf_balloc = .);
+    KEEP(*(.nrf_balloc))
+    PROVIDE(__stop_nrf_balloc = .);
   } > FLASH
   .sdh_state_observers :
   {
@@ -70,8 +69,13 @@ SECTIONS
     KEEP(*(SORT(.sdh_stack_observers*)))
     PROVIDE(__stop_sdh_stack_observers = .);
   } > FLASH
-  
+  .sdh_req_observers :
+  {
+    PROVIDE(__start_sdh_req_observers = .);
+    KEEP(*(SORT(.sdh_req_observers*)))
+    PROVIDE(__stop_sdh_req_observers = .);
+  } > FLASH
 
 } INSERT AFTER .text
 
-INCLUDE "nrf5x_common.ld"
+INCLUDE "nrf_common.ld"

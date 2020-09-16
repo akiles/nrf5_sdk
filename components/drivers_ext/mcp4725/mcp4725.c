@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -92,7 +92,7 @@ static ret_code_t twi_init(mcp4725_pins_config_t const * p_pins_config)
     const nrf_drv_twi_config_t twi_mcp4725_config = {
        .scl                = p_pins_config->scl_pin,
        .sda                = p_pins_config->sda_pin,
-       .frequency          = NRF_TWI_FREQ_100K,
+       .frequency          = NRF_DRV_TWI_FREQ_100K,
        .interrupt_priority = APP_IRQ_PRIORITY_HIGH,
        .clear_bus_init     = false
     };

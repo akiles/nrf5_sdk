@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -75,22 +75,65 @@
 #include <stdbool.h>
 #include "ble.h"
 #include "ble_srv_common.h"
+#include "ble_link_ctx_manager.h"
 #include "nrf_sdh_ble.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/**@brief   Macro for defining a ble_hids instance.
+/**@brief Allocate static data for keeping host connection contexts.
  *
- * @param   _name   Name of the instance.
+ * @param       _name             Name of BLE HIDS instance.
+ * @param[in]   _hids_max_clients Maximum number of HIDS clients connected at a time.
+ * @param[in]   ...               Lengths of HIDS reports.
+ *
+ * @details
+ * Mapping of HIDS reports in the HIDS report context:
+ * - Structure of type @ref ble_hids_client_context_t
+ * - Boot keyboard input report
+ * - Boot keyboard output report
+ * - Boot mouse input report
+ * - Input reports
+ * - Output reports
+ * - Feature reports
  * @hideinitializer
  */
-#define BLE_HIDS_DEF(_name)                                                                         \
-static ble_hids_t _name;                                                                            \
-NRF_SDH_BLE_OBSERVER(_name ## _obs,                                                                 \
-                     BLE_HIDS_BLE_OBSERVER_PRIO,                                                    \
-                     ble_hids_on_ble_evt, &_name)
+#define BLE_HIDS_DEF(_name,                                              \
+                     _hids_max_clients,                                  \
+                     ...)                                                \
+    BLE_LINK_CTX_MANAGER_DEF(CONCAT_2(_name, _link_ctx_storage),         \
+                             (_hids_max_clients),                        \
+                             BLE_HIDS_LINK_CTX_SIZE_CALC(__VA_ARGS__));  \
+    static ble_hids_t _name =                                            \
+    {                                                                    \
+        .p_link_ctx_storage = &CONCAT_2(_name, _link_ctx_storage)        \
+    };                                                                   \
+    NRF_SDH_BLE_OBSERVER(_name ## _obs,                                  \
+                         BLE_HIDS_BLE_OBSERVER_PRIO,                     \
+                         ble_hids_on_ble_evt,                            \
+                         &_name)
+
+/**@brief Helping macro for @ref BLE_HIDS_DEF, that calculates the link context size for BLE HIDS
+ *        instance.
+ *
+ * @param[in]   ... Lengths of HIDS reports
+ * @hideinitializer
+ */
+#define BLE_HIDS_LINK_CTX_SIZE_CALC(...)            \
+    (sizeof(ble_hids_client_context_t) +            \
+    MACRO_MAP_REC(BLE_HIDS_REPORT_ADD, __VA_ARGS__) \
+    (BOOT_KB_INPUT_REPORT_MAX_SIZE) +               \
+    (BOOT_KB_OUTPUT_REPORT_MAX_SIZE) +              \
+    (BOOT_MOUSE_INPUT_REPORT_MAX_SIZE))             \
+
+/**@brief Helping macro for @ref BLE_HIDS_LINK_CTX_SIZE_CALC, that adds Input/Output/Feature report
+ *        lengths.
+ *
+ * @param[in]   _report_size   Length of the specific report.
+ * @hideinitializer
+ */
+#define BLE_HIDS_REPORT_ADD(_report_size) (_report_size) +
 
 /** @name Report Type values
  * @anchor BLE_HIDS_REPORT_TYPE @{
@@ -109,6 +152,11 @@ NRF_SDH_BLE_OBSERVER(_name ## _obs,                                             
 // Information Flags
 #define HID_INFO_FLAG_REMOTE_WAKE_MSK           0x01
 #define HID_INFO_FLAG_NORMALLY_CONNECTABLE_MSK  0x02
+
+#define BOOT_KB_INPUT_REPORT_MAX_SIZE           8       /**< Maximum size of a Boot Keyboard Input Report (as per Appendix B in Device Class Definition for Human Interface Devices (HID), Version 1.11). */
+#define BOOT_KB_OUTPUT_REPORT_MAX_SIZE          1       /**< Maximum size of a Boot Keyboard Output Report (as per Appendix B in Device Class Definition for Human Interface Devices (HID), Version 1.11). */
+#define BOOT_MOUSE_INPUT_REPORT_MIN_SIZE        3       /**< Minimum size of a Boot Mouse Input Report (as per Appendix B in Device Class Definition for Human Interface Devices (HID), Version 1.11). */
+#define BOOT_MOUSE_INPUT_REPORT_MAX_SIZE        8       /**< Maximum size of a Boot Mouse Input Report (as per Appendix B in Device Class Definition for Human Interface Devices (HID), Version 1.11). */
 
 /**@brief HID Service characteristic id. */
 typedef struct
@@ -146,7 +194,7 @@ typedef struct
             ble_hids_char_id_t char_id;             /**< Id of characteristic having been written. */
             uint16_t           offset;              /**< Offset for the write operation. */
             uint16_t           len;                 /**< Length of the incoming data. */
-            uint8_t*           data;                /**< Incoming data, variable length */
+            uint8_t    const * data;                /**< Incoming data, variable length */
         } char_write;
         struct
         {
@@ -178,7 +226,6 @@ typedef struct
     uint16_t                      max_len;          /**< Maximum length of characteristic value. */
     ble_srv_report_ref_t          rep_ref;          /**< Value of the Report Reference descriptor. */
     ble_srv_cccd_security_mode_t  security_mode;    /**< Security mode for the HID Input Report characteristic, including cccd. */
-    uint8_t                       read_resp : 1;    /**< Should application generate a response to read requests. */
 } ble_hids_inp_rep_init_t;
 
 /**@brief HID Service Output Report characteristic init structure. This contains all options and
@@ -188,7 +235,6 @@ typedef struct
     uint16_t                      max_len;          /**< Maximum length of characteristic value. */
     ble_srv_report_ref_t          rep_ref;          /**< Value of the Report Reference descriptor. */
     ble_srv_cccd_security_mode_t  security_mode;    /**< Security mode for the HID Output Report characteristic, including cccd. */
-    uint8_t                       read_resp : 1;    /**< Should application generate a response to read requests. */
 } ble_hids_outp_rep_init_t;
 
 /**@brief HID Service Feature Report characteristic init structure. This contains all options and
@@ -198,7 +244,6 @@ typedef struct
     uint16_t                      max_len;          /**< Maximum length of characteristic value. */
     ble_srv_report_ref_t          rep_ref;          /**< Value of the Report Reference descriptor. */
     ble_srv_cccd_security_mode_t  security_mode;    /**< Security mode for the HID Service Feature Report characteristic, including cccd. */
-    uint8_t                       read_resp : 1;    /**< Should application generate a response to read requests. */
 } ble_hids_feature_rep_init_t;
 
 /**@brief HID Service Report Map characteristic init structure. This contains all options and data
@@ -208,7 +253,7 @@ typedef struct
     uint8_t *                     p_data;           /**< Report map data. */
     uint16_t                      data_len;         /**< Length of report map data. */
     uint8_t                       ext_rep_ref_num;  /**< Number of Optional External Report Reference descriptors. */
-    ble_uuid_t *                  p_ext_rep_ref;    /**< Optional External Report Reference descriptor (will be added if != NULL). */
+    ble_uuid_t const *            p_ext_rep_ref;    /**< Optional External Report Reference descriptor (will be added if != NULL). */
     ble_srv_security_mode_t       security_mode;    /**< Security mode for the HID Service Report Map characteristic. */
 } ble_hids_rep_map_init_t;
 
@@ -219,54 +264,63 @@ typedef struct
     uint16_t                      ref_handle;       /**< Handle of the Report Reference descriptor. */
 } ble_hids_rep_char_t;
 
+/**@brief HID Host context structure. It keeps information relevant to a single host. */
+typedef struct
+{
+    uint8_t   protocol_mode;  /**< Protocol mode. */
+    uint8_t   ctrl_pt;        /**< HID Control Point. */
+} ble_hids_client_context_t;
+
 /**@brief HID Service init structure. This contains all options and data needed for initialization
  *        of the service. */
 typedef struct
 {
-    ble_hids_evt_handler_t        evt_handler;                                  /**< Event handler to be called for handling events in the HID Service. */
-    ble_srv_error_handler_t       error_handler;                                /**< Function to be called in case of an error. */
-    bool                          is_kb;                                        /**< TRUE if device is operating as a keyboard, FALSE if it is not. */
-    bool                          is_mouse;                                     /**< TRUE if device is operating as a mouse, FALSE if it is not. */
-    uint8_t                       inp_rep_count;                                /**< Number of Input Report characteristics. */
-    ble_hids_inp_rep_init_t *     p_inp_rep_array;                              /**< Information about the Input Report characteristics. */
-    uint8_t                       outp_rep_count;                               /**< Number of Output Report characteristics. */
-    ble_hids_outp_rep_init_t *    p_outp_rep_array;                             /**< Information about the Output Report characteristics. */
-    uint8_t                       feature_rep_count;                            /**< Number of Feature Report characteristics. */
-    ble_hids_feature_rep_init_t * p_feature_rep_array;                          /**< Information about the Feature Report characteristics. */
-    ble_hids_rep_map_init_t       rep_map;                                      /**< Information nedeed for initialization of the Report Map characteristic. */
-    ble_hids_hid_information_t    hid_information;                              /**< Value of the HID Information characteristic. */
-    uint8_t                       included_services_count;                      /**< Number of services to include in HID service. */
-    uint16_t *                    p_included_services_array;                    /**< Array of services to include in HID service. */
-    ble_srv_security_mode_t       security_mode_protocol;                       /**< Security settings for HID service protocol attribute */
-    ble_srv_security_mode_t       security_mode_ctrl_point;                     /**< Security settings for HID service Control Point attribute */
-    ble_srv_cccd_security_mode_t  security_mode_boot_mouse_inp_rep;             /**< Security settings for HID service Mouse input report attribute */
-    ble_srv_cccd_security_mode_t  security_mode_boot_kb_inp_rep;                /**< Security settings for HID service Keyboard input report attribute */
-    ble_srv_security_mode_t       security_mode_boot_kb_outp_rep;               /**< Security settings for HID service Keyboard output report attribute */
+    ble_hids_evt_handler_t              evt_handler;                                  /**< Event handler to be called for handling events in the HID Service. */
+    ble_srv_error_handler_t             error_handler;                                /**< Function to be called in case of an error. */
+    bool                                is_kb;                                        /**< TRUE if device is operating as a keyboard, FALSE if it is not. */
+    bool                                is_mouse;                                     /**< TRUE if device is operating as a mouse, FALSE if it is not. */
+    uint8_t                             inp_rep_count;                                /**< Number of Input Report characteristics. */
+    ble_hids_inp_rep_init_t const *     p_inp_rep_array;                              /**< Information about the Input Report characteristics. */
+    uint8_t                             outp_rep_count;                               /**< Number of Output Report characteristics. */
+    ble_hids_outp_rep_init_t const *    p_outp_rep_array;                             /**< Information about the Output Report characteristics. */
+    uint8_t                             feature_rep_count;                            /**< Number of Feature Report characteristics. */
+    ble_hids_feature_rep_init_t const * p_feature_rep_array;                          /**< Information about the Feature Report characteristics. */
+    ble_hids_rep_map_init_t             rep_map;                                      /**< Information nedeed for initialization of the Report Map characteristic. */
+    ble_hids_hid_information_t          hid_information;                              /**< Value of the HID Information characteristic. */
+    uint8_t                             included_services_count;                      /**< Number of services to include in HID service. */
+    uint16_t *                          p_included_services_array;                    /**< Array of services to include in HID service. */
+    ble_srv_security_mode_t             security_mode_protocol;                       /**< Security settings for HID service protocol attribute */
+    ble_srv_security_mode_t             security_mode_ctrl_point;                     /**< Security settings for HID service Control Point attribute */
+    ble_srv_cccd_security_mode_t        security_mode_boot_mouse_inp_rep;             /**< Security settings for HID service Mouse input report attribute */
+    ble_srv_cccd_security_mode_t        security_mode_boot_kb_inp_rep;                /**< Security settings for HID service Keyboard input report attribute */
+    ble_srv_security_mode_t             security_mode_boot_kb_outp_rep;               /**< Security settings for HID service Keyboard output report attribute */
 } ble_hids_init_t;
 
 /**@brief HID Service structure. This contains various status information for the service. */
 struct ble_hids_s
 {
-    ble_hids_evt_handler_t        evt_handler;                                  /**< Event handler to be called for handling events in the HID Service. */
-    ble_srv_error_handler_t       error_handler;                                /**< Function to be called in case of an error. */
-    uint16_t                      service_handle;                               /**< Handle of HID Service (as provided by the BLE stack). */
-    ble_gatts_char_handles_t      protocol_mode_handles;                        /**< Handles related to the Protocol Mode characteristic (will only be created if ble_hids_init_t.is_kb or ble_hids_init_t.is_mouse is set). */
-    uint8_t                       inp_rep_count;                                /**< Number of Input Report characteristics. */
-    ble_hids_rep_char_t           inp_rep_array[BLE_HIDS_MAX_INPUT_REP];        /**< Information about the Input Report characteristics. */
-    uint8_t                       outp_rep_count;                               /**< Number of Output Report characteristics. */
-    ble_hids_rep_char_t           outp_rep_array[BLE_HIDS_MAX_OUTPUT_REP];      /**< Information about the Output Report characteristics. */
-    uint8_t                       feature_rep_count;                            /**< Number of Feature Report characteristics. */
-    ble_hids_rep_char_t           feature_rep_array[BLE_HIDS_MAX_FEATURE_REP];  /**< Information about the Feature Report characteristics. */
-    ble_gatts_char_handles_t      rep_map_handles;                              /**< Handles related to the Report Map characteristic. */
-    uint16_t                      rep_map_ext_rep_ref_handle;                   /**< Handle of the Report Map External Report Reference descriptor. */
-    ble_gatts_char_handles_t      boot_kb_inp_rep_handles;                      /**< Handles related to the Boot Keyboard Input Report characteristic (will only be created if ble_hids_init_t.is_kb is set). */
-    ble_gatts_char_handles_t      boot_kb_outp_rep_handles;                     /**< Handles related to the Boot Keyboard Output Report characteristic (will only be created if ble_hids_init_t.is_kb is set). */
-    ble_gatts_char_handles_t      boot_mouse_inp_rep_handles;                   /**< Handles related to the Boot Mouse Input Report characteristic (will only be created if ble_hids_init_t.is_mouse is set). */
-    ble_gatts_char_handles_t      hid_information_handles;                      /**< Handles related to the Report Map characteristic. */
-    ble_gatts_char_handles_t      hid_control_point_handles;                    /**< Handles related to the Report Map characteristic. */
-    uint16_t                      conn_handle;                                  /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
+    ble_hids_evt_handler_t              evt_handler;                                  /**< Event handler to be called for handling events in the HID Service. */
+    ble_srv_error_handler_t             error_handler;                                /**< Function to be called in case of an error. */
+    uint16_t                            service_handle;                               /**< Handle of HID Service (as provided by the BLE stack). */
+    ble_gatts_char_handles_t            protocol_mode_handles;                        /**< Handles related to the Protocol Mode characteristic (will only be created if ble_hids_init_t.is_kb or ble_hids_init_t.is_mouse is set). */
+    uint8_t                             inp_rep_count;                                /**< Number of Input Report characteristics. */
+    ble_hids_rep_char_t                 inp_rep_array[BLE_HIDS_MAX_INPUT_REP];        /**< Information about the Input Report characteristics. */
+    uint8_t                             outp_rep_count;                               /**< Number of Output Report characteristics. */
+    ble_hids_rep_char_t                 outp_rep_array[BLE_HIDS_MAX_OUTPUT_REP];      /**< Information about the Output Report characteristics. */
+    uint8_t                             feature_rep_count;                            /**< Number of Feature Report characteristics. */
+    ble_hids_rep_char_t                 feature_rep_array[BLE_HIDS_MAX_FEATURE_REP];  /**< Information about the Feature Report characteristics. */
+    ble_gatts_char_handles_t            rep_map_handles;                              /**< Handles related to the Report Map characteristic. */
+    uint16_t                            rep_map_ext_rep_ref_handle;                   /**< Handle of the Report Map External Report Reference descriptor. */
+    ble_gatts_char_handles_t            boot_kb_inp_rep_handles;                      /**< Handles related to the Boot Keyboard Input Report characteristic (will only be created if ble_hids_init_t.is_kb is set). */
+    ble_gatts_char_handles_t            boot_kb_outp_rep_handles;                     /**< Handles related to the Boot Keyboard Output Report characteristic (will only be created if ble_hids_init_t.is_kb is set). */
+    ble_gatts_char_handles_t            boot_mouse_inp_rep_handles;                   /**< Handles related to the Boot Mouse Input Report characteristic (will only be created if ble_hids_init_t.is_mouse is set). */
+    ble_gatts_char_handles_t            hid_information_handles;                      /**< Handles related to the Report Map characteristic. */
+    ble_gatts_char_handles_t            hid_control_point_handles;                    /**< Handles related to the Report Map characteristic. */
+    blcm_link_ctx_storage_t     * const p_link_ctx_storage;                           /**< Link context storage with handles of all current connections and its data context. */
+    ble_hids_inp_rep_init_t     const * p_inp_rep_init_array;                         /**< Pointer to information about the Input Report characteristics. */
+    ble_hids_outp_rep_init_t    const * p_outp_rep_init_array;                        /**< Pointer to information about the Output Report characteristics. */
+    ble_hids_feature_rep_init_t const * p_feature_rep_init_array;                     /**< Pointer to information about the Feature Report characteristics. */
 };
-
 
 /**@brief Function for initializing the HID Service.
  *
@@ -279,7 +333,6 @@ struct ble_hids_s
  */
 uint32_t ble_hids_init(ble_hids_t * p_hids, const ble_hids_init_t * p_hids_init);
 
-
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @details Handles all events from the BLE stack of interest to the HID Service.
@@ -288,7 +341,6 @@ uint32_t ble_hids_init(ble_hids_t * p_hids, const ble_hids_init_t * p_hids_init)
  * @param[in]   p_context   HID Service structure.
  */
 void ble_hids_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
-
 
 /**@brief Function for sending Input Report.
  *
@@ -299,14 +351,15 @@ void ble_hids_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
  *                           ble_hids_t.inp_rep_array as passed to ble_hids_init()).
  * @param[in]   len          Length of data to be sent.
  * @param[in]   p_data       Pointer to data to be sent.
+ * @param[in]   conn_handle  Connection handle, where the notification will be sent.
  *
  * @return      NRF_SUCCESS on successful sending of input report, otherwise an error code.
  */
 uint32_t ble_hids_inp_rep_send(ble_hids_t * p_hids,
                                uint8_t      rep_index,
                                uint16_t     len,
-                               uint8_t *    p_data);
-
+                               uint8_t    * p_data,
+                               uint16_t     conn_handle);
 
 /**@brief Function for sending Boot Keyboard Input Report.
  *
@@ -315,13 +368,14 @@ uint32_t ble_hids_inp_rep_send(ble_hids_t * p_hids,
  * @param[in]   p_hids       HID Service structure.
  * @param[in]   len          Length of data to be sent.
  * @param[in]   p_data       Pointer to data to be sent.
+ * @param[in]   conn_handle  Connection handle, where the notification will be sent.
  *
  * @return      NRF_SUCCESS on successful sending of the report, otherwise an error code.
  */
 uint32_t ble_hids_boot_kb_inp_rep_send(ble_hids_t * p_hids,
                                        uint16_t     len,
-                                       uint8_t *    p_data);
-
+                                       uint8_t    * p_data,
+                                       uint16_t     conn_handle);
 
 /**@brief Function for sending Boot Mouse Input Report.
  *
@@ -333,6 +387,7 @@ uint32_t ble_hids_boot_kb_inp_rep_send(ble_hids_t * p_hids,
  * @param[in]   y_delta             Vertical movement.
  * @param[in]   optional_data_len   Length of optional part of Boot Mouse Input Report.
  * @param[in]   p_optional_data     Optional part of Boot Mouse Input Report.
+ * @param[in]   conn_handle         Connection handle.
  *
  * @return      NRF_SUCCESS on successful sending of the report, otherwise an error code.
  */
@@ -341,8 +396,8 @@ uint32_t ble_hids_boot_mouse_inp_rep_send(ble_hids_t * p_hids,
                                           int8_t       x_delta,
                                           int8_t       y_delta,
                                           uint16_t     optional_data_len,
-                                          uint8_t *    p_optional_data);
-
+                                          uint8_t    * p_optional_data,
+                                          uint16_t     conn_handle);
 
 /**@brief Function for getting the current value of Output Report from the stack.
  *
@@ -353,6 +408,7 @@ uint32_t ble_hids_boot_mouse_inp_rep_send(ble_hids_t * p_hids,
  *                          ble_hids_t.outp_rep_array as passed to ble_hids_init()).
  * @param[in]   len         Length of output report needed.
  * @param[in]   offset      Offset in bytes to read from.
+ * @param[in]   conn_handle Connection handle.
  * @param[out]  p_outp_rep  Pointer to the output report.
  *
  * @return      NRF_SUCCESS on successful read of the report, otherwise an error code.
@@ -361,7 +417,8 @@ uint32_t ble_hids_outp_rep_get(ble_hids_t * p_hids,
                                uint8_t      rep_index,
                                uint16_t     len,
                                uint8_t      offset,
-                               uint8_t *    p_outp_rep);
+                               uint16_t     conn_handle,
+                               uint8_t    * p_outp_rep);
 
 
 #ifdef __cplusplus

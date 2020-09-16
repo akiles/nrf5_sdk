@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -153,7 +153,7 @@ int main(void)
     uint8_t     rx_byte;                   // Last byte read from UART.
     dtm_event_t result;                    // Result of a DTM operation.
 
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
     
     uart_init();
 

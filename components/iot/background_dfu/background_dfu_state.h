@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -79,7 +79,7 @@ typedef enum
     BACKGROUND_DFU_EVENT_TRANSFER_CONTINUE,
     BACKGROUND_DFU_EVENT_TRANSFER_ERROR,
     BACKGROUND_DFU_EVENT_PROCESSING_ERROR,
-} background_dfu_even_t;
+} background_dfu_event_t;
 
 /** @brief DFU mode definitions. */
 typedef enum
@@ -99,7 +99,7 @@ typedef PACKED_STRUCT
 } background_dfu_trigger_t;
 
 /**@brief Structure with DFU diagnostic information. */
-typedef PACKED_STRUCT
+typedef PACKED_STRUCT background_dfu_diagnostic
 {
     uint32_t build_id;                      /**< Build identifier, based on compilation time. */
     uint8_t  state;                         /**< Current DFU state. */
@@ -183,7 +183,7 @@ background_dfu_block_result_t background_dfu_process_block(background_dfu_contex
  * @return NRF_SUCCESS or error code
  */
 uint32_t background_dfu_handle_event(background_dfu_context_t * p_dfu_ctx,
-                                     background_dfu_even_t      event);
+                                     background_dfu_event_t     event);
 
 /**@brief Reset state machine state.
  *
@@ -203,7 +203,7 @@ void background_dfu_state_init(background_dfu_context_t * p_dfu_ctx);
  *
  * @return String representing the event.
  */
-const char * background_dfu_event_to_string(const background_dfu_even_t event);
+const char * background_dfu_event_to_string(const background_dfu_event_t event);
 
 /**@brief Convert a DFU state enum value to a string description.
  *

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -52,6 +52,7 @@
 #include "fds.h"
 #include "nfc_ble_pair_lib.h"
 #include "nrf_ble_gatt.h"
+#include "nrf_ble_qwr.h"
 
 #define NRF_LOG_MODULE_NAME BLE_M
 #include "nrf_log.h"
@@ -72,14 +73,13 @@ NRF_LOG_MODULE_REGISTER();
 #define APP_BLE_CONN_CFG_TAG            1                                           /**< A tag for a BLE stack configuration. */
 
 #define APP_ADV_INTERVAL                300                                         /**< The advertising interval (in units of 0.625 ms. This value corresponds to 187.5 ms). */
-#define APP_ADV_TIMEOUT_IN_SECONDS      30                                          /**< The advertising timeout in units of seconds. */
-
+#define APP_ADV_DURATION                18000                                       /**< The advertising duration (180 seconds) in units of 10 milliseconds. */
 
 NRF_BLE_GATT_DEF(m_gatt);                                                           /**< GATT module instance. */
+NRF_BLE_QWR_DEF(m_qwr);                                                             /**< Context for the Queued Write module.*/
 BLE_ADVERTISING_DEF(m_advertising);                                                 /**< Advertising module instance. */
 
 static uint16_t                m_conn_handle  = BLE_CONN_HANDLE_INVALID;            /**< Handle of the current connection. */
-static bool                    m_is_connected = false;                              /**< Flag to keep track of BLE connections with central devices. */
 static ble_gap_conn_sec_mode_t m_sec_mode;                                          /**< Holds GAP security requirements. */
 static ble_advdata_t           m_advdata;                                           /**< Variable holding advertised data. */
 
@@ -102,20 +102,20 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
     {
         case BLE_GAP_EVT_DISCONNECTED:
             NRF_LOG_INFO("Disonnected");
-            // LED indication will be changed when advertising starts.
-            m_conn_handle  = BLE_CONN_HANDLE_INVALID;
-            m_is_connected = false;
+            err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+            APP_ERROR_CHECK(err_code);
+            m_conn_handle = BLE_CONN_HANDLE_INVALID;
             break;
 
         case BLE_GAP_EVT_CONNECTED:
             NRF_LOG_INFO("Connected.");
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
-            m_conn_handle  = p_ble_evt->evt.gap_evt.conn_handle;
-            m_is_connected = true;
+            m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
+            err_code = nrf_ble_qwr_conn_handle_assign(&m_qwr, m_conn_handle);
+            APP_ERROR_CHECK(err_code);
             break;
 
-#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -127,7 +127,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
             APP_ERROR_CHECK(err_code);
         } break;
-#endif
 
         case BLE_GATTC_EVT_TIMEOUT:
             // Disconnect on GATT Client timeout event.
@@ -142,11 +141,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             NRF_LOG_DEBUG("GATT Server Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gatts_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
-            APP_ERROR_CHECK(err_code);
-            break;
-
-        case BLE_EVT_USER_MEM_REQUEST:
-            err_code = sd_ble_user_mem_reply(p_ble_evt->evt.gattc_evt.conn_handle, NULL);
             APP_ERROR_CHECK(err_code);
             break;
 
@@ -212,6 +206,19 @@ static void conn_params_error_handler(uint32_t nrf_error)
 }
 
 
+/**@brief Function for handling Queued Write Module errors.
+ *
+ * @details A pointer to this function will be passed to each service which may need to inform the
+ *          application about an error.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void nrf_qwr_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
+}
+
+
 /**@brief   Function for handling advertising events.
  *
  * @details This function will be called for advertising events which are passed to the application.
@@ -233,12 +240,6 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
         case BLE_ADV_EVT_IDLE:
             NRF_LOG_INFO("Advertising stopped.");
             err_code = bsp_indication_set(BSP_INDICATE_IDLE);
-            APP_ERROR_CHECK(err_code);
-            break;
-
-        case BLE_ADV_EVT_DIRECTED:
-            NRF_LOG_INFO("Directed advertising.");
-            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
             APP_ERROR_CHECK(err_code);
             break;
 
@@ -294,10 +295,11 @@ void advertising_init(void)
 
     init.advdata = m_advdata;
 
-    init.config.ble_adv_fast_enabled      = true;
-    init.config.ble_adv_fast_interval     = APP_ADV_INTERVAL;
-    init.config.ble_adv_fast_timeout      = APP_ADV_TIMEOUT_IN_SECONDS;
-    init.config.ble_adv_whitelist_enabled = false;
+    init.config.ble_adv_fast_enabled           = true;
+    init.config.ble_adv_fast_interval          = APP_ADV_INTERVAL;
+    init.config.ble_adv_fast_timeout           = APP_ADV_DURATION;
+    init.config.ble_adv_whitelist_enabled      = false;
+    init.config.ble_adv_on_disconnect_disabled = true;
 
     init.evt_handler = on_adv_evt;
 
@@ -312,7 +314,7 @@ void ble_disconnect(void)
 {
     ret_code_t err_code;
 
-    if (m_is_connected)
+    if (m_conn_handle != BLE_CONN_HANDLE_INVALID)
     {
         err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
         APP_ERROR_CHECK(err_code);
@@ -356,6 +358,18 @@ void gap_params_init(void)
 void gatt_init()
 {
     ret_code_t err_code = nrf_ble_gatt_init(&m_gatt, NULL);
+    APP_ERROR_CHECK(err_code);
+}
+
+
+void qwr_init(void)
+{
+    ret_code_t         err_code;
+    nrf_ble_qwr_init_t qwr_init_obj = {0};
+
+    qwr_init_obj.error_handler = nrf_qwr_error_handler;
+
+    err_code = nrf_ble_qwr_init(&m_qwr, &qwr_init_obj);
     APP_ERROR_CHECK(err_code);
 }
 

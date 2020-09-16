@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -41,10 +41,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include "compiler_abstraction.h"
-#include "nrf_dfu_svci.h"
+#include "nrf_dfu_ble_svci_bond_sharing.h"
 #include "nordic_common.h"
-#include "nrf_dfu_svci.h"
 #include "nrf_error.h"
 #include "ble_dfu.h"
 #include "nrf_log.h"
@@ -52,18 +50,24 @@
 #include "gatts_cache_manager.h"
 #include "peer_id.h"
 #include "nrf_sdh_soc.h"
+#include "nrf_strerror.h"
 
-#if defined(NRF_DFU_BLE_BUTTONLESS_SUPPORTS_BONDS) && (NRF_DFU_BLE_BUTTONLESS_SUPPORTS_BONDS == 1)
+#if (NRF_DFU_BLE_BUTTONLESS_SUPPORTS_BONDS)
+
+
+void ble_dfu_buttonless_on_sys_evt(uint32_t, void * );
+uint32_t nrf_dfu_svci_vector_table_set(void);
+uint32_t nrf_dfu_svci_vector_table_unset(void);
 
 /**@brief Define function for async interface to set peer data. */
 NRF_SVCI_ASYNC_FUNC_DEFINE(NRF_DFU_SVCI_SET_PEER_DATA, nrf_dfu_set_peer_data, nrf_dfu_peer_data_t);
 
+// Register SoC observer for the Buttonless Secure DFU service
+NRF_SDH_SOC_OBSERVER(m_dfu_buttonless_soc_obs, BLE_DFU_SOC_OBSERVER_PRIO, ble_dfu_buttonless_on_sys_evt, NULL);
+
 ble_dfu_buttonless_t       * mp_dfu;
 static nrf_dfu_peer_data_t   m_peer_data;
 
-void ble_dfu_buttonless_on_sys_evt(uint32_t, void * );
-// Register SoC observer for the Buttonless Secure DFU service
-NRF_SDH_SOC_OBSERVER(m_dfu_buttonless_soc_obs, BLE_DFU_SOC_OBSERVER_PRIO, ble_dfu_buttonless_on_sys_evt, NULL);
 
 /**@brief Function for handling Peer Manager events.
  *
@@ -71,7 +75,8 @@ NRF_SDH_SOC_OBSERVER(m_dfu_buttonless_soc_obs, BLE_DFU_SOC_OBSERVER_PRIO, ble_df
  */
 static void pm_evt_handler(pm_evt_t const * p_evt)
 {
-    uint32_t err_code;
+    uint32_t ret;
+
     if (mp_dfu == NULL)
     {
         return;
@@ -86,7 +91,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
     switch(p_evt->evt_id)
     {
         case PM_EVT_PEER_DATA_UPDATE_SUCCEEDED:
-            if (p_evt->params.peer_data_update_succeeded.data_id == PM_PEER_DATA_ID_GATT_LOCAL)
+            if (p_evt->params.peer_data_update_succeeded.data_id == PM_PEER_DATA_ID_SERVICE_CHANGED_PENDING)
             {
                 mp_dfu->peers_count--;
                 NRF_LOG_DEBUG("Updating Service Changed indication for peers, %d left", mp_dfu->peers_count);
@@ -94,63 +99,59 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
                 {
                     NRF_LOG_DEBUG("Finished updating Service Changed indication for peers");
                     // We have updated Service Changed Indication for all devices.
-                    err_code = ble_dfu_buttonless_bootloader_start_finalize();
-                    if (err_code != NRF_SUCCESS)
+                    ret = ble_dfu_buttonless_bootloader_start_finalize();
+                    if (ret != NRF_SUCCESS)
                     {
                         mp_dfu->evt_handler(BLE_DFU_EVT_BOOTLOADER_ENTER_FAILED);
                     }
                 }
-                break;
             }
+            break;
 
         case PM_EVT_PEER_DATA_UPDATE_FAILED:
             // Failure to update data. Service Changed cannot be sent but DFU mode is still possible
-            err_code = ble_dfu_buttonless_bootloader_start_finalize();
-            if (err_code != NRF_SUCCESS)
+            ret = ble_dfu_buttonless_bootloader_start_finalize();
+            if (ret != NRF_SUCCESS)
             {
                 mp_dfu->evt_handler(BLE_DFU_EVT_BOOTLOADER_ENTER_FAILED);
             }
-
             break;
 
         default:
             break;
     }
-
 }
 
 
 static uint32_t retrieve_peer_data(void)
 {
-    ret_code_t              ret_code;
-    pm_peer_data_bonding_t  bonding_data;
+    ret_code_t              ret;
+    pm_peer_data_bonding_t  bonding_data = {0};
     pm_peer_id_t            peer_id;
 
-    ret_code = pm_peer_id_get(mp_dfu->conn_handle, &peer_id);
-    VERIFY_SUCCESS(ret_code);
+    ret = pm_peer_id_get(mp_dfu->conn_handle, &peer_id);
+    VERIFY_SUCCESS(ret);
 
     if (peer_id == PM_PEER_ID_INVALID)
     {
         return NRF_ERROR_FORBIDDEN;
     }
 
-    ret_code = pm_peer_data_bonding_load(peer_id, &bonding_data);
-    VERIFY_SUCCESS(ret_code);
+    ret = pm_peer_data_bonding_load(peer_id, &bonding_data);
+    VERIFY_SUCCESS(ret);
 
-    memcpy(&m_peer_data.ble_id, &bonding_data.peer_ble_id, sizeof(ble_gap_id_key_t));
-    memcpy(&m_peer_data.enc_key, &bonding_data.own_ltk, sizeof(ble_gap_enc_key_t));
+    memcpy(&m_peer_data.ble_id,  &bonding_data.peer_ble_id, sizeof(ble_gap_id_key_t));
+    memcpy(&m_peer_data.enc_key, &bonding_data.own_ltk,     sizeof(ble_gap_enc_key_t));
 
     uint16_t len = SYSTEM_SERVICE_ATT_SIZE;
-    ret_code = sd_ble_gatts_sys_attr_get(mp_dfu->conn_handle,
-                                         m_peer_data.sys_serv_attr,
-                                         &len,
-                                         BLE_GATTS_SYS_ATTR_FLAG_SYS_SRVCS);
+    ret = sd_ble_gatts_sys_attr_get(mp_dfu->conn_handle,
+                                    m_peer_data.sys_serv_attr,
+                                    &len,
+                                    BLE_GATTS_SYS_ATTR_FLAG_SYS_SRVCS);
 
-    NRF_LOG_INFO("---------------system attribute table: %d--------------", len);
+    NRF_LOG_DEBUG("system attribute table len: %d", len);
 
-    VERIFY_SUCCESS(ret_code);
-
-    return NRF_SUCCESS;
+    return ret;
 }
 
 
@@ -160,99 +161,98 @@ static uint32_t retrieve_peer_data(void)
  */
 static uint32_t enter_bootloader(void)
 {
-    uint32_t err_code;
+    uint32_t ret;
 
-    NRF_LOG_INFO("Writing peer data to the bootloader");
+    NRF_LOG_INFO("Writing peer data to the bootloader...");
 
     if (mp_dfu->is_waiting_for_svci)
     {
         return ble_dfu_buttonless_resp_send(DFU_OP_ENTER_BOOTLOADER, DFU_RSP_BUSY);
     }
 
-    // If retrieve_peer_data returns NRF_ERROR_FORBIDDEN, then
-    // the device was not bonded.
-    err_code = retrieve_peer_data();
-    VERIFY_SUCCESS(err_code);
+    // If retrieve_peer_data returns NRF_ERROR_FORBIDDEN, then the device was not bonded.
+    ret = retrieve_peer_data();
+    VERIFY_SUCCESS(ret);
 
-    err_code = nrf_dfu_set_peer_data(&m_peer_data);
-    if (err_code == NRF_SUCCESS)
+    ret = nrf_dfu_set_peer_data(&m_peer_data);
+    if (ret == NRF_SUCCESS)
     {
-        // The request was accepted. Waiting for
-        // sys events to progress.
+        // The request was accepted. Waiting for sys events to progress.
         mp_dfu->is_waiting_for_svci = true;
     }
+    else if (ret == NRF_ERROR_FORBIDDEN)
+    {
+        NRF_LOG_ERROR("The bootloader has write protected its settings page. This prohibits setting the peer data. "\
+                      "The bootloader must be compiled with NRF_BL_SETTINGS_PAGE_PROTECT=0 to allow setting the peer data.");
+    }
 
-    return err_code;
+    return ret;
 }
 
 
 uint32_t ble_dfu_buttonless_backend_init(ble_dfu_buttonless_t * p_dfu)
 {
-    uint32_t err_code = NRF_SUCCESS;
-    
     VERIFY_PARAM_NOT_NULL(p_dfu);
-    
+
     // Set the memory used by the backend.
     mp_dfu = p_dfu;
-    
+
     // Initialize the Peer manager handler.
-    err_code = pm_register(&pm_evt_handler);
-    VERIFY_SUCCESS(err_code);
-    
-    return NRF_SUCCESS;
+    return pm_register(&pm_evt_handler);
 }
-
-
-uint32_t nrf_dfu_svci_vector_table_set(void);
-uint32_t nrf_dfu_svci_vector_table_unset(void);
 
 
 uint32_t ble_dfu_buttonless_async_svci_init(void)
 {
-    uint32_t ret_val;
+    uint32_t ret;
 
     // Set the vector table base address to the bootloader.
-    ret_val = nrf_dfu_svci_vector_table_set();
-    VERIFY_SUCCESS(ret_val);
+    ret = nrf_dfu_svci_vector_table_set();
+    NRF_LOG_DEBUG("nrf_dfu_svci_vector_table_set() -> %s",
+                  (ret == NRF_SUCCESS) ? "success" : nrf_strerror_get(ret));
+    VERIFY_SUCCESS(ret);
 
     // Initialize the asynchronous SuperVisor interface to set peer data in Secure DFU bootloader.
-    ret_val = nrf_dfu_set_peer_data_init();
-    VERIFY_SUCCESS(ret_val);
+    ret = nrf_dfu_set_peer_data_init();
+    NRF_LOG_DEBUG("nrf_dfu_set_peer_data_init() -> %s",
+                  (ret == NRF_SUCCESS) ? "success" : nrf_strerror_get(ret));
+    VERIFY_SUCCESS(ret);
 
     // Set the vector table base address back to main application.
-    ret_val = nrf_dfu_svci_vector_table_unset();
-    VERIFY_SUCCESS(ret_val);
+    ret = nrf_dfu_svci_vector_table_unset();
+    NRF_LOG_DEBUG("nrf_dfu_svci_vector_table_unset() -> %s",
+                  (ret == NRF_SUCCESS) ? "success" : nrf_strerror_get(ret));
 
-    return ret_val;
+    return ret;
 }
 
 
 void ble_dfu_buttonless_on_sys_evt(uint32_t sys_evt, void * p_context)
 {
-    uint32_t err_code;
+    uint32_t ret;
 
     if (!nrf_dfu_set_peer_data_is_initialized())
     {
         return;
     }
 
-    err_code = nrf_dfu_set_peer_data_on_sys_evt(sys_evt);
-    if (err_code == NRF_ERROR_BUSY)
+    ret = nrf_dfu_set_peer_data_on_sys_evt(sys_evt);
+    if (ret == NRF_ERROR_INVALID_STATE)
     {
-        // The async operations are ongoing.
-        // No action is taken, and nothing is reported
+        // The system event is not from an operation started by buttonless DFU.
+        // No action is taken, and nothing is reported.
     }
-    else if (err_code == NRF_SUCCESS)
+    else if (ret == NRF_SUCCESS)
     {
         // Peer data was successfully forwarded to the Secure DFU bootloader.
         // Set the flag indicating that we are waiting for indication response
         // to activate the reset.
         mp_dfu->is_waiting_for_reset = true;
-        mp_dfu->is_waiting_for_svci = false;
+        mp_dfu->is_waiting_for_svci  = false;
 
         // Report back the positive response
-        err_code = ble_dfu_buttonless_resp_send(DFU_OP_ENTER_BOOTLOADER, DFU_RSP_SUCCESS);
-        if (err_code != NRF_SUCCESS)
+        ret = ble_dfu_buttonless_resp_send(DFU_OP_ENTER_BOOTLOADER, DFU_RSP_SUCCESS);
+        if (ret != NRF_SUCCESS)
         {
             mp_dfu->evt_handler(BLE_DFU_EVT_RESPONSE_SEND_ERROR);
             mp_dfu->is_waiting_for_reset = false;
@@ -262,11 +262,11 @@ void ble_dfu_buttonless_on_sys_evt(uint32_t sys_evt, void * p_context)
     {
         // Failed to set peer data. Report this.
         mp_dfu->is_waiting_for_reset = false;
-        mp_dfu->is_waiting_for_svci = false;
-        err_code = ble_dfu_buttonless_resp_send(DFU_OP_ENTER_BOOTLOADER, DFU_RSP_OPERATION_FAILED);
+        mp_dfu->is_waiting_for_svci  = false;
+        ret = ble_dfu_buttonless_resp_send(DFU_OP_ENTER_BOOTLOADER, DFU_RSP_BUSY);
 
         // Report the failure to send the response to the client
-        if (err_code != NRF_SUCCESS)
+        if (ret != NRF_SUCCESS)
         {
             mp_dfu->evt_handler(BLE_DFU_EVT_RESPONSE_SEND_ERROR);
         }
@@ -325,19 +325,23 @@ uint32_t ble_dfu_buttonless_char_add(ble_dfu_buttonless_t * p_dfu)
 
 void ble_dfu_buttonless_on_ctrl_pt_write(ble_gatts_evt_write_t const * p_evt_write)
 {
-    uint32_t err_code;
+    uint32_t ret;
     ble_dfu_buttonless_rsp_code_t rsp_code = DFU_RSP_OPERATION_FAILED;
 
     // Start executing the control point write action
     switch (p_evt_write->data[0])
     {
         case DFU_OP_ENTER_BOOTLOADER:
-            err_code = enter_bootloader();
-            if (err_code == NRF_SUCCESS)
+            ret = enter_bootloader();
+            if (ret == NRF_SUCCESS)
             {
                 rsp_code = DFU_RSP_SUCCESS;
             }
-            else if (err_code == NRF_ERROR_FORBIDDEN)
+            else if (ret == NRF_ERROR_BUSY)
+            {
+                rsp_code = DFU_RSP_BUSY;
+            }
+            else if (ret == NRF_ERROR_FORBIDDEN)
             {
                 rsp_code = DFU_RSP_NOT_BONDED;
             }
@@ -348,12 +352,13 @@ void ble_dfu_buttonless_on_ctrl_pt_write(ble_gatts_evt_write_t const * p_evt_wri
             break;
     }
 
-
     // Report back in case of error
     if (rsp_code != DFU_RSP_SUCCESS)
     {
-        err_code = ble_dfu_buttonless_resp_send((ble_dfu_buttonless_op_code_t)p_evt_write->data[0], rsp_code);
-        if (err_code != NRF_SUCCESS)
+        ret = ble_dfu_buttonless_resp_send((ble_dfu_buttonless_op_code_t)p_evt_write->data[0],
+                                            rsp_code);
+
+        if (ret != NRF_SUCCESS)
         {
             mp_dfu->evt_handler(BLE_DFU_EVT_RESPONSE_SEND_ERROR);
         }
@@ -366,7 +371,7 @@ void ble_dfu_buttonless_on_ctrl_pt_write(ble_gatts_evt_write_t const * p_evt_wri
 
 uint32_t ble_dfu_buttonless_bootloader_start_prepare(void)
 {
-    uint32_t err_code;
+    uint32_t ret;
 
     NRF_LOG_DEBUG("In ble_dfu_buttonless_bootloader_start_prepare");
 
@@ -377,12 +382,11 @@ uint32_t ble_dfu_buttonless_bootloader_start_prepare(void)
 
     // Disconnect from the device to enable Service Changed on next connection.
     // (Stored in Peer Manager persistent storage for next bootup).
-    err_code = sd_ble_gap_disconnect(mp_dfu->conn_handle,
-                                     BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
-    if (err_code != NRF_SUCCESS)
+    ret = sd_ble_gap_disconnect(mp_dfu->conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+    if (ret != NRF_SUCCESS)
     {
         NRF_LOG_ERROR("Failed to disconnect GAP connection");
-        return err_code;
+        return ret;
     }
     else
     {
@@ -396,8 +400,8 @@ uint32_t ble_dfu_buttonless_bootloader_start_prepare(void)
     // on next bootup (either because of a successful or aborted DFU).
     gscm_local_database_has_changed();
 
-    return err_code;
+    return ret;
 }
 
-#endif //defined(NRF_DFU_BOTTONLESS_SUPPORT_BOND) && (NRF_DFU_BOTTONLESS_SUPPORT_BOND == 1)
+#endif // NRF_DFU_BLE_BUTTONLESS_SUPPORTS_BONDS
 

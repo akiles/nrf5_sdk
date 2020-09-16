@@ -7,7 +7,6 @@ MEMORY
 {
   FLASH (rx) : ORIGIN = 0x12000, LENGTH = 0x6e000
   RAM (rwx) :  ORIGIN = 0x20000b80, LENGTH = 0xf480
-  
 }
 
 SECTIONS
@@ -28,8 +27,7 @@ SECTIONS
   .mem_section_dummy_rom :
   {
   }
-  
 
 } INSERT AFTER .text
 
-INCLUDE "nrf5x_common.ld"
+INCLUDE "nrf_common.ld"

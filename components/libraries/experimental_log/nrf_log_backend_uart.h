@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -51,6 +51,10 @@
 
 #include "nrf_log_backend_interface.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 extern const nrf_log_backend_api_t nrf_log_backend_uart_api;
 
 typedef struct {
@@ -63,6 +67,11 @@ typedef struct {
     }
 
 void nrf_log_backend_uart_init(void);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif //NRF_LOG_BACKEND_UART_H
 
 /** @} */

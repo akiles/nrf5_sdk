@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -98,7 +98,7 @@ extern nrf_fstorage_t fstorage;                                                 
 extern void wait_for_flash_ready(nrf_fstorage_t const *);                                           /**< Wait for flash operations to complete. Defined in main.c */
 
 
-NRF_CLI_UART_DEF(cli_uart, 0, 64, 16);
+NRF_CLI_UART_DEF(cli_uart, 0, 64, 128);
 NRF_CLI_DEF(m_cli_uart, "fstorage example:~$ ", &cli_uart.transport, '\r', 4);
 
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -38,12 +38,20 @@
  * 
  */
 #include "ble_gap_conn.h"
+#include "ser_config.h"
 #include "conn_mw_ble_gap.h"
 #include "ble_serialization.h"
 #include "conn_ble_gap_sec_keys.h"
 #include <stddef.h>
 
 extern ser_ble_gap_conn_keyset_t m_conn_keys_table[SER_MAX_CONNECTIONS];
+#if NRF_SD_BLE_API_VERSION > 5 && !defined(S112)
+static uint8_t * mp_scan_data;
+#endif
+
+/* Id used to identify buffer allocated for scan reports. */
+#define SCAN_BUFFER_ID 1
+#ifndef S112
 
 uint32_t conn_mw_ble_gap_connect(uint8_t const * const p_rx_buf,
                                  uint32_t              rx_buf_len,
@@ -115,24 +123,90 @@ uint32_t conn_mw_ble_gap_scan_start(uint8_t const * const p_rx_buf,
     SER_ASSERT_NOT_NULL(p_rx_buf);
     SER_ASSERT_NOT_NULL(p_tx_buf);
     SER_ASSERT_NOT_NULL(p_tx_buf_len);
-
-    ble_gap_scan_params_t scan_params;
-    ble_gap_scan_params_t * p_scan_params = &scan_params;
-
     uint32_t err_code = NRF_SUCCESS;
     uint32_t sd_err_code;
+    ble_gap_scan_params_t scan_params;
+    ble_gap_scan_params_t * p_scan_params = &scan_params;
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION > 5
+    ble_data_t adv_report_buffer;
+    ble_data_t * p_adv_report_buffer = &adv_report_buffer;
+    mp_scan_data = conn_ble_gap_ble_data_buf_alloc(SCAN_BUFFER_ID);
+    adv_report_buffer.p_data = mp_scan_data;
+    adv_report_buffer.len = SER_MAX_ADV_DATA;
+    err_code = ble_gap_scan_start_req_dec(p_rx_buf, rx_buf_len, &p_scan_params, &p_adv_report_buffer);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
+    sd_err_code = sd_ble_gap_scan_start(p_scan_params, p_adv_report_buffer);
+#else
     err_code = ble_gap_scan_start_req_dec(p_rx_buf, rx_buf_len, &p_scan_params);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
     sd_err_code = sd_ble_gap_scan_start(p_scan_params);
-
+#endif
     err_code = ble_gap_scan_start_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
     return err_code;
 }
 
+
+uint32_t conn_mw_ble_gap_scan_stop(uint8_t const * const p_rx_buf,
+                                 uint32_t              rx_buf_len,
+                                 uint8_t * const       p_tx_buf,
+                                 uint32_t * const      p_tx_buf_len)
+{
+   SER_ASSERT_NOT_NULL(p_rx_buf);
+   SER_ASSERT_NOT_NULL(p_tx_buf);
+   SER_ASSERT_NOT_NULL(p_tx_buf_len);
+
+   uint32_t err_code = NRF_SUCCESS;
+   uint32_t sd_err_code;
+   
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION > 5
+      conn_ble_gap_ble_data_buf_free(mp_scan_data);
+#endif
+
+   sd_err_code = sd_ble_gap_scan_stop();
+
+   err_code = ble_gap_scan_stop_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
+   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+   return err_code;
+}
+
+uint32_t conn_mw_ble_gap_encrypt(uint8_t const * const p_rx_buf,
+                                 uint32_t              rx_buf_len,
+                                 uint8_t       * const p_tx_buf,
+                                 uint32_t      * const p_tx_buf_len)
+{
+   SER_ASSERT_NOT_NULL(p_rx_buf);
+   SER_ASSERT_NOT_NULL(p_tx_buf);
+   SER_ASSERT_NOT_NULL(p_tx_buf_len);
+
+   uint32_t err_code = NRF_SUCCESS;
+   uint32_t sd_err_code;
+
+   uint16_t conn_handle;
+
+   ble_gap_master_id_t master_id;
+   ble_gap_master_id_t *p_master_id = &master_id;
+
+   ble_gap_enc_info_t  enc_info;
+   ble_gap_enc_info_t *p_enc_info  = &enc_info;
+
+   err_code = ble_gap_encrypt_req_dec(p_rx_buf, rx_buf_len, &conn_handle, &p_master_id, &p_enc_info);
+   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+   sd_err_code = sd_ble_gap_encrypt(conn_handle, p_master_id, p_enc_info);
+
+   err_code = ble_gap_encrypt_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
+   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+   return err_code;
+}
+#endif //!S112
+
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION < 6
 uint32_t conn_mw_ble_gap_adv_data_set(uint8_t const * const p_rx_buf,
                                      uint32_t              rx_buf_len,
                                      uint8_t * const       p_tx_buf,
@@ -168,6 +242,7 @@ uint32_t conn_mw_ble_gap_adv_data_set(uint8_t const * const p_rx_buf,
 
    return err_code;
 }
+#endif
 
 uint32_t conn_mw_ble_gap_adv_start(uint8_t const * const p_rx_buf,
                                   uint32_t              rx_buf_len,
@@ -181,13 +256,21 @@ uint32_t conn_mw_ble_gap_adv_start(uint8_t const * const p_rx_buf,
     uint32_t err_code = NRF_SUCCESS;
     uint32_t sd_err_code;
 
+#if NRF_SD_BLE_API_VERSION > 5
+    uint8_t conn_cfg_tag;
+    uint8_t adv_handle;
+
+    err_code = ble_gap_adv_start_req_dec(p_rx_buf, rx_buf_len, &adv_handle, &conn_cfg_tag);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    sd_err_code = sd_ble_gap_adv_start(adv_handle, conn_cfg_tag);
+#else
     ble_gap_addr_t         peer_addr;
     ble_gap_adv_params_t   adv_params;
     ble_gap_adv_params_t * p_adv_params;
 
     adv_params.p_peer_addr = &peer_addr;
     p_adv_params = &adv_params;
-
 #if NRF_SD_BLE_API_VERSION >= 4
     uint8_t conn_cfg_tag;
     err_code = ble_gap_adv_start_req_dec(p_rx_buf, rx_buf_len, &p_adv_params, &conn_cfg_tag);
@@ -199,6 +282,7 @@ uint32_t conn_mw_ble_gap_adv_start(uint8_t const * const p_rx_buf,
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
     sd_err_code = sd_ble_gap_adv_start(p_adv_params);
+#endif
 #endif
     err_code = ble_gap_adv_start_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
@@ -217,8 +301,15 @@ uint32_t conn_mw_ble_gap_adv_stop(uint8_t const * const p_rx_buf,
 
    uint32_t err_code = NRF_SUCCESS;
    uint32_t sd_err_code;
+#if NRF_SD_BLE_API_VERSION > 5
+   uint8_t adv_handle;
+   err_code = ble_gap_adv_stop_req_dec(p_rx_buf, rx_buf_len, &adv_handle);
+   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
+   sd_err_code = sd_ble_gap_adv_stop(adv_handle);
+#else
    sd_err_code = sd_ble_gap_adv_stop();
+#endif
 
    err_code = ble_gap_adv_stop_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
@@ -292,12 +383,20 @@ uint32_t conn_mw_ble_gap_tx_power_set(uint8_t const * const p_rx_buf,
 
    uint32_t err_code = NRF_SUCCESS;
    uint32_t sd_err_code;
+#if NRF_SD_BLE_API_VERSION > 5
+   uint8_t role;
+   uint16_t handle;
 
+   err_code = ble_gap_tx_power_set_req_dec(p_rx_buf, rx_buf_len, &role, &handle, &tx_power);
+   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+   sd_err_code = sd_ble_gap_tx_power_set(role, handle, tx_power);
+#else
    err_code = ble_gap_tx_power_set_req_dec(p_rx_buf, rx_buf_len, &tx_power);
    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
    sd_err_code = sd_ble_gap_tx_power_set(tx_power);
-
+#endif
    err_code = ble_gap_tx_power_set_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
@@ -706,57 +805,6 @@ uint32_t conn_mw_ble_gap_rssi_stop(uint8_t const * const p_rx_buf,
    return err_code;
 }
 
-uint32_t conn_mw_ble_gap_scan_stop(uint8_t const * const p_rx_buf,
-                                 uint32_t              rx_buf_len,
-                                 uint8_t * const       p_tx_buf,
-                                 uint32_t * const      p_tx_buf_len)
-{
-   SER_ASSERT_NOT_NULL(p_rx_buf);
-   SER_ASSERT_NOT_NULL(p_tx_buf);
-   SER_ASSERT_NOT_NULL(p_tx_buf_len);
-
-   uint32_t err_code = NRF_SUCCESS;
-   uint32_t sd_err_code;
-
-   sd_err_code = sd_ble_gap_scan_stop();
-
-   err_code = ble_gap_scan_stop_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
-   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
-
-   return err_code;
-}
-
-uint32_t conn_mw_ble_gap_encrypt(uint8_t const * const p_rx_buf,
-                                 uint32_t              rx_buf_len,
-                                 uint8_t       * const p_tx_buf,
-                                 uint32_t      * const p_tx_buf_len)
-{
-   SER_ASSERT_NOT_NULL(p_rx_buf);
-   SER_ASSERT_NOT_NULL(p_tx_buf);
-   SER_ASSERT_NOT_NULL(p_tx_buf_len);
-
-   uint32_t err_code = NRF_SUCCESS;
-   uint32_t sd_err_code;
-
-   uint16_t conn_handle;
-
-   ble_gap_master_id_t master_id;
-   ble_gap_master_id_t *p_master_id = &master_id;
-
-   ble_gap_enc_info_t  enc_info;
-   ble_gap_enc_info_t *p_enc_info  = &enc_info;
-
-   err_code = ble_gap_encrypt_req_dec(p_rx_buf, rx_buf_len, &conn_handle, &p_master_id, &p_enc_info);
-   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
-
-   sd_err_code = sd_ble_gap_encrypt(conn_handle, p_master_id, p_enc_info);
-
-   err_code = ble_gap_encrypt_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
-   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
-
-   return err_code;
-}
-
 uint32_t conn_mw_ble_gap_rssi_get(uint8_t const * const p_rx_buf,
                                   uint32_t              rx_buf_len,
                                   uint8_t       * const p_tx_buf,
@@ -768,19 +816,30 @@ uint32_t conn_mw_ble_gap_rssi_get(uint8_t const * const p_rx_buf,
 
     uint32_t err_code = NRF_SUCCESS;
     uint32_t sd_err_code;
-
     uint16_t conn_handle;
     int8_t   rssi;
     int8_t * p_rssi = &rssi;
 
+#if NRF_SD_BLE_API_VERSION > 5
+    uint8_t ch_index;
+    uint8_t * p_ch_index = &ch_index;
+
+    err_code = ble_gap_rssi_get_req_dec(p_rx_buf, rx_buf_len, &conn_handle, &p_rssi, &p_ch_index);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    sd_err_code = sd_ble_gap_rssi_get(conn_handle, p_rssi, p_ch_index);
+
+    err_code = ble_gap_rssi_get_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len, p_rssi, p_ch_index);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+#else
     err_code = ble_gap_rssi_get_req_dec(p_rx_buf, rx_buf_len, &conn_handle, &p_rssi);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
     sd_err_code = sd_ble_gap_rssi_get(conn_handle, p_rssi);
 
-    err_code = ble_gap_rssi_get_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len, rssi);
+    err_code = ble_gap_rssi_get_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len, p_rssi);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
-
+#endif
     return err_code;
 }
 
@@ -1110,7 +1169,7 @@ uint32_t conn_mw_ble_gap_phy_update(uint8_t const * const p_rx_buf,
 }
 #endif
 
-#if NRF_SD_BLE_API_VERSION >= 4
+#if NRF_SD_BLE_API_VERSION >= 4 && !defined(S112)
 uint32_t conn_mw_ble_gap_data_length_update(uint8_t const * const p_rx_buf,
                                             uint32_t              rx_buf_len,
                                             uint8_t * const       p_tx_buf,
@@ -1139,4 +1198,93 @@ uint32_t conn_mw_ble_gap_data_length_update(uint8_t const * const p_rx_buf,
 
    return err_code;
 }
+#endif //NRF_SD_BLE_API_VERSION >= 4 && !defined(S112)
+
+#if NRF_SD_BLE_API_VERSION > 5
+uint32_t conn_mw_ble_gap_adv_set_configure(uint8_t const * const p_rx_buf,
+                                           uint32_t              rx_buf_len,
+                                           uint8_t * const       p_tx_buf,
+                                           uint32_t * const      p_tx_buf_len)
+{
+   SER_ASSERT_NOT_NULL(p_rx_buf);
+   SER_ASSERT_NOT_NULL(p_tx_buf);
+   SER_ASSERT_NOT_NULL(p_tx_buf_len);
+
+   uint32_t err_code = NRF_SUCCESS;
+   uint32_t sd_err_code;
+
+   uint8_t adv_handle;
+   uint8_t * p_adv_handle = &adv_handle;
+   ble_gap_adv_data_t adv_data;
+   ble_gap_adv_data_t * p_adv_data = &adv_data;
+   adv_data.adv_data.len = SER_MAX_ADV_DATA;
+   adv_data.adv_data.p_data = NULL;
+   adv_data.scan_rsp_data.len = SER_MAX_ADV_DATA;
+   adv_data.scan_rsp_data.p_data = NULL;
+   ble_gap_addr_t addr;
+   ble_gap_adv_params_t adv_params;
+   adv_params.p_peer_addr = &addr;
+   ble_gap_adv_params_t * p_adv_params = &adv_params;
+
+
+   err_code = ble_gap_adv_set_configure_req_dec(p_rx_buf, rx_buf_len, &p_adv_handle, &p_adv_data, &p_adv_params);
+   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+   sd_err_code = sd_ble_gap_adv_set_configure(p_adv_handle, p_adv_data, p_adv_params);
+
+   err_code = ble_gap_adv_set_configure_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len, p_adv_handle);
+   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+   return err_code;
+}
+
+#ifndef S112
+uint32_t conn_mw_ble_gap_qos_channel_survey_start(uint8_t const * const p_rx_buf,
+                                            uint32_t              rx_buf_len,
+                                            uint8_t * const       p_tx_buf,
+                                            uint32_t * const      p_tx_buf_len)
+{
+   SER_ASSERT_NOT_NULL(p_rx_buf);
+   SER_ASSERT_NOT_NULL(p_tx_buf);
+   SER_ASSERT_NOT_NULL(p_tx_buf_len);
+
+   uint32_t err_code = NRF_SUCCESS;
+   uint32_t sd_err_code;
+
+   uint32_t interval_us;
+
+   err_code = ble_gap_qos_channel_survey_start_req_dec(p_rx_buf, rx_buf_len, &interval_us);
+   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+   sd_err_code = sd_ble_gap_qos_channel_survey_start(interval_us);
+
+   err_code = ble_gap_qos_channel_survey_start_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
+   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+   return err_code;
+}
+
+uint32_t conn_mw_ble_gap_qos_channel_survey_stop(uint8_t const * const p_rx_buf,
+                                            uint32_t              rx_buf_len,
+                                            uint8_t * const       p_tx_buf,
+                                            uint32_t * const      p_tx_buf_len)
+{
+   SER_ASSERT_NOT_NULL(p_rx_buf);
+   SER_ASSERT_NOT_NULL(p_tx_buf);
+   SER_ASSERT_NOT_NULL(p_tx_buf_len);
+
+   uint32_t err_code = NRF_SUCCESS;
+   uint32_t sd_err_code;
+
+   err_code = ble_gap_qos_channel_survey_stop_req_dec(p_rx_buf, rx_buf_len);
+   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+   sd_err_code = sd_ble_gap_qos_channel_survey_stop();
+
+   err_code = ble_gap_qos_channel_survey_stop_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
+   SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+   return err_code;
+}
+#endif //!S112
 #endif

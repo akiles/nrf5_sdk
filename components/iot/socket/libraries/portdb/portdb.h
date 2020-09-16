@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -74,6 +74,11 @@ uint32_t portdb_init(uint32_t max_len);
  * This will free all memory allocated by this portdb.
  */
 void portdb_deinit(void);
+
+/**
+ * @brief Function to reset all ports without freeing any memories.
+ */
+void portdb_reset(void);
 
 /**
  * @brief Function for allocating a port.

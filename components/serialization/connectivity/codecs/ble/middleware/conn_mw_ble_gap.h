@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -52,6 +52,7 @@ extern "C" {
  * @ingroup sercon_mw_s132
  */
 
+#if defined(NRF_SD_BLE_API_VERSION) && (NRF_SD_BLE_API_VERSION <= 5)
 /**@brief Handles @ref sd_ble_gap_adv_data_set command and prepares response.
  *
  * @param[in]     p_rx_buf            Pointer to input buffer.
@@ -69,6 +70,7 @@ uint32_t conn_mw_ble_gap_adv_data_set(uint8_t const * const p_rx_buf,
                                       uint32_t              rx_buf_len,
                                       uint8_t       * const p_tx_buf,
                                       uint32_t      * const p_tx_buf_len);
+#endif
 
 /**@brief Handles @ref sd_ble_gap_adv_start command and prepares response.
  *
@@ -741,7 +743,7 @@ uint32_t conn_mw_ble_gap_phy_update(uint8_t const * const p_rx_buf,
 #endif
 
 #if NRF_SD_BLE_API_VERSION >= 4
-/**@brief Handles @ref sd_ble_data_length_update command request and prepares response.
+/**@brief Handles @ref sd_ble_gap_data_length_update command request and prepares response.
  *
  * @param[in]     p_rx_buf            Pointer to input buffer.
  * @param[in]     rx_buf_len          Size of @p p_rx_buf.
@@ -759,7 +761,59 @@ uint32_t conn_mw_ble_gap_data_length_update(uint8_t const * const p_rx_buf,
                                             uint8_t * const       p_tx_buf,
                                             uint32_t * const      p_tx_buf_len);
 
+/**@brief Handles @ref sd_ble_gap_adv_set_configure command request and prepares response.
+ *
+ * @param[in]     p_rx_buf            Pointer to input buffer.
+ * @param[in]     rx_buf_len          Size of @p p_rx_buf.
+ * @param[out]    p_tx_buf            Pointer to output buffer.
+ * @param[in,out] p_tx_buf_len        \c in: Size of \p p_tx_buf buffer.
+ *                                    \c out: Length of valid data in \p p_tx_buf.
+ *
+ * @retval NRF_SUCCESS                Handler success.
+ * @retval NRF_ERROR_NULL             Handler failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Handler failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Handler failure. Invalid operation type.
+ */
+uint32_t conn_mw_ble_gap_adv_set_configure(uint8_t const * const p_rx_buf,
+                                           uint32_t              rx_buf_len,
+                                           uint8_t * const       p_tx_buf,
+                                           uint32_t * const      p_tx_buf_len);
 
+/**@brief Handles @ref sd_ble_gap_qos_channel_survey_start command request and prepares response.
+ *
+ * @param[in]     p_rx_buf            Pointer to input buffer.
+ * @param[in]     rx_buf_len          Size of @p p_rx_buf.
+ * @param[out]    p_tx_buf            Pointer to output buffer.
+ * @param[in,out] p_tx_buf_len        \c in: Size of \p p_tx_buf buffer.
+ *                                    \c out: Length of valid data in \p p_tx_buf.
+ *
+ * @retval NRF_SUCCESS                Handler success.
+ * @retval NRF_ERROR_NULL             Handler failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Handler failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Handler failure. Invalid operation type.
+ */
+uint32_t conn_mw_ble_gap_qos_channel_survey_start(uint8_t const * const p_rx_buf,
+                                            uint32_t              rx_buf_len,
+                                            uint8_t * const       p_tx_buf,
+                                            uint32_t * const      p_tx_buf_len);
+
+/**@brief Handles @ref sd_ble_gap_qos_channel_survey_stop command request and prepares response.
+ *
+ * @param[in]     p_rx_buf            Pointer to input buffer.
+ * @param[in]     rx_buf_len          Size of @p p_rx_buf.
+ * @param[out]    p_tx_buf            Pointer to output buffer.
+ * @param[in,out] p_tx_buf_len        \c in: Size of \p p_tx_buf buffer.
+ *                                    \c out: Length of valid data in \p p_tx_buf.
+ *
+ * @retval NRF_SUCCESS                Handler success.
+ * @retval NRF_ERROR_NULL             Handler failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Handler failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Handler failure. Invalid operation type.
+ */
+uint32_t conn_mw_ble_gap_qos_channel_survey_stop(uint8_t const * const p_rx_buf,
+                                            uint32_t              rx_buf_len,
+                                            uint8_t * const       p_tx_buf,
+                                            uint32_t * const      p_tx_buf_len);
 #endif
 #endif //_CONN_MW_BLE_GAP_H
 

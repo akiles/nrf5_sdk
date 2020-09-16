@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -92,7 +92,7 @@ static void rtc_handler(nrf_drv_rtc_int_type_t int_type)
  */
 static void leds_config(void)
 {
-    bsp_board_leds_init();
+    bsp_board_init(BSP_INIT_LEDS);
 }
 
 /** @brief Function starting the internal LFCLK XTAL oscillator.

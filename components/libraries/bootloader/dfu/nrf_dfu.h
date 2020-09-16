@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -39,26 +39,29 @@
  */
 /**@file
  *
- * @defgroup nrf_dfu DFU bootloader
+ * @defgroup nrf_dfu DFU modules
  * @{
- * @ingroup  sdk_nrf_bootloader
- * @brief Bootloader with Device Firmware Update (DFU) functionality.
+ * @ingroup  nrf_bootloader
+ * @brief Modules providing Device Firmware Update (DFU) functionality.
  *
- * The DFU bootloader module, in combination with the @ref sdk_bootloader module,
+ * The DFU module, in combination with the @ref nrf_bootloader module,
  * can be used to implement a bootloader that supports Device Firmware Updates.
  */
-
 
 #ifndef NRF_DFU_H__
 #define NRF_DFU_H__
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "nrf_dfu_types.h"
+#include "nrf_dfu_req_handler.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+
+#define NRF_DFU_SCHED_EVENT_DATA_SIZE (sizeof(nrf_dfu_request_t))
 
 
 /** @brief Function for initializing a DFU operation.
@@ -66,41 +69,11 @@ extern "C" {
  * This function initializes a DFU operation and any transports that are registered
  * in the system.
  *
+ * @param[in] observer  Function for receiving DFU notifications.
+ *
  * @retval  NRF_SUCCESS     If the DFU operation was successfully initialized.
  */
-uint32_t nrf_dfu_init(void);
-
-    
-/** @brief Function to check if button was pressed
- *
- * @note    This function must be implemented by the application to enable
- *          entering bootloader mode based on button press.
- *
- * @retval true if the DFU mode should be entered, otherwise false.
- */
-bool nrf_dfu_button_enter_check(void);
-    
-
-/** @brief Function for checking if DFU mode should be entered.
- *
- * This function checks whether DFU mode is required.
- *
- * @retval  true    If DFU mode must be entered.
- * @retval  false   If there is no need to enter DFU mode.
- */
-bool nrf_dfu_enter_check(void);
-
-
-/** @brief Function for checking if DFU should be reset (failsafe).
- *
- * This function will check if DFU should be reset (failsafe).
- *
- * If this returns true, DFU mode will be entered and DFU will be reset.
- *
- * @retval  true    If DFU must be reset (failsafe).
- * @retval  false   If there is no need to reset DFU.
- */
-bool nrf_dfu_check_failsafe_reset(void);
+uint32_t nrf_dfu_init(nrf_dfu_observer_t observer);
 
 
 #ifdef __cplusplus

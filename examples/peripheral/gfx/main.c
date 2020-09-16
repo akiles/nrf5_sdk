@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -204,7 +204,7 @@ int main(void)
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("This a GFX usage example application.")
+    NRF_LOG_INFO("GFX usage example application started.")
     NRF_LOG_FLUSH();
 
     gfx_initialization();

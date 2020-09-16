@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -181,12 +181,13 @@ static uint32_t srt_char_add(nrf_ble_cgms_t * p_cgms)
 
     len += uint16_encode(p_cgms->session_run_time, &(encoded_initial_srt[len]));
 
-    add_char_params.uuid         = BLE_UUID_CGM_SESSION_RUN_TIME;
-    add_char_params.max_len      = NRF_BLE_CGMS_SRT_LEN;
-    add_char_params.init_len     = len;
-    add_char_params.p_init_value = encoded_initial_srt;
-    add_char_params.read_access  = SEC_JUST_WORKS;
-    add_char_params.write_access = SEC_NO_ACCESS;
+    add_char_params.uuid            = BLE_UUID_CGM_SESSION_RUN_TIME;
+    add_char_params.max_len         = NRF_BLE_CGMS_SRT_LEN;
+    add_char_params.init_len        = len;
+    add_char_params.p_init_value    = encoded_initial_srt;
+    add_char_params.read_access     = SEC_JUST_WORKS;
+    add_char_params.write_access    = SEC_NO_ACCESS;
+    add_char_params.char_props.read = true;
 
     return characteristic_add(p_cgms->service_handle,
                               &add_char_params,

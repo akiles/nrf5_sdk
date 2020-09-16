@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -57,21 +57,22 @@
 #include "nrf_log.h"
 NRF_LOG_MODULE_REGISTER();
 
-#define NFC_BLE_PAIR_OBSERVER_PRIO         1                                               /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define NFC_BLE_PAIR_OBSERVER_PRIO         1                                                /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 
-#define SEL_RES_CASCADE_BIT_NUM            3                                               /**< Number of Cascade bit within SEL_RES byte. */
-#define SEL_RES_TAG_PLATFORM_MASK          0x60                                            /**< Mask of Tag Platform bit group within SEL_RES byte. */
-#define SEL_RES_TAG_PLATFORM_BIT_OFFSET    5                                               /**< Offset of the Tag Platform bit group within SEL_RES byte. */
+#define SEL_RES_CASCADE_BIT_NUM            3                                                /**< Number of Cascade bit within SEL_RES byte. */
+#define SEL_RES_TAG_PLATFORM_MASK          0x60                                             /**< Mask of Tag Platform bit group within SEL_RES byte. */
+#define SEL_RES_TAG_PLATFORM_BIT_OFFSET    5                                                /**< Offset of the Tag Platform bit group within SEL_RES byte. */
 
-#define TAG_TYPE_2_UID_LENGTH              7                                               /**< Length of the Tag's UID. */
-#define TAG_DATA_BUFFER_SIZE               1024                                            /**< Buffer size for data from a Tag. */
-#define TAG_DETECT_TIMEOUT                 5000                                            /**< Timeout for function which searches for a tag. */
-#define TAG_TYPE_2_DATA_AREA_SIZE_OFFSET   (T2T_CC_BLOCK_OFFSET + 2)                       /**< Offset of the byte with Tag's Data size. */
-#define TAG_TYPE_2_DATA_AREA_MULTIPLICATOR 8                                               /**< Multiplicator for a value stored in the Tag's Data size byte. */
-#define TAG_TYPE_2_FIRST_DATA_BLOCK_NUM    (T2T_FIRST_DATA_BLOCK_OFFSET / T2T_BLOCK_SIZE)  /**< First block number with Tag's Data. */
-#define TAG_TYPE_2_BLOCKS_PER_EXCHANGE     (T2T_MAX_DATA_EXCHANGE / T2T_BLOCK_SIZE)        /**< Number of blocks fetched in single Tag's Read command. */
+#define TAG_TYPE_2_UID_LENGTH              7                                                /**< Length of the Tag's UID. */
+#define TAG_DATA_BUFFER_SIZE               1024                                             /**< Buffer size for data from a Tag. */
+#define TAG_DETECT_TIMEOUT                 5000                                             /**< Timeout for function which searches for a tag. */
+#define TAG_TYPE_2_DATA_AREA_SIZE_OFFSET   (T2T_CC_BLOCK_OFFSET + 2)                        /**< Offset of the byte with Tag's Data size. */
+#define TAG_TYPE_2_DATA_AREA_MULTIPLICATOR 8                                                /**< Multiplicator for a value stored in the Tag's Data size byte. */
+#define TAG_TYPE_2_FIRST_DATA_BLOCK_NUM    (T2T_FIRST_DATA_BLOCK_OFFSET / T2T_BLOCK_SIZE)   /**< First block number with Tag's Data. */
+#define TAG_TYPE_2_BLOCKS_PER_EXCHANGE     (T2T_MAX_DATA_EXCHANGE / T2T_BLOCK_SIZE)         /**< Number of blocks fetched in single Tag's Read command. */
 
-#define DEVICE_NAME_BUFF_SIZE              30                                              /**< Size of the buffer used to store BLE device name. */
+#define DEVICE_NAME_BUFF_SIZE              30                                               /**< Size of the buffer used to store BLE device name. */
+#define BLE_GAP_ADDR_TYPE_INVALID          0x04                                             /**< Invalid address type. */
 
 /**
  * @brief Possible Tag Types.
@@ -87,7 +88,6 @@ static ble_gap_addr_t           m_device_addr;                                  
 static ble_advdata_tk_value_t   m_device_tk;                                                /**< Value acquired by NFC. Holds Temporary Key of peer device. */
 
 static volatile bool            m_tag_match             = false;                            /**< Flag indicating that the read tag has valid Connection Handover information. */
-static bool                     m_same_tag_disconnected = false;                            /**< Flag indicating that peripheral device was disconnected because the same Connection Handover message was read. */
 static bool                     m_read_tag              = false;                            /**< Flag indicating that NFC reader is turned on. */
 
 static ble_gap_lesc_oob_data_t  m_ble_lesc_oob_peer_data;                                   /**< LESC OOB pairing data. */
@@ -228,7 +228,8 @@ __STATIC_INLINE void nfc_oob_pairing_tag_appoint(void)
 
 void nfc_oob_pairing_tag_invalidate(void)
 {
-    m_tag_match = false;
+    m_device_addr.addr_type = BLE_GAP_ADDR_TYPE_INVALID;
+    m_tag_match             = false;
 }
 
 /**
@@ -280,10 +281,10 @@ void ch_ndef_msg_handle(nfc_ndef_msg_desc_t * p_ch_msg_desc)
 
     for (uint8_t i = 0; i < p_ch_msg_desc->record_count; i++)
     {
-        le_oob_record_pairing_data.device_name.p_name  = device_name;
-        le_oob_record_pairing_data.device_name.len     = sizeof(device_name);
-        le_oob_record_pairing_data.p_device_addr       = &device_lesc_data.addr;
-        le_oob_record_pairing_data.p_tk_value          = &device_tk;
+        le_oob_record_pairing_data.device_name.p_name   = device_name;
+        le_oob_record_pairing_data.device_name.len      = sizeof(device_name);
+        le_oob_record_pairing_data.p_device_addr        = &device_lesc_data.addr;
+        le_oob_record_pairing_data.p_tk_value           = &device_tk;
         le_oob_record_pairing_data.p_lesc_confirm_value = (uint8_t *)device_lesc_data.c;
         le_oob_record_pairing_data.p_lesc_random_value  = (uint8_t *)device_lesc_data.r;
 
@@ -297,15 +298,22 @@ void ch_ndef_msg_handle(nfc_ndef_msg_desc_t * p_ch_msg_desc)
             int mem_diff = memcmp(&m_device_addr,
                                   le_oob_record_pairing_data.p_device_addr,
                                   sizeof(ble_gap_addr_t));
-            if ((mem_diff != 0) || m_same_tag_disconnected)
-            {
+
+            if (mem_diff != 0) // NFC Tag of the currently disconnected peripheral has been read.
+            { 
+                if (m_device_addr.addr_type != BLE_GAP_ADDR_TYPE_INVALID)
+                {
+                     // Terminate the current connection, so the new peripheral will be able to connect.
+                    ble_disconnect();
+                    while (m_tag_match){};
+                }
                 nfc_essential_pairing_data_copy(&le_oob_record_pairing_data);
                 nfc_oob_pairing_tag_appoint();
-                m_same_tag_disconnected = false;
             }
-            else
+            else // NFC Tag of the currently connected peripheral has been read.
             {
-                m_same_tag_disconnected = true;
+                ble_disconnect();
+                while (m_tag_match){};
             }
             break;
         }
@@ -323,34 +331,24 @@ void ndef_data_analyze(tlv_block_t * p_tlv_block)
     uint8_t    desc_buf[NFC_NDEF_PARSER_REQIRED_MEMO_SIZE_CALC(10)];
     uint32_t   nfc_data_len;
     uint32_t   desc_buf_len = sizeof(desc_buf);
-    ret_code_t err_code;
+    ret_code_t ret_code;
 
     if (p_tlv_block->tag == TLV_NDEF_MESSAGE)
     {
         nfc_data_len = p_tlv_block->length;
 
-        err_code = ndef_msg_parser(desc_buf,
+        ret_code = ndef_msg_parser(desc_buf,
                                    &desc_buf_len,
                                    p_tlv_block->p_value,
                                    &nfc_data_len);
         ndef_msg_printout((nfc_ndef_msg_desc_t *) desc_buf);
 
-        if (err_code != NRF_SUCCESS)
+        if (ret_code != NRF_SUCCESS)
         {
             NRF_LOG_INFO("Error during parsing a NDEF message.");
         }
         else
         {
-            // If tag was matched, disconnect after reading correctly next NDEF message.
-            if (m_tag_match)
-            {
-                ble_disconnect();
-                while (m_tag_match){};
-            }
-            else
-            {
-                m_same_tag_disconnected = true;
-            }
             ch_ndef_msg_handle((nfc_ndef_msg_desc_t *) desc_buf);
         }
     }
@@ -410,15 +408,19 @@ void nfc_tag_process(void)
                 nfc_pair_stop();
                 scan_start();
                 break;
+
             case NRF_ERROR_NO_MEM:
                 NRF_LOG_INFO("Declared buffer is to small to store tag data.");
                 break;
+
             case NRF_ERROR_NOT_FOUND:
                 NRF_LOG_INFO("No Tag found.");
                 break;
+
             case NRF_ERROR_NOT_SUPPORTED:
                 NRF_LOG_INFO("Tag not supported.");
                 break;
+
             default:
                 NRF_LOG_INFO("Error during tag read.");
                 err_code = adafruit_pn532_field_off();
@@ -440,6 +442,14 @@ bool nfc_oob_pairing_tag_match(ble_gap_addr_t const * const p_peer_addr)
     return false;
 }
 
+/**
+ * @brief Function used for acquiring Temporary Key value.
+ *
+ * @param[out] pp_tk_value   Pointer to pointer to the Temporary Key Value.
+ *
+ * @retval    NRF_SUCCESS         If the Temporary Key was found.
+ * @retval    NRF_ERROR_NOT_FOUND Otherwise.
+ */
 ret_code_t nfc_tk_value_get(ble_advdata_tk_value_t ** pp_tk_value)
 {
     if (m_tag_match)
@@ -454,7 +464,7 @@ ret_code_t nfc_tk_value_get(ble_advdata_tk_value_t ** pp_tk_value)
 }
 
 /**
- * @brief NFC pairing BLE events handler.
+ * @brief Function for handling NFC pairing BLE events.
  *
  * @details Handles authentication events, replying with OOB data.
  *
@@ -482,8 +492,7 @@ static void ble_nfc_pair_handler(const ble_evt_t * const p_ble_evt, void * p_con
                                                  BLE_GAP_AUTH_KEY_TYPE_OOB,
                                                  oob_key->tk);
             APP_ERROR_CHECK(err_code);
-            break;
-        }
+        } break;
 
         // Upon LESC Diffie_Hellman key request, reply with key computed from device secret key and peer public key.
         case BLE_GAP_EVT_LESC_DHKEY_REQUEST:
@@ -515,9 +524,7 @@ static void ble_nfc_pair_handler(const ble_evt_t * const p_ble_evt, void * p_con
             // Reply with obtained result.
             err_code = sd_ble_gap_lesc_dhkey_reply(conn_handle, &m_lesc_dhkey);
             APP_ERROR_CHECK(err_code);
-
-            break;
-        }
+        } break;
     }
 }
 

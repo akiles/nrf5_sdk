@@ -67,6 +67,7 @@
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 /**@brief Function for ANT stack initialization.
  */
@@ -88,22 +89,33 @@ static void softdevice_setup(void)
  */
 static void utils_setup(void)
 {
+    bsp_board_init(BSP_INIT_LEDS);
+
+    ret_code_t err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
+}
+
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
     ret_code_t err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
-    bsp_board_leds_init();
-
-    err_code = nrf_pwr_mgmt_init();
-    APP_ERROR_CHECK(err_code);
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 }
 
 /**@brief Function for application main entry. Does not return.
  */
 int main(void)
 {
+    log_init();
     utils_setup();
     softdevice_setup();
     ant_multi_channels_encrypted_channel_tx_broadcast_setup();
+
+    NRF_LOG_INFO("ANT Multi Channels Encrypted TX example started.");
 
     // Main loop.
     for (;;)

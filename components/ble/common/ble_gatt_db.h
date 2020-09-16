@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -50,12 +50,15 @@
 #include <stdint.h>
 #include "ble.h"
 #include "ble_gattc.h"
+#include "sdk_config.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#ifndef BLE_GATT_DB_MAX_CHARS
 #define BLE_GATT_DB_MAX_CHARS 6        /**< The maximum number of characteristics present in a service record. */
+#endif // BLE_GATT_DB_MAX_CHARS
 
 /**@brief Structure for holding the characteristic and the handle of its CCCD present on a server.
  */

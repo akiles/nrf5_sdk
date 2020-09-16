@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -191,7 +191,7 @@ ret_code_t cgms_meas_send(nrf_ble_cgms_t * p_cgms, ble_cgms_rec_t * p_rec, uint8
         else
         {
             // Measurement successfully sent
-            p_cgms->racp_data.racp_proc_records_reported++;
+            p_cgms->racp_data.racp_proc_records_reported += *p_count;
             p_cgms->racp_data.racp_proc_records_reported_since_txcomplete++;
         }
     }

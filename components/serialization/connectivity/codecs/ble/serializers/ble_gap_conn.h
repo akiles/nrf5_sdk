@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -91,6 +91,7 @@ uint32_t ble_gap_authenticate_rsp_enc(uint32_t         return_code,
                                       uint8_t * const  p_buf,
                                       uint32_t * const p_buf_len);
 
+#if defined(NRF_SD_BLE_API_VERSION) && (NRF_SD_BLE_API_VERSION <= 5)
 /**@brief Decodes @ref sd_ble_gap_adv_data_set command request.
  *
  * @sa @ref ble_gap_adv_data_set_rsp_enc for response encoding.
@@ -130,7 +131,7 @@ uint32_t ble_gap_adv_data_set_req_dec(uint8_t const * const p_buf,
 uint32_t ble_gap_adv_data_set_rsp_enc(uint32_t         return_code,
                                       uint8_t * const  p_buf,
                                       uint32_t * const p_buf_len);
-
+#endif
 /**@brief Decodes @ref sd_ble_gap_adv_start command request.
  *
  * @sa @ref ble_gap_adv_start_rsp_enc for response encoding.
@@ -146,7 +147,11 @@ uint32_t ble_gap_adv_data_set_rsp_enc(uint32_t         return_code,
  */
 uint32_t ble_gap_adv_start_req_dec(uint8_t const * const          p_buf,
                                    uint32_t                       packet_len,
+#if NRF_SD_BLE_API_VERSION > 5
+                                   uint8_t *                     p_adv_handle
+#else
                                    ble_gap_adv_params_t * * const pp_adv_params
+#endif
 #if NRF_SD_BLE_API_VERSION >= 4
                                    ,uint8_t *                     p_conn_cfg_tag
 #endif
@@ -287,7 +292,7 @@ uint32_t ble_gap_disconnect_rsp_enc(uint32_t         return_code,
  *
  * @param[in] p_buf           Pointer to beginning of command request packet.
  * @param[in] packet_len      Length (in bytes) of response packet.
- * @param[in] tx_power        Pointer to TX power value.
+ * @param[in] p_tx_power      Pointer to TX power value.
  *
  * @retval NRF_SUCCESS                Decoding success.
  * @retval NRF_ERROR_NULL             Decoding failure. NULL pointer supplied.
@@ -296,7 +301,10 @@ uint32_t ble_gap_disconnect_rsp_enc(uint32_t         return_code,
  */
 uint32_t ble_gap_tx_power_set_req_dec(uint8_t const * const p_buf,
                                       uint32_t              packet_len,
-                                      int8_t *              tx_power);
+#if NRF_SD_BLE_API_VERSION > 5
+                                      uint8_t * p_role, uint16_t * p_handle,
+#endif
+                                      int8_t *              p_tx_power);
 
 /**@brief Encodes @ref sd_ble_gap_tx_power_set command response.
  *
@@ -387,6 +395,10 @@ uint32_t ble_gap_ppcp_get_rsp_enc(uint32_t                            return_cod
                                   uint32_t * const                    p_buf_len,
                                   ble_gap_conn_params_t const * const p_conn_params);
 
+
+uint32_t ble_gap_adv_stop_req_dec(uint8_t const * const p_buf,
+                                  uint16_t              packet_len,
+                                  uint8_t *             p_adv_handle);
 /**@brief Encodes @ref sd_ble_gap_adv_stop command response.
  *
  * @param[in]      return_code    Return code indicating if command was successful or not.
@@ -742,6 +754,7 @@ uint32_t ble_gap_conn_sec_get_rsp_enc(uint32_t                   return_code,
                                       uint8_t * const            p_buf,
                                       uint32_t * const           p_buf_len);
 
+#ifndef S112
 /**@brief Encodes @ref sd_ble_gap_scan_stop command response.
  *
  * @param[in]      return_code    Return code indicating if command was successful or not.
@@ -814,9 +827,13 @@ uint32_t ble_gap_connect_rsp_enc(uint32_t         return_code,
  * @retval NRF_ERROR_INVALID_LENGTH   Decoding failure. Incorrect buffer length.
  * @retval NRF_ERROR_INVALID_PARAM    Decoding failure. Invalid operation type.
  */
-uint32_t ble_gap_scan_start_req_dec(uint8_t const * const           p_buf,
-                                    uint32_t                        packet_len,
-                                    ble_gap_scan_params_t * * const pp_scan_params);
+uint32_t ble_gap_scan_start_req_dec(uint8_t const * const     p_buf,
+                                    uint32_t                  packet_len,
+                                    ble_gap_scan_params_t * * const pp_scan_params
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION > 5
+                                    ,ble_data_t * * const pp_adv_report_buffer
+#endif
+                                    );
 
 /**@brief Encodes @ref sd_ble_gap_scan_start command response.
  *
@@ -851,6 +868,7 @@ uint32_t ble_gap_scan_start_rsp_enc(uint32_t         return_code,
 uint32_t ble_gap_connect_cancel_rsp_enc(uint32_t         return_code,
                                         uint8_t * const  p_buf,
                                         uint32_t * const p_buf_len);
+
 
 /**@brief Decodes @ref sd_ble_gap_encrypt command request.
  *
@@ -890,6 +908,8 @@ uint32_t ble_gap_encrypt_rsp_enc(uint32_t          return_code,
                                  uint8_t   * const p_buf,
                                  uint32_t  * const p_buf_len);
 
+#endif
+
 /**@brief Decodes @ref sd_ble_gap_rssi_get command request.
  *
  * @sa @ref ble_gap_rssi_get_rsp_enc for response encoding.
@@ -907,7 +927,11 @@ uint32_t ble_gap_encrypt_rsp_enc(uint32_t          return_code,
 uint32_t ble_gap_rssi_get_req_dec(uint8_t const * const p_buf,
                                   uint16_t              packet_len,
                                   uint16_t *            p_conn_handle,
-                                  int8_t * * const      pp_rssi);
+                                  int8_t * * const      pp_rssi
+#if NRF_SD_BLE_API_VERSION > 5
+                                  ,uint8_t * * const      pp_ch_index
+#endif
+                                  );
 
 /**@brief Encodes @ref sd_ble_gap_rssi_get command response.
  *
@@ -918,7 +942,7 @@ uint32_t ble_gap_rssi_get_req_dec(uint8_t const * const p_buf,
  *                                returned.
  * @param[in,out] p_buf_len       \c in: size of \p p_buf buffer.
  *                                \c out: Length of encoded command response packet.
- * @param[in] rssi                RSSI value.
+ * @param[in] p_rssi              RSSI value.
  *
  * @retval NRF_SUCCESS                Encoding success.
  * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
@@ -927,7 +951,11 @@ uint32_t ble_gap_rssi_get_req_dec(uint8_t const * const p_buf,
 uint32_t ble_gap_rssi_get_rsp_enc(uint32_t         return_code,
                                   uint8_t * const  p_buf,
                                   uint32_t * const p_buf_len,
-                                  int8_t           rssi);
+                                  int8_t *         p_rssi
+#if NRF_SD_BLE_API_VERSION > 5
+                                  ,uint8_t * p_ch_index
+#endif
+                                  );
 
 /**@brief Decodes @ref sd_ble_gap_keypress_notify command request.
  *
@@ -1297,7 +1325,7 @@ uint32_t ble_gap_device_identities_set_req_dec(uint8_t const * const        p_bu
 uint32_t ble_gap_device_identities_set_rsp_enc(uint32_t         return_code,
                                                uint8_t * const  p_buf,
                                                uint32_t * const p_buf_len);
-#if NRF_SD_BLE_API_VERSION >= 4
+#if NRF_SD_BLE_API_VERSION >= 4 && !defined(S112)
 /** @brief Decodes @ref sd_bble_gap_data_length_update command request.
  *
  * @sa @ref ble_gap_data_length_update_rsp_enc for response encoding.
@@ -1374,6 +1402,121 @@ uint32_t ble_gap_phy_update_req_dec(uint8_t const * const    p_buf,
 uint32_t ble_gap_phy_update_rsp_enc(uint32_t         return_code,
                                      uint8_t * const  p_buf,
                                      uint32_t * const p_buf_len);
+#endif
+
+#if NRF_SD_BLE_API_VERSION >= 6
+/**@brief Decodes @ref sd_ble_gap_adv_set_configure command request.
+ *
+ * @sa @ref ble_gap_adv_set_configure_rsp_enc for response encoding.
+ *
+ * @param[in] p_buf            Pointer to beginning of command request packet.
+ * @param[in] packet_len       Length (in bytes) of response packet.
+ * @param[out] p_conn_handle   Pointer to connection handle
+ * @param[out] pp_adv_handle   Pointer to pointer to the struct.
+ * @param[out] pp_adv_data     Pointer to pointer to the struct.
+ * @param[out] pp_adv_params   Pointer to pointer to the struct.
+ *
+ * @retval NRF_SUCCESS                Decoding success.
+ * @retval NRF_ERROR_NULL             Decoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Decoding failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Decoding failure. Invalid operation type.
+ */
+uint32_t ble_gap_adv_set_configure_req_dec(uint8_t const * const        p_buf,
+                                           uint16_t                     packet_len,
+                                           uint8_t * * const            pp_adv_handle,
+                                           ble_gap_adv_data_t **const   pp_adv_data,
+                                           ble_gap_adv_params_t **const pp_adv_params);
+
+
+/**@brief Encodes @ref sd_ble_gap_adv_set_configure command response.
+ *
+ * @sa @ref ble_gap_adv_set_configure_req_dec for request decoding.
+ *
+ * @param[in] return_code         Return code indicating if command was successful or not.
+ * @param[out] p_buf              Pointer to buffer where encoded data command response will be
+ *                                returned.
+ * @param[in,out] p_buf_len       \c in: size of \p p_buf buffer.
+ *                                \c out: Length of encoded command response packet.
+ * @param[in] p_adv_handle        Pointer to the field to be encoded.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
+ */
+uint32_t ble_gap_adv_set_configure_rsp_enc(uint32_t               return_code,
+                                           uint8_t * const        p_buf,
+                                           uint32_t * const       p_buf_len,
+                                           uint8_t const * const p_adv_handle);
+
+#ifndef S112
+/**@brief Decodes @ref sd_ble_gap_qos_channel_survey_start command request.
+ *
+ * @sa @ref ble_gap_qos_channel_survey_start_rsp_enc for response encoding.
+ *
+ * @param[in] p_buf            Pointer to beginning of command request packet.
+ * @param[in] packet_len       Length (in bytes) of response packet.
+ * @param[out] p_interval_us   Pointer to interval.
+ *
+ * @retval NRF_SUCCESS                Decoding success.
+ * @retval NRF_ERROR_NULL             Decoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Decoding failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Decoding failure. Invalid operation type.
+ */
+uint32_t ble_gap_qos_channel_survey_start_req_dec(uint8_t const * const          p_buf,
+                                                  uint32_t                       packet_len,
+                                                  uint32_t * const               p_interval_us);
+
+/**@brief Encodes @ref sd_ble_gap_qos_channel_survey_start command response.
+ *
+ * @sa @ref ble_gap_qos_channel_survey_start_req_dec for request decoding.
+ *
+ * @param[in] return_code         Return code indicating if command was successful or not.
+ * @param[out] p_buf              Pointer to buffer where encoded data command response will be
+ *                                returned.
+ * @param[in,out] p_buf_len       \c in: size of \p p_buf buffer.
+ *                                \c out: Length of encoded command response packet.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
+ */
+uint32_t ble_gap_qos_channel_survey_start_rsp_enc(uint32_t         return_code,
+                                                  uint8_t * const  p_buf,
+                                                  uint32_t * const p_buf_len);
+
+/**@brief Decodes @ref sd_ble_gap_qos_channel_survey_stop command request.
+ *
+ * @sa @ref ble_gap_qos_channel_survey_stop_rsp_enc for response encoding.
+ *
+ * @param[in] p_buf            Pointer to beginning of command request packet.
+ * @param[in] packet_len       Length (in bytes) of response packet.
+ *
+ * @retval NRF_SUCCESS                Decoding success.
+ * @retval NRF_ERROR_NULL             Decoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Decoding failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Decoding failure. Invalid operation type.
+ */
+uint32_t ble_gap_qos_channel_survey_stop_req_dec(uint8_t const * const          p_buf,
+                                                 uint32_t                       packet_len);
+
+/**@brief Encodes @ref sd_ble_gap_qos_channel_survey_stop command response.
+ *
+ * @sa @ref ble_gap_qos_channel_survey_stop_req_dec for request decoding.
+ *
+ * @param[in] return_code         Return code indicating if command was successful or not.
+ * @param[out] p_buf              Pointer to buffer where encoded data command response will be
+ *                                returned.
+ * @param[in,out] p_buf_len       \c in: size of \p p_buf buffer.
+ *                                \c out: Length of encoded command response packet.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
+ */
+uint32_t ble_gap_qos_channel_survey_stop_rsp_enc(uint32_t         return_code,
+                                                 uint8_t * const  p_buf,
+                                                 uint32_t * const p_buf_len);
+#endif //!defined(S112)
 #endif
 /** @} */
 #ifdef __cplusplus

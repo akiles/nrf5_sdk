@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -54,6 +54,7 @@
 #include "nrf_error.h"
 #include "app_util.h"
 #include "nrf_drv_uart.h"
+#include "nrf_peripherals.h"
 #include "app_util_platform.h"
 
 //Configuration parameters.
@@ -127,7 +128,11 @@ static uint32_t uart_init(app_uart_stream_comm_params_t * p_comm_params)
     config.baudrate = (nrf_uart_baudrate_t) m_baud_rates[p_comm_params->baud_rate];
     config.hwfc = NRF_UART_HWFC_DISABLED;
     config.parity = NRF_UART_PARITY_EXCLUDED;
-
+#ifdef UART_PRESENT
+    //Current implementation of DTM requires legacy UART features and 
+    // it will not work on nrf52810.
+    config.use_easy_dma = false;
+#endif
     nrf_drv_uart_uninit(&m_dtm_uart_driver);
     uint32_t err_code = nrf_drv_uart_init(&m_dtm_uart_driver, &config, NULL);
     if (err_code != NRF_SUCCESS)

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -160,6 +160,8 @@ ret_code_t sm_lesc_public_key_set(ble_gap_lesc_p256_pk_t * p_public_key);
  * @retval NRF_ERROR_TIMEOUT              There has been an SMP timeout, so no more SMP operations
  *                                        can be performed on this link.
  * @retval BLE_ERROR_INVALID_CONN_HANDLE  Invalid connection handle.
+ * @retval NRF_ERROR_INVALID_DATA         Peer is bonded, but no LTK was found, and repairing was
+ *                                        not requested.
  * @retval NRF_ERROR_NOT_FOUND            Security parameters have not been set.
  * @retval NRF_ERROR_INVALID_STATE        A security procedure is already in progress on the link,
  *                                        or the link is disconnecting.

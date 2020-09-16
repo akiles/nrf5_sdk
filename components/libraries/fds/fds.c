@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -326,10 +326,19 @@ static void page_scan(uint32_t const *       p_addr,
 }
 
 
-static void page_offsets_update(fds_page_t * const p_page, uint16_t length_words)
+static void page_offsets_update(fds_page_t * const p_page, fds_op_t const * p_op)
 {
-    p_page->write_offset   += (FDS_HEADER_SIZE + length_words);
-    p_page->words_reserved -= (FDS_HEADER_SIZE + length_words);
+    // If the first part of the header has been written correctly, update the offset as normal.
+    // Even if the record has not been written completely, fds is still able to continue normal
+    // operation. Incomplete records will be deleted the next time garbage collection is run.
+    // If we failed at the very beginning of the write operation, restore the offset
+    // to the previous value so that no holes will be left in the flash.
+    if (p_op->write.step > FDS_OP_WRITE_RECORD_ID)
+    {
+        p_page->write_offset += (FDS_HEADER_SIZE + p_op->write.header.length_words);
+    }
+
+    p_page->words_reserved -= (FDS_HEADER_SIZE + p_op->write.header.length_words);
 }
 
 
@@ -1207,7 +1216,7 @@ static ret_code_t write_execute(uint32_t prev_ret, fds_op_t * const p_op)
     if (prev_ret != NRF_SUCCESS)
     {
         // The previous operation has timed out, update offsets.
-        page_offsets_update(p_page, p_op->write.header.length_words);
+        page_offsets_update(p_page, p_op);
         return FDS_ERR_OPERATION_TIMEOUT;
     }
 
@@ -1277,7 +1286,7 @@ static ret_code_t write_execute(uint32_t prev_ret, fds_op_t * const p_op)
     if (ret != FDS_OP_EXECUTING)
     {
         // There won't be another callback for this operation, so update the page offset now.
-        page_offsets_update(p_page, p_op->write.header.length_words);
+        page_offsets_update(p_page, p_op);
     }
 
     return ret;
@@ -1436,23 +1445,15 @@ static void queue_process(ret_code_t result)
         // - free the operation buffer
         // - execute any other queued operations
 
-        fds_evt_t evt;
-        memset(&evt, 0x00, sizeof(evt));
-
-        if (result == FDS_OP_COMPLETED)
+        fds_evt_t evt =
         {
-            evt.result = FDS_SUCCESS;
-            result     = NRF_SUCCESS;
-        }
-        else
-        {
-            // The operation failed for one of the following reasons:
+            // The operation might have failed for one of the following reasons:
             // FDS_ERR_BUSY              - flash subsystem can't accept the operation
             // FDS_ERR_OPERATION_TIMEOUT - flash subsystem timed out
             // FDS_ERR_CRC_CHECK_FAILED  - a CRC check failed
             // FDS_ERR_NOT_FOUND         - no record found (delete/update)
-            evt.result = result;
-        }
+            .result = (result == FDS_OP_COMPLETED) ? FDS_SUCCESS : result,
+        };
 
         event_prepare(m_p_cur_op, &evt);
         event_send(&evt);
@@ -1460,6 +1461,10 @@ static void queue_process(ret_code_t result)
         // Zero the pointer to the current operation so that this function
         // will fetch a new one from the queue next time it is run.
         m_p_cur_op = NULL;
+
+        // The result of the operation must be reset upon re-entering the loop to ensure
+        // the next operation won't be affected by eventual errors in previous operations.
+        result = NRF_SUCCESS;
 
         // Free the queue element used by the current operation.
         queue_free(&m_iget_ctx);

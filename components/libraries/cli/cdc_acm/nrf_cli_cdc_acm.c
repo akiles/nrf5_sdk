@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -45,31 +45,12 @@
 #include "nrf_assert.h"
 
 
-#if APP_USBD_EVENT_QUEUE_ENABLE
-#error "Current CLI CDC implementation supports only USB with event queue disabled (see APP_USBD_EVENT_QUEUE_ENABLE)"
+#if APP_USBD_CONFIG_EVENT_QUEUE_ENABLE
+#error "Current CLI CDC implementation supports only USB with event queue disabled (see APP_USBD_CONFIG_EVENT_QUEUE_ENABLE)"
 #endif
 
 static void cdc_acm_user_ev_handler(app_usbd_class_inst_t const * p_inst,
                                     app_usbd_cdc_acm_user_event_t event);
-
-
-/**
- * @brief Interfaces list passed to @ref APP_USBD_CDC_ACM_GLOBAL_DEF
- * */
-#define NRF_CLI_CDC_ACM_INTERFACES_CONFIG()                 \
-    APP_USBD_CDC_ACM_CONFIG(NRF_CLI_CDC_ACM_COMM_INTERFACE, \
-                            NRF_CLI_CDC_ACM_COMM_EPIN,      \
-                            NRF_CLI_CDC_ACM_DATA_INTERFACE, \
-                            NRF_CLI_CDC_ACM_DATA_EPIN,      \
-                            NRF_CLI_CDC_ACM_DATA_EPOUT)
-
-static const uint8_t m_cdc_acm_class_descriptors[] = {
-        APP_USBD_CDC_ACM_DEFAULT_DESC(NRF_CLI_CDC_ACM_COMM_INTERFACE,
-                                      NRF_CLI_CDC_ACM_COMM_EPIN,
-                                      NRF_CLI_CDC_ACM_DATA_INTERFACE,
-                                      NRF_CLI_CDC_ACM_DATA_EPIN,
-                                      NRF_CLI_CDC_ACM_DATA_EPOUT)
-};
 
 /*lint -save -e26 -e40 -e64 -e123 -e505 -e651*/
 
@@ -77,9 +58,13 @@ static const uint8_t m_cdc_acm_class_descriptors[] = {
  * @brief CDC_ACM class instance.
  * */
 APP_USBD_CDC_ACM_GLOBAL_DEF(nrf_cli_cdc_acm,
-                            NRF_CLI_CDC_ACM_INTERFACES_CONFIG(),
                             cdc_acm_user_ev_handler,
-                            m_cdc_acm_class_descriptors
+                            NRF_CLI_CDC_ACM_COMM_INTERFACE,
+                            NRF_CLI_CDC_ACM_DATA_INTERFACE,
+                            NRF_CLI_CDC_ACM_COMM_EPIN,
+                            NRF_CLI_CDC_ACM_DATA_EPIN,
+                            NRF_CLI_CDC_ACM_DATA_EPOUT,
+                            APP_USBD_CDC_COMM_PROTOCOL_AT_V250
 );
 
 /*lint -restore*/
@@ -89,10 +74,48 @@ NRF_QUEUE_DEF(uint8_t,
               2*NRF_DRV_USBD_EPSIZE,
               NRF_QUEUE_MODE_OVERFLOW);
 
-static bool m_port_is_open;
 static char m_rx_buffer[NRF_DRV_USBD_EPSIZE];
 
 static nrf_cli_cdc_acm_internal_t * mp_internal;
+
+/**
+ * @brief Set new buffer and process any data if already present
+ *
+ * This is internal function.
+ * The result of its execution is the library waiting for the event of the new data.
+ * If there is already any data that was returned from the CDC internal buffer
+ * it would be processed here.
+ */
+static void cdc_acm_process_and_prepare_buffer(app_usbd_cdc_acm_t const * p_cdc_acm)
+{
+    for (;;)
+    {
+        if (!nrf_queue_is_empty(&m_rx_queue))
+        {
+            mp_internal->p_cb->handler(NRF_CLI_TRANSPORT_EVT_RX_RDY, mp_internal->p_cb->p_context);
+        }
+        ret_code_t ret = app_usbd_cdc_acm_read_any(&nrf_cli_cdc_acm,
+                                                   m_rx_buffer,
+                                                   sizeof(m_rx_buffer));
+        if (ret == NRF_SUCCESS)
+        {
+            size_t size = app_usbd_cdc_acm_rx_size(p_cdc_acm);
+            size_t qsize = nrf_queue_in(&m_rx_queue, m_rx_buffer, size);
+            ASSERT(size == qsize);
+            UNUSED_VARIABLE(qsize);
+        }
+        else if (ret == NRF_ERROR_IO_PENDING)
+        {
+            break;
+        }
+        else
+        {
+            APP_ERROR_CHECK(ret);
+            break;
+        }
+    }
+}
+
 /**
  * @brief User event handler.
  * */
@@ -106,16 +129,11 @@ static void cdc_acm_user_ev_handler(app_usbd_class_inst_t const * p_inst,
     {
         case APP_USBD_CDC_ACM_USER_EVT_PORT_OPEN:
         {
-            m_port_is_open = true;
             /*Setup first transfer*/
-            ret_code_t ret = app_usbd_cdc_acm_read(&nrf_cli_cdc_acm,
-                                                   m_rx_buffer,
-                                                   sizeof(m_rx_buffer));
-            APP_ERROR_CHECK(ret);
+            cdc_acm_process_and_prepare_buffer(p_cdc_acm);
             break;
         }
         case APP_USBD_CDC_ACM_USER_EVT_PORT_CLOSE:
-            m_port_is_open = false;
             break;
         case APP_USBD_CDC_ACM_USER_EVT_TX_DONE:
             mp_internal->p_cb->handler(NRF_CLI_TRANSPORT_EVT_TX_RDY, mp_internal->p_cb->p_context);
@@ -129,13 +147,7 @@ static void cdc_acm_user_ev_handler(app_usbd_class_inst_t const * p_inst,
             UNUSED_VARIABLE(qsize);
 
             /*Setup next transfer*/
-            ret_code_t ret = app_usbd_cdc_acm_read(&nrf_cli_cdc_acm,
-                                                   m_rx_buffer,
-                                                   sizeof(m_rx_buffer));
-
-            ASSERT(ret == NRF_SUCCESS); /*Should not happen*/
-            UNUSED_VARIABLE(ret);
-            mp_internal->p_cb->handler(NRF_CLI_TRANSPORT_EVT_RX_RDY, mp_internal->p_cb->p_context);
+            cdc_acm_process_and_prepare_buffer(p_cdc_acm);
             break;
         }
         default:
@@ -200,16 +212,11 @@ static ret_code_t cli_cdc_acm_write(nrf_cli_transport_t const * p_transport,
     UNUSED_PARAMETER(p_transport);
     ret_code_t ret;
 
-    if (!m_port_is_open)
-    {
-        *p_cnt = length;
-        return NRF_SUCCESS;
-    }
-
     ret = app_usbd_cdc_acm_write(&nrf_cli_cdc_acm, p_data, length);
-    if (ret == NRF_SUCCESS)
+    if (ret == NRF_SUCCESS || ret == NRF_ERROR_INVALID_STATE)
     {
         *p_cnt = length;
+        ret = NRF_SUCCESS;
     }
     else if (ret == NRF_ERROR_BUSY)
     {
@@ -231,10 +238,5 @@ const nrf_cli_transport_api_t nrf_cli_cdc_acm_transport_api = {
         .read = cli_cdc_acm_read,
         .write = cli_cdc_acm_write,
 };
-
-bool nrf_cli_cdc_acm_port_is_open(void)
-{
-    return m_port_is_open;
-}
 
 #endif // NRF_MODULE_ENABLED(NRF_CLI_CDC_ACM)

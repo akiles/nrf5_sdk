@@ -1,18 +1,45 @@
-// Copyright (c) 2016-2017, ARM Limited or its affiliates. All rights reserved 
-// 
-// This file and the related binary are licensed under the ARM Object Code and 
-// Headers License; you may not use these files except in compliance with this 
-// license. 
-// 
-// You may obtain a copy of the License at <.../external/nrf_cc310/license.txt> 
-// 
-// See the License for the specific language governing permissions and 
-// limitations under the License.
+/**************************************************************************************
+* Copyright (c) 2016-2017, ARM Limited or its affiliates. All rights reserved         *
+*                                                                                     *
+* This file and the related binary are licensed under the following license:          *
+*                                                                                     *
+* ARM Object Code and Header Files License, v1.0 Redistribution.                      *
+*                                                                                     *
+* Redistribution and use of object code, header files, and documentation, without     *
+* modification, are permitted provided that the following conditions are met:         *
+*                                                                                     *
+* 1) Redistributions must reproduce the above copyright notice and the                *
+*    following disclaimer in the documentation and/or other materials                 *
+*    provided with the distribution.                                                  *
+*                                                                                     *
+* 2) Unless to the extent explicitly permitted by law, no reverse                     *
+*    engineering, decompilation, or disassembly of is permitted.                      *
+*                                                                                     *
+* 3) Redistribution and use is permitted solely for the purpose of                    *
+*    developing or executing applications that are targeted for use                   *
+*    on an ARM-based product.                                                         *
+*                                                                                     *
+* DISCLAIMER. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND                  *
+* CONTRIBUTORS "AS IS." ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT             *
+* NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT,        *
+* AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE          *
+* COPYRIGHT HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,   *
+* SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED            *
+* TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR              *
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF              *
+* LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING                *
+* NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS                  *
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                        *
+**************************************************************************************/
+
 
 /*!
 @file
 @brief This file contains all of the enums and definitions that are used for the
          CRYS CHACHA APIs, as well as the APIs themselves.
+@defgroup crys_chacha CryptoCell CHACHA APIs
+@{
+@ingroup cryptocell_api
 */
 #ifndef CRYS_CHACHA_H
 #define CRYS_CHACHA_H
@@ -28,43 +55,49 @@ extern "C"
 #endif
 
 /************************ Defines ******************************/
-
-/*
-brief - a definition describing the low level Engine type ( SW, Hardware, Etc )
-*/
-
+/*! CHACHA user's context size in words. */
 #define CRYS_CHACHA_USER_CTX_SIZE_IN_WORDS 17
 
+/*! CHACHA block size in words. */
 #define CRYS_CHACHA_BLOCK_SIZE_IN_WORDS 16
+/*! CHACHA block size in bytes. */
 #define CRYS_CHACHA_BLOCK_SIZE_IN_BYTES  (CRYS_CHACHA_BLOCK_SIZE_IN_WORDS * sizeof(uint32_t))
 
-/*! The max size of the nonce buffer. */
+/*! Nonce buffer max size in words. */
 #define CRYS_CHACHA_NONCE_MAX_SIZE_IN_WORDS   3
+/*! Nonce buffer max size in bytes. */
 #define CRYS_CHACHA_NONCE_MAX_SIZE_IN_BYTES  (CRYS_CHACHA_NONCE_MAX_SIZE_IN_WORDS * sizeof(uint32_t))
 
-/*! The maximum size of the CHACHA KEY in words and bytes. */
+/*! CHACHA KEY maximal size in words. */
 #define CRYS_CHACHA_KEY_MAX_SIZE_IN_WORDS 8
+/*! CHACHA KEY maximal size in bytes. */
 #define CRYS_CHACHA_KEY_MAX_SIZE_IN_BYTES (CRYS_CHACHA_KEY_MAX_SIZE_IN_WORDS * sizeof(uint32_t))
 
 /************************ Enums ********************************/
 
-/* Enum defining the Encrypt or Decrypt operation mode */
+/*! Enum defining the CHACHA Encrypt or Decrypt operation mode. */
 typedef enum {
-	CRYS_CHACHA_Encrypt = 0,
-	CRYS_CHACHA_Decrypt = 1,
+    /*! CHACHA encrypt mode. */
+    CRYS_CHACHA_Encrypt = 0,
+    /*! CHACHA decrypt mode. */
+    CRYS_CHACHA_Decrypt = 1,
+    /*! CHACHA maximal number of operations (encrypt/decrypt). */
+    CRYS_CHACHA_EncryptNumOfOptions,
 
-	CRYS_CHACHA_EncryptNumOfOptions,
-
-	CRYS_CHACHA_EncryptModeLast = 0x7FFFFFFF,
+    /*! Reserved. */
+    CRYS_CHACHA_EncryptModeLast = 0x7FFFFFFF,
 
 }CRYS_CHACHA_EncryptMode_t;
 
+/*! Enum defining the CHACHA Nonce size in bits. */
 typedef enum {
+    /*! 64 bit Nonce size. */
         CRYS_CHACHA_Nonce64BitSize = 0,
+    /*! 96 bit Nonce size. */
         CRYS_CHACHA_Nonce96BitSize = 1,
-
+    /*! CHACHA maximal number of nonce sizes. */
         CRYS_CHACHA_NonceSizeNumOfOptions,
-
+    /*! Reserved. */
         CRYS_CHACHA_NonceSizeLast = 0x7FFFFFFF,
 
 }CRYS_CHACHA_NonceSize_t;
@@ -80,12 +113,14 @@ typedef uint8_t CRYS_CHACHA_Key_t[CRYS_CHACHA_KEY_MAX_SIZE_IN_BYTES];
 
 /************************ context Structs  ******************************/
 
-/* The user's context prototype - the argument type that is passed by the user
-   to the APIs called */
+/*! The user's context prototype - the argument type that is passed by the user
+   to the CHACHA API. The context saves the state of the operation and must be saved by the user
+   till the end of the APIs flow (for example till ::CRYS_CHACHA_Free is called). */
 typedef struct CRYS_CHACHAUserContext_t {
-	/* Allocated buffer must be double the size of actual context
-	 * + 1 word for offset management */
-	uint32_t buff[CRYS_CHACHA_USER_CTX_SIZE_IN_WORDS];
+    /* Allocated buffer must be double the size of actual context
+     * + 1 word for offset management */
+    /*! Context buffer for internal use */
+    uint32_t buff[CRYS_CHACHA_USER_CTX_SIZE_IN_WORDS];
 }CRYS_CHACHAUserContext_t;
 
 /************************ Public Variables **********************/
@@ -104,7 +139,7 @@ typedef struct CRYS_CHACHAUserContext_t {
 CIMPORT_C CRYSError_t  CRYS_CHACHA_Init(
                         CRYS_CHACHAUserContext_t    *pContextID,        /*!< [in]  Pointer to the CHACHA context buffer that is allocated by the user
                                                                                    and is used for the CHACHA operation. */
-                        CRYS_CHACHA_Nonce_t          pNonce,         	/*!< [in]  A buffer containing an nonce. */
+                        CRYS_CHACHA_Nonce_t          pNonce,            /*!< [in]  A buffer containing an nonce. */
                         CRYS_CHACHA_NonceSize_t      nonceSize,         /*!< [in]  Enumerator defining the nonce size (only 64 and 96 bit are valid). */
                         CRYS_CHACHA_Key_t            pKey,               /*!< [in]  A pointer to the user's key buffer. */
                         uint32_t                     initialCounter,     /*!< [in]  An initial counter. */
@@ -167,7 +202,7 @@ CIMPORT_C CRYSError_t  CRYS_CHACHA_Free(
 @return A non-zero value on failure as defined crys_chacha_error.h.
 */
 CIMPORT_C CRYSError_t  CRYS_CHACHA(
-                            CRYS_CHACHA_Nonce_t       	  pNonce,           /*!< [in]  A buffer containing an nonce. */
+                            CRYS_CHACHA_Nonce_t           pNonce,           /*!< [in]  A buffer containing an nonce. */
                             CRYS_CHACHA_NonceSize_t       nonceSize,               /*!< [in]  Enumerator defining the nonce size (only 64 and 96 bit are valid). */
                             CRYS_CHACHA_Key_t             pKey,                 /*!< [in]  A pointer to the user's key buffer. */
                             uint32_t                      initialCounter,       /*!< [in]  An initial counter. */
@@ -186,6 +221,10 @@ CIMPORT_C CRYSError_t  CRYS_CHACHA(
 #ifdef __cplusplus
 }
 #endif
+
+/**
+@}
+ */
 
 #endif /* #ifndef CRYS_CHACHA_H */
 

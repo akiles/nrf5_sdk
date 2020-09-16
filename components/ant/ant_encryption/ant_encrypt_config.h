@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -206,7 +206,7 @@ ret_code_t ant_channel_encrypt_config_perform(uint8_t                          c
  *
  * @retval NRF_SUCCESS                      If the function completed successfully.
  * @retval NRF_ERROR_INVALID_PARAM          If the channel type is invalid.
- * @retval NRF_ERROR_MODULE_NOT_INITIALZED  If the stack is not configured for encryption.
+ * @retval NRF_ERROR_MODULE_NOT_INITIALIZED  If the stack is not configured for encryption.
  * @retval Other                            Otherwise, the error value returned by the @ref
  *                                          ant_channel_encrypt_config_perform function is returned.
  */

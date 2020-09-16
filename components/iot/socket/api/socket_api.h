@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -93,7 +93,9 @@ typedef int32_t ssize_t;
  */
 #define AF_INET             2   /**< IPv4 socket family.                 */
 #define AF_INET6            10  /**< IPv6 socket family.                 */
-#define AF_NRF_CFG          39  /**< nRF configuration socket.           */
+#if defined(NRF52) || defined(NRF52_SERIES)
+#define AF_NRF_CFG          39  /**< nRF configuration socket.*/
+#endif
 /**@} */
 
 /**@defgroup socket_types Values for socket_type_t
@@ -123,7 +125,9 @@ typedef int32_t ssize_t;
 #define MSG_WAITALL         0x10    /**< Request a blocking operation until the request is satisfied.                            */
 /**@} */
 
-/**@defgroup socket_option_levels Values for socket_opt_lvl_t
+#if defined(NRF52) || defined(NRF52_SERIES)
+/**
+ * @defgroup socket_option_levels Values for socket_opt_lvl_t
  * @ingroup iot_socket
  * @{
  */
@@ -136,7 +140,9 @@ typedef int32_t ssize_t;
  * @{
  */
 #define MEDIUM_INIT_PARAMS  1       /**< Medium initialization parameters. */
-/**@} */
+/**@}
+ */
+#endif
 
 /**@defgroup fcnt_commands fcntl commands
  * @ingroup iot_socket
@@ -196,9 +202,11 @@ typedef int socket_type_t;
 typedef int socket_protocol_t;
 
 /**
+ * @if (IOT)
  * @brief Socket option levels.
  *
  * @details For a list of valid values, refer to @ref socket_option_levels.
+ * @endif
  */
 typedef int socket_opt_lvl_t;
 
@@ -293,7 +301,7 @@ typedef struct sockaddr_in  sockaddr_in_t;
  * @param[in] type      The protocol type to use for this socket.
  * @param[in] protocol  The transport protocol to use for this socket.
  *
- * @retval A non-negative socket descriptor on success, or -1 on error.
+ * @return A non-negative socket descriptor on success, or -1 on error.
  */
 int socket(socket_family_t family, socket_type_t type, socket_protocol_t protocol);
 
@@ -304,7 +312,7 @@ int socket(socket_family_t family, socket_type_t type, socket_protocol_t protoco
  *
  * @param[in] sock  The socket to close.
  *
- * @retval 0 on success, or -1 on error.
+ * @return 0 on success, or -1 on error.
  */
 int close(int sock);
 
@@ -331,7 +339,7 @@ int fcntl(int fd, int cmd, int flags);
  *                          the only supported type.
  * @param[in] addrlen       The size of the p_servaddr argument.
  *
- * @retval 0 on success, or -1 on error.
+ * @return 0 on success, or -1 on error.
  */
 int connect(int sock, const void * p_servaddr, socklen_t addrlen);
 
@@ -347,7 +355,7 @@ int connect(int sock, const void * p_servaddr, socklen_t addrlen);
  * @param[in] nbytes   Size of data contained on p_buff.
  * @param[in] flags    Flags to control send behavior.
  *
- * @retval The number of bytes that were sent on success, or -1 on error.
+ * @return The number of bytes that were sent on success, or -1 on error.
  */
 ssize_t send(int sock, const void * p_buff, size_t nbytes, int flags);
 
@@ -366,7 +374,7 @@ ssize_t send(int sock, const void * p_buff, size_t nbytes, int flags);
  *                          the only supported type.
  * @param[in] addrlen       The size of the p_servaddr argument.
  *
- * @retval The number of bytes that were sent on success, or -1 on error.
+ * @return The number of bytes that were sent on success, or -1 on error.
  */
 ssize_t sendto(int          sock,
                const void * p_buff,
@@ -382,7 +390,7 @@ ssize_t sendto(int          sock,
  * @param[in] p_buff   Buffer containing the data to send.
  * @param[in] nbytes   Size of data contained in p_buff.
  *
- * @retval The number of bytes that were sent on success, or -1 on error.
+ * @return The number of bytes that were sent on success, or -1 on error.
  */
 ssize_t write(int sock, const void * p_buff, size_t nbytes);
 
@@ -397,7 +405,7 @@ ssize_t write(int sock, const void * p_buff, size_t nbytes);
  * @param[in]  nbytes   Number of bytes to read. Should not be larger than the size of p_buff.
  * @param[in]  flags    Flags to control receive behavior.
  *
- * @retval The number of bytes that were read, or -1 on error.
+ * @return The number of bytes that were read, or -1 on error.
  */
 ssize_t recv(int sock, void * p_buff, size_t nbytes, int flags);
 
@@ -414,7 +422,7 @@ ssize_t recv(int sock, void * p_buff, size_t nbytes, int flags);
  * @param[out]   p_cliaddr    Socket address that will be set to the client's address.
  * @param[inout] p_addrlen    The size of the p_cliaddr passed. Might be modified by the function.
  *
- * @retval The number of bytes that were read, or -1 on error.
+ * @return The number of bytes that were read, or -1 on error.
  */
 ssize_t recvfrom(int         sock,
                  void      * p_buff,
@@ -430,7 +438,7 @@ ssize_t recvfrom(int         sock,
  * @param[out] p_buff   Buffer to hold the data to be read.
  * @param[in]  nbytes   Number of bytes to read. Should not be larger than the size of p_buff.
  *
- * @retval The number of bytes that were read, or -1 on error.
+ * @return The number of bytes that were read, or -1 on error.
  */
 ssize_t read(int sock, void * p_buff, size_t nbytes);
 
@@ -473,7 +481,7 @@ typedef uint32_t fd_set;
  *                             NULL if not used.
  * @param[in]    p_timeout     The timeout to use for select call. Set to NULL if waiting forever.
  *
- * @retval The number of ready descriptors contained in the descriptor sets on success, or -1 on error.
+ * @return The number of ready descriptors contained in the descriptor sets on success, or -1 on error.
  */
 int select(int                    nfds,
            fd_set               * p_readset,
@@ -493,7 +501,7 @@ int select(int                    nfds,
  * @param[in] p_optval  The value to be stored for this option.
  * @param[in] optlen    The size of p_optval.
  *
- * @retval 0 on success, or -1 on error.
+ * @return 0 on success, or -1 on error.
  */
 int setsockopt(int              sock,
                socket_opt_lvl_t level,
@@ -513,7 +521,7 @@ int setsockopt(int              sock,
  * @param[out]      p_optval  Pointer to the storage for the option value.
  * @param[inout]    p_optlen  The size of p_optval. Can be modified to the actual size of p_optval.
  *
- * @retval 0 on success, or -1 on error.
+ * @return 0 on success, or -1 on error.
  */
 int getsockopt(int              sock,
                socket_opt_lvl_t level,
@@ -530,7 +538,7 @@ int getsockopt(int              sock,
  * @param[in] p_myaddr  The address to bind this socket to.
  * @param[in] addrlen   The size of p_myaddr.
  *
- * @retval 0 on success, or -1 on error.
+ * @return 0 on success, or -1 on error.
  */
 int bind(int sock, const void * p_myaddr, socklen_t addrlen);
 
@@ -545,7 +553,7 @@ int bind(int sock, const void * p_myaddr, socklen_t addrlen);
  * @param[in] backlog   The max length of the queue of pending connections. A value of 0 means
  *                      infinite.
  *
- * @retval 0 on success, or -1 on error.
+ * @return 0 on success, or -1 on error.
  */
 int listen(int sock, int backlog);
 
@@ -558,7 +566,7 @@ int listen(int sock, int backlog);
  * @param[out] p_cliaddr    Socket address that will be set to the client's address.
  * @param[out] p_addrlen    The size of the p_cliaddr passed. Might be modified by the function.
  *
- * @retval  A non-negative client descriptor on success, or -1 on error.
+ * @return  A non-negative client descriptor on success, or -1 on error.
  */
 int accept(int sock, void * p_cliaddr, socklen_t * p_addrlen);
 
@@ -571,7 +579,7 @@ int accept(int sock, void * p_cliaddr, socklen_t * p_addrlen);
  * @param[in]  p_src        Null-terminated string containing the address to convert.
  * @param[out] p_dst        Pointer to a struct in6_addr where the address will be stored.
  *
- * @retval 1 on success, 0 if src does not contain a valid address, -1 if af is not a valid address
+ * @return 1 on success, 0 if src does not contain a valid address, -1 if af is not a valid address
  *         family.
  */
 int inet_pton(socket_family_t af, const char * p_src, void * p_dst);

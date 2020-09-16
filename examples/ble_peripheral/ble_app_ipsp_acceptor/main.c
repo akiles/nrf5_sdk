@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -58,6 +58,7 @@
 #include "iot_common.h"
 #include "mem_manager.h"
 #include "sdk_config.h"
+#include "nrf_pwr_mgmt.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -90,14 +91,31 @@
 
 #endif // APP_ENABLE_LOGS
 
-static ble_gap_addr_t       m_my_addr;                                                              /**< Local GAP address. */
-static ble_gap_adv_params_t m_adv_params;                                                           /**< Parameters to be passed to the stack when starting advertising. */
-
 #define MAX_IPSP_DATA_LEN   CEIL_DIV(BLE_IPSP_MTU, sizeof(uint32_t))
 static uint32_t             ipsp_data[MAX_IPSP_DATA_LEN];
 static uint32_t             ipsp_data_len = BLE_IPSP_MTU;
 static ble_ipsp_handle_t    m_handle;
 
+static ble_gap_addr_t       m_my_addr;                                                              /**< Local GAP address. */
+static ble_gap_adv_params_t m_adv_params;                                                           /**< Parameters to be passed to the stack when starting advertising. */
+static uint8_t              m_enc_advdata[BLE_GAP_ADV_SET_DATA_SIZE_MAX];                           /**< Buffer for storing an encoded advertising set. */
+static uint8_t              m_adv_handle = BLE_GAP_ADV_SET_HANDLE_NOT_SET;                          /**< Advertising handle used to identify an advertising set. */
+
+/**@brief Struct that contains pointers to the encoded advertising data. */
+static ble_gap_adv_data_t m_adv_data =
+{
+    .adv_data =
+    {
+        .p_data = m_enc_advdata,
+        .len    = BLE_GAP_ADV_SET_DATA_SIZE_MAX
+    },
+    .scan_rsp_data =
+    {
+        .p_data = NULL,
+        .len    = 0
+
+    }
+};
 
 /**@brief Callback function for asserts in the SoftDevice.
  *
@@ -170,17 +188,23 @@ static void advertising_init(void)
     advdata.name_type               = BLE_ADVDATA_FULL_NAME;
     advdata.flags                   = flags;
 
-    err_code = ble_advdata_set(&advdata, NULL);
+//    err_code = ble_advdata_set(&advdata, NULL);
+//    APP_ERROR_CHECK(err_code);
+
+    err_code = ble_advdata_encode(&advdata, m_adv_data.adv_data.p_data, &m_adv_data.adv_data.len);
     APP_ERROR_CHECK(err_code);
 
     // Initialize advertising parameters (used when starting advertising).
     memset(&m_adv_params, 0, sizeof(m_adv_params));
 
-    m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_IND;
-    m_adv_params.p_peer_addr = NULL;                             // Undirected advertisement.
-    m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
-    m_adv_params.interval    = APP_ADV_ADV_INTERVAL;
-    m_adv_params.timeout     = APP_ADV_TIMEOUT;
+    m_adv_params.properties.type = BLE_GAP_ADV_TYPE_CONNECTABLE_SCANNABLE_UNDIRECTED;
+    m_adv_params.p_peer_addr     = NULL;                                              // Undirected advertisement.
+    m_adv_params.filter_policy   = BLE_GAP_ADV_FP_ANY;
+    m_adv_params.interval        = APP_ADV_ADV_INTERVAL;
+    m_adv_params.duration        = APP_ADV_TIMEOUT;
+
+    err_code = sd_ble_gap_adv_set_configure(&m_adv_handle, &m_adv_data, &m_adv_params);
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -278,7 +302,7 @@ static void advertising_start(void)
 {
     uint32_t err_code;
 
-    err_code = sd_ble_gap_adv_start(&m_adv_params, APP_IPSP_TAG);
+    err_code = sd_ble_gap_adv_start(m_adv_handle, APP_IPSP_TAG);
     APP_ERROR_CHECK(err_code);
 
     LEDS_ON(ADVERTISING_LED);
@@ -429,18 +453,43 @@ static void log_init(void)
 }
 
 
+/**@brief Function for initializing power management.
+ */
+static void power_management_init(void)
+{
+    ret_code_t err_code;
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for handling the idle state (main loop).
+ *
+ * @details If there is no pending log operation, then sleep until next the next event occurs.
+ */
+static void idle_state_handle(void)
+{
+    if (NRF_LOG_PROCESS() == false)
+    {
+        nrf_pwr_mgmt_run();
+    }
+}
+
+
 /**
  * @brief Function for application main entry.
  */
 int main(void)
 {
+    // Initialize.
     log_init();
     leds_init();
+    power_management_init();
     ble_stack_init();
     advertising_init();
     services_init();
 
-    APPL_LOG("ble_app_ipsp_acceptor initialized.");
+    APPL_LOG("ble_app_ipsp_acceptor started.");
     APPL_LOG("Advertising.");
 
     // Start execution.
@@ -449,12 +498,7 @@ int main(void)
     // Enter main loop.
     for (;;)
     {
-        if (NRF_LOG_PROCESS() == false)
-        {
-            // Sleep waiting for an application event.
-            uint32_t err_code = sd_app_evt_wait();
-            APP_ERROR_CHECK(err_code);
-        }
+        idle_state_handle();
     }
 }
 

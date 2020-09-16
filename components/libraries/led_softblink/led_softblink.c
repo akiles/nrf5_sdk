@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -56,13 +56,15 @@ typedef struct
 {
     bool                    leds_is_on;     /**< Flag for indicating if LEDs are on. */
     bool                    is_counting_up; /**< Flag for indicating if counter is incrementing or decrementing. */
-    nrf_drv_state_t         led_sb_state;   /**< Indicates current state of instance. */
+    nrfx_drv_state_t        led_sb_state;   /**< Indicates current state of instance. */
     uint16_t                duty_cycle;     /**< Current pulse width. */
     uint32_t                bit_mask;       /**< Mask of used pins. */
     led_sb_init_params_t    params;         /**< Structure holding initialization parameters. */
     low_power_pwm_config_t  pwm_config;     /**< Structure holding parameters for initializing low level layer. */
     low_power_pwm_t         pwm_instance;   /**< Structure holding low-power PWM instance parameters. */
 }led_sb_context_t;
+
+APP_TIMER_DEF(m_led_softblink_timer);
 
 static led_sb_context_t m_led_sb = {0};
 
@@ -75,7 +77,7 @@ static led_sb_context_t m_led_sb = {0};
 static void led_softblink_on_timeout(void * p_context)
 {
     static int32_t pause_ticks;
-    ASSERT(m_led_sb.led_sb_state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(m_led_sb.led_sb_state != NRFX_DRV_STATE_UNINITIALIZED);
     ret_code_t err_code;
 
     if (pause_ticks <= 0)
@@ -124,7 +126,7 @@ ret_code_t led_softblink_init(led_sb_init_params_t const * p_init_params)
 {
     ret_code_t err_code;
 
-    ASSERT(m_led_sb.led_sb_state == NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(m_led_sb.led_sb_state == NRFX_DRV_STATE_UNINITIALIZED);
     ASSERT(p_init_params);
 
     if ( (p_init_params->duty_cycle_max == 0)                               ||
@@ -145,19 +147,17 @@ ret_code_t led_softblink_init(led_sb_init_params_t const * p_init_params)
     m_led_sb.leds_is_on     = false;
     m_led_sb.bit_mask       = p_init_params->leds_pin_bm;
 
-    APP_TIMER_DEF(led_softblink_timer);
-
     m_led_sb.pwm_config.active_high         = m_led_sb.params.active_high;
     m_led_sb.pwm_config.bit_mask            = p_init_params->leds_pin_bm;
     m_led_sb.pwm_config.p_port              = p_init_params->p_leds_port;
     m_led_sb.pwm_config.period              = PWM_PERIOD;
-    m_led_sb.pwm_config.p_timer_id          = &led_softblink_timer;
+    m_led_sb.pwm_config.p_timer_id          = &m_led_softblink_timer;
 
     err_code = low_power_pwm_init( &m_led_sb.pwm_instance, &m_led_sb.pwm_config, led_softblink_on_timeout);
 
     if (err_code == NRF_SUCCESS)
     {
-        m_led_sb.led_sb_state = NRF_DRV_STATE_INITIALIZED;
+        m_led_sb.led_sb_state = NRFX_DRV_STATE_INITIALIZED;
     }
     else
     {
@@ -174,7 +174,7 @@ ret_code_t led_softblink_start(uint32_t leds_pin_bit_mask)
 {
     ret_code_t err_code;
 
-    ASSERT(m_led_sb.led_sb_state == NRF_DRV_STATE_INITIALIZED);
+    ASSERT(m_led_sb.led_sb_state == NRFX_DRV_STATE_INITIALIZED);
 
     err_code = low_power_pwm_start(&m_led_sb.pwm_instance, leds_pin_bit_mask);
 
@@ -194,7 +194,7 @@ ret_code_t led_softblink_stop(void)
 
 void led_softblink_off_time_set(uint32_t off_time_ticks)
 {
-    ASSERT(m_led_sb.led_sb_state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(m_led_sb.led_sb_state != NRFX_DRV_STATE_UNINITIALIZED);
 
     m_led_sb.params.off_time_ticks = off_time_ticks;
 }
@@ -202,7 +202,7 @@ void led_softblink_off_time_set(uint32_t off_time_ticks)
 
 void led_softblink_on_time_set(uint32_t on_time_ticks)
 {
-    ASSERT(m_led_sb.led_sb_state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(m_led_sb.led_sb_state != NRFX_DRV_STATE_UNINITIALIZED);
 
     m_led_sb.params.on_time_ticks = on_time_ticks;
 }
@@ -210,7 +210,7 @@ void led_softblink_on_time_set(uint32_t on_time_ticks)
 
 ret_code_t led_softblink_uninit(void)
 {
-    ASSERT(m_led_sb.led_sb_state != NRF_DRV_STATE_UNINITIALIZED);
+    ASSERT(m_led_sb.led_sb_state != NRFX_DRV_STATE_UNINITIALIZED);
 
     ret_code_t err_code;
 
@@ -218,7 +218,7 @@ ret_code_t led_softblink_uninit(void)
 
     if (err_code == NRF_SUCCESS)
     {
-        m_led_sb.led_sb_state = NRF_DRV_STATE_UNINITIALIZED;
+        m_led_sb.led_sb_state = NRFX_DRV_STATE_UNINITIALIZED;
     }
     else
     {

@@ -75,6 +75,7 @@
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 #define APP_TIMER_PRESCALER           0                                             /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE       2u                                            /**< Size of timer operation queues. */
@@ -260,13 +261,10 @@ static void bsp_evt_handler(bsp_event_t evt)
  */
 static void utils_setup(void)
 {
-    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    ret_code_t err_code = app_timer_init();
     APP_ERROR_CHECK(err_code);
 
-    err_code = app_timer_init();
-    APP_ERROR_CHECK(err_code);
-
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS,
                         bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 
@@ -428,12 +426,27 @@ static void softdevice_setup(void)
 }
 
 
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
+
 /* Main function */
 int main(void)
 {
+    log_init();
     utils_setup();
     softdevice_setup();
     continuous_scan_init();
+
+    NRF_LOG_INFO("ANT Continuous Scanning Controller example started.");
 
     // Enter main loop
     for (;;)

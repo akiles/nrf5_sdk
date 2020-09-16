@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -267,6 +267,7 @@ void coap_transport_input(void)
                 // Notify the CoAP module of received data.
                 retval = coap_transport_read(&port,
                                              &remote_endpoint,
+                                             NULL,
                                              result,
                                              read_mem,
                                              (uint16_t)bytes_read);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -58,6 +58,7 @@
 #include "nrf_pwr_mgmt.h"
 #include "app_util.h"
 #include "app_error.h"
+#include "ble_dis_c.h"
 #include "ble_rscs_c.h"
 #include "app_util.h"
 #include "app_timer.h"
@@ -67,6 +68,8 @@
 #include "nrf_fstorage.h"
 #include "ble_conn_state.h"
 #include "nrf_ble_gatt.h"
+#include "ble_advdata.h"
+#include "nrf_pwr_mgmt.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -89,32 +92,40 @@
 #define SCAN_INTERVAL               0x00A0                              /**< Determines scan interval in units of 0.625 millisecond. */
 #define SCAN_WINDOW                 0x0050                              /**< Determines scan window in units of 0.625 millisecond. */
 
+#define SCAN_DURATION           0x0000                              /**< Duration of the scanning in units of 10 milliseconds. If set to 0x0000, scanning will continue until it is explicitly disabled. */
+#define SCAN_DURATION_WITELIST  3000                                /**< Duration of the scanning in units of 10 milliseconds. */
+
 #define MIN_CONNECTION_INTERVAL     MSEC_TO_UNITS(7.5, UNIT_1_25_MS)    /**< Determines minimum connection interval in millisecond. */
 #define MAX_CONNECTION_INTERVAL     MSEC_TO_UNITS(30, UNIT_1_25_MS)     /**< Determines maximum connection interval in millisecond. */
 #define SLAVE_LATENCY               0                                   /**< Determines slave latency in counts of connection events. */
 #define SUPERVISION_TIMEOUT         MSEC_TO_UNITS(4000, UNIT_10_MS)     /**< Determines supervision time-out in units of 10 millisecond. */
 
-#define TARGET_UUID                 BLE_UUID_RUNNING_SPEED_AND_CADENCE  /**< Target device name that application is looking for. */
-#define UUID16_SIZE                 2                                   /**< Size of 16 bit UUID */
-
-/**@brief Macro to unpack 16bit unsigned UUID from octet stream. */
-#define UUID16_EXTRACT(DST, SRC) \
-    do                           \
-    {                            \
-        (*(DST))   = (SRC)[1];   \
-        (*(DST)) <<= 8;          \
-        (*(DST))  |= (SRC)[0];   \
-    } while (0)
-
+#define TARGET_UUID                 BLE_UUID_RUNNING_SPEED_AND_CADENCE  /**< Target UUID that the application looks for. */
 
 /**@brief Variable length data encapsulation in terms of length and pointer to data */
 typedef struct
 {
     uint8_t * p_data;   /**< Pointer to data. */
     uint16_t  data_len; /**< Length of data. */
-}data_t;
+} data_t;
 
 
+/**@brief Strings to display data retrieved by Device Information service client module */
+static char const * const m_dis_char_names[] =
+{
+    "Manufacturer Name String",
+    "Model Number String     ",
+    "Serial Number String    ",
+    "Hardware Revision String",
+    "Firmware Revision String",
+    "Software Revision String",
+    "System ID",
+    "IEEE 11073-20601 Regulatory Certification Data List",
+    "PnP ID"
+};
+
+
+BLE_DIS_C_DEF(m_ble_dis_c);                                 /**< Device Information service client instance. */
 BLE_RSCS_C_DEF(m_rscs_c);                                   /**< Running speed and cadence service client instance. */
 NRF_BLE_GATT_DEF(m_gatt);                                   /**< GATT module instance. */
 BLE_DB_DISCOVERY_DEF(m_db_disc);                            /**< DB discovery module instance. */
@@ -122,8 +133,17 @@ BLE_DB_DISCOVERY_DEF(m_db_disc);                            /**< DB discovery mo
 static uint16_t              m_conn_handle;                 /**< Current connection handle. */
 static bool                  m_whitelist_disabled;          /**< True if whitelist has been temporarily disabled. */
 static bool                  m_memory_access_in_progress;   /**< Flag to keep track of ongoing operations on persistent memory. */
-static ble_gap_scan_params_t m_scan_param;                  /**< Scan parameters requested for scanning and connection. */
+static bool                  m_rscs_log_enabled;            /**< Flag to enable logs related with RSCS measurements. */
 
+static ble_gap_scan_params_t m_scan_param;                                         /**< Scan parameters requested for scanning and connection. */
+static uint8_t               m_scan_buffer_data[BLE_GAP_SCAN_BUFFER_EXTENDED_MIN]; /**< buffer where advertising reports will be stored by the SoftDevice. */
+
+/**@brief Pointer to the buffer where advertising reports will be stored by the SoftDevice. */
+static ble_data_t m_scan_buffer =
+{
+    m_scan_buffer_data,
+    BLE_GAP_SCAN_BUFFER_EXTENDED_MIN
+};
 
 /**@brief Connection parameters requested for connection. */
 static ble_gap_conn_params_t const m_connection_param =
@@ -166,6 +186,7 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
 {
     ble_rscs_on_db_disc_evt(&m_rscs_c, p_evt);
+    ble_dis_c_on_db_disc_evt(&m_ble_dis_c, p_evt);
 }
 
 
@@ -239,7 +260,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         {
             // Run garbage collection on the flash.
             err_code = fds_gc();
-            if (err_code == FDS_ERR_BUSY || err_code == FDS_ERR_NO_SPACE_IN_QUEUES)
+            if (err_code == FDS_ERR_NO_SPACE_IN_QUEUES)
             {
                 // Retry.
             }
@@ -252,12 +273,6 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         case PM_EVT_PEERS_DELETE_SUCCEEDED:
         {
             scan_start();
-        } break;
-
-        case PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED:
-        {
-            // The local database has likely changed, send service changed indications.
-            pm_local_database_has_changed();
         } break;
 
         case PM_EVT_PEER_DATA_UPDATE_FAILED:
@@ -288,47 +303,13 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         case PM_EVT_PEER_DATA_UPDATE_SUCCEEDED:
         case PM_EVT_PEER_DELETE_SUCCEEDED:
         case PM_EVT_LOCAL_DB_CACHE_APPLIED:
+        case PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED:
+            // This can happen when the local DB has changed.
         case PM_EVT_SERVICE_CHANGED_IND_SENT:
         case PM_EVT_SERVICE_CHANGED_IND_CONFIRMED:
         default:
             break;
     }
-}
-
-
-/**
- * @brief Parses advertisement data, providing length and location of the field in case
- *        matching data is found.
- *
- * @param[in]  Type of data to be looked for in advertisement data.
- * @param[in]  Advertisement report length and pointer to report.
- * @param[out] If data type requested is found in the data report, type data length and
- *             pointer to data will be populated here.
- *
- * @retval NRF_SUCCESS if the data type is found in the report.
- * @retval NRF_ERROR_NOT_FOUND if the data type could not be found.
- */
-static uint32_t adv_report_parse(uint8_t type, data_t * p_advdata, data_t * p_typedata)
-{
-    uint32_t  index = 0;
-    uint8_t * p_data;
-
-    p_data = p_advdata->p_data;
-
-    while (index < p_advdata->data_len)
-    {
-        uint8_t field_length = p_data[index];
-        uint8_t field_type   = p_data[index + 1];
-
-        if (field_type == type)
-        {
-            p_typedata->p_data   = &p_data[index + 2];
-            p_typedata->data_len = field_length - 1;
-            return NRF_SUCCESS;
-        }
-        index += field_length + 1;
-    }
-    return NRF_ERROR_NOT_FOUND;
 }
 
 
@@ -362,6 +343,46 @@ static bool shutdown_handler(nrf_pwr_mgmt_evt_t event)
 NRF_PWR_MGMT_HANDLER_REGISTER(shutdown_handler, APP_SHUTDOWN_HANDLER_PRIORITY);
 
 
+/**@brief Function for handling the advertising report BLE event.
+ *
+ * @param[in] p_adv_report  Advertising report from the SoftDevice.
+ */
+static void on_adv_report(ble_gap_evt_adv_report_t const * p_adv_report)
+{
+    ret_code_t err_code;
+    ble_uuid_t target_uuid = {.uuid = TARGET_UUID, .type = BLE_UUID_TYPE_BLE};
+
+    if (ble_advdata_uuid_find(p_adv_report->data.p_data, p_adv_report->data.len, &target_uuid))
+    {
+        // Stop scanning.
+        (void) sd_ble_gap_scan_stop();
+
+        err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+        APP_ERROR_CHECK(err_code);
+
+        // Initiate connection.
+        m_scan_param.filter_policy = BLE_GAP_SCAN_FP_ACCEPT_ALL,
+
+        err_code = sd_ble_gap_connect(&p_adv_report->peer_addr,
+                                      &m_scan_param,
+                                      &m_connection_param,
+                                      APP_BLE_CONN_CFG_TAG);
+
+        m_whitelist_disabled = false;
+
+        if (err_code != NRF_SUCCESS)
+        {
+            NRF_LOG_DEBUG("Connection Request Failed, reason 0x%x", err_code);
+        }
+    }
+    else
+    {
+        err_code = sd_ble_gap_scan_start(NULL, &m_scan_buffer);
+        APP_ERROR_CHECK(err_code);
+    }
+}
+
+
 /**@brief Function for handling BLE events.
  *
  * @param[in]   p_ble_evt   Bluetooth stack event.
@@ -383,7 +404,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
 
-            if (ble_conn_state_n_centrals() < NRF_SDH_BLE_CENTRAL_LINK_COUNT)
+            if (ble_conn_state_central_conn_count() < NRF_SDH_BLE_CENTRAL_LINK_COUNT)
             {
                 scan_start();
             }
@@ -391,66 +412,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GAP_EVT_ADV_REPORT:
         {
-            data_t adv_data;
-            data_t type_data;
-
-            // Initialize advertisement report for parsing.
-            adv_data.p_data   = (uint8_t *)p_gap_evt->params.adv_report.data;
-            adv_data.data_len = p_gap_evt->params.adv_report.dlen;
-
-            err_code = adv_report_parse(BLE_GAP_AD_TYPE_16BIT_SERVICE_UUID_MORE_AVAILABLE,
-                                        &adv_data,
-                                        &type_data);
-
-            if (err_code != NRF_SUCCESS)
-            {
-                // Compare short local name in case complete name does not match.
-                err_code = adv_report_parse(BLE_GAP_AD_TYPE_16BIT_SERVICE_UUID_COMPLETE,
-                                            &adv_data,
-                                            &type_data);
-            }
-
-            // Verify if short or complete name matches target.
-            if (err_code == NRF_SUCCESS)
-            {
-                uint16_t extracted_uuid;
-
-                // UUIDs found, look for matching UUID
-                for (uint32_t u_index = 0; u_index < (type_data.data_len / UUID16_SIZE); u_index++)
-                {
-                    UUID16_EXTRACT(&extracted_uuid, &type_data.p_data[u_index * UUID16_SIZE]);
-
-                    if (extracted_uuid == TARGET_UUID)
-                    {
-                        // Stop scanning.
-                        (void) sd_ble_gap_scan_stop();
-
-                        err_code = bsp_indication_set(BSP_INDICATE_IDLE);
-                        APP_ERROR_CHECK(err_code);
-
-                        // Initiate connection.
-                        #if (NRF_SD_BLE_API_VERSION <= 2)
-                            m_scan_param.selective = 0;
-                        #endif
-                        #if (NRF_SD_BLE_API_VERSION >= 3)
-                            m_scan_param.use_whitelist = 0;
-                        #endif
-
-                        err_code = sd_ble_gap_connect(&p_gap_evt->params.adv_report.peer_addr,
-                                                      &m_scan_param,
-                                                      &m_connection_param,
-                                                      APP_BLE_CONN_CFG_TAG);
-
-                        m_whitelist_disabled = false;
-
-                        if (err_code != NRF_SUCCESS)
-                        {
-                            NRF_LOG_DEBUG("Connection Request Failed, reason 0x%x", err_code);
-                        }
-                        break;
-                    }
-                }
-            }
+            on_adv_report(&p_gap_evt->params.adv_report);
         } break; // BLE_GAP_EVT_ADV_REPORT
 
         case BLE_GAP_EVT_TIMEOUT:
@@ -476,13 +438,12 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GAP_EVT_DISCONNECTED:
         {
-            if (ble_conn_state_n_centrals() < NRF_SDH_BLE_CENTRAL_LINK_COUNT)
+            if (ble_conn_state_central_conn_count() < NRF_SDH_BLE_CENTRAL_LINK_COUNT)
             {
                 scan_start();
             }
         } break;
 
-#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -494,7 +455,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
             APP_ERROR_CHECK(err_code);
         } break;
-#endif
 
         case BLE_GATTC_EVT_TIMEOUT:
         {
@@ -648,28 +608,31 @@ static void rscs_c_evt_handler(ble_rscs_c_t * p_rsc_c, ble_rscs_c_evt_t * p_rsc_
 
         case BLE_RSCS_C_EVT_RSC_NOTIFICATION:
         {
-            NRF_LOG_INFO("");
-            NRF_LOG_DEBUG("RSC Measurement received %d ",
-                     p_rsc_c_evt->params.rsc.inst_speed);
+            if (m_rscs_log_enabled)
+            {
+                NRF_LOG_INFO("");
+                NRF_LOG_DEBUG("RSC Measurement received %d ",
+                         p_rsc_c_evt->params.rsc.inst_speed);
 
-            NRF_LOG_INFO("Instantanious Speed   = %d", p_rsc_c_evt->params.rsc.inst_speed);
-            if (p_rsc_c_evt->params.rsc.is_inst_stride_len_present)
-            {
-                NRF_LOG_INFO("Stride Length         = %d",
-                       p_rsc_c_evt->params.rsc.inst_stride_length);
+                NRF_LOG_INFO("Instantanious Speed   = %d", p_rsc_c_evt->params.rsc.inst_speed);
+                if (p_rsc_c_evt->params.rsc.is_inst_stride_len_present)
+                {
+                    NRF_LOG_INFO("Stride Length         = %d",
+                           p_rsc_c_evt->params.rsc.inst_stride_length);
+                }
+                if (p_rsc_c_evt->params.rsc.is_total_distance_present)
+                {
+                    NRF_LOG_INFO("Total Distance = %u",
+                           (unsigned int)p_rsc_c_evt->params.rsc.total_distance);
+                }
+                NRF_LOG_INFO("Instantanious Cadence = %d", p_rsc_c_evt->params.rsc.inst_cadence);
+                NRF_LOG_INFO("Flags");
+                NRF_LOG_INFO("  Stride Length Present = %d",
+                       p_rsc_c_evt->params.rsc.is_inst_stride_len_present);
+                NRF_LOG_INFO("  Total Distance Present= %d",
+                       p_rsc_c_evt->params.rsc.is_total_distance_present);
+                NRF_LOG_INFO("  Is Running            = %d", p_rsc_c_evt->params.rsc.is_running);
             }
-            if (p_rsc_c_evt->params.rsc.is_total_distance_present)
-            {
-                NRF_LOG_INFO("Total Distance = %u",
-                       (unsigned int)p_rsc_c_evt->params.rsc.total_distance);
-            }
-            NRF_LOG_INFO("Instantanious Cadence = %d", p_rsc_c_evt->params.rsc.inst_cadence);
-            NRF_LOG_INFO("Flags");
-            NRF_LOG_INFO("  Stride Length Present = %d",
-                   p_rsc_c_evt->params.rsc.is_inst_stride_len_present);
-            NRF_LOG_INFO("  Total Distance Present= %d",
-                   p_rsc_c_evt->params.rsc.is_total_distance_present);
-            NRF_LOG_INFO("  Is Running            = %d", p_rsc_c_evt->params.rsc.is_running);
             break;
         }
 
@@ -679,8 +642,180 @@ static void rscs_c_evt_handler(ble_rscs_c_t * p_rsc_c, ble_rscs_c_evt_t * p_rsc_
 }
 
 
+/**@brief Function for reading all characteristics that can be present in DIS.
+ *
+ * @return    The number of discovered characteristics.
+ */
+static uint32_t ble_dis_c_all_chars_read(void)
+{
+    ret_code_t err_code;
+    uint32_t   disc_char_num = 0;
+
+    for (ble_dis_c_char_type_t char_type = (ble_dis_c_char_type_t) 0;
+         char_type < BLE_DIS_C_CHAR_TYPES_NUM;
+         char_type++)
+    {
+        err_code = ble_dis_c_read(&m_ble_dis_c, char_type);
+
+        // The NRF_ERROR_INVALID_STATE error code means that the characteristic is not present in DIS.
+        if (err_code != NRF_ERROR_INVALID_STATE)
+        {
+            APP_ERROR_CHECK(err_code);
+            disc_char_num++;
+        }
+    }
+
+    return disc_char_num;
+}
+
+
+/**@brief Function for logging string characteristics that can be present in DIS.
+ *
+ * @param[in] char_type Type of string characteristic.
+ * @param[in] p_string  Response data of the characteristic that has been read.
+ */
+static void ble_dis_c_string_char_log(ble_dis_c_char_type_t            char_type,
+                                      ble_dis_c_string_t const * const p_string)
+{
+    char response_data_string[BLE_DIS_C_STRING_MAX_LEN] = {0};
+
+    if (sizeof(response_data_string) > p_string->len)
+    {
+        memcpy(response_data_string, p_string->p_data, p_string->len);
+        NRF_LOG_INFO("%s: %s",
+                     m_dis_char_names[char_type],
+                     nrf_log_push((char *) response_data_string));
+    }
+    else
+    {
+        NRF_LOG_ERROR("String buffer for DIS characteristics is too short.")
+    }
+}
+
+
+/**@brief Function for logging System ID characteristic data that can be present in DIS.
+ *
+ * @param[in] p_sys_id Pointer to structure describing the content of System ID characteristic.
+ */
+static void ble_dis_c_system_id_log(ble_dis_sys_id_t const * const p_sys_id)
+{
+    NRF_LOG_INFO("%s:", m_dis_char_names[BLE_DIS_C_SYS_ID]);
+    NRF_LOG_INFO(" Manufacturer Identifier:            0x%010X", p_sys_id->manufacturer_id);
+    NRF_LOG_INFO(" Organizationally Unique Identifier: 0x%06X", p_sys_id->organizationally_unique_id);
+}
+
+
+/**@brief Function for logging IEEE 11073-20601 Regulatory Certification Data List characteristic
+ *        data that can be present in DIS.
+ *
+ * @param[in] p_cert_list  Pointer to structure describing the content of Certification Data List
+ *                         characteristic.
+ */
+static void ble_dis_c_cert_list_log(ble_dis_reg_cert_data_list_t const * const p_cert_list)
+{
+    NRF_LOG_INFO("%s:", m_dis_char_names[BLE_DIS_C_CERT_LIST]);
+    NRF_LOG_HEXDUMP_INFO(p_cert_list->p_list, p_cert_list->list_len);
+}
+
+
+/**@brief Function for logging PnP ID characteristic data that can be present in DIS.
+ *
+ * @param[in] p_pnp_id Pointer to structure describing the content of PnP ID characteristic.
+ */
+static void ble_dis_c_pnp_id_log(ble_dis_pnp_id_t const * const p_pnp_id)
+{
+    NRF_LOG_INFO("%s:", m_dis_char_names[BLE_DIS_C_PNP_ID]);
+    NRF_LOG_INFO(" Vendor ID Source: 0x%02X", p_pnp_id->vendor_id_source);
+    NRF_LOG_INFO(" Vendor ID:        0x%04X", p_pnp_id->vendor_id);
+    NRF_LOG_INFO(" Product ID:       0x%04X", p_pnp_id->product_id);
+    NRF_LOG_INFO(" Product Version:  0x%04X", p_pnp_id->product_version);
+}
+
+
+/**@brief Device Information service client Handler.
+ */
+static void ble_dis_c_evt_handler(ble_dis_c_t * p_ble_dis_c, ble_dis_c_evt_t const * p_ble_dis_evt)
+{
+    ret_code_t      err_code;
+    static uint32_t disc_chars_num     = 0;
+    static uint32_t disc_chars_handled = 0;
+
+    switch (p_ble_dis_evt->evt_type)
+    {
+        case BLE_DIS_C_EVT_DISCOVERY_COMPLETE:
+            err_code = ble_dis_c_handles_assign(p_ble_dis_c,
+                                                p_ble_dis_evt->conn_handle,
+                                                p_ble_dis_evt->params.disc_complete.handles);
+            APP_ERROR_CHECK(err_code);
+
+            disc_chars_num     = ble_dis_c_all_chars_read();
+            disc_chars_handled = 0;
+            NRF_LOG_INFO("Device Information service discovered.");
+            break;
+
+        case BLE_DIS_C_EVT_DIS_C_READ_RSP:
+        {
+            ble_dis_c_evt_read_rsp_t const * p_read_rsp = &p_ble_dis_evt->params.read_rsp;
+
+            //Print header log.
+            if ((disc_chars_handled == 0) && (disc_chars_num != 0))
+            {
+                NRF_LOG_INFO("");
+                NRF_LOG_INFO("Device Information:");
+            }
+
+            switch (p_read_rsp->char_type)
+            {
+                case BLE_DIS_C_MANUF_NAME:
+                case BLE_DIS_C_MODEL_NUM:
+                case BLE_DIS_C_SERIAL_NUM:
+                case BLE_DIS_C_HW_REV:
+                case BLE_DIS_C_FW_REV:
+                case BLE_DIS_C_SW_REV:
+                    ble_dis_c_string_char_log(p_read_rsp->char_type, &p_read_rsp->content.string);
+                    break;
+
+                case BLE_DIS_C_SYS_ID:
+                    ble_dis_c_system_id_log(&p_read_rsp->content.sys_id);
+                    break;
+
+                case BLE_DIS_C_CERT_LIST:
+                    ble_dis_c_cert_list_log(&p_read_rsp->content.cert_list);
+                    break;
+
+                case BLE_DIS_C_PNP_ID:
+                    ble_dis_c_pnp_id_log(&p_read_rsp->content.pnp_id);
+                    break;
+
+                default:
+                    break;
+            }
+
+            disc_chars_handled++;
+            if(disc_chars_handled == disc_chars_num)
+            {
+                NRF_LOG_INFO("");
+                disc_chars_handled = 0;
+                disc_chars_num     = 0;
+                m_rscs_log_enabled = true;
+            }
+         }
+         break;
+
+        case BLE_DIS_C_EVT_DIS_C_READ_RSP_ERROR:
+            NRF_LOG_ERROR("Read request for: %s characteristic failed with gatt_status: 0x%04X.",
+                          m_dis_char_names[p_ble_dis_evt->params.read_rsp.char_type],
+                          p_ble_dis_evt->params.read_rsp_err.gatt_status);
+            break;
+
+        case BLE_DIS_C_EVT_DISCONNECTED:
+            break;
+    }
+}
+
+
 /**
- * @brief HRunning Speed and Cadence collector initialization.
+ * @brief Running Speed and Cadence collector initialization.
  */
 static void rscs_c_init(void)
 {
@@ -689,6 +824,20 @@ static void rscs_c_init(void)
     rscs_c_init_obj.evt_handler = rscs_c_evt_handler;
 
     ret_code_t err_code = ble_rscs_c_init(&m_rscs_c, &rscs_c_init_obj);
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for initializing the DIS Client. */
+static void dis_c_init(void)
+{
+    ret_code_t       err_code;
+    ble_dis_c_init_t init;
+
+    memset(&init, 0, sizeof(ble_dis_c_init_t));
+    init.evt_handler = ble_dis_c_evt_handler;
+
+    err_code = ble_dis_c_init(&m_ble_dis_c, &init);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -781,6 +930,7 @@ static void whitelist_load()
     }
 }
 
+
 /**@brief Function to start scanning.
  */
 static void scan_start(void)
@@ -802,25 +952,6 @@ static void scan_start(void)
     uint32_t addr_cnt = (sizeof(whitelist_addrs) / sizeof(ble_gap_addr_t));
     uint32_t irk_cnt  = (sizeof(whitelist_irks)  / sizeof(ble_gap_irk_t));
 
-    #if (NRF_SD_BLE_API_VERSION <= 2)
-
-        ble_gap_addr_t * p_whitelist_addrs[8];
-        ble_gap_irk_t  * p_whitelist_irks[8];
-
-        for (uint32_t i = 0; i < 8; i++)
-        {
-            p_whitelist_addrs[i] = &whitelist_addrs[i];
-            p_whitelist_irks[i]  = &whitelist_irks[i];
-        }
-
-        ble_gap_whitelist_t whitelist =
-        {
-            .pp_addrs = p_whitelist_addrs,
-            .pp_irks  = p_whitelist_irks,
-        };
-
-    #endif
-
     // Reload the whitelist and whitelist all peers.
     whitelist_load();
 
@@ -830,43 +961,29 @@ static void scan_start(void)
     ret = pm_whitelist_get(whitelist_addrs, &addr_cnt,
                            whitelist_irks,  &irk_cnt);
 
-    m_scan_param.active   = 0;
-    m_scan_param.interval = SCAN_INTERVAL;
-    m_scan_param.window   = SCAN_WINDOW;
+    m_scan_param.active    = 0;
+    m_scan_param.interval  = SCAN_INTERVAL;
+    m_scan_param.window    = SCAN_WINDOW;
+    m_scan_param.extended  = true;
+    m_scan_param.scan_phys = BLE_GAP_PHY_1MBPS;
 
     if (((addr_cnt == 0) && (irk_cnt == 0)) ||
         (m_whitelist_disabled))
     {
         // Don't use whitelist.
-        #if (NRF_SD_BLE_API_VERSION <= 2)
-            m_scan_param.selective   = 0;
-            m_scan_param.p_whitelist = NULL;
-        #endif
-        #if (NRF_SD_BLE_API_VERSION >= 3)
-            m_scan_param.use_whitelist  = 0;
-            m_scan_param.adv_dir_report = 0;
-        #endif
-        m_scan_param.timeout  = 0x0000; // No timeout.
+        m_scan_param.timeout           = SCAN_DURATION;
+        m_scan_param.filter_policy     = BLE_GAP_SCAN_FP_ACCEPT_ALL;
     }
     else
     {
         // Use whitelist.
-        #if (NRF_SD_BLE_API_VERSION <= 2)
-            whitelist.addr_count     = addr_cnt;
-            whitelist.irk_count      = irk_cnt;
-            m_scan_param.selective   = 1;
-            m_scan_param.p_whitelist = &whitelist;
-        #endif
-        #if (NRF_SD_BLE_API_VERSION >= 3)
-            m_scan_param.use_whitelist  = 1;
-            m_scan_param.adv_dir_report = 0;
-        #endif
-        m_scan_param.timeout  = 0x001E; // 30 seconds.
+        m_scan_param.filter_policy    = BLE_GAP_SCAN_FP_WHITELIST;
+        m_scan_param.timeout          = SCAN_DURATION_WITELIST;
     }
 
     NRF_LOG_INFO("Starting scan.");
 
-    ret = sd_ble_gap_scan_start(&m_scan_param);
+    ret = sd_ble_gap_scan_start(&m_scan_param, &m_scan_buffer);
     APP_ERROR_CHECK(ret);
 
     ret = bsp_indication_set(BSP_INDICATE_SCANNING);
@@ -883,7 +1000,7 @@ static void buttons_leds_init(bool * p_erase_bonds)
     ret_code_t err_code;
     bsp_event_t startup_event;
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, bsp_event_handler);
+    err_code = bsp_init(BSP_INIT_LEDS | BSP_INIT_BUTTONS, bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_btn_ble_init(NULL, &startup_event);
@@ -919,11 +1036,47 @@ static void gatt_init(void)
 }
 
 
-/** @brief Function for initializing the Power manager. */
-static void power_init(void)
+/**@brief Function for initializing power management.
+ */
+static void power_management_init(void)
 {
-    ret_code_t err_code = nrf_pwr_mgmt_init();
+    ret_code_t err_code;
+    err_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for handling the idle state (main loop).
+ *
+ * @details Handle any pending log operation(s), then sleep until the next event occurs.
+ */
+static void idle_state_handle(void)
+{
+    if (NRF_LOG_PROCESS() == false)
+    {
+        nrf_pwr_mgmt_run();
+    }
+}
+
+
+/**@brief Function for starting a scan, or instead trigger it from peer manager (after
+ *        deleting bonds).
+ *
+ * @param[in] p_erase_bonds Pointer to a bool to determine if bonds will be deleted before scanning.
+ */
+void scanning_start(bool * p_erase_bonds)
+{
+    // Start scanning for peripherals and initiate connection
+    // with devices that advertise GATT Service UUID.
+    if (*p_erase_bonds == true)
+    {
+        // Scan is started by the PM_EVT_PEERS_DELETE_SUCCEEDED event.
+        delete_bonds();
+    }
+    else
+    {
+        scan_start();
+    }
 }
 
 
@@ -934,33 +1087,25 @@ int main(void)
     // Initialize.
     log_init();
     timer_init();
-    power_init();
     buttons_leds_init(&erase_bonds);
+    power_management_init();
     ble_stack_init();
     gatt_init();
     peer_manager_init();
     db_discovery_init();
     rscs_c_init();
+    dis_c_init();
 
     whitelist_load();
 
-    // Start scanning for peripherals and initiate connection
-    // with devices that advertise Running Speed and Cadence UUID.
-    if (erase_bonds == true)
-    {
-        delete_bonds();
-        // Scan is started by the PM_EVT_PEERS_DELETE_SUCCEEDED event.
-    }
-    else
-    {
-        scan_start();
-    }
-
+    // Start execution.
     NRF_LOG_INFO("Running Speed Collector example started.");
+    scanning_start(&erase_bonds);
 
+
+    // Enter main loop.
     for (;;)
     {
-        NRF_LOG_FLUSH();
-        nrf_pwr_mgmt_run();
+        idle_state_handle();
     }
 }

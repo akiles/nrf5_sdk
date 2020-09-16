@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -576,12 +576,12 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 
 int main(void)
 {
-    init_bsp();
-
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("PWM example");
+    init_bsp();
+
+    NRF_LOG_INFO("PWM example started.");
 
     // Start with Demo 1, then switch to another one when the user presses
     // button 1 or button 2 (see the 'bsp_evt_handler' function).

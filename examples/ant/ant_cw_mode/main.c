@@ -67,6 +67,9 @@
 #include "nrf_sdh_ant.h"
 #include "sdk_config.h"
 
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
 /**@brief Initialize application.
  */
@@ -115,15 +118,31 @@ static void softdevice_setup(void)
 }
 
 
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
+
 /* Main function */
 int main(void)
 {
+    log_init();
     softdevice_setup();
     application_initialize();
+
+    NRF_LOG_INFO("ANT Continuous Waveform Mode example started.");
 
     // Enter main loop
     for (;;)
     {
+        NRF_LOG_FLUSH();
         nrf_pwr_mgmt_run();
     }
 }

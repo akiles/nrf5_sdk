@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -86,8 +86,6 @@ typedef void (*app_usbd_msc_user_ev_handler_t)(app_usbd_class_inst_t const *  p_
  * @brief MSC part of class instance data
  */
 typedef struct {
-    uint8_t const * p_raw_desc;         //!< MSC descriptors
-    size_t          raw_desc_size;      //!< MSC descriptors size
     void *          p_block_buff;       //!< Block buffer
     size_t          block_buff_size;    //!< Block buffer size (typically 512 bytes)
 
@@ -95,6 +93,9 @@ typedef struct {
     size_t                     block_devs_count;   //!< Block device list size
 
     app_usbd_msc_user_ev_handler_t user_ev_handler; //!< User event handler
+
+    app_usbd_msc_subclass_t subclass; //!< MSC subclass
+    app_usbd_msc_protocol_t protocol; //!< MSC protocol
 } app_usbd_msc_inst_t;
 
 /**
@@ -178,24 +179,22 @@ typedef struct {
  */
 #define APP_USBD_MSC_INSTANCE_SPECIFIC_DEC app_usbd_msc_inst_t inst;
 
-
 /**
  * @brief Configures MSC instance
  *
- * @param descriptors           Mass storage class descriptors (raw table)
  * @param block_devs            Block devices list
  * @param block_buff            Block buffer
  * @param user_event_handler    User event handler
  */
-#define APP_USBD_MSC_INST_CONFIG(descriptors, block_devs, block_buff, user_event_handler)   \
+#define APP_USBD_MSC_INST_CONFIG(block_devs, block_buff, user_event_handler)                \
     .inst = {                                                                               \
-         .p_raw_desc = descriptors,                                                         \
-         .raw_desc_size = sizeof(descriptors),                                              \
-         .pp_block_devs = block_devs,                                                       \
+         .pp_block_devs    = block_devs,                                                    \
          .block_devs_count = ARRAY_SIZE(block_devs),                                        \
-         .p_block_buff = block_buff,                                                        \
-         .block_buff_size = sizeof(block_buff) / 2,                                         \
-         .user_ev_handler = user_event_handler,                                             \
+         .p_block_buff     = block_buff,                                                    \
+         .block_buff_size  = sizeof(block_buff) / 2,                                        \
+         .user_ev_handler  = user_event_handler,                                            \
+         .subclass         = APP_USBD_MSC_SUBCLASS_TRANSPARENT,                             \
+         .protocol         = APP_USBD_MSC_PROTOCOL_BULK,                                    \
     }
 
 /**
@@ -236,8 +235,6 @@ extern const app_usbd_class_methods_t app_usbd_msc_class_methods;
                                          endpoint_list,                                         \
                                          blockdev_list,                                         \
                                          workbuffer_size)                                       \
-    static const uint8_t CONCAT_2(instance_name, _dsc)[] =                                      \
-                 APP_USBD_MSC_DSC_CONFIG(interface_number, BRACKET_EXTRACT(endpoint_list));     \
     static const nrf_block_dev_t * CONCAT_2(instance_name, _blkdevs)[] =                        \
                                    { BRACKET_EXTRACT(blockdev_list) };                          \
     static uint32_t CONCAT_2(instance_name, _block)[2 *(workbuffer_size) / sizeof(uint32_t)];   \
@@ -246,8 +243,7 @@ extern const app_usbd_class_methods_t app_usbd_msc_class_methods;
         app_usbd_msc,                                                                           \
         &app_usbd_msc_class_methods,                                                            \
         APP_USBD_MSC_CONFIG(interface_number, endpoint_list),                                   \
-        (APP_USBD_MSC_INST_CONFIG(CONCAT_2(instance_name, _dsc),                                \
-                                  CONCAT_2(instance_name, _blkdevs),                            \
+        (APP_USBD_MSC_INST_CONFIG(CONCAT_2(instance_name, _blkdevs),                            \
                                   CONCAT_2(instance_name, _block),                              \
                                   user_ev_handler))                                             \
     )

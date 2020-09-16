@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -47,6 +47,17 @@
 #include <string.h>
 #include "ble_srv_common.h"
 
+#define NRF_LOG_MODULE_NAME ble_ias
+#if BLE_IAS_CONFIG_LOG_ENABLED
+#define NRF_LOG_LEVEL       BLE_IAS_CONFIG_LOG_LEVEL
+#define NRF_LOG_INFO_COLOR  BLE_IAS_CONFIG_INFO_COLOR
+#define NRF_LOG_DEBUG_COLOR BLE_IAS_CONFIG_DEBUG_COLOR
+#else // BLE_IAS_CONFIG_LOG_ENABLED
+#define NRF_LOG_LEVEL       0
+#endif // BLE_IAS_CONFIG_LOG_ENABLED
+#include "nrf_log.h"
+NRF_LOG_MODULE_REGISTER();
+
 
 #define INITIAL_ALERT_LEVEL BLE_CHAR_ALERT_LEVEL_NO_ALERT
 
@@ -58,8 +69,23 @@
  */
 static void on_connect(ble_ias_t * p_ias, ble_evt_t const * p_ble_evt)
 {
-    p_ias->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
+    ret_code_t                 err_code;
+    ble_ias_client_context_t * p_client = NULL;
+
+    err_code = blcm_link_ctx_get(p_ias->p_link_ctx_storage,
+                                 p_ble_evt->evt.gap_evt.conn_handle,
+                                 (void *) &p_client);
+    if (err_code != NRF_SUCCESS)
+    {
+        NRF_LOG_ERROR("Link context for 0x%02X connection handle could not be fetched.",
+                      p_ble_evt->evt.gap_evt.conn_handle);
+    }
+    else
+    {
+        p_client->alert_level = INITIAL_ALERT_LEVEL;
+    }
 }
+
 
 /**@brief Function for handling the Write event.
  *
@@ -73,10 +99,26 @@ static void on_write(ble_ias_t * p_ias, ble_evt_t const * p_ble_evt)
     if ((p_evt_write->handle == p_ias->alert_level_handles.value_handle) && (p_evt_write->len == 1))
     {
         // Alert level written, call application event handler
-        ble_ias_evt_t evt;
+        ret_code_t                 err_code;
+        ble_ias_evt_t              evt;
+        ble_ias_client_context_t * p_client;
 
-        evt.evt_type           = BLE_IAS_EVT_ALERT_LEVEL_UPDATED;
-        evt.params.alert_level = p_evt_write->data[0];
+        err_code = blcm_link_ctx_get(p_ias->p_link_ctx_storage,
+                                     p_ble_evt->evt.gatts_evt.conn_handle,
+                                     (void *) &p_client);
+        if (err_code != NRF_SUCCESS)
+        {
+            NRF_LOG_ERROR("Link context for 0x%02X connection handle could not be fetched.",
+                          p_ble_evt->evt.gatts_evt.conn_handle);
+        }
+        else
+        {
+            p_client->alert_level = p_evt_write->data[0];
+        }
+
+        evt.evt_type    = BLE_IAS_EVT_ALERT_LEVEL_UPDATED;
+        evt.conn_handle = p_ble_evt->evt.gatts_evt.conn_handle;
+        evt.p_link_ctx  = p_client;
 
         p_ias->evt_handler(p_ias, &evt);
     }
@@ -175,30 +217,26 @@ uint32_t ble_ias_init(ble_ias_t * p_ias, const ble_ias_init_t * p_ias_init)
     err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY,
                                         &ble_uuid,
                                         &p_ias->service_handle);
-
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     // Add alert level characteristic
-    return alert_level_char_add(p_ias);
+    err_code = alert_level_char_add(p_ias);
+    VERIFY_SUCCESS(err_code);
+
+    return err_code;
 }
 
 
-uint32_t ble_ias_alert_level_get(ble_ias_t * p_ias, uint8_t * p_alert_level)
+uint32_t ble_ias_alert_level_get(ble_ias_t * p_ias, uint16_t conn_handle, uint8_t * p_alert_level)
 {
-    ble_gatts_value_t gatts_value;
+    ret_code_t                 err_code;
+    ble_ias_client_context_t * p_client;
 
-    // Initialize value struct.
-    memset(&gatts_value, 0, sizeof(gatts_value));
+    err_code = blcm_link_ctx_get(p_ias->p_link_ctx_storage, conn_handle, (void *) &p_client);
+    VERIFY_SUCCESS(err_code);
 
-    gatts_value.len     = sizeof(uint8_t);
-    gatts_value.offset  = 0;
-    gatts_value.p_value = p_alert_level;
-
-    return sd_ble_gatts_value_get(p_ias->conn_handle,
-                                  p_ias->alert_level_handles.value_handle,
-                                  &gatts_value);
+    *p_alert_level = p_client->alert_level;
+    return NRF_SUCCESS;
 }
+
 #endif // NRF_MODULE_ENABLED(BLE_IAS)

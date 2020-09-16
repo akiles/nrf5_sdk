@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -67,15 +67,21 @@
 
 #include "app_util_platform.h"
 #include "nrf_soc.h"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 // uint32_t m_error_code;
 // uint32_t m_error_line_num;
 // const uint8_t *m_p_error_file_name;
 
+/*lint -save -e14 */
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
     // disable INTs
     CRITICAL_REGION_ENTER();
+
+    NRF_LOG_ERROR("Fatal error");
+    NRF_LOG_FINAL_FLUSH();
 
     #if LEDS_NUMBER > 0
 
@@ -101,7 +107,7 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 
         /* ble_debug_assert_handler(error_code, line_num, p_file_name); */
 
-#if 0
+#ifndef DEBUG
         /* Reset the chip. Should be used in the release version. */
         NVIC_SystemReset();
 #else   /* Debug version. */
@@ -114,6 +120,7 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 
     CRITICAL_REGION_EXIT();
 }
+/*lint -restore */
 
 
 /**@brief Callback function for asserts in the SoftDevice.

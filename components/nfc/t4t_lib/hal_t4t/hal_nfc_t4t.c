@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -56,11 +56,13 @@
 #define NRF_LOG_LEVEL       HAL_NFC_CONFIG_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  HAL_NFC_CONFIG_INFO_COLOR
 #define NRF_LOG_DEBUG_COLOR HAL_NFC_CONFIG_DEBUG_COLOR
-#else // HAL_NFC_CONFIG_LOG_ENABLED
-#define NRF_LOG_LEVEL       0
-#endif // HAL_NFC_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
 NRF_LOG_MODULE_REGISTER();
+#else // HAL_NFC_CONFIG_LOG_ENABLED
+#define NRF_LOG_LEVEL       0
+#include "nrf_log.h"
+#endif // HAL_NFC_CONFIG_LOG_ENABLED
+
 
 #if HAL_NFC_CONFIG_DEBUG_PIN_ENABLED
     #include "nrf_gpio.h"
@@ -116,8 +118,20 @@ NRF_LOG_MODULE_REGISTER();
 #define NFC_CRC_SIZE                2u                 /**< CRC size in bytes */
 #define NFC_T4T_SELRES_PROTOCOL     1u                 /**< Type 4A Tag PROTOCOL bit setup (b7:b6) for SEL_RES Response frame */
 #define NFC_T4T_SELRES_PROTOCOL_MSK 0x03u              /**< PROTOCOL bits mask for SEL_RES Response frame */
-#define NFC_T4T_FWI_MAX             4u                 /**< Maximum FWI parameter value */
+
+#ifdef  BOARD_PCA10056
+    #define NFC_T4T_FWI_MAX         8u                 /**< Maximum FWI parameter value for 52840*/
+#else
+    #define NFC_T4T_FWI_MAX         4u                 /**< Maximum FWI parameter value */
+#endif // BOARD_PCA10056
+
+#define NFC_T4T_FWI_52840S_MAX      4u                 /**< Maximum FWI parameter value for first sample of 52840 */
+#define NFCT_FRAMEDELAYMAX_52840S   (0xFFFFUL)         /**< Bit mask of FRAMEDELAYMAX field for first sample of 52840 */
+#define NFC_T4T_FWI_DEFAULT         4u                 /**< Default FWI parameter value */
+#define NRF_T4T_FWI_LISTEN_MAX      8u                 /**< Maxiumum FWI parameter value in Listen Mode */
 #define NFC_T4T_RATS_CMD            0xE0u              /**< RATS Command Byte */
+#define NFC_T4T_RATS_DID_MASK       0x0Fu              /**< Mask of DID field inside RATS Parameter Byte. */
+#define NFC_T4T_RATS_DID_RFU        0x0Fu              /**< Invalid value of DID - RFU. */
 #define NFC_T4T_S_DESELECT          0xC2u              /**< S(DESELECT) Block identifier */
 #define NFC_T4T_S_WTX               0xF2u              /**< S(WTX)Block identifier */
 #define NFC_T4T_S_BLOCK_MSK         0xF7u              /**< S-Block Mask */
@@ -125,21 +139,21 @@ NRF_LOG_MODULE_REGISTER();
 #define NFC_T4T_BLOCK_MSK           0xE6u              /**< I/R- block mask (NAD not supported, expect this bit equal 0) */
 #define NFC_T4T_ISO_DEP_MSK         0x02u              /**< ISO-DEP block mask */
 #define NFC_T4T_R_BLOCK             0xA2u              /**< R- Block identifier (static bits) */
-#define NFC_T4T_WTXM_MAX            0x10u              /**< WTXM maximum value based on 'NFC Forum Digital Protocol Specification Version 1.1, Requirement 15.2.2.9', and FRAMEDELAYMAX maximum register setting */
 #define NFC_T4T_WTX_NO_DID_SIZE     0x02               /**< WTX data buffer size without DID field. */
 #define NFC_T4T_WTX_DID_SIZE        0x03               /**< WTX data buffer size with DID field. */
+#define NFC_T4T_WTXM_MAX_VALUE      0x3B               /**< WTXM max value, according to 'NFC Forum Digital Protocol Technical Specification 2.0, 16.2.2 */
 #define NFC_T4T_DID_BIT             0x08               /**< Indicates if DID present in ISO-DEP block. */
 #define NFC_T4T_DID_MASK            0x0F               /**< DID field mask */
 #define NFCT_INTEN_MSK              0x1C5CFFu          /**< Mask for all NFCT interrupts */
 
 
-#ifdef HAL_NFC_NRF52840_ENGINEERING_A_WORKAROUND
+#ifdef HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
     #define NRF_NFCT_ERRORSTATUS_ALL (NFCT_ERRORSTATUS_FRAMEDELAYTIMEOUT_Msk)   /**< Mask for clearing all error flags in NFCT_ERRORSTATUS register */
 #else
     #define NRF_NFCT_ERRORSTATUS_ALL (NFCT_ERRORSTATUS_NFCFIELDTOOWEAK_Msk   | \
                                       NFCT_ERRORSTATUS_NFCFIELDTOOSTRONG_Msk | \
                                       NFCT_ERRORSTATUS_FRAMEDELAYTIMEOUT_Msk)   /**< Mask for clearing all error flags in NFCT_ERRORSTATUS register */
-#endif // HAL_NFC_NRF52840_ENGINEERING_A_WORKAROUND
+#endif // HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
 
 #define NRF_NFCT_FRAMESTATUS_RX_MSK (NFCT_FRAMESTATUS_RX_OVERRUN_Msk      | \
                                      NFCT_FRAMESTATUS_RX_PARITYSTATUS_Msk | \
@@ -148,11 +162,20 @@ NRF_LOG_MODULE_REGISTER();
 #define NFC_FIELD_OFF_MASK           NFCT_FIELDPRESENT_FIELDPRESENT_Msk         /**< Mask for checking FIELDPRESENT register for state: FIELD OFF. */
 
 #define NFC_T4T_FWI_TO_FWT(FWI)      (256u * 16u * (1 << (FWI)))                /**< Macro for calculating FWT (in number of NFC carrier periods) from FWI parameter. */
+#define NFC_T4T_WTXM_MAX(FWI)        ( 1 << (NRF_T4T_FWI_LISTEN_MAX - (FWI)))   /**< Macro for calculating WTXM based on 'NFC Forum Digital Protocol Specification Version 1.1, Requirement 15.2.2.9', and FRAMEDELAYMAX maximum register setting */
 
 /* Begin: Bugfix for FTPAN-xx (AUTOCOLRESCONFIG) */
 #define NRF_NFCT_AUTOCOLRESCONFIG     (*(uint32_t volatile *)(0x4000559C))
 #define NRF_NFCT_AUTOCOLRESCONFIG_Pos 0
 /* End: Bugfix for FTPAN-xx */
+
+#define NRF_NFCT_DEFAULTSTATESLEEP     (*(uint32_t volatile *)(0x40005420))     /**< The default state of NFCT. */
+#define NRF_NFCT_DEFAULTSTATESLEEP_MSK 0x1UL                                    /**< Mask for checking the default state of NFCT. */
+
+#ifdef HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
+    #define NRF_NFCT_ACTIVATE_CONDS_THR    2                                        /**< Number of required conditions to activate NFCT. */
+    #define NRF_NFCT_ACTIVATE_DELAY        1000                                     /**< Minimal delay in us between NFC field detection and activation of NFCT. */
+#endif // HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
 
 typedef enum
 {
@@ -177,6 +200,7 @@ static volatile bool                m_slp_req_received                    = fals
 static volatile bool                m_field_on                            = false;                      /**< Flag indicating that NFC Tag field is present */
 static nrf_drv_clock_handler_item_t m_clock_handler_item;                                               /**< Clock event handler item structure */
 static volatile uint8_t             m_fwi;                                                              /**< FWI parameter */
+static volatile uint8_t             m_wtxm;                                                             /**< WTXM maximum value */
 static volatile uint8_t             m_wtx_data[3];                                                      /**< Tx buffer for an S(WTX) block */
 static volatile bool                m_deselect                            = false;                      /**< Flag indicating reception of DESELECT command */
 static volatile bool                m_swtx_sent                           = false;                      /**< Flag indicating that SWTX command has been sended. */
@@ -189,6 +213,11 @@ static volatile uint8_t             m_did                                 = 0;  
 static uint8_t                      m_nfcid1_length                       = 0;                          /**< Length of NFCID1 provided by user or 0 if not initialized yet */
 static uint8_t                      m_nfcid1_data[NFCID1_MAX_LENGHT]      = {0};                        /**< Content of NFCID1 */
 static volatile uint8_t             m_t4t_active                          = false;                      /**< Indicates if NFC Tag is in 4A state (on reception of correct RATS command). */
+
+#ifdef HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
+static volatile bool                m_nfc_fieldevents_filter_active       = false;     /**< Flag indicating that field events are ignored. */
+static volatile uint32_t            m_nfc_activate_conditions             = 0;         /**< Number of activation conditions that are met. */
+#endif // HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
 
 #ifndef HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
 static volatile uint32_t            m_nfc_fieldpresent_mask               = NFC_FIELD_OFF_MASK;   /**< Mask used for NFC Field polling in NFCT_FIELDPRESENT register */
@@ -206,15 +235,53 @@ static void hal_nfc_field_check(void);
 
 #define NFC_HAL_FIELDPRESENT_IS_LOST   ((NFCT_FIELDPRESENT_FIELDPRESENT_NoField <<  \
                                        NFCT_FIELDPRESENT_FIELDPRESENT_Pos) |        \
-                                       (NFCT_FIELDPRESENT_LOCKDETECT_NotLocked <<  \
+                                       (NFCT_FIELDPRESENT_LOCKDETECT_NotLocked <<   \
                                        NFCT_FIELDPRESENT_LOCKDETECT_Pos))
 
-static void field_timer_with_callback_config()
+#endif // HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
+
+#ifdef HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
+static void hal_nfc_activate_check(void)
+{
+    static bool is_field_validation_pending = false;
+
+    if (is_field_validation_pending)
+    {
+        is_field_validation_pending     = false;
+        m_nfc_fieldevents_filter_active = false;
+
+        // Check the field status with FIELDPRESENT and take action if field is lost.
+        nrf_nfct_field_event_handler(NFC_FIELD_STATE_UNKNOWN);
+        return;
+    }
+
+    m_nfc_activate_conditions++;
+    if (m_nfc_activate_conditions == NRF_NFCT_ACTIVATE_CONDS_THR)
+    {
+        m_nfc_activate_conditions = 0;
+
+        NRF_NFCT->TASKS_ACTIVATE    = 1;
+        is_field_validation_pending = true;
+
+        // Start the timer second time to validate if tag has locked to the field
+        NRF_TIMER4->TASKS_CLEAR = 1;
+        NRF_TIMER4->TASKS_START = 1;
+    }
+}
+#endif // HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
+
+#if defined(HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND) || defined(HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND)
+
+static void field_timer_with_callback_config(void)
 {
     NRF_TIMER4->MODE      = TIMER_MODE_MODE_Timer << TIMER_MODE_MODE_Pos;
     NRF_TIMER4->BITMODE   = TIMER_BITMODE_BITMODE_16Bit << TIMER_BITMODE_BITMODE_Pos;
     NRF_TIMER4->PRESCALER = 4 << TIMER_PRESCALER_PRESCALER_Pos;
+#ifdef HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
     NRF_TIMER4->CC[0]     = HAL_NFC_FIELD_TIMER_PERIOD << TIMER_CC_CC_Pos;
+#else
+    NRF_TIMER4->CC[0]     = NRF_NFCT_ACTIVATE_DELAY << TIMER_CC_CC_Pos;
+#endif
     NRF_TIMER4->SHORTS    = TIMER_SHORTS_COMPARE0_CLEAR_Enabled << TIMER_SHORTS_COMPARE0_CLEAR_Pos;
     NRF_TIMER4->INTENSET  = TIMER_INTENSET_COMPARE0_Set << TIMER_INTENSET_COMPARE0_Pos;
 
@@ -223,15 +290,20 @@ static void field_timer_with_callback_config()
     NVIC_EnableIRQ(TIMER4_IRQn);
 }
 
-
 void TIMER4_IRQHandler(void)
 {
-    HAL_NFC_DEBUG_PIN_SET(TIMER4_EVENT_PIN);
+    HAL_NFC_DEBUG_PIN_SET(HAL_NFC_TIMER4_EVENT_DEBUG_PIN);
+#ifdef HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
     hal_nfc_field_check();
+#else
+    NRF_TIMER4->TASKS_SHUTDOWN = 1;
+    hal_nfc_activate_check();
+#endif
     NRF_TIMER4->EVENTS_COMPARE[0] = 0;
-    HAL_NFC_DEBUG_PIN_CLEAR(TIMER4_EVENT_PIN);
+    HAL_NFC_DEBUG_PIN_CLEAR(HAL_NFC_TIMER4_EVENT_DEBUG_PIN);
 }
-#endif // HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
+
+#endif // defined(HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND) || defined(HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND)
 
 /**
  * @brief Common part of setup used for NFCT initialization and reinitialization.
@@ -242,16 +314,19 @@ static void hal_nfc_common_hw_setup()
 static inline void hal_nfc_common_hw_setup()
 #endif // HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
 {
-#ifdef HAL_NFC_NRF52840_ENGINEERING_A_WORKAROUND
-/* Begin: Bugfix for FTPAN-98 */
-    *(volatile uint32_t *) 0x4000568C = 0x00038148;
-/* End: Bugfix for FTPAN-98 */
-/* Begin: Bugfix for FTPAN-144 */
-    *(volatile uint32_t *) 0x4000561c = 0x01;
-    *(volatile uint32_t *) 0x4000562c = 0x3F;
-    *(volatile uint32_t *) 0x4000563c = 0x0;
-/* End: Bugfix for FTPAN-144 */
-#endif // HAL_NFC_NRF52840_ENGINEERING_A_WORKAROUND
+#ifdef HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
+    if (type_52840_sample_check())
+    {
+        /* Begin: Bugfix for FTPAN-98 */
+        *(volatile uint32_t *) 0x4000568C = 0x00038148;
+        /* End: Bugfix for FTPAN-98 */
+        /* Begin: Bugfix for FTPAN-144 */
+        *(volatile uint32_t *) 0x4000561c = 0x01;
+        *(volatile uint32_t *) 0x4000562c = 0x3F;
+        *(volatile uint32_t *) 0x4000563c = 0x0;
+        /* End: Bugfix for FTPAN-144 */
+    }
+#endif // HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
 
 /* Begin: Bugfix for FTPAN-17 */
 /* fixed by avoiding usage of FIELDLOST event */
@@ -270,9 +345,11 @@ static inline void hal_nfc_common_hw_setup()
 
     hal_nfc_nfcid1_registers_setup();
 
-    /* Set FRAMEDELAYMAX to maximum available setting, corresponding to FWI = 4 */
-    NRF_NFCT->FRAMEDELAYMAX = NFCT_FRAMEDELAYMAX_FRAMEDELAYMAX_Msk;
-    m_fwi                   = 4;
+    /* Set FRAMEDELAYMAX to default setting */
+    uint8_t fwi             = NFC_T4T_FWI_DEFAULT;
+
+    ret_code_t err_code     = hal_nfc_parameter_set( HAL_NFC_PARAM_FWI, &fwi, sizeof(fwi));
+    ASSERT(err_code == NRF_SUCCESS);
 
     /* Set PROTOCOL bits for Type 4A Tag */
     NRF_NFCT->SELRES =
@@ -362,9 +439,14 @@ ret_code_t hal_nfc_setup(hal_nfc_callback_t callback, void * p_context)
 
     ret_code_t err_code = nrf_drv_clock_init();
 
-#ifdef HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
-    field_timer_with_callback_config();
-#endif // HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
+#if defined(HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND) || defined(HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND)
+    #if defined(HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND)
+    if (!type_52840_sample_check())
+    #endif // defined(HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND)
+    {
+        field_timer_with_callback_config();
+    }
+#endif // defined(HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND) || defined(HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND)
 
     NRF_LOG_INFO("Init");
     HAL_NFC_DEBUG_PINS_INITIALIZE();
@@ -407,7 +489,18 @@ static inline void nrf_nfct_clock_event_handler(nrf_drv_clock_evt_type_t event)
         case NRF_DRV_CLOCK_EVT_HFCLK_STARTED:
             /* Activate NFCT only when HFXO is running */
             HAL_NFC_DEBUG_PIN_SET(HAL_NFC_HCLOCK_ON_DEBUG_PIN); // DEBUG!
-            NRF_NFCT->TASKS_ACTIVATE = 1;
+
+#ifdef HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
+            if (type_52840_final_check())
+            {
+                hal_nfc_activate_check();
+            }
+            else
+#endif // HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
+            {
+                NRF_NFCT->TASKS_ACTIVATE = 1;
+            }
+
             HAL_NFC_DEBUG_PIN_CLEAR(HAL_NFC_HCLOCK_ON_DEBUG_PIN); // DEBUG!
             break;
 
@@ -421,13 +514,13 @@ static inline void nrf_nfct_clock_event_handler(nrf_drv_clock_evt_type_t event)
 #ifdef HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
 static inline void nrf_nfct_field_lost_hfclk_handle(void)
 {
-    /* Begin: Bugfix for FTPAN-116 (IC-12886) NFCT won't release HFCLK */
+    /* Begin: Bugfix for FTPAN-116 (IC-12886) */
     // reset the NFC for release HFCLK
     __DMB();
     NRF_NFCT_POWER = 0;
     __DMB();
     NRF_NFCT_POWER = 1;
-    /* END:   Bugfix for FTPAN-116 (IC-12886) NFCT won't release HFCLK */
+    /* END:   Bugfix for FTPAN-116 (IC-12886) */
 
 }
 #endif // HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
@@ -440,6 +533,15 @@ static inline void nrf_nfct_field_lost_hfclk_handle(void)
  */
 static inline void nrf_nfct_field_event_handler(volatile nfct_field_sense_state_t field_state)
 {
+#ifdef HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
+    bool is_first_sample = type_52840_sample_check();
+
+    if((!is_first_sample) && (m_nfc_fieldevents_filter_active))
+    {
+        return;
+    }
+#endif // HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
+
     if (field_state == NFC_FIELD_STATE_UNKNOWN)
     {
         /* Probe NFC field */
@@ -463,6 +565,20 @@ static inline void nrf_nfct_field_event_handler(volatile nfct_field_sense_state_
             {
                 HAL_NFC_DEBUG_PIN_SET(HAL_NFC_HCLOCK_ON_DEBUG_PIN); // DEBUG!
                 nrf_drv_clock_hfclk_request(&m_clock_handler_item);
+
+#ifdef HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
+                /* Begin: Bugfix for FTPAN-190 */
+                if (!is_first_sample)
+                {
+                    m_nfc_activate_conditions       = 0;
+                    m_nfc_fieldevents_filter_active = true;
+
+                    NRF_TIMER4->TASKS_CLEAR = 1;
+                    NRF_TIMER4->TASKS_START = 1;
+                }
+                /* END: Bugfix for FTPAN-190 */
+#endif // HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
+
                 HAL_NFC_DEBUG_PIN_CLEAR(HAL_NFC_HCLOCK_ON_DEBUG_PIN); // DEBUG!
             }
             m_field_on = true;
@@ -471,11 +587,14 @@ static inline void nrf_nfct_field_event_handler(volatile nfct_field_sense_state_
         case NFC_FIELD_STATE_OFF:
             HAL_NFC_DEBUG_PIN_SET(HAL_NFC_HCLOCK_OFF_DEBUG_PIN); // DEBUG!
 
-/* Begin:   Bugfix for FTPAN-116 (IC-12886) NFCT won't release HFCLK */
-#ifdef HAL_NFC_NRF52840_ENGINEERING_A_WORKAROUND
-            *(volatile uint32_t *)0x40005010 = 1;
-#endif // HAL_NFC_NRF52840_ENGINEERING_A_WORKAROUND
-/* END:   Bugfix for FTPAN-116 (IC-12886) NFCT won't release HFCLK */
+#ifdef HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
+            /* Begin: Bugfix for FTPAN-116 (IC-12886) */
+            if (is_first_sample)
+            {
+                *(volatile uint32_t *)0x40005010 = 1;
+            }
+            /* END: Bugfix for FTPAN-116 (IC-12886) */
+#endif // HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
 
             NRF_NFCT->TASKS_SENSE = 1;
             nrf_drv_clock_hfclk_release();
@@ -484,7 +603,7 @@ static inline void nrf_nfct_field_event_handler(volatile nfct_field_sense_state_
             NRF_NFCT->INTENCLR =
                 (NFCT_INTENCLR_RXFRAMEEND_Clear << NFCT_INTENCLR_RXFRAMEEND_Pos) |
                 (NFCT_INTENCLR_RXERROR_Clear    << NFCT_INTENCLR_RXERROR_Pos);
-                
+
             /* Change mask to FIELD_OFF state - trigger FIELD_ON even if HW has not locked to the field */
             m_nfc_fieldpresent_mask = NFC_FIELD_OFF_MASK;
 
@@ -499,7 +618,7 @@ static inline void nrf_nfct_field_event_handler(volatile nfct_field_sense_state_
             m_t4t_active = false;
 
             /* Go back to default frame delay mode, bugfix for tag locking. */
-            NRF_NFCT->FRAMEDELAYMODE = NFCT_FRAMEDELAYMODE_FRAMEDELAYMODE_WindowGrid << 
+            NRF_NFCT->FRAMEDELAYMODE = NFCT_FRAMEDELAYMODE_FRAMEDELAYMODE_WindowGrid <<
                                        NFCT_FRAMEDELAYMODE_FRAMEDELAYMODE_Pos;
 
             HAL_NFC_DEBUG_PIN_CLEAR(HAL_NFC_HCLOCK_OFF_DEBUG_PIN); // DEBUG!
@@ -515,25 +634,25 @@ static inline void nrf_nfct_field_event_handler(volatile nfct_field_sense_state_
 __STATIC_INLINE void hal_nfc_wtx_data_set(bool did_present)
 {
     uint32_t wtx_data_size;
-    
+
     m_wtx_data[0] = NFC_T4T_S_WTX;
     if (did_present)
     {
         m_wtx_data[0] |= NFC_T4T_DID_BIT;
         m_wtx_data[1]  = m_did;
-        m_wtx_data[2]  = NFC_T4T_WTXM_MAX;
+        m_wtx_data[2]  = m_wtxm;
         wtx_data_size  = NFC_T4T_WTX_DID_SIZE;
     }
     else
     {
-        m_wtx_data[1] = NFC_T4T_WTXM_MAX;
+        m_wtx_data[1] = m_wtxm;
         wtx_data_size = NFC_T4T_WTX_NO_DID_SIZE;
     }
 
     NRF_NFCT->PACKETPTR      = (uint32_t) m_wtx_data;
     NRF_NFCT->TXD.AMOUNT     = (wtx_data_size << NFCT_TXD_AMOUNT_TXDATABYTES_Pos) &
                                NFCT_TXD_AMOUNT_TXDATABYTES_Msk;
-    NRF_NFCT->FRAMEDELAYMODE = NFCT_FRAMEDELAYMODE_FRAMEDELAYMODE_ExactVal << 
+    NRF_NFCT->FRAMEDELAYMODE = NFCT_FRAMEDELAYMODE_FRAMEDELAYMODE_ExactVal <<
                                NFCT_FRAMEDELAYMODE_FRAMEDELAYMODE_Pos;
     NRF_NFCT->TASKS_STARTTX  = 1;
     m_t4t_tx_waiting         = true;
@@ -561,6 +680,26 @@ static void hal_nfc_nfcid1_default_bytes(void)
 }
 
 
+/** @brief Resets NFCT peripheral to its default state before automatic collision resolution
+ *         procedure.
+ */
+static inline void nrf_nfct_default_state_reset(void)
+{
+    if (NRF_NFCT_DEFAULTSTATESLEEP & NRF_NFCT_DEFAULTSTATESLEEP_MSK) // Default state is SLEEP_A
+    {
+        NRF_NFCT->TASKS_GOSLEEP = 1;
+    }
+    else // Default state is IDLE
+    {
+        NRF_NFCT->TASKS_GOIDLE = 1;
+    }
+
+    /* Disable RX here (will be enabled at SELECTED) */
+    NRF_NFCT->INTENCLR = NFCT_INTENCLR_RXFRAMEEND_Clear <<
+                         NFCT_INTENCLR_RXFRAMEEND_Pos;
+}
+
+
 ret_code_t hal_nfc_parameter_set(hal_nfc_param_id_t id, void * p_data, size_t data_length)
 {
     /* Parameter validation is done in upper-layer */
@@ -574,19 +713,48 @@ ret_code_t hal_nfc_parameter_set(hal_nfc_param_id_t id, void * p_data, size_t da
         {
             return NRF_ERROR_DATA_SIZE;
         }
-        if (m_fwi > NFC_T4T_FWI_MAX)
+        /* Frame Wait Time settings for first sample of 52840 */
+        if (type_52840_sample_check())
         {
-            return NRF_ERROR_INVALID_PARAM;
-        }
-
-        /* Set FRAMEDELAYTIME */
-        if (m_fwi == NFC_T4T_FWI_MAX)
-        {
-            NRF_NFCT->FRAMEDELAYMAX = NFCT_FRAMEDELAYMAX_FRAMEDELAYMAX_Msk;
+            if (m_fwi > NFC_T4T_FWI_52840S_MAX)
+            {
+                return NRF_ERROR_INVALID_PARAM;
+            }
+            /* Set FRAMEDELAYTIME */
+            if (m_fwi == NFC_T4T_FWI_52840S_MAX)
+            {
+                NRF_NFCT->FRAMEDELAYMAX = NFCT_FRAMEDELAYMAX_52840S;
+            }
+            else
+            {
+                NRF_NFCT->FRAMEDELAYMAX = NFC_T4T_FWI_TO_FWT(m_fwi);
+            }
         }
         else
         {
-            NRF_NFCT->FRAMEDELAYMAX = NFC_T4T_FWI_TO_FWT(m_fwi);
+            if (m_fwi > NFC_T4T_FWI_MAX)
+            {
+                return NRF_ERROR_INVALID_PARAM;
+            }
+
+            /* Set FRAMEDELAYTIME */
+            if (m_fwi == NFC_T4T_FWI_MAX)
+            {
+                NRF_NFCT->FRAMEDELAYMAX = NFCT_FRAMEDELAYMAX_FRAMEDELAYMAX_Msk;
+            }
+            else
+            {
+                NRF_NFCT->FRAMEDELAYMAX = NFC_T4T_FWI_TO_FWT(m_fwi);
+            }
+        }
+
+        if (NFC_T4T_WTXM_MAX(m_fwi) > NFC_T4T_WTXM_MAX_VALUE)
+        {
+            m_wtxm = NFC_T4T_WTXM_MAX_VALUE;
+        }
+        else
+        {
+            m_wtxm = NFC_T4T_WTXM_MAX(m_fwi);
         }
     }
     else if (id == HAL_NFC_PARAM_SELRES)
@@ -742,7 +910,7 @@ ret_code_t hal_nfc_send(const uint8_t * p_data, size_t data_length)
     NRF_NFCT->PACKETPTR      = (uint32_t) p_data;
     NRF_NFCT->TXD.AMOUNT     = (data_length << NFCT_TXD_AMOUNT_TXDATABYTES_Pos) &
                                 NFCT_TXD_AMOUNT_TXDATABYTES_Msk;
-    NRF_NFCT->FRAMEDELAYMODE = NFCT_FRAMEDELAYMODE_FRAMEDELAYMODE_WindowGrid << 
+    NRF_NFCT->FRAMEDELAYMODE = NFCT_FRAMEDELAYMODE_FRAMEDELAYMODE_WindowGrid <<
                                NFCT_FRAMEDELAYMODE_FRAMEDELAYMODE_Pos;
     NRF_NFCT->TASKS_STARTTX  = 1;
 
@@ -811,7 +979,7 @@ void NFCT_IRQHandler(void)
 
         if (NRF_NFCT->EVENTS_RXERROR && (NRF_NFCT->INTEN & NFCT_INTEN_RXERROR_Msk))
         {
-            rx_status = NRF_NFCT->FRAMESTATUS.RX;
+            rx_status = (NRF_NFCT->FRAMESTATUS.RX & NRF_NFCT_FRAMESTATUS_RX_MSK);
             nrf_nfct_event_clear(&NRF_NFCT->EVENTS_RXERROR);
 
             NRF_LOG_DEBUG("Rx error (0x%x)", (unsigned int) rx_status);
@@ -821,15 +989,12 @@ void NFCT_IRQHandler(void)
         }
 
         /* Ignore all NFC-A data frames with Transmission Error */
-        if (rx_status & NRF_NFCT_FRAMESTATUS_RX_MSK)
+        if (rx_status)
         {
             /* Go back to idle state if currently in the ACTIVE_A state */
             if (!m_t4t_active)
             {
-                NRF_NFCT->TASKS_GOIDLE = 1;
-                /* Disable RX here (will be enabled at SELECTED) */
-                NRF_NFCT->INTENCLR     = NFCT_INTENCLR_RXFRAMEEND_Clear <<
-                                         NFCT_INTENCLR_RXFRAMEEND_Pos;
+                nrf_nfct_default_state_reset();
             }
             /* Stay in the CARD_EMULATOR_4A state */
             else
@@ -843,7 +1008,9 @@ void NFCT_IRQHandler(void)
             /* Look for NFC-A Commands */
             if (!m_t4t_active)
             {
-                if (m_nfc_rx_buffer[0] == NFC_T4T_RATS_CMD)
+                // 'NFC Forum Digital Protocol Technical Specification 2.0, 14.6.1.13' */
+                if ((m_nfc_rx_buffer[0] == NFC_T4T_RATS_CMD) &&
+                    ((m_nfc_rx_buffer[1] & NFC_T4T_RATS_DID_MASK) != NFC_T4T_RATS_DID_RFU))
                 {
                     /* Disable Auto Collision Resolution */
                     NRF_NFCT_AUTOCOLRESCONFIG = NRF_NFCT_AUTOCOLRESCONFIG |
@@ -860,10 +1027,7 @@ void NFCT_IRQHandler(void)
                 }
                 else
                 {
-                    NRF_NFCT->TASKS_GOIDLE = 1;
-                    /* Disable RX here (will be enabled at SELECTED) */
-                    NRF_NFCT->INTENCLR     = NFCT_INTENCLR_RXFRAMEEND_Clear <<
-                                            NFCT_INTENCLR_RXFRAMEEND_Pos;
+                    nrf_nfct_default_state_reset();
                 }
             }
             /* Look for Tag 4 Type Commands */
@@ -871,40 +1035,45 @@ void NFCT_IRQHandler(void)
             {
                 bool    did_present;
                 uint8_t did;
-        
+
                 did_present = (m_nfc_rx_buffer[0] & NFC_T4T_DID_BIT) != 0;
                 did         = m_did;
-        
+
                 // React only to the ISO-DEP blocks that are directed to our tag.
-                if ((!did_present) || (did == (m_nfc_rx_buffer[1] & NFC_T4T_DID_MASK)))
+                if ((!did_present) && (did > 0)) // 'NFC Forum Digital Protocol Technical Specification 2.0, 16.1.2.12' */
+                {
+                    /* Not our ISO-DEP block, so wait for next frame reception */
+                    NRF_NFCT->TASKS_ENABLERXDATA = 1;
+                }
+                else if ((!did_present) || (did == (m_nfc_rx_buffer[1] & NFC_T4T_DID_MASK)))
                 {
                     if ((m_nfc_rx_buffer[0] & NFC_T4T_S_BLOCK_MSK) == NFC_T4T_S_DESELECT)
                     {
                         m_deselect = true;
-                        NRF_LOG_DEBUG("RX: T4T Go to sleep");
+                        NRF_LOG_DEBUG("RX: T4T Deselect");
                     }
                     else if (m_swtx_sent && ((m_nfc_rx_buffer[0] & NFC_T4T_S_BLOCK_MSK) == NFC_T4T_S_WTX))
                     {
                         m_swtx_sent = false;
-                        
-                        NRF_LOG_DEBUG("RX: S(WTX) reponse");
-                        
+
+                        NRF_LOG_DEBUG("RX: S(WTX) response");
+
                         if (m_pending_msg)
                         {
                             m_pending_msg = false;
-                
+
                             nrf_nfct_event_clear(&NRF_NFCT->EVENTS_TXFRAMEEND);
-                
+
                             NRF_NFCT->INTENSET       = (NFCT_INTENSET_TXFRAMEEND_Enabled <<
                                                         NFCT_INTENSET_TXFRAMEEND_Pos);
                             NRF_NFCT->PACKETPTR      = (uint32_t) m_pending_msg_ptr;
                             NRF_NFCT->TXD.AMOUNT     = (m_pending_data_length <<
                                                         NFCT_TXD_AMOUNT_TXDATABYTES_Pos) &
                                                         NFCT_TXD_AMOUNT_TXDATABYTES_Msk;
-                            NRF_NFCT->FRAMEDELAYMODE = NFCT_FRAMEDELAYMODE_FRAMEDELAYMODE_WindowGrid << 
+                            NRF_NFCT->FRAMEDELAYMODE = NFCT_FRAMEDELAYMODE_FRAMEDELAYMODE_WindowGrid <<
                                                        NFCT_FRAMEDELAYMODE_FRAMEDELAYMODE_Pos;
                             NRF_NFCT->TASKS_STARTTX  = 1;
-                
+
                             m_t4t_tx_waiting   = false;
                             NRF_LOG_DEBUG("Sending pending message!");
                         }
@@ -918,8 +1087,8 @@ void NFCT_IRQHandler(void)
                         /* Set up default transmission of S(WTX) block. Tx will be executed only if FDT timer
                         * expires (FrameDelayMode-ExactVal) before hal_nfc_send is called */
                         hal_nfc_wtx_data_set(did_present);
-                
-                        NRF_NFCT->INTENSET = (NFCT_INTENSET_TXFRAMEEND_Enabled << 
+
+                        NRF_NFCT->INTENSET = (NFCT_INTENSET_TXFRAMEEND_Enabled <<
                                             NFCT_INTENSET_TXFRAMEEND_Pos);
                     }
                     else
@@ -934,7 +1103,7 @@ void NFCT_IRQHandler(void)
                     NRF_NFCT->TASKS_ENABLERXDATA = 1;
                 }
             }
-    
+
             if (m_nfc_lib_callback != NULL)
             {
                 /* This callback should trigger transmission of READ Response */
@@ -1054,12 +1223,12 @@ void NFCT_IRQHandler(void)
     if (NRF_NFCT->EVENTS_TXFRAMESTART && (NRF_NFCT->INTEN & NFCT_INTEN_TXFRAMESTART_Msk))
     {
         nrf_nfct_event_clear(&NRF_NFCT->EVENTS_TXFRAMESTART);
-        
+
         if (m_t4t_tx_waiting)
         {
             m_t4t_tx_waiting = false;
             m_swtx_sent      = true;
-                  
+
             NRF_LOG_DEBUG("Response timeout, sending WTX!");
         }
     }
@@ -1070,7 +1239,7 @@ void NFCT_IRQHandler(void)
 
 #ifdef HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
 
-#ifdef  HAL_NFC_NRF52840_ENGINEERING_A_WORKAROUND
+#ifdef  HAL_NFC_NRF52840_ENGINEERING_ABC_WORKAROUND
     #error Wrong workaround combination
 #endif
 
@@ -1103,10 +1272,10 @@ static void hal_nfc_field_check(void)
             }
             m_field_on = false;
 
-            /* Begin:   Bugfix for FTPAN-116 (IC-12886) NFCT won't release HFCLK */
+            /* Begin:   Bugfix for FTPAN-116 (IC-12886) */
             // resume the NFCT to initialized state
             hal_nfc_re_setup();
-            /* End:   Bugfix for FTPAN-116 (IC-12886) NFCT won't release HFCLK */
+            /* End:   Bugfix for FTPAN-116 (IC-12886) */
 
             HAL_NFC_DEBUG_PIN_CLEAR(HAL_NFC_HCLOCK_OFF_DEBUG_PIN); // DEBUG!
         }

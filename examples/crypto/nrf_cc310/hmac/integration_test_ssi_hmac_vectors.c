@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -66,9 +66,9 @@ const hmacDataStuct hmacVectors[] = {
 		/*input_dataSize*/
 		32*sizeof(uint8_t),
 		/*TST_SHA1_Expected_output_data*/
-		{0x6568524f,0x6783ca5f,0x8f7a8e8e,0x139d0804,0x167b05f2},
+		{0x6568524f,0x6783ca5f,0x8f7a8e8e,0x139d0804,0x167b05f2}, 
 		/*TST_SHA1_Expected_output_dataSize*/
-		CRYS_HASH_SHA1_DIGEST_SIZE_IN_BYTES*sizeof(uint8_t),
+		CRYS_HASH_SHA1_DIGEST_SIZE_IN_BYTES*sizeof(uint8_t), 
 	},
 	{
 		/*Test parameters*/
@@ -92,9 +92,9 @@ const hmacDataStuct hmacVectors[] = {
 		65*sizeof(uint8_t),
 		/*TST_SHA256_Expected_output_data*/
 		{0xE0903CC8,0x24C89469,0x71B12528,0x6DEFD88C,
-		 0xF662C7FC,0x971C4DD1,0x5755CB85,0x8E72FD6F},
+		 0xF662C7FC,0x971C4DD1,0x5755CB85,0x8E72FD6F}, 
 		/*TST_SAH256_expected_dataSize*/
-		CRYS_HASH_SHA256_DIGEST_SIZE_IN_BYTES*sizeof(uint8_t),
+		CRYS_HASH_SHA256_DIGEST_SIZE_IN_BYTES*sizeof(uint8_t),  
 
 
 	}

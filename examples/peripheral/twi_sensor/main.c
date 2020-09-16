@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -142,7 +142,7 @@ void twi_init (void)
     const nrf_drv_twi_config_t twi_lm75b_config = {
        .scl                = ARDUINO_SCL_PIN,
        .sda                = ARDUINO_SDA_PIN,
-       .frequency          = NRF_TWI_FREQ_100K,
+       .frequency          = NRF_DRV_TWI_FREQ_100K,
        .interrupt_priority = APP_IRQ_PRIORITY_HIGH,
        .clear_bus_init     = false
     };
@@ -173,7 +173,7 @@ int main(void)
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    NRF_LOG_INFO("\r\nTWI sensor example");
+    NRF_LOG_INFO("\r\nTWI sensor example started.");
     NRF_LOG_FLUSH();
     twi_init();
     LM75B_set_mode();

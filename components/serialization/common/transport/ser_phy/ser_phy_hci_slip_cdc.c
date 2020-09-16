@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -74,28 +74,15 @@ static void cdc_acm_user_ev_handler(app_usbd_class_inst_t const * p_inst,
 #define CDC_ACM_DATA_EPIN       NRF_DRV_USBD_EPIN1
 #define CDC_ACM_DATA_EPOUT      NRF_DRV_USBD_EPOUT1
 
-#define CDC_ACM_INTERFACES_CONFIG()                 \
-    APP_USBD_CDC_ACM_CONFIG(CDC_ACM_COMM_INTERFACE, \
-                            CDC_ACM_COMM_EPIN,      \
-                            CDC_ACM_DATA_INTERFACE, \
-                            CDC_ACM_DATA_EPIN,      \
-                            CDC_ACM_DATA_EPOUT)
-
-static const uint8_t m_cdc_acm_class_descriptors[] = {
-        APP_USBD_CDC_ACM_DEFAULT_DESC(CDC_ACM_COMM_INTERFACE,
-                                      CDC_ACM_COMM_EPIN,
-                                      CDC_ACM_DATA_INTERFACE,
-                                      CDC_ACM_DATA_EPIN,
-                                      CDC_ACM_DATA_EPOUT)
-};
-
-/*lint -save -e40 -e26 -e64 -e123 -e505 -e651*/
 APP_USBD_CDC_ACM_GLOBAL_DEF(m_app_cdc_acm,
-                            CDC_ACM_INTERFACES_CONFIG(),
                             cdc_acm_user_ev_handler,
-                            m_cdc_acm_class_descriptors
+                            CDC_ACM_COMM_INTERFACE,
+                            CDC_ACM_DATA_INTERFACE,
+                            CDC_ACM_COMM_EPIN,
+                            CDC_ACM_DATA_EPIN,
+                            CDC_ACM_DATA_EPOUT,
+                            APP_USBD_CDC_COMM_PROTOCOL_NONE
 );
-/*lint -restore*/
 
 static bool volatile m_port_open;
 
@@ -114,6 +101,7 @@ static uint8_t   m_tx_buf0[NRF_DRV_USBD_EPSIZE];
 static uint8_t   m_tx_buf1[NRF_DRV_USBD_EPSIZE];
 static uint8_t * mp_tx_buf;
 static uint8_t   m_tx_bytes;
+
 static enum {
     PHASE_BEGIN,
     PHASE_HEADER,
@@ -126,6 +114,7 @@ static enum {
     PHASE_PRE_IDLE = PHASE_PACKET_END + 1,
     PHASE_IDLE     = PHASE_PRE_IDLE + 1
 } volatile m_tx_phase;
+
 static bool volatile m_tx_in_progress;
 static bool volatile m_tx_pending;
 
@@ -144,38 +133,9 @@ static uint8_t * mp_big_buffer   = NULL;
 static uint8_t * mp_buffer       = NULL;
 static uint32_t  m_rx_index;
 
-static uint8_t m_rx_buf[NRF_DRV_USBD_EPSIZE];
+static uint8_t m_rx_byte;
 static bool m_rx_escape;
 
-#define SERIAL_NUMBER_STRING_SIZE (16)
-uint16_t g_extern_serial_number[SERIAL_NUMBER_STRING_SIZE + 1];
-
-static void serial_number_string_create(void)
-{
-    g_extern_serial_number[0] = (uint16_t)APP_USBD_DESCRIPTOR_STRING << 8 |
-                                          sizeof(g_extern_serial_number);
-
-    uint32_t dev_id_hi = NRF_FICR->DEVICEID[1];
-    uint32_t dev_id_lo = NRF_FICR->DEVICEID[0];
-    uint64_t device_id = (((uint64_t)dev_id_hi) << 32) | dev_id_lo;
-
-    for (size_t i = SERIAL_NUMBER_STRING_SIZE; i > 0; --i)
-    {
-        uint8_t nibble = (uint8_t)(device_id & 0xF);
-        device_id >>= 4;
-
-        uint8_t hex_digit;
-        if (nibble >= 10)
-        {
-            hex_digit = 'A' + (nibble - 10);
-        }
-        else
-        {
-            hex_digit = '0' + nibble;
-        }
-        g_extern_serial_number[i] = hex_digit;
-    }
-}
 
 // The function returns false to signal that no more bytes can be passed to be
 // sent (put into the TX buffer) until UART transmission is done.
@@ -639,9 +599,21 @@ static void cdc_acm_user_ev_handler(app_usbd_class_inst_t const * p_inst,
         NRF_LOG_DEBUG("EVT_PORT_OPEN");
         if (!m_port_open)
         {
+            ret_code_t ret_code;
+
             m_port_open = true;
-            APP_ERROR_CHECK(app_usbd_cdc_acm_read(p_cdc_acm,
-                m_rx_buf, sizeof(m_rx_buf)));
+
+            do {
+                ret_code = app_usbd_cdc_acm_read(p_cdc_acm, &m_rx_byte, 1);
+                if (ret_code == NRF_SUCCESS)
+                {
+                    ser_phi_hci_rx_byte(m_rx_byte);
+                }
+                else if (ret_code != NRF_ERROR_IO_PENDING)
+                {
+                    APP_ERROR_CHECK(ret_code);
+                }
+            } while (ret_code == NRF_SUCCESS);
         }
         break;
 
@@ -690,13 +662,13 @@ static void cdc_acm_user_ev_handler(app_usbd_class_inst_t const * p_inst,
 
     case APP_USBD_CDC_ACM_USER_EVT_RX_DONE:
         {
-            size_t size = app_usbd_cdc_acm_rx_size(p_cdc_acm);
-            for (size_t i = 0; i < size; ++i)
+            ret_code_t ret_code;
+            do
             {
-                ser_phi_hci_rx_byte(m_rx_buf[i]);
-            }
-            APP_ERROR_CHECK(app_usbd_cdc_acm_read(p_cdc_acm,
-                m_rx_buf, sizeof(m_rx_buf)));
+                ser_phi_hci_rx_byte(m_rx_byte);
+
+                ret_code = app_usbd_cdc_acm_read(p_cdc_acm, &m_rx_byte, 1);
+            } while (ret_code == NRF_SUCCESS);
         }
         break;
 
@@ -704,27 +676,6 @@ static void cdc_acm_user_ev_handler(app_usbd_class_inst_t const * p_inst,
         break;
     }
 }
-
-static void clock_event_handler(nrf_drv_clock_evt_type_t event)
-{
-    ASSERT(event == NRF_DRV_CLOCK_EVT_HFCLK_STARTED);
-    (void)event;
-
-    NRF_LOG_DEBUG("Clock started");
-
-    APP_ERROR_CHECK(app_usbd_init(NULL));
-    APP_ERROR_CHECK(app_usbd_class_append(
-        app_usbd_cdc_acm_class_inst_get(&m_app_cdc_acm)));
-
-    app_usbd_enable();
-    app_usbd_start();
-
-    NRF_LOG_DEBUG("USB started");
-}
-static nrf_drv_clock_handler_item_t m_clock_handler_item = {
-    NULL,
-    clock_event_handler
-};
 
 uint32_t ser_phy_hci_slip_open(ser_phy_hci_slip_event_handler_t events_handler)
 {
@@ -739,10 +690,13 @@ uint32_t ser_phy_hci_slip_open(ser_phy_hci_slip_event_handler_t events_handler)
         return NRF_ERROR_INVALID_STATE;
     }
 
-    serial_number_string_create();
+    ret_code_t ret = app_usbd_class_append(
+        app_usbd_cdc_acm_class_inst_get(&m_app_cdc_acm));
+    if (ret != NRF_SUCCESS)
+    {
+        return ret;
+    }
 
-    (void)nrf_drv_clock_init();
-    nrf_drv_clock_hfclk_request(&m_clock_handler_item);
 
     m_ser_phy_hci_slip_event_handler = events_handler;
 
@@ -762,10 +716,5 @@ uint32_t ser_phy_hci_slip_open(ser_phy_hci_slip_event_handler_t events_handler)
 
 void ser_phy_hci_slip_close(void)
 {
-    app_usbd_stop();
-    app_usbd_disable();
-    (void)app_usbd_uninit();
-    nrf_drv_clock_hfclk_release();
-
     m_ser_phy_hci_slip_event_handler = NULL;
 }

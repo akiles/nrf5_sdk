@@ -30,17 +30,17 @@
  * @details Macros used for creating module logs which can be useful in understanding handling
  *          of events or actions on API requests. These are intended for debugging purposes and
  *          can be enabled by defining the NRF_DRIVER_ENABLE_LOGS.
- * @note That if NRF_LWIP_DRIVER_CONFIG_LOG_ENABLED is disabled, having NRF_DRIVER_ENABLE_LOGS has no effect.
+ * @note If NRF_LWIP_DRIVER_CONFIG_LOG_ENABLED is disabled, having NRF_DRIVER_ENABLE_LOGS has no effect.
  * @{
  */
 
 #if NRF_LWIP_DRIVER_CONFIG_LOG_ENABLED
 
-#define NRF_LOG_MODULE_NAME IP-DRI
+#define NRF_LOG_MODULE_NAME LwIP
 
-#define NRF_LOG_LEVEL       IOT_NRF_DRIVER_CONFIG_LOG_LEVEL
-#define NRF_LOG_INFO_COLOR  IOT_NRF_DRIVER_CONFIG_INFO_COLOR
-#define NRF_LOG_DEBUG_COLOR IOT_NRF_DRIVER_CONFIG_DEBUG_COLOR
+#define NRF_LOG_LEVEL       NRF_LWIP_DRIVER_CONFIG_LOG_LEVEL
+#define NRF_LOG_INFO_COLOR  NRF_LWIP_DRIVER_CONFIG_INFO_COLOR
+#define NRF_LOG_DEBUG_COLOR NRF_LWIP_DRIVER_CONFIG_DEBUG_COLOR
 
 #include "nrf_log.h"
 NRF_LOG_MODULE_REGISTER();

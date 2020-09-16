@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -97,7 +97,7 @@ void disconnect_event_notify(mqtt_client_t * p_client, uint32_t result);
 static void tcp_close_connection(const mqtt_client_t * p_client)
 {
     tcp_arg((struct tcp_pcb *)p_client->tcp_id, NULL);
-    tcp_sent((struct tcp_pcb *)p_client->tcp_id, NULL);
+    UNUSED_VARIABLE(tcp_output((struct tcp_pcb *)p_client->tcp_id));
     tcp_recv((struct tcp_pcb *)p_client->tcp_id, NULL);
 
     UNUSED_VARIABLE(tcp_close((struct tcp_pcb *)p_client->tcp_id));

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -46,7 +46,6 @@
 #include "nfc_pair_m.h"
 #include "fds.h"
 #include "nrf_fstorage.h"
-#include "nfc_ble_oob_advdata_parser.h"
 #include "nrf_ble_gatt.h"
 
 #define NRF_LOG_MODULE_NAME BLE_M
@@ -66,6 +65,8 @@ NRF_LOG_MODULE_REGISTER();
 #define APP_SOC_OBSERVER_PRIO       1                                           /**< Applications' SoC observer priority. You shoulnd't need to modify this value. */
 #define APP_BLE_CONN_CFG_TAG        1                                           /**< A tag identifying the SoftDevice BLE configuration. */
 
+#define DEV_NAME_LEN                ((BLE_GAP_ADV_SET_DATA_SIZE_MAX + 1) - \
+                                    AD_DATA_OFFSET)                             /**< Determines device name length.  */
 
 NRF_BLE_GATT_DEF(m_gatt);                                                       /**< GATT module instance. */
 
@@ -82,6 +83,15 @@ static ble_gap_conn_params_t const m_connection_param =
     .conn_sup_timeout  = (uint16_t)SUPERVISION_TIMEOUT
 };
 
+static uint8_t               m_scan_buffer_data[BLE_GAP_SCAN_BUFFER_MIN]; /**< buffer where advertising reports will be stored by the SoftDevice. */
+    
+/**@brief Pointer to the buffer where advertising reports will be stored by the SoftDevice. */
+static ble_data_t m_scan_buffer =
+{
+    m_scan_buffer_data,
+    BLE_GAP_SCAN_BUFFER_MIN
+};
+
 /**@brief Parameters used when scanning. */
 ble_gap_scan_params_t const m_scan_params =
 {
@@ -89,13 +99,6 @@ ble_gap_scan_params_t const m_scan_params =
     .interval = SCAN_INTERVAL,
     .window   = SCAN_WINDOW,
     .timeout  = SCAN_TIMEOUT,
-    #if (NRF_SD_BLE_API_VERSION == 2)
-        .selective   = 0,
-        .p_whitelist = NULL,
-    #endif
-    #if (NRF_SD_BLE_API_VERSION == 3)
-        .use_whitelist = 0,
-    #endif
 };
 
 
@@ -139,64 +142,71 @@ void scan_start(void)
 
     (void) sd_ble_gap_scan_stop();
 
-    err_code = sd_ble_gap_scan_start(&m_scan_params);
+    err_code = sd_ble_gap_scan_start(&m_scan_params, &m_scan_buffer);
     APP_ERROR_CHECK(err_code);
 }
 
 
 /**@brief Function for handling the advertising report BLE event.
  *
- * @param[in] p_ble_evt  Bluetooth stack event.
+ * @param[in] p_adv_report  Advertising report from the SoftDevice.
  */
-static void on_adv_report(ble_evt_t const * const p_ble_evt)
+static void on_adv_report(ble_gap_evt_adv_report_t const * p_adv_report)
 {
     ret_code_t  err_code;
     uint8_t   * p_adv_data;
-    uint8_t     data_len;
-    uint8_t   * dev_name_ptr;
-    char        dev_name[32];
-
-    // For readibility.
-    ble_gap_evt_t const * const  p_gap_evt  = &p_ble_evt->evt.gap_evt;
-    ble_gap_addr_t const * const peer_addr  = &p_gap_evt->params.adv_report.peer_addr;
+    uint16_t    data_len;
+    uint16_t    field_len;
+    uint16_t    dev_name_offset = 0;
+    char        dev_name[DEV_NAME_LEN];
 
     // Initialize advertisement report for parsing.
-    p_adv_data = (uint8_t *)p_gap_evt->params.adv_report.data;
-    data_len   = p_gap_evt->params.adv_report.dlen;
+    p_adv_data = (uint8_t *)p_adv_report->data.p_data;
+    data_len   = p_adv_report->data.len;
 
     // Search for advertising names.
-    err_code = nfc_ble_oob_advdata_parser_field_find(BLE_GAP_AD_TYPE_COMPLETE_LOCAL_NAME,
-                                                     p_adv_data,
-                                                     &data_len,
-                                                     &dev_name_ptr);
-    if (err_code != NRF_SUCCESS)
+    field_len = ble_advdata_search(p_adv_data, 
+                                   data_len, 
+                                   &dev_name_offset, 
+                                   BLE_GAP_AD_TYPE_COMPLETE_LOCAL_NAME);
+    if (field_len == 0)
     {
         // Look for the short local name if it was not found as complete.
-        err_code = nfc_ble_oob_advdata_parser_field_find(BLE_GAP_AD_TYPE_SHORT_LOCAL_NAME,
-                                                         p_adv_data,
-                                                         &data_len,
-                                                         &dev_name_ptr);
-        if (err_code != NRF_SUCCESS)
+        field_len = ble_advdata_search(p_adv_data, 
+                                       data_len,
+                                       &dev_name_offset,
+                                       BLE_GAP_AD_TYPE_SHORT_LOCAL_NAME);
+        if (field_len == 0)
         {
             // If we can't parse the data, then exit.
+            err_code = sd_ble_gap_scan_start(NULL, &m_scan_buffer);
+            APP_ERROR_CHECK(err_code);
+
             return;
         }
     }
 
-    memcpy(dev_name, dev_name_ptr, data_len);
-    dev_name[data_len] = 0;
+    memcpy(dev_name, &p_adv_data[dev_name_offset], field_len);
+    dev_name[field_len] = 0;
 
     NRF_LOG_DEBUG("Found advertising device: %s", nrf_log_push((char *)dev_name));
 
     // Check if device address is the same as address taken from the NFC tag.
-    if (nfc_oob_pairing_tag_match(peer_addr))
+    if (nfc_oob_pairing_tag_match(&p_adv_report->peer_addr))
     {
         // If address is correct, stop scanning and initiate connection with peripheral device.
         err_code = sd_ble_gap_scan_stop();
         APP_ERROR_CHECK(err_code);
 
-        err_code = sd_ble_gap_connect(peer_addr, &m_scan_params,
-                                      &m_connection_param, APP_BLE_CONN_CFG_TAG);
+        err_code = sd_ble_gap_connect(&p_adv_report->peer_addr,
+                                      &m_scan_params,
+                                      &m_connection_param,
+                                      APP_BLE_CONN_CFG_TAG);
+        APP_ERROR_CHECK(err_code);
+    }
+    else
+    {
+        err_code = sd_ble_gap_scan_start(NULL, &m_scan_buffer);
         APP_ERROR_CHECK(err_code);
     }
 }
@@ -233,7 +243,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             break;
 
         case BLE_GAP_EVT_ADV_REPORT:
-            on_adv_report(p_ble_evt);
+            on_adv_report(&p_gap_evt->params.adv_report);
             break;
 
         case BLE_GAP_EVT_TIMEOUT:
@@ -251,7 +261,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
             break;
 
-#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -263,7 +272,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
             APP_ERROR_CHECK(err_code);
         } break;
-#endif
 
         case BLE_GATTC_EVT_TIMEOUT:
             // Disconnect on GATT Client timeout event.

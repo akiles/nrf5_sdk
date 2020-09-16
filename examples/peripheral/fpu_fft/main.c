@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
  * 
  * All rights reserved.
  * 
@@ -246,6 +246,7 @@ int main(void)
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
     // Welcome message.
+    NRF_LOG_INFO("FPU FFT example started.");
     NRF_LOG_RAW_INFO("This is FPU usage example with FFT calculation and drawing.\r\n");
 
 #ifdef FPU_INTERRUPT_MODE
