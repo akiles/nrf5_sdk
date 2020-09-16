@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: pstorage_module_param_t Struct Reference</title>
+<title>nRF51 SDK - S210 SoftDevice: pin_transition_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,45 +106,36 @@ $(document).ready(function(){initNavTree('a00065.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">pstorage_module_param_t Struct Reference<div class="ingroups"><a class="el" href="a00215.html">Persistent Memory Interface Data Types</a></div></div>  </div>
+<div class="title">pin_transition_t Struct Reference<div class="ingroups"><a class="el" href="a00225.html">Button Handler</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Pin transition direction struct.  
+ <a href="a00065.html#details">More...</a></p>
+
+<p><code>#include &lt;app_button.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a3495db72b9ff587f0c9ea0ab38d5e9f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00215.html#gaac1d429f24eb2850da6d8f8773a14c47">pstorage_ntf_cb_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a3495db72b9ff587f0c9ea0ab38d5e9f8">cb</a></td></tr>
-<tr class="separator:a3495db72b9ff587f0c9ea0ab38d5e9f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95b58714824957d4c930a5da78d7109a"><td class="memItemLeft" align="right" valign="top">pstorage_size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a95b58714824957d4c930a5da78d7109a">block_size</a></td></tr>
-<tr class="separator:a95b58714824957d4c930a5da78d7109a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7bb96f4e9d1b68cb94fd5c75570e5a99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7bb96f4e9d1b68cb94fd5c75570e5a99"></a>
-pstorage_size_t&#160;</td><td class="memItemRight" valign="bottom"><b>block_count</b></td></tr>
-<tr class="separator:a7bb96f4e9d1b68cb94fd5c75570e5a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5b08a4f0525b94727edf87267f57c0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5b08a4f0525b94727edf87267f57c0b"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>high_to_low</b></td></tr>
+<tr class="separator:ae5b08a4f0525b94727edf87267f57c0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab74530adb87a0c8728839d2bbdc0f8f0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ab74530adb87a0c8728839d2bbdc0f8f0">low_to_high</a></td></tr>
+<tr class="separator:ab74530adb87a0c8728839d2bbdc0f8f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a95b58714824957d4c930a5da78d7109a"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Pin transition direction struct. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="ab74530adb87a0c8728839d2bbdc0f8f0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">pstorage_size_t pstorage_module_param_t::block_size</td>
+          <td class="memname">uint32_t pin_transition_t::low_to_high</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">     Desired block size for persistent memory storage, for example, if a module has a table with 10 entries, each entry is size 64 bytes,
-</pre><p> it can request 10 blocks with block size 64 bytes. On the other hand, the module can also request one block of size 640 based on how it would like to access or alter memory in persistent memory. First option is preferred when single entries that need to be updated often when having no impact on the other entries. While second option is preferred when entries of table are not changed on individually but have common point of loading and storing data. </p>
-
-</div>
-</div>
-<a class="anchor" id="a3495db72b9ff587f0c9ea0ab38d5e9f8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00215.html#gaac1d429f24eb2850da6d8f8773a14c47">pstorage_ntf_cb_t</a> pstorage_module_param_t::cb</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Callback registered with the module to be notified of any error occurring in persistent memory management </p>
+<p>Pin went from high to low </p>
 
 </div>
 </div>
@@ -153,8 +144,8 @@ pstorage_size_t&#160;</td><td class="memItemRight" valign="bottom"><b>block_coun
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00065.html">pstorage_module_param_t</a></li>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:29 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00065.html">pin_transition_t</a></li>
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:41 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,8 +1,11 @@
 var a00785 =
 [
-    [ "dm_application_instance_set", "a00785.html#gad3a18ce58b434ecdcf78c9071163df1d", null ],
-    [ "dm_distributed_keys_get", "a00785.html#ga1d155d67c9463c911a2a04b81101d919", null ],
-    [ "dm_handle_initialize", "a00785.html#gaade48957b4fee06f203158a283b69b89", null ],
-    [ "dm_peer_addr_get", "a00785.html#ga550783ada0aa766e7f0c96ba003ffda2", null ],
-    [ "dm_peer_addr_set", "a00785.html#ga191fbd9074dab75ced9706282f6c9dff", null ]
+    [ "dm_application_context_delete", "a00785.html#ga04c7d505fd5c13d07b7d190697900245", null ],
+    [ "dm_application_context_get", "a00785.html#ga7d8beb6bd04dda25aa00866a983a6540", null ],
+    [ "dm_application_context_set", "a00785.html#ga8982a146ca6448b2d0a9fa5dfed12173", null ],
+    [ "dm_device_delete", "a00785.html#ga7b7436baf8238af38c72cb1f8f10f63a", null ],
+    [ "dm_device_delete_all", "a00785.html#gac3065f03be4655962edb309e4bdf2a32", null ],
+    [ "dm_service_context_delete", "a00785.html#gac9f62e454e48d9ce92b96a16a9abaf83", null ],
+    [ "dm_service_context_get", "a00785.html#ga21fdfce3233bcf71357f5ccb36e42a23", null ],
+    [ "dm_service_context_set", "a00785.html#ga7bad92174e8a940617c77917bb76a50a", null ]
 ];

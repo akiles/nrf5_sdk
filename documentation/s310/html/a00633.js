@@ -1,6 +1,7 @@
 var a00633 =
 [
-    [ "BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST", "a00633.html#gaa65c2f6a6eba52654e2b6febc5c3ba8c", null ],
-    [ "BLE_ERROR_GAP_INVALID_BLE_ADDR", "a00633.html#ga3eda228736d6c1dcbcf9aba2bd059068", null ],
-    [ "BLE_ERROR_GAP_UUID_LIST_MISMATCH", "a00633.html#ga996146eb2c3b244f044b5cd121f8b826", null ]
+    [ "NRF_GAP_ERR_BASE", "a00633.html#ga29249baa158d723505c601121d003034", null ],
+    [ "NRF_GATTC_ERR_BASE", "a00633.html#ga200400dc8ad79918acee9cd038336165", null ],
+    [ "NRF_GATTS_ERR_BASE", "a00633.html#ga7bc503f781e56a86cdd044d6043629b8", null ],
+    [ "NRF_L2CAP_ERR_BASE", "a00633.html#ga82756b5d44b6b5757c3968513b4928ac", null ]
 ];

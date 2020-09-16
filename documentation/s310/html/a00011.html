@@ -100,8 +100,8 @@ $(document).ready(function(){initNavTree('a00011.html','');});
 <div class="title">Button handling library </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The button handler uses the <a class="el" href="a00607.html">GPIOTE Handler</a> to detect that a button has been pushed. To handle debouncing, it will start a timer in the GPIOTE event handler. The button will only be reported as pushed if the corresponding pin is still active when the timer expires. If there is a new GPIOTE event while the timer is running, the timer is restarted. Use the USE_SCHEDULER parameter of the <a class="el" href="a00604.html#ga6b3e6aee33c6befc718d84f2dcc02fd5" title="Macro for initializing the Button Handler module.">APP_BUTTON_INIT()</a> macro to select if the <a class="el" href="a00612.html">Scheduler</a> is to be used or not.</p>
-<p>The app_button module uses the app_timer module. The user must ensure that the queue in app_timer is large enough to hold the <a class="el" href="a00613.html#gad40fbb2a6a9e5bf7d00f838763f5514c" title="Function for stopping the specified timer.">app_timer_stop()</a> / <a class="el" href="a00613.html#ga03fb5f5fa85d16289db0d3c15bb0f24d" title="Function for starting a timer.">app_timer_start()</a> operations which will be executed on each event from GPIOTE module (2 operations), as well as other app_timer operations queued simultaneously in the application.</p>
+<div class="textblock"><p>The button handler uses the <a class="el" href="a00608.html">GPIOTE Handler</a> to detect that a button has been pushed. To handle debouncing, it will start a timer in the GPIOTE event handler. The button will only be reported as pushed if the corresponding pin is still active when the timer expires. If there is a new GPIOTE event while the timer is running, the timer is restarted. Use the USE_SCHEDULER parameter of the <a class="el" href="a00605.html#ga6b3e6aee33c6befc718d84f2dcc02fd5" title="Macro for initializing the Button Handler module.">APP_BUTTON_INIT()</a> macro to select if the <a class="el" href="a00613.html">Scheduler</a> is to be used or not.</p>
+<p>The app_button module uses the app_timer module. The user must ensure that the queue in app_timer is large enough to hold the <a class="el" href="a00614.html#gad40fbb2a6a9e5bf7d00f838763f5514c" title="Function for stopping the specified timer.">app_timer_stop()</a> / <a class="el" href="a00614.html#ga03fb5f5fa85d16289db0d3c15bb0f24d" title="Function for starting a timer.">app_timer_start()</a> operations which will be executed on each event from GPIOTE module (2 operations), as well as other app_timer operations queued simultaneously in the application.</p>
 <p>Even if the scheduler is not used, app_button.h will include app_scheduler.h, so when compiling, app_scheduler.h must be available in one of the compiler include paths. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
@@ -109,7 +109,7 @@ $(document).ready(function(){initNavTree('a00011.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:32 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:44 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

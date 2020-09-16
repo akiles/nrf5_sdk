@@ -19,8 +19,7 @@
 #include "nrf51_bitfields.h"
 #include "app_util.h"
 #include "nrf_sdm.h"
-//#include "app_error.h"
-#include "error_handler.h"
+#include "app_error.h"
 #include "nrf_error.h"
 #include "app_timer.h"
 #include "nordic_common.h"
@@ -217,7 +216,10 @@ uint32_t dfu_start_pkt_handle(dfu_update_packet_t * p_packet)
         return NRF_ERROR_NOT_SUPPORTED;
     }
 
-    m_image_size = m_start_packet.sd_image_size + m_start_packet.bl_image_size + m_start_packet.app_image_size;
+    m_image_size =  m_start_packet.sd_image_size    +
+                    m_start_packet.bl_image_size    +
+                    m_start_packet.app_image_size   +
+                    m_start_packet.info_bytes_size;
 
     if (IS_UPDATING_BL() && m_start_packet.bl_image_size > DFU_BL_IMAGE_MAX_SIZE)//lint !e655 suppress Lint Warning 655: Bit-wise operations
     {
@@ -233,7 +235,7 @@ uint32_t dfu_start_pkt_handle(dfu_update_packet_t * p_packet)
     }
 
     // If new softdevice size is greater than the code region 1 boundary
-    if (IS_UPDATING_SD() && m_start_packet.sd_image_size > (CODE_REGION_1_START - SOFTDEVICE_REGION_START)) /*lint !e655 "bit-wise operation uses (compatible) enum's" */
+    if (IS_UPDATING_SD() && m_start_packet.sd_image_size > (CODE_REGION_1_START - SOFTDEVICE_REGION_START))//lint !e655 suppress Lint Warning 655: Bit-wise operations
     {
         //calculate storage starting offset.
         uint32_t storage_starting_offset;
@@ -412,10 +414,9 @@ uint32_t dfu_init_pkt_handle(dfu_update_packet_t * p_packet)
     return err_code;
 }
 
-uint32_t dfu_image_validate(uint16_t crc_seed, uint16_t crc_expected)
+uint32_t dfu_image_validate(uint16_t crc_seed)
 {
     uint32_t err_code;
-    uint16_t crc_calculate;
 
     switch (m_dfu_state)
     {
@@ -435,8 +436,7 @@ uint32_t dfu_image_validate(uint16_t crc_seed, uint16_t crc_expected)
                 err_code = dfu_timer_restart();
                 if (err_code == NRF_SUCCESS)
                 {
-                    crc_calculate = crc_crc16_update(crc_seed, (uint32_t*)dfu_storage_start_address_get(), m_image_size);
-                    if(crc_calculate == crc_expected)
+                    if(crc_crc16_update(crc_seed, (uint32_t*)dfu_storage_start_address_get(), m_image_size) == 0)
                     {
                         m_dfu_state = DFU_STATE_WAIT_4_ACTIVATE;
                         err_code = NRF_SUCCESS;
@@ -445,7 +445,6 @@ uint32_t dfu_image_validate(uint16_t crc_seed, uint16_t crc_expected)
                     {
                         err_code = NRF_ERROR_INTERNAL;
                     }
-
                 }
             }
             break;

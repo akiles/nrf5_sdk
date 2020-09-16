@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: FIFO implementation</title>
+<title>nRF51 SDK - S210 SoftDevice: Button Handler</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,176 +98,278 @@ $(document).ready(function(){initNavTree('a00225.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">FIFO implementation<div class="ingroups"><a class="el" href="a00265.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">Button Handler<div class="ingroups"><a class="el" href="a00267.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>FIFO implementation.  
+<p>Buttons handling module.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html">app_fifo_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the information about which memory is allocated for the buffer and its size. This needs to be initialized by <a class="el" href="a00225.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init()</a> before use.  <a href="a00052.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html">app_button_cfg_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Button configuration structure.  <a href="a00052.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html">pin_transition_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pin transition direction struct.  <a href="a00065.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga75d0548e653ad66f00eccf977ee6810a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#ga75d0548e653ad66f00eccf977ee6810a">APP_BUTTON_SCHED_EVT_SIZE</a>&#160;&#160;&#160;sizeof(app_button_event_t)</td></tr>
+<tr class="separator:ga75d0548e653ad66f00eccf977ee6810a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga06c8e0c7a172e83379f8217b7d934889"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#ga06c8e0c7a172e83379f8217b7d934889">APP_BUTTON_PUSH</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:ga06c8e0c7a172e83379f8217b7d934889"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafce94a5fd0ff676c5be4431d9a463d10"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#gafce94a5fd0ff676c5be4431d9a463d10">APP_BUTTON_RELEASE</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:gafce94a5fd0ff676c5be4431d9a463d10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48cbcd4efb138f79b93227d015da599f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#ga48cbcd4efb138f79b93227d015da599f">APP_BUTTON_ACTIVE_HIGH</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:ga48cbcd4efb138f79b93227d015da599f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf0fe3f9c01f8f44ff89f082b5f3e068"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#gadf0fe3f9c01f8f44ff89f082b5f3e068">APP_BUTTON_ACTIVE_LOW</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:gadf0fe3f9c01f8f44ff89f082b5f3e068"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b3e6aee33c6befc718d84f2dcc02fd5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#ga6b3e6aee33c6befc718d84f2dcc02fd5">APP_BUTTON_INIT</a>(BUTTONS, BUTTON_COUNT, DETECTION_DELAY, USE_SCHEDULER)</td></tr>
+<tr class="memdesc:ga6b3e6aee33c6befc718d84f2dcc02fd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for initializing the Button Handler module.  <a href="#ga6b3e6aee33c6befc718d84f2dcc02fd5">More...</a><br/></td></tr>
+<tr class="separator:ga6b3e6aee33c6befc718d84f2dcc02fd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga5c09451dc7c257a9d3846268e110cf8d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5c09451dc7c257a9d3846268e110cf8d"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#ga5c09451dc7c257a9d3846268e110cf8d">app_button_handler_t</a> )(uint8_t pin_no, uint8_t button_action)</td></tr>
+<tr class="memdesc:ga5c09451dc7c257a9d3846268e110cf8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Button event handler type. <br/></td></tr>
+<tr class="separator:ga5c09451dc7c257a9d3846268e110cf8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4a0e0ddde81209333217e558ebe0d91"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa4a0e0ddde81209333217e558ebe0d91"></a>
+typedef uint32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#gaa4a0e0ddde81209333217e558ebe0d91">app_button_evt_schedule_func_t</a> )(<a class="el" href="a00225.html#ga5c09451dc7c257a9d3846268e110cf8d">app_button_handler_t</a> button_handler, uint8_t pin_no, uint8_t button_action)</td></tr>
+<tr class="memdesc:gaa4a0e0ddde81209333217e558ebe0d91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of function for passing events from the Button Handler module to the scheduler. <br/></td></tr>
+<tr class="separator:gaa4a0e0ddde81209333217e558ebe0d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gafc2ba3545e60f0134689fac2aa87f493"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#gafc2ba3545e60f0134689fac2aa87f493">app_fifo_init</a> (<a class="el" href="a00052.html">app_fifo_t</a> *p_fifo, uint8_t *p_buf, uint16_t buf_size)</td></tr>
-<tr class="memdesc:gafc2ba3545e60f0134689fac2aa87f493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the FIFO.  <a href="#gafc2ba3545e60f0134689fac2aa87f493">More...</a><br/></td></tr>
-<tr class="separator:gafc2ba3545e60f0134689fac2aa87f493"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">app_fifo_put</a> (<a class="el" href="a00052.html">app_fifo_t</a> *p_fifo, uint8_t byte)</td></tr>
-<tr class="memdesc:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for adding an element to the FIFO.  <a href="#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">More...</a><br/></td></tr>
-<tr class="separator:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab6292f78e91737ba0df83d6755e0abb9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a> (<a class="el" href="a00052.html">app_fifo_t</a> *p_fifo, uint8_t *p_byte)</td></tr>
-<tr class="memdesc:gab6292f78e91737ba0df83d6755e0abb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the next element from the FIFO.  <a href="#gab6292f78e91737ba0df83d6755e0abb9">More...</a><br/></td></tr>
-<tr class="separator:gab6292f78e91737ba0df83d6755e0abb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0944439787b55aafb3288a836efa3b9b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#ga0944439787b55aafb3288a836efa3b9b">app_fifo_flush</a> (<a class="el" href="a00052.html">app_fifo_t</a> *p_fifo)</td></tr>
-<tr class="memdesc:ga0944439787b55aafb3288a836efa3b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for flushing the FIFO.  <a href="#ga0944439787b55aafb3288a836efa3b9b">More...</a><br/></td></tr>
-<tr class="separator:ga0944439787b55aafb3288a836efa3b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf277d828259fc6b338959e89d0f87194"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#gaf277d828259fc6b338959e89d0f87194">app_button_init</a> (<a class="el" href="a00052.html">app_button_cfg_t</a> *p_buttons, uint8_t button_count, uint32_t detection_delay, <a class="el" href="a00225.html#gaa4a0e0ddde81209333217e558ebe0d91">app_button_evt_schedule_func_t</a> evt_schedule_func)</td></tr>
+<tr class="memdesc:gaf277d828259fc6b338959e89d0f87194"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Buttons.  <a href="#gaf277d828259fc6b338959e89d0f87194">More...</a><br/></td></tr>
+<tr class="separator:gaf277d828259fc6b338959e89d0f87194"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab498b436a38ebb03393e1129a6daffc9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#gab498b436a38ebb03393e1129a6daffc9">app_button_enable</a> (void)</td></tr>
+<tr class="memdesc:gab498b436a38ebb03393e1129a6daffc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for enabling button detection.  <a href="#gab498b436a38ebb03393e1129a6daffc9">More...</a><br/></td></tr>
+<tr class="separator:gab498b436a38ebb03393e1129a6daffc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga261a5deb026836858a61905db0e8ac90"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#ga261a5deb026836858a61905db0e8ac90">app_button_disable</a> (void)</td></tr>
+<tr class="memdesc:ga261a5deb026836858a61905db0e8ac90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for disabling button detection.  <a href="#ga261a5deb026836858a61905db0e8ac90">More...</a><br/></td></tr>
+<tr class="separator:ga261a5deb026836858a61905db0e8ac90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a7a1664fb906351ed582a95553c17a2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#ga6a7a1664fb906351ed582a95553c17a2">app_button_is_pushed</a> (uint8_t button_id, bool *p_is_pushed)</td></tr>
+<tr class="memdesc:ga6a7a1664fb906351ed582a95553c17a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if a button is currently being pushed.  <a href="#ga6a7a1664fb906351ed582a95553c17a2">More...</a><br/></td></tr>
+<tr class="separator:ga6a7a1664fb906351ed582a95553c17a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>FIFO implementation. </p>
+<p>Buttons handling module. </p>
+<p>The button handler uses the <a class="el" href="a00228.html">GPIOTE Handler</a> to detect that a button has been pushed. To handle debouncing, it will start a timer in the GPIOTE event handler. The button will only be reported as pushed if the corresponding pin is still active when the timer expires. If there is a new GPIOTE event while the timer is running, the timer is restarted. Use the USE_SCHEDULER parameter of the <a class="el" href="a00225.html#ga6b3e6aee33c6befc718d84f2dcc02fd5" title="Macro for initializing the Button Handler module.">APP_BUTTON_INIT()</a> macro to select if the <a class="el" href="a00233.html">Scheduler</a> is to be used or not.</p>
+<dl class="section note"><dt>Note</dt><dd>The app_button module uses the app_timer module. The user must ensure that the queue in app_timer is large enough to hold the <a class="el" href="a00234.html#gad40fbb2a6a9e5bf7d00f838763f5514c" title="Function for stopping the specified timer.">app_timer_stop()</a> / <a class="el" href="a00234.html#ga03fb5f5fa85d16289db0d3c15bb0f24d" title="Function for starting a timer.">app_timer_start()</a> operations which will be executed on each event from GPIOTE module (2 operations), as well as other app_timer operations queued simultaneously in the application.</dd>
+<dd>
+Even if the scheduler is not used, app_button.h will include app_scheduler.h, so when compiling, app_scheduler.h must be available in one of the compiler include paths. </dd></dl>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga48cbcd4efb138f79b93227d015da599f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_BUTTON_ACTIVE_HIGH&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates that a button is active high. </p>
+
+</div>
+</div>
+<a class="anchor" id="gadf0fe3f9c01f8f44ff89f082b5f3e068"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_BUTTON_ACTIVE_LOW&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates that a button is active low. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga6b3e6aee33c6befc718d84f2dcc02fd5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_BUTTON_INIT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">BUTTONS, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">BUTTON_COUNT, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">DETECTION_DELAY, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">USE_SCHEDULER&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                                                             \</div>
+<div class="line">    {                                                                                              \</div>
+<div class="line">        uint32_t ERR_CODE = <a class="code" href="a00225.html#gaf277d828259fc6b338959e89d0f87194" title="Function for initializing the Buttons.">app_button_init</a>((BUTTONS),                                             \</div>
+<div class="line">                                            (BUTTON_COUNT),                                        \</div>
+<div class="line">                                            (DETECTION_DELAY),                                     \</div>
+<div class="line">                                            (USE_SCHEDULER) ? app_button_evt_schedule : NULL);     \</div>
+<div class="line">        APP_ERROR_CHECK(ERR_CODE);                                                                 \</div>
+<div class="line">    } <span class="keywordflow">while</span> (0)</div>
+</div><!-- fragment -->
+<p>Macro for initializing the Button Handler module. </p>
+<p>It will initialize the specified pins as buttons, and configure the Button Handler module as a GPIOTE user (but it will not enable button detection). It will also connect the Button Handler module to the scheduler (if specified).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">BUTTONS</td><td>Array of buttons to be used (type <a class="el" href="a00052.html" title="Button configuration structure.">app_button_cfg_t</a>, must be static!). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">BUTTON_COUNT</td><td>Number of buttons. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">DETECTION_DELAY</td><td>Delay from a GPIOTE event until a button is reported as pushed. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">USE_SCHEDULER</td><td>TRUE if the application is using the event scheduler, FALSE otherwise. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga06c8e0c7a172e83379f8217b7d934889"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_BUTTON_PUSH&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates that a button is pushed. </p>
+
+</div>
+</div>
+<a class="anchor" id="gafce94a5fd0ff676c5be4431d9a463d10"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_BUTTON_RELEASE&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates that a button is released. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga75d0548e653ad66f00eccf977ee6810a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_BUTTON_SCHED_EVT_SIZE&#160;&#160;&#160;sizeof(app_button_event_t)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of button events being passed through the scheduler (is to be used for computing the maximum size of scheduler events). </p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga0944439787b55aafb3288a836efa3b9b"></a>
+<a class="anchor" id="ga261a5deb026836858a61905db0e8ac90"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t app_fifo_flush </td>
+          <td class="memname">uint32_t app_button_disable </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00052.html">app_fifo_t</a> *&#160;</td>
-          <td class="paramname"><em>p_fifo</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for flushing the FIFO. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO.</td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Function for disabling button detection. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If the FIFO flushed successfully. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>GPIOTE has to many users. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Button or GPIOTE not initialized. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Button detection successfully enabled. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gab6292f78e91737ba0df83d6755e0abb9"></a>
+<a class="anchor" id="gab498b436a38ebb03393e1129a6daffc9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t app_fifo_get </td>
+          <td class="memname">uint32_t app_button_enable </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00052.html">app_fifo_t</a> *&#160;</td>
-          <td class="paramname"><em>p_fifo</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_byte</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for getting the next element from the FIFO. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_byte</td><td>Byte fetched from the FIFO.</td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Function for enabling button detection. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If an element was returned. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NOT_FOUND</td><td>If there is no more elements in the queue. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>GPIOTE has to many users. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Button or GPIOTE not initialized. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Button detection successfully enabled. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gafc2ba3545e60f0134689fac2aa87f493"></a>
+<a class="anchor" id="gaf277d828259fc6b338959e89d0f87194"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t app_fifo_init </td>
+          <td class="memname">uint32_t app_button_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00052.html">app_fifo_t</a> *&#160;</td>
-          <td class="paramname"><em>p_fifo</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>buf_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for initializing the FIFO. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_fifo</td><td>FIFO object. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>FIFO buffer for storing data. The buffer size has to be a power of two. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buf_size</td><td>Size of the FIFO buffer provided, has to be a power of 2.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If initialization was successful. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If a NULL pointer is provided as buffer. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>If size of buffer provided is not a power of two. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga76ac40c5174cc17b8b6ebd8d86cf0f0e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t app_fifo_put </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00052.html">app_fifo_t</a> *&#160;</td>
-          <td class="paramname"><em>p_fifo</em>, </td>
+          <td class="paramtype"><a class="el" href="a00052.html">app_button_cfg_t</a> *&#160;</td>
+          <td class="paramname"><em>p_buttons</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>byte</em>&#160;</td>
+          <td class="paramname"><em>button_count</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>detection_delay</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00225.html#gaa4a0e0ddde81209333217e558ebe0d91">app_button_evt_schedule_func_t</a>&#160;</td>
+          <td class="paramname"><em>evt_schedule_func</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -277,18 +379,60 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for adding an element to the FIFO. </p>
+<p>Function for initializing the Buttons. </p>
+<p>This function will initialize the specified pins as buttons, and configure the Button Handler module as a GPIOTE user (but it will not enable button detection).</p>
+<dl class="section note"><dt>Note</dt><dd>Normally initialization should be done using the <a class="el" href="a00225.html#ga6b3e6aee33c6befc718d84f2dcc02fd5" title="Macro for initializing the Button Handler module.">APP_BUTTON_INIT()</a> macro, as that will take care of connecting the Buttons module to the scheduler (if specified).</dd>
+<dd>
+<a class="el" href="a00225.html#gab498b436a38ebb03393e1129a6daffc9" title="Function for enabling button detection.">app_button_enable()</a> function must be called in order to enable the button detection.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">byte</td><td>Data byte to add to the FIFO.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buttons</td><td>Array of buttons to be used (NOTE: Must be static!). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">button_count</td><td>Number of buttons. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">detection_delay</td><td>Delay from a GPIOTE event until a button is reported as pushed. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">evt_schedule_func</td><td>Function for passing button events to the scheduler. Point to app_button_evt_schedule() to connect to the scheduler. Set to NULL to make the Buttons module call the event handler directly from the delayed button push detection timeout handler.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6a7a1664fb906351ed582a95553c17a2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t app_button_is_pushed </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>button_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>p_is_pushed</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for checking if a button is currently being pushed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">button_id</td><td>Button index (in the <a class="el" href="a00052.html" title="Button configuration structure.">app_button_cfg_t</a> array given to app_button_init) to be checked. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_is_pushed</td><td>Button state.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If an element has been successfully added to the FIFO. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>If the FIFO is full. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>State successfully read. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Invalid button index. </td></tr>
   </table>
   </dd>
 </dl>
@@ -300,7 +444,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:29 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:41 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

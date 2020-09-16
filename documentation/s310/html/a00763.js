@@ -1,46 +1,114 @@
 var a00763 =
 [
-    [ "ble_hts_evt_t", "a00249.html", [
-      [ "evt_type", "a00249.html#afe0fd1c3cee451270df1d333c1605837", null ]
+    [ "ble_hids_char_id_t", "a00232.html", [
+      [ "rep_index", "a00232.html#a06b63ec45cda32c75e842421f1235063", null ],
+      [ "rep_type", "a00232.html#affea5bdaeda61718d00cf34afa060f20", null ],
+      [ "uuid", "a00232.html#a47c01b1e08f6757e61e2dd38dcb67044", null ]
     ] ],
-    [ "ieee_float32_t", "a00315.html", [
-      [ "exponent", "a00315.html#ad2b0d21fa7152a4afd8d98ec81bbe15a", null ],
-      [ "mantissa", "a00315.html#af54051e1c850e7ca43fc5e7b49c91261", null ]
+    [ "ble_hids_evt_t", "a00233.html", [
+      [ "char_auth_read", "a00233.html#a52453afb42d527bc45516dc3f2956263", null ],
+      [ "char_id", "a00233.html#a778ecea962888dfc1e026fc52526a9a4", null ],
+      [ "char_write", "a00233.html#acb0dff54d056df773cad96ecfb415bce", null ],
+      [ "data", "a00233.html#a8c305e6a62b2c26934d5be6e84dec0f5", null ],
+      [ "evt_type", "a00233.html#a51d0ccfb2582557e1863bb12d77e71dc", null ],
+      [ "len", "a00233.html#ae218ffb7a01687ebe2557a2ab2d48bba", null ],
+      [ "notification", "a00233.html#a58294e1cb350129aeec706402e8fcc0a", null ],
+      [ "offset", "a00233.html#ab8048550dc2672f019c4e6278977efbc", null ],
+      [ "p_ble_evt", "a00233.html#a43346ee583a9d322a18716f188630a89", null ],
+      [ "params", "a00233.html#a2ac2fca86fa63145eb52d2f3840bb8a3", null ]
     ] ],
-    [ "ble_hts_init_t", "a00250.html", [
-      [ "evt_handler", "a00250.html#ac6fbae8371e9336d3acb46b8903a8947", null ],
-      [ "hts_meas_attr_md", "a00250.html#a5c4a4bc737442da34f2b9cfd367bb5e8", null ],
-      [ "hts_temp_type_attr_md", "a00250.html#a1f216c81224e94f40db0d5b4aaa1898b", null ],
-      [ "temp_type", "a00250.html#a7d233be4574d7bdd2f28c9afa8d0efc2", null ],
-      [ "temp_type_as_characteristic", "a00250.html#a6ac11fedc2f4a022e482c6342880e30f", null ]
+    [ "ble_hids_hid_information_t", "a00235.html", [
+      [ "b_country_code", "a00235.html#aadd0326cc45c31ea9e16b2f4cf0000fd", null ],
+      [ "bcd_hid", "a00235.html#a077bfa68d00dff20a7497f8f7936ae79", null ],
+      [ "flags", "a00235.html#acec5c1f0cd643c04bce7a9542e1b7444", null ],
+      [ "security_mode", "a00235.html#ad011fc0114c033fc712bce4491101ac1", null ]
     ] ],
-    [ "ble_hts_s", "a00252.html", [
-      [ "conn_handle", "a00252.html#a71533de99d438bb326730e08da1d402a", null ],
-      [ "evt_handler", "a00252.html#ab0392a7012b01ace2dad863bc8f573cc", null ],
-      [ "meas_handles", "a00252.html#a6e3f96502d28802be863f09b2839817d", null ],
-      [ "service_handle", "a00252.html#ac62f9c0c453beef41d04c488c5d19ecc", null ],
-      [ "temp_type", "a00252.html#ad8e572095f9a6cecdf4bcde49c527aab", null ],
-      [ "temp_type_handles", "a00252.html#a514df962e0856554cd6eee1e2b11bf26", null ]
+    [ "ble_hids_inp_rep_init_t", "a00237.html", [
+      [ "max_len", "a00237.html#a656fc246bd9f18026083e3efb640052e", null ],
+      [ "read_resp", "a00237.html#a49208f982abf135a1f8d5c76ee893995", null ],
+      [ "rep_ref", "a00237.html#aeb77c0bc0738fbb0be766e574ac173b5", null ],
+      [ "security_mode", "a00237.html#a757afd0e411e7e67224c94fefcf26bab", null ]
     ] ],
-    [ "ble_hts_meas_s", "a00251.html", [
-      [ "temp_in_celcius", "a00251.html#a4065a89fde57ebf2effce6a1401e38c4", null ],
-      [ "temp_in_fahr", "a00251.html#a0120700a8a6185ce21e1a05391fbc706", null ],
-      [ "temp_in_fahr_units", "a00251.html#a16e05739a1ac3b03a2b4dc683bc1eacd", null ],
-      [ "temp_type", "a00251.html#a12b9d8fddee8e461bfcedb3489bd5f92", null ],
-      [ "temp_type_present", "a00251.html#a10dadb1129dd55a6d597e4e08764d7ff", null ],
-      [ "time_stamp", "a00251.html#aab4240703a233a4bd2cd1a7b3a5997c0", null ],
-      [ "time_stamp_present", "a00251.html#a21a7a430b8f85908438c9bd1fc2e0dce", null ]
+    [ "ble_hids_outp_rep_init_t", "a00238.html", [
+      [ "max_len", "a00238.html#ac0cfa5494f231413123e5f9b18356591", null ],
+      [ "read_resp", "a00238.html#a9928aad36b7acb9a2d9202384b8d058e", null ],
+      [ "rep_ref", "a00238.html#a75349cbfb49b717b2fda5f70b2622775", null ],
+      [ "security_mode", "a00238.html#ac658edb5d68d2b14843f1d8274a48f60", null ]
     ] ],
-    [ "ble_hts_evt_handler_t", "a00763.html#ga78edebed11dc6c480b65706199500862", null ],
-    [ "ble_hts_meas_t", "a00763.html#ga2e809e8344a249203c4e86abc19c7c1b", null ],
-    [ "ble_hts_t", "a00763.html#ga15a0b1f92fe74fb20da63eb7dd0efed8", null ],
-    [ "ble_hts_evt_type_t", "a00763.html#ga9de0c7527af87daac3cf198d8708cc27", [
-      [ "BLE_HTS_EVT_INDICATION_ENABLED", "a00763.html#gga9de0c7527af87daac3cf198d8708cc27a0c68bf5f24a76260b8d60d6b5d992245", null ],
-      [ "BLE_HTS_EVT_INDICATION_DISABLED", "a00763.html#gga9de0c7527af87daac3cf198d8708cc27a85a307874a0234f6150db9bb938cdad0", null ],
-      [ "BLE_HTS_EVT_INDICATION_CONFIRMED", "a00763.html#gga9de0c7527af87daac3cf198d8708cc27a3973d850e7c89fb22b39ae12393bb278", null ]
+    [ "ble_hids_feature_rep_init_t", "a00234.html", [
+      [ "max_len", "a00234.html#a021ad724a66d2f8e54c1bdff8def4b4c", null ],
+      [ "read_resp", "a00234.html#a9ed64286300a70a9d26f1839f2396221", null ],
+      [ "rep_ref", "a00234.html#af12bb312c4056f52bc2e83ff0ef66233", null ],
+      [ "security_mode", "a00234.html#a88082cfc1a5360f43e333ea838257ccb", null ]
     ] ],
-    [ "ble_hts_init", "a00763.html#ga734d073032acce7c7f59bf9afc428fb7", null ],
-    [ "ble_hts_is_indication_enabled", "a00763.html#gaac026b3fb1fff6771f554e913a76e80e", null ],
-    [ "ble_hts_measurement_send", "a00763.html#ga46f07a190d194f273fbe609936bde3e2", null ],
-    [ "ble_hts_on_ble_evt", "a00763.html#ga1d50a1758227869205ce213a564b436c", null ]
+    [ "ble_hids_rep_map_init_t", "a00240.html", [
+      [ "data_len", "a00240.html#ad37a58093ba29da8205f825d524fde10", null ],
+      [ "ext_rep_ref_num", "a00240.html#a9dfff543d60774b7fe5bd69f23547e86", null ],
+      [ "p_data", "a00240.html#ac68f34bc812fb78bd16a11acf3931297", null ],
+      [ "p_ext_rep_ref", "a00240.html#a460e7c6bc062f9bd31fd72b4b696c2aa", null ],
+      [ "security_mode", "a00240.html#adcb39f07b266acfe8539c7ed9ed13532", null ]
+    ] ],
+    [ "ble_hids_rep_char_t", "a00239.html", [
+      [ "char_handles", "a00239.html#a3f137cc3f92bf439d93a8491e4314d5a", null ],
+      [ "ref_handle", "a00239.html#a0209468bba2c298192f4500a652dd6d1", null ]
+    ] ],
+    [ "ble_hids_init_t", "a00236.html", [
+      [ "error_handler", "a00236.html#a348bc87e17753e1606fa2f69776fc812", null ],
+      [ "evt_handler", "a00236.html#ac556d1dd9fc887e0a4b9f09d07c55334", null ],
+      [ "feature_rep_count", "a00236.html#ad300d14d2242b2d62fce14bb6f5b22d9", null ],
+      [ "hid_information", "a00236.html#abd10367fccd9ed2769f53fd48a53edae", null ],
+      [ "included_services_count", "a00236.html#aa5d9b0a338623e121645bd5f1c95b447", null ],
+      [ "inp_rep_count", "a00236.html#a49bc68d03c380079324253f2814b0d8b", null ],
+      [ "is_kb", "a00236.html#aa6c5ebde3de8b7e2ce3a875fe5e4677e", null ],
+      [ "is_mouse", "a00236.html#ace2e84fb6d3caeb8005c30019ba5da01", null ],
+      [ "outp_rep_count", "a00236.html#aaef06614621108b1cbcf899dd049ca1f", null ],
+      [ "p_feature_rep_array", "a00236.html#abb18c2ab0ca4201cdbc4bc24892ffba0", null ],
+      [ "p_included_services_array", "a00236.html#a9e5826891cda3e96702e53cfb382c419", null ],
+      [ "p_inp_rep_array", "a00236.html#aabed7d34793cf270bb665237975c0e1a", null ],
+      [ "p_outp_rep_array", "a00236.html#ab2e8ef802d1179e3adf99a8a985916a3", null ],
+      [ "rep_map", "a00236.html#ab6c5e4e298cf612f986069d0b76d6fca", null ],
+      [ "security_mode_boot_kb_inp_rep", "a00236.html#a2946d2c8678418813ce84d3a2d59e0b2", null ],
+      [ "security_mode_boot_kb_outp_rep", "a00236.html#a2838fb8e4efceeb941245155f469fa0e", null ],
+      [ "security_mode_boot_mouse_inp_rep", "a00236.html#a082e9a087723dd62d352847296672302", null ],
+      [ "security_mode_ctrl_point", "a00236.html#a4113e6621315caa0b2a95e35d1863a33", null ],
+      [ "security_mode_protocol", "a00236.html#aa5933daad55ab978998cdcdf9757c0cf", null ]
+    ] ],
+    [ "ble_hids_s", "a00241.html", [
+      [ "boot_kb_inp_rep_handles", "a00241.html#aa31e87ba295f282b70a98222cc2d3fcc", null ],
+      [ "boot_kb_outp_rep_handles", "a00241.html#a8c8d5455ff6ec5854f5b0fe3e38f722c", null ],
+      [ "boot_mouse_inp_rep_handles", "a00241.html#a8b115742e76add897fb332cb77bf081a", null ],
+      [ "conn_handle", "a00241.html#aeca3d69373de621e4ca332bf6b5984bd", null ],
+      [ "error_handler", "a00241.html#aad5b627e9fa39362dc586d9f5a18b886", null ],
+      [ "evt_handler", "a00241.html#af14cb4fcfb90428bef5dde26f2dbbc8c", null ],
+      [ "feature_rep_array", "a00241.html#a4cdbd7dea57702309ba6fabda04b92b3", null ],
+      [ "feature_rep_count", "a00241.html#a3f1837c205c62ff0a2f5938467eb9116", null ],
+      [ "hid_control_point_handles", "a00241.html#a033e6876ba6f549ef2ba199c90ce3199", null ],
+      [ "hid_information_handles", "a00241.html#ad873bd754571a42ee367c2f85448efac", null ],
+      [ "inp_rep_array", "a00241.html#a0b2f9ea0ae58be58ff1b12bd72600ae9", null ],
+      [ "inp_rep_count", "a00241.html#a414d074d9bcf9405bbc9de8e404a8f11", null ],
+      [ "outp_rep_array", "a00241.html#a2b24228b1fd9372646dad4ef392a8fe7", null ],
+      [ "outp_rep_count", "a00241.html#aea5350a28091b83e3b992fb273b1829a", null ],
+      [ "protocol_mode_handles", "a00241.html#a4dda3a819ae7bc7b3b4b4f91db642f5c", null ],
+      [ "rep_map_ext_rep_ref_handle", "a00241.html#af98acb1f2b53d554f1652825e2e57661", null ],
+      [ "rep_map_handles", "a00241.html#a6121cb2fc16664059745f58549c95763", null ],
+      [ "service_handle", "a00241.html#a5e292df7c129413e237e917afbe8f2b5", null ]
+    ] ],
+    [ "ble_hids_evt_handler_t", "a00763.html#ga6311e0f98c60c31fd17b201162dc6427", null ],
+    [ "ble_hids_t", "a00763.html#ga7038aff3f095043b34e0a1403dd4ebcc", null ],
+    [ "ble_hids_evt_type_t", "a00763.html#ga621d899fc96687c922a0c65010bfc063", [
+      [ "BLE_HIDS_EVT_HOST_SUSP", "a00763.html#gga621d899fc96687c922a0c65010bfc063a2c517f6d4a3a253bd99b52cc67f34a8b", null ],
+      [ "BLE_HIDS_EVT_HOST_EXIT_SUSP", "a00763.html#gga621d899fc96687c922a0c65010bfc063a6971e1a18ee6ee48d3aa2e046debba6b", null ],
+      [ "BLE_HIDS_EVT_NOTIF_ENABLED", "a00763.html#gga621d899fc96687c922a0c65010bfc063a65b1e55409e2bed5a0871ec15dff4875", null ],
+      [ "BLE_HIDS_EVT_NOTIF_DISABLED", "a00763.html#gga621d899fc96687c922a0c65010bfc063a71b3af5b42cc730e6ad0752b3ad5c581", null ],
+      [ "BLE_HIDS_EVT_REP_CHAR_WRITE", "a00763.html#gga621d899fc96687c922a0c65010bfc063a0afaaafa6865acd5725096b6c2f6faa6", null ],
+      [ "BLE_HIDS_EVT_BOOT_MODE_ENTERED", "a00763.html#gga621d899fc96687c922a0c65010bfc063a4bc01306b5a8d12443926c1761d49a3a", null ],
+      [ "BLE_HIDS_EVT_REPORT_MODE_ENTERED", "a00763.html#gga621d899fc96687c922a0c65010bfc063a42845071ff0875e098bd16723d57d72f", null ],
+      [ "BLE_HIDS_EVT_REPORT_READ", "a00763.html#gga621d899fc96687c922a0c65010bfc063afd062cf35ee7e413359bf8ce168006b3", null ]
+    ] ],
+    [ "ble_hids_boot_kb_inp_rep_send", "a00763.html#ga30a528bd23ffe8ddea07d1960eb4c507", null ],
+    [ "ble_hids_boot_mouse_inp_rep_send", "a00763.html#gafc9114dc1527bfdd5a961c57c35357e3", null ],
+    [ "ble_hids_init", "a00763.html#gaf0b5ac4400c5c10be0a32554a6ffb68a", null ],
+    [ "ble_hids_inp_rep_send", "a00763.html#gaebf0c8621a14c15990aeac30750fb5bc", null ],
+    [ "ble_hids_on_ble_evt", "a00763.html#ga77b3d388f18004a1e730b4f2bbee5cac", null ],
+    [ "ble_hids_outp_rep_get", "a00763.html#ga66e5fb9cefb62e76a88f2cc229c55f70", null ]
 ];

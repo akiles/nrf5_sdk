@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: APIs to set up or read status of security on a link.</title>
+<title>nRF51 SDK - S310 SoftDevice: Device Module Set-up APIs</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,80 +99,101 @@ $(document).ready(function(){initNavTree('a00783.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">APIs to set up or read status of security on a link.<div class="ingroups"><a class="el" href="a00781.html">Device Module APIs</a></div></div>  </div>
+<div class="title">Device Module Set-up APIs<div class="ingroups"><a class="el" href="a00782.html">Device Module APIs</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This section describes APIs to set up Security. These APIs require that the peer is connected before the procedures can be requested.  
+<p>Initialization &amp; registration APIs that are pre-requisite for all other module procedures.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga4611de4e4f5cc68f0e3648e72e63283e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00618.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00783.html#ga4611de4e4f5cc68f0e3648e72e63283e">dm_security_setup_req</a> (<a class="el" href="a00780.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> *p_handle)</td></tr>
-<tr class="memdesc:ga4611de4e4f5cc68f0e3648e72e63283e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for requesting setting up security on a link.  <a href="#ga4611de4e4f5cc68f0e3648e72e63283e">More...</a><br/></td></tr>
-<tr class="separator:ga4611de4e4f5cc68f0e3648e72e63283e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3fe0567568f486ca25712c87522cb939"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00618.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00783.html#ga3fe0567568f486ca25712c87522cb939">dm_security_status_req</a> (<a class="el" href="a00780.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> const *p_handle, <a class="el" href="a00780.html#ga7404a8275ca6d38f7400881deb1e6b0e">dm_security_status_t</a> *p_status)</td></tr>
-<tr class="memdesc:ga3fe0567568f486ca25712c87522cb939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading the status of the security on a link.  <a href="#ga3fe0567568f486ca25712c87522cb939">More...</a><br/></td></tr>
-<tr class="separator:ga3fe0567568f486ca25712c87522cb939"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2c2148c29f11f7508ee4550ff3ac3db2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00618.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00783.html#ga2c2148c29f11f7508ee4550ff3ac3db2">dm_whitelist_create</a> (<a class="el" href="a00780.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a> const *p_handle, <a class="el" href="a00187.html">ble_gap_whitelist_t</a> *p_whitelist)</td></tr>
-<tr class="memdesc:ga2c2148c29f11f7508ee4550ff3ac3db2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for creating the whitelist.  <a href="#ga2c2148c29f11f7508ee4550ff3ac3db2">More...</a><br/></td></tr>
-<tr class="separator:ga2c2148c29f11f7508ee4550ff3ac3db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5103c3ed7af4bef6e8a76075d48d14f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00619.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00783.html#ga5103c3ed7af4bef6e8a76075d48d14f1">dm_init</a> (<a class="el" href="a00306.html">dm_init_param_t</a> const *p_init_param)</td></tr>
+<tr class="memdesc:ga5103c3ed7af4bef6e8a76075d48d14f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module Initialization Routine.  <a href="#ga5103c3ed7af4bef6e8a76075d48d14f1">More...</a><br/></td></tr>
+<tr class="separator:ga5103c3ed7af4bef6e8a76075d48d14f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62366984b8a674d9cadb48a8da2d3694"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00619.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00783.html#ga62366984b8a674d9cadb48a8da2d3694">dm_register</a> (<a class="el" href="a00781.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a> *p_appl_instance, <a class="el" href="a00300.html">dm_application_param_t</a> const *p_appl_param)</td></tr>
+<tr class="memdesc:ga62366984b8a674d9cadb48a8da2d3694"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering the application.  <a href="#ga62366984b8a674d9cadb48a8da2d3694">More...</a><br/></td></tr>
+<tr class="separator:ga62366984b8a674d9cadb48a8da2d3694"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga57e8fe96dc9be50938198204894eceeb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00783.html#ga57e8fe96dc9be50938198204894eceeb">dm_ble_evt_handler</a> (<a class="el" href="a00153.html">ble_evt_t</a> *p_ble_evt)</td></tr>
+<tr class="memdesc:ga57e8fe96dc9be50938198204894eceeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling BLE events.  <a href="#ga57e8fe96dc9be50938198204894eceeb">More...</a><br/></td></tr>
+<tr class="separator:ga57e8fe96dc9be50938198204894eceeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>This section describes APIs to set up Security. These APIs require that the peer is connected before the procedures can be requested. </p>
-<p>This group allows application to request security procedures or get the status of the security on a link. </p>
+<p>Initialization &amp; registration APIs that are pre-requisite for all other module procedures. </p>
+<p>This section describes the Module Initialization and Registration APIs needed to be set up by the application before device manager can start managing devices and device contexts for the application. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga4611de4e4f5cc68f0e3648e72e63283e"></a>
+<a class="anchor" id="ga57e8fe96dc9be50938198204894eceeb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00618.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> dm_security_setup_req </td>
+          <td class="memname">void dm_ble_evt_handler </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00780.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>p_handle</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00153.html">ble_evt_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_evt</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for requesting setting up security on a link. </p>
-<p>This API initiates security procedures with a peer device. </p>
-<dl class="section note"><dt>Note</dt><dd>For the GAP Central role, in case peer is not bonded, request to bond/pair is initiated. If it is bonded, the link is re-encrypted using the existing bond information. For the GAP peripheral role, a Slave security request is sent.</dd></dl>
-<p>If a pairing procedure is initiated successfully, application is notified of <a class="el" href="a00778.html#ga44bd57374aa0379152253c85b3f2f898">DM_EVT_SECURITY_SETUP_COMPLETE</a>. A result indicating success or failure is notified along with the event. In case the link is re-encrypted using existing bond information, <a class="el" href="a00778.html#gaf572cf54f12fa19eec469c0fff0c9a38">DM_EVT_LINK_SECURED</a> is notified to the application.</p>
+<p>Function for handling BLE events. </p>
+<p>BLE Event Handler for the module. This routine should be called from BLE stack event dispatcher for the module to work as expected.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Identifies the link on which security is desired.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>On success, else an error code indicating reason for failure. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the API is called without module initialization and/or application registration. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If p_handle is NULL. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>If the peer is not identified by the handle provided by the application or if the peer is not connected when this procedure is requested. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>BLE stack event being dispatched to the function. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3fe0567568f486ca25712c87522cb939"></a>
+<a class="anchor" id="ga5103c3ed7af4bef6e8a76075d48d14f1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00618.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> dm_security_status_req </td>
+          <td class="memname"><a class="el" href="a00619.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> dm_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00780.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> const *&#160;</td>
-          <td class="paramname"><em>p_handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00306.html">dm_init_param_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_init_param</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Module Initialization Routine. </p>
+<p>Function for initializing the module. Must called before any other APIs of the module are used.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_init_param</td><td>Initialization parameters.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>On success, else an error code indicating reason for failure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>It is mandatory that pstorage is initialized before initializing this module. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga62366984b8a674d9cadb48a8da2d3694"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00619.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> dm_register </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00781.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a> *&#160;</td>
+          <td class="paramname"><em>p_appl_instance</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00780.html#ga7404a8275ca6d38f7400881deb1e6b0e">dm_security_status_t</a> *&#160;</td>
-          <td class="paramname"><em>p_status</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00300.html">dm_application_param_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_appl_param</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -182,69 +203,25 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for reading the status of the security on a link. </p>
-<p>This API allows application to query status of security on a link.</p>
+<p>Function for registering the application. </p>
+<p>This routine is used by the application to register for asynchronous events with the device manager. During registration the application also indicates the services that it intends to support on this instance. It is possible to register multiple times with the device manager. At least one instance shall be registered with the device manager after the module has been initialized. Maximum number of application instances device manager can support is determined by DM_MAX_APPLICATIONS.</p>
+<p>All applications must be registered before initiating or accepting connections from the peer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Identifies the link on which security is desired. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_status</td><td>Pointer where security status is provided to the application. See <a class="el" href="a00780.html#ga7404a8275ca6d38f7400881deb1e6b0e">dm_security_status_t</a> for possible statuses that can be expected.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_appl_param</td><td>Application parameters. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_appl_instance</td><td>Application Instance Identifier in case registration is successful.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Or appropriate error code indicating reason for failure. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the API is called without module initialization and/or application registration. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If p_handle or p_status is NULL. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>If peer is not identified by the handle provided by the application or if peer is not connected when this procedure is requested. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2c2148c29f11f7508ee4550ff3ac3db2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00618.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> dm_whitelist_create </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00780.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a> const *&#160;</td>
-          <td class="paramname"><em>p_handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00187.html">ble_gap_whitelist_t</a> *&#160;</td>
-          <td class="paramname"><em>p_whitelist</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for creating the whitelist. </p>
-<p>This API allows application to create whitelist based on bonded peer devices in module data base.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Identifies the application requesting whitelist creation. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_whitelist</td><td>Pointer where created whitelist is provided to the application.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>'addr_count' and 'irk_count' fields of the structure should be populated with the maximum number of devices that the application wishes to request in the whitelist. If the number of bonded devices is less than requested, the fields are updated with that number of devices. If the number of devices are more than requested, the module will populate the list with devices in the order the bond was established with the peer devices. Also, if this routine is called when a connection exists with one or more peer devices, those connected devices are not added to the whitelist.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">NRF_SUCCESS</td><td>On success, else an error code indicating reason for failure. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the API is called without module initialization and/or application registration. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If p_handle or p_whitelist is NULL. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the API is called without module initialization. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>If module cannot support more applications.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Currently only one application instance is supported by the module. </dd></dl>
 
 </div>
 </div>
@@ -253,7 +230,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:37 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:49 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

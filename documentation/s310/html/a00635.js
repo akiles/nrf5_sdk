@@ -1,5 +1,6 @@
 var a00635 =
 [
-    [ "BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT", "a00635.html#gaa46bdf8feb1ae0b278754223cbde7085", null ],
-    [ "BLE_GAP_TIMEOUT_SRC_SECURITY_REQUEST", "a00635.html#ga21e86dcbf84f6bb4e21c809d5c1032e4", null ]
+    [ "BLE_GAP_ROLE_CENTRAL", "a00635.html#ga6b9440660a70146392d27c849431fadb", null ],
+    [ "BLE_GAP_ROLE_INVALID", "a00635.html#ga8164b32f4fd65997d0523cd7c5735166", null ],
+    [ "BLE_GAP_ROLE_PERIPH", "a00635.html#ga12e431897d73a3ce88fab8a4dbd90497", null ]
 ];

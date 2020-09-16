@@ -24,5 +24,6 @@ var a00944 =
       [ "DFU_STATE_RX_DATA_PKT", "a00944.html#gga187dfde3b0fa8047e6c97b2317bce21fa475955163ace358b9373c0b3a87ce4ec", null ],
       [ "DFU_STATE_VALIDATE", "a00944.html#gga187dfde3b0fa8047e6c97b2317bce21fae274655cddb628140c568df6bc5f70bf", null ],
       [ "DFU_STATE_WAIT_4_ACTIVATE", "a00944.html#gga187dfde3b0fa8047e6c97b2317bce21fa2a335037693bd40cff8c8787d3a11598", null ]
-    ] ]
+    ] ],
+    [ "m_data_received", "a00944.html#ga412c8a2eb860a4398bb6c5101ceba57d", null ]
 ];

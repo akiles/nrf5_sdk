@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Link Status Events</title>
+<title>nRF51 SDK - S310 SoftDevice: General Events</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,107 +99,47 @@ $(document).ready(function(){initNavTree('a00778.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Link Status Events<div class="ingroups"><a class="el" href="a00776.html">Device Manager Events</a></div></div>  </div>
+<div class="title">General Events<div class="ingroups"><a class="el" href="a00777.html">Device Manager Events</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Link Status Events.  
+<p>General or miscellaneous events.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga0f770455b2a8d43faf3e18570163a3d8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga0f770455b2a8d43faf3e18570163a3d8">DM_EVT_CONNECTION</a>&#160;&#160;&#160;0x11</td></tr>
-<tr class="separator:ga0f770455b2a8d43faf3e18570163a3d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7909152aa711df2ab18ddef129af9597"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga7909152aa711df2ab18ddef129af9597">DM_EVT_DISCONNECTION</a>&#160;&#160;&#160;0x12</td></tr>
-<tr class="separator:ga7909152aa711df2ab18ddef129af9597"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabeb39b4bbdb79dc5df6feffc467deae3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#gabeb39b4bbdb79dc5df6feffc467deae3">DM_EVT_SECURITY_SETUP</a>&#160;&#160;&#160;0x13</td></tr>
-<tr class="separator:gabeb39b4bbdb79dc5df6feffc467deae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44bd57374aa0379152253c85b3f2f898"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga44bd57374aa0379152253c85b3f2f898">DM_EVT_SECURITY_SETUP_COMPLETE</a>&#160;&#160;&#160;0x14</td></tr>
-<tr class="separator:ga44bd57374aa0379152253c85b3f2f898"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf572cf54f12fa19eec469c0fff0c9a38"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#gaf572cf54f12fa19eec469c0fff0c9a38">DM_EVT_LINK_SECURED</a>&#160;&#160;&#160;0x15</td></tr>
-<tr class="separator:gaf572cf54f12fa19eec469c0fff0c9a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf45fa4ad220ac72b86b2aa66aeb8979d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#gaf45fa4ad220ac72b86b2aa66aeb8979d">DM_EVT_SECURITY_SETUP_REFRESH</a>&#160;&#160;&#160;0x16</td></tr>
-<tr class="separator:gaf45fa4ad220ac72b86b2aa66aeb8979d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad038033184e5745ddd4fef4d52bfcea4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#gad038033184e5745ddd4fef4d52bfcea4">DM_EVT_RFU</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gad038033184e5745ddd4fef4d52bfcea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga14b9e8a4e4dd9d6223d414bf25762f7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga14b9e8a4e4dd9d6223d414bf25762f7b">DM_EVT_ERROR</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga14b9e8a4e4dd9d6223d414bf25762f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Link Status Events. </p>
-<p>This category of events notify the application of the link status. Event result associated with the event is provided along with the event in the callback to provide more details of whether a procedure succeeded or failed and assist the application in decision making of how to proceed. For example if a DM_DEVICE_CONNECT_IND is indicated with NRF_SUCCESS result, the application may want to proceed with discovering and association with service of the peer. However, if indicated with a failure result, the application may want to take an alternate action such as reattempting to connect or go into a sleep mode. </p>
+<p>General or miscellaneous events. </p>
+<p>This category of events are general events not pertaining to a peer or context. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga0f770455b2a8d43faf3e18570163a3d8"></a>
+<a class="anchor" id="ga14b9e8a4e4dd9d6223d414bf25762f7b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_CONNECTION&#160;&#160;&#160;0x11</td>
+          <td class="memname">#define DM_EVT_ERROR&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicates that link with the peer is established. </p>
+<p>Device Manager Event Error. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga7909152aa711df2ab18ddef129af9597"></a>
+<a class="anchor" id="gad038033184e5745ddd4fef4d52bfcea4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_DISCONNECTION&#160;&#160;&#160;0x12</td>
+          <td class="memname">#define DM_EVT_RFU&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicates that link with peer is torn down. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaf572cf54f12fa19eec469c0fff0c9a38"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_LINK_SECURED&#160;&#160;&#160;0x15</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates that link with the peer is secured. For bonded devices, subsequent reconnections with bonded peer will result only in this event when the link is secured and setup procedures will not occur unless the bonding information is either lost or deleted on either or both sides. </p>
-
-</div>
-</div>
-<a class="anchor" id="gabeb39b4bbdb79dc5df6feffc467deae3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_SECURITY_SETUP&#160;&#160;&#160;0x13</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Security procedure for link started indication </p>
-
-</div>
-</div>
-<a class="anchor" id="ga44bd57374aa0379152253c85b3f2f898"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_SECURITY_SETUP_COMPLETE&#160;&#160;&#160;0x14</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Security procedure for link completion indication. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaf45fa4ad220ac72b86b2aa66aeb8979d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_SECURITY_SETUP_REFRESH&#160;&#160;&#160;0x16</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates that the security on the link was re-established. </p>
+<p>Reserved for future use, is never notified. </p>
 
 </div>
 </div>
@@ -208,7 +148,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:37 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:49 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

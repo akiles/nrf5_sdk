@@ -1,7 +1,7 @@
 var a00632 =
 [
-    [ "NRF_GAP_ERR_BASE", "a00632.html#ga29249baa158d723505c601121d003034", null ],
-    [ "NRF_GATTC_ERR_BASE", "a00632.html#ga200400dc8ad79918acee9cd038336165", null ],
-    [ "NRF_GATTS_ERR_BASE", "a00632.html#ga7bc503f781e56a86cdd044d6043629b8", null ],
-    [ "NRF_L2CAP_ERR_BASE", "a00632.html#ga82756b5d44b6b5757c3968513b4928ac", null ]
+    [ "BLE_ERROR_INVALID_ATTR_HANDLE", "a00632.html#ga6346bb5ec3bcd4a25332dc782c1b7e01", null ],
+    [ "BLE_ERROR_INVALID_CONN_HANDLE", "a00632.html#gabdc27cbc2ffac4a50640a0ce992c03af", null ],
+    [ "BLE_ERROR_NO_TX_BUFFERS", "a00632.html#ga901e1bc3ccae29eff9fb31cabdbb5e02", null ],
+    [ "BLE_ERROR_NOT_ENABLED", "a00632.html#ga521db6a097589b80939d76cb453fad3c", null ]
 ];

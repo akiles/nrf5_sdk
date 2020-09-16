@@ -20,5 +20,6 @@ var searchData=
   ['irk_5fmatch',['irk_match',['../a00120.html#ade7ff1956c46e2832bf82c95711a408f',1,'ble_gap_evt_connected_t']]],
   ['irk_5fmatch_5fidx',['irk_match_idx',['../a00120.html#a40ac77b4be795c7085f8eece5adc9d73',1,'ble_gap_evt_connected_t']]],
   ['is_5fpower_5fof_5ftwo',['IS_POWER_OF_TWO',['../a00514.html#ga93157dfd3f26159fb0a1a542723def55',1,'app_util.h']]],
+  ['is_5fword_5faligned',['is_word_aligned',['../a00514.html#gad1c2cf43cc8c15daa4404e3a1721d83a',1,'app_util.h']]],
   ['item_5fsz',['item_sz',['../a00087.html#a6a6172b2fd1d922b2fdd786722b608f5',1,'app_mailbox_def']]]
 ];

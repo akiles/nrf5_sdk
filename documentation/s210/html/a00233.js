@@ -1,6 +1,10 @@
 var a00233 =
 [
-    [ "app_trace_log", "a00233.html#ga731dcef3cb5915b230fd9f55067f69bb", null ],
-    [ "app_trace_dump", "a00233.html#ga48cc2844a947c20ae7f00762dc69417e", null ],
-    [ "app_trace_init", "a00233.html#gae7a95b63891d69936ff23995fdd9fa53", null ]
+    [ "APP_SCHED_BUF_SIZE", "a00233.html#ga197748a0733d615e809ce71effa6dc48", null ],
+    [ "APP_SCHED_EVENT_HEADER_SIZE", "a00233.html#ga6ec6d3a526d13df66e0aff7d20049e20", null ],
+    [ "APP_SCHED_INIT", "a00233.html#gaa9670ed0053a67304c3d2d0cb3eb1333", null ],
+    [ "app_sched_event_handler_t", "a00233.html#gad36ea5cb15b82aa724a13f1ba24ef005", null ],
+    [ "app_sched_event_put", "a00233.html#ga49ec0ad278ece44b5dc56b86ac44489c", null ],
+    [ "app_sched_execute", "a00233.html#gab725820c32a8d05379db4567cf30e862", null ],
+    [ "app_sched_init", "a00233.html#gaf021e02dd6ca1767b428c250d1ded56c", null ]
 ];

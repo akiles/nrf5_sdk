@@ -1,8 +1,5 @@
 var a00788 =
 [
-    [ "ble_db_discovery_evt_type_t", "a00788.html#gaa16075c6c77a4f3f32fb567d5ce45462", [
-      [ "BLE_DB_DISCOVERY_COMPLETE", "a00788.html#ggaa16075c6c77a4f3f32fb567d5ce45462ad6925ee73dada1191de4934d7891dc1f", null ],
-      [ "BLE_DB_DISCOVERY_ERROR", "a00788.html#ggaa16075c6c77a4f3f32fb567d5ce45462aca629cd78939015c22a44c9e3797043b", null ],
-      [ "BLE_DB_DISCOVERY_SRV_NOT_FOUND", "a00788.html#ggaa16075c6c77a4f3f32fb567d5ce45462a16f218739c505cfa820990dce92e412d", null ]
-    ] ]
+    [ "BLE_DB_DISCOVERY_MAX_CHAR_PER_SRV", "a00788.html#gae17633bce497fe1c216826ed096ababd", null ],
+    [ "BLE_DB_DISCOVERY_MAX_SRV", "a00788.html#gaf1f2ccd6a3638aab1ef6a6a68866fe71", null ]
 ];

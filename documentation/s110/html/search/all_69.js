@@ -57,6 +57,7 @@ var searchData=
   ['is_5fupdating_5fbl',['IS_UPDATING_BL',['../a00944.html#ga7f75359550e5d1c48c845c3a64beeff9',1,'dfu_bank_internal.h']]],
   ['is_5fupdating_5fsd',['IS_UPDATING_SD',['../a00944.html#gac9f752070cc5f86753dbf9345b795392',1,'dfu_bank_internal.h']]],
   ['is_5fwheel_5frev_5fdata_5fpresent',['is_wheel_rev_data_present',['../a00185.html#ae78a3f62b14426e5a3fcc65d5cc54d7c',1,'ble_cscs_meas_s']]],
+  ['is_5fword_5faligned',['is_word_aligned',['../a00783.html#gad1c2cf43cc8c15daa4404e3a1721d83a',1,'app_util.h']]],
   ['is_5fword_5fsized',['IS_WORD_SIZED',['../a00944.html#gaa829238741c8e27c7c8a8b6d5c36a103',1,'dfu_bank_internal.h']]],
   ['item_5fsz',['item_sz',['../a00144.html#a6a6172b2fd1d922b2fdd786722b608f5',1,'app_mailbox_def']]],
   ['init_20packet_20handling_20in_20dfu_2e',['Init packet handling in DFU.',['../a00947.html',1,'']]]

@@ -9,7 +9,7 @@ var a01035 =
     [ "GPIO abstraction", "a00757.html", "a00757" ],
     [ "GPIOTE abstraction", "a00758.html", "a00758" ],
     [ "Non-volatile memory controller", "a00759.html", "a00759" ],
-    [ "TEMP (temperature) abstraction", "a00760.html", null ],
+    [ "TEMP (temperature) abstraction", "a00760.html", "a00760" ],
     [ "SDIO driver", "a00765.html", "a00765" ],
     [ "Simple UART driver", "a00766.html", "a00766" ],
     [ "SPI Master driver", "a00767.html", "a00767" ],

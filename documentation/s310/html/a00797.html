@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Battery Service Client</title>
+<title>nRF51 SDK - S310 SoftDevice: Radio Notification Event Handler</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,36 +97,81 @@ $(document).ready(function(){initNavTree('a00797.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Battery Service Client<div class="ingroups"><a class="el" href="a00829.html">BLE Services</a></div></div>  </div>
+<div class="title">Radio Notification Event Handler<div class="ingroups"><a class="el" href="a00831.html">BLE Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Battery Service Client module.  
+<p>Module for propagating Radio Notification events to the application.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00798"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00798.html">Enumerations</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00799"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00799.html">Structures</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00800"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00800.html">Types</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00801"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00801.html">Functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga7d22caf17609042ff0c07873c1ad2a13"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7d22caf17609042ff0c07873c1ad2a13"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#ga7d22caf17609042ff0c07873c1ad2a13">ble_radio_notification_evt_handler_t</a> )(bool radio_active)</td></tr>
+<tr class="memdesc:ga7d22caf17609042ff0c07873c1ad2a13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application radio notification event handler type. <br/></td></tr>
+<tr class="separator:ga7d22caf17609042ff0c07873c1ad2a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga0e02811c4ce9dff7bd190daa42b7a58b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#ga0e02811c4ce9dff7bd190daa42b7a58b">ble_radio_notification_init</a> (<a class="el" href="a00866.html#ga2b45edb07b58c30c52475c673d0db856">nrf_app_irq_priority_t</a> irq_priority, <a class="el" href="a00866.html#ga2be0dce389b0d728a857b178b0f3d7ae">nrf_radio_notification_distance_t</a> distance, <a class="el" href="a00797.html#ga7d22caf17609042ff0c07873c1ad2a13">ble_radio_notification_evt_handler_t</a> evt_handler)</td></tr>
+<tr class="memdesc:ga0e02811c4ce9dff7bd190daa42b7a58b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Radio Notification module.  <a href="#ga0e02811c4ce9dff7bd190daa42b7a58b">More...</a><br/></td></tr>
+<tr class="separator:ga0e02811c4ce9dff7bd190daa42b7a58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Battery Service Client module. </p>
-<p>This module contains APIs to read and interact with the Battery Service of a remote device.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to this module by calling <a class="el" href="a00806.html#ga062e0829a2ebd211d4e51a23c520ab1f" title="Function for handling BLE events from the SoftDevice.">ble_hrs_c_on_ble_evt()</a>. </dd></dl>
+<p>Module for propagating Radio Notification events to the application. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga0e02811c4ce9dff7bd190daa42b7a58b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_radio_notification_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00866.html#ga2b45edb07b58c30c52475c673d0db856">nrf_app_irq_priority_t</a>&#160;</td>
+          <td class="paramname"><em>irq_priority</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00866.html#ga2be0dce389b0d728a857b178b0f3d7ae">nrf_radio_notification_distance_t</a>&#160;</td>
+          <td class="paramname"><em>distance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00797.html#ga7d22caf17609042ff0c07873c1ad2a13">ble_radio_notification_evt_handler_t</a>&#160;</td>
+          <td class="paramname"><em>evt_handler</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for initializing the Radio Notification module. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq_priority</td><td>Interrupt priority for the Radio Notification interrupt handler. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">distance</td><td>The time from an Active event until the radio is activated. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">evt_handler</td><td>Handler to be executed when a radio notification event has been received.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization, otherwise an error code. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:37 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:49 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

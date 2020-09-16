@@ -17,8 +17,7 @@
 #include "dfu.h"
 #include "dfu_transport.h"
 #include "nrf51.h"
-//#include "app_error.h"
-#include "error_handler.h"
+#include "app_error.h"
 #include "nrf_sdm.h"
 #include "nrf_nvmc.h"
 #include "nordic_common.h"
@@ -52,6 +51,10 @@ static pstorage_handle_t        m_bootsettings_handle;  /**< Pstorage handle to 
 static bootloader_status_t      m_update_status;        /**< Current update status for the bootloader module to ensure correct behaviour when updating settings and when update completes. */
 static uint8_t                  m_delay_applied = false;/**< Delay has been applied before the initial access to flash > */
 
+/* NOTE: Temporary use of this page until the bootloader_settings slotting is implemented */
+#define BOOT_SETTINGS_PEND_ADDRESS      (BOOTLOADER_SETTINGS_ADDRESS - CODE_PAGE_SIZE)
+#define BOOT_SETTINGS_PEND_VALUE        0xFFFFFFFE
+uint8_t  m_boot_settings_pend[CODE_PAGE_SIZE] __attribute__((at(BOOTLOADER_SETTINGS_ADDRESS - CODE_PAGE_SIZE))) __attribute__((used));
 
 static void pstorage_callback_handler(pstorage_handle_t * handle, uint8_t op_code, uint32_t result, uint8_t * p_data, uint32_t data_len)
 {
@@ -60,6 +63,12 @@ static void pstorage_callback_handler(pstorage_handle_t * handle, uint8_t op_cod
     if ((m_update_status == BOOTLOADER_SETTINGS_SAVING) && (op_code == PSTORAGE_STORE_OP_CODE) && (handle->block_id == BOOTLOADER_SETTINGS_ADDRESS)) //
     {
         m_update_status = BOOTLOADER_COMPLETE;
+
+        /*Clears bootloader_settings critical flag*/
+        if (*((uint32_t *)BOOT_SETTINGS_PEND_ADDRESS) == BOOT_SETTINGS_PEND_VALUE)
+        {
+            nrf_nvmc_page_erase(BOOT_SETTINGS_PEND_ADDRESS);
+        }
     }
     APP_ERROR_CHECK(result);
 }
@@ -99,6 +108,12 @@ bool bootloader_app_is_valid(uint32_t app_addr)
 {
     const bootloader_settings_t * p_bootloader_settings;
 
+    // Critical flag was not cleared.
+    if (*((uint32_t *)BOOT_SETTINGS_PEND_ADDRESS) == BOOT_SETTINGS_PEND_VALUE)
+    {
+        return false;
+    }
+
     // There exists an application in CODE region 1.
     if (*((uint32_t *) app_addr) == EMPTY_FLASH_MASK)
     {
@@ -133,16 +148,16 @@ static void bootloader_settings_save(bootloader_settings_t * p_settings)
                                         BOOTLOADER_SETTINGS_FLASH_BLOCK_SIZE * BOOTLOADER_SETTINGS_FLASH_BLOCK_COUNT);
     APP_ERROR_CHECK(err_code);
 
-    err_code = pstorage_store(&m_bootsettings_handle,
-                              (uint8_t *)p_settings,
-                              sizeof(bootloader_settings_t),
-                              0);
-    APP_ERROR_CHECK(err_code);
-
     /* Write back ant_boot_settings */
     err_code = pstorage_store(&ant_boot_settings_handle,
                               ant_boot_settings,
                               BOOTLOADER_SETTINGS_FLASH_BLOCK_SIZE,
+                              0);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = pstorage_store(&m_bootsettings_handle,
+                              (uint8_t *)p_settings,
+                              sizeof(bootloader_settings_t),
                               0);
     APP_ERROR_CHECK(err_code);
 }
@@ -190,20 +205,10 @@ void bootloader_dfu_update_process(dfu_update_status_t update_status)
 
         settings.src_image_address = update_status.src_image_address;
         m_update_status             = BOOTLOADER_SETTINGS_SAVING;
-        bootloader_settings_save(&settings);
-    }
-    else if (update_status.status_code == DFU_UPDATE_SD_SWAPPED)
-    {
-        settings.sd_image.st.bank   = NEW_IMAGE_BANK_DONE;
-        settings.sd_image.st.size   = p_bootloader_settings->sd_image.st.size;
-        m_update_status             = BOOTLOADER_SETTINGS_SAVING;
-        bootloader_settings_save(&settings);
-    }
-    else if (update_status.status_code == DFU_UPDATE_BL_SWAPPED)
-    {
-        settings.bl_image.st.bank   = NEW_IMAGE_BANK_DONE;
-        settings.bl_image.st.size   = p_bootloader_settings->bl_image.st.size;
-        m_update_status             = BOOTLOADER_SETTINGS_SAVING;
+
+        // TEMPORARY: This serves as a critical flag for the bootloader_settings updating.
+        nrf_nvmc_write_word(BOOT_SETTINGS_PEND_ADDRESS, BOOT_SETTINGS_PEND_VALUE);
+
         bootloader_settings_save(&settings);
     }
     else if (update_status.status_code == DFU_UPDATE_AP_SWAPPED)
@@ -212,13 +217,20 @@ void bootloader_dfu_update_process(dfu_update_status_t update_status)
         settings.ap_image.st.size   = p_bootloader_settings->ap_image.st.size;
         settings.valid_app          = BOOTLOADER_SETTINGS_VALID_APPLICATION;
         m_update_status             = BOOTLOADER_SETTINGS_SAVING;
+
+        // TEMPORARY: This serves as a critical flag for the bootloader_settings updating.
+        nrf_nvmc_write_word(BOOT_SETTINGS_PEND_ADDRESS, BOOT_SETTINGS_PEND_VALUE);
+
         bootloader_settings_save(&settings);
     }
     else if (update_status.status_code == DFU_UPDATE_AP_INVALIDATED)
     {
-        settings.valid_app          = BOOTLOADER_SETTINGS_INVALID_APPLICATION;
-        m_update_status             = BOOTLOADER_UPDATING;
-        bootloader_settings_save(&settings);
+        if (p_bootloader_settings->valid_app != BOOTLOADER_SETTINGS_INVALID_APPLICATION)
+        {
+            settings.valid_app          = BOOTLOADER_SETTINGS_INVALID_APPLICATION;
+            m_update_status             = BOOTLOADER_UPDATING;
+            bootloader_settings_save(&settings);
+        }
     }
     else if (update_status.status_code == DFU_TIMEOUT)
     {
@@ -345,20 +357,27 @@ uint32_t bootloader_dfu_sd_update_continue()
 
     bootloader_util_settings_get(&p_bootloader_settings);
 
-    if((p_bootloader_settings->sd_image.st.bank == NEW_IMAGE_BANK_0)
-            || (p_bootloader_settings->sd_image.st.bank == NEW_IMAGE_BANK_1))
+    /* Ignore update attempts on invalid src_image_address */
+    if( (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_EMPTY)   ||
+        (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_INVALID))
     {
-       debugger_delay();
+        return NRF_SUCCESS;
+    }
 
-       err_code = dfu_sd_image_swap();
-       if (dfu_sd_image_validate() == NRF_SUCCESS)
-       {
+    if( (p_bootloader_settings->sd_image.st.bank == NEW_IMAGE_BANK_0)           ||
+        (p_bootloader_settings->sd_image.st.bank == NEW_IMAGE_BANK_1))
+    {
+        debugger_delay();
+
+        err_code = dfu_sd_image_swap();
+        if (dfu_sd_image_validate() == NRF_SUCCESS)
+        {
             /* This is a manual write to flash, non-softdevice managed */
             uint32_t address    = (uint32_t)p_bootloader_settings + BOOTLOADER_SETTINGS_SD_IMAGE_SIZE_ADR_OFFSET;
             temp_value      = p_bootloader_settings->sd_image.all & 0x3FFFFFFF; // clears image bank bits.
             nrf_nvmc_write_word( address, temp_value);
             //TODO need to catch verification error
-       }
+        }
     }
     return err_code;
 }
@@ -370,8 +389,15 @@ uint32_t bootloader_dfu_bl_update_continue(void)
 
     bootloader_util_settings_get(&p_bootloader_settings);
 
-    if((p_bootloader_settings->bl_image.st.bank == NEW_IMAGE_BANK_0)
-            || (p_bootloader_settings->bl_image.st.bank == NEW_IMAGE_BANK_1))
+    /* Ignore update attempts on invalid src_image_address */
+    if( (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_EMPTY)   ||
+        (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_INVALID))
+    {
+        return NRF_SUCCESS;
+    }
+
+    if( (p_bootloader_settings->bl_image.st.bank == NEW_IMAGE_BANK_0)           ||
+        (p_bootloader_settings->bl_image.st.bank == NEW_IMAGE_BANK_1))
     {
         debugger_delay();
 
@@ -397,13 +423,20 @@ uint32_t bootloader_dfu_ap_update_continue(void)
     uint32_t err_code = NRF_SUCCESS;
     const bootloader_settings_t * p_bootloader_settings;
 
-     bootloader_util_settings_get(&p_bootloader_settings);
+    bootloader_util_settings_get(&p_bootloader_settings);
 
-    if( (p_bootloader_settings->ap_image.st.bank == NEW_IMAGE_BANK_0) ||
+    /* Ignore update attempts on invalid src_image_address */
+    if( (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_EMPTY)   ||
+        (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_INVALID))
+    {
+        return NRF_SUCCESS;
+    }
+
+    if( (p_bootloader_settings->ap_image.st.bank == NEW_IMAGE_BANK_0)           ||
         (p_bootloader_settings->ap_image.st.bank == NEW_IMAGE_BANK_1))
     {
         /* If updating application only, we can start the copy right now*/
-        if ((p_bootloader_settings->sd_image.st.size == NEW_IMAGE_SIZE_EMPTY) &&
+        if ((p_bootloader_settings->sd_image.st.size == NEW_IMAGE_SIZE_EMPTY)   &&
             (p_bootloader_settings->bl_image.st.size == NEW_IMAGE_SIZE_EMPTY))
         {
             err_code = dfu_ap_image_swap();

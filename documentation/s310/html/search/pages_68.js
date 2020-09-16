@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['heart_20rate_20application',['Heart Rate Application',['../a00048.html',1,'examples_ble_peripheral']]],
+  ['heart_20rate_20application',['Heart Rate Application',['../a00049.html',1,'examples_ble_peripheral']]],
   ['hardware_20peripheral_20examples',['Hardware Peripheral Examples',['../a00018.html',1,'examples']]],
   ['hardware_20drivers',['Hardware Drivers',['../a00002.html',1,'']]],
   ['hci_20transport_20library',['HCI transport library',['../a00090.html',1,'transport_libraries']]],

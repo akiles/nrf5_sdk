@@ -1,6 +1,7 @@
 var a00208 =
 [
-    [ "nrf_ecb_crypt", "a00208.html#gaaa8745b5d94900452e525ba60f783cd0", null ],
-    [ "nrf_ecb_init", "a00208.html#gae9609bc1e796e528ca2f4ad3311662e4", null ],
-    [ "nrf_ecb_set_key", "a00208.html#ga69e4fcd00a7c2249c5c94210c1c21c90", null ]
+    [ "mpu6050_init", "a00208.html#ga69d0fa94f347b662e7312e313595773e", null ],
+    [ "mpu6050_register_read", "a00208.html#ga2a262546c837f7d4841c95099eb93c87", null ],
+    [ "mpu6050_register_write", "a00208.html#ga2435390ec63c2d17ab67c32a55ccc867", null ],
+    [ "mpu6050_verify_product_id", "a00208.html#ga3af875981ed613d4377fd457753f323d", null ]
 ];

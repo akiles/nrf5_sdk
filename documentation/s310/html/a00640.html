@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: GAP Advertising interval max and min</title>
+<title>nRF51 SDK - S310 SoftDevice: GAP Advertisement Flags</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,57 +99,117 @@ $(document).ready(function(){initNavTree('a00640.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GAP Advertising interval max and min<div class="ingroups"><a class="el" href="a00837.html">Defines</a></div></div>  </div>
+<div class="title">GAP Advertisement Flags<div class="ingroups"><a class="el" href="a00839.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gaf61691584387648b33a032c934bcd094"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00640.html#gaf61691584387648b33a032c934bcd094">BLE_GAP_ADV_INTERVAL_MIN</a>&#160;&#160;&#160;0x0020</td></tr>
-<tr class="separator:gaf61691584387648b33a032c934bcd094"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0853bcb2a170efd2bb58e3a6b3c8ca5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00640.html#gaf0853bcb2a170efd2bb58e3a6b3c8ca5">BLE_GAP_ADV_NONCON_INTERVAL_MIN</a>&#160;&#160;&#160;0x00A0</td></tr>
-<tr class="separator:gaf0853bcb2a170efd2bb58e3a6b3c8ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada06c7f328e5bcc50ce55f9f567129ca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00640.html#gada06c7f328e5bcc50ce55f9f567129ca">BLE_GAP_ADV_INTERVAL_MAX</a>&#160;&#160;&#160;0x4000</td></tr>
-<tr class="separator:gada06c7f328e5bcc50ce55f9f567129ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ed61557e00488daa5daf0b3d9f3d0fd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00640.html#ga7ed61557e00488daa5daf0b3d9f3d0fd">BLE_GAP_ADV_FLAG_LE_LIMITED_DISC_MODE</a>&#160;&#160;&#160;(0x01)</td></tr>
+<tr class="separator:ga7ed61557e00488daa5daf0b3d9f3d0fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b7d4251306cd6644d9125da1994a931"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00640.html#ga3b7d4251306cd6644d9125da1994a931">BLE_GAP_ADV_FLAG_LE_GENERAL_DISC_MODE</a>&#160;&#160;&#160;(0x02)</td></tr>
+<tr class="separator:ga3b7d4251306cd6644d9125da1994a931"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb3630594402e27c96515eb80080f2a3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00640.html#gacb3630594402e27c96515eb80080f2a3">BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED</a>&#160;&#160;&#160;(0x04)</td></tr>
+<tr class="separator:gacb3630594402e27c96515eb80080f2a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga589a2a83eb353ad35fc9660c442514ce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00640.html#ga589a2a83eb353ad35fc9660c442514ce">BLE_GAP_ADV_FLAG_LE_BR_EDR_CONTROLLER</a>&#160;&#160;&#160;(0x08)</td></tr>
+<tr class="separator:ga589a2a83eb353ad35fc9660c442514ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb2468cf5bea6160d3b7fff9a1059116"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00640.html#gaeb2468cf5bea6160d3b7fff9a1059116">BLE_GAP_ADV_FLAG_LE_BR_EDR_HOST</a>&#160;&#160;&#160;(0x10)</td></tr>
+<tr class="separator:gaeb2468cf5bea6160d3b7fff9a1059116"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad19a5111127656b299dbdbe5d5e8d4e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00640.html#gad19a5111127656b299dbdbe5d5e8d4e0">BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE</a>&#160;&#160;&#160;(<a class="el" href="a00640.html#ga7ed61557e00488daa5daf0b3d9f3d0fd">BLE_GAP_ADV_FLAG_LE_LIMITED_DISC_MODE</a> | <a class="el" href="a00640.html#gacb3630594402e27c96515eb80080f2a3">BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED</a>)</td></tr>
+<tr class="separator:gad19a5111127656b299dbdbe5d5e8d4e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa57375a29c3f6acc5a22565528118cc6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00640.html#gaa57375a29c3f6acc5a22565528118cc6">BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE</a>&#160;&#160;&#160;(<a class="el" href="a00640.html#ga3b7d4251306cd6644d9125da1994a931">BLE_GAP_ADV_FLAG_LE_GENERAL_DISC_MODE</a> | <a class="el" href="a00640.html#gacb3630594402e27c96515eb80080f2a3">BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED</a>)</td></tr>
+<tr class="separator:gaa57375a29c3f6acc5a22565528118cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gada06c7f328e5bcc50ce55f9f567129ca"></a>
+<a class="anchor" id="gacb3630594402e27c96515eb80080f2a3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GAP_ADV_INTERVAL_MAX&#160;&#160;&#160;0x4000</td>
+          <td class="memname">#define BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED&#160;&#160;&#160;(0x04)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Maximum Advertising interval in 625 us units, i.e. 10.24 s. </p>
+<p>BR/EDR not supported. </p>
 
 </div>
 </div>
-<a class="anchor" id="gaf61691584387648b33a032c934bcd094"></a>
+<a class="anchor" id="ga589a2a83eb353ad35fc9660c442514ce"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GAP_ADV_INTERVAL_MIN&#160;&#160;&#160;0x0020</td>
+          <td class="memname">#define BLE_GAP_ADV_FLAG_LE_BR_EDR_CONTROLLER&#160;&#160;&#160;(0x08)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Minimum Advertising interval in 625 us units, i.e. 20 ms. </p>
+<p>Simultaneous LE and BR/EDR, Controller. </p>
 
 </div>
 </div>
-<a class="anchor" id="gaf0853bcb2a170efd2bb58e3a6b3c8ca5"></a>
+<a class="anchor" id="gaeb2468cf5bea6160d3b7fff9a1059116"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GAP_ADV_NONCON_INTERVAL_MIN&#160;&#160;&#160;0x00A0</td>
+          <td class="memname">#define BLE_GAP_ADV_FLAG_LE_BR_EDR_HOST&#160;&#160;&#160;(0x10)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Minimum Advertising interval in 625 us units for non connectable mode, i.e. 100 ms. </p>
+<p>Simultaneous LE and BR/EDR, Host. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga3b7d4251306cd6644d9125da1994a931"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADV_FLAG_LE_GENERAL_DISC_MODE&#160;&#160;&#160;(0x02)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>LE General Discoverable Mode. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7ed61557e00488daa5daf0b3d9f3d0fd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADV_FLAG_LE_LIMITED_DISC_MODE&#160;&#160;&#160;(0x01)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>LE Limited Discoverable Mode. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaa57375a29c3f6acc5a22565528118cc6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE&#160;&#160;&#160;(<a class="el" href="a00640.html#ga3b7d4251306cd6644d9125da1994a931">BLE_GAP_ADV_FLAG_LE_GENERAL_DISC_MODE</a> | <a class="el" href="a00640.html#gacb3630594402e27c96515eb80080f2a3">BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>LE General Discoverable Mode, BR/EDR not supported. </p>
+
+</div>
+</div>
+<a class="anchor" id="gad19a5111127656b299dbdbe5d5e8d4e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE&#160;&#160;&#160;(<a class="el" href="a00640.html#ga7ed61557e00488daa5daf0b3d9f3d0fd">BLE_GAP_ADV_FLAG_LE_LIMITED_DISC_MODE</a> | <a class="el" href="a00640.html#gacb3630594402e27c96515eb80080f2a3">BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>LE Limited Discoverable Mode, BR/EDR not supported. </p>
 
 </div>
 </div>
@@ -158,7 +218,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:32 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:45 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

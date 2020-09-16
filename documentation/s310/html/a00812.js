@@ -1,5 +1,5 @@
 var a00812 =
 [
-    [ "GAP Central", "a00817.html", null ],
-    [ "GAP Peripheral", "a00818.html", null ]
+    [ "Fresh Bonding & Context Store", "a00813.html", "a00813" ],
+    [ "Link Encryption with Bonded Device", "a00814.html", "a00814" ]
 ];

@@ -1,6 +1,5 @@
 var a00059 =
 [
-    [ "ciphertext", "a00059.html#a478942ae65d7433678164a95e4944115", null ],
-    [ "cleartext", "a00059.html#ad4c798195f0d6d399a7f75d09ef89793", null ],
-    [ "key", "a00059.html#aab4ea408dd38499ceff3935ecb5fa39f", null ]
+    [ "cmd_type", "a00059.html#a4955a964032009d6b9b5cc167e758d32", null ],
+    [ "tx_done_result", "a00059.html#ac9e1ac1b373abcbd4e761600473340bc", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Types definitions for BLE support in SoftDevice handler.</title>
+<title>nRF51 SDK - S310 SoftDevice: Types definitions for ANT support in SoftDevice handler.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,86 +97,93 @@ $(document).ready(function(){initNavTree('a00750.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Types definitions for BLE support in SoftDevice handler.<div class="ingroups"><a class="el" href="a00751.html">SoftDevice Event Handler</a></div></div>  </div>
+<div class="title">Types definitions for ANT support in SoftDevice handler.<div class="ingroups"><a class="el" href="a00752.html">SoftDevice Event Handler</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This file contains the declarations of types required for BLE stack support. These types will be defined when the preprocessor define BLE_STACK_SUPPORT_REQD is defined.  
+<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00094.html">ant_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ANT stack event type.  <a href="a00094.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gab11d82da68bcf71c064b936f8398fb26"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00750.html#gab11d82da68bcf71c064b936f8398fb26">BLE_STACK_EVT_MSG_BUF_SIZE</a>&#160;&#160;&#160;(sizeof(<a class="el" href="a00153.html">ble_evt_t</a>) + (<a class="el" href="a00841.html#gaf0a71c5d9dd3b12235312bd40fd2175e">GATT_MTU_SIZE_DEFAULT</a>))</td></tr>
-<tr class="separator:gab11d82da68bcf71c064b936f8398fb26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5cdd71430c9268465e479ababfa08dc3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00750.html#ga5cdd71430c9268465e479ababfa08dc3">BLE_STACK_HANDLER_SCHED_EVT_SIZE</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ga5cdd71430c9268465e479ababfa08dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafcf5a1211ca1625c5c111871c6139d79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00750.html#gafcf5a1211ca1625c5c111871c6139d79">ANT_STACK_EVT_MSG_BUF_SIZE</a>&#160;&#160;&#160;32</td></tr>
+<tr class="separator:gafcf5a1211ca1625c5c111871c6139d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00750.html#ga099e8f139d53724bf7238bb77c9e32e0">ANT_STACK_EVT_STRUCT_SIZE</a>&#160;&#160;&#160;(sizeof(<a class="el" href="a00094.html">ant_evt_t</a>))</td></tr>
+<tr class="separator:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga2363934d42202759e09f9039ab5b60a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2363934d42202759e09f9039ab5b60a5"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00750.html#ga2363934d42202759e09f9039ab5b60a5">ble_evt_handler_t</a> )(<a class="el" href="a00153.html">ble_evt_t</a> *p_ble_evt)</td></tr>
-<tr class="memdesc:ga2363934d42202759e09f9039ab5b60a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application stack event handler type. <br/></td></tr>
-<tr class="separator:ga2363934d42202759e09f9039ab5b60a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2b0ca4dbb952df8f26cb58d4e7341115"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00750.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> )(<a class="el" href="a00094.html">ant_evt_t</a> *p_ant_evt)</td></tr>
+<tr class="memdesc:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application ANT stack event handler type. <br/></td></tr>
+<tr class="separator:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gae54951e939156d5f05fa4d27fed1dc65"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00750.html#gae54951e939156d5f05fa4d27fed1dc65">softdevice_ble_evt_handler_set</a> (<a class="el" href="a00750.html#ga2363934d42202759e09f9039ab5b60a5">ble_evt_handler_t</a> ble_evt_handler)</td></tr>
-<tr class="memdesc:gae54951e939156d5f05fa4d27fed1dc65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering for BLE events.  <a href="#gae54951e939156d5f05fa4d27fed1dc65">More...</a><br/></td></tr>
-<tr class="separator:gae54951e939156d5f05fa4d27fed1dc65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac05d1d266aef077ae88818dff3775010"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00750.html#gac05d1d266aef077ae88818dff3775010">softdevice_ant_evt_handler_set</a> (<a class="el" href="a00750.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> ant_evt_handler)</td></tr>
+<tr class="memdesc:gac05d1d266aef077ae88818dff3775010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering for ANT events.  <a href="#gac05d1d266aef077ae88818dff3775010">More...</a><br/></td></tr>
+<tr class="separator:gac05d1d266aef077ae88818dff3775010"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>This file contains the declarations of types required for BLE stack support. These types will be defined when the preprocessor define BLE_STACK_SUPPORT_REQD is defined. </p>
+<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gab11d82da68bcf71c064b936f8398fb26"></a>
+<a class="anchor" id="gafcf5a1211ca1625c5c111871c6139d79"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_STACK_EVT_MSG_BUF_SIZE&#160;&#160;&#160;(sizeof(<a class="el" href="a00153.html">ble_evt_t</a>) + (<a class="el" href="a00841.html#gaf0a71c5d9dd3b12235312bd40fd2175e">GATT_MTU_SIZE_DEFAULT</a>))</td>
+          <td class="memname">#define ANT_STACK_EVT_MSG_BUF_SIZE&#160;&#160;&#160;32</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Size of BLE event message buffer. This will be provided to the SoftDevice while fetching an event. </p>
+<p>Size of ANT event message buffer. This will be provided to the SoftDevice while fetching an event. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga5cdd71430c9268465e479ababfa08dc3"></a>
+<a class="anchor" id="ga099e8f139d53724bf7238bb77c9e32e0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_STACK_HANDLER_SCHED_EVT_SIZE&#160;&#160;&#160;0</td>
+          <td class="memname">#define ANT_STACK_EVT_STRUCT_SIZE&#160;&#160;&#160;(sizeof(<a class="el" href="a00094.html">ant_evt_t</a>))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The size of the scheduler event used by SoftDevice handler when passing BLE events using the <a class="el" href="a00612.html">Scheduler</a>. </p>
+<p>Size of the <a class="el" href="a00094.html">ant_evt_t</a> structure. This will be used by the <a class="el" href="a00752.html">SoftDevice Event Handler</a> to internal event buffer size needed. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gae54951e939156d5f05fa4d27fed1dc65"></a>
+<a class="anchor" id="gac05d1d266aef077ae88818dff3775010"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t softdevice_ble_evt_handler_set </td>
+          <td class="memname">uint32_t softdevice_ant_evt_handler_set </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00750.html#ga2363934d42202759e09f9039ab5b60a5">ble_evt_handler_t</a>&#160;</td>
-          <td class="paramname"><em>ble_evt_handler</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00750.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a>&#160;</td>
+          <td class="paramname"><em>ant_evt_handler</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for registering for BLE events. </p>
-<p>The application should use this function to register for receiving BLE events from the SoftDevice. If the application does not call this function, then any BLE event that may be generated by the SoftDevice will NOT be fetched. Once the application has registered for the events, it is not possible to cancel the registration. However, it is possible to register a different function for handling the events at any point of time.</p>
+<p>Function for registering for ANT events. </p>
+<p>The application should use this function to register for receiving ANT events from the SoftDevice. If the application does not call this function, then any ANT event that may be generated by the SoftDevice will NOT be fetched. Once the application has registered for the events, it is not possible to possible to cancel the registration. However, it is possible to register a different function for handling the events at any point of time.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ble_evt_handler</td><td>Function to be called for each received BLE event.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ant_evt_handler</td><td>Function to be called for each received ANT event.</td></tr>
   </table>
   </dd>
 </dl>
@@ -195,7 +202,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:37 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:49 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

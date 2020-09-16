@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Non-volatile memory controller</title>
+<title>nRF51 SDK - S310 SoftDevice: GPIOTE abstraction</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,76 +97,124 @@ $(document).ready(function(){initNavTree('a00592.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Non-volatile memory controller<div class="ingroups"><a class="el" href="a00827.html">Peripheral Drivers</a></div></div>  </div>
+<div class="title">GPIOTE abstraction<div class="ingroups"><a class="el" href="a00828.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Driver for the nRF51 NVMC peripheral.  
+<p>GPIOTE abstraction for configuration of channels.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga9a424db0997c11092f8f69d52155dd9d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00592.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00592.html#gga9a424db0997c11092f8f69d52155dd9da59dda358a841a81671bd372058b46498">NRF_GPIOTE_POLARITY_LOTOHI</a> = GPIOTE_CONFIG_POLARITY_LoToHi, 
+<br/>
+&#160;&#160;<a class="el" href="a00592.html#gga9a424db0997c11092f8f69d52155dd9da97c193ac03f0691bea38c2283b55fa8a">NRF_GPIOTE_POLARITY_HITOLO</a> = GPIOTE_CONFIG_POLARITY_HiToLo, 
+<br/>
+&#160;&#160;<a class="el" href="a00592.html#gga9a424db0997c11092f8f69d52155dd9da00487cd8286ff071ca751cd4a00295d5">NRF_GPIOTE_POLARITY_TOGGLE</a> = GPIOTE_CONFIG_POLARITY_Toggle
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga9a424db0997c11092f8f69d52155dd9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Polarity for GPIOTE channel enumerator.  <a href="a00592.html#ga9a424db0997c11092f8f69d52155dd9d">More...</a><br/></td></tr>
+<tr class="separator:ga9a424db0997c11092f8f69d52155dd9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab280bbb7269ab98a97e7b47d906ef9aa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00592.html#gab280bbb7269ab98a97e7b47d906ef9aa">nrf_gpiote_outinit_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00592.html#ggab280bbb7269ab98a97e7b47d906ef9aaae0df1a0e930bfe3b198a9692d9916667">NRF_GPIOTE_INITIAL_VALUE_LOW</a> = GPIOTE_CONFIG_OUTINIT_Low, 
+<br/>
+&#160;&#160;<a class="el" href="a00592.html#ggab280bbb7269ab98a97e7b47d906ef9aaa1fc9af8ce3fcd7165b3c090b564e9aa4">NRF_GPIOTE_INITIAL_VALUE_HIGH</a> = GPIOTE_CONFIG_OUTINIT_High
+<br/>
+ }</td></tr>
+<tr class="memdesc:gab280bbb7269ab98a97e7b47d906ef9aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial output value for GPIOTE channel enumerator.  <a href="a00592.html#gab280bbb7269ab98a97e7b47d906ef9aa">More...</a><br/></td></tr>
+<tr class="separator:gab280bbb7269ab98a97e7b47d906ef9aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga8cf428dbb2a28a342c3b57cc07869d9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00592.html#ga8cf428dbb2a28a342c3b57cc07869d9d">nrf_nvmc_page_erase</a> (uint32_t address)</td></tr>
-<tr class="memdesc:ga8cf428dbb2a28a342c3b57cc07869d9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erase a page in flash. This is required before writing to any address in the page.  <a href="#ga8cf428dbb2a28a342c3b57cc07869d9d">More...</a><br/></td></tr>
-<tr class="separator:ga8cf428dbb2a28a342c3b57cc07869d9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga008c6a4096bda07d67f33294af00ad9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00592.html#ga008c6a4096bda07d67f33294af00ad9b">nrf_nvmc_write_byte</a> (uint32_t address, uint8_t value)</td></tr>
-<tr class="memdesc:ga008c6a4096bda07d67f33294af00ad9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a single byte to flash.  <a href="#ga008c6a4096bda07d67f33294af00ad9b">More...</a><br/></td></tr>
-<tr class="separator:ga008c6a4096bda07d67f33294af00ad9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1347c44095f9486554be7c3d62737925"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00592.html#ga1347c44095f9486554be7c3d62737925">nrf_nvmc_write_word</a> (uint32_t address, uint32_t value)</td></tr>
-<tr class="memdesc:ga1347c44095f9486554be7c3d62737925"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a 32-bit word to flash.  <a href="#ga1347c44095f9486554be7c3d62737925">More...</a><br/></td></tr>
-<tr class="separator:ga1347c44095f9486554be7c3d62737925"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7d566edd65fdc5655ce7be3cd17faba0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00592.html#ga7d566edd65fdc5655ce7be3cd17faba0">nrf_nvmc_write_bytes</a> (uint32_t address, const uint8_t *src, uint32_t num_bytes)</td></tr>
-<tr class="memdesc:ga7d566edd65fdc5655ce7be3cd17faba0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write consecutive bytes to flash.  <a href="#ga7d566edd65fdc5655ce7be3cd17faba0">More...</a><br/></td></tr>
-<tr class="separator:ga7d566edd65fdc5655ce7be3cd17faba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ac0536be3127139fb91992e1c5b46c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00592.html#ga9ac0536be3127139fb91992e1c5b46c4">nrf_nvmc_write_words</a> (uint32_t address, const uint32_t *src, uint32_t num_words)</td></tr>
-<tr class="memdesc:ga9ac0536be3127139fb91992e1c5b46c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write consecutive words to flash.  <a href="#ga9ac0536be3127139fb91992e1c5b46c4">More...</a><br/></td></tr>
-<tr class="separator:ga9ac0536be3127139fb91992e1c5b46c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab8667667ddf3bdca874df3add96fb622"><td class="memItemLeft" align="right" valign="top">static __INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00592.html#gab8667667ddf3bdca874df3add96fb622">nrf_gpiote_task_config</a> (uint32_t channel_number, uint32_t pin_number, <a class="el" href="a00592.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a> polarity, <a class="el" href="a00592.html#gab280bbb7269ab98a97e7b47d906ef9aa">nrf_gpiote_outinit_t</a> initial_value)</td></tr>
+<tr class="memdesc:gab8667667ddf3bdca874df3add96fb622"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for configuring GPIOTE channel as output, setting the properly desired output level.  <a href="#gab8667667ddf3bdca874df3add96fb622">More...</a><br/></td></tr>
+<tr class="separator:gab8667667ddf3bdca874df3add96fb622"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac04dde3ea740f163fa2ac032bf56152d"><td class="memItemLeft" align="right" valign="top">static __INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00592.html#gac04dde3ea740f163fa2ac032bf56152d">nrf_gpiote_event_config</a> (uint32_t channel_number, uint32_t pin_number, <a class="el" href="a00592.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a> polarity)</td></tr>
+<tr class="memdesc:gac04dde3ea740f163fa2ac032bf56152d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for configuring GPIOTE channel as input, automatically clearing an event that appears in some cases under configuration.  <a href="#gac04dde3ea740f163fa2ac032bf56152d">More...</a><br/></td></tr>
+<tr class="separator:gac04dde3ea740f163fa2ac032bf56152d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae721c9782910048854960a6db18ab2ef"><td class="memItemLeft" align="right" valign="top">static __INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00592.html#gae721c9782910048854960a6db18ab2ef">nrf_gpiote_unconfig</a> (uint32_t channel_number)</td></tr>
+<tr class="memdesc:gae721c9782910048854960a6db18ab2ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for unconfiguring GPIOTE channel.  <a href="#gae721c9782910048854960a6db18ab2ef">More...</a><br/></td></tr>
+<tr class="separator:gae721c9782910048854960a6db18ab2ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Driver for the nRF51 NVMC peripheral. </p>
-<p>This driver allows writing to the non-volatile memory (NVM) regions of the nRF51. In order to write to NVM the controller must be powered on and the relevant page must be erased. </p>
+<p>GPIOTE abstraction for configuration of channels. </p>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gab280bbb7269ab98a97e7b47d906ef9aa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00592.html#gab280bbb7269ab98a97e7b47d906ef9aa">nrf_gpiote_outinit_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initial output value for GPIOTE channel enumerator. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab280bbb7269ab98a97e7b47d906ef9aaae0df1a0e930bfe3b198a9692d9916667"></a>NRF_GPIOTE_INITIAL_VALUE_LOW</em>&nbsp;</td><td class="fielddoc">
+<p>Low to high. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab280bbb7269ab98a97e7b47d906ef9aaa1fc9af8ce3fcd7165b3c090b564e9aa4"></a>NRF_GPIOTE_INITIAL_VALUE_HIGH</em>&nbsp;</td><td class="fielddoc">
+<p>High to low. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga9a424db0997c11092f8f69d52155dd9d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00592.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Polarity for GPIOTE channel enumerator. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9a424db0997c11092f8f69d52155dd9da59dda358a841a81671bd372058b46498"></a>NRF_GPIOTE_POLARITY_LOTOHI</em>&nbsp;</td><td class="fielddoc">
+<p>Low to high. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga9a424db0997c11092f8f69d52155dd9da97c193ac03f0691bea38c2283b55fa8a"></a>NRF_GPIOTE_POLARITY_HITOLO</em>&nbsp;</td><td class="fielddoc">
+<p>High to low. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga9a424db0997c11092f8f69d52155dd9da00487cd8286ff071ca751cd4a00295d5"></a>NRF_GPIOTE_POLARITY_TOGGLE</em>&nbsp;</td><td class="fielddoc">
+<p>Toggle. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga8cf428dbb2a28a342c3b57cc07869d9d"></a>
+<a class="anchor" id="gac04dde3ea740f163fa2ac032bf56152d"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void nrf_nvmc_page_erase </td>
+          <td class="memname">static __INLINE void nrf_gpiote_event_config </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Erase a page in flash. This is required before writing to any address in the page. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">address</td><td>Start address of the page. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga008c6a4096bda07d67f33294af00ad9b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void nrf_nvmc_write_byte </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
+          <td class="paramname"><em>channel_number</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pin_number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00592.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a>&#160;</td>
+          <td class="paramname"><em>polarity</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -174,41 +222,56 @@ Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Write a single byte to flash. </p>
-<p>The function reads the word containing the byte, and then rewrites the entire word.</p>
+<p>Function for configuring GPIOTE channel as input, automatically clearing an event that appears in some cases under configuration. </p>
+<p>Note that when configuring the channel as input an event might be triggered. Care of disabling interrupts for that channel is left to the user.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">address</td><td>Address to write to. </td></tr>
-    <tr><td class="paramname">value</td><td>Value to write. </td></tr>
+    <tr><td class="paramname">channel_number</td><td>specifies the GPIOTE channel [0:3] to configure as an input channel. </td></tr>
+    <tr><td class="paramname">pin_number</td><td>specifies the pin number [0:30] to use in the GPIOTE channel. </td></tr>
+    <tr><td class="paramname">polarity</td><td>specifies the desired polarity in the output GPIOTE channel. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7d566edd65fdc5655ce7be3cd17faba0"></a>
+<a class="anchor" id="gab8667667ddf3bdca874df3add96fb622"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void nrf_nvmc_write_bytes </td>
+          <td class="memname">static __INLINE void nrf_gpiote_task_config </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>src</em>, </td>
+          <td class="paramname"><em>channel_number</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>num_bytes</em>&#160;</td>
+          <td class="paramname"><em>pin_number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00592.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a>&#160;</td>
+          <td class="paramname"><em>polarity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00592.html#gab280bbb7269ab98a97e7b47d906ef9aa">nrf_gpiote_outinit_t</a>&#160;</td>
+          <td class="paramname"><em>initial_value</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -216,91 +279,53 @@ Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Write consecutive bytes to flash. </p>
+<p>Function for configuring GPIOTE channel as output, setting the properly desired output level. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">address</td><td>Address to write to. </td></tr>
-    <tr><td class="paramname">src</td><td>Pointer to data to copy from. </td></tr>
-    <tr><td class="paramname">num_bytes</td><td>Number of bytes in src to write. </td></tr>
+    <tr><td class="paramname">channel_number</td><td>specifies the GPIOTE channel [0:3] to configure as an output channel. </td></tr>
+    <tr><td class="paramname">pin_number</td><td>specifies the pin number [0:30] to use in the GPIOTE channel. </td></tr>
+    <tr><td class="paramname">polarity</td><td>specifies the desired polarity in the output GPIOTE channel. </td></tr>
+    <tr><td class="paramname">initial_value</td><td>specifies the initial value of the GPIOTE channel input after the channel configuration. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1347c44095f9486554be7c3d62737925"></a>
+<a class="anchor" id="gae721c9782910048854960a6db18ab2ef"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void nrf_nvmc_write_word </td>
+          <td class="memname">static __INLINE void nrf_gpiote_unconfig </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>channel_number</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Write a 32-bit word to flash. </p>
+<p>Function for unconfiguring GPIOTE channel. </p>
+<p>Note that when unconfiguring the channel, the pin is configured as GPIO PIN_CNF configuration.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">address</td><td>Address to write to. </td></tr>
-    <tr><td class="paramname">value</td><td>Value to write. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9ac0536be3127139fb91992e1c5b46c4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void nrf_nvmc_write_words </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint32_t *&#160;</td>
-          <td class="paramname"><em>src</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>num_words</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Write consecutive words to flash. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">address</td><td>Address to write to. </td></tr>
-    <tr><td class="paramname">src</td><td>Pointer to data to copy from. </td></tr>
-    <tr><td class="paramname">num_words</td><td>Number of bytes in src to write. </td></tr>
+    <tr><td class="paramname">channel_number</td><td>specifies the GPIOTE channel [0:3] to unconfigure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -312,7 +337,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:32 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:44 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

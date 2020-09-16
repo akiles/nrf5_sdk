@@ -1,18 +1,20 @@
 var a00832 =
 [
-    [ "BLE_COMMON_OPTS", "a00832.html#gab104c3b3aebea136806077a7a8d20d00", [
-      [ "BLE_COMMON_OPT_RADIO_CPU_MUTEX", "a00832.html#ggab104c3b3aebea136806077a7a8d20d00abec3e50a45802caa9c024ad219e294ba", null ]
-    ] ],
-    [ "BLE_COMMON_SVCS", "a00832.html#gab53f87e96c3cbbb977a1c1b1004d7526", [
-      [ "SD_BLE_ENABLE", "a00832.html#ggab53f87e96c3cbbb977a1c1b1004d7526a5bc269d863f4f35451475890b2c04adc", null ],
-      [ "SD_BLE_EVT_GET", "a00832.html#ggab53f87e96c3cbbb977a1c1b1004d7526a0d32aa9b47a0efe1af65bf138ac0b617", null ],
-      [ "SD_BLE_TX_BUFFER_COUNT_GET", "a00832.html#ggab53f87e96c3cbbb977a1c1b1004d7526a377ad568f58eb2ccb2c0f3e9229f69fd", null ],
-      [ "SD_BLE_UUID_VS_ADD", "a00832.html#ggab53f87e96c3cbbb977a1c1b1004d7526a0974926f3c11748769d7a51c1407ee48", null ],
-      [ "SD_BLE_UUID_DECODE", "a00832.html#ggab53f87e96c3cbbb977a1c1b1004d7526a893795930e05c96fff604f861c8689c4", null ],
-      [ "SD_BLE_UUID_ENCODE", "a00832.html#ggab53f87e96c3cbbb977a1c1b1004d7526af9ed6f002dd3c6798457e7f8316b9122", null ],
-      [ "SD_BLE_VERSION_GET", "a00832.html#ggab53f87e96c3cbbb977a1c1b1004d7526a955b5bde398b0a62db9f51843fc2ffb3", null ],
-      [ "SD_BLE_USER_MEM_REPLY", "a00832.html#ggab53f87e96c3cbbb977a1c1b1004d7526a9235db5aeac0058167d9d2fdfb81a3bd", null ],
-      [ "SD_BLE_OPT_SET", "a00832.html#ggab53f87e96c3cbbb977a1c1b1004d7526a0a3fca033f8d3bdf363edf6f47368489", null ],
-      [ "SD_BLE_OPT_GET", "a00832.html#ggab53f87e96c3cbbb977a1c1b1004d7526acf5a51bcf12d98abd706ab94ae304a55", null ]
-    ] ]
+    [ "Persistent Storage Interface", "a00595.html", "a00595" ],
+    [ "UART module", "a00604.html", "a00604" ],
+    [ "Button Handler", "a00605.html", "a00605" ],
+    [ "FIFO implementation", "a00607.html", "a00607" ],
+    [ "GPIOTE Handler", "a00608.html", "a00608" ],
+    [ "Memory pool", "a00610.html", "a00610" ],
+    [ "SLIP module", "a00611.html", "a00611" ],
+    [ "HCI Transport", "a00612.html", "a00612" ],
+    [ "Scheduler", "a00613.html", "a00613" ],
+    [ "Application Timer", "a00614.html", "a00614" ],
+    [ "Debug Logger", "a00615.html", "a00615" ],
+    [ "Common application error handler", "a00616.html", "a00616" ],
+    [ "Utility Functions and Definitions", "a00617.html", "a00617" ],
+    [ "Utility Functions and Definitions (Platform)", "a00618.html", "a00618" ],
+    [ "SDK Error codes", "a00619.html", "a00619" ],
+    [ "Board Support Package", "a00624.html", "a00624" ],
+    [ "SoftDevice Event Handler", "a00752.html", "a00752" ]
 ];

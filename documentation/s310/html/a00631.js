@@ -1,7 +1,5 @@
 var a00631 =
 [
-    [ "BLE_ERROR_INVALID_ATTR_HANDLE", "a00631.html#ga6346bb5ec3bcd4a25332dc782c1b7e01", null ],
-    [ "BLE_ERROR_INVALID_CONN_HANDLE", "a00631.html#gabdc27cbc2ffac4a50640a0ce992c03af", null ],
-    [ "BLE_ERROR_NO_TX_BUFFERS", "a00631.html#ga901e1bc3ccae29eff9fb31cabdbb5e02", null ],
-    [ "BLE_ERROR_NOT_ENABLED", "a00631.html#ga521db6a097589b80939d76cb453fad3c", null ]
+    [ "BLE_USER_MEM_TYPE_GATTS_QUEUED_WRITES", "a00631.html#ga77c2aca2438a868f228f877cafb5b910", null ],
+    [ "BLE_USER_MEM_TYPE_INVALID", "a00631.html#ga690838a139a17cdd21661c8045073277", null ]
 ];

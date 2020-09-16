@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Common service definitions</title>
+<title>nRF51 SDK - S310 SoftDevice: Control point functionalities.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,164 +97,59 @@ $(document).ready(function(){initNavTree('a00769.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Common service definitions<div class="ingroups"><a class="el" href="a00829.html">BLE Services</a></div></div>  </div>
+<div class="title">Control point functionalities.<div class="ingroups"><a class="el" href="a00768.html">Speed and Cadence Control Point</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Constants, type definitions and functions that are common to all services.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00770"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00770.html">Service UUID definitions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00771"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00771.html">Characteristic UUID definitions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00772"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00772.html">Definitions for the Alert Level characteristic values</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00280.html">ble_srv_report_ref_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value of a Report Reference descriptor.  <a href="a00280.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html">ble_srv_utf8_str_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">UTF-8 string data type.  <a href="a00282.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00281.html">ble_srv_security_mode_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Security settings structure.  <a href="a00281.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html">ble_srv_cccd_security_mode_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Security settings structure.  <a href="a00279.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gafbfc0ef111ca725cc8bb500fd93301cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00769.html#gafbfc0ef111ca725cc8bb500fd93301cc">BLE_SRV_ENCODED_REPORT_REF_LEN</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:gafbfc0ef111ca725cc8bb500fd93301cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa5c29b2eac30fc2688b11741f5895697"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00769.html#gaa5c29b2eac30fc2688b11741f5895697">BLE_CCCD_VALUE_LEN</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:gaa5c29b2eac30fc2688b11741f5895697"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gac10076d39c0ddcfe333252fe8810a1f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac10076d39c0ddcfe333252fe8810a1f1"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00769.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> )(uint32_t nrf_error)</td></tr>
-<tr class="memdesc:gac10076d39c0ddcfe333252fe8810a1f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definition for error handler function which will be called in case of an error in a service or a service library module. <br/></td></tr>
-<tr class="separator:gac10076d39c0ddcfe333252fe8810a1f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaebc3fc5316f1a6a67e830516b8f9aed5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00769.html#gaebc3fc5316f1a6a67e830516b8f9aed5">ble_srv_report_ref_encode</a> (uint8_t *p_encoded_buffer, const <a class="el" href="a00280.html">ble_srv_report_ref_t</a> *p_report_ref)</td></tr>
-<tr class="memdesc:gaebc3fc5316f1a6a67e830516b8f9aed5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for encoding a Report Reference Descriptor.  <a href="#gaebc3fc5316f1a6a67e830516b8f9aed5">More...</a><br/></td></tr>
-<tr class="separator:gaebc3fc5316f1a6a67e830516b8f9aed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga611dfcf7209a57c2e45964e8bb4c5756"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00769.html#ga611dfcf7209a57c2e45964e8bb4c5756">ble_srv_ascii_to_utf8</a> (<a class="el" href="a00282.html">ble_srv_utf8_str_t</a> *p_utf8, char *p_ascii)</td></tr>
-<tr class="memdesc:ga611dfcf7209a57c2e45964e8bb4c5756"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for making UTF-8 structure refer to an ASCII string.  <a href="#ga611dfcf7209a57c2e45964e8bb4c5756">More...</a><br/></td></tr>
-<tr class="separator:ga611dfcf7209a57c2e45964e8bb4c5756"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70169283f5203ae8eac233136d7d8bcb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00769.html#ga70169283f5203ae8eac233136d7d8bcb">BLE_SRV_SC_CTRLPT_SENSOR_LOCATIONS_OP_SUPPORTED</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga70169283f5203ae8eac233136d7d8bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga057b47633228ff5da51d9c924f346637"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00769.html#ga057b47633228ff5da51d9c924f346637">BLE_SRV_SC_CTRLPT_CUM_VAL_OP_SUPPORTED</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga057b47633228ff5da51d9c924f346637"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5b9d61593d9037072ebf7a6202424f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00769.html#gac5b9d61593d9037072ebf7a6202424f4">BLE_SRV_SC_CTRLPT_START_CALIB_OP_SUPPORTED</a>&#160;&#160;&#160;0x04</td></tr>
+<tr class="separator:gac5b9d61593d9037072ebf7a6202424f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Constants, type definitions and functions that are common to all services. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaa5c29b2eac30fc2688b11741f5895697"></a>
+<a class="anchor" id="ga057b47633228ff5da51d9c924f346637"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_CCCD_VALUE_LEN&#160;&#160;&#160;2</td>
+          <td class="memname">#define BLE_SRV_SC_CTRLPT_CUM_VAL_OP_SUPPORTED&#160;&#160;&#160;0x02</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The length of a CCCD value. </p>
+<p>Support for setting cumulative value related operations </p>
 
 </div>
 </div>
-<a class="anchor" id="gafbfc0ef111ca725cc8bb500fd93301cc"></a>
+<a class="anchor" id="ga70169283f5203ae8eac233136d7d8bcb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_SRV_ENCODED_REPORT_REF_LEN&#160;&#160;&#160;2</td>
+          <td class="memname">#define BLE_SRV_SC_CTRLPT_SENSOR_LOCATIONS_OP_SUPPORTED&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The length of an encoded Report Reference Descriptor. </p>
+<p>Support for sensor location related operations </p>
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga611dfcf7209a57c2e45964e8bb4c5756"></a>
+<a class="anchor" id="gac5b9d61593d9037072ebf7a6202424f4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ble_srv_ascii_to_utf8 </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00282.html">ble_srv_utf8_str_t</a> *&#160;</td>
-          <td class="paramname"><em>p_utf8</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>p_ascii</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define BLE_SRV_SC_CTRLPT_START_CALIB_OP_SUPPORTED&#160;&#160;&#160;0x04</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Function for making UTF-8 structure refer to an ASCII string. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_utf8</td><td>UTF-8 structure to be set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ascii</td><td>ASCII string to be referred to. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaebc3fc5316f1a6a67e830516b8f9aed5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_srv_report_ref_encode </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_encoded_buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00280.html">ble_srv_report_ref_t</a> *&#160;</td>
-          <td class="paramname"><em>p_report_ref</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for encoding a Report Reference Descriptor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_encoded_buffer</td><td>The buffer of the encoded data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_report_ref</td><td>Report Reference value to be encoded.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Length of the encoded data. </dd></dl>
+<p>Support for starting calibration related operations </p>
 
 </div>
 </div>
@@ -263,7 +158,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:37 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:49 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

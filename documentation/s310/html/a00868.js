@@ -1,15 +1,14 @@
 var a00868 =
 [
-    [ "HCI Transport Layer Configuration", "a00748.html", "a00748" ],
-    [ "Bootloader API.", "a00736.html", "a00736" ],
-    [ "Bootloader settings API.", "a00737.html", "a00737" ],
-    [ "DFU BLE packet handling in Application", "a00747.html", "a00747" ],
-    [ "Device Firmware Update API.", "a00740.html", "a00740" ],
-    [ "Init packet handling in DFU.", "a00744.html", "a00744" ],
-    [ "DFU transport API.", "a00745.html", "a00745" ],
-    [ "Bootloader util API.", "a00739.html", "a00739" ],
-    [ "Device Firmware Update internal header for bank handling in DFU.", "a00741.html", "a00741" ],
-    [ "Ble_sdk_app_bootloader_main", "a00869.html", null ],
-    [ "DFU BLE SVC", "a00742.html", "a00742" ],
-    [ "DFU BLE SVC internal", "a00743.html", "a00743" ]
+    [ "ANT STACK", "a00626.html", "a00626" ],
+    [ "BLE SoftDevice Common", "a00629.html", "a00629" ],
+    [ "Generic Access Profile (GAP)", "a00687.html", "a00687" ],
+    [ "Generic Attribute Profile (GATT) Client", "a00699.html", "a00699" ],
+    [ "Generic Attribute Profile (GATT) Common", "a00842.html", "a00842" ],
+    [ "Generic Attribute Profile (GATT) Server", "a00712.html", "a00712" ],
+    [ "Logical Link Control and Adaptation Protocol (L2CAP)", "a00732.html", "a00732" ],
+    [ "SoftDevice Manager API", "a00678.html", "a00678" ],
+    [ "SoftDevice Global Error Codes", "a00676.html", "a00676" ],
+    [ "SoC Library API", "a00680.html", "a00680" ],
+    [ "Master Boot Record API", "a00682.html", "a00682" ]
 ];

@@ -166,7 +166,7 @@ Typical DFU Control Point procedure</div></div>
 <tr>
 <td>Start DFU </td><td>Procedure to prepare the device for a uploading the firmware. Size of firmware is provided in the request parameter. DFU Target response determines the device is ready for next stage of firmware update. The Start DFU must be followed by a byte indicating type of update, </td></tr>
 <tr>
-<td>Receive Init Data </td><td>procedure to exchange information necessary for firmware update that needs to be exchanged before upload of firmware. Device Type, Revision Type, Application version, Hash exchange / Public key exchange etc are some examples of such information. For detailed description of the init packet, see <a class="el" href="a00052.html">Init packet handling</a>. </td></tr>
+<td>Receive Init Data </td><td>procedure to exchange information necessary for firmware update that needs to be exchanged before upload of firmware. Device Type, Revision Type, Application version, Hash exchange / Public key exchange etc are some examples of such information. For detailed description of the init packet, see <a class="el" href="a00053.html">Init packet handling</a>. </td></tr>
 <tr>
 <td>Receive App Data </td><td>Procedure to upload firmware fragmented as DFU Packets. Maximum size of each packet is (ATT_MTU - 3) octets. DFU Packets can be of variable length with a minimum size of 1 octet. </td></tr>
 <tr>
@@ -181,7 +181,7 @@ Typical DFU Control Point procedure</div></div>
 <td>Packet Receipt Notification</td><td>Procedure to request notification on receiving every 'n' packets. The number 'n' is requested by the controller. This is not a mandatory procedure for the Controller. </td></tr>
 </table>
 <p>DFU Target in DFU mode, is in <b>GAP General Discoverable mode</b> and is <b>connectable</b>. 128-bit DFU Service UUID is advertised in the Advertisement Data, along with full name of <b>DfuTarg</b>.</p>
-<p>Once connected to the DFU Controller, DFU Procedure can be started by requesting a Start DFU Procedure. Size of new firmware is provided during this procedure. On successful <em>Start DFU</em> procedure, <em>Receive Init Data</em> is initiated to exchange Init packet data information, <a class="el" href="a00052.html">Init packet handling</a>. On success, this procedure is followed by upload of new firmware by requesting the <em>Receive App Data</em> Procedure. Currently, banked update is performed, implying, the old firmware can be restored in case firmware update procedure did not succeed at any stage of DFU Transfer. New firmware transferred is validated using the <em>Validate Procedure</em>. Validated firmware can be activated by issuing the <em>Activate Image &amp; Reset Procedure</em>. It is possible to reset the system at any stage using the <em>System Reset</em> procedure. When this procedure is requested, the system will restart with old firmware in case the device had a firmware; in case the device did not have any existing application firmware the system will restart in DFU mode.</p>
+<p>Once connected to the DFU Controller, DFU Procedure can be started by requesting a Start DFU Procedure. Size of new firmware is provided during this procedure. On successful <em>Start DFU</em> procedure, <em>Receive Init Data</em> is initiated to exchange Init packet data information, <a class="el" href="a00053.html">Init packet handling</a>. On success, this procedure is followed by upload of new firmware by requesting the <em>Receive App Data</em> Procedure. Currently, banked update is performed, implying, the old firmware can be restored in case firmware update procedure did not succeed at any stage of DFU Transfer. New firmware transferred is validated using the <em>Validate Procedure</em>. Validated firmware can be activated by issuing the <em>Activate Image &amp; Reset Procedure</em>. It is possible to reset the system at any stage using the <em>System Reset</em> procedure. When this procedure is requested, the system will restart with old firmware in case the device had a firmware; in case the device did not have any existing application firmware the system will restart in DFU mode.</p>
 <p>Firmware being updated is expected in binary format. It is possible to request the size of received firmware by requesting the <em>Report Received Image Size</em> procedure. This procedure is particularly useful on reconnection after a link loss. See <a class="el" href="a00058.html#ota_profile_ll_behavior">Link Loss Procedure</a> for more details. It is also possible for the Controller to request notification of acknowledge for every 'n' packets received using the <em>Packet Receipt Notification</em> procedure.</p>
 <p>MSC below describes a typical firmware update exchange between a DFU Controller and DFU Target.</p>
 <div class="image">
@@ -193,7 +193,7 @@ Idle Mode Procedures</h3>
 <p>In case no connection is established with the DFU Target after 60 seconds, Target device will restart in normal mode with old firmware, in case there was an existing application, else in DFU mode, in case there was no application on the device.</p>
 <h3><a class="anchor" id="ota_image_validation_procedure"></a>
 Image Validation Procedure</h3>
-<p>Procedure validates the updated firmware image. This is performed on the post validate function, <a class="el" href="a00744.html#ga1926c2d8e3484641d16f9beb654ac5f1">dfu_init_postvalidate</a>, in <code>dfu_init_template.c</code>.</p>
+<p>Procedure validates the updated firmware image. This is performed on the post validate function, <a class="el" href="a00745.html#ga1926c2d8e3484641d16f9beb654ac5f1">dfu_init_postvalidate</a>, in <code>dfu_init_template.c</code>.</p>
 <h3><a class="anchor" id="ota_profile_idle_conn"></a>
 Idle Connection Procedure</h3>
 <p>When the Nordic bootloader application detects that the connection has been idle for a time period, meaning that the DFU Controller has not written any packet that will result in the progress of the firmware update, the update will be stopped, the connection will be terminated, and the previously valid application will be started. If no valid application exists in the flash, the application stays in bootloader mode waiting for a reconnection from the DFU Controller.</p>
@@ -286,8 +286,8 @@ General Error Handling procedures</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00049.html">BLE Bootloader/DFU</a></li><li class="navelem"><a class="el" href="a00055.html">DFU Transport Layers</a></li>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:32 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00050.html">BLE Bootloader/DFU</a></li><li class="navelem"><a class="el" href="a00055.html">DFU Transport Layers</a></li>
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:44 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

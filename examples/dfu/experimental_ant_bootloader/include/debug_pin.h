@@ -59,6 +59,7 @@ All rights reserved.
 /*starts at 24 ends at 32*/
 #define DBG_DFU_BOOTLOADER_PATH             24
 #define DBG_DFU_FLASH_IMAGE_STATUS          25
+#define DBG_DFU_CKPT_PINC                   25
 #define DBG_DFU_CKPT_PINA                   28
 #define DBG_DFU_CKPT_PINB                   29
 //#define DBG_DFU_FLASH_PIN                   29

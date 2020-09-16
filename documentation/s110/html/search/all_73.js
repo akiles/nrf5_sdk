@@ -332,7 +332,7 @@ var searchData=
   ['softdevice_5fble_5fevt_5fhandler_5fset',['softdevice_ble_evt_handler_set',['../a00953.html#gae54951e939156d5f05fa4d27fed1dc65',1,'ble_stack_handler_types.h']]],
   ['softdevice_5fevt_5fschedule_5ffunc_5ft',['softdevice_evt_schedule_func_t',['../a00954.html#ga25f319506f20e24ad71478dce23f7f39',1,'softdevice_handler.h']]],
   ['softdevice_20event_20handler',['SoftDevice Event Handler',['../a00954.html',1,'']]],
-  ['softdevice_5fhandler_5finit',['SOFTDEVICE_HANDLER_INIT',['../a00954.html#ga9ff2f68caf148f0645c9953c93aa2ec7',1,'SOFTDEVICE_HANDLER_INIT():&#160;softdevice_handler.h'],['../a00954.html#ga53c8f6b5556622cc42f717ddf756ca8e',1,'softdevice_handler_init(nrf_clock_lfclksrc_t clock_source, void *p_evt_buffer, uint16_t evt_buffer_size, softdevice_evt_schedule_func_t evt_schedule_func):&#160;softdevice_handler.h']]],
+  ['softdevice_5fhandler_5finit',['SOFTDEVICE_HANDLER_INIT',['../a00954.html#ga9ff2f68caf148f0645c9953c93aa2ec7',1,'SOFTDEVICE_HANDLER_INIT():&#160;softdevice_handler.h'],['../a00954.html#ga33d6c5c2cf0d6cd1e89ef172d75e0975',1,'softdevice_handler_init(nrf_clock_lfclksrc_t clock_source, void *p_ble_evt_buffer, uint16_t ble_evt_buffer_size, softdevice_evt_schedule_func_t evt_schedule_func):&#160;softdevice_handler.h']]],
   ['softdevice_5fhandler_5fsd_5fdisable',['softdevice_handler_sd_disable',['../a00954.html#gabbec783a89f93617d3661a819597d79c',1,'softdevice_handler.h']]],
   ['softdevice_5finformation',['SOFTDEVICE_INFORMATION',['../a00949.html#gaab39eb82cd517f5d6b50d7b2df9c1929',1,'dfu_types.h']]],
   ['softdevice_5finformation_5fbase',['SOFTDEVICE_INFORMATION_BASE',['../a00949.html#ga7dbc283cb0c0e330a468ad120ef5742a',1,'dfu_types.h']]],

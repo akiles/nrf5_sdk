@@ -300,7 +300,7 @@ var searchData=
   ['softdevice_5fble_5fevt_5fhandler_5fset',['softdevice_ble_evt_handler_set',['../a00699.html#gae54951e939156d5f05fa4d27fed1dc65',1,'ble_stack_handler_types.h']]],
   ['softdevice_5fevt_5fschedule_5ffunc_5ft',['softdevice_evt_schedule_func_t',['../a00700.html#ga25f319506f20e24ad71478dce23f7f39',1,'softdevice_handler.h']]],
   ['softdevice_20event_20handler',['SoftDevice Event Handler',['../a00700.html',1,'']]],
-  ['softdevice_5fhandler_5finit',['softdevice_handler_init',['../a00700.html#ga53c8f6b5556622cc42f717ddf756ca8e',1,'softdevice_handler_init(nrf_clock_lfclksrc_t clock_source, void *p_evt_buffer, uint16_t evt_buffer_size, softdevice_evt_schedule_func_t evt_schedule_func):&#160;softdevice_handler.h'],['../a00700.html#ga9ff2f68caf148f0645c9953c93aa2ec7',1,'SOFTDEVICE_HANDLER_INIT():&#160;softdevice_handler.h']]],
+  ['softdevice_5fhandler_5finit',['softdevice_handler_init',['../a00700.html#ga33d6c5c2cf0d6cd1e89ef172d75e0975',1,'softdevice_handler_init(nrf_clock_lfclksrc_t clock_source, void *p_ble_evt_buffer, uint16_t ble_evt_buffer_size, softdevice_evt_schedule_func_t evt_schedule_func):&#160;softdevice_handler.h'],['../a00700.html#ga9ff2f68caf148f0645c9953c93aa2ec7',1,'SOFTDEVICE_HANDLER_INIT():&#160;softdevice_handler.h']]],
   ['softdevice_5fhandler_5fsd_5fdisable',['softdevice_handler_sd_disable',['../a00700.html#gabbec783a89f93617d3661a819597d79c',1,'softdevice_handler.h']]],
   ['softdevice_5fsched_5fevt_5fsize',['SOFTDEVICE_SCHED_EVT_SIZE',['../a00700.html#ga9977dc2f6256c9b2c6d23622fa4da975',1,'softdevice_handler.h']]],
   ['softdevice_5fsys_5fevt_5fhandler_5fset',['softdevice_sys_evt_handler_set',['../a00700.html#ga200d4e1f1c70a46e6de6343f0a7d84b1',1,'softdevice_handler.h']]],

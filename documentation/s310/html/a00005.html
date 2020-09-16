@@ -160,19 +160,19 @@ SPI Module Initialization and Configuration</h1>
 <div class="line">- Disable only SPI interrupt.   <span class="comment">//false</span></div>
 </div><!-- fragment --><dl class="section user"><dt>Quick start</dt><dd></dd></dl>
 <ul>
-<li>Create and initialize structure <a class="el" href="a00331.html">spi_master_config_t</a>. Macro <a class="el" href="a00600.html#gac60ab1614b729be681ca7268fee84350">SPI_MASTER_INIT_DEFAULT</a> can be used to initialize this structure by default values.</li>
+<li>Create and initialize structure <a class="el" href="a00331.html">spi_master_config_t</a>. Macro <a class="el" href="a00601.html#gac60ab1614b729be681ca7268fee84350">SPI_MASTER_INIT_DEFAULT</a> can be used to initialize this structure by default values.</li>
 </ul>
 <ul>
 <li>Configure SPI master PINs.</li>
 </ul>
 <ul>
-<li>Invoke <a class="el" href="a00600.html#ga3cf5563d474f5b41080b6ae53be0ee51" title="Function for opening and initializing a SPI master driver.">spi_master_open()</a> with parameters <a class="el" href="a00600.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> and pointer to the <a class="el" href="a00331.html">spi_master_config_t</a>. On successful initialization <a class="el" href="a00600.html#ga3cf5563d474f5b41080b6ae53be0ee51" title="Function for opening and initializing a SPI master driver.">spi_master_open()</a> should return <a class="el" href="a00675.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a>.</li>
+<li>Invoke <a class="el" href="a00601.html#ga3cf5563d474f5b41080b6ae53be0ee51" title="Function for opening and initializing a SPI master driver.">spi_master_open()</a> with parameters <a class="el" href="a00601.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> and pointer to the <a class="el" href="a00331.html">spi_master_config_t</a>. On successful initialization <a class="el" href="a00601.html#ga3cf5563d474f5b41080b6ae53be0ee51" title="Function for opening and initializing a SPI master driver.">spi_master_open()</a> should return <a class="el" href="a00676.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a>.</li>
 </ul>
 <ul>
-<li>Invoke <a class="el" href="a00600.html#ga76af017b1ce006baeed02f2668c00e7d" title="Function for registration event handler.">spi_master_evt_handler_reg()</a> with parameters <a class="el" href="a00600.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> and the event handler name to register a event handler.</li>
+<li>Invoke <a class="el" href="a00601.html#ga76af017b1ce006baeed02f2668c00e7d" title="Function for registration event handler.">spi_master_evt_handler_reg()</a> with parameters <a class="el" href="a00601.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> and the event handler name to register a event handler.</li>
 </ul>
 <ul>
-<li>Invoke <a class="el" href="a00600.html#ga4e03ec39c566925e98fe0ec79c6d7623" title="Function for transferring data between SPI master and SPI slave.">spi_master_send_recv()</a> with parameters <a class="el" href="a00600.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> and buffers to start transfer.</li>
+<li>Invoke <a class="el" href="a00601.html#ga4e03ec39c566925e98fe0ec79c6d7623" title="Function for transferring data between SPI master and SPI slave.">spi_master_send_recv()</a> with parameters <a class="el" href="a00601.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> and buffers to start transfer.</li>
 </ul>
 <dl class="section user"><dt>Following sample snippet initializes SPI_MASTER_0 with default values.</dt><dd></dd></dl>
 <p><br/>
@@ -183,7 +183,7 @@ SPI Module Initialization and Configuration</h1>
 <div class="line">{</div>
 <div class="line">    <span class="keywordflow">switch</span> (spi_master_evt.<a class="code" href="a00332.html#a622197dded7bfa292535944e6870c5f7">evt_type</a>)</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code" href="a00600.html#gga31240c0ee79ef65d920c9d3fa8899789ac7b903657b890c123f4b51fd2a26e53e">SPI_MASTER_EVT_TRANSFER_COMPLETED</a>:</div>
+<div class="line">        <span class="keywordflow">case</span> <a class="code" href="a00601.html#gga31240c0ee79ef65d920c9d3fa8899789ac7b903657b890c123f4b51fd2a26e53e">SPI_MASTER_EVT_TRANSFER_COMPLETED</a>:</div>
 <div class="line">            <span class="comment">//Data transmission is ended successful. &#39;rx_buffer&#39; has data received from SPI slave.</span></div>
 <div class="line">            </div>
 <div class="line">            transmission_completed = <span class="keyword">true</span>;</div>
@@ -198,7 +198,7 @@ SPI Module Initialization and Configuration</h1>
 <div class="line"><span class="keywordtype">void</span> spi_master_init(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">//Structure for SPI master configuration, initialized by default values.</span></div>
-<div class="line">    <a class="code" href="a00331.html" title="Struct containing configuration parameters of the SPI master.">spi_master_config_t</a> spi_config = <a class="code" href="a00600.html#gac60ab1614b729be681ca7268fee84350" title="Macro for initializing SPI master by default values.">SPI_MASTER_INIT_DEFAULT</a>;</div>
+<div class="line">    <a class="code" href="a00331.html" title="Struct containing configuration parameters of the SPI master.">spi_master_config_t</a> spi_config = <a class="code" href="a00601.html#gac60ab1614b729be681ca7268fee84350" title="Macro for initializing SPI master by default values.">SPI_MASTER_INIT_DEFAULT</a>;</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">//Configure SPI master.</span></div>
 <div class="line">    spi_config.<a class="code" href="a00331.html#a0beff1248c5fd9d9f257fc2c3ea12a84">SPI_Pin_SCK</a>  = SPIM0_SCK_PIN;</div>
@@ -208,14 +208,14 @@ SPI Module Initialization and Configuration</h1>
 <div class="line"></div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">//Initialize SPI master.</span></div>
-<div class="line">    uint32_t err_code = <a class="code" href="a00600.html#ga3cf5563d474f5b41080b6ae53be0ee51" title="Function for opening and initializing a SPI master driver.">spi_master_open</a>(<a class="code" href="a00600.html#gga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d">SPI_MASTER_0</a>, &amp;spi_config);</div>
-<div class="line">    <span class="keywordflow">if</span> (err_code != <a class="code" href="a00675.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">    uint32_t err_code = <a class="code" href="a00601.html#ga3cf5563d474f5b41080b6ae53be0ee51" title="Function for opening and initializing a SPI master driver.">spi_master_open</a>(<a class="code" href="a00601.html#gga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d">SPI_MASTER_0</a>, &amp;spi_config);</div>
+<div class="line">    <span class="keywordflow">if</span> (err_code != <a class="code" href="a00676.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">    {</div>
 <div class="line">        <span class="comment">//Module initialization failed. Take recovery action.</span></div>
 <div class="line">    }</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">//Register SPI master event handler.</span></div>
-<div class="line">    <a class="code" href="a00600.html#ga76af017b1ce006baeed02f2668c00e7d" title="Function for registration event handler.">spi_master_evt_handler_reg</a>(<a class="code" href="a00600.html#gga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d">SPI_MASTER_0</a>, spi_master_event_handler);</div>
+<div class="line">    <a class="code" href="a00601.html#ga76af017b1ce006baeed02f2668c00e7d" title="Function for registration event handler.">spi_master_evt_handler_reg</a>(<a class="code" href="a00601.html#gga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d">SPI_MASTER_0</a>, spi_master_event_handler);</div>
 <div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="spi_master_send_recv"></a>
 SPI Master Data Exchange API</h1>
@@ -232,8 +232,8 @@ SPI Master Data Exchange API</h1>
 <div class="line">    tx_buffer[index] = index;</div>
 <div class="line">}</div>
 <div class="line"></div>
-<div class="line">uint32_t err_code = <a class="code" href="a00600.html#ga4e03ec39c566925e98fe0ec79c6d7623" title="Function for transferring data between SPI master and SPI slave.">spi_master_send_recv</a>(<a class="code" href="a00600.html#gga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d">SPI_MASTER_0</a>, tx_buffer, buf_len, rx_buffer, buf_len);</div>
-<div class="line"><span class="keywordflow">if</span> (err_code != <a class="code" href="a00675.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">uint32_t err_code = <a class="code" href="a00601.html#ga4e03ec39c566925e98fe0ec79c6d7623" title="Function for transferring data between SPI master and SPI slave.">spi_master_send_recv</a>(<a class="code" href="a00601.html#gga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d">SPI_MASTER_0</a>, tx_buffer, buf_len, rx_buffer, buf_len);</div>
+<div class="line"><span class="keywordflow">if</span> (err_code != <a class="code" href="a00676.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">//Data transmission failed.</span></div>
 <div class="line">}</div>
@@ -245,7 +245,7 @@ SPI Master Data Exchange API</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00002.html">Hardware Drivers</a></li>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:32 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:44 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

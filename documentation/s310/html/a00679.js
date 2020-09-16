@@ -1,7 +1,6 @@
 var a00679 =
 [
-    [ "SoC Library Error Codes", "a00680.html", "a00680" ],
-    [ "Defines", "a00863.html", "a00863" ],
-    [ "Types", "a00864.html", "a00864" ],
-    [ "Functions", "a00865.html", "a00865" ]
+    [ "NRF_ERROR_SDM_INCORRECT_CLENR0", "a00679.html#gaa612f324901ce4390c4010751c935d94", null ],
+    [ "NRF_ERROR_SDM_INCORRECT_INTERRUPT_CONFIGURATION", "a00679.html#ga5e01566a9b1b0f6fdec349198401e5bd", null ],
+    [ "NRF_ERROR_SDM_LFCLK_SOURCE_UNKNOWN", "a00679.html#ga987f38ed25beabe507da1d5dd31bbeae", null ]
 ];

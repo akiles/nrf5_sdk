@@ -100,16 +100,16 @@ $(document).ready(function(){initNavTree('a00016.html','');});
 <div class="title">Error module </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The error module provides the weak function <a class="el" href="a00234.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> for handling application errors. This function is used by most applications if it is not defined explicitly in the application code.</p>
+<div class="textblock"><p>The error module provides the weak function <a class="el" href="a00236.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> for handling application errors. This function is used by most applications if it is not defined explicitly in the application code.</p>
 <p>The behavior of the error handler differs depending on whether the DEBUG flag is set:</p>
 <ul>
 <li><p class="startli"><b>If the DEBUG flag is not set:</b></p>
-<p class="startli">When <a class="el" href="a00234.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> is invoked, the MCU is reset.</p>
+<p class="startli">When <a class="el" href="a00236.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> is invoked, the MCU is reset.</p>
 </li>
 </ul>
 <ul>
 <li><p class="startli"><b>If the DEBUG flag is set:</b></p>
-<p class="startli">When <a class="el" href="a00234.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> is invoked, the function parameters (error code, line number, and file name) are copied to global memory, interrupts are disabled, and the application enters an infinite loop.</p>
+<p class="startli">When <a class="el" href="a00236.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> is invoked, the function parameters (error code, line number, and file name) are copied to global memory, interrupts are disabled, and the application enters an infinite loop.</p>
 <p class="startli">If the BSP_DEFINES_ONLY flag is set, all LEDs available on the board are turned on.</p>
 <p class="startli">If the BSP_DEFINES_ONLY flag is not set, the <a class="el" href="a00040.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> state is indicated. </p>
 </li>
@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('a00016.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:28 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:40 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

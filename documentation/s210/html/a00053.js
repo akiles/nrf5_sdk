@@ -1,7 +1,7 @@
 var a00053 =
 [
-    [ "rx_buf", "a00053.html#ab5c77995614a78b4a7baf6f5ab59bb5c", null ],
-    [ "rx_buf_size", "a00053.html#a42c5f8c78ee123d84c7de5da43f703e0", null ],
-    [ "tx_buf", "a00053.html#a1073bbd41b6d0ddc55e7ec432cf517dd", null ],
-    [ "tx_buf_size", "a00053.html#a8a0ff8a830eadfc972a4d44e1340e392", null ]
+    [ "buf_size_mask", "a00053.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
+    [ "p_buf", "a00053.html#a64eafd180a65260208be3b845f6acbf5", null ],
+    [ "read_pos", "a00053.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
+    [ "write_pos", "a00053.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
 ];

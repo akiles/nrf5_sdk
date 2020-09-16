@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Bootloader API.</title>
+<title>nRF51 SDK - S310 SoftDevice: Heart Rate Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,277 +97,428 @@ $(document).ready(function(){initNavTree('a00736.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Bootloader API.<div class="ingroups"><a class="el" href="a00868.html">Bootloader/DFU API</a></div></div>  </div>
+<div class="title">Heart Rate Service<div class="ingroups"><a class="el" href="a00830.html">BLE Services</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Bootloader module interface.  
+<p>Heart Rate Service module.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00738"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00738.html">Types and definitions.</a></td></tr>
-<tr class="memdesc:a00738"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bootloader module type and definitions. <br/></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00246.html">ble_hrs_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heart Rate Service event.  <a href="a00246.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00247.html">ble_hrs_init_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heart Rate Service init structure. This contains all options and data needed for initialization of the service.  <a href="a00247.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00248.html">ble_hrs_s</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heart Rate Service structure. This contains various status information for the service.  <a href="a00248.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga31b5866ba8e305a1b7ca2fb60db7b326"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga31b5866ba8e305a1b7ca2fb60db7b326"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_OTHER</b>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ga31b5866ba8e305a1b7ca2fb60db7b326"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5425d93ca774106500b41705e15055b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5425d93ca774106500b41705e15055b4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_CHEST</b>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:ga5425d93ca774106500b41705e15055b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17a151b89da0050f4777588290c4aedb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga17a151b89da0050f4777588290c4aedb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_WRIST</b>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:ga17a151b89da0050f4777588290c4aedb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3cc553f76ed3ea59fabb38c628562b0d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3cc553f76ed3ea59fabb38c628562b0d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_FINGER</b>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:ga3cc553f76ed3ea59fabb38c628562b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd74436f71c3e8398e86837787e3c2a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd74436f71c3e8398e86837787e3c2a5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_HAND</b>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:gafd74436f71c3e8398e86837787e3c2a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga950b269e5a74ec5b830e99f7b7919e52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga950b269e5a74ec5b830e99f7b7919e52"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_EAR_LOBE</b>&#160;&#160;&#160;5</td></tr>
+<tr class="separator:ga950b269e5a74ec5b830e99f7b7919e52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga63bef70c28133016a9735ffdbc732df9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga63bef70c28133016a9735ffdbc732df9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_FOOT</b>&#160;&#160;&#160;6</td></tr>
+<tr class="separator:ga63bef70c28133016a9735ffdbc732df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e829f32fd9d57d18d1e8daa7956dee5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#ga2e829f32fd9d57d18d1e8daa7956dee5">BLE_HRS_MAX_BUFFERED_RR_INTERVALS</a>&#160;&#160;&#160;20</td></tr>
+<tr class="separator:ga2e829f32fd9d57d18d1e8daa7956dee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gafea0cb34e3a05260b4de67d81f2f4cab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafea0cb34e3a05260b4de67d81f2f4cab"></a>
+typedef struct <a class="el" href="a00248.html">ble_hrs_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a></td></tr>
+<tr class="memdesc:gafea0cb34e3a05260b4de67d81f2f4cab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heart Rate Service structure. This contains various status information for the service. <br/></td></tr>
+<tr class="separator:gafea0cb34e3a05260b4de67d81f2f4cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga85836949ab0f55e7ffcaec72dd0ee6e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga85836949ab0f55e7ffcaec72dd0ee6e1"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#ga85836949ab0f55e7ffcaec72dd0ee6e1">ble_hrs_evt_handler_t</a> )(<a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, <a class="el" href="a00246.html">ble_hrs_evt_t</a> *p_evt)</td></tr>
+<tr class="memdesc:ga85836949ab0f55e7ffcaec72dd0ee6e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heart Rate Service event handler type. <br/></td></tr>
+<tr class="separator:ga85836949ab0f55e7ffcaec72dd0ee6e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaee495052c855cd5345f7301b594763c9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gaee495052c855cd5345f7301b594763c9">ble_hrs_evt_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00736.html#ggaee495052c855cd5345f7301b594763c9a0f13cf6877038b174544d95ee3a40894">BLE_HRS_EVT_NOTIFICATION_ENABLED</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00736.html#ggaee495052c855cd5345f7301b594763c9a1ed0b327eecae450aa039af15ddae345">BLE_HRS_EVT_NOTIFICATION_DISABLED</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaee495052c855cd5345f7301b594763c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heart Rate Service event type.  <a href="a00736.html#gaee495052c855cd5345f7301b594763c9">More...</a><br/></td></tr>
+<tr class="separator:gaee495052c855cd5345f7301b594763c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaa821efb3c4074cee13cb2a7377e793f1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gaa821efb3c4074cee13cb2a7377e793f1">bootloader_init</a> (void)</td></tr>
-<tr class="memdesc:gaa821efb3c4074cee13cb2a7377e793f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Bootloader.  <a href="#gaa821efb3c4074cee13cb2a7377e793f1">More...</a><br/></td></tr>
-<tr class="separator:gaa821efb3c4074cee13cb2a7377e793f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd325fffda0cb29f1a8b917eb61d2494"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gabd325fffda0cb29f1a8b917eb61d2494">bootloader_app_is_valid</a> (uint32_t app_addr)</td></tr>
-<tr class="memdesc:gabd325fffda0cb29f1a8b917eb61d2494"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for validating application region in flash.  <a href="#gabd325fffda0cb29f1a8b917eb61d2494">More...</a><br/></td></tr>
-<tr class="separator:gabd325fffda0cb29f1a8b917eb61d2494"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf11a485218863db81385fe18437b5961"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gaf11a485218863db81385fe18437b5961">bootloader_dfu_start</a> (void)</td></tr>
-<tr class="memdesc:gaf11a485218863db81385fe18437b5961"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting the Device Firmware Update.  <a href="#gaf11a485218863db81385fe18437b5961">More...</a><br/></td></tr>
-<tr class="separator:gaf11a485218863db81385fe18437b5961"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4fc5191d040a4abb9a23b52e22f56101"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#ga4fc5191d040a4abb9a23b52e22f56101">bootloader_app_start</a> (uint32_t app_addr)</td></tr>
-<tr class="memdesc:ga4fc5191d040a4abb9a23b52e22f56101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for exiting bootloader and booting into application.  <a href="#ga4fc5191d040a4abb9a23b52e22f56101">More...</a><br/></td></tr>
-<tr class="separator:ga4fc5191d040a4abb9a23b52e22f56101"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a5868fa37d3f3ef4cdb3cd54cb81684"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#ga5a5868fa37d3f3ef4cdb3cd54cb81684">bootloader_settings_get</a> (<a class="el" href="a00289.html">bootloader_settings_t</a> *const p_settings)</td></tr>
-<tr class="memdesc:ga5a5868fa37d3f3ef4cdb3cd54cb81684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for retrieving the bootloader settings.  <a href="#ga5a5868fa37d3f3ef4cdb3cd54cb81684">More...</a><br/></td></tr>
-<tr class="separator:ga5a5868fa37d3f3ef4cdb3cd54cb81684"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebf46c5b600b9c2a5609c7f36954adef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gaebf46c5b600b9c2a5609c7f36954adef">bootloader_dfu_update_process</a> (<a class="el" href="a00299.html">dfu_update_status_t</a> update_status)</td></tr>
-<tr class="memdesc:gaebf46c5b600b9c2a5609c7f36954adef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for processing DFU status update.  <a href="#gaebf46c5b600b9c2a5609c7f36954adef">More...</a><br/></td></tr>
-<tr class="separator:gaebf46c5b600b9c2a5609c7f36954adef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga360affe1c4d4326b4daa465dee005330"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#ga360affe1c4d4326b4daa465dee005330">bootloader_dfu_sd_in_progress</a> (void)</td></tr>
-<tr class="memdesc:ga360affe1c4d4326b4daa465dee005330"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function getting state of SoftDevice update in progress. After a successfull SoftDevice transfer the system restarts in orderto disable SoftDevice and complete the update.  <a href="#ga360affe1c4d4326b4daa465dee005330">More...</a><br/></td></tr>
-<tr class="separator:ga360affe1c4d4326b4daa465dee005330"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2edc94128b91cbdc2551be36dc692ef0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#ga2edc94128b91cbdc2551be36dc692ef0">bootloader_dfu_sd_update_continue</a> (void)</td></tr>
-<tr class="memdesc:ga2edc94128b91cbdc2551be36dc692ef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for continuing the Device Firmware Update of a SoftDevice.  <a href="#ga2edc94128b91cbdc2551be36dc692ef0">More...</a><br/></td></tr>
-<tr class="separator:ga2edc94128b91cbdc2551be36dc692ef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga252165c548d698c2f001261314fecfce"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#ga252165c548d698c2f001261314fecfce">bootloader_dfu_sd_update_finalize</a> (void)</td></tr>
-<tr class="memdesc:ga252165c548d698c2f001261314fecfce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for finalizing the Device Firmware Update of a SoftDevice.  <a href="#ga252165c548d698c2f001261314fecfce">More...</a><br/></td></tr>
-<tr class="separator:ga252165c548d698c2f001261314fecfce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga94256c7eb29129ff352ca53adf1ad5b8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#ga94256c7eb29129ff352ca53adf1ad5b8">ble_hrs_init</a> (<a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, const <a class="el" href="a00247.html">ble_hrs_init_t</a> *p_hrs_init)</td></tr>
+<tr class="memdesc:ga94256c7eb29129ff352ca53adf1ad5b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Heart Rate Service.  <a href="#ga94256c7eb29129ff352ca53adf1ad5b8">More...</a><br/></td></tr>
+<tr class="separator:ga94256c7eb29129ff352ca53adf1ad5b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac50e029608199cc8d52463acb3e8a02e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gac50e029608199cc8d52463acb3e8a02e">ble_hrs_on_ble_evt</a> (<a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, <a class="el" href="a00153.html">ble_evt_t</a> *p_ble_evt)</td></tr>
+<tr class="memdesc:gac50e029608199cc8d52463acb3e8a02e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Application's BLE Stack events.  <a href="#gac50e029608199cc8d52463acb3e8a02e">More...</a><br/></td></tr>
+<tr class="separator:gac50e029608199cc8d52463acb3e8a02e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe5fed48baeb4a518a51bd7e2e5f010e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gabe5fed48baeb4a518a51bd7e2e5f010e">ble_hrs_heart_rate_measurement_send</a> (<a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, uint16_t heart_rate)</td></tr>
+<tr class="memdesc:gabe5fed48baeb4a518a51bd7e2e5f010e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for sending heart rate measurement if notification has been enabled.  <a href="#gabe5fed48baeb4a518a51bd7e2e5f010e">More...</a><br/></td></tr>
+<tr class="separator:gabe5fed48baeb4a518a51bd7e2e5f010e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea316a9c9503571b143d93086295f61a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gaea316a9c9503571b143d93086295f61a">ble_hrs_rr_interval_add</a> (<a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, uint16_t rr_interval)</td></tr>
+<tr class="memdesc:gaea316a9c9503571b143d93086295f61a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for adding a RR Interval measurement to the RR Interval buffer.  <a href="#gaea316a9c9503571b143d93086295f61a">More...</a><br/></td></tr>
+<tr class="separator:gaea316a9c9503571b143d93086295f61a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf207a34d16fbee25b5555fd4192b5b15"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gaf207a34d16fbee25b5555fd4192b5b15">ble_hrs_rr_interval_buffer_is_full</a> (<a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs)</td></tr>
+<tr class="memdesc:gaf207a34d16fbee25b5555fd4192b5b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if RR Interval buffer is full.  <a href="#gaf207a34d16fbee25b5555fd4192b5b15">More...</a><br/></td></tr>
+<tr class="separator:gaf207a34d16fbee25b5555fd4192b5b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8b66aa54ddf79459271df6ec9b65644"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gad8b66aa54ddf79459271df6ec9b65644">ble_hrs_sensor_contact_supported_set</a> (<a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, bool is_sensor_contact_supported)</td></tr>
+<tr class="memdesc:gad8b66aa54ddf79459271df6ec9b65644"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the state of the Sensor Contact Supported bit.  <a href="#gad8b66aa54ddf79459271df6ec9b65644">More...</a><br/></td></tr>
+<tr class="separator:gad8b66aa54ddf79459271df6ec9b65644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4eccea2cb1d248ccdc75bebb84c1dff2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#ga4eccea2cb1d248ccdc75bebb84c1dff2">ble_hrs_sensor_contact_detected_update</a> (<a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, bool is_sensor_contact_detected)</td></tr>
+<tr class="memdesc:ga4eccea2cb1d248ccdc75bebb84c1dff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the state of the Sensor Contact Detected bit.  <a href="#ga4eccea2cb1d248ccdc75bebb84c1dff2">More...</a><br/></td></tr>
+<tr class="separator:ga4eccea2cb1d248ccdc75bebb84c1dff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab3ec66c7419f5c79ad54f849353e8aea"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gab3ec66c7419f5c79ad54f849353e8aea">ble_hrs_body_sensor_location_set</a> (<a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, uint8_t body_sensor_location)</td></tr>
+<tr class="memdesc:gab3ec66c7419f5c79ad54f849353e8aea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the Body Sensor Location.  <a href="#gab3ec66c7419f5c79ad54f849353e8aea">More...</a><br/></td></tr>
+<tr class="separator:gab3ec66c7419f5c79ad54f849353e8aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Bootloader module interface. </p>
+<p>Heart Rate Service module. </p>
+<p>This module implements the Heart Rate Service with the Heart Rate Measurement, Body Sensor Location and Heart Rate Control Point characteristics. During initialization it adds the Heart Rate Service and Heart Rate Measurement characteristic to the BLE stack database. Optionally it also adds the Body Sensor Location and Heart Rate Control Point characteristics.</p>
+<p>If enabled, notification of the Heart Rate Measurement characteristic is performed when the application calls <a class="el" href="a00736.html#gabe5fed48baeb4a518a51bd7e2e5f010e" title="Function for sending heart rate measurement if notification has been enabled.">ble_hrs_heart_rate_measurement_send()</a>.</p>
+<p>The Heart Rate Service also provides a set of functions for manipulating the various fields in the Heart Rate Measurement characteristic, as well as setting the Body Sensor Location characteristic value.</p>
+<p>If an event handler is supplied by the application, the Heart Rate Service will generate Heart Rate Service events to the application.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Heart Rate Service module by calling <a class="el" href="a00736.html#gac50e029608199cc8d52463acb3e8a02e" title="Function for handling the Application&#39;s BLE Stack events.">ble_hrs_on_ble_evt()</a> from the <a class="el" href="a00752.html">SoftDevice Event Handler</a> callback.</dd>
+<dd>
+Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profile qualification listings, this section of source code must not be modified. </dd></dl>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga2e829f32fd9d57d18d1e8daa7956dee5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_HRS_MAX_BUFFERED_RR_INTERVALS&#160;&#160;&#160;20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of RR Interval buffer inside service. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaee495052c855cd5345f7301b594763c9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00736.html#gaee495052c855cd5345f7301b594763c9">ble_hrs_evt_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Heart Rate Service event type. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaee495052c855cd5345f7301b594763c9a0f13cf6877038b174544d95ee3a40894"></a>BLE_HRS_EVT_NOTIFICATION_ENABLED</em>&nbsp;</td><td class="fielddoc">
+<p>Heart Rate value notification enabled event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaee495052c855cd5345f7301b594763c9a1ed0b327eecae450aa039af15ddae345"></a>BLE_HRS_EVT_NOTIFICATION_DISABLED</em>&nbsp;</td><td class="fielddoc">
+<p>Heart Rate value notification disabled event. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gabd325fffda0cb29f1a8b917eb61d2494"></a>
+<a class="anchor" id="gab3ec66c7419f5c79ad54f849353e8aea"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool bootloader_app_is_valid </td>
+          <td class="memname">uint32_t ble_hrs_body_sensor_location_set </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>app_addr</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_hrs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>body_sensor_location</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for validating application region in flash. </p>
+<p>Function for setting the Body Sensor Location. </p>
+<p>Sets a new value of the Body Sensor Location characteristic. The new value will be sent to the client the next time the client reads the Body Sensor Location characteristic.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">app_addr</td><td>Address to the region in flash where the application is stored.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">body_sensor_location</td><td>New Body Sensor Location.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>If Application region is valid. </td></tr>
-    <tr><td class="paramname">false</td><td>If Application region is not valid. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga4fc5191d040a4abb9a23b52e22f56101"></a>
+<a class="anchor" id="gabe5fed48baeb4a518a51bd7e2e5f010e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void bootloader_app_start </td>
+          <td class="memname">uint32_t ble_hrs_heart_rate_measurement_send </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>app_addr</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_hrs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>heart_rate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for exiting bootloader and booting into application. </p>
-<p>This function will disable SoftDevice and all interrupts before jumping to application. The SoftDevice vector table base for interrupt forwarding will be set the application address.</p>
+<p>Function for sending heart rate measurement if notification has been enabled. </p>
+<p>The application calls this function after having performed a heart rate measurement. If notification has been enabled, the heart rate measurement data is encoded and sent to the client.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">app_addr</td><td>Address to the region where the application is stored. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">heart_rate</td><td>New heart rate measurement.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga360affe1c4d4326b4daa465dee005330"></a>
+<a class="anchor" id="ga94256c7eb29129ff352ca53adf1ad5b8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool bootloader_dfu_sd_in_progress </td>
+          <td class="memname">uint32_t ble_hrs_init </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="paramtype"><a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_hrs</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function getting state of SoftDevice update in progress. After a successfull SoftDevice transfer the system restarts in orderto disable SoftDevice and complete the update. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>A SoftDevice update is in progress. This indicates that second stage of a SoftDevice update procedure can be initiated. </td></tr>
-    <tr><td class="paramname">false</td><td>No SoftDevice update is in progress. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2edc94128b91cbdc2551be36dc692ef0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">uint32_t bootloader_dfu_sd_update_continue </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const <a class="el" href="a00247.html">ble_hrs_init_t</a> *&#160;</td>
+          <td class="paramname"><em>p_hrs_init</em>&#160;</td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for continuing the Device Firmware Update of a SoftDevice. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If the final stage of SoftDevice update was successful. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga252165c548d698c2f001261314fecfce"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">uint32_t bootloader_dfu_sd_update_finalize </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
           <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for finalizing the Device Firmware Update of a SoftDevice. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If the final stage of SoftDevice update was successful. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf11a485218863db81385fe18437b5961"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t bootloader_dfu_start </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for starting the Device Firmware Update. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If new application image was successfully transferred. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaebf46c5b600b9c2a5609c7f36954adef"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void bootloader_dfu_update_process </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00299.html">dfu_update_status_t</a>&#160;</td>
-          <td class="paramname"><em>update_status</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for processing DFU status update. </p>
+<p>Function for initializing the Heart Rate Service. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">update_status</td><td>DFU update status. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. This structure will have to be supplied by the application. It will be initialized by this function, and will later be used to identify this particular service instance. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs_init</td><td>Information needed to initialize the service.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization of service, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaa821efb3c4074cee13cb2a7377e793f1"></a>
+<a class="anchor" id="gac50e029608199cc8d52463acb3e8a02e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t bootloader_init </td>
+          <td class="memname">void ble_hrs_on_ble_evt </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="paramtype"><a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_hrs</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for initializing the Bootloader. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If bootloader was succesfully initialized. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5a5868fa37d3f3ef4cdb3cd54cb81684"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">void bootloader_settings_get </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00289.html">bootloader_settings_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_settings</em></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00153.html">ble_evt_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_evt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for retrieving the bootloader settings. </p>
+<p>Function for handling the Application's BLE Stack events. </p>
+<p>Handles all events from the BLE stack of interest to the Heart Rate Service.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_settings</td><td>A copy of the current bootloader settings is returned in the structure provided. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Event received from the BLE stack. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="gaea316a9c9503571b143d93086295f61a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ble_hrs_rr_interval_add </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_hrs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>rr_interval</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for adding a RR Interval measurement to the RR Interval buffer. </p>
+<p>All buffered RR Interval measurements will be included in the next heart rate measurement message, up to the maximum number of measurements that will fit into the message. If the buffer is full, the oldest measurement in the buffer will be deleted.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rr_interval</td><td>New RR Interval measurement (will be buffered until the next transmission of Heart Rate Measurement). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf207a34d16fbee25b5555fd4192b5b15"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_hrs_rr_interval_buffer_is_full </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_hrs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for checking if RR Interval buffer is full. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if RR Interval buffer is full, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4eccea2cb1d248ccdc75bebb84c1dff2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ble_hrs_sensor_contact_detected_update </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_hrs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>is_sensor_contact_detected</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for setting the state of the Sensor Contact Detected bit. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">is_sensor_contact_detected</td><td>TRUE if sensor contact is detected, FALSE otherwise. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad8b66aa54ddf79459271df6ec9b65644"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_hrs_sensor_contact_supported_set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00736.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_hrs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>is_sensor_contact_supported</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for setting the state of the Sensor Contact Supported bit. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">is_sensor_contact_supported</td><td>New state of the Sensor Contact Supported bit.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
@@ -376,7 +527,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:37 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:49 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -10,6 +10,7 @@ All rights reserved.
 #include "defines.h"
 #include "app_error.h"
 #include "app_timer.h"
+#include "app_scheduler.h"
 #include "ant_error.h"
 #include "ant_parameters.h"
 #include "ant_interface.h"
@@ -225,7 +226,7 @@ static void wait_burst_request_to_complete(void)
 {
     while (m_burst_wait != 0)
     {
-        // No implementation needed.
+        app_sched_execute();
     };
 }
 
@@ -935,7 +936,12 @@ uint32_t antfs_input_data_download(uint16_t index,
                                                         sizeof(tx_buffer),
                                                         tx_buffer,
                                                         BURST_SEGMENT_END);
-                APP_ERROR_CHECK(err_code);
+                if(err_code != NRF_ANT_ERROR_TRANSFER_SEQUENCE_NUMBER_ERROR)
+                {
+                    // If burst failed before we are able to catch it, we will get a TRANSFER_SEQUENCE_NUMBER_ERROR
+                    // The message processing will send client back to correct state
+                    APP_ERROR_CHECK(err_code);
+                }
 
                 wait_burst_request_to_complete();
 
@@ -2048,34 +2054,38 @@ void antfs_message_process(uint8_t * p_message)
                                 {
                                     authenticate_layer_transit(); // Reload beacon
                                 }
-                                if(m_current_state.sub_state.auth_sub_state == ANTFS_AUTH_SUBSTATE_ACCEPT)
+                                else
                                 {
-                                    if(m_authenticate_command_type == COMMAND_TYPE_REQUEST_PAIR)
+                                    if(m_current_state.sub_state.auth_sub_state == ANTFS_AUTH_SUBSTATE_ACCEPT)
                                     {
-                                        authenticate_response_transmit(AUTH_RESPONSE_ACCEPT, ANTFS_PASSKEY_SIZE,
-                                           m_initial_parameters.p_pass_key);
+                                        if(m_authenticate_command_type == COMMAND_TYPE_REQUEST_PAIR)
+                                        {
+                                            authenticate_response_transmit(AUTH_RESPONSE_ACCEPT, ANTFS_PASSKEY_SIZE,
+                                               m_initial_parameters.p_pass_key);
+                                        }
+                                        else
+                                        {
+                                            authenticate_response_transmit(AUTH_RESPONSE_ACCEPT, 0, NULL);
+                                        }
+                                    }
+                                    else if(m_current_state.sub_state.auth_sub_state == ANTFS_AUTH_SUBSTATE_REJECT)
+                                    {
+                                        authenticate_response_transmit(AUTH_RESPONSE_REJECT, 0, NULL);
+                                    }
+                                    else if(m_authenticate_command_type == COMMAND_TYPE_REQUEST_SERIAL)
+                                    {
+                                        authenticate_response_transmit(AUTH_RESPONSE_N_A,
+                                                           ANTFS_REMOTE_FRIENDLY_NAME_MAX,
+                                                           // Send device friendly name if it exists.
+                                                           m_initial_parameters.p_remote_friendly_name);
                                     }
                                     else
                                     {
-                                        authenticate_response_transmit(AUTH_RESPONSE_ACCEPT, 0, NULL);
+                                        // No implementation needed
                                     }
+
+                                    m_retry--;
                                 }
-                                else if(m_current_state.sub_state.auth_sub_state == ANTFS_AUTH_SUBSTATE_REJECT)
-                                {
-                                    authenticate_response_transmit(AUTH_RESPONSE_REJECT, 0, NULL);
-                                }
-                                else if(m_authenticate_command_type == COMMAND_TYPE_REQUEST_SERIAL)
-                                {
-                                    authenticate_response_transmit(AUTH_RESPONSE_N_A,
-                                                       ANTFS_REMOTE_FRIENDLY_NAME_MAX,
-                                                       // Send device friendly name if it exists.
-                                                       m_initial_parameters.p_remote_friendly_name);
-                                }
-                                else
-                                {
-                                    // No implementation needed
-                                }
-                                m_retry--;
 
                                 break;
 

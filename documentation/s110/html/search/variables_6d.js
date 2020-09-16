@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['m_5fdata_5freceived',['m_data_received',['../a00944.html#ga412c8a2eb860a4398bb6c5101ceba57d',1,'dfu_bank_internal.h']]],
   ['magic_5fnumber',['magic_number',['../a00392.html#a8e3c0ed915d2c32a3a486ce625155466',1,'SOFTDEVICE_INFORMATION_Type']]],
   ['mantissa',['mantissa',['../a00364.html#a4668d8cc50fe654da1cfff425c16c5c0',1,'ieee_float16_t::mantissa()'],['../a00391.html#a3f8b946e6d4361fa7a8e427a1c5cc0ef',1,'sfloat_t::mantissa()'],['../a00365.html#af54051e1c850e7ca43fc5e7b49c91261',1,'ieee_float32_t::mantissa()']]],
   ['manufact_5fname_5fstr',['manufact_name_str',['../a00196.html#a6980c3b02e2eb6513ba564c17aea32af',1,'ble_dis_init_t']]],

@@ -20,8 +20,8 @@
   */
 
 
-   #define     SW_VER_MAJOR      "0."
-   #define     SW_VER_MINOR      "13"
+   #define     SW_VER_MAJOR      "1."
+   #define     SW_VER_MINOR      "00"  // last change was merging in antfs updates
 
    #define     SW_VER_PREFIX     "BFD" // N548 Reference Design Bootloader
    #define     SW_VER_POSTFIX    "B00"

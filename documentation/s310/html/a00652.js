@@ -1,4 +1,4 @@
 var a00652 =
 [
-    [ "BLE_GATT_TIMEOUT_SRC_PROTOCOL", "a00652.html#gaa6077c1bbc03fb3b6335d5003330ad75", null ]
+    [ "BLE_GAP_SEC_MODE", "a00652.html#ga478a8b4b25a773dda9322206e5f2647f", null ]
 ];

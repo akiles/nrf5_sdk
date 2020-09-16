@@ -1,18 +1,38 @@
 var a00602 =
 [
-    [ "TWI_DELAY", "a00602.html#ga0bdffa7178084c5e1b2e11d3a95c5e85", null ],
-    [ "TWI_DONT_ISSUE_STOP", "a00602.html#gaedaa985feb5cea808d8811bd7ceeb318", null ],
-    [ "TWI_ISSUE_STOP", "a00602.html#ga13a824cf1c6a37f2ddea21c962128a3e", null ],
-    [ "TWI_READ_BIT", "a00602.html#ga67c0f91739433360f513b097acf11946", null ],
-    [ "TWI_SCL_HIGH", "a00602.html#ga7635564961ef4b40ebe54c566b25dc75", null ],
-    [ "TWI_SCL_LOW", "a00602.html#gafef260a0ebd7d5669cd2731d2c20f55d", null ],
-    [ "TWI_SCL_OUTPUT", "a00602.html#gaa73e62b201f371e4d2e543f0ba2bb4cb", null ],
-    [ "TWI_SCL_READ", "a00602.html#ga45cf9fc8c9487711c3b8457b8e1116b2", null ],
-    [ "TWI_SDA_HIGH", "a00602.html#ga112251118224f5623c20423efce89ae8", null ],
-    [ "TWI_SDA_INPUT", "a00602.html#ga63ae25f476902e9df0c31b057e2bb527", null ],
-    [ "TWI_SDA_LOW", "a00602.html#ga6b884c7770898bf063884f3f1893d492", null ],
-    [ "TWI_SDA_OUTPUT", "a00602.html#gaa6c311f207bff59456fb22648965c53b", null ],
-    [ "TWI_SDA_READ", "a00602.html#ga0a7e559c3bceb5b50ff3e51cabb21f73", null ],
-    [ "twi_master_init", "a00602.html#ga148f1dd10bc0248c6c6c5336ce07a540", null ],
-    [ "twi_master_transfer", "a00602.html#ga36e8039d4cbb4f66c0cf0cf1e3a72445", null ]
+    [ "spi_slave_config_t", "a00333.html", [
+      [ "bit_order", "a00333.html#a27e8ba88d43c17e40e1c2cbf0f785648", null ],
+      [ "def_tx_character", "a00333.html#a4f274a8534602ab7cf7b3df09501e3e0", null ],
+      [ "mode", "a00333.html#a21dcdc253470ffeaf889d2b9ffa22472", null ],
+      [ "orc_tx_character", "a00333.html#a7d9dd3521043484438ffa72545b6db28", null ],
+      [ "pin_csn", "a00333.html#a1ff06608d64bb19ed48f49274231de9c", null ],
+      [ "pin_miso", "a00333.html#a65afb70f1cdb35519719efa4950294b7", null ],
+      [ "pin_mosi", "a00333.html#af40a3044730330e7c560f2a9913b6d55", null ],
+      [ "pin_sck", "a00333.html#ae98dbbcc5e16aea69a2f0922e266f908", null ]
+    ] ],
+    [ "spi_slave_evt_t", "a00334.html", [
+      [ "evt_type", "a00334.html#acbc2e2d26c15219ff593c40aabab3815", null ],
+      [ "rx_amount", "a00334.html#a7b54206d997d599a2c3ee5751c208c58", null ],
+      [ "tx_amount", "a00334.html#a080b88a554c371f8220691fc28117ebd", null ]
+    ] ],
+    [ "spi_slave_event_handler_t", "a00602.html#ga0c5517095d30c2d6dc739a7dcb6e7d01", null ],
+    [ "spi_slave_endian_t", "a00602.html#ga348be3a931288103790b15b689696f25", [
+      [ "SPIM_LSB_FIRST", "a00602.html#gga348be3a931288103790b15b689696f25aec8b43120ad55a6a995f3147f887b662", null ],
+      [ "SPIM_MSB_FIRST", "a00602.html#gga348be3a931288103790b15b689696f25a06efdba330b7a4d360ad97c5f26eaaed", null ]
+    ] ],
+    [ "spi_slave_evt_type_t", "a00602.html#ga8c080d3b9fbe05708273eadef309094e", [
+      [ "SPI_SLAVE_BUFFERS_SET_DONE", "a00602.html#gga8c080d3b9fbe05708273eadef309094eae05604d49f7c5d272f2325f8405baec9", null ],
+      [ "SPI_SLAVE_XFER_DONE", "a00602.html#gga8c080d3b9fbe05708273eadef309094eabe9f17960cda631b4c223f50e09eff9c", null ],
+      [ "SPI_SLAVE_EVT_TYPE_MAX", "a00602.html#gga8c080d3b9fbe05708273eadef309094ead8e6b1a309aa74e535a6a3262376743a", null ]
+    ] ],
+    [ "spi_slave_mode_t", "a00602.html#ga1febfa1b05a4e0d259877752c6c53c33", [
+      [ "SPI_MODE_0", "a00602.html#gga1febfa1b05a4e0d259877752c6c53c33a152359b11fb4b43ed0c5485eb0ab0673", null ],
+      [ "SPI_MODE_1", "a00602.html#gga1febfa1b05a4e0d259877752c6c53c33a7c1990cc15e9d69621be8e0e757e634c", null ],
+      [ "SPI_MODE_2", "a00602.html#gga1febfa1b05a4e0d259877752c6c53c33a4d350945d895a4acdc45ae96b0b82fc3", null ],
+      [ "SPI_MODE_3", "a00602.html#gga1febfa1b05a4e0d259877752c6c53c33af06ec36087996d6f328df39866ff5de6", null ]
+    ] ],
+    [ "spi_slave_buffers_set", "a00602.html#ga122922caa9f1e8fb449c49322105afaf", null ],
+    [ "spi_slave_evt_handler_register", "a00602.html#gaa7d934e9bcf58eadcb7680f9964d028d", null ],
+    [ "spi_slave_init", "a00602.html#ga8e5e7f859116cd6dab99017d094a6003", null ],
+    [ "spi_slave_set_cs_pull_up_config", "a00602.html#ga2b0e2f58211a1d2784228b6f42dd5fb9", null ]
 ];

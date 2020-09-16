@@ -1,8 +1,7 @@
 var a00599 =
 [
-    [ "simple_uart_config", "a00599.html#ga15ab88a2172a5ea02ff41ae9711bc0af", null ],
-    [ "simple_uart_get", "a00599.html#gabae30008064ce450ab819949a692c511", null ],
-    [ "simple_uart_get_with_timeout", "a00599.html#gad4e7d17833960c77c90db7a5cb309a68", null ],
-    [ "simple_uart_put", "a00599.html#ga6346f3ba3f0f1eaaa123064daa3df405", null ],
-    [ "simple_uart_putstring", "a00599.html#ga76e6bde269950e02affbff121c79d408", null ]
+    [ "sdio_init", "a00599.html#gafd362e60216c5346709cac28c7cc175b", null ],
+    [ "sdio_read_burst", "a00599.html#ga95ee69dbe058216ef73012a1ff04c077", null ],
+    [ "sdio_read_byte", "a00599.html#ga1ff0f4956042d92b01fc2dbeffe26284", null ],
+    [ "sdio_write_byte", "a00599.html#ga2e5d560f80ba374b7fe18f4e8a565ffd", null ]
 ];

@@ -351,7 +351,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> __HEAP_SIZE=0 NRF51 BOARD_PCA10028 ANT_STACK_SUPPORT_REQD BLE_STACK_SUPPORT_REQD S310 SOFTDEVICE_PRESENT</Define>
+              <Define> __HEAP_SIZE=0 ANT_STACK_SUPPORT_REQD NRF51 BOARD_PCA10028 S310 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\include;..\..\..\libs\include;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\toolchain;..\..\..\;..\..\..\..\..\bsp;..\..\..\..\..\..\components\softdevice\s310\headers</IncludePath>
             </VariousControls>
@@ -367,7 +367,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define> __HEAP_SIZE=0 NRF51 BOARD_PCA10028 ANT_STACK_SUPPORT_REQD BLE_STACK_SUPPORT_REQD S310 SOFTDEVICE_PRESENT</Define>
+              <Define> __HEAP_SIZE=0 ANT_STACK_SUPPORT_REQD NRF51 BOARD_PCA10028 S310 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

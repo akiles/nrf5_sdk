@@ -1,5 +1,7 @@
 var a00637 =
 [
-    [ "BLE_GAP_ADDR_CYCLE_MODE_AUTO", "a00637.html#gad1b508bba948e89462e018fecc38b13f", null ],
-    [ "BLE_GAP_ADDR_CYCLE_MODE_NONE", "a00637.html#ga876e1c374d17d451d901e3e8d151a20d", null ]
+    [ "BLE_GAP_ADDR_TYPE_PUBLIC", "a00637.html#gaa5e499423d88b16817efd4d5ec10fd6e", null ],
+    [ "BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE", "a00637.html#ga86fe5e506ba152ec4d60ac6daaca2aef", null ],
+    [ "BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE", "a00637.html#gae166d654401b0ed83ad7073f31467b70", null ],
+    [ "BLE_GAP_ADDR_TYPE_RANDOM_STATIC", "a00637.html#gabe27b8f22c3a52413fa064c2ee1e4fba", null ]
 ];

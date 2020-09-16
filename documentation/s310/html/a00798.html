@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Enumerations</title>
+<title>nRF51 SDK - S310 SoftDevice: Battery Service Client</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,58 +97,36 @@ $(document).ready(function(){initNavTree('a00798.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Enumerations<div class="ingroups"><a class="el" href="a00797.html">Battery Service Client</a></div></div>  </div>
+<div class="title">Battery Service Client<div class="ingroups"><a class="el" href="a00830.html">BLE Services</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Battery Service Client module.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga825ba0a7f2d9094574df073de10a3a15"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00798.html#ga825ba0a7f2d9094574df073de10a3a15">ble_bas_c_evt_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00798.html#gga825ba0a7f2d9094574df073de10a3a15a427a6611278fff5ee71ac80463d5c4e2">BLE_BAS_C_EVT_DISCOVERY_COMPLETE</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00798.html#gga825ba0a7f2d9094574df073de10a3a15a9d1d37260864fc90e1a1c56c6de13657">BLE_BAS_C_EVT_BATT_NOTIFICATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00798.html#gga825ba0a7f2d9094574df073de10a3a15a424840c39dfabd3c63e1c10d0fc30f6c">BLE_BAS_C_EVT_BATT_READ_RESP</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga825ba0a7f2d9094574df073de10a3a15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Battery Service Client event type.  <a href="a00798.html#ga825ba0a7f2d9094574df073de10a3a15">More...</a><br/></td></tr>
-<tr class="separator:ga825ba0a7f2d9094574df073de10a3a15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00799"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00799.html">Enumerations</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00800"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00800.html">Structures</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00801"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00801.html">Types</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00802"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00802.html">Functions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga825ba0a7f2d9094574df073de10a3a15"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00798.html#ga825ba0a7f2d9094574df073de10a3a15">ble_bas_c_evt_type_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Battery Service Client event type. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga825ba0a7f2d9094574df073de10a3a15a427a6611278fff5ee71ac80463d5c4e2"></a>BLE_BAS_C_EVT_DISCOVERY_COMPLETE</em>&nbsp;</td><td class="fielddoc">
-<p>Event indicating that the Battery Service has been discovered at the peer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga825ba0a7f2d9094574df073de10a3a15a9d1d37260864fc90e1a1c56c6de13657"></a>BLE_BAS_C_EVT_BATT_NOTIFICATION</em>&nbsp;</td><td class="fielddoc">
-<p>Event indicating that a notification of the Battery Level characteristic has been received from the peer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga825ba0a7f2d9094574df073de10a3a15a424840c39dfabd3c63e1c10d0fc30f6c"></a>BLE_BAS_C_EVT_BATT_READ_RESP</em>&nbsp;</td><td class="fielddoc">
-<p>Event indicating that a read response on Battery Level characteristic has been received from peer. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
+<p>Battery Service Client module. </p>
+<p>This module contains APIs to read and interact with the Battery Service of a remote device.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to this module by calling <a class="el" href="a00807.html#ga062e0829a2ebd211d4e51a23c520ab1f" title="Function for handling BLE events from the SoftDevice.">ble_hrs_c_on_ble_evt()</a>. </dd></dl>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:37 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:49 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

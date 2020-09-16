@@ -100,7 +100,8 @@ $(document).ready(function(){initNavTree('a00514.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Utility Functions and Definitions<div class="ingroups"><a class="el" href="a00741.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
@@ -155,6 +156,27 @@ Enumerations</h2></td></tr>
 <br/>
  }</td></tr>
 <tr class="separator:gadf764cbdea00d65edcd07bb9953ad2b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gab58c28346b89382397aa7a716bf9a178"><td class="memItemLeft" align="right" valign="top">static __INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00514.html#gab58c28346b89382397aa7a716bf9a178">uint16_encode</a> (uint16_t value, uint8_t *p_encoded_data)</td></tr>
+<tr class="memdesc:gab58c28346b89382397aa7a716bf9a178"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for encoding a uint16 value.  <a href="#gab58c28346b89382397aa7a716bf9a178">More...</a><br/></td></tr>
+<tr class="separator:gab58c28346b89382397aa7a716bf9a178"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad960286275534b81d75fbeba2d52aec9"><td class="memItemLeft" align="right" valign="top">static __INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00514.html#gad960286275534b81d75fbeba2d52aec9">uint32_encode</a> (uint32_t value, uint8_t *p_encoded_data)</td></tr>
+<tr class="memdesc:gad960286275534b81d75fbeba2d52aec9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for encoding a uint32 value.  <a href="#gad960286275534b81d75fbeba2d52aec9">More...</a><br/></td></tr>
+<tr class="separator:gad960286275534b81d75fbeba2d52aec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf30655fd762a9debe0b499db3a9451f7"><td class="memItemLeft" align="right" valign="top">static __INLINE uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00514.html#gaf30655fd762a9debe0b499db3a9451f7">uint16_decode</a> (const uint8_t *p_encoded_data)</td></tr>
+<tr class="memdesc:gaf30655fd762a9debe0b499db3a9451f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for decoding a uint16 value.  <a href="#gaf30655fd762a9debe0b499db3a9451f7">More...</a><br/></td></tr>
+<tr class="separator:gaf30655fd762a9debe0b499db3a9451f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8eaa6f05cd43462e58a24e54c0ddacd"><td class="memItemLeft" align="right" valign="top">static __INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00514.html#gaa8eaa6f05cd43462e58a24e54c0ddacd">uint32_decode</a> (const uint8_t *p_encoded_data)</td></tr>
+<tr class="memdesc:gaa8eaa6f05cd43462e58a24e54c0ddacd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for decoding a uint32 value.  <a href="#gaa8eaa6f05cd43462e58a24e54c0ddacd">More...</a><br/></td></tr>
+<tr class="separator:gaa8eaa6f05cd43462e58a24e54c0ddacd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8902704fe018646ace7d303994320f45"><td class="memItemLeft" align="right" valign="top">static __INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00514.html#ga8902704fe018646ace7d303994320f45">battery_level_in_percent</a> (const uint16_t mvolts)</td></tr>
+<tr class="memdesc:ga8902704fe018646ace7d303994320f45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for converting the input voltage (in milli volts) into percentage of 3.0 Volts.  <a href="#ga8902704fe018646ace7d303994320f45">More...</a><br/></td></tr>
+<tr class="separator:ga8902704fe018646ace7d303994320f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1c2cf43cc8c15daa4404e3a1721d83a"><td class="memItemLeft" align="right" valign="top">static __INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00514.html#gad1c2cf43cc8c15daa4404e3a1721d83a">is_word_aligned</a> (void *p)</td></tr>
+<tr class="memdesc:gad1c2cf43cc8c15daa4404e3a1721d83a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if a pointer value is aligned to a 4 byte boundary.  <a href="#gad1c2cf43cc8c15daa4404e3a1721d83a">More...</a><br/></td></tr>
+<tr class="separator:gad1c2cf43cc8c15daa4404e3a1721d83a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Various types and definitions available to all applications. </p>
@@ -348,12 +370,242 @@ The macro is intentionally implemented not using do while(0), allowing it to be 
 
 </div>
 </div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga8902704fe018646ace7d303994320f45"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE uint8_t battery_level_in_percent </td>
+          <td>(</td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>mvolts</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for converting the input voltage (in milli volts) into percentage of 3.0 Volts. </p>
+<p>The calculation is based on a linearized version of the battery's discharge curve. 3.0V returns 100% battery level. The limit for power failure is 2.1V and is considered to be the lower boundary.</p>
+<p>The discharge curve for CR2032 is non-linear. In this model it is split into 4 linear sections:</p>
+<ul>
+<li>Section 1: 3.0V - 2.9V = 100% - 42% (58% drop on 100 mV)</li>
+<li>Section 2: 2.9V - 2.74V = 42% - 18% (24% drop on 160 mV)</li>
+<li>Section 3: 2.74V - 2.44V = 18% - 6% (12% drop on 300 mV)</li>
+<li>Section 4: 2.44V - 2.1V = 6% - 0% (6% drop on 340 mV)</li>
+</ul>
+<p>These numbers are by no means accurate. Temperature and load in the actual application is not accounted for!</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">mvolts</td><td>The voltage in mV</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Battery level in percent. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad1c2cf43cc8c15daa4404e3a1721d83a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE bool is_word_aligned </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for checking if a pointer value is aligned to a 4 byte boundary. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p</td><td>Pointer value to be checked.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>TRUE if pointer is aligned to a 4 byte boundary, FALSE otherwise. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf30655fd762a9debe0b499db3a9451f7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE uint16_t uint16_decode </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>p_encoded_data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for decoding a uint16 value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_encoded_data</td><td>Buffer where the encoded data is stored.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Decoded value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gab58c28346b89382397aa7a716bf9a178"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE uint8_t uint16_encode </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_encoded_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for encoding a uint16 value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Value to be encoded. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_encoded_data</td><td>Buffer where the encoded data is to be written.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bytes written. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa8eaa6f05cd43462e58a24e54c0ddacd"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE uint32_t uint32_decode </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>p_encoded_data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for decoding a uint32 value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_encoded_data</td><td>Buffer where the encoded data is stored.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Decoded value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad960286275534b81d75fbeba2d52aec9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE uint8_t uint32_encode </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_encoded_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for encoding a uint32 value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Value to be encoded. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_encoded_data</td><td>Buffer where the encoded data is to be written.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bytes written. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

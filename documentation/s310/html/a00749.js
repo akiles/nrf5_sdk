@@ -1,12 +1,11 @@
 var a00749 =
 [
-    [ "ant_evt_t", "a00094.html", [
-      [ "channel", "a00094.html#a5e084957ed6c0f93b78203d74a268e36", null ],
-      [ "event", "a00094.html#a8449b66e97f4dfce737478dc751199e1", null ],
-      [ "evt_buffer", "a00094.html#a0945895af053724b710662f5beea9ed5", null ]
-    ] ],
-    [ "ANT_STACK_EVT_MSG_BUF_SIZE", "a00749.html#gafcf5a1211ca1625c5c111871c6139d79", null ],
-    [ "ANT_STACK_EVT_STRUCT_SIZE", "a00749.html#ga099e8f139d53724bf7238bb77c9e32e0", null ],
-    [ "ant_evt_handler_t", "a00749.html#ga2b0ca4dbb952df8f26cb58d4e7341115", null ],
-    [ "softdevice_ant_evt_handler_set", "a00749.html#gac05d1d266aef077ae88818dff3775010", null ]
+    [ "HCI_SLIP_UART_BAUDRATE", "a00749.html#ga32bbc9330e57446dca60392c29857b89", null ],
+    [ "HCI_SLIP_UART_CTS_PIN_NUMBER", "a00749.html#ga9b29fdaf1844f05115940fbf2401fd5f", null ],
+    [ "HCI_SLIP_UART_MODE", "a00749.html#ga3f2a196e8e6fd828a7408cbce3625a39", null ],
+    [ "HCI_SLIP_UART_RTS_PIN_NUMBER", "a00749.html#gabef88f732922a13c3dc4e3dd514c36fc", null ],
+    [ "HCI_SLIP_UART_RX_PIN_NUMBER", "a00749.html#ga563b2db0be6fc39f6bdc43275fce4a6c", null ],
+    [ "HCI_SLIP_UART_TX_PIN_NUMBER", "a00749.html#ga37627f12f64e2d3a9ff5df63fd872003", null ],
+    [ "MAX_PACKET_SIZE_IN_BITS", "a00749.html#ga7f50bc31550595e28cbf7a9eb3597b69", null ],
+    [ "USED_BAUD_RATE", "a00749.html#ga191602a3878cbd9811815ba22f8fea51", null ]
 ];

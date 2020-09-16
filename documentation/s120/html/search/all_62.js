@@ -2,6 +2,7 @@ var searchData=
 [
   ['button_20handler',['Button Handler',['../a00502.html',1,'']]],
   ['battery_5flevel',['battery_level',['../a00092.html#aa06f57fc8285fed61a3c0dd89671f6d3',1,'ble_bas_c_evt_t']]],
+  ['battery_5flevel_5fin_5fpercent',['battery_level_in_percent',['../a00514.html#ga8902704fe018646ace7d303994320f45',1,'app_util.h']]],
   ['baud_5frate',['baud_rate',['../a00089.html#aed401d2ee067394f8996bd5c0f4ff894',1,'app_uart_comm_params_t::baud_rate()'],['../a00091.html#af3f1e2f02e0c2d6fdfbc09fc335a373a',1,'app_uart_stream_comm_params_t::baud_rate()']]],
   ['bit_5forder',['bit_order',['../a00231.html#a27e8ba88d43c17e40e1c2cbf0f785648',1,'spi_slave_config_t']]],
   ['bl_5fcccd_5fhandle',['bl_cccd_handle',['../a00094.html#a2ea89dfa950963404b32410a8e42a04f',1,'ble_bas_c_s']]],
@@ -821,6 +822,8 @@ var searchData=
   ['ble_5fsrv_5fcccd_5fsecurity_5fmode_5ft',['ble_srv_cccd_security_mode_t',['../a00187.html',1,'']]],
   ['ble_5fsrv_5fencoded_5freport_5fref_5flen',['BLE_SRV_ENCODED_REPORT_REF_LEN',['../a00731.html#gafbfc0ef111ca725cc8bb500fd93301cc',1,'ble_srv_common.h']]],
   ['ble_5fsrv_5ferror_5fhandler_5ft',['ble_srv_error_handler_t',['../a00731.html#gac10076d39c0ddcfe333252fe8810a1f1',1,'ble_srv_common.h']]],
+  ['ble_5fsrv_5fis_5findication_5fenabled',['ble_srv_is_indication_enabled',['../a00731.html#gaf572afefe05bacfb4d5967d9c5a6c5e6',1,'ble_srv_common.h']]],
+  ['ble_5fsrv_5fis_5fnotification_5fenabled',['ble_srv_is_notification_enabled',['../a00731.html#ga11fd3cc1b15d4bec4accc37618305ccb',1,'ble_srv_common.h']]],
   ['ble_5fsrv_5freport_5fref_5fencode',['ble_srv_report_ref_encode',['../a00731.html#gaebc3fc5316f1a6a67e830516b8f9aed5',1,'ble_srv_common.h']]],
   ['ble_5fsrv_5freport_5fref_5ft',['ble_srv_report_ref_t',['../a00188.html',1,'']]],
   ['ble_5fsrv_5fsecurity_5fmode_5ft',['ble_srv_security_mode_t',['../a00189.html',1,'']]],

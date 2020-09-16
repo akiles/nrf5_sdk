@@ -1,3 +1,112 @@
+nRF51 SDK v. 7.2.0
+------------------
+
+Following toolchains/devices have been used for testing and verification:
+    - ARM: MDK-ARM Version 5.12, 5.13
+    - GCC: gcc-arm-embedded 4.7 2013q1
+    - IAR: no support in this release
+    - Windows XP SP3 32-bit
+    - Windows 7 SP1 64-bit
+    - Windows 8.1
+
+Supported devices
+    - This SDK is optimized for IC revision 3. 
+      For details, see the "nRF51 Series Compatibility Matrix" document (ATTN-51) available on 
+      www.nordicsemi.com.
+
+      Note 1: To run the ANT examples, you must use an nRF51422 device.
+      Note 2: Some of the examples using the SoftDevice will not fit on the 128kB variant of the 
+              chip.
+      Note 3: Some of the serialization examples are too big to be compiled using the free version 
+              of Keil.
+
+Supported SoftDevices:
+    - S110 7.1.0
+    - S120 1.0.1
+    - S130 0.5.0-1.alpha
+    - S210 4.0.1
+    - S310 2.0.1
+
+Supported boards:
+    - PCA10028
+    - PCA10031
+    - S110 connectivity support for Wavetek WT51822
+
+    For other devices and boards, see the SDK documentation, section "Using the SDK with other 
+    boards", or use SDK V6.x.x.
+
+Changes:
+    - ANT:
+        - ANT-FS client example: Added callback to allow applications to execute custom code while
+          waiting for the burst to complete
+        - Major rework on ANT DFU example
+        - Added new ANT hub-2-hub/shared channel example 
+        - Added S310 target support for DTM example
+        - BLE DFU is now supported for S310
+
+Fixed issues:
+    - ANT:
+        - ANT-FS: Fixed bug with transfer sequence number error causing download failures
+        - ANT-FS: Fixed bug where upon exhaustion of m_retry, the link time-out has been mistakenly
+          disabled by a burst transfer
+        - Fixed issue in linker script for S310
+        - Fixed memory corruption issue by using dedicated buffers for ANT and BLE stack events 
+          respectively on S310
+        - Fixed an issue where the ANT OTA Updater application v0.8 would not support hex files 
+          with code size larger than 65535 bytes
+
+Known issues:
+    - SEGGER J-Link software has some issues with Keil. 
+      See http://www.segger.com/IDE_Integration_Keil.html#knownproblems for details.
+    - Keil 5.13 may issue a warning about missing packs even when all Nordic Semiconductor packs are
+      correctly installed. 
+    - The DFU over BLE example has been tested to work with a minimum connection interval of 
+      11.25 ms. The application cannot handle connection intervals lower than 11.25 ms and may 
+      undergo a system reset in the middle of a firmware update.
+         Workaround: If you face unexpected disconnects during the firmware update process, consider
+         increasing the connection interval used by the master.
+
+    - ANT:
+        - NRFFOSDK-755: HRM TX buttons example may report wrong total elapsed time
+
+    - BLE:
+        - NRFFOSDK-3135: S120 examples: RAM is limited to 16 kB, because S120 V1.0.1 does not 
+          support utilizing the whole flash on the QFACAB chip
+        - NRFFOSDK-119: Only the ble_app_proximity_low_power and ble_app_hrs applications are power 
+          optimized
+        - S120 examples: Flash clear operation may fail when connected. Impact of this in the S120 
+          examples is that if the peer loses the bond and a rebonding occurs, flash clear fails and
+          a DM_EVT_DEVICE_CONTEXT_STORED event is notified with a failure.
+        - A few APIs of the Device Manager are not implemented. Also, documentation providing 
+          examples of how the API can be used is missing.
+        - NRFFOSDK-2824: Device Manager (pstorage) does not support update of bond split across two 
+          pages.
+
+    - Proprietary:
+        - Temperature example does not give sane output values. This is a hardware-related issue
+          described in PAN_028 and will be fixed in future silicon.
+        - The nRF24Lxx ESB examples found in the legacy nRFready SDKs do not work out of the box 
+          with the nRF51 ESB examples. This is due to:
+            - The legacy examples do not use "payload in ACK".
+            - The legacy examples use RF channel 2 (not 10 as the nRF51 examples).
+            - The examples do not use dynamic payload length.
+          The legacy examples need to add the following to work with the nRF51 examples:
+                hal_nrf_setup_dynamic_payload(0xFF);
+                hal_nrf_enable_dynamic_payload(true);
+                hal_nrf_enable_ack_payload(true);
+                hal_nrf_set_rf_channel(10);
+          In addition, the legacy PTX example must add code for handling the payloads received in ACK.
+        - The Gazell Link Layer examples are not fully "out of the box" compatible with the legacy 
+          Gazell examples provided in the nRFgo SDK for nRF24Lxx devices. The timeslot periods and 
+          channel tables require adjustment.
+            - Timeslot period: Edit the gzll_params.h file used in the nRF24Lxx projects or use the 
+              nrf_gzll_set_timeslot_period() function in the nRF51 projects 
+              (nRF51 Gazell timeslot period = 0.5*GZLL_RX_PERIOD).
+            - Channel table: Edit the gzll_params.h file used in the nRF24Lxx projects or use the 
+              nrf_gzll_set_channel_table() function in the nRF51 projects.
+        - Gazell does not support "Low Power Host mode" (Host mode 1).
+
+
 nRF51 SDK v. 7.1.0
 ------------------
 

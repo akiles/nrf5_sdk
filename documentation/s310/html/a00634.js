@@ -1,6 +1,6 @@
 var a00634 =
 [
-    [ "BLE_GAP_ROLE_CENTRAL", "a00634.html#ga6b9440660a70146392d27c849431fadb", null ],
-    [ "BLE_GAP_ROLE_INVALID", "a00634.html#ga8164b32f4fd65997d0523cd7c5735166", null ],
-    [ "BLE_GAP_ROLE_PERIPH", "a00634.html#ga12e431897d73a3ce88fab8a4dbd90497", null ]
+    [ "BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST", "a00634.html#gaa65c2f6a6eba52654e2b6febc5c3ba8c", null ],
+    [ "BLE_ERROR_GAP_INVALID_BLE_ADDR", "a00634.html#ga3eda228736d6c1dcbcf9aba2bd059068", null ],
+    [ "BLE_ERROR_GAP_UUID_LIST_MISMATCH", "a00634.html#ga996146eb2c3b244f044b5cd121f8b826", null ]
 ];

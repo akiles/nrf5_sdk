@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"a00088.html":[3,11],
 "a00088.html#lib_logger_log":[3,11,1],
 "a00088.html#lib_trace_init":[3,11,0],
 "a00088.html#lib_trace_usage":[3,11,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "a00135.html":[5,0,3,5,4],
 "a00135.html#a28e443636699abf5ac97850f4fb9eb39":[5,0,3,5,4,1],
 "a00135.html#a5ddda2de7f892024636795e85b9ba914":[5,0,3,5,4,4],
-"a00135.html#a6750c3a77be5be56ef6e563164b85a4a":[5,0,3,5,4,2],
-"a00135.html#ab1b12075f983b9149eacf65f318f0482":[5,0,3,5,4,5]
+"a00135.html#a6750c3a77be5be56ef6e563164b85a4a":[5,0,3,5,4,2]
 };

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: GATT Server Service Types</title>
+<title>nRF51 SDK - S310 SoftDevice: Maximum attribute lengths</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,57 +99,42 @@ $(document).ready(function(){initNavTree('a00662.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GATT Server Service Types<div class="ingroups"><a class="el" href="a00848.html">Defines</a></div></div>  </div>
+<div class="title">Maximum attribute lengths<div class="ingroups"><a class="el" href="a00850.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga07c49b0b262d0b5bd709d282b659436d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00662.html#ga07c49b0b262d0b5bd709d282b659436d">BLE_GATTS_SRVC_TYPE_INVALID</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:ga07c49b0b262d0b5bd709d282b659436d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga881b91f3ac789bf6fcefee7f815dcf7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00662.html#ga881b91f3ac789bf6fcefee7f815dcf7e">BLE_GATTS_SRVC_TYPE_PRIMARY</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga881b91f3ac789bf6fcefee7f815dcf7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1aa1898278ef4d0034858d752eac29b0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00662.html#ga1aa1898278ef4d0034858d752eac29b0">BLE_GATTS_SRVC_TYPE_SECONDARY</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:ga1aa1898278ef4d0034858d752eac29b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4cf6efe8134f1f771c088ff7d4c1d79a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00662.html#ga4cf6efe8134f1f771c088ff7d4c1d79a">BLE_GATTS_FIX_ATTR_LEN_MAX</a>&#160;&#160;&#160;(510)</td></tr>
+<tr class="separator:ga4cf6efe8134f1f771c088ff7d4c1d79a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac2a12a8c74733f8a666083550b77dc09"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00662.html#gac2a12a8c74733f8a666083550b77dc09">BLE_GATTS_VAR_ATTR_LEN_MAX</a>&#160;&#160;&#160;(512)</td></tr>
+<tr class="separator:gac2a12a8c74733f8a666083550b77dc09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga07c49b0b262d0b5bd709d282b659436d"></a>
+<a class="anchor" id="ga4cf6efe8134f1f771c088ff7d4c1d79a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_SRVC_TYPE_INVALID&#160;&#160;&#160;0x00</td>
+          <td class="memname">#define BLE_GATTS_FIX_ATTR_LEN_MAX&#160;&#160;&#160;(510)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Invalid Service Type. </p>
+<p>Maximum length for fixed length Attribute Values. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga881b91f3ac789bf6fcefee7f815dcf7e"></a>
+<a class="anchor" id="gac2a12a8c74733f8a666083550b77dc09"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_SRVC_TYPE_PRIMARY&#160;&#160;&#160;0x01</td>
+          <td class="memname">#define BLE_GATTS_VAR_ATTR_LEN_MAX&#160;&#160;&#160;(512)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Primary Service. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga1aa1898278ef4d0034858d752eac29b0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GATTS_SRVC_TYPE_SECONDARY&#160;&#160;&#160;0x02</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Secondary Type. </p>
+<p>Maximum length for variable length Attribute Values. </p>
 
 </div>
 </div>
@@ -158,7 +143,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:33 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:45 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

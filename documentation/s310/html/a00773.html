@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: TX Power Service</title>
+<title>nRF51 SDK - S310 SoftDevice: Definitions for the Alert Level characteristic values</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,109 +97,59 @@ $(document).ready(function(){initNavTree('a00773.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">TX Power Service<div class="ingroups"><a class="el" href="a00829.html">BLE Services</a></div></div>  </div>
+<div class="title">Definitions for the Alert Level characteristic values<div class="ingroups"><a class="el" href="a00770.html">Common service definitions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>TX Power Service module.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00283.html">ble_tps_init_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX Power Service init structure. This contains all options and data needed for initialization of the service.  <a href="a00283.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00284.html">ble_tps_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX Power Service structure. This contains various status information for the service.  <a href="a00284.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gadf50170201ca904944d8ba0ecb485ba7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00773.html#gadf50170201ca904944d8ba0ecb485ba7">ble_tps_init</a> (<a class="el" href="a00284.html">ble_tps_t</a> *p_hrs, const <a class="el" href="a00283.html">ble_tps_init_t</a> *p_tps_init)</td></tr>
-<tr class="memdesc:gadf50170201ca904944d8ba0ecb485ba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the TX Power Service.  <a href="#gadf50170201ca904944d8ba0ecb485ba7">More...</a><br/></td></tr>
-<tr class="separator:gadf50170201ca904944d8ba0ecb485ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6fccb23ed9c10d23d370e5709cdf6d9f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00773.html#ga6fccb23ed9c10d23d370e5709cdf6d9f">ble_tps_tx_power_level_set</a> (<a class="el" href="a00284.html">ble_tps_t</a> *p_tps, int8_t tx_power_level)</td></tr>
-<tr class="memdesc:ga6fccb23ed9c10d23d370e5709cdf6d9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the state of the Sensor Contact Detected bit.  <a href="#ga6fccb23ed9c10d23d370e5709cdf6d9f">More...</a><br/></td></tr>
-<tr class="separator:ga6fccb23ed9c10d23d370e5709cdf6d9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga19af58d002f35b548719d7043562cee7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00773.html#ga19af58d002f35b548719d7043562cee7">BLE_CHAR_ALERT_LEVEL_NO_ALERT</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga19af58d002f35b548719d7043562cee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4fb46aeec8acd50f37f0e6277e45cee"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00773.html#gaf4fb46aeec8acd50f37f0e6277e45cee">BLE_CHAR_ALERT_LEVEL_MILD_ALERT</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:gaf4fb46aeec8acd50f37f0e6277e45cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9fc865fa1b7f643d40c5e43dc81c0556"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00773.html#ga9fc865fa1b7f643d40c5e43dc81c0556">BLE_CHAR_ALERT_LEVEL_HIGH_ALERT</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga9fc865fa1b7f643d40c5e43dc81c0556"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>TX Power Service module. </p>
-<p>This module implements the TX Power Service with the TX Power Level characteristic. During initialization it adds the TX Power Service and TX Power Level characteristic with the specified initial value to the BLE stack database.</p>
-<p>It provides a function for letting the application update the TX Power Level characteristic.</p>
-<dl class="section note"><dt>Note</dt><dd>Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profile qualification listings, this section of source code must not be modified. </dd></dl>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gadf50170201ca904944d8ba0ecb485ba7"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga9fc865fa1b7f643d40c5e43dc81c0556"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_tps_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00284.html">ble_tps_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hrs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00283.html">ble_tps_init_t</a> *&#160;</td>
-          <td class="paramname"><em>p_tps_init</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define BLE_CHAR_ALERT_LEVEL_HIGH_ALERT&#160;&#160;&#160;0x02</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Function for initializing the TX Power Service. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_hrs</td><td>TX Power Service structure. This structure will have to be supplied by the application. It will be initialized by this function, and will later be used to identify this particular service instance. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_tps_init</td><td>Information needed to initialize the service.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization of service, otherwise an error code. </dd></dl>
+<p>High Alert. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga6fccb23ed9c10d23d370e5709cdf6d9f"></a>
+<a class="anchor" id="gaf4fb46aeec8acd50f37f0e6277e45cee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_tps_tx_power_level_set </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00284.html">ble_tps_t</a> *&#160;</td>
-          <td class="paramname"><em>p_tps</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>tx_power_level</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define BLE_CHAR_ALERT_LEVEL_MILD_ALERT&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Mild Alert. </p>
 
-<p>Function for setting the state of the Sensor Contact Detected bit. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_tps</td><td>TX Power Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">tx_power_level</td><td>New TX Power Level (unit dBm, range -100 to 20).</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
+</div>
+</div>
+<a class="anchor" id="ga19af58d002f35b548719d7043562cee7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_CHAR_ALERT_LEVEL_NO_ALERT&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>No Alert. </p>
 
 </div>
 </div>
@@ -208,7 +158,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:37 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:49 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

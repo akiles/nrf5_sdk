@@ -1,20 +1,13 @@
 var a00607 =
 [
-    [ "APP_GPIOTE_BUF_SIZE", "a00607.html#ga1776902d69e12c277659e609fcbf2fe5", null ],
-    [ "APP_GPIOTE_INIT", "a00607.html#gaed385f30da9f44fb5bf4591eef4d27d9", null ],
-    [ "GPIOTE_USER_NODE_SIZE", "a00607.html#ga873de058f1a74896f2117c6576e1b4e2", null ],
-    [ "NO_OF_PINS", "a00607.html#ga9ceabb78fed1102abd4f0f331a04e190", null ],
-    [ "app_gpiote_event_handler_t", "a00607.html#ga23c3e3e3c8e271614548b30684a0f4da", null ],
-    [ "app_gpiote_input_event_handler_t", "a00607.html#gaebc08f58d1b9e90b05832bb3205f93a9", null ],
-    [ "app_gpiote_disable_interrupts", "a00607.html#ga81f2b093519e072e7e875d3752948778", null ],
-    [ "app_gpiote_enable_interrupts", "a00607.html#ga328efc6349aeb671173d4934008996f3", null ],
-    [ "app_gpiote_end_irq_event_handler_register", "a00607.html#ga156c09d369b6f4169640f0c5f3b58d8c", null ],
-    [ "app_gpiote_end_irq_event_handler_unregister", "a00607.html#gab19aa3044fd57a44ac309b2275958580", null ],
-    [ "app_gpiote_init", "a00607.html#ga573b71494c38cc4c32b209a13708c78d", null ],
-    [ "app_gpiote_input_event_handler_register", "a00607.html#gadb3478898eb54905aa38d7ddf731d480", null ],
-    [ "app_gpiote_input_event_handler_unregister", "a00607.html#ga87444fbfe469eb73229d43fdf8cd61fc", null ],
-    [ "app_gpiote_pins_state_get", "a00607.html#ga5eaa7bc1dcd21b11a809dbd13b714d75", null ],
-    [ "app_gpiote_user_disable", "a00607.html#ga486576266f08b96279e514f080911350", null ],
-    [ "app_gpiote_user_enable", "a00607.html#ga50622a63550c442d6ad8a8a0d34b166d", null ],
-    [ "app_gpiote_user_register", "a00607.html#gaa0fe3334c8940d86fc48af00ccb8e0ed", null ]
+    [ "app_fifo_t", "a00096.html", [
+      [ "buf_size_mask", "a00096.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
+      [ "p_buf", "a00096.html#a64eafd180a65260208be3b845f6acbf5", null ],
+      [ "read_pos", "a00096.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
+      [ "write_pos", "a00096.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
+    ] ],
+    [ "app_fifo_flush", "a00607.html#ga0944439787b55aafb3288a836efa3b9b", null ],
+    [ "app_fifo_get", "a00607.html#gab6292f78e91737ba0df83d6755e0abb9", null ],
+    [ "app_fifo_init", "a00607.html#gafc2ba3545e60f0134689fac2aa87f493", null ],
+    [ "app_fifo_put", "a00607.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e", null ]
 ];

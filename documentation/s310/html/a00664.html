@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: GATT Server Operations</title>
+<title>nRF51 SDK - S310 SoftDevice: GATT Server Attribute Types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,117 +99,132 @@ $(document).ready(function(){initNavTree('a00664.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GATT Server Operations<div class="ingroups"><a class="el" href="a00848.html">Defines</a></div></div>  </div>
+<div class="title">GATT Server Attribute Types<div class="ingroups"><a class="el" href="a00850.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gaefcca583b8fedfba89e3e8864f5fb392"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#gaefcca583b8fedfba89e3e8864f5fb392">BLE_GATTS_OP_INVALID</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:gaefcca583b8fedfba89e3e8864f5fb392"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga52cba338739e55ac2843c2ef92bef44b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#ga52cba338739e55ac2843c2ef92bef44b">BLE_GATTS_OP_WRITE_REQ</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga52cba338739e55ac2843c2ef92bef44b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac567f652312a6f8bbb5e348f01ed3f77"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#gac567f652312a6f8bbb5e348f01ed3f77">BLE_GATTS_OP_WRITE_CMD</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:gac567f652312a6f8bbb5e348f01ed3f77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c61bfea52333d5d0b1f8ede31b3f8ee"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#ga0c61bfea52333d5d0b1f8ede31b3f8ee">BLE_GATTS_OP_SIGN_WRITE_CMD</a>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:ga0c61bfea52333d5d0b1f8ede31b3f8ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga97ae5797d7a83c1df161626765ddb436"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#ga97ae5797d7a83c1df161626765ddb436">BLE_GATTS_OP_PREP_WRITE_REQ</a>&#160;&#160;&#160;0x04</td></tr>
-<tr class="separator:ga97ae5797d7a83c1df161626765ddb436"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae298558aca1af7f9dc5ce38268418059"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#gae298558aca1af7f9dc5ce38268418059">BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL</a>&#160;&#160;&#160;0x05</td></tr>
-<tr class="separator:gae298558aca1af7f9dc5ce38268418059"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6b36a56316847e970cc728a68e5bb6f0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#ga6b36a56316847e970cc728a68e5bb6f0">BLE_GATTS_OP_EXEC_WRITE_REQ_NOW</a>&#160;&#160;&#160;0x06</td></tr>
-<tr class="separator:ga6b36a56316847e970cc728a68e5bb6f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga24097ed5a56be45fc4d051584546e458"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#ga24097ed5a56be45fc4d051584546e458">BLE_GATTS_ATTR_TYPE_INVALID</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga24097ed5a56be45fc4d051584546e458"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0bb8323562a8a6be5ad1b2287b20373c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#ga0bb8323562a8a6be5ad1b2287b20373c">BLE_GATTS_ATTR_TYPE_PRIM_SRVC_DECL</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga0bb8323562a8a6be5ad1b2287b20373c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa5f417382bd4c490203767739062c74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#gafa5f417382bd4c490203767739062c74">BLE_GATTS_ATTR_TYPE_SEC_SRVC_DECL</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:gafa5f417382bd4c490203767739062c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf7b95716018edd34e87df7e4163bc74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#gadf7b95716018edd34e87df7e4163bc74">BLE_GATTS_ATTR_TYPE_INC_DECL</a>&#160;&#160;&#160;0x03</td></tr>
+<tr class="separator:gadf7b95716018edd34e87df7e4163bc74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga102e704417b457854a05daa5fa06d7d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#ga102e704417b457854a05daa5fa06d7d6">BLE_GATTS_ATTR_TYPE_CHAR_DECL</a>&#160;&#160;&#160;0x04</td></tr>
+<tr class="separator:ga102e704417b457854a05daa5fa06d7d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7e5c6d395c2a57918233dd8c7a9a699"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#gac7e5c6d395c2a57918233dd8c7a9a699">BLE_GATTS_ATTR_TYPE_CHAR_VAL</a>&#160;&#160;&#160;0x05</td></tr>
+<tr class="separator:gac7e5c6d395c2a57918233dd8c7a9a699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5f3e3213a49c7fe404a1c3f934de50c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#gac5f3e3213a49c7fe404a1c3f934de50c">BLE_GATTS_ATTR_TYPE_DESC</a>&#160;&#160;&#160;0x06</td></tr>
+<tr class="separator:gac5f3e3213a49c7fe404a1c3f934de50c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbf23b44b2e2731d944ba3682427c316"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#gadbf23b44b2e2731d944ba3682427c316">BLE_GATTS_ATTR_TYPE_OTHER</a>&#160;&#160;&#160;0x07</td></tr>
+<tr class="separator:gadbf23b44b2e2731d944ba3682427c316"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gae298558aca1af7f9dc5ce38268418059"></a>
+<a class="anchor" id="ga102e704417b457854a05daa5fa06d7d6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL&#160;&#160;&#160;0x05</td>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_CHAR_DECL&#160;&#160;&#160;0x04</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Execute Write Request: Cancel all prepared writes. </p>
+<p>Characteristic Declaration. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga6b36a56316847e970cc728a68e5bb6f0"></a>
+<a class="anchor" id="gac7e5c6d395c2a57918233dd8c7a9a699"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_OP_EXEC_WRITE_REQ_NOW&#160;&#160;&#160;0x06</td>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_CHAR_VAL&#160;&#160;&#160;0x05</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Execute Write Request: Immediately execute all prepared writes. </p>
+<p>Characteristic Value. </p>
 
 </div>
 </div>
-<a class="anchor" id="gaefcca583b8fedfba89e3e8864f5fb392"></a>
+<a class="anchor" id="gac5f3e3213a49c7fe404a1c3f934de50c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_OP_INVALID&#160;&#160;&#160;0x00</td>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_DESC&#160;&#160;&#160;0x06</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Invalid Operation. </p>
+<p>Descriptor. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga97ae5797d7a83c1df161626765ddb436"></a>
+<a class="anchor" id="gadf7b95716018edd34e87df7e4163bc74"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_OP_PREP_WRITE_REQ&#160;&#160;&#160;0x04</td>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_INC_DECL&#160;&#160;&#160;0x03</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Prepare Write Request. </p>
+<p>Include Declaration. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga0c61bfea52333d5d0b1f8ede31b3f8ee"></a>
+<a class="anchor" id="ga24097ed5a56be45fc4d051584546e458"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_OP_SIGN_WRITE_CMD&#160;&#160;&#160;0x03</td>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_INVALID&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Signed Write Command. </p>
+<p>Invalid Attribute Type. </p>
 
 </div>
 </div>
-<a class="anchor" id="gac567f652312a6f8bbb5e348f01ed3f77"></a>
+<a class="anchor" id="gadbf23b44b2e2731d944ba3682427c316"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_OP_WRITE_CMD&#160;&#160;&#160;0x02</td>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_OTHER&#160;&#160;&#160;0x07</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write Command. </p>
+<p>Other, non-GATT specific type. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga52cba338739e55ac2843c2ef92bef44b"></a>
+<a class="anchor" id="ga0bb8323562a8a6be5ad1b2287b20373c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_OP_WRITE_REQ&#160;&#160;&#160;0x01</td>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_PRIM_SRVC_DECL&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write Request. </p>
+<p>Primary Service Declaration. </p>
+
+</div>
+</div>
+<a class="anchor" id="gafa5f417382bd4c490203767739062c74"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_SEC_SRVC_DECL&#160;&#160;&#160;0x02</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Secondary Service Declaration. </p>
 
 </div>
 </div>
@@ -218,7 +233,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:33 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:45 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

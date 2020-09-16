@@ -48,8 +48,8 @@ All rights reserved.
 #define ANTFS_CLIENT_SERIAL_NUMBER              NRF_FICR->DEVICEID[0]                               /**< Serial number of client device. */
 
 // The following parameters can be customized, and should match the OTA Updater tool Connection & Authentication settings
-#define ANTFS_CLIENT_DEV_TYPE                   1u                                                 /**< Beacon device type . Set to Product ID*/
-#define ANTFS_CLIENT_MANUF_ID                   255u                                               /**< Beacon manufacturer ID.  Set to your own Manufacturer ID (managed by ANT+) */
+#define ANTFS_CLIENT_DEV_TYPE                   1u                                                  /**< Beacon device type . Set to Product ID*/
+#define ANTFS_CLIENT_MANUF_ID                   255u                                                /**< Beacon manufacturer ID.  Set to your own Manufacturer ID (managed by ANT+) */
 #define ANTFS_CLIENT_NAME                       { "ANTFS OTA Update" }                              /**< Client's friendly name.  This string  can be displayed to identify the device. */
 #define ANTFS_CLIENT_PASSKEY                    {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08}    /**< Client authentication passkey. */
 
@@ -87,8 +87,8 @@ static const directory_file_t m_directory =
             0x80,                                   /* Read only, General File Flags*/
             OTA_UPDATE_INFO_FILE_SIZE,              /* File Size*/
             0xFFFFFFFF
-        },
-    },
+        }
+    }
 };
 
 
@@ -100,29 +100,23 @@ static uint16_t                 m_current_crc;                  /**< ANTFS curre
 static uint16_t                 m_current_file_index;           /**< ANTFS current File Index. */
 
 static uint32_t                 m_pending_offset;
-static uint16_t                 m_pending_crc;
 
 static uint8_t                  * mp_rx_buffer;
 
 static bool                     m_image_data_complete;
-static uint32_t                 m_image_data_count;
 static uint32_t                 m_image_data_offset;
 static uint32_t                 m_image_data_max;
-static uint16_t                 m_image_data_crc_post;
-static uint16_t                 m_image_data_crc_pre;
 
-static uint16_t                 m_validation_crc;
-static uint16_t                 m_ota_file_crc;
+static uint16_t                 m_header_crc_seed;
 
 static dfu_update_mode_t        m_update_mode = DFU_UPDATE_NONE;
 
-static dfu_update_packet_t      dfu_pkt;
+static dfu_update_packet_t      m_dfu_pkt;
 
 typedef struct{
     uint8_t         a_mem_pool[ANTFS_UPLOAD_DATA_BUFFER_MAX_SIZE];
     uint32_t        size;
     uint16_t        crc;
-    uint8_t         priority;
 } mem_pool_t;
 mem_pool_t m_mem_pool_1;
 mem_pool_t m_mem_pool_2;
@@ -146,6 +140,7 @@ static bool                     m_upload_swap_space_prepared    = false;
 
 static void services_init(void);
 static bool flash_busy(void);
+static void upload_data_response_fail_reset(void);
 
 //static pstorage_handle_t m_storage_handle_ant = {0};
 //static void boot_return_set (uint32_t status)
@@ -202,7 +197,8 @@ static void dfu_cb_handler(uint32_t result, uint8_t * p_data)
 {
     uint32_t err_code;
     uint16_t rxd_buffer_len = 0;
-    uint16_t preflashed_crc = 0;
+    uint16_t ram_crc        = 0;
+    uint16_t flash_crc      = 0;
 
 #if defined (DBG_DFU_UART_OUT_PIN)
     DEBUG_UART_OUT(0xFF);
@@ -254,44 +250,41 @@ static void dfu_cb_handler(uint32_t result, uint8_t * p_data)
             // Handles Flash write call back queued by Upload Data.
             if (result != NRF_SUCCESS)
             {
-                UNUSED_VARIABLE(antfs_upload_data_resp_transmit(false));
-                m_antfs_dfu_state = ANTFS_DFU_STATE_STALL;
+                upload_data_response_fail_reset();
                 return;
             }
 
-            if ((m_mem_pool_1.size != 0) && (m_mem_pool_2.priority == 0))
+            if ((m_mem_pool_1.a_mem_pool <= p_data) && (p_data <= (m_mem_pool_1.a_mem_pool + ANTFS_UPLOAD_DATA_BUFFER_MAX_SIZE)))
             {
                 rxd_buffer_len = m_mem_pool_1.size;
-                preflashed_crc = m_mem_pool_1.crc;
+                ram_crc = m_mem_pool_1.crc;
                 m_mem_pool_1.size = 0;
             }
-            else if (m_mem_pool_2.size != 0)
+            else if ((m_mem_pool_2.a_mem_pool <= p_data) && (p_data <= (m_mem_pool_2.a_mem_pool + ANTFS_UPLOAD_DATA_BUFFER_MAX_SIZE)))
             {
                 rxd_buffer_len = m_mem_pool_2.size;
-                preflashed_crc = m_mem_pool_2.crc;
+                ram_crc = m_mem_pool_2.crc;
                 m_mem_pool_2.size = 0;
-                m_mem_pool_2.priority = 0;
             }
             else
             {
-                UNUSED_VARIABLE(antfs_upload_data_resp_transmit(false));
-                m_antfs_dfu_state = ANTFS_DFU_STATE_STALL;
+                upload_data_response_fail_reset();
                 return;
             }
 
             // Verify the data written to flash.
-            m_image_data_crc_post = crc_crc16_update(m_image_data_crc_post, (uint8_t*)(dfu_storage_start_address_get() + m_image_data_offset), rxd_buffer_len);
-            if (m_image_data_crc_post != preflashed_crc)
+            flash_crc = crc_crc16_update(0, (uint8_t*)(dfu_storage_start_address_get() + m_image_data_offset), rxd_buffer_len);
+            if (flash_crc != ram_crc)
             {
-                UNUSED_VARIABLE(antfs_upload_data_resp_transmit(false));
-                m_antfs_dfu_state = ANTFS_DFU_STATE_STALL;
+                upload_data_response_fail_reset();
                 return;
             }
-            m_image_data_offset += rxd_buffer_len;
 
             //update current offsets and crc
-            m_current_offset    = m_pending_offset;
-            m_current_crc       = m_pending_crc;
+            m_current_offset    += rxd_buffer_len;
+            m_current_crc       = crc_crc16_update(m_current_crc, (uint8_t*)(dfu_storage_start_address_get() + m_image_data_offset), rxd_buffer_len);
+
+            m_image_data_offset += rxd_buffer_len;
 
             if (m_antfs_dfu_state == ANTFS_DFU_STATE_FLASH_PENDING)
             {
@@ -301,30 +294,47 @@ static void dfu_cb_handler(uint32_t result, uint8_t * p_data)
                 m_response_info.file_crc                  = m_current_crc;
                 if (m_upload_request_in_progress)
                 {
+                    m_upload_request_in_progress = false;
                     UNUSED_VARIABLE(antfs_upload_req_resp_transmit(RESPONSE_MESSAGE_OK, &m_response_info));
                 }
-                else if (m_image_data_complete == false)
+                else    // data response
                 {
-                    UNUSED_VARIABLE(antfs_upload_data_resp_transmit(true));
+                    if (m_image_data_complete == true)
+                    {
+                        if (m_image_data_max == m_image_data_offset)
+                        {
+                            err_code = dfu_image_validate(m_header_crc_seed);
+                            if (err_code == NRF_SUCCESS)
+                            {
+                                UNUSED_VARIABLE(antfs_upload_data_resp_transmit(true));
+                                m_antfs_dfu_state = ANTFS_DFU_STATE_VALIDATED;
+                                return;
+                            }
+                            else
+                            {
+                                upload_data_response_fail_reset();
+                            }
+                        }
+
+                        if ((m_mem_pool_1.size != 0) || (m_mem_pool_2.size != 0))
+                        {
+                            m_antfs_dfu_state = ANTFS_DFU_STATE_FLASH_PENDING;
+                        }
+                    }
+                    else //m_image_data_complete == false
+                    {
+                        if ((m_mem_pool_1.size == 0) && (m_mem_pool_2.size == 0))
+                        {
+                            UNUSED_VARIABLE(antfs_upload_data_resp_transmit(true));                 // Handles block transfers
+                        }
+                        else
+                        {
+                            m_antfs_dfu_state = ANTFS_DFU_STATE_FLASH_PENDING;
+                        }
+                    }
                 }
             }
 
-            // We got all the image validate it right away.
-            if ((m_image_data_complete == true) && ( m_image_data_max == m_image_data_offset))
-            {
-                err_code = dfu_image_validate(m_validation_crc, m_ota_file_crc);
-                if (err_code == NRF_SUCCESS)
-                {
-                    m_antfs_dfu_state = ANTFS_DFU_STATE_VALIDATED;
-                    UNUSED_VARIABLE(antfs_upload_data_resp_transmit(true));
-                }
-                else
-                {
-//                    boot_return_set(PARAM_RETURN_BOOT_STATUS_Failed);
-                    m_antfs_dfu_state = ANTFS_DFU_STATE_STALL;
-                    UNUSED_VARIABLE(antfs_upload_data_resp_transmit(false));
-                }
-            }
             break;
 
         default:
@@ -341,7 +351,7 @@ static void antfs_event_upload_request_handle(const antfs_event_return_t * p_eve
     uint32_t    err_code = RESPONSE_MESSAGE_OK;
     uint8_t     new_request = false;
 
-    if (m_antfs_dfu_state == ANTFS_DFU_STATE_FLASH_ERASE)
+    if ((m_antfs_dfu_state == ANTFS_DFU_STATE_FLASH_ERASE) || (m_antfs_dfu_state == ANTFS_DFU_STATE_FLASH_PENDING))
     {
         return;
     }
@@ -393,16 +403,23 @@ static void antfs_event_upload_request_handle(const antfs_event_return_t * p_eve
             m_response_info.file_size.data            = m_current_offset;
             // Intentionally report maximum allowed upload file size as max writeable file size + header and crc.
             // Writeable size check will be performed by dfu_start_pkt_handle() after parsing uploaded header
-            m_response_info.max_file_size             = ANTFS_FILE_SIZE_MAX_DFU_IMAGE + OTA_IMAGE_HEADER_SIZE_MAX + OTA_IMAGE_CRC_SIZE_MAX;
+            m_response_info.max_file_size             = ANTFS_FILE_SIZE_MAX_DFU_IMAGE + OTA_IMAGE_HEADER_SIZE_MAX;
             // Maximum burst block should be maximum allowable downloadable file size.
-            m_response_info.max_burst_block_size.data = ANTFS_FILE_SIZE_MAX_DFU_IMAGE + OTA_IMAGE_HEADER_SIZE_MAX + OTA_IMAGE_CRC_SIZE_MAX;
+            m_response_info.max_burst_block_size.data = ANTFS_FILE_SIZE_MAX_DFU_IMAGE + OTA_IMAGE_HEADER_SIZE_MAX;
             // Last valid CRC.
             m_response_info.file_crc                  = m_current_crc;
 
             // Will only handle upload request while at ANTFS_DFU_STATE_READY
             if (m_antfs_dfu_state == ANTFS_DFU_STATE_VALIDATED)
             {
-                UNUSED_VARIABLE(antfs_upload_req_resp_transmit(RESPONSE_MESSAGE_OK, &m_response_info));
+                if (new_request)
+                {
+                    UNUSED_VARIABLE(antfs_upload_req_resp_transmit(RESPONSE_MESSAGE_NOT_AVAILABLE, &m_response_info));
+                }
+                else
+                {
+                    UNUSED_VARIABLE(antfs_upload_req_resp_transmit(RESPONSE_MESSAGE_OK, &m_response_info));                 // To handle resume at end of data.
+                }
                 return;
             }
             else if (m_antfs_dfu_state != ANTFS_DFU_STATE_READY)
@@ -427,7 +444,8 @@ static void antfs_event_upload_request_handle(const antfs_event_return_t * p_eve
                 m_current_offset    = 0;
                 m_current_crc       = 0;
                 m_pending_offset    = 0;
-                m_pending_crc       = 0;
+
+                antfs_ota_init();
 
                 // Only supports offset starting at 0;
                 if (p_event->offset != 0)
@@ -456,30 +474,30 @@ static void antfs_event_upload_request_handle(const antfs_event_return_t * p_eve
                 else if (m_current_file_index == ANTFS_FILE_INDEX_UPDATE_STACK_BOOTLOADER)
                 {
                     m_update_mode = DFU_UPDATE_SD;
-                    m_update_mode |= DFU_UPDATE_BL; /*lint !e655 "bit-wise operation uses (compatible) enum's" */
+                    m_update_mode |= DFU_UPDATE_BL;//lint !e655 suppress Lint Warning 655: Bit-wise operations
                 }
 
-                dfu_pkt.packet_type = INIT_PACKET;
+                m_dfu_pkt.packet_type = INIT_PACKET;
 
                 if ((*ANT_BOOT_APP_SIZE > DFU_IMAGE_MAX_SIZE_BANKED)    ||
                     (*ANT_BOOT_APP_SIZE == 0xFFFFFFFF)                  ||
                     (*ANT_BOOT_APP_SIZE == 0x00000000)                  ||
-                    (m_update_mode & DFU_UPDATE_SD)) /*lint !e655 "bit-wise operation uses (compatible) enum's" */
+                    (m_update_mode & DFU_UPDATE_SD))/*lint !e655 suppress Lint Warning 655: Bit-wise operations*/
                 {
-                    dfu_pkt.params.init_packet.total_image_size = DFU_IMAGE_MAX_SIZE_FULL;
+                    m_dfu_pkt.params.init_packet.total_image_size = DFU_IMAGE_MAX_SIZE_FULL;
                 }
                 else
                 {
-                    dfu_pkt.params.init_packet.total_image_size = m_current_file_size;
+                    m_dfu_pkt.params.init_packet.total_image_size = m_current_file_size;
                 }
 
                 if (m_upload_swap_space_prepared == true)
                 {
                     // Prepare no flash, except the states
-                    dfu_pkt.params.init_packet.total_image_size = 0;
+                    m_dfu_pkt.params.init_packet.total_image_size = 0;
                 }
 
-                err_code = dfu_init_pkt_handle(&dfu_pkt);
+                err_code = dfu_init_pkt_handle(&m_dfu_pkt);
                 if (err_code)
                 {
                     if (err_code == NRF_ERROR_INVALID_STATE)
@@ -495,10 +513,7 @@ static void antfs_event_upload_request_handle(const antfs_event_return_t * p_eve
 
                 m_ota_image_header_parsed   = false;
                 m_image_data_complete       = false;
-                m_image_data_count          = 0;
                 m_image_data_offset         = 0;
-                m_image_data_crc_post       = 0;
-                m_image_data_crc_pre        = 0;
 
                 m_data_buffered             = 0;
 
@@ -554,12 +569,10 @@ static void antfs_event_upload_start_handle(const antfs_event_return_t * p_event
  */
 static void antfs_event_upload_data_handle(const antfs_event_return_t * p_event)
 {
-    uint32_t    image_data_count_remaining;
-    uint8_t *   p_rxd_data;
-    uint32_t    rxd_data_size;
-    uint32_t    err_code                    = NRF_SUCCESS;
-    bool        callback_activated          = false;
-    ota_image_header_t * p_ota_image_header;
+    static uint8_t *        p_rxd_data;
+    static uint32_t         rxd_data_size;
+    uint32_t                err_code = NRF_SUCCESS;
+    ota_image_header_t *    p_ota_image_header;
 
      // Allocate a memory pool for upload buffering.
     if (m_data_buffered == 0)
@@ -598,7 +611,7 @@ static void antfs_event_upload_data_handle(const antfs_event_return_t * p_event)
     if ((m_data_buffered >= ANTFS_UPLOAD_DATA_BUFFER_MIN_SIZE) ||
             ((m_pending_offset + m_data_buffered) >= m_current_file_size))
     {
-       /* If any of the pool is still pending process and we are running out of space
+        /* If any of the pool is still pending process and we are running out of space
         * The ANTFS_UPLOAD_DATA_BUFFER_MIN_SIZE should be enough delay to get the previous buffer be processed, including flashing*/
         if (((m_mem_pool_1.size != 0) || (m_mem_pool_2.size != 0)) && ((m_pending_offset + m_data_buffered) < m_current_file_size))
         {
@@ -609,8 +622,7 @@ static void antfs_event_upload_data_handle(const antfs_event_return_t * p_event)
             else
             {
                 // Something is wrong. the device is not flashing.
-                UNUSED_VARIABLE(antfs_upload_data_resp_transmit(false));
-                m_antfs_dfu_state = ANTFS_DFU_STATE_STALL;
+                upload_data_response_fail_reset();
                 return;
             }
         }
@@ -632,17 +644,16 @@ static void antfs_event_upload_data_handle(const antfs_event_return_t * p_event)
                     // Throw it away.
                     mp_buffering_handle->size   = 0;
                     mp_buffering_handle         = NULL;
-                    UNUSED_VARIABLE(antfs_upload_data_resp_transmit(false));
-                    m_antfs_dfu_state = ANTFS_DFU_STATE_STALL;
+
+                    upload_data_response_fail_reset();
                     return;
                 }
 
                 p_rxd_data      = mp_buffering_handle->a_mem_pool;
                 rxd_data_size   = mp_buffering_handle->size;
 
-                // pre calculate pending offset and crc
-                m_pending_offset  = m_current_offset + rxd_data_size;
-                m_pending_crc     = crc_crc16_update(m_current_crc, p_rxd_data, rxd_data_size);
+                // pre calculate pending offset
+                m_pending_offset  = m_pending_offset + rxd_data_size;
 
                 /***********
                  * Header Section
@@ -650,41 +661,46 @@ static void antfs_event_upload_data_handle(const antfs_event_return_t * p_event)
                 if (!m_ota_image_header_parsed)
                 {
                     // Parse the Header
-                    p_ota_image_header = antfs_ota_image_header_parsing(p_rxd_data, rxd_data_size);
-                    if (p_ota_image_header == NULL)
+                    if (antfs_ota_image_header_parsing(&p_rxd_data, &rxd_data_size))
+                    {
+                        m_ota_image_header_parsed = true;
+                        p_ota_image_header = antfs_ota_image_header_get();
+                    }
+                    else
+                    {
+                        return;                                         // Get more
+                    }
+
+                    if ((p_ota_image_header == NULL)                                                        ||  // Make sure it is a valid header
+                        (p_ota_image_header->architecture_identifier != OTA_IMAGE_ARCH_IDENTIFIER_ST_BL_AP) ||  // Make sure it is SD BL and AP arch
+                        (p_ota_image_header->image_format != OTA_IMAGE_IMAGE_FORMAT_BINARY))                    // Make sure it is in Binary format
                     {
                         // Invalid header, fail now.
-                        UNUSED_VARIABLE(antfs_upload_data_resp_transmit(false));
+                        upload_data_response_fail_reset();
                         return;
-                        //dfu_error_notify(err_code, 13);
                     }
-                    m_ota_image_header_parsed = true;
 
                     // Fill in DFU parameters
-                    dfu_pkt.params.start_packet.dfu_update_mode    = m_update_mode;
-                    dfu_pkt.params.start_packet.sd_image_size      = p_ota_image_header->wireless_stack_size;
-                    dfu_pkt.params.start_packet.bl_image_size      = p_ota_image_header->bootloader_size;
-                    dfu_pkt.params.start_packet.app_image_size     = p_ota_image_header->application_size;
+                    m_dfu_pkt.params.start_packet.dfu_update_mode   = m_update_mode;
+                    m_dfu_pkt.params.start_packet.sd_image_size     = p_ota_image_header->wireless_stack_size;
+                    m_dfu_pkt.params.start_packet.bl_image_size     = p_ota_image_header->bootloader_size;
+                    m_dfu_pkt.params.start_packet.app_image_size    = p_ota_image_header->application_size;
+                    m_dfu_pkt.params.start_packet.info_bytes_size   = OTA_IMAGE_CRC_SIZE_MAX;
 
-                    err_code = dfu_start_pkt_handle(&dfu_pkt);        // reinitializing dfu pkt
+                    err_code = dfu_start_pkt_handle(&m_dfu_pkt);        // reinitializing dfu pkt
                     if (err_code)
                     {
-                        UNUSED_VARIABLE(antfs_upload_data_resp_transmit(false));
-                        m_antfs_dfu_state = ANTFS_DFU_STATE_STALL;
+                        upload_data_response_fail_reset();
                         return;
                     }
 
-                    //precalculating validation crc up to the header size only.
-                    m_validation_crc = crc_crc16_update(0, p_rxd_data, p_ota_image_header->header_size);
-
-                    // Adjust handler parameters.
-                    p_rxd_data          += p_ota_image_header->header_size;
-                    rxd_data_size       -= p_ota_image_header->header_size;
-
-                    m_image_data_max    =  p_ota_image_header->wireless_stack_size
-                                         +  p_ota_image_header->bootloader_size
-                                         +  p_ota_image_header->application_size;
-
+                    m_image_data_max    = p_ota_image_header->wireless_stack_size   +
+                                          p_ota_image_header->bootloader_size       +
+                                          p_ota_image_header->application_size      +
+                                          OTA_IMAGE_CRC_SIZE_MAX;
+                    m_header_crc_seed   = antfs_ota_image_header_crc_get();
+                    m_current_crc       = m_header_crc_seed;
+                    m_current_offset    = p_ota_image_header->header_size;
                 }
 
                 /***********
@@ -694,37 +710,16 @@ static void antfs_event_upload_data_handle(const antfs_event_return_t * p_event)
                 {
                     m_upload_swap_space_prepared = false;
 
-                    // Check if it is way over the image section
-                    if ((m_image_data_count +  rxd_data_size) >= m_image_data_max)
-                    {
-                        image_data_count_remaining                  = m_image_data_max - m_image_data_count;
+                    m_dfu_pkt.params.data_packet.p_data_packet  = (uint32_t*) p_rxd_data;
+                    m_dfu_pkt.params.data_packet.packet_length  = rxd_data_size / sizeof(uint32_t);
 
-                        dfu_pkt.params.data_packet.p_data_packet    = (uint32_t*) p_rxd_data;
-                        dfu_pkt.params.data_packet.packet_length    = image_data_count_remaining  / sizeof(uint32_t);
-
-                        // store flushed information for flash write verification.
-                        mp_buffering_handle->size                   = image_data_count_remaining;
-                        m_image_data_crc_pre                        = crc_crc16_update(m_image_data_crc_pre, p_rxd_data, image_data_count_remaining);
-                        mp_buffering_handle->crc                    = m_image_data_crc_pre;
-
-                        //Adjust data count and size for parsing the remaining data in the info section.
-                        p_rxd_data                                  += image_data_count_remaining;
-                        rxd_data_size                               -= image_data_count_remaining;
-                    }
-                    else
-                    {
-                        dfu_pkt.params.data_packet.p_data_packet    = (uint32_t*) p_rxd_data;
-                        dfu_pkt.params.data_packet.packet_length    = rxd_data_size / sizeof(uint32_t);
-
-                        // store flushed information for flash write verification.
-                        mp_buffering_handle->size                   = rxd_data_size;
-                        m_image_data_crc_pre                        = crc_crc16_update(m_image_data_crc_pre, p_rxd_data, rxd_data_size);
-                        mp_buffering_handle->crc                    = m_image_data_crc_pre;
-                    }
+                    // store flushed information for flash write verification.
+                    mp_buffering_handle->size                   = rxd_data_size;
+                    mp_buffering_handle->crc                    = crc_crc16_update(0, p_rxd_data, rxd_data_size);
 
                     // Pass the image to dfu.
-                    dfu_pkt.packet_type        = DATA_PACKET;
-                    err_code = dfu_data_pkt_handle(&dfu_pkt);
+                    m_dfu_pkt.packet_type        = DATA_PACKET;
+                    err_code = dfu_data_pkt_handle(&m_dfu_pkt);
                     if (err_code == NRF_SUCCESS)
                     {
                         // All the expected firmware image has been received and processed successfully.
@@ -741,42 +736,8 @@ static void antfs_event_upload_data_handle(const antfs_event_return_t * p_event)
                         //TODO Need to figure out what to do on unmanaged returns. Maybe reset
                         dfu_error_notify(err_code, 9);
                     }
-
-                    m_image_data_count += mp_buffering_handle->size;
-
-                    callback_activated = true;
-
-                    if ((mp_buffering_handle == &m_mem_pool_1) && (m_mem_pool_2.size != 0))
-                    {
-                        m_mem_pool_2.priority = 1;
-                    }
                 }
 
-                /***********
-                 * Info section
-                 */
-                if (m_image_data_complete)
-                {
-                    // -Version info
-                    // -CRC
-                    if(antfs_ota_version_info_parsing(&p_rxd_data, &rxd_data_size))
-                    {
-                        // do nothing for now.
-                    }
-
-                    if (antfs_ota_crc_parsing(&p_rxd_data, &rxd_data_size))
-                    {
-                        m_ota_file_crc = antfs_ota_crc_get();
-                    }
-
-                    // Covering cases when we dont expect a callback to free up mem_pool.
-                    if (!callback_activated)
-                    {
-                        mp_buffering_handle->size       = 0;
-                        mp_buffering_handle->priority   = 0;
-                        mp_buffering_handle             = NULL;
-                    }
-                }
                 m_antfs_dfu_state = ANTFS_DFU_STATE_READY;
 
                 break;
@@ -788,9 +749,10 @@ static void antfs_event_upload_data_handle(const antfs_event_return_t * p_event)
     }
 }
 
-
 static void antfs_event_upload_complete_handle(const antfs_event_return_t * p_event)
 {
+    uint32_t err_code;
+
     if (m_antfs_dfu_state == ANTFS_DFU_STATE_VALIDATED)
     {
        // only send this response if we have validated the upload
@@ -800,12 +762,26 @@ static void antfs_event_upload_complete_handle(const antfs_event_return_t * p_ev
     {
         if (flash_busy())
         {
-            m_antfs_dfu_state = ANTFS_DFU_STATE_FLASH_PENDING;
+            m_antfs_dfu_state = ANTFS_DFU_STATE_FLASH_PENDING;                  //  Image completed but still busy writing, postpone it on flash call back.
             return;
+        }
+
+        if (m_image_data_complete == true)
+        {
+            err_code = dfu_image_validate(m_header_crc_seed);
+            if (err_code == NRF_SUCCESS)
+            {
+                m_antfs_dfu_state = ANTFS_DFU_STATE_VALIDATED;
+                UNUSED_VARIABLE(antfs_upload_data_resp_transmit(true));
+            }
+            else
+            {
+                upload_data_response_fail_reset();
+            }
         }
         else
         {
-            UNUSED_VARIABLE(antfs_upload_data_resp_transmit(true));
+            UNUSED_VARIABLE(antfs_upload_data_resp_transmit(true));             // This is expected on block transfers.
         }
     }
     else
@@ -814,10 +790,9 @@ static void antfs_event_upload_complete_handle(const antfs_event_return_t * p_ev
     }
 }
 
-
 static void antfs_event_upload_fail_handle(const antfs_event_return_t * p_event)
 {
-    if (m_antfs_dfu_state == ANTFS_DFU_STATE_READY)
+    if (m_antfs_dfu_state == ANTFS_DFU_STATE_READY)                            // All other failure like RF transfers.
     {
         UNUSED_VARIABLE(antfs_upload_data_resp_transmit(false));
     }
@@ -898,7 +873,7 @@ static void antfs_event_download_data_handle(const antfs_event_return_t * p_even
     if (m_current_file_index == p_event->file_index)
     {
         // Only send data for a file index matching the download request.
-        uint8_t buffer[OTA_UPDATE_INFO_FILE_SIZE];
+        uint8_t * p_buffer;
         // Burst data block size * 8 bytes per burst packet.
         // Offset specified by client.
         const uint32_t offset     = 0;
@@ -911,19 +886,25 @@ static void antfs_event_download_data_handle(const antfs_event_return_t * p_even
         }
         else if (m_current_file_index == ANTFS_FILE_INDEX_OTA_UPDATE_INFO)
         {
-            antfs_ota_update_information_file(&buffer[0], &data_bytes);
+            antfs_ota_update_information_file_get(&data_bytes, &p_buffer);
 
             // @note: Suppress return value as no use case for handling it exists.
-            UNUSED_VARIABLE(antfs_input_data_download(m_current_file_index, offset, data_bytes, buffer));
+            UNUSED_VARIABLE(antfs_input_data_download(m_current_file_index, offset, data_bytes, p_buffer));
         }
     }
 }
 
 static void antfs_event_link_handle(const antfs_event_return_t * p_event)
 {
+    uint32_t err_code;
+
     if (m_antfs_dfu_state == ANTFS_DFU_STATE_VALIDATED)
     {
-        uint32_t err_code = dfu_image_activate();
+        // We can stop ANT right here.
+        err_code = sd_ant_stack_reset();
+        APP_ERROR_CHECK(err_code);
+
+        err_code = dfu_image_activate();
         if (err_code == NRF_SUCCESS)
         {
             m_antfs_dfu_state = ANTFS_DFU_STATE_COMPLETED;
@@ -938,7 +919,7 @@ static void antfs_event_link_handle(const antfs_event_return_t * p_event)
 
 static void antfs_event_trans_handle(const antfs_event_return_t * p_event)
 {
-    if (m_antfs_dfu_state == ANTFS_DFU_STATE_STALL)
+    if (m_antfs_dfu_state == ANTFS_DFU_STATE_STALL)                            // Needs restart
     {
         dfu_error_notify(NRF_ERROR_INTERNAL, 11);
     }
@@ -1018,12 +999,17 @@ static void ant_evt_dispatch(ant_evt_t * p_ant_evt)
     }
 }
 
+static void upload_data_response_fail_reset(void)
+{
+    UNUSED_VARIABLE(antfs_upload_data_resp_transmit(false));
+    m_antfs_dfu_state = ANTFS_DFU_STATE_STALL;
+}
+
 static bool flash_busy(void)
 {
     uint32_t q_count, err_code;
     err_code = pstorage_access_status_get(&q_count);
     APP_ERROR_CHECK(err_code);
-
     if (q_count != 0)
     {
         return true;
@@ -1033,12 +1019,11 @@ static bool flash_busy(void)
         return false;
     }
 }
+
 /**@brief Function for initializing services that will be used by the application.
  */
 static void services_init(void)
 {
-    uint32_t err_code;
-
     // Initializing ANTFS service.
     const antfs_params_t params =
     {
@@ -1057,15 +1042,15 @@ static void services_init(void)
     /* adjust coex settings
      * only enables ANT search and ANT synch keep alive priority behaviour. Transfer keep alive disabled to ensure flash erase doesn’t time out
      * */
+    uint32_t err_code;
     static uint8_t aucCoexConfig[8] = {0x09, 0x00, 0x00, 0x04, 0x00, 0x3A, 0x00, 0x3A};
     err_code = sd_ant_coex_config_set(ANTFS_CHANNEL, aucCoexConfig, NULL);
     APP_ERROR_CHECK(err_code);
 
     m_current_offset                = 0;
     m_current_crc                   = 0;
-    m_pending_offset                = 0;
-    m_pending_crc                   = 0;
 
+    m_pending_offset                = 0;
     m_data_buffered                 = 0;
     mp_buffering_handle             = NULL;
     m_upload_swap_space_prepared    = false;
@@ -1092,9 +1077,7 @@ uint32_t dfu_transport_update_start(void)
 
     // initialize mem_pools
     m_mem_pool_1.size       = 0;
-    m_mem_pool_1.priority   = 0;
     m_mem_pool_2.size       = 0;
-    m_mem_pool_2.priority   = 0;
 
     // It is expected that there was no ANTFS related activities before this point.
     // Check if flash is busy pre-initializing.
@@ -1115,6 +1098,11 @@ uint32_t dfu_transport_update_start(void)
 
 uint32_t dfu_transport_close()
 {
+    uint32_t err_code;
+
     // Close ANTFS Channel
-    return sd_ant_channel_close(ANTFS_CHANNEL);
+    err_code = sd_ant_stack_reset();
+    APP_ERROR_CHECK(err_code);
+
+    return NRF_SUCCESS;
 }

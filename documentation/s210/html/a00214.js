@@ -1,8 +1,5 @@
 var a00214 =
 [
-    [ "PSTORAGE_CLEAR_OP_CODE", "a00214.html#gaf2ce8b4e460358a23ae82516167df79c", null ],
-    [ "PSTORAGE_ERROR_OP_CODE", "a00214.html#ga31c301088ac2d5534ebdc5ed44bd3b55", null ],
-    [ "PSTORAGE_LOAD_OP_CODE", "a00214.html#ga4e04e36e3adf60869073dce4af46b7d5", null ],
-    [ "PSTORAGE_STORE_OP_CODE", "a00214.html#gad1415b8815fc4e0ba8f4f6bc2d8e3ce6", null ],
-    [ "PSTORAGE_UPDATE_OP_CODE", "a00214.html#gae66936fc791b79a9f85a7058ea83423a", null ]
+    [ "nrf_temp_init", "a00214.html#gaac6989281c66a701979e172df40e39ab", null ],
+    [ "nrf_temp_read", "a00214.html#ga15d7acdef48ce1cb1e5e83dc02465dc7", null ]
 ];

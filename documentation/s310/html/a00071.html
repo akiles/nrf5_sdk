@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('a00071.html','');});
 <div class="textblock"><p>Device Manager manages all bonded devices managing all contexts for a bonded device. Various contexts are identified under</p>
 <ul>
 <li>Device Context: Bonding and peer identification information.</li>
-<li>Service Context: GATT Server's configuration for peer device is a typical example for service context. Module has provision to store GATT client related information as well, but not completely implemented. In case application does not implement GATT Server or Client, DM_PROTOCOL_CNTXT_NONE can be used when registering the application to indicate respective service context are not used. See <a class="el" href="a00775.html">Service/Protocol Types</a> for details.</li>
+<li>Service Context: GATT Server's configuration for peer device is a typical example for service context. Module has provision to store GATT client related information as well, but not completely implemented. In case application does not implement GATT Server or Client, DM_PROTOCOL_CNTXT_NONE can be used when registering the application to indicate respective service context are not used. See <a class="el" href="a00776.html">Service/Protocol Types</a> for details.</li>
 <li>Application Context: In case application requires to store application specific data per bonded device, it can do so by requesting Device Manager to store application context for the device. Application context is not permitted to be set for a non bonded device.</li>
 </ul>
 <p>Device Manager cab be compile time to suit the application. Configuration includes number of active peers, bonded device module should support, number of CCCDs in GATT Server, Application context size etc. Active refers to maximum connections that the module wants to be able to manage concurrently. Configurable parameters are described in device_manager_cnfg.h.</p>
@@ -120,9 +120,9 @@ pstorage module shall be initialized before initializing this module. Applicatio
 <div class="line">init_param.<a class="code" href="a00306.html#ab5feebf730ecc50b0c78c0f4354d6fc3">clear_persistent_data</a> = <span class="keyword">true</span>.</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Initialize device manager</span></div>
-<div class="line">retval = <a class="code" href="a00782.html#ga5103c3ed7af4bef6e8a76075d48d14f1" title="Module Initialization Routine.">dm_init</a>(&amp;init_param);</div>
+<div class="line">retval = <a class="code" href="a00783.html#ga5103c3ed7af4bef6e8a76075d48d14f1" title="Module Initialization Routine.">dm_init</a>(&amp;init_param);</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span>(retval == <a class="code" href="a00675.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span>(retval == <a class="code" href="a00676.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Module successfully initialized.</span></div>
 <div class="line">}</div>
@@ -138,22 +138,22 @@ Associated Configuration Parameters</h2>
 <p>None. Initialization procedure is unaltered by configuration of the module.</p>
 <h1><a class="anchor" id="lib_device_manager_register"></a>
 Registration</h1>
-<p>The application should register with the device manager before using any other APIs of the module. Registration is done using the <a class="el" href="a00782.html#ga62366984b8a674d9cadb48a8da2d3694">dm_register</a> API. Sample code below demonstrate registration procedure with the module.</p>
+<p>The application should register with the device manager before using any other APIs of the module. Registration is done using the <a class="el" href="a00783.html#ga62366984b8a674d9cadb48a8da2d3694">dm_register</a> API. Sample code below demonstrate registration procedure with the module.</p>
 <div class="fragment"><div class="line">uint32_t                   retval;</div>
 <div class="line"><a class="code" href="a00300.html" title="Application Registration Parameters.">dm_application_param_t</a>     param;</div>
-<div class="line"><a class="code" href="a00780.html#ga3c013385ac2ef5502370f598308d0339" title="Application Instance.">dm_application_instance_t</a>  appl_id;</div>
+<div class="line"><a class="code" href="a00781.html#ga3c013385ac2ef5502370f598308d0339" title="Application Instance.">dm_application_instance_t</a>  appl_id;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Set notification callback in registration parameter.</span></div>
 <div class="line">param.ntf_cb = example_cm_event_handler;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Indicate no service type being used by application.</span></div>
-<div class="line">param.<a class="code" href="a00300.html#a01e7f59d291d6e3962ab36b22a7d1683">service_type</a> = <a class="code" href="a00775.html#gaf4cac13e3128b3131c16d52760393932">DM_PROTOCOL_CNTXT_NONE</a>;</div>
+<div class="line">param.<a class="code" href="a00300.html#a01e7f59d291d6e3962ab36b22a7d1683">service_type</a> = <a class="code" href="a00776.html#gaf4cac13e3128b3131c16d52760393932">DM_PROTOCOL_CNTXT_NONE</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Set security parameters to be used for establishing bond with peer.</span></div>
 <div class="line">memset (&amp;param.<a class="code" href="a00300.html#a763895cc4380ab52a871637ad5156d94">sec_param</a>, 0, <span class="keyword">sizeof</span>(<a class="code" href="a00185.html" title="GAP security parameters.">ble_gap_sec_params_t</a>));</div>
 <div class="line">param.<a class="code" href="a00300.html#a763895cc4380ab52a871637ad5156d94">sec_param</a>.<a class="code" href="a00185.html#af2d04383bf2e1c7a4447e024528b7db9">bond</a>         = 1;                    <span class="comment">// Bonding set to 1, meaning bond should be established.</span></div>
 <div class="line">param.<a class="code" href="a00300.html#a763895cc4380ab52a871637ad5156d94">sec_param</a>.<a class="code" href="a00185.html#ab717b7758f6bc0d7ea50682a4d4e149b">mitm</a>         = 1;                    <span class="comment">// MITM protection needed.</span></div>
-<div class="line">param.<a class="code" href="a00300.html#a763895cc4380ab52a871637ad5156d94">sec_param</a>.<a class="code" href="a00185.html#a13fd33e5f5b50a596e255123f8d21036">io_caps</a>      = <a class="code" href="a00645.html#gad11df80d3ac9d375b320363694ec0a03">BLE_GAP_IO_CAPS_NONE</a>; <span class="comment">// No Input, No Output.</span></div>
+<div class="line">param.<a class="code" href="a00300.html#a763895cc4380ab52a871637ad5156d94">sec_param</a>.<a class="code" href="a00185.html#a13fd33e5f5b50a596e255123f8d21036">io_caps</a>      = <a class="code" href="a00646.html#gad11df80d3ac9d375b320363694ec0a03">BLE_GAP_IO_CAPS_NONE</a>; <span class="comment">// No Input, No Output.</span></div>
 <div class="line">param.<a class="code" href="a00300.html#a763895cc4380ab52a871637ad5156d94">sec_param</a>.<a class="code" href="a00185.html#a72cc5af2f69e1b15a7c0b281acd1059e">oob</a>          = 0;                    <span class="comment">// No out of band information used.</span></div>
 <div class="line">param.<a class="code" href="a00300.html#a763895cc4380ab52a871637ad5156d94">sec_param</a>.<a class="code" href="a00185.html#a70632c0a1d795c5b651d910826803cad">min_key_size</a> = 16;                   <span class="comment">// Minimum key size.</span></div>
 <div class="line">param.<a class="code" href="a00300.html#a763895cc4380ab52a871637ad5156d94">sec_param</a>.<a class="code" href="a00185.html#a6f9134a72c72763bc041086eea13aced">max_key_size</a> = 16;                   <span class="comment">// Maximum key size.</span></div>
@@ -161,9 +161,9 @@ Registration</h1>
 <div class="line">param.<a class="code" href="a00300.html#a763895cc4380ab52a871637ad5156d94">sec_param</a>.kdist_periph.id  = 1;                <span class="comment">// Exchange identification information of peripheral.(Parameter is applicable only for GAP Central role.)</span></div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Request registration with device manager.</span></div>
-<div class="line">retval = <a class="code" href="a00782.html#ga62366984b8a674d9cadb48a8da2d3694" title="Function for registering the application.">dm_register</a>(&amp;param);</div>
+<div class="line">retval = <a class="code" href="a00783.html#ga62366984b8a674d9cadb48a8da2d3694" title="Function for registering the application.">dm_register</a>(&amp;param);</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span>(retval == <a class="code" href="a00675.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span>(retval == <a class="code" href="a00676.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Successfully registered with module.</span></div>
 <div class="line">    <span class="comment">// &#39;appl_id&#39; identifies the application, to be remembered for subsequent procedures.</span></div>
@@ -174,7 +174,7 @@ Registration</h1>
 <div class="line">}</div>
 </div><!-- fragment --><h2><a class="anchor" id="lib_cnxn_register_evt"></a>
 Associated Events</h2>
-<p>None. Asynchronous events from module are only received after module is successfully initialized and registered. Once successfully registered, application will have one or more events associated with each procedure it requests. Few events could be triggered due to an action on the peer. An example of such an event is the disconnection event <a class="el" href="a00778.html#ga7909152aa711df2ab18ddef129af9597">DM_EVT_DISCONNECTION</a>.</p>
+<p>None. Asynchronous events from module are only received after module is successfully initialized and registered. Once successfully registered, application will have one or more events associated with each procedure it requests. Few events could be triggered due to an action on the peer. An example of such an event is the disconnection event <a class="el" href="a00779.html#ga7909152aa711df2ab18ddef129af9597">DM_EVT_DISCONNECTION</a>.</p>
 <h2><a class="anchor" id="lib_cnxn_register_cnfg_param"></a>
 Associated Configuration Parameters</h2>
 <ol type="1">
@@ -190,7 +190,7 @@ Associated Configuration Parameters</h2>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00061.html">BLE libraries</a></li>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:32 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:44 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

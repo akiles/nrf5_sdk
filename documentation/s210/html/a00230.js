@@ -1,26 +1,12 @@
 var a00230 =
 [
-    [ "CRC compute", "a00224.html", "a00224" ],
-    [ "hci_transport_evt_t", "a00057.html", [
-      [ "evt_type", "a00057.html#ad8b8284f5d85ee34da6a3db177c35d20", null ]
-    ] ],
-    [ "hci_transport_event_handler_t", "a00230.html#ga7efe3de4ca7194b952f224c078e98137", null ],
-    [ "hci_transport_tx_done_handler_t", "a00230.html#ga5f292ecaadba029ac812506329fe4cdc", null ],
-    [ "hci_transport_evt_type_t", "a00230.html#ga1679bda84cf17b2f9c2dd5e323078c5a", [
-      [ "HCI_TRANSPORT_RX_RDY", "a00230.html#gga1679bda84cf17b2f9c2dd5e323078c5aa2d702ba14161b60cb74a7dd5c2c71d5b", null ],
-      [ "HCI_TRANSPORT_EVT_TYPE_MAX", "a00230.html#gga1679bda84cf17b2f9c2dd5e323078c5aa7abdd63991cc440f4fdd54e02ce945bf", null ]
-    ] ],
-    [ "hci_transport_tx_done_result_t", "a00230.html#gae80211a61fd86e95a2ad0d7e8dcf8a5c", [
-      [ "HCI_TRANSPORT_TX_DONE_SUCCESS", "a00230.html#ggae80211a61fd86e95a2ad0d7e8dcf8a5ca0f6139241ce530ef3bd92baa428b6d73", null ],
-      [ "HCI_TRANSPORT_TX_DONE_FAILURE", "a00230.html#ggae80211a61fd86e95a2ad0d7e8dcf8a5ca99f0852942a9bdd2a80ef9318ecb508b", null ]
-    ] ],
-    [ "hci_transport_close", "a00230.html#ga1e88949d8bf4e67f16af9e2577750e70", null ],
-    [ "hci_transport_evt_handler_reg", "a00230.html#gad7d6efd012a22ff3b4749944b8049467", null ],
-    [ "hci_transport_open", "a00230.html#ga5bb2e014f346a3a51a6687545b26b0ce", null ],
-    [ "hci_transport_pkt_write", "a00230.html#gac59c8369494bbe394a6fb075115263ba", null ],
-    [ "hci_transport_rx_pkt_consume", "a00230.html#ga5fa929e7796b2b4af481c8c0a86a51c7", null ],
-    [ "hci_transport_rx_pkt_extract", "a00230.html#ga3fcd4cdf510a2e66a2938f2806f677f0", null ],
-    [ "hci_transport_tx_alloc", "a00230.html#ga319b29010ea99d069018e543e7042121", null ],
-    [ "hci_transport_tx_done_register", "a00230.html#ga84d8c08bb7ff0cc2e1c7c51015762937", null ],
-    [ "hci_transport_tx_free", "a00230.html#ga59e21e1c13ebf70dde8ec9c4449e3a4a", null ]
+    [ "Memory Pool Internal", "a00229.html", "a00229" ],
+    [ "hci_mem_pool_close", "a00230.html#ga46bf92027fa4fe402e53a8764713c99f", null ],
+    [ "hci_mem_pool_open", "a00230.html#gaadd0dcc9a737d2401c05dbd0cd350a13", null ],
+    [ "hci_mem_pool_rx_consume", "a00230.html#ga961c95e86995f3a6ad1a14822745c368", null ],
+    [ "hci_mem_pool_rx_data_size_set", "a00230.html#ga7aae0da2e09ccedb4deb30e01940c303", null ],
+    [ "hci_mem_pool_rx_extract", "a00230.html#gaf29059c4fa6204e2313069e90e7db51a", null ],
+    [ "hci_mem_pool_rx_produce", "a00230.html#ga06c527499f6006d354a540268b4ea124", null ],
+    [ "hci_mem_pool_tx_alloc", "a00230.html#gad1da3c1e38317a5c312650396d9da6e8", null ],
+    [ "hci_mem_pool_tx_free", "a00230.html#ga44dd78500f42bf6cddc5f90a03abd7af", null ]
 ];

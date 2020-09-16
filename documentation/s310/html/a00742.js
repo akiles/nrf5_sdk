@@ -1,14 +1,29 @@
 var a00742 =
 [
-    [ "DFU BLE SVC internal", "a00743.html", "a00743" ],
-    [ "dfu_ble_peer_data_t", "a00293.html", [
-      [ "addr", "a00293.html#a254efa46b45f5707510660ee0ae9edc3", null ],
-      [ "enc_info", "a00293.html#a8edc7904f78de5fddc021504d06ae029", null ],
-      [ "irk", "a00293.html#ac8c0e0d99c8c5cc39adfa07073253d58", null ]
+    [ "dfu_bank_func_t", "a00292.html", [
+      [ "activate", "a00292.html#af00135287925be9fcd8216ca9f926106", null ],
+      [ "cleared", "a00292.html#ae4f65f28daba87c601079fdb99ed986b", null ],
+      [ "prepare", "a00292.html#a836a20b948e91ba36fb2a77f09d97aa4", null ]
     ] ],
-    [ "BOOTLOADER_SVC_BASE", "a00742.html#ga40250c4367f60f8adf2f36ca02a620d2", null ],
-    [ "BOOTLOADER_SVCS", "a00742.html#gab61a9eaf497f22e66f7a0f76d8203133", [
-      [ "DFU_BLE_SVC_SET_PEER_DATA", "a00742.html#ggab61a9eaf497f22e66f7a0f76d8203133a343827596c1f6effeaf0ff0149cb5734", null ]
+    [ "APP_TIMER_PRESCALER", "a00742.html#ga7bbff5bb0ca047b109e70a831f08e217", null ],
+    [ "DFU_TIMEOUT_INTERVAL", "a00742.html#gac852b26871e27db5896374b80d173ed7", null ],
+    [ "IMAGE_WRITE_IN_PROGRESS", "a00742.html#ga11fffdc6dd415319a5a8154b66a8b2ce", null ],
+    [ "IS_UPDATING_APP", "a00742.html#ga3c3aedab2c56af1d09a7f08fef4209e1", null ],
+    [ "IS_UPDATING_BL", "a00742.html#ga7f75359550e5d1c48c845c3a64beeff9", null ],
+    [ "IS_UPDATING_SD", "a00742.html#gac9f752070cc5f86753dbf9345b795392", null ],
+    [ "IS_WORD_SIZED", "a00742.html#gaa829238741c8e27c7c8a8b6d5c36a103", null ],
+    [ "dfu_bank_activate_t", "a00742.html#gad9ce0b70db1ec648acc0bd50629e22ff", null ],
+    [ "dfu_bank_cleared_t", "a00742.html#ga7c3f98f2a92d87008ba13e9dae8484d8", null ],
+    [ "dfu_bank_prepare_t", "a00742.html#gaf68c07fc7834b9c16aae9a748f43bdc8", null ],
+    [ "dfu_state_t", "a00742.html#ga187dfde3b0fa8047e6c97b2317bce21f", [
+      [ "DFU_STATE_INIT_ERROR", "a00742.html#gga187dfde3b0fa8047e6c97b2317bce21fa668c685914fdc7aad5c00ac9ad119d85", null ],
+      [ "DFU_STATE_IDLE", "a00742.html#gga187dfde3b0fa8047e6c97b2317bce21fad19963a8788de50aaf05a439c9448e7a", null ],
+      [ "DFU_STATE_PREPARING", "a00742.html#gga187dfde3b0fa8047e6c97b2317bce21fa539947bf7a53147eff081ef153818b8d", null ],
+      [ "DFU_STATE_RDY", "a00742.html#gga187dfde3b0fa8047e6c97b2317bce21fa43c819e2e2d6cb79f0cc3e9703df3b04", null ],
+      [ "DFU_STATE_RX_INIT_PKT", "a00742.html#gga187dfde3b0fa8047e6c97b2317bce21fa8d1d50d8d5174b1cead26cf34ad1daf5", null ],
+      [ "DFU_STATE_RX_DATA_PKT", "a00742.html#gga187dfde3b0fa8047e6c97b2317bce21fa475955163ace358b9373c0b3a87ce4ec", null ],
+      [ "DFU_STATE_VALIDATE", "a00742.html#gga187dfde3b0fa8047e6c97b2317bce21fae274655cddb628140c568df6bc5f70bf", null ],
+      [ "DFU_STATE_WAIT_4_ACTIVATE", "a00742.html#gga187dfde3b0fa8047e6c97b2317bce21fa2a335037693bd40cff8c8787d3a11598", null ]
     ] ],
-    [ "dfu_ble_svc_set_peer_data", "a00742.html#ga8d962d1d241de6a5778d01eaebfa0460", null ]
+    [ "m_data_received", "a00742.html#ga412c8a2eb860a4398bb6c5101ceba57d", null ]
 ];

@@ -1,10 +1,11 @@
 var a00664 =
 [
-    [ "BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL", "a00664.html#gae298558aca1af7f9dc5ce38268418059", null ],
-    [ "BLE_GATTS_OP_EXEC_WRITE_REQ_NOW", "a00664.html#ga6b36a56316847e970cc728a68e5bb6f0", null ],
-    [ "BLE_GATTS_OP_INVALID", "a00664.html#gaefcca583b8fedfba89e3e8864f5fb392", null ],
-    [ "BLE_GATTS_OP_PREP_WRITE_REQ", "a00664.html#ga97ae5797d7a83c1df161626765ddb436", null ],
-    [ "BLE_GATTS_OP_SIGN_WRITE_CMD", "a00664.html#ga0c61bfea52333d5d0b1f8ede31b3f8ee", null ],
-    [ "BLE_GATTS_OP_WRITE_CMD", "a00664.html#gac567f652312a6f8bbb5e348f01ed3f77", null ],
-    [ "BLE_GATTS_OP_WRITE_REQ", "a00664.html#ga52cba338739e55ac2843c2ef92bef44b", null ]
+    [ "BLE_GATTS_ATTR_TYPE_CHAR_DECL", "a00664.html#ga102e704417b457854a05daa5fa06d7d6", null ],
+    [ "BLE_GATTS_ATTR_TYPE_CHAR_VAL", "a00664.html#gac7e5c6d395c2a57918233dd8c7a9a699", null ],
+    [ "BLE_GATTS_ATTR_TYPE_DESC", "a00664.html#gac5f3e3213a49c7fe404a1c3f934de50c", null ],
+    [ "BLE_GATTS_ATTR_TYPE_INC_DECL", "a00664.html#gadf7b95716018edd34e87df7e4163bc74", null ],
+    [ "BLE_GATTS_ATTR_TYPE_INVALID", "a00664.html#ga24097ed5a56be45fc4d051584546e458", null ],
+    [ "BLE_GATTS_ATTR_TYPE_OTHER", "a00664.html#gadbf23b44b2e2731d944ba3682427c316", null ],
+    [ "BLE_GATTS_ATTR_TYPE_PRIM_SRVC_DECL", "a00664.html#ga0bb8323562a8a6be5ad1b2287b20373c", null ],
+    [ "BLE_GATTS_ATTR_TYPE_SEC_SRVC_DECL", "a00664.html#gafa5f417382bd4c490203767739062c74", null ]
 ];

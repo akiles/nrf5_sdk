@@ -1,8 +1,8 @@
 var a00618 =
 [
-    [ "Base defined for SDK Modules", "a00619.html", "a00619" ],
-    [ "Codes reserved as identification for module where the error occurred.", "a00620.html", null ],
-    [ "Codes reserved as identification for common errors.", "a00621.html", null ],
-    [ "Error / status codes specific to device manager.", "a00622.html", null ],
-    [ "api_result_t", "a00618.html#ga981ace296dd50082e82b56dc820295a9", null ]
+    [ "CRITICAL_REGION_ENTER", "a00618.html#ga61149a977f6ebdaeb8bdeed626dd9392", null ],
+    [ "CRITICAL_REGION_EXIT", "a00618.html#ga854878240b628e978f760f75aca4e1cc", null ],
+    [ "NRF_APP_PRIORITY_THREAD", "a00618.html#gac3db2bb99db38f42bf316a9d0d9ace99", null ],
+    [ "app_irq_priority_t", "a00618.html#ga1a193131d1d5911b1ec53f9541841b1b", null ],
+    [ "current_int_priority_get", "a00618.html#ga2462e81e0f0c058ca4c44c21a3d22a80", null ]
 ];

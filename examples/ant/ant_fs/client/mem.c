@@ -1,32 +1,32 @@
 /*
-This software is subject to the license described in the license.txt file included with this software distribution. 
-You may not use this file except in compliance with this license. 
+This software is subject to the license described in the license.txt file included with this software distribution.
+You may not use this file except in compliance with this license.
 Copyright © Dynastream Innovations Inc. 2012
 All rights reserved.
 */
 
-#include "mem.h" 
+#include "mem.h"
 #include <stdio.h>
 #include <string.h>
 
 #define MEM_DIR_SIZE          9u                     /**< Example directory size. */
 #define MEM_DIR_INVALID_INDEX 0xFFFFu                /**< Defined invalid index value. */
 
-// Sample constant directory structure. 
-typedef struct 
+// Sample constant directory structure.
+typedef struct
 {
     antfs_dir_header_t header;                       /**< Directory header. */
     antfs_dir_struct_t directory_file[MEM_DIR_SIZE]; /**< Array of directory entry structures. */
 } directory_file_t;
 
 // Sample constant directory.
-static const directory_file_t m_directory = 
+static const directory_file_t m_directory =
 {
     {
-        ANTFS_DIR_STRUCT_VERSION,                             // Version 1, length of each subsequent entry = 16 bytes, system time not used. 
-        sizeof(antfs_dir_struct_t),  
+        ANTFS_DIR_STRUCT_VERSION,                             // Version 1, length of each subsequent entry = 16 bytes, system time not used.
+        sizeof(antfs_dir_struct_t),
         0, 0, 0, 0, 0, 0, 0, 0
-    },                                    
+    },
     {
         {9, 0,        4, 0, 0, 0xA0, 0x00000000, 0x000296BC}, // Index 9, data type 0, identifier 4, read and erase, 0 bytes in length.
         {7, 1,        0, 0, 0, 0x60, 0x00000000, 0x00007E71}, // Index 7, data type 1, identifier 0, write and erase, 0 bytes in length.
@@ -41,12 +41,12 @@ static const directory_file_t m_directory =
 };
 
 
-/**@brief Function for getting an array index of a particular directory structure matching the 
+/**@brief Function for getting an array index of a particular directory structure matching the
  *        requested file index.
  *
  * @param[in] index The file index identifier used for lookup.
  *
- * @return Upon success the array index, otherwise MEM_DIR_INVALID_INDEX. 
+ * @return Upon success the array index, otherwise MEM_DIR_INVALID_INDEX.
  */
 static uint32_t index_lookup(uint32_t index)
 {
@@ -60,7 +60,7 @@ static uint32_t index_lookup(uint32_t index)
                 return idx;
             }
         }
-        
+
     }
 
     return MEM_DIR_INVALID_INDEX;
@@ -73,16 +73,16 @@ bool mem_file_write(uint16_t index, uint32_t offset, const void * p_data, uint32
     {
         const uint32_t array_index = index_lookup(index);
         if (array_index != MEM_DIR_INVALID_INDEX)
-        { 
+        {
             uint32_t loop_count = size / 8u;
-#ifndef TRACE_MEM_WRITE_OFF 
+#ifndef TRACE_MEM_WRITE_OFF
             uint8_t * p_trace = (uint8_t *)p_data;
 #endif // TRACE_MEM_WRITE_OFF
             while (loop_count)
             {
 #ifndef TRACE_MEM_WRITE_OFF // Do not define this if you want to trace out the upload buffer content.
-                printf("%#x-%#x-%#x-%#x-%#x-%#x-%#x-%#x\n", 
-                    p_trace[0], p_trace[1], p_trace[2], p_trace[3], 
+                printf("%#x-%#x-%#x-%#x-%#x-%#x-%#x-%#x\n",
+                    p_trace[0], p_trace[1], p_trace[2], p_trace[3],
                     p_trace[4], p_trace[5], p_trace[6], p_trace[7]);
 #endif // TRACE_MEM_WRITE_OFF
                 --loop_count;
@@ -92,28 +92,28 @@ bool mem_file_write(uint16_t index, uint32_t offset, const void * p_data, uint32
         }
         else
         {
-            return false;   
+            return false;
         }
-        
+
     }
 
-    return false; 
+    return false;
 }
 
 
 void mem_file_read(uint16_t index, uint32_t offset, void * p_data, uint32_t size)
 {
-    if (index == 0) 
+    if (index == 0)
     {
         // Directory.
-        
+
         uint8_t * p_directory = (uint8_t*) &m_directory;
         memcpy((uint8_t*)p_data, p_directory + offset, size);
     }
-    else            
+    else
     {
         // Fake data (no actual files stored in memory for this reference design).
-        
+
         uint32_t idx;
         uint8_t* p_data_access = (uint8_t*)p_data;
         for (idx = 0; idx < size; idx++)
@@ -130,18 +130,18 @@ bool mem_file_erase(uint16_t index)
     {
         const uint32_t array_index = index_lookup(index);
         if (array_index != MEM_DIR_INVALID_INDEX)
-        { 
-            // Erase file. This function is implementation specific. There are no actual files in 
+        {
+            // Erase file. This function is implementation specific. There are no actual files in
             // memory for this reference design, so there is nothing to erase.
             return true;
         }
         else
         {
-            return false;   
+            return false;
         }
     }
 
-    return false;           
+    return false;
 }
 
 
@@ -149,27 +149,27 @@ bool mem_file_info_get(uint16_t index, antfs_dir_struct_t * p_file_info)
 {
     if (index < (MEM_DIR_SIZE + 1u))
     {
-        if (index == 0) 
+        if (index == 0)
         {
             // Requested directory.
-            
+
             // Set can download flag.
-            p_file_info->general_flags = 0x80u;   
-                        
-            p_file_info->file_size_in_bytes = 
+            p_file_info->general_flags = 0x80u;
+
+            p_file_info->file_size_in_bytes =
                 // Header + directory structures.
-                (uint32_t)(MEM_DIR_SIZE + 1u) * sizeof(antfs_dir_struct_t);    
-                
+                (uint32_t)(MEM_DIR_SIZE + 1u) * sizeof(antfs_dir_struct_t);
+
             // Directory is index 0
-            p_file_info->data_file_index = 0;    
+            p_file_info->data_file_index = 0;
         }
-        else        
+        else
         {
             // Requested a file.
-            
-            const uint32_t array_index = index_lookup(index);   
-            memcpy(p_file_info, 
-                   &m_directory.directory_file[array_index], 
+
+            const uint32_t array_index = index_lookup(index);
+            memcpy(p_file_info,
+                   &m_directory.directory_file[array_index],
                    sizeof(antfs_dir_struct_t));
         }
 

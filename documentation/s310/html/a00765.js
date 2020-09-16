@@ -1,26 +1,24 @@
 var a00765 =
 [
-    [ "ble_ias_c_evt_t", "a00253.html", [
-      [ "evt_type", "a00253.html#aa03cb513eb320bde9c8f800162a7142f", null ]
+    [ "ble_ias_evt_t", "a00256.html", [
+      [ "alert_level", "a00256.html#aadc350acbcf634cf778a5a253049ebe0", null ],
+      [ "evt_type", "a00256.html#a730fff52efb38d8f5f61973ef47696b4", null ],
+      [ "params", "a00256.html#a436ccefb86ad7804abe101b61110304d", null ]
     ] ],
-    [ "ble_ias_c_s", "a00255.html", [
-      [ "alert_level_handle", "a00255.html#ad136ca554bce057fd4cd38ba0f796ea6", null ],
-      [ "conn_handle", "a00255.html#ad18ae38bccb88d086eedbc1647ce2386", null ],
-      [ "error_handler", "a00255.html#a6cecf3d78ec7d72912dd4215455720ed", null ],
-      [ "evt_handler", "a00255.html#ac306d48fcd140ddbffb4d4c64ca4d007", null ]
+    [ "ble_ias_init_t", "a00257.html", [
+      [ "evt_handler", "a00257.html#a5e40f1f02a66e26a1da20bbf3e2a275a", null ]
     ] ],
-    [ "ble_ias_c_init_t", "a00254.html", [
-      [ "error_handler", "a00254.html#a83986799fa5972b6665f1dd70af89bca", null ],
-      [ "evt_handler", "a00254.html#a53302faad4381a87101012bf06af6101", null ]
+    [ "ble_ias_s", "a00258.html", [
+      [ "alert_level_handles", "a00258.html#a67d6395f4804c00de308270dddf15b7e", null ],
+      [ "evt_handler", "a00258.html#a6304bcdac9c7d2758f64aa1dd5844959", null ],
+      [ "service_handle", "a00258.html#afa6a28eec3f1b9b4f7ea596af7ee2c29", null ]
     ] ],
-    [ "ble_ias_c_evt_handler_t", "a00765.html#ga96adb4273980cee3c28140485a07884f", null ],
-    [ "ble_ias_c_t", "a00765.html#ga4de8fe9971720f3186d60ea307026c54", null ],
-    [ "ble_ias_c_evt_type_t", "a00765.html#ga1363ef6107e67c26fd0ace31f6afa7cd", [
-      [ "BLE_IAS_C_EVT_SRV_DISCOVERED", "a00765.html#gga1363ef6107e67c26fd0ace31f6afa7cda108c1542b350d15f6acf09092cda957a", null ],
-      [ "BLE_IAS_C_EVT_SRV_NOT_FOUND", "a00765.html#gga1363ef6107e67c26fd0ace31f6afa7cdaccf3636bb38605fd6b836dc01c05459a", null ],
-      [ "BLE_IAS_C_EVT_DISCONN_COMPLETE", "a00765.html#gga1363ef6107e67c26fd0ace31f6afa7cdac1eac62d545a853750a6b3f5a8ceb3f5", null ]
+    [ "ble_ias_evt_handler_t", "a00765.html#gab059c5376beb245a8f876ee3d7b8480a", null ],
+    [ "ble_ias_t", "a00765.html#ga8a63bc7ea5b311d297838a4095271665", null ],
+    [ "ble_ias_evt_type_t", "a00765.html#gaa55445ca6b845393a2dc353e0afa38ec", [
+      [ "BLE_IAS_EVT_ALERT_LEVEL_UPDATED", "a00765.html#ggaa55445ca6b845393a2dc353e0afa38ecaf04e8963239be8fd6c09d876f88db8ff", null ]
     ] ],
-    [ "ble_ias_c_init", "a00765.html#gaf0c1bf8a8837220f03442c18448e50ad", null ],
-    [ "ble_ias_c_on_ble_evt", "a00765.html#ga7f98bafec49ce5bf78e444e46c628a1f", null ],
-    [ "ble_ias_c_send_alert_level", "a00765.html#gab37ce69f8533cd510dc5620effba4409", null ]
+    [ "ble_ias_alert_level_get", "a00765.html#ga2b433148292e1fdf6ab22633e2d8dde1", null ],
+    [ "ble_ias_init", "a00765.html#gaa1d939e0499a5e34f6c9752347f6b974", null ],
+    [ "ble_ias_on_ble_evt", "a00765.html#ga7aceea1ccf7fa036d066a08e19fe1504", null ]
 ];

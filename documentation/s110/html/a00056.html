@@ -144,14 +144,14 @@ Testing</h1>
 <li>Simulate a link loss situation, for example by disconnecting the Master Emulator, and observe that the <a class="el" href="a00041.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a> and <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> are indicated.</li>
 <li>Reconnect and observe that only the <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
 <li>Select the TxPowerLevel characteristic in <a class="el" href="a00981.html">TX Power Service</a>, click the 'Read' button, and verify that it was successfully read.</li>
-<li>Click the 'Enable services' button to start notification of Battery Level and observe that the battery level is notified periodically.</li>
+<li>Click the 'Enable services' button to start notification of Battery Level and observe that the battery level is notified periodically (every 2 minutes).</li>
 <li>Disconnect from the Master Control Panel and observe that <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> is indicated.</li>
 <li>Wait until the application goes to system-off (<a class="el" href="a00041.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a>).</li>
-<li>Press button 1 and connect to the Master Control Panel. Observe that <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> is indicated and that the battery level is notified periodically.</li>
+<li>Press button 1 and connect to the Master Control Panel. Observe that <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> is indicated and that the battery level is notified periodically (every 2 minutes).</li>
 <li>Disconnect from the Master Control Panel.</li>
 <li>Connect with a different central and bond and disconnect.</li>
 <li>Wait until the application goes to system-off (<a class="el" href="a00041.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a>).</li>
-<li>Press button 1 and reconnect to the first Master Control Panel. Observe that <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> is indicated and that the battery level is notified periodically.</li>
+<li>Press button 1 and reconnect to the first Master Control Panel. Observe that <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> is indicated and that the battery level is notified periodically (every 2 minutes).</li>
 <li>Disconnect from the Master Control Panel.</li>
 <li>Connect with the second central and observe that the link encryption is on and that the battery level is not notified.</li>
 <li>Disconnect from the second central and wait for the application to go to system-off.</li>
@@ -162,7 +162,7 @@ Testing</h1>
 <ol type="1">
 <li>In the Master Control Panel, create the Immediate Alert Service (IAS) server by performing the following steps:<ul>
 <li>Click File -&gt; Server Setup. In the window that is displayed, click File -&gt; Load setup.</li>
-<li>In the resulting window, navigate to ble_app_proximity folder and load the file named findMeMasterServer.bin.</li>
+<li>In the resulting window, navigate to the <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_proximity</code> folder. If you are using Keil packs, this folder is located at <code>&lt;KeilFolder&gt;\ARM\Pack\NordicSemiconductor\nRF_Examples\&lt;version&gt;\ble_peripheral\ble_app_proximity</code>. Load the file <code>findMeMasterServer.bin</code>.</li>
 <li>Click the 'Stop Server' button and then 'Start Server'. This restarts the server with Immediate Alert Service configured.</li>
 <li>You must keep the 'Server Setup' window opened.</li>
 </ul>
@@ -177,7 +177,7 @@ Testing</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00043.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

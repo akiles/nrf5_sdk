@@ -1,7 +1,7 @@
 var a00642 =
 [
-    [ "BLE_GAP_ADV_FP_ANY", "a00642.html#ga0b0393df73db101d6cbfaede2dbb7ea6", null ],
-    [ "BLE_GAP_ADV_FP_FILTER_BOTH", "a00642.html#ga38ff579b96a5ad3abd2e4eb370dd1de6", null ],
-    [ "BLE_GAP_ADV_FP_FILTER_CONNREQ", "a00642.html#gac37d0158c7458cb4250f9bdfba593858", null ],
-    [ "BLE_GAP_ADV_FP_FILTER_SCANREQ", "a00642.html#gae2dcdb81f0e1e024b82b244058656d26", null ]
+    [ "BLE_GAP_ADV_TYPE_ADV_DIRECT_IND", "a00642.html#gafefde83f6b598e7fb14868e0610bdf43", null ],
+    [ "BLE_GAP_ADV_TYPE_ADV_IND", "a00642.html#ga6cc0db53453977ee0a31e59f07de2b86", null ],
+    [ "BLE_GAP_ADV_TYPE_ADV_NONCONN_IND", "a00642.html#ga8c86ca45ebffc3938fd97f9556daa49c", null ],
+    [ "BLE_GAP_ADV_TYPE_ADV_SCAN_IND", "a00642.html#ga594ca8490efef1702e8ccb6a28d2a1de", null ]
 ];

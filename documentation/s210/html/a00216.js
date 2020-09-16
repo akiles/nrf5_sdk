@@ -1,11 +1,8 @@
 var a00216 =
 [
-    [ "pstorage_access_status_get", "a00216.html#ga1553a4d6d6d8ddf070d0eb4960b72d62", null ],
-    [ "pstorage_block_identifier_get", "a00216.html#gafdeeb475e4f2db19863226bc55d507b5", null ],
-    [ "pstorage_clear", "a00216.html#ga64d9814f864c3f771a99eb7574e87dd0", null ],
-    [ "pstorage_init", "a00216.html#ga729ef8b64fc0cb6bfdabb2543a565d32", null ],
-    [ "pstorage_load", "a00216.html#ga99402440650cc2d2ee63d8866760a25b", null ],
-    [ "pstorage_register", "a00216.html#ga0a57b964c8945eaca2d267835ef6688c", null ],
-    [ "pstorage_store", "a00216.html#ga12e52da12709de8d43bfb8389b80af6d", null ],
-    [ "pstorage_update", "a00216.html#ga0316f640da7481e9bd03ed51b29a3e65", null ]
+    [ "PSTORAGE_CLEAR_OP_CODE", "a00216.html#gaf2ce8b4e460358a23ae82516167df79c", null ],
+    [ "PSTORAGE_ERROR_OP_CODE", "a00216.html#ga31c301088ac2d5534ebdc5ed44bd3b55", null ],
+    [ "PSTORAGE_LOAD_OP_CODE", "a00216.html#ga4e04e36e3adf60869073dce4af46b7d5", null ],
+    [ "PSTORAGE_STORE_OP_CODE", "a00216.html#gad1415b8815fc4e0ba8f4f6bc2d8e3ce6", null ],
+    [ "PSTORAGE_UPDATE_OP_CODE", "a00216.html#gae66936fc791b79a9f85a7058ea83423a", null ]
 ];

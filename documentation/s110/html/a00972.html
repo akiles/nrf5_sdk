@@ -156,6 +156,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga7f98bafec49ce5bf78e444e46c628a1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00972.html#ga7f98bafec49ce5bf78e444e46c628a1f">ble_ias_c_on_ble_evt</a> (<a class="el" href="a00972.html#ga4de8fe9971720f3186d60ea307026c54">ble_ias_c_t</a> *p_ias_c, const <a class="el" href="a00203.html">ble_evt_t</a> *p_ble_evt)</td></tr>
 <tr class="memdesc:ga7f98bafec49ce5bf78e444e46c628a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Application's BLE Stack events for Immediate Alert Service client.  <a href="#ga7f98bafec49ce5bf78e444e46c628a1f">More...</a><br/></td></tr>
 <tr class="separator:ga7f98bafec49ce5bf78e444e46c628a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae637c4c4a92e401ddfdd382861c36767"><td class="memItemLeft" align="right" valign="top">static __INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00972.html#gae637c4c4a92e401ddfdd382861c36767">ble_ias_c_is_ias_discovered</a> (const <a class="el" href="a00972.html#ga4de8fe9971720f3186d60ea307026c54">ble_ias_c_t</a> *p_ias_c)</td></tr>
+<tr class="memdesc:gae637c4c4a92e401ddfdd382861c36767"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking whether the peer's Immediate Alert Service instance and the alert level characteristic have been discovered.  <a href="#gae637c4c4a92e401ddfdd382861c36767">More...</a><br/></td></tr>
+<tr class="separator:gae637c4c4a92e401ddfdd382861c36767"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Immediate Alert Service Client module. </p>
@@ -222,6 +225,38 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization of service. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gae637c4c4a92e401ddfdd382861c36767"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE bool ble_ias_c_is_ias_discovered </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00972.html#ga4de8fe9971720f3186d60ea307026c54">ble_ias_c_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ias_c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for checking whether the peer's Immediate Alert Service instance and the alert level characteristic have been discovered. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ias_c</td><td>Immediate Alert Service client structure. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -303,7 +338,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:23 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

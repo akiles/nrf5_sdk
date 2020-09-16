@@ -162,7 +162,7 @@ var searchData=
   ['simple_5fuart_5fputstring',['simple_uart_putstring',['../a00497.html#ga76e6bde269950e02affbff121c79d408',1,'simple_uart.h']]],
   ['softdevice_5fant_5fevt_5fhandler_5fset',['softdevice_ant_evt_handler_set',['../a00698.html#gac05d1d266aef077ae88818dff3775010',1,'ant_stack_handler_types.h']]],
   ['softdevice_5fble_5fevt_5fhandler_5fset',['softdevice_ble_evt_handler_set',['../a00699.html#gae54951e939156d5f05fa4d27fed1dc65',1,'ble_stack_handler_types.h']]],
-  ['softdevice_5fhandler_5finit',['softdevice_handler_init',['../a00700.html#ga53c8f6b5556622cc42f717ddf756ca8e',1,'softdevice_handler.h']]],
+  ['softdevice_5fhandler_5finit',['softdevice_handler_init',['../a00700.html#ga33d6c5c2cf0d6cd1e89ef172d75e0975',1,'softdevice_handler.h']]],
   ['softdevice_5fhandler_5fsd_5fdisable',['softdevice_handler_sd_disable',['../a00700.html#gabbec783a89f93617d3661a819597d79c',1,'softdevice_handler.h']]],
   ['softdevice_5fsys_5fevt_5fhandler_5fset',['softdevice_sys_evt_handler_set',['../a00700.html#ga200d4e1f1c70a46e6de6343f0a7d84b1',1,'softdevice_handler.h']]],
   ['spi_5fmaster_5fclose',['spi_master_close',['../a00498.html#ga50bc5bf9e8334ef1387826e0a2af4256',1,'spi_master.h']]],

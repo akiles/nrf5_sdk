@@ -1,8 +1,8 @@
 var a00786 =
 [
-    [ "Defines", "a00787.html", "a00787" ],
-    [ "Enumerations", "a00788.html", "a00788" ],
-    [ "Structures", "a00789.html", "a00789" ],
-    [ "Types", "a00790.html", "a00790" ],
-    [ "Functions", "a00791.html", "a00791" ]
+    [ "dm_application_instance_set", "a00786.html#gad3a18ce58b434ecdcf78c9071163df1d", null ],
+    [ "dm_distributed_keys_get", "a00786.html#ga1d155d67c9463c911a2a04b81101d919", null ],
+    [ "dm_handle_initialize", "a00786.html#gaade48957b4fee06f203158a283b69b89", null ],
+    [ "dm_peer_addr_get", "a00786.html#ga550783ada0aa766e7f0c96ba003ffda2", null ],
+    [ "dm_peer_addr_set", "a00786.html#ga191fbd9074dab75ced9706282f6c9dff", null ]
 ];

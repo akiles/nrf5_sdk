@@ -1,6 +1,8 @@
 var a00678 =
 [
-    [ "NRF_ERROR_SDM_INCORRECT_CLENR0", "a00678.html#gaa612f324901ce4390c4010751c935d94", null ],
-    [ "NRF_ERROR_SDM_INCORRECT_INTERRUPT_CONFIGURATION", "a00678.html#ga5e01566a9b1b0f6fdec349198401e5bd", null ],
-    [ "NRF_ERROR_SDM_LFCLK_SOURCE_UNKNOWN", "a00678.html#ga987f38ed25beabe507da1d5dd31bbeae", null ]
+    [ "SoftDevice Manager Error Codes", "a00679.html", "a00679" ],
+    [ "Defines", "a00861.html", "a00861" ],
+    [ "Enumerations", "a00862.html", "a00862" ],
+    [ "Types", "a00863.html", "a00863" ],
+    [ "Functions", "a00864.html", "a00864" ]
 ];

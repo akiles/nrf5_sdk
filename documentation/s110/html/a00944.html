@@ -100,7 +100,8 @@ $(document).ready(function(){initNavTree('a00944.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Device Firmware Update internal header for bank handling in DFU.<div class="ingroups"><a class="el" href="a01040.html">Bootloader/DFU API</a></div></div>  </div>
 </div><!--header-->
@@ -127,7 +128,7 @@ Macros</h2></td></tr>
 <tr class="separator:ga7f75359550e5d1c48c845c3a64beeff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3c3aedab2c56af1d09a7f08fef4209e1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00944.html#ga3c3aedab2c56af1d09a7f08fef4209e1">IS_UPDATING_APP</a>(START_PKT)&#160;&#160;&#160;((START_PKT).dfu_update_mode &amp; <a class="el" href="a00949.html#gab3b062de629de930998df9fd2b4db211">DFU_UPDATE_APP</a>)</td></tr>
 <tr class="separator:ga3c3aedab2c56af1d09a7f08fef4209e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga11fffdc6dd415319a5a8154b66a8b2ce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00944.html#ga11fffdc6dd415319a5a8154b66a8b2ce">IMAGE_WRITE_IN_PROGRESS</a>()&#160;&#160;&#160;(m_data_received &gt; 0)</td></tr>
+<tr class="memitem:ga11fffdc6dd415319a5a8154b66a8b2ce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00944.html#ga11fffdc6dd415319a5a8154b66a8b2ce">IMAGE_WRITE_IN_PROGRESS</a>()&#160;&#160;&#160;(<a class="el" href="a00944.html#ga412c8a2eb860a4398bb6c5101ceba57d">m_data_received</a> &gt; 0)</td></tr>
 <tr class="separator:ga11fffdc6dd415319a5a8154b66a8b2ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa829238741c8e27c7c8a8b6d5c36a103"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00944.html#gaa829238741c8e27c7c8a8b6d5c36a103">IS_WORD_SIZED</a>(SIZE)&#160;&#160;&#160;((SIZE &amp; (sizeof(uint32_t) - 1)) == 0)</td></tr>
 <tr class="separator:gaa829238741c8e27c7c8a8b6d5c36a103"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,6 +168,11 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga187dfde3b0fa8047e6c97b2317bce21f"><td class="mdescLeft">&#160;</td><td class="mdescRight">States of the DFU state machine.  <a href="a00944.html#ga187dfde3b0fa8047e6c97b2317bce21f">More...</a><br/></td></tr>
 <tr class="separator:ga187dfde3b0fa8047e6c97b2317bce21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga412c8a2eb860a4398bb6c5101ceba57d"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00944.html#ga412c8a2eb860a4398bb6c5101ceba57d">m_data_received</a></td></tr>
+<tr class="separator:ga412c8a2eb860a4398bb6c5101ceba57d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Device Firmware Update Bank handling module interface. </p>
@@ -206,7 +212,7 @@ Enumerations</h2></td></tr>
           <td class="memname">#define IMAGE_WRITE_IN_PROGRESS</td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;(m_data_received &gt; 0)</td>
+          <td>&#160;&#160;&#160;(<a class="el" href="a00944.html#ga412c8a2eb860a4398bb6c5101ceba57d">m_data_received</a> &gt; 0)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -359,12 +365,34 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="ga412c8a2eb860a4398bb6c5101ceba57d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t m_data_received</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Amount of received data. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:23 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

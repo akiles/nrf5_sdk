@@ -141,9 +141,9 @@ typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga53c8f6b5556622cc42f717ddf756ca8e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#ga53c8f6b5556622cc42f717ddf756ca8e">softdevice_handler_init</a> (<a class="el" href="a00773.html#gabfecdd0b916a4022bd5688d4f842c473">nrf_clock_lfclksrc_t</a> clock_source, void *p_evt_buffer, uint16_t evt_buffer_size, <a class="el" href="a00700.html#ga25f319506f20e24ad71478dce23f7f39">softdevice_evt_schedule_func_t</a> evt_schedule_func)</td></tr>
-<tr class="memdesc:ga53c8f6b5556622cc42f717ddf756ca8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the stack handler module.  <a href="#ga53c8f6b5556622cc42f717ddf756ca8e">More...</a><br/></td></tr>
-<tr class="separator:ga53c8f6b5556622cc42f717ddf756ca8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33d6c5c2cf0d6cd1e89ef172d75e0975"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#ga33d6c5c2cf0d6cd1e89ef172d75e0975">softdevice_handler_init</a> (<a class="el" href="a00773.html#gabfecdd0b916a4022bd5688d4f842c473">nrf_clock_lfclksrc_t</a> clock_source, void *p_ble_evt_buffer, uint16_t ble_evt_buffer_size, <a class="el" href="a00700.html#ga25f319506f20e24ad71478dce23f7f39">softdevice_evt_schedule_func_t</a> evt_schedule_func)</td></tr>
+<tr class="memdesc:ga33d6c5c2cf0d6cd1e89ef172d75e0975"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the stack handler module.  <a href="#ga33d6c5c2cf0d6cd1e89ef172d75e0975">More...</a><br/></td></tr>
+<tr class="separator:ga33d6c5c2cf0d6cd1e89ef172d75e0975"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabbec783a89f93617d3661a819597d79c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#gabbec783a89f93617d3661a819597d79c">softdevice_handler_sd_disable</a> (void)</td></tr>
 <tr class="memdesc:gabbec783a89f93617d3661a819597d79c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for disabling the SoftDevice.  <a href="#gabbec783a89f93617d3661a819597d79c">More...</a><br/></td></tr>
 <tr class="separator:gabbec783a89f93617d3661a819597d79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,16 +183,11 @@ Even if the scheduler is not used, softdevice_handler.h will include app_schedul
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                                                             \</div>
 <div class="line">    {                                                                                              \</div>
-<div class="line">        static uint32_t EVT_BUFFER[<a class="code" href="a00514.html#ga7aaa817cfd7ed354f09db5675ffe1427" title="Perform integer division, making sure the result is rounded up.">CEIL_DIV</a>(MAX(                                                   \</div>
-<div class="line">                                                MAX(<a class="code" href="a00699.html#gab11d82da68bcf71c064b936f8398fb26">BLE_STACK_EVT_MSG_BUF_SIZE</a>,                    \</div>
-<div class="line">                                                    <a class="code" href="a00698.html#ga099e8f139d53724bf7238bb77c9e32e0">ANT_STACK_EVT_STRUCT_SIZE</a>),                    \</div>
-<div class="line">                                                <a class="code" href="a00700.html#ga33d256e5c8385694b358053139fe2153">SYS_EVT_MSG_BUF_SIZE</a>                               \</div>
-<div class="line">                                               ),                                                  \</div>
-<div class="line">                                            <span class="keyword">sizeof</span>(uint32_t))];                                    \</div>
+<div class="line">        static uint32_t BLE_EVT_BUFFER[<a class="code" href="a00514.html#ga7aaa817cfd7ed354f09db5675ffe1427" title="Perform integer division, making sure the result is rounded up.">CEIL_DIV</a>(<a class="code" href="a00699.html#gab11d82da68bcf71c064b936f8398fb26">BLE_STACK_EVT_MSG_BUF_SIZE</a>, <span class="keyword">sizeof</span>(uint32_t))];    \</div>
 <div class="line">        uint32_t ERR_CODE;                                                                         \</div>
-<div class="line">        ERR_CODE = <a class="code" href="a00700.html#ga53c8f6b5556622cc42f717ddf756ca8e" title="Function for initializing the stack handler module.">softdevice_handler_init</a>((CLOCK_SOURCE),                                         \</div>
-<div class="line">                                           EVT_BUFFER,                                             \</div>
-<div class="line">                                           <span class="keyword">sizeof</span>(EVT_BUFFER),                                     \</div>
+<div class="line">        ERR_CODE = <a class="code" href="a00700.html#ga33d6c5c2cf0d6cd1e89ef172d75e0975" title="Function for initializing the stack handler module.">softdevice_handler_init</a>((CLOCK_SOURCE),                                         \</div>
+<div class="line">                                           BLE_EVT_BUFFER,                                         \</div>
+<div class="line">                                           <span class="keyword">sizeof</span>(BLE_EVT_BUFFER),                                 \</div>
 <div class="line">                                           (USE_SCHEDULER) ? softdevice_evt_schedule : NULL);      \</div>
 <div class="line">        APP_ERROR_CHECK(ERR_CODE);                                                                 \</div>
 <div class="line">    } <span class="keywordflow">while</span> (0)</div>
@@ -237,7 +232,7 @@ Even if the scheduler is not used, softdevice_handler.h will include app_schedul
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga53c8f6b5556622cc42f717ddf756ca8e"></a>
+<a class="anchor" id="ga33d6c5c2cf0d6cd1e89ef172d75e0975"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -251,13 +246,13 @@ Even if the scheduler is not used, softdevice_handler.h will include app_schedul
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>p_evt_buffer</em>, </td>
+          <td class="paramname"><em>p_ble_evt_buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>evt_buffer_size</em>, </td>
+          <td class="paramname"><em>ble_evt_buffer_size</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -281,8 +276,8 @@ Normally initialization should be done using the <a class="el" href="a00700.html
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">clock_source</td><td>Low frequency clock source to be used by the SoftDevice. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_evt_buffer</td><td>Buffer for holding one stack event. Since heap is not being used, this buffer must be provided by the application. The buffer must be large enough to hold the biggest stack event the application is supposed to handle. The buffer must be aligned to a 4 byte boundary. This parameter is unused if neither BLE nor ANT stack support is required. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">evt_buffer_size</td><td>Size of SoftDevice event buffer. This parameter is unused if BLE stack support is not required. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt_buffer</td><td>Buffer for holding one BLE stack event. Since heap is not being used, this buffer must be provided by the application. The buffer must be large enough to hold the biggest stack event the application is supposed to handle. The buffer must be aligned to a 4 byte boundary. This parameter is unused if BLE stack support is not required. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ble_evt_buffer_size</td><td>Size of SoftDevice BLE event buffer. This parameter is unused if BLE stack support is not required. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">evt_schedule_func</td><td>Function for passing events to the scheduler. Point to ble_ant_stack_evt_schedule() to connect to the scheduler. Set to NULL to make the stack handler module call the event handler directly from the stack event interrupt handler.</td></tr>
   </table>
   </dd>
@@ -353,7 +348,7 @@ Normally initialization should be done using the <a class="el" href="a00700.html
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:25 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:37 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

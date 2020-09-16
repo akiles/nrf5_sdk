@@ -80,12 +80,13 @@ static void restart_in_bootloader(void)
     uint32_t err_code;
     static ant_boot_settings_t ant_boot_settings;
 
-    err_code = ant_boot_settings_clear(&ant_boot_settings);                                  // Clears and set FFs to the memory block
+    err_code = ant_boot_settings_clear(&ant_boot_settings); // Clears and set FFs to the memory block
     APP_ERROR_CHECK(err_code);
     memcpy((void*) ant_boot_settings.app_version, m_version_string, sizeof(m_version_string));
+    ant_boot_settings.app_size = 2000;                      // Estimated current application size used to try to preserve itself
     err_code = ant_boot_settings_save(&ant_boot_settings);
     APP_ERROR_CHECK(err_code);
-    ant_boot_settings_validate(1);                                                // Sets in the magic number. Must be done last before the reset!!!
+    ant_boot_settings_validate(1);                          // Sets flag to indicate restarting in bootloader mode. Must be done last before the reset!!!
     NVIC_SystemReset();
 }
 

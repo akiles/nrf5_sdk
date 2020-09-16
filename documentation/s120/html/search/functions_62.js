@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['battery_5flevel_5fin_5fpercent',['battery_level_in_percent',['../a00514.html#ga8902704fe018646ace7d303994320f45',1,'app_util.h']]],
   ['ble_5fbas_5fc_5fbl_5fnotif_5fenable',['ble_bas_c_bl_notif_enable',['../a00686.html#ga16c5e2436be7c05afc7ea62868981c15',1,'ble_bas_c.h']]],
   ['ble_5fbas_5fc_5fbl_5fread',['ble_bas_c_bl_read',['../a00686.html#gaaebe0b4cd8e0e09d54d18c1b8647d1dd',1,'ble_bas_c.h']]],
   ['ble_5fbas_5fc_5finit',['ble_bas_c_init',['../a00686.html#ga9d0ae2cdd0fefec37afe05d139739f1d',1,'ble_bas_c.h']]],
@@ -294,6 +295,8 @@ var searchData=
   ['ble_5fopt_5fset_5frsp_5fenc',['ble_opt_set_rsp_enc',['../a00665.html#gaf40ae6207852b2a4a5adae167c91a5aa',1,'ble_conn.h']]],
   ['ble_5fradio_5fnotification_5finit',['ble_radio_notification_init',['../a00729.html#ga0e02811c4ce9dff7bd190daa42b7a58b',1,'ble_radio_notification.h']]],
   ['ble_5fsrv_5fascii_5fto_5futf8',['ble_srv_ascii_to_utf8',['../a00731.html#ga611dfcf7209a57c2e45964e8bb4c5756',1,'ble_srv_common.h']]],
+  ['ble_5fsrv_5fis_5findication_5fenabled',['ble_srv_is_indication_enabled',['../a00731.html#gaf572afefe05bacfb4d5967d9c5a6c5e6',1,'ble_srv_common.h']]],
+  ['ble_5fsrv_5fis_5fnotification_5fenabled',['ble_srv_is_notification_enabled',['../a00731.html#ga11fd3cc1b15d4bec4accc37618305ccb',1,'ble_srv_common.h']]],
   ['ble_5fsrv_5freport_5fref_5fencode',['ble_srv_report_ref_encode',['../a00731.html#gaebc3fc5316f1a6a67e830516b8f9aed5',1,'ble_srv_common.h']]],
   ['ble_5ftx_5fbuffer_5fcount_5fget_5freq_5fdec',['ble_tx_buffer_count_get_req_dec',['../a00665.html#gab209833145c75643045687ebb7724871',1,'ble_conn.h']]],
   ['ble_5ftx_5fbuffer_5fcount_5fget_5freq_5fenc',['ble_tx_buffer_count_get_req_enc',['../a00648.html#ga1804f1406a5798d53e6f3971539647fc',1,'ble_app.h']]],

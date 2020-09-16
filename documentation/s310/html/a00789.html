@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Structures</title>
+<title>nRF51 SDK - S310 SoftDevice: Enumerations</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,34 +97,58 @@ $(document).ready(function(){initNavTree('a00789.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Structures<div class="ingroups"><a class="el" href="a00786.html">Database Discovery</a></div></div>  </div>
+<div class="title">Enumerations<div class="ingroups"><a class="el" href="a00787.html">Database Discovery</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00138.html">ble_db_discovery_char_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure for holding the characteristic and the handle of its CCCD found during the discovery process.  <a href="a00138.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00140.html">ble_db_discovery_srv_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure for holding information about the service and the characteristics found during the discovery process.  <a href="a00140.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html">ble_db_discovery_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure for holding the information related to the GATT database at the server.  <a href="a00141.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00139.html">ble_db_discovery_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure containing the event from the DB discovery module to the application.  <a href="a00139.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaa16075c6c77a4f3f32fb567d5ce45462"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00789.html#gaa16075c6c77a4f3f32fb567d5ce45462">ble_db_discovery_evt_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00789.html#ggaa16075c6c77a4f3f32fb567d5ce45462ad6925ee73dada1191de4934d7891dc1f">BLE_DB_DISCOVERY_COMPLETE</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00789.html#ggaa16075c6c77a4f3f32fb567d5ce45462aca629cd78939015c22a44c9e3797043b">BLE_DB_DISCOVERY_ERROR</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00789.html#ggaa16075c6c77a4f3f32fb567d5ce45462a16f218739c505cfa820990dce92e412d">BLE_DB_DISCOVERY_SRV_NOT_FOUND</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaa16075c6c77a4f3f32fb567d5ce45462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of the DB Discovery event.  <a href="a00789.html#gaa16075c6c77a4f3f32fb567d5ce45462">More...</a><br/></td></tr>
+<tr class="separator:gaa16075c6c77a4f3f32fb567d5ce45462"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaa16075c6c77a4f3f32fb567d5ce45462"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00789.html#gaa16075c6c77a4f3f32fb567d5ce45462">ble_db_discovery_evt_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Type of the DB Discovery event. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa16075c6c77a4f3f32fb567d5ce45462ad6925ee73dada1191de4934d7891dc1f"></a>BLE_DB_DISCOVERY_COMPLETE</em>&nbsp;</td><td class="fielddoc">
+<p>Event indicating that the GATT Database discovery is complete. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa16075c6c77a4f3f32fb567d5ce45462aca629cd78939015c22a44c9e3797043b"></a>BLE_DB_DISCOVERY_ERROR</em>&nbsp;</td><td class="fielddoc">
+<p>Event indicating that an internal error has occurred in the DB Discovery module. This could typically be because of the SoftDevice API returning an error code during the DB discover. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa16075c6c77a4f3f32fb567d5ce45462a16f218739c505cfa820990dce92e412d"></a>BLE_DB_DISCOVERY_SRV_NOT_FOUND</em>&nbsp;</td><td class="fielddoc">
+<p>Event indicating that the service was not found at the peer. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:37 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:49 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

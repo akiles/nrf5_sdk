@@ -1,7 +1,7 @@
 var a00253 =
 [
-    [ "Defines", "a00266.html", "a00266" ],
-    [ "Enumerations", "a00267.html", "a00267" ],
-    [ "Types", "a00268.html", "a00268" ],
-    [ "Functions", "a00269.html", "a00269" ]
+    [ "SoC Library Error Codes", "a00254.html", "a00254" ],
+    [ "Defines", "a00276.html", "a00276" ],
+    [ "Types", "a00277.html", "a00277" ],
+    [ "Functions", "a00278.html", "a00278" ]
 ];

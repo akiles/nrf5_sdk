@@ -1,14 +1,11 @@
 var a00850 =
 [
-    [ "sd_ble_gatts_characteristic_add", "a00850.html#ga685489d21a0958e17ce84434970f4d11", null ],
-    [ "sd_ble_gatts_descriptor_add", "a00850.html#ga8e6d075e51aa9d30eea059270376bf73", null ],
-    [ "sd_ble_gatts_hvx", "a00850.html#ga00ea603adee7561e8bdc00c8853a0ba8", null ],
-    [ "sd_ble_gatts_include_add", "a00850.html#ga7ed902a775d92af18e5887bb39a35e26", null ],
-    [ "sd_ble_gatts_rw_authorize_reply", "a00850.html#ga8480b85d786bd4d3fb935204844c82fe", null ],
-    [ "sd_ble_gatts_service_add", "a00850.html#ga846b1b86d54c1c6a4bd46dbbc63883f7", null ],
-    [ "sd_ble_gatts_service_changed", "a00850.html#ga2c8c90d73fa27ba6691ad82b4a960adc", null ],
-    [ "sd_ble_gatts_sys_attr_get", "a00850.html#gaeda9ee9cc4231a1eae4160f0b35fc8fb", null ],
-    [ "sd_ble_gatts_sys_attr_set", "a00850.html#gafc37f2050903a4dc91f4527b59e6457a", null ],
-    [ "sd_ble_gatts_value_get", "a00850.html#gae6200e20d54680a3b8914e4b07ae4afa", null ],
-    [ "sd_ble_gatts_value_set", "a00850.html#ga1fc08d39d3011a0a87c2812af9174b96", null ]
+    [ "SVC return values specific to GATTS", "a00661.html", "a00661" ],
+    [ "Maximum attribute lengths", "a00662.html", "a00662" ],
+    [ "GATT Server Service Types", "a00663.html", "a00663" ],
+    [ "GATT Server Attribute Types", "a00664.html", "a00664" ],
+    [ "GATT Server Operations", "a00665.html", "a00665" ],
+    [ "GATT Value Locations", "a00666.html", "a00666" ],
+    [ "GATT Server Authorization Types", "a00667.html", "a00667" ],
+    [ "GATT_RX_MTU", "a00850.html#ga69b579663f889c0ce87a8931b51048b4", null ]
 ];

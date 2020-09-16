@@ -1,7 +1,9 @@
 var a00775 =
 [
-    [ "DM_PROTOCOL_CNTXT_ALL", "a00775.html#gabf3d92dc785166cb06763af1c6616b94", null ],
-    [ "DM_PROTOCOL_CNTXT_GATT_CLI_ID", "a00775.html#ga20cd764cccd94fd71cc07c9f5f2c681a", null ],
-    [ "DM_PROTOCOL_CNTXT_GATT_SRVR_ID", "a00775.html#ga40fd38aabb6b0c4ab56549d5189ff366", null ],
-    [ "DM_PROTOCOL_CNTXT_NONE", "a00775.html#gaf4cac13e3128b3131c16d52760393932", null ]
+    [ "Service/Protocol Types", "a00776.html", "a00776" ],
+    [ "Device Manager Events", "a00777.html", "a00777" ],
+    [ "Device Manager Data Types", "a00781.html", "a00781" ],
+    [ "Device Module APIs", "a00782.html", "a00782" ],
+    [ "Device Manager Sequence Charts", "a00811.html", "a00811" ],
+    [ "DM_INVALID_ID", "a00775.html#gaffbf0ad98e25546a4645eb2cac9bef8a", null ]
 ];

@@ -1,6 +1,6 @@
 var a00666 =
 [
-    [ "BLE_GATTS_AUTHORIZE_TYPE_INVALID", "a00666.html#ga156b817b68ec907affac6d5aa16f29aa", null ],
-    [ "BLE_GATTS_AUTHORIZE_TYPE_READ", "a00666.html#gacd69638f1f1f3eddbedc59c530b946d8", null ],
-    [ "BLE_GATTS_AUTHORIZE_TYPE_WRITE", "a00666.html#ga1b8036fd4c246ad2bb5696632761ab47", null ]
+    [ "BLE_GATTS_VLOC_INVALID", "a00666.html#ga0b0c153e71bddb01a4ba803a9110a6e4", null ],
+    [ "BLE_GATTS_VLOC_STACK", "a00666.html#gaf51ee5f68c7eea401ee79cd250c1fb16", null ],
+    [ "BLE_GATTS_VLOC_USER", "a00666.html#gaddb51f959e18123c5e215e22af0c31a9", null ]
 ];

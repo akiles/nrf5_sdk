@@ -1,13 +1,15 @@
 var a00835 =
 [
-    [ "sd_ble_enable", "a00835.html#ga0f632bec36100e4d2d74672ccbb4218b", null ],
-    [ "sd_ble_evt_get", "a00835.html#ga412b12b43c253dd744bcf574d6e86f43", null ],
-    [ "sd_ble_opt_get", "a00835.html#gad64712eef7dba0287275d185768c5291", null ],
-    [ "sd_ble_opt_set", "a00835.html#ga511d431bc3d9ccf9bef09ad20cbf855a", null ],
-    [ "sd_ble_tx_buffer_count_get", "a00835.html#ga37e443c585217475a97e40dfb443a1b6", null ],
-    [ "sd_ble_user_mem_reply", "a00835.html#ga55b6ddb780c9715fffed628ae22ff6da", null ],
-    [ "sd_ble_uuid_decode", "a00835.html#gac27814ac145d826cda33446a51ad04a2", null ],
-    [ "sd_ble_uuid_encode", "a00835.html#gaa2f13b287633d17f7500f0f39851b682", null ],
-    [ "sd_ble_uuid_vs_add", "a00835.html#gab3101ab721b427d1548b5f77bf5118cf", null ],
-    [ "sd_ble_version_get", "a00835.html#gab3ba7bb07fa809e8dccfd27cbba0210a", null ]
+    [ "User Memory Types", "a00631.html", "a00631" ],
+    [ "BLE Connection Handles", "a00672.html", "a00672" ],
+    [ "Assigned Values for BLE UUIDs", "a00673.html", "a00673" ],
+    [ "Types of UUID", "a00674.html", "a00674" ],
+    [ "Bluetooth Appearance values", "a00675.html", "a00675" ],
+    [ "BLE_EVTS_PTR_ALIGNMENT", "a00835.html#ga60320cd534c9f7f0f16a1da17d5afacb", null ],
+    [ "BLE_UUID_BLE_ASSIGN", "a00835.html#gac4478362651889d2ade8030f53713588", null ],
+    [ "BLE_UUID_COPY_INST", "a00835.html#ga7b7bc0d395b3436d101cbf183a16fd8f", null ],
+    [ "BLE_UUID_COPY_PTR", "a00835.html#gae760be8e12d22dc39e9dca99bdf33536", null ],
+    [ "BLE_UUID_EQ", "a00835.html#gaa8d7439022acdbd47118aab389084298", null ],
+    [ "BLE_UUID_NEQ", "a00835.html#ga06eb7ac9c1db7d9a1ef2fb7d6fb4e5ec", null ],
+    [ "BLE_UUID_VS_MAX_COUNT", "a00835.html#gaef66ffd47e836932207ee77faecacb8b", null ]
 ];

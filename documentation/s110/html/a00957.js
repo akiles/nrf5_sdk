@@ -88,6 +88,7 @@ var a00957 =
     [ "gzp_init", "a00957.html#gae0c59c904a0ea56323274885ac3da45a", null ],
     [ "gzp_pairing_enable", "a00957.html#gaa00479ce99d1b3f598e02562b1bc5f20", null ],
     [ "gzp_random_numbers_generate", "a00957.html#ga739fa1981fe1606f79dfbc305652e50c", null ],
+    [ "gzp_set_host_id", "a00957.html#ga716af0575504167733f3b67da3c24511", null ],
     [ "gzp_update_radio_params", "a00957.html#ga6c2fd95c5a3c45e1a3bceebf72f5c990", null ],
     [ "gzp_validate_id", "a00957.html#ga288cb74335df9d0f81f29b632a27c254", null ],
     [ "gzp_xor_cipher", "a00957.html#ga2b720c2fcfa4a0df48da14d88e58fe67", null ],

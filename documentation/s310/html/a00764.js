@@ -1,24 +1,46 @@
 var a00764 =
 [
-    [ "ble_ias_evt_t", "a00256.html", [
-      [ "alert_level", "a00256.html#aadc350acbcf634cf778a5a253049ebe0", null ],
-      [ "evt_type", "a00256.html#a730fff52efb38d8f5f61973ef47696b4", null ],
-      [ "params", "a00256.html#a436ccefb86ad7804abe101b61110304d", null ]
+    [ "ble_hts_evt_t", "a00249.html", [
+      [ "evt_type", "a00249.html#afe0fd1c3cee451270df1d333c1605837", null ]
     ] ],
-    [ "ble_ias_init_t", "a00257.html", [
-      [ "evt_handler", "a00257.html#a5e40f1f02a66e26a1da20bbf3e2a275a", null ]
+    [ "ieee_float32_t", "a00315.html", [
+      [ "exponent", "a00315.html#ad2b0d21fa7152a4afd8d98ec81bbe15a", null ],
+      [ "mantissa", "a00315.html#af54051e1c850e7ca43fc5e7b49c91261", null ]
     ] ],
-    [ "ble_ias_s", "a00258.html", [
-      [ "alert_level_handles", "a00258.html#a67d6395f4804c00de308270dddf15b7e", null ],
-      [ "evt_handler", "a00258.html#a6304bcdac9c7d2758f64aa1dd5844959", null ],
-      [ "service_handle", "a00258.html#afa6a28eec3f1b9b4f7ea596af7ee2c29", null ]
+    [ "ble_hts_init_t", "a00250.html", [
+      [ "evt_handler", "a00250.html#ac6fbae8371e9336d3acb46b8903a8947", null ],
+      [ "hts_meas_attr_md", "a00250.html#a5c4a4bc737442da34f2b9cfd367bb5e8", null ],
+      [ "hts_temp_type_attr_md", "a00250.html#a1f216c81224e94f40db0d5b4aaa1898b", null ],
+      [ "temp_type", "a00250.html#a7d233be4574d7bdd2f28c9afa8d0efc2", null ],
+      [ "temp_type_as_characteristic", "a00250.html#a6ac11fedc2f4a022e482c6342880e30f", null ]
     ] ],
-    [ "ble_ias_evt_handler_t", "a00764.html#gab059c5376beb245a8f876ee3d7b8480a", null ],
-    [ "ble_ias_t", "a00764.html#ga8a63bc7ea5b311d297838a4095271665", null ],
-    [ "ble_ias_evt_type_t", "a00764.html#gaa55445ca6b845393a2dc353e0afa38ec", [
-      [ "BLE_IAS_EVT_ALERT_LEVEL_UPDATED", "a00764.html#ggaa55445ca6b845393a2dc353e0afa38ecaf04e8963239be8fd6c09d876f88db8ff", null ]
+    [ "ble_hts_s", "a00252.html", [
+      [ "conn_handle", "a00252.html#a71533de99d438bb326730e08da1d402a", null ],
+      [ "evt_handler", "a00252.html#ab0392a7012b01ace2dad863bc8f573cc", null ],
+      [ "meas_handles", "a00252.html#a6e3f96502d28802be863f09b2839817d", null ],
+      [ "service_handle", "a00252.html#ac62f9c0c453beef41d04c488c5d19ecc", null ],
+      [ "temp_type", "a00252.html#ad8e572095f9a6cecdf4bcde49c527aab", null ],
+      [ "temp_type_handles", "a00252.html#a514df962e0856554cd6eee1e2b11bf26", null ]
     ] ],
-    [ "ble_ias_alert_level_get", "a00764.html#ga2b433148292e1fdf6ab22633e2d8dde1", null ],
-    [ "ble_ias_init", "a00764.html#gaa1d939e0499a5e34f6c9752347f6b974", null ],
-    [ "ble_ias_on_ble_evt", "a00764.html#ga7aceea1ccf7fa036d066a08e19fe1504", null ]
+    [ "ble_hts_meas_s", "a00251.html", [
+      [ "temp_in_celcius", "a00251.html#a4065a89fde57ebf2effce6a1401e38c4", null ],
+      [ "temp_in_fahr", "a00251.html#a0120700a8a6185ce21e1a05391fbc706", null ],
+      [ "temp_in_fahr_units", "a00251.html#a16e05739a1ac3b03a2b4dc683bc1eacd", null ],
+      [ "temp_type", "a00251.html#a12b9d8fddee8e461bfcedb3489bd5f92", null ],
+      [ "temp_type_present", "a00251.html#a10dadb1129dd55a6d597e4e08764d7ff", null ],
+      [ "time_stamp", "a00251.html#aab4240703a233a4bd2cd1a7b3a5997c0", null ],
+      [ "time_stamp_present", "a00251.html#a21a7a430b8f85908438c9bd1fc2e0dce", null ]
+    ] ],
+    [ "ble_hts_evt_handler_t", "a00764.html#ga78edebed11dc6c480b65706199500862", null ],
+    [ "ble_hts_meas_t", "a00764.html#ga2e809e8344a249203c4e86abc19c7c1b", null ],
+    [ "ble_hts_t", "a00764.html#ga15a0b1f92fe74fb20da63eb7dd0efed8", null ],
+    [ "ble_hts_evt_type_t", "a00764.html#ga9de0c7527af87daac3cf198d8708cc27", [
+      [ "BLE_HTS_EVT_INDICATION_ENABLED", "a00764.html#gga9de0c7527af87daac3cf198d8708cc27a0c68bf5f24a76260b8d60d6b5d992245", null ],
+      [ "BLE_HTS_EVT_INDICATION_DISABLED", "a00764.html#gga9de0c7527af87daac3cf198d8708cc27a85a307874a0234f6150db9bb938cdad0", null ],
+      [ "BLE_HTS_EVT_INDICATION_CONFIRMED", "a00764.html#gga9de0c7527af87daac3cf198d8708cc27a3973d850e7c89fb22b39ae12393bb278", null ]
+    ] ],
+    [ "ble_hts_init", "a00764.html#ga734d073032acce7c7f59bf9afc428fb7", null ],
+    [ "ble_hts_is_indication_enabled", "a00764.html#gaac026b3fb1fff6771f554e913a76e80e", null ],
+    [ "ble_hts_measurement_send", "a00764.html#ga46f07a190d194f273fbe609936bde3e2", null ],
+    [ "ble_hts_on_ble_evt", "a00764.html#ga1d50a1758227869205ce213a564b436c", null ]
 ];

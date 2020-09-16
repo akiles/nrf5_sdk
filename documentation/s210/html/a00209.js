@@ -1,27 +1,25 @@
 var a00209 =
 [
-    [ "nrf_gpio_pin_dir_t", "a00209.html#ga4089fa9e3311c34d254d4d00029911bc", [
-      [ "NRF_GPIO_PIN_DIR_INPUT", "a00209.html#gga4089fa9e3311c34d254d4d00029911bcadcb15e081def4002ed564fd8abbaa29d", null ],
-      [ "NRF_GPIO_PIN_DIR_OUTPUT", "a00209.html#gga4089fa9e3311c34d254d4d00029911bca51b31d6f52c664433688ecc535e49f54", null ]
+    [ "TOUCHPAD_BUTTON_STATUS", "a00209.html#ga31521894e811710e49d5d9bb9abcecb8", null ],
+    [ "TOUCHPAD_COMMAND", "a00209.html#gaf471db4675c021cc375b84815f2c3561", null ],
+    [ "TOUCHPAD_CONTROL", "a00209.html#gaf5a2290d3919707171195ce78d02c091", null ],
+    [ "TOUCHPAD_FINGER0_REL", "a00209.html#gab981111abcb9a726d0963a0ad9099de0", null ],
+    [ "TOUCHPAD_GESTURE_FLAGS", "a00209.html#ga95556e3ba7e191db7a7c877501aa9a1d", null ],
+    [ "TOUCHPAD_INT_STATUS", "a00209.html#ga45323ee0dff39f598de4e6913ce06ef8", null ],
+    [ "TOUCHPAD_PAGESELECT", "a00209.html#ga40ad4ab55f47fb885452b74af1d61b06", null ],
+    [ "TOUCHPAD_PRODUCT_ID", "a00209.html#ga2fc2cf0bedd74903e7181acfe0df6941", null ],
+    [ "TOUCHPAD_RESET", "a00209.html#ga81cf02c11ea295d8110493005dd1babd", null ],
+    [ "TOUCHPAD_SCROLL", "a00209.html#ga62a3433c5a8ef739a8f0520247c70efd", null ],
+    [ "TouchpadSleepMode_t", "a00209.html#ga330fdbd5e3557a42f4c73c445d0f7337", [
+      [ "SleepmodeNormal", "a00209.html#gga330fdbd5e3557a42f4c73c445d0f7337a2529a190fc6b8b859b7248b35f83f391", null ],
+      [ "SleepmodeSensorSleep", "a00209.html#gga330fdbd5e3557a42f4c73c445d0f7337a689a10deefd36760eee23b59321bcadb", null ]
     ] ],
-    [ "nrf_gpio_pin_pull_t", "a00209.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc", [
-      [ "NRF_GPIO_PIN_NOPULL", "a00209.html#gga07e0c8c0b30499cf0a7b79dbe62d3fcca13ffcb94eb78be866c66b5f5b516af65", null ],
-      [ "NRF_GPIO_PIN_PULLDOWN", "a00209.html#gga07e0c8c0b30499cf0a7b79dbe62d3fcca314d4b349d7e59ea3373a1ced4f32e4d", null ],
-      [ "NRF_GPIO_PIN_PULLUP", "a00209.html#gga07e0c8c0b30499cf0a7b79dbe62d3fccad60f768c699495d9976a45fa7a9f51c6", null ]
-    ] ],
-    [ "nrf_gpio_pin_sense_t", "a00209.html#ga0708136c752d69015962a2ccb4c59fbd", [
-      [ "NRF_GPIO_PIN_NOSENSE", "a00209.html#gga0708136c752d69015962a2ccb4c59fbda60d9e9b3abe91c66a618e34d88444e95", null ],
-      [ "NRF_GPIO_PIN_SENSE_LOW", "a00209.html#gga0708136c752d69015962a2ccb4c59fbda48aaaa3fc33a295d9c65f094e03aba24", null ],
-      [ "NRF_GPIO_PIN_SENSE_HIGH", "a00209.html#gga0708136c752d69015962a2ccb4c59fbda8fe882a266370654fa6d664be3e1ecce", null ]
-    ] ],
-    [ "nrf_gpio_port_dir_t", "a00209.html#ga494d7ac30db1cbb6366e0b9ebd5b49b4", [
-      [ "NRF_GPIO_PORT_DIR_OUTPUT", "a00209.html#gga494d7ac30db1cbb6366e0b9ebd5b49b4a90b7ce7a76775cb7534487635755be3f", null ],
-      [ "NRF_GPIO_PORT_DIR_INPUT", "a00209.html#gga494d7ac30db1cbb6366e0b9ebd5b49b4a6ec5811669635e30b9dc014e1f494936", null ]
-    ] ],
-    [ "nrf_gpio_port_select_t", "a00209.html#gaa1a5c145e334817f2d960317d64fcb3d", [
-      [ "NRF_GPIO_PORT_SELECT_PORT0", "a00209.html#ggaa1a5c145e334817f2d960317d64fcb3dada4c86d9760e81857ec0482c1cc78190", null ],
-      [ "NRF_GPIO_PORT_SELECT_PORT1", "a00209.html#ggaa1a5c145e334817f2d960317d64fcb3da9209d7820d65eb58c7804e676581bf40", null ],
-      [ "NRF_GPIO_PORT_SELECT_PORT2", "a00209.html#ggaa1a5c145e334817f2d960317d64fcb3daf83f3be082e45a73102618f149448fc8", null ],
-      [ "NRF_GPIO_PORT_SELECT_PORT3", "a00209.html#ggaa1a5c145e334817f2d960317d64fcb3da9075a015252fd02d27ba7ca897aa564d", null ]
-    ] ]
+    [ "touchpad_init", "a00209.html#ga56d2b2da22fd614a12dead51b86f5be8", null ],
+    [ "touchpad_interrupt_status_read", "a00209.html#ga22b2f1fbcc1c09d3fcb5dae98e7a7dd2", null ],
+    [ "touchpad_product_id_read", "a00209.html#ga32ff3519e36304ef6111a893730a22a8", null ],
+    [ "touchpad_product_id_verify", "a00209.html#ga64efe8dc563464be3110e139729c663b", null ],
+    [ "touchpad_read_register", "a00209.html#ga517f43a4e4520713f69f14b38efc927b", null ],
+    [ "touchpad_reset", "a00209.html#gac053ca9455c2ee583def58d2d826cd9c", null ],
+    [ "touchpad_set_sleep_mode", "a00209.html#gaeaf145b444000da6d332bf4f0333380c", null ],
+    [ "touchpad_write_register", "a00209.html#gad33761514312c640fc14e096069476b9", null ]
 ];

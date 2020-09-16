@@ -1,5 +1,5 @@
 var a00661 =
 [
-    [ "BLE_GATTS_FIX_ATTR_LEN_MAX", "a00661.html#ga4cf6efe8134f1f771c088ff7d4c1d79a", null ],
-    [ "BLE_GATTS_VAR_ATTR_LEN_MAX", "a00661.html#gac2a12a8c74733f8a666083550b77dc09", null ]
+    [ "BLE_ERROR_GATTS_INVALID_ATTR_TYPE", "a00661.html#ga050988950fb5cfb9e64b1f91f8872b45", null ],
+    [ "BLE_ERROR_GATTS_SYS_ATTR_MISSING", "a00661.html#ga1d0833ac31d0c319e5286623b6301d0a", null ]
 ];

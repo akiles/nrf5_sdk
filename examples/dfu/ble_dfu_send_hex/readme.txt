@@ -34,7 +34,7 @@ When using the dummy images in test_images update, the transfer can be verified:
         softdevice is in place (nrfjprog --memrd 0x3000 --w 4 --n 16). Notice the change in the last
         four hex digits (004F -> FFFE).
 6.  The Bootloader update can be verified as:
-        Open Master Control Panel, verify that the device is now advertising as: 'DfuTest' istead of
+        Open Master Control Panel, verify that the device is now advertising as: 'DfuSx10' istead of
         'DfuTarg'. 
          
 When performing Application DFU:

@@ -1,11 +1,6 @@
 var a00784 =
 [
-    [ "dm_application_context_delete", "a00784.html#ga04c7d505fd5c13d07b7d190697900245", null ],
-    [ "dm_application_context_get", "a00784.html#ga7d8beb6bd04dda25aa00866a983a6540", null ],
-    [ "dm_application_context_set", "a00784.html#ga8982a146ca6448b2d0a9fa5dfed12173", null ],
-    [ "dm_device_delete", "a00784.html#ga7b7436baf8238af38c72cb1f8f10f63a", null ],
-    [ "dm_device_delete_all", "a00784.html#gac3065f03be4655962edb309e4bdf2a32", null ],
-    [ "dm_service_context_delete", "a00784.html#gac9f62e454e48d9ce92b96a16a9abaf83", null ],
-    [ "dm_service_context_get", "a00784.html#ga21fdfce3233bcf71357f5ccb36e42a23", null ],
-    [ "dm_service_context_set", "a00784.html#ga7bad92174e8a940617c77917bb76a50a", null ]
+    [ "dm_security_setup_req", "a00784.html#ga4611de4e4f5cc68f0e3648e72e63283e", null ],
+    [ "dm_security_status_req", "a00784.html#ga3fe0567568f486ca25712c87522cb939", null ],
+    [ "dm_whitelist_create", "a00784.html#ga2c2148c29f11f7508ee4550ff3ac3db2", null ]
 ];

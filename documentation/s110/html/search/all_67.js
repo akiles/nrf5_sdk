@@ -201,6 +201,7 @@ var searchData=
   ['gzp_5fpairing_5fpipe',['GZP_PAIRING_PIPE',['../a00957.html#ga182a74e6f09944e693cde1be08fdacfc',1,'nrf_gzp.h']]],
   ['gzp_5frandom_5fnumbers_5fgenerate',['gzp_random_numbers_generate',['../a00957.html#ga739fa1981fe1606f79dfbc305652e50c',1,'nrf_gzp.h']]],
   ['gzp_5fsession_5ftoken_5flength',['GZP_SESSION_TOKEN_LENGTH',['../a00957.html#gac5fd1ba6e4b161953182cfc099d1ad03',1,'nrf_gzp.h']]],
+  ['gzp_5fset_5fhost_5fid',['gzp_set_host_id',['../a00957.html#ga716af0575504167733f3b67da3c24511',1,'nrf_gzp.h']]],
   ['gzp_5fsystem_5faddress_5fwidth',['GZP_SYSTEM_ADDRESS_WIDTH',['../a00957.html#ga50ae5998a3561c07f92f95aa35d9bf61',1,'nrf_gzp.h']]],
   ['gzp_5ftx_5frx_5ftrans_5fdelay',['GZP_TX_RX_TRANS_DELAY',['../a00957.html#ga6ba06ffcdb5c467a19e0a220f30c11db',1,'nrf_gzp.h']]],
   ['gzp_5fupdate_5fradio_5fparams',['gzp_update_radio_params',['../a00957.html#ga6c2fd95c5a3c45e1a3bceebf72f5c990',1,'nrf_gzp.h']]],

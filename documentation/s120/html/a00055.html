@@ -127,14 +127,14 @@ Subscription to events</h2>
 <h2><a class="anchor" id="api_usage"></a>
 No direct calls to sd_softdevice_disable and sd_softdevice_enable</h2>
 <p>When the application needs to disable the SoftDevice, it must use the function <a class="el" href="a00700.html#gabbec783a89f93617d3661a819597d79c">softdevice_handler_sd_disable</a> and not directly call the function <a class="el" href="a00774.html#ga45900ecbe6d5ebf9ae78894fe6c75b23">sd_softdevice_disable</a> that is provided by the SoftDevice. If this is not done, this module will not be aware that the SoftDevice was disabled. This will result in the SoftDevice returning the error code <a class="el" href="a00571.html#ga9a2af1a322a5dfb3bdb69e2aacd3bc27">NRF_ERROR_SOFTDEVICE_NOT_ENABLED</a> when this module tries to fetch BLE or ANT events. This in turn will result in a call to <a class="el" href="a00513.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> function defined by the application.</p>
-<p>Similarly, if the application needs to enable the SoftDevice, it must do so using the function <a class="el" href="a00700.html#ga53c8f6b5556622cc42f717ddf756ca8e">softdevice_handler_init</a> function. If this is not done, this module will never fetch the BLE or ANT events. </p>
+<p>Similarly, if the application needs to enable the SoftDevice, it must do so using the function <a class="el" href="a00700.html#ga33d6c5c2cf0d6cd1e89ef172d75e0975">softdevice_handler_init</a> function. If this is not done, this module will never fetch the BLE or ANT events. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

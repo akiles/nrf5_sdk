@@ -150,6 +150,12 @@ typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga11fd3cc1b15d4bec4accc37618305ccb"><td class="memItemLeft" align="right" valign="top">static __INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00731.html#ga11fd3cc1b15d4bec4accc37618305ccb">ble_srv_is_notification_enabled</a> (uint8_t *p_encoded_data)</td></tr>
+<tr class="memdesc:ga11fd3cc1b15d4bec4accc37618305ccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for decoding a CCCD value, and then testing if notification is enabled.  <a href="#ga11fd3cc1b15d4bec4accc37618305ccb">More...</a><br/></td></tr>
+<tr class="separator:ga11fd3cc1b15d4bec4accc37618305ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf572afefe05bacfb4d5967d9c5a6c5e6"><td class="memItemLeft" align="right" valign="top">static __INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00731.html#gaf572afefe05bacfb4d5967d9c5a6c5e6">ble_srv_is_indication_enabled</a> (uint8_t *p_encoded_data)</td></tr>
+<tr class="memdesc:gaf572afefe05bacfb4d5967d9c5a6c5e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for decoding a CCCD value, and then testing if indication is enabled.  <a href="#gaf572afefe05bacfb4d5967d9c5a6c5e6">More...</a><br/></td></tr>
+<tr class="separator:gaf572afefe05bacfb4d5967d9c5a6c5e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaebc3fc5316f1a6a67e830516b8f9aed5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00731.html#gaebc3fc5316f1a6a67e830516b8f9aed5">ble_srv_report_ref_encode</a> (uint8_t *p_encoded_buffer, const <a class="el" href="a00188.html">ble_srv_report_ref_t</a> *p_report_ref)</td></tr>
 <tr class="memdesc:gaebc3fc5316f1a6a67e830516b8f9aed5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for encoding a Report Reference Descriptor.  <a href="#gaebc3fc5316f1a6a67e830516b8f9aed5">More...</a><br/></td></tr>
 <tr class="separator:gaebc3fc5316f1a6a67e830516b8f9aed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -222,6 +228,72 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="gaf572afefe05bacfb4d5967d9c5a6c5e6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE bool ble_srv_is_indication_enabled </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_encoded_data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for decoding a CCCD value, and then testing if indication is enabled. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_encoded_data</td><td>Buffer where the encoded CCCD is stored.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>TRUE if indication is enabled, FALSE otherwise. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga11fd3cc1b15d4bec4accc37618305ccb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE bool ble_srv_is_notification_enabled </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_encoded_data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for decoding a CCCD value, and then testing if notification is enabled. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_encoded_data</td><td>Buffer where the encoded CCCD is stored.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>TRUE if notification is enabled, FALSE otherwise. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="gaebc3fc5316f1a6a67e830516b8f9aed5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -263,7 +335,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:25 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:37 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

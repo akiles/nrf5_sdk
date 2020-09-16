@@ -1,6 +1,8 @@
 var a00056 =
 [
-    [ "evt_type", "a00056.html#ac7e76a07c099aed4eb9d8180a15368d8", null ],
-    [ "packet", "a00056.html#a005a67172eb3d6a4645d536db7fbb98f", null ],
-    [ "packet_length", "a00056.html#ac31d16ccc1a5fc4bd8852c58d710f821", null ]
+    [ "data", "a00056.html#a9241052870696d4d825c91c4a834a84f", null ],
+    [ "error_code", "a00056.html#ab2aeea864de0050ec22790a186a4e9b1", null ],
+    [ "error_communication", "a00056.html#ae2f48256edd4052e8273d098bb8249c4", null ],
+    [ "evt_type", "a00056.html#ae89e1d236d49d18fa5be6fa32ba3c0d8", null ],
+    [ "value", "a00056.html#a9e34eabccc01fe3eeff1c7392d737d84", null ]
 ];

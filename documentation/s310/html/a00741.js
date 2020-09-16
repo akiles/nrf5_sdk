@@ -1,28 +1,18 @@
 var a00741 =
 [
-    [ "dfu_bank_func_t", "a00292.html", [
-      [ "activate", "a00292.html#af00135287925be9fcd8216ca9f926106", null ],
-      [ "cleared", "a00292.html#ae4f65f28daba87c601079fdb99ed986b", null ],
-      [ "prepare", "a00292.html#a836a20b948e91ba36fb2a77f09d97aa4", null ]
-    ] ],
-    [ "APP_TIMER_PRESCALER", "a00741.html#ga7bbff5bb0ca047b109e70a831f08e217", null ],
-    [ "DFU_TIMEOUT_INTERVAL", "a00741.html#gac852b26871e27db5896374b80d173ed7", null ],
-    [ "IMAGE_WRITE_IN_PROGRESS", "a00741.html#ga11fffdc6dd415319a5a8154b66a8b2ce", null ],
-    [ "IS_UPDATING_APP", "a00741.html#ga3c3aedab2c56af1d09a7f08fef4209e1", null ],
-    [ "IS_UPDATING_BL", "a00741.html#ga7f75359550e5d1c48c845c3a64beeff9", null ],
-    [ "IS_UPDATING_SD", "a00741.html#gac9f752070cc5f86753dbf9345b795392", null ],
-    [ "IS_WORD_SIZED", "a00741.html#gaa829238741c8e27c7c8a8b6d5c36a103", null ],
-    [ "dfu_bank_activate_t", "a00741.html#gad9ce0b70db1ec648acc0bd50629e22ff", null ],
-    [ "dfu_bank_cleared_t", "a00741.html#ga7c3f98f2a92d87008ba13e9dae8484d8", null ],
-    [ "dfu_bank_prepare_t", "a00741.html#gaf68c07fc7834b9c16aae9a748f43bdc8", null ],
-    [ "dfu_state_t", "a00741.html#ga187dfde3b0fa8047e6c97b2317bce21f", [
-      [ "DFU_STATE_INIT_ERROR", "a00741.html#gga187dfde3b0fa8047e6c97b2317bce21fa668c685914fdc7aad5c00ac9ad119d85", null ],
-      [ "DFU_STATE_IDLE", "a00741.html#gga187dfde3b0fa8047e6c97b2317bce21fad19963a8788de50aaf05a439c9448e7a", null ],
-      [ "DFU_STATE_PREPARING", "a00741.html#gga187dfde3b0fa8047e6c97b2317bce21fa539947bf7a53147eff081ef153818b8d", null ],
-      [ "DFU_STATE_RDY", "a00741.html#gga187dfde3b0fa8047e6c97b2317bce21fa43c819e2e2d6cb79f0cc3e9703df3b04", null ],
-      [ "DFU_STATE_RX_INIT_PKT", "a00741.html#gga187dfde3b0fa8047e6c97b2317bce21fa8d1d50d8d5174b1cead26cf34ad1daf5", null ],
-      [ "DFU_STATE_RX_DATA_PKT", "a00741.html#gga187dfde3b0fa8047e6c97b2317bce21fa475955163ace358b9373c0b3a87ce4ec", null ],
-      [ "DFU_STATE_VALIDATE", "a00741.html#gga187dfde3b0fa8047e6c97b2317bce21fae274655cddb628140c568df6bc5f70bf", null ],
-      [ "DFU_STATE_WAIT_4_ACTIVATE", "a00741.html#gga187dfde3b0fa8047e6c97b2317bce21fa2a335037693bd40cff8c8787d3a11598", null ]
-    ] ]
+    [ "Types and definitions.", "a00747.html", "a00747" ],
+    [ "dfu_callback_t", "a00741.html#gaacc31c43e887f7b9f1f462b39f5171c2", null ],
+    [ "dfu_bl_image_swap", "a00741.html#gaa5c719005d3cb149dc8af672c8782037", null ],
+    [ "dfu_bl_image_validate", "a00741.html#ga46075f420f41e2c6fe102a07e0def6e9", null ],
+    [ "dfu_data_pkt_handle", "a00741.html#gaedeca60961c137dbc070c9acba09126f", null ],
+    [ "dfu_image_activate", "a00741.html#gaaa8227795cc1e3d231d2114f79a9017c", null ],
+    [ "dfu_image_validate", "a00741.html#ga025b98379882ab47f9a2585dce60e34c", null ],
+    [ "dfu_init", "a00741.html#ga04aa562312c46cd022b4d4acc7318452", null ],
+    [ "dfu_init_pkt_complete", "a00741.html#ga7029a93e35d44f50a82aacd001069893", null ],
+    [ "dfu_init_pkt_handle", "a00741.html#ga0a7187ec97973d70e1f0d3d9a1747052", null ],
+    [ "dfu_register_callback", "a00741.html#gac459a6787392cac2da15bc87ce7b99c9", null ],
+    [ "dfu_reset", "a00741.html#ga3428f74b8abe841939414cd8669dc017", null ],
+    [ "dfu_sd_image_swap", "a00741.html#gac5f2b2c8faf704d6e2be18df05ceee1b", null ],
+    [ "dfu_sd_image_validate", "a00741.html#ga4d1fb87fd6d01940f8c69cfc08d74cb9", null ],
+    [ "dfu_start_pkt_handle", "a00741.html#ga3ca360d2f4d3e5847815e3b78ee00786", null ]
 ];

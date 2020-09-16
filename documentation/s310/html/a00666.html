@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: GATT Server Authorization Types</title>
+<title>nRF51 SDK - S310 SoftDevice: GATT Value Locations</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,57 +99,57 @@ $(document).ready(function(){initNavTree('a00666.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GATT Server Authorization Types<div class="ingroups"><a class="el" href="a00848.html">Defines</a></div></div>  </div>
+<div class="title">GATT Value Locations<div class="ingroups"><a class="el" href="a00850.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga156b817b68ec907affac6d5aa16f29aa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00666.html#ga156b817b68ec907affac6d5aa16f29aa">BLE_GATTS_AUTHORIZE_TYPE_INVALID</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:ga156b817b68ec907affac6d5aa16f29aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacd69638f1f1f3eddbedc59c530b946d8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00666.html#gacd69638f1f1f3eddbedc59c530b946d8">BLE_GATTS_AUTHORIZE_TYPE_READ</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:gacd69638f1f1f3eddbedc59c530b946d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1b8036fd4c246ad2bb5696632761ab47"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00666.html#ga1b8036fd4c246ad2bb5696632761ab47">BLE_GATTS_AUTHORIZE_TYPE_WRITE</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:ga1b8036fd4c246ad2bb5696632761ab47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b0c153e71bddb01a4ba803a9110a6e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00666.html#ga0b0c153e71bddb01a4ba803a9110a6e4">BLE_GATTS_VLOC_INVALID</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga0b0c153e71bddb01a4ba803a9110a6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf51ee5f68c7eea401ee79cd250c1fb16"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00666.html#gaf51ee5f68c7eea401ee79cd250c1fb16">BLE_GATTS_VLOC_STACK</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:gaf51ee5f68c7eea401ee79cd250c1fb16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaddb51f959e18123c5e215e22af0c31a9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00666.html#gaddb51f959e18123c5e215e22af0c31a9">BLE_GATTS_VLOC_USER</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:gaddb51f959e18123c5e215e22af0c31a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga156b817b68ec907affac6d5aa16f29aa"></a>
+<a class="anchor" id="ga0b0c153e71bddb01a4ba803a9110a6e4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_AUTHORIZE_TYPE_INVALID&#160;&#160;&#160;0x00</td>
+          <td class="memname">#define BLE_GATTS_VLOC_INVALID&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Invalid Type. </p>
+<p>Invalid Location. </p>
 
 </div>
 </div>
-<a class="anchor" id="gacd69638f1f1f3eddbedc59c530b946d8"></a>
+<a class="anchor" id="gaf51ee5f68c7eea401ee79cd250c1fb16"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_AUTHORIZE_TYPE_READ&#160;&#160;&#160;0x01</td>
+          <td class="memname">#define BLE_GATTS_VLOC_STACK&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Authorize a Read Operation. </p>
+<p>Attribute Value is located in stack memory, no user memory is required. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga1b8036fd4c246ad2bb5696632761ab47"></a>
+<a class="anchor" id="gaddb51f959e18123c5e215e22af0c31a9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_AUTHORIZE_TYPE_WRITE&#160;&#160;&#160;0x02</td>
+          <td class="memname">#define BLE_GATTS_VLOC_USER&#160;&#160;&#160;0x02</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Authorize a Write Request Operation. </p>
+<p>Attribute Value is located in user memory. This requires the user to maintain a valid buffer through the lifetime of the attribute, since the stack will read and write directly to the memory using the pointer provided in the APIs. There are no alignment requirements for the buffer. </p>
 
 </div>
 </div>
@@ -158,7 +158,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:33 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:45 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

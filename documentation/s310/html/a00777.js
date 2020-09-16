@@ -1,5 +1,6 @@
 var a00777 =
 [
-    [ "DM_EVT_ERROR", "a00777.html#ga14b9e8a4e4dd9d6223d414bf25762f7b", null ],
-    [ "DM_EVT_RFU", "a00777.html#gad038033184e5745ddd4fef4d52bfcea4", null ]
+    [ "General Events", "a00778.html", "a00778" ],
+    [ "Link Status Events", "a00779.html", "a00779" ],
+    [ "Context Management Events", "a00780.html", "a00780" ]
 ];

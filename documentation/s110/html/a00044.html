@@ -131,7 +131,7 @@ Testing</h1>
 <li>Compile and program the application. Observe that the <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
 <li>In the Master Control Panel, create the Alert Notification Service (ANS) server by performing the following steps:<ol type="a">
 <li>Click File -&gt; Server Setup. In the window that opens up, click File -&gt; Load setup.</li>
-<li>In the resulting window, navigate to the ble_app_alert_notification folder and load the file named AlertNotifServer.bin.</li>
+<li>In the resulting window, navigate to the <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_alert_notification</code> folder. If you are using Keil packs, this folder is located at <code>&lt;KeilFolder&gt;\ARM\Pack\NordicSemiconductor\nRF_Examples\&lt;version&gt;\ble_peripheral\ble_app_alert_notification</code>. Load the file <code>AlertNotifServer.bin</code>.</li>
 <li>Click 'Stop server' and then 'Start server'.</li>
 <li>Set the values of characteristics with UUID 0x2A47 and 0x2A48 to 0xFF.</li>
 <li>You must keep the 'Server Setup' window opened.</li>
@@ -160,7 +160,7 @@ Testing</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00043.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

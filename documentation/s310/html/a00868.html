@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Bootloader/DFU API</title>
+<title>nRF51 SDK - S310 SoftDevice: S310 (ANT and BLE peripheral)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,55 +99,57 @@ $(document).ready(function(){initNavTree('a00868.html','');});
   <div class="summary">
 <a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Bootloader/DFU API</div>  </div>
+<div class="title">S310 (ANT and BLE peripheral)</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Application Programming Interface for S310 SoftDevice.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00748"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html">HCI Transport Layer Configuration</a></td></tr>
-<tr class="memdesc:a00748"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of HCI Transport Layer configurable parameters. <br/></td></tr>
+<tr class="memitem:a00626"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00626.html">ANT STACK</a></td></tr>
+<tr class="memdesc:a00626"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for the ANT Stack. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00736"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html">Bootloader API.</a></td></tr>
-<tr class="memdesc:a00736"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bootloader module interface. <br/></td></tr>
+<tr class="memitem:a00629"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00629.html">BLE SoftDevice Common</a></td></tr>
+<tr class="memdesc:a00629"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definitions, macros, error codes, SVC and event number subranges etc. common to all S110 SoftDevice modules. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00737"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00737.html">Bootloader settings API.</a></td></tr>
-<tr class="memdesc:a00737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bootloader settings module interface. <br/></td></tr>
+<tr class="memitem:a00687"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00687.html">Generic Access Profile (GAP)</a></td></tr>
+<tr class="memdesc:a00687"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definitions and prototypes for the GAP interface. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00747"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00747.html">DFU BLE packet handling in Application</a></td></tr>
-<tr class="memdesc:a00747"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU BLE packet handling for application. <br/></td></tr>
+<tr class="memitem:a00699"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00699.html">Generic Attribute Profile (GATT) Client</a></td></tr>
+<tr class="memdesc:a00699"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definitions and prototypes for the GATT Client interface. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00740"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00740.html">Device Firmware Update API.</a></td></tr>
-<tr class="memdesc:a00740"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Firmware Update module interface. <br/></td></tr>
+<tr class="memitem:a00842"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00842.html">Generic Attribute Profile (GATT) Common</a></td></tr>
+<tr class="memdesc:a00842"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common definitions and prototypes for the GATT interfaces. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00744"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00744.html">Init packet handling in DFU.</a></td></tr>
-<tr class="memdesc:a00744"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Firmware Update module type and function declaration for init packet handling. <br/></td></tr>
+<tr class="memitem:a00712"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00712.html">Generic Attribute Profile (GATT) Server</a></td></tr>
+<tr class="memdesc:a00712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definitions and prototypes for the GATTS interface. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00745"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html">DFU transport API.</a></td></tr>
-<tr class="memdesc:a00745"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU transport module interface. <br/></td></tr>
+<tr class="memitem:a00732"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00732.html">Logical Link Control and Adaptation Protocol (L2CAP)</a></td></tr>
+<tr class="memdesc:a00732"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definitions and prototypes for the L2CAP interface. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00739"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html">Bootloader util API.</a></td></tr>
-<tr class="memdesc:a00739"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bootloader util module interface. <br/></td></tr>
+<tr class="memitem:a00678"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00678.html">SoftDevice Manager API</a></td></tr>
+<tr class="memdesc:a00678"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for SoftDevice management. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00741"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00741.html">Device Firmware Update internal header for bank handling in DFU.</a></td></tr>
-<tr class="memdesc:a00741"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Firmware Update Bank handling module interface. <br/></td></tr>
+<tr class="memitem:a00676"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00676.html">SoftDevice Global Error Codes</a></td></tr>
+<tr class="memdesc:a00676"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global Error definitions. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00869"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00869.html">Ble_sdk_app_bootloader_main</a></td></tr>
+<tr class="memitem:a00680"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00680.html">SoC Library API</a></td></tr>
+<tr class="memdesc:a00680"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for the SoC library. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00742"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00742.html">DFU BLE SVC</a></td></tr>
-<tr class="memdesc:a00742"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU BLE SVC in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00743"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html">DFU BLE SVC internal</a></td></tr>
-<tr class="memdesc:a00743"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU BLE SVC internal functions in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader. This interface provides internal Bootloader DFU functions for retrieving data exchanged through SuperVisor Calls. <br/></td></tr>
+<tr class="memitem:a00682"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html">Master Boot Record API</a></td></tr>
+<tr class="memdesc:a00682"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for updating SoftDevice and BootLoader. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Application Programming Interface for S310 SoftDevice. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:38 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:50 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

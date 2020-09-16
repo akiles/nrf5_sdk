@@ -14,5 +14,11 @@ var a00783 =
       [ "UNIT_0_625_MS", "a00783.html#ggadf764cbdea00d65edcd07bb9953ad2b7a448dcb5272567df7360a964e7c9b91b1", null ],
       [ "UNIT_1_25_MS", "a00783.html#ggadf764cbdea00d65edcd07bb9953ad2b7abd6cc6c5518e69158001db0a5b3c4410", null ],
       [ "UNIT_10_MS", "a00783.html#ggadf764cbdea00d65edcd07bb9953ad2b7adfbb1465ed01976b118bae937a90cc60", null ]
-    ] ]
+    ] ],
+    [ "battery_level_in_percent", "a00783.html#ga8902704fe018646ace7d303994320f45", null ],
+    [ "is_word_aligned", "a00783.html#gad1c2cf43cc8c15daa4404e3a1721d83a", null ],
+    [ "uint16_decode", "a00783.html#gaf30655fd762a9debe0b499db3a9451f7", null ],
+    [ "uint16_encode", "a00783.html#gab58c28346b89382397aa7a716bf9a178", null ],
+    [ "uint32_decode", "a00783.html#gaa8eaa6f05cd43462e58a24e54c0ddacd", null ],
+    [ "uint32_encode", "a00783.html#gad960286275534b81d75fbeba2d52aec9", null ]
 ];

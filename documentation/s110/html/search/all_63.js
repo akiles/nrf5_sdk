@@ -92,6 +92,7 @@ var searchData=
   ['cumulative_5fwheel_5frevs',['cumulative_wheel_revs',['../a00185.html#a28e443636699abf5ac97850f4fb9eb39',1,'ble_cscs_meas_s']]],
   ['curr_5fchar_5find',['curr_char_ind',['../a00191.html#a2ca30b7a259a7342dc23272fcd6d889f',1,'ble_db_discovery_t']]],
   ['curr_5fsrv_5find',['curr_srv_ind',['../a00191.html#aa598c16586a07aa4b13e38c35b8b803d',1,'ble_db_discovery_t']]],
+  ['current_5fint_5fpriority_5fget',['current_int_priority_get',['../a00784.html#ga2462e81e0f0c058ca4c44c21a3d22a80',1,'app_util_platform.h']]],
   ['current_5fval',['current_val',['../a00328.html#a607fd7c8e6f2f3e7bbe8dc5d5b44b54e',1,'ble_sensorsim_state_t']]],
   ['context_20management_20apis',['Context Management APIs',['../a00992.html',1,'']]],
   ['connection_20parameters_20negotiation',['Connection Parameters Negotiation',['../a00112.html',1,'lib_ble']]],

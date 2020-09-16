@@ -18,12 +18,15 @@ var a00041 =
     ] ],
     [ "Experimental: ANT Bootloader/DFU", "a00042.html", [
       [ "Description", "a00042.html#ant_examples_dfu_description", null ],
-      [ "Memory Layout", "a00042.html#ant_examples_dfu_memory", null ],
+      [ "Memory Layout", "a00042.html#ant_examples_dfu_memory", [
+        [ "Dual-bank mode and single-bank mode", "a00042.html#ant_examples_dfu_mode", null ],
+        [ "Passing parameters between application and bootloader", "a00042.html#ant_examples_dfu_params", null ]
+      ] ],
       [ "OTA Update Information file", "a00042.html#update_information_file", null ],
       [ "Configuration options", "a00042.html#ant_examples_dfu_config", null ],
       [ "Channel parameters", "a00042.html#ant_examples_dfu_channel", null ],
       [ "Performing an OTA update", "a00042.html#ant_examples_dfu_updating", null ],
-      [ "Testing with the supplied test image", "a00042.html#ant_examples_dfu_testing", null ]
+      [ "Testing with the supplied test image (S210 only)", "a00042.html#ant_examples_dfu_testing", null ]
     ] ],
     [ "Experimental: Background Scanning", "a00043.html", [
       [ "Description", "a00043.html#ant_examples_scanning_description", null ],
@@ -37,5 +40,11 @@ var a00041 =
       [ "Message format for computer or mobile applications", "a00050.html#ant_examples_relay_mobile_format", null ],
       [ "Setup", "a00050.html#ant_examples_relay_setup", null ],
       [ "Testing", "a00050.html#ant_examples_relay_testing", null ]
+    ] ],
+    [ "Experimental: Auto Shared Channels", "a00051.html", [
+      [ "Description", "a00051.html#ant_examples_asc_description", null ],
+      [ "Message format", "a00051.html#ant_examples_asc_message_format", null ],
+      [ "Setup", "a00051.html#ant_examples_asc_setup", null ],
+      [ "Testing", "a00051.html#ant_examples_asc_testing", null ]
     ] ]
 ];

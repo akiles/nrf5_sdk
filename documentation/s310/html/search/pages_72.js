@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['running_20speed_20and_20cadence_20application',['Running Speed and Cadence Application',['../a00047.html',1,'examples_ble_peripheral']]],
+  ['running_20speed_20and_20cadence_20application',['Running Speed and Cadence Application',['../a00048.html',1,'examples_ble_peripheral']]],
   ['running_20a_20first_20example',['Running a first example',['../a00010.html',1,'nrf51_getting_started']]],
   ['running_20examples_20that_20use_20a_20softdevice',['Running examples that use a SoftDevice',['../a00009.html',1,'nrf51_getting_started']]],
   ['record_20access_20control_20point',['Record Access Control Point',['../a00068.html',1,'lib_ble']]],

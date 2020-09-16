@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Defines</title>
+<title>nRF51 SDK - S310 SoftDevice: Database Discovery</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,53 +97,44 @@ $(document).ready(function(){initNavTree('a00787.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Defines<div class="ingroups"><a class="el" href="a00786.html">Database Discovery</a></div></div>  </div>
+<div class="title">Database Discovery<div class="ingroups"><a class="el" href="a00827.html">nRF51 SDK</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Database discovery module.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaf1f2ccd6a3638aab1ef6a6a68866fe71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00787.html#gaf1f2ccd6a3638aab1ef6a6a68866fe71">BLE_DB_DISCOVERY_MAX_SRV</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:gaf1f2ccd6a3638aab1ef6a6a68866fe71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae17633bce497fe1c216826ed096ababd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00787.html#gae17633bce497fe1c216826ed096ababd">BLE_DB_DISCOVERY_MAX_CHAR_PER_SRV</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:gae17633bce497fe1c216826ed096ababd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00788"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00788.html">Defines</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00789"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00789.html">Enumerations</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00790"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00790.html">Structures</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00791"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00791.html">Types</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00792"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00792.html">Functions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gae17633bce497fe1c216826ed096ababd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_DB_DISCOVERY_MAX_CHAR_PER_SRV&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Maximum number of characteristics per service supported by this module. </p>
-
+<p>Database discovery module. </p>
+<p>This module contains the APIs and types exposed by the DB Discovery module. These APIs and types can be used by the application to perform discovery of a service and its characteristics at the peer server. This module can also be used to discover the desired services in multiple remote devices. A typical use of this library is described in the figure below. </p>
+<div class="image">
+<img src="db_discovery.jpg" alt="db_discovery.jpg"/>
 </div>
-</div>
-<a class="anchor" id="gaf1f2ccd6a3638aab1ef6a6a68866fe71"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_DB_DISCOVERY_MAX_SRV&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Maximum number of services supported by this module. This also indicates the maximum number of users allowed to be registered to this module. (one user per service). </p>
-
-</div>
-</div>
+<dl class="section warning"><dt>Warning</dt><dd>The maximum number of characteristics per service that can be discovered by this module is indicated by the value of <a class="el" href="a00788.html#gae17633bce497fe1c216826ed096ababd">BLE_DB_DISCOVERY_MAX_CHAR_PER_SRV</a>. If the peer has more than the supported number of characteristics, then the first found will be discovered and any further characteristics will be ignored. No descriptors other than Client Characteristic Configuration Descriptors will be searched for at the peer.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Presently only one instance of a Primary Service can be discovered by this module. If there are multiple instances of the service at the peer, only the first instance of it at the peer is fetched and returned to the application.</dd>
+<dd>
+The application must propagate BLE stack events to this module by calling <a class="el" href="a00792.html#ga60575c004188a08a78063884356bf15f" title="Function for handling the Application&#39;s BLE Stack events.">ble_db_discovery_on_ble_evt()</a>. </dd></dl>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:37 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:49 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: General Events</title>
+<title>nRF51 SDK - S310 SoftDevice: Device Manager Events</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,58 +97,37 @@ $(document).ready(function(){initNavTree('a00777.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">General Events<div class="ingroups"><a class="el" href="a00776.html">Device Manager Events</a></div></div>  </div>
+<div class="title">Device Manager Events<div class="ingroups"><a class="el" href="a00775.html">Device Manager</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>General or miscellaneous events.  
+<p>This section describes the device manager events that are notified to the application.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gad038033184e5745ddd4fef4d52bfcea4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00777.html#gad038033184e5745ddd4fef4d52bfcea4">DM_EVT_RFU</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:gad038033184e5745ddd4fef4d52bfcea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14b9e8a4e4dd9d6223d414bf25762f7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00777.html#ga14b9e8a4e4dd9d6223d414bf25762f7b">DM_EVT_ERROR</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga14b9e8a4e4dd9d6223d414bf25762f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00778"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html">General Events</a></td></tr>
+<tr class="memdesc:a00778"><td class="mdescLeft">&#160;</td><td class="mdescRight">General or miscellaneous events. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00779"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00779.html">Link Status Events</a></td></tr>
+<tr class="memdesc:a00779"><td class="mdescLeft">&#160;</td><td class="mdescRight">Link Status Events. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00780"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00780.html">Context Management Events</a></td></tr>
+<tr class="memdesc:a00780"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context Management Events. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>General or miscellaneous events. </p>
-<p>This category of events are general events not pertaining to a peer or context. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga14b9e8a4e4dd9d6223d414bf25762f7b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_ERROR&#160;&#160;&#160;0x01</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Device Manager Event Error. </p>
-
-</div>
-</div>
-<a class="anchor" id="gad038033184e5745ddd4fef4d52bfcea4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_RFU&#160;&#160;&#160;0x00</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Reserved for future use, is never notified. </p>
-
-</div>
-</div>
+<p>This section describes the device manager events that are notified to the application. </p>
+<p>The Device Manager notifies the application of various asynchronous events using the asynchronous event notification callback. All events has been categorized into: a. General. b. Link Status. c. Context Management.</p>
+<p>In the callback, these events are notified along with handle that uniquely identifies: application instance, active instance (if applicable), device instance bonding instance, (if applicable) and service instance. Not all events are pertaining to an active connection, for example a context deletion event could occur even if the peer is not connected. Also, general category of events may not be pertaining to any specific peer. See also <a class="el" href="a00781.html#ga1d3589567c4e17c3d32ab53dcedf3fd2">dm_event_cb_t</a> and <a class="el" href="a00783.html#ga62366984b8a674d9cadb48a8da2d3694">dm_register</a>. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:37 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:49 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

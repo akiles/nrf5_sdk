@@ -351,7 +351,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define>  NRF51 ANT_STACK_SUPPORT_REQD S210 SOFTDEVICE_PRESENT BOARD_PCA10028</Define>
+              <Define> NRF51 ANT_STACK_SUPPORT_REQD S210 SOFTDEVICE_PRESENT BOARD_PCA10028</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\include;..\..\..\..\..\..\components\toolchain;..\..\;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\softdevice\s210\headers;..\..\..\..\..\bsp</IncludePath>
             </VariousControls>
@@ -367,7 +367,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>  NRF51 ANT_STACK_SUPPORT_REQD S210 SOFTDEVICE_PRESENT BOARD_PCA10028</Define>
+              <Define> NRF51 ANT_STACK_SUPPORT_REQD S210 SOFTDEVICE_PRESENT BOARD_PCA10028</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

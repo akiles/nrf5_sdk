@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: GATT Write operations</title>
+<title>nRF51 SDK - S310 SoftDevice: GATT Timeout sources</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,102 +99,27 @@ $(document).ready(function(){initNavTree('a00653.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GATT Write operations<div class="ingroups"><a class="el" href="a00841.html">Defines</a></div></div>  </div>
+<div class="title">GATT Timeout sources<div class="ingroups"><a class="el" href="a00843.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga608ba17cf0f6dd37f68bcca0f5bcc6c6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#ga608ba17cf0f6dd37f68bcca0f5bcc6c6">BLE_GATT_OP_INVALID</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:ga608ba17cf0f6dd37f68bcca0f5bcc6c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga07b9cb136bbd9c0b85d0fff54dbe0103"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#ga07b9cb136bbd9c0b85d0fff54dbe0103">BLE_GATT_OP_WRITE_REQ</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga07b9cb136bbd9c0b85d0fff54dbe0103"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac70b760454146bc15a51a3e2bbdccf9a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#gac70b760454146bc15a51a3e2bbdccf9a">BLE_GATT_OP_WRITE_CMD</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:gac70b760454146bc15a51a3e2bbdccf9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9a87ace6849f8d15ba3117a5c50ec481"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#ga9a87ace6849f8d15ba3117a5c50ec481">BLE_GATT_OP_SIGN_WRITE_CMD</a>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:ga9a87ace6849f8d15ba3117a5c50ec481"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2a14ca8931148c5b97289f12acbb2a02"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#ga2a14ca8931148c5b97289f12acbb2a02">BLE_GATT_OP_PREP_WRITE_REQ</a>&#160;&#160;&#160;0x04</td></tr>
-<tr class="separator:ga2a14ca8931148c5b97289f12acbb2a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b4e1d78a5c63acda9f936be6293b513"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#ga7b4e1d78a5c63acda9f936be6293b513">BLE_GATT_OP_EXEC_WRITE_REQ</a>&#160;&#160;&#160;0x05</td></tr>
-<tr class="separator:ga7b4e1d78a5c63acda9f936be6293b513"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa6077c1bbc03fb3b6335d5003330ad75"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#gaa6077c1bbc03fb3b6335d5003330ad75">BLE_GATT_TIMEOUT_SRC_PROTOCOL</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gaa6077c1bbc03fb3b6335d5003330ad75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga7b4e1d78a5c63acda9f936be6293b513"></a>
+<a class="anchor" id="gaa6077c1bbc03fb3b6335d5003330ad75"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATT_OP_EXEC_WRITE_REQ&#160;&#160;&#160;0x05</td>
+          <td class="memname">#define BLE_GATT_TIMEOUT_SRC_PROTOCOL&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Execute Write Request. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga608ba17cf0f6dd37f68bcca0f5bcc6c6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GATT_OP_INVALID&#160;&#160;&#160;0x00</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Invalid Operation. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga2a14ca8931148c5b97289f12acbb2a02"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GATT_OP_PREP_WRITE_REQ&#160;&#160;&#160;0x04</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Prepare Write Request. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga9a87ace6849f8d15ba3117a5c50ec481"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GATT_OP_SIGN_WRITE_CMD&#160;&#160;&#160;0x03</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Signed Write Command. </p>
-
-</div>
-</div>
-<a class="anchor" id="gac70b760454146bc15a51a3e2bbdccf9a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GATT_OP_WRITE_CMD&#160;&#160;&#160;0x02</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Write Command. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga07b9cb136bbd9c0b85d0fff54dbe0103"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GATT_OP_WRITE_REQ&#160;&#160;&#160;0x01</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Write Request. </p>
+<p>ATT Protocol timeout. </p>
 
 </div>
 </div>
@@ -203,7 +128,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:33 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:45 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

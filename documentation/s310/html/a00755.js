@@ -1,49 +1,56 @@
 var a00755 =
 [
-    [ "Cycling Speed and Cadence Service feature bits", "a00756.html", "a00756" ],
-    [ "ble_cscs_evt_t", "a00133.html", [
-      [ "evt_type", "a00133.html#ac43ceebccaf7aab507697ac1738e8b43", null ]
+    [ "ble_bps_evt_t", "a00123.html", [
+      [ "evt_type", "a00123.html#a83328e50ff25cb6d23ccd0922452590d", null ]
     ] ],
-    [ "ble_cscs_init_t", "a00134.html", [
-      [ "csc_ctrlpt_attr_md", "a00134.html#a7abd30a1cf1bd5370034ecd106770649", null ],
-      [ "csc_feature_attr_md", "a00134.html#a923061b93c1ccd5084a26a3473fe017f", null ],
-      [ "csc_meas_attr_md", "a00134.html#ab5e96f9cc92d4606148bdcbab1f267f8", null ],
-      [ "csc_sensor_loc_attr_md", "a00134.html#a8408f547469c37daf6f400b0e29ea728", null ],
-      [ "ctrlpt_evt_handler", "a00134.html#ae231dc1f9d43bda606fa4b727caf3884", null ],
-      [ "ctrplt_supported_functions", "a00134.html#a15059621d6cb93de8b90767f76adc6e7", null ],
-      [ "error_handler", "a00134.html#a4396c5044bb0f5e1220c29a87b6ca54d", null ],
-      [ "evt_handler", "a00134.html#a9f766010d9a6bc81bb6797c1b4d5daf6", null ],
-      [ "feature", "a00134.html#ab63bfc8e6831331b8094ddff39f9f450", null ],
-      [ "list_supported_locations", "a00134.html#a373d7b18dfbd5752d3289df0ac9c2c0b", null ],
-      [ "sensor_location", "a00134.html#a3d866076247845450b80114da2d67b48", null ],
-      [ "size_list_supported_locations", "a00134.html#ac680f9557c992b9e2443b2fec6c022d1", null ]
+    [ "ieee_float16_t", "a00314.html", [
+      [ "exponent", "a00314.html#a42d83a992fc160d167482ec70b58d17c", null ],
+      [ "mantissa", "a00314.html#a4668d8cc50fe654da1cfff425c16c5c0", null ]
     ] ],
-    [ "ble_cscs_s", "a00136.html", [
-      [ "conn_handle", "a00136.html#a84ba1f5c9a2f30359b12cc4dcbda3478", null ],
-      [ "ctrl_pt", "a00136.html#a90f150d8ecb3b79596f1ec3807867f1a", null ],
-      [ "evt_handler", "a00136.html#ac2e6ecdcdab44250a58bebd85104143b", null ],
-      [ "feature", "a00136.html#a32ce63e283663bde451653a25fc5b4bd", null ],
-      [ "feature_handles", "a00136.html#a967fca5b0492cbf671183eed800fcd3a", null ],
-      [ "meas_handles", "a00136.html#a9596e5fc4db125abaae55fc329982dfd", null ],
-      [ "sensor_loc_handles", "a00136.html#a3572c357aed7775240aee4a217ddaf60", null ],
-      [ "service_handle", "a00136.html#a3850255dd1cc2f89b7086771201eb8e0", null ]
+    [ "ble_bps_init_t", "a00124.html", [
+      [ "bps_feature_attr_md", "a00124.html#aa811a90c7dd0b8bea4434fe2ef2c4ede", null ],
+      [ "bps_meas_attr_md", "a00124.html#a977afca322fd5a03271e0fa35300a164", null ],
+      [ "evt_handler", "a00124.html#a22943d0794c7a162398ddb54872d1751", null ],
+      [ "feature", "a00124.html#a811bba9e34ca00cad260b8d50aadbe5f", null ]
     ] ],
-    [ "ble_cscs_meas_s", "a00135.html", [
-      [ "cumulative_crank_revs", "a00135.html#abaf971426cea9d234838ad3896a5ebb0", null ],
-      [ "cumulative_wheel_revs", "a00135.html#a28e443636699abf5ac97850f4fb9eb39", null ],
-      [ "is_crank_rev_data_present", "a00135.html#a6750c3a77be5be56ef6e563164b85a4a", null ],
-      [ "is_wheel_rev_data_present", "a00135.html#ae78a3f62b14426e5a3fcc65d5cc54d7c", null ],
-      [ "last_crank_event_time", "a00135.html#a5ddda2de7f892024636795e85b9ba914", null ],
-      [ "last_wheel_event_time", "a00135.html#ab1b12075f983b9149eacf65f318f0482", null ]
+    [ "ble_bps_s", "a00126.html", [
+      [ "conn_handle", "a00126.html#acb6ea6f96806c80017f6d80a65fa1c40", null ],
+      [ "evt_handler", "a00126.html#ad503c598af64ae0973fcbd69c2564f6c", null ],
+      [ "feature", "a00126.html#ab6a6c9882bfb4ca35a22b2b46e6cc342", null ],
+      [ "feature_handles", "a00126.html#ad7b6cace6c499b77b40be59b7d9ed843", null ],
+      [ "meas_handles", "a00126.html#ab61b1c5af5765ac4f24f617a24a81cd0", null ],
+      [ "service_handle", "a00126.html#a08ca745c921f74e622b3226b74a5453a", null ]
     ] ],
-    [ "ble_cscs_evt_handler_t", "a00755.html#ga10281fbc8ffe1192d6047d3e9fa0ddc0", null ],
-    [ "ble_cscs_meas_t", "a00755.html#ga48ac37bca68e48cda3c1ef093398c9c6", null ],
-    [ "ble_cscs_t", "a00755.html#ga8fb5ed5d9c117d85db4c59a4470bb627", null ],
-    [ "ble_cscs_evt_type_t", "a00755.html#gabd8c3101d93c08174d2e0d2085e2f02b", [
-      [ "BLE_CSCS_EVT_NOTIFICATION_ENABLED", "a00755.html#ggabd8c3101d93c08174d2e0d2085e2f02ba0a1409a9c76ef90b22cd76e03fde4b50", null ],
-      [ "BLE_CSCS_EVT_NOTIFICATION_DISABLED", "a00755.html#ggabd8c3101d93c08174d2e0d2085e2f02ba47805a8eed422166cb4d8415b91d13ee", null ]
+    [ "ble_bps_meas_s", "a00125.html", [
+      [ "blood_pressure_diastolic", "a00125.html#aed7e0a29d6cda87a84a69f4f7551fb6c", null ],
+      [ "blood_pressure_systolic", "a00125.html#ab097c85436eecc592213cdb75435f596", null ],
+      [ "blood_pressure_units_in_kpa", "a00125.html#a3d4f46ef4a031f2c849bba6ac9d68ba3", null ],
+      [ "mean_arterial_pressure", "a00125.html#a2455e564b8569f3f3bc999420efa7c1d", null ],
+      [ "measurement_status", "a00125.html#aa825f66cc38338e2f8bb4f767cdc8805", null ],
+      [ "measurement_status_present", "a00125.html#a80874044508391d1569ff1c476a4b5a7", null ],
+      [ "pulse_rate", "a00125.html#a4cec6cfcf650361edada4efe2d612461", null ],
+      [ "pulse_rate_present", "a00125.html#adcd3739c6e00a92c9c9026894e4248b8", null ],
+      [ "time_stamp", "a00125.html#a5724947dd197246dea1db93935a24b32", null ],
+      [ "time_stamp_present", "a00125.html#a5ed42a9cdaf140e3e18dc44e1b1baa5b", null ],
+      [ "user_id", "a00125.html#a68b822db90d51c550cddfb74fec7b1a7", null ],
+      [ "user_id_present", "a00125.html#a48e9ed959366ea1e7c7c8bb284a01979", null ]
     ] ],
-    [ "ble_cscs_init", "a00755.html#ga12394192a629326cb7f4cab0b59dff1e", null ],
-    [ "ble_cscs_measurement_send", "a00755.html#ga445c4e7578c68607b1573e175c20323f", null ],
-    [ "ble_cscs_on_ble_evt", "a00755.html#gabcc0bd0d90b6d40220468349ba190b98", null ]
+    [ "BLE_BPS_FEATURE_BODY_MOVEMENT_BIT", "a00755.html#gab290c8fad6602966bdf90d503234c1d4", null ],
+    [ "BLE_BPS_FEATURE_CUFF_FIT_BIT", "a00755.html#gad99e5cdbef5e342fc386a0fe2fda3dbb", null ],
+    [ "BLE_BPS_FEATURE_IRREGULAR_PULSE_BIT", "a00755.html#gab9c335e57d829d3025d24412c630ec01", null ],
+    [ "BLE_BPS_FEATURE_MEASUREMENT_POSITION_BIT", "a00755.html#ga0a92ff47d40fe0c771b52bc3c40c2854", null ],
+    [ "BLE_BPS_FEATURE_MULTIPLE_BOND_BIT", "a00755.html#ga4e7f65094b9653a90bbfbc9c56176d76", null ],
+    [ "BLE_BPS_FEATURE_PULSE_RATE_RANGE_BIT", "a00755.html#gadd2fb490c4220a74a6b3654b7c424500", null ],
+    [ "ble_bps_evt_handler_t", "a00755.html#ga4c7199796f540fc4ea76d6eb9cd98809", null ],
+    [ "ble_bps_meas_t", "a00755.html#ga806d743979c29aa0326b9b155ae920fd", null ],
+    [ "ble_bps_t", "a00755.html#ga242d78f65ee0028e8b2e87a954811158", null ],
+    [ "ble_bps_evt_type_t", "a00755.html#ga98f1cefcd43052be0eede287994762e6", [
+      [ "BLE_BPS_EVT_INDICATION_ENABLED", "a00755.html#gga98f1cefcd43052be0eede287994762e6a4ea1567592db55227fffc3d07af1ba09", null ],
+      [ "BLE_BPS_EVT_INDICATION_DISABLED", "a00755.html#gga98f1cefcd43052be0eede287994762e6a26c6a093dd2ab03e8a1a9f31cb3783ba", null ],
+      [ "BLE_BPS_EVT_INDICATION_CONFIRMED", "a00755.html#gga98f1cefcd43052be0eede287994762e6afbd5349a29d34a241d1380a7d6e28668", null ]
+    ] ],
+    [ "ble_bps_init", "a00755.html#gaefd86b5ffa856f1d3b22a11939ea318b", null ],
+    [ "ble_bps_is_indication_enabled", "a00755.html#gab2de420367180bd1762ea7dc7e269fee", null ],
+    [ "ble_bps_measurement_send", "a00755.html#gafa33eb35e243d0fca55b44ac136f1f68", null ],
+    [ "ble_bps_on_ble_evt", "a00755.html#gaa5b69f0e2e6a3063254e198ca426c39a", null ]
 ];

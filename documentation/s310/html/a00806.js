@@ -1,6 +1,5 @@
 var a00806 =
 [
-    [ "ble_hrs_c_hrm_notif_enable", "a00806.html#gab4bcaf5864ee2e17bc0abf2ae585a68b", null ],
-    [ "ble_hrs_c_init", "a00806.html#ga9ec622429b01bc15e65fbcd3613a8b8b", null ],
-    [ "ble_hrs_c_on_ble_evt", "a00806.html#ga062e0829a2ebd211d4e51a23c520ab1f", null ]
+    [ "ble_hrs_c_evt_handler_t", "a00806.html#ga877f2faf397dff36652766f1a6c31b85", null ],
+    [ "ble_hrs_c_t", "a00806.html#gaff74b227fdcb0906d5333821b4d06217", null ]
 ];

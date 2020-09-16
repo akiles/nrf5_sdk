@@ -1,6 +1,7 @@
 var a00682 =
 [
-    [ "Interrupt-driven Event Retrieval", "a00683.html", null ],
-    [ "Thread Mode Event Retrieval", "a00684.html", null ],
-    [ "App Buffer Management", "a00685.html", null ]
+    [ "Defines", "a00857.html", "a00857" ],
+    [ "Enumerations", "a00858.html", "a00858" ],
+    [ "Types", "a00859.html", "a00859" ],
+    [ "Functions", "a00860.html", "a00860" ]
 ];

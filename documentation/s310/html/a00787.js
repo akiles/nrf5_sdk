@@ -1,5 +1,8 @@
 var a00787 =
 [
-    [ "BLE_DB_DISCOVERY_MAX_CHAR_PER_SRV", "a00787.html#gae17633bce497fe1c216826ed096ababd", null ],
-    [ "BLE_DB_DISCOVERY_MAX_SRV", "a00787.html#gaf1f2ccd6a3638aab1ef6a6a68866fe71", null ]
+    [ "Defines", "a00788.html", "a00788" ],
+    [ "Enumerations", "a00789.html", "a00789" ],
+    [ "Structures", "a00790.html", "a00790" ],
+    [ "Types", "a00791.html", "a00791" ],
+    [ "Functions", "a00792.html", "a00792" ]
 ];

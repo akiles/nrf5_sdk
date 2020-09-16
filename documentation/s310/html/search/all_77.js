@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['wakeon_5frf_5factivity_5fall',['WAKEON_RF_ACTIVITY_ALL',['../a00627.html#ga25fc3340b09bb5c094b8b444610efef4',1,'ant_parameters.h']]],
-  ['wakeon_5frf_5factivity_5fnone',['WAKEON_RF_ACTIVITY_NONE',['../a00627.html#ga601bf6ef6847a15d0541bcbade881964',1,'ant_parameters.h']]],
-  ['wakeon_5frf_5factivity_5frx',['WAKEON_RF_ACTIVITY_RX',['../a00627.html#ga9b6dbdd6e7e99c1a2200f0eee3e444ee',1,'ant_parameters.h']]],
-  ['wakeon_5frf_5factivity_5ftx',['WAKEON_RF_ACTIVITY_TX',['../a00627.html#ga810c9fdc8fc28d9f0bea65cbd420027f',1,'ant_parameters.h']]],
+  ['wakeon_5frf_5factivity_5fall',['WAKEON_RF_ACTIVITY_ALL',['../a00628.html#ga25fc3340b09bb5c094b8b444610efef4',1,'ant_parameters.h']]],
+  ['wakeon_5frf_5factivity_5fnone',['WAKEON_RF_ACTIVITY_NONE',['../a00628.html#ga601bf6ef6847a15d0541bcbade881964',1,'ant_parameters.h']]],
+  ['wakeon_5frf_5factivity_5frx',['WAKEON_RF_ACTIVITY_RX',['../a00628.html#ga9b6dbdd6e7e99c1a2200f0eee3e444ee',1,'ant_parameters.h']]],
+  ['wakeon_5frf_5factivity_5ftx',['WAKEON_RF_ACTIVITY_TX',['../a00628.html#ga810c9fdc8fc28d9f0bea65cbd420027f',1,'ant_parameters.h']]],
   ['window',['window',['../a00182.html#a89a91dffe2c1b7edc26567c932a491b7',1,'ble_gap_scan_params_t']]],
   ['wr_5fauth',['wr_auth',['../a00209.html#affcd971025cbaa9525c2ed9ff95d913c',1,'ble_gatts_attr_md_t']]],
   ['wr_5faux',['wr_aux',['../a00188.html#a0f36b2c312c08c22853231a3bc8b950c',1,'ble_gatt_char_ext_props_t']]],

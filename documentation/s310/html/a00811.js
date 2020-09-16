@@ -1,5 +1,6 @@
 var a00811 =
 [
-    [ "Fresh Bonding & Context Store", "a00812.html", "a00812" ],
-    [ "Link Encryption with Bonded Device", "a00813.html", "a00813" ]
+    [ "Security Set-Up & Status Related", "a00812.html", "a00812" ],
+    [ "Device Manager Context Management MSCs", "a00815.html", "a00815" ],
+    [ "Initialization and Setup", "a00817.html", null ]
 ];

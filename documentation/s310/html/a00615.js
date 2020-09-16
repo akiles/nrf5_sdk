@@ -1,7 +1,6 @@
 var a00615 =
 [
-    [ "APP_ERROR_CHECK", "a00615.html#ga82d00a810dcea7dcc6af469461fb254c", null ],
-    [ "APP_ERROR_CHECK_BOOL", "a00615.html#ga9e67d9f4978caa34040b31f8fb9d4f58", null ],
-    [ "APP_ERROR_HANDLER", "a00615.html#gace6d059863761677dae5a6b1456a34ba", null ],
-    [ "app_error_handler", "a00615.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf", null ]
+    [ "app_trace_log", "a00615.html#ga731dcef3cb5915b230fd9f55067f69bb", null ],
+    [ "app_trace_dump", "a00615.html#ga48cc2844a947c20ae7f00762dc69417e", null ],
+    [ "app_trace_init", "a00615.html#gae7a95b63891d69936ff23995fdd9fa53", null ]
 ];

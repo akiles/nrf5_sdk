@@ -1,5 +1,4 @@
 var a00861 =
 [
-    [ "nrf_clock_lfclksrc_t", "a00861.html#gabfecdd0b916a4022bd5688d4f842c473", null ],
-    [ "softdevice_assertion_handler_t", "a00861.html#gaddfb569a9b86648e642ed0d7e3a83034", null ]
+    [ "SDM_SVC_BASE", "a00861.html#gaa620a383a50dd98d8319832cedc20a19", null ]
 ];

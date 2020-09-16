@@ -1,8 +1,7 @@
 var a00677 =
 [
-    [ "SoftDevice Manager Error Codes", "a00678.html", "a00678" ],
-    [ "Defines", "a00859.html", "a00859" ],
-    [ "Enumerations", "a00860.html", "a00860" ],
-    [ "Types", "a00861.html", "a00861" ],
-    [ "Functions", "a00862.html", "a00862" ]
+    [ "NRF_ERROR_BASE_NUM", "a00677.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8", null ],
+    [ "NRF_ERROR_SDM_BASE_NUM", "a00677.html#ga42709115c27b1a355561ae7060a6232f", null ],
+    [ "NRF_ERROR_SOC_BASE_NUM", "a00677.html#ga27c2a0b7271420a6c3f7b186543ee227", null ],
+    [ "NRF_ERROR_STK_BASE_NUM", "a00677.html#gaf090abe440a1752161646079114acaaf", null ]
 ];

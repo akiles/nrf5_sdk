@@ -126,7 +126,7 @@ Figure 1: Bootloader/DFU Flash layout overview.</div></div>
 <p>In the Bootloader/DFU project, the writing of the UICR.BOOTLOADERADDR is linked into the HEX file and will be written automatically when flashing the bootloader with <code>nrfjprog.exe</code>, see <a class="el" href="a00054.html#dfu_bootloader_keil_flashing_sec">Bootloader/DFU Flashing</a>.<br/>
 </p>
 <p>This is ensured by the following code in <code>bootloader_util_arm.c:</code> </p>
-<div class="fragment"><div class="line">uint32_t m_uicr_bootloader_start_address __attribute__((at(<a class="code" href="a00746.html#gae4ec3580aab0657ce2c1212adec2c0b8">NRF_UICR_BOOT_START_ADDRESS</a>))) = <a class="code" href="a00746.html#ga86b4872454e09cda5b4156b2f9f5f689">BOOTLOADER_REGION_START</a>;</div>
+<div class="fragment"><div class="line">uint32_t m_uicr_bootloader_start_address __attribute__((at(<a class="code" href="a00747.html#gae4ec3580aab0657ce2c1212adec2c0b8">NRF_UICR_BOOT_START_ADDRESS</a>))) = <a class="code" href="a00747.html#ga86b4872454e09cda5b4156b2f9f5f689">BOOTLOADER_REGION_START</a>;</div>
 </div><!-- fragment --><p>BOOTLOADER_REGION_START must point to the correct location of the bootloader in the flash. The location in this example is <code>0x0003C000</code>.</p>
 <h1><a class="anchor" id="dfu_bootloader_keil_flashing_sec"></a>
 Bootloader/DFU Flashing</h1>
@@ -183,8 +183,8 @@ Figure 4: Bootloader/DFU Start address setting in Keil.</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00049.html">BLE Bootloader/DFU</a></li>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:32 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00050.html">BLE Bootloader/DFU</a></li>
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:44 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

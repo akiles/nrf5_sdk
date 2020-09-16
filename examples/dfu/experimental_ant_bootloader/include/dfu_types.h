@@ -111,6 +111,7 @@ typedef struct
     uint32_t            sd_image_size;                                                          /** Size of the SoftDevice image to be transferred. Zero if no SoftDevice image will be transfered. */
     uint32_t            bl_image_size;                                                          /** Size of the Bootloader image to be transferred. Zero if no Bootloader image will be transfered. */
     uint32_t            app_image_size;                                                         /** Size of the application image to be transmitted. Zero if no Bootloader image will be transfered. */
+    uint32_t            info_bytes_size;
 } dfu_start_packet_t;
 
 typedef struct

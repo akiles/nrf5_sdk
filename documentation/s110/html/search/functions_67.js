@@ -26,6 +26,7 @@ var searchData=
   ['gzp_5finit',['gzp_init',['../a00957.html#gae0c59c904a0ea56323274885ac3da45a',1,'nrf_gzp.h']]],
   ['gzp_5fpairing_5fenable',['gzp_pairing_enable',['../a00957.html#gaa00479ce99d1b3f598e02562b1bc5f20',1,'nrf_gzp.h']]],
   ['gzp_5frandom_5fnumbers_5fgenerate',['gzp_random_numbers_generate',['../a00957.html#ga739fa1981fe1606f79dfbc305652e50c',1,'nrf_gzp.h']]],
+  ['gzp_5fset_5fhost_5fid',['gzp_set_host_id',['../a00957.html#ga716af0575504167733f3b67da3c24511',1,'nrf_gzp.h']]],
   ['gzp_5fupdate_5fradio_5fparams',['gzp_update_radio_params',['../a00957.html#ga6c2fd95c5a3c45e1a3bceebf72f5c990',1,'nrf_gzp.h']]],
   ['gzp_5fvalidate_5fid',['gzp_validate_id',['../a00957.html#ga288cb74335df9d0f81f29b632a27c254',1,'nrf_gzp.h']]],
   ['gzp_5fxor_5fcipher',['gzp_xor_cipher',['../a00957.html#ga2b720c2fcfa4a0df48da14d88e58fe67',1,'nrf_gzp.h']]]

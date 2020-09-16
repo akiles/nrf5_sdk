@@ -21,6 +21,7 @@ var a00972 =
       [ "BLE_IAS_C_EVT_DISCONN_COMPLETE", "a00972.html#gga1363ef6107e67c26fd0ace31f6afa7cdac1eac62d545a853750a6b3f5a8ceb3f5", null ]
     ] ],
     [ "ble_ias_c_init", "a00972.html#gaf0c1bf8a8837220f03442c18448e50ad", null ],
+    [ "ble_ias_c_is_ias_discovered", "a00972.html#gae637c4c4a92e401ddfdd382861c36767", null ],
     [ "ble_ias_c_on_ble_evt", "a00972.html#ga7f98bafec49ce5bf78e444e46c628a1f", null ],
     [ "ble_ias_c_send_alert_level", "a00972.html#gab37ce69f8533cd510dc5620effba4409", null ]
 ];

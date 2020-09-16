@@ -1,14 +1,13 @@
 var a00843 =
 [
-    [ "BLE_GATTC_SVCS", "a00843.html#ga1861d83550e6998efd13d44b09ec1ba9", [
-      [ "SD_BLE_GATTC_PRIMARY_SERVICES_DISCOVER", "a00843.html#gga1861d83550e6998efd13d44b09ec1ba9a6362074e02b0a5e960257ceaa0886f51", null ],
-      [ "SD_BLE_GATTC_RELATIONSHIPS_DISCOVER", "a00843.html#gga1861d83550e6998efd13d44b09ec1ba9a84e92548312cd9db93e3b6943ce83e65", null ],
-      [ "SD_BLE_GATTC_CHARACTERISTICS_DISCOVER", "a00843.html#gga1861d83550e6998efd13d44b09ec1ba9aa07c8e5ddc5a267dd9561787695d48ee", null ],
-      [ "SD_BLE_GATTC_DESCRIPTORS_DISCOVER", "a00843.html#gga1861d83550e6998efd13d44b09ec1ba9acbf16ad32f9408da33a6fdb9c969f455", null ],
-      [ "SD_BLE_GATTC_CHAR_VALUE_BY_UUID_READ", "a00843.html#gga1861d83550e6998efd13d44b09ec1ba9aba39e3ced819d191f10a368eb4d28595", null ],
-      [ "SD_BLE_GATTC_READ", "a00843.html#gga1861d83550e6998efd13d44b09ec1ba9a8cd119e7dac7c5a94a6b9b209cd072f9", null ],
-      [ "SD_BLE_GATTC_CHAR_VALUES_READ", "a00843.html#gga1861d83550e6998efd13d44b09ec1ba9aefadfe6aebd0e0f3111d9514e3387c90", null ],
-      [ "SD_BLE_GATTC_WRITE", "a00843.html#gga1861d83550e6998efd13d44b09ec1ba9ae34d35052cd94de5fd4e6c5263d898ab", null ],
-      [ "SD_BLE_GATTC_HV_CONFIRM", "a00843.html#gga1861d83550e6998efd13d44b09ec1ba9a3bb17168d2477e2fce1b66481ebcfb02", null ]
-    ] ]
+    [ "GATT Timeout sources", "a00653.html", "a00653" ],
+    [ "GATT Write operations", "a00654.html", "a00654" ],
+    [ "GATT Execute Write flags", "a00655.html", null ],
+    [ "GATT Handle Value operations", "a00656.html", "a00656" ],
+    [ "GATT Status Codes", "a00657.html", "a00657" ],
+    [ "Characteristic Presentation Formats", "a00658.html", "a00658" ],
+    [ "GATT Bluetooth Namespaces", "a00659.html", null ],
+    [ "BLE_GATT_HANDLE_INVALID", "a00843.html#ga755613d0f9d0979be50a3814c1436ab9", null ],
+    [ "GATT_MTU_SIZE_DEFAULT", "a00843.html#gaf0a71c5d9dd3b12235312bd40fd2175e", null ],
+    [ "GATT_RX_MTU", "a00843.html#ga69b579663f889c0ce87a8931b51048b4", null ]
 ];

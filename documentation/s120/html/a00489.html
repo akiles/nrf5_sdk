@@ -97,7 +97,8 @@ $(document).ready(function(){initNavTree('a00489.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">GPIOTE abstraction<div class="ingroups"><a class="el" href="a00737.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
@@ -126,6 +127,18 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:gab280bbb7269ab98a97e7b47d906ef9aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial output value for GPIOTE channel enumerator.  <a href="a00489.html#gab280bbb7269ab98a97e7b47d906ef9aa">More...</a><br/></td></tr>
 <tr class="separator:gab280bbb7269ab98a97e7b47d906ef9aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gab8667667ddf3bdca874df3add96fb622"><td class="memItemLeft" align="right" valign="top">static __INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00489.html#gab8667667ddf3bdca874df3add96fb622">nrf_gpiote_task_config</a> (uint32_t channel_number, uint32_t pin_number, <a class="el" href="a00489.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a> polarity, <a class="el" href="a00489.html#gab280bbb7269ab98a97e7b47d906ef9aa">nrf_gpiote_outinit_t</a> initial_value)</td></tr>
+<tr class="memdesc:gab8667667ddf3bdca874df3add96fb622"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for configuring GPIOTE channel as output, setting the properly desired output level.  <a href="#gab8667667ddf3bdca874df3add96fb622">More...</a><br/></td></tr>
+<tr class="separator:gab8667667ddf3bdca874df3add96fb622"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac04dde3ea740f163fa2ac032bf56152d"><td class="memItemLeft" align="right" valign="top">static __INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00489.html#gac04dde3ea740f163fa2ac032bf56152d">nrf_gpiote_event_config</a> (uint32_t channel_number, uint32_t pin_number, <a class="el" href="a00489.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a> polarity)</td></tr>
+<tr class="memdesc:gac04dde3ea740f163fa2ac032bf56152d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for configuring GPIOTE channel as input, automatically clearing an event that appears in some cases under configuration.  <a href="#gac04dde3ea740f163fa2ac032bf56152d">More...</a><br/></td></tr>
+<tr class="separator:gac04dde3ea740f163fa2ac032bf56152d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae721c9782910048854960a6db18ab2ef"><td class="memItemLeft" align="right" valign="top">static __INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00489.html#gae721c9782910048854960a6db18ab2ef">nrf_gpiote_unconfig</a> (uint32_t channel_number)</td></tr>
+<tr class="memdesc:gae721c9782910048854960a6db18ab2ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for unconfiguring GPIOTE channel.  <a href="#gae721c9782910048854960a6db18ab2ef">More...</a><br/></td></tr>
+<tr class="separator:gae721c9782910048854960a6db18ab2ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>GPIOTE abstraction for configuration of channels. </p>
@@ -177,12 +190,154 @@ Enumerations</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gac04dde3ea740f163fa2ac032bf56152d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE void nrf_gpiote_event_config </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel_number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pin_number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00489.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a>&#160;</td>
+          <td class="paramname"><em>polarity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for configuring GPIOTE channel as input, automatically clearing an event that appears in some cases under configuration. </p>
+<p>Note that when configuring the channel as input an event might be triggered. Care of disabling interrupts for that channel is left to the user.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel_number</td><td>specifies the GPIOTE channel [0:3] to configure as an input channel. </td></tr>
+    <tr><td class="paramname">pin_number</td><td>specifies the pin number [0:30] to use in the GPIOTE channel. </td></tr>
+    <tr><td class="paramname">polarity</td><td>specifies the desired polarity in the output GPIOTE channel. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab8667667ddf3bdca874df3add96fb622"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE void nrf_gpiote_task_config </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel_number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pin_number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00489.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a>&#160;</td>
+          <td class="paramname"><em>polarity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00489.html#gab280bbb7269ab98a97e7b47d906ef9aa">nrf_gpiote_outinit_t</a>&#160;</td>
+          <td class="paramname"><em>initial_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for configuring GPIOTE channel as output, setting the properly desired output level. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel_number</td><td>specifies the GPIOTE channel [0:3] to configure as an output channel. </td></tr>
+    <tr><td class="paramname">pin_number</td><td>specifies the pin number [0:30] to use in the GPIOTE channel. </td></tr>
+    <tr><td class="paramname">polarity</td><td>specifies the desired polarity in the output GPIOTE channel. </td></tr>
+    <tr><td class="paramname">initial_value</td><td>specifies the initial value of the GPIOTE channel input after the channel configuration. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae721c9782910048854960a6db18ab2ef"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE void nrf_gpiote_unconfig </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel_number</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for unconfiguring GPIOTE channel. </p>
+<p>Note that when unconfiguring the channel, the pin is configured as GPIO PIN_CNF configuration.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">channel_number</td><td>specifies the GPIOTE channel [0:3] to unconfigure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

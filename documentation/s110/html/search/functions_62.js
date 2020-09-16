@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['battery_5flevel_5fin_5fpercent',['battery_level_in_percent',['../a00783.html#ga8902704fe018646ace7d303994320f45',1,'app_util.h']]],
   ['ble_5fadvdata_5fset',['ble_advdata_set',['../a01015.html#ga180ff4057a0763688c734e98ab8d976b',1,'ble_advdata.h']]],
   ['ble_5fancs_5fc_5fdisable_5fnotif_5fdata_5fsource',['ble_ancs_c_disable_notif_data_source',['../a01031.html#ga8734ce02eaa7f35c2455063d1b3bca6e',1,'ble_ancs_c.h']]],
   ['ble_5fancs_5fc_5fdisable_5fnotif_5fnotification_5fsource',['ble_ancs_c_disable_notif_notification_source',['../a01031.html#gadb26b2aa6aa17563bed036251e01e147',1,'ble_ancs_c.h']]],
@@ -322,6 +323,7 @@ var searchData=
   ['ble_5fhts_5fon_5fble_5fevt',['ble_hts_on_ble_evt',['../a00970.html#ga1d50a1758227869205ce213a564b436c',1,'ble_hts.h']]],
   ['ble_5fias_5falert_5flevel_5fget',['ble_ias_alert_level_get',['../a00971.html#ga2b433148292e1fdf6ab22633e2d8dde1',1,'ble_ias.h']]],
   ['ble_5fias_5fc_5finit',['ble_ias_c_init',['../a00972.html#gaf0c1bf8a8837220f03442c18448e50ad',1,'ble_ias_c.h']]],
+  ['ble_5fias_5fc_5fis_5fias_5fdiscovered',['ble_ias_c_is_ias_discovered',['../a00972.html#gae637c4c4a92e401ddfdd382861c36767',1,'ble_ias_c.h']]],
   ['ble_5fias_5fc_5fon_5fble_5fevt',['ble_ias_c_on_ble_evt',['../a00972.html#ga7f98bafec49ce5bf78e444e46c628a1f',1,'ble_ias_c.h']]],
   ['ble_5fias_5fc_5fsend_5falert_5flevel',['ble_ias_c_send_alert_level',['../a00972.html#gab37ce69f8533cd510dc5620effba4409',1,'ble_ias_c.h']]],
   ['ble_5fias_5finit',['ble_ias_init',['../a00971.html#gaa1d939e0499a5e34f6c9752347f6b974',1,'ble_ias.h']]],
@@ -364,6 +366,8 @@ var searchData=
   ['ble_5fsensorsim_5finit',['ble_sensorsim_init',['../a01032.html#ga87dbeaec725800b329897a89763da807',1,'ble_sensorsim.h']]],
   ['ble_5fsensorsim_5fmeasure',['ble_sensorsim_measure',['../a01032.html#gae73b8f0f956e0708e16d160605318ba8',1,'ble_sensorsim.h']]],
   ['ble_5fsrv_5fascii_5fto_5futf8',['ble_srv_ascii_to_utf8',['../a00977.html#ga611dfcf7209a57c2e45964e8bb4c5756',1,'ble_srv_common.h']]],
+  ['ble_5fsrv_5fis_5findication_5fenabled',['ble_srv_is_indication_enabled',['../a00977.html#gaf572afefe05bacfb4d5967d9c5a6c5e6',1,'ble_srv_common.h']]],
+  ['ble_5fsrv_5fis_5fnotification_5fenabled',['ble_srv_is_notification_enabled',['../a00977.html#ga11fd3cc1b15d4bec4accc37618305ccb',1,'ble_srv_common.h']]],
   ['ble_5fsrv_5freport_5fref_5fencode',['ble_srv_report_ref_encode',['../a00977.html#gaebc3fc5316f1a6a67e830516b8f9aed5',1,'ble_srv_common.h']]],
   ['ble_5ftps_5finit',['ble_tps_init',['../a00981.html#gadf50170201ca904944d8ba0ecb485ba7',1,'ble_tps.h']]],
   ['ble_5ftps_5ftx_5fpower_5flevel_5fset',['ble_tps_tx_power_level_set',['../a00981.html#ga6fccb23ed9c10d23d370e5709cdf6d9f',1,'ble_tps.h']]],

@@ -50,7 +50,12 @@ def main():
                         dest='baud_rate',
                         default=1000000,
                         help='Baud rate for communication with the master emulator device. Default 1000000.')
-
+    parser.add_argument('--dongle', '-d',
+                        type=str,
+                        required=False,
+                        dest='dongle',
+                        default='',
+                        help='Specify which Nordic USB dongle to use for the BLE connection, for example COM26.')
 
     args = parser.parse_args()
     print 'Sending file {0} to device {1}'.format(args.file, args.address.upper())
@@ -60,7 +65,7 @@ def main():
     ble_dfu = BleDfu(args.address.upper(), args.file, args.baud_rate, dfu_mode)
 
     # Connect to peer device.
-    ble_dfu.scan_and_connect()
+    ble_dfu.scan_and_connect(args.dongle)
 
     # Transmit the hex image to peer device.
     ble_dfu.dfu_send_image()

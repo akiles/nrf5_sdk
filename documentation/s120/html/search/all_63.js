@@ -69,6 +69,7 @@ var searchData=
   ['cts_5fpin_5fno',['cts_pin_no',['../a00089.html#afd55bb9fe47cfd5eff8b468083b2dfed',1,'app_uart_comm_params_t::cts_pin_no()'],['../a00091.html#a3db286645aa6ca3d00b4050837dfac81',1,'app_uart_stream_comm_params_t::cts_pin_no()']]],
   ['curr_5fchar_5find',['curr_char_ind',['../a00100.html#a2ca30b7a259a7342dc23272fcd6d889f',1,'ble_db_discovery_t']]],
   ['curr_5fsrv_5find',['curr_srv_ind',['../a00100.html#aa598c16586a07aa4b13e38c35b8b803d',1,'ble_db_discovery_t']]],
+  ['current_5fint_5fpriority_5fget',['current_int_priority_get',['../a00515.html#ga2462e81e0f0c058ca4c44c21a3d22a80',1,'app_util_platform.h']]],
   ['context_20management_20apis',['Context Management APIs',['../a00724.html',1,'']]],
   ['cherry_208x16_20keyboard_20matrix_20driver',['Cherry 8x16 keyboard matrix driver',['../a00483.html',1,'']]],
   ['codes_20reserved_20as_20identification_20for_20common_20errors_2e',['Codes reserved as identification for common errors.',['../a00519.html',1,'']]],

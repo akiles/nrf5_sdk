@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: SoC Library API</title>
+<title>nRF51 SDK - S310 SoftDevice: SoftDevice Manager Error Codes</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,35 +97,38 @@ $(document).ready(function(){initNavTree('a00679.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">SoC Library API<div class="ingroups"><a class="el" href="a00866.html">S310 (ANT and BLE peripheral)</a></div></div>  </div>
+<div class="title">SoftDevice Manager Error Codes<div class="ingroups"><a class="el" href="a00678.html">SoftDevice Manager API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>APIs for the SoC library.  
+<p>Error definitions for the SDM API.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00680"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00680.html">SoC Library Error Codes</a></td></tr>
-<tr class="memdesc:a00680"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error definitions for the SoC library. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00863"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00863.html">Defines</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00864"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00864.html">Types</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00865"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00865.html">Functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga987f38ed25beabe507da1d5dd31bbeae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga987f38ed25beabe507da1d5dd31bbeae"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00679.html#ga987f38ed25beabe507da1d5dd31bbeae">NRF_ERROR_SDM_LFCLK_SOURCE_UNKNOWN</a>&#160;&#160;&#160;(<a class="el" href="a00677.html#ga42709115c27b1a355561ae7060a6232f">NRF_ERROR_SDM_BASE_NUM</a> + 0)</td></tr>
+<tr class="memdesc:ga987f38ed25beabe507da1d5dd31bbeae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unknown lfclk source. <br/></td></tr>
+<tr class="separator:ga987f38ed25beabe507da1d5dd31bbeae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e01566a9b1b0f6fdec349198401e5bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5e01566a9b1b0f6fdec349198401e5bd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00679.html#ga5e01566a9b1b0f6fdec349198401e5bd">NRF_ERROR_SDM_INCORRECT_INTERRUPT_CONFIGURATION</a>&#160;&#160;&#160;(<a class="el" href="a00677.html#ga42709115c27b1a355561ae7060a6232f">NRF_ERROR_SDM_BASE_NUM</a> + 1)</td></tr>
+<tr class="memdesc:ga5e01566a9b1b0f6fdec349198401e5bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Incorrect interrupt configuration (can be caused by using illegal priority levels, or having enabled SoftDevice interrupts) <br/></td></tr>
+<tr class="separator:ga5e01566a9b1b0f6fdec349198401e5bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa612f324901ce4390c4010751c935d94"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa612f324901ce4390c4010751c935d94"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00679.html#gaa612f324901ce4390c4010751c935d94">NRF_ERROR_SDM_INCORRECT_CLENR0</a>&#160;&#160;&#160;(<a class="el" href="a00677.html#ga42709115c27b1a355561ae7060a6232f">NRF_ERROR_SDM_BASE_NUM</a> + 2)</td></tr>
+<tr class="memdesc:gaa612f324901ce4390c4010751c935d94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Incorrect CLENR0 (can be caused by erronous SoftDevice flashing) <br/></td></tr>
+<tr class="separator:gaa612f324901ce4390c4010751c935d94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>APIs for the SoC library. </p>
+<p>Error definitions for the SDM API. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Nov 26 2014 11:57:33 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Thu Jan 15 2015 09:02:45 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

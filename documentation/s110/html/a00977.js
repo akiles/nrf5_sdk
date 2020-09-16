@@ -24,5 +24,7 @@ var a00977 =
     [ "BLE_SRV_ENCODED_REPORT_REF_LEN", "a00977.html#gafbfc0ef111ca725cc8bb500fd93301cc", null ],
     [ "ble_srv_error_handler_t", "a00977.html#gac10076d39c0ddcfe333252fe8810a1f1", null ],
     [ "ble_srv_ascii_to_utf8", "a00977.html#ga611dfcf7209a57c2e45964e8bb4c5756", null ],
+    [ "ble_srv_is_indication_enabled", "a00977.html#gaf572afefe05bacfb4d5967d9c5a6c5e6", null ],
+    [ "ble_srv_is_notification_enabled", "a00977.html#ga11fd3cc1b15d4bec4accc37618305ccb", null ],
     [ "ble_srv_report_ref_encode", "a00977.html#gaebc3fc5316f1a6a67e830516b8f9aed5", null ]
 ];

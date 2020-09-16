@@ -76,7 +76,7 @@ uint32_t dfu_init_pkt_handle(dfu_update_packet_t * p_packet);
  *
  * @return    NRF_SUCCESS on success, an error_code otherwise.
  */
-uint32_t dfu_image_validate(uint16_t crc_seed, uint16_t crc_expected);
+uint32_t dfu_image_validate(uint16_t crc_seed);
 
 /**@brief Function for activating the transfered image after validation has successfully completed.
  *

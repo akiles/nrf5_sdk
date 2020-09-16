@@ -19,8 +19,7 @@
 #include <stddef.h>
 #include "nordic_common.h"
 #include "nrf.h"
-//#include "app_error.h"
-#include "error_handler.h"
+#include "app_error.h"
 #include "nrf_gpio.h"
 #include "nrf_nvmc.h"
 #include "nrf_delay.h"
@@ -77,8 +76,20 @@
  * @param[in] line_num    Line number where the handler is called.
  * @param[in] p_file_name Pointer to the file name.
  */
+#if defined (DEBUG_DFU_BOOTLOADER)
+uint32_t error_code_;
+uint32_t line_num_;
+const uint8_t * p_file_name_;
+#endif // DEBUG_DFU_BOOTLOADER
+
 void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
 {
+#if defined (DEBUG_DFU_BOOTLOADER)
+    error_code_      = error_code;
+    line_num_        = line_num;
+    p_file_name_     = p_file_name;
+#endif // DEBUG_DFU_BOOTLOADER
+
 #if defined (ENABLE_IO_LED)
 //    nrf_gpio_pin_set(BOOTLOADER_ERROR_LED);
 #endif // ENABLE_IO_LED
@@ -89,6 +100,13 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
           NVIC_SystemReset();
 }
 
+void HardFault_Handler(uint32_t ulProgramCounter, uint32_t ulLinkRegister)
+{
+   (void)ulProgramCounter;
+   (void)ulLinkRegister;
+
+   NVIC_SystemReset();
+}
 
 /**@brief Callback function for asserts in the SoftDevice.
  *
@@ -320,7 +338,9 @@ int main(void)
     }
 #endif // ENABLE_BUTTON
 
-    if ((enter_boot_get() == PARAM_FLAGS_ENTER_BOOT_EnterBoot) || (bootloader_is_pushed) || (!bootloader_app_is_valid(DFU_BANK_0_REGION_START)))
+    if ((enter_boot_get() == PARAM_FLAGS_ENTER_BOOT_EnterBoot)  ||
+        (bootloader_is_pushed)                                  ||
+        (!bootloader_app_is_valid(DFU_BANK_0_REGION_START)))
     {
         #if defined (DBG_DFU_BOOTLOADER_PATH)
         DEBUG_PIN_FALL(DBG_DFU_BOOTLOADER_PATH);DEBUG_PIN_FALL(DBG_DFU_BOOTLOADER_PATH);

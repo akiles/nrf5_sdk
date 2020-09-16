@@ -1,7 +1,5 @@
 var a00797 =
 [
-    [ "Enumerations", "a00798.html", "a00798" ],
-    [ "Structures", "a00799.html", "a00799" ],
-    [ "Types", "a00800.html", "a00800" ],
-    [ "Functions", "a00801.html", "a00801" ]
+    [ "ble_radio_notification_evt_handler_t", "a00797.html#ga7d22caf17609042ff0c07873c1ad2a13", null ],
+    [ "ble_radio_notification_init", "a00797.html#ga0e02811c4ce9dff7bd190daa42b7a58b", null ]
 ];

@@ -1,11 +1,13 @@
 var a00046 =
 [
-    [ "Heart Rate Application", "a00048.html", [
-      [ "Setup", "a00048.html#project_hrs_setup", null ],
-      [ "Testing", "a00048.html#project_hrs_test", null ]
+    [ "ANT and BLE Heart Rate Monitor Relay Application", "a00041.html", [
+      [ "Setup", "a00041.html#examples_ant_ble_hrm_relay_setup", null ],
+      [ "Testing", "a00041.html#examples_ant_ble_hrm_relay_test", null ]
     ] ],
-    [ "Running Speed and Cadence Application", "a00047.html", [
-      [ "Setup", "a00047.html#project_rscs_setup", null ],
-      [ "Testing", "a00047.html#project_rscs_test", null ]
+    [ "Experimental: Auto Shared Channels", "a00042.html", [
+      [ "Description", "a00042.html#ant_examples_asc_description", null ],
+      [ "Message format", "a00042.html#ant_examples_asc_message_format", null ],
+      [ "Setup", "a00042.html#ant_examples_asc_setup", null ],
+      [ "Testing", "a00042.html#ant_examples_asc_testing", null ]
     ] ]
 ];

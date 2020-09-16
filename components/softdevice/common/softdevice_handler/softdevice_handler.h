@@ -71,16 +71,11 @@ typedef void (*sys_evt_handler_t) (uint32_t evt_id);
                                 USE_SCHEDULER)                                                     \
     do                                                                                             \
     {                                                                                              \
-        static uint32_t EVT_BUFFER[CEIL_DIV(MAX(                                                   \
-                                                MAX(BLE_STACK_EVT_MSG_BUF_SIZE,                    \
-                                                    ANT_STACK_EVT_STRUCT_SIZE),                    \
-                                                SYS_EVT_MSG_BUF_SIZE                               \
-                                               ),                                                  \
-                                            sizeof(uint32_t))];                                    \
+        static uint32_t BLE_EVT_BUFFER[CEIL_DIV(BLE_STACK_EVT_MSG_BUF_SIZE, sizeof(uint32_t))];    \
         uint32_t ERR_CODE;                                                                         \
         ERR_CODE = softdevice_handler_init((CLOCK_SOURCE),                                         \
-                                           EVT_BUFFER,                                             \
-                                           sizeof(EVT_BUFFER),                                     \
+                                           BLE_EVT_BUFFER,                                         \
+                                           sizeof(BLE_EVT_BUFFER),                                 \
                                            (USE_SCHEDULER) ? softdevice_evt_schedule : NULL);      \
         APP_ERROR_CHECK(ERR_CODE);                                                                 \
     } while (0)
@@ -96,13 +91,13 @@ typedef void (*sys_evt_handler_t) (uint32_t evt_id);
  *             as that will both allocate the event buffer, and also align the buffer correctly.
  *
  * @param[in]  clock_source        Low frequency clock source to be used by the SoftDevice.
- * @param[in]  p_evt_buffer        Buffer for holding one stack event. Since heap is not being
+ * @param[in]  p_ble_evt_buffer    Buffer for holding one BLE stack event. Since heap is not being
  *                                 used, this buffer must be provided by the application. The
  *                                 buffer must be large enough to hold the biggest stack event the
  *                                 application is supposed to handle. The buffer must be aligned to
- *                                 a 4 byte boundary. This parameter is unused if neither BLE nor
- *                                 ANT stack support is required.
- * @param[in]  evt_buffer_size     Size of SoftDevice event buffer. This parameter is unused if
+ *                                 a 4 byte boundary. This parameter is unused if BLE stack support 
+ *                                 is not required.
+ * @param[in]  ble_evt_buffer_size Size of SoftDevice BLE event buffer. This parameter is unused if
  *                                 BLE stack support is not required.
  * @param[in]  evt_schedule_func   Function for passing events to the scheduler. Point to
  *                                 ble_ant_stack_evt_schedule() to connect to the scheduler.
@@ -114,8 +109,8 @@ typedef void (*sys_evt_handler_t) (uint32_t evt_id);
  *                                       boundary) or NULL.
  */
 uint32_t softdevice_handler_init(nrf_clock_lfclksrc_t              clock_source,
-                                 void *                            p_evt_buffer,
-                                 uint16_t                          evt_buffer_size,
+                                 void *                            p_ble_evt_buffer,
+                                 uint16_t                          ble_evt_buffer_size,
                                  softdevice_evt_schedule_func_t    evt_schedule_func);
 
 

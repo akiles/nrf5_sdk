@@ -538,8 +538,6 @@ uint32_t dfu_image_validate()
     switch (m_dfu_state)
     {
         case DFU_STATE_RX_DATA_PKT:
-            m_dfu_state = DFU_STATE_VALIDATE;
-
             // Check if the application image write has finished.
             if (m_data_received != m_image_size)
             {
@@ -549,6 +547,8 @@ uint32_t dfu_image_validate()
             }
             else
             {
+                m_dfu_state = DFU_STATE_VALIDATE;
+
                 // Valid peer activity detected. Hence restart the DFU timer.
                 err_code = dfu_timer_restart();
                 if (err_code == NRF_SUCCESS)
