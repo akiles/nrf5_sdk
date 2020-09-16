@@ -6,47 +6,38 @@
  *           nrf52840 from Nordic Semiconductor.
  *
  * @version  V1
- * @date     22. February 2017
+ * @date     18. November 2016
  *
  * @note     Generated with SVDConv V2.81d 
  *           from CMSIS SVD File 'nrf52840.svd' Version 1,
  *
- * @par      Copyright (c) 2010 - 2017, Nordic Semiconductor ASA
- *           
+ * @par      Copyright (c) 2016, Nordic Semiconductor ASA
  *           All rights reserved.
  *           
- *           Redistribution and use in source and binary forms, with or without modification,
- *           are permitted provided that the following conditions are met:
+ *           Redistribution and use in source and binary forms, with or without
+ *           modification, are permitted provided that the following conditions are met:
  *           
- *           1. Redistributions of source code must retain the above copyright notice, this
+ *           * Redistributions of source code must retain the above copyright notice, this
  *           list of conditions and the following disclaimer.
  *           
- *           2. Redistributions in binary form, except as embedded into a Nordic
- *           Semiconductor ASA integrated circuit in a product or a software update for
- *           such product, must reproduce the above copyright notice, this list of
- *           conditions and the following disclaimer in the documentation and/or other
- *           materials provided with the distribution.
+ *           * Redistributions in binary form must reproduce the above copyright notice,
+ *           this list of conditions and the following disclaimer in the documentation
+ *           and/or other materials provided with the distribution.
  *           
- *           3. Neither the name of Nordic Semiconductor ASA nor the names of its
- *           contributors may be used to endorse or promote products derived from this
- *           software without specific prior written permission.
+ *           * Neither the name of Nordic Semiconductor ASA nor the names of its
+ *           contributors may be used to endorse or promote products derived from
+ *           this software without specific prior written permission.
  *           
- *           4. This software, with or without modification, must only be used with a
- *           Nordic Semiconductor ASA integrated circuit.
- *           
- *           5. Any software provided in binary form under this license must not be reverse
- *           engineered, decompiled, modified and/or disassembled.
- *           
- *           THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
- *           OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- *           OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *           DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
- *           LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- *           CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- *           GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- *           HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- *           LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- *           OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *           THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ *           AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ *           IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ *           DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ *           FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ *           DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ *           SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ *           CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ *           OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *           OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *           
  *
  *******************************************************************************************************/
@@ -182,7 +173,7 @@ typedef enum {
 
 typedef struct {
   __I  uint32_t  PART;                              /*!< Part code                                                             */
-  __I  uint32_t  VARIANT;                           /*!< Part variant (hardware version and production configuration)          */
+  __I  uint32_t  VARIANT;                           /*!< Part variant (hardware version and production configuration).         */
   __I  uint32_t  PACKAGE;                           /*!< Package option                                                        */
   __I  uint32_t  RAM;                               /*!< RAM variant                                                           */
   __I  uint32_t  FLASH;                             /*!< Flash variant                                                         */
@@ -190,33 +181,33 @@ typedef struct {
 } FICR_INFO_Type;
 
 typedef struct {
-  __I  uint32_t  A0;                                /*!< Slope definition A0                                                   */
-  __I  uint32_t  A1;                                /*!< Slope definition A1                                                   */
-  __I  uint32_t  A2;                                /*!< Slope definition A2                                                   */
-  __I  uint32_t  A3;                                /*!< Slope definition A3                                                   */
-  __I  uint32_t  A4;                                /*!< Slope definition A4                                                   */
-  __I  uint32_t  A5;                                /*!< Slope definition A5                                                   */
-  __I  uint32_t  B0;                                /*!< Y-intercept B0                                                        */
-  __I  uint32_t  B1;                                /*!< Y-intercept B1                                                        */
-  __I  uint32_t  B2;                                /*!< Y-intercept B2                                                        */
-  __I  uint32_t  B3;                                /*!< Y-intercept B3                                                        */
-  __I  uint32_t  B4;                                /*!< Y-intercept B4                                                        */
-  __I  uint32_t  B5;                                /*!< Y-intercept B5                                                        */
-  __I  uint32_t  T0;                                /*!< Segment end T0                                                        */
-  __I  uint32_t  T1;                                /*!< Segment end T1                                                        */
-  __I  uint32_t  T2;                                /*!< Segment end T2                                                        */
-  __I  uint32_t  T3;                                /*!< Segment end T3                                                        */
-  __I  uint32_t  T4;                                /*!< Segment end T4                                                        */
+  __I  uint32_t  A0;                                /*!< Slope definition A0.                                                  */
+  __I  uint32_t  A1;                                /*!< Slope definition A1.                                                  */
+  __I  uint32_t  A2;                                /*!< Slope definition A2.                                                  */
+  __I  uint32_t  A3;                                /*!< Slope definition A3.                                                  */
+  __I  uint32_t  A4;                                /*!< Slope definition A4.                                                  */
+  __I  uint32_t  A5;                                /*!< Slope definition A5.                                                  */
+  __I  uint32_t  B0;                                /*!< y-intercept B0.                                                       */
+  __I  uint32_t  B1;                                /*!< y-intercept B1.                                                       */
+  __I  uint32_t  B2;                                /*!< y-intercept B2.                                                       */
+  __I  uint32_t  B3;                                /*!< y-intercept B3.                                                       */
+  __I  uint32_t  B4;                                /*!< y-intercept B4.                                                       */
+  __I  uint32_t  B5;                                /*!< y-intercept B5.                                                       */
+  __I  uint32_t  T0;                                /*!< Segment end T0.                                                       */
+  __I  uint32_t  T1;                                /*!< Segment end T1.                                                       */
+  __I  uint32_t  T2;                                /*!< Segment end T2.                                                       */
+  __I  uint32_t  T3;                                /*!< Segment end T3.                                                       */
+  __I  uint32_t  T4;                                /*!< Segment end T4.                                                       */
 } FICR_TEMP_Type;
 
 typedef struct {
-  __I  uint32_t  TAGHEADER0;                        /*!< Default header for NFC tag. Software can read these values to
+  __I  uint32_t  TAGHEADER0;                        /*!< Default header for NFC Tag. Software can read these values to
                                                          populate NFCID1_3RD_LAST, NFCID1_2ND_LAST and NFCID1_LAST.            */
-  __I  uint32_t  TAGHEADER1;                        /*!< Default header for NFC tag. Software can read these values to
+  __I  uint32_t  TAGHEADER1;                        /*!< Default header for NFC Tag. Software can read these values to
                                                          populate NFCID1_3RD_LAST, NFCID1_2ND_LAST and NFCID1_LAST.            */
-  __I  uint32_t  TAGHEADER2;                        /*!< Default header for NFC tag. Software can read these values to
+  __I  uint32_t  TAGHEADER2;                        /*!< Default header for NFC Tag. Software can read these values to
                                                          populate NFCID1_3RD_LAST, NFCID1_2ND_LAST and NFCID1_LAST.            */
-  __I  uint32_t  TAGHEADER3;                        /*!< Default header for NFC tag. Software can read these values to
+  __I  uint32_t  TAGHEADER3;                        /*!< Default header for NFC Tag. Software can read these values to
                                                          populate NFCID1_3RD_LAST, NFCID1_2ND_LAST and NFCID1_LAST.            */
 } FICR_NFC_Type;
 
@@ -386,12 +377,12 @@ typedef struct {
 } QDEC_PSEL_Type;
 
 typedef struct {
-  __IO uint32_t  PTR;                               /*!< Description cluster[0]: Beginning address in Data RAM of this
-                                                         sequence                                                              */
-  __IO uint32_t  CNT;                               /*!< Description cluster[0]: Amount of values (duty cycles) in this
-                                                         sequence                                                              */
+  __IO uint32_t  PTR;                               /*!< Description cluster[0]: Beginning address in Data RAM of sequence
+                                                         A                                                                     */
+  __IO uint32_t  CNT;                               /*!< Description cluster[0]: Amount of values (duty cycles) in sequence
+                                                         A                                                                     */
   __IO uint32_t  REFRESH;                           /*!< Description cluster[0]: Amount of additional PWM periods between
-                                                         samples loaded into compare register                                  */
+                                                         samples loaded to compare register (load every CNT+1 PWM periods)     */
   __IO uint32_t  ENDDELAY;                          /*!< Description cluster[0]: Time added after the sequence                 */
   __I  uint32_t  RESERVED1[4];
 } PWM_SEQ_Type;
@@ -577,7 +568,7 @@ typedef struct {
 
 
 /**
-  * @brief Factory information configuration registers (FICR)
+  * @brief Factory Information Configuration Registers (FICR)
   */
 
 typedef struct {                                    /*!< FICR Structure                                                        */
@@ -606,7 +597,7 @@ typedef struct {                                    /*!< FICR Structure         
 
 
 /**
-  * @brief User information configuration registers (UICR)
+  * @brief User Information Configuration Registers (UICR)
   */
 
 typedef struct {                                    /*!< UICR Structure                                                        */
@@ -625,9 +616,9 @@ typedef struct {                                    /*!< UICR Structure         
                                                          or GPIO                                                               */
   __I  uint32_t  RESERVED2[60];
   __IO uint32_t  EXTSUPPLY;                         /*!< Enable external circuitry to be supplied from VDD pin. Applicable
-                                                         in high voltage mode only.                                            */
-  __IO uint32_t  REGOUT0;                           /*!< GPIO reference voltage / external output supply voltage in high
-                                                         voltage mode                                                          */
+                                                         in 'High voltage mode' only.                                          */
+  __IO uint32_t  REGOUT0;                           /*!< GPIO reference voltage / external output supply voltage in 'High
+                                                         voltage mode'.                                                        */
 } NRF_UICR_Type;
 
 
@@ -718,8 +709,6 @@ typedef struct {                                    /*!< CLOCK Structure        
   __IO uint32_t  CTIV;                              /*!< Calibration timer interval                                            */
   __I  uint32_t  RESERVED7[8];
   __IO uint32_t  TRACECONFIG;                       /*!< Clocking options for the Trace Port debug interface                   */
-  __I  uint32_t  RESERVED8[21];
-  __IO uint32_t  LFRCMODE;                          /*!< LFRC mode configuration                                               */
 } NRF_CLOCK_Type;
 
 
@@ -1896,19 +1885,19 @@ typedef struct {                                    /*!< NVMC Structure         
   __IO uint32_t  CONFIG;                            /*!< Configuration register                                                */
   
   union {
-    __IO uint32_t  ERASEPCR1;                       /*!< Deprecated register - Register for erasing a page in code area.
+    __IO uint32_t  ERASEPCR1;                       /*!< Deprecated register - Register for erasing a page in Code area.
                                                          Equivalent to ERASEPAGE.                                              */
-    __IO uint32_t  ERASEPAGE;                       /*!< Register for erasing a page in code area                              */
+    __IO uint32_t  ERASEPAGE;                       /*!< Register for erasing a page in Code area                              */
   };
   __IO uint32_t  ERASEALL;                          /*!< Register for erasing all non-volatile user memory                     */
-  __IO uint32_t  ERASEPCR0;                         /*!< Deprecated register - Register for erasing a page in code area.
+  __IO uint32_t  ERASEPCR0;                         /*!< Deprecated register - Register for erasing a page in Code area.
                                                          Equivalent to ERASEPAGE.                                              */
-  __IO uint32_t  ERASEUICR;                         /*!< Register for erasing user information configuration registers         */
+  __IO uint32_t  ERASEUICR;                         /*!< Register for erasing User Information Configuration Registers         */
   __I  uint32_t  RESERVED2[10];
-  __IO uint32_t  ICACHECNF;                         /*!< I-code cache configuration register.                                  */
+  __IO uint32_t  ICACHECNF;                         /*!< I-Code cache configuration register.                                  */
   __I  uint32_t  RESERVED3;
-  __IO uint32_t  IHIT;                              /*!< I-code cache hit counter.                                             */
-  __IO uint32_t  IMISS;                             /*!< I-code cache miss counter.                                            */
+  __IO uint32_t  IHIT;                              /*!< I-Code cache hit counter.                                             */
+  __IO uint32_t  IMISS;                             /*!< I-Code cache miss counter.                                            */
 } NRF_NVMC_Type;
 
 

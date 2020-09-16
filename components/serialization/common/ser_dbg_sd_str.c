@@ -1,56 +1,20 @@
-/**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
- * 
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 
- * 2. Redistributions in binary form, except as embedded into a Nordic
- *    Semiconductor ASA integrated circuit in a product or a software update for
- *    such product, must reproduce the above copyright notice, this list of
- *    conditions and the following disclaimer in the documentation and/or other
- *    materials provided with the distribution.
- * 
- * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
- *    contributors may be used to endorse or promote products derived from this
- *    software without specific prior written permission.
- * 
- * 4. This software, with or without modification, must only be used with a
- *    Nordic Semiconductor ASA integrated circuit.
- * 
- * 5. Any software provided in binary form under this license must not be reverse
- *    engineered, decompiled, modified and/or disassembled.
- * 
- * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
- * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
+ *
+ * The information contained herein is property of Nordic Semiconductor ASA.
+ * Terms and conditions of usage are described in detail in NORDIC
+ * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
+ *
+ * Licensees are granted free, non-transferable use of the information. NO
+ * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
+ * the file.
+ *
  */
 #include "ser_dbg_sd_str.h"
+#include "ble_ranges.h"
 #include "nrf_soc.h"
 #include "nrf_log.h"
 #include <string.h>
 #include "sdk_common.h"
-
-#ifdef BLE_STACK_SUPPORT_REQD
-#include "ble_ranges.h"
-#endif
-
-#ifdef ANT_STACK_SUPPORT_REQD
-#include "ant_interface.h"
-#include "ant_parameters.h"
-#endif
 
 #if NRF_MODULE_ENABLED(NRF_LOG)
 static const char * sd_events[] = {
@@ -223,21 +187,12 @@ static const char * sd_functions[] = {
     "SD_BLE_GATTS_ATTR_GET",                   /*0xAc*/
     "SD_BLE_GATTS_EXCHANGE_MTU_REPLY",         /*0xAd*/
 };
-#endif // NRF_MODULE_ENABLED(NRF_LOG)
-
-#ifdef ANT_STACK_SUPPORT_REQD
-const char * string[] =
-{
-    "ANT SVC",
-    "ANT_EVT",
-};
-#endif // ANT_STACK_SUPPORT_REQD
+#endif
 
 const char * ser_dbg_sd_call_str_get(uint8_t opcode)
 {
 #if NRF_MODULE_ENABLED(NRF_LOG)
     const char * p_str = "SD_CALL_UNKNOWN";
-#ifdef BLE_STACK_SUPPORT_REQD
     if (opcode >= BLE_SVC_BASE && opcode <= BLE_GATTS_SVC_LAST)
     {
         uint32_t idx = opcode-BLE_SVC_BASE;
@@ -246,19 +201,6 @@ const char * ser_dbg_sd_call_str_get(uint8_t opcode)
             p_str = sd_functions[idx];
         }
     }
-#endif // BLE_STACK_SUPPORT_REQD
-
-#ifdef ANT_STACK_SUPPORT_REQD
-    // Check if opcode is within the range of the ANT Stack API SVC numbers
-#ifdef BLE_STACK_SUPPORT_REQD
-    else if (opcode >= STK_SVC_BASE_2 && opcode <= SVC_ANT_EXTENDED2)
-#else
-    if (opcode >= STK_SVC_BASE_2 && opcode <= SVC_ANT_EXTENDED2)
-#endif // BLE_STACK_SUPPORT_REQD
-    {
-        p_str = string[0];
-    }
-#endif // ANT_STACK_SUPPORT_REQD
     else
     {
         switch (opcode)
@@ -283,7 +225,6 @@ const char * ser_dbg_sd_evt_str_get(uint16_t opcode)
 {
 #if NRF_MODULE_ENABLED(NRF_LOG)
     const char * p_str = "SD_EVT_UNKNOWN";
-#ifdef BLE_STACK_SUPPORT_REQD
     if (opcode >= BLE_EVT_BASE && opcode <= BLE_GATTS_EVT_LAST)
     {
         uint32_t idx = opcode - BLE_EVT_BASE;
@@ -292,21 +233,8 @@ const char * ser_dbg_sd_evt_str_get(uint16_t opcode)
             p_str = sd_events[idx];
         }
     }
-#endif // BLE_STACK_SUPPORT_REQD
-
-#ifdef ANT_STACK_SUPPORT_REQD
-    // Check if opcode is within the range of the ANT Stack API SVC numbers
-#ifdef BLE_STACK_SUPPORT_REQD
-    else if (opcode >= NO_EVENT && opcode <= EVENT_BLOCKED)
-#else
-    if (opcode >= NO_EVENT && opcode <= EVENT_BLOCKED)
-#endif // BLE_STACK_SUPPORT_REQD
-    {
-        p_str = string[1];
-    }
-#endif
     return p_str;
 #else
     return NULL;
-#endif // NRF_MODULE_ENABLED(NRF_LOG)
+#endif
 }

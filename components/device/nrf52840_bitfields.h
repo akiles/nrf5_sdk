@@ -1,44 +1,33 @@
-/*
-
-Copyright (c) 2010 - 2017, Nordic Semiconductor ASA
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
-2. Redistributions in binary form, except as embedded into a Nordic
-   Semiconductor ASA integrated circuit in a product or a software update for
-   such product, must reproduce the above copyright notice, this list of
-   conditions and the following disclaimer in the documentation and/or other
-   materials provided with the distribution.
-
-3. Neither the name of Nordic Semiconductor ASA nor the names of its
-   contributors may be used to endorse or promote products derived from this
-   software without specific prior written permission.
-
-4. This software, with or without modification, must only be used with a
-   Nordic Semiconductor ASA integrated circuit.
-
-5. Any software provided in binary form under this license must not be reverse
-   engineered, decompiled, modified and/or disassembled.
-
-THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
-OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
-GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
-OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-*/
-
+/* Copyright (c) 2016, Nordic Semiconductor ASA
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *   * Redistributions of source code must retain the above copyright notice, this
+ *     list of conditions and the following disclaimer.
+ *
+ *   * Redistributions in binary form must reproduce the above copyright notice,
+ *     this list of conditions and the following disclaimer in the documentation
+ *     and/or other materials provided with the distribution.
+ *
+ *   * Neither the name of Nordic Semiconductor ASA nor the names of its
+ *     contributors may be used to endorse or promote products derived from
+ *     this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ */
+ 
 #ifndef __NRF52840_BITS_H
 #define __NRF52840_BITS_H
 
@@ -443,6 +432,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define CLOCK_LFCLKSTAT_SRC_RC (0UL) /*!< 32.768 kHz RC oscillator */
 #define CLOCK_LFCLKSTAT_SRC_Xtal (1UL) /*!< 32.768 kHz crystal oscillator */
 #define CLOCK_LFCLKSTAT_SRC_Synth (2UL) /*!< 32.768 kHz synthesized from HFCLK */
+#define CLOCK_LFCLKSTAT_SRC_LFULP (3UL) /*!< 32.768 kHz ultra low power RC oscillator */
 
 /* Register: CLOCK_LFCLKSRCCOPY */
 /* Description: Copy of LFCLKSRC register, set when LFCLKSTART task was triggered */
@@ -453,6 +443,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define CLOCK_LFCLKSRCCOPY_SRC_RC (0UL) /*!< 32.768 kHz RC oscillator */
 #define CLOCK_LFCLKSRCCOPY_SRC_Xtal (1UL) /*!< 32.768 kHz crystal oscillator */
 #define CLOCK_LFCLKSRCCOPY_SRC_Synth (2UL) /*!< 32.768 kHz synthesized from HFCLK */
+#define CLOCK_LFCLKSRCCOPY_SRC_LFULP (3UL) /*!< 32.768 kHz ultra low power RC oscillator */
 
 /* Register: CLOCK_LFCLKSRC */
 /* Description: Clock source for the LFCLK */
@@ -475,6 +466,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define CLOCK_LFCLKSRC_SRC_RC (0UL) /*!< 32.768 kHz RC oscillator */
 #define CLOCK_LFCLKSRC_SRC_Xtal (1UL) /*!< 32.768 kHz crystal oscillator */
 #define CLOCK_LFCLKSRC_SRC_Synth (2UL) /*!< 32.768 kHz synthesized from HFCLK */
+#define CLOCK_LFCLKSRC_SRC_LFULP (3UL) /*!< 32.768 kHz ultra low power RC oscillator */
 
 /* Register: CLOCK_CTIV */
 /* Description: Calibration timer interval */
@@ -500,21 +492,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define CLOCK_TRACECONFIG_TRACEPORTSPEED_16MHz (1UL) /*!< 16 MHz Trace Port clock (TRACECLK = 8 MHz) */
 #define CLOCK_TRACECONFIG_TRACEPORTSPEED_8MHz (2UL) /*!< 8 MHz Trace Port clock (TRACECLK = 4 MHz) */
 #define CLOCK_TRACECONFIG_TRACEPORTSPEED_4MHz (3UL) /*!< 4 MHz Trace Port clock (TRACECLK = 2 MHz) */
-
-/* Register: CLOCK_LFRCMODE */
-/* Description: LFRC mode configuration */
-
-/* Bit 16 : Active LFRC mode. This field is read only. */
-#define CLOCK_LFRCMODE_STATUS_Pos (16UL) /*!< Position of STATUS field. */
-#define CLOCK_LFRCMODE_STATUS_Msk (0x1UL << CLOCK_LFRCMODE_STATUS_Pos) /*!< Bit mask of STATUS field. */
-#define CLOCK_LFRCMODE_STATUS_Normal (0UL) /*!< Normal mode */
-#define CLOCK_LFRCMODE_STATUS_ULP (1UL) /*!< Ultra-low power mode (ULP) */
-
-/* Bit 0 : Set LFRC mode */
-#define CLOCK_LFRCMODE_MODE_Pos (0UL) /*!< Position of MODE field. */
-#define CLOCK_LFRCMODE_MODE_Msk (0x1UL << CLOCK_LFRCMODE_MODE_Pos) /*!< Bit mask of MODE field. */
-#define CLOCK_LFRCMODE_MODE_Normal (0UL) /*!< Normal mode */
-#define CLOCK_LFRCMODE_MODE_ULP (1UL) /*!< Ultra-low power mode (ULP) */
 
 
 /* Peripheral: COMP */
@@ -1136,7 +1113,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 /* Peripheral: FICR */
-/* Description: Factory information configuration registers */
+/* Description: Factory Information Configuration Registers */
 
 /* Register: FICR_CODEPAGESIZE */
 /* Description: Code memory page size */
@@ -1199,7 +1176,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define FICR_INFO_PART_PART_Unspecified (0xFFFFFFFFUL) /*!< Unspecified */
 
 /* Register: FICR_INFO_VARIANT */
-/* Description: Part variant (hardware version and production configuration) */
+/* Description: Part variant (hardware version and production configuration). */
 
 /* Bits 31..0 : Part variant (hardware version and production configuration). Encoded as ASCII. */
 #define FICR_INFO_VARIANT_VARIANT_Pos (0UL) /*!< Position of VARIANT field. */
@@ -1248,126 +1225,126 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define FICR_INFO_FLASH_FLASH_Unspecified (0xFFFFFFFFUL) /*!< Unspecified */
 
 /* Register: FICR_TEMP_A0 */
-/* Description: Slope definition A0 */
+/* Description: Slope definition A0. */
 
 /* Bits 11..0 : A (slope definition) register. */
 #define FICR_TEMP_A0_A_Pos (0UL) /*!< Position of A field. */
 #define FICR_TEMP_A0_A_Msk (0xFFFUL << FICR_TEMP_A0_A_Pos) /*!< Bit mask of A field. */
 
 /* Register: FICR_TEMP_A1 */
-/* Description: Slope definition A1 */
+/* Description: Slope definition A1. */
 
 /* Bits 11..0 : A (slope definition) register. */
 #define FICR_TEMP_A1_A_Pos (0UL) /*!< Position of A field. */
 #define FICR_TEMP_A1_A_Msk (0xFFFUL << FICR_TEMP_A1_A_Pos) /*!< Bit mask of A field. */
 
 /* Register: FICR_TEMP_A2 */
-/* Description: Slope definition A2 */
+/* Description: Slope definition A2. */
 
 /* Bits 11..0 : A (slope definition) register. */
 #define FICR_TEMP_A2_A_Pos (0UL) /*!< Position of A field. */
 #define FICR_TEMP_A2_A_Msk (0xFFFUL << FICR_TEMP_A2_A_Pos) /*!< Bit mask of A field. */
 
 /* Register: FICR_TEMP_A3 */
-/* Description: Slope definition A3 */
+/* Description: Slope definition A3. */
 
 /* Bits 11..0 : A (slope definition) register. */
 #define FICR_TEMP_A3_A_Pos (0UL) /*!< Position of A field. */
 #define FICR_TEMP_A3_A_Msk (0xFFFUL << FICR_TEMP_A3_A_Pos) /*!< Bit mask of A field. */
 
 /* Register: FICR_TEMP_A4 */
-/* Description: Slope definition A4 */
+/* Description: Slope definition A4. */
 
 /* Bits 11..0 : A (slope definition) register. */
 #define FICR_TEMP_A4_A_Pos (0UL) /*!< Position of A field. */
 #define FICR_TEMP_A4_A_Msk (0xFFFUL << FICR_TEMP_A4_A_Pos) /*!< Bit mask of A field. */
 
 /* Register: FICR_TEMP_A5 */
-/* Description: Slope definition A5 */
+/* Description: Slope definition A5. */
 
 /* Bits 11..0 : A (slope definition) register. */
 #define FICR_TEMP_A5_A_Pos (0UL) /*!< Position of A field. */
 #define FICR_TEMP_A5_A_Msk (0xFFFUL << FICR_TEMP_A5_A_Pos) /*!< Bit mask of A field. */
 
 /* Register: FICR_TEMP_B0 */
-/* Description: Y-intercept B0 */
+/* Description: y-intercept B0. */
 
 /* Bits 13..0 : B (y-intercept) */
 #define FICR_TEMP_B0_B_Pos (0UL) /*!< Position of B field. */
 #define FICR_TEMP_B0_B_Msk (0x3FFFUL << FICR_TEMP_B0_B_Pos) /*!< Bit mask of B field. */
 
 /* Register: FICR_TEMP_B1 */
-/* Description: Y-intercept B1 */
+/* Description: y-intercept B1. */
 
 /* Bits 13..0 : B (y-intercept) */
 #define FICR_TEMP_B1_B_Pos (0UL) /*!< Position of B field. */
 #define FICR_TEMP_B1_B_Msk (0x3FFFUL << FICR_TEMP_B1_B_Pos) /*!< Bit mask of B field. */
 
 /* Register: FICR_TEMP_B2 */
-/* Description: Y-intercept B2 */
+/* Description: y-intercept B2. */
 
 /* Bits 13..0 : B (y-intercept) */
 #define FICR_TEMP_B2_B_Pos (0UL) /*!< Position of B field. */
 #define FICR_TEMP_B2_B_Msk (0x3FFFUL << FICR_TEMP_B2_B_Pos) /*!< Bit mask of B field. */
 
 /* Register: FICR_TEMP_B3 */
-/* Description: Y-intercept B3 */
+/* Description: y-intercept B3. */
 
 /* Bits 13..0 : B (y-intercept) */
 #define FICR_TEMP_B3_B_Pos (0UL) /*!< Position of B field. */
 #define FICR_TEMP_B3_B_Msk (0x3FFFUL << FICR_TEMP_B3_B_Pos) /*!< Bit mask of B field. */
 
 /* Register: FICR_TEMP_B4 */
-/* Description: Y-intercept B4 */
+/* Description: y-intercept B4. */
 
 /* Bits 13..0 : B (y-intercept) */
 #define FICR_TEMP_B4_B_Pos (0UL) /*!< Position of B field. */
 #define FICR_TEMP_B4_B_Msk (0x3FFFUL << FICR_TEMP_B4_B_Pos) /*!< Bit mask of B field. */
 
 /* Register: FICR_TEMP_B5 */
-/* Description: Y-intercept B5 */
+/* Description: y-intercept B5. */
 
 /* Bits 13..0 : B (y-intercept) */
 #define FICR_TEMP_B5_B_Pos (0UL) /*!< Position of B field. */
 #define FICR_TEMP_B5_B_Msk (0x3FFFUL << FICR_TEMP_B5_B_Pos) /*!< Bit mask of B field. */
 
 /* Register: FICR_TEMP_T0 */
-/* Description: Segment end T0 */
+/* Description: Segment end T0. */
 
-/* Bits 7..0 : T (segment end) register */
+/* Bits 7..0 : T (segment end)register. */
 #define FICR_TEMP_T0_T_Pos (0UL) /*!< Position of T field. */
 #define FICR_TEMP_T0_T_Msk (0xFFUL << FICR_TEMP_T0_T_Pos) /*!< Bit mask of T field. */
 
 /* Register: FICR_TEMP_T1 */
-/* Description: Segment end T1 */
+/* Description: Segment end T1. */
 
-/* Bits 7..0 : T (segment end) register */
+/* Bits 7..0 : T (segment end)register. */
 #define FICR_TEMP_T1_T_Pos (0UL) /*!< Position of T field. */
 #define FICR_TEMP_T1_T_Msk (0xFFUL << FICR_TEMP_T1_T_Pos) /*!< Bit mask of T field. */
 
 /* Register: FICR_TEMP_T2 */
-/* Description: Segment end T2 */
+/* Description: Segment end T2. */
 
-/* Bits 7..0 : T (segment end) register */
+/* Bits 7..0 : T (segment end)register. */
 #define FICR_TEMP_T2_T_Pos (0UL) /*!< Position of T field. */
 #define FICR_TEMP_T2_T_Msk (0xFFUL << FICR_TEMP_T2_T_Pos) /*!< Bit mask of T field. */
 
 /* Register: FICR_TEMP_T3 */
-/* Description: Segment end T3 */
+/* Description: Segment end T3. */
 
-/* Bits 7..0 : T (segment end) register */
+/* Bits 7..0 : T (segment end)register. */
 #define FICR_TEMP_T3_T_Pos (0UL) /*!< Position of T field. */
 #define FICR_TEMP_T3_T_Msk (0xFFUL << FICR_TEMP_T3_T_Pos) /*!< Bit mask of T field. */
 
 /* Register: FICR_TEMP_T4 */
-/* Description: Segment end T4 */
+/* Description: Segment end T4. */
 
-/* Bits 7..0 : T (segment end) register */
+/* Bits 7..0 : T (segment end)register. */
 #define FICR_TEMP_T4_T_Pos (0UL) /*!< Position of T field. */
 #define FICR_TEMP_T4_T_Msk (0xFFUL << FICR_TEMP_T4_T_Pos) /*!< Bit mask of T field. */
 
 /* Register: FICR_NFC_TAGHEADER0 */
-/* Description: Default header for NFC tag. Software can read these values to populate NFCID1_3RD_LAST, NFCID1_2ND_LAST and NFCID1_LAST. */
+/* Description: Default header for NFC Tag. Software can read these values to populate NFCID1_3RD_LAST, NFCID1_2ND_LAST and NFCID1_LAST. */
 
 /* Bits 31..24 : Unique identifier byte 3 */
 #define FICR_NFC_TAGHEADER0_UD3_Pos (24UL) /*!< Position of UD3 field. */
@@ -1386,7 +1363,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define FICR_NFC_TAGHEADER0_MFGID_Msk (0xFFUL << FICR_NFC_TAGHEADER0_MFGID_Pos) /*!< Bit mask of MFGID field. */
 
 /* Register: FICR_NFC_TAGHEADER1 */
-/* Description: Default header for NFC tag. Software can read these values to populate NFCID1_3RD_LAST, NFCID1_2ND_LAST and NFCID1_LAST. */
+/* Description: Default header for NFC Tag. Software can read these values to populate NFCID1_3RD_LAST, NFCID1_2ND_LAST and NFCID1_LAST. */
 
 /* Bits 31..24 : Unique identifier byte 7 */
 #define FICR_NFC_TAGHEADER1_UD7_Pos (24UL) /*!< Position of UD7 field. */
@@ -1405,7 +1382,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define FICR_NFC_TAGHEADER1_UD4_Msk (0xFFUL << FICR_NFC_TAGHEADER1_UD4_Pos) /*!< Bit mask of UD4 field. */
 
 /* Register: FICR_NFC_TAGHEADER2 */
-/* Description: Default header for NFC tag. Software can read these values to populate NFCID1_3RD_LAST, NFCID1_2ND_LAST and NFCID1_LAST. */
+/* Description: Default header for NFC Tag. Software can read these values to populate NFCID1_3RD_LAST, NFCID1_2ND_LAST and NFCID1_LAST. */
 
 /* Bits 31..24 : Unique identifier byte 11 */
 #define FICR_NFC_TAGHEADER2_UD11_Pos (24UL) /*!< Position of UD11 field. */
@@ -1424,7 +1401,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define FICR_NFC_TAGHEADER2_UD8_Msk (0xFFUL << FICR_NFC_TAGHEADER2_UD8_Pos) /*!< Bit mask of UD8 field. */
 
 /* Register: FICR_NFC_TAGHEADER3 */
-/* Description: Default header for NFC tag. Software can read these values to populate NFCID1_3RD_LAST, NFCID1_2ND_LAST and NFCID1_LAST. */
+/* Description: Default header for NFC Tag. Software can read these values to populate NFCID1_3RD_LAST, NFCID1_2ND_LAST and NFCID1_LAST. */
 
 /* Bits 31..24 : Unique identifier byte 15 */
 #define FICR_NFC_TAGHEADER3_UD15_Pos (24UL) /*!< Position of UD15 field. */
@@ -1595,9 +1572,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define GPIOTE_CONFIG_POLARITY_HiToLo (2UL) /*!< Task mode: Clear pin from OUT[n] task. Event mode: Generate IN[n] event when falling edge on pin. */
 #define GPIOTE_CONFIG_POLARITY_Toggle (3UL) /*!< Task mode: Toggle pin from OUT[n]. Event mode: Generate IN[n] when any change on pin. */
 
-/* Bit 13 : Port number */
+/* Bits 14..13 : Port number */
 #define GPIOTE_CONFIG_PORT_Pos (13UL) /*!< Position of PORT field. */
-#define GPIOTE_CONFIG_PORT_Msk (0x1UL << GPIOTE_CONFIG_PORT_Pos) /*!< Bit mask of PORT field. */
+#define GPIOTE_CONFIG_PORT_Msk (0x3UL << GPIOTE_CONFIG_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 12..8 : GPIO number associated with SET[n], CLR[n] and OUT[n] tasks and IN[n] event */
 #define GPIOTE_CONFIG_PSEL_Pos (8UL) /*!< Position of PSEL field. */
@@ -1837,9 +1814,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define I2S_PSEL_MCK_CONNECT_Connected (0UL) /*!< Connect */
 #define I2S_PSEL_MCK_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
-#define I2S_PSEL_MCK_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define I2S_PSEL_MCK_PORT_Msk (0x1UL << I2S_PSEL_MCK_PORT_Pos) /*!< Bit mask of PORT field. */
+/* Bits 9..8 : Port number */
+#define I2S_PSEL_MCK_PORT_Pos (8UL) /*!< Position of PORT field. */
+#define I2S_PSEL_MCK_PORT_Msk (0x3UL << I2S_PSEL_MCK_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define I2S_PSEL_MCK_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -1854,9 +1831,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define I2S_PSEL_SCK_CONNECT_Connected (0UL) /*!< Connect */
 #define I2S_PSEL_SCK_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
-#define I2S_PSEL_SCK_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define I2S_PSEL_SCK_PORT_Msk (0x1UL << I2S_PSEL_SCK_PORT_Pos) /*!< Bit mask of PORT field. */
+/* Bits 9..8 : Port number */
+#define I2S_PSEL_SCK_PORT_Pos (8UL) /*!< Position of PORT field. */
+#define I2S_PSEL_SCK_PORT_Msk (0x3UL << I2S_PSEL_SCK_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define I2S_PSEL_SCK_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -1871,9 +1848,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define I2S_PSEL_LRCK_CONNECT_Connected (0UL) /*!< Connect */
 #define I2S_PSEL_LRCK_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
-#define I2S_PSEL_LRCK_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define I2S_PSEL_LRCK_PORT_Msk (0x1UL << I2S_PSEL_LRCK_PORT_Pos) /*!< Bit mask of PORT field. */
+/* Bits 9..8 : Port number */
+#define I2S_PSEL_LRCK_PORT_Pos (8UL) /*!< Position of PORT field. */
+#define I2S_PSEL_LRCK_PORT_Msk (0x3UL << I2S_PSEL_LRCK_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define I2S_PSEL_LRCK_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -1888,9 +1865,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define I2S_PSEL_SDIN_CONNECT_Connected (0UL) /*!< Connect */
 #define I2S_PSEL_SDIN_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
-#define I2S_PSEL_SDIN_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define I2S_PSEL_SDIN_PORT_Msk (0x1UL << I2S_PSEL_SDIN_PORT_Pos) /*!< Bit mask of PORT field. */
+/* Bits 9..8 : Port number */
+#define I2S_PSEL_SDIN_PORT_Pos (8UL) /*!< Position of PORT field. */
+#define I2S_PSEL_SDIN_PORT_Msk (0x3UL << I2S_PSEL_SDIN_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define I2S_PSEL_SDIN_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -1905,9 +1882,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define I2S_PSEL_SDOUT_CONNECT_Connected (0UL) /*!< Connect */
 #define I2S_PSEL_SDOUT_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
-#define I2S_PSEL_SDOUT_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define I2S_PSEL_SDOUT_PORT_Msk (0x1UL << I2S_PSEL_SDOUT_PORT_Pos) /*!< Bit mask of PORT field. */
+/* Bits 9..8 : Port number */
+#define I2S_PSEL_SDOUT_PORT_Pos (8UL) /*!< Position of PORT field. */
+#define I2S_PSEL_SDOUT_PORT_Msk (0x3UL << I2S_PSEL_SDOUT_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define I2S_PSEL_SDOUT_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -4092,20 +4069,20 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define NVMC_CONFIG_WEN_Pos (0UL) /*!< Position of WEN field. */
 #define NVMC_CONFIG_WEN_Msk (0x3UL << NVMC_CONFIG_WEN_Pos) /*!< Bit mask of WEN field. */
 #define NVMC_CONFIG_WEN_Ren (0UL) /*!< Read only access */
-#define NVMC_CONFIG_WEN_Wen (1UL) /*!< Write enabled */
+#define NVMC_CONFIG_WEN_Wen (1UL) /*!< Write Enabled */
 #define NVMC_CONFIG_WEN_Een (2UL) /*!< Erase enabled */
 
 /* Register: NVMC_ERASEPAGE */
-/* Description: Register for erasing a page in code area */
+/* Description: Register for erasing a page in Code area */
 
-/* Bits 31..0 : Register for starting erase of a page in code area */
+/* Bits 31..0 : Register for starting erase of a page in Code area */
 #define NVMC_ERASEPAGE_ERASEPAGE_Pos (0UL) /*!< Position of ERASEPAGE field. */
 #define NVMC_ERASEPAGE_ERASEPAGE_Msk (0xFFFFFFFFUL << NVMC_ERASEPAGE_ERASEPAGE_Pos) /*!< Bit mask of ERASEPAGE field. */
 
 /* Register: NVMC_ERASEPCR1 */
-/* Description: Deprecated register -  Register for erasing a page in code area. Equivalent to ERASEPAGE. */
+/* Description: Deprecated register -  Register for erasing a page in Code area. Equivalent to ERASEPAGE. */
 
-/* Bits 31..0 : Register for erasing a page in code area. Equivalent to ERASEPAGE. */
+/* Bits 31..0 : Register for erasing a page in Code area. Equivalent to ERASEPAGE. */
 #define NVMC_ERASEPCR1_ERASEPCR1_Pos (0UL) /*!< Position of ERASEPCR1 field. */
 #define NVMC_ERASEPCR1_ERASEPCR1_Msk (0xFFFFFFFFUL << NVMC_ERASEPCR1_ERASEPCR1_Pos) /*!< Bit mask of ERASEPCR1 field. */
 
@@ -4119,23 +4096,23 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define NVMC_ERASEALL_ERASEALL_Erase (1UL) /*!< Start chip erase */
 
 /* Register: NVMC_ERASEPCR0 */
-/* Description: Deprecated register -  Register for erasing a page in code area. Equivalent to ERASEPAGE. */
+/* Description: Deprecated register -  Register for erasing a page in Code area. Equivalent to ERASEPAGE. */
 
-/* Bits 31..0 : Register for starting erase of a page in code area. Equivalent to ERASEPAGE. */
+/* Bits 31..0 : Register for starting erase of a page in Code area. Equivalent to ERASEPAGE. */
 #define NVMC_ERASEPCR0_ERASEPCR0_Pos (0UL) /*!< Position of ERASEPCR0 field. */
 #define NVMC_ERASEPCR0_ERASEPCR0_Msk (0xFFFFFFFFUL << NVMC_ERASEPCR0_ERASEPCR0_Pos) /*!< Bit mask of ERASEPCR0 field. */
 
 /* Register: NVMC_ERASEUICR */
-/* Description: Register for erasing user information configuration registers */
+/* Description: Register for erasing User Information Configuration Registers */
 
-/* Bit 0 : Register starting erase of all user information configuration registers. Note that the erase must be enabled using CONFIG.WEN before the UICR can be erased. */
+/* Bit 0 : Register starting erase of all User Information Configuration Registers. Note that the erase must be enabled using CONFIG.WEN before the UICR can be erased. */
 #define NVMC_ERASEUICR_ERASEUICR_Pos (0UL) /*!< Position of ERASEUICR field. */
 #define NVMC_ERASEUICR_ERASEUICR_Msk (0x1UL << NVMC_ERASEUICR_ERASEUICR_Pos) /*!< Bit mask of ERASEUICR field. */
 #define NVMC_ERASEUICR_ERASEUICR_NoOperation (0UL) /*!< No operation */
 #define NVMC_ERASEUICR_ERASEUICR_Erase (1UL) /*!< Start erase of UICR */
 
 /* Register: NVMC_ICACHECNF */
-/* Description: I-code cache configuration register. */
+/* Description: I-Code cache configuration register. */
 
 /* Bit 8 : Cache profiling enable */
 #define NVMC_ICACHECNF_CACHEPROFEN_Pos (8UL) /*!< Position of CACHEPROFEN field. */
@@ -4150,14 +4127,14 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define NVMC_ICACHECNF_CACHEEN_Enabled (1UL) /*!< Enable cache */
 
 /* Register: NVMC_IHIT */
-/* Description: I-code cache hit counter. */
+/* Description: I-Code cache hit counter. */
 
 /* Bits 31..0 : Number of cache hits */
 #define NVMC_IHIT_HITS_Pos (0UL) /*!< Position of HITS field. */
 #define NVMC_IHIT_HITS_Msk (0xFFFFFFFFUL << NVMC_IHIT_HITS_Pos) /*!< Bit mask of HITS field. */
 
 /* Register: NVMC_IMISS */
-/* Description: I-code cache miss counter. */
+/* Description: I-Code cache miss counter. */
 
 /* Bits 31..0 : Number of cache misses */
 #define NVMC_IMISS_MISSES_Pos (0UL) /*!< Position of MISSES field. */
@@ -6053,9 +6030,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PDM_PSEL_CLK_CONNECT_Connected (0UL) /*!< Connect */
 #define PDM_PSEL_CLK_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define PDM_PSEL_CLK_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define PDM_PSEL_CLK_PORT_Msk (0x1UL << PDM_PSEL_CLK_PORT_Pos) /*!< Bit mask of PORT field. */
+#define PDM_PSEL_CLK_PORT_Msk (0x3UL << PDM_PSEL_CLK_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define PDM_PSEL_CLK_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -6070,9 +6047,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PDM_PSEL_DIN_CONNECT_Connected (0UL) /*!< Connect */
 #define PDM_PSEL_DIN_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define PDM_PSEL_DIN_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define PDM_PSEL_DIN_PORT_Msk (0x1UL << PDM_PSEL_DIN_PORT_Pos) /*!< Bit mask of PORT field. */
+#define PDM_PSEL_DIN_PORT_Msk (0x3UL << PDM_PSEL_DIN_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define PDM_PSEL_DIN_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -8021,24 +7998,24 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PWM_LOOP_CNT_Disabled (0UL) /*!< Looping disabled (stop at the end of the sequence) */
 
 /* Register: PWM_SEQ_PTR */
-/* Description: Description cluster[0]:  Beginning address in Data RAM of this sequence */
+/* Description: Description cluster[0]:  Beginning address in Data RAM of sequence A */
 
-/* Bits 31..0 : Beginning address in Data RAM of this sequence */
+/* Bits 31..0 : Beginning address in Data RAM of sequence A */
 #define PWM_SEQ_PTR_PTR_Pos (0UL) /*!< Position of PTR field. */
 #define PWM_SEQ_PTR_PTR_Msk (0xFFFFFFFFUL << PWM_SEQ_PTR_PTR_Pos) /*!< Bit mask of PTR field. */
 
 /* Register: PWM_SEQ_CNT */
-/* Description: Description cluster[0]:  Amount of values (duty cycles) in this sequence */
+/* Description: Description cluster[0]:  Amount of values (duty cycles) in sequence A */
 
-/* Bits 14..0 : Amount of values (duty cycles) in this sequence */
+/* Bits 14..0 : Amount of values (duty cycles) in sequence A */
 #define PWM_SEQ_CNT_CNT_Pos (0UL) /*!< Position of CNT field. */
 #define PWM_SEQ_CNT_CNT_Msk (0x7FFFUL << PWM_SEQ_CNT_CNT_Pos) /*!< Bit mask of CNT field. */
 #define PWM_SEQ_CNT_CNT_Disabled (0UL) /*!< Sequence is disabled, and shall not be started as it is empty */
 
 /* Register: PWM_SEQ_REFRESH */
-/* Description: Description cluster[0]:  Amount of additional PWM periods between samples loaded into compare register */
+/* Description: Description cluster[0]:  Amount of additional PWM periods between samples loaded to compare register (load every CNT+1 PWM periods) */
 
-/* Bits 23..0 : Amount of additional PWM periods between samples loaded into compare register (load every REFRESH.CNT+1 PWM periods) */
+/* Bits 23..0 : Amount of additional PWM periods between samples loaded to compare register (load every CNT+1 PWM periods) */
 #define PWM_SEQ_REFRESH_CNT_Pos (0UL) /*!< Position of CNT field. */
 #define PWM_SEQ_REFRESH_CNT_Msk (0xFFFFFFUL << PWM_SEQ_REFRESH_CNT_Pos) /*!< Bit mask of CNT field. */
 #define PWM_SEQ_REFRESH_CNT_Continuous (0UL) /*!< Update every PWM period */
@@ -8059,9 +8036,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PWM_PSEL_OUT_CONNECT_Connected (0UL) /*!< Connect */
 #define PWM_PSEL_OUT_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
-#define PWM_PSEL_OUT_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define PWM_PSEL_OUT_PORT_Msk (0x1UL << PWM_PSEL_OUT_PORT_Pos) /*!< Bit mask of PORT field. */
+/* Bits 9..8 : Port number */
+#define PWM_PSEL_OUT_PORT_Pos (8UL) /*!< Position of PORT field. */
+#define PWM_PSEL_OUT_PORT_Msk (0x3UL << PWM_PSEL_OUT_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define PWM_PSEL_OUT_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -8274,9 +8251,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define QDEC_PSEL_LED_CONNECT_Connected (0UL) /*!< Connect */
 #define QDEC_PSEL_LED_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define QDEC_PSEL_LED_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define QDEC_PSEL_LED_PORT_Msk (0x1UL << QDEC_PSEL_LED_PORT_Pos) /*!< Bit mask of PORT field. */
+#define QDEC_PSEL_LED_PORT_Msk (0x3UL << QDEC_PSEL_LED_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define QDEC_PSEL_LED_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -8291,9 +8268,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define QDEC_PSEL_A_CONNECT_Connected (0UL) /*!< Connect */
 #define QDEC_PSEL_A_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define QDEC_PSEL_A_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define QDEC_PSEL_A_PORT_Msk (0x1UL << QDEC_PSEL_A_PORT_Pos) /*!< Bit mask of PORT field. */
+#define QDEC_PSEL_A_PORT_Msk (0x3UL << QDEC_PSEL_A_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define QDEC_PSEL_A_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -8308,9 +8285,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define QDEC_PSEL_B_CONNECT_Connected (0UL) /*!< Connect */
 #define QDEC_PSEL_B_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define QDEC_PSEL_B_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define QDEC_PSEL_B_PORT_Msk (0x1UL << QDEC_PSEL_B_PORT_Pos) /*!< Bit mask of PORT field. */
+#define QDEC_PSEL_B_PORT_Msk (0x3UL << QDEC_PSEL_B_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define QDEC_PSEL_B_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -8456,9 +8433,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define QSPI_PSEL_SCK_CONNECT_Connected (0UL) /*!< Connect */
 #define QSPI_PSEL_SCK_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define QSPI_PSEL_SCK_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define QSPI_PSEL_SCK_PORT_Msk (0x1UL << QSPI_PSEL_SCK_PORT_Pos) /*!< Bit mask of PORT field. */
+#define QSPI_PSEL_SCK_PORT_Msk (0x3UL << QSPI_PSEL_SCK_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define QSPI_PSEL_SCK_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -8473,9 +8450,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define QSPI_PSEL_CSN_CONNECT_Connected (0UL) /*!< Connect */
 #define QSPI_PSEL_CSN_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define QSPI_PSEL_CSN_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define QSPI_PSEL_CSN_PORT_Msk (0x1UL << QSPI_PSEL_CSN_PORT_Pos) /*!< Bit mask of PORT field. */
+#define QSPI_PSEL_CSN_PORT_Msk (0x3UL << QSPI_PSEL_CSN_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define QSPI_PSEL_CSN_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -8490,9 +8467,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define QSPI_PSEL_IO0_CONNECT_Connected (0UL) /*!< Connect */
 #define QSPI_PSEL_IO0_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define QSPI_PSEL_IO0_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define QSPI_PSEL_IO0_PORT_Msk (0x1UL << QSPI_PSEL_IO0_PORT_Pos) /*!< Bit mask of PORT field. */
+#define QSPI_PSEL_IO0_PORT_Msk (0x3UL << QSPI_PSEL_IO0_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define QSPI_PSEL_IO0_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -8507,9 +8484,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define QSPI_PSEL_IO1_CONNECT_Connected (0UL) /*!< Connect */
 #define QSPI_PSEL_IO1_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define QSPI_PSEL_IO1_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define QSPI_PSEL_IO1_PORT_Msk (0x1UL << QSPI_PSEL_IO1_PORT_Pos) /*!< Bit mask of PORT field. */
+#define QSPI_PSEL_IO1_PORT_Msk (0x3UL << QSPI_PSEL_IO1_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define QSPI_PSEL_IO1_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -8524,9 +8501,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define QSPI_PSEL_IO2_CONNECT_Connected (0UL) /*!< Connect */
 #define QSPI_PSEL_IO2_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define QSPI_PSEL_IO2_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define QSPI_PSEL_IO2_PORT_Msk (0x1UL << QSPI_PSEL_IO2_PORT_Pos) /*!< Bit mask of PORT field. */
+#define QSPI_PSEL_IO2_PORT_Msk (0x3UL << QSPI_PSEL_IO2_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define QSPI_PSEL_IO2_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -8541,9 +8518,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define QSPI_PSEL_IO3_CONNECT_Connected (0UL) /*!< Connect */
 #define QSPI_PSEL_IO3_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define QSPI_PSEL_IO3_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define QSPI_PSEL_IO3_PORT_Msk (0x1UL << QSPI_PSEL_IO3_PORT_Pos) /*!< Bit mask of PORT field. */
+#define QSPI_PSEL_IO3_PORT_Msk (0x3UL << QSPI_PSEL_IO3_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define QSPI_PSEL_IO3_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -8598,8 +8575,8 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Bit 25 : Select SPI mode. */
 #define QSPI_IFCONFIG1_SPIMODE_Pos (25UL) /*!< Position of SPIMODE field. */
 #define QSPI_IFCONFIG1_SPIMODE_Msk (0x1UL << QSPI_IFCONFIG1_SPIMODE_Pos) /*!< Bit mask of SPIMODE field. */
-#define QSPI_IFCONFIG1_SPIMODE_MODE0 (0UL) /*!< Mode 0: Data are captured on the clock rising edge and data is output on a falling edge. Base level of clock is 0 (CPOL=0, CPHA=0). */
-#define QSPI_IFCONFIG1_SPIMODE_MODE3 (1UL) /*!< Mode 3: Data are captured on the clock falling edge and data is output on a rising edge. Base level of clock is 1 (CPOL=1, CPHA=1). */
+#define QSPI_IFCONFIG1_SPIMODE_MODE0 (0UL) /*!< Mode 0: Data are captured on the clock's rising edge and data is output on a falling edge. Base level of clock is 0 (CPOL=0, CPHA=0). */
+#define QSPI_IFCONFIG1_SPIMODE_MODE3 (1UL) /*!< Mode 3: Data are captured on the clock's falling edge and data is output on a rising edge. Base level of clock is 1 (CPOL=1, CPHA=1). */
 
 /* Bit 24 : Enter/exit deep power-down mode (DPM) for external flash memory. */
 #define QSPI_IFCONFIG1_DPMEN_Pos (24UL) /*!< Position of DPMEN field. */
@@ -8614,7 +8591,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Register: QSPI_STATUS */
 /* Description: Status register. */
 
-/* Bits 31..24 : Value of external flash device Status Register. When the external flash has two bytes status register this field includes the value of the low byte. */
+/* Bits 31..24 : Value of external flash devices Status Register. When the external flash has two bytes status register this field includes the value of the low byte. */
 #define QSPI_STATUS_SREG_Pos (24UL) /*!< Position of SREG field. */
 #define QSPI_STATUS_SREG_Msk (0xFFUL << QSPI_STATUS_SREG_Pos) /*!< Bit mask of SREG field. */
 
@@ -10654,9 +10631,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPI_PSEL_SCK_CONNECT_Connected (0UL) /*!< Connect */
 #define SPI_PSEL_SCK_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define SPI_PSEL_SCK_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define SPI_PSEL_SCK_PORT_Msk (0x1UL << SPI_PSEL_SCK_PORT_Pos) /*!< Bit mask of PORT field. */
+#define SPI_PSEL_SCK_PORT_Msk (0x3UL << SPI_PSEL_SCK_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define SPI_PSEL_SCK_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -10671,9 +10648,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPI_PSEL_MOSI_CONNECT_Connected (0UL) /*!< Connect */
 #define SPI_PSEL_MOSI_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define SPI_PSEL_MOSI_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define SPI_PSEL_MOSI_PORT_Msk (0x1UL << SPI_PSEL_MOSI_PORT_Pos) /*!< Bit mask of PORT field. */
+#define SPI_PSEL_MOSI_PORT_Msk (0x3UL << SPI_PSEL_MOSI_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define SPI_PSEL_MOSI_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -10688,9 +10665,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPI_PSEL_MISO_CONNECT_Connected (0UL) /*!< Connect */
 #define SPI_PSEL_MISO_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define SPI_PSEL_MISO_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define SPI_PSEL_MISO_PORT_Msk (0x1UL << SPI_PSEL_MISO_PORT_Pos) /*!< Bit mask of PORT field. */
+#define SPI_PSEL_MISO_PORT_Msk (0x3UL << SPI_PSEL_MISO_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define SPI_PSEL_MISO_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -10867,9 +10844,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPIM_PSEL_SCK_CONNECT_Connected (0UL) /*!< Connect */
 #define SPIM_PSEL_SCK_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define SPIM_PSEL_SCK_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define SPIM_PSEL_SCK_PORT_Msk (0x1UL << SPIM_PSEL_SCK_PORT_Pos) /*!< Bit mask of PORT field. */
+#define SPIM_PSEL_SCK_PORT_Msk (0x3UL << SPIM_PSEL_SCK_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define SPIM_PSEL_SCK_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -10884,9 +10861,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPIM_PSEL_MOSI_CONNECT_Connected (0UL) /*!< Connect */
 #define SPIM_PSEL_MOSI_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define SPIM_PSEL_MOSI_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define SPIM_PSEL_MOSI_PORT_Msk (0x1UL << SPIM_PSEL_MOSI_PORT_Pos) /*!< Bit mask of PORT field. */
+#define SPIM_PSEL_MOSI_PORT_Msk (0x3UL << SPIM_PSEL_MOSI_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define SPIM_PSEL_MOSI_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -10901,9 +10878,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPIM_PSEL_MISO_CONNECT_Connected (0UL) /*!< Connect */
 #define SPIM_PSEL_MISO_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define SPIM_PSEL_MISO_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define SPIM_PSEL_MISO_PORT_Msk (0x1UL << SPIM_PSEL_MISO_PORT_Pos) /*!< Bit mask of PORT field. */
+#define SPIM_PSEL_MISO_PORT_Msk (0x3UL << SPIM_PSEL_MISO_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define SPIM_PSEL_MISO_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -10918,9 +10895,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPIM_PSEL_CSN_CONNECT_Connected (0UL) /*!< Connect */
 #define SPIM_PSEL_CSN_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define SPIM_PSEL_CSN_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define SPIM_PSEL_CSN_PORT_Msk (0x1UL << SPIM_PSEL_CSN_PORT_Pos) /*!< Bit mask of PORT field. */
+#define SPIM_PSEL_CSN_PORT_Msk (0x3UL << SPIM_PSEL_CSN_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define SPIM_PSEL_CSN_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -11151,9 +11128,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPIS_PSEL_SCK_CONNECT_Connected (0UL) /*!< Connect */
 #define SPIS_PSEL_SCK_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define SPIS_PSEL_SCK_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define SPIS_PSEL_SCK_PORT_Msk (0x1UL << SPIS_PSEL_SCK_PORT_Pos) /*!< Bit mask of PORT field. */
+#define SPIS_PSEL_SCK_PORT_Msk (0x3UL << SPIS_PSEL_SCK_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define SPIS_PSEL_SCK_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -11168,9 +11145,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPIS_PSEL_MISO_CONNECT_Connected (0UL) /*!< Connect */
 #define SPIS_PSEL_MISO_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define SPIS_PSEL_MISO_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define SPIS_PSEL_MISO_PORT_Msk (0x1UL << SPIS_PSEL_MISO_PORT_Pos) /*!< Bit mask of PORT field. */
+#define SPIS_PSEL_MISO_PORT_Msk (0x3UL << SPIS_PSEL_MISO_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define SPIS_PSEL_MISO_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -11185,9 +11162,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPIS_PSEL_MOSI_CONNECT_Connected (0UL) /*!< Connect */
 #define SPIS_PSEL_MOSI_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define SPIS_PSEL_MOSI_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define SPIS_PSEL_MOSI_PORT_Msk (0x1UL << SPIS_PSEL_MOSI_PORT_Pos) /*!< Bit mask of PORT field. */
+#define SPIS_PSEL_MOSI_PORT_Msk (0x3UL << SPIS_PSEL_MOSI_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define SPIS_PSEL_MOSI_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -11202,9 +11179,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SPIS_PSEL_CSN_CONNECT_Connected (0UL) /*!< Connect */
 #define SPIS_PSEL_CSN_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define SPIS_PSEL_CSN_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define SPIS_PSEL_CSN_PORT_Msk (0x1UL << SPIS_PSEL_CSN_PORT_Pos) /*!< Bit mask of PORT field. */
+#define SPIS_PSEL_CSN_PORT_Msk (0x3UL << SPIS_PSEL_CSN_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define SPIS_PSEL_CSN_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -11798,9 +11775,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TWI_PSEL_SCL_CONNECT_Connected (0UL) /*!< Connect */
 #define TWI_PSEL_SCL_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define TWI_PSEL_SCL_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define TWI_PSEL_SCL_PORT_Msk (0x1UL << TWI_PSEL_SCL_PORT_Pos) /*!< Bit mask of PORT field. */
+#define TWI_PSEL_SCL_PORT_Msk (0x3UL << TWI_PSEL_SCL_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define TWI_PSEL_SCL_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -11815,9 +11792,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TWI_PSEL_SDA_CONNECT_Connected (0UL) /*!< Connect */
 #define TWI_PSEL_SDA_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define TWI_PSEL_SDA_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define TWI_PSEL_SDA_PORT_Msk (0x1UL << TWI_PSEL_SDA_PORT_Pos) /*!< Bit mask of PORT field. */
+#define TWI_PSEL_SDA_PORT_Msk (0x3UL << TWI_PSEL_SDA_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define TWI_PSEL_SDA_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -12079,9 +12056,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TWIM_PSEL_SCL_CONNECT_Connected (0UL) /*!< Connect */
 #define TWIM_PSEL_SCL_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define TWIM_PSEL_SCL_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define TWIM_PSEL_SCL_PORT_Msk (0x1UL << TWIM_PSEL_SCL_PORT_Pos) /*!< Bit mask of PORT field. */
+#define TWIM_PSEL_SCL_PORT_Msk (0x3UL << TWIM_PSEL_SCL_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define TWIM_PSEL_SCL_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -12096,9 +12073,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TWIM_PSEL_SDA_CONNECT_Connected (0UL) /*!< Connect */
 #define TWIM_PSEL_SDA_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define TWIM_PSEL_SDA_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define TWIM_PSEL_SDA_PORT_Msk (0x1UL << TWIM_PSEL_SDA_PORT_Pos) /*!< Bit mask of PORT field. */
+#define TWIM_PSEL_SDA_PORT_Msk (0x3UL << TWIM_PSEL_SDA_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define TWIM_PSEL_SDA_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -12375,9 +12352,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TWIS_PSEL_SCL_CONNECT_Connected (0UL) /*!< Connect */
 #define TWIS_PSEL_SCL_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define TWIS_PSEL_SCL_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define TWIS_PSEL_SCL_PORT_Msk (0x1UL << TWIS_PSEL_SCL_PORT_Pos) /*!< Bit mask of PORT field. */
+#define TWIS_PSEL_SCL_PORT_Msk (0x3UL << TWIS_PSEL_SCL_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define TWIS_PSEL_SCL_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -12392,9 +12369,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TWIS_PSEL_SDA_CONNECT_Connected (0UL) /*!< Connect */
 #define TWIS_PSEL_SDA_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define TWIS_PSEL_SDA_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define TWIS_PSEL_SDA_PORT_Msk (0x1UL << TWIS_PSEL_SDA_PORT_Pos) /*!< Bit mask of PORT field. */
+#define TWIS_PSEL_SDA_PORT_Msk (0x3UL << TWIS_PSEL_SDA_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define TWIS_PSEL_SDA_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -12625,9 +12602,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UART_PSEL_RTS_CONNECT_Connected (0UL) /*!< Connect */
 #define UART_PSEL_RTS_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define UART_PSEL_RTS_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define UART_PSEL_RTS_PORT_Msk (0x1UL << UART_PSEL_RTS_PORT_Pos) /*!< Bit mask of PORT field. */
+#define UART_PSEL_RTS_PORT_Msk (0x3UL << UART_PSEL_RTS_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define UART_PSEL_RTS_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -12642,9 +12619,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UART_PSEL_TXD_CONNECT_Connected (0UL) /*!< Connect */
 #define UART_PSEL_TXD_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define UART_PSEL_TXD_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define UART_PSEL_TXD_PORT_Msk (0x1UL << UART_PSEL_TXD_PORT_Pos) /*!< Bit mask of PORT field. */
+#define UART_PSEL_TXD_PORT_Msk (0x3UL << UART_PSEL_TXD_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define UART_PSEL_TXD_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -12659,9 +12636,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UART_PSEL_CTS_CONNECT_Connected (0UL) /*!< Connect */
 #define UART_PSEL_CTS_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define UART_PSEL_CTS_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define UART_PSEL_CTS_PORT_Msk (0x1UL << UART_PSEL_CTS_PORT_Pos) /*!< Bit mask of PORT field. */
+#define UART_PSEL_CTS_PORT_Msk (0x3UL << UART_PSEL_CTS_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define UART_PSEL_CTS_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -12676,9 +12653,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UART_PSEL_RXD_CONNECT_Connected (0UL) /*!< Connect */
 #define UART_PSEL_RXD_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define UART_PSEL_RXD_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define UART_PSEL_RXD_PORT_Msk (0x1UL << UART_PSEL_RXD_PORT_Pos) /*!< Bit mask of PORT field. */
+#define UART_PSEL_RXD_PORT_Msk (0x3UL << UART_PSEL_RXD_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define UART_PSEL_RXD_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -13031,9 +13008,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UARTE_PSEL_RTS_CONNECT_Connected (0UL) /*!< Connect */
 #define UARTE_PSEL_RTS_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define UARTE_PSEL_RTS_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define UARTE_PSEL_RTS_PORT_Msk (0x1UL << UARTE_PSEL_RTS_PORT_Pos) /*!< Bit mask of PORT field. */
+#define UARTE_PSEL_RTS_PORT_Msk (0x3UL << UARTE_PSEL_RTS_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define UARTE_PSEL_RTS_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -13048,9 +13025,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UARTE_PSEL_TXD_CONNECT_Connected (0UL) /*!< Connect */
 #define UARTE_PSEL_TXD_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define UARTE_PSEL_TXD_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define UARTE_PSEL_TXD_PORT_Msk (0x1UL << UARTE_PSEL_TXD_PORT_Pos) /*!< Bit mask of PORT field. */
+#define UARTE_PSEL_TXD_PORT_Msk (0x3UL << UARTE_PSEL_TXD_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define UARTE_PSEL_TXD_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -13065,9 +13042,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UARTE_PSEL_CTS_CONNECT_Connected (0UL) /*!< Connect */
 #define UARTE_PSEL_CTS_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define UARTE_PSEL_CTS_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define UARTE_PSEL_CTS_PORT_Msk (0x1UL << UARTE_PSEL_CTS_PORT_Pos) /*!< Bit mask of PORT field. */
+#define UARTE_PSEL_CTS_PORT_Msk (0x3UL << UARTE_PSEL_CTS_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define UARTE_PSEL_CTS_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -13082,9 +13059,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UARTE_PSEL_RXD_CONNECT_Connected (0UL) /*!< Connect */
 #define UARTE_PSEL_RXD_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number */
+/* Bits 6..5 : Port number */
 #define UARTE_PSEL_RXD_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define UARTE_PSEL_RXD_PORT_Msk (0x1UL << UARTE_PSEL_RXD_PORT_Pos) /*!< Bit mask of PORT field. */
+#define UARTE_PSEL_RXD_PORT_Msk (0x3UL << UARTE_PSEL_RXD_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number */
 #define UARTE_PSEL_RXD_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -13180,7 +13157,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 /* Peripheral: UICR */
-/* Description: User information configuration registers */
+/* Description: User Information Configuration Registers */
 
 /* Register: UICR_NRFFW */
 /* Description: Description collection[0]:  Reserved for Nordic firmware design */
@@ -13212,9 +13189,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UICR_PSELRESET_CONNECT_Connected (0UL) /*!< Connect */
 #define UICR_PSELRESET_CONNECT_Disconnected (1UL) /*!< Disconnect */
 
-/* Bit 5 : Port number onto which nRESET is exposed */
+/* Bits 6..5 : Port number onto which nRESET is exposed */
 #define UICR_PSELRESET_PORT_Pos (5UL) /*!< Position of PORT field. */
-#define UICR_PSELRESET_PORT_Msk (0x1UL << UICR_PSELRESET_PORT_Pos) /*!< Bit mask of PORT field. */
+#define UICR_PSELRESET_PORT_Msk (0x3UL << UICR_PSELRESET_PORT_Pos) /*!< Bit mask of PORT field. */
 
 /* Bits 4..0 : Pin number of PORT onto which nRESET is exposed */
 #define UICR_PSELRESET_PIN_Pos (0UL) /*!< Position of PIN field. */
@@ -13239,16 +13216,16 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UICR_NFCPINS_PROTECT_NFC (1UL) /*!< Operation as NFC antenna pins. Configures the protection for NFC operation */
 
 /* Register: UICR_EXTSUPPLY */
-/* Description: Enable external circuitry to be supplied from VDD pin. Applicable in high voltage mode only. */
+/* Description: Enable external circuitry to be supplied from VDD pin. Applicable in 'High voltage mode' only. */
 
-/* Bit 0 : Enable external circuitry to be supplied from VDD pin (output of REG0 stage) */
+/* Bit 0 : Enable external circuitry to be supplied from VDD pin (output of REG0 stage). */
 #define UICR_EXTSUPPLY_EXTSUPPLY_Pos (0UL) /*!< Position of EXTSUPPLY field. */
 #define UICR_EXTSUPPLY_EXTSUPPLY_Msk (0x1UL << UICR_EXTSUPPLY_EXTSUPPLY_Pos) /*!< Bit mask of EXTSUPPLY field. */
-#define UICR_EXTSUPPLY_EXTSUPPLY_Disabled (0UL) /*!< No current can be drawn from the VDD pin */
-#define UICR_EXTSUPPLY_EXTSUPPLY_Enabled (1UL) /*!< It is allowed to supply external circuitry from the VDD pin */
+#define UICR_EXTSUPPLY_EXTSUPPLY_Disabled (0UL) /*!< No current can be drawn from the VDD pin. */
+#define UICR_EXTSUPPLY_EXTSUPPLY_Enabled (1UL) /*!< It is allowed to supply external circuitry from the VDD pin. */
 
 /* Register: UICR_REGOUT0 */
-/* Description: GPIO reference voltage / external output supply voltage in high voltage mode */
+/* Description: GPIO reference voltage / external output supply voltage in 'High voltage mode'. */
 
 /* Bits 2..0 : Output voltage from of REG0 regulator stage. The maximum output voltage from this stage is given as VDDH - VEXDIF. */
 #define UICR_REGOUT0_VOUT_Pos (0UL) /*!< Position of VOUT field. */

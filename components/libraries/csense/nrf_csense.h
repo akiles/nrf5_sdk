@@ -1,42 +1,15 @@
-/**
- * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
- * 
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 
- * 2. Redistributions in binary form, except as embedded into a Nordic
- *    Semiconductor ASA integrated circuit in a product or a software update for
- *    such product, must reproduce the above copyright notice, this list of
- *    conditions and the following disclaimer in the documentation and/or other
- *    materials provided with the distribution.
- * 
- * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
- *    contributors may be used to endorse or promote products derived from this
- *    software without specific prior written permission.
- * 
- * 4. This software, with or without modification, must only be used with a
- *    Nordic Semiconductor ASA integrated circuit.
- * 
- * 5. Any software provided in binary form under this license must not be reverse
- *    engineered, decompiled, modified and/or disassembled.
- * 
- * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
- * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
+ *
+ * The information contained herein is property of Nordic Semiconductor ASA.
+ * Terms and conditions of usage are described in detail in NORDIC
+ * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
+ *
+ * Licensees are granted free, non-transferable use of the information. NO
+ * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
+ * the file.
+ *
  */
+
 #ifndef NRF_CSENSE_H__
 #define NRF_CSENSE_H__
 
@@ -50,7 +23,7 @@
 
 /** @file
  *
- * @defgroup nrf_csense Capacitive sensor library
+ * @defgroup nrf_csense Capacitive Sensor Library
  * @{
  * @ingroup app_common
  *
@@ -71,7 +44,7 @@
 #define NRF_CSENSE_BUTTON_DEF(name, p1) NRF_CSENSE_INTERNAL_BUTTON_DEF(name, p1)
 
 /**
- * @brief Macro for creating a 2-pad slider instance.
+ * @brief Macro for creating a 2-pads slider instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).
@@ -81,7 +54,7 @@
 #define NRF_CSENSE_SLIDER_2_DEF(name, steps_no, p1, p2) NRF_CSENSE_INTERNAL_SLIDER_2_DEF(name, steps_no, p1, p2)
 
 /**
- * @brief Macro for creating a 3-pad slider instance.
+ * @brief Macro for creating a 3-pads slider instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).
@@ -92,7 +65,7 @@
 #define NRF_CSENSE_SLIDER_3_DEF(name, steps_no, p1, p2, p3) NRF_CSENSE_INTERNAL_SLIDER_3_DEF(name, steps_no, p1, p2, p3)
 
 /**
- * @brief Macro for creating a 4-pad slider instance.
+ * @brief Macro for creating a 4-pads slider instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).
@@ -104,7 +77,7 @@
 #define NRF_CSENSE_SLIDER_4_DEF(name, steps_no, p1, p2, p3, p4) NRF_CSENSE_INTERNAL_SLIDER_4_DEF(name, steps_no, p1, p2, p3, p4)
 
 /**
- * @brief Macro for creating a 5-pad slider instance.
+ * @brief Macro for creating a 5-pads slider instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).
@@ -117,7 +90,7 @@
 #define NRF_CSENSE_SLIDER_5_DEF(name, steps_no, p1, p2, p3, p4, p5) NRF_CSENSE_INTERNAL_SLIDER_5_DEF(name, steps_no, p1, p2, p3, p4, p5)
 
 /**
- * @brief Macro for creating a 3-pad wheel instance.
+ * @brief Macro for creating a 3-pads wheel instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).
@@ -128,7 +101,7 @@
 #define NRF_CSENSE_WHEEL_3_DEF(name, steps_no, p1, p2, p3) NRF_CSENSE_INTERNAL_WHEEL_3_DEF(name, steps_no, p1, p2, p3)
 
 /**
- * @brief Macro for creating a 4-pad wheel instance.
+ * @brief Macro for creating a 4-pads wheel instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).
@@ -140,7 +113,7 @@
 #define NRF_CSENSE_WHEEL_4_DEF(name, steps_no, p1, p2, p3, p4) NRF_CSENSE_INTERNAL_WHEEL_4_DEF(name, steps_no, p1, p2, p3, p4)
 
 /**
- * @brief Macro for creating a 5-pad wheel instance.
+ * @brief Macro for creating a 5-pads wheel instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).

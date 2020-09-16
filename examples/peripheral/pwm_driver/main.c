@@ -1,42 +1,15 @@
-/**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
- * 
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 
- * 2. Redistributions in binary form, except as embedded into a Nordic
- *    Semiconductor ASA integrated circuit in a product or a software update for
- *    such product, must reproduce the above copyright notice, this list of
- *    conditions and the following disclaimer in the documentation and/or other
- *    materials provided with the distribution.
- * 
- * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
- *    contributors may be used to endorse or promote products derived from this
- *    software without specific prior written permission.
- * 
- * 4. This software, with or without modification, must only be used with a
- *    Nordic Semiconductor ASA integrated circuit.
- * 
- * 5. Any software provided in binary form under this license must not be reverse
- *    engineered, decompiled, modified and/or disassembled.
- * 
- * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
- * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+/* Copyright (c) 2015 Nordic Semiconductor. All Rights Reserved.
+ *
+ * The information contained herein is property of Nordic Semiconductor ASA.
+ * Terms and conditions of usage are described in detail in NORDIC
+ * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
+ *
+ * Licensees are granted free, non-transferable use of the information. NO
+ * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
+ * the file.
+ *
  */
+
 /** @file
  * @defgroup pwm_example_main main.c
  * @{
@@ -59,6 +32,9 @@
 #define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+
+#define APP_TIMER_PRESCALER     0
+#define APP_TIMER_OP_QUEUE_SIZE 2
 
 static nrf_drv_pwm_t m_pwm0 = NRF_DRV_PWM_INSTANCE(0);
 static nrf_drv_pwm_t m_pwm1 = NRF_DRV_PWM_INSTANCE(1);
@@ -90,7 +66,7 @@ static void demo1_handler(nrf_drv_pwm_evt_type_t event_type)
         bool    next_phase = false;
 
         uint16_t * p_channels = (uint16_t *)&m_demo1_seq_values;
-        uint16_t value = p_channels[channel];
+        uint16_t   value      = p_channels[channel];
         if (down)
         {
             value -= m_demo1_step;
@@ -118,6 +94,8 @@ static void demo1_handler(nrf_drv_pwm_evt_type_t event_type)
         }
     }
 }
+
+
 static void demo1(void)
 {
     NRF_LOG_INFO("Demo 1\r\n");
@@ -131,6 +109,7 @@ static void demo1(void)
      * continuously on succeeding channels (one second per channel).
      */
 
+    uint32_t                   err_code;
     nrf_drv_pwm_config_t const config0 =
     {
         .output_pins =
@@ -147,7 +126,8 @@ static void demo1(void)
         .load_mode    = NRF_PWM_LOAD_INDIVIDUAL,
         .step_mode    = NRF_PWM_STEP_AUTO
     };
-    APP_ERROR_CHECK(nrf_drv_pwm_init(&m_pwm0, &config0, demo1_handler));
+    err_code = nrf_drv_pwm_init(&m_pwm0, &config0, demo1_handler);
+    APP_ERROR_CHECK(err_code);
     m_used |= USED_PWM(0);
 
     m_demo1_seq_values.channel_0 = 0;
@@ -156,8 +136,8 @@ static void demo1(void)
     m_demo1_seq_values.channel_3 = 0;
     m_demo1_phase                = 0;
 
-    (void)nrf_drv_pwm_simple_playback(&m_pwm0, &m_demo1_seq, 1,
-                                      NRF_DRV_PWM_FLAG_LOOP);
+    nrf_drv_pwm_simple_playback(&m_pwm0, &m_demo1_seq, 1,
+                                NRF_DRV_PWM_FLAG_LOOP);
 }
 
 
@@ -174,11 +154,14 @@ static void demo2(void)
      * The playback is repeated in a loop.
      */
 
-    enum { // [local constants]
+    // [local constant parameters]
+    enum
+    {
         TOP        = 10000,
         STEP_COUNT = 25
     };
 
+    uint32_t                   err_code;
     nrf_drv_pwm_config_t const config0 =
     {
         .output_pins =
@@ -195,39 +178,40 @@ static void demo2(void)
         .load_mode    = NRF_PWM_LOAD_COMMON,
         .step_mode    = NRF_PWM_STEP_AUTO
     };
-    APP_ERROR_CHECK(nrf_drv_pwm_init(&m_pwm0, &config0, NULL));
+    err_code = nrf_drv_pwm_init(&m_pwm0, &config0, NULL);
+    APP_ERROR_CHECK(err_code);
     m_used |= USED_PWM(0);
 
     // This array cannot be allocated on stack (hence "static") and it must
     // be in RAM.
     static nrf_pwm_values_common_t seq0_values[STEP_COUNT];
-    uint16_t value = 0;
-    uint16_t step  = TOP / STEP_COUNT;
-    uint8_t  i;
-    for (i = 0; i < STEP_COUNT; ++i)
-    {
-        value         += step;
-        seq0_values[i] = value;
-    }
-
-    nrf_pwm_sequence_t const seq0 =
+    nrf_pwm_sequence_t const       seq0 =
     {
         .values.p_common = seq0_values,
         .length          = NRF_PWM_VALUES_LENGTH(seq0_values),
         .repeats         = 1,
         .end_delay       = 0
     };
+    uint16_t value = 0;
+    uint16_t step  = TOP / STEP_COUNT;
+    uint8_t  i;
+
+    for (i = 0; i < STEP_COUNT; ++i)
+    {
+        value         += step;
+        seq0_values[i] = value;
+    }
 
     // This array cannot be allocated on stack (hence "static") and it must
     // be in RAM (hence no "const", though its content is not changed).
-    static nrf_pwm_values_common_t /*const*/ seq1_values[] =
+    static nrf_pwm_values_common_t  /*const*/ seq1_values[] =
     {
-             0,
+        0,
         0x8000,
-             0,
+        0,
         0x8000,
-             0,
-             0
+        0,
+        0
     };
     nrf_pwm_sequence_t const seq1 =
     {
@@ -237,8 +221,8 @@ static void demo2(void)
         .end_delay       = 0
     };
 
-    (void)nrf_drv_pwm_complex_playback(&m_pwm0, &seq0, &seq1, 1,
-                                       NRF_DRV_PWM_FLAG_LOOP);
+    nrf_drv_pwm_complex_playback(&m_pwm0, &seq0, &seq1, 1,
+                                 NRF_DRV_PWM_FLAG_LOOP);
 }
 
 
@@ -253,6 +237,7 @@ static void demo3(void)
      * This scheme is performed three times before the peripheral is stopped.
      */
 
+    uint32_t                   err_code;
     nrf_drv_pwm_config_t const config0 =
     {
         .output_pins =
@@ -269,19 +254,20 @@ static void demo3(void)
         .load_mode    = NRF_PWM_LOAD_COMMON,
         .step_mode    = NRF_PWM_STEP_AUTO
     };
-    APP_ERROR_CHECK(nrf_drv_pwm_init(&m_pwm0, &config0, NULL));
+    err_code = nrf_drv_pwm_init(&m_pwm0, &config0, NULL);
+    APP_ERROR_CHECK(err_code);
     m_used |= USED_PWM(0);
 
     // This array cannot be allocated on stack (hence "static") and it must
     // be in RAM (hence no "const", though its content is not changed).
-    static uint16_t /*const*/ seq_values[] =
+    static uint16_t  /*const*/ seq_values[] =
     {
         0x8000,
-             0,
+        0,
         0x8000,
-             0,
+        0,
         0x8000,
-             0
+        0
     };
     nrf_pwm_sequence_t const seq =
     {
@@ -291,7 +277,7 @@ static void demo3(void)
         .end_delay       = 4
     };
 
-    (void)nrf_drv_pwm_simple_playback(&m_pwm0, &seq, 3, NRF_DRV_PWM_FLAG_STOP);
+    nrf_drv_pwm_simple_playback(&m_pwm0, &seq, 3, NRF_DRV_PWM_FLAG_STOP);
 }
 
 
@@ -310,6 +296,8 @@ static void demo4(void)
      * Simple playback with grouped loading mode is used for PWM0, and complex
      * playback with common loading mode is used for both PWM1 and PWM2.
      */
+
+    uint32_t err_code;
 
     nrf_drv_pwm_config_t config =
     {
@@ -330,15 +318,16 @@ static void demo4(void)
     config.base_clock     = NRF_PWM_CLK_125kHz;
     config.top_value      = 31250; // 250ms period
     config.load_mode      = NRF_PWM_LOAD_GROUPED;
-    APP_ERROR_CHECK(nrf_drv_pwm_init(&m_pwm0, &config, NULL));
+    err_code              = nrf_drv_pwm_init(&m_pwm0, &config, NULL);
+    APP_ERROR_CHECK(err_code);
     m_used |= USED_PWM(0);
 
     // This array cannot be allocated on stack (hence "static") and it must
     // be in RAM (hence no "const", though its content is not changed).
-    static nrf_pwm_values_grouped_t /*const*/ pwm0_seq_values[] =
+    static nrf_pwm_values_grouped_t  /*const*/ pwm0_seq_values[] =
     {
-        {      0,      0 },
-        { 0x8000,      0 },
+        {      0, 0 },
+        { 0x8000, 0 },
         {      0, 0x8000 },
         { 0x8000, 0x8000 }
     };
@@ -352,8 +341,9 @@ static void demo4(void)
 
     ////////////////////////////////////////////////////////////////////////////
     // Common settings for PWM1 and PWM2.
-
-    enum { // [local constants]
+    // [local constant parameters]
+    enum
+    {
         TOP        = 5000,
         STEP_COUNT = 50
     };
@@ -365,9 +355,10 @@ static void demo4(void)
     // This array cannot be allocated on stack (hence "static") and it must
     // be in RAM.
     static nrf_pwm_values_common_t fade_in_out_values[2 * STEP_COUNT];
-    uint16_t value = 0;
-    uint16_t step  = TOP / STEP_COUNT;
-    uint8_t  i;
+    uint16_t                       value = 0;
+    uint16_t                       step  = TOP / STEP_COUNT;
+    uint8_t                        i;
+
     for (i = 0; i < STEP_COUNT; ++i)
     {
         value                             += step;
@@ -377,7 +368,7 @@ static void demo4(void)
 
     // This array cannot be allocated on stack (hence "static") and it must
     // be in RAM (hence no "const", though its content is not changed).
-    static nrf_pwm_values_common_t /*const*/ stay_off_values[2] = { 0, 0 };
+    static nrf_pwm_values_common_t  /*const*/ stay_off_values[2] = { 0, 0 };
 
     ////////////////////////////////////////////////////////////////////////////
     // PWM1 initialization.
@@ -386,7 +377,8 @@ static void demo4(void)
     config.output_pins[1] = NRF_DRV_PWM_PIN_NOT_USED;
     config.output_pins[2] = BSP_LED_2 | NRF_DRV_PWM_PIN_INVERTED;
     config.output_pins[3] = NRF_DRV_PWM_PIN_NOT_USED;
-    APP_ERROR_CHECK(nrf_drv_pwm_init(&m_pwm1, &config, NULL));
+    err_code              = nrf_drv_pwm_init(&m_pwm1, &config, NULL);
+    APP_ERROR_CHECK(err_code);
     m_used |= USED_PWM(1);
 
     // Sequence 0 - fade-in/fade-out, duration: 500 ms.
@@ -413,7 +405,8 @@ static void demo4(void)
     config.output_pins[1] = NRF_DRV_PWM_PIN_NOT_USED;
     config.output_pins[2] = NRF_DRV_PWM_PIN_NOT_USED;
     config.output_pins[3] = BSP_LED_3 | NRF_DRV_PWM_PIN_INVERTED;
-    APP_ERROR_CHECK(nrf_drv_pwm_init(&m_pwm2, &config, NULL));
+    err_code              = nrf_drv_pwm_init(&m_pwm2, &config, NULL);
+    APP_ERROR_CHECK(err_code);
     m_used |= USED_PWM(2);
 
     // Sequence 0 - fade-in/fade-out, duration: 1500 ms.
@@ -433,12 +426,12 @@ static void demo4(void)
         .end_delay       = 0
     };
 
-    (void)nrf_drv_pwm_simple_playback(&m_pwm0, &pwm0_seq, 1,
-                                      NRF_DRV_PWM_FLAG_LOOP);
-    (void)nrf_drv_pwm_complex_playback(&m_pwm1, &pwm1_seq0, &pwm1_seq1, 1,
-                                       NRF_DRV_PWM_FLAG_LOOP);
-    (void)nrf_drv_pwm_complex_playback(&m_pwm2, &pwm2_seq0, &pwm2_seq1, 1,
-                                       NRF_DRV_PWM_FLAG_LOOP);
+    nrf_drv_pwm_simple_playback(&m_pwm0, &pwm0_seq, 1,
+                                NRF_DRV_PWM_FLAG_LOOP);
+    nrf_drv_pwm_complex_playback(&m_pwm1, &pwm1_seq0, &pwm1_seq1, 1,
+                                 NRF_DRV_PWM_FLAG_LOOP);
+    nrf_drv_pwm_complex_playback(&m_pwm2, &pwm2_seq0, &pwm2_seq1, 1,
+                                 NRF_DRV_PWM_FLAG_LOOP);
 }
 
 
@@ -455,6 +448,7 @@ static void demo5(void)
      * in counterclockwise order (looking at the board).
      */
 
+    uint32_t                   err_code;
     nrf_drv_pwm_config_t const config0 =
     {
         .output_pins =
@@ -471,17 +465,18 @@ static void demo5(void)
         .load_mode    = NRF_PWM_LOAD_INDIVIDUAL,
         .step_mode    = NRF_PWM_STEP_AUTO
     };
-    APP_ERROR_CHECK(nrf_drv_pwm_init(&m_pwm0, &config0, NULL));
+    err_code = nrf_drv_pwm_init(&m_pwm0, &config0, NULL);
+    APP_ERROR_CHECK(err_code);
     m_used |= USED_PWM(0);
 
     // This array cannot be allocated on stack (hence "static") and it must
     // be in RAM (hence no "const", though its content is not changed).
-    static nrf_pwm_values_individual_t /*const*/ seq_values[] =
+    static nrf_pwm_values_individual_t  /*const*/ seq_values[] =
     {
-        { 0x8000,      0,      0,      0 },
-        {      0, 0x8000,      0,      0 },
-        {      0,      0, 0x8000,      0 },
-        {      0,      0,      0, 0x8000 }
+        { 0x8000, 0, 0, 0 },
+        {      0, 0x8000, 0, 0 },
+        {      0, 0, 0x8000, 0 },
+        {      0, 0, 0, 0x8000 }
     };
     nrf_pwm_sequence_t const seq =
     {
@@ -491,15 +486,13 @@ static void demo5(void)
         .end_delay           = 0
     };
 
-    (void)nrf_drv_pwm_simple_playback(&m_pwm0, &seq, 1, NRF_DRV_PWM_FLAG_LOOP);
+    nrf_drv_pwm_simple_playback(&m_pwm0, &seq, 1, NRF_DRV_PWM_FLAG_LOOP);
 }
-
-
 
 
 static void bsp_evt_handler(bsp_event_t evt)
 {
-    void (* const demos[])(void) =
+    void(*const demos[]) (void) =
     {
         demo1,
         demo2,
@@ -556,14 +549,23 @@ static void bsp_evt_handler(bsp_event_t evt)
 
     demos[demo_idx]();
 }
+
+
 static void init_bsp()
 {
-    APP_ERROR_CHECK(nrf_drv_clock_init());
+    uint32_t err_code;
+
+    err_code = nrf_drv_clock_init();
+    APP_ERROR_CHECK(err_code);
     nrf_drv_clock_lfclk_request(NULL);
 
-    APP_ERROR_CHECK(app_timer_init());
-    APP_ERROR_CHECK(bsp_init(BSP_INIT_BUTTONS, bsp_evt_handler));
-    APP_ERROR_CHECK(bsp_buttons_enable());
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
+    err_code = bsp_init(BSP_INIT_BUTTONS,
+                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), bsp_evt_handler);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = bsp_buttons_enable();
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -582,7 +584,8 @@ int main(void)
 {
     init_bsp();
 
-    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    uint32_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
     NRF_LOG_INFO("PWM example\r\n");
 
@@ -598,7 +601,6 @@ int main(void)
         // Clear the event register.
         __SEV();
         __WFE();
-
         NRF_LOG_FLUSH();
     }
 }

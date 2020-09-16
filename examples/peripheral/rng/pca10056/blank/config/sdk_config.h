@@ -156,13 +156,6 @@
 #define RNG_CONFIG_DEBUG_COLOR 0
 #endif
 
-// <q> RNG_CONFIG_RANDOM_NUMBER_LOG_ENABLED  - Enables logging of random numbers.
- 
-
-#ifndef RNG_CONFIG_RANDOM_NUMBER_LOG_ENABLED
-#define RNG_CONFIG_RANDOM_NUMBER_LOG_ENABLED 0
-#endif
-
 #endif //RNG_CONFIG_LOG_ENABLED
 // </e>
 
@@ -346,13 +339,6 @@
 
 #ifndef NRF_QUEUE_ENABLED
 #define NRF_QUEUE_ENABLED 1
-#endif
-
-// <q> NRF_STRERROR_ENABLED  - nrf_strerror - Library for converting error code to string.
- 
-
-#ifndef NRF_STRERROR_ENABLED
-#define NRF_STRERROR_ENABLED 1
 #endif
 
 // </h> 

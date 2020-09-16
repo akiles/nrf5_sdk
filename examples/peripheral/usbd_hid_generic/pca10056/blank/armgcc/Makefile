@@ -17,7 +17,6 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
   $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
   $(SDK_ROOT)/components/libraries/fifo/app_fifo.c \
-  $(SDK_ROOT)/components/libraries/scheduler/app_scheduler.c \
   $(SDK_ROOT)/components/libraries/timer/app_timer.c \
   $(SDK_ROOT)/components/libraries/uart/app_uart_fifo.c \
   $(SDK_ROOT)/components/libraries/usbd/class/hid/app_usbd_hid.c \
@@ -28,8 +27,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/hardfault/nrf52/handler/hardfault_handler_gcc.c \
   $(SDK_ROOT)/components/libraries/hardfault/hardfault_implementation.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
-  $(SDK_ROOT)/components/libraries/queue/nrf_queue.c \
-  $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
+  $(SDK_ROOT)/components/libraries/util/sdk_errors.c \
   $(SDK_ROOT)/components/libraries/usbd/app_usbd.c \
   $(SDK_ROOT)/components/libraries/usbd/app_usbd_core.c \
   $(SDK_ROOT)/components/libraries/usbd/app_usbd_string_desc.c \
@@ -56,10 +54,8 @@ INC_FOLDERS += \
   $(PROJ_DIR)/config \
   $(SDK_ROOT)/components \
   ../config \
-  $(SDK_ROOT)/components/libraries/scheduler \
-  $(SDK_ROOT)/components/libraries/queue \
+  $(PROJ_DIR) \
   $(SDK_ROOT)/components/libraries/fifo \
-  $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/drivers_nrf/delay \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/util \
@@ -77,7 +73,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/button \
   $(SDK_ROOT)/components/libraries/timer \
   $(SDK_ROOT)/components/libraries/usbd \
-  $(PROJ_DIR) \
   $(SDK_ROOT)/components/drivers_nrf/gpiote \
   $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/drivers_nrf/power \
@@ -98,12 +93,12 @@ INC_FOLDERS += \
 LIB_FILES += \
 
 # C flags common to all targets
-CFLAGS += -DBOARD_PCA10056
-CFLAGS += -DCONFIG_GPIO_AS_PINRESET
-CFLAGS += -DDEBUG
-CFLAGS += -DDEBUG_NRF
 CFLAGS += -DNRF52840_XXAA
 CFLAGS += -DSWI_DISABLE0
+CFLAGS += -DCONFIG_GPIO_AS_PINRESET
+CFLAGS += -DDEBUG
+CFLAGS += -DBOARD_PCA10056
+CFLAGS += -DDEBUG_NRF
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS +=  -Wall -Werror -O3 -g3
@@ -117,12 +112,12 @@ CXXFLAGS += \
 
 # Assembler flags common to all targets
 ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DBOARD_PCA10056
-ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
-ASMFLAGS += -DDEBUG
-ASMFLAGS += -DDEBUG_NRF
 ASMFLAGS += -DNRF52840_XXAA
 ASMFLAGS += -DSWI_DISABLE0
+ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
+ASMFLAGS += -DDEBUG
+ASMFLAGS += -DBOARD_PCA10056
+ASMFLAGS += -DDEBUG_NRF
 
 # Linker flags
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)

@@ -1,42 +1,15 @@
-/**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
- * 
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 
- * 2. Redistributions in binary form, except as embedded into a Nordic
- *    Semiconductor ASA integrated circuit in a product or a software update for
- *    such product, must reproduce the above copyright notice, this list of
- *    conditions and the following disclaimer in the documentation and/or other
- *    materials provided with the distribution.
- * 
- * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
- *    contributors may be used to endorse or promote products derived from this
- *    software without specific prior written permission.
- * 
- * 4. This software, with or without modification, must only be used with a
- *    Nordic Semiconductor ASA integrated circuit.
- * 
- * 5. Any software provided in binary form under this license must not be reverse
- *    engineered, decompiled, modified and/or disassembled.
- * 
- * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
- * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+/* Copyright (c) 2015 Nordic Semiconductor. All Rights Reserved.
+ *
+ * The information contained herein is property of Nordic Semiconductor ASA.
+ * Terms and conditions of usage are described in detail in NORDIC
+ * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
+ *
+ * Licensees are granted free, non-transferable use of the information. NO
+ * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
+ * the file.
+ *
  */
+
 /** @file
  * @defgroup nrf_drv_csense_example_main main.c
  * @{
@@ -59,17 +32,17 @@
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 
+/* Time between RTC interrupts. */
+#define APP_TIMER_TICKS_TIMEOUT 2000
+
 /* Pin used to measure capacitor charging time. */
-#if USE_COMP == 0
-#ifdef ADC_PRESENT
+#ifdef NRF51
 #define OUTPUT_PIN 30
-#elif defined(SAADC_PRESENT)
-#define OUTPUT_PIN 26
-#endif
 #endif
 
-/* Time between RTC interrupts. */
-#define APP_TIMER_TICKS_TIMEOUT APP_TIMER_TICKS(50)
+/* Timer initialization parameters. */
+#define OP_QUEUES_SIZE          4
+#define APP_TIMER_PRESCALER     0
 
 /* Analog inputs. */
 #define AIN_1                   1
@@ -100,7 +73,7 @@ volatile uint32_t max_value[2];
 volatile uint32_t min_value[2];
 bool conf_mode;
 
-/**
+/** 
  * @brief Function for starting the internal LFCLK XTAL oscillator.
  *
  * Note that when using a SoftDevice, LFCLK is always on.
@@ -187,7 +160,7 @@ void csense_initialize(void)
 
     nrf_drv_csense_config_t csense_config = { 0 };
 
-#if USE_COMP == 0
+#ifdef NRF51
     csense_config.output_pin = OUTPUT_PIN;
 #endif
 
@@ -222,7 +195,7 @@ static void csense_timeout_handler(void * p_context)
 void start_app_timer(void)
 {
     ret_code_t err_code;
-
+        
     /* APP_TIMER definition for csense example. */
     APP_TIMER_DEF(timer_0);
 
@@ -241,13 +214,13 @@ void configure_thresholds(void)
     ret_code_t err_code;
     uint32_t new_th_pad_1;
     uint32_t new_th_pad_2;
-
+    
     for (int i = 0; i < 2; i++)
     {
         max_value[i] = 0;
         min_value[i] = UINT32_MAX;
     }
-
+    
     NRF_LOG_INFO("Touch both pads.\r\n");
     NRF_LOG_FLUSH();
     nrf_delay_ms(1000);
@@ -259,15 +232,15 @@ void configure_thresholds(void)
     nrf_delay_ms(1000);
     NRF_LOG_INFO("1...\r\n");
     NRF_LOG_FLUSH();
-
-    err_code = nrf_drv_csense_sample();
+    
+    err_code = nrf_drv_csense_sample();   
     if (err_code != NRF_SUCCESS)
     {
         NRF_LOG_INFO("Busy.\n");
         return;
     }
     while (nrf_drv_csense_is_busy());
-
+    
     NRF_LOG_INFO("Release both pads.\r\n");
     NRF_LOG_FLUSH();
     nrf_delay_ms(1000);
@@ -279,8 +252,8 @@ void configure_thresholds(void)
     nrf_delay_ms(1000);
     NRF_LOG_INFO("1...\r\n");
     NRF_LOG_FLUSH();
-
-    err_code = nrf_drv_csense_sample();
+    
+    err_code = nrf_drv_csense_sample();   
     if (err_code != NRF_SUCCESS)
     {
         NRF_LOG_INFO("Busy.\n");
@@ -288,7 +261,7 @@ void configure_thresholds(void)
     }
     while (nrf_drv_csense_is_busy());
 
-    nrf_delay_ms(100);
+    nrf_delay_ms(100);    
     new_th_pad_1 = max_value[PAD_ID_0];
     new_th_pad_1 += min_value[PAD_ID_0];
     new_th_pad_1 /= 2;
@@ -309,28 +282,28 @@ int main(void)
 {
     ret_code_t err_code;
     char config;
-
+    
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
-
+    
     bsp_board_leds_init();
 
     err_code = clock_config();
     APP_ERROR_CHECK(err_code);
+    
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, OP_QUEUES_SIZE, NULL);
 
-    err_code = app_timer_init();
-    APP_ERROR_CHECK(err_code);
-
+    
     NRF_LOG_INFO("Capacitive sensing driver example.\r\n");
-
-    csense_initialize();
+    
+    csense_initialize();    
 
     NRF_LOG_INFO("Do you want to enter configuration mode to set thresholds?(y/n)\r\n");
     NRF_LOG_FLUSH();
-
+    
     config = NRF_LOG_GETCHAR();
-
+    
     conf_mode = (config == 'y') ? true : false;
-
+    
     if (conf_mode)
     {
         configure_thresholds();
@@ -338,8 +311,8 @@ int main(void)
     }
 
     NRF_LOG_INFO("Module ready.\r\n");
-
-    start_app_timer();
+    
+    start_app_timer();    
 
     while (1)
     {
