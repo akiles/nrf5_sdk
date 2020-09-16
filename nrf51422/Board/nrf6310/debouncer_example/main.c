@@ -90,7 +90,7 @@ int main(void)
     __enable_irq();
 
     // Configure pins 0-7 as inputs
-    nrf_gpio_range_cfg_input(BUTTON_START, BUTTON_STOP, NRF_GPIO_PIN_NOPULL);
+    nrf_gpio_range_cfg_input(BUTTON_START, BUTTON_STOP, BUTTON_PULL);
 
     // Configure pins 8-15 as outputs
     nrf_gpio_range_cfg_output(LED_START, LED_STOP);

@@ -83,14 +83,15 @@ void simple_uart_config(  uint8_t rts_pin_number,
                           uint8_t txd_pin_number,
                           uint8_t cts_pin_number,
                           uint8_t rxd_pin_number,
-                          bool hwfc)
+                          bool    hwfc)
 {
+/** @snippet [Configure UART RX and TX pin] */
   nrf_gpio_cfg_output(txd_pin_number);
   nrf_gpio_cfg_input(rxd_pin_number, NRF_GPIO_PIN_NOPULL);  
 
   NRF_UART0->PSELTXD = txd_pin_number;
   NRF_UART0->PSELRXD = rxd_pin_number;
-
+/** @snippet [Configure UART RX and TX pin] */
   if (hwfc)
   {
     nrf_gpio_cfg_output(rts_pin_number);

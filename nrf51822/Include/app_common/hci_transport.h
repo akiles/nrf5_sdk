@@ -52,8 +52,8 @@
  * will collide in the TX pipeline having the end result that retransmitted application TX packet 
  * will be excluded from the TX pipeline.
  * - Processing of the acknowledgement number from RX application packets:
- * Acknowledgement number is not pocessed from the RX application packets having the end result that 
- * unnecessary application packet retransmissions can occur.
+ * Acknowledgement number is not processed from the RX application packets having the end result 
+ * that unnecessary application packet retransmissions can occur.
  *
  * The application TX packet processing flow is illustrated by the statemachine below. 
  *

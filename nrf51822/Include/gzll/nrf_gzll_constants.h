@@ -8,7 +8,7 @@
  * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
  * the file.
  *
- * $LastChangedRevision: 25851 $
+ * $LastChangedRevision: 32956 $
  */
 
 
@@ -35,6 +35,7 @@
 #define NRF_GZLL_HIGH_IRQ_PRIORITY 0        ///< Interrupt priority the Gazell timer and the radio
 #define NRF_GZLL_LOW_IRQ_PRIORITY 1         ///< Interrupt priority for Gazell callback functions.
 
+#ifndef USE_SD_HW_RESOURCES
 #define NRF_GZLL_SWI_IRQn SWI0_IRQn              ///< Software interrupt # used for callback functions.
 #define NRF_GZLL_SWI_IRQ_HANDLER SWI0_IRQHandler ///< Software interrupt handler used for callback functions.
 
@@ -57,6 +58,33 @@
 
 #define NRF_GZLL_PPI_CHEN_MSK_0_AND_1 (0x03)        ///< Channel enable/disable mask for PPI endpoint 0 and 1.
 #define NRF_GZLL_PPI_CHEN_MSK_2 (0x04)              ///< Channel enable/disable mask for PPI endpoint 2.
+
+#else
+
+#define NRF_GZLL_SWI_IRQn SWI1_IRQn              ///< Software interrupt # used for callback functions.
+#define NRF_GZLL_SWI_IRQ_HANDLER SWI1_IRQHandler ///< Software interrupt handler used for callback functions.
+
+#define NRF_GZLL_TIMER NRF_TIMER0                               ///< Timer to be used as flywheel timer.
+#define NRF_GZLL_TIMER_PERPOWER_Msk POWER_PERPOWER_TIMER0_Msk   ///< PERPOWER mask for the timer.
+#define NRF_GZLL_TIMER_IRQn TIMER0_IRQn                         ///< Interrupt # for the timer.
+#define NRF_GZLL_TIMER_IRQ_HANDLER TIMER0_IRQHandler            ///< Interrupt handler for the timer.           
+
+// In addition, Gazell uses the radio peripheral and radio interrupts.
+               
+/*
+ * PPI configuration 
+ */
+#define NRF_GZLL_PPI_EEP0 (NRF_PPI -> CH8_EEP)      ///< Gazell PPI event endpoint 0
+#define NRF_GZLL_PPI_TEP0 (NRF_PPI -> CH8_TEP)      ///< Gazell PPI task endpoint 0
+#define NRF_GZLL_PPI_EEP1 (NRF_PPI -> CH9_EEP)      ///< Gazell PPI event endpoint 1
+#define NRF_GZLL_PPI_TEP1 (NRF_PPI -> CH9_TEP)      ///< Gazell PPI task endpoint 1
+#define NRF_GZLL_PPI_EEP2 (NRF_PPI -> CH10_EEP)      ///< Gazell PPI event endpoint 2
+#define NRF_GZLL_PPI_TEP2 (NRF_PPI -> CH10_TEP)      ///< Gazell PPI task endpoint 2
+
+#define NRF_GZLL_PPI_CHEN_MSK_0_AND_1 (0x300)        ///< Channel enable/disable mask for PPI endpoint 0 and 1.
+#define NRF_GZLL_PPI_CHEN_MSK_2 (0x400)              ///< Channel enable/disable mask for PPI endpoint 2.
+
+#endif
 
 #define NRF_GZLL_CONST_PIPE_COUNT 8                 ///< Number of TX pipes (at least one for each Device-Host pairs).
 #define NRF_GZLL_CONST_FIFO_LENGTH 3                ///< Maximum number of packets allowed in a TX or RX FIFO.

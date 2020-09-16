@@ -24,6 +24,8 @@
 #include "spi_master.h"
 #include "nrf_delay.h"
 #include "common.h"
+#include "nrf_gpio.h"
+#include "boards.h"
 #include "spi_master_config.h"
 
 static uint8_t tx_data[TX_RX_MSG_LENGTH]; /**< SPI TX buffer. */
@@ -112,8 +114,8 @@ int main(void)
 {
     bool ret0, ret1;
 
-    NRF_GPIO->DIRSET = (1UL << ERROR_PIN_SPI0);
-    NRF_GPIO->DIRSET = (1UL << ERROR_PIN_SPI1);
+    nrf_gpio_pin_dir_set(ERROR_PIN_SPI0, NRF_GPIO_PIN_DIR_OUTPUT);
+    nrf_gpio_pin_dir_set(ERROR_PIN_SPI1, NRF_GPIO_PIN_DIR_OUTPUT);
     while(true)
     {
         // SPI0

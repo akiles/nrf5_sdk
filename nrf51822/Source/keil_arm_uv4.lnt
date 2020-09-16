@@ -1,12 +1,11 @@
 C:\Keil\ARM\BIN\CO-RV.LNT
 
--iC:\Keil\ARM\INC\
--ic:\Keil\ARM\RV31\INC
 -ic:\Keil\ARM\ARMCC\include
--iC:\Keil\ARM\CMSIS\Include
+-iC:\Keil\ARM\Pack\ARM\CMSIS\3.20.4\CMSIS\Include
 
 
 +fdi
++fan
 +macros // Double maximum allowed macro size
 -w2
 -wlib(2)

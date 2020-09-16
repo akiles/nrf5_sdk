@@ -27,7 +27,7 @@
 #include "nrf51.h"
 #include "app_error.h"
 
-/**@brief The interrupt priorities available to the application while the softdevice is active. */
+/**@brief The interrupt priorities available to the application while the SoftDevice is active. */
 typedef enum
 {
     APP_IRQ_PRIORITY_HIGH = 1,
@@ -78,123 +78,6 @@ typedef struct
     uint16_t  size;                 /**< Number of array entries. */
     uint8_t * p_data;               /**< Pointer to array entries. */
 } uint8_array_t;
-
-/**@cond NO_DOXYGEN */
-#define INTERN_GPIO_PIN_CONFIG(PIN_NO, IO_DIR, IO_INPUT, IO_PULL, IO_DRIVE, IO_SENSE) \
-    do{                                                                               \
-        NRF_GPIO->PIN_CNF[(PIN_NO)] =                                                 \
-            ((IO_DIR)   << GPIO_PIN_CNF_DIR_Pos)   |                                  \
-            ((IO_INPUT) << GPIO_PIN_CNF_INPUT_Pos) |                                  \
-            ((IO_PULL)  << GPIO_PIN_CNF_PULL_Pos)  |                                  \
-            ((IO_DRIVE) << GPIO_PIN_CNF_DRIVE_Pos) |                                  \
-            ((IO_SENSE) << GPIO_PIN_CNF_SENSE_Pos);                                   \
-    } while (0)
-/**@endcond */
-
-/**@brief Macro to configure an I/O.
- *
- * @details This macro configures a given I/O to input or output with pullup/buffer configuration.
- *
- * @param[in]  PIN_NO     I/O pin to configure.
- * @param[in]  IO_DIR     I/O pin direction.
- * @param[in]  IO_INPUT   Connect or disconnect input path.
- * @param[in]  IO_PULL    Pull-up or -down configuration.
- * @param[in]  IO_DRIVE   Drive configuration.
- * @param[in]  IO_SENSE   Pin sensing mechanism.
- */
-#define GPIO_PIN_CONFIG(PIN_NO, IO_DIR, IO_INPUT, IO_PULL, IO_DRIVE, IO_SENSE) \
-            INTERN_GPIO_PIN_CONFIG(PIN_NO, IO_DIR, IO_INPUT, IO_PULL, IO_DRIVE, IO_SENSE)
-
-/**@brief Configure a PIN to be used as a LED.
- *
- * @param[in]  PIN_NO  Input pin to configure.
- */
-#define GPIO_LED_CONFIG(PIN_NO)                       \
-    do                                                \
-    {                                                 \
-        GPIO_PIN_CONFIG(PIN_NO,                       \
-                        GPIO_PIN_CNF_DIR_Output,      \
-                        GPIO_PIN_CNF_INPUT_Disconnect,\
-                        GPIO_PIN_CNF_PULL_Disabled,   \
-                        GPIO_PIN_CNF_DRIVE_S0S1,      \
-                        GPIO_PIN_CNF_SENSE_Disabled); \
-    } while (0)
-
-/**@brief Configure a PIN to be used as a debug pin (e.g. to be monitored using a logic analyzer).
- *
- * @param[in]  PIN_NO  Input pin to configure.
- */
-#define GPIO_DEBUG_PIN_CONFIG(PIN_NO)                 \
-    do                                                \
-    {                                                 \
-        GPIO_PIN_CONFIG(PIN_NO,                       \
-                        GPIO_PIN_CNF_DIR_Output,      \
-                        GPIO_PIN_CNF_INPUT_Disconnect,\
-                        GPIO_PIN_CNF_PULL_Disabled,   \
-                        GPIO_PIN_CNF_DRIVE_S0S1,      \
-                        GPIO_PIN_CNF_SENSE_Disabled); \
-    } while (0)
-
-/**@brief Configure a PIN to be used as a Button.
- *
- * @param[in]  PIN_NO  Pin to configure.
- */
-#define GPIO_BUTTON_CONFIG(PIN_NO)                    \
-    do                                                \
-    {                                                 \
-        GPIO_PIN_CONFIG(PIN_NO,                       \
-                        GPIO_PIN_CNF_DIR_Input,       \
-                        GPIO_PIN_CNF_INPUT_Connect,   \
-                        GPIO_PIN_CNF_PULL_Disabled,   \
-                        GPIO_PIN_CNF_DRIVE_S0S1,      \
-                        GPIO_PIN_CNF_SENSE_Disabled); \
-    } while (0)
-
-/**@brief Configure a PIN to be used as a Button and a Wakeup source.
- *
- * @param[in]  PIN_NO  Pin to configure.
- */
-#define GPIO_WAKEUP_BUTTON_CONFIG(PIN_NO)             \
-    do                                                \
-    {                                                 \
-        GPIO_PIN_CONFIG(PIN_NO,                       \
-                        GPIO_PIN_CNF_DIR_Input,       \
-                        GPIO_PIN_CNF_INPUT_Connect,   \
-                        GPIO_PIN_CNF_PULL_Disabled,   \
-                        GPIO_PIN_CNF_DRIVE_S0S1,      \
-                        GPIO_PIN_CNF_SENSE_Low);      \
-    } while (0)
-
-/**@brief Configure a PIN to be used as a Button, with a pullup resistor enabled.
- *
- * @param[in]  PIN_NO  Pin to configure.
- */
-#define GPIO_BUTTON_WITH_PULLUP_CONFIG(PIN_NO)        \
-    do                                                \
-    {                                                 \
-        GPIO_PIN_CONFIG(PIN_NO,                       \
-                        GPIO_PIN_CNF_DIR_Input,       \
-                        GPIO_PIN_CNF_INPUT_Connect,   \
-                        GPIO_PIN_CNF_PULL_Pullup,     \
-                        GPIO_PIN_CNF_DRIVE_S0S1,      \
-                        GPIO_PIN_CNF_SENSE_Disabled); \
-    } while (0)
-
-/**@brief Configure a PIN to be used as a Button and a Wakeup source, with a pullup resistor
- *        enabled.
- *
- * @param[in]  PIN_NO  Pin to configure.
- */
-#define GPIO_WAKEUP_BUTTON_WITH_PULLUP_CONFIG(PIN_NO) \
-    do                                                \
-    {                                                 \
-        GPIO_PIN_CONFIG(PIN_NO,                       \
-                        GPIO_PIN_CNF_DIR_Input,       \
-                        GPIO_PIN_CNF_INPUT_Connect,   \
-                        GPIO_PIN_CNF_PULL_Pullup,     \
-                        GPIO_PIN_CNF_DRIVE_S0S1,      \
-                        GPIO_PIN_CNF_SENSE_Low);      \
-    } while (0)
 
 /**@brief Macro for entering a critical region.
  *

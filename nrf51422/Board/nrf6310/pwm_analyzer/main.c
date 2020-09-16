@@ -28,7 +28,7 @@
 #include "nrf_gpio.h"
 #include "boards.h"
 
-#define INPUT_PIN_NUMBER (BUTTON0)          /**< Pin number for the input. */
+#define INPUT_PIN_NUMBER (BUTTON_0)          /**< Pin number for the input. */
 #define DUTY_CYCLE_SCALE_VALUE (256UL)      /**< Defines the upper limit of the duty cycle value. */
 
 static void timer1_init(void);
@@ -117,7 +117,7 @@ static void gpiote_init(void)
     // Configure port1 (pins 8-15) as outputs for showing duty cycle.
     nrf_gpio_range_cfg_output(LED_START, LED_STOP);
 
-    nrf_gpio_cfg_input(INPUT_PIN_NUMBER, NRF_GPIO_PIN_NOPULL);
+    nrf_gpio_cfg_sense_input(INPUT_PIN_NUMBER, BUTTON_PULL, NRF_GPIO_PIN_SENSE_LOW);
 
     // Enable interrupt on input 1 event.
     NRF_GPIOTE->INTENSET = (GPIOTE_INTENSET_IN1_Enabled << GPIOTE_INTENSET_IN1_Pos);

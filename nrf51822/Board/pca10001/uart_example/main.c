@@ -30,7 +30,7 @@
 
 //#define ENABLE_LOOPBACK_TEST           /*!< if defined, then this example will be a loopback test, which means that TX should be connected to RX to get data loopback */
 
-#define ERROR_PIN                (LED0)   /*!< gpio pin number to show error if loopback is enabled */
+#define ERROR_PIN                (LED_0)   /*!< gpio pin number to show error if loopback is enabled */
 #define MAX_TEST_DATA_BYTES      (15U) /*!< max number of test bytes to be used for tx and rx */
 
 #ifndef ENABLE_LOOPBACK_TEST
@@ -80,14 +80,14 @@ static void uart_loopback_test()
     bool status;
     simple_uart_put(tx_data[i]);
     if(!simple_uart_get_with_timeout(2, &rx_data[i]))
-	{
-	  show_error();
-	}
+    {
+        show_error();
+    }
   }
-	
+
   for(uint8_t i = 0; i < MAX_TEST_DATA_BYTES; i++)
   {
-	  if ((rx_data[i] != tx_data[i]))
+    if ((rx_data[i] != tx_data[i]))
     {
       show_error();
     }

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['calibration_5fnotif_5fevent_5ft',['calibration_notif_event_t',['../group__ant__bicycle__power__minimum__receiver.html#gae8b6845af62186424aa654e6e48c76b8',1,'calibration_notif_event_t():&#160;bicycle_power_rx.h'],['../group__foftt__ant__bicycle__power__minimum__receiver.html#gae8b6845af62186424aa654e6e48c76b8',1,'calibration_notif_event_t():&#160;bicycle_power_rx.h']]]
+  ['calibration_5fnotif_5fevent_5ft',['calibration_notif_event_t',['../a01038.html#gae8b6845af62186424aa654e6e48c76b8',1,'bicycle_power_rx.h']]],
+  ['cherry8x16_5fstatus_5ft',['cherry8x16_status_t',['../a01014.html#gabb88a2cc8f85ba70003398a2e9e26a5e',1,'cherry8x16.h']]]
 ];

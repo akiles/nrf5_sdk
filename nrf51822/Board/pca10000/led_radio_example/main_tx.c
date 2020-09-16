@@ -24,7 +24,7 @@
 
 #include <stdint.h>
 #include "radio_config.h"
-#include "nrf_gpio.h"
+#include "nrf.h"
 #include "simple_uart.h"
 #include "boards.h"
 

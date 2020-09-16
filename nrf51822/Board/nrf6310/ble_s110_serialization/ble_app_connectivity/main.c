@@ -27,15 +27,17 @@
 #include "nrf51_bitfields.h"
 #include "nrf_gpio.h"
 #include "ble.h"
-#include "ble_stack_handler.h"
-#include "ble_nrf6310_pins.h"
+#include "softdevice_handler.h"
+#include "boards.h"
 #include "ble_debug_assert_handler.h"
 #include "app_error.h"
 #include "app_gpiote.h"
-#include "hci_transport.h"
+#include "hal_transport.h"
 #include "ble_rpc_event_encoder.h"
 #include "ble_rpc_cmd_decoder.h"
 #include "app_timer.h"
+
+#define ASSERT_LED_PIN_NO                  LED_7                                          /**< Is on when application has asserted. */
 
 #define APP_TIMER_PRESCALER                0                                              /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_MAX_TIMERS               1                                              /**< Maximum number of simultaneously created timers. */
@@ -60,7 +62,7 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
 {
     nrf_gpio_pin_set(ASSERT_LED_PIN_NO);
 
-    // This call can be used for debug purposes during development of an application.
+    // This call can be used for debug purposes during application development.
     // @note CAUTION: Activating this code will write the stack to flash on an error.
     //                This function should NOT be used in a final product.
     //                It is intended STRICTLY for development/debugging purposes.
@@ -91,7 +93,7 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
  */
 static void power_manage(void)
 {
-    uint32_t err_code = sd_app_event_wait();
+    uint32_t err_code = sd_app_evt_wait();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -117,7 +119,7 @@ void transport_evt_handle(hci_transport_evt_t event)
  */
 static void leds_init(void)
 {
-    GPIO_LED_CONFIG(ASSERT_LED_PIN_NO);
+    nrf_gpio_cfg_output(ASSERT_LED_PIN_NO);
 }
 
 /**@brief Callback function for transport layer to indicate when it 
@@ -136,23 +138,24 @@ void transport_tx_complete_handle(hci_transport_tx_done_result_t result)
  */
 int main(void)
 {
+    uint32_t err_code;
+    
     leds_init();
     
     APP_SCHED_INIT(SCHED_MAX_EVENT_DATA_SIZE, SCHED_QUEUE_SIZE);
     
-    // Initialize SoftDevice and enable the BLE event interrupt.
-    BLE_STACK_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM,
-                           BLE_L2CAP_MTU_DEF,
-                           ble_rpc_event_handle,
-                           true);
+    // Initialize SoftDevice.
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, true);
     
-    uint32_t err_code;
-    
+    // Subscribe for BLE events.
+    err_code = softdevice_ble_evt_handler_set(ble_rpc_event_handle);
+    APP_ERROR_CHECK(err_code);
+
     // Configure GPIOTE with one user for the UART flow control feature. 
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
     
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
-    
+
     // Open transport layer.
     err_code = hci_transport_open();
     APP_ERROR_CHECK(err_code);

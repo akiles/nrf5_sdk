@@ -30,7 +30,7 @@
 #include "nrf_gpiote.h"
 #include "boards.h"
 
-#define PWM_OUTPUT_PIN_NUMBER (LED0)    /**< Pin number for PWM output. */
+#define PWM_OUTPUT_PIN_NUMBER (LED_0)    /**< Pin number for PWM output. */
 #define TIMER_PRESCALER       (4)       /**< Prescaler setting for timers. */
 #define LED_INTENSITY_HIGH    (224U)    /**< High intensity. */
 #define LED_INTENSITY_LOW     (32U)     /**< Low intensity. */
@@ -89,11 +89,11 @@ static void gpiote_init(void)
     NRF_GPIO->DIRCLR    = 0x000000FFUL;
 
     /* Configuring Button 0 as input */
-    nrf_gpio_cfg_input(BUTTON0, NRF_GPIO_PIN_NOPULL);
+    nrf_gpio_cfg_input(BUTTON_0, BUTTON_PULL);
 
     /* Configuring Button 1 as input. */
     /*lint -e{845} // A zero has been given as right argument to operator '|'" */
-    nrf_gpio_cfg_input(BUTTON1, NRF_GPIO_PIN_NOPULL);
+    nrf_gpio_cfg_input(BUTTON_1, BUTTON_PULL);
 
     /* Configuring Pin PWM_OUTPUT_PIN_NUMBER as output to be used for the PWM waveform. */
     nrf_gpio_cfg_output(PWM_OUTPUT_PIN_NUMBER);
@@ -134,11 +134,11 @@ void TIMER2_IRQHandler(void)
         NRF_TIMER2->EVENTS_COMPARE[2] = 0;
     }
     // Process buttons.
-    if (nrf_gpio_pin_read(BUTTON1) == 0)
+    if (nrf_gpio_pin_read(BUTTON_1) == 0)
     {
         pwm_set(LED_INTENSITY_HIGH);
     }
-    else if (nrf_gpio_pin_read(BUTTON0) == 0)
+    else if (nrf_gpio_pin_read(BUTTON_0) == 0)
     {
         pwm_set(LED_INTENSITY_LOW);
     }

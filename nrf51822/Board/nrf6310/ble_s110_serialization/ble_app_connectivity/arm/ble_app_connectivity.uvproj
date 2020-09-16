@@ -13,7 +13,7 @@
       <TargetOption>
         <TargetCommonOption>
           <Device>nRF51822_xxAA</Device>
-          <Vendor>Nordic</Vendor>
+          <Vendor>Nordic Semiconductor</Vendor>
           <Cpu>IRAM(0x20000000-0x20003FFF) IROM(0-0x3FFFF) CLOCK(16000000) CPUTYPE("Cortex-M0") ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"Device\Nordic\nRF51822\Source\templates\arm\arm_startup_nrf51.s"("Nordic Semiconductor nRF51822 Startup Code")</StartupFile>
@@ -165,6 +165,7 @@
             <Capability>1</Capability>
             <DriverSelection>4099</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>Segger\JL2CM3.dll</Flash2>
           <Flash3></Flash3>
           <Flash4></Flash4>
@@ -348,9 +349,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define>NRF51, BOARD_NRF6310, DEBUG_NRF_USER</Define>
+              <Define>NRF51, BOARD_NRF6310, DEBUG_NRF_USER, BLE_STACK_SUPPORT_REQD</Define>
               <Undefine></Undefine>
-              <IncludePath>..;..\..\..\..\..\Include;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\rpc;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\ble\softdevice</IncludePath>
+              <IncludePath>..;..\..\..\..\..\Include;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\rpc;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110;..\..\..\..\..\Include\sd_common</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -432,9 +433,9 @@
               <FilePath>..\..\..\..\..\Source\ble\ble_debug_assert_handler.c</FilePath>
             </File>
             <File>
-              <FileName>ble_stack_handler.c</FileName>
+              <FileName>softdevice_handler.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_stack_handler.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\sd_common\softdevice_handler.c</FilePath>
             </File>
             <File>
               <FileName>app_scheduler.c</FileName>
@@ -528,7 +529,7 @@
       <TargetOption>
         <TargetCommonOption>
           <Device>nRF51822_xxAB</Device>
-          <Vendor>Nordic</Vendor>
+          <Vendor>Nordic Semiconductor</Vendor>
           <Cpu>IRAM(0x20000000-0x20003FFF) IROM(0-0x3FFFF) CLOCK(16000000) CPUTYPE("Cortex-M0") ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"Device\Nordic\nRF51822\Source\templates\arm\arm_startup_nrf51.s"("Nordic Semiconductor nRF51822 Startup Code")</StartupFile>
@@ -680,6 +681,7 @@
             <Capability>1</Capability>
             <DriverSelection>4099</DriverSelection>
           </Flash1>
+          <bUseTDR>0</bUseTDR>
           <Flash2>Segger\JL2CM3.dll</Flash2>
           <Flash3></Flash3>
           <Flash4></Flash4>
@@ -863,9 +865,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define>NRF51, BOARD_NRF6310, DEBUG_NRF_USER</Define>
+              <Define>NRF51, BOARD_NRF6310, DEBUG_NRF_USER, BLE_STACK_SUPPORT_REQD</Define>
               <Undefine></Undefine>
-              <IncludePath>..;..\..\..\..\..\Include;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\rpc;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\ble\softdevice</IncludePath>
+              <IncludePath>..;..\..\..\..\..\Include;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\rpc;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110;..\..\..\..\..\Include\sd_common</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -947,9 +949,9 @@
               <FilePath>..\..\..\..\..\Source\ble\ble_debug_assert_handler.c</FilePath>
             </File>
             <File>
-              <FileName>ble_stack_handler.c</FileName>
+              <FileName>softdevice_handler.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_stack_handler.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\sd_common\softdevice_handler.c</FilePath>
             </File>
             <File>
               <FileName>app_scheduler.c</FileName>

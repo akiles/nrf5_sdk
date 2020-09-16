@@ -1,13 +1,11 @@
 var searchData=
 [
-  ['uart_20module',['UART module',['../group__app__uart.html',1,'']]],
-  ['utility_20functions_20and_20definitions',['Utility Functions and Definitions',['../group__app__util.html',1,'']]],
-  ['uart_20example',['UART Example',['../group__foftt__uart__example.html',1,'']]],
-  ['uicr_20config_20example',['UICR config example',['../group__foftt__uicr__config__example.html',1,'']]],
-  ['user_20guides',['User Guides',['../group__nrf518__user__guides.html',1,'']]],
-  ['uart_20example',['UART Example',['../group__uart__example.html',1,'']]],
-  ['uart_20example',['UART Example',['../group__uart__example__pca10000.html',1,'']]],
-  ['uart_20example',['UART Example',['../group__uart__example__pca10001.html',1,'']]],
-  ['uart_20example',['UART Example',['../group__uart__example__pca10003.html',1,'']]],
-  ['uicr_20config_20example',['UICR config example',['../group__uicr__config__example.html',1,'']]]
+  ['uart_20module',['UART module',['../a00938.html',1,'']]],
+  ['utility_20functions_20and_20definitions',['Utility Functions and Definitions',['../a00939.html',1,'']]],
+  ['user_20memory_20layout_20for_20queued_20writes',['User memory layout for Queued Writes',['../a01261.html',1,'']]],
+  ['user_20memory_20types',['User Memory Types',['../a01062.html',1,'']]],
+  ['user_20memory_20layout_20for_20queued_20writes',['User memory layout for Queued Writes',['../a01264.html',1,'']]],
+  ['user_20memory_20types',['User Memory Types',['../a01123.html',1,'']]],
+  ['user_20memory_20types',['User Memory Types',['../a01182.html',1,'']]],
+  ['utility_20apis',['Utility APIs',['../a01012.html',1,'']]]
 ];

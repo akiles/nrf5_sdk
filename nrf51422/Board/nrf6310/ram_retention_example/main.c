@@ -28,23 +28,24 @@
 #include "nrf_gpio.h"
 
 
+
 #define RAM_MEMORY_TEST_ADDRESS     (0x20002000UL)        /**< Address in RAM where test word (RAM_MEMORY_TEST_WORD) is written before System OFF and checked after System RESET.*/
 #define RAM_MEMORY_TEST_WORD        (0xFEEDBEEFUL)        /**< Test word that is written to RAM address RAM_MEMORY_TEST_ADDRESS. */
 #define RESET_MEMORY_TEST_BYTE      (0x0DUL)              /**< Known sequence written to a special register to check if this wake up is from System OFF. */
 #define MAX_TEST_ITERATIONS         (1)                   /**< Maximum number of iterations this example will run. */
 #define SUCCESS_OUTPUT_VALUE        (0xAB)                /**< If RAM retention is tested for MAX_TEST_ITERATIONS, this value will be given as output.*/
-#define PIN_GPIO_WAKEUP             (7)                   /**< GPIO pin configured to wake up system from System OFF on falling edge. It can be connected to a button which is high when not pressed. */
+#define PIN_GPIO_WAKEUP             (BUTTON_STOP)         /**< GPIO pin configured to wake up system from System OFF on falling edge. It can be connected to a button which is high when not pressed. */
 
 /** @brief Function for handling HardFaults. In case something went wrong
  * or System OFF did not work and reached the end of the program.
  */
 void HardFault_Handler()
 {
-    NRF_GPIO->OUT = 0;
+        nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT1, 0xFF);
 
     while(true)
     {
-        NRF_GPIO->OUT ^= (1UL << 8);
+        nrf_gpio_pin_toggle(LED_0);
         nrf_delay_ms(100);
     }
 }
@@ -54,12 +55,11 @@ void HardFault_Handler()
  */
 static void gpio_config(void)
 {
-    // Set Port 1 as output.
+    // Set board specific range as output.
     nrf_gpio_range_cfg_output(LED_START, LED_STOP);
 
     // This pin is used for waking up from System OFF and is active low, enabling sense capabilities.
-    nrf_gpio_cfg_input(PIN_GPIO_WAKEUP, NRF_GPIO_PIN_PULLUP);
-    NRF_GPIO->PIN_CNF[PIN_GPIO_WAKEUP] |= (GPIO_PIN_CNF_SENSE_Low << GPIO_PIN_CNF_SENSE_Pos);
+    nrf_gpio_cfg_sense_input(PIN_GPIO_WAKEUP, BUTTON_PULL, NRF_GPIO_PIN_SENSE_LOW);
 }
 
 
@@ -140,7 +140,7 @@ int main(void)
 
     // Write the known value to the known address in RAM, enable RAM retention, set System OFF, and wait
     // for GPIO wakeup from external source.
-	// The LED lights up to indicate that the system will go to System OFF with RAM retention enabled.
+    // The LED lights up to indicate that the system will go to System OFF with RAM retention enabled.
     // @note This loop is just to display that we are preparing for system OFF and is not needed in a real
     // application.
     for(uint32_t i = 0; i < 8; i++)

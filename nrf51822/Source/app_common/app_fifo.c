@@ -13,23 +13,22 @@
 #include "app_fifo.h"
 #include "app_util.h"
 
-
 #define FIFO_LENGTH (p_fifo->write_pos - p_fifo->read_pos)  /**< Macro for calculating the FIFO length. */
 
 
 uint32_t app_fifo_init(app_fifo_t * p_fifo, uint8_t * p_buf, uint16_t buf_size)
 {
-	// Check buffer for null pointer
-	if (p_buf == NULL)
-	{
-		return NRF_ERROR_NULL;
-	}
+    // Check buffer for null pointer.
+    if (p_buf == NULL)
+    {
+        return NRF_ERROR_NULL;
+    }
 
-	// Check that the buffer size is a power of two
-	if (!IS_POWER_OF_TWO(buf_size))
-	{
-		return NRF_ERROR_INVALID_LENGTH;
-	}
+    // Check that the buffer size is a power of two.
+    if (!IS_POWER_OF_TWO(buf_size))
+    {
+        return NRF_ERROR_INVALID_LENGTH;
+    }
 
     p_fifo->p_buf         = p_buf;
     p_fifo->buf_size_mask = buf_size - 1;

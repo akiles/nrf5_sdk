@@ -53,9 +53,11 @@ uint32_t* spi_master_init(SPIModuleNumber module_number, SPIMode mode, bool lsb_
 
     spi_base_address->FREQUENCY = (uint32_t) SPI_OPERATING_FREQUENCY;
 
+    /*lint -e845 -save // A zero has been given as right argument to operator '!'" */
+    /** @snippet [SPI Select mode] */
     switch (mode )
     {
-        /*lint -e845 -save // A zero has been given as right argument to operator '!'" */
+       
         case SPI_MODE0:
             config_mode = (SPI_CONFIG_CPHA_Leading << SPI_CONFIG_CPHA_Pos) | (SPI_CONFIG_CPOL_ActiveHigh << SPI_CONFIG_CPOL_Pos);
             break;
@@ -71,18 +73,23 @@ uint32_t* spi_master_init(SPIModuleNumber module_number, SPIMode mode, bool lsb_
         default:
             config_mode = 0;
             break;
-        /*lint -restore */
+    
     }
+    /** @snippet [SPI Select mode] */
+    /*lint -restore */
+
+    /*lint -e845 -save // A zero has been given as right argument to operator '!'" */
+    /** @snippet [SPI Select endianess] */
     if (lsb_first)
     {
-        /*lint -e{845} // A zero has been given as right argument to operator '|'" */
         spi_base_address->CONFIG = (config_mode | (SPI_CONFIG_ORDER_LsbFirst << SPI_CONFIG_ORDER_Pos));
     }
     else
     {
-        /*lint -e{845} // A zero has been given as right argument to operator '|'" */
         spi_base_address->CONFIG = (config_mode | (SPI_CONFIG_ORDER_MsbFirst << SPI_CONFIG_ORDER_Pos));
     }
+    /** @snippet [SPI Select endianess] */
+    /*lint -restore */
 
     spi_base_address->EVENTS_READY = 0U;
 

@@ -315,6 +315,7 @@ static bool twi_master_clock_byte(uint_fast8_t databyte)
 {
     bool transfer_succeeded = true;
 
+    /** @snippet [TWI SW master write] */                    
     // Make sure SDA is an output
     TWI_SDA_OUTPUT();
 
@@ -339,10 +340,12 @@ static bool twi_master_clock_byte(uint_fast8_t databyte)
             break;
         }
     }
-
+    
     // Finish last data bit by pulling SCL low
     TWI_SCL_LOW();
     TWI_DELAY();
+    
+    /** @snippet [TWI SW master write] */                    
 
     // Configure TWI_SDA pin as input for receiving the ACK bit
     TWI_SDA_INPUT();
@@ -386,6 +389,7 @@ static bool twi_master_clock_byte_in(uint8_t *databyte, bool ack)
     uint_fast8_t byte_read = 0;
     bool transfer_succeeded = true;
 
+    /** @snippet [TWI SW master read] */                        
     // Make sure SDA is an input
     TWI_SDA_INPUT();
 
@@ -415,6 +419,7 @@ static bool twi_master_clock_byte_in(uint8_t *databyte, bool ack)
 
     // Make sure SDA is an output before we exit the function
     TWI_SDA_OUTPUT();
+    /** @snippet [TWI SW master read] */                            
 
     *databyte = (uint8_t)byte_read;
 

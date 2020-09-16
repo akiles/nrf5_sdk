@@ -76,13 +76,13 @@ int main(void)
       switch(packet[0])
       {
         case '0':
-          nrf_gpio_pin_set(LED0);
-          nrf_gpio_pin_clear(LED1);
+          nrf_gpio_pin_set(LED_0);
+          nrf_gpio_pin_clear(LED_1);
           break;
 
         case '1':
-          nrf_gpio_pin_set(LED1);
-          nrf_gpio_pin_clear(LED0);
+          nrf_gpio_pin_set(LED_1);
+          nrf_gpio_pin_clear(LED_0);
           break;
       }
     }

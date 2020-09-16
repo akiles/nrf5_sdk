@@ -38,21 +38,24 @@
 #include "ble_hrs.h"
 #include "ble_dis.h"
 #include "ble_conn_params.h"
-#include "ble_nrf6310_pins.h"
+#include "boards.h"
 #include "ble_sensorsim.h"
-#include "ble_stack_handler.h"
+#include "softdevice_handler.h"
 #include "app_timer.h"
 #include "ble_error_log.h"
 #include "ble_bondmngr.h"
-#include "ble_radio_notification.h"
 #include "ble_flash.h"
 #include "ble_debug_assert_handler.h"
 #include "app_gpiote.h"
-
+#include "pstorage.h"
 #include "nrf_delay.h"
 
-#define WAKEUP_BUTTON_PIN                    NRF6310_BUTTON_0                               /**< Button used to wake up the application. */
-#define BONDMNGR_DELETE_BUTTON_PIN_NO        NRF6310_BUTTON_1                               /**< Button used for deleting all bonded masters during startup. */
+#define WAKEUP_BUTTON_PIN                    BUTTON_0                                       /**< Button used to wake up the application. */
+#define BONDMNGR_DELETE_BUTTON_PIN_NO        BUTTON_1                                       /**< Button used for deleting all bonded centrals during startup. */
+
+#define ADVERTISING_LED_PIN_NO               LED_0                                          /**< Is on when device is advertising. */
+#define CONNECTED_LED_PIN_NO                 LED_1                                          /**< Is on when device has connected. */
+#define ASSERT_LED_PIN_NO                    LED_7                                          /**< Is on when application has asserted. */
 
 #define DEVICE_NAME                          "Nordic_HRM"                                   /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                    "NordicSemiconductor"                          /**< Manufacturer. Will be passed to Device Information Service. */
@@ -86,7 +89,7 @@
 #define CONN_SUP_TIMEOUT                     MSEC_TO_UNITS(4000, UNIT_10_MS)                /**< Connection supervisory timeout (4 seconds. */
 
 #define FIRST_CONN_PARAMS_UPDATE_DELAY       APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)     /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
-#define NEXT_CONN_PARAMS_UPDATE_DELAY        APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)     /**< Time between each call to sd_ble_gap_conn_param_update after the first (30 seconds). */
+#define NEXT_CONN_PARAMS_UPDATE_DELAY        APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)     /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
 #define MAX_CONN_PARAMS_UPDATE_COUNT         3                                              /**< Number of attempts before giving up the connection parameter negotiation. */
 
 #define SEC_PARAM_TIMEOUT                    30                                             /**< Timeout for Pairing Request or Security Request (in seconds). */
@@ -97,14 +100,11 @@
 #define SEC_PARAM_MIN_KEY_SIZE               7                                              /**< Minimum encryption key size. */
 #define SEC_PARAM_MAX_KEY_SIZE               16                                             /**< Maximum encryption key size. */
 
-#define FLASH_PAGE_SYS_ATTR                  (BLE_FLASH_PAGE_END - 3)                       /**< Flash page used for bond manager system attribute information. */
-#define FLASH_PAGE_BOND                      (BLE_FLASH_PAGE_END - 1)                       /**< Flash page used for bond manager bonding information. */
-
 #define DEAD_BEEF                            0xDEADBEEF                                     /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
-#define CONN_CHIP_RESET_PIN_NO              30                                              /**< Pin used for reseting the connectivity chip. */
-#define CONN_CHIP_RESET_TIME                50                                              /**< The time to keep the reset line to the connectivity chip low (in milliseconds). */
-#define CONN_CHIP_WAKEUP_TIME               500                                             /**< The time for connectivity chip to reset and become ready to receive serialized commands (in milliseconds). */
+#define CONN_CHIP_RESET_PIN_NO              30                                              /**< Pin used for reseting the nRF51822. */
+#define CONN_CHIP_RESET_TIME                50                                              /**< The time to keep the reset line to the nRF51822 low (in milliseconds). */
+#define CONN_CHIP_WAKEUP_TIME               500                                             /**< The time for nRF51822 to reset and become ready to receive serialized commands (in milliseconds). */
 
 #define SCHED_MAX_EVENT_DATA_SIZE           MAX(APP_TIMER_SCHED_EVT_SIZE,\
                                                 BLE_STACK_HANDLER_SCHED_EVT_SIZE)           /**< Maximum size of scheduler events. */
@@ -144,14 +144,14 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
 {
     nrf_gpio_pin_set(ASSERT_LED_PIN_NO);
 
-    // This call can be used for debug purposes during development of an application.
+    // This call can be used for debug purposes during application development.
     // @note CAUTION: Activating this code will write the stack to flash on an error.
     //                This function should NOT be used in a final product.
     //                It is intended STRICTLY for development/debugging purposes.
     //                The flash write will happen EVEN if the radio is active, thus interrupting
     //                any communication.
     //                Use with care. Un-comment the line below to use.
-    //ble_debug_assert_handler(error_code, line_num, p_file_name);
+    ble_debug_assert_handler(error_code, line_num, p_file_name);
 
     // On assert, the system can only recover with a reset.
     for (;;) ;
@@ -301,9 +301,9 @@ static void sensor_contact_detected_timeout_handler(void * p_context)
  */
 static void leds_init(void)
 {
-    GPIO_LED_CONFIG(ADVERTISING_LED_PIN_NO);
-    GPIO_LED_CONFIG(CONNECTED_LED_PIN_NO);
-    GPIO_LED_CONFIG(ASSERT_LED_PIN_NO);
+    nrf_gpio_cfg_output(ADVERTISING_LED_PIN_NO);
+    nrf_gpio_cfg_output(CONNECTED_LED_PIN_NO);
+    nrf_gpio_cfg_output(ASSERT_LED_PIN_NO);
 }
 
 
@@ -348,14 +348,19 @@ static void timers_init(void)
     uint32_t err_code;
     
     // Initialize timer module
-    static uint32_t timer_buffer[CEIL_DIV(APP_TIMER_BUF_SIZE((APP_TIMER_MAX_TIMERS), (APP_TIMER_OP_QUEUE_SIZE) + 1), sizeof(uint32_t))];
+    static uint32_t timer_buffer[CEIL_DIV(
+                                          APP_TIMER_BUF_SIZE(
+                                                             (APP_TIMER_MAX_TIMERS),
+                                                             (APP_TIMER_OP_QUEUE_SIZE) + 1
+                                                            ),
+                                          sizeof(uint32_t))];
     
-    err_code = app_timer_init(APP_TIMER_PRESCALER,                                            
-                              APP_TIMER_MAX_TIMERS,                                           
-                              (APP_TIMER_OP_QUEUE_SIZE) + 1,                                   
-                              timer_buffer,                                          
-                              timer_event_schedule);       
-    APP_ERROR_CHECK(err_code);                                                                 
+    err_code = app_timer_init(APP_TIMER_PRESCALER,
+                              APP_TIMER_MAX_TIMERS,
+                              (APP_TIMER_OP_QUEUE_SIZE) + 1,
+                              timer_buffer,
+                              timer_event_schedule);
+    APP_ERROR_CHECK(err_code);
 
     // Create timers
     err_code = app_timer_create(&m_battery_timer_id,
@@ -382,9 +387,9 @@ static void timers_init(void)
 
 /**@brief Function for the GAP initialization.
  *
- * @details This function shall be used to setup all the necessary GAP (Generic Access Profile)
- *          parameters of the device. It also sets the permissions and appearance.
+ * @details This function sets up all the necessary GAP (Generic Access Profile) parameters of the *          device including the device name, appearance, and the preferred connection parameters.
  */
+
 static void gap_params_init(void)
 {
     uint32_t                err_code;
@@ -652,7 +657,7 @@ static void conn_params_init(void)
  */
 static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
-    uint32_t err_code = NRF_SUCCESS;
+    uint32_t err_code;
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -667,7 +672,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
 
             // Since we are not in a connection and have not started advertising, store bonds
-            err_code = ble_bondmngr_bonded_masters_store();
+            err_code = ble_bondmngr_bonded_centrals_store();
             APP_ERROR_CHECK(err_code);
 
             advertising_start();
@@ -675,8 +680,9 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
         case BLE_GAP_EVT_SEC_PARAMS_REQUEST:
             err_code = sd_ble_gap_sec_params_reply(m_conn_handle, 
-                                                BLE_GAP_SEC_STATUS_SUCCESS, 
-                                                &m_sec_params);
+                                                   BLE_GAP_SEC_STATUS_SUCCESS, 
+                                                   &m_sec_params);
+            APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GAP_EVT_TIMEOUT:
@@ -684,7 +690,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             { 
                 nrf_gpio_pin_clear(ADVERTISING_LED_PIN_NO);
                 
-                // Put connectivity chip to system-off mode
+                // Put nRF51822 to system-off mode
                 err_code = sd_power_system_off();    
                 APP_ERROR_CHECK(err_code);
                 
@@ -694,10 +700,9 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             break;
             
         default:
+            // No implementation needed.
             break;
     }
-
-    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -724,10 +729,12 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
  */
 static void ble_stack_init(void)
 {
-    BLE_STACK_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM,
-                           BLE_L2CAP_MTU_DEF,
-                           ble_evt_dispatch,
-                           true);
+    // Initialize SoftDevice.
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, true);
+    
+    // Subscribe for BLE events.
+    uint32_t err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -736,8 +743,13 @@ static void ble_stack_init(void)
 static void buttons_init(void)
 {
     // Set Wakeup and Bonds Delete buttons as wakeup sources
-    GPIO_WAKEUP_BUTTON_CONFIG(WAKEUP_BUTTON_PIN);
-    GPIO_WAKEUP_BUTTON_CONFIG(BONDMNGR_DELETE_BUTTON_PIN_NO);
+    nrf_gpio_cfg_sense_input(WAKEUP_BUTTON_PIN,
+                             BUTTON_PULL, 
+                             NRF_GPIO_PIN_SENSE_LOW);
+    
+    nrf_gpio_cfg_sense_input(BONDMNGR_DELETE_BUTTON_PIN_NO,
+                             BUTTON_PULL, 
+                             NRF_GPIO_PIN_SENSE_LOW);
 }    
 
 
@@ -759,12 +771,13 @@ static void bond_manager_init(void)
     ble_bondmngr_init_t bond_init_data;
     bool                bonds_delete;
 
-    // Clear all bonded masters if the Bonds Delete button is pushed
+    err_code = pstorage_init();
+    APP_ERROR_CHECK(err_code);
+    
+    // Clear all bonded centrals if the Bonds Delete button is pushed
     bonds_delete = (nrf_gpio_pin_read(BONDMNGR_DELETE_BUTTON_PIN_NO) == 0);
 
     // Initialize the Bond Manager
-    bond_init_data.flash_page_num_bond     = FLASH_PAGE_BOND;
-    bond_init_data.flash_page_num_sys_attr = FLASH_PAGE_SYS_ATTR;
     bond_init_data.evt_handler             = NULL;
     bond_init_data.error_handler           = bond_manager_error_handler;
     bond_init_data.bonds_delete            = bonds_delete;
@@ -774,46 +787,27 @@ static void bond_manager_init(void)
 }
 
 
-/**@brief Function for initializing the Radio Notification event.
- */
-static void radio_notification_init(void)
-{
-    uint32_t err_code;
-
-    err_code = ble_radio_notification_init(NRF_APP_PRIORITY_HIGH,
-                                           NRF_RADIO_NOTIFICATION_DISTANCE_4560US,
-                                           ble_flash_on_radio_active_evt);
-    APP_ERROR_CHECK(err_code);
-}
-
-
 /**@brief Function for the Power manager.
  */
 static void power_manage(void)
 {
-    uint32_t err_code = sd_app_event_wait();
+    uint32_t err_code = sd_app_evt_wait();
     APP_ERROR_CHECK(err_code);
 }
 
 
 static void connectivity_chip_reset(void)
 {
-    GPIO_PIN_CONFIG(CONN_CHIP_RESET_PIN_NO,                       
-                    GPIO_PIN_CNF_DIR_Output,      
-                    GPIO_PIN_CNF_INPUT_Disconnect,
-                    GPIO_PIN_CNF_PULL_Pullup,   
-                    GPIO_PIN_CNF_DRIVE_S0S1,      
-                    GPIO_PIN_CNF_SENSE_Disabled);
+    nrf_gpio_cfg_output(CONN_CHIP_RESET_PIN_NO);                       
     
-    // Signal a reset to the connectivity chip by setting the 
-    // reset pin on the connectivity chip low.
+    // Signal a reset to the nRF51822 by setting the reset pin on the nRF51822 low.
     nrf_gpio_pin_clear(CONN_CHIP_RESET_PIN_NO);
     nrf_delay_ms(CONN_CHIP_RESET_TIME);
     
     // Set the reset level to high again.
     nrf_gpio_pin_set(CONN_CHIP_RESET_PIN_NO);
     
-    // Wait for connectivity chip to be ready.
+    // Wait for nRF51822 to be ready.
     nrf_delay_ms(CONN_CHIP_WAKEUP_TIME);
 }
 
@@ -824,6 +818,7 @@ static void scheduler_init(void)
     APP_SCHED_INIT(SCHED_MAX_EVENT_DATA_SIZE, SCHED_QUEUE_SIZE);
 }
 
+
 /**@brief Function for application main entry.
  */
 int main(void)
@@ -832,22 +827,17 @@ int main(void)
     connectivity_chip_reset();
     
     leds_init();
-    buttons_init();    
-    bond_manager_init();
-    timers_init();
+    buttons_init();  
+    timers_init();    
     ble_stack_init();
+    bond_manager_init();
     scheduler_init();
-    ble_error_log_init();
-    
-    nrf_gpio_pin_set(NRF6310_LED_5);
     gap_params_init();
-    nrf_gpio_pin_clear(NRF6310_LED_5);
     advertising_init();
     services_init();
     sensor_sim_init();
     conn_params_init();
     sec_params_init();
-    radio_notification_init();
    
     // Start execution
     application_timers_start();

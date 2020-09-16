@@ -15,8 +15,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#define RX_BUF_QUEUE_SIZE 4u                                        /**< RX buffer element size. */
-
 /**@brief RX buffer element instance structure. 
  */
 typedef struct 

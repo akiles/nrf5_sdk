@@ -30,7 +30,7 @@
  *   - Initialize the scheduler by calling the APP_SCHED_INIT() macro before entering the
  *     application main loop.
  *   - Call app_sched_execute() from the main loop each time the application wakes up because of an
- *     event (typically when sd_app_event_wait() returns).
+ *     event (typically when sd_app_evt_wait() returns).
  *
  * @subsection int_context_logic Logic in interrupt context:
  *

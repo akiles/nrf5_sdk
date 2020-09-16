@@ -31,7 +31,7 @@
 #include "nrf_gpio.h"
 #include "boards.h"
 
-#define PWM_OUTPUT_PIN_NUMBER (LED0)  /**< Pin number for PWM output. */
+#define PWM_OUTPUT_PIN_NUMBER (LED_0)  /**< Pin number for PWM output. */
 
 #define MAX_SAMPLE_LEVELS (256UL)     /**< Maximum number of sample levels. */
 #define TIMER_PRESCALERS 6U           /**< Prescaler setting for timer. */
@@ -42,9 +42,9 @@
 static __INLINE uint32_t next_sample_get(void)
 {
     static uint32_t sample_value = 8;
-  
+    
     // Read button input.
-    sample_value = (~NRF_GPIO->IN & 0x000000FFUL);
+    sample_value = (~(nrf_gpio_port_read(NRF_GPIO_PORT_SELECT_PORT0)) & 0x000000FFUL);
   
     // This is to avoid having two CC events happen at the same time,
     // CC1 will always create an event on 0 so CC0 and CC2 should not.
@@ -125,13 +125,13 @@ static void timer2_init(void)
 static void gpiote_init(void)
 {
     // Connect GPIO input buffers and configure PWM_OUTPUT_PIN_NUMBER as an output.
-    nrf_gpio_range_cfg_input(BUTTON_START, BUTTON_STOP, NRF_GPIO_PIN_NOPULL);
+    nrf_gpio_range_cfg_input(BUTTON_START, BUTTON_STOP, BUTTON_PULL);
     nrf_gpio_cfg_output(PWM_OUTPUT_PIN_NUMBER);
 
-    NRF_GPIO->OUT = 0x00000000UL;
+    nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT0, 0xFF);
 
     // Configure GPIOTE channel 0 to toggle the PWM pin state
-	// @note Only one GPIOTE task can be connected to an output pin.
+    // @note Only one GPIOTE task can be connected to an output pin.
     nrf_gpiote_task_config(0, PWM_OUTPUT_PIN_NUMBER, \
                            NRF_GPIOTE_POLARITY_TOGGLE, NRF_GPIOTE_INITIAL_VALUE_LOW);
 }

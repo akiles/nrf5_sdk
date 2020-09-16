@@ -24,6 +24,7 @@
 #include "nrf6350.h"
 #include "nrf_gpio.h"
 #include "nrf_delay.h"
+#include "boards.h"
 
 static uint8_t packet[256];                                                  /**< Data packet. */
 static bool sweep                   = false;                                 /**< Sweep enabled. */
@@ -42,12 +43,12 @@ static uint8_t current_menu_pos     = 0;                                     /**
 static uint8_t current_scroll_pos   = 0;                                     /**< Current scroll position in the selection text (defaults to first character). */
 
 
-#define MAX_MENU_OPTIONS                  (11UL)    /**< Number of options in the main menu of the test */
-#define MAX_CHARACTERS_PER_LINE           (16UL)    /**< Maximum characters that are visible in one line on nRF6350 display */
-#define MAX_CHARECTER_IN_MENU_OPTION      (60UL)    /**< Maximum string length of display options text */
+#define MAX_MENU_OPTIONS                  (11UL)                             /**< Number of options in the main menu of the test */
+#define MAX_CHARACTERS_PER_LINE           (16UL)                             /**< Maximum characters that are visible in one line on nRF6350 display */
+#define MAX_CHARECTER_IN_MENU_OPTION      (60UL)                             /**< Maximum string length of display options text */
 #define MAX_CURSOR_POS_IN_STRING          (MAX_CHARECTER_IN_MENU_OPTION - \
-                                           MAX_CHARACTERS_PER_LINE)   /**< Maximum cursor position(string position that points to first letter in first line of display) on display */
-#define ERROR_PIN                         (8)       /**< Pin that is active high when there is an error in this example */
+                                           MAX_CHARACTERS_PER_LINE)          /**< Maximum cursor position(string position that points to first letter in first line of display) on display */
+#define ERROR_PIN                         (LED_0)                            /**< Pin that is active high when there is an error in this example */
 
 /*
  * Output power is
@@ -251,6 +252,7 @@ static void change_selected_variable(change_direction_t cd)
         case 6:
             // Fall through.
         default:
+            // No implementation needed.
             break;
     }
 }
@@ -314,6 +316,7 @@ static void joystick_wait_change_update_pos_variables(void)
         case JS_BUTTON_NONE:
             // fall through
         default:
+            // No implementation needed.
             break;
     }
 }
@@ -680,6 +683,7 @@ static void radio_test(void)
             break;
 
         default:
+            // No implementation needed.
             break;
         }
     }
@@ -736,6 +740,7 @@ static void radio_test(void)
         case RADIO_TEST_NOP:
             // Fall through.
         default:
+            // No implementation needed.
             break;
     }
 }

@@ -32,7 +32,7 @@
 static void init(void)
 {
     // Port0 (0-7 as inputs)
-    nrf_gpio_range_cfg_input(BUTTON_START, BUTTON_STOP, NRF_GPIO_PIN_NOPULL);
+    nrf_gpio_range_cfg_input(BUTTON_START, BUTTON_STOP, BUTTON_PULL);
 
     // Port1 (8-15 as outputs)
     nrf_gpio_range_cfg_output(LED_START, LED_STOP);

@@ -24,6 +24,7 @@
 #include <stdbool.h>
 #include "nrf.h"
 #include "nrf_gpio.h"
+#include "boards.h"
 
 
 /**
@@ -32,10 +33,10 @@
  */
 static void gpio_init(void)
 {
-    nrf_gpio_cfg_input(0, NRF_GPIO_PIN_NOPULL);
-    nrf_gpio_cfg_output(8);
+    nrf_gpio_cfg_input(BUTTON_0, BUTTON_PULL);
+    nrf_gpio_cfg_output(LED_0);
 
-    nrf_gpio_pin_write(8, 0);
+    nrf_gpio_pin_write(LED_0, BUTTON_0);
 
     // Enable interrupt:
     NVIC_EnableIRQ(GPIOTE_IRQn);

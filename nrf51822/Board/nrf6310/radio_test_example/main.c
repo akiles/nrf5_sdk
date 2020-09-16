@@ -288,6 +288,7 @@ void print_parameters(void)
             break;
         
         default:
+            // No implementation needed.
             break;
         
     }
@@ -466,6 +467,7 @@ int main(void)
         case RADIO_TEST_NOP:
             // Fall through.
         default:
+            // No implementation needed.
             break;
         }
     }

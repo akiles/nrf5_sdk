@@ -24,9 +24,10 @@
 #include <stdbool.h>
 #include "nrf.h"
 #include "nrf_gpio.h"
+#include "boards.h"
 
-#define GPIO_TOGGLE_TICK_EVENT    (8)                                     /**< Pin number to toggle when there is a tick event in RTC. */
-#define GPIO_TOGGLE_COMPARE_EVENT (9)                                     /**< Pin number to toggle when there is compare event in RTC. */
+#define GPIO_TOGGLE_TICK_EVENT    (LED_0)                                 /**< Pin number to toggle when there is a tick event in RTC. */
+#define GPIO_TOGGLE_COMPARE_EVENT (LED_1)                                 /**< Pin number to toggle when there is compare event in RTC. */
 #define LFCLK_FREQUENCY           (32768UL)                               /**< LFCLK frequency in Hertz, constant. */
 #define RTC_FREQUENCY             (8UL)                                   /**< Required RTC working clock RTC_FREQUENCY Hertz. Changable. */
 #define COMPARE_COUNTERTIME       (3UL)                                   /**< Get Compare event COMPARE_TIME seconds after the counter starts from 0. */

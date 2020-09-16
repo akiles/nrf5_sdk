@@ -30,7 +30,7 @@
 
 //#define ENABLE_LOOPBACK_TEST           /**< if defined, then this example will be a loopback test, which means that TX should be connected to RX to get data loopback. */
 
-#define ERROR_PIN                (8)     /**< gpio pin number to show error if loopback is enabled. */
+#define ERROR_PIN                (LED_0) /**< gpio pin number to show error if loopback is enabled. */
 #define MAX_TEST_DATA_BYTES      (15U)   /**< max number of test bytes to be used for tx and rx. */
 
 #ifndef ENABLE_LOOPBACK_TEST

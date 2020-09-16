@@ -89,8 +89,8 @@ int main(void)
       
                     if (ds1624_temp_read(&temperature, &temperature_fraction))
                     {
-                        NRF_GPIO->OUTCLR = 0x00007F00UL;
-                        NRF_GPIO->OUTSET = ((uint8_t)temperature << 8);
+                        nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT1, 0x7F);
+                        nrf_gpio_port_set(NRF_GPIO_PORT_SELECT_PORT1, (uint8_t)temperature);
                     }
                 }
             }
@@ -102,10 +102,10 @@ int main(void)
             if (touchpad_read_register(TOUCHPAD_BUTTON_STATUS, &touchpad_button_status))
             {
                 // There's a active low button on the side of the touchpad, check the state and light up a LED if it's pressed.
-                NRF_GPIO->OUTCLR = 0x00008000UL;
+                nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT1, 0x80);
                 if (!(touchpad_button_status & 0x01))
                 {
-                    NRF_GPIO->OUTSET = 0x00008000UL;
+                    nrf_gpio_port_set(NRF_GPIO_PORT_SELECT_PORT1, 0x80);
                 }
             }
         }

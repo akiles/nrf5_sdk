@@ -12,7 +12,7 @@
 #ifndef NRF_GPIOTE_H__
 #define NRF_GPIOTE_H__
 
-#include "nrf51.h"
+#include "nrf.h"
 
 /**
 * @defgroup nrf_gpiote GPIOTE abstraction

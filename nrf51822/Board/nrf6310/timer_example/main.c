@@ -25,9 +25,10 @@
 #include <stdint.h>
 #include "nrf.h"
 #include "nrf_gpio.h"
+#include "boards.h"
 
 #define TIMER_DELAY_MS               (100UL)   /**< Timer Delay in milli-seconds. */
-#define GPIO_TOGGLE_PIN              (8)       /**< gpio pin to toggle after delay. */
+#define GPIO_TOGGLE_PIN              (LED_0)   /**< gpio pin to toggle after delay. */
 
 
 /** @def p_timer

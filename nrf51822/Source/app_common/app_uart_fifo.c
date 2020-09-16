@@ -454,12 +454,7 @@ uint32_t app_uart_init(const app_uart_comm_params_t * p_comm_params,
         // know when to activate/de-activate the TX/RX in the UART.
         // Configure pin.
         m_pin_cts_mask = (1 << p_comm_params->cts_pin_no);
-        GPIO_PIN_CONFIG(p_comm_params->cts_pin_no,
-                        GPIO_PIN_CNF_DIR_Input,
-                        GPIO_PIN_CNF_INPUT_Connect,
-                        GPIO_PIN_CNF_PULL_Disabled,
-                        GPIO_PIN_CNF_DRIVE_S0S1,
-                        GPIO_PIN_CNF_SENSE_Low);
+        nrf_gpio_cfg_sense_input(p_comm_params->cts_pin_no, NRF_GPIO_PIN_NOPULL, NRF_GPIO_PIN_SENSE_LOW);
 
         gpiote_pin_low_high_mask = (1 << p_comm_params->cts_pin_no);
         gpiote_pin_high_low_mask = (1 << p_comm_params->cts_pin_no);

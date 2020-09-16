@@ -9,7 +9,7 @@
 ; the file.
  
 ; NOTE: Template files (including this one) are application specific and therefore 
-; expected to be copied into the application project folder prior to its use! 
+; expected to be copied into the application project folder prior to its use!
 
 ; Description message
 

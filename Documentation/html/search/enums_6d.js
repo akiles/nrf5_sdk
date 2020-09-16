@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['mouse_5fsensor_5fsample_5fperiod_5ft',['mouse_sensor_sample_period_t',['../group__gzp__mouse__emulator.html#ga6327f0fa9008473f60ae14338b8e1b1c',1,'mouse_sensor_emulator.h']]]
+  ['motion_5foutput_5fpolarity_5ft',['motion_output_polarity_t',['../a01013.html#ga0a2e533ff5cb6517085859827320e103',1,'adns2080.h']]],
+  ['motion_5foutput_5fsensitivity_5ft',['motion_output_sensitivity_t',['../a01013.html#gaf829efdc343990811ba18dd86c68ef41',1,'adns2080.h']]]
 ];

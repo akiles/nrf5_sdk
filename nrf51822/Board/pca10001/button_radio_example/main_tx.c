@@ -47,7 +47,7 @@ void init(void)
   // Set payload pointer
   NRF_RADIO->PACKETPTR = (uint32_t)packet;
   
-  nrf_gpio_range_cfg_input(BUTTON_START, BUTTON_STOP, NRF_GPIO_PIN_PULLUP);
+  nrf_gpio_range_cfg_input(BUTTON_START, BUTTON_STOP, BUTTON_PULL);
 }
 
 /**
@@ -60,14 +60,14 @@ int main(void)
   
   uint8_t btn0_nstate;                              // Store new (current) state of button 0
   uint8_t btn1_nstate;                              // Store new (current) state of button 1
-  uint8_t btn0_ostate = nrf_gpio_pin_read(BUTTON0); // Store old (previous) state of button 0
-  uint8_t btn1_ostate = nrf_gpio_pin_read(BUTTON1); // Store old (previous) state of button 1
+  uint8_t btn0_ostate = nrf_gpio_pin_read(BUTTON_0); // Store old (previous) state of button 0
+  uint8_t btn1_ostate = nrf_gpio_pin_read(BUTTON_1); // Store old (previous) state of button 1
   
   while(true)
   {
     uint8_t btns = 0;
-    btn0_nstate = nrf_gpio_pin_read(BUTTON0);
-    btn1_nstate = nrf_gpio_pin_read(BUTTON1);
+    btn0_nstate = nrf_gpio_pin_read(BUTTON_0);
+    btn1_nstate = nrf_gpio_pin_read(BUTTON_1);
     if ((btn0_ostate == 1) && (btn0_nstate == 0))
     {
       btns |= 1;

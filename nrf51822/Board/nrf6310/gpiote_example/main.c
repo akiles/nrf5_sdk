@@ -27,10 +27,11 @@
 #include "nrf.h"
 #include "nrf_gpiote.h"
 #include "nrf_gpio.h"
+#include "boards.h"
 
 
-#define GPIO_OUTPUT_PIN_NUMBER 8  /**< Pin number for PWM output. */
-#define GPIOTE_CHANNEL_NUMBER  0  /**< GPIOTE channel number. */
+#define GPIO_OUTPUT_PIN_NUMBER LED_0  /**< Pin number for PWM output. */
+#define GPIOTE_CHANNEL_NUMBER  0      /**< GPIOTE channel number. */
 
 
 /** @brief Function for initializing the GPIO Tasks and Events peripheral.

@@ -61,6 +61,17 @@ typedef enum
 } nrf_gpio_pin_pull_t;
 
 /**
+ * @enum nrf_gpio_pin_sense_t
+ * @brief Enumerator used for selecting the pin to sense high or low level on the pin input.
+ */
+typedef enum
+{
+    NRF_GPIO_PIN_NOSENSE    = GPIO_PIN_CNF_SENSE_Disabled,              ///<  Pin sense level disabled.
+    NRF_GPIO_PIN_SENSE_LOW  = GPIO_PIN_CNF_SENSE_Low,                   ///<  Pin sense low level.
+    NRF_GPIO_PIN_SENSE_HIGH = GPIO_PIN_CNF_SENSE_High,                  ///<  Pin sense high level.
+} nrf_gpio_pin_sense_t;
+
+/**
  * @brief Function for configuring the GPIO pin range as outputs with normal drive strength.
  *        This function can be used to configure pin range as simple output with gate driving GPIO_PIN_CNF_DRIVE_S0S1 (normal cases).
  *
@@ -149,6 +160,27 @@ static __INLINE void nrf_gpio_cfg_input(uint32_t pin_number, nrf_gpio_pin_pull_t
 }
 
 /**
+ * @brief Function for configuring the given GPIO pin number as input with given initial value set, hiding inner details.
+ *        This function can be used to configure pin range as simple input with gate driving GPIO_PIN_CNF_DRIVE_S0S1 (normal cases).
+ *        Sense capability on the pin is configurable, and input is connected to buffer so that the GPIO->IN register is readable.
+ *
+ * @param pin_number specifies the pin number of gpio pin numbers to be configured (allowed values 0-30).
+ *
+ * @param pull_config state of the pin pull resistor (no pull, pulled down or pulled high).
+ *
+ * @param sense_config sense level of the pin (no sense, sense low or sense high).
+ */
+static __INLINE void nrf_gpio_cfg_sense_input(uint32_t pin_number, nrf_gpio_pin_pull_t pull_config, nrf_gpio_pin_sense_t sense_config)
+{
+    /*lint -e{845} // A zero has been given as right argument to operator '|'" */
+    NRF_GPIO->PIN_CNF[pin_number] = (sense_config << GPIO_PIN_CNF_SENSE_Pos)
+                                        | (GPIO_PIN_CNF_DRIVE_S0S1 << GPIO_PIN_CNF_DRIVE_Pos)
+                                        | (pull_config << GPIO_PIN_CNF_PULL_Pos)
+                                        | (GPIO_PIN_CNF_INPUT_Connect << GPIO_PIN_CNF_INPUT_Pos)
+                                        | (GPIO_PIN_CNF_DIR_Input << GPIO_PIN_CNF_DIR_Pos);
+}
+
+/**
  * @brief Function for setting the direction for a GPIO pin.
  *
  * @param pin_number specifies the pin number [0:31] for which to
@@ -169,7 +201,7 @@ static __INLINE void nrf_gpio_pin_dir_set(uint32_t pin_number, nrf_gpio_pin_dir_
     }
     else
     {
-        NRF_GPIO -> DIRSET = (1UL << pin_number);
+        NRF_GPIO->DIRSET = (1UL << pin_number);
     }
 }
 

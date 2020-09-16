@@ -1,5 +1,5 @@
 This text contains three licenses (License #1, License #2 and License #3). 
-License #1 applies to the whole SDK, except i) the JLinkARM.dll file and ii) files including Dynastream copyright notices. 
+License #1 applies to the whole SDK, except i) the JLinkARM.dll file; ii) files including Dynastream copyright notices and iii) source files including BSD 3-clause license texts.
 License #2 applies only to the JLinkARM.dll file. 
 License #3 applies only to files including Dynastream copyright notices. 
 All must be read and accepted before proceeding.

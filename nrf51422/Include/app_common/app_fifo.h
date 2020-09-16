@@ -10,19 +10,13 @@
  *
  */
 
-/** @file
+/**@file
  *
  * @defgroup app_fifo FIFO implementation
  * @{
  * @ingroup app_common
  *
  * @brief FIFO implementation.
- *
- * @details The size of the FIFO buffer has to be a power of two.
- *
- * @note    The FIFO implementation only guarantees correct behaviour when having 
- *          one producer and one consumer. If more than one interrupt level writes 
- *          to the FIFO data might be lost or over-written. 
  */
 
 #ifndef APP_FIFO_H__

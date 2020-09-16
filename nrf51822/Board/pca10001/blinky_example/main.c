@@ -11,11 +11,11 @@
  */
 
 /** @file
-* @defgroup gpio_example_pca10001_main main.c
+* @defgroup blinky_example_pca10001_main main.c
 * @{
-* @ingroup gpio_example_pca10001
+* @ingroup blinky_example_pca10001
 *
-* @brief GPIO Example Application main file.
+* @brief Blinky Example Application main file.
 *
 * This file contains the source code for a sample application using GPIO to drive LEDs.
 *
@@ -29,20 +29,25 @@
 
 /**
  * @brief Function for application main entry.
- * @return 0. int return type required by ANSI/ISO standard.
  */
 int main(void)
 {
-  uint8_t output_state = 0;
-
   // Configure LED-pins as outputs
-  nrf_gpio_range_cfg_output(LED_START, LED_STOP);
-
+  nrf_gpio_cfg_output(LED_0);
+  nrf_gpio_cfg_output(LED_1);
+  
+  // LED 0 and LED 1 blink alternately.
   while(true)
   {
-    nrf_gpio_port_write(LED_PORT, 1 << (output_state + LED_OFFSET));
-    output_state = (output_state + 1) & BLINKY_STATE_MASK;
-    nrf_delay_ms(100);
+    nrf_gpio_pin_clear(LED_0);
+    nrf_gpio_pin_set(LED_1);
+    
+    nrf_delay_ms(500);
+    
+    nrf_gpio_pin_clear(LED_1);
+    nrf_gpio_pin_set(LED_0);
+    
+    nrf_delay_ms(500);
   }
 }
 

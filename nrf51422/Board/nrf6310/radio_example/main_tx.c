@@ -47,7 +47,7 @@ int main(void)
     }
 
     // Set Port 0 as input.
-    nrf_gpio_range_cfg_input(BUTTON_START, BUTTON_STOP, NRF_GPIO_PIN_PULLUP);
+    nrf_gpio_range_cfg_input(BUTTON_START, BUTTON_STOP, BUTTON_PULL);
 
     // Set Port 1 as output.
     nrf_gpio_range_cfg_output(LED_START, LED_STOP);
@@ -61,7 +61,7 @@ int main(void)
     while(true)
     {
         // Read Data to send, button signals are default high, and low when pressed.
-        packet[0]               = ~((uint8_t) (NRF_GPIO->IN));  // Write GPIO to payload byte 0.
+        packet[0]               = ~(nrf_gpio_port_read(NRF_GPIO_PORT_SELECT_PORT0));  // Write GPIO to payload byte 0.
         NRF_RADIO->EVENTS_READY = 0U;
         NRF_RADIO->TASKS_TXEN   = 1; // Enable radio and wait for ready.
 

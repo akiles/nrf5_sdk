@@ -503,6 +503,7 @@ static bool list_deletions_handler(void)
                     break;
                     
                 default:
+                    // No implementation needed.
                     break;
             }
         }
