@@ -178,13 +178,10 @@
           <name>CCDefines</name>
           <state>ANT_STACK_SUPPORT_REQD</state>
           <state>BLE_STACK_SUPPORT_REQD</state>
-          <state>NRF52832</state>
-          <state>NRF52</state>
-          <state>S332</state>
-          <state>NRF_SD_BLE_API_VERSION=3</state>
-          <state>NRF52_PAN_58</state>
-          <state>NRF52_PAN_64</state>
           <state>BOARD_PCA10040</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>NRF52</state>
+          <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_12</state>
           <state>NRF52_PAN_15</state>
           <state>NRF52_PAN_20</state>
@@ -192,8 +189,12 @@
           <state>NRF52_PAN_36</state>
           <state>NRF52_PAN_51</state>
           <state>NRF52_PAN_54</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_55</state>
+          <state>NRF52_PAN_58</state>
+          <state>NRF52_PAN_64</state>
+          <state>NRF52_PAN_74</state>
+          <state>NRF_SD_BLE_API_VERSION=4</state>
+          <state>S332</state>
           <state>SOFTDEVICE_PRESENT</state>
           <state>SWI_DISABLE0</state>
         </option>
@@ -260,7 +261,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state></state>
+          <state>1</state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -324,6 +325,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$\..\..\..\config\ble_ant_app_hrm_pca10040_s332</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ant\ant_channel_config</state>
@@ -357,7 +359,9 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
@@ -527,13 +531,10 @@
       <name>ADefines</name>
           <state>ANT_STACK_SUPPORT_REQD</state>
           <state>BLE_STACK_SUPPORT_REQD</state>
-          <state>NRF52832</state>
-          <state>NRF52</state>
-          <state>S332</state>
-          <state>NRF_SD_BLE_API_VERSION=3</state>
-          <state>NRF52_PAN_58</state>
-          <state>NRF52_PAN_64</state>
           <state>BOARD_PCA10040</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>NRF52</state>
+          <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_12</state>
           <state>NRF52_PAN_15</state>
           <state>NRF52_PAN_20</state>
@@ -541,8 +542,12 @@
           <state>NRF52_PAN_36</state>
           <state>NRF52_PAN_51</state>
           <state>NRF52_PAN_54</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_55</state>
+          <state>NRF52_PAN_58</state>
+          <state>NRF52_PAN_64</state>
+          <state>NRF52_PAN_74</state>
+          <state>NRF_SD_BLE_API_VERSION=4</state>
+          <state>S332</state>
           <state>SOFTDEVICE_PRESENT</state>
           <state>SWI_DISABLE0</state>
         </option>
@@ -640,6 +645,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$\..\..\..\config\ble_ant_app_hrm_pca10040_s332</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ant\ant_channel_config</state>
@@ -673,7 +679,9 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
@@ -1070,11 +1078,14 @@
   <name>nRF_Log</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_backend_serial.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_frontend.c</name>    </file>  </group>  <group>
+  <name>Board Definition</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Libraries</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button\app_button.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
@@ -1082,13 +1093,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fds\fds.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage\fstorage.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\sdk_errors.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\sdk_mapped_flags.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim\sensorsim.c</name>    </file>  </group>  <group>
-  <name>Documentation</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\license.txt</name>    </file>  </group>  <group>
-  <name>Board Definition</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\clock\nrf_drv_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>    </file>    <file>
@@ -1124,7 +1131,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\gatts_cache_manager.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\id_manager.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\nrf_ble_gatt\nrf_ble_gatt.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\peer_data.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\peer_data_storage.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\peer_database.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\peer_id.c</name>    </file>    <file>

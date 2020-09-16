@@ -6,7 +6,7 @@ GROUP(-lgcc -lc -lnosys)
 MEMORY
 {
   FLASH (rx) : ORIGIN = 0x0, LENGTH = 0x100000
-  RAM (rwx) :  ORIGIN = 0x20000dc0, LENGTH = 0x3f240
+  RAM (rwx) :  ORIGIN = 0x20001118, LENGTH = 0x3eee8
 }
 
 SECTIONS
@@ -24,7 +24,7 @@ SECTIONS
   .pwr_mgmt_data :
   {
     PROVIDE(__start_pwr_mgmt_data = .);
-    KEEP(*(.pwr_mgmt_data))
+    KEEP(*(SORT(.pwr_mgmt_data*)))
     PROVIDE(__stop_pwr_mgmt_data = .);
   } > FLASH
 } INSERT AFTER .text

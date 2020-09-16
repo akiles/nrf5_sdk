@@ -1,13 +1,41 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(NRF_BLE_QWR)
@@ -15,6 +43,7 @@
 #include "nrf_ble_qwr.h"
 #include "ble.h"
 #include "ble_srv_common.h"
+
 
 #define NRF_BLE_QWR_INITIALIZED 0xDE // Non-zero value used to make sure the given structure has been initialized by the module.
 #define MODULE_INITIALIZED      (p_qwr->initialized == NRF_BLE_QWR_INITIALIZED)
@@ -128,17 +157,15 @@ ret_code_t nrf_ble_qwr_conn_handle_assign(nrf_ble_qwr_t * p_qwr,
 }
 
 
-/**@brief Handle a user memory request event.
+/**@brief checks if a user_mem_reply is pending, if so attempts to send it.
  *
  * @param[in]   p_qwr        QWR structure.
- * @param[in]   p_common_evt User_mem_request event to be handled.
  */
-static void on_user_mem_request(nrf_ble_qwr_t          * p_qwr,
-                                ble_common_evt_t const * p_common_evt)
+static void user_mem_reply(nrf_ble_qwr_t * p_qwr)
 {
-    if (p_common_evt->conn_handle == p_qwr->conn_handle)
+    if (p_qwr->is_user_mem_reply_pending)
     {
-        uint32_t err_code = sd_ble_user_mem_reply(p_common_evt->conn_handle, &p_qwr->mem_buffer);
+        ret_code_t err_code = sd_ble_user_mem_reply(p_qwr->conn_handle, &p_qwr->mem_buffer);
         if (err_code == NRF_SUCCESS)
         {
             p_qwr->is_user_mem_reply_pending = false;
@@ -150,6 +177,44 @@ static void on_user_mem_request(nrf_ble_qwr_t          * p_qwr,
         else
         {
             p_qwr->error_handler(err_code);
+        }
+    }
+}
+
+
+/**@brief Handle a user memory request event.
+ *
+ * @param[in]   p_qwr        QWR structure.
+ * @param[in]   p_common_evt User_mem_request event to be handled.
+ */
+static void on_user_mem_request(nrf_ble_qwr_t          * p_qwr,
+                                ble_common_evt_t const * p_common_evt)
+{
+    if (p_common_evt->conn_handle == p_qwr->conn_handle)
+    {
+        if (p_common_evt->params.user_mem_request.type == BLE_USER_MEM_TYPE_GATTS_QUEUED_WRITES)
+        {
+            p_qwr->is_user_mem_reply_pending = true;
+            user_mem_reply(p_qwr);
+        }
+    }
+}
+
+
+/**@brief Handle a user memory release event.
+ *
+ * @param[in]   p_qwr        QWR structure.
+ * @param[in]   p_common_evt User_mem_release event to be handled.
+ */
+static void on_user_mem_release(nrf_ble_qwr_t          * p_qwr,
+                                ble_common_evt_t const * p_common_evt)
+{
+    if (p_common_evt->conn_handle == p_qwr->conn_handle)
+    {
+        if (p_common_evt->params.user_mem_release.type == BLE_USER_MEM_TYPE_GATTS_QUEUED_WRITES)
+        {
+            // Cancel the current operation.
+            p_qwr->nb_written_handles = 0;
         }
     }
 }
@@ -346,15 +411,18 @@ void nrf_ble_qwr_on_ble_evt(nrf_ble_qwr_t * p_qwr,
     VERIFY_PARAM_NOT_NULL_VOID(p_ble_evt);
     VERIFY_MODULE_INITIALIZED_VOID();
 
-    if (p_qwr->is_user_mem_reply_pending)
+    if (p_ble_evt->evt.common_evt.conn_handle == p_qwr->conn_handle)
     {
-        on_user_mem_request(p_qwr, &p_ble_evt->evt.common_evt);
+        user_mem_reply(p_qwr);
     }
-
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_EVT_USER_MEM_REQUEST:
             on_user_mem_request(p_qwr, &p_ble_evt->evt.common_evt);
+            break; // BLE_EVT_USER_MEM_REQUEST
+
+        case BLE_EVT_USER_MEM_RELEASE:
+            on_user_mem_release(p_qwr, &p_ble_evt->evt.common_evt);
             break; // BLE_EVT_USER_MEM_REQUEST
 
         case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:

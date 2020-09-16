@@ -296,7 +296,6 @@ ret_code_t adafruit_pn532_i2c_create(void)
 {
     NRF_LOG_INFO("Creating I2C\r\n");
 
-    nrf_drv_twi_uninit(&m_twi_master);
     nrf_drv_twi_config_t twi_config = NRF_DRV_TWI_DEFAULT_CONFIG;
     twi_config.scl = PN532_CONFIG_SCL;
     twi_config.sda = PN532_CONFIG_SDA;

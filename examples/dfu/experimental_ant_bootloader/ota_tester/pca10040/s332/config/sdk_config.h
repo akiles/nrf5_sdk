@@ -17,7 +17,7 @@
 #if  ANT_STACK_CONFIG_ENABLED
 // <o> ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED - Allocated ANT channels 
 #ifndef ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED
-#define ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED 0
+#define ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED 1
 #endif
 
 // <o> ANT_CONFIG_ENCRYPTED_CHANNELS - Encrypted ANT channels 
@@ -267,6 +267,13 @@
 
 #ifndef HARDFAULT_HANDLER_ENABLED
 #define HARDFAULT_HANDLER_ENABLED 1
+#endif
+
+// <q> NRF_STRERROR_ENABLED  - nrf_strerror - Library for converting error code to string.
+ 
+
+#ifndef NRF_STRERROR_ENABLED
+#define NRF_STRERROR_ENABLED 1
 #endif
 
 // </h> 

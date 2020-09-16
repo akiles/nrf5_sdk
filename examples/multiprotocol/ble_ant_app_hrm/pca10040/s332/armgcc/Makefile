@@ -12,10 +12,12 @@ $(OUTPUT_DIRECTORY)/nrf52832_xxaa.out: \
 SRC_FILES += \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_serial.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_frontend.c \
+  $(SDK_ROOT)/components/boards/boards.c \
   $(SDK_ROOT)/components/libraries/button/app_button.c \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
   $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
   $(SDK_ROOT)/components/libraries/fifo/app_fifo.c \
+  $(SDK_ROOT)/components/libraries/scheduler/app_scheduler.c \
   $(SDK_ROOT)/components/libraries/timer/app_timer.c \
   $(SDK_ROOT)/components/libraries/uart/app_uart_fifo.c \
   $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
@@ -23,10 +25,9 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/fds/fds.c \
   $(SDK_ROOT)/components/libraries/fstorage/fstorage.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
-  $(SDK_ROOT)/components/libraries/util/sdk_errors.c \
+  $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/components/libraries/util/sdk_mapped_flags.c \
   $(SDK_ROOT)/components/libraries/sensorsim/sensorsim.c \
-  $(SDK_ROOT)/components/boards/boards.c \
   $(SDK_ROOT)/components/drivers_nrf/clock/nrf_drv_clock.c \
   $(SDK_ROOT)/components/drivers_nrf/common/nrf_drv_common.c \
   $(SDK_ROOT)/components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
@@ -55,7 +56,6 @@ SRC_FILES += \
   $(SDK_ROOT)/components/ble/peer_manager/gatts_cache_manager.c \
   $(SDK_ROOT)/components/ble/peer_manager/id_manager.c \
   $(SDK_ROOT)/components/ble/nrf_ble_gatt/nrf_ble_gatt.c \
-  $(SDK_ROOT)/components/ble/peer_manager/peer_data.c \
   $(SDK_ROOT)/components/ble/peer_manager/peer_data_storage.c \
   $(SDK_ROOT)/components/ble/peer_manager/peer_database.c \
   $(SDK_ROOT)/components/ble/peer_manager/peer_id.c \
@@ -75,8 +75,10 @@ SRC_FILES += \
 INC_FOLDERS += \
   $(SDK_ROOT)/components \
   $(SDK_ROOT)/components/softdevice/s332/headers/nrf52 \
+  $(SDK_ROOT)/components/libraries/scheduler \
   $(SDK_ROOT)/components/libraries/timer \
   $(SDK_ROOT)/components/libraries/fifo \
+  $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/libraries/uart \
   $(SDK_ROOT)/components/drivers_nrf/delay \
   $(SDK_ROOT)/components/libraries/crc16 \
@@ -122,26 +124,27 @@ INC_FOLDERS += \
 LIB_FILES += \
 
 # C flags common to all targets
-CFLAGS += -DNRF52_PAN_55
+CFLAGS += -DANT_STACK_SUPPORT_REQD
+CFLAGS += -DBLE_STACK_SUPPORT_REQD
+CFLAGS += -DBOARD_PCA10040
+CFLAGS += -DCONFIG_GPIO_AS_PINRESET
+CFLAGS += -DNRF52
+CFLAGS += -DNRF52832_XXAA
 CFLAGS += -DNRF52_PAN_12
 CFLAGS += -DNRF52_PAN_15
-CFLAGS += -DNRF52_PAN_58
-CFLAGS += -DSWI_DISABLE0
 CFLAGS += -DNRF52_PAN_20
-CFLAGS += -DNRF52_PAN_54
-CFLAGS += -DNRF52
-CFLAGS += -DNRF52_PAN_51
-CFLAGS += -DNRF52_PAN_36
-CFLAGS += -DANT_STACK_SUPPORT_REQD
-CFLAGS += -DNRF52_PAN_64
-CFLAGS += -DS332
-CFLAGS += -DNRF52832
-CFLAGS += -DBLE_STACK_SUPPORT_REQD
-CFLAGS += -DSOFTDEVICE_PRESENT
-CFLAGS += -DCONFIG_GPIO_AS_PINRESET
-CFLAGS += -DBOARD_PCA10040
 CFLAGS += -DNRF52_PAN_31
-CFLAGS += -DNRF_SD_BLE_API_VERSION=3
+CFLAGS += -DNRF52_PAN_36
+CFLAGS += -DNRF52_PAN_51
+CFLAGS += -DNRF52_PAN_54
+CFLAGS += -DNRF52_PAN_55
+CFLAGS += -DNRF52_PAN_58
+CFLAGS += -DNRF52_PAN_64
+CFLAGS += -DNRF52_PAN_74
+CFLAGS += -DNRF_SD_BLE_API_VERSION=4
+CFLAGS += -DS332
+CFLAGS += -DSOFTDEVICE_PRESENT
+CFLAGS += -DSWI_DISABLE0
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS +=  -Wall -Werror -O3 -g3
@@ -155,26 +158,27 @@ CXXFLAGS += \
 
 # Assembler flags common to all targets
 ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DNRF52_PAN_55
+ASMFLAGS += -DANT_STACK_SUPPORT_REQD
+ASMFLAGS += -DBLE_STACK_SUPPORT_REQD
+ASMFLAGS += -DBOARD_PCA10040
+ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
+ASMFLAGS += -DNRF52
+ASMFLAGS += -DNRF52832_XXAA
 ASMFLAGS += -DNRF52_PAN_12
 ASMFLAGS += -DNRF52_PAN_15
-ASMFLAGS += -DNRF52_PAN_58
-ASMFLAGS += -DSWI_DISABLE0
 ASMFLAGS += -DNRF52_PAN_20
-ASMFLAGS += -DNRF52_PAN_54
-ASMFLAGS += -DNRF52
-ASMFLAGS += -DNRF52_PAN_51
-ASMFLAGS += -DNRF52_PAN_36
-ASMFLAGS += -DANT_STACK_SUPPORT_REQD
-ASMFLAGS += -DNRF52_PAN_64
-ASMFLAGS += -DS332
-ASMFLAGS += -DNRF52832
-ASMFLAGS += -DBLE_STACK_SUPPORT_REQD
-ASMFLAGS += -DSOFTDEVICE_PRESENT
-ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
-ASMFLAGS += -DBOARD_PCA10040
 ASMFLAGS += -DNRF52_PAN_31
-ASMFLAGS += -DNRF_SD_BLE_API_VERSION=3
+ASMFLAGS += -DNRF52_PAN_36
+ASMFLAGS += -DNRF52_PAN_51
+ASMFLAGS += -DNRF52_PAN_54
+ASMFLAGS += -DNRF52_PAN_55
+ASMFLAGS += -DNRF52_PAN_58
+ASMFLAGS += -DNRF52_PAN_64
+ASMFLAGS += -DNRF52_PAN_74
+ASMFLAGS += -DNRF_SD_BLE_API_VERSION=4
+ASMFLAGS += -DS332
+ASMFLAGS += -DSOFTDEVICE_PRESENT
+ASMFLAGS += -DSWI_DISABLE0
 
 # Linker flags
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)

@@ -1,15 +1,42 @@
-/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /** @file
  *
  * @defgroup ble_sdk_app_pwr_mgmt_main main.c
@@ -36,18 +63,10 @@
 #include "ble_advdata.h"
 #include "softdevice_handler.h"
 #include "app_timer.h"
-#include "boards.h"
+#include "bsp.h"
+#include "nrf_ble_gatt.h"
 
-#define IS_SRVC_CHANGED_CHARACT_PRESENT     0                                       /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
-#if (NRF_SD_BLE_API_VERSION <= 3)
-    #define NRF_BLE_MAX_MTU_SIZE        GATT_MTU_SIZE_DEFAULT                   /**< MTU size used in the softdevice enabling and to reply to a BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST event. */
-#else
-    #define NRF_BLE_MAX_MTU_SIZE        BLE_GATT_MTU_SIZE_DEFAULT               /**< MTU size used in the softdevice enabling and to reply to a BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST event. */
-#endif
-
-#define CENTRAL_LINK_COUNT                  0                                       /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
-#define PERIPHERAL_LINK_COUNT               1                                       /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 
 #define APP_FEATURE_NOT_SUPPORTED           BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2    /**< Reply when unsupported features are requested. */
 
@@ -69,11 +88,7 @@
 
 #define DEVICE_NAME                   "Nordic_Power_Mgmt"                           /**< Name of device. Will be included in the advertising data. */
 
-#define APP_TIMER_PRESCALER           0                                             /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE       4                                             /**< Size of timer operation queues. */
-
-#define CHAR_NOTIF_TIMEOUT_IN_TKS     APP_TIMER_TICKS(APP_CFG_CHAR_NOTIF_TIMEOUT,\
-                                                      APP_TIMER_PRESCALER)          /**< Time for which the device must continue to send notifications once connected to central (in ticks). */
+#define CHAR_NOTIF_TIMEOUT_IN_TKS     APP_TIMER_TICKS(APP_CFG_CHAR_NOTIF_TIMEOUT)          /**< Time for which the device must continue to send notifications once connected to central (in ticks). */
 
 #define CONNECTABLE_ADV_INTERVAL      MSEC_TO_UNITS(20, UNIT_0_625_MS)              /**< The advertising interval for connectable advertisement (20 ms). This value can vary between 20ms to 10.24s. */
 #define NON_CONNECTABLE_ADV_INTERVAL  MSEC_TO_UNITS(100, UNIT_0_625_MS)             /**< The advertising interval for non-connectable advertisement (100 ms). This value can vary between 100ms to 10.24s). */
@@ -106,7 +121,7 @@
 
 // Check whether the maximum characteristic length + opcode length (1) + handle length (2) is not
 // greater than default MTU size.
-#if (APP_CFG_CHAR_LEN + 1 + 2) > BLE_L2CAP_MTU_DEF
+#if (APP_CFG_CHAR_LEN + 1 + 2) > BLE_GATT_ATT_MTU_DEFAULT
     #error "The APP_CFG_CHAR_LEN is too large for the maximum MTU size."
 #endif
 
@@ -137,6 +152,8 @@ static ble_gatts_char_handles_t m_char_handles;                                 
 static uint16_t                 m_conn_handle = BLE_CONN_HANDLE_INVALID;            /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection).*/
 static uint16_t                 m_service_handle;                                   /**< Handle of local service (as provided by the BLE stack).*/
 static bool                     m_is_notifying_enabled = false;                     /**< Variable to indicate whether the notification is enabled by the peer.*/
+static nrf_ble_gatt_t           m_gatt;                                             /**< GATT module instance. */
+
 APP_TIMER_DEF(m_conn_int_timer_id);                                                 /**< Connection interval timer. */
 APP_TIMER_DEF(m_notif_timer_id);                                                    /**< Notification timer. */
 
@@ -165,7 +182,7 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
  */
 static void char_notify(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
     uint16_t len = APP_CFG_CHAR_LEN;
 
     // Send value if connected and notifying.
@@ -176,16 +193,16 @@ static void char_notify(void)
         memset(&hvx_params, 0, sizeof(hvx_params));
         len = sizeof(uint8_t);
 
-        hvx_params.handle   = m_char_handles.value_handle;
-        hvx_params.type     = BLE_GATT_HVX_NOTIFICATION;
-        hvx_params.offset   = 0;
-        hvx_params.p_len    = &len;
-        hvx_params.p_data   = m_char_value;
+        hvx_params.handle = m_char_handles.value_handle;
+        hvx_params.type   = BLE_GATT_HVX_NOTIFICATION;
+        hvx_params.offset = 0;
+        hvx_params.p_len  = &len;
+        hvx_params.p_data = m_char_value;
 
         err_code = sd_ble_gatts_hvx(m_conn_handle, &hvx_params);
         if ((err_code != NRF_SUCCESS) &&
             (err_code != NRF_ERROR_INVALID_STATE) &&
-            (err_code != BLE_ERROR_NO_TX_PACKETS) &&
+            (err_code != NRF_ERROR_RESOURCES) &&
             (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
         )
         {
@@ -203,7 +220,7 @@ static void char_notify(void)
  */
 static void gap_params_init(void)
 {
-    uint32_t                err_code;
+    ret_code_t              err_code;
     ble_gap_conn_params_t   gap_conn_params;
     ble_gap_conn_sec_mode_t sec_mode;
 
@@ -224,6 +241,15 @@ static void gap_params_init(void)
     gap_conn_params.conn_sup_timeout  = CONN_SUP_TIMEOUT;
 
     err_code = sd_ble_gap_ppcp_set(&gap_conn_params);
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for initializing the GATT module.
+ */
+static void gatt_init(void)
+{
+    ret_code_t err_code = nrf_ble_gatt_init(&m_gatt, NULL);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -274,10 +300,10 @@ static void non_connectable_adv_init(void)
  */
 static void advertising_data_init(void)
 {
-    uint32_t                   err_code;
-    ble_advdata_t              advdata;
-    ble_advdata_manuf_data_t   manuf_data;
-    uint8_t                    flags = BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE;
+    ret_code_t               err_code;
+    ble_advdata_t            advdata;
+    ble_advdata_manuf_data_t manuf_data;
+    uint8_t                  flags = BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE;
 
     APP_ERROR_CHECK_BOOL(sizeof(flags) == ADV_FLAGS_LEN);  // Assert that these two values of the same.
 
@@ -304,7 +330,7 @@ static void advertising_data_init(void)
  */
 static void char_add(const uint8_t uuid_type)
 {
-    uint32_t            err_code;
+    ret_code_t          err_code;
     ble_gatts_char_md_t char_md;
     ble_gatts_attr_md_t cccd_md;
     ble_gatts_attr_t    attr_char_value;
@@ -364,8 +390,8 @@ static void char_add(const uint8_t uuid_type)
  */
 static void service_add(void)
 {
-    ble_uuid_t  service_uuid;
-    uint32_t    err_code;
+    ble_uuid_t service_uuid;
+    ret_code_t err_code;
 
     service_uuid.uuid = LOCAL_SERVICE_UUID;
 
@@ -390,7 +416,7 @@ static void service_add(void)
  */
 static void notif_timeout_handler(void * p_context)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     UNUSED_PARAMETER(p_context);
 
@@ -429,11 +455,11 @@ static void connection_interval_timeout_handler(void * p_context)
  */
 static void application_timers_start(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     // Start connection interval timer.
     err_code = app_timer_start(m_conn_int_timer_id,
-                               APP_TIMER_TICKS(APP_CFG_CONNECTION_INTERVAL, APP_TIMER_PRESCALER),
+                               APP_TIMER_TICKS(APP_CFG_CONNECTION_INTERVAL),
                                NULL);
     APP_ERROR_CHECK(err_code);
 
@@ -447,7 +473,7 @@ static void application_timers_start(void)
  */
 static void application_timers_stop(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     err_code = app_timer_stop(m_notif_timer_id);
     APP_ERROR_CHECK(err_code);
@@ -461,9 +487,9 @@ static void application_timers_stop(void)
  */
 static void advertising_start(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
-    err_code = sd_ble_gap_adv_start(&m_adv_params);
+    err_code = sd_ble_gap_adv_start(&m_adv_params,BLE_CONN_CFG_TAG_DEFAULT);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -474,10 +500,11 @@ static void advertising_start(void)
 */
 static void timers_init(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     // Initialize timer module
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
     // Create timers
     err_code = app_timer_create(&m_conn_int_timer_id,
@@ -488,6 +515,15 @@ static void timers_init(void)
     err_code = app_timer_create(&m_notif_timer_id,
                                 APP_TIMER_MODE_SINGLE_SHOT,
                                 notif_timeout_handler);
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for initializing buttons.
+ */
+static void buttons_init(void)
+{
+    ret_code_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, NULL);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -528,7 +564,7 @@ static void on_write(ble_evt_t * p_ble_evt)
  */
 static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -615,14 +651,6 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             }
         } break; // BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST
 
-#if (NRF_SD_BLE_API_VERSION >= 3)
-        case BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST:
-            err_code = sd_ble_gatts_exchange_mtu_reply(p_ble_evt->evt.gatts_evt.conn_handle,
-                                                       NRF_BLE_MAX_MTU_SIZE);
-            APP_ERROR_CHECK(err_code);
-            break; // BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST
-#endif
-
         default:
             // No implementation needed.
             break;
@@ -640,6 +668,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
     on_ble_evt(p_ble_evt);
+    nrf_ble_gatt_on_ble_evt(&m_gatt, p_ble_evt);
 }
 
 
@@ -662,27 +691,31 @@ static void sys_evt_dispatch(uint32_t sys_evt)
  */
 static void ble_stack_init(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
 
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
 
-    ble_enable_params_t ble_enable_params;
-    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
-                                                    PERIPHERAL_LINK_COUNT,
-                                                    &ble_enable_params);
+    // Fetch the start address of the application RAM.
+    uint32_t ram_start = 0;
+    err_code = softdevice_app_ram_start_get(&ram_start);
     APP_ERROR_CHECK(err_code);
 
-    //Check the ram settings against the used number of links
-    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
+    // Overwrite some of the default configurations for the BLE stack.
+    ble_cfg_t ble_cfg;
+
+    // Configure the maximum number of connections.
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = BLE_GAP_ROLE_COUNT_PERIPH_DEFAULT;
+    ble_cfg.gap_cfg.role_count_cfg.central_role_count = 0;
+    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = 0;
+    err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start);
+    APP_ERROR_CHECK(err_code);
 
     // Enable BLE stack.
-#if (NRF_SD_BLE_API_VERSION >= 3)
-    ble_enable_params.gatt_enable_params.att_mtu = NRF_BLE_MAX_MTU_SIZE;
-#endif
-    err_code = softdevice_enable(&ble_enable_params);
+    err_code = softdevice_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
@@ -699,7 +732,7 @@ static void ble_stack_init(void)
  */
 static void power_manage(void)
 {
-    uint32_t err_code = sd_app_evt_wait();
+    ret_code_t err_code = sd_app_evt_wait();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -708,14 +741,14 @@ static void power_manage(void)
  */
 int main(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
     bool is_notification_mode    = false;
     bool is_non_connectable_mode = false;
 
     timers_init();
+    buttons_init();
 
 #if BUTTONS_NUMBER > 2
-
     // Check button states.
     // Notification Start button.
     is_notification_mode = bsp_board_button_state_get(NOTIF_BUTTON_ID);
@@ -725,11 +758,10 @@ int main(void)
     {
         is_non_connectable_mode = bsp_board_button_state_get(NON_CONN_ADV_BUTTON_ID);
     }
-    // Un-configured button.
     else
     {
+        // Un-configured button.
     }
-
 #else
     is_notification_mode = true;
 #endif
@@ -745,9 +777,10 @@ int main(void)
         APP_ERROR_CHECK(err_code);
     }
 
-    // If we reach this point, the application was woken up by pressing one of the two configured
-    // buttons.
+    // If we reach this point, the application was woken up
+    // by pressing one of the two configured buttons.
     gap_params_init();
+    gatt_init();
 
     if (is_notification_mode)
     {

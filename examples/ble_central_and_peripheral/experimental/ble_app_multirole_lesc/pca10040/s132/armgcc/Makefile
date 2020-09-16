@@ -18,6 +18,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/button/app_button.c \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
   $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
+  $(SDK_ROOT)/components/libraries/scheduler/app_scheduler.c \
   $(SDK_ROOT)/components/libraries/timer/app_timer.c \
   $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
   $(SDK_ROOT)/components/libraries/crc16/crc16.c \
@@ -27,7 +28,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/mem_manager/mem_manager.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
   $(SDK_ROOT)/components/libraries/queue/nrf_queue.c \
-  $(SDK_ROOT)/components/libraries/util/sdk_errors.c \
+  $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/components/libraries/util/sdk_mapped_flags.c \
   $(SDK_ROOT)/components/libraries/sha256/sha256.c \
   $(SDK_ROOT)/components/boards/boards.c \
@@ -57,7 +58,6 @@ SRC_FILES += \
   $(SDK_ROOT)/components/ble/peer_manager/gatts_cache_manager.c \
   $(SDK_ROOT)/components/ble/peer_manager/id_manager.c \
   $(SDK_ROOT)/components/ble/nrf_ble_gatt/nrf_ble_gatt.c \
-  $(SDK_ROOT)/components/ble/peer_manager/peer_data.c \
   $(SDK_ROOT)/components/ble/peer_manager/peer_data_storage.c \
   $(SDK_ROOT)/components/ble/peer_manager/peer_database.c \
   $(SDK_ROOT)/components/ble/peer_manager/peer_id.c \
@@ -122,6 +122,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/ble/ble_services/ble_rscs \
   $(SDK_ROOT)/components/ble/ble_dtm \
   $(SDK_ROOT)/components/drivers_nrf/rtc \
+  $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/drivers_nrf/wdt \
   $(SDK_ROOT)/components/libraries/util \
   $(SDK_ROOT)/components/libraries/pwm \
@@ -198,27 +199,28 @@ LIB_FILES += \
   $(SDK_ROOT)/external/micro-ecc/nrf52_armgcc/armgcc/micro_ecc_lib_nrf52.a \
 
 # C flags common to all targets
-CFLAGS += -DNRF52
-CFLAGS += -DNRF52_PAN_36
-CFLAGS += -DSVC_INTERFACE_CALL_AS_NORMAL_FUNCTION
-CFLAGS += -DSOFTDEVICE_PRESENT
-CFLAGS += -DBOARD_PCA10040
-CFLAGS += -DNRF52832
-CFLAGS += -DNRF52_PAN_12
-CFLAGS += -DNRF52_PAN_58
-CFLAGS += -DNRF52_PAN_54
-CFLAGS += -DNRF52_PAN_31
-CFLAGS += -DNRF52_PAN_51
-CFLAGS += -D__HEAP_SIZE=0
-CFLAGS += -DCONFIG_GPIO_AS_PINRESET
 CFLAGS += -DBLE_STACK_SUPPORT_REQD
-CFLAGS += -DNRF_SD_BLE_API_VERSION=5
+CFLAGS += -DBOARD_PCA10040
+CFLAGS += -DCONFIG_GPIO_AS_PINRESET
+CFLAGS += -DNRF52
+CFLAGS += -DNRF52832_XXAA
+CFLAGS += -DNRF52_PAN_12
 CFLAGS += -DNRF52_PAN_15
-CFLAGS += -DSWI_DISABLE0
 CFLAGS += -DNRF52_PAN_20
-CFLAGS += -DNRF52_PAN_64
+CFLAGS += -DNRF52_PAN_31
+CFLAGS += -DNRF52_PAN_36
+CFLAGS += -DNRF52_PAN_51
+CFLAGS += -DNRF52_PAN_54
 CFLAGS += -DNRF52_PAN_55
+CFLAGS += -DNRF52_PAN_58
+CFLAGS += -DNRF52_PAN_64
+CFLAGS += -DNRF52_PAN_74
+CFLAGS += -DNRF_SD_BLE_API_VERSION=4
 CFLAGS += -DS132
+CFLAGS += -DSOFTDEVICE_PRESENT
+CFLAGS += -DSVC_INTERFACE_CALL_AS_NORMAL_FUNCTION
+CFLAGS += -DSWI_DISABLE0
+CFLAGS += -D__HEAP_SIZE=0
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS +=  -Wall -Werror -O3 -g3
@@ -232,27 +234,28 @@ CXXFLAGS += \
 
 # Assembler flags common to all targets
 ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DNRF52
-ASMFLAGS += -DNRF52_PAN_36
-ASMFLAGS += -DSVC_INTERFACE_CALL_AS_NORMAL_FUNCTION
-ASMFLAGS += -DSOFTDEVICE_PRESENT
-ASMFLAGS += -DBOARD_PCA10040
-ASMFLAGS += -DNRF52832
-ASMFLAGS += -DNRF52_PAN_12
-ASMFLAGS += -DNRF52_PAN_58
-ASMFLAGS += -DNRF52_PAN_54
-ASMFLAGS += -DNRF52_PAN_31
-ASMFLAGS += -DNRF52_PAN_51
-ASMFLAGS += -D__HEAP_SIZE=0
-ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
 ASMFLAGS += -DBLE_STACK_SUPPORT_REQD
-ASMFLAGS += -DNRF_SD_BLE_API_VERSION=5
+ASMFLAGS += -DBOARD_PCA10040
+ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
+ASMFLAGS += -DNRF52
+ASMFLAGS += -DNRF52832_XXAA
+ASMFLAGS += -DNRF52_PAN_12
 ASMFLAGS += -DNRF52_PAN_15
-ASMFLAGS += -DSWI_DISABLE0
 ASMFLAGS += -DNRF52_PAN_20
-ASMFLAGS += -DNRF52_PAN_64
+ASMFLAGS += -DNRF52_PAN_31
+ASMFLAGS += -DNRF52_PAN_36
+ASMFLAGS += -DNRF52_PAN_51
+ASMFLAGS += -DNRF52_PAN_54
 ASMFLAGS += -DNRF52_PAN_55
+ASMFLAGS += -DNRF52_PAN_58
+ASMFLAGS += -DNRF52_PAN_64
+ASMFLAGS += -DNRF52_PAN_74
+ASMFLAGS += -DNRF_SD_BLE_API_VERSION=4
 ASMFLAGS += -DS132
+ASMFLAGS += -DSOFTDEVICE_PRESENT
+ASMFLAGS += -DSVC_INTERFACE_CALL_AS_NORMAL_FUNCTION
+ASMFLAGS += -DSWI_DISABLE0
+ASMFLAGS += -D__HEAP_SIZE=0
 
 # Linker flags
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)
@@ -288,8 +291,8 @@ flash: $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex
 
 # Flash softdevice
 flash_softdevice:
-	@echo Flashing: s132_nrf52_5.0.0-1.alpha_softdevice.hex
-	nrfjprog --program $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_5.0.0-1.alpha_softdevice.hex -f nrf52 --sectorerase 
+	@echo Flashing: s132_nrf52_4.0.2_softdevice.hex
+	nrfjprog --program $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_4.0.2_softdevice.hex -f nrf52 --sectorerase 
 	nrfjprog --reset -f nrf52
 
 erase:

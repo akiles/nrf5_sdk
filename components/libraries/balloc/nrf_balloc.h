@@ -1,16 +1,43 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
- /**
+/**
   * @defgroup nrf_balloc Block memory allocator
   * @{
   * @ingroup app_common
@@ -89,12 +116,12 @@ typedef struct
 #endif // NRF_BALLOC_CONFIG_DEBUG_ENABLED
     uint16_t          block_size;       //!< Size of the allocated block (including debug overhead).
                                         /**<
-                                         * Single block contains user element with header and tail 
+                                         * Single block contains user element with header and tail
                                          * words.
                                          */
 } nrf_balloc_t;
 
-/**@brief Get total memory consumed by single block (element size with overhead caused by debug 
+/**@brief Get total memory consumed by single block (element size with overhead caused by debug
  *        flags).
  *
  * @param[in]   _element_size    Size of an element.
@@ -174,8 +201,7 @@ typedef struct
  */
 #define NRF_BALLOC_INTERFACE_DEC(_type, _name)    \
     _type * _name##_alloc(void);                  \
-    void    _name##_free(_type * p_element);      \
-    uint8_t _name##_max_utilization_get(void)
+    void    _name##_free(_type * p_element)
 
 /**@brief Define a custom block allocator interface.
  *
@@ -187,24 +213,24 @@ typedef struct
 #define NRF_BALLOC_INTERFACE_CUSTOM_DEF(_attr, _type, _name, _p_pool)           \
     _attr _type * _name##_alloc(void)                                           \
     {                                                                           \
+        GCC_PRAGMA("GCC diagnostic push")                                       \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")                      \
         ASSERT((_p_pool) != NULL);                                              \
         ASSERT((_p_pool)->block_size >=                                         \
                NRF_BALLOC_BLOCK_SIZE(sizeof(_type), (_p_pool)->debug_flags));   \
+        GCC_PRAGMA("GCC diagnostic pop")                                        \
         return (_type *)(nrf_balloc_alloc(_p_pool));                            \
     }                                                                           \
                                                                                 \
     _attr void _name##_free(_type * p_element)                                  \
     {                                                                           \
+        GCC_PRAGMA("GCC diagnostic push")                                       \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")                      \
         ASSERT((_p_pool) != NULL);                                              \
         ASSERT((_p_pool)->block_size >=                                         \
                NRF_BALLOC_BLOCK_SIZE(sizeof(_type), (_p_pool)->debug_flags));   \
+        GCC_PRAGMA("GCC diagnostic pop")                                        \
         nrf_balloc_free((_p_pool), p_element);                                  \
-    }                                                                           \
-                                                                                \
-    _attr uint8_t _name##_max_utilization_get(void)                             \
-    {                                                                           \
-        ASSERT((_p_pool) != NULL);                                              \
-        return nrf_balloc_max_utilization_get((_p_pool));                       \
     }
 
 /**@brief Define block allocator interface.

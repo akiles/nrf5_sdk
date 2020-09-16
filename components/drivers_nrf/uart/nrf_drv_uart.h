@@ -1,15 +1,42 @@
-/* Copyright (c) 2015 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /**@file
  * @addtogroup nrf_uart UART driver and HAL
  * @ingroup nrf_drivers
@@ -329,23 +356,35 @@ void nrf_drv_uart_tx_abort(nrf_drv_uart_t const * p_instance);
 ret_code_t nrf_drv_uart_rx(nrf_drv_uart_t const * p_instance,
                            uint8_t * p_data, uint8_t length);
 
+
+
 /**
- * @brief Function for enabling receiver.
+ * @brief Function for testing the receiver state in blocking mode.
  *
- * UART has 6 byte long RX FIFO and it will be used to store incoming data. If user will not call
- * UART receive function before FIFO is filled, overrun error will encounter. Enabling receiver
- * without specifying RX buffer is supported only in UART mode (without Easy DMA). Receiver must be
- * explicitly closed by the user @sa nrf_drv_uart_rx_disable. Function asserts if mode is wrong.
+ * @param[in] p_instance Pointer to the driver instance structure.
+ *
+ * @retval true  If the receiver has at least one byte of data to get.
+ * @retval false If the receiver is empty.
+ */
+bool nrf_drv_uart_rx_ready(nrf_drv_uart_t const * p_instance);
+
+/**
+ * @brief Function for enabling the receiver.
+ *
+ * UART has a 6-byte-long RX FIFO and it is used to store incoming data. If a user does not call the
+ * UART receive function before the FIFO is filled, an overrun error will appear. Enabling the receiver
+ * without specifying an RX buffer is supported only in UART mode (without Easy DMA). The receiver must be
+ * explicitly closed by the user @sa nrf_drv_uart_rx_disable. This function asserts if the mode is wrong.
  *
  * @param[in] p_instance Pointer to the driver instance structure.
  */
 void nrf_drv_uart_rx_enable(nrf_drv_uart_t const * p_instance);
 
 /**
- * @brief Function for disabling receiver.
+ * @brief Function for disabling the receiver.
  *
- * Function must be called to close the receiver after it has been explicitly enabled by
- * @sa nrf_drv_uart_rx_enable. Feature is supported only in UART mode (without Easy DMA). Function
+ * This function must be called to close the receiver after it has been explicitly enabled by
+ * @sa nrf_drv_uart_rx_enable. The feature is supported only in UART mode (without Easy DMA). The function
  * asserts if mode is wrong.
  *
  * @param[in] p_instance Pointer to the driver instance structure.
@@ -364,7 +403,7 @@ void nrf_drv_uart_rx_abort(nrf_drv_uart_t const * p_instance);
 
 /**
  * @brief Function for reading error source mask. Mask contains values from @ref nrf_uart_error_mask_t.
- * @note Function should be used in blocking mode only. In case of non-blocking mode error event is
+ * @note Function should be used in blocking mode only. In case of non-blocking mode, an error event is
  *       generated. Function clears error sources after reading.
  *
  * @param[in] p_instance Pointer to the driver instance structure.
@@ -372,6 +411,7 @@ void nrf_drv_uart_rx_abort(nrf_drv_uart_t const * p_instance);
  * @retval    Mask of reported errors.
  */
 uint32_t nrf_drv_uart_errorsrc_get(nrf_drv_uart_t const * p_instance);
+
 
 #ifndef SUPPRESS_INLINE_IMPLEMENTATION
 __STATIC_INLINE uint32_t nrf_drv_uart_task_address_get(nrf_drv_uart_t const * p_instance,

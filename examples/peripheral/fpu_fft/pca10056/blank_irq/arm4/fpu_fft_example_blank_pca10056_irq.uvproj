@@ -349,10 +349,10 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
-              <MiscControls>--c99</MiscControls>
-              <Define> FPU_INTERRUPT_MODE CONFIG_GPIO_AS_PINRESET BOARD_PCA10056 BSP_DEFINES_ONLY ARM_MATH_CM4 NRF52840_XXAA</Define>
+              <MiscControls>--c99 --reduce_paths</MiscControls>
+              <Define> ARM_MATH_CM4 BOARD_PCA10056 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FPU_INTERRUPT_MODE NRF52840_XXAA</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config\fpu_fft_example_blank_pca10056_irq;..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
+              <IncludePath>..\..\..\config\fpu_fft_example_blank_pca10056_irq;..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,10 +365,10 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DFPU_INTERRUPT_MODE,-DCONFIG_GPIO_AS_PINRESET,-DBOARD_PCA10056,-DBSP_DEFINES_ONLY,-DARM_MATH_CM4,-DNRF52840_XXAA</MiscControls>
-              <Define> FPU_INTERRUPT_MODE CONFIG_GPIO_AS_PINRESET BOARD_PCA10056 BSP_DEFINES_ONLY ARM_MATH_CM4 NRF52840_XXAA</Define>
+              <MiscControls> --cpreproc_opts=-DARM_MATH_CM4,-DBOARD_PCA10056,-DBSP_DEFINES_ONLY,-DCONFIG_GPIO_AS_PINRESET,-DFPU_INTERRUPT_MODE,-DNRF52840_XXAA</MiscControls>
+              <Define> ARM_MATH_CM4 BOARD_PCA10056 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FPU_INTERRUPT_MODE NRF52840_XXAA</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config\fpu_fft_example_blank_pca10056_irq;..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
+              <IncludePath>..\..\..\config\fpu_fft_example_blank_pca10056_irq;..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -383,7 +383,7 @@
             <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc></Misc>
+            <Misc>--diag_suppress 6330</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -414,12 +414,6 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\toolchain\system_nrf52840.c</FilePath>            </File>          </Files>
         </Group>        <Group>
-          <GroupName>Documentation</GroupName>
-          <Files>            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\license.txt</FilePath>            </File>          </Files>
-        </Group>        <Group>
           <GroupName>Third Parties</GroupName>
           <Files>            <File>
               <FileName>arm_cortexM4lf_math.lib</FileName>
@@ -449,9 +443,9 @@
               <FileName>nrf_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\nrf_assert.c</FilePath>            </File>            <File>
-              <FileName>sdk_errors.c</FileName>
+              <FileName>nrf_strerror.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\util\sdk_errors.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Log</GroupName>
           <Files>            <File>

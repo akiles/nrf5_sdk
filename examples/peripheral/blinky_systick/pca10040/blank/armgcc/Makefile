@@ -10,20 +10,22 @@ $(OUTPUT_DIRECTORY)/nrf52832_xxaa.out: \
 
 # Source files common to all targets
 SRC_FILES += \
+  $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf52.S \
+  $(SDK_ROOT)/components/toolchain/system_nrf52.c \
+  $(PROJ_DIR)/main.c \
+  $(SDK_ROOT)/components/boards/boards.c \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
   $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
+  $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/components/drivers_nrf/systick/nrf_drv_systick.c \
-  $(SDK_ROOT)/components/boards/boards.c \
-  $(PROJ_DIR)/main.c \
-  $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf52.S \
-  $(SDK_ROOT)/components/toolchain/system_nrf52.c \
 
 # Include folders common to all targets
 INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/util \
   $(SDK_ROOT)/components/drivers_nrf/systick \
   $(SDK_ROOT)/components/toolchain \
+  $(SDK_ROOT)/components/libraries/strerror \
   $(PROJ_DIR) \
   $(SDK_ROOT)/components/toolchain/gcc \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
@@ -39,20 +41,21 @@ INC_FOLDERS += \
 LIB_FILES += \
 
 # C flags common to all targets
+CFLAGS += -DBOARD_PCA10040
+CFLAGS += -DCONFIG_GPIO_AS_PINRESET
+CFLAGS += -DNRF52
+CFLAGS += -DNRF52832_XXAA
 CFLAGS += -DNRF52_PAN_12
 CFLAGS += -DNRF52_PAN_15
-CFLAGS += -DNRF52_PAN_58
 CFLAGS += -DNRF52_PAN_20
-CFLAGS += -DNRF52_PAN_54
-CFLAGS += -DNRF52
-CFLAGS += -DNRF52_PAN_51
-CFLAGS += -DNRF52_PAN_36
-CFLAGS += -DCONFIG_GPIO_AS_PINRESET
-CFLAGS += -DNRF52_PAN_64
-CFLAGS += -DNRF52_PAN_55
-CFLAGS += -DBOARD_PCA10040
 CFLAGS += -DNRF52_PAN_31
-CFLAGS += -DNRF52832
+CFLAGS += -DNRF52_PAN_36
+CFLAGS += -DNRF52_PAN_51
+CFLAGS += -DNRF52_PAN_54
+CFLAGS += -DNRF52_PAN_55
+CFLAGS += -DNRF52_PAN_58
+CFLAGS += -DNRF52_PAN_64
+CFLAGS += -DNRF52_PAN_74
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS +=  -Wall -Werror -O3 -g3
@@ -66,20 +69,21 @@ CXXFLAGS += \
 
 # Assembler flags common to all targets
 ASMFLAGS += -x assembler-with-cpp
+ASMFLAGS += -DBOARD_PCA10040
+ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
+ASMFLAGS += -DNRF52
+ASMFLAGS += -DNRF52832_XXAA
 ASMFLAGS += -DNRF52_PAN_12
 ASMFLAGS += -DNRF52_PAN_15
-ASMFLAGS += -DNRF52_PAN_58
 ASMFLAGS += -DNRF52_PAN_20
-ASMFLAGS += -DNRF52_PAN_54
-ASMFLAGS += -DNRF52
-ASMFLAGS += -DNRF52_PAN_51
-ASMFLAGS += -DNRF52_PAN_36
-ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
-ASMFLAGS += -DNRF52_PAN_64
-ASMFLAGS += -DNRF52_PAN_55
-ASMFLAGS += -DBOARD_PCA10040
 ASMFLAGS += -DNRF52_PAN_31
-ASMFLAGS += -DNRF52832
+ASMFLAGS += -DNRF52_PAN_36
+ASMFLAGS += -DNRF52_PAN_51
+ASMFLAGS += -DNRF52_PAN_54
+ASMFLAGS += -DNRF52_PAN_55
+ASMFLAGS += -DNRF52_PAN_58
+ASMFLAGS += -DNRF52_PAN_64
+ASMFLAGS += -DNRF52_PAN_74
 
 # Linker flags
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)

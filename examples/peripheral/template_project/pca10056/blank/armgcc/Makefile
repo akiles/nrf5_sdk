@@ -45,7 +45,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/csense/nrf_csense.c \
   $(SDK_ROOT)/components/libraries/csense_drv/nrf_drv_csense.c \
   $(SDK_ROOT)/components/libraries/queue/nrf_queue.c \
-  $(SDK_ROOT)/components/libraries/util/sdk_errors.c \
+  $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/components/libraries/slip/slip.c \
   $(SDK_ROOT)/components/libraries/usbd/app_usbd.c \
   $(SDK_ROOT)/components/libraries/usbd/app_usbd_core.c \
@@ -65,7 +65,6 @@ SRC_FILES += \
   $(SDK_ROOT)/components/drivers_nrf/rtc/nrf_drv_rtc.c \
   $(SDK_ROOT)/components/drivers_nrf/saadc/nrf_drv_saadc.c \
   $(SDK_ROOT)/components/drivers_nrf/spi_master/nrf_drv_spi.c \
-  $(SDK_ROOT)/components/drivers_nrf/spi_slave/nrf_drv_spis.c \
   $(SDK_ROOT)/components/drivers_nrf/swi/nrf_drv_swi.c \
   $(SDK_ROOT)/components/drivers_nrf/systick/nrf_drv_systick.c \
   $(SDK_ROOT)/components/drivers_nrf/timer/nrf_drv_timer.c \
@@ -83,6 +82,7 @@ SRC_FILES += \
   $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
+  $(SDK_ROOT)/components/drivers_nrf/spi_slave/nrf_drv_spis.c \
   $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf52840.S \
   $(SDK_ROOT)/components/toolchain/system_nrf52840.c \
 
@@ -99,6 +99,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/twi_master \
   $(SDK_ROOT)/components/libraries/fifo \
   $(SDK_ROOT)/components/libraries/usbd/class/cdc \
+  $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/drivers_nrf/pdm \
   $(SDK_ROOT)/components/libraries/crc32 \
   $(SDK_ROOT)/components/drivers_nrf/delay \
@@ -166,10 +167,10 @@ INC_FOLDERS += \
 LIB_FILES += \
 
 # C flags common to all targets
-CFLAGS += -DNRF52840_XXAA
 CFLAGS += -DBOARD_PCA10056
-CFLAGS += -DSWI_DISABLE0
 CFLAGS += -DCONFIG_GPIO_AS_PINRESET
+CFLAGS += -DNRF52840_XXAA
+CFLAGS += -DSWI_DISABLE0
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS +=  -Wall -Werror -O3 -g3
@@ -183,10 +184,10 @@ CXXFLAGS += \
 
 # Assembler flags common to all targets
 ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DNRF52840_XXAA
 ASMFLAGS += -DBOARD_PCA10056
-ASMFLAGS += -DSWI_DISABLE0
 ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
+ASMFLAGS += -DNRF52840_XXAA
+ASMFLAGS += -DSWI_DISABLE0
 
 # Linker flags
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)

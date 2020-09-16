@@ -1920,8 +1920,6 @@ UBaseType_t uxTaskGetNumberOfTasks( void )
 This is to ensure vTaskStepTick() is available when user defined low power mode
 implementations require configUSE_TICKLESS_IDLE to be set to a value other than
 1. */
-#if ( configUSE_TICKLESS_IDLE != 0 )
-
 	void vTaskStepTick( const TickType_t xTicksToJump )
 	{
 		/* Correct the tick count value after a period during which the tick
@@ -1932,7 +1930,7 @@ implementations require configUSE_TICKLESS_IDLE to be set to a value other than
 		traceINCREASE_TICK_COUNT( xTicksToJump );
 	}
 
-#endif /* configUSE_TICKLESS_IDLE */
+
 /*----------------------------------------------------------*/
 
 BaseType_t xTaskIncrementTick( void )

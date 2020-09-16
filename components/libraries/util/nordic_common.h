@@ -1,14 +1,42 @@
-/* Copyright (c) 2008 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
+/**
+ * Copyright (c) 2008 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /** @file
  * @brief Common defines and macros for firmware developed by Nordic Semiconductor.
  */
@@ -44,12 +72,12 @@ extern "C" {
  * And given parameter would be connected with @c _ENABLED postfix directly
  * without evaluating its value.
  */
-//lint -e491 // Suppers warning 491 "non-standard use of 'defined' preprocessor operator"
+//lint -emacro(491,NRF_MODULE_ENABLED) // Suppers warning 491 "non-standard use of 'defined' preprocessor operator"
 #define NRF_MODULE_ENABLED(module) \
     ((defined(module ## _ENABLED) && (module ## _ENABLED)) ? 1 : 0)
 
 /** The upper 8 bits of a 32 bit value */
-//lint -emacro(572,MSB) // Suppress warning 572 "Excessive shift value"
+//lint -emacro(572,MSB_32) // Suppress warning 572 "Excessive shift value"
 #define MSB_32(a) (((a) & 0xFF000000) >> 24)
 /** The lower 8 bits (of a 32 bit value) */
 #define LSB_32(a) ((a) & 0x000000FF)
@@ -104,10 +132,10 @@ extern "C" {
 /** Auxiliary macro used by @ref CONCAT_3 */
 #define CONCAT_3_(p1, p2, p3) p1##p2##p3
 
-#define NUM_TO_STR_INTERNAL(val) #val
-/** Converts numeric value to string.
+#define STRINGIFY_(val) #val
+/** Converts a macro argument into a character constant.
  */
-#define NUM_TO_STR(val) NUM_TO_STR_INTERNAL(val)
+#define STRINGIFY(val)  STRINGIFY_(val)
 
 /** Counts number of elements inside the array
  */
@@ -126,7 +154,7 @@ extern "C" {
  * @param[in] W   Word whose bit is to be cleared.
  * @param[in] B   Bit number in the word to be cleared.
  */
-#define CLR_BIT(W, B) ((W) &= (~((uint32_t)1 << (B))))
+#define CLR_BIT(W, B) ((W) &= (~((uint32_t)1U << (B))))
 
 
 /**@brief Checks if a bit is set.

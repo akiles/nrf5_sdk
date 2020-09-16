@@ -1,14 +1,43 @@
-/* Copyright (c) Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2017 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
+
 #ifndef NRF_USBD_H__
 #define NRF_USBD_H__
 
@@ -318,7 +347,7 @@ bool nrf_usbd_event_check(nrf_usbd_event_t event)
 bool nrf_usbd_event_get_and_clear(nrf_usbd_event_t event)
 {
     bool ret = nrf_usbd_event_check(event);
-    if(ret)
+    if (ret)
     {
         nrf_usbd_event_clear(event);
     }
@@ -337,7 +366,7 @@ void nrf_usbd_shorts_enable(uint32_t short_mask)
 
 void nrf_usbd_shorts_disable(uint32_t short_mask)
 {
-    if(~0U == short_mask)
+    if (~0U == short_mask)
     {
         /* Optimized version for "disable all" */
         NRF_USBD->SHORTS = 0;
@@ -389,7 +418,8 @@ void nrf_usbd_int_disable(uint32_t int_mask)
  *
  * The number of counts that can be fitted into frame counter
  */
-#define NRF_USBD_FRAMECNTR_SIZE ( (USBD_FRAMECNTR_FRAMECNTR_Msk >> USBD_FRAMECNTR_FRAMECNTR_Pos) + 1UL )
+#define NRF_USBD_FRAMECNTR_SIZE \
+    ( (USBD_FRAMECNTR_FRAMECNTR_Msk >> USBD_FRAMECNTR_FRAMECNTR_Pos) + 1UL )
 #ifndef USBD_FRAMECNTR_FRAMECNTR_Msk
 #error USBD_FRAMECNTR_FRAMECNTR_Msk should be changed into USBD_FRAMECNTR_FRAMECNTR_Msk
 #endif
@@ -431,7 +461,7 @@ void nrf_usbd_int_disable(uint32_t int_mask)
 #define NRF_USBD_EP_DIR_OUT (0U << 7)
 
 /**
- * @brief Make IN endpoint identifier from endpoint number
+ * @brief Macro for making IN endpoint identifier from endpoint number
  *
  * Macro that sets direction bit to make IN endpoint
  * @param[in] epnr Endpoint number
@@ -440,7 +470,7 @@ void nrf_usbd_int_disable(uint32_t int_mask)
 #define NRF_USBD_EPIN(epnr)  (((uint8_t)(epnr)) | NRF_USBD_EP_DIR_IN)
 
 /**
- * @brief Make OUT endpoint identifier from endpoint number
+ * @brief Macro for making OUT endpoint identifier from endpoint number
  *
  * Macro that sets direction bit to make OUT endpoint
  * @param[in] epnr Endpoint number
@@ -449,7 +479,7 @@ void nrf_usbd_int_disable(uint32_t int_mask)
 #define NRF_USBD_EPOUT(epnr) (((uint8_t)(epnr)) | NRF_USBD_EP_DIR_OUT)
 
 /**
- * @brief Extract the endpoint number from endpoint identifier
+ * @brief Macro for extracting the endpoint number from endpoint identifier
  *
  * Macro that strips out the information about endpoint direction.
  * @param[in] ep Endpoint identifier
@@ -485,6 +515,19 @@ void nrf_usbd_int_disable(uint32_t int_mask)
  * @retval false The endpoint is bulk of interrupt type
  */
 #define NRF_USBD_EPISO_CHECK(ep) (NRF_USBD_EP_NR_GET(ep) >= NRF_USBD_EPISO_FIRST)
+
+/**
+ * @brief Macro for checking if given number is valid endpoint number
+ *
+ * @param ep Endpoint number to check
+ * @retval true  The endpoint is valid
+ * @retval false The endpoint is not valid
+ */
+#define NRF_USBD_EP_VALIDATE(ep) (                                              \
+    (NRF_USBD_EPIN_CHECK(ep) && (NRF_USBD_EP_NR_GET(ep) < NRF_USBD_EPIN_CNT))   \
+    ||                                                                          \
+    (NRF_USBD_EPOUT_CHECK(ep) && (NRF_USBD_EP_NR_GET(ep) < NRF_USBD_EPOUT_CNT)) \
+    )
 
 
 /**
@@ -604,31 +647,31 @@ typedef enum
 }nrf_usbd_isosplit_t;
 
 /**
- * @brief Enable USBD
+ * @brief Function for enabling USBD
  */
 __STATIC_INLINE void nrf_usbd_enable(void);
 
 /**
- * @brief Disable USBD
+ * @brief Function for disabling USBD
  */
 __STATIC_INLINE void nrf_usbd_disable(void);
 
 /**
- * @brief Get EVENTCAUSE register
+ * @brief Function for getting EVENTCAUSE register
  *
  * @return Flag values defined in @ref nrf_usbd_eventcause_mask_t
  */
 __STATIC_INLINE uint32_t nrf_usbd_eventcause_get(void);
 
 /**
- * @brief Clear EVENTCAUSE flags
+ * @brief Function for clearing EVENTCAUSE flags
  *
  * @param flags Flags defined in @ref nrf_usbd_eventcause_mask_t
  */
 __STATIC_INLINE void nrf_usbd_eventcause_clear(uint32_t flags);
 
 /**
- * @brief Get EVENTCAUSE register and clear flags that are set
+ * @brief Function for getting EVENTCAUSE register and clear flags that are set
  *
  * The safest way to return current EVENTCAUSE register.
  * All the flags that are returned would be cleared inside EVENTCAUSE register.
@@ -638,14 +681,14 @@ __STATIC_INLINE void nrf_usbd_eventcause_clear(uint32_t flags);
 __STATIC_INLINE uint32_t nrf_usbd_eventcause_get_and_clear(void);
 
 /**
- * @brief Get BUSSTATE register value
+ * @brief Function for getting BUSSTATE register value
  *
  * @return The value of BUSSTATE register
  */
 __STATIC_INLINE nrf_usbd_busstate_t nrf_usbd_busstate_get(void);
 
 /**
- * @brief Get HALTEDEPIN register value
+ * @brief Function for getting HALTEDEPIN register value
  *
  * @param ep Endpoint number with IN/OUT flag
  *
@@ -658,7 +701,7 @@ __STATIC_INLINE nrf_usbd_busstate_t nrf_usbd_busstate_get(void);
 __STATIC_INLINE uint32_t nrf_usbd_haltedep(uint8_t ep);
 
 /**
- * @brief Check if selected endpoint is stalled
+ * @brief Function for checking if selected endpoint is stalled
  *
  * Function to be used as a syntax sweeter for @ref nrf_usbd_haltedep.
  *
@@ -672,21 +715,21 @@ __STATIC_INLINE uint32_t nrf_usbd_haltedep(uint8_t ep);
 __STATIC_INLINE bool nrf_usbd_ep_is_stall(uint8_t ep);
 
 /**
- * @brief Get EPSTATUS register value
+ * @brief Function for getting EPSTATUS register value
  *
  * @return Flag values defined in @ref nrf_usbd_epstatus_mask_t
  */
 __STATIC_INLINE uint32_t nrf_usbd_epstatus_get(void);
 
 /**
- * @brief Clear EPSTATUS register value
+ * @brief Function for clearing EPSTATUS register value
  *
  * @param flags Flags defined in @ref nrf_usbd_epstatus_mask_t
  */
 __STATIC_INLINE void nrf_usbd_epstatus_clear(uint32_t flags);
 
 /**
- * @brief Get and clear EPSTATUS register value
+ * @brief Function for getting and clearing EPSTATUS register value
  *
  * Function clears all flags in register set before returning its value.
  * @return Flag values defined in @ref nrf_usbd_epstatus_mask_t
@@ -694,21 +737,21 @@ __STATIC_INLINE void nrf_usbd_epstatus_clear(uint32_t flags);
 __STATIC_INLINE uint32_t nrf_usbd_epstatus_get_and_clear(void);
 
 /**
- * @brief Get DATAEPSTATUS register value
+ * @brief Function for getting DATAEPSTATUS register value
  *
  * @return Flag values defined in @ref nrf_usbd_dataepstatus_mask_t
  */
 __STATIC_INLINE uint32_t nrf_usbd_epdatastatus_get(void);
 
 /**
- * @brief Clear DATAEPSTATUS register value
+ * @brief Function for clearing DATAEPSTATUS register value
  *
  * @param flags Flags defined in @ref nrf_usbd_dataepstatus_mask_t
  */
 __STATIC_INLINE void nrf_usbd_epdatastatus_clear(uint32_t flags);
 
 /**
- * @brief Get and clear DATAEPSTATUS register value
+ * @brief Function for getting and clearing DATAEPSTATUS register value
  *
  * Function clears all flags in register set before returning its value.
  * @return Flag values defined in @ref nrf_usbd_dataepstatus_mask_t
@@ -722,35 +765,35 @@ __STATIC_INLINE uint32_t nrf_usbd_epdatastatus_get_and_clear(void);
  * @{
  */
     /**
-     * @brief Read BMREQUESTTYPE - part of SETUP packet
+     * @brief Function for reading BMREQUESTTYPE - part of SETUP packet
      *
      * @return the value of BREQUESTTYPE on last received SETUP frame
      */
     __STATIC_INLINE uint8_t nrf_usbd_setup_bmrequesttype_get(void);
 
     /**
-     * @brief Read BMREQUEST - part of SETUP packet
+     * @brief Function for reading BMREQUEST - part of SETUP packet
      *
      * @return the value of BREQUEST on last received SETUP frame
      */
     __STATIC_INLINE uint8_t nrf_usbd_setup_brequest_get(void);
 
     /**
-     * @brief Read WVALUE - part of SETUP packet
+     * @brief Function for reading WVALUE - part of SETUP packet
      *
      * @return the value of WVALUE on last received SETUP frame
      */
     __STATIC_INLINE uint16_t nrf_usbd_setup_wvalue_get(void);
 
     /**
-     * @brief Read WINDEX - part of SETUP packet
+     * @brief Function for reading WINDEX - part of SETUP packet
      *
      * @return the value of WINDEX on last received SETUP frame
      */
     __STATIC_INLINE uint16_t nrf_usbd_setup_windex_get(void);
 
     /**
-     * @brief Read WLENGTH - part of SETUP packet
+     * @brief Function for reading WLENGTH - part of SETUP packet
      *
      * @return the value of WLENGTH on last received SETUP frame
      */
@@ -758,7 +801,7 @@ __STATIC_INLINE uint32_t nrf_usbd_epdatastatus_get_and_clear(void);
 /** @} */
 
 /**
- * @brief Get number of received bytes on selected endpoint
+ * @brief Function for getting number of received bytes on selected endpoint
  *
  * @param ep Endpoint identifier.
  *
@@ -769,29 +812,32 @@ __STATIC_INLINE uint32_t nrf_usbd_epdatastatus_get_and_clear(void);
 __STATIC_INLINE size_t nrf_usbd_epout_size_get(uint8_t ep);
 
 /**
- * @brief Clear out endpoint to accept any new incoming traffic
+ * @brief Function for clearing out endpoint to accept any new incoming traffic
  *
  * @param ep ep Endpoint identifier. Only OUT Interrupt/Bulk endpoints are accepted.
  */
 __STATIC_INLINE void nrf_usbd_epout_clear(uint8_t ep);
 
 /**
- * @brief Enable USB pullup
+ * @brief Function for enabling USB pullup
  */
 __STATIC_INLINE void nrf_usbd_pullup_enable(void);
 
 /**
- * @brief Disable USB pullup
+ * @brief Function for disabling USB pullup
  */
 __STATIC_INLINE void nrf_usbd_pullup_disable(void);
 
 /**
- * @brief Return USB pullup state
+ * @brief Function for returning current USB pullup state
+ *
+ * @retval true  USB pullup is enabled
+ * @retval false USB pullup is disabled
  */
 __STATIC_INLINE bool nrf_usbd_pullup_check(void);
 
 /**
- * @brief Configure the value to be forced on the bus on DRIVEDPDM task
+ * @brief Function for configuring the value to be forced on the bus on DRIVEDPDM task
  *
  * Selected state would be forced on the bus when @ref NRF_USBD_TASK_DRIVEDPM is set.
  * The state would be removed from the bus on @ref NRF_USBD_TASK_NODRIVEDPM and
@@ -801,7 +847,7 @@ __STATIC_INLINE bool nrf_usbd_pullup_check(void);
 __STATIC_INLINE void nrf_usbd_dpdmvalue_set(nrf_usbd_dpdmvalue_t val);
 
 /**
- * @brief Data toggle set
+ * @brief Function for setting data toggle
  *
  * Configuration of current state of data toggling
  * @param ep Endpoint number with the information about its direction
@@ -810,7 +856,7 @@ __STATIC_INLINE void nrf_usbd_dpdmvalue_set(nrf_usbd_dpdmvalue_t val);
 __STATIC_INLINE void nrf_usbd_dtoggle_set(uint8_t ep, nrf_usbd_dtoggle_t op);
 
 /**
- * @brief Data toggle get
+ * @brief Function for getting data toggle
  *
  * Get the current state of data toggling
  * @param ep Endpoint number to return the information about current data toggling
@@ -820,7 +866,17 @@ __STATIC_INLINE void nrf_usbd_dtoggle_set(uint8_t ep, nrf_usbd_dtoggle_t op);
 __STATIC_INLINE nrf_usbd_dtoggle_t nrf_usbd_dtoggle_get(uint8_t ep);
 
 /**
- * @brief Enable selected endpoint
+ * @brief Function for checking if endpoint is enabled
+ *
+ * @param ep Endpoint id to check
+ *
+ * @retval true  Endpoint is enabled
+ * @retval false Endpoint is disabled
+ */
+__STATIC_INLINE bool nrf_usbd_ep_enable_check(uint8_t ep);
+
+/**
+ * @brief Function for enabling selected endpoint
  *
  * Enabled endpoint responds for the tokens on the USB bus
  *
@@ -829,7 +885,7 @@ __STATIC_INLINE nrf_usbd_dtoggle_t nrf_usbd_dtoggle_get(uint8_t ep);
 __STATIC_INLINE void nrf_usbd_ep_enable(uint8_t ep);
 
 /**
- * @brief Disable selected endpoint
+ * @brief Function for disabling selected endpoint
  *
  * Disabled endpoint does not respond for the tokens on the USB bus
  *
@@ -838,7 +894,7 @@ __STATIC_INLINE void nrf_usbd_ep_enable(uint8_t ep);
 __STATIC_INLINE void nrf_usbd_ep_disable(uint8_t ep);
 
 /**
- * @brief Disable all endpoints
+ * @brief Function for disabling all endpoints
  *
  * Auxiliary function to simply disable all aviable endpoints.
  * It lefts only EP0 IN and OUT enabled.
@@ -846,7 +902,7 @@ __STATIC_INLINE void nrf_usbd_ep_disable(uint8_t ep);
 __STATIC_INLINE void nrf_usbd_ep_all_disable(void);
 
 /**
- * @brief Stall selected endpoint
+ * @brief Function for stalling selected endpoint
  *
  * @param ep Endpoint identifier
  * @note This function cannot be called on isochronous endpoint
@@ -854,7 +910,7 @@ __STATIC_INLINE void nrf_usbd_ep_all_disable(void);
 __STATIC_INLINE void nrf_usbd_ep_stall(uint8_t ep);
 
 /**
- * @brief Unstall selected endpoint
+ * @brief Function for unstalling selected endpoint
  *
  * @param ep Endpoint identifier
  * @note This function cannot be called on isochronous endpoint
@@ -862,7 +918,7 @@ __STATIC_INLINE void nrf_usbd_ep_stall(uint8_t ep);
 __STATIC_INLINE void nrf_usbd_ep_unstall(uint8_t ep);
 
 /**
- * @brief Configure isochronous buffer splitting
+ * @brief Function for configuration of isochronous buffer splitting
  *
  * Configure isochronous buffer splitting between IN and OUT endpoints.
  *
@@ -871,7 +927,7 @@ __STATIC_INLINE void nrf_usbd_ep_unstall(uint8_t ep);
 __STATIC_INLINE void nrf_usbd_isosplit_set(nrf_usbd_isosplit_t split);
 
 /**
- * @brief Get the isochronous buffer splitting configuration
+ * @brief Function for getting the isochronous buffer splitting configuration
  *
  * Get the current isochronous buffer splitting configuration.
  *
@@ -880,14 +936,14 @@ __STATIC_INLINE void nrf_usbd_isosplit_set(nrf_usbd_isosplit_t split);
 __STATIC_INLINE nrf_usbd_isosplit_t nrf_usbd_isosplit_get(void);
 
 /**
- * @brief Get current frame counter
+ * @brief Function for getting current frame counter
  *
  * @return Current frame counter
  */
 __STATIC_INLINE uint32_t nrf_usbd_framecntr_get(void);
 
 /**
- * @brief Configure EasyDMA channel
+ * @brief Function for configuring EasyDMA channel
  *
  * Configures EasyDMA for the transfer.
  *
@@ -898,7 +954,7 @@ __STATIC_INLINE uint32_t nrf_usbd_framecntr_get(void);
 __STATIC_INLINE void nrf_usbd_ep_easydma_set(uint8_t ep, uint32_t ptr, uint32_t maxcnt);
 
 /**
- * @brief Get number of transferred bytes
+ * @brief Function for getting number of transferred bytes
  *
  * Get number of transferred bytes in the last transaction
  *
@@ -921,7 +977,7 @@ void nrf_usbd_enable(void)
     __ISB();
     __DSB();
 #endif
-    
+
     NRF_USBD->ENABLE = USBD_ENABLE_ENABLE_Enabled << USBD_ENABLE_ENABLE_Pos;
     __ISB();
     __DSB();
@@ -964,7 +1020,7 @@ nrf_usbd_busstate_t nrf_usbd_busstate_get(void)
 uint32_t nrf_usbd_haltedep(uint8_t ep)
 {
     uint8_t epnr = NRF_USBD_EP_NR_GET(ep);
-    if(NRF_USBD_EPIN_CHECK(ep))
+    if (NRF_USBD_EPIN_CHECK(ep))
     {
         ASSERT(epnr < ARRAY_SIZE(NRF_USBD->HALTED.EPIN));
         return NRF_USBD->HALTED.EPIN[epnr];
@@ -978,7 +1034,7 @@ uint32_t nrf_usbd_haltedep(uint8_t ep)
 
 bool nrf_usbd_ep_is_stall(uint8_t ep)
 {
-    if(NRF_USBD_EPISO_CHECK(ep))
+    if (NRF_USBD_EPISO_CHECK(ep))
         return false;
     return USBD_HALTED_EPOUT_GETSTATUS_Halted == nrf_usbd_haltedep(ep);
 }
@@ -1056,9 +1112,10 @@ uint16_t nrf_usbd_setup_wlength_get(void)
 size_t nrf_usbd_epout_size_get(uint8_t ep)
 {
     ASSERT(NRF_USBD_EPOUT_CHECK(ep));
-    if(NRF_USBD_EPISO_CHECK(ep))
+    if (NRF_USBD_EPISO_CHECK(ep))
     {
-        ASSERT(NRF_USBD_EP_NR_GET(ep) == ARRAY_SIZE(NRF_USBD->SIZE.EPOUT)); /* Only single isochronous endpoint supported */
+        /* Only single isochronous endpoint supported */
+        ASSERT(NRF_USBD_EP_NR_GET(ep) == ARRAY_SIZE(NRF_USBD->SIZE.EPOUT));
         return NRF_USBD->SIZE.ISOOUT;
     }
 
@@ -1114,12 +1171,27 @@ nrf_usbd_dtoggle_t nrf_usbd_dtoggle_get(uint8_t ep)
     return (nrf_usbd_dtoggle_t)retval;
 }
 
+bool nrf_usbd_ep_enable_check(uint8_t ep)
+{
+    ASSERT(NRF_USBD_EP_VALIDATE(ep));
+    uint8_t epnr = NRF_USBD_EP_NR_GET(ep);
+
+    if (NRF_USBD_EPIN_CHECK(ep))
+    {
+        return 0 != (NRF_USBD->EPINEN & (1UL<<epnr));
+    }
+    else
+    {
+        return 0 != (NRF_USBD->EPOUTEN & (1UL<<epnr));
+    }
+}
+
 void nrf_usbd_ep_enable(uint8_t ep)
 {
+    ASSERT(NRF_USBD_EP_VALIDATE(ep));
     uint8_t epnr = NRF_USBD_EP_NR_GET(ep);
-    ASSERT(epnr <= USBD_EPINEN_ISOIN_Pos);
 
-    if(NRF_USBD_EPIN_CHECK(ep))
+    if (NRF_USBD_EPIN_CHECK(ep))
     {
         NRF_USBD->EPINEN |= 1UL<<epnr;
     }
@@ -1133,10 +1205,10 @@ void nrf_usbd_ep_enable(uint8_t ep)
 
 void nrf_usbd_ep_disable(uint8_t ep)
 {
+    ASSERT(NRF_USBD_EP_VALIDATE(ep));
     uint8_t epnr = NRF_USBD_EP_NR_GET(ep);
-    ASSERT(epnr <= USBD_EPINEN_ISOIN_Pos);
 
-    if(NRF_USBD_EPIN_CHECK(ep))
+    if (NRF_USBD_EPIN_CHECK(ep))
     {
         NRF_USBD->EPINEN &= ~(1UL<<epnr);
     }
@@ -1179,7 +1251,8 @@ void nrf_usbd_isosplit_set(nrf_usbd_isosplit_t split)
 
 nrf_usbd_isosplit_t nrf_usbd_isosplit_get(void)
 {
-    return (nrf_usbd_isosplit_t)(((NRF_USBD->ISOSPLIT) & USBD_ISOSPLIT_SPLIT_Msk) >> USBD_ISOSPLIT_SPLIT_Pos);
+    return (nrf_usbd_isosplit_t)
+        (((NRF_USBD->ISOSPLIT) & USBD_ISOSPLIT_SPLIT_Msk) >> USBD_ISOSPLIT_SPLIT_Pos);
 }
 
 uint32_t nrf_usbd_framecntr_get(void)
@@ -1189,9 +1262,9 @@ uint32_t nrf_usbd_framecntr_get(void)
 
 void nrf_usbd_ep_easydma_set(uint8_t ep, uint32_t ptr, uint32_t maxcnt)
 {
-    if(NRF_USBD_EPIN_CHECK(ep))
+    if (NRF_USBD_EPIN_CHECK(ep))
     {
-        if(NRF_USBD_EPISO_CHECK(ep))
+        if (NRF_USBD_EPISO_CHECK(ep))
         {
             NRF_USBD->ISOIN.PTR    = ptr;
             NRF_USBD->ISOIN.MAXCNT = maxcnt;
@@ -1206,7 +1279,7 @@ void nrf_usbd_ep_easydma_set(uint8_t ep, uint32_t ptr, uint32_t maxcnt)
     }
     else
     {
-        if(NRF_USBD_EPISO_CHECK(ep))
+        if (NRF_USBD_EPISO_CHECK(ep))
         {
             NRF_USBD->ISOOUT.PTR    = ptr;
             NRF_USBD->ISOOUT.MAXCNT = maxcnt;
@@ -1225,9 +1298,9 @@ uint32_t nrf_usbd_ep_amount_get(uint8_t ep)
 {
     uint32_t ret;
 
-    if(NRF_USBD_EPIN_CHECK(ep))
+    if (NRF_USBD_EPIN_CHECK(ep))
     {
-        if(NRF_USBD_EPISO_CHECK(ep))
+        if (NRF_USBD_EPISO_CHECK(ep))
         {
             ret = NRF_USBD->ISOIN.AMOUNT;
         }
@@ -1240,7 +1313,7 @@ uint32_t nrf_usbd_ep_amount_get(uint8_t ep)
     }
     else
     {
-        if(NRF_USBD_EPISO_CHECK(ep))
+        if (NRF_USBD_EPISO_CHECK(ep))
         {
             ret = NRF_USBD->ISOOUT.AMOUNT;
         }

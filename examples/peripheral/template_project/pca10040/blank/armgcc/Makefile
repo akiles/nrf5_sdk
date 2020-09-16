@@ -38,7 +38,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/csense/nrf_csense.c \
   $(SDK_ROOT)/components/libraries/csense_drv/nrf_drv_csense.c \
   $(SDK_ROOT)/components/libraries/queue/nrf_queue.c \
-  $(SDK_ROOT)/components/libraries/util/sdk_errors.c \
+  $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/components/libraries/slip/slip.c \
   $(SDK_ROOT)/components/drivers_nrf/clock/nrf_drv_clock.c \
   $(SDK_ROOT)/components/drivers_nrf/common/nrf_drv_common.c \
@@ -55,7 +55,6 @@ SRC_FILES += \
   $(SDK_ROOT)/components/drivers_nrf/rtc/nrf_drv_rtc.c \
   $(SDK_ROOT)/components/drivers_nrf/saadc/nrf_drv_saadc.c \
   $(SDK_ROOT)/components/drivers_nrf/spi_master/nrf_drv_spi.c \
-  $(SDK_ROOT)/components/drivers_nrf/spi_slave/nrf_drv_spis.c \
   $(SDK_ROOT)/components/drivers_nrf/swi/nrf_drv_swi.c \
   $(SDK_ROOT)/components/drivers_nrf/timer/nrf_drv_timer.c \
   $(SDK_ROOT)/components/drivers_nrf/twi_master/nrf_drv_twi.c \
@@ -71,6 +70,7 @@ SRC_FILES += \
   $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
+  $(SDK_ROOT)/components/drivers_nrf/spi_slave/nrf_drv_spis.c \
   $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf52.S \
   $(SDK_ROOT)/components/toolchain/system_nrf52.c \
 
@@ -83,6 +83,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/pwm \
   $(SDK_ROOT)/components/drivers_nrf/twi_master \
   $(SDK_ROOT)/components/libraries/fifo \
+  $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/drivers_nrf/pdm \
   $(SDK_ROOT)/components/libraries/crc32 \
   $(SDK_ROOT)/components/drivers_nrf/delay \
@@ -140,21 +141,22 @@ INC_FOLDERS += \
 LIB_FILES += \
 
 # C flags common to all targets
+CFLAGS += -DBOARD_PCA10040
+CFLAGS += -DCONFIG_GPIO_AS_PINRESET
+CFLAGS += -DNRF52
+CFLAGS += -DNRF52832_XXAA
 CFLAGS += -DNRF52_PAN_12
 CFLAGS += -DNRF52_PAN_15
-CFLAGS += -DNRF52_PAN_58
-CFLAGS += -DSWI_DISABLE0
 CFLAGS += -DNRF52_PAN_20
-CFLAGS += -DNRF52_PAN_54
-CFLAGS += -DNRF52
-CFLAGS += -DNRF52_PAN_51
-CFLAGS += -DNRF52_PAN_36
-CFLAGS += -DCONFIG_GPIO_AS_PINRESET
-CFLAGS += -DNRF52_PAN_64
-CFLAGS += -DNRF52_PAN_55
-CFLAGS += -DBOARD_PCA10040
 CFLAGS += -DNRF52_PAN_31
-CFLAGS += -DNRF52832
+CFLAGS += -DNRF52_PAN_36
+CFLAGS += -DNRF52_PAN_51
+CFLAGS += -DNRF52_PAN_54
+CFLAGS += -DNRF52_PAN_55
+CFLAGS += -DNRF52_PAN_58
+CFLAGS += -DNRF52_PAN_64
+CFLAGS += -DNRF52_PAN_74
+CFLAGS += -DSWI_DISABLE0
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS +=  -Wall -Werror -O3 -g3
@@ -168,21 +170,22 @@ CXXFLAGS += \
 
 # Assembler flags common to all targets
 ASMFLAGS += -x assembler-with-cpp
+ASMFLAGS += -DBOARD_PCA10040
+ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
+ASMFLAGS += -DNRF52
+ASMFLAGS += -DNRF52832_XXAA
 ASMFLAGS += -DNRF52_PAN_12
 ASMFLAGS += -DNRF52_PAN_15
-ASMFLAGS += -DNRF52_PAN_58
-ASMFLAGS += -DSWI_DISABLE0
 ASMFLAGS += -DNRF52_PAN_20
-ASMFLAGS += -DNRF52_PAN_54
-ASMFLAGS += -DNRF52
-ASMFLAGS += -DNRF52_PAN_51
-ASMFLAGS += -DNRF52_PAN_36
-ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
-ASMFLAGS += -DNRF52_PAN_64
-ASMFLAGS += -DNRF52_PAN_55
-ASMFLAGS += -DBOARD_PCA10040
 ASMFLAGS += -DNRF52_PAN_31
-ASMFLAGS += -DNRF52832
+ASMFLAGS += -DNRF52_PAN_36
+ASMFLAGS += -DNRF52_PAN_51
+ASMFLAGS += -DNRF52_PAN_54
+ASMFLAGS += -DNRF52_PAN_55
+ASMFLAGS += -DNRF52_PAN_58
+ASMFLAGS += -DNRF52_PAN_64
+ASMFLAGS += -DNRF52_PAN_74
+ASMFLAGS += -DSWI_DISABLE0
 
 # Linker flags
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)

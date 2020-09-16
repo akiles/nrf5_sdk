@@ -1,15 +1,42 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -26,6 +53,7 @@
 #include "app_usbd_hid_generic.h"
 #include "app_usbd_hid_mouse.h"
 #include "app_usbd_hid_kbd.h"
+#include "app_error.h"
 #include "boards.h"
 
 #define NRF_LOG_MODULE_NAME "APP"
@@ -45,34 +73,57 @@
  */
 
 /**
- * @brief User event handler
+ * @brief User event handler.
  * */
 static void hid_user_ev_handler(app_usbd_class_inst_t const * p_inst,
                                 app_usbd_hid_user_event_t event);
 
 /**
- * @brief Reuse HID mouse report descriptor for HID generic class
- */
-static uint8_t m_generic_rep_dsc[] = APP_USBD_HID_MOUSE_REPORT_DSC_BUTTON(2);
+ * @brief HID generic class interface number.
+ * */
+#define HID_GENERIC_INTERFACE  0
+
+/**
+ * @brief HID generic class endpoint number.
+ * */
+#define HID_GENERIC_EPIN       NRF_DRV_USBD_EPIN1
 
 
 /**
- * @brief Mandatory REPORT descriptor item and optional list of physical descriptors
- */
-#define HID_DESCRIPTOR_ITEM_LIST()                           \
-(                                                            \
-        m_generic_rep_dsc                                    \
-)
+ * @brief HID generic class endpoints count.
+ * */
+#define HID_GENERIC_EP_COUNT  1
 
+
+/**
+ * @brief List of HID generic class endpoints.
+ * */
 #define ENDPOINT_LIST()                                      \
 (                                                            \
-        NRF_DRV_USBD_EPIN1                                   \
+        HID_GENERIC_EPIN                                     \
 )
 
 /**
- * @brief Number of reports defined in report descriptor
+ * @brief Reuse HID mouse report descriptor for HID generic class
  */
-#define REPORT_COUNT        1
+static const uint8_t m_hid_generic_rep_descriptor[] = APP_USBD_HID_MOUSE_REPORT_DSC_BUTTON(2);
+
+/**
+ * @brief HID generic class descriptors.
+ * */
+static const uint8_t m_hid_generic_class_descriptors[] ={
+        APP_USBD_HID_GENERIC_INTERFACE_DSC(HID_GENERIC_INTERFACE,
+                                           HID_GENERIC_EP_COUNT,
+                                           APP_USBD_HID_SUBCLASS_BOOT,
+                                           APP_USBD_HID_PROTO_MOUSE)
+        APP_USBD_HID_GENERIC_HID_DSC(m_hid_generic_rep_descriptor)
+        APP_USBD_HID_GENERIC_EP_DSC(HID_GENERIC_EPIN)
+};
+
+/**
+ * @brief Number of reports defined in report descriptor.
+ */
+#define REPORT_IN_QUEUE_SIZE    1
 
 /**
  * @brief Size of maximum output report. HID generic class will reserve
@@ -84,9 +135,14 @@ static uint8_t m_generic_rep_dsc[] = APP_USBD_HID_MOUSE_REPORT_DSC_BUTTON(2);
 /**
  * @brief Global HID generic instance
  */
-APP_USBD_HID_GENERIC_GLOBAL_DEF(m_app_hid_generic, 0, hid_user_ev_handler,
-                                ENDPOINT_LIST(), HID_DESCRIPTOR_ITEM_LIST(),
-                                REPORT_COUNT, REPORT_OUT_MAXSIZE);
+APP_USBD_HID_GENERIC_GLOBAL_DEF(m_app_hid_generic,
+                                HID_GENERIC_INTERFACE,
+                                hid_user_ev_handler,
+                                ENDPOINT_LIST(),
+                                m_hid_generic_class_descriptors,
+                                m_hid_generic_rep_descriptor,
+                                REPORT_IN_QUEUE_SIZE,
+                                REPORT_OUT_MAXSIZE);
 
 /*lint -restore*/
 
@@ -123,24 +179,18 @@ static uint8_t m_input_report[4];
  */
 #define DEBOUNCE_DELAY 5000
 
+/**
+ * @brief Class specific event handler.
+ *
+ * @param p_inst    Class instance.
+ * @param event     Class specific event.
+ * */
 static void hid_user_ev_handler(app_usbd_class_inst_t const * p_inst,
                                 app_usbd_hid_user_event_t event)
 {
     app_usbd_hid_generic_t const * p_generic = app_usbd_hid_generic_class_get(p_inst);
 
     switch (event) {
-        case APP_USBD_HID_USER_EVT_SUSPEND:
-            bsp_board_led_off(LED_USB_RESUME);
-            break;
-        case APP_USBD_HID_USER_EVT_RESUME:
-            bsp_board_led_on(LED_USB_RESUME);
-            break;
-        case APP_USBD_HID_USER_EVT_START:
-            bsp_board_led_on(LED_USB_START);
-            break;
-        case APP_USBD_HID_USER_EVT_STOP:
-            bsp_board_leds_off();
-            break;
         case APP_USBD_HID_USER_EVT_OUT_REPORT_READY:
         {
             /* No output report defined for this example.*/
@@ -149,19 +199,60 @@ static void hid_user_ev_handler(app_usbd_class_inst_t const * p_inst,
         }
         case APP_USBD_HID_USER_EVT_IN_REPORT_DONE:
         {
-            uint8_t rep_id = app_usbd_hid_generic_in_report_last_id(p_generic);
+            size_t report_size = 0;
+            (void)app_usbd_hid_generic_in_report_get(p_generic, &report_size);
 
+            m_input_report[1] = m_input_report[2] = m_input_report[3] = 0;
             bsp_board_led_invert(LED_HID_REP_IN);
-
-            /*Just assert. Mouse descriptor has only one IN report ID (default, equal to 0)*/
-            ASSERT(rep_id == 0);
-
+            break;
+        }
+        case APP_USBD_HID_USER_EVT_SET_BOOT_PROTO:
+        {
+            NRF_LOG_INFO("SET_BOOT_PROTO\r\n");
+            break;
+        }
+        case APP_USBD_HID_USER_EVT_SET_REPORT_PROTO:
+        {
+            NRF_LOG_INFO("SET_REPORT_PROTO\r\n");
             break;
         }
         default:
             break;
     }
 }
+
+
+
+/**
+ * @brief USBD library specific event handler.
+ *
+ * @param event     USBD library event.
+ * */
+static void usbd_user_ev_handler(app_usbd_event_type_t event)
+{
+    switch (event)
+    {
+        case APP_USBD_EVT_DRV_SUSPEND:
+            bsp_board_led_off(LED_USB_RESUME);
+            break;
+        case APP_USBD_EVT_DRV_RESUME:
+            bsp_board_led_on(LED_USB_RESUME);
+            break;
+        case APP_USBD_EVT_START:
+            bsp_board_led_on(LED_USB_START);
+            break;
+        case APP_USBD_EVT_STOP:
+            bsp_board_leds_off();
+            break;
+        default:
+            break;
+    }
+}
+
+static const app_usbd_config_t m_usbd_config = {
+    .ev_handler = usbd_user_ev_handler
+};
+
 
 /**
  * @brief HID generic mouse action types
@@ -229,12 +320,6 @@ static void hid_action(uint32_t btn_state)
     /*Get last button state.*/
     uint8_t button_previous = m_input_report[0];
 
-    if (app_usbd_hid_generic_report_in_done(&m_app_hid_generic, 0))
-    {
-        /* Clear relative mouse offsets only if previous transfer has been done. */
-        m_input_report[1] = m_input_report[2] = m_input_report[3] = 0;
-    }
-
     val = (btn_state & (1u << BTN_MOUSE_X_POS));
     hid_generic_mouse_action(HID_GENERIC_MOUSE_VERTICAL, val ? PRESS_OFFSET : 0);
 
@@ -260,8 +345,7 @@ static void hid_action(uint32_t btn_state)
     if (in_report_required != false)
     {
         /*Trigger new IN report*/
-        (void)app_usbd_hid_generic_report_in_set(&m_app_hid_generic,
-                                                 0,
+        (void)app_usbd_hid_generic_in_report_set(&m_app_hid_generic,
                                                  m_input_report,
                                                  sizeof(m_input_report));
     }
@@ -307,7 +391,9 @@ static void usb_start(void)
             .handler = power_usb_event_handler
         };
 
-        nrf_drv_power_usbevt_init(&config);
+        ret_code_t ret;
+        ret = nrf_drv_power_usbevt_init(&config);
+        APP_ERROR_CHECK(ret);
     }
     else
     {
@@ -347,7 +433,7 @@ int main(void)
     bsp_board_leds_init();
     bsp_board_buttons_init();
 
-    ret = app_usbd_init();
+    ret = app_usbd_init(&m_usbd_config);
     APP_ERROR_CHECK(ret);
 
     app_usbd_class_inst_t const * class_inst_generic;

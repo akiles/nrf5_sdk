@@ -1,15 +1,42 @@
-/* Copyright (c) 2015 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 #include "nfc_ble_pair_msg.h"
 #include "nfc_hs_rec.h"
 #include "nfc_ac_rec.h"
@@ -31,7 +58,7 @@ typedef struct
 /**
  * @brief Descriptor of LESC OOB data in Connection Handover NDEF message.
  */
-typedef struct 
+typedef struct
 {
     uint8_t * confirm; /**< Pointer to the LESC OOB confirmation value in the CH NDEF message. */
     uint8_t * random;  /**< Pointer to the LESC OOB random value in the CH NDEF message. */
@@ -262,7 +289,7 @@ static ret_code_t nfc_ble_full_handover_select_msg_declare(ble_advdata_t  const 
  *                                      LE OOB records.
  */
 static void common_adv_data_create(ble_advdata_tk_value_t  * const p_tk_value,
-                                   ble_gap_lesc_oob_data_t * const p_lesc_data,    
+                                   ble_gap_lesc_oob_data_t * const p_lesc_data,
                                    ble_advdata_t           * const p_adv_data)
 {
     memset((uint8_t *) p_adv_data, 0, sizeof(ble_advdata_t));
@@ -275,7 +302,7 @@ static void common_adv_data_create(ble_advdata_tk_value_t  * const p_tk_value,
     {
         p_adv_data->p_tk_value = p_tk_value;
     }
-    
+
     p_adv_data->p_lesc_data = p_lesc_data;
 }
 
@@ -290,7 +317,7 @@ static void common_adv_data_create(ble_advdata_tk_value_t  * const p_tk_value,
  *                                      for LE OOB record.
  */
 static void le_oob_specific_adv_data_create(ble_advdata_tk_value_t  * const p_tk_value,
-                                            ble_gap_lesc_oob_data_t * const p_lesc_data,    
+                                            ble_gap_lesc_oob_data_t * const p_lesc_data,
                                             ble_advdata_t           * const p_le_adv_data)
 {
     /* Create default configuration which is common for both EP and LE OOB Records */
@@ -313,7 +340,7 @@ static void le_oob_specific_adv_data_create(ble_advdata_tk_value_t  * const p_tk
  *                                      for EP OOB record.
  */
 static void ep_oob_specific_adv_data_create(ble_advdata_tk_value_t  * const p_tk_value,
-                                            ble_gap_lesc_oob_data_t * const p_lesc_data,    
+                                            ble_gap_lesc_oob_data_t * const p_lesc_data,
                                             ble_advdata_t           * const p_ep_adv_data)
 {
     /* Create default configuration which is common for both EP and LE OOB Records */
@@ -341,7 +368,7 @@ ret_code_t nfc_ble_simplified_le_oob_msg_encode(ble_advdata_t const * const p_le
     {
         nfc_tk_group_modifier_config(NULL, 0);
     }
-    
+
     /* Encode whole message into buffer */
     err_code = nfc_ndef_msg_encode(p_le_oob_msg_desc,
                                    p_buf,
@@ -368,7 +395,7 @@ ret_code_t nfc_ble_simplified_ep_oob_msg_encode(ble_advdata_t const * const p_ep
     {
         nfc_tk_group_modifier_config(NULL, 0);
     }
-    
+
     /* Encode whole message into buffer */
     err_code = nfc_ndef_msg_encode(p_ep_oob_msg_desc,
                                    p_buf,
@@ -393,7 +420,7 @@ ret_code_t nfc_ble_full_handover_select_msg_encode(ble_advdata_t const * const p
     {
         return err_code;
     }
-    
+
     if (!m_tk_modifier_on)
     {
         nfc_tk_group_modifier_config(NULL, 0);
@@ -449,14 +476,14 @@ ret_code_t nfc_ble_pair_msg_updatable_tk_encode(nfc_ble_pair_type_t             
                                                 ble_gap_lesc_oob_data_t * const p_lesc_data,
                                                 uint8_t                 *       p_buf,
                                                 uint32_t                *       p_len,
-                                                uint8_t                **       pp_tk_group, 
+                                                uint8_t                **       pp_tk_group,
                                                 uint8_t                         max_group_size)
 {
     ret_code_t err_code = NRF_SUCCESS;
 
     m_tk_modifier_on = true;
     nfc_tk_group_modifier_config(pp_tk_group, max_group_size);
-    err_code = nfc_ble_pair_default_msg_encode(nfc_ble_pair_type, p_tk_value, 
+    err_code = nfc_ble_pair_default_msg_encode(nfc_ble_pair_type, p_tk_value,
                                                p_lesc_data, p_buf, p_len);
     m_tk_modifier_on = false;
 
@@ -481,7 +508,7 @@ ret_code_t nfc_tk_to_group_add(uint8_t * p_tk_location)
     {
         return NRF_SUCCESS;
     }
-    
+
     if (m_tk_group.tk_num < m_tk_group.tk_max_num)
     {
         m_tk_group.pp_tk_group[m_tk_group.tk_num++] = p_tk_location;
@@ -499,13 +526,13 @@ ret_code_t nfc_lesc_pos_set(uint8_t * p_confirm, uint8_t * p_random)
     {
         m_lesc_pos.confirm = p_confirm;
         m_lesc_pos.random = p_random;
-        
+
         return NRF_SUCCESS;
     }
     else
     {
         return NRF_ERROR_NULL;
-    }  
+    }
 }
 
 ret_code_t nfc_lesc_data_update(ble_gap_lesc_oob_data_t * ble_lesc_oob_data)
@@ -516,14 +543,14 @@ ret_code_t nfc_lesc_data_update(ble_gap_lesc_oob_data_t * ble_lesc_oob_data)
         {
             memcpy(m_lesc_pos.confirm, ble_lesc_oob_data->c, AD_TYPE_CONFIRM_VALUE_DATA_SIZE);
             memcpy(m_lesc_pos.random, ble_lesc_oob_data->r, AD_TYPE_RANDOM_VALUE_DATA_SIZE);
-        
-            return NRF_SUCCESS;            
+
+            return NRF_SUCCESS;
         }
-        
+
         return NRF_ERROR_INVALID_STATE;
     }
     else
     {
         return NRF_ERROR_NULL;
-    }      
+    }
 }

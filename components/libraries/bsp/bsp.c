@@ -1,15 +1,42 @@
-/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 #include "bsp.h"
 #include <stddef.h>
 #include <stdio.h>
@@ -28,8 +55,8 @@
 #if LEDS_NUMBER > 0 && !(defined BSP_SIMPLE)
 static bsp_indication_t m_stable_state        = BSP_INDICATE_IDLE;
 static bool             m_leds_clear          = false;
-static uint32_t         m_app_ticks_per_100ms = 0;
 static uint32_t         m_indication_type     = 0;
+static bool             m_alert_on            = false;
 APP_TIMER_DEF(m_leds_timer_id);
 APP_TIMER_DEF(m_alert_timer_id);
 #endif // LEDS_NUMBER > 0 && !(defined BSP_SIMPLE)
@@ -112,7 +139,7 @@ static void bsp_button_event_handler(uint8_t pin_no, uint8_t button_action)
                 event = m_events_list[button].push_event;
                 if (m_events_list[button].long_push_event != BSP_EVENT_NOTHING)
                 {
-                    err_code = app_timer_start(m_button_timer_id, BSP_MS_TO_TICK(BSP_LONG_PUSH_TIMEOUT_MS), (void*)&current_long_push_pin_no);
+                    err_code = app_timer_start(m_button_timer_id, APP_TIMER_TICKS(BSP_LONG_PUSH_TIMEOUT_MS), (void*)&current_long_push_pin_no);
                     if (err_code == NRF_SUCCESS)
                     {
                         current_long_push_pin_no = pin_no;
@@ -150,7 +177,28 @@ static void button_timer_handler(void * p_context)
 
 #endif // (BUTTONS_NUMBER > 0) && !(defined BSP_SIMPLE)
 
+
 #if LEDS_NUMBER > 0 && !(defined BSP_SIMPLE)
+static void leds_off(void)
+{
+    if (m_alert_on)
+    {
+        uint32_t i;
+        for(i = 0; i < LEDS_NUMBER; i++)
+        {
+            if (i != BSP_LED_ALERT)
+            {
+                bsp_board_led_off(i);
+            }
+        }
+    }
+    else
+    {
+        bsp_board_leds_off();
+    }
+}
+
+
 /**@brief       Configure leds to indicate required state.
  * @param[in]   indicate   State to be indicated.
  */
@@ -162,13 +210,13 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
     if(m_leds_clear)
     {
         m_leds_clear = false;
-        bsp_board_leds_off();
+        leds_off();
     }
 
     switch (indicate)
     {
         case BSP_INDICATE_IDLE:
-            bsp_board_leds_off();
+            leds_off();
             m_stable_state = indicate;
             break;
 
@@ -191,7 +239,7 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
             }
 
             m_stable_state = indicate;
-            err_code       = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(next_delay), NULL);
+            err_code       = app_timer_start(m_leds_timer_id, APP_TIMER_TICKS(next_delay), NULL);
             break;
 
         case BSP_INDICATE_ADVERTISING_WHITELIST:
@@ -213,7 +261,7 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
                              ADVERTISING_SLOW_LED_ON_INTERVAL;
             }
             m_stable_state = indicate;
-            err_code       = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(next_delay), NULL);
+            err_code       = app_timer_start(m_leds_timer_id, APP_TIMER_TICKS(next_delay), NULL);
             break;
 
         case BSP_INDICATE_ADVERTISING_SLOW:
@@ -233,7 +281,7 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
                              ADVERTISING_SLOW_LED_ON_INTERVAL;
             }
             m_stable_state = indicate;
-            err_code       = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(next_delay), NULL);
+            err_code       = app_timer_start(m_leds_timer_id, APP_TIMER_TICKS(next_delay), NULL);
             break;
 
         case BSP_INDICATE_ADVERTISING_DIRECTED:
@@ -255,7 +303,7 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
                              ADVERTISING_SLOW_LED_ON_INTERVAL;
             }
             m_stable_state = indicate;
-            err_code       = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(next_delay), NULL);
+            err_code       = app_timer_start(m_leds_timer_id, APP_TIMER_TICKS(next_delay), NULL);
             break;
 
         case BSP_INDICATE_BONDING:
@@ -264,7 +312,7 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
 
             m_stable_state = indicate;
             err_code       =
-                app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(BONDING_INTERVAL), NULL);
+                app_timer_start(m_leds_timer_id, APP_TIMER_TICKS(BONDING_INTERVAL), NULL);
             break;
 
         case BSP_INDICATE_CONNECTED:
@@ -276,28 +324,28 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
             // when sending shortly invert LED_1
             m_leds_clear = true;
             bsp_board_led_invert(BSP_LED_INDICATE_SENT_OK);
-            err_code = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(SENT_OK_INTERVAL), NULL);
+            err_code = app_timer_start(m_leds_timer_id, APP_TIMER_TICKS(SENT_OK_INTERVAL), NULL);
             break;
 
         case BSP_INDICATE_SEND_ERROR:
             // on receving error invert LED_1 for long time
             m_leds_clear = true;
             bsp_board_led_invert(BSP_LED_INDICATE_SEND_ERROR);
-            err_code = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(SEND_ERROR_INTERVAL), NULL);
+            err_code = app_timer_start(m_leds_timer_id, APP_TIMER_TICKS(SEND_ERROR_INTERVAL), NULL);
             break;
 
         case BSP_INDICATE_RCV_OK:
             // when receving shortly invert LED_1
             m_leds_clear = true;
             bsp_board_led_invert(BSP_LED_INDICATE_RCV_OK);
-            err_code = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(RCV_OK_INTERVAL), NULL);
+            err_code = app_timer_start(m_leds_timer_id, APP_TIMER_TICKS(RCV_OK_INTERVAL), NULL);
             break;
 
         case BSP_INDICATE_RCV_ERROR:
             // on receving error invert LED_1 for long time
             m_leds_clear = true;
             bsp_board_led_invert(BSP_LED_INDICATE_RCV_ERROR);
-            err_code = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(RCV_ERROR_INTERVAL), NULL);
+            err_code = app_timer_start(m_leds_timer_id, APP_TIMER_TICKS(RCV_ERROR_INTERVAL), NULL);
             break;
 
         case BSP_INDICATE_FATAL_ERROR:
@@ -320,36 +368,39 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
                 if (next_delay > 1)
                 {
                     err_code = app_timer_start(m_alert_timer_id,
-                                               BSP_MS_TO_TICK((next_delay * ALERT_INTERVAL)),
+                                               APP_TIMER_TICKS(((uint16_t)next_delay * ALERT_INTERVAL)),
                                                NULL);
                 }
                 bsp_board_led_on(BSP_LED_ALERT);
+                m_alert_on = true;
             }
             else
             {
                 bsp_board_led_off(BSP_LED_ALERT);
+                m_alert_on = false;
+
             }
             break;
 
         case BSP_INDICATE_USER_STATE_OFF:
-            bsp_board_leds_off();
+            leds_off();
             m_stable_state = indicate;
             break;
 
         case BSP_INDICATE_USER_STATE_0:
-            bsp_board_leds_off();
+            leds_off();
             bsp_board_led_on(BSP_LED_INDICATE_USER_LED1);
             m_stable_state = indicate;
             break;
 
         case BSP_INDICATE_USER_STATE_1:
-            bsp_board_leds_off();
+            leds_off();
             bsp_board_led_on(BSP_LED_INDICATE_USER_LED2);
             m_stable_state = indicate;
             break;
 
         case BSP_INDICATE_USER_STATE_2:
-            bsp_board_leds_off();
+            leds_off();
             bsp_board_led_on(BSP_LED_INDICATE_USER_LED1);
             bsp_board_led_on(BSP_LED_INDICATE_USER_LED2);
             m_stable_state = indicate;
@@ -418,15 +469,12 @@ uint32_t bsp_indication_set(bsp_indication_t indicate)
 }
 
 
-uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t callback)
+uint32_t bsp_init(uint32_t type, bsp_event_callback_t callback)
 {
     uint32_t err_code = NRF_SUCCESS;
 
 #if LEDS_NUMBER > 0 && !(defined BSP_SIMPLE)
-    m_app_ticks_per_100ms = ticks_per_100ms;
     m_indication_type     = type;
-#else
-    UNUSED_VARIABLE(ticks_per_100ms);
 #endif // LEDS_NUMBER > 0 && !(defined BSP_SIMPLE)
 
 #if (BUTTONS_NUMBER > 0) && !(defined BSP_SIMPLE)
@@ -446,7 +494,7 @@ uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t 
         {
             err_code = app_button_init((app_button_cfg_t *)app_buttons,
                                        BUTTONS_NUMBER,
-                                       ticks_per_100ms / 2);
+                                       APP_TIMER_TICKS(50));
         }
 
         if (err_code == NRF_SUCCESS)

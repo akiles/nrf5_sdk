@@ -1,15 +1,42 @@
-/* Copyright (c) 2012 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /** @file
  *
  * @defgroup ble_sdk_app_hids_keyboard_main main.c
@@ -47,12 +74,13 @@
 #include "bsp_btn_ble.h"
 #include "app_scheduler.h"
 #include "softdevice_handler_appsh.h"
-#include "app_timer_appsh.h"
+#include "app_timer.h"
 #include "peer_manager.h"
 #include "app_button.h"
 #include "fds.h"
 #include "fstorage.h"
 #include "ble_conn_state.h"
+#include "nrf_ble_gatt.h"
 
 #define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
@@ -62,28 +90,13 @@
 #error "Not enough resources on board"
 #endif
 
-#if (NRF_SD_BLE_API_VERSION <= 3)
-    #define NRF_BLE_MAX_MTU_SIZE        GATT_MTU_SIZE_DEFAULT                   /**< MTU size used in the softdevice enabling and to reply to a BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST event. */
-#else
-    #define NRF_BLE_MAX_MTU_SIZE        BLE_GATT_MTU_SIZE_DEFAULT               /**< MTU size used in the softdevice enabling and to reply to a BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST event. */
-#endif
 
-#define CENTRAL_LINK_COUNT               0                                          /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
-#define PERIPHERAL_LINK_COUNT            1                                          /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
-
-#define UART_TX_BUF_SIZE                 256                                        /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE                 1                                          /**< UART RX buffer size. */
-
-#define KEY_PRESS_BUTTON_ID              0                                          /**< Button used as Keyboard key press. */
 #define SHIFT_BUTTON_ID                  1                                          /**< Button used as 'SHIFT' Key. */
 
 #define DEVICE_NAME                      "Nordic_Keyboard"                          /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                "NordicSemiconductor"                      /**< Manufacturer. Will be passed to Device Information Service. */
 
-#define APP_TIMER_PRESCALER              0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE          4                                          /**< Size of timer operation queues. */
-
-#define BATTERY_LEVEL_MEAS_INTERVAL      APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). */
+#define BATTERY_LEVEL_MEAS_INTERVAL      APP_TIMER_TICKS(2000)                      /**< Battery level measurement interval (ticks). */
 #define MIN_BATTERY_LEVEL                81                                         /**< Minimum simulated battery level. */
 #define MAX_BATTERY_LEVEL                100                                        /**< Maximum simulated battery level. */
 #define BATTERY_LEVEL_INCREMENT          1                                          /**< Increment between each simulated battery level measurement. */
@@ -104,8 +117,8 @@
 #define SLAVE_LATENCY                    6                                           /**< Slave latency. */
 #define CONN_SUP_TIMEOUT                 MSEC_TO_UNITS(430, UNIT_10_MS)              /**< Connection supervisory timeout (430 ms). */
 
-#define FIRST_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)  /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
-#define NEXT_CONN_PARAMS_UPDATE_DELAY    APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER) /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
+#define FIRST_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(5000)                      /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
+#define NEXT_CONN_PARAMS_UPDATE_DELAY    APP_TIMER_TICKS(30000)                     /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
 #define MAX_CONN_PARAMS_UPDATE_COUNT     3                                           /**< Number of attempts before giving up the connection parameter negotiation. */
 
 #define SEC_PARAM_BOND                   1                                           /**< Perform bonding. */
@@ -134,7 +147,7 @@
 
 #define DEAD_BEEF                        0xDEADBEEF                                  /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
-#define SCHED_MAX_EVENT_DATA_SIZE        MAX(APP_TIMER_SCHED_EVT_SIZE, \
+#define SCHED_MAX_EVENT_DATA_SIZE        MAX(APP_TIMER_SCHED_EVENT_DATA_SIZE, \
                                              BLE_STACK_HANDLER_SCHED_EVT_SIZE)       /**< Maximum size of scheduler events. */
 #ifdef SVCALL_AS_NORMAL_FUNCTION
 #define SCHED_QUEUE_SIZE                 20                                          /**< Maximum number of events in the scheduler queue. More is needed in case of Serialization. */
@@ -143,7 +156,7 @@
 #endif
 
 #define MODIFIER_KEY_POS                 0                                           /**< Position of the modifier byte in the Input Report. */
-#define SCAN_CODE_POS                    2                                           /**< This macro indicates the start position of the key scan code in a HID Report. As per the document titled 'Device Class Definition for Human Interface Devices (HID) V1.11, each report shall have one modifier byte followed by a reserved constant byte and then the key scan code. */
+#define SCAN_CODE_POS                    2                                           /**< The start position of the key scan code in a HID Report. */
 #define SHIFT_KEY_CODE                   0x02                                        /**< Key code indicating the press of the Shift Key. */
 
 #define MAX_KEYS_IN_ONE_REPORT           (INPUT_REPORT_KEYS_MAX_LEN - SCAN_CODE_POS) /**< Maximum number of key presses that can be sent in one Input Report. */
@@ -177,16 +190,6 @@
 
 /** @} */
 
-typedef enum
-{
-    BLE_NO_ADV,             /**< No advertising running. */
-    BLE_DIRECTED_ADV,       /**< Direct advertising to the latest central. */
-    BLE_FAST_ADV_WHITELIST, /**< Advertising with whitelist. */
-    BLE_FAST_ADV,           /**< Fast advertising running. */
-    BLE_SLOW_ADV,           /**< Slow advertising running. */
-    BLE_SLEEP,              /**< Go to system-off. */
-} ble_advertising_mode_t;
-
 /** Abstracts buffer element */
 typedef struct hid_key_buffer
 {
@@ -209,18 +212,19 @@ typedef struct
 
 STATIC_ASSERT(sizeof(buffer_list_t) % 4 == 0);
 
-static ble_hids_t m_hids;                                   /**< Structure used to identify the HID service. */
-static ble_bas_t  m_bas;                                    /**< Structure used to identify the battery service. */
-static bool       m_in_boot_mode = false;                   /**< Current protocol mode. */
-static uint16_t   m_conn_handle  = BLE_CONN_HANDLE_INVALID; /**< Handle of the current connection. */
+static ble_hids_t     m_hids;                                   /**< Structure used to identify the HID service. */
+static ble_bas_t      m_bas;                                    /**< Structure used to identify the battery service. */
+static nrf_ble_gatt_t m_gatt;                                   /**< GATT module instance. */
+static bool           m_in_boot_mode = false;                   /**< Current protocol mode. */
+static uint16_t       m_conn_handle  = BLE_CONN_HANDLE_INVALID; /**< Handle of the current connection. */
 
-static sensorsim_cfg_t   m_battery_sim_cfg;                 /**< Battery Level sensor simulator configuration. */
-static sensorsim_state_t m_battery_sim_state;               /**< Battery Level sensor simulator state. */
+static sensorsim_cfg_t   m_battery_sim_cfg;                     /**< Battery Level sensor simulator configuration. */
+static sensorsim_state_t m_battery_sim_state;                   /**< Battery Level sensor simulator state. */
 
-APP_TIMER_DEF(m_battery_timer_id);                          /**< Battery timer. */
+APP_TIMER_DEF(m_battery_timer_id);                              /**< Battery timer. */
 
-static pm_peer_id_t m_peer_id;                              /**< Device reference handle to the current bonded central. */
-static bool         m_caps_on = false;                      /**< Variable to indicate if Caps Lock is turned on. */
+static pm_peer_id_t m_peer_id;                                  /**< Device reference handle to the current bonded central. */
+static bool         m_caps_on = false;                          /**< Variable to indicate if Caps Lock is turned on. */
 
 static pm_peer_id_t   m_whitelist_peers[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];  /**< List of peers currently in the whitelist. */
 static uint32_t       m_whitelist_peer_cnt;                                 /**< Number of peers currently in the whitelist. */
@@ -306,32 +310,53 @@ static void peer_list_get(pm_peer_id_t * p_peers, uint32_t * p_size)
 }
 
 
+/**@brief Clear bond information from persistent storage.
+ */
+static void delete_bonds(void)
+{
+    ret_code_t err_code;
+
+    NRF_LOG_INFO("Erase bonds!\r\n");
+
+    err_code = pm_peers_delete();
+    APP_ERROR_CHECK(err_code);
+}
+
+
 /**@brief Function for starting advertising.
  */
-static void advertising_start(void)
+static void advertising_start(bool erase_bonds)
 {
-    ret_code_t ret;
-
-    memset(m_whitelist_peers, PM_PEER_ID_INVALID, sizeof(m_whitelist_peers));
-    m_whitelist_peer_cnt = (sizeof(m_whitelist_peers) / sizeof(pm_peer_id_t));
-
-    peer_list_get(m_whitelist_peers, &m_whitelist_peer_cnt);
-
-    ret = pm_whitelist_set(m_whitelist_peers, m_whitelist_peer_cnt);
-    APP_ERROR_CHECK(ret);
-
-    // Setup the device identies list.
-    // Some SoftDevices do not support this feature.
-    ret = pm_device_identities_list_set(m_whitelist_peers, m_whitelist_peer_cnt);
-    if (ret != NRF_ERROR_NOT_SUPPORTED)
+    if (erase_bonds == true)
     {
+        delete_bonds();
+        // Advertising is started by PM_EVT_PEERS_DELETE_SUCCEEDED event.
+    }
+    else
+    {
+        ret_code_t ret;
+
+        memset(m_whitelist_peers, PM_PEER_ID_INVALID, sizeof(m_whitelist_peers));
+        m_whitelist_peer_cnt = (sizeof(m_whitelist_peers) / sizeof(pm_peer_id_t));
+
+        peer_list_get(m_whitelist_peers, &m_whitelist_peer_cnt);
+
+        ret = pm_whitelist_set(m_whitelist_peers, m_whitelist_peer_cnt);
+        APP_ERROR_CHECK(ret);
+
+        // Setup the device identies list.
+        // Some SoftDevices do not support this feature.
+        ret = pm_device_identities_list_set(m_whitelist_peers, m_whitelist_peer_cnt);
+        if (ret != NRF_ERROR_NOT_SUPPORTED)
+        {
+            APP_ERROR_CHECK(ret);
+        }
+
+        m_is_wl_changed = false;
+
+        ret = ble_advertising_start(BLE_ADV_MODE_FAST);
         APP_ERROR_CHECK(ret);
     }
-
-    m_is_wl_changed = false;
-
-    ret = ble_advertising_start(BLE_ADV_MODE_FAST);
-    APP_ERROR_CHECK(ret);
 }
 
 
@@ -352,7 +377,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
 
         case PM_EVT_CONN_SEC_SUCCEEDED:
         {
-            NRF_LOG_INFO("Connection secured. Role: %d. conn_handle: %d, Procedure: %d\r\n",
+            NRF_LOG_INFO("Connection secured: role: %d, conn_handle: 0x%x, procedure: %d.\r\n",
                          ble_conn_state_role(p_evt->conn_handle),
                          p_evt->conn_handle,
                          p_evt->params.conn_sec_succeeded.procedure);
@@ -409,7 +434,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
 
         case PM_EVT_PEERS_DELETE_SUCCEEDED:
         {
-            advertising_start();
+            advertising_start(false);
         } break;
 
         case PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED:
@@ -481,7 +506,7 @@ static void ble_advertising_error_handler(uint32_t nrf_error)
  */
 static void battery_level_update(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
     uint8_t  battery_level;
 
     battery_level = (uint8_t)sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
@@ -489,7 +514,7 @@ static void battery_level_update(void)
     err_code = ble_bas_battery_level_update(&m_bas, battery_level);
     if ((err_code != NRF_SUCCESS) &&
         (err_code != NRF_ERROR_INVALID_STATE) &&
-        (err_code != BLE_ERROR_NO_TX_PACKETS) &&
+        (err_code != NRF_ERROR_RESOURCES) &&
         (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
        )
     {
@@ -518,10 +543,10 @@ static void battery_level_meas_timeout_handler(void * p_context)
  */
 static void timers_init(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
-    // Initialize timer module, making it use the scheduler.
-    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, true);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
     // Create battery timer.
     err_code = app_timer_create(&m_battery_timer_id,
@@ -538,7 +563,7 @@ static void timers_init(void)
  */
 static void gap_params_init(void)
 {
-    uint32_t                err_code;
+    ret_code_t              err_code;
     ble_gap_conn_params_t   gap_conn_params;
     ble_gap_conn_sec_mode_t sec_mode;
 
@@ -564,11 +589,20 @@ static void gap_params_init(void)
 }
 
 
+/**@brief Function for initializing the GATT module.
+ */
+static void gatt_init(void)
+{
+    ret_code_t err_code = nrf_ble_gatt_init(&m_gatt, NULL);
+    APP_ERROR_CHECK(err_code);
+}
+
+
 /**@brief Function for initializing Device Information Service.
  */
 static void dis_init(void)
 {
-    uint32_t         err_code;
+    ret_code_t       err_code;
     ble_dis_init_t   dis_init_obj;
     ble_dis_pnp_id_t pnp_id;
 
@@ -594,7 +628,7 @@ static void dis_init(void)
  */
 static void bas_init(void)
 {
-    uint32_t       err_code;
+    ret_code_t     err_code;
     ble_bas_init_t bas_init_obj;
 
     memset(&bas_init_obj, 0, sizeof(bas_init_obj));
@@ -619,7 +653,7 @@ static void bas_init(void)
  */
 static void hids_init(void)
 {
-    uint32_t                   err_code;
+    ret_code_t                 err_code;
     ble_hids_init_t            hids_init_obj;
     ble_hids_inp_rep_init_t    input_report_array[1];
     ble_hids_inp_rep_init_t  * p_input_report;
@@ -776,7 +810,7 @@ static void conn_params_error_handler(uint32_t nrf_error)
  */
 static void conn_params_init(void)
 {
-    uint32_t               err_code;
+    ret_code_t             err_code;
     ble_conn_params_init_t cp_init;
 
     memset(&cp_init, 0, sizeof(cp_init));
@@ -799,7 +833,7 @@ static void conn_params_init(void)
  */
 static void timers_start(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     err_code = app_timer_start(m_battery_timer_id, BATTERY_LEVEL_MEAS_INTERVAL, NULL);
     APP_ERROR_CHECK(err_code);
@@ -817,11 +851,11 @@ static void timers_start(void)
  * @param[in]  pattern_offset Offset applied to Key Pattern for transmission.
  * @param[out] actual_len     Provides actual length of Key Pattern transmitted, making buffering of
  *                            rest possible if needed.
- * @return     NRF_SUCCESS on success, BLE_ERROR_NO_TX_PACKETS in case transmission could not be
+ * @return     NRF_SUCCESS on success, NRF_ERROR_RESOURCES in case transmission could not be
  *             completed due to lack of transmission buffer or other error codes indicating reason
  *             for failure.
  *
- * @note       In case of BLE_ERROR_NO_TX_PACKETS, remaining pattern that could not be transmitted
+ * @note       In case of NRF_ERROR_RESOURCES, remaining pattern that could not be transmitted
  *             can be enqueued \ref buffer_enqueue function.
  *             In case a pattern of 'cofFEe' is the p_key_pattern, with pattern_len as 6 and
  *             pattern_offset as 0, the notifications as observed on the peer side would be
@@ -843,7 +877,7 @@ static uint32_t send_key_scan_press_release(ble_hids_t * p_hids,
                                             uint16_t     pattern_offset,
                                             uint16_t   * p_actual_len)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
     uint16_t offset;
     uint16_t data_len;
     uint8_t  data[INPUT_REPORT_KEYS_MAX_LEN];
@@ -1007,7 +1041,7 @@ static uint32_t buffer_dequeue(bool tx_flag)
                                                    &actual_len);
             // An additional notification is needed for release of all keys, therefore check
             // is for actual_len <= element->data_len and not actual_len < element->data_len
-            if ((err_code == BLE_ERROR_NO_TX_PACKETS) && (actual_len <= p_element->data_len))
+            if ((err_code == NRF_ERROR_RESOURCES) && (actual_len <= p_element->data_len))
             {
                 // Transmission could not be completed, do not remove the entry, adjust next data to
                 // be transmitted
@@ -1041,7 +1075,7 @@ static uint32_t buffer_dequeue(bool tx_flag)
  */
 static void keys_send(uint8_t key_pattern_len, uint8_t * p_key_pattern)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
     uint16_t actual_len;
 
     err_code = send_key_scan_press_release(&m_hids,
@@ -1051,7 +1085,7 @@ static void keys_send(uint8_t key_pattern_len, uint8_t * p_key_pattern)
                                            &actual_len);
     // An additional notification is needed for release of all keys, therefore check
     // is for actual_len <= key_pattern_len and not actual_len < key_pattern_len.
-    if ((err_code == BLE_ERROR_NO_TX_PACKETS) && (actual_len <= key_pattern_len))
+    if ((err_code == NRF_ERROR_RESOURCES) && (actual_len <= key_pattern_len))
     {
         // Buffer enqueue routine return value is not intentionally checked.
         // Rationale: Its better to have a a few keys missing than have a system
@@ -1063,7 +1097,7 @@ static void keys_send(uint8_t key_pattern_len, uint8_t * p_key_pattern)
 
     if ((err_code != NRF_SUCCESS) &&
         (err_code != NRF_ERROR_INVALID_STATE) &&
-        (err_code != BLE_ERROR_NO_TX_PACKETS) &&
+        (err_code != NRF_ERROR_RESOURCES) &&
         (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
        )
     {
@@ -1080,7 +1114,7 @@ static void on_hid_rep_char_write(ble_hids_evt_t * p_evt)
 {
     if (p_evt->params.char_write.char_id.rep_type == BLE_HIDS_REP_TYPE_OUTPUT)
     {
-        uint32_t err_code;
+        ret_code_t err_code;
         uint8_t  report_val;
         uint8_t  report_index = p_evt->params.char_write.char_id.rep_index;
 
@@ -1132,8 +1166,9 @@ static void on_hid_rep_char_write(ble_hids_evt_t * p_evt)
  */
 static void sleep_mode_enter(void)
 {
-    uint32_t err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+    ret_code_t err_code;
 
+    err_code = bsp_indication_set(BSP_INDICATE_IDLE);
     APP_ERROR_CHECK(err_code);
 
     // Prepare wakeup buttons.
@@ -1187,36 +1222,36 @@ static void on_hids_evt(ble_hids_t * p_hids, ble_hids_evt_t * p_evt)
  */
 static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     switch (ble_adv_evt)
     {
         case BLE_ADV_EVT_DIRECTED:
-            NRF_LOG_INFO("BLE_ADV_EVT_DIRECTED\r\n");
+            NRF_LOG_INFO("Directed advertising.\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_DIRECTED);
             APP_ERROR_CHECK(err_code);
             break; //BLE_ADV_EVT_DIRECTED
 
         case BLE_ADV_EVT_FAST:
-            NRF_LOG_INFO("BLE_ADV_EVT_FAST\r\n");
+            NRF_LOG_INFO("Fast advertising.\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
             APP_ERROR_CHECK(err_code);
             break; //BLE_ADV_EVT_FAST
 
         case BLE_ADV_EVT_SLOW:
-            NRF_LOG_INFO("BLE_ADV_EVT_SLOW\r\n");
+            NRF_LOG_INFO("Slow advertising.\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_SLOW);
             APP_ERROR_CHECK(err_code);
             break; //BLE_ADV_EVT_SLOW
 
         case BLE_ADV_EVT_FAST_WHITELIST:
-            NRF_LOG_INFO("BLE_ADV_EVT_FAST_WHITELIST\r\n");
+            NRF_LOG_INFO("Fast advertising with whitelist.\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_WHITELIST);
             APP_ERROR_CHECK(err_code);
             break; //BLE_ADV_EVT_FAST_WHITELIST
 
         case BLE_ADV_EVT_SLOW_WHITELIST:
-            NRF_LOG_INFO("BLE_ADV_EVT_SLOW_WHITELIST\r\n");
+            NRF_LOG_INFO("Slow advertising with whitelist.\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_WHITELIST);
             APP_ERROR_CHECK(err_code);
             break; //BLE_ADV_EVT_SLOW_WHITELIST
@@ -1276,7 +1311,7 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
  */
 static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -1288,7 +1323,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
             break; // BLE_GAP_EVT_CONNECTED
 
-        case BLE_EVT_TX_COMPLETE:
+        case BLE_GATTS_EVT_HVN_TX_COMPLETE:
             // Send next key event
             (void) buffer_dequeue(true);
             break; // BLE_EVT_TX_COMPLETE
@@ -1373,14 +1408,6 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             }
         } break; // BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST
 
-#if (NRF_SD_BLE_API_VERSION >= 3)
-        case BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST:
-            err_code = sd_ble_gatts_exchange_mtu_reply(p_ble_evt->evt.gatts_evt.conn_handle,
-                                                       NRF_BLE_MAX_MTU_SIZE);
-            APP_ERROR_CHECK(err_code);
-            break; // BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST
-#endif
-
         default:
             // No implementation needed.
             break;
@@ -1407,6 +1434,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
     ble_conn_params_on_ble_evt(p_ble_evt);
     ble_hids_on_ble_evt(&m_hids, p_ble_evt);
     ble_bas_on_ble_evt(&m_bas, p_ble_evt);
+    nrf_ble_gatt_on_ble_evt(&m_gatt, p_ble_evt);
 }
 
 
@@ -1436,27 +1464,37 @@ static void sys_evt_dispatch(uint32_t sys_evt)
  */
 static void ble_stack_init(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
 
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_APPSH_INIT(&clock_lf_cfg, true);
 
-    ble_enable_params_t ble_enable_params;
-    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
-                                                    PERIPHERAL_LINK_COUNT,
-                                                    &ble_enable_params);
+    // Fetch the start address of the application RAM.
+    uint32_t ram_start = 0;
+    err_code = softdevice_app_ram_start_get(&ram_start);
     APP_ERROR_CHECK(err_code);
 
-    // Check the ram settings against the used number of links
-    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT, PERIPHERAL_LINK_COUNT);
+    // Overwrite some of the default configurations for the BLE stack.
+    ble_cfg_t ble_cfg;
+
+    // Configure the number of custom UUIDS.
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.common_cfg.vs_uuid_cfg.vs_uuid_count = 0;
+    err_code = sd_ble_cfg_set(BLE_COMMON_CFG_VS_UUID, &ble_cfg, ram_start);
+    APP_ERROR_CHECK(err_code);
+
+    // Configure the maximum number of connections.
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = BLE_GAP_ROLE_COUNT_PERIPH_DEFAULT;
+    ble_cfg.gap_cfg.role_count_cfg.central_role_count = 0;
+    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = 0;
+    err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start);
+    APP_ERROR_CHECK(err_code);
 
     // Enable BLE stack.
-#if (NRF_SD_BLE_API_VERSION >= 3)
-    ble_enable_params.gatt_enable_params.att_mtu = NRF_BLE_MAX_MTU_SIZE;
-#endif
-    err_code = softdevice_enable(&ble_enable_params);
+    err_code = softdevice_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
@@ -1534,23 +1572,14 @@ static void bsp_event_handler(bsp_event_t event)
 
 
 /**@brief Function for the Peer Manager initialization.
- *
- * @param[in] erase_bonds  Indicates whether bonding information should be cleared from
- *                         persistent storage during initialization of the Peer Manager.
  */
-static void peer_manager_init(bool erase_bonds)
+static void peer_manager_init(void)
 {
     ble_gap_sec_params_t sec_param;
     ret_code_t           err_code;
 
     err_code = pm_init();
     APP_ERROR_CHECK(err_code);
-
-    if (erase_bonds)
-    {
-        err_code = pm_peers_delete();
-        APP_ERROR_CHECK(err_code);
-    }
 
     memset(&sec_param, 0, sizeof(ble_gap_sec_params_t));
 
@@ -1623,12 +1652,10 @@ static void advertising_init(void)
  */
 static void buttons_leds_init(bool * p_erase_bonds)
 {
+    ret_code_t err_code;
     bsp_event_t startup_event;
 
-    uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                                 APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
-                                 bsp_event_handler);
-
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_btn_ble_init(NULL, &startup_event);
@@ -1638,12 +1665,20 @@ static void buttons_leds_init(bool * p_erase_bonds)
 }
 
 
+/**@brief Function for initializing the nrf log module.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+}
+
+
 /**@brief Function for the Power manager.
  */
 static void power_manage(void)
 {
-    uint32_t err_code = sd_app_evt_wait();
-
+    ret_code_t err_code = sd_app_evt_wait();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -1652,33 +1687,28 @@ static void power_manage(void)
  */
 int main(void)
 {
-    bool     erase_bonds;
-    uint32_t err_code;
+    bool erase_bonds;
 
     // Initialize.
-    err_code = NRF_LOG_INIT(NULL);
-    APP_ERROR_CHECK(err_code);
-
+    log_init();
     timers_init();
     buttons_leds_init(&erase_bonds);
     ble_stack_init();
     scheduler_init();
-    peer_manager_init(erase_bonds);
-    if (erase_bonds == true)
-    {
-        NRF_LOG_INFO("Bonds erased!\r\n");
-    }
     gap_params_init();
+    gatt_init();
     advertising_init();
     services_init();
     sensor_simulator_init();
     conn_params_init();
     buffer_init();
+    peer_manager_init();
 
     // Start execution.
-    NRF_LOG_INFO("HID Keyboard Start!\r\n");
+    NRF_LOG_INFO("HID Keyboard example started.\r\n");
     timers_start();
-    advertising_start();
+
+    advertising_start(erase_bonds);
 
     // Enter main loop.
     for (;;)

@@ -1,12 +1,42 @@
-/*
- * Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is confidential property of Nordic Semiconductor. The use,
- * copying, transfer or disclosure of such information is prohibited except by express written
- * agreement with Nordic Semiconductor.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /**@cond To Make Doxygen skip documentation generation for this file.
  * @{
  */
@@ -180,7 +210,7 @@ static void on_write_response(nrf_ble_amtc_t * p_ctx, const ble_evt_t * p_ble_ev
 
 void nrf_ble_amtc_on_db_disc_evt(nrf_ble_amtc_t * p_ctx, const ble_db_discovery_evt_t * p_evt)
 {
-    // Check if the AMT Service was discovered.
+    // Check if the AMT service was discovered.
     if (   (p_evt->evt_type != BLE_DB_DISCOVERY_COMPLETE)
         || (p_evt->params.discovered_db.srv_uuid.uuid != AMT_SERVICE_UUID)
         || (p_evt->params.discovered_db.srv_uuid.type != p_ctx->uuid_type))
@@ -201,19 +231,19 @@ void nrf_ble_amtc_on_db_disc_evt(nrf_ble_amtc_t * p_ctx, const ble_db_discovery_
             // Found AMT characteristic. Store handles.
             evt.params.peer_db.amt_cccd_handle =
                 p_evt->params.discovered_db.charateristics[i].cccd_handle;
-            evt.params.peer_db.amt_handle      =
+            evt.params.peer_db.amt_handle =
                 p_evt->params.discovered_db.charateristics[i].characteristic.handle_value;
         }
 
         if ((uuid.uuid == AMT_RCV_BYTES_CNT_CHAR_UUID) && (uuid.type == p_ctx->uuid_type))
         {
             // Found AMT Number of received bytes characteristic. Store handles.
-            evt.params.peer_db.amt_rbc_handle      =
+            evt.params.peer_db.amt_rbc_handle =
                 p_evt->params.discovered_db.charateristics[i].characteristic.handle_value;
         }
     }
 
-    NRF_LOG_DEBUG("AMT Service discovered at peer.\r\n");
+    NRF_LOG_DEBUG("AMT service discovered at peer.\r\n");
 
     //If the instance has been assigned prior to db_discovery, assign the db_handles.
     if (p_ctx->conn_handle != BLE_CONN_HANDLE_INVALID)

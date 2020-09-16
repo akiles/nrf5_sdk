@@ -1,15 +1,42 @@
-/* Copyright (c) 2015 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /**@file
  * @addtogroup nrf_pwm PWM HAL and driver
  * @ingroup    nrf_drivers
@@ -135,7 +162,18 @@ typedef enum
     NRF_DRV_PWM_FLAG_LOOP = 0x02, /**< When the requested playback is finished,
                                        it should be started from the beginning.
                                        This flag is ignored if used together
-                                       with @ref NRF_DRV_PWM_FLAG_STOP. */
+                                       with @ref NRF_DRV_PWM_FLAG_STOP.
+                                       @note The playback restart is done via a
+                                       shortcut configured in the PWM peripheral.
+                                       This shortcut triggers the proper starting
+                                       task when the final value of previous
+                                       playback is read from RAM and applied to
+                                       the pulse generator counter.
+                                       When this mechanism is used together with
+                                       the @ref NRF_PWM_STEP_TRIGGERED mode,
+                                       the playback restart will occur right
+                                       after switching to the final value (this
+                                       final value will be played only once). */
     NRF_DRV_PWM_FLAG_SIGNAL_END_SEQ0 = 0x04, /**< The event handler should be
                                                   called when the last value
                                                   from sequence 0 is loaded. */
@@ -145,6 +183,13 @@ typedef enum
     NRF_DRV_PWM_FLAG_NO_EVT_FINISHED = 0x10, /**< The playback finished event
                                                   (enabled by default) should be
                                                   suppressed. */
+    NRF_DRV_PWM_FLAG_START_VIA_TASK = 0x80, /**< The playback should not be
+                                                 started directly by the called
+                                                 function. Instead, the function
+                                                 should only prepare it and
+                                                 return the address of the task
+                                                 to be triggered to start the
+                                                 playback. */
 } nrf_drv_pwm_flag_t;
 
 
@@ -206,6 +251,11 @@ void nrf_drv_pwm_uninit(nrf_drv_pwm_t const * const p_instance);
  * the @ref NRF_DRV_PWM_EVT_END_SEQ0 event and the @ref NRF_DRV_PWM_EVT_END_SEQ1
  * event should be handled in the same way).
  *
+ * Use the @ref NRF_DRV_PWM_FLAG_START_VIA_TASK flag if you want the playback
+ * to be only prepared by this function, and you want to start it later by
+ * triggering a task (using PPI for instance). The function will then return
+ * the address of the task to be triggered.
+ *
  * @note The array containing the duty cycle values for the specified sequence
  *       must be in RAM and cannot be allocated on stack.
  *       For detailed information, see @ref nrf_pwm_sequence_t.
@@ -216,14 +266,22 @@ void nrf_drv_pwm_uninit(nrf_drv_pwm_t const * const p_instance);
  * @param[in] flags          Additional options. Pass any combination of
  *                           @ref nrf_drv_pwm_flag_t "playback flags", or 0
  *                           for default settings.
+ *
+ * @return Address of the task to be triggered to start the playback if the @ref
+ *         NRF_DRV_PWM_FLAG_START_VIA_TASK flag was used, 0 otherwise.
  */
-void nrf_drv_pwm_simple_playback(nrf_drv_pwm_t const * const p_instance,
-                                 nrf_pwm_sequence_t const * p_sequence,
-                                 uint16_t                   playback_count,
-                                 uint32_t                   flags);
+uint32_t nrf_drv_pwm_simple_playback(nrf_drv_pwm_t const * const p_instance,
+                                     nrf_pwm_sequence_t const * p_sequence,
+                                     uint16_t                   playback_count,
+                                     uint32_t                   flags);
 
 /**
  * @brief Function for starting a two-sequence playback.
+ *
+ * Use the @ref NRF_DRV_PWM_FLAG_START_VIA_TASK flag if you want the playback
+ * to be only prepared by this function, and you want to start it later by
+ * triggering a task (using PPI for instance). The function will then return
+ * the address of the task to be triggered.
  *
  * @note The array containing the duty cycle values for the specified sequence
  *       must be in RAM and cannot be allocated on stack.
@@ -236,12 +294,15 @@ void nrf_drv_pwm_simple_playback(nrf_drv_pwm_t const * const p_instance,
  * @param[in] flags          Additional options. Pass any combination of
  *                           @ref nrf_drv_pwm_flag_t "playback flags", or 0
  *                           for default settings.
+ *
+ * @return Address of the task to be triggered to start the playback if the @ref
+ *         NRF_DRV_PWM_FLAG_START_VIA_TASK flag was used, 0 otherwise.
  */
-void nrf_drv_pwm_complex_playback(nrf_drv_pwm_t const * const p_instance,
-                                  nrf_pwm_sequence_t const * p_sequence_0,
-                                  nrf_pwm_sequence_t const * p_sequence_1,
-                                  uint16_t                   playback_count,
-                                  uint32_t                   flags);
+uint32_t nrf_drv_pwm_complex_playback(nrf_drv_pwm_t const * const p_instance,
+                                      nrf_pwm_sequence_t const * p_sequence_0,
+                                      nrf_pwm_sequence_t const * p_sequence_1,
+                                      uint16_t                   playback_count,
+                                      uint32_t                   flags);
 
 /**
  * @brief Function for advancing the active sequence.

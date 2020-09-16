@@ -1,15 +1,42 @@
- /* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /** @file
  *
  * @defgroup ser_phy Serialization PHY
@@ -18,35 +45,39 @@
  *
  * @brief PHY layer for serialization.
  *
- * @details Here you can find declarations of functions and definitions of data structures and
- *          identifiers (typedef enum) used as API of the serialization PHY layer.
+ * @details The @ref ser_phy library declares functions and definitions of data structures and
+ *          identifiers (typedef enum) that are used as API of the serialization PHY layer.
  *
  * \par Rationale
  * Each specific PHY layer (SPI, I2C, UART, low power UART etc.) should provide the same API. This
  * allows the layer above (the HAL Transport layer), which is responsible for controlling the PHY
- * layer, memory management, crc, retransmission etc., to be hardware independent.
+ * layer, memory management, CRC, retransmission etc., to be hardware independent.
  *
  *
  * \par Interlayer communication and control
- * The PHY layer is controlled by the HAL Transport layer by calling functions declared in this
- * file.
- * The PHY layer communicates events to the HAL Transport layer by calling a callback function.
+ * The PHY layer is controlled by the HAL transport layer by calling functions declared in
+ * the @ref ser_phy library.
+ *
+ * @par
+ * The PHY layer communicates events to the HAL transport layer by calling a callback function.
  * A handler to this function is passed in the @ref ser_phy_open function. This callback function
- * should be called with parameter of type @ref ser_phy_evt_t, filled accordingly to an event to be
+ * should be called with a parameter of type @ref ser_phy_evt_t, filled accordingly to an event to be
  * passed. Types of supported events are defined in @ref ser_phy_evt_type_t.
- * For example, to pass an event indicating that RX packet has been successfully received, first a
- * struct of type @ref ser_phy_evt_t has to be filled:
+ *
+ * @par
+ * For example, to pass an event indicating that an RX packet has been successfully received, first a
+ * struct of type @ref ser_phy_evt_t must be filled:
  * @code
  * ser_phy_evt_t phy_evt;
  * phy_evt.evt_type = SER_PHY_EVT_RX_PKT_RECEIVED;
  * phy_evt.evt_params.rx_pkt_received.p_buffer = (pointer to the RX buffer);
  * phy_evt.evt_params.rx_pkt_received.num_of_bytes = (number of received bytes);
  * @endcode
- * , and then the callback function has to be called:
+ * Then, the callback function must be called:
  * @code
  * events_handler(phy_evt);
  * @endcode
- * All functions declared in this file are obligatory to implement. Some events specified in 
+ * All functions declared in the @ref ser_phy file (ser_phy.h) must be implemented. Some events specified in
  * @ref ser_phy_evt_type_t are optional to implement.
  *
  * \par Transmitting a packet
@@ -58,35 +89,43 @@
  *
  * \image html ser_phy_transport_tx.svg "TX - interlayer communication"
  *
- *
  * \par Receiving a packet
  * The PHY layer should be able to store only the PHY header (16-bit field carrying the packet
  * length). After the PHY header has been received, the transmission is stopped and the PHY
- * layer has to send a request to the HAL Transport layer for memory to store the packet - an event
+ * layer must send a request to the HAL transport layer for memory to store the packet - an event
  * of type @ref SER_PHY_EVT_RX_BUF_REQUEST with event parameters defined in
  * @ref ser_phy_evt_rx_buf_request_params_t (the uint16_decode function defined in app_util.h should
  * be used for header decoding to ensure endianness independence). The transmission should be
  * resumed when the @ref ser_phy_rx_buf_set function has been called.
  *
- * When the @ref ser_phy_rx_buf_set function parameter equals NULL, it means that there is not
- * enough memory to store the packet, however the packet will be received to dummy location to
+ * @par
+ * When the @ref ser_phy_rx_buf_set function parameter equals NULL, there is not
+ * enough memory to store the packet. However, the packet will be received to a dummy location to
  * ensure continuous communication. After receiving has finished, an event of type
  * @ref SER_PHY_EVT_RX_PKT_DROPPED is generated.
  *
  * \image html ser_phy_transport_rx_dropped.svg "RX dropping - interlayer communication"
  *
+ * @par
  * When the @ref ser_phy_rx_buf_set function parameter is different than NULL, the packet is
- * received to a buffer pointed by it. After receiving has finished, an event of type
+ * received to a buffer pointed to by it. After receiving has finished, an event of type
  * @ref SER_PHY_EVT_RX_PKT_RECEIVED is generated with event parameters defined in
  * @ref ser_phy_evt_rx_pkt_received_params_t.
  *
  * \image html ser_phy_transport_rx_received.svg "RX - interlayer communication"
  *
- *
  * \par PHY layer errors
  * PHY layer errors can be signaled by an event of type @ref SER_PHY_EVT_RX_OVERFLOW_ERROR or
  * @ref SER_PHY_EVT_TX_OVERREAD_ERROR or @ref SER_PHY_EVT_HW_ERROR with event parameters defined in
  * @ref ser_phy_evt_hw_error_params_t.
+ *
+ * @par Available PHY layers
+ * The following PHY layers are available:
+ * - @ref ser_phy_spi_page
+ * - @ref ser_phy_spi_5W_page
+ * - @ref ser_phy_uart_page
+ * - @ref ser_phy_uart_hci_page
+ * <!-- - @ref ser_phy_usb_hci_page -->
  *
  */
 

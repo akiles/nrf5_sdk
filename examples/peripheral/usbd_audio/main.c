@@ -1,15 +1,42 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -25,6 +52,7 @@
 #include "app_usbd_core.h"
 #include "app_usbd_string_desc.h"
 #include "app_usbd_audio.h"
+#include "app_error.h"
 #include "boards.h"
 
 #define NRF_LOG_MODULE_NAME "APP"
@@ -382,20 +410,6 @@ static void hp_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
     UNUSED_VARIABLE(m_rx_counter);
     switch (event)
     {
-        case APP_USBD_AUDIO_USER_EVT_SUSPEND:
-            bsp_board_led_off(LED_USB_RESUME);
-            break;
-        case APP_USBD_AUDIO_USER_EVT_RESUME:
-            bsp_board_led_on(LED_USB_RESUME);
-            break;
-        case APP_USBD_AUDIO_USER_EVT_START:
-            /*Setup receive buffer*/
-            app_usbd_audio_class_rx_buf_set(p_inst, m_rx_buffer, sizeof(m_rx_buffer));
-            bsp_board_led_on(LED_USB_START);
-            break;
-        case APP_USBD_AUDIO_USER_EVT_STOP:
-            bsp_board_leds_off();
-            break;
         case APP_USBD_AUDIO_USER_EVT_CLASS_REQ:
             hp_audio_user_class_req(p_inst);
             break;
@@ -423,10 +437,6 @@ static void mic_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
 
     switch (event)
     {
-        case APP_USBD_AUDIO_USER_EVT_START:
-            /*Setup receive buffer*/
-            app_usbd_audio_class_tx_buf_set(p_inst, m_tx_buffer, sizeof(m_tx_buffer));
-            break;
         case APP_USBD_AUDIO_USER_EVT_CLASS_REQ:
             mic_audio_user_class_req(p_inst);
             break;
@@ -441,6 +451,44 @@ static void mic_audio_user_ev_handler(app_usbd_class_inst_t const * p_inst,
             break;
     }
 }
+
+/**
+ * @brief USBD library specific event handler.
+ *
+ * @param event     USBD library event.
+ * */
+static void usbd_user_ev_handler(app_usbd_event_type_t event)
+{
+    switch (event)
+    {
+        case APP_USBD_EVT_DRV_SUSPEND:
+            bsp_board_led_off(LED_USB_RESUME);
+            break;
+        case APP_USBD_EVT_DRV_RESUME:
+            bsp_board_led_on(LED_USB_RESUME);
+            break;
+        case APP_USBD_EVT_START:
+            app_usbd_audio_class_rx_buf_set(&m_app_audio_headphone.base,
+                                            m_rx_buffer,
+                                            sizeof(m_rx_buffer));
+
+            app_usbd_audio_class_tx_buf_set(&m_app_audio_microphone.base,
+                                            m_tx_buffer,
+                                            sizeof(m_tx_buffer));
+
+            bsp_board_led_invert(LED_USB_START);
+            break;
+        case APP_USBD_EVT_STOP:
+            bsp_board_leds_off();
+            break;
+        default:
+            break;
+    }
+}
+
+static const app_usbd_config_t m_usbd_config = {
+    .ev_handler = usbd_user_ev_handler
+};
 
 /**
  * @brief  USB connection status
@@ -480,8 +528,9 @@ static void usb_start(void)
         {
             .handler = power_usb_event_handler
         };
-
-        nrf_drv_power_usbevt_init(&config);
+        ret_code_t ret;
+        ret = nrf_drv_power_usbevt_init(&config);
+        APP_ERROR_CHECK(ret);
     }
     else
     {
@@ -519,7 +568,7 @@ int main(void)
     bsp_board_leds_init();
     bsp_board_buttons_init();
 
-    ret = app_usbd_init();
+    ret = app_usbd_init(&m_usbd_config);
     APP_ERROR_CHECK(ret);
 
     app_usbd_class_inst_t const * class_inst_hp =

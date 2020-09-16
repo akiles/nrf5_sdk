@@ -1,15 +1,42 @@
- /* Copyright (c) 2013 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2013 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(SPIS)
 #define ENABLED_SPIS_COUNT (SPIS0_ENABLED+SPIS1_ENABLED+SPIS2_ENABLED)
@@ -30,8 +57,10 @@
 #define NRF_LOG_LEVEL       SPIS_CONFIG_LOG_LEVEL
 #define NRF_LOG_INFO_COLOR  SPIS_CONFIG_INFO_COLOR
 #define NRF_LOG_DEBUG_COLOR SPIS_CONFIG_DEBUG_COLOR
-#define EVT_TO_STR(event)   (event == NRF_SPIS_EVENT_ACQUIRED ? "NRF_SPIS_EVENT_ACQUIRED" :                  \
-                            (event == NRF_SPIS_EVENT_END ? "NRF_SPIS_EVENT_END" :  "UNKNOWN ERROR"))
+#define EVT_TO_STR(event) \
+    (event == NRF_SPIS_EVENT_ACQUIRED ? "NRF_SPIS_EVENT_ACQUIRED" : \
+    (event == NRF_SPIS_EVENT_END      ? "NRF_SPIS_EVENT_END" : \
+                                        "UNKNOWN ERROR"))
 
 #else //SPIS_CONFIG_LOG_ENABLED
 #define EVT_TO_STR(event)   ""
@@ -39,6 +68,18 @@
 #endif //SPIS_CONFIG_LOG_ENABLED
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+
+#if NRF_MODULE_ENABLED(SPIS_NRF52_ANOMALY_109_WORKAROUND)
+#include "nrf_drv_gpiote.h"
+#define USE_DMA_ISSUE_WORKAROUND
+// This handler is called by the GPIOTE driver when a falling edge is detected
+// on the CSN line. There is no need to do anything here. The handling of the
+// interrupt itself provides a protection for DMA transfers.
+static void csn_event_handler(nrf_drv_gpiote_pin_t pin,
+                              nrf_gpiote_polarity_t action)
+{
+}
+#endif
 
 
 /**@brief States of the SPI transaction state machine. */
@@ -107,26 +148,32 @@ ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
     ASSERT(p_config);
     spis_cb_t * p_cb = &m_cb[p_instance->instance_id];
     ret_code_t err_code;
-    
+
     NRF_SPIS_Type * p_spis = p_instance->p_reg;
 
     if (p_cb->state != NRF_DRV_STATE_UNINITIALIZED)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+                        (uint32_t)__func__,
+                        (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
     if ((uint32_t)p_config->mode > (uint32_t)NRF_DRV_SPIS_MODE_3)
     {
         err_code = NRF_ERROR_INVALID_PARAM;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+                        (uint32_t)__func__,
+                        (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     if (!event_handler)
     {
         err_code = NRF_ERROR_NULL;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+                        (uint32_t)__func__,
+                        (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 #if NRF_MODULE_ENABLED(PERIPHERAL_RESOURCE_SHARING)
@@ -134,7 +181,9 @@ ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
             m_irq_handlers[p_instance->instance_id]) != NRF_SUCCESS)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+                        (uint32_t)__func__,
+                        (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 #endif
@@ -210,6 +259,29 @@ ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
     m_cb[p_instance->instance_id].spi_state = SPIS_STATE_INIT;
     m_cb[p_instance->instance_id].handler = event_handler;
 
+#if defined(USE_DMA_ISSUE_WORKAROUND)
+    // Configure a GPIOTE channel to generate interrupts on each falling edge
+    // on the CSN line. Handling of these interrupts will make the CPU active,
+    // and thus will protect the DMA transfers started by SPIS right after it
+    // is selected for communication.
+    // [the GPIOTE driver may be already initialized at this point (by this
+    //  driver when another SPIS instance is used, or by an application code),
+    //  so just ignore the returned value]
+    (void)nrf_drv_gpiote_init();
+    static nrf_drv_gpiote_in_config_t const csn_gpiote_config =
+        GPIOTE_CONFIG_IN_SENSE_HITOLO(true);
+    ret_code_t gpiote_err_code = nrf_drv_gpiote_in_init(p_config->csn_pin,
+        &csn_gpiote_config, csn_event_handler);
+    if (gpiote_err_code != NRF_SUCCESS)
+    {
+        err_code = NRF_ERROR_INTERNAL;
+        NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
+                     (uint32_t)__func__,
+                     (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+        return err_code;
+    }
+    nrf_drv_gpiote_in_event_enable(p_config->csn_pin, true);
+#endif
 
     // Enable IRQ.
     nrf_spis_int_enable(p_spis, NRF_SPIS_INT_ACQUIRED_MASK | NRF_SPIS_INT_END_MASK);
@@ -221,12 +293,14 @@ ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
     nrf_spis_enable(p_spis);
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
+                 (uint32_t)__func__,
+                 (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
 
-void nrf_drv_spis_uninit(nrf_drv_spis_t const * const  p_instance)
+void nrf_drv_spis_uninit(nrf_drv_spis_t const * const p_instance)
 {
     spis_cb_t * p_cb = &m_cb[p_instance->instance_id];
     ASSERT(p_cb->state != NRF_DRV_STATE_UNINITIALIZED);
@@ -250,7 +324,7 @@ void nrf_drv_spis_uninit(nrf_drv_spis_t const * const  p_instance)
 
 /**@brief Function for executing the state entry action. */
 static void spis_state_entry_action_execute(NRF_SPIS_Type * p_spis,
-                                                     spis_cb_t * p_cb)
+                                            spis_cb_t * p_cb)
 {
     nrf_drv_spis_event_t event;
 
@@ -272,10 +346,11 @@ static void spis_state_entry_action_execute(NRF_SPIS_Type * p_spis,
         case SPIS_XFER_COMPLETED:
             event.evt_type  = NRF_DRV_SPIS_XFER_DONE;
             event.rx_amount = nrf_spis_rx_amount_get(p_spis);
-            event.tx_amount = nrf_spis_tx_amount_get(p_spis);            
+            event.tx_amount = nrf_spis_tx_amount_get(p_spis);
             NRF_LOG_INFO("Transfer rx_len:%d.\r\n", event.rx_amount);
             NRF_LOG_DEBUG("Rx data:\r\n");
-            NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_cb->rx_buffer, event.rx_amount * sizeof(p_cb->rx_buffer));
+            NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_cb->rx_buffer,
+                                  event.rx_amount * sizeof(p_cb->rx_buffer));
             APP_ERROR_CHECK_BOOL(p_cb->handler != NULL);
             p_cb->handler(event);
             break;
@@ -319,7 +394,9 @@ ret_code_t nrf_drv_spis_buffers_set(nrf_drv_spis_t const * const  p_instance,
         (p_rx_buffer != NULL && !nrf_drv_is_in_RAM(p_rx_buffer)))
     {
         err_code = NRF_ERROR_INVALID_ADDR;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+                        (uint32_t)__func__,
+                        (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -347,7 +424,9 @@ ret_code_t nrf_drv_spis_buffers_set(nrf_drv_spis_t const * const  p_instance,
             break;
     }
 
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
+                 (uint32_t)__func__,
+                 (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 

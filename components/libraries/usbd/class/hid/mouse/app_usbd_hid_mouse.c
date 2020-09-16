@@ -1,13 +1,41 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
 #include "sdk_config.h"
 #if APP_USBD_HID_MOUSE_ENABLED
@@ -65,13 +93,13 @@ app_usbd_hid_report_buffer_t const * hid_mouse_rep_buffer_get(app_usbd_hid_mouse
     ASSERT(p_mouse != NULL);
     app_usbd_hid_inst_t const * p_hinst = &p_mouse->specific.inst.hid_inst;
     app_usbd_hid_mouse_ctx_t *            p_mouse_ctx = hid_mouse_ctx_get(p_mouse);
-    app_usbd_hid_report_buffer_t *        p_rep_buff = app_usbd_hid_rep_buff_in_get(p_hinst, 0);
+    app_usbd_hid_report_buffer_t *        p_rep_buff = app_usbd_hid_rep_buff_in_get(p_hinst);
 
     p_rep_buff->p_buff = p_mouse_ctx->report_buff;
     p_rep_buff->size = sizeof(p_mouse_ctx->report_buff);
 
     /*Mouse has only one report input report buffer */
-    return app_usbd_hid_rep_buff_in_get(p_hinst, 0);
+    return app_usbd_hid_rep_buff_in_get(p_hinst);
 }
 
 /**@brief Auxiliary function to get report value from internal accumulated value.
@@ -175,7 +203,7 @@ static inline ret_code_t hid_mouse_transfer_set(app_usbd_hid_mouse_t const * p_m
 
     ret_code_t ret;
     CRITICAL_REGION_ENTER();
-    ret = app_usbd_core_ep_transfer(ep_addr, &transfer,  NULL);
+    ret = app_usbd_core_ep_transfer(ep_addr, &transfer);
     if (ret == NRF_SUCCESS)
     {
         app_usbd_hid_state_flag_set(&p_mouse_ctx->hid_ctx,
@@ -246,6 +274,10 @@ ret_code_t app_usbd_hid_mouse_x_move(app_usbd_hid_mouse_t const * p_mouse, int8_
 ret_code_t app_usbd_hid_mouse_y_move(app_usbd_hid_mouse_t const * p_mouse, int8_t offset)
 {
     app_usbd_hid_mouse_ctx_t * p_mouse_ctx = hid_mouse_ctx_get(p_mouse);
+    if (!app_usbd_hid_state_valid(&p_mouse_ctx->hid_ctx))
+    {
+        return NRF_ERROR_INVALID_STATE;
+    }
 
     if (offset == 0)
     {

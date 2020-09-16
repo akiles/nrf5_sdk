@@ -1,3 +1,13 @@
+// Copyright (c) 2016-2017, ARM Limited or its affiliates. All rights reserved 
+// 
+// This file and the related binary are licensed under the ARM Object Code and 
+// Headers License; you may not use these files except in compliance with this 
+// license. 
+// 
+// You may obtain a copy of the License at <.../external/nrf_cc310/license.txt> 
+// 
+// See the License for the specific language governing permissions and 
+// limitations under the License.
 #include "ssi_pal_types.h"
 
 #ifdef AES_INTEGTEST
@@ -37,7 +47,7 @@
 #define MAX_RND_SIZE_VECTOR              0x20
 
 #ifdef AES_INTEGTEST
-typedef struct aesDataStuct{	
+typedef struct aesDataStuct{
 	uint8_t			        aesTest_name[MAX_TEST_DATA_SIZE];
 	uint8_t                 TST_KeyData[SASI_AES_KEY_MAX_SIZE_IN_BYTES];
 	uint8_t                 TST_KeySize;
@@ -45,13 +55,13 @@ typedef struct aesDataStuct{
 	uint8_t 			aesTest_input_data[MAX_TEST_DATA_SIZE];
 	uint8_t 			aesTest_output_data[MAX_TEST_DATA_SIZE];
 	uint8_t 			aesTest_Expected_output_data[MAX_TEST_DATA_SIZE];
-	uint16_t			aesTest_DataSize;	
+	uint16_t			aesTest_DataSize;
 	SaSiAesOperationMode_t  	aesTest_OperationMode;
 	SaSiAesEncryptMode_t		aesTest_EncDecMode;
 	uint32_t                       	aesTest_OutputDataSize;
 } aesDataStuct;
 
-typedef struct aesCCMDataStuct{	
+typedef struct aesCCMDataStuct{
 	uint8_t			        aesCCMTest_name[MAX_TEST_DATA_SIZE];
 	CRYS_AESCCM_Key_t 		aesCCMTest_Key;
 	CRYS_AESCCM_KeySize_t	aesCCMTest_KeySize;
@@ -71,38 +81,38 @@ typedef struct aesCCMDataStuct{
 #endif
 
 #ifdef ECC_INTEGTEST
-typedef struct eccSignDataStuct{	
+typedef struct eccSignDataStuct{
 	uint8_t			        eccTest_name[MAX_TEST_DATA_SIZE];
 	CRYS_ECPKI_DomainID_t		eccTest_DomainID;
 	CRYS_ECPKI_HASH_OpMode_t   	eccTest_HashMode;
 	uint8_t  			eccTest_InputData[MAX_TEST_DATA_SIZE];
-	uint32_t                        eccTest_InputDataSize; 
+	uint32_t                        eccTest_InputDataSize;
 	uint8_t  			eccTest_PubKey[MAX_TEST_DATA_SIZE];
-	uint32_t                        eccTest_PubKeySize; 
+	uint32_t                        eccTest_PubKeySize;
 	uint8_t  			eccTest_PrivKey[MAX_TEST_DATA_SIZE];
 	uint32_t                        eccTest_PrivKeySize;
-	uint32_t                        eccTest_SignitureSize;  
-		
+	uint32_t                        eccTest_SignitureSize;
+
 } eccSignDataStuct;
-	
-typedef struct eccDHDataStuct{	
+
+typedef struct eccDHDataStuct{
 	uint8_t			        eccDHTest_name[MAX_TEST_DATA_SIZE];
 	CRYS_ECPKI_DomainID_t		eccDHTest_DomainID;
 	uint8_t  			eccDHTest_PubKey1[MAX_TEST_DATA_SIZE];
-	uint32_t                        eccDHTest_PubKeySize1; 
+	uint32_t                        eccDHTest_PubKeySize1;
 	uint8_t  			eccDHTest_PrivKey1[MAX_TEST_DATA_SIZE];
 	uint32_t                        eccDHTest_PrivKeySize1;
 	uint8_t  			eccDHTest_PubKey2[MAX_TEST_DATA_SIZE];
-	uint32_t                        eccDHTest_PubKeySize2; 
+	uint32_t                        eccDHTest_PubKeySize2;
 	uint8_t  			eccDHTest_PrivKey2[MAX_TEST_DATA_SIZE];
 	uint32_t                        eccDHTest_PrivKeySize2;
 
-} eccDHDataStuct; 
+} eccDHDataStuct;
 #endif
 
 #ifdef CHACHA_INTEGTEST
 typedef struct CHACHA_DataStruct {
-        uint8_t                     testName[MAX_TEST_DATA_SIZE];       
+        uint8_t                     testName[MAX_TEST_DATA_SIZE];
         CRYS_CHACHA_Nonce_t         pIVCounter;
         CRYS_CHACHA_NonceSize_t     IVSize;
         CRYS_CHACHA_Key_t           pKey;
@@ -116,7 +126,7 @@ typedef struct CHACHA_DataStruct {
 
 #define TEST_CHACHA_POLY_DATA_SIZE_MAX   272
 typedef struct CHACHA_POLY_DataStruct {
-        uint8_t                     testName[MAX_TEST_DATA_SIZE];       
+        uint8_t                     testName[MAX_TEST_DATA_SIZE];
         CRYS_CHACHA_EncryptMode_t   encryptDecryptFlag;
         CRYS_CHACHA_Key_t           pKey;
         uint8_t                     pDataIn[TEST_CHACHA_POLY_DATA_SIZE_MAX];
@@ -132,7 +142,7 @@ typedef struct CHACHA_POLY_DataStruct {
 
 #ifdef HASH_INTEGTEST
 
-typedef struct hashDataStuct{	
+typedef struct hashDataStuct{
 	uint8_t			        hashTest_Name[MAX_TEST_DATA_SIZE];
 	CRYS_HASH_OperationMode_t	hashTest_TST_OperationMode;
 	uint8_t 			hashTest_InputData[MAX_TEST_DATA_SIZE];
@@ -143,16 +153,16 @@ typedef struct hashDataStuct{
 #endif
 
 #ifdef HMAC_INTEGTEST
-typedef struct hmacDataStuct{	
+typedef struct hmacDataStuct{
 	uint8_t			        hmacTest_Name[MAX_TEST_DATA_SIZE];
 	CRYS_HASH_OperationMode_t	hmacTest_TST_OperationMode;
 	uint8_t				hmacTest_Key[CRYS_HMAC_KEY_SIZE_IN_BYTES];
-	uint16_t                        hmacTest_KeySize;	
+	uint16_t                        hmacTest_KeySize;
 	uint8_t 			hmacTest_InputData[MAX_TEST_DATA_SIZE];
 	uint32_t			hmacTest_InputDataSize;
 	CRYS_HASH_Result_t	hmacTest_ExpOutData;
 	uint32_t			hmacTest_ExpOutDataSize;
-} hmacDataStuct;	
+} hmacDataStuct;
 #endif
 
 #ifdef RND_INTEGTEST
@@ -182,7 +192,7 @@ typedef struct rndDataStuct{
 #define TST_MAX_SIGN_VERIFY_DATA_IN_BYTES           512
 #define TST_MAX_PUB_EXP_SIZE_IN_BYTES               3
 #define TST_MAX_SINGLE_RSA_SIGN_BLOCK_SIZE_IN_BYTS  16
-#define TST_LESS_DATA_FOR_PKCS1V15_ENCRYPT	    11 
+#define TST_LESS_DATA_FOR_PKCS1V15_ENCRYPT	    11
 #define TST_LESS_DATA_FOR_OAEP_ENCRYPT_SHA1	    42
 #define TST_LESS_DATA_FOR_OAEP_ENCRYPT_SHA224	    58
 #define TST_LESS_DATA_FOR_OAEP_ENCRYPT_SHA256	    66
@@ -200,59 +210,59 @@ typedef struct rndDataStuct{
 #define TST_LESS_DATA_FOR_OAEP_ENCRYPT_SHA512	    130
 
 
-typedef struct rsaEncDecDataStuct{	
+typedef struct rsaEncDecDataStuct{
     uint8_t					rsaEncDec_Name[MAX_TEST_DATA_SIZE];
     uint8_t					rsaEncDec_PrivetExponent_D[TST_MAX_PRVT_EXP_SIZE_IN_BYTES];
     uint8_t					rsaEncDec_PublicExponent_E[TST_MAX_PUB_EXP_SIZE_IN_BYTES];
     uint8_t					rsaEncDec_Modulus_N[TST_MAX_MOD_SIZE_IN_BYTES];
-    uint8_t					rsaEncDec_P[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2]; 
-    uint8_t					rsaEncDec_Q[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];  	   
+    uint8_t					rsaEncDec_P[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];
+    uint8_t					rsaEncDec_Q[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];
     uint8_t					rsaEncDec_dP[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];
     uint8_t					rsaEncDec_dQ[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];
-    uint8_t					rsaEncDec_Qinv[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];		  	
+    uint8_t					rsaEncDec_Qinv[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];
     uint16_t					rsaEncDec_KeySize;
     uint16_t					rsaEncDec_DPSize;
-    uint16_t					rsaEncDec_PubExponentSize; 
-    uint8_t 					rsaEncDec_input_data[TST_MAX_ENCDEC_DATA_IN_BYTES];	
-    uint8_t 					rsaEncDec_output_data[TST_MAX_ENCDEC_DATA_IN_BYTES];	
-    uint8_t 					rsaEncDec_Expected_output_data[TST_MAX_ENCDEC_DATA_IN_BYTES];	      
+    uint16_t					rsaEncDec_PubExponentSize;
+    uint8_t 					rsaEncDec_input_data[TST_MAX_ENCDEC_DATA_IN_BYTES];
+    uint8_t 					rsaEncDec_output_data[TST_MAX_ENCDEC_DATA_IN_BYTES];
+    uint8_t 					rsaEncDec_Expected_output_data[TST_MAX_ENCDEC_DATA_IN_BYTES];
 } rsaEncDecDataStuct;
 
 
-typedef struct rsaSignVerifyDataStuct{	
+typedef struct rsaSignVerifyDataStuct{
     char				        rsaSignVerify_Name[MAX_TEST_DATA_SIZE];
     uint8_t 		                        rsaSignVerify_PrivetExponent_D[TST_MAX_PRVT_EXP_SIZE_IN_BYTES];
     uint8_t					rsaSignVerify_PublicExponent_E[TST_MAX_PRVT_EXP_SIZE_IN_BYTES];
     uint8_t					rsaSignVerify_Modulus_N[TST_MAX_MOD_SIZE_IN_BYTES];
-    uint8_t					rsaSignVerify_P[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2]; 
-    uint8_t					rsaSignVerify_Q[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];  	   
+    uint8_t					rsaSignVerify_P[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];
+    uint8_t					rsaSignVerify_Q[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];
     uint8_t					rsaSignVerify_dP[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];
     uint8_t					rsaSignVerify_dQ[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];
-    uint8_t					rsaSignVerify_Qinv[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];		  	
+    uint8_t					rsaSignVerify_Qinv[TST_MAX_PRVT_EXP_SIZE_IN_BYTES/2];
     uint16_t					rsaSignVerify_KeySize;
     uint16_t					rsaSignVerify_DPSize;
-    uint16_t					rsaSignVerify_PubExponentSize; 
+    uint16_t					rsaSignVerify_PubExponentSize;
     uint16_t					rsaSignVerify_SaltLength;
     uint8_t 					rsaSignVerify_input_data[TST_MAX_SIGN_VERIFY_DATA_IN_BYTES];
     uint16_t 					rsaSignVerify_input_dataSize;
-    uint8_t 					rsaSignVerify_output_signiture[TST_MAX_PRVT_EXP_SIZE_IN_BYTES];	
+    uint8_t 					rsaSignVerify_output_signiture[TST_MAX_PRVT_EXP_SIZE_IN_BYTES];
     uint8_t                   	                rsaSignVerify_hash_SHA1[CRYS_HASH_SHA1_DIGEST_SIZE_IN_BYTES];
     uint8_t                   	                rsaSignVerify_hash_SHA256[CRYS_HASH_SHA256_DIGEST_SIZE_IN_BYTES];
     uint8_t                   	                rsaSignVerify_hash_SHA512[CRYS_HASH_SHA512_DIGEST_SIZE_IN_BYTES];
-    
+
 } rsaSignVerifyDataStuct;
 #endif
 
 #ifdef HKDF_INTEGTEST
 #define TST_NAME_STRING_LEN             150
 
-#define TST_HKDF_MAX_IKM_SIZE           512  
-#define TST_HKDF_MAX_SALT_SIZE         	512 
-#define TST_HKDF_MAX_INFO_SIZE        	128 
-#define TST_HKDF_MAX_PRK_SIZE        	2048 
-#define TST_HKDF_MAX_OKM_SIZE        	4096 
+#define TST_HKDF_MAX_IKM_SIZE           512
+#define TST_HKDF_MAX_SALT_SIZE         	512
+#define TST_HKDF_MAX_INFO_SIZE        	128
+#define TST_HKDF_MAX_PRK_SIZE        	2048
+#define TST_HKDF_MAX_OKM_SIZE        	4096
 
-typedef struct hkdfDataStuct{	
+typedef struct hkdfDataStuct{
 	char			    hkdf_Name[TST_NAME_STRING_LEN];
 	CRYS_HKDF_HASH_OpMode_t	    hkdfHashMode;
 	uint8_t		    	hkdf_IKM[TST_HKDF_MAX_IKM_SIZE];

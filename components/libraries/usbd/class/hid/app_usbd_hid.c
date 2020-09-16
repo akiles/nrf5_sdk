@@ -1,13 +1,41 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
 #include "sdk_config.h"
 #if APP_USBD_CLASS_HID_ENABLED
@@ -240,6 +268,13 @@ static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
             return NRF_SUCCESS;
         case APP_USBD_HID_REQ_SET_PROTOCOL:
             p_hid_ctx->protocol = p_setup_ev->setup.wValue.w;
+            {
+                app_usbd_hid_user_event_t ev = (p_hid_ctx->protocol == 0) ?
+                    APP_USBD_HID_USER_EVT_SET_BOOT_PROTO :
+                    APP_USBD_HID_USER_EVT_SET_REPORT_PROTO;
+
+                user_event_handler(p_inst, p_hinst, ev);
+            }
             return NRF_SUCCESS;
         default:
             break;
@@ -266,17 +301,6 @@ static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
     ASSERT(p_hinst != NULL);
     ASSERT(p_hid_ctx != NULL);
     ASSERT(p_setup_ev != NULL);
-
-    if (app_usbd_setup_req_rec(p_setup_ev->setup.bmRequestType) == APP_USBD_SETUP_REQREC_ENDPOINT)
-    {
-        return app_usbd_endpoint_std_req_handle(p_inst, p_setup_ev);
-    }
-
-    ret_code_t ret = app_usbd_interface_std_req_handle(p_inst, p_setup_ev);
-    if (ret == NRF_SUCCESS || ret != NRF_ERROR_NOT_SUPPORTED)
-    {
-        return ret;
-    }
 
     if (app_usbd_setup_req_dir(p_setup_ev->setup.bmRequestType) == APP_USBD_SETUP_REQDIR_IN)
     {
@@ -405,11 +429,9 @@ ret_code_t app_usbd_hid_event_handler(app_usbd_class_inst_t const * p_inst,
             break;
         case APP_USBD_EVT_DRV_SUSPEND:
             app_usbd_hid_state_flag_set(p_hid_ctx, APP_USBD_HID_STATE_FLAG_SUSPENDED);
-            user_event_handler(p_inst, p_hinst, APP_USBD_HID_USER_EVT_SUSPEND);
             break;
         case APP_USBD_EVT_DRV_RESUME:
             app_usbd_hid_state_flag_clr(p_hid_ctx, APP_USBD_HID_STATE_FLAG_SUSPENDED);
-            user_event_handler(p_inst, p_hinst, APP_USBD_HID_USER_EVT_RESUME);
 
             /* Always try to trigger transfer on resume event*/
             ret = p_hinst->p_hid_methods->ep_transfer_in(p_inst);
@@ -437,11 +459,9 @@ ret_code_t app_usbd_hid_event_handler(app_usbd_class_inst_t const * p_inst,
             break;
         case APP_USBD_EVT_START:
             app_usbd_hid_state_flag_set(p_hid_ctx, APP_USBD_HID_STATE_FLAG_STARTED);
-            user_event_handler(p_inst, p_hinst, APP_USBD_HID_USER_EVT_START);
             break;
         case APP_USBD_EVT_STOP:
             app_usbd_hid_state_flag_clr(p_hid_ctx, APP_USBD_HID_STATE_FLAG_STARTED);
-            user_event_handler(p_inst, p_hinst, APP_USBD_HID_USER_EVT_STOP);
             break;
         default:
             ret = NRF_ERROR_NOT_SUPPORTED;
@@ -451,17 +471,10 @@ ret_code_t app_usbd_hid_event_handler(app_usbd_class_inst_t const * p_inst,
     return ret;
 }
 
-app_usbd_hid_report_buffer_t * app_usbd_hid_rep_buff_in_get(app_usbd_hid_inst_t const * p_hinst,
-                                                            size_t report_id)
+app_usbd_hid_report_buffer_t * app_usbd_hid_rep_buff_in_get(app_usbd_hid_inst_t const * p_hinst)
 {
     ASSERT(p_hinst);
-
-    if (report_id >= p_hinst->rep_buffers_count_in)
-    {
-        return NULL;
-    }
-
-    return &p_hinst->p_rep_buffers_in[report_id];
+    return p_hinst->p_rep_buffer_in;
 }
 
 

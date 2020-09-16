@@ -1,11 +1,43 @@
-/*
- * Copyright (c) Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is confidential property of Nordic Semiconductor. The use,
- * copying, transfer or disclosure of such information is prohibited except by express written
- * agreement with Nordic Semiconductor.
- *
+/**
+ * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
+
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(BLE_NUS_C)
 #include <stdlib.h> // definition of NULL
@@ -16,6 +48,8 @@
 #include "ble_srv_common.h"
 #include "app_error.h"
 
+#define NRF_LOG_MODULE_NAME "BLE_NUS"
+#include "nrf_log.h"
 
 void ble_nus_c_on_db_disc_evt(ble_nus_c_t * p_ble_nus_c, ble_db_discovery_evt_t * p_evt)
 {
@@ -36,13 +70,13 @@ void ble_nus_c_on_db_disc_evt(ble_nus_c_t * p_ble_nus_c, ble_db_discovery_evt_t 
         {
             switch (p_chars[i].characteristic.uuid.uuid)
             {
-                case BLE_UUID_NUS_TX_CHARACTERISTIC:
-                    nus_c_evt.handles.nus_tx_handle = p_chars[i].characteristic.handle_value;
-                    break;
-
                 case BLE_UUID_NUS_RX_CHARACTERISTIC:
                     nus_c_evt.handles.nus_rx_handle = p_chars[i].characteristic.handle_value;
-                    nus_c_evt.handles.nus_rx_cccd_handle = p_chars[i].cccd_handle;
+                    break;
+
+                case BLE_UUID_NUS_TX_CHARACTERISTIC:
+                    nus_c_evt.handles.nus_tx_handle = p_chars[i].characteristic.handle_value;
+                    nus_c_evt.handles.nus_tx_cccd_handle = p_chars[i].cccd_handle;
                     break;
 
                 default:
@@ -61,7 +95,7 @@ void ble_nus_c_on_db_disc_evt(ble_nus_c_t * p_ble_nus_c, ble_db_discovery_evt_t 
 /**@brief     Function for handling Handle Value Notification received from the SoftDevice.
  *
  * @details   This function will uses the Handle Value Notification received from the SoftDevice
- *            and checks if it is a notification of the NUS RX characteristic from the peer. If
+ *            and checks if it is a notification of the NUS TX characteristic from the peer. If
  *            it is, this function will decode the data and send it to the
  *            application.
  *
@@ -71,18 +105,19 @@ void ble_nus_c_on_db_disc_evt(ble_nus_c_t * p_ble_nus_c, ble_db_discovery_evt_t 
 static void on_hvx(ble_nus_c_t * p_ble_nus_c, const ble_evt_t * p_ble_evt)
 {
     // HVX can only occur from client sending.
-    if ( (p_ble_nus_c->handles.nus_rx_handle != BLE_GATT_HANDLE_INVALID)
-            && (p_ble_evt->evt.gattc_evt.params.hvx.handle == p_ble_nus_c->handles.nus_rx_handle)
+    if ((p_ble_nus_c->handles.nus_tx_handle != BLE_GATT_HANDLE_INVALID)
+            && (p_ble_evt->evt.gattc_evt.params.hvx.handle == p_ble_nus_c->handles.nus_tx_handle)
             && (p_ble_nus_c->evt_handler != NULL)
-        )
+       )
     {
         ble_nus_c_evt_t ble_nus_c_evt;
 
-        ble_nus_c_evt.evt_type = BLE_NUS_C_EVT_NUS_RX_EVT;
+        ble_nus_c_evt.evt_type = BLE_NUS_C_EVT_NUS_TX_EVT;
         ble_nus_c_evt.p_data   = (uint8_t *)p_ble_evt->evt.gattc_evt.params.hvx.data;
         ble_nus_c_evt.data_len = p_ble_evt->evt.gattc_evt.params.hvx.len;
 
         p_ble_nus_c->evt_handler(p_ble_nus_c, &ble_nus_c_evt);
+        NRF_LOG_DEBUG("Client sending data.\r\n");
     }
 }
 
@@ -103,8 +138,8 @@ uint32_t ble_nus_c_init(ble_nus_c_t * p_ble_nus_c, ble_nus_c_init_t * p_ble_nus_
 
     p_ble_nus_c->conn_handle           = BLE_CONN_HANDLE_INVALID;
     p_ble_nus_c->evt_handler           = p_ble_nus_c_init->evt_handler;
-    p_ble_nus_c->handles.nus_rx_handle = BLE_GATT_HANDLE_INVALID;
     p_ble_nus_c->handles.nus_tx_handle = BLE_GATT_HANDLE_INVALID;
+    p_ble_nus_c->handles.nus_rx_handle = BLE_GATT_HANDLE_INVALID;
 
     return ble_db_discovery_evt_register(&uart_uuid);
 }
@@ -141,6 +176,10 @@ void ble_nus_c_on_ble_evt(ble_nus_c_t * p_ble_nus_c, const ble_evt_t * p_ble_evt
                 p_ble_nus_c->evt_handler(p_ble_nus_c, &nus_c_evt);
             }
             break;
+
+        default:
+            // No implementation needed.
+            break;
     }
 }
 
@@ -165,17 +204,17 @@ static uint32_t cccd_configure(uint16_t conn_handle, uint16_t cccd_handle, bool 
     return sd_ble_gattc_write(conn_handle, &write_params);
 }
 
-uint32_t ble_nus_c_rx_notif_enable(ble_nus_c_t * p_ble_nus_c)
+uint32_t ble_nus_c_tx_notif_enable(ble_nus_c_t * p_ble_nus_c)
 {
     VERIFY_PARAM_NOT_NULL(p_ble_nus_c);
 
     if ( (p_ble_nus_c->conn_handle == BLE_CONN_HANDLE_INVALID)
-       ||(p_ble_nus_c->handles.nus_rx_cccd_handle == BLE_GATT_HANDLE_INVALID)
+       ||(p_ble_nus_c->handles.nus_tx_cccd_handle == BLE_GATT_HANDLE_INVALID)
        )
     {
         return NRF_ERROR_INVALID_STATE;
     }
-    return cccd_configure(p_ble_nus_c->conn_handle,p_ble_nus_c->handles.nus_rx_cccd_handle, true);
+    return cccd_configure(p_ble_nus_c->conn_handle,p_ble_nus_c->handles.nus_tx_cccd_handle, true);
 }
 
 uint32_t ble_nus_c_string_send(ble_nus_c_t * p_ble_nus_c, uint8_t * p_string, uint16_t length)
@@ -184,17 +223,19 @@ uint32_t ble_nus_c_string_send(ble_nus_c_t * p_ble_nus_c, uint8_t * p_string, ui
 
     if (length > BLE_NUS_MAX_DATA_LEN)
     {
+        NRF_LOG_WARNING("Content too long.\r\n");
         return NRF_ERROR_INVALID_PARAM;
     }
-    if ( p_ble_nus_c->conn_handle == BLE_CONN_HANDLE_INVALID)
+    if (p_ble_nus_c->conn_handle == BLE_CONN_HANDLE_INVALID)
     {
+        NRF_LOG_WARNING("Connection handle invalid.\r\n");
         return NRF_ERROR_INVALID_STATE;
     }
 
-    const ble_gattc_write_params_t write_params = {
+    ble_gattc_write_params_t const write_params = {
         .write_op = BLE_GATT_OP_WRITE_CMD,
         .flags    = BLE_GATT_EXEC_WRITE_FLAG_PREPARED_WRITE,
-        .handle   = p_ble_nus_c->handles.nus_tx_handle,
+        .handle   = p_ble_nus_c->handles.nus_rx_handle,
         .offset   = 0,
         .len      = length,
         .p_value  = p_string
@@ -213,9 +254,9 @@ uint32_t ble_nus_c_handles_assign(ble_nus_c_t * p_ble_nus,
     p_ble_nus->conn_handle = conn_handle;
     if (p_peer_handles != NULL)
     {
-        p_ble_nus->handles.nus_rx_cccd_handle = p_peer_handles->nus_rx_cccd_handle;
-        p_ble_nus->handles.nus_rx_handle      = p_peer_handles->nus_rx_handle;
+        p_ble_nus->handles.nus_tx_cccd_handle = p_peer_handles->nus_tx_cccd_handle;
         p_ble_nus->handles.nus_tx_handle      = p_peer_handles->nus_tx_handle;
+        p_ble_nus->handles.nus_rx_handle      = p_peer_handles->nus_rx_handle;
     }
     return NRF_SUCCESS;
 }

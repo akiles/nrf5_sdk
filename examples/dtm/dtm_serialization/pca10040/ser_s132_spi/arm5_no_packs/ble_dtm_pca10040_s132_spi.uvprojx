@@ -12,7 +12,7 @@
       <TargetOption>
         <TargetCommonOption>          <Device>nRF52832_xxAA</Device>
           <Vendor>Nordic Semiconductor</Vendor>
-          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.11.1</PackID>
+          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.12.0</PackID>
           <PackURL>http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/</PackURL>          <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x10000) CPUTYPE("Cortex-M4") FPU2 CLOCK(64000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -361,10 +361,10 @@
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
             <VariousControls>
-              <MiscControls></MiscControls>
-              <Define> SPI_MASTER_0_ENABLE BLE_STACK_SUPPORT_REQD SWI_DISABLE3 S132 NRF_SD_BLE_API_VERSION=5 SVCALL_AS_NORMAL_FUNCTION NRF52_PAN_58 NRF52_PAN_64 BOARD_PCA10040 NRF52_PAN_12 NRF52_PAN_15 NRF52_PAN_20 NRF52_PAN_31 NRF52_PAN_36 NRF52_PAN_51 NRF52_PAN_54 CONFIG_GPIO_AS_PINRESET NRF52_PAN_55 NRF52832 NRF52 SWI_DISABLE0</Define>
+              <MiscControls>--reduce_paths</MiscControls>
+              <Define> BLE_STACK_SUPPORT_REQD BOARD_PCA10040 CONFIG_GPIO_AS_PINRESET NRF52 NRF52832_XXAA NRF52_PAN_12 NRF52_PAN_15 NRF52_PAN_20 NRF52_PAN_31 NRF52_PAN_36 NRF52_PAN_51 NRF52_PAN_54 NRF52_PAN_55 NRF52_PAN_58 NRF52_PAN_64 NRF52_PAN_74 NRF_SD_BLE_API_VERSION=4 S132 SPI_MASTER_0_ENABLE SVCALL_AS_NORMAL_FUNCTION SWI_DISABLE0 SWI_DISABLE3</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ble\common;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\spi_master;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\uart;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\serialization\application\codecs\common;..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers;..\..\..\..\..\..\components\serialization\application\hal;..\..\..\..\..\..\components\serialization\application\transport;..\..\..\..\..\..\components\serialization\common;..\..\..\..\..\..\components\serialization\common\struct_ser\s132_s140;..\..\..\..\..\..\components\serialization\common\transport;..\..\..\..\..\..\components\serialization\common\transport\ser_phy;..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config;..\..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\..\components\softdevice\s132\headers;..\..\..\..\..\..\components\softdevice\s132\headers\nrf52;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ble\common;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\spi_master;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\uart;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers;..\..\..\..\..\..\components\serialization\application\codecs\common;..\..\..\..\..\..\components\serialization\application\hal;..\..\..\..\..\..\components\serialization\application\transport;..\..\..\..\..\..\components\serialization\common;..\..\..\..\..\..\components\serialization\common\struct_ser\ble;..\..\..\..\..\..\components\serialization\common\transport;..\..\..\..\..\..\components\serialization\common\transport\ser_phy;..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config;..\..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\..\components\softdevice\s132\headers;..\..\..\..\..\..\components\softdevice\s132\headers\nrf52;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -378,10 +378,10 @@
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DSPI_MASTER_0_ENABLE,-DBLE_STACK_SUPPORT_REQD,-DSWI_DISABLE3,-DS132,-DNRF_SD_BLE_API_VERSION=5,-DSVCALL_AS_NORMAL_FUNCTION,-DNRF52_PAN_58,-DNRF52_PAN_64,-DBOARD_PCA10040,-DNRF52_PAN_12,-DNRF52_PAN_15,-DNRF52_PAN_20,-DNRF52_PAN_31,-DNRF52_PAN_36,-DNRF52_PAN_51,-DNRF52_PAN_54,-DCONFIG_GPIO_AS_PINRESET,-DNRF52_PAN_55,-DNRF52832,-DNRF52,-DSWI_DISABLE0</MiscControls>
-              <Define> SPI_MASTER_0_ENABLE BLE_STACK_SUPPORT_REQD SWI_DISABLE3 S132 NRF_SD_BLE_API_VERSION=5 SVCALL_AS_NORMAL_FUNCTION NRF52_PAN_58 NRF52_PAN_64 BOARD_PCA10040 NRF52_PAN_12 NRF52_PAN_15 NRF52_PAN_20 NRF52_PAN_31 NRF52_PAN_36 NRF52_PAN_51 NRF52_PAN_54 CONFIG_GPIO_AS_PINRESET NRF52_PAN_55 NRF52832 NRF52 SWI_DISABLE0</Define>
+              <MiscControls> --cpreproc_opts=-DBLE_STACK_SUPPORT_REQD,-DBOARD_PCA10040,-DCONFIG_GPIO_AS_PINRESET,-DNRF52,-DNRF52832_XXAA,-DNRF52_PAN_12,-DNRF52_PAN_15,-DNRF52_PAN_20,-DNRF52_PAN_31,-DNRF52_PAN_36,-DNRF52_PAN_51,-DNRF52_PAN_54,-DNRF52_PAN_55,-DNRF52_PAN_58,-DNRF52_PAN_64,-DNRF52_PAN_74,-DNRF_SD_BLE_API_VERSION=4,-DS132,-DSPI_MASTER_0_ENABLE,-DSVCALL_AS_NORMAL_FUNCTION,-DSWI_DISABLE0,-DSWI_DISABLE3</MiscControls>
+              <Define> BLE_STACK_SUPPORT_REQD BOARD_PCA10040 CONFIG_GPIO_AS_PINRESET NRF52 NRF52832_XXAA NRF52_PAN_12 NRF52_PAN_15 NRF52_PAN_20 NRF52_PAN_31 NRF52_PAN_36 NRF52_PAN_51 NRF52_PAN_54 NRF52_PAN_55 NRF52_PAN_58 NRF52_PAN_64 NRF52_PAN_74 NRF_SD_BLE_API_VERSION=4 S132 SPI_MASTER_0_ENABLE SVCALL_AS_NORMAL_FUNCTION SWI_DISABLE0 SWI_DISABLE3</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ble\common;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\spi_master;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\uart;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\serialization\application\codecs\common;..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers;..\..\..\..\..\..\components\serialization\application\hal;..\..\..\..\..\..\components\serialization\application\transport;..\..\..\..\..\..\components\serialization\common;..\..\..\..\..\..\components\serialization\common\struct_ser\s132_s140;..\..\..\..\..\..\components\serialization\common\transport;..\..\..\..\..\..\components\serialization\common\transport\ser_phy;..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config;..\..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\..\components\softdevice\s132\headers;..\..\..\..\..\..\components\softdevice\s132\headers\nrf52;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ble\common;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\spi_master;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\uart;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers;..\..\..\..\..\..\components\serialization\application\codecs\common;..\..\..\..\..\..\components\serialization\application\hal;..\..\..\..\..\..\components\serialization\application\transport;..\..\..\..\..\..\components\serialization\common;..\..\..\..\..\..\components\serialization\common\struct_ser\ble;..\..\..\..\..\..\components\serialization\common\transport;..\..\..\..\..\..\components\serialization\common\transport\ser_phy;..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config;..\..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\..\components\softdevice\s132\headers;..\..\..\..\..\..\components\softdevice\s132\headers\nrf52;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -397,7 +397,7 @@
             <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc></Misc>
+            <Misc>--diag_suppress 6330</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -427,12 +427,6 @@
               <FileName>bsp_nfc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\bsp\bsp_nfc.c</FilePath>            </File>          </Files>
-        </Group>        <Group>
-          <GroupName>Documentation</GroupName>
-          <Files>            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\license.txt</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_BLE</GroupName>
           <Files>            <File>
@@ -502,9 +496,9 @@
               <FileName>nrf_queue.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\queue\nrf_queue.c</FilePath>            </File>            <File>
-              <FileName>sdk_errors.c</FileName>
+              <FileName>nrf_strerror.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\util\sdk_errors.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Log</GroupName>
           <Files>            <File>
@@ -531,31 +525,31 @@
           <Files>            <File>
               <FileName>app_ble_gap_sec_keys.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\app_ble_gap_sec_keys.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\app_ble_gap_sec_keys.c</FilePath>            </File>            <File>
               <FileName>app_ble_user_mem.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\app_ble_user_mem.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\app_ble_user_mem.c</FilePath>            </File>            <File>
               <FileName>app_mw_ble.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\middleware\app_mw_ble.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\middleware\app_mw_ble.c</FilePath>            </File>            <File>
               <FileName>app_mw_ble_gap.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\middleware\app_mw_ble_gap.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\middleware\app_mw_ble_gap.c</FilePath>            </File>            <File>
               <FileName>app_mw_ble_gattc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\middleware\app_mw_ble_gattc.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\middleware\app_mw_ble_gattc.c</FilePath>            </File>            <File>
               <FileName>app_mw_ble_gatts.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\middleware\app_mw_ble_gatts.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\middleware\app_mw_ble_gatts.c</FilePath>            </File>            <File>
               <FileName>app_mw_ble_l2cap.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\middleware\app_mw_ble_l2cap.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\middleware\app_mw_ble_l2cap.c</FilePath>            </File>            <File>
               <FileName>app_mw_nrf_soc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\middleware\app_mw_nrf_soc.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\middleware\app_mw_nrf_soc.c</FilePath>            </File>            <File>
               <FileName>ble_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\ble_app.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\ble_app.c</FilePath>            </File>            <File>
               <FileName>ble_dtm_app.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\common\ble_dtm_app.c</FilePath>            </File>            <File>
@@ -564,61 +558,61 @@
               <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\common\ble_dtm_init.c</FilePath>            </File>            <File>
               <FileName>ble_event.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\ble_event.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\ble_event.c</FilePath>            </File>            <File>
               <FileName>ble_evt_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\ble_evt_app.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\ble_evt_app.c</FilePath>            </File>            <File>
               <FileName>ble_gap_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\ble_gap_app.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\ble_gap_app.c</FilePath>            </File>            <File>
               <FileName>ble_gap_evt_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\ble_gap_evt_app.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\ble_gap_evt_app.c</FilePath>            </File>            <File>
               <FileName>ble_gap_struct_serialization.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\common\struct_ser\s132_s140\ble_gap_struct_serialization.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\common\struct_ser\ble\ble_gap_struct_serialization.c</FilePath>            </File>            <File>
               <FileName>ble_gatt_struct_serialization.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\common\struct_ser\s132_s140\ble_gatt_struct_serialization.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\common\struct_ser\ble\ble_gatt_struct_serialization.c</FilePath>            </File>            <File>
               <FileName>ble_gattc_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\ble_gattc_app.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\ble_gattc_app.c</FilePath>            </File>            <File>
               <FileName>ble_gattc_evt_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\ble_gattc_evt_app.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\ble_gattc_evt_app.c</FilePath>            </File>            <File>
               <FileName>ble_gattc_struct_serialization.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\common\struct_ser\s132_s140\ble_gattc_struct_serialization.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\common\struct_ser\ble\ble_gattc_struct_serialization.c</FilePath>            </File>            <File>
               <FileName>ble_gatts_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\ble_gatts_app.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\ble_gatts_app.c</FilePath>            </File>            <File>
               <FileName>ble_gatts_evt_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\ble_gatts_evt_app.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\ble_gatts_evt_app.c</FilePath>            </File>            <File>
               <FileName>ble_gatts_struct_serialization.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\common\struct_ser\s132_s140\ble_gatts_struct_serialization.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\common\struct_ser\ble\ble_gatts_struct_serialization.c</FilePath>            </File>            <File>
               <FileName>ble_l2cap_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\ble_l2cap_app.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\ble_l2cap_app.c</FilePath>            </File>            <File>
               <FileName>ble_l2cap_evt_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\ble_l2cap_evt_app.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\ble_l2cap_evt_app.c</FilePath>            </File>            <File>
               <FileName>ble_serialization.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\serialization\common\ble_serialization.c</FilePath>            </File>            <File>
               <FileName>ble_struct_serialization.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\common\struct_ser\s132_s140\ble_struct_serialization.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\common\struct_ser\ble\ble_struct_serialization.c</FilePath>            </File>            <File>
               <FileName>cond_field_serialization.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\serialization\common\cond_field_serialization.c</FilePath>            </File>            <File>
               <FileName>nrf_soc_app.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\s132_s140\serializers\nrf_soc_app.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\application\codecs\ble\serializers\nrf_soc_app.c</FilePath>            </File>            <File>
               <FileName>nrf_soc_struct_serialization.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\serialization\common\struct_ser\s132_s140\nrf_soc_struct_serialization.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\serialization\common\struct_ser\ble\nrf_soc_struct_serialization.c</FilePath>            </File>            <File>
               <FileName>ser_app_hal_nrf5x.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\serialization\application\hal\ser_app_hal_nrf5x.c</FilePath>            </File>            <File>
@@ -654,7 +648,7 @@
     </filter>    <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0">
       <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>      </targetInfos>
     </package>
-    <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.11.1">
+    <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.12.0">
       <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>      </targetInfos>
     </package>  </packages>
   <apis/>
@@ -662,8 +656,8 @@
       <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
       <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>      </targetInfos>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="8.11.1" condition="nRF5x Series CMSIS Device">
-      <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.11.1"/>
+    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="8.12.0" condition="nRF5x Series CMSIS Device">
+      <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.12.0"/>
       <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>      </targetInfos>
     </component>  </components>
   <files>  </files>

@@ -1,14 +1,42 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /* Disclaimer: This client implementation of the Apple Notification Center Service can and will be changed at any time by Nordic Semiconductor ASA.
  * Server implementations such as the ones found in iOS can be changed at any time by Apple and may cause this client implementation to stop working.
  */
@@ -23,11 +51,8 @@
 #define GATTC_OPCODE_SIZE                1      /**< Size of the GATTC OPCODE. */
 #define GATTC_ATTR_HANDLE_SIZE           4      /**< Size of the Attribute handle Size. */
 
-#if (NRF_SD_BLE_API_VERSION <= 3)
-    #define ANCS_GATTC_WRITE_PAYLOAD_LEN_MAX (GATT_MTU_SIZE_DEFAULT - GATTC_OPCODE_SIZE - GATTC_ATTR_HANDLE_SIZE)  /**< Maximum Length of the data we can send in one write. */
-#else
-    #define ANCS_GATTC_WRITE_PAYLOAD_LEN_MAX (BLE_GATT_MTU_SIZE_DEFAULT - GATTC_OPCODE_SIZE - GATTC_ATTR_HANDLE_SIZE)  /**< Maximum Length of the data we can send in one write. */
-#endif
+
+#define ANCS_GATTC_WRITE_PAYLOAD_LEN_MAX (BLE_GATT_ATT_MTU_DEFAULT - GATTC_OPCODE_SIZE - GATTC_ATTR_HANDLE_SIZE)  /**< Maximum Length of the data we can send in one write. */
 
 
 /**@brief Enum to keep track of the state based encoding while requesting App attributes. */
@@ -265,11 +290,12 @@ static uint32_t app_attr_get(ble_ancs_c_t  * p_ancs,
     uint32_t          app_id_bytes_encoded_count = 0;
     encode_app_attr_t state                      = APP_ATTR_COMMAND_ID;
     p_ancs->number_of_requested_attr             = 0;
-    uint32_t attr_get_total_nb                   = app_attr_nb_to_get(p_ancs);
-    tx_message_t      p_msg;
-    memset(&p_msg,0,sizeof(tx_message_t));
 
-    NRF_LOG_DEBUG("Attribute Get Started.\r\n");
+    uint32_t     attr_get_total_nb = app_attr_nb_to_get(p_ancs);
+    tx_message_t p_msg;
+
+    memset(&p_msg, 0, sizeof(tx_message_t));
+
     while(state != APP_ATTR_DONE)
     {
         switch(state)

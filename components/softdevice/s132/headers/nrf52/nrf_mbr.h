@@ -41,16 +41,11 @@
 
 */
 
-/* Header guard */
 #ifndef NRF_MBR_H__
 #define NRF_MBR_H__
 
 #include "nrf_svc.h"
 #include <stdint.h>
-
-#ifndef NRF52
-#error "This header file shall only be included for nRF52 projects"
-#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -65,8 +60,8 @@ extern "C" {
 /**@brief Page size in words. */
 #define MBR_PAGE_SIZE_IN_WORDS  (1024)
 
-/** @brief The size that must be reserved for the MBR when a softdevice is written to flash.
-This is the offset where the first byte of the softdevice hex file is written.*/
+/** @brief The size that must be reserved for the MBR when a SoftDevice is written to flash.
+This is the offset where the first byte of the SoftDevice hex file is written.*/
 #define MBR_SIZE                (0x1000)
 
 /** @} */
@@ -83,9 +78,9 @@ enum NRF_MBR_SVCS
 /**@brief Possible values for ::sd_mbr_command_t.command */
 enum NRF_MBR_COMMANDS
 {
-  SD_MBR_COMMAND_COPY_BL,               /**< Copy a new BootLoader. @see sd_mbr_command_copy_bl_t */
+  SD_MBR_COMMAND_COPY_BL,               /**< Copy a new BootLoader. @see sd_mbr_command_copy_bl_t*/
   SD_MBR_COMMAND_COPY_SD,               /**< Copy a new SoftDevice. @see ::sd_mbr_command_copy_sd_t*/
-  SD_MBR_COMMAND_INIT_SD,               /**< Init forwarding interrupts to SD, and run reset function in SD*/
+  SD_MBR_COMMAND_INIT_SD,               /**< Initialize forwarding interrupts to SD, and run reset function in SD*/
   SD_MBR_COMMAND_COMPARE,               /**< This command works like memcmp. @see ::sd_mbr_command_compare_t*/
   SD_MBR_COMMAND_VECTOR_TABLE_BASE_SET, /**< Start forwarding all exception to this address @see ::sd_mbr_command_vector_table_base_set_t*/
 };
@@ -134,12 +129,12 @@ typedef struct
  *
  *  This function will use PROTENSET to protect the flash that is not intended to be written.
  *
- *  On Success, this function will not return. It will start the new BootLoader from reset-vector as normal.
+ *  On success, this function will not return. It will start the new BootLoader from reset-vector as normal.
  *
  * @retval ::NRF_ERROR_INTERNAL indicates an internal error that should not happen.
  * @retval ::NRF_ERROR_FORBIDDEN if NRF_UICR->BOOTADDR is not set.
  * @retval ::NRF_ERROR_INVALID_LENGTH if parameters attempts to read or write outside flash area.
- * @retval ::NRF_ERROR_NO_MEM if no parameter page is provided (see sds for more info)
+ * @retval ::NRF_ERROR_NO_MEM if no parameter page is provided (see SoftDevice Specification for more info)
  */
 typedef struct
 {
@@ -154,11 +149,11 @@ typedef struct
  * To restore default forwarding this function should be called with @param address set to 0.
  * The MBR will then start forwarding to interrupts to the address in NFR_UICR->BOOTADDR or to the SoftDevice if the BOOTADDR is not set.
  *
- * On Success, this function will not return. It will reset the device.
+ * On success, this function will not return. It will reset the device.
  *
  * @retval ::NRF_ERROR_INTERNAL indicates an internal error that should not happen.
  * @retval ::NRF_ERROR_INVALID_ADDR if parameter address is outside of the flash size.
- * @retval ::NRF_ERROR_NO_MEM if no parameter page is provided (see sds for more info)
+ * @retval ::NRF_ERROR_NO_MEM if no parameter page is provided (see SoftDevice Specification for more info)
  */
 typedef struct
 {
@@ -189,7 +184,7 @@ typedef struct
  *
  * The SD_MBR_COMMAND_COPY_BL and SD_MBR_COMMAND_VECTOR_TABLE_BASE_SET requires parameters to be
  * retained by the MBR when resetting the IC. This is done in a separate flash page
- * provided by the application. The uicr register UICR.NRFFW[1] must be set
+ * provided by the application. The UICR register UICR.NRFFW[1] must be set
  * to an address corresponding to a page in the application flash space. This page will be cleared
  * by the MBR and used to store the command before reset. When the UICR.NRFFW[1] field is set
  * the page it refers to must not be used by the application. If the UICR.NRFFW[1] is set to
@@ -198,7 +193,7 @@ typedef struct
  *
  * @param[in]  param Pointer to a struct describing the command.
  *
- * @note for retvals see ::sd_mbr_command_copy_sd_t ::sd_mbr_command_copy_bl_t ::sd_mbr_command_compare_t ::sd_mbr_command_vector_table_base_set_t
+ * @note For return values, see ::sd_mbr_command_copy_sd_t ::sd_mbr_command_copy_bl_t ::sd_mbr_command_compare_t ::sd_mbr_command_vector_table_base_set_t
  *
  * @retval NRF_ERROR_NO_MEM if UICR.NRFFW[1] is not set (i.e. is 0xFFFFFFFF).
  * @retval NRF_ERROR_INVALID_PARAM if an invalid command is given.

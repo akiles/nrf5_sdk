@@ -1,14 +1,43 @@
-/* Copyright (c) Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
+
 #include "sdk_config.h"
 #if APP_USBD_ENABLED
 #include "app_usbd_core.h"
@@ -95,32 +124,26 @@
 }
 
 /**
- * @brief USB descriptors
+ * @brief Device descriptor instance.
+ *
+ * @note
+ * Constant part of the device descriptor.
+ * Values that must be calculated are updated directly in the buffer
+ * just before the transmission.
  */
-typedef struct {
-    app_usbd_descriptor_device_t                device;
-    app_usbd_descriptor_configuration_t * const configuration;
-} app_usbd_core_descriptors_t;
+static const app_usbd_descriptor_device_t m_device_dsc =
+    APP_USBD_CORE_DEVICE_DESCRIPTOR;
 
 /**
  * @brief Configuration descriptor instance.
  *
- * Not const: some values must be calculated dynamically
+ * @note
+ * Constant part of the device descriptor.
+ * Values that must be calculated are updated directly in the buffer
+ * just before the transmission.
  */
-static app_usbd_descriptor_configuration_t m_configuration_dsc =
+static const app_usbd_descriptor_configuration_t m_configuration_dsc =
     APP_USBD_CORE_CONFIGURATION_DESCRIPTOR;
-
-/**
- * @brief Core descriptors
- *
- * Descriptors: device, configuration, strings
- *
- */
-static const app_usbd_core_descriptors_t m_descriptors = {
-        .device = APP_USBD_CORE_DEVICE_DESCRIPTOR,
-        .configuration = &m_configuration_dsc,
-};
-
 
 /* Required early declaration of event handler function */
 static ret_code_t app_usbd_core_event_handler(app_usbd_class_inst_t const * const  p_inst,
@@ -267,52 +290,14 @@ static ret_code_t setup_data_handler_empty(nrf_drv_usbd_ep_status_t status, void
 }
 
 /**
- * @brief 
+ * @brief
  *
  * @todo RK Documentation
  */
-static const app_usbd_core_setup_data_handler_desc_t m_setup_data_handler_empty_desc =
+static app_usbd_core_setup_data_handler_desc_t const m_setup_data_handler_empty_desc =
 {
     .handler = setup_data_handler_empty,
     .p_context = NULL
-};
-
-/**
- * @brief Special feeder to generate ZLP
- *
- * This feeder includes ZLP on the end of the transfer if required.
- * The context should be a pointer to the boolean value: true if it ZLP is required,
- * false if not.
- */
-static bool app_usbd_core_zlp_feeder(nrf_drv_usbd_transfer_t * p_next, void * p_context)
-{
-    bool * p_generate = p_context;
-    if(*p_generate)
-    {
-        p_next->p_data.tx = NULL;
-        p_next->size      = 0;
-        *p_generate = false;
-        return true;
-    }
-    return false;
-}
-
-/**
- * @todo RK Documentation
- *
- * @note This variable is used only for ZLP generation in SETUP response
- */
-static bool m_setup_zlp_required;
-
-/**
- * @todo RK Documentation
- *
- * @note This variable is used only for ZLP generation in SETUP response
- */
-static const nrf_drv_usbd_transfer_handler_desc_t m_setup_zlp_desc =
-{
-    .handler = app_usbd_core_zlp_feeder,
-    .p_context = &m_setup_zlp_required
 };
 
 /**
@@ -323,7 +308,7 @@ static const nrf_drv_usbd_transfer_handler_desc_t m_setup_zlp_desc =
  */
 typedef struct
 {
-    app_usbd_class_inst_t const * p_cinst; //!< The class instance that is currently processed
+    app_usbd_class_inst_t const * p_cinst; //!< The class instance that is to be processed next.
     const uint8_t * p_desc;                //!< Pointer at current descriptor or NULL if finished.
                                            /**<
                                             * If we get NULL on transfer function enter it means that ZLP is required.
@@ -331,19 +316,6 @@ typedef struct
                                             */
     size_t desc_left;                      //!< Number of bytes left in the current class descriptor to send
     size_t total_left;                     //!< Number of bytes left that was requested by the host
-    uint8_t * p_trans_buff;                //!< Currently used transfer buffer
-                                           /**<
-                                            * This member is used only when function is called first time,
-                                            * from function that prepares first transfer.
-                                            * If the buffer was partially filled the @c max_size member would contain
-                                            * number of bytes left to fill.
-                                            *
-                                            * This member is automatically cleared inside @ref usbd_descriptor_feeder.
-                                            */
-    size_t max_size;                       //!< Size in the buffer left.
-                                           /**
-                                            * Valid only if @c p_trans_buff is not NULL.
-                                            */
 } app_usbd_core_descriptor_conf_feed_data_t;
 
 /**
@@ -362,90 +334,89 @@ static app_usbd_core_descriptor_conf_feed_data_t m_descriptor_conf_feed_data;
  *
  * @param p_next    See @ref nrf_drv_usbd_next_transfer_handler_t documentation.
  * @param p_context Pointer to @ref app_usbd_core_descriptor_feed_data_t data type.
+ * @param ep_size   The size of the endpoint.
  *
  * @return See @ref nrf_drv_usbd_next_transfer_handler_t documentation.
  */
-static bool usbd_descriptor_conf_feeder(nrf_drv_usbd_transfer_t * p_next, void * p_context)
+static bool usbd_descriptor_conf_feeder(
+    nrf_drv_usbd_ep_transfer_t * p_next,
+    void * p_context,
+    size_t ep_size)
 {
+    bool continue_req = true;
+
     app_usbd_core_descriptor_conf_feed_data_t * p_data = p_context;
-    if (NULL == p_data->p_cinst)
+    if (NULL == p_data->p_desc)
     {
-        if (0 != p_data->total_left)
-        {
-            p_data->total_left = 0;
-            /* ZLP request */
-            p_next->p_data.tx = NULL;
-            p_next->size   = 0;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        /* ZLP */
+        continue_req      = false;
+        p_next->p_data.tx = NULL;
+        p_next->size      = 0;
     }
     else
     {
-        size_t max_size; /* Buffer size */
-        uint8_t * p_trans_buff;
+        ASSERT(ep_size <= NRF_DRV_USBD_FEEDER_BUFFER_SIZE);
+        uint8_t * p_tx_buff   = nrf_drv_usbd_feeder_buffer_get();
         size_t size = 0; /* Currently added number of bytes */
-        size_t tx_size;  /* Number of bytes aviable for current transfer */
+        size_t tx_size;  /* Number of bytes to send right now */
 
-        if (NULL == p_data->p_trans_buff)
-        {
-            p_trans_buff = app_usbd_core_setup_transfer_buff_get(&max_size);
-        }
-        else
-        {
-            p_trans_buff         = p_data->p_trans_buff;
-            max_size             = p_data->max_size;
-            p_data->p_trans_buff = NULL;
-        }
+        /* Feeder function can use the USBD driver internal buffer */
+        p_tx_buff = nrf_drv_usbd_feeder_buffer_get();
 
-        tx_size = MIN(max_size, p_data->total_left);
+        tx_size = MIN(ep_size, p_data->total_left);
         while (0 != tx_size)
         {
             /* Process transfer */
             if (0 < p_data->desc_left)
             {
                 size_t to_copy = MIN(tx_size, p_data->desc_left);
-                memcpy(p_trans_buff+size, p_data->p_desc, to_copy);
+                memcpy(p_tx_buff+size, p_data->p_desc, to_copy);
                 p_data->desc_left  -= to_copy;
                 p_data->total_left -= to_copy;
                 tx_size            -= to_copy;
                 size               += to_copy;
                 p_data->p_desc     += to_copy;
             }
-            if (0 == p_data->desc_left)
+
+            if (0 == p_data->total_left)
             {
-                /* Get next descriptor */
-                p_data->p_cinst = app_usbd_class_next_get(p_data->p_cinst);
+                continue_req = false;
+            }
+            else if (0 == p_data->desc_left)
+            {
                 if (NULL == p_data->p_cinst)
                 {
+                    p_data->p_desc = NULL;
                     /* No more data - check if ZLP is required */
                     if (size > 0)
                     {
-                        if (0 != (size % nrf_drv_usbd_ep_max_packet_size_get(NRF_DRV_USBD_EPIN0)))
+                        if (size < ep_size)
                         {
-                            /* No ZLP required */
-                            p_data->total_left = 0;
+                            continue_req = false;
                         }
                     }
-
                     break;
                 }
                 else
                 {
                     /* Prepare next descriptor */
                     p_data->p_desc =
-                            p_data->p_cinst->p_class_methods->get_descriptors(p_data->p_cinst,
-                                                                              &p_data->desc_left);
+                        p_data->p_cinst->p_class_methods->get_descriptors(
+                            p_data->p_cinst,
+                            &p_data->desc_left);
+                    /* Get next descriptor */
+                    p_data->p_cinst = app_usbd_class_next_get(p_data->p_cinst);
                 }
             }
+            else
+            {
+                /* Nothing to do */
+            }
         }
-        p_next->p_data.tx = p_trans_buff;
+        p_next->p_data.tx = p_tx_buff;
         p_next->size      = size;
-        return true;
     }
+    return continue_req;
 }
 
 /**
@@ -453,9 +424,9 @@ static bool usbd_descriptor_conf_feeder(nrf_drv_usbd_transfer_t * p_next, void *
  *
  * @todo RK Documentation
  */
-static const nrf_drv_usbd_transfer_handler_desc_t usbd_descriptor_feeder_desc =
+static const nrf_drv_usbd_handler_desc_t usbd_descriptor_feeder_desc =
 {
-    .handler = usbd_descriptor_conf_feeder,
+    .handler = { .feeder = usbd_descriptor_conf_feeder },
     .p_context = &m_descriptor_conf_feed_data
 };
 
@@ -467,7 +438,7 @@ static ret_code_t setup_req_get_status(app_usbd_class_inst_t const * const p_ins
     ASSERT(sizeof(uint16_t) <= max_size);
 
     memset(p_trans_buff, 0, sizeof(uint16_t));
-    if (m_descriptors.configuration->bmAttributes &
+    if (m_configuration_dsc.bmAttributes &
         APP_USBD_DESCRIPTOR_CONFIGURATION_ATTRIBUTE_SELF_POWERED_MASK)
     {
         SET_BIT(p_trans_buff[0], 0);
@@ -487,13 +458,16 @@ static ret_code_t setup_req_get_descriptor(app_usbd_class_inst_t const * const p
         case APP_USBD_DESCRIPTOR_DEVICE:
         {
             return app_usbd_core_setup_rsp(&(p_setup_ev->setup),
-                                           &m_descriptors.device,
-                                           sizeof(m_descriptors.device));
+                                           &m_device_dsc,
+                                           sizeof(m_device_dsc));
         }
         case APP_USBD_DESCRIPTOR_CONFIGURATION:
         {
             /* The size equals the size of configuration descriptor and all classes descriptors */
-            size_t size = sizeof(app_usbd_descriptor_configuration_t);
+            const size_t size = MIN(
+                sizeof(app_usbd_descriptor_configuration_t),
+                p_setup_ev->setup.wLength.w);
+            size_t total_length = sizeof(app_usbd_descriptor_configuration_t);
             uint8_t iface_count = 0;
 
             /* Iterate over all registered classes count descriptors and total size */
@@ -506,81 +480,43 @@ static ret_code_t setup_req_get_descriptor(app_usbd_class_inst_t const * const p
                 size_t dsc_size;
                 const void * dsc = p_class->p_class_methods->get_descriptors(p_class, &dsc_size);
                 UNUSED_VARIABLE(dsc);
-                size += dsc_size;
+                total_length += dsc_size;
                 iface_count += app_usbd_class_iface_count_get(p_class);
-            }
-
-            m_descriptors.configuration->bNumInterfaces = iface_count;
-            m_descriptors.configuration->wTotalLength = size;
-
-            if (m_rwu_counter)
-            {
-                m_descriptors.configuration->bmAttributes |=
-                        APP_USBD_DESCRIPTOR_CONFIGURATION_ATTRIBUTE_REMOTE_WAKEUP_MASK;
             }
 
             /* Access transmission buffer */
             size_t max_size;
-            uint8_t * p_trans_buff = app_usbd_core_setup_transfer_buff_get(&max_size);
-            /* Copy updated configuration descriptor */
-            ASSERT(sizeof(m_descriptors.configuration) <= max_size);
-            memcpy(p_trans_buff,
-                   m_descriptors.configuration,
-                   sizeof(app_usbd_descriptor_configuration_t));
+            app_usbd_descriptor_configuration_t * p_trans_buff = app_usbd_core_setup_transfer_buff_get(&max_size);
+            /* Copy the configuration descriptor and update the fields that require it */
+            ASSERT(size <= max_size);
+            memcpy(p_trans_buff, &m_configuration_dsc, size);
 
-            /* Fill the structure that allows iteration through all classes */
-            memset(&m_descriptor_conf_feed_data, 0, sizeof(m_descriptor_conf_feed_data));
-
-            nrf_drv_usbd_transfer_t first_tx;
-            size_t tx_size = MIN(size, p_setup_ev->setup.wLength.w);
-            if (tx_size > sizeof(app_usbd_descriptor_configuration_t))
+            p_trans_buff->bNumInterfaces = iface_count;
+            p_trans_buff->wTotalLength   = total_length;
+            if (m_rwu_counter)
             {
-                p_class = app_usbd_class_first_get();
-                m_descriptor_conf_feed_data.p_cinst = p_class;
-
-                ASSERT(NULL != (p_class->p_class_methods));
-                ASSERT(NULL != (p_class->p_class_methods->get_descriptors));
-
-                m_descriptor_conf_feed_data.p_desc =
-                    p_class->p_class_methods->get_descriptors(
-                        p_class,
-                        &(m_descriptor_conf_feed_data.desc_left));
-
-                size_t dsc_size = sizeof(app_usbd_descriptor_configuration_t);
-
-                m_descriptor_conf_feed_data.total_left   = tx_size      - dsc_size;
-                m_descriptor_conf_feed_data.p_trans_buff = p_trans_buff + dsc_size;
-                m_descriptor_conf_feed_data.max_size     = max_size     - dsc_size;
-
-                bool tx_ready = usbd_descriptor_conf_feeder(&first_tx,
-                                                            &m_descriptor_conf_feed_data);
-                ASSERT(tx_ready);
-                UNUSED_VARIABLE(tx_ready);
-
-                first_tx.p_data.tx = p_trans_buff;
-                first_tx.size     += sizeof(app_usbd_descriptor_configuration_t);
-                ASSERT(first_tx.size <= max_size);
+                p_trans_buff->bmAttributes |=
+                    APP_USBD_DESCRIPTOR_CONFIGURATION_ATTRIBUTE_REMOTE_WAKEUP_MASK;
             }
-            else
-            {
-                m_descriptor_conf_feed_data.p_cinst = NULL;
-                m_descriptor_conf_feed_data.total_left = 0;
 
-                first_tx.p_data.tx = p_trans_buff;
-                first_tx.size      = tx_size;
-            }
+            m_descriptor_conf_feed_data.p_cinst    = app_usbd_class_first_get();
+            m_descriptor_conf_feed_data.p_desc     = (void *)p_trans_buff;
+            m_descriptor_conf_feed_data.desc_left  = size;
+            m_descriptor_conf_feed_data.total_left = p_setup_ev->setup.wLength.w;
 
             /* Start first transfer */
             ret_code_t ret;
             CRITICAL_REGION_ENTER();
-            ret = app_usbd_core_setup_data_transfer(NRF_DRV_USBD_EPIN0,
-                                                    &first_tx,
-                                                    &usbd_descriptor_feeder_desc);
+
+            ret = app_usbd_setup_data_handled_transfer(
+                NRF_DRV_USBD_EPIN0,
+                &usbd_descriptor_feeder_desc);
 
             if (NRF_SUCCESS == ret)
             {
-                ret = app_usbd_core_setup_data_handler_set(NRF_DRV_USBD_EPIN0,
-                                                           &m_setup_data_handler_empty_desc);
+                ret = app_usbd_core_setup_data_handler_set(
+                    NRF_DRV_USBD_EPIN0,
+                    &m_setup_data_handler_empty_desc);
             }
             CRITICAL_REGION_EXIT();
 
@@ -597,9 +533,10 @@ static ret_code_t setup_req_get_descriptor(app_usbd_class_inst_t const * const p
                 return NRF_ERROR_NOT_SUPPORTED;
             }
 
-            return app_usbd_core_setup_rsp(&p_setup_ev->setup,
-                                           p_string_dsc,
-                                           app_usbd_string_desc_length(p_string_dsc));
+            return app_usbd_core_setup_rsp(
+                &p_setup_ev->setup,
+                p_string_dsc,
+                app_usbd_string_desc_length(p_string_dsc));
         }
         default:
             break;
@@ -856,28 +793,46 @@ static inline ret_code_t app_usbd_core_setup_req_handler(app_usbd_class_inst_t c
         {
             /* Endpoint 0 has core instance (that process device requests) connected */
             ret = setup_device_event_handler(p_inst, &setup_ev);
+
+            app_usbd_setup_reqtype_t req_type =
+                    app_usbd_setup_req_typ(setup_ev.setup.bmRequestType);
+            if (ret == NRF_ERROR_NOT_SUPPORTED &&
+                req_type == APP_USBD_SETUP_REQTYPE_VENDOR)
+            {
+                ret = app_usbd_all_until_served_call((app_usbd_complex_evt_t const *)&setup_ev);
+            }
+
             break;
         }
         case APP_USBD_SETUP_REQREC_INTERFACE:
         {
-            ret = app_usbd_iface_call(
-                setup_ev.setup.wIndex.lb,
-                (app_usbd_complex_evt_t const *)&setup_ev);
+            uint8_t iface_number = setup_ev.setup.wIndex.lb;
+            ret = app_usbd_iface_call(iface_number, (app_usbd_complex_evt_t const *)&setup_ev);
+            if (ret == NRF_SUCCESS || ret != NRF_ERROR_NOT_SUPPORTED)
+            {
+                break;
+            }
+
+            ret = app_usbd_interface_std_req_handle(&setup_ev);
             break;
         }
         case APP_USBD_SETUP_REQREC_ENDPOINT:
         {
-            nrf_drv_usbd_ep_t ep = (nrf_drv_usbd_ep_t)setup_ev.setup.wIndex.w;
-            if (ep == NRF_DRV_USBD_EPOUT0)
+            nrf_drv_usbd_ep_t ep = (nrf_drv_usbd_ep_t)setup_ev.setup.wIndex.lb;
+
+            if ((ep == NRF_DRV_USBD_EPOUT0) || (ep == NRF_DRV_USBD_EPIN0))
             {
-                app_usbd_class_inst_t const * const p_core_inst = app_usbd_core_instance_access();
-                ret = app_usbd_endpoint_std_req_handle(p_core_inst, &setup_ev);
+                ret = app_usbd_endpoint_std_req_handle(&setup_ev);
                 break;
             }
 
-            ret = app_usbd_ep_call(
-                (nrf_drv_usbd_ep_t)(setup_ev.setup.wIndex.lb),
-                (app_usbd_complex_evt_t const *)&setup_ev);
+            ret = app_usbd_ep_call(ep, (app_usbd_complex_evt_t const *)&setup_ev);
+            if (ret == NRF_SUCCESS || ret != NRF_ERROR_NOT_SUPPORTED)
+            {
+                break;
+            }
+
+            ret = app_usbd_endpoint_std_req_handle(&setup_ev);
             break;
         }
         case APP_USBD_SETUP_REQREC_OTHER:
@@ -994,7 +949,7 @@ static ret_code_t app_usbd_core_event_handler(app_usbd_class_inst_t const * cons
         /* Data transfer on endpoint 0 */
         case APP_USBD_EVT_DRV_EPTRANSFER:
         {
-            /* This EPTRANSFER event have to be called only for EP0 */
+            /* This EPTRANSFER event has to be called only for EP0 */
             ASSERT((p_event->drv_evt.data.eptransfer.ep == NRF_DRV_USBD_EPOUT0) ||
                    (p_event->drv_evt.data.eptransfer.ep == NRF_DRV_USBD_EPIN0));
             ret = usbd_core_ep0_handler_call_and_clear(p_event->drv_evt.data.eptransfer.status);
@@ -1009,7 +964,12 @@ static ret_code_t app_usbd_core_event_handler(app_usbd_class_inst_t const * cons
                 else
                 {
                     /* Request processed successfully */
-                    nrf_drv_usbd_setup_clear();
+                    /* Clear setup only for a write transfer - for a read transfer,
+                     * it is cleared inside the driver */
+                    if(p_event->drv_evt.data.eptransfer.ep == NRF_DRV_USBD_EPOUT0)
+                    {
+                        nrf_drv_usbd_setup_clear();
+                    }
                 }
             }
             else
@@ -1035,15 +995,16 @@ ret_code_t app_usbd_core_setup_rsp(app_usbd_setup_t const * p_setup,
     bool zlp_required = (size < req_size) &&
                         (0 == (size % nrf_drv_usbd_ep_max_packet_size_get(NRF_DRV_USBD_EPIN0)));
 
-    m_setup_zlp_required = zlp_required;
-
-    NRF_DRV_USBD_TRANSFER_IN(transfer, p_data, tx_size);
+    NRF_DRV_USBD_TRANSFER_IN_FLAGS(
+        transfer,
+        p_data,
+        tx_size,
+        zlp_required ? NRF_DRV_USBD_TRANSFER_ZLP_FLAG : 0);
 
     ret_code_t ret;
     CRITICAL_REGION_ENTER();
     ret = app_usbd_core_setup_data_transfer(NRF_DRV_USBD_EPIN0,
-                                            &transfer,
-                                            &m_setup_zlp_desc);
+                                            &transfer);
     if (NRF_SUCCESS == ret)
     {
         ret = app_usbd_core_setup_data_handler_set(NRF_DRV_USBD_EPIN0,
@@ -1069,20 +1030,18 @@ ret_code_t app_usbd_core_setup_data_handler_set(
 
 ret_code_t app_usbd_core_ep_transfer(
     nrf_drv_usbd_ep_t                                  ep,
-    nrf_drv_usbd_transfer_t              const * const p_transfer,
-    nrf_drv_usbd_transfer_handler_desc_t const * const p_handler)
+    nrf_drv_usbd_transfer_t              const * const p_transfer)
 {
     if (APP_USB_STATE_BASE(app_usbd_state) != APP_USBD_STATE_Configured)
     {
         return NRF_ERROR_INVALID_STATE;
     }
-    return nrf_drv_usbd_ep_transfer(ep, p_transfer, p_handler);
+    return nrf_drv_usbd_ep_transfer(ep, p_transfer);
 }
 
 ret_code_t app_usbd_core_setup_data_transfer(
     nrf_drv_usbd_ep_t                                  ep,
-    nrf_drv_usbd_transfer_t              const * const p_transfer,
-    nrf_drv_usbd_transfer_handler_desc_t const * const p_handler)
+    nrf_drv_usbd_transfer_t              const * const p_transfer)
 {
     ASSERT(0 == NRF_USBD_EP_NR_GET(ep));
 
@@ -1092,7 +1051,33 @@ ret_code_t app_usbd_core_setup_data_transfer(
     {
         return NRF_ERROR_INVALID_STATE;
     }
-    return nrf_drv_usbd_ep_transfer(ep, p_transfer, p_handler);
+    return nrf_drv_usbd_ep_transfer(ep, p_transfer);
+}
+
+ret_code_t app_usbd_ep_handled_transfer(
+    nrf_drv_usbd_ep_t                         ep,
+    nrf_drv_usbd_handler_desc_t const * const p_handler)
+{
+    if (APP_USB_STATE_BASE(app_usbd_state) != APP_USBD_STATE_Configured)
+    {
+        return NRF_ERROR_INVALID_STATE;
+    }
+    return nrf_drv_usbd_ep_handled_transfer(ep, p_handler);
+}
+
+ret_code_t app_usbd_setup_data_handled_transfer(
+    nrf_drv_usbd_ep_t                         ep,
+    nrf_drv_usbd_handler_desc_t const * const p_handler)
+{
+    ASSERT(0 == NRF_USBD_EP_NR_GET(ep));
+
+    if (!((APP_USB_STATE_BASE(app_usbd_state) == APP_USBD_STATE_Configured) ||
+          (APP_USB_STATE_BASE(app_usbd_state) == APP_USBD_STATE_Addressed ) ||
+          (APP_USB_STATE_BASE(app_usbd_state) == APP_USBD_STATE_Default   ) ))
+    {
+        return NRF_ERROR_INVALID_STATE;
+    }
+    return nrf_drv_usbd_ep_handled_transfer(ep, p_handler);
 }
 
 void * app_usbd_core_setup_transfer_buff_get(size_t * p_size)

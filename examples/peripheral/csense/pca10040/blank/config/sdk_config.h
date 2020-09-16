@@ -375,6 +375,119 @@
 #endif //PPI_ENABLED
 // </e>
 
+// <e> SAADC_ENABLED - nrf_drv_saadc - SAADC peripheral driver
+//==========================================================
+#ifndef SAADC_ENABLED
+#define SAADC_ENABLED 1
+#endif
+#if  SAADC_ENABLED
+// <o> SAADC_CONFIG_RESOLUTION  - Resolution
+ 
+// <0=> 8 bit 
+// <1=> 10 bit 
+// <2=> 12 bit 
+// <3=> 14 bit 
+
+#ifndef SAADC_CONFIG_RESOLUTION
+#define SAADC_CONFIG_RESOLUTION 1
+#endif
+
+// <o> SAADC_CONFIG_OVERSAMPLE  - Sample period
+ 
+// <0=> Disabled 
+// <1=> 2x 
+// <2=> 4x 
+// <3=> 8x 
+// <4=> 16x 
+// <5=> 32x 
+// <6=> 64x 
+// <7=> 128x 
+// <8=> 256x 
+
+#ifndef SAADC_CONFIG_OVERSAMPLE
+#define SAADC_CONFIG_OVERSAMPLE 0
+#endif
+
+// <q> SAADC_CONFIG_LP_MODE  - Enabling low power mode
+ 
+
+#ifndef SAADC_CONFIG_LP_MODE
+#define SAADC_CONFIG_LP_MODE 0
+#endif
+
+// <o> SAADC_CONFIG_IRQ_PRIORITY  - Interrupt priority
+ 
+
+// <i> Priorities 0,2 (nRF51) and 0,1,4,5 (nRF52) are reserved for SoftDevice
+// <0=> 0 (highest) 
+// <1=> 1 
+// <2=> 2 
+// <3=> 3 
+// <4=> 4 
+// <5=> 5 
+// <6=> 6 
+// <7=> 7 
+
+#ifndef SAADC_CONFIG_IRQ_PRIORITY
+#define SAADC_CONFIG_IRQ_PRIORITY 7
+#endif
+
+// <e> SAADC_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef SAADC_CONFIG_LOG_ENABLED
+#define SAADC_CONFIG_LOG_ENABLED 0
+#endif
+#if  SAADC_CONFIG_LOG_ENABLED
+// <o> SAADC_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef SAADC_CONFIG_LOG_LEVEL
+#define SAADC_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> SAADC_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef SAADC_CONFIG_INFO_COLOR
+#define SAADC_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> SAADC_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef SAADC_CONFIG_DEBUG_COLOR
+#define SAADC_CONFIG_DEBUG_COLOR 0
+#endif
+
+#endif //SAADC_CONFIG_LOG_ENABLED
+// </e>
+
+#endif //SAADC_ENABLED
+// </e>
+
 // <e> TIMER_ENABLED - nrf_drv_timer - TIMER periperal driver
 //==========================================================
 #ifndef TIMER_ENABLED
@@ -689,12 +802,82 @@
 #define APP_FIFO_ENABLED 1
 #endif
 
+// <e> APP_SCHEDULER_ENABLED - app_scheduler - Events scheduler
+//==========================================================
+#ifndef APP_SCHEDULER_ENABLED
+#define APP_SCHEDULER_ENABLED 1
+#endif
+#if  APP_SCHEDULER_ENABLED
+// <q> APP_SCHEDULER_WITH_PAUSE  - Enabling pause feature
+ 
+
+#ifndef APP_SCHEDULER_WITH_PAUSE
+#define APP_SCHEDULER_WITH_PAUSE 0
+#endif
+
+// <q> APP_SCHEDULER_WITH_PROFILER  - Enabling scheduler profiling
+ 
+
+#ifndef APP_SCHEDULER_WITH_PROFILER
+#define APP_SCHEDULER_WITH_PROFILER 0
+#endif
+
+#endif //APP_SCHEDULER_ENABLED
+// </e>
+
 // <e> APP_TIMER_ENABLED - app_timer - Application timer functionality
 //==========================================================
 #ifndef APP_TIMER_ENABLED
 #define APP_TIMER_ENABLED 1
 #endif
 #if  APP_TIMER_ENABLED
+// <o> APP_TIMER_CONFIG_RTC_FREQUENCY  - Configure RTC prescaler.
+ 
+// <0=> 32768 Hz 
+// <1=> 16384 Hz 
+// <3=> 8192 Hz 
+// <7=> 4096 Hz 
+// <15=> 2048 Hz 
+// <31=> 1024 Hz 
+
+#ifndef APP_TIMER_CONFIG_RTC_FREQUENCY
+#define APP_TIMER_CONFIG_RTC_FREQUENCY 0
+#endif
+
+// <o> APP_TIMER_CONFIG_IRQ_PRIORITY  - Interrupt priority
+ 
+
+// <i> Priorities 0,2 (nRF51) and 0,1,4,5 (nRF52) are reserved for SoftDevice
+// <0=> 0 (highest) 
+// <1=> 1 
+// <2=> 2 
+// <3=> 3 
+// <4=> 4 
+// <5=> 5 
+// <6=> 6 
+// <7=> 7 
+
+#ifndef APP_TIMER_CONFIG_IRQ_PRIORITY
+#define APP_TIMER_CONFIG_IRQ_PRIORITY 7
+#endif
+
+// <o> APP_TIMER_CONFIG_OP_QUEUE_SIZE - Capacity of timer requests queue. 
+// <i> Size of the queue depends on how many timers are used
+// <i> in the system, how often timers are started and overall
+// <i> system latency. If queue size is too small app_timer calls
+// <i> will fail.
+
+#ifndef APP_TIMER_CONFIG_OP_QUEUE_SIZE
+#define APP_TIMER_CONFIG_OP_QUEUE_SIZE 10
+#endif
+
+// <q> APP_TIMER_CONFIG_USE_SCHEDULER  - Enable scheduling app_timer events to app_scheduler
+ 
+
+#ifndef APP_TIMER_CONFIG_USE_SCHEDULER
+#define APP_TIMER_CONFIG_USE_SCHEDULER 0
+#endif
+
 // <q> APP_TIMER_WITH_PROFILER  - Enable app_timer profiling
  
 
@@ -710,6 +893,15 @@
 
 #ifndef APP_TIMER_KEEPS_RTC_ACTIVE
 #define APP_TIMER_KEEPS_RTC_ACTIVE 0
+#endif
+
+// <o> APP_TIMER_CONFIG_SWI_NUMBER  - Configure SWI instance used.
+ 
+// <0=> 0 
+// <1=> 1 
+
+#ifndef APP_TIMER_CONFIG_SWI_NUMBER
+#define APP_TIMER_CONFIG_SWI_NUMBER 0
 #endif
 
 #endif //APP_TIMER_ENABLED
@@ -732,23 +924,23 @@
 #endif //APP_UART_ENABLED
 // </e>
 
-// <e> NRF_CSENSE_ENABLED - nrf_csense - nrf_csense module
+// <e> NRF_CSENSE_ENABLED - nrf_csense - Capacitive sensor module
 //==========================================================
 #ifndef NRF_CSENSE_ENABLED
 #define NRF_CSENSE_ENABLED 1
 #endif
 #if  NRF_CSENSE_ENABLED
-// <o> NRF_CSENSE_PAD_HYSTERESIS - Minimal value of change to decide that pad was touched. 
+// <o> NRF_CSENSE_PAD_HYSTERESIS - Minimum value of change required to determine that a pad was touched. 
 #ifndef NRF_CSENSE_PAD_HYSTERESIS
 #define NRF_CSENSE_PAD_HYSTERESIS 15
 #endif
 
-// <o> NRF_CSENSE_PAD_DEVIATION - Minimal value measured on pad to take its value while calculating step. 
+// <o> NRF_CSENSE_PAD_DEVIATION - Minimum value measured on a pad required to take it into account while calculating the step. 
 #ifndef NRF_CSENSE_PAD_DEVIATION
 #define NRF_CSENSE_PAD_DEVIATION 70
 #endif
 
-// <o> NRF_CSENSE_MIN_PAD_VALUE - Minimum normalized value on pad to take its value into account. 
+// <o> NRF_CSENSE_MIN_PAD_VALUE - Minimum normalized value on a pad required to take its value into account. 
 #ifndef NRF_CSENSE_MIN_PAD_VALUE
 #define NRF_CSENSE_MIN_PAD_VALUE 20
 #endif
@@ -758,46 +950,66 @@
 #define NRF_CSENSE_MAX_PADS_NUMBER 20
 #endif
 
-// <o> NRF_CSENSE_MAX_VALUE - Maximum normalized value got from measurement. 
+// <o> NRF_CSENSE_MAX_VALUE - Maximum normalized value obtained from measurement. 
 #ifndef NRF_CSENSE_MAX_VALUE
 #define NRF_CSENSE_MAX_VALUE 1000
 #endif
 
-// <o> NRF_CSENSE_OUTPUT_PIN - Output pin used by lower module. 
-// <i> This is only used when running on NRF51.
+// <o> NRF_CSENSE_OUTPUT_PIN - Output pin used by the low-level module. 
+// <i> This is used when capacitive sensor does not use COMP.
 
 #ifndef NRF_CSENSE_OUTPUT_PIN
-#define NRF_CSENSE_OUTPUT_PIN 30
+#define NRF_CSENSE_OUTPUT_PIN 26
 #endif
 
 #endif //NRF_CSENSE_ENABLED
 // </e>
 
-// <e> NRF_DRV_CSENSE_ENABLED - nrf_drv_csense - Capacitive sensor module
+// <e> NRF_DRV_CSENSE_ENABLED - nrf_drv_csense - Capacitive sensor low-level module
 //==========================================================
 #ifndef NRF_DRV_CSENSE_ENABLED
 #define NRF_DRV_CSENSE_ENABLED 1
 #endif
 #if  NRF_DRV_CSENSE_ENABLED
-// <o> TIMER0_FOR_CSENSE - First TIMER instance used by the driver (except nRF51) 
+// <e> USE_COMP - Use the comparator to implement the capacitive sensor driver.
+
+// <i> Due to Anomaly 84, COMP I_SOURCE is not functional. It has too high a varation.
+//==========================================================
+#ifndef USE_COMP
+#define USE_COMP 0
+#endif
+#if  USE_COMP
+// <o> TIMER0_FOR_CSENSE - First TIMER instance used by the driver (not used on nRF51). 
 #ifndef TIMER0_FOR_CSENSE
 #define TIMER0_FOR_CSENSE 1
 #endif
 
-// <o> TIMER1_FOR_CSENSE - Second TIMER instance used by the driver (except nRF51) 
+// <o> TIMER1_FOR_CSENSE - Second TIMER instance used by the driver (not used on nRF51). 
 #ifndef TIMER1_FOR_CSENSE
 #define TIMER1_FOR_CSENSE 2
 #endif
 
 // <o> MEASUREMENT_PERIOD - Single measurement period. 
-// <i> Time of single measurement can be calculated as T = (1/2)*MEASUREMENT_PERIOD*(1/f_OSC) where f_OSC = I_SOURCE / (2C*(VUP-VDOWN) ). I_SOURCE, VUP and VDOWN are values used to initialize COMP and C is capacitance of used pad.
+// <i> Time of a single measurement can be calculated as
+// <i> T = (1/2)*MEASUREMENT_PERIOD*(1/f_OSC) where f_OSC = I_SOURCE / (2C*(VUP-VDOWN) ).
+// <i> I_SOURCE, VUP, and VDOWN are values used to initialize COMP and C is the capacitance of the used pad.
 
 #ifndef MEASUREMENT_PERIOD
 #define MEASUREMENT_PERIOD 20
 #endif
 
+#endif //USE_COMP
+// </e>
+
 #endif //NRF_DRV_CSENSE_ENABLED
 // </e>
+
+// <q> NRF_STRERROR_ENABLED  - nrf_strerror - Library for converting error code to string.
+ 
+
+#ifndef NRF_STRERROR_ENABLED
+#define NRF_STRERROR_ENABLED 1
+#endif
 
 // <q> RETARGET_ENABLED  - retarget - Retargeting stdio functions
  

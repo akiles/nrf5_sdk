@@ -382,6 +382,13 @@
 #define HARDFAULT_HANDLER_ENABLED 1
 #endif
 
+// <q> NRF_STRERROR_ENABLED  - nrf_strerror - Library for converting error code to string.
+ 
+
+#ifndef NRF_STRERROR_ENABLED
+#define NRF_STRERROR_ENABLED 1
+#endif
+
 // </h> 
 //==========================================================
 

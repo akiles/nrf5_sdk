@@ -1449,6 +1449,36 @@
 #endif //PWM_CONFIG_LOG_ENABLED
 // </e>
 
+// <e> PWM_NRF52_ANOMALY_109_WORKAROUND_ENABLED - Enables nRF52 Anomaly 109 workaround for PWM.
+
+// <i> The workaround uses interrupts to wake up the CPU and ensure
+// <i> it is active when PWM is about to start a DMA transfer. For
+// <i> initial transfer, done when a playback is started via PPI,
+// <i> a specific EGU instance is used to generate the interrupt.
+// <i> During the playback, the PWM interrupt triggered on SEQEND
+// <i> event of a preceding sequence is used to protect the transfer
+// <i> done for the next sequence to be played.
+//==========================================================
+#ifndef PWM_NRF52_ANOMALY_109_WORKAROUND_ENABLED
+#define PWM_NRF52_ANOMALY_109_WORKAROUND_ENABLED 0
+#endif
+#if  PWM_NRF52_ANOMALY_109_WORKAROUND_ENABLED
+// <o> PWM_NRF52_ANOMALY_109_EGU_INSTANCE  - EGU instance used by the nRF52 Anomaly 109 workaround for PWM.
+ 
+// <0=> EGU0 
+// <1=> EGU1 
+// <2=> EGU2 
+// <3=> EGU3 
+// <4=> EGU4 
+// <5=> EGU5 
+
+#ifndef PWM_NRF52_ANOMALY_109_EGU_INSTANCE
+#define PWM_NRF52_ANOMALY_109_EGU_INSTANCE 5
+#endif
+
+#endif //PWM_NRF52_ANOMALY_109_WORKAROUND_ENABLED
+// </e>
+
 #endif //PWM_ENABLED
 // </e>
 
@@ -1693,6 +1723,13 @@
 
 #ifndef RNG_CONFIG_DEBUG_COLOR
 #define RNG_CONFIG_DEBUG_COLOR 0
+#endif
+
+// <q> RNG_CONFIG_RANDOM_NUMBER_LOG_ENABLED  - Enables logging of random numbers.
+ 
+
+#ifndef RNG_CONFIG_RANDOM_NUMBER_LOG_ENABLED
+#define RNG_CONFIG_RANDOM_NUMBER_LOG_ENABLED 0
 #endif
 
 #endif //RNG_CONFIG_LOG_ENABLED
@@ -2064,6 +2101,20 @@
 #endif //SPIS_CONFIG_LOG_ENABLED
 // </e>
 
+// <q> SPIS_NRF52_ANOMALY_109_WORKAROUND_ENABLED  - Enables nRF52 Anomaly 109 workaround for SPIS.
+ 
+
+// <i> The workaround uses a GPIOTE channel to generate interrupts
+// <i> on falling edges detected on the CSN line. This will make
+// <i> the CPU active for the moment when SPIS starts DMA transfers,
+// <i> and this way the transfers will be protected.
+// <i> This workaround uses GPIOTE driver, so this driver must be
+// <i> enabled as well.
+
+#ifndef SPIS_NRF52_ANOMALY_109_WORKAROUND_ENABLED
+#define SPIS_NRF52_ANOMALY_109_WORKAROUND_ENABLED 0
+#endif
+
 #endif //SPIS_ENABLED
 // </e>
 
@@ -2225,6 +2276,20 @@
 
 #endif //SPI_CONFIG_LOG_ENABLED
 // </e>
+
+// <q> SPIM_NRF52_ANOMALY_109_WORKAROUND_ENABLED  - Enables nRF52 anomaly 109 workaround for SPIM.
+ 
+
+// <i> The workaround uses interrupts to wake up the CPU by catching
+// <i> a start event of zero-length transmission to start the clock. This 
+// <i> ensures that the DMA transfer will be executed without issues and
+// <i> that the proper transfer will be started. See more in the Errata 
+// <i> document or Anomaly 109 Addendum located at 
+// <i> https://infocenter.nordicsemi.com/
+
+#ifndef SPIM_NRF52_ANOMALY_109_WORKAROUND_ENABLED
+#define SPIM_NRF52_ANOMALY_109_WORKAROUND_ENABLED 0
+#endif
 
 #endif //SPI_ENABLED
 // </e>
@@ -2653,6 +2718,19 @@
 #endif //TWI_CONFIG_LOG_ENABLED
 // </e>
 
+// <q> TWIM_NRF52_ANOMALY_109_WORKAROUND_ENABLED  - Enables nRF52 anomaly 109 workaround for TWIM.
+ 
+
+// <i> The workaround uses interrupts to wake up the CPU by catching
+// <i> the start event of zero-frequency transmission, clear the 
+// <i> peripheral, set desired frequency, start the peripheral, and
+// <i> the proper transmission. See more in the Errata document or
+// <i> Anomaly 109 Addendum located at https://infocenter.nordicsemi.com/
+
+#ifndef TWIM_NRF52_ANOMALY_109_WORKAROUND_ENABLED
+#define TWIM_NRF52_ANOMALY_109_WORKAROUND_ENABLED 0
+#endif
+
 #endif //TWI_ENABLED
 // </e>
 
@@ -2838,7 +2916,7 @@
 #define NRF_DRV_USBD_DMASCHEDULER_MODE 0
 #endif
 
-// <q> NRF_USBD_DRV_LOG_ENABLED  - Enable logging.
+// <q> NRF_USBD_DRV_LOG_ENABLED  - Enable logging
  
 
 #ifndef NRF_USBD_DRV_LOG_ENABLED
@@ -2968,7 +3046,7 @@
 // <e> APP_SCHEDULER_ENABLED - app_scheduler - Events scheduler
 //==========================================================
 #ifndef APP_SCHEDULER_ENABLED
-#define APP_SCHEDULER_ENABLED 0
+#define APP_SCHEDULER_ENABLED 1
 #endif
 #if  APP_SCHEDULER_ENABLED
 // <q> APP_SCHEDULER_WITH_PAUSE  - Enabling pause feature
@@ -2994,6 +3072,53 @@
 #define APP_TIMER_ENABLED 1
 #endif
 #if  APP_TIMER_ENABLED
+// <o> APP_TIMER_CONFIG_RTC_FREQUENCY  - Configure RTC prescaler.
+ 
+// <0=> 32768 Hz 
+// <1=> 16384 Hz 
+// <3=> 8192 Hz 
+// <7=> 4096 Hz 
+// <15=> 2048 Hz 
+// <31=> 1024 Hz 
+
+#ifndef APP_TIMER_CONFIG_RTC_FREQUENCY
+#define APP_TIMER_CONFIG_RTC_FREQUENCY 0
+#endif
+
+// <o> APP_TIMER_CONFIG_IRQ_PRIORITY  - Interrupt priority
+ 
+
+// <i> Priorities 0,2 (nRF51) and 0,1,4,5 (nRF52) are reserved for SoftDevice
+// <0=> 0 (highest) 
+// <1=> 1 
+// <2=> 2 
+// <3=> 3 
+// <4=> 4 
+// <5=> 5 
+// <6=> 6 
+// <7=> 7 
+
+#ifndef APP_TIMER_CONFIG_IRQ_PRIORITY
+#define APP_TIMER_CONFIG_IRQ_PRIORITY 7
+#endif
+
+// <o> APP_TIMER_CONFIG_OP_QUEUE_SIZE - Capacity of timer requests queue. 
+// <i> Size of the queue depends on how many timers are used
+// <i> in the system, how often timers are started and overall
+// <i> system latency. If queue size is too small app_timer calls
+// <i> will fail.
+
+#ifndef APP_TIMER_CONFIG_OP_QUEUE_SIZE
+#define APP_TIMER_CONFIG_OP_QUEUE_SIZE 10
+#endif
+
+// <q> APP_TIMER_CONFIG_USE_SCHEDULER  - Enable scheduling app_timer events to app_scheduler
+ 
+
+#ifndef APP_TIMER_CONFIG_USE_SCHEDULER
+#define APP_TIMER_CONFIG_USE_SCHEDULER 0
+#endif
+
 // <q> APP_TIMER_WITH_PROFILER  - Enable app_timer profiling
  
 
@@ -3009,6 +3134,15 @@
 
 #ifndef APP_TIMER_KEEPS_RTC_ACTIVE
 #define APP_TIMER_KEEPS_RTC_ACTIVE 0
+#endif
+
+// <o> APP_TIMER_CONFIG_SWI_NUMBER  - Configure SWI instance used.
+ 
+// <0=> 0 
+// <1=> 1 
+
+#ifndef APP_TIMER_CONFIG_SWI_NUMBER
+#define APP_TIMER_CONFIG_SWI_NUMBER 1
 #endif
 
 #endif //APP_TIMER_ENABLED
@@ -3353,6 +3487,62 @@
 #define MEMORY_MANAGER_LARGE_BLOCK_SIZE 256
 #endif
 
+// <o> MEMORY_MANAGER_XLARGE_BLOCK_COUNT - Size of each memory blocks identified as 'extra large' block.  <0-255> 
+
+
+#ifndef MEMORY_MANAGER_XLARGE_BLOCK_COUNT
+#define MEMORY_MANAGER_XLARGE_BLOCK_COUNT 0
+#endif
+
+// <o> MEMORY_MANAGER_XLARGE_BLOCK_SIZE -  Size of each memory blocks identified as 'extra large' block. 
+// <i>  Size of each memory blocks identified as 'extra large' block. Memory block are recommended to be word-sized.
+
+#ifndef MEMORY_MANAGER_XLARGE_BLOCK_SIZE
+#define MEMORY_MANAGER_XLARGE_BLOCK_SIZE 1320
+#endif
+
+// <o> MEMORY_MANAGER_XXLARGE_BLOCK_COUNT - Size of each memory blocks identified as 'extra extra large' block.  <0-255> 
+
+
+#ifndef MEMORY_MANAGER_XXLARGE_BLOCK_COUNT
+#define MEMORY_MANAGER_XXLARGE_BLOCK_COUNT 0
+#endif
+
+// <o> MEMORY_MANAGER_XXLARGE_BLOCK_SIZE -  Size of each memory blocks identified as 'extra extra large' block. 
+// <i>  Size of each memory blocks identified as 'extra extra large' block. Memory block are recommended to be word-sized.
+
+#ifndef MEMORY_MANAGER_XXLARGE_BLOCK_SIZE
+#define MEMORY_MANAGER_XXLARGE_BLOCK_SIZE 3444
+#endif
+
+// <o> MEMORY_MANAGER_XSMALL_BLOCK_COUNT - Size of each memory blocks identified as 'extra small' block.  <0-255> 
+
+
+#ifndef MEMORY_MANAGER_XSMALL_BLOCK_COUNT
+#define MEMORY_MANAGER_XSMALL_BLOCK_COUNT 0
+#endif
+
+// <o> MEMORY_MANAGER_XSMALL_BLOCK_SIZE -  Size of each memory blocks identified as 'extra small' block. 
+// <i>  Size of each memory blocks identified as 'extra large' block. Memory block are recommended to be word-sized.
+
+#ifndef MEMORY_MANAGER_XSMALL_BLOCK_SIZE
+#define MEMORY_MANAGER_XSMALL_BLOCK_SIZE 64
+#endif
+
+// <o> MEMORY_MANAGER_XXSMALL_BLOCK_COUNT - Size of each memory blocks identified as 'extra extra small' block.  <0-255> 
+
+
+#ifndef MEMORY_MANAGER_XXSMALL_BLOCK_COUNT
+#define MEMORY_MANAGER_XXSMALL_BLOCK_COUNT 0
+#endif
+
+// <o> MEMORY_MANAGER_XXSMALL_BLOCK_SIZE -  Size of each memory blocks identified as 'extra extra small' block. 
+// <i>  Size of each memory blocks identified as 'extra extra small' block. Memory block are recommended to be word-sized.
+
+#ifndef MEMORY_MANAGER_XXSMALL_BLOCK_SIZE
+#define MEMORY_MANAGER_XXSMALL_BLOCK_SIZE 32
+#endif
+
 // <q> MEM_MANAGER_ENABLE_LOGS  - Enable debug trace in the module.
  
 
@@ -3370,23 +3560,23 @@
 #endif //MEM_MANAGER_ENABLED
 // </e>
 
-// <e> NRF_CSENSE_ENABLED - nrf_csense - nrf_csense module
+// <e> NRF_CSENSE_ENABLED - nrf_csense - Capacitive sensor module
 //==========================================================
 #ifndef NRF_CSENSE_ENABLED
 #define NRF_CSENSE_ENABLED 0
 #endif
 #if  NRF_CSENSE_ENABLED
-// <o> NRF_CSENSE_PAD_HYSTERESIS - Minimal value of change to decide that pad was touched. 
+// <o> NRF_CSENSE_PAD_HYSTERESIS - Minimum value of change required to determine that a pad was touched. 
 #ifndef NRF_CSENSE_PAD_HYSTERESIS
 #define NRF_CSENSE_PAD_HYSTERESIS 15
 #endif
 
-// <o> NRF_CSENSE_PAD_DEVIATION - Minimal value measured on pad to take its value while calculating step. 
+// <o> NRF_CSENSE_PAD_DEVIATION - Minimum value measured on a pad required to take it into account while calculating the step. 
 #ifndef NRF_CSENSE_PAD_DEVIATION
 #define NRF_CSENSE_PAD_DEVIATION 70
 #endif
 
-// <o> NRF_CSENSE_MIN_PAD_VALUE - Minimum normalized value on pad to take its value into account. 
+// <o> NRF_CSENSE_MIN_PAD_VALUE - Minimum normalized value on a pad required to take its value into account. 
 #ifndef NRF_CSENSE_MIN_PAD_VALUE
 #define NRF_CSENSE_MIN_PAD_VALUE 20
 #endif
@@ -3396,43 +3586,56 @@
 #define NRF_CSENSE_MAX_PADS_NUMBER 20
 #endif
 
-// <o> NRF_CSENSE_MAX_VALUE - Maximum normalized value got from measurement. 
+// <o> NRF_CSENSE_MAX_VALUE - Maximum normalized value obtained from measurement. 
 #ifndef NRF_CSENSE_MAX_VALUE
 #define NRF_CSENSE_MAX_VALUE 1000
 #endif
 
-// <o> NRF_CSENSE_OUTPUT_PIN - Output pin used by lower module. 
-// <i> This is only used when running on NRF51.
+// <o> NRF_CSENSE_OUTPUT_PIN - Output pin used by the low-level module. 
+// <i> This is used when capacitive sensor does not use COMP.
 
 #ifndef NRF_CSENSE_OUTPUT_PIN
-#define NRF_CSENSE_OUTPUT_PIN 30
+#define NRF_CSENSE_OUTPUT_PIN 26
 #endif
 
 #endif //NRF_CSENSE_ENABLED
 // </e>
 
-// <e> NRF_DRV_CSENSE_ENABLED - nrf_drv_csense - Capacitive sensor module
+// <e> NRF_DRV_CSENSE_ENABLED - nrf_drv_csense - Capacitive sensor low-level module
 //==========================================================
 #ifndef NRF_DRV_CSENSE_ENABLED
 #define NRF_DRV_CSENSE_ENABLED 0
 #endif
 #if  NRF_DRV_CSENSE_ENABLED
-// <o> TIMER0_FOR_CSENSE - First TIMER instance used by the driver (except nRF51) 
+// <e> USE_COMP - Use the comparator to implement the capacitive sensor driver.
+
+// <i> Due to Anomaly 84, COMP I_SOURCE is not functional. It has too high a varation.
+//==========================================================
+#ifndef USE_COMP
+#define USE_COMP 0
+#endif
+#if  USE_COMP
+// <o> TIMER0_FOR_CSENSE - First TIMER instance used by the driver (not used on nRF51). 
 #ifndef TIMER0_FOR_CSENSE
 #define TIMER0_FOR_CSENSE 1
 #endif
 
-// <o> TIMER1_FOR_CSENSE - Second TIMER instance used by the driver (except nRF51) 
+// <o> TIMER1_FOR_CSENSE - Second TIMER instance used by the driver (not used on nRF51). 
 #ifndef TIMER1_FOR_CSENSE
 #define TIMER1_FOR_CSENSE 2
 #endif
 
 // <o> MEASUREMENT_PERIOD - Single measurement period. 
-// <i> Time of single measurement can be calculated as T = (1/2)*MEASUREMENT_PERIOD*(1/f_OSC) where f_OSC = I_SOURCE / (2C*(VUP-VDOWN) ). I_SOURCE, VUP and VDOWN are values used to initialize COMP and C is capacitance of used pad.
+// <i> Time of a single measurement can be calculated as
+// <i> T = (1/2)*MEASUREMENT_PERIOD*(1/f_OSC) where f_OSC = I_SOURCE / (2C*(VUP-VDOWN) ).
+// <i> I_SOURCE, VUP, and VDOWN are values used to initialize COMP and C is the capacitance of the used pad.
 
 #ifndef MEASUREMENT_PERIOD
 #define MEASUREMENT_PERIOD 20
 #endif
+
+#endif //USE_COMP
+// </e>
 
 #endif //NRF_DRV_CSENSE_ENABLED
 // </e>
@@ -3444,7 +3647,14 @@
 #define NRF_QUEUE_ENABLED 0
 #endif
 
-// <q> SLIP_ENABLED  - slip - SLIP encoding decoding
+// <q> NRF_STRERROR_ENABLED  - nrf_strerror - Library for converting error code to string.
+ 
+
+#ifndef NRF_STRERROR_ENABLED
+#define NRF_STRERROR_ENABLED 1
+#endif
+
+// <q> SLIP_ENABLED  - slip - SLIP encoding and decoding
  
 
 #ifndef SLIP_ENABLED

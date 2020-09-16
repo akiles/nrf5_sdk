@@ -1,14 +1,43 @@
-/* Copyright (c) Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
+
 #include "sdk_config.h"
 #if APP_USBD_ENABLED
 #include "sdk_common.h"
@@ -98,6 +127,18 @@ static app_usbd_class_inst_t const * m_p_first_cinst;
 static app_usbd_class_inst_t const * m_p_first_sof_cinst;
 
 /**
+ * @brief Default configuration (when NULL is passed to @ref app_usbd_init).
+ */
+static const app_usbd_config_t m_default_conf = {
+        .ev_handler = NULL
+};
+
+/**
+ * @brief Current configuration.
+ */
+static app_usbd_config_t m_current_conf;
+
+/**
  * @brief Class interface call: event handler
  *
  * @ref app_usbd_class_interface_t::event_handler
@@ -116,6 +157,19 @@ static inline ret_code_t class_event_handler(app_usbd_class_inst_t  const * cons
     ASSERT(p_cinst->p_class_methods != NULL);
     ASSERT(p_cinst->p_class_methods->event_handler != NULL);
     return p_cinst->p_class_methods->event_handler(p_cinst, p_event);
+}
+
+/**
+ * @brief User event handler call (passed via configuration).
+ *
+ * @param event Event type.
+ */
+static inline void user_event_handler(app_usbd_event_type_t event)
+{
+    if ((m_current_conf.ev_handler) != NULL)
+    {
+        m_current_conf.ev_handler(event);
+    }
 }
 
 /**
@@ -245,8 +299,9 @@ static void app_usbd_ep_instance_set(nrf_drv_usbd_ep_t ep, app_usbd_class_inst_t
  */
 static inline ret_code_t app_usbd_core_handler_call(nrf_drv_usbd_evt_t const * const p_event)
 {
-    return m_epout_conf[0].event_handler(m_epout_conf[0].p_cinst,
-                                         (app_usbd_complex_evt_t const *)p_event);
+    return m_epout_conf[0].event_handler(
+        m_epout_conf[0].p_cinst,
+        (app_usbd_complex_evt_t const *)p_event);
 }
 
 /**
@@ -322,12 +377,14 @@ static void app_usbd_event_handler(nrf_drv_usbd_evt_t const * const p_event)
             ASSERT(0);
             break;
     }
+
+    user_event_handler((app_usbd_event_type_t)p_event->type);
 }
 
 /** @} */
 
 
-ret_code_t app_usbd_init(void)
+ret_code_t app_usbd_init(app_usbd_config_t const * p_config)
 {
     ret_code_t ret;
 
@@ -335,6 +392,15 @@ ret_code_t app_usbd_init(void)
     if (NRF_SUCCESS != ret)
     {
         return ret;
+    }
+
+    if (p_config == NULL)
+    {
+        m_current_conf = m_default_conf;
+    }
+    else
+    {
+        m_current_conf = *p_config;
     }
 
     /* Clear variables */
@@ -397,6 +463,8 @@ ret_code_t app_usbd_uninit(void)
     /* Clear all endpoints configurations */
     memset(m_epin_conf , 0, sizeof(m_epin_conf ));
     memset(m_epout_conf, 0, sizeof(m_epout_conf));
+    /* Clear current configuration */
+    memset(&m_current_conf, 0, sizeof(m_current_conf));
 
     return ret;
 }
@@ -406,7 +474,9 @@ void app_usbd_enable(void)
 {
     nrf_drv_usbd_enable();
     while (!app_usbd_core_power_regulator_is_ready())
-        ;
+    {
+        /* Just waiting */
+    }
 }
 
 
@@ -446,6 +516,7 @@ void app_usbd_start(void)
     /* Send event to all classes */
     UNUSED_RETURN_VALUE(app_usbd_core_handler_call((nrf_drv_usbd_evt_t const * )&evt_data));
     app_usbd_all_call((app_usbd_complex_evt_t const *)&evt_data);
+    user_event_handler(APP_USBD_EVT_START);
 
     nrf_drv_usbd_start(NULL != m_p_first_sof_cinst);
 }
@@ -462,6 +533,7 @@ void app_usbd_stop(void)
     /* Send event to all classes */
     app_usbd_all_call((app_usbd_complex_evt_t const * )&evt_data);
     UNUSED_RETURN_VALUE(app_usbd_core_handler_call((nrf_drv_usbd_evt_t const *)&evt_data));
+    user_event_handler(APP_USBD_EVT_STOP);
 }
 
 
@@ -661,8 +733,7 @@ ret_code_t app_usbd_class_sof_unregister(app_usbd_class_inst_t const * p_cinst)
     return NRF_ERROR_NOT_FOUND;
 }
 
-ret_code_t app_usbd_interface_std_req_handle(app_usbd_class_inst_t const * p_cinst,
-                                             app_usbd_setup_evt_t  const * p_setup_ev)
+ret_code_t app_usbd_interface_std_req_handle(app_usbd_setup_evt_t  const * p_setup_ev)
 {
     switch (p_setup_ev->setup.bmRequest)
     {
@@ -681,31 +752,9 @@ ret_code_t app_usbd_interface_std_req_handle(app_usbd_class_inst_t const * p_cin
     return NRF_ERROR_NOT_SUPPORTED;
 }
 
-ret_code_t app_usbd_endpoint_std_req_handle(app_usbd_class_inst_t const * p_cinst,
-                                            app_usbd_setup_evt_t  const * p_setup_ev)
+ret_code_t app_usbd_endpoint_std_req_handle(app_usbd_setup_evt_t const * p_setup_ev)
 {
-    size_t i;
-    nrf_drv_usbd_ep_t ep_addr = NRF_DRV_USBD_EPIN0;
-    for (i = 0; i < app_usbd_class_iface_count_get(p_cinst); ++i)
-    {
-        app_usbd_class_iface_conf_t const * p_iface_conf = app_usbd_class_iface_get(p_cinst, i);
-        const uint8_t ep_count = app_usbd_class_iface_ep_count_get(p_iface_conf);
-
-        ep_addr = (nrf_drv_usbd_ep_t)(p_setup_ev->setup.wIndex.lb);
-        uint8_t ep_idx = app_usbd_class_iface_ep_idx_get(p_iface_conf, ep_addr);
-        if (ep_idx == ep_count)
-        {
-            continue;
-        }
-
-        break;
-    }
-
-    if (i == app_usbd_class_iface_count_get(p_cinst))
-    {
-        return NRF_ERROR_NOT_SUPPORTED;
-    }
-
+    nrf_drv_usbd_ep_t ep_addr = (nrf_drv_usbd_ep_t)(p_setup_ev->setup.wIndex.lb);
     switch (p_setup_ev->setup.bmRequest)
     {
         case APP_USBD_SETUP_STDREQ_GET_STATUS:
@@ -759,7 +808,7 @@ ret_code_t app_usbd_req_std_set_interface(app_usbd_class_inst_t const * const p_
     for (uint8_t j = 0; j < iface_count; ++j)
     {
         p_iface = app_usbd_class_iface_get(p_cinst, j);
-        if (p_iface->number == p_setup_ev->setup.wIndex.w)
+        if (p_iface->number == p_setup_ev->setup.wIndex.lb)
         {
             break;
         }

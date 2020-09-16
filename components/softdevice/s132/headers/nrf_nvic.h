@@ -83,7 +83,6 @@ extern "C" {
       | (1U << CCM_AAR_IRQn) \
       | (1U << TEMP_IRQn) \
       | (1U << __NRF_NVIC_NVMC_IRQn) \
-      | (1U << (uint32_t)SWI4_IRQn) \
       | (1U << (uint32_t)SWI5_IRQn) \
     ))
 
@@ -105,7 +104,6 @@ extern "C" {
       | (1U << CCM_AAR_IRQn) \
       | (1U << TEMP_IRQn) \
       | (1U << __NRF_NVIC_NVMC_IRQn) \
-      | (1U << (uint32_t)SWI4_EGU4_IRQn) \
       | (1U << (uint32_t)SWI5_EGU5_IRQn) \
     ))
   #define __NRF_NVIC_SD_IRQS_1 ((uint32_t)0)
@@ -148,9 +146,9 @@ __STATIC_INLINE int __sd_nvic_irq_disable(void);
 __STATIC_INLINE void __sd_nvic_irq_enable(void);
 
 /**@brief Checks if IRQn is available to application
- * @param[in]  IRQn  irq to check
+ * @param[in]  IRQn  IRQ to check
  *
- * @retval  1 (true) if the irq to check is available to the application
+ * @retval  1 (true) if the IRQ to check is available to the application
  */
 __STATIC_INLINE uint32_t __sd_nvic_app_accessible_irq(IRQn_Type IRQn);
 

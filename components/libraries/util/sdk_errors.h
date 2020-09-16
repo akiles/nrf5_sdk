@@ -1,15 +1,42 @@
-/* Copyright (c) 2013 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2013 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /**@file
  *
  * @defgroup sdk_error SDK Error codes
@@ -56,7 +83,7 @@ extern "C" {
  */
 #define NRF_ERROR_SDK_ERROR_BASE         (NRF_ERROR_BASE_NUM + 0x8000)   /**< Base value defined for SDK module identifiers. */
 #define NRF_ERROR_SDK_COMMON_ERROR_BASE  (NRF_ERROR_BASE_NUM + 0x0080)   /**< Base error value to be used for SDK error values. */
-/* @} */
+/** @} */
 
 /**
  * @defgroup sdk_module_codes Codes reserved as identification for module where the error occurred.
@@ -65,7 +92,7 @@ extern "C" {
 #define NRF_ERROR_MEMORY_MANAGER_ERR_BASE   (0x8100)
 #define NRF_ERROR_PERIPH_DRIVERS_ERR_BASE   (0x8200)
 #define NRF_ERROR_GAZELLE_ERR_BASE          (0x8300)
-/* @} */
+/** @} */
 
 
 /**
@@ -74,7 +101,7 @@ extern "C" {
  */
 #define NRF_ERROR_IOT_ERR_BASE_START        (0xA000)
 #define NRF_ERROR_IOT_ERR_BASE_STOP         (0xAFFF)
-/* @} */
+/** @} */
 
 
 /**
@@ -90,7 +117,7 @@ extern "C" {
 #define NRF_ERROR_STORAGE_FULL               (NRF_ERROR_SDK_COMMON_ERROR_BASE + 0x0006)
 #define NRF_ERROR_API_NOT_IMPLEMENTED        (NRF_ERROR_SDK_COMMON_ERROR_BASE + 0x0010)
 #define NRF_ERROR_FEATURE_NOT_ENABLED        (NRF_ERROR_SDK_COMMON_ERROR_BASE + 0x0011)
-/* @} */
+/** @} */
 
 
 /**
@@ -100,7 +127,7 @@ extern "C" {
 #define NRF_ERROR_DRV_TWI_ERR_OVERRUN              (NRF_ERROR_PERIPH_DRIVERS_ERR_BASE + 0x0000)
 #define NRF_ERROR_DRV_TWI_ERR_ANACK                (NRF_ERROR_PERIPH_DRIVERS_ERR_BASE + 0x0001)
 #define NRF_ERROR_DRV_TWI_ERR_DNACK                (NRF_ERROR_PERIPH_DRIVERS_ERR_BASE + 0x0002)
-/* @} */
+/** @} */
 
 /**
  * @brief API Result.
@@ -115,34 +142,6 @@ extern "C" {
  */
 typedef uint32_t ret_code_t;
 
-#if defined(NRF_LOG_ENABLED) && NRF_LOG_ENABLED
-/**
- * @defgroup err_sizes Sizes of error code arrays.
- * @{
- */
-#define ERR_NAMES_SIZE          18
-#define ERR_NAMES_COMMON_SIZE   9
-#define ERR_NAMES_TWI_SIZE      3
-/* @} */
-
-extern const char * m_sdk_errors_name[ERR_NAMES_SIZE];
-extern const char * m_sdk_errors_name_common[ERR_NAMES_COMMON_SIZE];
-extern const char * m_sdk_errors_name_twi[ERR_NAMES_TWI_SIZE];
-
-/**
- * @defgroup err_to_string Macros for converting error codes to strings.
- * @{
- */
-#define ERR_TO_STR(err_code)            m_sdk_errors_name[err_code]
-#define ERR_TO_STR_COMMON(err_code)     m_sdk_errors_name_common[err_code - NRF_ERROR_SDK_COMMON_ERROR_BASE]
-#define ERR_TO_STR_TWI(err_code)        m_sdk_errors_name_twi[err_code - NRF_ERROR_PERIPH_DRIVERS_ERR_BASE]
-#else
-#define ERR_TO_STR(err_code)            ""
-#define ERR_TO_STR_COMMON(err_code)     ""
-#define ERR_TO_STR_TWI(err_code)        ""
-#endif // NRF_LOG_ENABLED
-
-/* @} */
 /** @} */
 /** @} */
 
@@ -151,4 +150,3 @@ extern const char * m_sdk_errors_name_twi[ERR_NAMES_TWI_SIZE];
 #endif
 
 #endif // SDK_ERRORS_H__
-

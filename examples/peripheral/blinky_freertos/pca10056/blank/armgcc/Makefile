@@ -29,7 +29,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/timer/app_timer_freertos.c \
   $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
-  $(SDK_ROOT)/components/libraries/util/sdk_errors.c \
+  $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/components/drivers_nrf/clock/nrf_drv_clock.c \
   $(SDK_ROOT)/components/drivers_nrf/common/nrf_drv_common.c \
   $(SDK_ROOT)/components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
@@ -50,6 +50,7 @@ INC_FOLDERS += \
   $(PROJ_DIR)/config/blinky_FreeRTOS_pca10056 \
   $(SDK_ROOT)/components \
   $(PROJ_DIR) \
+  $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/external/freertos/source/include \
   $(SDK_ROOT)/external/freertos/config \
@@ -78,10 +79,10 @@ INC_FOLDERS += \
 LIB_FILES += \
 
 # C flags common to all targets
-CFLAGS += -DNRF52840_XXAA
 CFLAGS += -DBOARD_PCA10056
-CFLAGS += -DFREERTOS
 CFLAGS += -DCONFIG_GPIO_AS_PINRESET
+CFLAGS += -DFREERTOS
+CFLAGS += -DNRF52840_XXAA
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS +=  -Wall -Werror -O3 -g3
@@ -95,10 +96,10 @@ CXXFLAGS += \
 
 # Assembler flags common to all targets
 ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DNRF52840_XXAA
 ASMFLAGS += -DBOARD_PCA10056
-ASMFLAGS += -DFREERTOS
 ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
+ASMFLAGS += -DFREERTOS
+ASMFLAGS += -DNRF52840_XXAA
 
 # Linker flags
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)

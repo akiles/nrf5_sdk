@@ -1,15 +1,42 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /**@file
  *
  * @defgroup sdk_nrf_dfu_req_handler Request handling
@@ -23,6 +50,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "nrf_dfu_types.h"
+#include "nrf_dfu_handling_error.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -54,26 +82,6 @@ typedef enum
     NRF_DFU_OBJECT_OP_SELECT        = 6,        /**< Select operation. When called, the object of the given type is selected, and information about the object is reported back. */
     NRF_DFU_OBJECT_OP_OTHER         = 7,        /**< A user-defined DFU request type. The application must define how to interpret the request. */
 } nrf_dfu_req_op_t;
-
-
-/**@brief DFU request result codes.
- *
- * @details The DFU transport layer creates request events of types @ref nrf_dfu_req_op_t,
- * which are handled by @ref nrf_dfu_req_handler_on_req. That functions returns one of these result codes.
- */
-typedef enum
-{
-    NRF_DFU_RES_CODE_INVALID                 = 0x00,     /**< Invalid opcode. */
-    NRF_DFU_RES_CODE_SUCCESS                 = 0x01,     /**< Operation successful. */
-    NRF_DFU_RES_CODE_OP_CODE_NOT_SUPPORTED   = 0x02,     /**< Opcode not supported. */
-    NRF_DFU_RES_CODE_INVALID_PARAMETER       = 0x03,     /**< Missing or invalid parameter value. */
-    NRF_DFU_RES_CODE_INSUFFICIENT_RESOURCES  = 0x04,     /**< Not enough memory for the data object. */
-    NRF_DFU_RES_CODE_INVALID_OBJECT          = 0x05,     /**< Data object does not match the firmware and hardware requirements, the signature is missing, or parsing the command failed. */
-    NRF_DFU_RES_CODE_UNSUPPORTED_TYPE        = 0x07,     /**< Not a valid object type for a Create request. */
-    NRF_DFU_RES_CODE_OPERATION_NOT_PERMITTED = 0x08,     /**< The state of the DFU process does not allow this operation. */
-    NRF_DFU_RES_CODE_OPERATION_FAILED        = 0x0A,     /**< Operation failed. */
-    NRF_DFU_RES_CODE_EXT_ERROR               = 0x0B,     /**< Extended error. */
-} nrf_dfu_res_code_t;
 
 
 #if defined(__CC_ARM)
@@ -165,6 +173,14 @@ uint32_t nrf_dfu_req_handler_init(void);
  *                                      could not be handled.
  */
 nrf_dfu_res_code_t nrf_dfu_req_handler_on_req(void * p_context, nrf_dfu_req_t * p_req, nrf_dfu_res_t * p_res);
+
+
+/** @brief Function for resetting the device when the DFU process is complete.
+ *
+ *  @details    Checks if the DFU transfer is complete. If it is complete, all transports are closed down
+ *              and reset is called.
+ */
+void nrf_dfu_req_handler_reset_if_dfu_complete(void);
 
 
 #ifdef __cplusplus

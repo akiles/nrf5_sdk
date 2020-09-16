@@ -251,6 +251,13 @@
 #endif //APP_UART_ENABLED
 // </e>
 
+// <q> NRF_STRERROR_ENABLED  - nrf_strerror - Library for converting error code to string.
+ 
+
+#ifndef NRF_STRERROR_ENABLED
+#define NRF_STRERROR_ENABLED 1
+#endif
+
 // <q> RETARGET_ENABLED  - retarget - Retargeting stdio functions
  
 

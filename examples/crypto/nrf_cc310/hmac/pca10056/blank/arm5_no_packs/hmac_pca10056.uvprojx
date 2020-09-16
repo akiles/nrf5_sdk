@@ -12,7 +12,7 @@
       <TargetOption>
         <TargetCommonOption>          <Device>nRF52840_xxAA</Device>
           <Vendor>Nordic Semiconductor</Vendor>
-          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.11.1</PackID>
+          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.12.0</PackID>
           <PackURL>http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/</PackURL>          <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x10000) CPUTYPE("Cortex-M4") FPU2 CLOCK(64000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -361,8 +361,8 @@
             <vShortEn>0</vShortEn>
             <vShortWch>0</vShortWch>
             <VariousControls>
-              <MiscControls></MiscControls>
-              <Define> DEBUG_NRF DEBUG DX_CC_TEE HMAC_INTEGTEST NRF_LOG_USES_RTT=1 NRF_LOG_ENABLED=1 NRF_SDK_PRESENT __STACK_SIZE=2048 NRF52840_XXAA CONFIG_GPIO_AS_PINRESET BOARD_PCA10056 BSP_DEFINES_ONLY SEGGER_RTT_BLOCKING NRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE=2048</Define>
+              <MiscControls>--reduce_paths</MiscControls>
+              <Define> BOARD_PCA10056 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET DEBUG DEBUG_NRF DX_CC_TEE HMAC_INTEGTEST NRF52840_XXAA NRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE=2048 NRF_LOG_ENABLED=1 NRF_LOG_USES_RTT=1 NRF_SDK_PRESENT SEGGER_RTT_BLOCKING __STACK_SIZE=2048</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config;..\..\..\..\..\..\..\components;..\..\..\..\..\..\..\components\boards;..\..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\..\components\toolchain;..\..\..;..\..\..\..\..\..\..\external\nrf_cc310\common;..\..\..\..\..\..\..\external\nrf_cc310\include;..\..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
@@ -378,8 +378,8 @@
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DDEBUG_NRF,-DDEBUG,-DDX_CC_TEE,-DHMAC_INTEGTEST,-DNRF_LOG_USES_RTT=1,-DNRF_LOG_ENABLED=1,-DNRF_SDK_PRESENT,-D__STACK_SIZE=2048,-DNRF52840_XXAA,-DCONFIG_GPIO_AS_PINRESET,-DBOARD_PCA10056,-DBSP_DEFINES_ONLY,-DSEGGER_RTT_BLOCKING,-DNRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE=2048</MiscControls>
-              <Define> DEBUG_NRF DEBUG DX_CC_TEE HMAC_INTEGTEST NRF_LOG_USES_RTT=1 NRF_LOG_ENABLED=1 NRF_SDK_PRESENT __STACK_SIZE=2048 NRF52840_XXAA CONFIG_GPIO_AS_PINRESET BOARD_PCA10056 BSP_DEFINES_ONLY SEGGER_RTT_BLOCKING NRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE=2048</Define>
+              <MiscControls> --cpreproc_opts=-DBOARD_PCA10056,-DBSP_DEFINES_ONLY,-DCONFIG_GPIO_AS_PINRESET,-DDEBUG,-DDEBUG_NRF,-DDX_CC_TEE,-DHMAC_INTEGTEST,-DNRF52840_XXAA,-DNRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE=2048,-DNRF_LOG_ENABLED=1,-DNRF_LOG_USES_RTT=1,-DNRF_SDK_PRESENT,-DSEGGER_RTT_BLOCKING,-D__STACK_SIZE=2048</MiscControls>
+              <Define> BOARD_PCA10056 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET DEBUG DEBUG_NRF DX_CC_TEE HMAC_INTEGTEST NRF52840_XXAA NRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE=2048 NRF_LOG_ENABLED=1 NRF_LOG_USES_RTT=1 NRF_SDK_PRESENT SEGGER_RTT_BLOCKING __STACK_SIZE=2048</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config;..\..\..\..\..\..\..\components;..\..\..\..\..\..\..\components\boards;..\..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\..\components\toolchain;..\..\..;..\..\..\..\..\..\..\external\nrf_cc310\common;..\..\..\..\..\..\..\external\nrf_cc310\include;..\..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
@@ -397,7 +397,7 @@
             <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc></Misc>
+            <Misc>--diag_suppress 6330</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -428,12 +428,6 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\..\components\boards\boards.c</FilePath>            </File>          </Files>
         </Group>        <Group>
-          <GroupName>Documentation</GroupName>
-          <Files>            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\license.txt</FilePath>            </File>          </Files>
-        </Group>        <Group>
           <GroupName>nRF_Libraries</GroupName>
           <Files>            <File>
               <FileName>app_util_platform.c</FileName>
@@ -441,10 +435,7 @@
               <FilePath>..\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</FilePath>            </File>            <File>
               <FileName>nrf_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</FilePath>            </File>            <File>
-              <FileName>sdk_errors.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\..\components\libraries\util\sdk_errors.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Segger_RTT</GroupName>
           <Files>            <File>
@@ -471,7 +462,7 @@
     </filter>    <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0">
       <targetInfos>        <targetInfo name="nrf52840_xxaa" versionMatchMode="fixed"/>      </targetInfos>
     </package>
-    <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.11.1">
+    <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.12.0">
       <targetInfos>        <targetInfo name="nrf52840_xxaa" versionMatchMode="fixed"/>      </targetInfos>
     </package>  </packages>
   <apis/>
@@ -479,8 +470,8 @@
       <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
       <targetInfos>        <targetInfo name="nrf52840_xxaa" versionMatchMode="fixed"/>      </targetInfos>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="8.11.1" condition="nRF5x Series CMSIS Device">
-      <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.11.1"/>
+    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="8.12.0" condition="nRF5x Series CMSIS Device">
+      <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.12.0"/>
       <targetInfos>        <targetInfo name="nrf52840_xxaa" versionMatchMode="fixed"/>      </targetInfos>
     </component>  </components>
   <files>  </files>

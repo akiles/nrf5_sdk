@@ -1,15 +1,42 @@
-/* Copyright (c) 2013 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2013 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 #ifndef BLE_SERIALIZATION_H__
 #define BLE_SERIALIZATION_H__
 
@@ -32,6 +59,11 @@ typedef enum
     SER_PKT_TYPE_DTM_CMD,     /**< DTM Command packet type. */
     SER_PKT_TYPE_DTM_RESP,    /**< DTM Response packet type. */
     SER_PKT_TYPE_RESET_CMD,   /**< System Reset Command packet type. */
+#if defined(ANT_STACK_SUPPORT_REQD)
+    SER_PKT_TYPE_ANT_CMD,     /**< ANT Command packet type. */
+    SER_PKT_TYPE_ANT_RESP,    /**< ANT Response packet type. */
+    SER_PKT_TYPE_ANT_EVT,     /**< ANT Event packet type. */
+#endif
     SER_PKT_TYPE_MAX          /**< Upper bound. */
 } ser_pkt_type_t;
 
@@ -74,6 +106,15 @@ typedef enum
 #define SER_EVT_HEADER_SIZE            (SER_EVT_ID_SIZE)
 /** Size of event connection handler. */
 #define SER_EVT_CONN_HANDLE_SIZE       2
+
+#if defined(ANT_STACK_SUPPORT_REQD)
+/** Size of event ID field. */
+#define SER_ANT_EVT_ID_SIZE            2
+/** Position of event ID field. */
+#define SER_ANT_EVT_ID_POS             0
+/** Size of event header. */
+#define SER_ANT_EVT_HEADER_SIZE        (SER_ANT_EVT_ID_SIZE)
+#endif
 
 /** Position of the Op Code in the DTM command buffer.*/
 #define SER_DTM_CMD_OP_CODE_POS        0
@@ -129,7 +170,6 @@ typedef enum
 
 /** See Bluetooth 4.0 spec: 3.4.4.7. */
 #define BLE_GATTC_HANDLE_COUNT_LEN_MAX     ((GATT_MTU_SIZE_DEFAULT - 1) / 2)
-
 
 /** Subtract 1 from X if X is greater than 0. */
 #define SUB1(X) (((X)>0) ? ((X)-1) : (X))
@@ -216,7 +256,7 @@ typedef uint32_t (*field_ext_decoder_handler_t)(uint8_t const * const p_buf,
                     SER_PUSH_FIELD(&((P_ARRAY)[_idx]),P_ENCODER);\
                 }                                                \
             } while (0)
-            
+
 /** Conditionally push a field if the specified pointer is not null. */
 #define SER_PUSH_COND(P_VAR, P_ENCODER) do { \
                 err_code = cond_field_enc((P_VAR), p_buf, buf_len, p_index, (P_ENCODER)); \
@@ -530,7 +570,7 @@ uint32_t ser_ble_cmd_rsp_dec(uint8_t const * const p_buf,
                              uint32_t * const      p_result_code);
 
 
-    
+
 /**@brief Function for safe field encoding field.
  *
  * @param[in]      p_field          Pointer to the input struct. Must not be a null.
@@ -552,13 +592,13 @@ static inline uint32_t field_enc(void const * const      p_field,
 {
     SER_ASSERT_NOT_NULL(fp_field_encoder);
     SER_ASSERT_NOT_NULL(p_field);
-    
+
     return fp_field_encoder(p_field, p_buf, buf_len, p_index);
 }
 
 /**@brief Function for safe field decoding.
  *
- * Function checks if conditional field is present in the input buffer and if it is set, it calls 
+ * Function checks if conditional field is present in the input buffer and if it is set, it calls
  * the provided parser function that attempts to parse the buffer content to the known field.
  *
  * @param[in]      p_buf            Pointer to the beginning of the input buffer.
@@ -614,7 +654,7 @@ static inline uint32_t field_ext_dec(uint8_t const * const        p_buf,
 
     return fp_field_decoder(p_buf, buf_len, p_index, p_ext_length, p_field);
 }
-                                                
+
 /**@brief Function for safe encoding an uint16 value.
  *
  * Safe decoding of a uint16 value. Range checks will be done if @ref SER_ASSERTS_ENABLED is set.
@@ -818,7 +858,7 @@ uint32_t len16data_dec(uint8_t const * const p_buf,
 /**@brief Function for safe encoding of a uint16 table with a given element count.
  *
  * Safe encoding of a variable length field. Range checks will be done if @ref SER_ASSERTS_ENABLED is set.
- * It is possible that the provided p_data is NULL. In that case, length is encoded and it is followed by a 
+ * It is possible that the provided p_data is NULL. In that case, length is encoded and it is followed by a
  * SER_FIELD_NOT_PRESENT flag. Otherwise, the SER_FIELD_PRESENT flag precedes the data.
  *
  * @param[in]      p_data           Data table to encode.
@@ -841,7 +881,7 @@ uint32_t count16_cond_data16_enc(uint16_t const * const p_data,
 /**@brief Function for safe decoding of a uint16 table with a given element count.
  *
  * Safe encoding of a variable length field. Range checks will be done if @ref SER_ASSERTS_ENABLED is set.
- * It is possible that the provided p_data is NULL. In that case, length is encoded and it is followed by a 
+ * It is possible that the provided p_data is NULL. In that case, length is encoded and it is followed by a
  * SER_FIELD_NOT_PRESENT flag. Otherwise, the SER_FIELD_PRESENT flag precedes the data.
  *
  * @param[in]      p_buf            Pointer to the beginning of the output buffer.

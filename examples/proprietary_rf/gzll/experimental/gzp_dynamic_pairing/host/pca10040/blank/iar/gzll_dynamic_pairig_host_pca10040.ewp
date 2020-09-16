@@ -176,12 +176,12 @@
         </option>
         <option>
           <name>CCDefines</name>
-          <state>USE_SD_HW_RESOURCES</state>
-          <state>NRF52832</state>
-          <state>NRF52</state>
-          <state>NRF52_PAN_58</state>
-          <state>NRF52_PAN_64</state>
           <state>BOARD_PCA10040</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>GAZELL_ALTERNATIVE_RESOURCES</state>
+          <state>GAZELL_PRESENT</state>
+          <state>NRF52</state>
+          <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_12</state>
           <state>NRF52_PAN_15</state>
           <state>NRF52_PAN_20</state>
@@ -189,11 +189,12 @@
           <state>NRF52_PAN_36</state>
           <state>NRF52_PAN_51</state>
           <state>NRF52_PAN_54</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_55</state>
-          <state>GAZELL_PRESENT</state>
-          <state>GAZELL_ALTERNATIVE_RESOURCES</state>
+          <state>NRF52_PAN_58</state>
+          <state>NRF52_PAN_64</state>
+          <state>NRF52_PAN_74</state>
           <state>SWI_DISABLE0</state>
+          <state>USE_SD_HW_RESOURCES</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -258,7 +259,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state></state>
+          <state>1</state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -336,6 +337,8 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\button</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\log</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\scheduler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\proprietary_rf\gzll</state>
@@ -501,12 +504,12 @@
         </option>
         <option>
       <name>ADefines</name>
-          <state>USE_SD_HW_RESOURCES</state>
-          <state>NRF52832</state>
-          <state>NRF52</state>
-          <state>NRF52_PAN_58</state>
-          <state>NRF52_PAN_64</state>
           <state>BOARD_PCA10040</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>GAZELL_ALTERNATIVE_RESOURCES</state>
+          <state>GAZELL_PRESENT</state>
+          <state>NRF52</state>
+          <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_12</state>
           <state>NRF52_PAN_15</state>
           <state>NRF52_PAN_20</state>
@@ -514,11 +517,12 @@
           <state>NRF52_PAN_36</state>
           <state>NRF52_PAN_51</state>
           <state>NRF52_PAN_54</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_55</state>
-          <state>GAZELL_PRESENT</state>
-          <state>GAZELL_ALTERNATIVE_RESOURCES</state>
+          <state>NRF52_PAN_58</state>
+          <state>NRF52_PAN_64</state>
+          <state>NRF52_PAN_74</state>
           <state>SWI_DISABLE0</state>
+          <state>USE_SD_HW_RESOURCES</state>
         </option>
         <option>
           <name>AList</name>
@@ -628,6 +632,8 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\button</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\log</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\scheduler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\proprietary_rf\gzll</state>
@@ -1022,16 +1028,17 @@
   <name>nRF_Log</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\log\src\nrf_log_backend_serial.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\log\src\nrf_log_frontend.c</name>    </file>  </group>  <group>
+  <name>Board Definition</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Libraries</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\button\app_button.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\util\app_error.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\timer\app_timer.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\util\sdk_errors.c</name>    </file>  </group>  <group>
-  <name>Board Definition</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</name>    </file>    <file>
@@ -1048,8 +1055,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\external\segger_rtt\RTT_Syscalls_IAR.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_printf.c</name>    </file>  </group>  <group>
-  <name>Documentation</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\license.txt</name>    </file>  </group>  <group>
   <name>nRF_Properitary_RF</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\proprietary_rf\gzll\iar\gzll_nrf52_sd_resource_iar.a</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\..\components\proprietary_rf\gzll\nrf_gzp.c</name>    </file>    <file>

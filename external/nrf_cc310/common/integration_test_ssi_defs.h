@@ -1,5 +1,13 @@
-
-
+// Copyright (c) 2016-2017, ARM Limited or its affiliates. All rights reserved 
+// 
+// This file and the related binary are licensed under the ARM Object Code and 
+// Headers License; you may not use these files except in compliance with this 
+// license. 
+// 
+// You may obtain a copy of the License at <.../external/nrf_cc310/license.txt> 
+// 
+// See the License for the specific language governing permissions and 
+// limitations under the License.
 #define SHARED_SECRET_MAX_LENGHT         250
 #define ECC_KEY_MAX_LENGHT               0x256
 #define AES_KEY_MAX_LENGHT_IN_BYTES      0x10
@@ -26,7 +34,7 @@ typedef enum OperationType_enum
 	 NON_INTEGRATED_OPERATION  ,
 	 OperationTypeLast= 0x7FFFFFFF,
 
-}OperationType_t; 
+}OperationType_t;
 
 typedef enum BufferType_enum
 {
@@ -34,7 +42,7 @@ typedef enum BufferType_enum
 	 INPLACE_BUFFER  ,
 	 BufferTypeLast= 0x7FFFFFFF,
 
-}BufferType_t; 
+}BufferType_t;
 
 typedef enum RSAType_enum
 {
@@ -42,5 +50,5 @@ typedef enum RSAType_enum
 	 CRT_MODE  ,
 	 RSATypeLast= 0x7FFFFFFF,
 
-}RSAType_enum; 
+}RSAType_enum;
 

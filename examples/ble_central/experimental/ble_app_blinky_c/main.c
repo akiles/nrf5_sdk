@@ -1,12 +1,42 @@
-/*
- * Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is confidential property of Nordic Semiconductor. The use,
- * copying, transfer or disclosure of such information is prohibited except by express written
- * agreement with Nordic Semiconductor.
- *
+/**
+ * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /**
  * @brief BLE LED Button Service central and client application main file.
  *
@@ -29,62 +59,49 @@
 #include "ble_conn_params.h"
 #include "ble_db_discovery.h"
 #include "ble_lbs_c.h"
+#include "nrf_ble_gatt.h"
+
 #define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 
 
-#define CENTRAL_LINK_COUNT        1                                        /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
-#define PERIPHERAL_LINK_COUNT     0                                        /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
+#define CENTRAL_LINK_COUNT        1                                     /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
+#define PERIPHERAL_LINK_COUNT     0                                     /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 
-#if (NRF_SD_BLE_API_VERSION <= 3)
-    #define NRF_BLE_MAX_MTU_SIZE        GATT_MTU_SIZE_DEFAULT                   /**< MTU size used in the softdevice enabling and to reply to a BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST event. */
-#else
-    #define NRF_BLE_MAX_MTU_SIZE        BLE_GATT_MTU_SIZE_DEFAULT               /**< MTU size used in the softdevice enabling and to reply to a BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST event. */
-#endif
+#define CENTRAL_SCANNING_LED      BSP_BOARD_LED_0                       /**< Scanning LED will be on when the device is scanning. */
+#define CENTRAL_CONNECTED_LED     BSP_BOARD_LED_1                       /**< Connected LED will be on when the device is connected. */
 
-#define CENTRAL_SCANNING_LED      BSP_BOARD_LED_0                          /**< Scanning LED will be on when the device is scanning. */
-#define CENTRAL_CONNECTED_LED     BSP_BOARD_LED_1                          /**< Connected LED will be on when the device is connected. */
+#define SCAN_INTERVAL             0x00A0                                /**< Determines scan interval in units of 0.625 millisecond. */
+#define SCAN_WINDOW               0x0050                                /**< Determines scan window in units of 0.625 millisecond. */
+#define SCAN_TIMEOUT              0x0000                                /**< Timout when scanning. 0x0000 disables timeout. */
 
-#define APP_TIMER_PRESCALER       0                                        /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE   2                                        /**< Size of timer operation queues. */
+#define MIN_CONNECTION_INTERVAL   MSEC_TO_UNITS(7.5, UNIT_1_25_MS)      /**< Determines minimum connection interval in milliseconds. */
+#define MAX_CONNECTION_INTERVAL   MSEC_TO_UNITS(30, UNIT_1_25_MS)       /**< Determines maximum connection interval in milliseconds. */
+#define SLAVE_LATENCY             0                                     /**< Determines slave latency in terms of connection events. */
+#define SUPERVISION_TIMEOUT       MSEC_TO_UNITS(4000, UNIT_10_MS)       /**< Determines supervision time-out in units of 10 milliseconds. */
 
-#define SEC_PARAM_BOND            1                                        /**< Perform bonding. */
-#define SEC_PARAM_MITM            0                                        /**< Man In The Middle protection not required. */
-#define SEC_PARAM_IO_CAPABILITIES BLE_GAP_IO_CAPS_NONE                     /**< No I/O capabilities. */
-#define SEC_PARAM_OOB             0                                        /**< Out Of Band data not available. */
-#define SEC_PARAM_MIN_KEY_SIZE    7                                        /**< Minimum encryption key size in octets. */
-#define SEC_PARAM_MAX_KEY_SIZE    16                                       /**< Maximum encryption key size in octets. */
+#define UUID16_SIZE               2                                     /**< Size of a UUID, in bytes. */
 
-#define SCAN_INTERVAL             0x00A0                                   /**< Determines scan interval in units of 0.625 millisecond. */
-#define SCAN_WINDOW               0x0050                                   /**< Determines scan window in units of 0.625 millisecond. */
-#define SCAN_TIMEOUT              0x0000                                   /**< Timout when scanning. 0x0000 disables timeout. */
-
-#define MIN_CONNECTION_INTERVAL   MSEC_TO_UNITS(7.5, UNIT_1_25_MS)         /**< Determines minimum connection interval in milliseconds. */
-#define MAX_CONNECTION_INTERVAL   MSEC_TO_UNITS(30, UNIT_1_25_MS)          /**< Determines maximum connection interval in milliseconds. */
-#define SLAVE_LATENCY             0                                        /**< Determines slave latency in terms of connection events. */
-#define SUPERVISION_TIMEOUT       MSEC_TO_UNITS(4000, UNIT_10_MS)          /**< Determines supervision time-out in units of 10 milliseconds. */
-
-#define UUID16_SIZE               2                                        /**< Size of a UUID, in bytes. */
-
-#define LEDBUTTON_LED             BSP_BOARD_LED_2                          /**< LED to indicate a change of state of the the Button characteristic on the peer. */
-#define LEDBUTTON_BUTTON_PIN      BSP_BUTTON_0                             /**< Button that will write to the LED characteristic of the peer */
-#define BUTTON_DETECTION_DELAY    APP_TIMER_TICKS(50, APP_TIMER_PRESCALER) /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
-
-static const char m_target_periph_name[] = "Nordic_Blinky";                /**< Name of the device we try to connect to. This name is searched in the scan report data*/
+#define LEDBUTTON_LED             BSP_BOARD_LED_2                       /**< LED to indicate a change of state of the the Button characteristic on the peer. */
+#define LEDBUTTON_BUTTON_PIN      BSP_BUTTON_0                          /**< Button that will write to the LED characteristic of the peer */
+#define BUTTON_DETECTION_DELAY    APP_TIMER_TICKS(50)                   /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
 
 
-/**@brief Variable length data encapsulation in terms of length and pointer to data. */
+/**@brief Variable length data encapsulation in terms of length and pointer to data.
+ */
 typedef struct
 {
     uint8_t * p_data;   /**< Pointer to data. */
     uint16_t  data_len; /**< Length of data. */
 } data_t;
 
-/**
- * @brief Parameters used when scanning.
+
+static char const m_target_periph_name[] = "Nordic_Blinky";             /**< Name of the device we try to connect to. This name is searched in the scan report data*/
+
+/**@brief Parameters used when scanning.
  */
-static const ble_gap_scan_params_t m_scan_params =
+static ble_gap_scan_params_t const m_scan_params =
 {
     .active   = 1,
     .interval = SCAN_INTERVAL,
@@ -99,8 +116,9 @@ static const ble_gap_scan_params_t m_scan_params =
     #endif
 };
 
-/**@brief Connection parameters requested for connection. */
-static const ble_gap_conn_params_t m_connection_param =
+/**@brief Connection parameters requested for connection.
+ */
+static ble_gap_conn_params_t const m_connection_param =
 {
     (uint16_t)MIN_CONNECTION_INTERVAL,
     (uint16_t)MAX_CONNECTION_INTERVAL,
@@ -108,8 +126,9 @@ static const ble_gap_conn_params_t m_connection_param =
     (uint16_t)SUPERVISION_TIMEOUT
 };
 
-static ble_lbs_c_t        m_ble_lbs_c;        /**< Main structure used by the LBS client module. */
-static ble_db_discovery_t m_ble_db_discovery; /**< DB structure used by the database discovery module. */
+static ble_lbs_c_t        m_ble_lbs_c;          /**< Main structure used by the LBS client module. */
+static ble_db_discovery_t m_ble_db_discovery;   /**< DB structure used by the database discovery module. */
+static nrf_ble_gatt_t     m_gatt;               /**< GATT module instance. */
 
 
 /**@brief Function to handle asserts in the SoftDevice.
@@ -239,53 +258,49 @@ static void lbs_c_evt_handler(ble_lbs_c_t * p_lbs_c, ble_lbs_c_evt_t * p_lbs_c_e
  */
 static void on_adv_report(const ble_evt_t * const p_ble_evt)
 {
-    uint32_t err_code;
-    data_t   adv_data;
-    bool     do_connect = false;
-    data_t   dev_name;
+    ret_code_t err_code;
+    data_t     adv_data;
+    data_t     dev_name;
+    bool       do_connect = false;
 
     // For readibility.
-    const ble_gap_evt_t * const  p_gap_evt  = &p_ble_evt->evt.gap_evt;
-    const ble_gap_addr_t * const peer_addr  = &p_gap_evt->params.adv_report.peer_addr;
+    ble_gap_evt_t  const * p_gap_evt  = &p_ble_evt->evt.gap_evt;
+    ble_gap_addr_t const * peer_addr  = &p_gap_evt->params.adv_report.peer_addr;
+
+    // Initialize advertisement report for parsing
+    adv_data.p_data   = (uint8_t *)p_gap_evt->params.adv_report.data;
+    adv_data.data_len = p_gap_evt->params.adv_report.dlen;
+
+    // Search for advertising names.
+    bool name_found = false;
+    err_code = adv_report_parse(BLE_GAP_AD_TYPE_COMPLETE_LOCAL_NAME, &adv_data, &dev_name);
+
+    if (err_code != NRF_SUCCESS)
     {
-        // Initialize advertisement report for parsing
-        adv_data.p_data     = (uint8_t *)p_gap_evt->params.adv_report.data;
-        adv_data.data_len   = p_gap_evt->params.adv_report.dlen;
-
-
-        //search for advertising names
-        bool found_name = false;
-        err_code = adv_report_parse(BLE_GAP_AD_TYPE_COMPLETE_LOCAL_NAME,
-                                    &adv_data,
-                                    &dev_name);
+        // Look for the short local name if it was not found as complete.
+        err_code = adv_report_parse(BLE_GAP_AD_TYPE_SHORT_LOCAL_NAME, &adv_data, &dev_name);
         if (err_code != NRF_SUCCESS)
         {
-            // Look for the short local name if it was not found as complete
-            err_code = adv_report_parse(BLE_GAP_AD_TYPE_SHORT_LOCAL_NAME,
-                                        &adv_data,
-                                        &dev_name);
-            if (err_code != NRF_SUCCESS)
-            {
-                // If we can't parse the data, then exit
-                return;
-            }
-            else
-            {
-                found_name = true;
-            }
+            // If we can't parse the data, then exit
+            return;
         }
         else
         {
-            found_name = true;
+            name_found = true;
         }
-        if (found_name)
+    }
+    else
+    {
+        name_found = true;
+    }
+
+    if (name_found)
+    {
+        if (strlen(m_target_periph_name) != 0)
         {
-            if (strlen(m_target_periph_name) != 0)
+            if (memcmp(m_target_periph_name, dev_name.p_data, dev_name.data_len )== 0)
             {
-                if (memcmp(m_target_periph_name, dev_name.p_data, dev_name.data_len )== 0)
-                {
-                    do_connect = true;
-                }
+                do_connect = true;
             }
         }
     }
@@ -293,7 +308,10 @@ static void on_adv_report(const ble_evt_t * const p_ble_evt)
     if (do_connect)
     {
         // Initiate connection.
-        err_code = sd_ble_gap_connect(peer_addr, &m_scan_params, &m_connection_param);
+        err_code = sd_ble_gap_connect(peer_addr,
+                                      &m_scan_params,
+                                      &m_connection_param,
+                                      BLE_CONN_CFG_TAG_DEFAULT);
         APP_ERROR_CHECK(err_code);
     }
 }
@@ -310,12 +328,12 @@ static void on_adv_report(const ble_evt_t * const p_ble_evt)
  *
  * @param[in] p_ble_evt Bluetooth stack event.
  */
-static void on_ble_evt(const ble_evt_t * const p_ble_evt)
+static void on_ble_evt(ble_evt_t const * p_ble_evt)
 {
     ret_code_t err_code;
 
     // For readability.
-    const ble_gap_evt_t * const p_gap_evt = &p_ble_evt->evt.gap_evt;
+    ble_gap_evt_t const * p_gap_evt = &p_ble_evt->evt.gap_evt;
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -384,15 +402,6 @@ static void on_ble_evt(const ble_evt_t * const p_ble_evt)
             APP_ERROR_CHECK(err_code);
         } break;
 
-#if (NRF_SD_BLE_API_VERSION >= 3)
-        case BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST:
-        {
-            err_code = sd_ble_gatts_exchange_mtu_reply(p_ble_evt->evt.gatts_evt.conn_handle,
-                                                       NRF_BLE_MAX_MTU_SIZE);
-            APP_ERROR_CHECK(err_code);
-        } break;
-#endif
-
         default:
             // No implementation needed.
             break;
@@ -412,6 +421,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
     on_ble_evt(p_ble_evt);
     ble_db_discovery_on_ble_evt(&m_ble_db_discovery, p_ble_evt);
     ble_lbs_c_on_ble_evt(&m_ble_lbs_c, p_ble_evt);
+    nrf_ble_gatt_on_ble_evt(&m_gatt, p_ble_evt);
 
 }
 
@@ -420,7 +430,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
  */
 static void lbs_c_init(void)
 {
-    uint32_t         err_code;
+    ret_code_t       err_code;
     ble_lbs_c_init_t lbs_c_init_obj;
 
     lbs_c_init_obj.evt_handler = lbs_c_evt_handler;
@@ -439,23 +449,33 @@ static void ble_stack_init(void)
     ret_code_t err_code;
 
     nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
 
-    ble_enable_params_t ble_enable_params;
-    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
-                                                    PERIPHERAL_LINK_COUNT,
-                                                    &ble_enable_params);
+    // Fetch the start address of the application RAM.
+    uint32_t ram_start = 0;
+    err_code = softdevice_app_ram_start_get(&ram_start);
     APP_ERROR_CHECK(err_code);
 
-    //Check the ram settings against the used number of links
-    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
+    // Overwrite some of the default configurations for the BLE stack.
+    ble_cfg_t ble_cfg;
+
+    // Configure the maximum number of connections.
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = 0;
+    ble_cfg.gap_cfg.role_count_cfg.central_role_count = CENTRAL_LINK_COUNT;
+    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = 1;
+    err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start);
+    APP_ERROR_CHECK(err_code);
+
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.gatts_cfg.attr_tab_size.attr_tab_size = BLE_GATTS_ATTR_TAB_SIZE_MIN;
+    err_code = sd_ble_cfg_set(BLE_GATTS_CFG_ATTR_TAB_SIZE, &ble_cfg, ram_start);
+    APP_ERROR_CHECK(err_code);
 
     // Enable BLE stack.
-#if (NRF_SD_BLE_API_VERSION >= 3)
-    ble_enable_params.gatt_enable_params.att_mtu = NRF_BLE_MAX_MTU_SIZE;
-#endif
-    err_code = softdevice_enable(&ble_enable_params);
+    err_code = softdevice_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
@@ -471,7 +491,7 @@ static void ble_stack_init(void)
  */
 static void button_event_handler(uint8_t pin_no, uint8_t button_action)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     switch (pin_no)
     {
@@ -500,7 +520,7 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
  */
 static void buttons_init(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
     //The array must be static because a pointer to it will be saved in the button handler module.
     static app_button_cfg_t buttons[] =
@@ -528,8 +548,7 @@ static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
 }
 
 
-/**
- * @brief Database discovery initialization.
+/**@brief Database discovery initialization.
  */
 static void db_discovery_init(void)
 {
@@ -538,8 +557,7 @@ static void db_discovery_init(void)
 }
 
 
-
-/** @brief Function to sleep until a BLE event is received by the application.
+/**@brief Function to sleep until a BLE event is received by the application.
  */
 static void power_manage(void)
 {
@@ -548,25 +566,49 @@ static void power_manage(void)
 }
 
 
+/**@brief Function for initializing the log.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for initializing the timer.
+ */
+static void timer_init(void)
+{
+    ret_code_t err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for initializing the GATT module.
+ */
+static void gatt_init(void)
+{
+    ret_code_t err_code = nrf_ble_gatt_init(&m_gatt, NULL);
+    APP_ERROR_CHECK(err_code);
+}
+
+
 int main(void)
 {
-    ret_code_t err_code;
-
-    err_code = NRF_LOG_INIT(NULL);
-    APP_ERROR_CHECK(err_code);
+    log_init();
+    timer_init();
     leds_init();
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
     buttons_init();
     ble_stack_init();
-
+    gatt_init();
     db_discovery_init();
     lbs_c_init();
+
+    NRF_LOG_INFO("Blinky example started.\r\n");
 
     // Start scanning for peripherals and initiate connection to devices which
     // advertise.
     scan_start();
-
-    NRF_LOG_INFO("\r\nBlinky Start!\r\n");
 
     // Turn on the LED to signal scanning.
     bsp_board_led_on(CENTRAL_SCANNING_LED);

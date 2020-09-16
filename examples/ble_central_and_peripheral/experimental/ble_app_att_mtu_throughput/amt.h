@@ -1,3 +1,43 @@
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
+ */
+
 #ifndef AMT_H__
 #define AMT_H__
 
@@ -22,12 +62,12 @@ extern "C" {
 #define SERVICE_UUID_BASE   {0xBB, 0x4A, 0xFF, 0x4F, 0xAD, 0x03, 0x41, 0x5D, \
                              0xA9, 0x6C, 0x9D, 0x6C, 0xDD, 0xDA, 0x83, 0x04}
 
-#define AMT_SERVICE_UUID             0x1523
-#define AMTS_CHAR_UUID               0x1524
-#define AMT_RCV_BYTES_CNT_CHAR_UUID  0x1525
+#define AMT_SERVICE_UUID                0x1523
+#define AMTS_CHAR_UUID                  0x1524
+#define AMT_RCV_BYTES_CNT_CHAR_UUID     0x1525
 
-#define AMT_RCV_BYTES_CNT_MAX_LEN    (4)
-#define AMT_BYTE_TRANSFER_CNT (1024*1024)
+#define AMT_RCV_BYTES_CNT_MAX_LEN       4
+#define AMT_BYTE_TRANSFER_CNT           (1024 * 1024)
 
 /**
  * @defgroup nrf_ble_amt ATT MTU Throughput (AMT) Service Client
@@ -45,39 +85,39 @@ extern "C" {
 /**@brief Structure containing the handles found on the peer. */
 typedef struct
 {
-    uint16_t amt_cccd_handle;                  //!<  Handle of the CCCD . */
-    uint16_t amt_handle;                       //!<  Handle of the characteristic as provided by the SoftDevice. */
-    uint16_t amt_rbc_handle;                   //!<  Handle of the Number of received bytes  characteristic as provided by the SoftDevice. */
+    uint16_t amt_cccd_handle;               //!<  Handle of the CCCD . */
+    uint16_t amt_handle;                    //!<  Handle of the characteristic as provided by the SoftDevice. */
+    uint16_t amt_rbc_handle;                //!<  Handle of the Number of received bytes  characteristic as provided by the SoftDevice. */
 } nrf_ble_amtc_db_t;
 
 /**@brief AMT Client event type. */
 typedef enum
 {
-    NRF_BLE_AMT_C_EVT_DISCOVERY_COMPLETE = 1,  //!<  Event indicating that the peer throughput Service has been discovered at the peer. */
-    NRF_BLE_AMT_C_EVT_NOTIFICATION,            //!<  Event indicating that a notification has been received from the peer. */
-    NRF_BLE_AMT_C_EVT_RBC_READ_RSP             //!<  Event indicating that a Number of received bytes notification has been received from the peer. */
+    NRF_BLE_AMT_C_EVT_DISCOVERY_COMPLETE,   //!<  Event indicating that the peer throughput Service has been discovered at the peer. */
+    NRF_BLE_AMT_C_EVT_NOTIFICATION,         //!<  Event indicating that a notification has been received from the peer. */
+    NRF_BLE_AMT_C_EVT_RBC_READ_RSP          //!<  Event indicating that a Number of received bytes notification has been received from the peer. */
 } nrf_ble_amtc_evt_type_t;
 
 
 /**@brief AMT Notification structure. */
 typedef struct
 {
-    uint16_t           notif_len;                //!<  Length of the received notification.*/
-    uint32_t           bytes_sent;               //!<  Decoded number of bytes sent by the peer.*/
-    uint32_t           bytes_rcvd;               //!<  Number of bytes received from the peer since the beggining of the transfer.*/
+    uint16_t notif_len;                     //!<  Length of the received notification.*/
+    uint32_t bytes_sent;                    //!<  Decoded number of bytes sent by the peer.*/
+    uint32_t bytes_rcvd;                    //!<  Number of bytes received from the peer since the beggining of the transfer.*/
 } nrf_ble_amtc_notif_t;
 
 
 /**@brief AMT Event structure. */
 typedef struct
 {
-    nrf_ble_amtc_evt_type_t evt_type;           //!<  Type of the event. */
-    uint16_t                conn_handle;        //!<  Connection handle on which the event  occurred.*/
+    nrf_ble_amtc_evt_type_t evt_type;       //!<  Type of the event. */
+    uint16_t                conn_handle;    //!<  Connection handle on which the event  occurred.*/
     union
     {
-        nrf_ble_amtc_db_t    peer_db;           //!<  Handles found on the peer device. This will be filled if the evt_type is @ref NRF_BLE_AMT_C_EVT_DISCOVERY_COMPLETE.*/
-        nrf_ble_amtc_notif_t hvx;               //!<  Notification data. This will be filled if the evt_type is @ref NRF_BLE_AMT_C_EVT_NOTIFICATION.*/
-        uint32_t             rcv_bytes_cnt;     //!<  Number of received bytes by the peer. This will be filled if the evt_type is @ref NRF_BLE_AMT_C_EVT_RBC_NOTIFICATION.*/
+        nrf_ble_amtc_db_t    peer_db;       //!<  Handles found on the peer device. This will be filled if the evt_type is @ref NRF_BLE_AMT_C_EVT_DISCOVERY_COMPLETE.*/
+        nrf_ble_amtc_notif_t hvx;           //!<  Notification data. This will be filled if the evt_type is @ref NRF_BLE_AMT_C_EVT_NOTIFICATION.*/
+        uint32_t             rcv_bytes_cnt; //!<  Number of received bytes by the peer. This will be filled if the evt_type is @ref NRF_BLE_AMT_C_EVT_RBC_NOTIFICATION.*/
     } params;
 } nrf_ble_amtc_evt_t;
 
@@ -174,9 +214,9 @@ void nrf_ble_amtc_on_db_disc_evt(nrf_ble_amtc_t * p_ctx, const ble_db_discovery_
  * @param[in] p_peer_handles Attribute handles on the AMT server that you want this AMT client to
  *                           interact with.
  */
-ret_code_t nrf_ble_amtc_handles_assign(nrf_ble_amtc_t * p_ctx,
-                                      uint16_t            conn_handle,
-                                      nrf_ble_amtc_db_t * p_peer_handles);
+ret_code_t nrf_ble_amtc_handles_assign(nrf_ble_amtc_t    * p_ctx,
+                                       uint16_t            conn_handle,
+                                       nrf_ble_amtc_db_t * p_peer_handles);
 
 
 /**@brief     Function for reading the Bytes Received Count (RCB) characteristic.
@@ -210,18 +250,18 @@ ret_code_t nrf_ble_amtc_rcb_read(nrf_ble_amtc_t * p_ctx);
 /**@brief AMT Server event type. */
 typedef enum
 {
-    SERVICE_EVT_NOTIF_ENABLED,
-    SERVICE_EVT_NOTIF_DISABLED,
-    SERVICE_EVT_TRANSFER_1KB,
-    SERVICE_EVT_TRANSFER_FINISHED,
+    NRF_BLE_AMTS_EVT_NOTIF_ENABLED,
+    NRF_BLE_AMTS_EVT_NOTIF_DISABLED,
+    NRF_BLE_AMTS_EVT_TRANSFER_1KB,
+    NRF_BLE_AMTS_EVT_TRANSFER_FINISHED,
 } nrf_ble_amts_evt_type_t;
 
 
 /**@brief AMTS Event structure. */
 typedef struct
 {
-    nrf_ble_amts_evt_type_t evt_type;                       //!< Type of the event. */
-    uint32_t                bytes_transfered_cnt;           //!< Number of bytes sent during the transfer*/
+    nrf_ble_amts_evt_type_t evt_type;               //!< Type of the event. */
+    uint32_t                bytes_transfered_cnt;   //!< Number of bytes sent during the transfer*/
 } nrf_ble_amts_evt_t;
 
 
@@ -242,16 +282,16 @@ typedef struct
     amts_evt_handler_t       evt_handler;            //!< Application event handler to be called when there is an event related to the AMTS module. */
     bool                     busy;                   //!< busy flag, indicates that the hvx function returned busy and that there are still data to be transfered. */
     uint16_t                 max_payload_len;        //!< Maximum number of bytes which can be sent in one notification. */
-    uint32_t                 kbytes_sent;            //!< number of kiloBytes sent. */
-    uint32_t                 bytes_sent;             //!< number of bytes sent. */
+    uint32_t                 kbytes_sent;            //!< Number of Kilobytes sent. */
+    uint32_t                 bytes_sent;             //!< Number of bytes sent. */
 } nrf_ble_amts_t;
 
 
-/**@brief     Function for handling BLE events from the SoftDevice.
+/**@brief   Function for handling BLE events from the SoftDevice.
  *
- * @details   This function will handle the BLE events received from the SoftDevice. If a BLE
- *            event is relevant to the AMTS module, then it uses it to update
- *            interval variables and, if necessary, send events to the application.
+ * @details This function will handle the BLE events received from the SoftDevice.
+ *          If a BLE event is relevant to the AMTS module, then it uses it to update
+ *          interval variables and, if necessary, send events to the application.
  *
  * @param     p_ctx       Pointer to the AMTS structure.
  * @param[in] p_ble_evt   Pointer to the BLE event.
@@ -259,9 +299,9 @@ typedef struct
 void nrf_ble_amts_on_ble_evt(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt);
 
 
-/**@brief      Function for initializing the ATT MTU Throughput Service module.
+/**@brief   Function for initializing the ATT MTU Throughput Service module.
  *
- * @details    This function will initialize the module and set up the ATT MTU Throughput Service.
+ * @details This function will initialize the module and set up the ATT MTU Throughput Service.
  *
  * @param[out] p_ctx        Pointer to the AMTS structure.
  * @param[in]  evt_handler  Event handler.
@@ -272,34 +312,35 @@ void nrf_ble_amts_on_ble_evt(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt);
 void nrf_ble_amts_init(nrf_ble_amts_t * p_ctx, amts_evt_handler_t evt_handler);
 
 
-/**@brief     Function for sending AMT_BYTE_TRANSFER_CNT bytes via notifications.
+/**@brief   Function for sending AMT_BYTE_TRANSFER_CNT bytes via notifications.
  *
- * @details   Call this function to start sending notifications. The module will keep sending notifications
- *            until AMT_BYTE_TRANSFER_CNT bytes has been sent.
+ * @details Call this function to start sending notifications until AMT_BYTE_TRANSFER_CNT bytes
+ *          have been sent. Each notification will contain @p p_ctx::max_payload_len bytes of
+ *          ATT payload.
  *
- * @param     p_ctx       Pointer to the AMTS structure.
+ * @param   p_ctx   Pointer to the AMTS structure.
  */
 void nrf_ble_amts_notif_spam(nrf_ble_amts_t * p_ctx);
 
 
-/**@brief     Function for setting the the number of received bytes.
+/**@brief   Function for setting the the number of bytes received.
  *
- * @details   Call this function to update the number of received bytes
+ * @details Call this function to update the number of bytes received.
  *
- * @param     p_ctx    Pointer to the AMTS structure.
- * @param[in] byte_cnt number of received bytes.
+ * @param       p_ctx     Pointer to the AMTS structure.
+ * @param[in]   byte_cnt  Number of bytes received.
  */
 void nrf_ble_amts_rbc_set(nrf_ble_amts_t * p_ctx, uint32_t byte_cnt);
 
 
-/**@brief Function for handling the GATT module's events.
+/**@brief   Function for handling the GATT module's events.
  *
  * @details Handles all events from the GATT module of interest to the AMT Service.
  *
- * @param     p_ctx       Pointer to the AMTS structure.
- * @param[in] p_gatt_evt  Event received from the GATT module.
+ * @param       p_ctx         Pointer to the AMTS structure.
+ * @param[in]   p_gatt_evt    Event received from the GATT module.
  */
-void nrf_ble_amts_on_gatt_evt(nrf_ble_amts_t * p_ctx, nrf_ble_gatt_evt_t * p_gatt_evt);
+void nrf_ble_amts_on_gatt_evt(nrf_ble_amts_t * p_ctx, nrf_ble_gatt_evt_t const * p_gatt_evt);
 
 /** @} */ // End tag for the Server.
 

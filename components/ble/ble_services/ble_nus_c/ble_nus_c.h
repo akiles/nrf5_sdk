@@ -1,12 +1,42 @@
-/*
- * Copyright (c) 2012 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is confidential property of Nordic Semiconductor. The use,
- * copying, transfer or disclosure of such information is prohibited except by express written
- * agreement with Nordic Semiconductor.
- *
+/**
+ * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /**@file
  *
  * @defgroup ble_nus_c Nordic UART Service Client
@@ -33,48 +63,53 @@
 #include "ble_gatt.h"
 #include "ble_db_discovery.h"
 
+#include "sdk_config.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #define NUS_BASE_UUID                   {{0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0x00, 0x00, 0x40, 0x6E}} /**< Used vendor specific UUID. */
-#define BLE_UUID_NUS_SERVICE            0x0001                      /**< The UUID of the Nordic UART Service. */
-#define BLE_UUID_NUS_TX_CHARACTERISTIC  0x0002                      /**< The UUID of the TX Characteristic. */
-#define BLE_UUID_NUS_RX_CHARACTERISTIC  0x0003                      /**< The UUID of the RX Characteristic. */
 
-#if   (NRF_SD_BLE_API_VERSION <= 3)
-    #define BLE_NUS_MAX_DATA_LEN            (GATT_MTU_SIZE_DEFAULT - 3) /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
+#define BLE_UUID_NUS_SERVICE            0x0001                      /**< The UUID of the Nordic UART Service. */
+#define BLE_UUID_NUS_RX_CHARACTERISTIC  0x0002                      /**< The UUID of the RX Characteristic. */
+#define BLE_UUID_NUS_TX_CHARACTERISTIC  0x0003                      /**< The UUID of the TX Characteristic. */
+
+#define OPCODE_LENGTH 1
+#define HANDLE_LENGTH 2
+
+#if defined(NRF_BLE_GATT_MAX_MTU_SIZE) && (NRF_BLE_GATT_MAX_MTU_SIZE != 0)
+    #define BLE_NUS_MAX_DATA_LEN (NRF_BLE_GATT_MAX_MTU_SIZE - OPCODE_LENGTH - HANDLE_LENGTH) /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
 #else
-    #define BLE_NUS_MAX_DATA_LEN            (BLE_GATT_MTU_SIZE_DEFAULT - 3) /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
+    #define BLE_NUS_MAX_DATA_LEN (BLE_GATT_MTU_SIZE_DEFAULT - OPCODE_LENGTH - HANDLE_LENGTH) /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
+    #warning NRF_BLE_GATT_MAX_MTU_SIZE is not defined.
 #endif
+
 
 /**@brief NUS Client event type. */
 typedef enum
 {
     BLE_NUS_C_EVT_DISCOVERY_COMPLETE = 1, /**< Event indicating that the NUS service and its characteristics was found. */
-    BLE_NUS_C_EVT_NUS_RX_EVT,             /**< Event indicating that the central has received something from a peer. */
+    BLE_NUS_C_EVT_NUS_TX_EVT,             /**< Event indicating that the central has received something from a peer. */
     BLE_NUS_C_EVT_DISCONNECTED            /**< Event indicating that the NUS server has disconnected. */
 } ble_nus_c_evt_type_t;
 
-
-/**@brief Handles on the connected peer device needed to interact with it.
-*/
+/**@brief Handles on the connected peer device needed to interact with it. */
 typedef struct {
-    uint16_t                nus_rx_handle;      /**< Handle of the NUS RX characteristic as provided by a discovery. */
-    uint16_t                nus_rx_cccd_handle; /**< Handle of the CCCD of the NUS RX characteristic as provided by a discovery. */
-    uint16_t                nus_tx_handle;      /**< Handle of the NUS TX characteristic as provided by a discovery. */
+    uint16_t nus_tx_handle;      /**< Handle of the NUS TX characteristic as provided by a discovery. */
+    uint16_t nus_tx_cccd_handle; /**< Handle of the CCCD of the NUS TX characteristic as provided by a discovery. */
+    uint16_t nus_rx_handle;      /**< Handle of the NUS RX characteristic as provided by a discovery. */
 } ble_nus_c_handles_t;
-
 
 /**@brief Structure containing the NUS event data received from the peer. */
 typedef struct {
     ble_nus_c_evt_type_t evt_type;
     uint16_t             conn_handle;
+    uint16_t             max_data_len;
     uint8_t            * p_data;
     uint8_t              data_len;
     ble_nus_c_handles_t  handles;     /**< Handles on which the Nordic Uart service characteristics was discovered on the peer device. This will be filled if the evt_type is @ref BLE_NUS_C_EVT_DISCOVERY_COMPLETE.*/
 } ble_nus_c_evt_t;
-
 
 // Forward declaration of the ble_nus_t type.
 typedef struct ble_nus_c_s ble_nus_c_t;
@@ -86,20 +121,18 @@ typedef struct ble_nus_c_s ble_nus_c_t;
  */
 typedef void (* ble_nus_c_evt_handler_t)(ble_nus_c_t * p_ble_nus_c, const ble_nus_c_evt_t * p_evt);
 
-
-/**@brief NUS Client structure.
- */
+/**@brief NUS Client structure. */
 struct ble_nus_c_s
 {
-    uint8_t                 uuid_type;          /**< UUID type. */
-    uint16_t                conn_handle;        /**< Handle of the current connection. Set with @ref ble_nus_c_handles_assign when connected. */
-    ble_nus_c_handles_t     handles;            /**< Handles on the connected peer device needed to interact with it. */
-    ble_nus_c_evt_handler_t evt_handler;        /**< Application event handler to be called when there is an event related to the NUS. */
+    uint8_t                 uuid_type;      /**< UUID type. */
+    uint16_t                conn_handle;    /**< Handle of the current connection. Set with @ref ble_nus_c_handles_assign when connected. */
+    ble_nus_c_handles_t     handles;        /**< Handles on the connected peer device needed to interact with it. */
+    ble_nus_c_evt_handler_t evt_handler;    /**< Application event handler to be called when there is an event related to the NUS. */
 };
 
-/**@brief NUS Client initialization structure.
- */
-typedef struct {
+/**@brief NUS Client initialization structure. */
+typedef struct
+{
     ble_nus_c_evt_handler_t evt_handler;
 } ble_nus_c_init_t;
 
@@ -148,10 +181,10 @@ uint32_t ble_nus_c_init(ble_nus_c_t * p_ble_nus_c, ble_nus_c_init_t * p_ble_nus_
  */
 void ble_nus_c_on_ble_evt(ble_nus_c_t * p_ble_nus_c, const ble_evt_t * p_ble_evt);
 
-/**@brief   Function for requesting the peer to start sending notification of RX characteristic.
+/**@brief   Function for requesting the peer to start sending notification of TX characteristic.
  *
- * @details This function enables notifications of the NUS RX characteristic at the peer
- *          by writing to the CCCD of the NUS RX characteristic.
+ * @details This function enables notifications of the NUS TX characteristic at the peer
+ *          by writing to the CCCD of the NUS TX characteristic.
  *
  * @param   p_ble_nus_c Pointer to the NUS client structure.
  *
@@ -159,11 +192,11 @@ void ble_nus_c_on_ble_evt(ble_nus_c_t * p_ble_nus_c, const ble_evt_t * p_ble_evt
  *                      Otherwise, an error code is returned. This function propagates the error
  *                      code returned by the SoftDevice API @ref sd_ble_gattc_write.
  */
-uint32_t ble_nus_c_rx_notif_enable(ble_nus_c_t * p_ble_nus_c);
+uint32_t ble_nus_c_tx_notif_enable(ble_nus_c_t * p_ble_nus_c);
 
 /**@brief Function for sending a string to the server.
  *
- * @details This function writes the TX characteristic of the server.
+ * @details This function writes the RX characteristic of the server.
  *
  * @param[in] p_ble_nus_c Pointer to the NUS client structure.
  * @param[in] p_string    String to be sent.

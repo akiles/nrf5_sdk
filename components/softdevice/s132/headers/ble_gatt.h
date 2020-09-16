@@ -1,26 +1,26 @@
-/* 
+/*
  * Copyright (c) Nordic Semiconductor ASA
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- * 
+ *
  *   1. Redistributions of source code must retain the above copyright notice, this
  *   list of conditions and the following disclaimer.
- * 
+ *
  *   2. Redistributions in binary form must reproduce the above copyright notice, this
  *   list of conditions and the following disclaimer in the documentation and/or
  *   other materials provided with the distribution.
- * 
+ *
  *   3. Neither the name of Nordic Semiconductor ASA nor the names of other
  *   contributors to this software may be used to endorse or promote products
  *   derived from this software without specific prior written permission.
- * 
+ *
  *   4. This software must only be used in a processor manufactured by Nordic
  *   Semiconductor ASA, or in a processor manufactured by a third party that
  *   is used in combination with a processor manufactured by Nordic Semiconductor.
- * 
- * 
+ *
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -31,7 +31,7 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  */
 
 /**
@@ -53,8 +53,8 @@ extern "C" {
 /** @addtogroup BLE_GATT_DEFINES Defines
  * @{ */
 
-/** @brief Default MTU size, in bytes. */
-#define BLE_GATT_MTU_SIZE_DEFAULT 23
+/** @brief Default ATT MTU, in bytes. */
+#define BLE_GATT_ATT_MTU_DEFAULT          23
 
 /**@brief Invalid Attribute Handle. */
 #define BLE_GATT_HANDLE_INVALID            0x0000
@@ -105,7 +105,7 @@ extern "C" {
 #define BLE_GATT_STATUS_ATTERR_INSUF_AUTHENTICATION       0x0105  /**< ATT Error: Authenticated link required. */
 #define BLE_GATT_STATUS_ATTERR_REQUEST_NOT_SUPPORTED      0x0106  /**< ATT Error: Used in ATT as Request Not Supported. */
 #define BLE_GATT_STATUS_ATTERR_INVALID_OFFSET             0x0107  /**< ATT Error: Offset specified was past the end of the attribute. */
-#define BLE_GATT_STATUS_ATTERR_INSUF_AUTHORIZATION        0x0108  /**< ATT Error: Used in ATT as Insufficient Authorisation. */
+#define BLE_GATT_STATUS_ATTERR_INSUF_AUTHORIZATION        0x0108  /**< ATT Error: Used in ATT as Insufficient Authorization. */
 #define BLE_GATT_STATUS_ATTERR_PREPARE_QUEUE_FULL         0x0109  /**< ATT Error: Used in ATT as Prepare Queue Full. */
 #define BLE_GATT_STATUS_ATTERR_ATTRIBUTE_NOT_FOUND        0x010A  /**< ATT Error: Used in ATT as Attribute not found. */
 #define BLE_GATT_STATUS_ATTERR_ATTRIBUTE_NOT_LONG         0x010B  /**< ATT Error: Attribute cannot be read or written using read/write blob requests. */
@@ -175,19 +175,20 @@ extern "C" {
  * @{ */
 
 /**
- * @brief BLE GATT initialization parameters.
+ * @brief BLE GATT connection configuration parameters, set with @ref sd_ble_cfg_set.
+ *
+ * @retval NRF_ERROR_INVALID_PARAM att_mtu is smaller than @ref BLE_GATT_ATT_MTU_DEFAULT.
  */
 typedef struct
 {
   uint16_t  att_mtu;          /**< Maximum size of ATT packet the SoftDevice can send or receive.
-                                   If it is 0 then @ref BLE_GATT_MTU_SIZE_DEFAULT will be used.
-                                   Otherwise @ref BLE_GATT_MTU_SIZE_DEFAULT is the minimum value.
+                                   The default and minimum value is @ref BLE_GATT_ATT_MTU_DEFAULT.
                                    @mscs
                                    @mmsc{@ref BLE_GATTC_MTU_EXCHANGE}
                                    @mmsc{@ref BLE_GATTS_MTU_EXCHANGE}
                                    @endmscs
                               */
-} ble_gatt_enable_params_t;
+} ble_gatt_conn_cfg_t;
 
 /**@brief GATT Characteristic Properties. */
 typedef struct
@@ -197,7 +198,7 @@ typedef struct
   uint8_t read            :1; /**< Reading the value permitted. */
   uint8_t write_wo_resp   :1; /**< Writing the value with Write Command permitted. */
   uint8_t write           :1; /**< Writing the value with Write Request permitted. */
-  uint8_t notify          :1; /**< Notications of the value permitted. */
+  uint8_t notify          :1; /**< Notification of the value permitted. */
   uint8_t indicate        :1; /**< Indications of the value permitted. */
   uint8_t auth_signed_wr  :1; /**< Writing the value with Signed Write Command permitted. */
 } ble_gatt_char_props_t;

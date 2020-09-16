@@ -176,10 +176,10 @@
         </option>
         <option>
           <name>CCDefines</name>
-          <state>NRF52840_XXAA</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>BOARD_PCA10056</state>
           <state>BSP_DEFINES_ONLY</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>NRF52840_XXAA</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -244,7 +244,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state></state>
+          <state>1</state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -325,6 +325,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sdcard</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
@@ -493,10 +494,10 @@
         </option>
         <option>
       <name>ADefines</name>
-          <state>NRF52840_XXAA</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>BOARD_PCA10056</state>
           <state>BSP_DEFINES_ONLY</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>NRF52840_XXAA</state>
         </option>
         <option>
           <name>AList</name>
@@ -609,6 +610,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sdcard</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
@@ -1017,7 +1019,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\block_dev\sdc\nrf_block_dev_sdc.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\sdk_errors.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_master\nrf_drv_spi.c</name>    </file>    <file>
@@ -1032,8 +1034,6 @@
   <name>FATFS</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\fatfs\port\diskio_blkdev.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\fatfs\src\ff.c</name>    </file>  </group>  <group>
-  <name>Documentation</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\license.txt</name>    </file>  </group>  <group>
   <name>Device</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\iar\iar_startup_nrf52840.s</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\system_nrf52840.c</name>    </file>  </group></project>

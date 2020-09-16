@@ -1,15 +1,42 @@
-/* Copyright (c) 2015 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /**
  * @file
  * @brief File with example code presenting usage of drivers for TWIS slave and TWI in master mode
@@ -20,34 +47,34 @@
 /**
  * @defgroup twi_master_with_twis_slave_example Example code presenting usage of drivers for TWIS slave and TWI in master mode
  *
- * This code presents usage of the two drivers:
+ * This code presents the usage of two drivers:
  * - @ref nrf_twi_drv (in synchronous mode)
  * - @ref nrf_twis_drv (in asynchronous mode)
  *
- * On the slave an EEPROM memory is simulated.
- * For simulated EEPROM AT24C01C device produced by ATMEL was selected.
+ * On the slave, EEPROM memory is simulated.
+ * For simulated EEPROM, the AT24C01C device produced by ATMEL was selected.
  * This device has 128 bytes of memory and it is simulated using internal RAM.
- * This RAM area is accessed only by simulated EEPROM so the rest of application can access it
+ * This RAM area is accessed only by simulated EEPROM so the rest of the application can access it
  * only using TWI commands via hardware configured pins.
  *
- * Selected memory chip uses 7 bits constant address. Word to access is selected during
- * write operation: first byte send is used as current address pointer.
+ * The selected memory chip uses a 7-bit constant address. Word to access is selected during
+ * a write operation: first byte sent is used as the current address pointer.
  *
- * Maximum 8 byte page can be written in single access.
- * The whole memory can be read in single access.
+ * A maximum of an 8-byte page can be written in a single access.
+ * The whole memory can be read in a single access.
  *
  * Differences between real chip and simulated one:
- * 1. Simulated chip has practically 0ms write time.
+ * 1. Simulated chip has practically 0 ms write time.
  *    This example does not poll the memory for readiness.
- * 2. During sequential read, when memory end is reached, zeroes are send.
+ * 2. During sequential read, when memory end is reached, zeroes are sent.
  *    There is no support for roll-over.
- * 3. It is possible to write maximum of 8 bytes in single sequential write.
- *    But in simulated EEPROM the whole address pointer is incremented.
- *    In real memory chip only 3 lowest bits changes during writing.
- *    In real device writing would roll-over in memory page.
+ * 3. It is possible to write a maximum of 8 bytes in a single sequential write.
+ *    However, in simulated EEPROM the whole address pointer is incremented.
+ *    In a real memory chip, only the 3 lowest bits chang during writing.
+ *    In a real device, writing would roll-over in memory page.
  *
- * On the master side we communicate with that memory and allow write and read.
- * We can use simple commands via UART to check the memory.
+ * On the master side, we communicate with that memory and allow write and read.
+ * Simple commands via UART can be used to check the memory.
  *
  * Pins to short:
  * - @ref TWI_SCL_M - @ref EEPROM_SIM_SCL_S
@@ -74,82 +101,83 @@
 #include "nrf_log_ctrl.h"
 
 /**
- * @brief Repeated part of help string
+ * @brief Repeated part of the help string.
  *
- * This string contains list of supported command together with description.
- * It is used in welcome message and in help message if unsupported commmand is detected.
+ * This string contains list of supported commands together with description.
+ * It is used in a welcome message and in a help message if an unsupported commmand is detected.
  */
 static const char m_cmd_help_str1[] =
         "   p - Print the EEPROM contents in a form: address, 8 bytes of code, ASCII form.\r\n";
 static const char m_cmd_help_str2[] =
-        "   w - Write string starting from address 0.\r\n";
+        "   w - Write a string starting from address 0.\r\n";
 static const char m_cmd_help_str3[] =
         "   c - Clear the memory (write 0xff)\r\n";
 static const char m_cmd_help_str4[] =
         "   x - Get transmission error byte.\r\n";
 
 /**
- * @brief TWI master instance
+ * @brief TWI master instance.
  *
- * Instance of TWI master driver that would be used for communication with simulated
- * eeprom memory.
+ * Instance of TWI master driver that will be used for communication with simulated
+ * EEPROM memory.
  */
 static const nrf_drv_twi_t m_twi_master = NRF_DRV_TWI_INSTANCE(MASTER_TWI_INST);
 
 
 /**
- * @brief Write data to simulated EEPROM
+ * @brief Write data to simulated EEPROM.
  *
- * Function uses TWI interface to write data into EEPROM memory.
+ * Function uses the TWI interface to write data into EEPROM memory.
  *
- * @param     addr  Start address to write
- * @param[in] pdata Pointer to data to send
- * @param     size  Byte count of data to send
+ * @param     addr  Start address to write.
+ * @param[in] pdata Pointer to data to send.
+ * @param     size  Byte count of data to send.
  * @attention       Maximum number of bytes that may be written is @ref EEPROM_SIM_SEQ_WRITE_MAX.
- *                  In sequential write all data have to be in the same page
+ *                  In sequential write, all data must be in the same page
  *                  (higher address bits do not change).
  *
  * @return NRF_SUCCESS or reason of error.
  *
- * @attention If you wish to communicate with real EEPROM memory chip check its readiness
- * after writing data.
+ * @attention If you wish to communicate with real EEPROM memory chip, check its readiness
+ * after writing the data.
  */
-static ret_code_t eeprom_write(size_t addr, uint8_t const * pdata, size_t size)
+static ret_code_t eeprom_write(uint16_t addr, uint8_t const * pdata, size_t size)
 {
     ret_code_t ret;
-    /* Memory device supports only limited number of bytes written in sequence */
-    if (size > (EEPROM_SIM_SEQ_WRITE_MAX))
+    /* Memory device supports only a limited number of bytes written in sequence */
+    if (size > (EEPROM_SIM_SEQ_WRITE_MAX_BYTES))
     {
         return NRF_ERROR_INVALID_LENGTH;
     }
-    /* All written data has to be in the same page */
-    if ((addr / (EEPROM_SIM_SEQ_WRITE_MAX)) != ((addr + size - 1) / (EEPROM_SIM_SEQ_WRITE_MAX)))
+    /* All written data must be in the same page */
+    if ((addr / (EEPROM_SIM_SEQ_WRITE_MAX_BYTES)) != ((addr + size - 1) / (EEPROM_SIM_SEQ_WRITE_MAX_BYTES)))
     {
         return NRF_ERROR_INVALID_ADDR;
     }
     do
     {
-        uint8_t buffer[1 + EEPROM_SIM_SEQ_WRITE_MAX]; /* Addr + data */
-        buffer[0] = (uint8_t)addr;
-        memcpy(buffer + 1, pdata, size);
-        ret = nrf_drv_twi_tx(&m_twi_master, EEPROM_SIM_ADDR, buffer, size + 1, false);
+        uint8_t buffer[EEPROM_SIM_ADDRESS_LEN_BYTES + EEPROM_SIM_SEQ_WRITE_MAX_BYTES]; /* Addr + data */
+
+        memcpy(buffer, &addr, EEPROM_SIM_ADDRESS_LEN_BYTES);
+        memcpy(buffer + EEPROM_SIM_ADDRESS_LEN_BYTES, pdata, size);
+        ret = nrf_drv_twi_tx(&m_twi_master, EEPROM_SIM_ADDR, buffer, size + EEPROM_SIM_ADDRESS_LEN_BYTES, false);
     }while (0);
     return ret;
 }
 
 
 /**
- * @brief Read data from simulated EEPROM
+ * @brief Read data from simulated EEPROM.
  *
- * Function uses TWI interface to read data from EEPROM memory.
+ * Function uses the TWI interface to read data from EEPROM memory.
  *
- * @param     addr  Start address to read
- * @param[in] pdata Pointer to the buffer to fill with data
- * @param     size  Byte count of data to read
+ * @param     addr  Start address to read.
+ * @param[in] pdata Pointer to the buffer to fill with data.
+ * @param     size  Byte count of data to read.
  *
  * @return NRF_SUCCESS or reason of error.
  */
-static ret_code_t eeprom_read(size_t addr, uint8_t * pdata, size_t size)
+static ret_code_t eeprom_read(uint16_t addr, uint8_t * pdata, size_t size)
 {
     ret_code_t ret;
     if (size > (EEPROM_SIM_SIZE))
@@ -158,8 +186,8 @@ static ret_code_t eeprom_read(size_t addr, uint8_t * pdata, size_t size)
     }
     do
     {
-       uint8_t addr8 = (uint8_t)addr;
-       ret = nrf_drv_twi_tx(&m_twi_master, EEPROM_SIM_ADDR, &addr8, 1, true);
+       uint16_t addr16 = addr;
+       ret = nrf_drv_twi_tx(&m_twi_master, EEPROM_SIM_ADDR, (uint8_t *)&addr16, EEPROM_SIM_ADDRESS_LEN_BYTES, true);
        if (NRF_SUCCESS != ret)
        {
            break;
@@ -170,13 +198,13 @@ static ret_code_t eeprom_read(size_t addr, uint8_t * pdata, size_t size)
 }
 
 /**
- * @brief Pretty-print EEPROM content
+ * @brief Pretty-print the EEPROM content.
  *
  * Respond on memory print command.
  */
 static void do_print_data(void)
 {
-    size_t addr;
+    uint16_t addr;
     uint8_t buff[IN_LINE_PRINT_CNT];
     for (addr=0; addr<(EEPROM_SIM_SIZE); addr+=(IN_LINE_PRINT_CNT))
     {
@@ -197,20 +225,20 @@ static void do_print_data(void)
 
 
 /**
- * @brief Safely get string from stdin
+ * @brief Safely get a string from stdin.
  *
- * Function reads character by character into given buffer.
+ * Function reads character by character into the given buffer.
  * Maximum @em nmax number of characters are read.
  *
  * Function ignores all nonprintable characters.
  * String may be finished by CR or NL.
  *
  * @attention
- * Remember that after characters read zero would be added to mark the string end.
- * Given buffer should be no smaller than @em nmax + 1
+ * Remember that after characters are read, zero will be added to mark the string end.
+ * Thee given buffer should be no smaller than @em nmax + 1.
  *
- * @param[out] str  Buffer for the string
- * @param      nmax Maximum number of characters to be readed
+ * @param[out] str  Buffer for the string.
+ * @param      nmax Maximum number of characters to be read.
  */
 static void safe_gets(char * str, size_t nmax)
 {
@@ -240,15 +268,15 @@ static void safe_gets(char * str, size_t nmax)
 }
 
 /**
- * @brief Check the string length check no more than given number of characters
+ * @brief Check the string length but no more than the given number of characters.
  *
  * Function iterates through the string searching for the zero character.
  * Even when it is not found it stops iterating after maximum of @em nmax characters.
  *
- * @param[in] str  String to check
- * @param     nmax Maximum number of characters to check
+ * @param[in] str  String to check.
+ * @param     nmax Maximum number of characters to check.
  *
- * @return String length or @em nmax if no the zero character is found.
+ * @return String length or @em nmax if no zero character is found.
  */
 static size_t safe_strlen(char const * str, size_t nmax)
 {
@@ -263,15 +291,15 @@ static size_t safe_strlen(char const * str, size_t nmax)
 }
 
 /**
- * @brief Function that performs the command of writing string to EEPROM
+ * @brief Function that performs the command of writing a string to EEPROM.
  *
- * Function gets user input and writes given string to EEPROM starting from address 0.
+ * Function gets user input and writes the given string to EEPROM starting from address 0.
  * It is accessing EEPROM using maximum allowed number of bytes in sequence.
  */
 static void do_string_write(void)
 {
     char str[(EEPROM_SIM_SIZE) + 1];
-    size_t addr = 0;
+    uint16_t addr = 0;
 
     NRF_LOG_RAW_INFO("Waiting for string to write:\r\n");
     NRF_LOG_FLUSH();
@@ -279,7 +307,7 @@ static void do_string_write(void)
     while (1)
     {
         ret_code_t err_code;
-        size_t to_write = safe_strlen(str + addr, EEPROM_SIM_SEQ_WRITE_MAX);
+        size_t to_write = safe_strlen(str + addr, EEPROM_SIM_SEQ_WRITE_MAX_BYTES);
         if (0 == to_write)
             break;
         err_code = eeprom_write(addr, (uint8_t const *)str + addr, to_write);
@@ -295,7 +323,7 @@ static void do_string_write(void)
 }
 
 /**
- * @brief Function that performs simulated EEPROM clearing
+ * @brief Function that performs simulated EEPROM clearing.
  *
  * Function fills the EEPROM with 0xFF value.
  * It is accessing the EEPROM writing only one byte at once.
@@ -318,11 +346,11 @@ static void do_clear_eeprom(void)
 }
 
 /**
- * @brief Initialize the master TWI
+ * @brief Initialize the master TWI.
  *
- * Function used to initialize master TWI interface that would communicate with simulated EEPROM.
+ * Function used to initialize the master TWI interface that would communicate with simulated EEPROM.
  *
- * @return NRF_SUCCESS or the reason of failure
+ * @return NRF_SUCCESS or the reason of failure.
  */
 static ret_code_t twi_master_init(void)
 {
@@ -355,7 +383,7 @@ static void help_print(void)
 }
 
 /**
- *  The begin of the journey
+ *  The beginning of the journey
  */
 int main(void)
 {

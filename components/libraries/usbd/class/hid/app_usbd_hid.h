@@ -1,15 +1,42 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 #ifndef APP_USBD_HID_H__
 #define APP_USBD_HID_H__
 
@@ -60,13 +87,10 @@ typedef enum {
    @endcode
  */
 typedef enum {
-    APP_USBD_HID_USER_EVT_SUSPEND = 0, /**< Event SUSPEND. */
-    APP_USBD_HID_USER_EVT_RESUME,      /**< Event RESUME.  */
-    APP_USBD_HID_USER_EVT_START,       /**< Event START.   */
-    APP_USBD_HID_USER_EVT_STOP,        /**< Event STOP.    */
-
-    APP_USBD_HID_USER_EVT_OUT_REPORT_READY,  /**< Event OUT_REPORT_READY. */
-    APP_USBD_HID_USER_EVT_IN_REPORT_DONE,    /**< Event IN_REPORT_DONE.  */
+    APP_USBD_HID_USER_EVT_SET_BOOT_PROTO,    /**< Event SET_BOOT_PROTOCOL.  */
+    APP_USBD_HID_USER_EVT_SET_REPORT_PROTO,  /**< Event SET_REPORT_PROTOCOL.*/
+    APP_USBD_HID_USER_EVT_OUT_REPORT_READY,  /**< Event OUT_REPORT_READY.   */
+    APP_USBD_HID_USER_EVT_IN_REPORT_DONE,    /**< Event IN_REPORT_DONE.     */
 } app_usbd_hid_user_event_t;
 
 /**
@@ -164,8 +188,7 @@ typedef struct {
     uint8_t const * p_report_dsc;     //!< Report descriptor, raw array.
     size_t          report_dsc_size;  //!< Report descriptor, raw array size.
 
-    app_usbd_hid_report_buffer_t *       p_rep_buffers_in;       //!< Report buffers IN.
-    size_t                               rep_buffers_count_in;   //!< Report count IN.
+    app_usbd_hid_report_buffer_t *       p_rep_buffer_in;       //!< Report buffer IN.
     app_usbd_hid_report_buffer_t const * p_rep_buffer_out;       //!< Report buffer OUT (only one instance).
     app_usbd_hid_methods_t const *       p_hid_methods;          //!< Hid interface methods.
     app_usbd_hid_user_ev_handler_t       user_event_handler;     //!< User event handler.
@@ -193,8 +216,7 @@ typedef struct {
         .raw_desc_size = ARRAY_SIZE(descriptors),            \
         .p_report_dsc = report_dsc,                          \
         .report_dsc_size = ARRAY_SIZE(report_dsc),           \
-        .p_rep_buffers_in = report_buff_in,                  \
-        .rep_buffers_count_in = ARRAY_SIZE(report_buff_in),  \
+        .p_rep_buffer_in = report_buff_in,                   \
         .p_rep_buffer_out = report_buff_out,                 \
         .user_event_handler = user_ev_handler,               \
         .p_hid_methods = hid_methods,                        \
@@ -357,12 +379,10 @@ ret_code_t app_usbd_hid_event_handler(app_usbd_class_inst_t const * p_inst,
  * @brief Returns IN report buffer.
  *
  * @param[in] p_hinst       HID class instance.
- * @param[in] report_id     Report ID.
  *
  * @return Report buffer handle or NULL if report doesn't exist.
  */
-app_usbd_hid_report_buffer_t * app_usbd_hid_rep_buff_in_get(app_usbd_hid_inst_t const * p_hinst,
-                                                            size_t report_id);
+app_usbd_hid_report_buffer_t * app_usbd_hid_rep_buff_in_get(app_usbd_hid_inst_t const * p_hinst);
 
 /**
  * @brief Returns OUT report buffer.

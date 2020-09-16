@@ -1,15 +1,42 @@
-/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /**
  * @addtogroup ser_app Application side code
  * @ingroup ble_sdk_lib_serialization
@@ -53,15 +80,16 @@ typedef uint32_t (*ser_sd_transport_rsp_handler_t)(const uint8_t * p_buffer, uin
  *
  * @note 'Wait for response' and 'Response set' callbacks can be set in RTOS environment.
  *       It enables rescheduling while waiting for the Connectivity Chip response. In a nonOS environment,
- *       usually 'Wait for response' will only be used for handling incoming events or forcing the 
+ *       usually 'Wait for response' will only be used for handling incoming events or forcing the
  *       application to low power mode.
  *
- * @param[in] evt_handler               Handler to be called when event packet is received.
- * @param[in] os_rsp_wait_handler       Handler to be called after the request is send. It should 
+ * @param[in] ble_evt_handler         	Handler to be called when ble event packet is received.
+ * @param[in] ant_evt_handler         	Handler to be called when ant event packet is received.
+ * @param[in] os_rsp_wait_handler       Handler to be called after the request is send. It should
  *                                      implement a 'Wait for signal' functionality in an OS environment.
- * @param[in] os_rsp_set_handler        Handler to be called after response reception. It should 
+ * @param[in] os_rsp_set_handler        Handler to be called after response reception. It should
  *                                      implement a 'Signal Set' functionality in an OS environment.
- * @param[in] rx_not_handler            Handler to be called after the transport layer notifies that 
+ * @param[in] rx_not_handler            Handler to be called after the transport layer notifies that
  *                                      an incoming RX packet is detected.
  *
  * @retval NRF_SUCCESS              Operation success.
@@ -74,10 +102,12 @@ typedef uint32_t (*ser_sd_transport_rsp_handler_t)(const uint8_t * p_buffer, uin
  *                                  opening or timer creation.
  * @retval NRF_ERROR_NO_MEM         Operation failure.  Parameter propagated from timer creation.
  */
-uint32_t ser_sd_transport_open(ser_sd_transport_evt_handler_t             evt_handler,
+uint32_t ser_sd_transport_open(ser_sd_transport_evt_handler_t             ble_evt_handler,
+                               ser_sd_transport_evt_handler_t             ant_evt_handler,
                                ser_sd_transport_rsp_wait_handler_t        os_rsp_wait_handler,
                                ser_sd_transport_rsp_set_handler_t         os_rsp_set_handler,
                                ser_sd_transport_rx_notification_handler_t rx_not_handler);
+
 
 /**@brief Function setting a 'One Time' handler to be called between sending the next request packet and
  *        receiving the response packet.

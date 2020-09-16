@@ -1,12 +1,53 @@
-/*
-This software is subject to the license described in the license.txt file
-included with this software distribution. You may not use this file except in compliance
-with this license.
-
-Copyright (c) Dynastream Innovations Inc. 2014
-All rights reserved.
-*/
-
+/**
+ * This software is subject to the ANT+ Shared Source License
+ * www.thisisant.com/swlicenses
+ * Copyright (c) Dynastream Innovations, Inc. 2014
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or
+ * without modification, are permitted provided that the following
+ * conditions are met:
+ * 1) Redistributions of source code must retain the above
+ *    copyright notice, this list of conditions and the following
+ *    disclaimer.
+ * 
+ * 2) Redistributions in binary form must reproduce the above
+ *    copyright notice, this list of conditions and the following
+ *    disclaimer in the documentation and/or other materials
+ *    provided with the distribution.
+ * 
+ * 3) Neither the name of Dynastream nor the names of its
+ *    contributors may be used to endorse or promote products
+ *    derived from this software without specific prior
+ *    written permission.
+ * 
+ * The following actions are prohibited:
+ * 1) Redistribution of source code containing the ANT+ Network
+ *    Key. The ANT+ Network Key is available to ANT+ Adopters.
+ *    Please refer to http://thisisant.com to become an ANT+
+ *    Adopter and access the key.
+ * 
+ * 2) Reverse engineering, decompilation, and/or disassembly of
+ *    software provided in binary form under this license.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE HEREBY
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES(INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; DAMAGE TO ANY DEVICE, LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE. SOME STATES DO NOT ALLOW
+ * THE EXCLUSION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE
+ * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
+ * 
+ */
 #include <stdint.h>
 #include <string.h>
 #include "asc_coordinator.h"
@@ -81,9 +122,6 @@ All rights reserved.
 
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 0                           /**< Whether or not to include the service_changed characteristic. If not enabled, the server's database cannot be changed for the lifetime of the device */
-
-#define CENTRAL_LINK_COUNT              0                           /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
-#define PERIPHERAL_LINK_COUNT           1                           /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 
 // Static variables and buffers.
 static uint16_t         m_neighbor_id = INVALID_NEIGHBOUR_ID;
@@ -450,20 +488,43 @@ static void ble_stack_init(void)
 
     // Initialize SoftDevice
     SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, false);
-
-    // Initialize BLE stack
-    ble_enable_params_t ble_enable_params;
-    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
-                                                    PERIPHERAL_LINK_COUNT,
-                                                    &ble_enable_params);
+	
+    // Fetch the start address of the application RAM.
+    uint32_t ram_start = 0;
+    err_code = softdevice_app_ram_start_get(&ram_start);
+    APP_ERROR_CHECK(err_code);
+ 
+    // Overwrite some of the default configurations for the BLE stack.
+    ble_cfg_t ble_cfg;
+ 
+    // Configure number of custom UUIDS.
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.common_cfg.vs_uuid_cfg.vs_uuid_count = 1;
+    err_code = sd_ble_cfg_set(BLE_COMMON_CFG_VS_UUID, &ble_cfg, ram_start);
     APP_ERROR_CHECK(err_code);
 
-    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
+    // Configure the maximum number of connections.
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = BLE_GAP_ROLE_COUNT_PERIPH_DEFAULT;
+    ble_cfg.gap_cfg.role_count_cfg.central_role_count = 0;
+    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = 0;
+    err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start);
+    APP_ERROR_CHECK(err_code);
 
-    //Check the ram settings against the used number of links
-    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
+    // Configure the maximum ATT MTU.
+    memset(&ble_cfg, 0x00, sizeof(ble_cfg));
+    ble_cfg.conn_cfg.conn_cfg_tag                 = CONN_CFG_TAG;
+    ble_cfg.conn_cfg.params.gatt_conn_cfg.att_mtu = NRF_BLE_GATT_MAX_MTU_SIZE;
+    err_code = sd_ble_cfg_set(BLE_CONN_CFG_GATT, &ble_cfg, ram_start);
+    APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_enable(&ble_enable_params);
+    // Configure service_changed characteristic.
+    memset(&ble_cfg, 0x00, sizeof(ble_cfg));
+    ble_cfg.gatts_cfg.service_changed.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
+    err_code = sd_ble_cfg_set(BLE_GATTS_CFG_SERVICE_CHANGED, &ble_cfg, ram_start);
+    APP_ERROR_CHECK(err_code);
+ 
+    err_code = softdevice_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Subscribe for BLE events.

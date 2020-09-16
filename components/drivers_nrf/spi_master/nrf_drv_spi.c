@@ -1,15 +1,42 @@
-/* Copyright (c) 2015 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(SPI)
 #define ENABLED_SPI_COUNT (SPI0_ENABLED+SPI1_ENABLED+SPI2_ENABLED)
@@ -90,7 +117,8 @@
 // Control block - driver instance local data.
 typedef struct
 {
-    nrf_drv_spi_handler_t handler;
+    nrf_drv_spi_evt_handler_t handler;
+    void *                p_context;
     nrf_drv_spi_evt_t     evt;  // Keep the struct that is ready for event handler. Less memcpy.
     nrf_drv_state_t       state;
     volatile bool         transfer_in_progress;
@@ -101,8 +129,14 @@ typedef struct
     uint8_t         orc;
     uint8_t         bytes_transferred;
 
+#if NRF_MODULE_ENABLED(SPIM_NRF52_ANOMALY_109_WORKAROUND)
+    uint8_t         tx_length;
+    uint8_t         rx_length;
+#endif
+
     bool tx_done : 1;
     bool rx_done : 1;
+    bool abort   : 1;
 } spi_control_block_t;
 static spi_control_block_t m_cb[ENABLED_SPI_COUNT];
 
@@ -134,19 +168,21 @@ static spi_control_block_t m_cb[ENABLED_SPI_COUNT];
     #define IRQ_HANDLER(n) void SPI##n##_IRQ_HANDLER(void)
 #endif // NRF_MODULE_ENABLED(PERIPHERAL_RESOURCE_SHARING)
 
-
 ret_code_t nrf_drv_spi_init(nrf_drv_spi_t const * const p_instance,
                             nrf_drv_spi_config_t const * p_config,
-                            nrf_drv_spi_handler_t handler)
+                            nrf_drv_spi_evt_handler_t handler,
+                            void * p_context)
 {
     ASSERT(p_config);
     spi_control_block_t * p_cb  = &m_cb[p_instance->drv_inst_idx];
     ret_code_t err_code;
-    
+
     if (p_cb->state != NRF_DRV_STATE_UNINITIALIZED)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+                        (uint32_t)__func__,
+                        (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -155,12 +191,15 @@ ret_code_t nrf_drv_spi_init(nrf_drv_spi_t const * const p_instance,
             m_irq_handlers[p_instance->drv_inst_idx]) != NRF_SUCCESS)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+                        (uint32_t)__func__,
+                        (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 #endif
 
     p_cb->handler = handler;
+    p_cb->p_context = p_context;
 
     uint32_t mosi_pin;
     uint32_t miso_pin;
@@ -177,12 +216,12 @@ ret_code_t nrf_drv_spi_init(nrf_drv_spi_t const * const p_instance,
     {
         nrf_gpio_pin_set(p_config->sck_pin);
     }
-    NRF_GPIO->PIN_CNF[p_config->sck_pin] =
-        (GPIO_PIN_CNF_DIR_Output        << GPIO_PIN_CNF_DIR_Pos)
-      | (GPIO_PIN_CNF_INPUT_Connect     << GPIO_PIN_CNF_INPUT_Pos)
-      | (GPIO_PIN_CNF_PULL_Disabled     << GPIO_PIN_CNF_PULL_Pos)
-      | (GPIO_PIN_CNF_DRIVE_S0S1        << GPIO_PIN_CNF_DRIVE_Pos)
-      | (GPIO_PIN_CNF_SENSE_Disabled    << GPIO_PIN_CNF_SENSE_Pos);
+    nrf_gpio_cfg(p_config->sck_pin,
+                 NRF_GPIO_PIN_DIR_OUTPUT,
+                 NRF_GPIO_PIN_INPUT_CONNECT,
+                 NRF_GPIO_PIN_NOPULL,
+                 NRF_GPIO_PIN_S0S1,
+                 NRF_GPIO_PIN_NOSENSE);
     // - MOSI (optional) - output with initial value 0,
     if (p_config->mosi_pin != NRF_DRV_SPI_PIN_NOT_USED)
     {
@@ -214,7 +253,7 @@ ret_code_t nrf_drv_spi_init(nrf_drv_spi_t const * const p_instance,
 
     CODE_FOR_SPIM
     (
-        NRF_SPIM_Type * p_spim = p_instance->p_registers;
+        NRF_SPIM_Type * p_spim = (NRF_SPIM_Type *)p_instance->p_registers;
         nrf_spim_pins_set(p_spim, p_config->sck_pin, mosi_pin, miso_pin);
         nrf_spim_frequency_set(p_spim,
             (nrf_spim_frequency_t)p_config->frequency);
@@ -260,9 +299,11 @@ ret_code_t nrf_drv_spi_init(nrf_drv_spi_t const * const p_instance,
     p_cb->state = NRF_DRV_STATE_INITIALIZED;
 
     NRF_LOG_INFO("Init\r\n");
-    
+
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
+                 (uint32_t)__func__,
+                 (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -280,7 +321,7 @@ void nrf_drv_spi_uninit(nrf_drv_spi_t const * const p_instance)
 
     CODE_FOR_SPIM
     (
-        NRF_SPIM_Type * p_spim = p_instance->p_registers;
+        NRF_SPIM_Type * p_spim = (NRF_SPIM_Type *)p_instance->p_registers;
         if (p_cb->handler)
         {
             nrf_spim_int_disable(p_spim, DISABLE_ALL);
@@ -344,9 +385,9 @@ static void finish_transfer(spi_control_block_t * p_cb)
     p_cb->evt.type = NRF_DRV_SPI_EVENT_DONE;
     NRF_LOG_INFO("Transfer rx_len:%d.\r\n", p_cb->evt.data.done.rx_length);
     NRF_LOG_DEBUG("Rx data:\r\n");
-    NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_cb->evt.data.done.p_rx_buffer, 
-                            p_cb->evt.data.done.rx_length * sizeof(p_cb->evt.data.done.p_rx_buffer));
-    p_cb->handler(&p_cb->evt);
+    NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_cb->evt.data.done.p_rx_buffer,
+                          p_cb->evt.data.done.rx_length * sizeof(p_cb->evt.data.done.p_rx_buffer));
+    p_cb->handler(&p_cb->evt, p_cb->p_context);
 }
 
 #ifdef SPI_IN_USE
@@ -375,6 +416,19 @@ static bool transfer_byte(NRF_SPI_Type * p_spi, spi_control_block_t * p_cb)
     //        see how the transfer is started in the 'nrf_drv_spi_transfer'
     //        function.
     uint16_t bytes_used = p_cb->bytes_transferred + 1;
+
+    if (p_cb->abort)
+    {
+        if (bytes_used < p_cb->evt.data.done.tx_length)
+        {
+            p_cb->evt.data.done.tx_length = bytes_used;
+        }
+        if (bytes_used < p_cb->evt.data.done.rx_length)
+        {
+            p_cb->evt.data.done.rx_length = bytes_used;
+        }
+    }
+
     if (bytes_used < p_cb->evt.data.done.tx_length)
     {
         nrf_spi_txd_set(p_spi, p_cb->evt.data.done.p_tx_buffer[bytes_used]);
@@ -432,7 +486,7 @@ static void spi_xfer(NRF_SPI_Type                  * p_spi,
         do {
             while (!nrf_spi_event_check(p_spi, NRF_SPI_EVENT_READY)) {}
             nrf_spi_event_clear(p_spi, NRF_SPI_EVENT_READY);
-            NRF_LOG_DEBUG("SPI: Event: NRF_SPI_EVENT_READY.\r\n"); 
+            NRF_LOG_DEBUG("SPI: Event: NRF_SPI_EVENT_READY.\r\n");
         } while (transfer_byte(p_spi, p_cb));
         if (p_cb->ss_pin != NRF_DRV_SPI_PIN_NOT_USED)
         {
@@ -489,9 +543,16 @@ static ret_code_t spim_xfer(NRF_SPIM_Type                * p_spim,
     {
         p_cb->transfer_in_progress = false;
         err_code = NRF_ERROR_INVALID_ADDR;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+                        (uint32_t)__func__,
+                        (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
+
+#if NRF_MODULE_ENABLED(SPIM_NRF52_ANOMALY_109_WORKAROUND)
+    p_cb->tx_length = 0;
+    p_cb->rx_length = 0;
+#endif
 
     nrf_spim_tx_buffer_set(p_spim, p_xfer_desc->p_tx_buffer, p_xfer_desc->tx_length);
     nrf_spim_rx_buffer_set(p_spim, p_xfer_desc->p_rx_buffer, p_xfer_desc->rx_length);
@@ -504,6 +565,17 @@ static ret_code_t spim_xfer(NRF_SPIM_Type                * p_spim,
     {
         nrf_spim_task_trigger(p_spim, NRF_SPIM_TASK_START);
     }
+#if NRF_MODULE_ENABLED(SPIM_NRF52_ANOMALY_109_WORKAROUND)
+    if (flags & NRF_DRV_SPI_FLAG_HOLD_XFER)
+    {
+        nrf_spim_event_clear(p_spim, NRF_SPIM_EVENT_STARTED);
+        p_cb->tx_length = p_xfer_desc->tx_length;
+        p_cb->rx_length = p_xfer_desc->rx_length;
+        nrf_spim_tx_buffer_set(p_spim, p_xfer_desc->p_tx_buffer, 0);
+        nrf_spim_rx_buffer_set(p_spim, p_xfer_desc->p_rx_buffer, 0);
+        nrf_spim_int_enable(p_spim, NRF_SPIM_INT_STARTED_MASK);
+    }
+#endif
 
     if (!p_cb->handler)
     {
@@ -513,12 +585,14 @@ static ret_code_t spim_xfer(NRF_SPIM_Type                * p_spim,
             nrf_gpio_pin_set(p_cb->ss_pin);
         }
     }
-        else
-        {
-            spim_int_enable(p_spim, !(flags & NRF_DRV_SPI_FLAG_NO_XFER_EVT_HANDLER));
-        }
+    else
+    {
+        spim_int_enable(p_spim, !(flags & NRF_DRV_SPI_FLAG_NO_XFER_EVT_HANDLER));
+    }
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
+                 (uint32_t)__func__,
+                 (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 #endif
@@ -537,12 +611,15 @@ ret_code_t nrf_drv_spi_xfer(nrf_drv_spi_t     const * const p_instance,
     if (p_cb->transfer_in_progress)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
+                        (uint32_t)__func__,
+                        (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     else
     {
-        if (p_cb->handler && !(flags & (NRF_DRV_SPI_FLAG_REPEATED_XFER | NRF_DRV_SPI_FLAG_NO_XFER_EVT_HANDLER)))
+        if (p_cb->handler && !(flags & (NRF_DRV_SPI_FLAG_REPEATED_XFER |
+                                        NRF_DRV_SPI_FLAG_NO_XFER_EVT_HANDLER)))
         {
             p_cb->transfer_in_progress = true;
         }
@@ -551,6 +628,7 @@ ret_code_t nrf_drv_spi_xfer(nrf_drv_spi_t     const * const p_instance,
     p_cb->evt.data.done = *p_xfer_desc;
     p_cb->tx_done = false;
     p_cb->rx_done = false;
+    p_cb->abort   = false;
 
     if (p_cb->ss_pin != NRF_DRV_SPI_PIN_NOT_USED)
     {
@@ -571,18 +649,63 @@ ret_code_t nrf_drv_spi_xfer(nrf_drv_spi_t     const * const p_instance,
         {
             spi_xfer(p_instance->p_registers, p_cb, p_xfer_desc);
         }
-        NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
+                     (uint32_t)__func__,
+                     (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     )
 }
+
+
+void nrf_drv_spi_abort(nrf_drv_spi_t const * p_instance)
+{
+    spi_control_block_t * p_cb = &m_cb[p_instance->drv_inst_idx];
+    ASSERT(p_cb->state != NRF_DRV_STATE_UNINITIALIZED);
+
+    CODE_FOR_SPIM
+    (
+        nrf_spim_task_trigger(p_instance->p_registers, NRF_SPIM_TASK_STOP);
+        while (!nrf_spim_event_check(p_instance->p_registers, NRF_SPIM_EVENT_STOPPED)) {}
+        p_cb->transfer_in_progress = false;
+    )
+    CODE_FOR_SPI
+    (
+        p_cb->abort = true;
+    )
+}
+
+
 #ifdef SPIM_IN_USE
 static void irq_handler_spim(NRF_SPIM_Type * p_spim, spi_control_block_t * p_cb)
 {
-    ASSERT(p_cb->handler);
+
+#if NRF_MODULE_ENABLED(SPIM_NRF52_ANOMALY_109_WORKAROUND)
+    if ((nrf_spim_int_enable_check(p_spim, NRF_SPIM_INT_STARTED_MASK)) &&
+        (nrf_spim_event_check(p_spim, NRF_SPIM_EVENT_STARTED)) )
+    {
+        /* Handle first, zero-length, auxiliary transmission. */
+        nrf_spim_event_clear(p_spim, NRF_SPIM_EVENT_STARTED);
+        nrf_spim_event_clear(p_spim, NRF_SPIM_EVENT_END);
+
+        ASSERT(p_spim->TXD.MAXCNT == 0);
+        p_spim->TXD.MAXCNT = p_cb->tx_length;
+
+        ASSERT(p_spim->RXD.MAXCNT == 0);
+        p_spim->RXD.MAXCNT = p_cb->rx_length;
+
+        /* Disable STARTED interrupt, used only in auxiliary transmission. */
+        nrf_spim_int_disable(p_spim, NRF_SPIM_INT_STARTED_MASK);
+
+        /* Start the actual, glitch-free transmission. */
+        nrf_spim_task_trigger(p_spim, NRF_SPIM_TASK_START);
+        return;
+    }
+#endif
 
     if (nrf_spim_event_check(p_spim, NRF_SPIM_EVENT_END))
     {
         nrf_spim_event_clear(p_spim, NRF_SPIM_EVENT_END);
+        ASSERT(p_cb->handler);
         NRF_LOG_DEBUG("SPIM: Event: NRF_SPIM_EVENT_END.\r\n");
         finish_transfer(p_cb);
     }
@@ -607,7 +730,7 @@ static void irq_handler_spi(NRF_SPI_Type * p_spi, spi_control_block_t * p_cb)
     ASSERT(p_cb->handler);
 
     nrf_spi_event_clear(p_spi, NRF_SPI_EVENT_READY);
-    NRF_LOG_DEBUG("SPI: Event: NRF_SPI_EVENT_READY.\r\n"); 
+    NRF_LOG_DEBUG("SPI: Event: NRF_SPI_EVENT_READY.\r\n");
 
     if (!transfer_byte(p_spi, p_cb))
     {

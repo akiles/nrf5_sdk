@@ -1,15 +1,42 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
- 
 #include "sdk_config.h"
 #if APP_SDCARD_ENABLED
 
@@ -41,8 +68,8 @@
 #define CMD55   (CMD_MASK | 55)                 /**< SDC/MMC command 55: APP_CMD. */
 #define CMD58   (CMD_MASK | 58)                 /**< SDC/MMC command 58: READ_OCR. */
 #define ACMD13  (ACMD_MASK | CMD_MASK | 13)     /**< SDC application command 13: SD_STATUS. */
-#define	ACMD23  (ACMD_MASK | CMD_MASK | 23)     /**< SDC application command 23: SET_WR_BLK_ERASE_COUNT. */
-#define	ACMD41  (ACMD_MASK | CMD_MASK | 41)     /**< SDC application command 41: SEND_OP_COND. */
+#define ACMD23  (ACMD_MASK | CMD_MASK | 23)     /**< SDC application command 23: SET_WR_BLK_ERASE_COUNT. */
+#define ACMD41  (ACMD_MASK | CMD_MASK | 41)     /**< SDC application command 41: SEND_OP_COND. */
 
 #define IS_ACMD(CMD) ((CMD) & ACMD_MASK)        /**< Check if command is an application command (ACMD). */
 
@@ -246,7 +273,7 @@ static uint32_t sdc_calculate_size(uint8_t const * const p_csd)
                               + ((uint32_t)(p_csd[6] & 0x03) << 10);
             uint32_t read_bl_len = p_csd[5] & 0x0F;
             uint32_t c_size_mult = ((p_csd[10] & 0x80) >> 7) + ((p_csd[9] & 0x03) << 1);
-            
+
             // Block size in this implementation is set to 512, so the resulting number of bytes
             // is divided by 512 (2^9)
             return (c_size + 1) << (read_bl_len + c_size_mult + 2 - 9);
@@ -447,7 +474,7 @@ static PT_THREAD(sdc_pt_sub_data_read(uint8_t * p_rx_data,
                  m_cb.rsp_buf, 2);
             PT_YIELD(SDC_PT_SUB);
 
-            
+
 
             // Set rx length to 0 to force "busy check" transmission before next data block.
             rx_length = 0;
@@ -522,7 +549,7 @@ static PT_THREAD(sdc_pt_identification(uint8_t * p_rx_data,
             // ACMD41 was rejected - MMC card.
             m_cb.info.type.version = SDC_TYPE_MMCV3;
             r1 &= ~SDC_FLAG_ILLEGAL_COMMAND;
-            
+
             do
             {
                 ++m_cb.state.retry_count;
@@ -542,7 +569,7 @@ static PT_THREAD(sdc_pt_identification(uint8_t * p_rx_data,
         {
             // SDv1 or SDv2 card. Send CMD58 or retry ACMD41 if not ready.
             SDC_RESP_CHECK(SDC_PT, r1);
-            
+
             while (r1 & SDC_FLAG_IN_IDLE_STATE)
             {
                 ++m_cb.state.retry_count;
@@ -550,14 +577,14 @@ static PT_THREAD(sdc_pt_identification(uint8_t * p_rx_data,
                 {
                     SDC_BREAK(SDC_PT, SDC_ERROR_TIMEOUT);
                 }
-                
+
                 arg = (m_cb.info.type.version == SDC_TYPE_SDV2) ? SDC_HCS_FLAG_MASK : 0;
                 err_code = sdc_cmd(ACMD41, arg, SDC_R3);
                 APP_ERROR_CHECK(err_code);
                 PT_YIELD(SDC_PT);
                 SDC_RESP_CHECK(SDC_PT, r1);
             }
-            
+
             err_code = sdc_cmd(CMD58, 0, SDC_R3);
             APP_ERROR_CHECK(err_code);
             PT_YIELD(SDC_PT);
@@ -744,7 +771,7 @@ static PT_THREAD(sdc_pt_write(uint8_t * rx_data,
                 sdc_spi_transfer(m_cb.cmd_buf, 1,
                                  m_cb.rsp_buf, SDC_DATA_WAIT_TX_SIZE);
                 PT_YIELD(SDC_PT);
-                
+
                 for (uint32_t i = 0; i < rx_length; ++i)
                 {
                     if (rx_data[i] != 0x00)
@@ -752,7 +779,7 @@ static PT_THREAD(sdc_pt_write(uint8_t * rx_data,
                         m_cb.state.bus_state = SDC_BUS_IDLE;
                         break;
                     }
-                }    
+                }
             }
 
             --m_cb.state.rw_op.blocks_left;
@@ -766,7 +793,7 @@ static PT_THREAD(sdc_pt_write(uint8_t * rx_data,
             sdc_spi_transfer(m_cb.cmd_buf, 2,
                              m_cb.rsp_buf, 3);
             PT_YIELD(SDC_PT);
-        
+
             m_cb.state.retry_count = 0;
             m_cb.state.bus_state = SDC_BUS_DATA_WAIT;
 
@@ -782,7 +809,7 @@ static PT_THREAD(sdc_pt_write(uint8_t * rx_data,
                 sdc_spi_transfer(m_cb.cmd_buf, 1,
                                  m_cb.rsp_buf, SDC_DATA_WAIT_TX_SIZE);
                 PT_YIELD(SDC_PT);
-                
+
                 for (uint32_t i = 0; i < rx_length; ++i)
                 {
                     if (rx_data[i] != 0x00)
@@ -790,7 +817,7 @@ static PT_THREAD(sdc_pt_write(uint8_t * rx_data,
                         m_cb.state.bus_state = SDC_BUS_IDLE;
                         break;
                     }
-                }    
+                }
             }
         }
 
@@ -805,7 +832,8 @@ static PT_THREAD(sdc_pt_write(uint8_t * rx_data,
  *
  * @param[in] p_event       Pointer to the SPI event structure.
  */
-static void spi_handler(nrf_drv_spi_evt_t const * p_event)
+static void spi_handler(nrf_drv_spi_evt_t const * p_event,
+                        void *                    p_context)
 {
     uint8_t * rx_data = p_event->data.done.p_rx_buffer;
     uint8_t rx_length = p_event->data.done.rx_length;
@@ -1027,7 +1055,7 @@ ret_code_t app_sdc_block_write(uint8_t const * p_buf, uint32_t block_address, ui
     m_cb.state.rw_op.blocks_left = block_count;
 
     PT_INIT(&m_cb.state.pt);
-    
+
     ret_code_t err_code;
     if (block_count == 1)
     {
@@ -1088,8 +1116,7 @@ ret_code_t app_sdc_init(app_sdc_config_t const * const p_config, sdc_event_handl
                             .mode         = NRF_DRV_SPI_MODE_0,
                             .bit_order    = NRF_DRV_SPI_BIT_ORDER_MSB_FIRST,
                         };
-
-    err_code = nrf_drv_spi_init(&m_spi, &spi_cfg, spi_handler);
+    err_code = nrf_drv_spi_init(&m_spi, &spi_cfg, spi_handler, NULL);
     APP_ERROR_CHECK(err_code);
 
     m_cb.handler            = event_handler;

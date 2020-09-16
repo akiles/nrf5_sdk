@@ -1,13 +1,41 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
 #include <stdint.h>
 #include <stdbool.h>
@@ -21,16 +49,8 @@
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "app_timer.h"
+#include "app_error.h"
 #include "bsp.h"
-
-/**
- * @brief APP_TIMER prescaler configuration
- */
-#define APP_TIMER_PRESCALER     0
-/**
- * @brief APP_TIMER size of operation queue
- */
-#define APP_TIMER_OP_QUEUE_SIZE 2
 
 /**
  * @brief Button used to simulate mouse move
@@ -371,10 +391,10 @@ static void respond_setup_data(
         .p_data = {.tx = p_data},
         .size = size
     };
-    ret = nrf_drv_usbd_ep_transfer(NRF_DRV_USBD_EPIN0, &transfer, NULL);
+    ret = nrf_drv_usbd_ep_transfer(NRF_DRV_USBD_EPIN0, &transfer);
     if(ret != NRF_SUCCESS)
     {
-        NRF_LOG_ERROR("Transfer failed: %08x", (uint32_t)ret);
+        NRF_LOG_ERROR("Transfer starting failed: %d", (uint32_t)ret);
     }
     ASSERT(ret == NRF_SUCCESS);
     UNUSED_VARIABLE(ret);
@@ -458,6 +478,7 @@ static void usbd_setup_GetStatus(nrf_drv_usbd_setup_t const * const p_setup)
     default:
         break; // Just go to stall
     }
+    NRF_LOG_ERROR("Unknown status: 0x%2x", p_setup->bmRequestType);
     nrf_drv_usbd_setup_stall();
 }
 
@@ -469,12 +490,13 @@ static void usbd_setup_ClearFeature(nrf_drv_usbd_setup_t const * const p_setup)
         {/** @todo RK missing EP0 IN and OUT support */
             if(((p_setup->wIndex) & 0xff) == NRF_DRV_USBD_EPIN1)
             {
-                nrf_drv_usbd_ep_stall(NRF_DRV_USBD_EPIN1);
+                nrf_drv_usbd_ep_stall_clear(NRF_DRV_USBD_EPIN1);
                 nrf_drv_usbd_setup_clear();
                 return;
             }
         }
     }
+    NRF_LOG_ERROR("Unknown feature to clear");
     nrf_drv_usbd_setup_stall();
 }
 
@@ -492,6 +514,7 @@ static void usbd_setup_SetFeature(nrf_drv_usbd_setup_t const * const p_setup)
             }
         }
     }
+    NRF_LOG_ERROR("Unknown feature to set");
     nrf_drv_usbd_setup_stall();
 }
 
@@ -608,6 +631,10 @@ static void usbd_setup_GetDescriptor(nrf_drv_usbd_setup_t const * const p_setup)
         break; // Not supported - go to stall
     }
 
+    NRF_LOG_ERROR("Unknown descriptor requested: 0x%2x, type: 0x%2x or value: 0x%2x\r\n",
+        p_setup->wValue >> 8,
+        p_setup->bmRequestType,
+        p_setup->wValue & 0xFF);
     nrf_drv_usbd_setup_stall();
 }
 
@@ -656,6 +683,9 @@ static void usbd_setup_SetConfig(nrf_drv_usbd_setup_t const * const p_setup)
             }
         }
     }
+    NRF_LOG_ERROR("Wrong configuration: Index: 0x%2x, Value: 0x%2x.\r\n",
+        p_setup->wIndex,
+        p_setup->wValue);
     nrf_drv_usbd_setup_stall();
 }
 
@@ -667,6 +697,7 @@ static void usbd_setup_SetIdle(nrf_drv_usbd_setup_t const * const p_setup)
         nrf_drv_usbd_setup_clear();
         return;
     }
+    NRF_LOG_ERROR("Set Idle wrong type: 0x%2x.\r\n", p_setup->bmRequestType);
     nrf_drv_usbd_setup_stall();
 }
 
@@ -674,6 +705,7 @@ static void usbd_setup_SetInterface(
     nrf_drv_usbd_setup_t const * const p_setup)
 {
     //no alternate setting is supported - STALL always
+    NRF_LOG_ERROR("No alternate interfaces supported.\r\n");
     nrf_drv_usbd_setup_stall();
 }
 
@@ -686,6 +718,7 @@ static void usbd_setup_SetProtocol(
         nrf_drv_usbd_setup_clear();
         return;
     }
+    NRF_LOG_ERROR("Set Protocol wrong type: 0x%2x.\r\n", p_setup->bmRequestType);
     nrf_drv_usbd_setup_stall();
 }
 
@@ -715,10 +748,16 @@ static void usbd_event_handler(nrf_drv_usbd_evt_t const * const p_event)
         {
             if(NRF_USBD_EP_OK == p_event->data.eptransfer.status)
             {
-                nrf_drv_usbd_setup_clear();
+                /* Transfer ok - nothing to do */
+            }
+            else if(NRF_USBD_EP_ABORTED == p_event->data.eptransfer.status)
+            {
+                /* Just ignore */
+                NRF_LOG_INFO("Transfer aborted event\r\n");
             }
             else
             {
+                NRF_LOG_ERROR("Transfer failed: %d\r\n", p_event->data.eptransfer.status);
                 nrf_drv_usbd_setup_stall();
             }
         }
@@ -765,10 +804,12 @@ static void usbd_event_handler(nrf_drv_usbd_evt_t const * const p_event)
                 }
                 else
                 {
+                    NRF_LOG_ERROR("Command 0xB. Unknown request: 0x%2x\r\n", setup.bmRequestType);
                     nrf_drv_usbd_setup_stall();
                 }
                 break;
             default:
+                NRF_LOG_ERROR("Unknown request: 0x%2x\r\n", setup.bmRequest);
                 nrf_drv_usbd_setup_stall();
                 return;
             }
@@ -815,11 +856,10 @@ static void move_mouse_pointer(void)
             .p_data = {.tx = &databuffer},
             .size = sizeof(databuffer)
         };
+        m_send_mouse_position = true;
         UNUSED_RETURN_VALUE(nrf_drv_usbd_ep_transfer(
             NRF_DRV_USBD_EPIN1,
-            &transfer,
-            NULL));
-        m_send_mouse_position = true;
+            &transfer));
     }
 }
 
@@ -891,7 +931,8 @@ static void init_power_clock(void)
         /* Just waiting */
     }
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
+    ret = app_timer_init();
+    APP_ERROR_CHECK(ret);
 
     /* Avoid warnings if assertion is disabled */
     UNUSED_VARIABLE(ret);
@@ -900,10 +941,7 @@ static void init_power_clock(void)
 static void init_bsp(void)
 {
     ret_code_t ret;
-    ret = bsp_init(
-        BSP_INIT_BUTTONS,
-        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
-        bsp_evt_handler);
+    ret = bsp_init(BSP_INIT_BUTTONS, bsp_evt_handler);
     APP_ERROR_CHECK(ret);
 
     ret = bsp_event_to_button_action_assign(
@@ -964,6 +1002,7 @@ static void log_resetreason(void)
 
 int main(void)
 {
+    ret_code_t ret;
     init_power_clock();
     init_bsp();
 
@@ -974,7 +1013,8 @@ int main(void)
     nrf_power_resetreas_clear(nrf_power_resetreas_get());
 
     /* USB work starts right here */
-    UNUSED_RETURN_VALUE(nrf_drv_usbd_init(usbd_event_handler));
+    ret = nrf_drv_usbd_init(usbd_event_handler);
+    APP_ERROR_CHECK(ret);
 
     /* Configure selected size of the packed on EP0 */
     nrf_drv_usbd_ep_max_packet_size_set(NRF_DRV_USBD_EPOUT0, EP0_MAXPACKETSIZE);
@@ -982,6 +1022,7 @@ int main(void)
 
     /* Configure LED and button */
     bsp_board_leds_init();
+    bsp_board_buttons_init();
     bsp_board_led_on(LED_RUNNING);
     bsp_board_led_on(LED_ACTIVE);
 
@@ -992,7 +1033,8 @@ int main(void)
         {
             .handler = power_usb_event_handler
         };
-        nrf_drv_power_usbevt_init(&config);
+        ret = nrf_drv_power_usbevt_init(&config);
+        APP_ERROR_CHECK(ret);
     }
     else
     {

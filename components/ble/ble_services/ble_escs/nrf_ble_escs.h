@@ -1,15 +1,42 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 #ifndef NRF_BLE_ESCS_H__
 #define NRF_BLE_ESCS_H__
 
@@ -30,9 +57,33 @@
  * @{
  */
 
+#define BLE_ESCS_NUMBER_OF_CHARACTERISTICS 13 //!< Number of characteristics contained in the Eddystone Configuration Service.
+
 #define BLE_UUID_ESCS_SERVICE 0x7500    //!< UUID of the Eddystone Configuration Service.
 
-/**@brief Data fields in the Broadcast Capabilities characteristic. 
+// ECS UUIDs
+#define BLE_UUID_ESCS_BROADCAST_CAP_CHAR      0x7501
+#define BLE_UUID_ESCS_ACTIVE_SLOT_CHAR        0x7502
+#define BLE_UUID_ESCS_ADV_INTERVAL_CHAR       0x7503
+#define BLE_UUID_ESCS_RADIO_TX_PWR_CHAR       0x7504
+#define BLE_UUID_ESCS_ADV_TX_PWR_CHAR         0x7505
+#define BLE_UUID_ESCS_LOCK_STATE_CHAR         0x7506
+#define BLE_UUID_ESCS_UNLOCK_CHAR             0x7507
+#define BLE_UUID_ESCS_PUBLIC_ECDH_KEY_CHAR    0x7508
+#define BLE_UUID_ESCS_EID_ID_KEY_CHAR         0x7509
+#define BLE_UUID_ESCS_RW_ADV_SLOT_CHAR        0x750A
+#define BLE_UUID_ESCS_FACTORY_RESET_CHAR      0x750B
+#define BLE_UUID_ESCS_REMAIN_CONNECTABLE_CHAR 0x750C
+
+#define ESCS_BASE_UUID                                                                          \
+    {{0x95, 0xE2, 0xED, 0xEB, 0x1B, 0xA0, 0x39, 0x8A, 0xDF, 0x4B, 0xD3, 0x8E, 0x00, 0x00, 0xC8, \
+      0xA3}}
+// A3C8XXXX-8ED3-4BDF-8A39-A01BEBEDE295
+
+#define NRF_BLE_ESCS_BROADCAST_CAP_LEN (ESCS_NUM_OF_SUPPORTED_TX_POWER + 6) // According to the eddystone spec, there are 6 bytes of data in addition to the supported_radio_tx_power array
+
+
+/**@brief Data fields in the Broadcast Capabilities characteristic.
  * @note This is a packed structure. Therefore, you should not change it.
  */
 typedef PACKED_STRUCT
@@ -66,7 +117,7 @@ typedef enum
     NRF_BLE_ESCS_LOCK_BYTE_DISABLE_AUTO_RELOCK = ESCS_LOCK_BYTE_DISABLE_AUTO_RELOCK
 } nrf_ble_escs_lock_byte_t;
 
-/**@brief Write data fields of the Lock State characteristic. 
+/**@brief Write data fields of the Lock State characteristic.
  * @note This is a packed structure. Therefore, you should not change it.
 */
 typedef PACKED_STRUCT
@@ -89,7 +140,7 @@ typedef union
     int8_t w_unlock_token[ESCS_AES_KEY_SIZE];
 } nrf_ble_escs_unlock_t;
 
-/**@brief Public ECDH Key characteristic. 
+/**@brief Public ECDH Key characteristic.
  * @note This is a packed structure. Therefore, you should not change it.
 */
 typedef PACKED_STRUCT
@@ -97,7 +148,7 @@ typedef PACKED_STRUCT
     int8_t key[ESCS_ECDH_KEY_SIZE];
 } nrf_ble_escs_public_ecdh_key_t;
 
-/**@brief EID Identity Key characteristic. 
+/**@brief EID Identity Key characteristic.
  * @note This is a packed structure. Therefore, you should not change it.
 */
 typedef PACKED_STRUCT
@@ -115,49 +166,30 @@ typedef union
     uint8_t w_remain_connectable_boolean;
 } nrf_ble_escs_remain_conntbl_t;
 
-/**@brief Eddystone Configuration Service event types (corresponding to each characteristic). */
-typedef enum
-{
-    NRF_BLE_ESCS_EVT_BROADCAST_CAP,
-    NRF_BLE_ESCS_EVT_ACTIVE_SLOT,
-    NRF_BLE_ESCS_EVT_ADV_INTERVAL,
-    NRF_BLE_ESCS_EVT_RADIO_TX_PWR,
-    NRF_BLE_ESCS_EVT_ADV_TX_PWR,
-    NRF_BLE_ESCS_EVT_LOCK_STATE,
-    NRF_BLE_ESCS_EVT_UNLOCK,
-    NRF_BLE_ESCS_EVT_PUBLIC_ECDH_KEY,
-    NRF_BLE_ESCS_EVT_EID_ID_KEY,
-    NRF_BLE_ESCS_EVT_RW_ADV_SLOT,
-    NRF_BLE_ESCS_EVT_RW_ADV_SLOT_PREP, //!< Used for longs writes for EID configuration.
-    NRF_BLE_ESCS_EVT_RW_ADV_SLOT_EXEC, //!< Used for longs writes for EID configuration.
-    NRF_BLE_ESCS_EVT_FACTORY_RESET,
-    NRF_BLE_ESCS_EVT_REMAIN_CONNECTABLE
-} nrf_ble_escs_evt_type_t;
-
 /**@brief Eddystone Configuration Service initialization parameters (corresponding to required characteristics). */
 typedef struct
 {
     nrf_ble_escs_broadcast_cap_t  broadcast_cap;
-    nrf_ble_escs_active_slot_t    active_slot;
     nrf_ble_escs_adv_interval_t   adv_interval;
     nrf_ble_escs_radio_tx_pwr_t   radio_tx_pwr;
     nrf_ble_escs_adv_tx_pwr_t     adv_tx_pwr;
-    nrf_ble_escs_lock_state_t     lock_state;
     nrf_ble_escs_factory_reset_t  factory_reset;
     nrf_ble_escs_remain_conntbl_t remain_connectable;
+
+
 } nrf_ble_escs_init_params_t;
 
 // Forward Declaration of nrf_ble_escs_t type.
 typedef struct nrf_ble_escs_s nrf_ble_escs_t;
 
 typedef void (*nrf_ble_escs_write_evt_handler_t)(nrf_ble_escs_t        * p_escs,
-                                                 nrf_ble_escs_evt_type_t evt_type,
+                                                 uint16_t                uuid,
                                                  uint16_t                value_handle,
                                                  uint8_t               * p_data,
                                                  uint16_t                length);
 
 typedef void (*nrf_ble_escs_read_evt_handler_t)(nrf_ble_escs_t        * p_escs,
-                                                nrf_ble_escs_evt_type_t evt_type,
+                                                uint16_t                uuid,
                                                 uint16_t                value_handle
                                                );
 
@@ -193,6 +225,8 @@ struct nrf_ble_escs_s
     uint16_t                         conn_handle;                //!< Handle of the current connection (as provided by the SoftDevice). @ref BLE_CONN_HANDLE_INVALID if not in a connection.
     nrf_ble_escs_write_evt_handler_t write_evt_handler;          //!< Event handler to be called for handling write attempts.
     nrf_ble_escs_read_evt_handler_t  read_evt_handler;           //!< Event handler to be called for handling read attempts.
+    uint8_t                        * p_active_slot;
+    nrf_ble_escs_lock_state_read_t * p_lock_state;
 };
 
 /**@brief Function for initializing the Eddystone Configuration Service.
@@ -221,30 +255,6 @@ ret_code_t nrf_ble_escs_init(nrf_ble_escs_t * p_escs, const nrf_ble_escs_init_t 
  * @retval                NRF_SUCCESS otherwise.
  */
 ret_code_t nrf_ble_escs_on_ble_evt(nrf_ble_escs_t * p_escs, ble_evt_t * p_ble_evt);
-
-
-/**@brief Function for checking if a beacon is locked.
- *
- * @param[in]  p_escs       Eddystone Configuration Service structure.
- * @param[out] p_lock_state Pointer to where result will be stored.
- *
- * @retval                  NRF_SUCCESS If the operation was successful.
- * @retval                  NRF_ERROR_NULL If p_escs is NULL.
- * @return                  See @ref sd_ble_gatts_value_get for other possible return values.
-  */
-ret_code_t nrf_ble_escs_get_lock_state(const nrf_ble_escs_t * p_escs, nrf_ble_escs_lock_state_read_t * p_lock_state);
-
-
-/**@brief Function for getting the current active slot.
- * 
- * @param[in]   p_escs          Eddystone Configuration Service structure.
- * @param[out]  p_active_slot   Pointer where resulting value will be stored.
- *
- * @retval                      NRF_SUCCESS If the operation was successful.
- * @retval                      NRF_ERROR_NULL If p_escs is NULL.
- * @return                      See @ref sd_ble_gatts_value_get for other possible return values.
- */
-ret_code_t nrf_ble_escs_active_slot_get(const nrf_ble_escs_t * p_escs, uint8_t * p_active_slot);
 
 /** @} */
 

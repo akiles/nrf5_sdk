@@ -1,13 +1,41 @@
-/* Copyright (c) 2015 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(FSTORAGE)
@@ -60,8 +88,8 @@ static bool check_config(fs_config_t const * const config)
 {
 #ifndef DFU_SUPPORT_SIGNING
     if ((config != NULL) &&
-        (FS_SECTION_VARS_START_ADDR <= (uint32_t)config) &&
-        (FS_SECTION_VARS_END_ADDR   >  (uint32_t)config))
+        ((uint32_t)FS_SECTION_START_ADDR <= (uint32_t)config) &&
+        ((uint32_t)FS_SECTION_END_ADDR   >  (uint32_t)config))
     {
         return true;
     }
@@ -265,8 +293,8 @@ static bool queue_get_next_free(fs_op_t ** p_op)
 
 fs_ret_t fs_init(void)
 {
-    uint32_t const   total_users     = FS_SECTION_VARS_COUNT;
-    uint32_t         configs_to_init = FS_SECTION_VARS_COUNT;
+    uint32_t const   total_users     = FS_SECTION_ITEM_COUNT;
+    uint32_t         configs_to_init = FS_SECTION_ITEM_COUNT;
     uint32_t const * p_current_end   = FS_PAGE_END_ADDR;
 
     if (m_flags & FS_FLAG_INITIALIZED)
@@ -285,7 +313,7 @@ fs_ret_t fs_init(void)
 
     for (uint32_t i = 0; i < total_users; i++)
     {
-        fs_config_t const * const p_config = FS_SECTION_VARS_GET(i);
+        fs_config_t const * const p_config = FS_SECTION_ITEM_GET(i);
 
         if ((p_config->p_start_addr != NULL) &&
             (p_config->p_end_addr   != NULL))
@@ -299,13 +327,13 @@ fs_ret_t fs_init(void)
 
     for (uint32_t i = 0; i < configs_to_init; i++)
     {
-        fs_config_t * p_config_i   = FS_SECTION_VARS_GET(i);
+        fs_config_t * p_config_i   = FS_SECTION_ITEM_GET(i);
         uint8_t       max_priority = 0;
         uint8_t       max_index    = i;
 
         for (uint32_t j = 0; j < total_users; j++)
         {
-            fs_config_t const * const p_config_j = FS_SECTION_VARS_GET(j);
+            fs_config_t const * const p_config_j = FS_SECTION_ITEM_GET(j);
 
             #if 0
             if (p_config_j->priority == p_config_i->priority)
@@ -332,7 +360,7 @@ fs_ret_t fs_init(void)
             }
         }
 
-        p_config_i = FS_SECTION_VARS_GET(max_index);
+        p_config_i = FS_SECTION_ITEM_GET(max_index);
 
         p_config_i->p_end_addr   = p_current_end;
         p_config_i->p_start_addr = p_current_end - (p_config_i->num_pages * FS_PAGE_SIZE_WORDS);

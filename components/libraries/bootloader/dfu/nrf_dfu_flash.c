@@ -1,34 +1,58 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 #include "nrf_dfu_flash.h"
 #include "nrf_dfu_types.h"
-#include "softdevice_handler.h"
 #include "nrf_nvmc.h"
 #include "nrf_log.h"
-
-#ifdef SOFTDEVICE_PRESENT
-// Only include fstorage if SD interaction is required
-#include "fstorage.h"
-#endif
 
 #define FLASH_FLAG_NONE                 (0)
 #define FLASH_FLAG_OPER                 (1<<0)
 #define FLASH_FLAG_FAILURE_SINCE_LAST   (1<<1)
 #define FLASH_FLAG_SD_ENABLED           (1<<2)
 
-static uint32_t m_flags;
+static uint32_t m_flags;  /*lint -e551*/
+
 
 #ifdef BLE_STACK_SUPPORT_REQD
+#include "softdevice_handler.h"
+#include "fstorage.h"
 
 // Function prototypes
 static void fs_evt_handler(fs_evt_t const * const evt, fs_ret_t result);
@@ -75,7 +99,7 @@ uint32_t nrf_dfu_flash_init(bool sd_enabled)
     // Only run this initialization if SD is enabled
     if(sd_enabled)
     {
-        NRF_LOG_INFO("------- nrf_dfu_flash_init-------\r\n");
+        NRF_LOG_DEBUG("------- nrf_dfu_flash_init-------\r\n");
         if (fs_fake_init() != FS_SUCCESS)
         {
             NRF_LOG_ERROR("Not initializing the thing\r\n");
@@ -187,7 +211,7 @@ fs_ret_t nrf_dfu_flash_store(uint32_t const * p_dest, uint32_t const * const p_s
 fs_ret_t nrf_dfu_flash_erase(uint32_t const * p_dest, uint32_t num_pages, dfu_flash_callback_t callback)
 {
     fs_ret_t ret_val = FS_SUCCESS;
-    NRF_LOG_INFO("Erasing: 0x%08x, num: %d\r\n", (uint32_t)p_dest, num_pages);
+    NRF_LOG_DEBUG("Erasing: 0x%08x, num: %d\r\n", (uint32_t)p_dest, num_pages);
 
 #ifdef BLE_STACK_SUPPORT_REQD
 
@@ -266,7 +290,7 @@ void nrf_dfu_flash_error_clear(void)
 
 fs_ret_t nrf_dfu_flash_wait(void)
 {
-    NRF_LOG_INFO("Waiting for finished...\r\n");
+    NRF_LOG_DEBUG("Waiting for finished...\r\n");
 
 #ifdef BLE_STACK_SUPPORT_REQD
     if ((m_flags & FLASH_FLAG_SD_ENABLED) != 0)
@@ -284,6 +308,6 @@ fs_ret_t nrf_dfu_flash_wait(void)
     }
 #endif
 
-    NRF_LOG_INFO("After wait!\r\n");
+    NRF_LOG_DEBUG("After wait!\r\n");
     return FS_SUCCESS;
 }

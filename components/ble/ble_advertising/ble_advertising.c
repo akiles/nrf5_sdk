@@ -1,12 +1,41 @@
-/* Copyright (c) 2015 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
+/**
+ * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
 #include  "sdk_common.h"
 #if NRF_MODULE_ENABLED(BLE_ADVERTISING)
@@ -29,6 +58,7 @@ static ble_adv_evt_t                   m_adv_evt;                               
 
 static ble_adv_mode_t                  m_adv_mode_current;                          /**< Variable to keep track of the current advertising mode. */
 static ble_adv_modes_config_t          m_adv_modes_config;                          /**< Struct to keep track of disabled and enabled advertising modes, as well as time-outs and intervals.*/
+static uint8_t                         m_conn_cfg_tag;                              /**< Variable to keep track of what connection settings will be used if the advertising results in a connection. */
 
 static ble_gap_addr_t                  m_peer_address;                              /**< Address of the most recently connected peer, used for direct advertising. */
 static bool                            m_peer_addr_reply_expected;                  /**< Flag to verify that peer address is only set when requested. */
@@ -356,6 +386,12 @@ static ret_code_t set_adv_mode_slow(ble_gap_adv_params_t * p_adv_params)
 }
 
 
+void ble_advertising_conn_cfg_tag_set(uint8_t ble_cfg_tag)
+{
+    m_conn_cfg_tag = ble_cfg_tag;
+}
+
+
 uint32_t ble_advertising_init(ble_advdata_t                   const * p_advdata,
                               ble_advdata_t                   const * p_srdata,
                               ble_adv_modes_config_t          const * p_config,
@@ -372,6 +408,7 @@ uint32_t ble_advertising_init(ble_advdata_t                   const * p_advdata,
     m_initialized                    = true;
     m_adv_mode_current               = BLE_ADV_MODE_IDLE;
     m_adv_modes_config               = *p_config;
+    m_conn_cfg_tag                   = BLE_CONN_CFG_TAG_DEFAULT;
     m_evt_handler                    = evt_handler;
     m_error_handler                  = error_handler;
     m_current_slave_link_conn_handle = BLE_CONN_HANDLE_INVALID;
@@ -539,7 +576,7 @@ uint32_t ble_advertising_start(ble_adv_mode_t advertising_mode)
 
     if (m_adv_mode_current != BLE_ADV_MODE_IDLE)
     {
-        ret = sd_ble_gap_adv_start(&adv_params);
+        ret = sd_ble_gap_adv_start(&adv_params, m_conn_cfg_tag);
         if (ret != NRF_SUCCESS)
         {
             return ret;

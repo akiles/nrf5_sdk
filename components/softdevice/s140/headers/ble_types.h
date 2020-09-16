@@ -1,26 +1,26 @@
-/* 
+/*
  * Copyright (c) Nordic Semiconductor ASA
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- * 
+ *
  *   1. Redistributions of source code must retain the above copyright notice, this
  *   list of conditions and the following disclaimer.
- * 
+ *
  *   2. Redistributions in binary form must reproduce the above copyright notice, this
  *   list of conditions and the following disclaimer in the documentation and/or
  *   other materials provided with the distribution.
- * 
+ *
  *   3. Neither the name of Nordic Semiconductor ASA nor the names of other
  *   contributors to this software may be used to endorse or promote products
  *   derived from this software without specific prior written permission.
- * 
+ *
  *   4. This software must only be used in a processor manufactured by Nordic
  *   Semiconductor ASA, or in a processor manufactured by a third party that
  *   is used in combination with a processor manufactured by Nordic Semiconductor.
- * 
- * 
+ *
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -31,7 +31,7 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  */
 
 /**
@@ -123,7 +123,7 @@ extern "C" {
 #define BLE_APPEARANCE_GENERIC_HID                          960 /**< Human Interface Device (HID). */
 #define BLE_APPEARANCE_HID_KEYBOARD                         961 /**< Keyboard (HID Subtype). */
 #define BLE_APPEARANCE_HID_MOUSE                            962 /**< Mouse (HID Subtype). */
-#define BLE_APPEARANCE_HID_JOYSTICK                         963 /**< Joystiq (HID Subtype). */
+#define BLE_APPEARANCE_HID_JOYSTICK                         963 /**< Joystick (HID Subtype). */
 #define BLE_APPEARANCE_HID_GAMEPAD                          964 /**< Gamepad (HID Subtype). */
 #define BLE_APPEARANCE_HID_DIGITIZERSUBTYPE                 965 /**< Digitizer Tablet (HID Subtype). */
 #define BLE_APPEARANCE_HID_CARD_READER                      966 /**< Card Reader (HID Subtype). */
@@ -151,7 +151,7 @@ extern "C" {
 #define BLE_APPEARANCE_OUTDOOR_SPORTS_ACT_LOC_AND_NAV_POD  5188 /**< Location and Navigation Pod (Outdoor Sports Activity subtype). */
 /** @} */
 
-/** @brief Set .type and .uuid fields of ble_uuid_struct to specified uuid value. */
+/** @brief Set .type and .uuid fields of ble_uuid_struct to specified UUID value. */
 #define BLE_UUID_BLE_ASSIGN(instance, value) do {\
             instance.type = BLE_UUID_TYPE_BLE; \
             instance.uuid = value;} while(0)
@@ -181,7 +181,7 @@ extern "C" {
 
 /** @brief 128 bit UUID values. */
 typedef struct
-{ 
+{
   uint8_t uuid128[16]; /**< Little-Endian UUID bytes. */
 } ble_uuid128_t;
 

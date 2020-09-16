@@ -78,18 +78,19 @@ enum BLE_GATTC_SVCS
  */
 enum BLE_GATTC_EVTS
 {
-  BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP = BLE_GATTC_EVT_BASE,  /**< Primary Service Discovery Response event.      \n See @ref ble_gattc_evt_prim_srvc_disc_rsp_t.          */
-  BLE_GATTC_EVT_REL_DISC_RSP,                             /**< Relationship Discovery Response event.         \n See @ref ble_gattc_evt_rel_disc_rsp_t.                */
-  BLE_GATTC_EVT_CHAR_DISC_RSP,                            /**< Characteristic Discovery Response event.       \n See @ref ble_gattc_evt_char_disc_rsp_t.               */
-  BLE_GATTC_EVT_DESC_DISC_RSP,                            /**< Descriptor Discovery Response event.           \n See @ref ble_gattc_evt_desc_disc_rsp_t.               */
-  BLE_GATTC_EVT_ATTR_INFO_DISC_RSP,                       /**< Attribute Information Response event.          \n See @ref ble_gattc_evt_attr_info_disc_rsp_t. */
-  BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP,                /**< Read By UUID Response event.                   \n See @ref ble_gattc_evt_char_val_by_uuid_read_rsp_t.   */
-  BLE_GATTC_EVT_READ_RSP,                                 /**< Read Response event.                           \n See @ref ble_gattc_evt_read_rsp_t.                    */
-  BLE_GATTC_EVT_CHAR_VALS_READ_RSP,                       /**< Read multiple Response event.                  \n See @ref ble_gattc_evt_char_vals_read_rsp_t.          */
-  BLE_GATTC_EVT_WRITE_RSP,                                /**< Write Response event.                          \n See @ref ble_gattc_evt_write_rsp_t.                   */
-  BLE_GATTC_EVT_HVX,                                      /**< Handle Value Notification or Indication event. \n Confirm indication with @ref sd_ble_gattc_hv_confirm.  \n See @ref ble_gattc_evt_hvx_t. */
-  BLE_GATTC_EVT_EXCHANGE_MTU_RSP,                         /**< Exchange MTU Response event.                   \n See @ref ble_gattc_evt_exchange_mtu_rsp_t.            */
-  BLE_GATTC_EVT_TIMEOUT                                   /**< Timeout event.                                 \n See @ref ble_gattc_evt_timeout_t.                     */
+  BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP = BLE_GATTC_EVT_BASE,  /**< Primary Service Discovery Response event.          \n See @ref ble_gattc_evt_prim_srvc_disc_rsp_t.          */
+  BLE_GATTC_EVT_REL_DISC_RSP,                             /**< Relationship Discovery Response event.             \n See @ref ble_gattc_evt_rel_disc_rsp_t.                */
+  BLE_GATTC_EVT_CHAR_DISC_RSP,                            /**< Characteristic Discovery Response event.           \n See @ref ble_gattc_evt_char_disc_rsp_t.               */
+  BLE_GATTC_EVT_DESC_DISC_RSP,                            /**< Descriptor Discovery Response event.               \n See @ref ble_gattc_evt_desc_disc_rsp_t.               */
+  BLE_GATTC_EVT_ATTR_INFO_DISC_RSP,                       /**< Attribute Information Response event.              \n See @ref ble_gattc_evt_attr_info_disc_rsp_t. */
+  BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP,                /**< Read By UUID Response event.                       \n See @ref ble_gattc_evt_char_val_by_uuid_read_rsp_t.   */
+  BLE_GATTC_EVT_READ_RSP,                                 /**< Read Response event.                               \n See @ref ble_gattc_evt_read_rsp_t.                    */
+  BLE_GATTC_EVT_CHAR_VALS_READ_RSP,                       /**< Read multiple Response event.                      \n See @ref ble_gattc_evt_char_vals_read_rsp_t.          */
+  BLE_GATTC_EVT_WRITE_RSP,                                /**< Write Response event.                              \n See @ref ble_gattc_evt_write_rsp_t.                   */
+  BLE_GATTC_EVT_HVX,                                      /**< Handle Value Notification or Indication event.     \n Confirm indication with @ref sd_ble_gattc_hv_confirm.  \n See @ref ble_gattc_evt_hvx_t. */
+  BLE_GATTC_EVT_EXCHANGE_MTU_RSP,                         /**< Exchange MTU Response event.                       \n See @ref ble_gattc_evt_exchange_mtu_rsp_t.            */
+  BLE_GATTC_EVT_TIMEOUT,                                  /**< Timeout event.                                     \n See @ref ble_gattc_evt_timeout_t.                     */
+  BLE_GATTC_EVT_WRITE_CMD_TX_COMPLETE                     /**< Write without Response transmission complete.      \n See @ref ble_gattc_evt_write_cmd_tx_complete_t.       */
 };
 
 /** @} */
@@ -108,10 +109,24 @@ enum BLE_GATTC_EVTS
 #define BLE_GATTC_ATTR_INFO_FORMAT_128BIT   2 /**< 128-bit Attribute Information Format. */
 /** @} */
 
+/** @defgroup BLE_GATTC_DEFAULTS GATT Client defaults
+ * @{ */
+#define BLE_GATTC_WRITE_CMD_TX_QUEUE_SIZE_DEFAULT  1 /**< Default number of Write without Response that can be queued for transmission. */
+/** @} */
+
 /** @} */
 
 /** @addtogroup BLE_GATTC_STRUCTURES Structures
  * @{ */
+
+/**
+ * @brief BLE GATTC connection configuration parameters, set with @ref sd_ble_cfg_set.
+ */
+typedef struct
+{
+  uint8_t  write_cmd_tx_queue_size; /**< The guaranteed minimum number of Write without Response that can be queued for transmission.
+                                          The default value is @ref BLE_GATTC_WRITE_CMD_TX_QUEUE_SIZE_DEFAULT */
+} ble_gattc_conn_cfg_t;
 
 /**@brief Operation Handle Range. */
 typedef struct
@@ -296,10 +311,16 @@ typedef struct
   uint8_t          src;                       /**< Timeout source, see @ref BLE_GATT_TIMEOUT_SOURCES. */
 } ble_gattc_evt_timeout_t;
 
+/**@brief Event structure for @ref BLE_GATTC_EVT_WRITE_CMD_TX_COMPLETE. */
+typedef struct
+{
+  uint8_t             count;            /**< Number of write without response transmissions completed. */
+} ble_gattc_evt_write_cmd_tx_complete_t;
+
 /**@brief GATTC event structure. */
 typedef struct
 {
-  uint16_t            conn_handle;                /**< Connection Handle on which event occured. */
+  uint16_t            conn_handle;                /**< Connection Handle on which event occurred. */
   uint16_t            gatt_status;                /**< GATT status code for the operation, see @ref BLE_GATT_STATUS_CODES. */
   uint16_t            error_handle;               /**< In case of error: The handle causing the error. In all other cases @ref BLE_GATT_HANDLE_INVALID. */
   union
@@ -316,6 +337,7 @@ typedef struct
     ble_gattc_evt_exchange_mtu_rsp_t            exchange_mtu_rsp;           /**< Exchange MTU Response Event Parameters. */
     ble_gattc_evt_timeout_t                     timeout;                    /**< Timeout Event Parameters. */
     ble_gattc_evt_attr_info_disc_rsp_t          attr_info_disc_rsp;         /**< Attribute Information Discovery Event Parameters. */
+    ble_gattc_evt_write_cmd_tx_complete_t       write_cmd_tx_complete;      /**< Write without Response transmission complete Event Parameters. */
   } params;                                                                 /**< Event Parameters. @note Only valid if @ref gatt_status == @ref BLE_GATT_STATUS_SUCCESS. */
 } ble_gattc_evt_t;
 /** @} */
@@ -512,20 +534,30 @@ SVCALL(SD_BLE_GATTC_CHAR_VALUES_READ, uint32_t, sd_ble_gattc_char_values_read(ui
  *
  * @details This function can perform all write procedures described in GATT.
  *
- * @note    It is important to note that a write without response will <b>consume an application buffer</b>, and will therefore
- *          generate a @ref BLE_EVT_TX_COMPLETE event when the packet has been transmitted. A write (with response) on the other hand will use the
- *          standard client internal buffer and thus will only generate a @ref BLE_GATTC_EVT_WRITE_RSP event as soon as the write response
- *          has been received from the peer. Please see the documentation of @ref sd_ble_tx_packet_count_get for more details.
+ * @note    Only one write with response procedure can be ongoing per connection at a time.
+ *          If the application tries to write with response while another write with response procedure is ongoing,
+ *          the function call will return @ref NRF_ERROR_BUSY.
+ *          A @ref BLE_GATTC_EVT_WRITE_RSP event will be issued as soon as the write response arrives from the peer.
+ *
+ * @note    The number of Write without Response that can be queued is configured by @ref ble_gattc_conn_cfg_t::write_cmd_tx_queue_size
+ *          When the queue is full, the function call will return @ref NRF_ERROR_RESOURCES.
+ *          A @ref BLE_GATTC_EVT_WRITE_CMD_TX_COMPLETE event will be issued as soon as the transmission of the write without response is complete.
+ *
+ * @note    The application can keep track of the available queue element count for writes without responses by following the procedure below:
+ *          - Store initial queue element count in a variable.
+ *          - Decrement the variable, which stores the currently available queue element count, by one when a call to this function returns @ref NRF_SUCCESS.
+ *          - Increment the variable, which stores the current available queue element count, by the count variable in @ref BLE_GATTC_EVT_WRITE_CMD_TX_COMPLETE event.
  *
  * @events
- * @event{@ref BLE_GATTC_EVT_WRITE_RSP, Generated when using write request or queued writes.}
+ * @event{@ref BLE_GATTC_EVT_WRITE_CMD_TX_COMPLETE, Write without response transmission complete.}
+ * @event{@ref BLE_GATTC_EVT_WRITE_RSP, Write response received from the peer.}
  * @endevents
  *
  * @mscs
+ * @mmsc{@ref BLE_GATTC_VALUE_WRITE_WITHOUT_RESP_MSC}
  * @mmsc{@ref BLE_GATTC_VALUE_WRITE_MSC}
  * @mmsc{@ref BLE_GATTC_VALUE_LONG_WRITE_MSC}
  * @mmsc{@ref BLE_GATTC_VALUE_RELIABLE_WRITE_MSC}
- * @mmsc{@ref BLE_COMMON_APP_BUFF_MSC}
  * @endmscs
  *
  * @param[in] conn_handle The connection handle identifying the connection to perform this procedure on.
@@ -537,8 +569,9 @@ SVCALL(SD_BLE_GATTC_CHAR_VALUES_READ, uint32_t, sd_ble_gattc_char_values_read(ui
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
  * @retval ::NRF_ERROR_DATA_SIZE Invalid data size(s) supplied.
- * @retval ::NRF_ERROR_BUSY Procedure already in progress.
- * @retval ::BLE_ERROR_NO_TX_PACKETS No available application packets for this connection.
+ * @retval ::NRF_ERROR_BUSY For write with response, procedure already in progress. Wait for a @ref BLE_GATTC_EVT_WRITE_RSP event and retry.
+ * @retval ::NRF_ERROR_RESOURCES Too many writes without responses queued.
+ *                               Wait for a @ref BLE_GATTC_EVT_WRITE_CMD_TX_COMPLETE event and retry.
  */
 SVCALL(SD_BLE_GATTC_WRITE, uint32_t, sd_ble_gattc_write(uint16_t conn_handle, ble_gattc_write_params_t const *p_write_params));
 
@@ -582,11 +615,10 @@ SVCALL(SD_BLE_GATTC_ATTR_INFO_DISCOVER, uint32_t, sd_ble_gattc_attr_info_discove
  *          - The Client RX MTU value, and
  *          - The Server RX MTU value from @ref BLE_GATTC_EVT_EXCHANGE_MTU_RSP.
  *
- *          However, the SoftDevice never sets ATT_MTU lower than @ref BLE_GATT_MTU_SIZE_DEFAULT.
+ *          However, the SoftDevice never sets ATT_MTU lower than @ref BLE_GATT_ATT_MTU_DEFAULT.
  *
  * @events
  * @event{@ref BLE_GATTC_EVT_EXCHANGE_MTU_RSP}
- * @event{@ref BLE_EVT_DATA_LENGTH_CHANGED, Generated if a data length update procedure is performed after the ATT_MTU exchange.}
  * @endevents
  *
  * @mscs
@@ -595,8 +627,9 @@ SVCALL(SD_BLE_GATTC_ATTR_INFO_DISCOVER, uint32_t, sd_ble_gattc_attr_info_discove
  *
  * @param[in] conn_handle    The connection handle identifying the connection to perform this procedure on.
  * @param[in] client_rx_mtu  Client RX MTU size.
- *                           - The minimum value is @ref BLE_GATT_MTU_SIZE_DEFAULT.
- *                           - The maximum value is @ref ble_gatt_enable_params_t::att_mtu.
+ *                           - The minimum value is @ref BLE_GATT_ATT_MTU_DEFAULT.
+ *                           - The maximum value is @ref ble_gatt_conn_cfg_t::att_mtu in the connection configuration
+                               used for this connection.
  *                           - The value must be equal to Server RX MTU size given in @ref sd_ble_gatts_exchange_mtu_reply
  *                             if an ATT_MTU exchange has already been performed in the other direction.
  *

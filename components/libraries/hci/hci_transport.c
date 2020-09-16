@@ -1,13 +1,41 @@
-/* Copyright (c) 2013 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2013 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(HCI_TRANSPORT)
@@ -33,8 +61,7 @@
                    (ROUNDED_DIV((HCI_MAX_PACKET_SIZE_IN_BITS * 1000u),         \
                     HCI_UART_REG_VALUE_TO_BAUDRATE(HCI_UART_BAUDRATE)))                                    /**< Max transmission time of a single application packet over UART in units of mseconds. */
 #define RETRANSMISSION_TIMEOUT_IN_MS    (3u * MAX_TRANSMISSION_TIME)                                       /**< Retransmission timeout for application packet in units of mseconds. */
-#define APP_TIMER_PRESCALER             0                                                                  /**< Value of the RTC1 PRESCALER register. */
-#define RETRANSMISSION_TIMEOUT_IN_TICKS APP_TIMER_TICKS(RETRANSMISSION_TIMEOUT_IN_MS, APP_TIMER_PRESCALER) /**< Retransmission timeout for application packet in units of timer ticks. */
+#define RETRANSMISSION_TIMEOUT_IN_TICKS APP_TIMER_TICKS(RETRANSMISSION_TIMEOUT_IN_MS) /**< Retransmission timeout for application packet in units of timer ticks. */
 #define MAX_RETRY_COUNT                 5u                                                                 /**< Max retransmission retry count for application packets. */
 #define ACK_BUF_SIZE                    5u                                                                 /**< Length of module internal RX buffer which is big enough to hold an acknowledgement packet. */
 

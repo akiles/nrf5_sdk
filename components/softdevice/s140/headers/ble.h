@@ -69,36 +69,44 @@ enum BLE_COMMON_SVCS
 {
   SD_BLE_ENABLE = BLE_SVC_BASE,         /**< Enable and initialize the BLE stack */
   SD_BLE_EVT_GET,                       /**< Get an event from the pending events queue. */
-  SD_BLE_TX_PACKET_COUNT_GET,           /**< Get the total number of available application transmission packets for a particular connection. */
   SD_BLE_UUID_VS_ADD,                   /**< Add a Vendor Specific UUID. */
   SD_BLE_UUID_DECODE,                   /**< Decode UUID bytes. */
   SD_BLE_UUID_ENCODE,                   /**< Encode UUID bytes. */
-  SD_BLE_VERSION_GET,                   /**< Get the local version information (company id, Link Layer Version, Link Layer Subversion). */
+  SD_BLE_VERSION_GET,                   /**< Get the local version information (company ID, Link Layer Version, Link Layer Subversion). */
   SD_BLE_USER_MEM_REPLY,                /**< User Memory Reply. */
   SD_BLE_OPT_SET,                       /**< Set a BLE option. */
   SD_BLE_OPT_GET,                       /**< Get a BLE option. */
+  SD_BLE_CFG_SET,                       /**< Add a configuration to the BLE stack. */
 };
 
-  /**
-   * @brief BLE Module Independent Event IDs.
-   */
+/**
+ * @brief BLE Module Independent Event IDs.
+ */
 enum BLE_COMMON_EVTS
 {
-  BLE_EVT_TX_COMPLETE  = BLE_EVT_BASE,  /**< Transmission Complete. @ref ble_evt_tx_complete_t */
-  BLE_EVT_USER_MEM_REQUEST,             /**< User Memory request. @ref ble_evt_user_mem_request_t */
-  BLE_EVT_USER_MEM_RELEASE,             /**< User Memory release. @ref ble_evt_user_mem_release_t */
-  BLE_EVT_DATA_LENGTH_CHANGED           /**< Link layer PDU length changed. @ref ble_evt_data_length_changed_t. */
+  BLE_EVT_USER_MEM_REQUEST = BLE_EVT_BASE,   /**< User Memory request. @ref ble_evt_user_mem_request_t */
+  BLE_EVT_USER_MEM_RELEASE,                  /**< User Memory release. @ref ble_evt_user_mem_release_t */
 };
 
-/**@brief BLE connection bandwidth types.
- * Bandwidth types supported by the SoftDevice. The bandwidth type dictates the maximum number of full length packets per connection interval.
+/**@brief BLE Connection Configuration IDs.
+ *
+ * IDs that uniquely identify a connection configuration.
  */
-enum BLE_CONN_BWS
+enum BLE_CONN_CFGS
 {
-  BLE_CONN_BW_INVALID = 0,              /**< Invalid connection bandwidth. */
-  BLE_CONN_BW_LOW,                      /**< Low connection bandwidth. */
-  BLE_CONN_BW_MID,                      /**< Medium connection bandwidth. */
-  BLE_CONN_BW_HIGH                      /**< High connection bandwidth. */
+    BLE_CONN_CFG_GAP = BLE_CONN_CFG_BASE,  /**< BLE GAP specific connection configuration. */
+    BLE_CONN_CFG_GATTC,                    /**< BLE GATTC specific connection configuration. */
+    BLE_CONN_CFG_GATTS,                    /**< BLE GATTS specific connection configuration. */
+    BLE_CONN_CFG_GATT,                     /**< BLE GATT specific connection configuration. */
+};
+
+/**@brief BLE Common Configuration IDs.
+ *
+ * IDs that uniquely identify a common configuration.
+ */
+enum BLE_COMMON_CFGS
+{
+  BLE_COMMON_CFG_VS_UUID = BLE_CFG_BASE, /**< Vendor specific UUID configuration */
 };
 
 /**@brief Common Option IDs.
@@ -106,8 +114,7 @@ enum BLE_CONN_BWS
  */
 enum BLE_COMMON_OPTS
 {
-  BLE_COMMON_OPT_CONN_BW = BLE_OPT_BASE,     /**< Bandwidth configuration @ref ble_common_opt_conn_bw_t */
-  BLE_COMMON_OPT_PA_LNA,                     /**< PA and LNA options */
+  BLE_COMMON_OPT_PA_LNA = BLE_OPT_BASE,      /**< PA and LNA options */
   BLE_COMMON_OPT_CONN_EVT_EXT,               /**< Extended connection events option */
 };
 
@@ -125,8 +132,8 @@ enum BLE_COMMON_OPTS
 #define BLE_MAX(a, b) ((a) < (b) ? (b) : (a))
 
 /** @brief  Maximum possible length for BLE Events.
- * @note Value of @ref ble_gatt_enable_params_t::att_mtu shall be used as a parameter.
- * If that value is set to 0 then @ref BLE_GATT_MTU_SIZE_DEFAULT must be used instead.
+ * @note The highest value used for @ref ble_gatt_conn_cfg_t::att_mtu in any connection configuration shall be used as a parameter.
+ * If that value has not been configured for any connections then @ref BLE_GATT_ATT_MTU_DEFAULT must be used instead.
 */
 #define BLE_EVT_LEN_MAX(ATT_MTU) (BLE_MAX( \
   sizeof(ble_evt_t), \
@@ -145,8 +152,15 @@ enum BLE_COMMON_OPTS
 /** @defgroup BLE_UUID_VS_COUNTS Vendor Specific UUID counts
  * @{
  */
-#define BLE_UUID_VS_COUNT_MIN         1    /**< Minimum VS UUID count. */
-#define BLE_UUID_VS_COUNT_DEFAULT     0    /**< Use the default VS UUID count (10 for this version of the SoftDevice). */
+#define BLE_UUID_VS_COUNT_DEFAULT 10  /**< Default VS UUID count. */
+#define BLE_UUID_VS_COUNT_MAX     254 /**< Maximum VS UUID count. */
+/** @} */
+
+/** @defgroup BLE_COMMON_CFG_DEFAULTS Configuration defaults.
+ * @{
+ */
+#define BLE_CONN_CFG_TAG_DEFAULT  0    /**< Default configuration tag, SoftDevice default connection configuration. */
+
 /** @} */
 
 /** @} */
@@ -161,14 +175,6 @@ typedef struct
   uint16_t          len;        /**< Length in bytes of the user memory block. */
 } ble_user_mem_block_t;
 
-/**
- * @brief Event structure for @ref BLE_EVT_TX_COMPLETE.
- */
-typedef struct
-{
-  uint8_t count;                        /**< Number of packets transmitted. */
-} ble_evt_tx_complete_t;
-
 /**@brief Event structure for @ref BLE_EVT_USER_MEM_REQUEST. */
 typedef struct
 {
@@ -182,25 +188,14 @@ typedef struct
   ble_user_mem_block_t        mem_block;  /**< User memory block */
 } ble_evt_user_mem_release_t;
 
-/**@brief Event structure for @ref BLE_EVT_DATA_LENGTH_CHANGED. */
-typedef struct
-{
-  uint16_t max_tx_octets;                 /**< The maximum number of payload octets in a Link Layer Data Channel PDU that the local Controller will send. Range: 27-251 */
-  uint16_t max_tx_time;                   /**< The maximum time (in microseconds) that the local Controller will take to send a Link Layer Data Channel PDU. Range: 328-2120  */
-  uint16_t max_rx_octets;                 /**< The maximum number of payload octets in a Link Layer Data Channel PDU that the local controller expects to receive. Range: 27-251 */
-  uint16_t max_rx_time;                   /**< The maximum time (in microseconds) that the local Controller expects to take to receive a Link Layer Data Channel PDU. Range: 328-2120 */
-} ble_evt_data_length_changed_t;
-
 /**@brief Event structure for events not associated with a specific function module. */
 typedef struct
 {
   uint16_t conn_handle;                                 /**< Connection Handle on which this event occurred. */
   union
   {
-    ble_evt_tx_complete_t           tx_complete;         /**< Transmission Complete. */
     ble_evt_user_mem_request_t      user_mem_request;    /**< User Memory Request Event Parameters. */
     ble_evt_user_mem_release_t      user_mem_release;    /**< User Memory Release Event Parameters. */
-    ble_evt_data_length_changed_t   data_length_changed; /**< Data Length Changed Event Parameters. */
   } params;                                              /**< Event parameter union. */
 } ble_common_evt_t;
 
@@ -219,7 +214,6 @@ typedef struct
   {
     ble_common_evt_t  common_evt; /**< Common Event, evt_id in BLE_EVT_* series. */
     ble_gap_evt_t     gap_evt;    /**< GAP originated event, evt_id in BLE_GAP_EVT_* series. */
-    ble_l2cap_evt_t   l2cap_evt;  /**< L2CAP originated event, evt_id in BLE_L2CAP_EVT* series. */
     ble_gattc_evt_t   gattc_evt;  /**< GATT client originated event, evt_id in BLE_GATTC_EVT* series. */
     ble_gatts_evt_t   gatts_evt;  /**< GATT server originated event, evt_id in BLE_GATTS_EVT* series. */
   } evt;                          /**< Event union. */
@@ -271,56 +265,11 @@ typedef struct
 } ble_common_opt_pa_lna_t;
 
 /**
- * @brief BLE connection bandwidth configuration parameters
- */
-typedef struct
-{
-  uint8_t conn_bw_tx;   /**< Connection bandwidth configuration for transmission, see @ref BLE_CONN_BWS.*/
-  uint8_t conn_bw_rx;   /**< Connection bandwidth configuration for reception, see @ref BLE_CONN_BWS.*/
-} ble_conn_bw_t;
-
-/**@brief BLE connection specific bandwidth configuration parameters.
- *
- * This can be used with @ref sd_ble_opt_set to set the bandwidth configuration to be used when creating connections.
- *
- * Call @ref sd_ble_opt_set with this option prior to calling @ref sd_ble_gap_adv_start or @ref sd_ble_gap_connect.
- *
- * The bandwidth configurations set via @ref sd_ble_opt_set are maintained separately for central and peripheral
- * connections. The given configurations are used for all future connections of the role indicated in this structure
- * unless they are changed by subsequent @ref sd_ble_opt_set calls.
- *
- * @note When this option is not used, the SoftDevice will use the default options:
- * - @ref BLE_CONN_BW_HIGH for @ref BLE_GAP_ROLE_PERIPH connections (both transmission and reception).
- * - @ref BLE_CONN_BW_MID for @ref BLE_GAP_ROLE_CENTRAL connections (both transmisison and reception).
- * This option allows the application to selectively override these defaults for each role.
- *
- * @note The global memory pool configuration can be set with the @ref ble_conn_bw_counts_t configuration parameter, which
- * is provided to @ref sd_ble_enable.
- *
- * @note @ref sd_ble_opt_get is not supported for this option.
- * @note Please refer to SoftDevice Specification for more information on bandwidth configuration.
- *
- * @mscs
- * @mmsc{@ref BLE_COMMON_CONF_BW}
- * @endmscs
- *
- * @retval ::NRF_SUCCESS Set successfully.
- * @retval ::BLE_ERROR_INVALID_ROLE The role is invalid.
- * @retval ::NRF_ERROR_INVALID_PARAM Invalid bandwidth configuration parameters.
- * @retval ::NRF_ERROR_NOT_SUPPORTED If the combination of role and bandwidth configuration is not supported.
- */
-typedef struct
-{
-  uint8_t            role;     /**< BLE role of the connection, see @ref BLE_GAP_ROLES. */
-  ble_conn_bw_t      conn_bw;  /**< Bandwidth configuration parameters. */
-} ble_common_opt_conn_bw_t;
-
-/**
  * @brief Configuration of extended BLE connection events.
  *
  * When enabled the SoftDevice will dynamically extend the connection event when possible.
  *
- * The connection event length is controlled by the bandwidth configuration as set by @ref ble_common_opt_conn_bw_t.
+ * The connection event length is controlled by the connection configuration as set by @ref ble_gap_conn_cfg_t::event_length.
  * The connection event can be extended if there is time to send another packet pair before the start of the next connection interval,
  * and if there are no conflicts with other BLE roles requesting radio time.
  *
@@ -334,7 +283,6 @@ typedef struct
 /**@brief Option structure for common options. */
 typedef union
 {
-  ble_common_opt_conn_bw_t      conn_bw;       /**< Parameters for the connection bandwidth option. */
   ble_common_opt_pa_lna_t       pa_lna;        /**< Parameters for controlling PA and LNA pin toggling. */
   ble_common_opt_conn_evt_ext_t conn_evt_ext;  /**< Parameters for enabling extended connection events. */
 } ble_common_opt_t;
@@ -346,67 +294,59 @@ typedef union
   ble_gap_opt_t     gap_opt;            /**< GAP option, opt_id in @ref BLE_GAP_OPTS series. */
 } ble_opt_t;
 
-/**
- * @brief BLE bandwidth count parameters
+/**@brief BLE connection configuration type, wrapping the module specific configurations, set with
+ * @ref sd_ble_cfg_set.
  *
- * These parameters are used to configure the memory pools allocated within the SoftDevice for application packets
- * (both transmission and reception) for all connections.
- *
- * @note The sum of all three counts must add up to the sum of @ref ble_gap_enable_params_t::central_conn_count and
- * @ref ble_gap_enable_params_t::periph_conn_count in @ref ble_gap_enable_params_t.
- */
-typedef struct {
-  uint8_t high_count;   /**< Total number of high bandwidth TX or RX memory pools available to the application at runtime for all active connections. */
-  uint8_t mid_count;    /**< Total number of medium bandwidth TX or RX memory pools available to the application at runtime for all active connections. */
-  uint8_t low_count;    /**< Total number of low bandwidth TX or RX memory pools available to the application at runtime for all active connections. */
-} ble_conn_bw_count_t;
-
-/**
- * @brief BLE bandwidth global memory pool configuration parameters
- *
- * These configuration parameters are used to set the amount of memory dedicated to application packets for
- * all connections. The application should specify the most demanding configuration for the intended use.
- *
- * Please refer to the SoftDevice Specification for more information on bandwidth configuration.
- *
- * @note Each connection created at runtime requires both a TX and an RX memory pool. By the use of these configuration
- * parameters, the application can decide the size and total number of the global memory pools that will be later
- * available for connection creation.
+ * @note Connection configurations don't have to be set.
+ * In the case that no configurations has been set, or fewer connection configurations has been set than enabled connections,
+ * the default connection configuration will be automatically added for the remaining connections.
+ * When creating connections with the default configuration, @ref BLE_CONN_CFG_TAG_DEFAULT should be used in
+ * place of @ref ble_conn_cfg_t::conn_cfg_tag. See @ref sd_ble_gap_adv_start() and @ref sd_ble_gap_connect()"
  *
  * @mscs
- * @mmsc{@ref BLE_COMMON_CONF_BW}
+ * @mmsc{@ref BLE_CONN_CFG}
  * @endmscs
- *
- */
-typedef struct {
-  ble_conn_bw_count_t tx_counts;   /**< Global memory pool configuration for transmission.*/
-  ble_conn_bw_count_t rx_counts;   /**< Global memory pool configuration for reception.*/
-} ble_conn_bw_counts_t;
 
-/**
- * @brief BLE Common Initialization parameters.
- *
- * @note If @ref p_conn_bw_counts is NULL the SoftDevice will assume default bandwidth configuration for all connections.
- * To fit a custom bandwidth configuration requirement, the application developer may have to specify a custom memory
- * pool configuration here. See @ref ble_common_opt_conn_bw_t for bandwidth configuration of individual connections.
- * Please refer to the SoftDevice Specification for more information on bandwidth configuration.
  */
 typedef struct
 {
-  uint16_t                  vs_uuid_count;     /**< Maximum number of 128-bit, Vendor Specific UUID bases to allocate. */
-  ble_conn_bw_counts_t      *p_conn_bw_counts; /**< Bandwidth configuration parameters or NULL for defaults. */
-} ble_common_enable_params_t;
+  uint8_t              conn_cfg_tag;        /**< The application chosen tag it can use with the @ref sd_ble_gap_adv_start() and @ref sd_ble_gap_connect()
+                                                 calls to select this configuration when creating a connection.
+                                                 Must be different for all connection configurations added and not @ref BLE_CONN_CFG_TAG_DEFAULT. */
+  union {
+    ble_gap_conn_cfg_t   gap_conn_cfg;      /**< GAP connection configuration, cfg_id is @ref BLE_CONN_CFG_GAP. */
+    ble_gattc_conn_cfg_t gattc_conn_cfg;    /**< GATTC connection configuration, cfg_id is @ref BLE_CONN_CFG_GATTC. */
+    ble_gatts_conn_cfg_t gatts_conn_cfg;    /**< GATTS this connection configuration, cfg_id is @ref BLE_CONN_CFG_GATTS. */
+    ble_gatt_conn_cfg_t  gatt_conn_cfg;     /**< GATT this connection configuration, cfg_id is @ref BLE_CONN_CFG_GATT. */
+  } params;                                 /**< Connection configuration union. */
+} ble_conn_cfg_t;
 
 /**
- * @brief BLE Initialization parameters.
+ * @brief Configuration of Vendor Specific UUIDs, set with @ref sd_ble_cfg_set.
+ *
+ * @retval ::NRF_ERROR_INVALID_PARAM Too many UUIDs configured.
  */
 typedef struct
 {
-  ble_common_enable_params_t        common_enable_params;  /**< Common init parameters @ref ble_common_enable_params_t. */
-  ble_gap_enable_params_t           gap_enable_params;     /**< GAP init parameters @ref ble_gap_enable_params_t. */
-  ble_gatt_enable_params_t          gatt_enable_params;    /**< GATT init parameters @ref ble_gatt_enable_params_t. */
-  ble_gatts_enable_params_t         gatts_enable_params;   /**< GATTS init parameters @ref ble_gatts_enable_params_t. */
-} ble_enable_params_t;
+  uint8_t vs_uuid_count; /**< Number of 128-bit Vendor Specific UUID bases to allocate memory for.
+                              Default value is @ref BLE_UUID_VS_COUNT_DEFAULT. Maximum value is
+                              @ref BLE_UUID_VS_COUNT_MAX. */
+} ble_common_cfg_vs_uuid_t;
+
+/**@brief Common BLE Configuration type, wrapping the common configurations. */
+typedef union
+{
+  ble_common_cfg_vs_uuid_t  vs_uuid_cfg;  /**< Vendor specific UUID configuration, cfg_id is @ref BLE_COMMON_CFG_VS_UUID. */
+} ble_common_cfg_t;
+
+/**@brief BLE Configuration type, wrapping the module specific configurations. */
+typedef union
+{
+  ble_conn_cfg_t    conn_cfg;   /**< Connection specific configurations, cfg_id in @ref BLE_CONN_CFGS series. */
+  ble_common_cfg_t  common_cfg; /**< Global common configurations, cfg_id in @ref BLE_COMMON_CFGS series. */
+  ble_gap_cfg_t     gap_cfg;    /**< Global GAP configurations, cfg_id in @ref BLE_GAP_CFGS series. */
+  ble_gatts_cfg_t   gatts_cfg;  /**< Global GATTS configuration, cfg_id in @ref BLE_GATTS_CFGS series. */
+} ble_cfg_t;
 
 /** @} */
 
@@ -415,19 +355,24 @@ typedef struct
 
 /**@brief Enable the BLE stack
  *
- * @param[in, out] p_ble_enable_params Pointer to ble_enable_params_t
- * @param[in, out] p_app_ram_base      Pointer to a variable containing the start address of the application RAM region
- * (APP_RAM_BASE). On return, this will contain the minimum start address of the application RAM region required by the
- * SoftDevice for this configuration. Calling @ref sd_ble_enable() with *p_app_ram_base set to 0 can be used during
- * development to find out how much memory a specific configuration will need.
+ * @param[in, out] p_app_ram_base   Pointer to a variable containing the start address of the
+ *                                  application RAM region (APP_RAM_BASE). On return, this will
+ *                                  contain the minimum start address of the application RAM region
+ *                                  required by the SoftDevice for this configuration.
  *
- * @note The memory requirement for a specific configuration will not increase between SoftDevices with the same major
- * version number.
+ * @note The memory requirement for a specific configuration will not increase between SoftDevices
+ *       with the same major version number.
  *
- * @note At runtime the IC's RAM is split into 2 regions: The SoftDevice RAM region is located between 0x20000000 and
- *       APP_RAM_BASE-1 and the application's RAM region is located between APP_RAM_BASE and the start of the call stack.
+ * @note The value of *p_app_ram_base when the app has done no custom configuration of the
+ *       SoftDevice, i.e. the app has not called @ref sd_ble_cfg_set before @ref sd_ble_enable, can
+ *       be found in the release notes.
  *
- * @details This call initializes the BLE stack, no other BLE related function can be called before this one.
+ * @note At runtime the IC's RAM is split into 2 regions: The SoftDevice RAM region is located
+ *       between 0x20000000 and APP_RAM_BASE-1 and the application's RAM region is located between
+ *       APP_RAM_BASE and the start of the call stack.
+ *
+ * @details This call initializes the BLE stack, no BLE related function other than @ref
+ *          sd_ble_cfg_set can be called before this one.
  *
  * @mscs
  * @mmsc{@ref BLE_COMMON_ENABLE}
@@ -436,26 +381,47 @@ typedef struct
  * @retval ::NRF_SUCCESS              The BLE stack has been initialized successfully.
  * @retval ::NRF_ERROR_INVALID_STATE  The BLE stack had already been initialized and cannot be reinitialized.
  * @retval ::NRF_ERROR_INVALID_ADDR   Invalid or not sufficiently aligned pointer supplied.
- * @retval ::NRF_ERROR_INVALID_LENGTH One or more of the following is true:
- *                                    - The specified Attribute Table size is too small.
- *                                      The minimum acceptable size is defined by @ref BLE_GATTS_ATTR_TAB_SIZE_MIN.
- *                                    - The specified Attribute Table size is not a multiple of 4.
- *                                    - The device name length is invalid (must be between 0 and @ref BLE_GAP_DEVNAME_MAX_LEN).
- *                                    - The device name length is too long for the given Attribute Table.
- * @retval ::NRF_ERROR_INVALID_PARAM  One or more of the following is true:
- *                                    - Incorrectly configured VS UUID count.
- *                                    - Invalid connection count parameters.
- *                                    - Invalid device name location (vloc).
- *                                    - Invalid device name security mode.
- *                                    - Invalid maximum ATT_MTU size, see @ref ble_gatt_enable_params_t::att_mtu.
- * @retval ::NRF_ERROR_NOT_SUPPORTED  Device name security mode is not supported.
  * @retval ::NRF_ERROR_NO_MEM         The amount of memory assigned to the SoftDevice by *p_app_ram_base is not
  *                                    large enough to fit this configuration's memory requirement. Check *p_app_ram_base
  *                                    and set the start address of the application RAM region accordingly.
- * @retval ::NRF_ERROR_CONN_COUNT     The requested number of connections exceeds the maximum supported by the SoftDevice.
- *                                    Please refer to the SoftDevice Specification for more information on role configuration.
  */
-SVCALL(SD_BLE_ENABLE, uint32_t, sd_ble_enable(ble_enable_params_t * p_ble_enable_params, uint32_t * p_app_ram_base));
+SVCALL(SD_BLE_ENABLE, uint32_t, sd_ble_enable(uint32_t * p_app_ram_base));
+
+/**@brief Add configurations for the BLE stack
+ *
+ * @param[in] cfg_id              Config ID, see @ref BLE_CONN_CFGS, @ref BLE_COMMON_CFGS, @ref
+ *                                BLE_GAP_CFGS or @ref BLE_GATTS_CFGS.
+ * @param[in] p_cfg               Pointer to a ble_cfg_t structure containing the configuration value.
+ * @param[in] app_ram_base        The start address of the application RAM region (APP_RAM_BASE).
+ *                                See @ref sd_ble_enable for details about APP_RAM_BASE.
+ *
+ * @note The memory requirement for a specific configuration will not increase between SoftDevices
+ *       with the same major version number.
+ *
+ * @note If a configuration is set more than once, the last one set is the one that takes effect on
+ *       @ref sd_ble_enable.
+ *
+ * @note Any part of the BLE stack that is NOT configured with @ref sd_ble_cfg_set will have default
+ *       configuration.
+ *
+ * @note @ref sd_ble_cfg_set may be called at any time when the SoftDevice is enabled (see @ref
+ *       sd_softdevice_enable) while the BLE part of the SoftDevice is not enabled (see @ref
+ *       sd_ble_enable).
+ *
+ * @note Error codes for the configurations are described in the configuration structs.
+ *
+ * @mscs
+ * @mmsc{@ref BLE_COMMON_ENABLE}
+ * @endmscs
+ *
+ * @retval ::NRF_SUCCESS              The configuration has been added successfully.
+ * @retval ::NRF_ERROR_INVALID_STATE  The BLE stack had already been initialized.
+ * @retval ::NRF_ERROR_INVALID_ADDR   Invalid or not sufficiently aligned pointer supplied.
+ * @retval ::NRF_ERROR_INVALID_PARAM  Invalid cfg_id supplied.
+ * @retval ::NRF_ERROR_NO_MEM         The amount of memory assigned to the SoftDevice by app_ram_base is not
+ *                                    large enough to fit this configuration's memory requirement.
+ */
+SVCALL(SD_BLE_CFG_SET, uint32_t, sd_ble_cfg_set(uint32_t cfg_id, ble_cfg_t const * p_cfg, uint32_t app_ram_base));
 
 /**@brief Get an event from the pending events queue.
  *
@@ -496,44 +462,6 @@ SVCALL(SD_BLE_ENABLE, uint32_t, sd_ble_enable(ble_enable_params_t * p_ble_enable
 SVCALL(SD_BLE_EVT_GET, uint32_t, sd_ble_evt_get(uint8_t *p_dest, uint16_t *p_len));
 
 
-/**@brief Get the total number of available guaranteed application transmission packets for a particular connection.
- *
- * @details This call allows the application to obtain the total number of guaranteed application transmission packets
- * available for a connection. Please note that this does not return the number of free packets, but rather the total
- * amount of them for that particular connection. The application has two options to handle transmitting application packets:
- * - Use a simple arithmetic calculation: after connection creation time the application should use this function to
- * find out the total amount of guaranteed packets available to it and store it in a variable.
- * Every time a packet is successfully queued for a transmission on this connection using any of the exposed functions in
- * this  BLE API, the application should decrement that variable. Conversely, whenever a @ref BLE_EVT_TX_COMPLETE event
- * with the conn_handle matching the particular connection is received by the application, it should retrieve the count
- * field in such event and add that number to the same variable storing the number of available guaranteed packets. This
- * mechanism allows the application to be aware at any time of the number of guaranteed application packets available for
- * each of the active connections, and therefore it can know with certainty whether it is possible to send more data or
- * it has to wait for a @ref BLE_EVT_TX_COMPLETE event before it proceeds.
- * The application can still pursue transmissions when the number of guaranteed application packets available is smaller
- * than or equal to zero, but successful queuing of the tranmsission is not guaranteed.
- * - Choose to simply not keep track of available packets at all, and instead handle the @ref BLE_ERROR_NO_TX_PACKETS error
- * by queueing the packet to be transmitted and try again as soon as a @ref BLE_EVT_TX_COMPLETE event arrives.
- *
- * The API functions that <b>may</b> consume an application packet depending on the parameters supplied to them can be found below:
- * - @ref sd_ble_gattc_write (write without response only)
- * - @ref sd_ble_gatts_hvx (notifications only)
- * - @ref sd_ble_l2cap_tx (all packets)
- *
- * @param[in]  conn_handle Connection handle.
- * @param[out] p_count Pointer to a uint8_t which will contain the number of application transmission packets upon
- *                     successful return.
- * @mscs
- * @mmsc{@ref BLE_COMMON_APP_BUFF_MSC}
- * @endmscs
- *
- * @retval ::NRF_SUCCESS Number of application transmission packets retrieved successfully.
- * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
- * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
- */
-SVCALL(SD_BLE_TX_PACKET_COUNT_GET, uint32_t, sd_ble_tx_packet_count_get(uint16_t conn_handle, uint8_t *p_count));
-
-
 /**@brief Add a Vendor Specific base UUID.
  *
  * @details This call enables the application to add a vendor specific base UUID to the BLE stack's table, for later
@@ -541,8 +469,8 @@ SVCALL(SD_BLE_TX_PACKET_COUNT_GET, uint32_t, sd_ble_tx_packet_count_get(uint16_t
  * format when dealing with both 16-bit and 128-bit UUIDs without having to check for lengths and having split code
  * paths. This is accomplished by extending the grouping mechanism that the Bluetooth SIG standard base UUID uses
  * for all other 128-bit UUIDs. The type field in the @ref ble_uuid_t structure is an index (relative to
- * @ref BLE_UUID_TYPE_VENDOR_BEGIN) to the table populated by multiple calls to this function, and the uuid field
- * in the same structure contains the 2 bytes at indices 12 and 13. The number of possible 128-bit UUIDs available to
+ * @ref BLE_UUID_TYPE_VENDOR_BEGIN) to the table populated by multiple calls to this function, and the UUID field
+ * in the same structure contains the 2 bytes at indexes 12 and 13. The number of possible 128-bit UUIDs available to
  * the application is therefore the number of Vendor Specific UUIDs added with the help of this function times 65536,
  * although restricted to modifying bytes 12 and 13 for each of the entries in the supplied array.
  *
@@ -617,7 +545,7 @@ SVCALL(SD_BLE_VERSION_GET, uint32_t, sd_ble_version_get(ble_version_t *p_version
  * @note This call can only be used as a response to a @ref BLE_EVT_USER_MEM_REQUEST event issued to the application.
  *
  * @param[in] conn_handle Connection handle.
- * @param[in,out] p_block Pointer to a user memory block structure.
+ * @param[in] p_block Pointer to a user memory block structure or NULL if memory is managed by the application.
  *
  * @mscs
  * @mmsc{@ref BLE_GATTS_QUEUED_WRITE_NOBUF_PEER_CANCEL_MSC}
@@ -629,9 +557,10 @@ SVCALL(SD_BLE_VERSION_GET, uint32_t, sd_ble_version_get(ble_version_t *p_version
  * @endmscs
  *
  * @retval ::NRF_SUCCESS Successfully queued a response to the peer.
+ * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
- * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection state or no execute write request pending.
- * @retval ::NRF_ERROR_BUSY The BLE stack is busy. Retry at later time.
+ * @retval ::NRF_ERROR_INVALID_LENGTH Invalid user memory block length supplied.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection state or no user memory request pending.
  */
 SVCALL(SD_BLE_USER_MEM_REPLY, uint32_t, sd_ble_user_mem_reply(uint16_t conn_handle, ble_user_mem_block_t const *p_block));
 
@@ -641,7 +570,6 @@ SVCALL(SD_BLE_USER_MEM_REPLY, uint32_t, sd_ble_user_mem_reply(uint16_t conn_hand
  *
  * @mscs
  * @mmsc{@ref BLE_GAP_PERIPH_BONDING_STATIC_PK_MSC}
- * @mmsc{@ref BLE_COMMON_CONF_BW}
  * @endmscs
  *
  * @param[in] opt_id Option ID, see @ref BLE_COMMON_OPTS and @ref BLE_GAP_OPTS.

@@ -1,14 +1,42 @@
-/* Copyright (c) 2012 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
+/**
+ * Copyright (c) 2012 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
- 
 /* Disclaimer: This client implementation of the Apple Notification Center Service can and will be changed at any time by Nordic Semiconductor ASA.
  * Server implementations such as the ones found in iOS can be changed at any time by Apple and may cause this client implementation to stop working.
  */
@@ -180,7 +208,7 @@ static uint32_t ble_ancs_verify_notification_format(const ble_ancs_c_evt_notif_t
 }
 
 /**@brief Function for receiving and validating notifications received from the Notification Provider.
- * 
+ *
  * @param[in] p_ancs     Pointer to an ANCS instance to which the event belongs.
  * @param[in] p_data_src Pointer to data that was received from the Notification Provider.
  * @param[in] hvx_len    Length of the data that was received by the Notification Provider.
@@ -246,7 +274,7 @@ ret_code_t nrf_ble_ancs_c_app_attr_request(ble_ancs_c_t  * p_ancs,
 
 
 /**@brief Function for receiving and validating notifications received from the Notification Provider.
- * 
+ *
  * @param[in] p_ancs    Pointer to an ANCS instance to which the event belongs.
  * @param[in] p_ble_evt Bluetooth stack event.
  */
@@ -405,7 +433,7 @@ static uint32_t cccd_configure(const uint16_t conn_handle, const uint16_t handle
     p_msg.type                                = WRITE_REQ;
 
     tx_buffer_insert(&p_msg);
-    
+
     tx_buffer_process();
     return NRF_SUCCESS;
 }
@@ -456,7 +484,7 @@ uint32_t ble_ancs_get_notif_attrs(ble_ancs_c_t * p_ancs,
 
     //Encode Command ID.
     p_msg.req.write_req.gattc_value[index++] = BLE_ANCS_COMMAND_ID_GET_NOTIF_ATTRIBUTES;
-    
+
     //Encode Notification UID.
     index += uint32_encode(p_uid, &(p_msg.req.write_req.gattc_value[index]));
 
@@ -583,7 +611,7 @@ static uint16_t encode_notif_action(uint8_t * p_encoded_data, uint32_t uid, ble_
 ret_code_t nrf_ancs_perform_notif_action(ble_ancs_c_t * p_ancs, uint32_t uid, ble_ancs_c_action_id_values_t action_id)
 {
     VERIFY_PARAM_NOT_NULL(p_ancs);
-    
+
     tx_message_t msg;
     memset(&msg, 0, sizeof(tx_message_t));
 
@@ -602,7 +630,7 @@ ret_code_t nrf_ancs_perform_notif_action(ble_ancs_c_t * p_ancs, uint32_t uid, bl
 
     tx_buffer_insert(&msg);
     tx_buffer_process();
-    
+
     return NRF_SUCCESS;
 }
 
@@ -613,7 +641,7 @@ ret_code_t nrf_ble_ancs_c_handles_assign(ble_ancs_c_t * p_ancs,
     VERIFY_PARAM_NOT_NULL(p_ancs);
 
     p_ancs->conn_handle = conn_handle;
-    
+
     if(p_peer_handles != NULL)
     {
         p_ancs->service.control_point_char.handle_value = p_peer_handles->control_point_char.handle_value;

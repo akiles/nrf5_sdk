@@ -1,15 +1,42 @@
-/* Copyright (c) 2015 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 /** @file
  * @defgroup nrf_twi_master_example main.c
  * @{
@@ -22,7 +49,8 @@
 #include <stdio.h>
 #include "boards.h"
 #include "app_util_platform.h"
-#include "nrf_drv_rtc.h"
+#include "app_timer.h"
+#include "nrf_pwr_mgmt.h"
 #include "nrf_drv_clock.h"
 #include "bsp.h"
 #include "app_error.h"
@@ -35,11 +63,12 @@
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 
+#define TWI_INSTANCE_ID             0
 
 #define MAX_PENDING_TRANSACTIONS    5
 
-#define APP_TIMER_PRESCALER         0
-#define APP_TIMER_OP_QUEUE_SIZE     2
+APP_TWI_DEF(m_app_twi, MAX_PENDING_TRANSACTIONS, TWI_INSTANCE_ID);
+APP_TIMER_DEF(m_timer);
 
 // Pin number for indicating communication with sensors.
 #ifdef BSP_LED_3
@@ -47,11 +76,6 @@
 #else
     #error "Please choose an output pin"
 #endif
-
-
-static app_twi_t m_app_twi = APP_TWI_INSTANCE(0);
-
-static nrf_drv_rtc_t const m_rtc = NRF_DRV_RTC_INSTANCE(0);
 
 
 // Buffer for data read from sensors.
@@ -178,9 +202,6 @@ void read_all_cb(ret_code_t result, void * p_user_data)
 }
 static void read_all(void)
 {
-    // Signal on LED that something is going on.
-    bsp_board_led_invert(READ_ALL_INDICATOR);
-
     // [these structures have to be "static" - they cannot be placed on stack
     //  since the transaction is scheduled and these structures most likely
     //  will be referred after this function returns]
@@ -199,6 +220,9 @@ static void read_all(void)
     };
 
     APP_ERROR_CHECK(app_twi_schedule(&m_app_twi, &transaction));
+
+    // Signal on LED that something is going on.
+    bsp_board_led_invert(READ_ALL_INDICATOR);
 }
 
 #if (BUFFER_SIZE < 7)
@@ -300,11 +324,10 @@ static void bsp_config(void)
 {
     uint32_t err_code;
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
-    err_code = bsp_init(BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
-                        bsp_event_handler);
+    err_code = bsp_init(BSP_INIT_BUTTONS, bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -321,38 +344,9 @@ static void twi_config(void)
        .clear_bus_init     = false
     };
 
-    APP_TWI_INIT(&m_app_twi, &config, MAX_PENDING_TRANSACTIONS, err_code);
+    err_code = app_twi_init(&m_app_twi, &config);
     APP_ERROR_CHECK(err_code);
 }
-
-
-// RTC tick events generation.
-static void rtc_handler(nrf_drv_rtc_int_type_t int_type)
-{
-    if (int_type == NRF_DRV_RTC_INT_TICK)
-    {
-        // On each RTC tick (their frequency is set in "nrf_drv_config.h")
-        // we read data from our sensors.
-        read_all();
-    }
-}
-static void rtc_config(void)
-{
-    uint32_t err_code;
-
-    // Initialize RTC instance with default configuration.
-    nrf_drv_rtc_config_t config = NRF_DRV_RTC_DEFAULT_CONFIG;
-    config.prescaler = RTC_FREQ_TO_PRESCALER(32); //Set RTC frequency to 32Hz
-    err_code = nrf_drv_rtc_init(&m_rtc, &config, rtc_handler);
-    APP_ERROR_CHECK(err_code);
-
-    // Enable tick event and interrupt.
-    nrf_drv_rtc_tick_enable(&m_rtc, true);
-
-    // Power on RTC instance.
-    nrf_drv_rtc_enable(&m_rtc);
-}
-
 
 static void lfclk_config(void)
 {
@@ -364,9 +358,26 @@ static void lfclk_config(void)
     nrf_drv_clock_lfclk_request(NULL);
 }
 
+void timer_handler(void * p_context)
+{
+    read_all();
+}
+
+void read_init(void)
+{
+    ret_code_t err_code;
+
+    err_code = app_timer_create(&m_timer, APP_TIMER_MODE_REPEATED, timer_handler);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = app_timer_start(m_timer, APP_TIMER_TICKS(50), NULL);
+    APP_ERROR_CHECK(err_code);
+}
 
 int main(void)
 {
+    ret_code_t err_code;
+
     bsp_board_leds_init();
 
     // Start internal LFCLK XTAL oscillator - it is needed by BSP to handle
@@ -376,11 +387,16 @@ int main(void)
 
     bsp_config();
 
+    err_code = nrf_pwr_mgmt_init();
+    APP_ERROR_CHECK(err_code);
+
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
 
     NRF_LOG_INFO("TWI master example\r\n");
     NRF_LOG_FLUSH();
     twi_config();
+
+    read_init();
 
     // Initialize sensors.
     APP_ERROR_CHECK(app_twi_perform(&m_app_twi, lm75b_init_transfers,
@@ -388,11 +404,9 @@ int main(void)
     APP_ERROR_CHECK(app_twi_perform(&m_app_twi, mma7660_init_transfers,
         MMA7660_INIT_TRANSFER_COUNT, NULL));
 
-    rtc_config();
-
     while (true)
     {
-        __WFI();
+        nrf_pwr_mgmt_run();
         NRF_LOG_FLUSH();
     }
 }

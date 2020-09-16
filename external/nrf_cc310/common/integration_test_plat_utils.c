@@ -1,3 +1,13 @@
+// Copyright (c) 2016-2017, ARM Limited or its affiliates. All rights reserved 
+// 
+// This file and the related binary are licensed under the ARM Object Code and 
+// Headers License; you may not use these files except in compliance with this 
+// license. 
+// 
+// You may obtain a copy of the License at <.../external/nrf_cc310/license.txt> 
+// 
+// See the License for the specific language governing permissions and 
+// limitations under the License.
 #ifdef DX_LINUX_PLATFORM
 #include <sys/mman.h>//for mmap
 #include <unistd.h>//for close()
@@ -56,7 +66,7 @@ SaSiError_t integration_tests_setup(void)
     (void)SEGGER_RTT_Init();
 
     INTEG_TEST_PRINT("==================== TEST START ====================\r\n");
-        
+
     NRF_CRYPTOCELL->ENABLE = 1;
 
     return ret;

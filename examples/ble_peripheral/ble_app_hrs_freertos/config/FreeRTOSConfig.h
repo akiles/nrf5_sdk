@@ -70,6 +70,7 @@
 #ifdef SOFTDEVICE_PRESENT
 #include "nrf_soc.h"
 #endif
+#include "app_util_platform.h"
 
 /*-----------------------------------------------------------
  * Possible configurations for system timer
@@ -96,7 +97,7 @@
 #define configUSE_TICKLESS_IDLE 1
 #define configUSE_TICKLESS_IDLE_SIMPLE_DEBUG                                      1 /* See into vPortSuppressTicksAndSleep source code for explanation */
 #define configCPU_CLOCK_HZ                                                        ( SystemCoreClock )
-#define configTICK_RATE_HZ                                                        1000
+#define configTICK_RATE_HZ                                                        1024
 #define configMAX_PRIORITIES                                                      ( 3 )
 #define configMINIMAL_STACK_SIZE                                                  ( 60 )
 #define configTOTAL_HEAP_SIZE                                                     ( 4096 )
@@ -176,6 +177,7 @@ INTERRUPT SAFE FREERTOS API FUNCTIONS FROM ANY INTERRUPT THAT HAS A HIGHER
 PRIORITY THAN THIS! (higher priorities are lower numeric values. */
 #define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY 1
 
+
 /* Interrupt priorities used by the kernel port layer itself.  These are generic
 to all Cortex-M ports, and do not rely on any particular library functions. */
 #define configKERNEL_INTERRUPT_PRIORITY                 configLIBRARY_LOWEST_INTERRUPT_PRIORITY
@@ -225,5 +227,18 @@ standard names - or at least those used in the unmodified vector table. */
         extern uint32_t SystemCoreClock;
     #endif
 #endif /* !assembler */
+
+/** Implementation note:  Use this with caution and set this to 1 ONLY for debugging
+ * ----------------------------------------------------------
+     * Set the value of configUSE_DISABLE_TICK_AUTO_CORRECTION_DEBUG to below for enabling or disabling RTOS tick auto correction:
+     * 0. This is default. If the RTC tick interrupt is masked for more than 1 tick by higher priority interrupts, then most likely
+     *    one or more RTC ticks are lost. The tick interrupt inside RTOS will detect this and make a correction needed. This is needed
+     *    for the RTOS internal timers to be more accurate.
+     * 1. The auto correction for RTOS tick is disabled even though few RTC tick interrupts were lost. This feature is desirable when debugging
+     *    the RTOS application and stepping though the code. After stepping when the application is continued in debug mode, the auto-corrections of
+     *    RTOS tick might cause asserts. Setting configUSE_DISABLE_TICK_AUTO_CORRECTION_DEBUG to 1 will make RTC and RTOS go out of sync but could be
+     *    convenient for debugging.
+     */
+#define configUSE_DISABLE_TICK_AUTO_CORRECTION_DEBUG     0
 
 #endif /* FREERTOS_CONFIG_H */

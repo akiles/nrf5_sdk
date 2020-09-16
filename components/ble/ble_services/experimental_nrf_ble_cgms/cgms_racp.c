@@ -1,14 +1,42 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 #include <stdint.h>
 #include <string.h>
 #include "ble.h"
@@ -34,7 +62,7 @@ ret_code_t cgms_racp_char_add(nrf_ble_cgms_t * p_cgms)
     memset(&add_char_params, 0, sizeof(add_char_params));
 
     add_char_params.uuid                = BLE_UUID_RECORD_ACCESS_CONTROL_POINT_CHAR;
-    add_char_params.max_len             = BLE_L2CAP_MTU_DEF;
+    add_char_params.max_len             = BLE_GATT_ATT_MTU_DEFAULT;
     add_char_params.init_len            = 0;
     add_char_params.p_init_value        = 0;
     add_char_params.is_var_len          = true;
@@ -96,28 +124,28 @@ static void racp_send(nrf_ble_cgms_t * p_cgms, ble_racp_value_t * p_racp_val)
     switch (err_code)
     {
         case NRF_SUCCESS:
-            // Wait for HVC event
+            // Wait for HVC event.
             p_cgms->cgms_com_state = STATE_RACP_RESPONSE_IND_VERIF;
             break;
 
-        case BLE_ERROR_NO_TX_PACKETS:
-            // Wait for TX_COMPLETE event to retry transmission
+        case NRF_ERROR_RESOURCES:
+            // Wait for TX_COMPLETE event to retry transmission.
             p_cgms->cgms_com_state = STATE_RACP_RESPONSE_PENDING;
             break;
 
         case NRF_ERROR_INVALID_STATE:
-            // Make sure state machine returns to the default state
+            // Make sure state machine returns to the default state.
             p_cgms->cgms_com_state = STATE_NO_COMM;
             break;
 
         default:
-            // Report error to application
+            // Report error to application.
             if (p_cgms->error_handler != NULL)
             {
                 p_cgms->error_handler(err_code);
             }
 
-            // Make sure state machine returns to the default state
+            // Make sure state machine returns to the default state.
             p_cgms->cgms_com_state = STATE_NO_COMM;
             break;
     }
@@ -288,7 +316,7 @@ static ret_code_t racp_report_records_less_equal(nrf_ble_cgms_t * p_cgms)
         ble_cgms_rec_t rec[NRF_BLE_CGMS_MEAS_REC_PER_NOTIF_MAX];
 
         rec_nb_left_to_send = total_rec_nb_to_send - p_cgms->racp_data.racp_proc_records_reported;
-        
+
         if (rec_nb_left_to_send > NRF_BLE_CGMS_MEAS_REC_PER_NOTIF_MAX)
         {
             nb_rec_to_send = NRF_BLE_CGMS_MEAS_REC_PER_NOTIF_MAX;
@@ -315,7 +343,7 @@ static ret_code_t racp_report_records_less_equal(nrf_ble_cgms_t * p_cgms)
         }
         p_cgms->racp_data.racp_proc_record_ndx += nb_rec_to_send;
     }
-   
+
    return NRF_SUCCESS;
 }
 
@@ -364,7 +392,7 @@ static ret_code_t racp_report_records_greater_equal(nrf_ble_cgms_t * p_cgms)
         ble_cgms_rec_t rec[NRF_BLE_CGMS_MEAS_REC_PER_NOTIF_MAX];
 
         rec_nb_left_to_send = total_rec_nb_to_send - p_cgms->racp_data.racp_proc_records_reported;
-        
+
         if (rec_nb_left_to_send > NRF_BLE_CGMS_MEAS_REC_PER_NOTIF_MAX)
         {
             nb_rec_to_send = NRF_BLE_CGMS_MEAS_REC_PER_NOTIF_MAX;
@@ -391,7 +419,7 @@ static ret_code_t racp_report_records_greater_equal(nrf_ble_cgms_t * p_cgms)
         }
         p_cgms->racp_data.racp_proc_record_ndx += nb_rec_to_send;
     }
-   
+
    return NRF_SUCCESS;
 }
 
@@ -460,18 +488,14 @@ static void racp_report_records_procedure(nrf_ble_cgms_t * p_cgms)
         switch (err_code)
         {
             case NRF_SUCCESS:
-                if (p_cgms->cgms_com_state == STATE_RACP_PROC_ACTIVE)
-                {
-                    //p_cgms->racp_data.racp_proc_record_ndx++;
-                }
-                else
+                if (p_cgms->cgms_com_state != STATE_RACP_PROC_ACTIVE)
                 {
                     racp_report_records_completed(p_cgms);
                 }
                 break;
 
-            case BLE_ERROR_NO_TX_PACKETS:
-                // Wait for TX_COMPLETE event to resume transmission
+            case NRF_ERROR_RESOURCES:
+                // Wait for TX_COMPLETE event to resume transmission.
                 return;
 
             case NRF_ERROR_INVALID_STATE:
@@ -480,13 +504,13 @@ static void racp_report_records_procedure(nrf_ble_cgms_t * p_cgms)
                 return;
 
             default:
-                // Report error to application
+                // Report error to application.
                 if (p_cgms->error_handler != NULL)
                 {
                     p_cgms->error_handler(err_code);
                 }
 
-                // Make sure state machine returns to the default state
+                // Make sure state machine returns to the default state.
                 p_cgms->cgms_com_state = STATE_NO_COMM;
                 return;
         }
@@ -750,7 +774,7 @@ void cgms_racp_on_rw_auth_req(nrf_ble_cgms_t                       * p_cgms,
 }
 
 
-/**@brief Function for handling the TX_COMPLETE event.
+/**@brief Function for handling BLE_GATTS_EVT_HVN_TX_COMPLETE events.
  *
  * @param[in]   p_cgms      Glucose Service structure.
  */

@@ -12,12 +12,12 @@ $(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: \
 SRC_FILES += \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_serial.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_frontend.c \
+  $(SDK_ROOT)/components/boards/boards.c \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
   $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
   $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
-  $(SDK_ROOT)/components/libraries/util/sdk_errors.c \
-  $(SDK_ROOT)/components/boards/boards.c \
+  $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/components/drivers_nrf/common/nrf_drv_common.c \
   $(SDK_ROOT)/components/drivers_nrf/uart/nrf_drv_uart.c \
   $(PROJ_DIR)/main.c \
@@ -35,6 +35,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/uart \
   ../config \
   $(SDK_ROOT)/components/drivers_nrf/common \
+  $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/libraries/bsp \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
@@ -52,12 +53,12 @@ LIB_FILES += \
   $(SDK_ROOT)/components/toolchain/cmsis/dsp/GCC/libarm_cortexM4lf_math.a \
 
 # C flags common to all targets
-CFLAGS += -DNRF52840_XXAA
-CFLAGS += -DFPU_INTERRUPT_MODE
 CFLAGS += -DARM_MATH_CM4
-CFLAGS += -DCONFIG_GPIO_AS_PINRESET
 CFLAGS += -DBOARD_PCA10056
 CFLAGS += -DBSP_DEFINES_ONLY
+CFLAGS += -DCONFIG_GPIO_AS_PINRESET
+CFLAGS += -DFPU_INTERRUPT_MODE
+CFLAGS += -DNRF52840_XXAA
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS +=  -Wall -Werror -O3 -g3
@@ -71,12 +72,12 @@ CXXFLAGS += \
 
 # Assembler flags common to all targets
 ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DNRF52840_XXAA
-ASMFLAGS += -DFPU_INTERRUPT_MODE
 ASMFLAGS += -DARM_MATH_CM4
-ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
 ASMFLAGS += -DBOARD_PCA10056
 ASMFLAGS += -DBSP_DEFINES_ONLY
+ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
+ASMFLAGS += -DFPU_INTERRUPT_MODE
+ASMFLAGS += -DNRF52840_XXAA
 
 # Linker flags
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)

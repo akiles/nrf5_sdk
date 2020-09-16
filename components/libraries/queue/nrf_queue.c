@@ -1,15 +1,42 @@
-/* Copyright (c) 2016 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+/**
+ * Copyright (c) 2016 - 2017, Nordic Semiconductor ASA
+ * 
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ * 
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ * 
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ * 
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(NRF_QUEUE)
 #include "nrf_queue.h"
@@ -36,15 +63,18 @@ __STATIC_INLINE size_t nrf_queue_next_idx(nrf_queue_t const * p_queue, size_t id
  */
 __STATIC_INLINE size_t queue_utilization_get(nrf_queue_t const * p_queue)
 {
-    return (p_queue->p_cb->back >= p_queue->p_cb->front) ?
-           (p_queue->p_cb->back - p_queue->p_cb->front)  :
-           (p_queue->size + 1 - p_queue->p_cb->front + p_queue->p_cb->back);
+    size_t front    = p_queue->p_cb->front;
+    size_t back     = p_queue->p_cb->back;
+    return (back >= front) ? (back - front) : (p_queue->size + 1 - front + back);
 }
 
 bool nrf_queue_is_full(nrf_queue_t const * p_queue)
 {
     ASSERT(p_queue != NULL);
-    return (nrf_queue_next_idx(p_queue, p_queue->p_cb->back) == p_queue->p_cb->front);
+    size_t front    = p_queue->p_cb->front;
+    size_t back     = p_queue->p_cb->back;
+
+    return (nrf_queue_next_idx(p_queue, back) == front);
 }
 
 ret_code_t nrf_queue_push(nrf_queue_t const * p_queue, void const * p_element)
@@ -117,8 +147,8 @@ ret_code_t nrf_queue_generic_pop(nrf_queue_t const * p_queue,
 {
     ret_code_t status = NRF_SUCCESS;
 
-    ASSERT(p_queue != NULL);
-    ASSERT(p_element != NULL);
+    ASSERT(p_queue      != NULL);
+    ASSERT(p_element    != NULL);
 
     CRITICAL_REGION_ENTER();
 
@@ -293,11 +323,11 @@ size_t nrf_queue_in(nrf_queue_t const * p_queue,
  */
 static void queue_read(nrf_queue_t const * p_queue, void * p_data, uint32_t element_count)
 {
-    size_t     continuous = (p_queue->p_cb->front <= p_queue->p_cb->back)
-                          ? p_queue->p_cb->back - p_queue->p_cb->front
-                          : p_queue->size + 1 - p_queue->p_cb->front;
+    size_t front        = p_queue->p_cb->front;
+    size_t back         = p_queue->p_cb->back;
+    size_t continuous   = (front <= back) ? (back - front) : (p_queue->size + 1 - front);
     void const * p_read_ptr = (void const *)((size_t)p_queue->p_buffer
-                            + p_queue->p_cb->front * p_queue->element_size);
+                                           + front * p_queue->element_size);
 
     if (element_count <= continuous)
     {
@@ -305,8 +335,8 @@ static void queue_read(nrf_queue_t const * p_queue, void * p_data, uint32_t elem
                p_read_ptr,
                element_count * p_queue->element_size);
 
-        p_queue->p_cb->front = ((p_queue->p_cb->front + element_count) <= p_queue->size)
-                             ? (p_queue->p_cb->front + element_count)
+        p_queue->p_cb->front = ((front + element_count) <= p_queue->size)
+                             ? (front + element_count)
                              : 0;
     }
     else
@@ -402,6 +432,26 @@ size_t nrf_queue_utilization_get(nrf_queue_t const * p_queue)
     CRITICAL_REGION_EXIT();
 
     return utilization;
+}
+
+bool nrf_queue_is_empty(nrf_queue_t const * p_queue)
+{
+    ASSERT(p_queue != NULL);
+    size_t front    = p_queue->p_cb->front;
+    size_t back     = p_queue->p_cb->back;
+    return (front == back);
+}
+
+size_t nrf_queue_available_get(nrf_queue_t const * p_queue)
+{
+    ASSERT(p_queue != NULL);
+    return p_queue->size - nrf_queue_utilization_get(p_queue);
+}
+
+size_t nrf_queue_max_utilization_get(nrf_queue_t const * p_queue)
+{
+    ASSERT(p_queue != NULL);
+    return p_queue->p_cb->max_utilization;
 }
 
 #endif // NRF_MODULE_ENABLED(NRF_QUEUE)
