@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2019, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2020, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -52,6 +52,9 @@
 #include "boards.h"
 #include "app_uart.h"
 
+#if defined(NRF21540_DRIVER_ENABLE) && (NRF21540_DRIVER_ENABLE == 1)
+#include "nrf21540.h"
+#endif
 
 // @note: The BLE DTM 2-wire UART standard specifies 8 data bits, 1 stop bit, no flow control.
 //        These parameters are not configurable in the BLE standard.
@@ -158,6 +161,12 @@ int main(void)
     uart_init();
 
     dtm_error_code = dtm_init();
+
+#if defined(NRF21540_DRIVER_ENABLE) && (NRF21540_DRIVER_ENABLE == 1)
+    //Initialization of nRF21540 front-end Bluetooth® range extender chip. Do not use if your hardware doesn't support it.
+    APP_ERROR_CHECK(nrf21540_init());
+#endif
+
     if (dtm_error_code != DTM_SUCCESS)
     {
         // If DTM cannot be correctly initialized, then we just return.

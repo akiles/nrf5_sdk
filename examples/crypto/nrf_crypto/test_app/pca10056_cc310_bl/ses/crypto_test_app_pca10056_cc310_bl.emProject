@@ -109,12 +109,12 @@
       <file file_name="../../../../../../modules/nrfx/mdk/system_nrf52840.c" />
     </folder>
     <folder Name="nrf_cc310_bl">
-      <file file_name="../../../../../../external/nrf_cc310_bl/lib/cortex-m4/hard-float/libnrf_cc310_bl_0.9.12.a" />
+      <file file_name="../../../../../../external/nrf_cc310_bl/lib/cortex-m4/hard-float/libnrf_cc310_bl_0.9.13.a" />
     </folder>
   </project>
   <configuration Name="Release"
     c_preprocessor_definitions="NDEBUG"
-    gcc_optimization_level="Optimize For Size" />
+    link_time_optimization="No"    gcc_optimization_level="Optimize For Size" />
   <configuration Name="Debug"
     c_preprocessor_definitions="DEBUG; DEBUG_NRF"
     gcc_optimization_level="None"/>

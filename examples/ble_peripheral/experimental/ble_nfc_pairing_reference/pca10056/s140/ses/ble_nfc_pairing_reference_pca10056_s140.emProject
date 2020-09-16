@@ -37,7 +37,7 @@
         <file file_name="$(StudioDir)/source/thumb_crt0.s" />
       </folder>
     <folder Name="nrf_cc310">
-      <file file_name="../../../../../../../external/nrf_cc310/lib/cortex-m4/hard-float/libnrf_cc310_0.9.12.a" />
+      <file file_name="../../../../../../../external/nrf_cc310/lib/cortex-m4/hard-float/libnrf_cc310_0.9.13.a" />
     </folder>
     <folder Name="Board Support">
       <file file_name="../../../../../../../components/libraries/bsp/bsp.c" />
@@ -109,9 +109,10 @@
     <folder Name="nRF_TLS">
       <file file_name="../../../../../../../external/mbedtls/library/aes.c" />
       <file file_name="../../../../../../../external/mbedtls/library/ctr_drbg.c" />
+      <file file_name="../../../../../../../external/mbedtls/library/platform_util.c" />
     </folder>
     <folder Name="nRF_Oberon_Crypto">
-      <file file_name="../../../../../../../external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_3.0.1.a" />
+      <file file_name="../../../../../../../external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_3.0.5.a" />
     </folder>
     <folder Name="nRF_Crypto">
       <file file_name="../../../../../../../components/libraries/crypto/nrf_crypto_aead.c" />
@@ -220,7 +221,7 @@
   </project>
   <configuration Name="Release"
     c_preprocessor_definitions="NDEBUG"
-    gcc_optimization_level="Optimize For Size" />
+    link_time_optimization="No"    gcc_optimization_level="Optimize For Size" />
   <configuration Name="Debug"
     c_preprocessor_definitions="DEBUG; DEBUG_NRF"
     gcc_optimization_level="None"/>

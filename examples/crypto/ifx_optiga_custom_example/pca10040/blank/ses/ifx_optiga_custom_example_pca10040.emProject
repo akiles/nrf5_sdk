@@ -66,7 +66,7 @@
       <file file_name="../../../../../../components/libraries/twi_mngr/nrf_twi_mngr.c" />
     </folder>
     <folder Name="nRF_Oberon_Crypto">
-      <file file_name="../../../../../../external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_3.0.1.a" />
+      <file file_name="../../../../../../external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_3.0.5.a" />
     </folder>
     <folder Name="Infineon">
       <file file_name="../../../../../../external/infineon/optiga/cmd/CommandLib.c" />
@@ -151,7 +151,7 @@
   </project>
   <configuration Name="Release"
     c_preprocessor_definitions="NDEBUG"
-    gcc_optimization_level="Optimize For Size" />
+    link_time_optimization="No"    gcc_optimization_level="Optimize For Size" />
   <configuration Name="Debug"
     c_preprocessor_definitions="DEBUG; DEBUG_NRF"
     gcc_optimization_level="None"/>

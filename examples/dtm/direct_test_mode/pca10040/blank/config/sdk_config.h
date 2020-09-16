@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2020, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -46,6 +46,52 @@
 #ifdef USE_APP_CONFIG
 #include "app_config.h"
 #endif
+// <h> Application 
+
+//==========================================================
+// <o> NRF21540_DO_NOT_USE_NATIVE_RADIO_IRQ_HANDLER  
+#ifndef NRF21540_DO_NOT_USE_NATIVE_RADIO_IRQ_HANDLER
+#define NRF21540_DO_NOT_USE_NATIVE_RADIO_IRQ_HANDLER 1
+#endif
+
+// <o> NRF21540_EGU_NO  
+#ifndef NRF21540_EGU_NO
+#define NRF21540_EGU_NO 0
+#endif
+
+// <o> NRF21540_PDN_PPI_CHANNEL_NO  
+#ifndef NRF21540_PDN_PPI_CHANNEL_NO
+#define NRF21540_PDN_PPI_CHANNEL_NO 3
+#endif
+
+// <o> NRF21540_RADIO_DISABLED_EGU_CHANNEL_NO  
+#ifndef NRF21540_RADIO_DISABLED_EGU_CHANNEL_NO
+#define NRF21540_RADIO_DISABLED_EGU_CHANNEL_NO 1
+#endif
+
+// <o> NRF21540_RADIO_DISABLED_TO_EGU_PPI_CHANNEL_NO  
+#ifndef NRF21540_RADIO_DISABLED_TO_EGU_PPI_CHANNEL_NO
+#define NRF21540_RADIO_DISABLED_TO_EGU_PPI_CHANNEL_NO 6
+#endif
+
+// <o> NRF21540_RADIO_READY_EGU_CHANNEL_NO  
+#ifndef NRF21540_RADIO_READY_EGU_CHANNEL_NO
+#define NRF21540_RADIO_READY_EGU_CHANNEL_NO 0
+#endif
+
+// <o> NRF21540_RADIO_READY_TO_EGU_PPI_CHANNEL_NO  
+#ifndef NRF21540_RADIO_READY_TO_EGU_PPI_CHANNEL_NO
+#define NRF21540_RADIO_READY_TO_EGU_PPI_CHANNEL_NO 5
+#endif
+
+// <o> NRF21540_USER_PPI_CHANNEL_NO  
+#ifndef NRF21540_USER_PPI_CHANNEL_NO
+#define NRF21540_USER_PPI_CHANNEL_NO 4
+#endif
+
+// </h> 
+//==========================================================
+
 // <h> nRF_BLE 
 
 //==========================================================

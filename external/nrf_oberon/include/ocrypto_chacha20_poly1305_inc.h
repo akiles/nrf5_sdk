@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019, Nordic Semiconductor ASA
+ * Copyright (c) 2019 - 2020, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -56,15 +56,14 @@
 #ifndef OCRYPTO_CHACHA20_POLY1305_INC_H
 #define OCRYPTO_CHACHA20_POLY1305_INC_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <stdint.h>
 #include <stddef.h>
 #include "ocrypto_chacha20_poly1305.h"
 #include "ocrypto_poly1305.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**@cond */
 typedef struct {
@@ -240,6 +239,6 @@ int ocrypto_chacha20_poly1305_final_dec(
 }
 #endif
 
-#endif
+#endif /* #ifndef OCRYPTO_CHACHA20_POLY1305_INC_H */
 
 /** @} */

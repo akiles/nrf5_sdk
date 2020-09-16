@@ -36,7 +36,7 @@
         <file file_name="$(StudioDir)/source/thumb_crt0.s" />
       </folder>
     <folder Name="nrf_cc310">
-      <file file_name="../../../../../../external/nrf_cc310/lib/cortex-m4/hard-float/libnrf_cc310_0.9.12.a" />
+      <file file_name="../../../../../../external/nrf_cc310/lib/cortex-m4/hard-float/libnrf_cc310_0.9.13.a" />
     </folder>
     <folder Name="Board Support">
       <file file_name="../../../../../../components/libraries/bsp/bsp.c" />
@@ -131,6 +131,7 @@
     <folder Name="nRF_TLS">
       <file file_name="../../../../../../external/mbedtls/library/aes.c" />
       <file file_name="../../../../../../external/mbedtls/library/ctr_drbg.c" />
+      <file file_name="../../../../../../external/mbedtls/library/platform_util.c" />
     </folder>
     <folder Name="nRF_Drivers">
       <file file_name="../../../../../../integration/nrfx/legacy/nrf_drv_clock.c" />
@@ -172,7 +173,7 @@
       <file file_name="../../../../../../external/segger_rtt/SEGGER_RTT_printf.c" />
     </folder>
     <folder Name="nRF_Oberon_Crypto">
-      <file file_name="../../../../../../external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_3.0.1.a" />
+      <file file_name="../../../../../../external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_3.0.5.a" />
     </folder>
     <folder Name="None">
       <file file_name="../../../../../../modules/nrfx/mdk/ses_startup_nrf52.s" />
@@ -226,7 +227,7 @@
   </project>
   <configuration Name="Release"
     c_preprocessor_definitions="NDEBUG"
-    gcc_optimization_level="Optimize For Size" />
+    link_time_optimization="No"    gcc_optimization_level="Optimize For Size" />
   <configuration Name="Debug"
     c_preprocessor_definitions="DEBUG; DEBUG_NRF"
     gcc_optimization_level="None"/>

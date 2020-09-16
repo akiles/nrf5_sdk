@@ -152,7 +152,7 @@
   </project>
   <configuration Name="Release"
     c_preprocessor_definitions="NDEBUG"
-    gcc_optimization_level=Debug />
+    link_time_optimization="No"    gcc_optimization_level=Debug />
   <configuration Name="Debug"
     c_preprocessor_definitions="DEBUG; DEBUG_NRF"
     gcc_optimization_level="Debug"/>

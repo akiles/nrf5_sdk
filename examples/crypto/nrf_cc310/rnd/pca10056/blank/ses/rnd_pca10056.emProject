@@ -36,7 +36,7 @@
         <file file_name="$(StudioDir)/source/thumb_crt0.s" />
       </folder>
     <folder Name="nrf_cc310">
-      <file file_name="../../../../../../../external/nrf_cc310/lib/cortex-m4/hard-float/libnrf_cc310_0.9.12.a" />
+      <file file_name="../../../../../../../external/nrf_cc310/lib/cortex-m4/hard-float/libnrf_cc310_0.9.13.a" />
     </folder>
     <folder Name="nRF_Log">
       <file file_name="../../../../../../../components/libraries/log/src/nrf_log_backend_rtt.c" />
@@ -89,7 +89,7 @@
   </project>
   <configuration Name="Release"
     c_preprocessor_definitions="NDEBUG"
-    gcc_optimization_level="Optimize For Size" />
+    link_time_optimization="No"    gcc_optimization_level="Optimize For Size" />
   <configuration Name="Debug"
     c_preprocessor_definitions="DEBUG; DEBUG_NRF"
     gcc_optimization_level="None"/>

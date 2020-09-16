@@ -82,6 +82,7 @@
       <file file_name="../../../../../../modules/nrfx/soc/nrfx_atomic.c" />
       <file file_name="../../../../../../modules/nrfx/drivers/src/nrfx_clock.c" />
       <file file_name="../../../../../../modules/nrfx/drivers/src/prs/nrfx_prs.c" />
+      <file file_name="../../../../../../modules/nrfx/drivers/src/nrfx_timer.c" />
       <file file_name="../../../../../../modules/nrfx/drivers/src/nrfx_uart.c" />
       <file file_name="../../../../../../modules/nrfx/drivers/src/nrfx_uarte.c" />
     </folder>
@@ -104,7 +105,7 @@
   </project>
   <configuration Name="Release"
     c_preprocessor_definitions="NDEBUG"
-    gcc_optimization_level="Optimize For Size" />
+    link_time_optimization="No"    gcc_optimization_level="Optimize For Size" />
   <configuration Name="Debug"
     c_preprocessor_definitions="DEBUG; DEBUG_NRF"
     gcc_optimization_level="None"/>
