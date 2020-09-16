@@ -640,8 +640,15 @@ uint16_t ble_advdata_search(uint8_t const * p_encoded_data,
     }
     else
     {
-        *p_offset = i + 2;
-        return (p_encoded_data[i] - 1);
+        uint16_t offset = i + 2;
+        uint16_t len    = p_encoded_data[i] - 1;
+        if ((offset + len) > data_len)
+        {
+            // Malformed. Extends beyond provided data.
+            return 0;
+        }
+        *p_offset = offset;
+        return len;
     }
 }
 

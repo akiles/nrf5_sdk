@@ -65,9 +65,30 @@
 #include "nrf_fprintf.h"
 #include "nrf_fprintf_format.h"
 
-#define NRF_CLI_FORMAT_FLAG_LEFT_JUSTIFY   (1u << 0)
-#define NRF_CLI_FORMAT_FLAG_PAD_ZERO       (1u << 1)
-#define NRF_CLI_FORMAT_FLAG_PRINT_SIGN     (1u << 2)
+#define NRF_CLI_FORMAT_FLAG_LEFT_JUSTIFY        (1u << 0)
+#define NRF_CLI_FORMAT_FLAG_PAD_ZERO            (1u << 1)
+#define NRF_CLI_FORMAT_FLAG_PRINT_SIGN          (1u << 2)
+
+#define NRF_CLI_FORMAT_DOUBLE_DEF_PRECISION     6
+
+#define NRF_CLI_FORMAT_DOUBLE_SIGN_POSITION     63U
+#define NRF_CLI_FORMAT_DOUBLE_SIGN_MASK         1ULL
+#define NRF_CLI_FORMAT_DOUBLE_SIGN              (NRF_CLI_FORMAT_DOUBLE_SIGN_MASK << NRF_CLI_FORMAT_DOUBLE_SIGN_POSITION)
+#define NRF_CLI_FORMAT_DOUBLE_EXP_POSITION      52U
+#define NRF_CLI_FORMAT_DOUBLE_EXP_MASK          0x7FFULL
+#define NRF_CLI_FORMAT_DOUBLE_EXP               (NRF_CLI_FORMAT_DOUBLE_EXP_MASK << NRF_CLI_FORMAT_DOUBLE_EXP_POSITION)
+#define NRF_CLI_FORMAT_DOUBLE_MANT_POSITION     0U
+#define NRF_CLI_FORMAT_DOUBLE_MANT_MASK         0xFFFFFFFFFFFFF
+#define NRF_CLI_FORMAT_DOUBLE_MANT              (NRF_CLI_FORMAT_DOUBLE_MANT_MASK << NRF_CLI_FORMAT_DOUBLE_MANT_POSITION)
+
+#define NRF_CLI_FORMAT_DOUBLE_SIGN_GET(v)       (!!((v) & NRF_CLI_FORMAT_DOUBLE_SIGN))
+#define NRF_CLI_FORMAT_DOUBLE_EXP_GET(v)        (((v) & NRF_CLI_FORMAT_DOUBLE_EXP) >> NRF_CLI_FORMAT_DOUBLE_EXP_POSITION)
+#define NRF_CLI_FORMAT_DOUBLE_MANT_GET(v)       (((v) & NRF_CLI_FORMAT_DOUBLE_MANT) >> NRF_CLI_FORMAT_DOUBLE_MANT_POSITION)
+#define NRF_CLI_FORMAT_REQ_SIGN_SPACE(s, f)     ((s) | (!!((f) & NRF_CLI_FORMAT_FLAG_PRINT_SIGN)))
+
+#define HIGH_32(v)                              ((v) >> 32)
+#define LOW_32(v)                               (((1ULL << 32) - 1) & v)
+
 
 static void buffer_add(nrf_fprintf_ctx_t * const p_ctx, char c)
 {
@@ -317,6 +338,255 @@ static void int_print(nrf_fprintf_ctx_t * const p_ctx,
     unsigned_print(p_ctx, (uint32_t)v, Base, NumDigits, FieldWidth, FormatFlags);
 }
 
+#if NRF_MODULE_ENABLED(NRF_FPRINTF_DOUBLE)
+
+static void fill_space(nrf_fprintf_ctx_t * const p_ctx,
+                       uint8_t len,
+                       bool zeros)
+{
+    for (; len > 0; len--)
+    {
+        if (zeros)
+        {
+            buffer_add(p_ctx, '0');
+        }
+        else
+        {
+            buffer_add(p_ctx, ' ');
+        }
+    }
+}
+
+static void float_print(nrf_fprintf_ctx_t * const p_ctx,
+                        double                    v,
+                        uint32_t                  digits,
+                        uint32_t                  width,
+                        uint32_t                  format,
+                        bool                      uppercase)
+{
+    bool sign, transform = false;
+    uint64_t num, mant, lead, low, base, res, carry, x, s0, s1, s2, s3, fr;
+    int32_t exp;
+    uint8_t highest, offset, lead_len = 0, skipped = 0;
+    uint8_t precision = digits ? digits + 1 : NRF_CLI_FORMAT_DOUBLE_DEF_PRECISION + 1;
+    /* Default digits should be -1, because 0 could be a requirement, not the default.
+     * This should be changed for the whole library.
+     */
+
+    if ((v > 0.0) && (v < 1.0))
+    {
+        v += 1.0;
+        transform = true;
+    }
+    else if ((v > -1.0) && (v < 0.0))
+    {
+        v -= 1.0;
+        transform = true;
+    }
+
+    memcpy(&num, &v, sizeof(num));
+    sign = NRF_CLI_FORMAT_DOUBLE_SIGN_GET(num);
+    exp = NRF_CLI_FORMAT_DOUBLE_EXP_GET(num);
+    mant = NRF_CLI_FORMAT_DOUBLE_MANT_GET(num);
+
+    /* Special cases */
+    if (exp == NRF_CLI_FORMAT_DOUBLE_EXP_MASK)
+    {
+        if (width && (!(format & NRF_CLI_FORMAT_FLAG_LEFT_JUSTIFY)))
+        {
+            fill_space(p_ctx, width - 3 - NRF_CLI_FORMAT_REQ_SIGN_SPACE(sign, format), false);
+        }
+
+        if (sign)
+        {
+            buffer_add(p_ctx, '-');
+        }
+        else if (format & NRF_CLI_FORMAT_FLAG_PRINT_SIGN)
+        {
+            buffer_add(p_ctx, '+');
+        }
+
+        if (mant != 0)
+        {
+            if(uppercase)
+            {
+                buffer_add(p_ctx, 'N');
+                buffer_add(p_ctx, 'A');
+                buffer_add(p_ctx, 'N');
+            }
+            else
+            {
+                buffer_add(p_ctx, 'n');
+                buffer_add(p_ctx, 'a');
+                buffer_add(p_ctx, 'n');
+            }
+        }
+        else
+        {
+            if(uppercase)
+            {
+                buffer_add(p_ctx, 'I');
+                buffer_add(p_ctx, 'N');
+                buffer_add(p_ctx, 'F');
+            }
+            else
+            {
+                buffer_add(p_ctx, 'i');
+                buffer_add(p_ctx, 'n');
+                buffer_add(p_ctx, 'f');
+            }
+        }
+        return;
+    }
+
+    /* Add leading 1 to mantissa (except 0.0) */
+    if ((mant != 0) || (exp != 0))
+    {
+        mant |= (1ULL << 52);
+    }
+
+    /* Convert the exponent */
+    exp = exp - 1023;
+
+    /* Whole numbers */
+    offset  = 52 - exp;
+
+    if (offset > 64)
+    {
+        /* Float fraction offset overflow */
+        return;
+    }
+
+    lead = (mant >> (offset));
+
+    /* Fraction */
+    low = mant & (~(lead << offset));
+
+    while (((low & 0x1) == 0) && low > 0)
+    {
+        low = low >> 1U;
+        skipped++;
+    }
+
+    highest = (offset - skipped);
+    base = 1;
+
+    for(uint8_t i = 0; i < precision; i++)
+    {
+        base *= 10;
+    }
+
+    /* Handle multiplication with possible overflow */
+    x = LOW_32(low) * LOW_32(base);
+    s0 = LOW_32(x);
+
+    x = HIGH_32(low) * LOW_32(base) + HIGH_32(x);
+    s1 = LOW_32(x);
+    s2 = HIGH_32(x);
+
+    x = s1 + LOW_32(low) * HIGH_32(base);
+    s1 = LOW_32(x);
+
+    x = s2 + HIGH_32(low) * HIGH_32(base) + HIGH_32(x);
+    s2 = LOW_32(x);
+    s3 = HIGH_32(x);
+
+    res = s1 << 32 | s0;
+    carry = s3 << 32 | s2;
+
+    /* Divide and combine */
+    carry = carry << (64 - highest);
+    res = res >> highest;
+    fr = res | carry;
+
+    /* Roundup */
+    if (fr%10 >= 5)
+    {
+        fr /= 10;
+        fr++;
+    }
+    else
+    {
+        fr /= 10;
+    }
+    precision--;
+
+    if (transform && (lead == 1))
+    {
+        lead = 0;
+    }
+
+    /* Maximum precision handled by int_print() is 10 */
+    if (precision > 10)
+    {
+        for (uint8_t delta = precision - 10; delta > 0; delta--)
+        {
+            fr /= 10;
+        }
+        precision = 10;
+    }
+
+    res = lead;
+    while (res > 0)
+    {
+        res /= 10;
+        lead_len++;
+    }
+
+    if ((lead == 0) && (fr == 0))
+    {
+        lead_len = 1;
+    }
+
+    if(lead_len == 0)
+    {
+        lead_len = 1;
+    }
+
+    if (width && (!(format & NRF_CLI_FORMAT_FLAG_LEFT_JUSTIFY)))
+    {
+        int32_t space = width - lead_len - precision - NRF_CLI_FORMAT_REQ_SIGN_SPACE(sign, format) - 1;
+        if (space > 0)
+        {
+            fill_space(p_ctx, space, format & NRF_CLI_FORMAT_FLAG_PAD_ZERO);
+        }
+    }
+
+    if (sign)
+    {
+        buffer_add(p_ctx, '-');
+    }
+    else if (format & NRF_CLI_FORMAT_FLAG_PRINT_SIGN)
+    {
+        buffer_add(p_ctx, '+');
+    }
+
+    int_print(p_ctx,
+              lead,
+              10u,
+              0,
+              0,
+              0);
+    buffer_add(p_ctx, '.');
+    int_print(p_ctx,
+              fr,
+              10u,
+              precision,
+              0,
+              0);
+
+    if (width && (format & NRF_CLI_FORMAT_FLAG_LEFT_JUSTIFY))
+    {
+        int32_t space = width - lead_len - precision - NRF_CLI_FORMAT_REQ_SIGN_SPACE(sign, format) - 1;
+        if (space > 0)
+        {
+            fill_space(p_ctx, space, false);
+        }
+    }
+}
+
+#endif
+
 void nrf_fprintf_fmt(nrf_fprintf_ctx_t * const p_ctx,
                     char const *               p_fmt,
                     va_list *                  p_args)
@@ -494,6 +764,30 @@ void nrf_fprintf_fmt(nrf_fprintf_ctx_t * const p_ctx,
                 case '%':
                     buffer_add(p_ctx, '%');
                     break;
+#if NRF_MODULE_ENABLED(NRF_FPRINTF_DOUBLE)
+                case 'f':
+                {
+                    double dbl = va_arg(*p_args, double);
+                    float_print(p_ctx,
+                                dbl,
+                                NumDigits,
+                                FieldWidth,
+                                FormatFlags,
+                                false);
+                    break;
+                }
+                case 'F':
+                {
+                    double dbl = va_arg(*p_args, double);
+                    float_print(p_ctx,
+                                dbl,
+                                NumDigits,
+                                FieldWidth,
+                                FormatFlags,
+                                true);
+                    break;
+                }
+#endif
                 default:
                     break;
             }

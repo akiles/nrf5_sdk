@@ -417,6 +417,16 @@ static void shutdown_process(void)
             ret_code_t ret_code = sd_power_system_off();
             ASSERT((ret_code == NRF_SUCCESS) || (ret_code == NRF_ERROR_SOFTDEVICE_NOT_ENABLED));
             UNUSED_VARIABLE(ret_code);
+#ifdef DEBUG
+            while (true)
+            {
+                /* Since the CPU is kept on in an emulated System OFF mode, it is recommended
+                 * to add an infinite loop directly after entering System OFF, to prevent
+                 * the CPU from executing code that normally should not be executed. */
+                __WFE();
+
+            }
+#endif
         }
 #endif // SOFTDEVICE_PRESENT
         nrf_power_system_off();

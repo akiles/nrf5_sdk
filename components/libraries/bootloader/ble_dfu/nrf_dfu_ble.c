@@ -780,7 +780,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             NRF_LOG_DEBUG("conn_sup_timeout: %d",  p_conn->conn_sup_timeout);
         } break;
 
-#ifndef S112
+#if !defined(S112) && !defined(S113)
         case BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("Received BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST");

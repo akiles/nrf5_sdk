@@ -168,7 +168,7 @@ static uint32_t persistent_settings_update(void)
 
     // Try to find FDS record with node settings.
     err_code = fds_record_find(COMM_FDS_FILE_ID, COMM_FDS_RECORD_KEY, &m_fds_record_desc, &token);
-    if (err_code == FDS_SUCCESS)
+    if (err_code == NRF_SUCCESS)
     {
         err_code = fds_record_update(&m_fds_record_desc, &record);
     }
@@ -193,7 +193,7 @@ static uint32_t persistent_settings_update(void)
  */
 static void persistent_settings_load(void)
 {
-    uint32_t           err_code = FDS_SUCCESS;
+    uint32_t           err_code = NRF_SUCCESS;
     fds_flash_record_t record;
 
     fds_find_token_t token;
@@ -201,10 +201,10 @@ static void persistent_settings_load(void)
 
     // Try to find FDS record with node settings.
     err_code = fds_record_find(COMM_FDS_FILE_ID, COMM_FDS_RECORD_KEY, &m_fds_record_desc, &token);
-    if (err_code == FDS_SUCCESS)
+    if (err_code == NRF_SUCCESS)
     {
         err_code = fds_record_open(&m_fds_record_desc, &record);
-        if (err_code == FDS_SUCCESS)
+        if (err_code == NRF_SUCCESS)
         {
             if (record.p_data)
             {
@@ -243,7 +243,7 @@ static uint32_t persistent_settings_init(void)
     uint32_t err_code;
 
     err_code = fds_init();
-    if (err_code == FDS_SUCCESS)
+    if (err_code == NRF_SUCCESS)
     {
         err_code = fds_register(persistent_settings_cb);
     }

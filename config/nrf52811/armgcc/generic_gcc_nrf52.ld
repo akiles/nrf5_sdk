@@ -6,7 +6,7 @@ GROUP(-lgcc -lc -lnosys)
 MEMORY
 {
   FLASH (rx) : ORIGIN = 0x19000, LENGTH = 0x17000
-  RAM (rwx) :  ORIGIN = 0x20001210, LENGTH = 0x4df0
+  RAM (rwx) :  ORIGIN = 0x20001118, LENGTH = 0x4ee8
 }
 
 SECTIONS
@@ -31,17 +31,17 @@ SECTIONS
     KEEP(*(.fs_data))
     PROVIDE(__stop_fs_data = .);
   } > RAM
-  .log_filter_data :
-  {
-    PROVIDE(__start_log_filter_data = .);
-    KEEP(*(SORT(.log_filter_data*)))
-    PROVIDE(__stop_log_filter_data = .);
-  } > RAM
   .log_dynamic_data :
   {
     PROVIDE(__start_log_dynamic_data = .);
     KEEP(*(SORT(.log_dynamic_data*)))
     PROVIDE(__stop_log_dynamic_data = .);
+  } > RAM
+  .log_filter_data :
+  {
+    PROVIDE(__start_log_filter_data = .);
+    KEEP(*(SORT(.log_filter_data*)))
+    PROVIDE(__stop_log_filter_data = .);
   } > RAM
 
 } INSERT AFTER .data;

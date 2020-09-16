@@ -62,6 +62,25 @@
 #define BPS_MEAS_MEASUREMENT_STATUS_FLAG_BIT   (0x01 << 4)  /**< Measurement Status Flag bit. */
 
 
+/**@brief Function for interception of GATT errors and @ref nrf_ble_gq errors.
+ *
+ * @param[in] nrf_error   Error code.
+ * @param[in] p_ctx       Parameter from the event handler.
+ * @param[in] conn_handle Connection handle.
+ */
+static void gatt_error_handler(uint32_t   nrf_error,
+                               void     * p_ctx,
+                               uint16_t   conn_handle)
+{
+    ble_bps_t * p_bps = (ble_bps_t *)p_ctx;
+
+    if (p_bps->error_handler != NULL)
+    {
+        p_bps->error_handler(nrf_error);
+    }
+}
+
+
 /**@brief Function for handling the Connect event.
  *
  * @param[in]   p_bps       Blood Pressure Service structure.
@@ -69,7 +88,18 @@
  */
 static void on_connect(ble_bps_t * p_bps, ble_evt_t const * p_ble_evt)
 {
-    p_bps->conn_handle = p_ble_evt->evt.gatts_evt.conn_handle;
+    ret_code_t err_code;
+
+    p_bps->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
+
+    err_code = nrf_ble_gq_conn_handle_register(p_bps->p_gatt_queue, 
+                                               p_ble_evt->evt.gap_evt.conn_handle);
+
+    if ((p_bps->error_handler != NULL) &&
+        (err_code != NRF_SUCCESS))
+    {
+        p_bps->error_handler(err_code);
+    }
 }
 
 
@@ -257,6 +287,10 @@ static uint8_t bps_measurement_encode(ble_bps_t      * p_bps,
 
 uint32_t ble_bps_init(ble_bps_t * p_bps, ble_bps_init_t const * p_bps_init)
 {
+    VERIFY_PARAM_NOT_NULL(p_bps);
+    VERIFY_PARAM_NOT_NULL(p_bps_init);
+    VERIFY_PARAM_NOT_NULL(p_bps_init->p_gatt_queue);
+
     uint32_t              err_code;
     uint8_t               init_value_encoded[MAX_BPM_LEN];
     uint8_t               initial_feature_len;
@@ -265,9 +299,11 @@ uint32_t ble_bps_init(ble_bps_t * p_bps, ble_bps_init_t const * p_bps_init)
     ble_add_char_params_t add_char_params;
 
     // Initialize service structure
-    p_bps->evt_handler = p_bps_init->evt_handler;
-    p_bps->conn_handle = BLE_CONN_HANDLE_INVALID;
-    p_bps->feature     = p_bps_init->feature;
+    p_bps->evt_handler   = p_bps_init->evt_handler;
+    p_bps->error_handler = p_bps_init->error_handler;
+    p_bps->p_gatt_queue  = p_bps_init->p_gatt_queue;
+    p_bps->conn_handle   = BLE_CONN_HANDLE_INVALID;
+    p_bps->feature       = p_bps_init->feature;
 
     // Add service
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_BLOOD_PRESSURE_SERVICE);
@@ -327,25 +363,22 @@ uint32_t ble_bps_measurement_send(ble_bps_t * p_bps, ble_bps_meas_t * p_bps_meas
     {
         uint8_t                encoded_bps_meas[MAX_BPM_LEN];
         uint16_t               len;
-        uint16_t               hvx_len;
-        ble_gatts_hvx_params_t hvx_params;
+        nrf_ble_gq_req_t       bps_req;
 
         len     = bps_measurement_encode(p_bps, p_bps_meas, encoded_bps_meas);
-        hvx_len = len;
 
-        memset(&hvx_params, 0, sizeof(hvx_params));
+        memset(&bps_req, 0, sizeof(nrf_ble_gq_req_t));
 
-        hvx_params.handle = p_bps->meas_handles.value_handle;
-        hvx_params.type   = BLE_GATT_HVX_INDICATION;
-        hvx_params.offset = 0;
-        hvx_params.p_len  = &hvx_len;
-        hvx_params.p_data = encoded_bps_meas;
+        bps_req.type                               = NRF_BLE_GQ_REQ_GATTS_HVX;
+        bps_req.error_handler.cb                   = gatt_error_handler;
+        bps_req.error_handler.p_ctx                = p_bps;
+        bps_req.params.gatts_hvx.handle  = p_bps->meas_handles.value_handle;
+        bps_req.params.gatts_hvx.offset  = 0;
+        bps_req.params.gatts_hvx.p_data  = encoded_bps_meas;
+        bps_req.params.gatts_hvx.p_len   = &len;
+        bps_req.params.gatts_hvx.type    = BLE_GATT_HVX_INDICATION;
 
-        err_code = sd_ble_gatts_hvx(p_bps->conn_handle, &hvx_params);
-        if ((err_code == NRF_SUCCESS) && (hvx_len != len))
-        {
-            err_code = NRF_ERROR_DATA_SIZE;
-        }
+        err_code = nrf_ble_gq_item_add(p_bps->p_gatt_queue, &bps_req, p_bps->conn_handle);
     }
     else
     {

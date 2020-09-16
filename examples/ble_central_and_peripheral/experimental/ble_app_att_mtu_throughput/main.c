@@ -134,6 +134,9 @@ typedef struct
 } test_params_t;
 
 
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_CENTRAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
 NRF_BLE_GATT_DEF(m_gatt);                       /**< GATT module instance. */
 NRF_BLE_QWR_DEF(m_qwr);                         /**< Context for the Queued Write module.*/
 BLE_DB_DISCOVERY_DEF(m_ble_db_discovery);       /**< Database discovery module instance. */
@@ -618,6 +621,9 @@ static void advertising_start(void)
     NRF_LOG_INFO("Starting advertising.");
 
     bsp_board_led_on(SCAN_ADV_LED);
+
+    UNUSED_RETURN_VALUE(sd_ble_gap_adv_stop(m_adv_handle));
+
     ret_code_t err_code = sd_ble_gap_adv_start(m_adv_handle, APP_BLE_CONN_CFG_TAG);
     APP_ERROR_CHECK(err_code);
 }
@@ -805,10 +811,24 @@ static void buttons_init(void)
 
 static void client_init(void)
 {
-    ret_code_t err_code = ble_db_discovery_init(db_disc_evt_handler);
+    ble_db_discovery_init_t db_init;
+
+    memset(&db_init, 0, sizeof(db_init));
+
+    db_init.evt_handler  = db_disc_evt_handler;
+    db_init.p_gatt_queue = &m_ble_gatt_queue;
+
+    ret_code_t err_code = ble_db_discovery_init(&db_init);
     APP_ERROR_CHECK(err_code);
 
-    err_code = nrf_ble_amtc_init(&m_amtc, amtc_evt_handler);
+    nrf_ble_amtc_init_t amtc_init;
+
+    memset(&amtc_init, 0, sizeof(amtc_init));
+
+    amtc_init.evt_handler  = amtc_evt_handler;
+    amtc_init.p_gatt_queue = &m_ble_gatt_queue;
+
+    err_code = nrf_ble_amtc_init(&m_amtc, &amtc_init);
     APP_ERROR_CHECK(err_code);
 }
 

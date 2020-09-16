@@ -132,6 +132,9 @@ NRF_BLE_GATT_DEF(m_gatt);                                                       
 NRF_BLE_QWR_DEF(m_qwr);                                                             /**< Context for the Queued Write module.*/
 BLE_ADVERTISING_DEF(m_advertising);                                                 /**< Advertising module instance. */
 BLE_DB_DISCOVERY_DEF(m_ble_db_discovery);                                           /**< DB discovery module instance. */
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                                    /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_PERIPHERAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
 
 static uint16_t m_cur_conn_handle = BLE_CONN_HANDLE_INVALID;                        /**< Handle of the current connection. */
 
@@ -570,6 +573,7 @@ static void alert_notification_init()
     ans_init_obj.message_buffer_size = MESSAGE_BUFFER_SIZE;
     ans_init_obj.p_message_buffer    = m_alert_message_buffer;
     ans_init_obj.error_handler       = alert_notification_error_handler;
+    ans_init_obj.p_gatt_queue        = &m_ble_gatt_queue;
 
     err_code = ble_ans_c_init(&m_ans_c, &ans_init_obj);
     APP_ERROR_CHECK(err_code);
@@ -594,7 +598,14 @@ static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
  */
 static void db_discovery_init(void)
 {
-    ret_code_t err_code = ble_db_discovery_init(db_disc_handler);
+    ble_db_discovery_init_t db_init;
+
+    memset(&db_init, 0, sizeof(ble_db_discovery_init_t));
+
+    db_init.evt_handler  = db_disc_handler;
+    db_init.p_gatt_queue = &m_ble_gatt_queue;
+
+    ret_code_t err_code = ble_db_discovery_init(&db_init);
 
     APP_ERROR_CHECK(err_code);
 }

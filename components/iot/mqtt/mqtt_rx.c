@@ -167,8 +167,6 @@ static uint32_t mqtt_handle_packet(mqtt_client_t * p_client,
             evt.id     = MQTT_EVT_PUBLISH;
             evt.result = err_code;
 
-            UNUSED_VARIABLE(iot_timer_wall_clock_get(&p_client->last_activity));
-
             break;
         }
 

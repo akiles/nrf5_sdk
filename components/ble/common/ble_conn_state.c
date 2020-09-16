@@ -49,7 +49,7 @@
 
 
 
-#define DEFAULT_FLAG_COLLECTION_COUNT 5                                /**< The number of flags kept for each connection, excluding user flags. */
+#define DEFAULT_FLAG_COLLECTION_COUNT 6                                /**< The number of flags kept for each connection, excluding user flags. */
 #define TOTAL_FLAG_COLLECTION_COUNT (DEFAULT_FLAG_COLLECTION_COUNT \
                                    + BLE_CONN_STATE_USER_FLAG_COUNT)   /**< The number of flags kept for each connection, including user flags. */
 
@@ -62,6 +62,7 @@ typedef struct
     nrf_atflags_t central_flags;                               /**< Flags indicating in which connections the local device is the central. */
     nrf_atflags_t encrypted_flags;                             /**< Flags indicating which connections are encrypted. */
     nrf_atflags_t mitm_protected_flags;                        /**< Flags indicating which connections have encryption with protection from man-in-the-middle attacks. */
+    nrf_atflags_t lesc_flags;                                  /**< Flags indicating which connections have bonded using LE Secure Connections (LESC). */
     nrf_atflags_t user_flags[BLE_CONN_STATE_USER_FLAG_COUNT];  /**< Flags that can be reserved by the user. The flags will be cleared when a connection is invalidated, otherwise, the user is wholly responsible for the flag states. */
 } ble_conn_state_flag_collections_t;
 
@@ -207,6 +208,18 @@ void ble_conn_state_init(void)
     bcs_internal_state_reset();
 }
 
+static void flag_toggle(nrf_atflags_t * p_flags, uint16_t conn_handle, bool value)
+{
+    if (value)
+    {
+        nrf_atflags_set(p_flags, conn_handle);
+    }
+    else
+    {
+        nrf_atflags_clear(p_flags, conn_handle);
+    }
+}
+
 /**
  * @brief Function for handling BLE events.
  *
@@ -240,28 +253,21 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GAP_EVT_CONN_SEC_UPDATE:
         {
-            bool encrypted = (p_ble_evt->evt.gap_evt.params.conn_sec_update.conn_sec.sec_mode.lv > 1);
-            bool mitm      = (p_ble_evt->evt.gap_evt.params.conn_sec_update.conn_sec.sec_mode.lv > 2);
-
-            if (encrypted)
-            {
-                nrf_atflags_set(&m_bcs.flags.encrypted_flags, conn_handle);
-                if (mitm)
-                {
-                    nrf_atflags_set(&m_bcs.flags.mitm_protected_flags, conn_handle);
-                }
-                else
-                {
-                    nrf_atflags_clear(&m_bcs.flags.mitm_protected_flags, conn_handle);
-                }
-            }
-            else
-            {
-                nrf_atflags_clear(&m_bcs.flags.encrypted_flags, conn_handle);
-                nrf_atflags_clear(&m_bcs.flags.mitm_protected_flags, conn_handle);
-            }
+            uint8_t sec_lv = p_ble_evt->evt.gap_evt.params.conn_sec_update.conn_sec.sec_mode.lv;
+            // Set/unset flags based on security level.
+            flag_toggle(&m_bcs.flags.lesc_flags, conn_handle, sec_lv >= 4);
+            flag_toggle(&m_bcs.flags.mitm_protected_flags, conn_handle, sec_lv >= 3);
+            flag_toggle(&m_bcs.flags.encrypted_flags, conn_handle, sec_lv >= 2);
             break;
         }
+
+        case BLE_GAP_EVT_AUTH_STATUS:
+            if (p_ble_evt->evt.gap_evt.params.auth_status.auth_status == BLE_GAP_SEC_STATUS_SUCCESS)
+            {
+                bool lesc = p_ble_evt->evt.gap_evt.params.auth_status.lesc;
+                flag_toggle(&m_bcs.flags.lesc_flags, conn_handle, lesc);
+            }
+            break;
     }
 }
 
@@ -284,12 +290,12 @@ uint8_t ble_conn_state_role(uint16_t conn_handle)
 
     if (ble_conn_state_valid(conn_handle))
     {
-#if !defined (S112) && !defined(S312)
+#if !defined(S112) && !defined(S312) && !defined(S113)
         bool central = nrf_atflags_get(&m_bcs.flags.central_flags, conn_handle);
         role = central ? BLE_GAP_ROLE_CENTRAL : BLE_GAP_ROLE_PERIPH;
 #else
         role = BLE_GAP_ROLE_PERIPH;
-#endif // !defined (S112) && !defined(S312)
+#endif // !defined (S112) && !defined(S312) && !defined(S113)
     }
 
     return role;
@@ -325,6 +331,15 @@ bool ble_conn_state_mitm_protected(uint16_t conn_handle)
     if (ble_conn_state_valid(conn_handle))
     {
         return nrf_atflags_get(&m_bcs.flags.mitm_protected_flags, conn_handle);
+    }
+    return false;
+}
+
+bool ble_conn_state_lesc(uint16_t conn_handle)
+{
+    if (ble_conn_state_valid(conn_handle))
+    {
+        return nrf_atflags_get(&m_bcs.flags.lesc_flags, conn_handle);
     }
     return false;
 }
@@ -423,14 +438,7 @@ void ble_conn_state_user_flag_set(uint16_t                      conn_handle,
 {
     if (user_flag_is_acquired(flag_id) && ble_conn_state_valid(conn_handle))
     {
-        if (value)
-        {
-            nrf_atflags_set(&m_bcs.flags.user_flags[flag_id], conn_handle);
-        }
-        else
-        {
-            nrf_atflags_clear(&m_bcs.flags.user_flags[flag_id], conn_handle);
-        }
+        flag_toggle(&m_bcs.flags.user_flags[flag_id], conn_handle, value);
     }
 }
 

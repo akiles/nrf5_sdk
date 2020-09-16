@@ -53,6 +53,7 @@
 
 #include <stdint.h>
 #include "ble_ots.h"
+#include "nrf_ble_gq.h"
 
 /**@brief Function for initializing the Object Transfer OACP characteristic.
  *

@@ -198,6 +198,7 @@ uint32_t ble_gap_device_name_get_req_dec(uint8_t const * const p_buf,
  * @param[in]      return_code     Return code indicating if command was successful or not.
  * @param[in]      p_dev_name      Pointer to device name buffer.
  * @param[in]      p_dev_name_len  Length of device name buffer.
+ * @param[in]      cpy_len         Amount of data to be copied to device name buffer.
  * @param[in]      p_buf           Pointer to buffer where encoded data command response will be
  *                                 returned.
  * @param[in, out] p_buf_len       \c in: size of \p p_buf buffer.
@@ -210,6 +211,7 @@ uint32_t ble_gap_device_name_get_req_dec(uint8_t const * const p_buf,
 uint32_t ble_gap_device_name_get_rsp_enc(uint32_t              return_code,
                                          uint8_t const * const p_dev_name,
                                          uint16_t *            p_dev_name_len,
+                                         uint16_t              cpy_len,
                                          uint8_t * const       p_buf,
                                          uint32_t * const      p_buf_len);
 

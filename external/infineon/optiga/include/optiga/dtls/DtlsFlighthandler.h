@@ -53,13 +53,13 @@
  ****************************************************************************/
 
 /// Successful execution
-#define OCP_FL_OK                           0x7569412
+#define OCP_FL_OK 						    0x7569412
 
 /// Failure in execution
-#define OCP_FL_ERROR                        0xF4358417
+#define OCP_FL_ERROR 					    0xF4358417
 
 ///Null Parameter(s)
-#define OCP_FL_NULL_PARAM                   BASE_ERROR_FLIGHT
+#define OCP_FL_NULL_PARAM 				    BASE_ERROR_FLIGHT
 
 ///Flight not listed
 #define OCP_FL_NOT_LISTED                   (OCP_FL_NULL_PARAM + 1)
@@ -101,13 +101,13 @@
 #define OCP_FL_MALLOC_FAILURE               (OCP_FL_NULL_PARAM + 13)
 
 ///Message sending to Security chip failed
-#define OCP_FL_SEND_MSG_TO_OPTIGA_ERROR     (OCP_FL_NULL_PARAM + 14)
+#define OCP_FL_SEND_MSG_TO_OPTIGA_ERROR   	(OCP_FL_NULL_PARAM + 14)
 
 ///Sending message to server failed
-#define OCP_FL_FLIGHTSEND_ERROR             (OCP_FL_NULL_PARAM + 15)
+#define OCP_FL_FLIGHTSEND_ERROR         	(OCP_FL_NULL_PARAM + 15)
 
 ///Getting a message from Security chip failed
-#define OCP_FL_GET_MSG_FROM_OPTIGA_ERROR        (OCP_FL_NULL_PARAM + 16)
+#define OCP_FL_GET_MSG_FROM_OPTIGA_ERROR    	(OCP_FL_NULL_PARAM + 16)
 
 ///Message Incomplete error
 #define OCP_FL_MSG_INCOMPLETE               (OCP_FL_NULL_PARAM + 17)
@@ -122,19 +122,19 @@
 #define OCP_FL_INVALID_MSG_SEQ              (OCP_FL_NULL_PARAM + 20)
 
 ///Message with invalid LENGTH
-#define OCP_FL_INVALID_PROCFLIGHT           (OCP_FL_NULL_PARAM + 21)
+#define OCP_FL_INVALID_PROCFLIGHT	        (OCP_FL_NULL_PARAM + 21)
 
 ///Message with invalid message type
-#define OCP_FL_MSG_NOT_LISTED               (OCP_FL_NULL_PARAM + 22)
+#define OCP_FL_MSG_NOT_LISTED	            (OCP_FL_NULL_PARAM + 22)
 
 ///Message to be ignored
-#define OCP_FL_MSG_IGNORE                   (OCP_FL_NULL_PARAM + 23)
+#define OCP_FL_MSG_IGNORE   	            (OCP_FL_NULL_PARAM + 23)
 
 ///Internal Error
-#define OCP_FL_INT_ERROR                    (OCP_FL_NULL_PARAM + 24)
+#define OCP_FL_INT_ERROR	   	            (OCP_FL_NULL_PARAM + 24)
 
 ///Invalid Handshake Error
-#define OCP_FL_HS_ERROR                     (OCP_FL_NULL_PARAM + 25)
+#define OCP_FL_HS_ERROR	   					(OCP_FL_NULL_PARAM + 25)
 
 /**
  * \brief Checks whether the received message belongs to the expected flight.<br>

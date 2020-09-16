@@ -122,8 +122,6 @@ extern "C" {
 ***********************************************************************************************************************/
 struct ifx_i2c_context;
 
-typedef struct ifx_i2c_context ifx_i2c_context_t;
-
 /** @brief Event handler function prototype */
 typedef void (*ifx_i2c_event_handler_t)(struct ifx_i2c_context* ctx, host_lib_status_t event, const uint8_t* data, uint16_t data_len);
 
@@ -240,7 +238,7 @@ typedef struct ifx_i2c_tl
 } ifx_i2c_tl_t;
 
 /** @brief IFX I2C context structure */
-struct ifx_i2c_context
+typedef struct ifx_i2c_context
 {
     /// I2C Slave address
     uint8_t slave_address;
@@ -288,7 +286,7 @@ struct ifx_i2c_context
     /// IFX I2C rx frame of max length
     uint8_t rx_frame_buffer[DL_MAX_FRAME_SIZE];
 
-};
+} ifx_i2c_context_t;
 
 /***********************************************************************************************************************
 * GLOBAL

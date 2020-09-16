@@ -45,7 +45,7 @@
  * @ingroup  nrf_ble_ots_c
  * @brief    Object Action Control Point module
  *
- * @details  This is the Object Action Control Point module of the Object Transfer Service (OTS) client. 
+ * @details  This is the Object Action Control Point module of the Object Transfer Service (OTS) Client. 
  */
  
 #ifndef NRF_BLE_OTS_C_OACP_H__
@@ -67,11 +67,11 @@ extern "C" {
 
 /**@brief Function for enabling remote indication.
 
-   @param[in,out] p_ots_c Pointer to Object Transfer client structure.
-   @param[in]     enable  True to enable Object Action Control Point (OACP) indication, false to disable.
+   @param[in,out] p_ots_c Pointer to Object Transfer Client structure.
+   @param[in]     enable  True to enable Object Action Control Point (OACP) indication; false to disable.
 
    @retval NRF_SUCCESS Operation success.
-   @return             If functions from other modules return errors to this function,
+   @retval err_code    If functions from other modules return errors to this function,
                        the @ref nrf_error are propagated.
 */
 ret_code_t nrf_ble_ots_c_indication_enable(nrf_ble_ots_c_t * const p_ots_c,
@@ -80,34 +80,32 @@ ret_code_t nrf_ble_ots_c_indication_enable(nrf_ble_ots_c_t * const p_ots_c,
 
 /**@brief Function for requesting a write of an object.
 
-   @details With this function we let the peer know the length of the object we want to write.
+   @details This function informs the peer about the length of the object to write.
             (The object itself is not written by this function.)
-            The peer will indicate a response on the Object Action Control Point.
+            The peer indicates a response on the Object Action Control Point.
             If the write is accepted (the event NRF_BLE_OTS_C_OACP_RES_SUCCESS ), an object can be
             transfered with @ref nrf_ble_ots_c_l2cap_obj_send.
 
-   @param[in,out] p_ots_c  Pointer to Object Transfer client structure.
+   @param[in,out] p_ots_c  Pointer to Object Transfer Client structure.
    @param[in]     offset   Offset of the write.
-   @param[in]     len      length of the object to write.
+   @param[in]     len      Length of the object to write.
    @param[in]     truncate True to let the write truncate on the object.
 
    @retval NRF_SUCCESS             Operation success.
    @retval NRF_ERROR_INVALID_STATE Module is not initialized, or the handles of the peer OACP
                                    are invalid.
-   @return                         If functions from other modules return errors to this function,
-                                   the @ref nrf_error are propagated.
+   @retval err_code                Otherwise, this API propagates the error code returned by functions: @ref nrf_ble_gq_item_add.
 */
 ret_code_t nrf_ble_ots_c_oacp_write_object(nrf_ble_ots_c_t * const p_ots_c, uint32_t offset, uint32_t len, bool truncate);
 
 /**@brief Function for requesting a read of an object.
 
-   @param[in,out] p_ots_c Pointer to Object Transfer client structure.
+   @param[in,out] p_ots_c Pointer to Object Transfer Client structure.
    @param[in]     offset  Offset of the read.
-   @param[in]     len     length of the read.
+   @param[in]     len     Length of the read.
 
    @retval NRF_SUCCESS Operation success.
-   @return             If functions from other modules return errors to this function,
-                       the @ref nrf_error are propagated.
+   @return             Otherwise this API propagates the error code returned by functions: @ref nrf_ble_gq_item_add.
 */
 ret_code_t nrf_ble_ots_c_oacp_read_object(nrf_ble_ots_c_t * const p_ots_c, uint32_t offset, uint32_t len);
 

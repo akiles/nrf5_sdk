@@ -41,16 +41,16 @@
 #include "optiga/pal/pal_os_timer.h"
 
  /// Successful execution
-#define OCP_HL_OK                       0x75236512
+#define OCP_HL_OK 						0x75236512
 
 /// Failure in execution
-#define OCP_HL_ERROR                    0XF3CA3154
+#define OCP_HL_ERROR 					0XF3CA3154
 
 ///Null Parameter(s)
-#define OCP_HL_NULL_PARAM               BASE_ERROR_HANDSHAKELAYER
+#define OCP_HL_NULL_PARAM 				BASE_ERROR_HANDSHAKELAYER
 
 ///Length of input is zero
-#define OCP_HL_LENZERO_ERROR            (BASE_ERROR_HANDSHAKELAYER + 1)
+#define OCP_HL_LENZERO_ERROR 			(BASE_ERROR_HANDSHAKELAYER + 1)
 
 ///Maximum PMTU value
 #define MAX_PMTU                    1500

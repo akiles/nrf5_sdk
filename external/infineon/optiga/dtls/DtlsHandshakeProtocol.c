@@ -61,7 +61,7 @@
 ///Message header length
 #define LENGTH_MSG_HEADER               (OFFSET_MSG_DATA)
 ///Offset for second byte of message fragment length field
-#define OFFSET_MSG_FRAG_LENGTH_2BYTE    (OFFSET_MSG_FRAG_LENGTH + 1)
+#define OFFSET_MSG_FRAG_LENGTH_2BYTE	(OFFSET_MSG_FRAG_LENGTH + 1)
 
 ///Macro for Receive Flight
 #ifndef DISABLE_RECEIVE_FLIGHT
@@ -188,18 +188,18 @@ _STATIC_H int32_t DtlsHS_CreateFlightNode(uint8_t PbLastProcFlight, sFlightDetai
  * Fragments a handshake message into smaller fragments.<br>
  * Returns a fragment of the handshake message.
  *
- * \param[in,out]   PpsFragmentMsg   Pointer to a structure containing handshake message, fragment size and other
- *                                   information required for fragmentation
+ * \param[in,out]	PpsFragmentMsg	 Pointer to a structure containing handshake message, fragment size and other
+ *									 information required for fragmentation
  *
- * \retval    #OCP_HL_OK                        Successful execution
- * \retval    #OCP_HL_ERROR                     Failure in execution
+ * \retval    #OCP_HL_OK  						Successful execution
+ * \retval    #OCP_HL_ERROR    					Failure in execution
 \if ENABLE_NULL_CHECKS
- * \retval    #OCP_HL_NULL_PARAM                Null parameter(s)
+ * \retval    #OCP_HL_NULL_PARAM  				Null parameter(s)
 \endif
- * \retval    #OCP_HL_LENZERO_ERROR             Length of input parameter is zero
- * \retval    #OCP_HL_INVALID_FRAGMENT_SIZE     Invalid fragment size
- * \retval    #OCP_HL_INVALID_OFFSET_LEN        Invalid offset length
- * \retval    #OCP_HL_INSUFFICIENT_MEMORY       Insufficient buffer size
+ * \retval    #OCP_HL_LENZERO_ERROR    			Length of input parameter is zero
+ * \retval    #OCP_HL_INVALID_FRAGMENT_SIZE  	Invalid fragment size
+ * \retval    #OCP_HL_INVALID_OFFSET_LEN   		Invalid offset length
+ * \retval	  #OCP_HL_INSUFFICIENT_MEMORY		Insufficient buffer size
  */
 _STATIC_H int32_t DtlsHS_FragmentMsg(sFragmentMsg_d* PpsFragmentMsg)
 {
@@ -342,7 +342,7 @@ _STATIC_H int32_t DtlsHS_FragmentMsg(sFragmentMsg_d* PpsFragmentMsg)
 /**
  * Frees the complete message list of a flight.<br>
  *
- * \param[in,out]   PppsMsgListPtr              Pointer to Message list
+ * \param[in,out]	PppsMsgListPtr			    Pointer to Message list
  *
  */
 _STATIC_H void DtlsHS_FreeMessageList(sMsgInfo_d **PppsMsgListPtr)
@@ -381,7 +381,7 @@ _STATIC_H void DtlsHS_FreeMessageList(sMsgInfo_d **PppsMsgListPtr)
 /**
  * Frees all flight node from flight list except the flight node of interest.<br>
  *
- * \param[in]        PbFlightID             Flight ID of the flight to be freed
+ * \param[in]        PbFlightID			    Flight ID of the flight to be freed
  * \param[in,out]    PppsFlightHead         Pointer to beginning of flight list
  *
  */
@@ -471,14 +471,14 @@ _STATIC_H void DtlsHS_FreeFlightNode(uint8_t PbFlightID, sFlightDetails_d** Ppps
  * Receives a handshake message from the server.<br>
  * Under some erroneous conditions, error codes from Record Layer and Handshake Layer can also be returned.<br>
  *
- * \param[in]       PpbLastProcFlight           pointer to the last processed flight number
- * \param[in]       PppsRFlightHead             Flight head node for the receive message
- * \param[in,out]   PpsMessageLayer             Pointer to structure containing information required for Message Layer
- * \param[in]       PbFlightTimeout             Flight timeout value
- * \param[in]       PdwBasetime                 Time at which State changed to receive mode
+ * \param[in]	    PpbLastProcFlight			pointer to the last processed flight number
+ * \param[in]	    PppsRFlightHead			    Flight head node for the receive message
+ * \param[in,out]	PpsMessageLayer			    Pointer to structure containing information required for Message Layer
+ * \param[in]	    PbFlightTimeout			    Flight timeout value
+ * \param[in]	    PdwBasetime			        Time at which State changed to receive mode
  *
- * \retval      #OCP_HL_OK      Successful Execution
- * \retval      #OCP_HL_ERROR   Failure Execution
+ * \retval 		#OCP_HL_OK		Successful Execution
+ * \retval 		#OCP_HL_ERROR	Failure Execution
  */
 _STATIC_H int32_t DtlsHS_ReceiveFlightMessage(uint8_t* PpbLastProcFlight, sFlightDetails_d** PppsRFlightHead,  sMsgLyr_d* PpsMessageLayer, uint8_t PbFlightTimeout,uint32_t PdwBasetime)
 {
@@ -669,12 +669,12 @@ _STATIC_H int32_t DtlsHS_ReceiveFlightMessage(uint8_t* PpbLastProcFlight, sFligh
 /**
  * Prepares Handshake message header<br>
  *
- * \param[in,out]   PpbMsgHeader        Pointer to buffer where handshake message header is formed
- * \param[in]       PpsMsgInfo          Pointer to #sMsgInfo_d
+ * \param[in,out]	PpbMsgHeader		Pointer to buffer where handshake message header is formed
+ * \param[in]	    PpsMsgInfo		    Pointer to #sMsgInfo_d
  *
- * \retval    #OCP_HL_OK                    Successful execution
+ * \retval    #OCP_HL_OK  					Successful execution
 \if ENABLE_NULL_CHECKS
- * \retval    #OCP_HL_NULL_PARAM            Null Parameters
+ * \retval    #OCP_HL_NULL_PARAM    		Null Parameters
 \endif
  */
 int32_t DtlsHS_PrepareMsgHeader(uint8_t* PpbMsgHeader, const sMsgInfo_d *PpsMsgInfo)
@@ -730,11 +730,11 @@ _STATIC_H void DtlsHS_ClearBuffer(sFlightDetails_d** PppsFlightHead)
 /**
  * Checks a flight is in the list or not.<br>
  *
- * \param[in]   PpsFlightHead               Pointer to list of Flights
- * \param[in]   PbFlightID                  Flight number
+ * \param[in]	PpsFlightHead			    Pointer to list of Flights
+ * \param[in]	PbFlightID			        Flight number
  *
- * \retval      #OCP_HL_OK      Successful Execution
- * \retval      #OCP_HL_ERROR   Failure Execution
+ * \retval 		#OCP_HL_OK		Successful Execution
+ * \retval 		#OCP_HL_ERROR	Failure Execution
  */
 _STATIC_H int32_t DtlsHS_CheckFlightList(sFlightDetails_d* PpsFlightHead, uint8_t PbFlightID)
 {
@@ -761,8 +761,8 @@ _STATIC_H int32_t DtlsHS_CheckFlightList(sFlightDetails_d* PpsFlightHead, uint8_
 /**
  * Appends a Flight Node to the end of the list.<br>
  *
- * \param[in,out]   PppsFlightHead              Pointer to Flight head node list
- * \param[in]       PpsFlightNode               Pointer to new Flight node
+ * \param[in,out]	PppsFlightHead			    Pointer to Flight head node list
+ * \param[in]	    PpsFlightNode			    Pointer to new Flight node
  *
  */
 _STATIC_H void DtlsHS_CreateFlightList(sFlightDetails_d** PppsFlightHead, sFlightDetails_d* PpsFlightNode)
@@ -790,13 +790,13 @@ _STATIC_H void DtlsHS_CreateFlightList(sFlightDetails_d** PppsFlightHead, sFligh
 /**
  * Creates a flight node based on the last processed flight and inserts the node to the head node..<br>
  *
- * \param[in,out]   PbLastProcFlight            Last processed flight number
- * \param[in]       PppsFlightHead              Pointer to the flight head node
- * \param[in]       PpsMessageLayer             Pointer to message information
+ * \param[in,out]	PbLastProcFlight			Last processed flight number
+ * \param[in]	    PppsFlightHead			    Pointer to the flight head node
+ * \param[in]	    PpsMessageLayer			    Pointer to message information
  *
- * \retval      #OCP_HL_OK              Successful Execution
- * \retval      #OCP_HL_MALLOC_FAILURE  Malloc failure
- * \retval      #OCP_HL_ERROR           Failure Execution
+ * \retval 		#OCP_HL_OK		        Successful Execution
+ * \retval 		#OCP_HL_MALLOC_FAILURE	Malloc failure
+ * \retval 		#OCP_HL_ERROR	        Failure Execution
  */
 _STATIC_H int32_t DtlsHS_CreateFlightNode(uint8_t PbLastProcFlight, sFlightDetails_d** PppsFlightHead, sMsgLyr_d* PpsMessageLayer)
 {
@@ -836,12 +836,12 @@ _STATIC_H int32_t DtlsHS_CreateFlightNode(uint8_t PbLastProcFlight, sFlightDetai
 /**
  * Initialises the Flight List for Send.<br>
  *
- * \param[in]       PbLastProcFlight                Last processed flight ID
- * \param[in,out]   PppsFlightHead                  Pointer to list of Flight nodes
- * \param[in]       PpsMessageLayer                 Pointer to message information
+ * \param[in]	    PbLastProcFlight			    Last processed flight ID
+ * \param[in,out]	PppsFlightHead			        Pointer to list of Flight nodes
+ * \param[in]	    PpsMessageLayer			        Pointer to message information
  *
- * \retval      #OCP_HL_OK      Successful Execution
- * \retval      #OCP_HL_ERROR   Failure Execution
+ * \retval 		#OCP_HL_OK		Successful Execution
+ * \retval 		#OCP_HL_ERROR	Failure Execution
  */
 _STATIC_H int32_t DtlsHS_SFlightInitialise(uint8_t PbLastProcFlight, sFlightDetails_d** PppsFlightHead, sMsgLyr_d* PpsMessageLayer)
 {
@@ -906,12 +906,12 @@ _STATIC_H int32_t DtlsHS_SFlightInitialise(uint8_t PbLastProcFlight, sFlightDeta
 /**
  * Initialises the Flight List for Receive.<br>
  *
- * \param[in]       PbLastProcFlight                Last processed flight ID
- * \param[in,out]   PppsFlightHead                  Pointer to list of Flight nodes
- * \param[in]       PpsMessageLayer                 Pointer to message information
+ * \param[in]	    PbLastProcFlight			    Last processed flight ID
+ * \param[in,out]	PppsFlightHead			        Pointer to list of Flight nodes
+ * \param[in]	    PpsMessageLayer			        Pointer to message information
  *
- * \retval      #OCP_HL_OK      Successful Execution
- * \retval      #OCP_HL_ERROR   Failure Execution
+ * \retval 		#OCP_HL_OK		Successful Execution
+ * \retval 		#OCP_HL_ERROR	Failure Execution
  */
 _STATIC_H int32_t DtlsHS_RFlightInitialise(uint8_t PbLastProcFlight, sFlightDetails_d** PppsFlightHead, sMsgLyr_d* PpsMessageLayer)
 {
@@ -975,13 +975,13 @@ _STATIC_H int32_t DtlsHS_RFlightInitialise(uint8_t PbLastProcFlight, sFlightDeta
 /**
  * Processes the send Flight.<br>
  *
- * \param[in]       PpbLastProcFlight               Pointer to last processed flight ID
- * \param[in,out]   PpsSFlightHead                  Pointer to list of Send Flight list
- * \param[in]       PpsMessageLayer                 Message layer information
+ * \param[in]	    PpbLastProcFlight			    Pointer to last processed flight ID
+ * \param[in,out]	PpsSFlightHead			        Pointer to list of Send Flight list
+ * \param[in]       PpsMessageLayer			        Message layer information
  *
- * \retval      #OCP_HL_OK          Successful Execution
- * \retval      #OCP_HL_ERROR       Failure Execution
- * \retval      #OCP_FL_NOT_LISTED  Flight not found in the list
+ * \retval 		#OCP_HL_OK		    Successful Execution
+ * \retval 		#OCP_HL_ERROR	    Failure Execution
+ * \retval 		#OCP_FL_NOT_LISTED	Flight not found in the list
  */
 _STATIC_H int32_t DtlsHS_SFlightProcess(uint8_t *PpbLastProcFlight, sFlightDetails_d* PpsSFlightHead, sMsgLyr_d* PpsMessageLayer)
 {
@@ -1022,15 +1022,15 @@ _STATIC_H int32_t DtlsHS_SFlightProcess(uint8_t *PpbLastProcFlight, sFlightDetai
  * Processes the receive Flight.<br>
  * Under some erroneous conditions, error codes from respective layer can also be returned.<br>
  *
- * \param[in]    PpbLastProcFlight              pointer to the last processed flight ID
- * \param[in]    PppsRFlightHead                    Pointer to list of receivable Flight list
- * \param[in]    PpsMessageLayer                Message layer information
- * \param[in]    PbFlightTimeout                Flight time out value
+ * \param[in]	 PpbLastProcFlight			    pointer to the last processed flight ID
+ * \param[in]	 PppsRFlightHead			        Pointer to list of receivable Flight list
+ * \param[in]    PpsMessageLayer			    Message layer information
+ * \param[in]    PbFlightTimeout			    Flight time out value
  *
- * \retval      #OCP_HL_OK          Successful Execution
- * \retval      #OCP_HL_ERROR       Failure Execution
+ * \retval 		#OCP_HL_OK          Successful Execution
+ * \retval 		#OCP_HL_ERROR	    Failure Execution
 \if ENABLE_NULL_CHECKS
- * \retval      #OCP_HL_NULL_PARAM  NULL parameters
+ * \retval 		#OCP_HL_NULL_PARAM	NULL parameters
 \endif
  */
 _STATIC_H int32_t DtlsHS_RFlightProcess(uint8_t* PpbLastProcFlight, sFlightDetails_d** PppsRFlightHead,  sMsgLyr_d* PpsMessageLayer, uint8_t PbFlightTimeout)
@@ -1074,11 +1074,11 @@ _STATIC_H int32_t DtlsHS_RFlightProcess(uint8_t* PpbLastProcFlight, sFlightDetai
  * Sends Handshake message to the server.Fragments the message if the message is greater than PMTU.<br>
  * Under some erroneous conditions, error codes from respective Layer can also be returned. <br>
  *
- * \param[in]       PpsMsgPtr               pointer to the structure containing message information
- * \param[in]       PpsMessageLayer         Pointer to the structure containing list of message
+ * \param[in]	    PpsMsgPtr			    pointer to the structure containing message information
+ * \param[in]	    PpsMessageLayer			Pointer to the structure containing list of message
  *
- * \retval      #OCP_HL_OK      Successful Execution
- * \retval      #OCP_HL_ERROR   Failure Execution
+ * \retval 		#OCP_HL_OK		Successful Execution
+ * \retval 		#OCP_HL_ERROR	Failure Execution
  */
 int32_t DtlsHS_FSendMessage(const sMsgInfo_d* PpsMsgPtr, const sMsgLyr_d* PpsMessageLayer)
 {
@@ -1209,11 +1209,11 @@ int32_t DtlsHS_FSendMessage(const sMsgInfo_d* PpsMsgPtr, const sMsgLyr_d* PpsMes
  *
  * \param[in]       PsBlobMessage      Pointer to a blob with Message including header.
  *
- * \retval    #OCP_HL_OK                    Successful execution
- * \retval    #OCP_HL_ERROR                 Failure in execution
- * \retval    #OCP_HL_LEN_MISMATCH          Fragment length mismatch
- * \retval    #OCP_HL_TOTALLEN_MISMATCH     Total length mismatch
- * \retval    #OCP_HL_BUFFER_OVERFLOW       Message length exceeded the limit
+ * \retval    #OCP_HL_OK  					Successful execution
+ * \retval    #OCP_HL_ERROR    				Failure in execution
+ * \retval    #OCP_HL_LEN_MISMATCH    		Fragment length mismatch
+ * \retval    #OCP_HL_TOTALLEN_MISMATCH    	Total length mismatch
+ * \retval    #OCP_HL_BUFFER_OVERFLOW  		Message length exceeded the limit
  *
  */
 int32_t DtlsHS_ProcHeader(sbBlob_d PsBlobMessage)
@@ -1262,8 +1262,8 @@ int32_t DtlsHS_ProcHeader(sbBlob_d PsBlobMessage)
  * \param[in]       PprgbData               Pointer to the Hello Request Message.
  * \param[in]       PwLen                   Length of the Message.
  *
- * \retval    #OCP_HL_OK                    Successful execution
- * \retval    #OCP_HL_INVALID_HRMSG         Invalid Handshake message
+ * \retval    #OCP_HL_OK  					Successful execution
+ * \retval    #OCP_HL_INVALID_HRMSG  		Invalid Handshake message
  *
  */
 int32_t DtlsHS_VerifyHR(const uint8_t* PprgbData, uint16_t PwLen)
@@ -1318,10 +1318,10 @@ int32_t DtlsHS_VerifyHR(const uint8_t* PprgbData, uint16_t PwLen)
  * Performs a DTLS handshake.<br>
  * The state machine is configurable as a client or as a server based on the selected protocol.Currently server configuration is not supported.<br>
  *
- * \param[in,out]   PphHandshake                Pointer to structure containing data to perform handshake
+ * \param[in,out]	PphHandshake			    Pointer to structure containing data to perform handshake
  *
- * \retval      #OCP_HL_OK      Successful Execution
- * \retval      #OCP_HL_ERROR   Failure Execution
+ * \retval 		#OCP_HL_OK		Successful Execution
+ * \retval 		#OCP_HL_ERROR	Failure Execution
  */
 int32_t DtlsHS_Handshake(sHandshake_d* PphHandshake)
 {

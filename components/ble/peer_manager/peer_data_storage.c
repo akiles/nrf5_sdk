@@ -162,9 +162,8 @@ static bool peer_data_id_is_valid(pm_peer_data_id_t data_id)
  *
  * @param[in]  peer_id    The peer the event pertains to.
  * @param[in]  err_code   The unexpected error that occurred.
- * @param[in]  fds_error  Whether the error should be interpreted as an FDS error code.
  */
-static void send_unexpected_error(pm_peer_id_t peer_id, ret_code_t err_code, bool fds_error)
+static void send_unexpected_error(pm_peer_id_t peer_id, ret_code_t err_code)
 {
     pm_evt_t error_evt =
     {
@@ -174,8 +173,7 @@ static void send_unexpected_error(pm_peer_id_t peer_id, ret_code_t err_code, boo
         {
             .error_unexpected =
             {
-                .error     = err_code,
-                .fds_error = fds_error,
+                .error = err_code,
             }
         }
     };
@@ -215,12 +213,12 @@ static void peer_data_delete_process()
         {
             m_peer_delete_deferred = true;
         }
-        else if (ret != FDS_SUCCESS)
+        else if (ret != NRF_SUCCESS)
         {
             NRF_LOG_ERROR("Could not delete peer data. fds_file_delete() returned 0x%x for peer_id: %d",
                           ret,
                           peer_id);
-            send_unexpected_error(peer_id, ret, true);
+            send_unexpected_error(peer_id, ret);
         }
     }
 }
@@ -244,7 +242,7 @@ static ret_code_t peer_data_find(pm_peer_id_t              peer_id,
 
     ret = fds_record_find(file_id, record_key, p_desc, &ftok);
 
-    if (ret != FDS_SUCCESS)
+    if (ret != NRF_SUCCESS)
     {
         return NRF_ERROR_NOT_FOUND;
     }
@@ -263,7 +261,7 @@ static void peer_ids_load()
 
     uint16_t const record_key = peer_data_id_to_record_key(PM_PEER_DATA_ID_BONDING);
 
-    while (fds_record_find_by_key(record_key, &record_desc, &ftok) == FDS_SUCCESS)
+    while (fds_record_find_by_key(record_key, &record_desc, &ftok) == NRF_SUCCESS)
     {
         pm_peer_id_t peer_id;
 
@@ -300,7 +298,7 @@ static void fds_evt_handler(fds_evt_t const * const p_fds_evt)
                                                                         : PM_PEER_DATA_OP_UPDATE;
                 pds_evt.params.peer_data_update_succeeded.token = p_fds_evt->write.record_id;
 
-                if (p_fds_evt->result == FDS_SUCCESS)
+                if (p_fds_evt->result == NRF_SUCCESS)
                 {
                     pds_evt.evt_id = PM_EVT_PEER_DATA_UPDATE_SUCCEEDED;
                     pds_evt.params.peer_data_update_succeeded.flash_changed = true;
@@ -308,8 +306,7 @@ static void fds_evt_handler(fds_evt_t const * const p_fds_evt)
                 else
                 {
                     pds_evt.evt_id = PM_EVT_PEER_DATA_UPDATE_FAILED;
-                    pds_evt.params.peer_data_update_failed.error     = p_fds_evt->result;
-                    pds_evt.params.peer_data_update_failed.fds_error = true;
+                    pds_evt.params.peer_data_update_failed.error = p_fds_evt->result;
                 }
 
                 pds_evt_send(&pds_evt);
@@ -320,7 +317,7 @@ static void fds_evt_handler(fds_evt_t const * const p_fds_evt)
             if (    file_id_within_pm_range(p_fds_evt->del.file_id)
                 && (p_fds_evt->del.record_key == FDS_RECORD_KEY_DIRTY))
             {
-                if (p_fds_evt->result == FDS_SUCCESS)
+                if (p_fds_evt->result == NRF_SUCCESS)
                 {
                     pds_evt.evt_id = PM_EVT_PEER_DELETE_SUCCEEDED;
                     peer_id_free(pds_evt.peer_id);
@@ -328,8 +325,7 @@ static void fds_evt_handler(fds_evt_t const * const p_fds_evt)
                 else
                 {
                     pds_evt.evt_id = PM_EVT_PEER_DELETE_FAILED;
-                    pds_evt.params.peer_delete_failed.error     = p_fds_evt->result;
-                    pds_evt.params.peer_delete_failed.fds_error = true;
+                    pds_evt.params.peer_delete_failed.error = p_fds_evt->result;
                 }
 
                 m_peer_delete_deferred = true; // Trigger remaining deletes.
@@ -339,15 +335,14 @@ static void fds_evt_handler(fds_evt_t const * const p_fds_evt)
             break;
 
         case FDS_EVT_GC:
-            if (p_fds_evt->result == FDS_SUCCESS)
+            if (p_fds_evt->result == NRF_SUCCESS)
             {
                 pds_evt.evt_id = PM_EVT_FLASH_GARBAGE_COLLECTED;
             }
             else
             {
                 pds_evt.evt_id = PM_EVT_FLASH_GARBAGE_COLLECTION_FAILED;
-                pds_evt.params.garbage_collection_failed.error     = p_fds_evt->result;
-                pds_evt.params.garbage_collection_failed.fds_error = true;
+                pds_evt.params.garbage_collection_failed.error = p_fds_evt->result;
             }
             pds_evt.peer_id = PM_PEER_ID_INVALID;
             pds_evt_send(&pds_evt);
@@ -398,7 +393,7 @@ ret_code_t pds_init()
 ret_code_t pds_peer_data_read(pm_peer_id_t                    peer_id,
                               pm_peer_data_id_t               data_id,
                               pm_peer_data_t          * const p_data,
-                              uint16_t          const * const p_buf_len)
+                              uint32_t          const * const p_buf_len)
 {
     ret_code_t         ret;
     fds_record_desc_t  rec_desc;
@@ -541,7 +536,7 @@ ret_code_t pds_peer_data_store(pm_peer_id_t                 peer_id,
 
     switch (ret)
     {
-        case FDS_SUCCESS:
+        case NRF_SUCCESS:
             if (p_store_token != NULL)
             {
                 // Update the store token.
@@ -587,7 +582,7 @@ ret_code_t pds_peer_data_delete(pm_peer_id_t peer_id, pm_peer_data_id_t data_id)
 
     switch (ret)
     {
-        case FDS_SUCCESS:
+        case NRF_SUCCESS:
             return NRF_SUCCESS;
 
         case FDS_ERR_NO_SPACE_IN_QUEUES:

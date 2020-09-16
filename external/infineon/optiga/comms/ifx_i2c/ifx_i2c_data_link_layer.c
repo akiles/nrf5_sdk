@@ -50,8 +50,8 @@
 #define DL_STATE_NACK                   (0x06)
 #define DL_STATE_ERROR                  (0x08)
 #define DL_STATE_DISCARD                (0x09)
-#define DL_STATE_RX_DF                  (0x0A)
-#define DL_STATE_RX_CF                  (0x0B)
+#define DL_STATE_RX_DF					(0x0A)
+#define DL_STATE_RX_CF					(0x0B)
 
 // Data Link Layer Frame Control Constants
 #define DL_FCTR_FTYPE_MASK              (0x80)
@@ -322,7 +322,7 @@ _STATIC_H void ifx_i2c_pl_event_handler(ifx_i2c_context_t* p_ctx,host_lib_status
     do
     {
         if((event == IFX_I2C_FATAL_ERROR) && (DL_STATE_IDLE != p_ctx->dl.state))
-        {   // Exit in case of fatal error
+        {	// Exit in case of fatal error
             LOG_DL("[IFX-DL]: Fatal error received\n");
             p_ctx->dl.state = DL_STATE_ERROR;
         }
@@ -360,7 +360,7 @@ _STATIC_H void ifx_i2c_pl_event_handler(ifx_i2c_context_t* p_ctx,host_lib_status
             case DL_STATE_RX:
             {
                 if (event == IFX_I2C_STACK_ERROR)
-                {   // If no frame was received retry sending
+                {	// If no frame was received retry sending
                     p_ctx->dl.state = DL_STATE_RESEND;
                     break;
                 }
@@ -368,7 +368,7 @@ _STATIC_H void ifx_i2c_pl_event_handler(ifx_i2c_context_t* p_ctx,host_lib_status
                 LOG_DL("[IFX-DL]: Received Frame of length %d\n",data_len);
 
                 if (data_len < DL_HEADER_SIZE)
-                {   // Received length is less than minimum size
+                {	// Received length is less than minimum size
                     LOG_DL("[IFX-DL]: received data_len < DL_HEADER_SIZE\n");
                     p_ctx->dl.state  = DL_STATE_NACK;
                     break;
@@ -391,7 +391,7 @@ _STATIC_H void ifx_i2c_pl_event_handler(ifx_i2c_context_t* p_ctx,host_lib_status
             {
                 LOG_DL("[IFX-DL]: Data Frame Received\n");
                 if ((crc_received != crc_calculated)||(packet_len == 0)||(data_len != DL_HEADER_SIZE + packet_len)||
-                    (seqctr == DL_FCTR_SEQCTR_VALUE_RFU) || (seqctr == DL_FCTR_SEQCTR_VALUE_RESYNC))
+                    (seqctr == DL_FCTR_SEQCTR_VALUE_RFU) ||	(seqctr == DL_FCTR_SEQCTR_VALUE_RESYNC))
                 {
                     // CRC,Length of data frame is 0/ SEQCTR has RFU/Re-sync in Data frame
                     LOG_DL("[IFX-DL]: NACK for CRC error,Data frame length is not correct,RFU in SEQCTR\n");
@@ -462,7 +462,7 @@ _STATIC_H void ifx_i2c_pl_event_handler(ifx_i2c_context_t* p_ctx,host_lib_status
                     break;
                 }
                 if(seqctr == DL_FCTR_SEQCTR_VALUE_RESYNC)
-                {   // Re-sync received
+                {	// Re-sync received
                     LOG_DL("[IFX-DL]: Re-Sync received\n");
                     p_ctx->dl.state = DL_STATE_DISCARD;
                     p_ctx->dl.resynced = 1;

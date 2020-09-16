@@ -239,7 +239,7 @@ static optiga_comms_t* p_optiga_comms;
 #define TAG_OID_SIG_KEY                 0x03
 
 ///Tag for seed
-#define TAG_SEED                        0x02
+#define TAG_SEED					    0x02
 
 /// Length for OID of signature key
 #define LEN_OID_SIG_KEY                 0x0002
@@ -292,48 +292,47 @@ uint16_t wMaxCommsBuffer = INVALID_MAX_COMMS_BUFF_SIZE;
 /**
  * Initializes the APDU buffer in stack.<br>
  **/
-#define INIT_STACK_APDUBUFFER(pbBuffer,wLen)\
-{                                           \
+#define INIT_STACK_APDUBUFFER(pbBuffer,wLen)    \
+{                                               \
     /*lint --e{733,830} suppress "Used only within Command Lib Block" */\
-    uint8_t rgbAPDUBuffer[wLen];            \
-    pbBuffer = rgbAPDUBuffer;               \
+    uint8_t rgbAPDUBuffer[wLen];                \
+    pbBuffer = rgbAPDUBuffer;                   \
 }
 
 /**
  * Initializes the APDU buffer in heap.<br>
  **/
-#define INIT_HEAP_APDUBUFFER(pbBuffer,wLen)                 \
-{                                                           \
-    if(INVALID_MAX_COMMS_BUFF_SIZE == wMaxCommsBuffer)      \
-    {                                                       \
-        i4Status = (int32_t)CMD_DEV_EXEC_ERROR;             \
-        break;                                              \
-    }                                                       \
-    pbBuffer = (uint8_t*)OCP_MALLOC(wLen);                  \
-    if(NULL == pbBuffer)                                    \
-    {                                                       \
-        i4Status = (int32_t)CMD_LIB_INSUFFICIENT_MEMORY;    \
-        break;                                              \
-    }                                                       \
-}                                                           \
+#define INIT_HEAP_APDUBUFFER(pbBuffer,wLen)                     \
+{                                                               \
+    if(INVALID_MAX_COMMS_BUFF_SIZE == wMaxCommsBuffer)          \
+    {                                                           \
+        i4Status = (int32_t)CMD_DEV_EXEC_ERROR;                 \
+    break;                                                      \
+    }                                                           \
+    pbBuffer = (uint8_t*)OCP_MALLOC(wLen);                      \
+    if(NULL == pbBuffer)                                        \
+    {                                                           \
+        i4Status = (int32_t)CMD_LIB_INSUFFICIENT_MEMORY;        \
+        break;                                                  \
+    }                                                           \
+}
 
 /**
  * Frees the heap memory.<br>
  **/
-#define FREE_HEAP_APDUBUFFER(pbBuffer)      \
-{                                           \
-    if(NULL != pbBuffer)                    \
-    {                                       \
-        OCP_FREE(pbBuffer);                 \
-        pbBuffer = NULL;                    \
-    }                                       \
+#define FREE_HEAP_APDUBUFFER(pbBuffer)  \
+{                                       \
+    if(NULL != pbBuffer)                \
+    {                                   \
+            OCP_FREE(pbBuffer);         \
+            pbBuffer = NULL;            \
+    }                                   \
 }
 
 
 //Hash info details for Hash algorithm
-const sHashinfo_d sHashInfo[1]=
-{
-    {eSHA256, SHA256_HASH_LEN, CALC_HASH_SHA256_CONTEXT_SIZE}
+sHashinfo_d sHashInfo[1]={
+{eSHA256, SHA256_HASH_LEN, CALC_HASH_SHA256_CONTEXT_SIZE}
 };
 
 /**
@@ -350,8 +349,7 @@ typedef struct sAlgoinfo
 }sAlgoInfo_d;
 
 //Algorithm identifier
-const sAlgoInfo_d sAlgoInfo[2]=
-{
+sAlgoInfo_d sAlgoInfo[2]={
     {eECC_NIST_P256, ECC_NIST_P_256_KEY_LEN},
     {eECC_NIST_P384, ECC_NIST_P_384_KEY_LEN}
 };
@@ -373,7 +371,7 @@ typedef struct sApduData_d
     //Payload Data
     uint8_t* prgbAPDUBuffer;
 
-    //Response Data
+        //Response Data
     uint8_t* prgbRespBuffer;
 
     //Response Length
@@ -410,6 +408,7 @@ static void optiga_comms_event_handler(void* upper_layer_ctx, host_lib_status_t 
  * If there is an internal error in function, then #CMD_DEV_ERROR is returned.<br>
  * Otherwise,the device error code is ORed with #CMD_DEV_ERROR and returned.<br>
  *
+ *
  * \retval    #CMD_DEV_ERROR
  * \retval    #CMD_LIB_ERROR
  * \retval    #CMD_DEV_EXEC_ERROR
@@ -436,7 +435,7 @@ _STATIC_H int32_t CmdLib_GetDeviceError(void)
         //wait for completion
         while(optiga_comms_status == OPTIGA_COMMS_BUSY){
 #ifdef USE_CMDLIB_WITH_RTOS
-            pal_os_timer_delay_in_milliseconds(1);
+                pal_os_timer_delay_in_milliseconds(1);
 #endif
         };
         if(optiga_comms_status != OPTIGA_COMMS_SUCCESS)
@@ -497,7 +496,7 @@ _STATIC_H int32_t TransceiveAPDU(sApduData_d *PpsApduData,uint8_t bGetError)
         do
         {
 #ifdef USE_CMDLIB_WITH_RTOS
-            pal_os_timer_delay_in_milliseconds(1);
+                pal_os_timer_delay_in_milliseconds(1);
 #endif
         }while(optiga_comms_status == OPTIGA_COMMS_BUSY);
 
@@ -547,7 +546,7 @@ _STATIC_H int32_t GetMaxCommsBuffer()
         sApduData.bCmd = CMD_GETDATA;
         sApduData.bParam = PARAM_GET_DATA;
         sApduData.wPayloadLength = LEN_PL_OID;
-        sApduData.wResponseLength = GETDATA_MAX_COMMS_SIZE;
+                sApduData.wResponseLength = GETDATA_MAX_COMMS_SIZE;
         //copy OID
         sApduData.prgbAPDUBuffer[OFFSET_PAYLOAD] = (uint8_t)(OID_MAX_COMMS_SIZE >> BITS_PER_BYTE);
         sApduData.prgbAPDUBuffer[OFFSET_PAYLOAD +1] = (uint8_t)OID_MAX_COMMS_SIZE;
@@ -578,6 +577,7 @@ _STATIC_H int32_t CmdLib_EncDecHelper(sProcCryptoData_d *PpsCryptoVector, uint8_
 /**
 * A common function for CmdLib_Encrypt and CmdLib_Decrypt.<br>
 * Forms the APDU required for encryption/decryption and sends to the security chip for processing.<br>
+*
 *
 * \param[in,out] PpsCryptoVector Pointer to structure containing Ciphertext and Plaintext
 * \param[in] bCmd ProcUplink or ProcDownlink
@@ -644,7 +644,7 @@ _STATIC_H int32_t CmdLib_EncDecHelper(sProcCryptoData_d *PpsCryptoVector, uint8_
         sApduData.bCmd = PbCmd;
         sApduData.bParam = PbParam;
 
-        wMaxPlaintText = wMaxCommsBuffer - OVERHEAD_UPDOWNLINK;
+                wMaxPlaintText = wMaxCommsBuffer - OVERHEAD_UPDOWNLINK;
 
         //Data that is yet to be encrypted/decrypted
         wDataRemaining = PpsCryptoVector->wInDataLength;
@@ -752,13 +752,13 @@ _STATIC_H int32_t CmdLib_EncDecHelper(sProcCryptoData_d *PpsCryptoVector, uint8_
 /**
  * This function returns Hash Algorithm information such as Hash output length, Hash context data.
  *
- * \param[in]        PeHashAlgo     Hash Algorithm type
+ * \param[in]        PeHashAlgo		Hash Algorithm type
  * \param[in,out]    PpsHashinfo    Pointer to a structure containing Hash algorithm information
  *
  * \retval  #CMD_LIB_OK
  * \retval  #CMD_LIB_ERROR
  */
-_STATIC_H int32_t Get_HashInfo(eHashAlg_d PeHashAlgo, const sHashinfo_d** PppsHashinfo )
+_STATIC_H int32_t Get_HashInfo(eHashAlg_d PeHashAlgo,sHashinfo_d** PppsHashinfo )
 {
     int32_t i4Status = (int32_t)CMD_LIB_ERROR;
     uint8_t bCount;
@@ -779,7 +779,7 @@ _STATIC_H int32_t Get_HashInfo(eHashAlg_d PeHashAlgo, const sHashinfo_d** PppsHa
 /**
  * This function returns key size based on the algorithm.
  *
- * \param[in]        PeAlgoIden     Algorithm identifier type
+ * \param[in]        PeAlgoIden		Algorithm identifier type
  * \param[in,out]    PpsAlgoinfo    Pointer to a structure containing key size of algorithm identifier
  *
  * \retval  #CMD_LIB_OK
@@ -795,7 +795,7 @@ _STATIC_H int32_t Get_KeySize(eAlgId_d PeAlgoIden,uint8_t* pbKeySize )
     {
         if(PeAlgoIden == sAlgoInfo[bCount].eAlgKeyId)
         {
-            *pbKeySize = sAlgoInfo[bCount].bKeyLen;
+                        *pbKeySize = sAlgoInfo[bCount].bKeyLen;
             i4Status = (int32_t) CMD_LIB_OK;
             break;
         }
@@ -817,7 +817,7 @@ _STATIC_H int32_t Get_KeySize(eAlgId_d PeAlgoIden,uint8_t* pbKeySize )
 */
 void CmdLib_SetOptigaCommsContext(const optiga_comms_t *p_input_optiga_comms)
 {
-    p_optiga_comms = (optiga_comms_t*)p_input_optiga_comms;
+        p_optiga_comms = (optiga_comms_t*)p_input_optiga_comms;
 }
 
 /**
@@ -866,7 +866,7 @@ int32_t CmdLib_OpenApplication(const sOpenApp_d* PpsOpenApp)
         sApduData.bCmd = CMD_OPEN_APP | CMD_CODE_MSB_SET ;
         sApduData.bParam = (uint8_t)PpsOpenApp->eOpenType;
         sApduData.wPayloadLength = sizeof(rgbUID);
-        sApduData.wResponseLength = OPEN_APDU_BUF_LEN;
+                sApduData.wResponseLength = OPEN_APDU_BUF_LEN;
         OCP_MEMCPY(sApduData.prgbAPDUBuffer+OFFSET_PAYLOAD, rgbUID, sizeof(rgbUID));
         i4Status = TransceiveAPDU(&sApduData,FALSE);
         if(CMD_LIB_OK != i4Status)
@@ -902,7 +902,7 @@ int32_t CmdLib_OpenApplication(const sOpenApp_d* PpsOpenApp)
 *\param[in,out] PpsResponse Pointer to Response structure
 *
 * \retval  #CMD_LIB_OK
-* \retval  #CMD_LIB_LENZERO_ERROR
+* \retval  #CMD_LIB_ERROR
 * \retval  #CMD_LIB_INSUFFICIENT_MEMORY
 * \retval  #CMD_DEV_ERROR
 * \retval  #CMD_LIB_NULL_PARAM
@@ -910,7 +910,7 @@ int32_t CmdLib_OpenApplication(const sOpenApp_d* PpsOpenApp)
 int32_t CmdLib_GetDataObject(const sGetData_d *PpsGDVector, sCmdResponse_d *PpsResponse)
 {
 /// @cond hidden
-#define ALLOCATE_ADDITIONAL_BYTES   6       // hdr(4) + oid(2)
+#define ALLOCATE_ADDITIONAL_BYTES	6		// hdr(4) + oid(2)
 /// @endcond
 
     //lint --e{818} suppress "PpsResponse is out parameter"
@@ -925,7 +925,7 @@ int32_t CmdLib_GetDataObject(const sGetData_d *PpsGDVector, sCmdResponse_d *PpsR
 //To use stack memory for APDU buffer, define STACK_ALLOC macro locally and else heap memory is used
 #ifdef STACK_ALLOC
         #error "Implement the inilization of stack memory for the required buffer"
-        //INIT_STACK_APDUBUFFER(sApduData.prgbAPDUBuffer, wLen);    //wLen to be replaced with the required const length
+                //INIT_STACK_APDUBUFFER(sApduData.prgbAPDUBuffer, wLen);    //wLen to be replaced with the required const length
 #else
         INIT_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer,wMaxCommsBuffer + ALLOCATE_ADDITIONAL_BYTES);
 #endif
@@ -1022,9 +1022,9 @@ int32_t CmdLib_GetDataObject(const sGetData_d *PpsGDVector, sCmdResponse_d *PpsR
     }while(FALSE);
 
 #ifndef STACK_ALLOC
-    FREE_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer);
+        FREE_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer);
 #else
-    #undef STACK_ALLOC
+        #undef STACK_ALLOC
 #endif
 
 ///@cond hidden
@@ -1081,9 +1081,9 @@ int32_t CmdLib_SetDataObject(const sSetData_d *PpsSDVector)
 //To use stack memory for APDU buffer, define STACK_ALLOC macro locally and else heap memory is used
 #ifdef STACK_ALLOC
         #error "Implement the inilization of stack memory for the required buffer"
-        //INIT_STACK_APDUBUFFER(sApduData.prgbAPDUBuffer, wLen);    //wLen to be replaced with the required const length
+                //INIT_STACK_APDUBUFFER(sApduData.prgbAPDUBuffer, wLen);    //wLen to be replaced with the required const length
 #else
-        INIT_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer,BUFFER_SIZE);
+                INIT_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer,BUFFER_SIZE);
 #endif
 
         if((NULL == PpsSDVector)||(NULL == PpsSDVector->prgbData))
@@ -1150,8 +1150,8 @@ int32_t CmdLib_SetDataObject(const sSetData_d *PpsSDVector)
 
             OCP_MEMCPY(sApduData.prgbAPDUBuffer+OVERHEAD,PpsSDVector->prgbData+wTotalWriteLen,wWriteLen);
 
-            //Set Response buffer length
-            sApduData.wResponseLength = BUFFER_SIZE;
+                        //Set Response buffer length
+                        sApduData.wResponseLength = BUFFER_SIZE;
 
             i4Status = TransceiveAPDU(&sApduData,TRUE);
             if(CMD_LIB_OK != i4Status)
@@ -1160,14 +1160,14 @@ int32_t CmdLib_SetDataObject(const sSetData_d *PpsSDVector)
             }
 
             wTotalWriteLen += wWriteLen;
-            wOffset += wWriteLen;
+                        wOffset += wWriteLen;
         }while(wTotalWriteLen != PpsSDVector->wLength);
     }while(FALSE);
 
 #ifndef STACK_ALLOC
-    FREE_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer);
+        FREE_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer);
 #else
-    #undef STACK_ALLOC
+        #undef STACK_ALLOC
 #endif
 
 /// @cond hidden
@@ -1181,6 +1181,7 @@ int32_t CmdLib_SetDataObject(const sSetData_d *PpsSDVector)
 /**
 * Reads maximum communication buffer size supported by the security chip.<br>
 *
+*
 * Notes:
 * - Application on security chip must be opened using #CmdLib_OpenApplication before using this API.<br>
 * - The function does not verify if the read access is permitted for the data object.<br>
@@ -1190,7 +1191,7 @@ int32_t CmdLib_SetDataObject(const sSetData_d *PpsSDVector)
 */
 uint16_t CmdLib_GetMaxCommsBufferSize(Void)
 {
-    return wMaxCommsBuffer;
+        return wMaxCommsBuffer;
 }
 #endif /* MODULE_ENABLE_READ_WRITE */
 
@@ -1223,7 +1224,7 @@ int32_t CmdLib_GetSignature(const sAuthMsg_d *PpsAuthMsg, sCmdResponse_d *PpsRes
 {
 /// @cond hidden
 #define STACK_ALLOC
-#define GETSIGN_APDU_BUF_LEN    270             //4 (cmd header) + 256 (Max Payload) + additional 10
+#define GETSIGN_APDU_BUF_LEN	270             //4 (cmd header) + 256 (Max Payload) + additional 10
 /// @endcond
 
     //lint --e{818} suppress "PpsResponse is out parameter"
@@ -1256,12 +1257,12 @@ int32_t CmdLib_GetSignature(const sAuthMsg_d *PpsAuthMsg, sCmdResponse_d *PpsRes
 
         //Set the pointer to the response buffer
         sApduData.prgbRespBuffer = sApduData.prgbAPDUBuffer;
-        sApduData.wResponseLength = GETSIGN_APDU_BUF_LEN;
+                sApduData.wResponseLength = GETSIGN_APDU_BUF_LEN;
 
         //Set Auth scheme
-        sAuthScheme.eAuthScheme = eECDSA;
-        sAuthScheme.wDevicePrivKey = PpsAuthMsg->wOIDDevPrivKey;
-        i4Status = CmdLib_SetAuthScheme(&sAuthScheme);
+                sAuthScheme.eAuthScheme = eECDSA;
+                sAuthScheme.wDevicePrivKey = PpsAuthMsg->wOIDDevPrivKey;
+                i4Status = CmdLib_SetAuthScheme(&sAuthScheme);
         if(CMD_LIB_OK != i4Status)
         {
             break;
@@ -1271,7 +1272,7 @@ int32_t CmdLib_GetSignature(const sAuthMsg_d *PpsAuthMsg, sCmdResponse_d *PpsRes
         sApduData.bCmd = CMD_SETAUTH_MSG;
         sApduData.bParam = PARAM_SET_AUTH_MSG;
         sApduData.wPayloadLength = PpsAuthMsg->wRndLength;
-        sApduData.wResponseLength = GETSIGN_APDU_BUF_LEN;
+                sApduData.wResponseLength = GETSIGN_APDU_BUF_LEN;
         //copy the random number
         OCP_MEMCPY(sApduData.prgbAPDUBuffer+OFFSET_PAYLOAD,PpsAuthMsg->prgbRnd,PpsAuthMsg->wRndLength);
         i4Status = TransceiveAPDU(&sApduData,TRUE);
@@ -1284,7 +1285,7 @@ int32_t CmdLib_GetSignature(const sAuthMsg_d *PpsAuthMsg, sCmdResponse_d *PpsRes
         sApduData.bCmd = CMD_GETAUTH_MSG;
         sApduData.bParam = PARAM_GET_AUTH_MSG;
         sApduData.wPayloadLength = 0;
-        sApduData.wResponseLength = GETSIGN_APDU_BUF_LEN;
+                sApduData.wResponseLength = GETSIGN_APDU_BUF_LEN;
         i4Status = TransceiveAPDU(&sApduData,TRUE);
         if(CMD_LIB_OK != i4Status)
         {
@@ -1303,9 +1304,9 @@ int32_t CmdLib_GetSignature(const sAuthMsg_d *PpsAuthMsg, sCmdResponse_d *PpsRes
 
     }while(FALSE);
 #ifndef STACK_ALLOC
-    FREE_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer);
+        FREE_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer);
 #else
-    #undef STACK_ALLOC
+        #undef STACK_ALLOC
 #endif
 
 ///@cond hidden
@@ -1323,8 +1324,8 @@ int32_t CmdLib_GetSignature(const sAuthMsg_d *PpsAuthMsg, sCmdResponse_d *PpsRes
  * - Command chaining is not supported in this API.<br>
  * - If the requested length of random bytes is either more than communication buffer size or more than the buffer size in PpsResponse,#CMD_LIB_INSUFFICIENT_MEMORY error is returned.<br>
  *
- *\param[in]        PpsRng      Pointer to sRngOptions_d to specify random number generation
- *\param[in,out]    PpsResponse Pointer to sCmdResponse_d to store random number
+ *\param[in]		PpsRng		Pointer to sRngOptions_d to specify random number generation
+ *\param[in,out]	PpsResponse Pointer to sCmdResponse_d to store random number
  *
  * \retval  #CMD_LIB_OK
  * \retval  #CMD_LIB_ERROR
@@ -1558,7 +1559,7 @@ int32_t CmdLib_CalcHash(sCalcHash_d* PpsCalcHash)
     eDataType_d eHashDataType;
     uint16_t wMemoryAllocLen;
     uint16_t wInDataLen;
-    const sHashinfo_d* psHashinfo;
+    sHashinfo_d* psHashinfo;
     uint16_t wOptTagLen = 0;
     uint16_t wOptTagOffset = 0;
     uint16_t wOffset;
@@ -1584,7 +1585,7 @@ int32_t CmdLib_CalcHash(sCalcHash_d* PpsCalcHash)
 
         //For eHashSequence_d as eFinalizeHash,validate sOutData
         if(((eFinalizeHash == PpsCalcHash->eHashSequence) || (eStartFinalizeHash == PpsCalcHash->eHashSequence) ||
-            (eIntermediateHash == PpsCalcHash->eHashSequence)) && (NULL == PpsCalcHash->sOutHash.prgbBuffer))
+                        (eIntermediateHash == PpsCalcHash->eHashSequence)) && (NULL == PpsCalcHash->sOutHash.prgbBuffer))
         {
             i4Status = (int32_t)CMD_LIB_NULL_PARAM;
             break;
@@ -1608,7 +1609,7 @@ int32_t CmdLib_CalcHash(sCalcHash_d* PpsCalcHash)
         if(eTerminateHash == PpsCalcHash->eHashSequence)
         {
             wInDataLen = 0;
-            eHashDataType = eDataStream;
+                        eHashDataType = eDataStream;
         }
         else if(eDataStream == eHashDataType)
         {
@@ -1681,7 +1682,7 @@ int32_t CmdLib_CalcHash(sCalcHash_d* PpsCalcHash)
 
         if(eTerminateHash != PpsCalcHash->eHashSequence)
         {
-            //If the DataType is Data stream, copy the input data to the buffer
+                        //If the DataType is Data stream, copy the input data to the buffer
             if(eDataStream == eHashDataType)
             {
                 OCP_MEMCPY(&sApduData.prgbAPDUBuffer[OFFSET_PAYLOAD + BYTES_SEQ + BYTES_LENGTH], PpsCalcHash->sDataStream.prgbStream,
@@ -1776,7 +1777,7 @@ int32_t CmdLib_CalcHash(sCalcHash_d* PpsCalcHash)
 
     }while(FALSE);
 
-    FREE_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer);
+        FREE_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer);
 
 /// @cond hidden
 #undef INDATA_LEN_OID
@@ -1824,14 +1825,14 @@ int32_t CmdLib_VerifySign(const sVerifyOption_d* PpsVerifySign,const sbBlob_d * 
     uint16_t wCalApduLen = 0;
 
 /// @cond hidden
-    ///Minimum length of APDU InData in case of Public Key from Host. [TLV Header(3) for Digest + TLV Header (3) for Signature + TLV Header(3) for Public Key + TLV for Algo (4)]
-    #define DATA_STREAM_APDU_INDATA_LEN     13
-    ///Minimum length of APDU InData in case of Public Key OID. [TLV Header(3) for Digest + TLV Header (3) for Signature + TLV for Public Key OID (5)]
-    #define OID_APDU_INDATA_LEN             11
+        ///Minimum length of APDU InData in case of Public Key from Host. [TLV Header(3) for Digest + TLV Header (3) for Signature + TLV Header(3) for Public Key + TLV for Algo (4)]
+        #define DATA_STREAM_APDU_INDATA_LEN		13
+        ///Minimum length of APDU InData in case of Public Key OID. [TLV Header(3) for Digest + TLV Header (3) for Signature + TLV for Public Key OID (5)]
+        #define OID_APDU_INDATA_LEN				11
 /// @endcond
 
     do
-    {
+        {
         //NULL checks
         if((NULL == PpsVerifySign) || (NULL == PpsDigest->prgbStream) ||
         (NULL == PpsSignature->prgbStream))
@@ -1864,7 +1865,7 @@ int32_t CmdLib_VerifySign(const sVerifyOption_d* PpsVerifySign,const sbBlob_d * 
 
         //Set the pointer to the response buffer
         sApduData.prgbRespBuffer = sApduData.prgbAPDUBuffer;
-                sApduData.wResponseLength = wMaxCommsBuffer;
+                                sApduData.wResponseLength = wMaxCommsBuffer;
         //Set digest tag, length, data
         sApduData.prgbAPDUBuffer[OFFSET_PAYLOAD] = TAG_DIGEST;
         Utility_SetUint16(&sApduData.prgbAPDUBuffer[wWritePosition + TAG_LENGTH_OFFSET], PpsDigest->wLen);
@@ -1972,9 +1973,9 @@ int32_t CmdLib_GenerateKeyPair(const sKeyPairOption_d* PpsKeyPairOption,sOutKeyP
     ///Tag for public key
     #define TAG_PUBLIC_KEY                  0x02
     ///Minimum length of APDU InData in case of Private key store. [TLV Header(3) of OID + OID (2) + TLV Header(3) for key usage identifier  + Identifier (1)]
-    #define PRIV_KEY_APDU_INDATA_LEN        9
+    #define PRIV_KEY_APDU_INDATA_LEN		9
     /// Encoding bytes for private and public key
-    #define KEY_PAIR_INDATA_LEN             4
+    #define KEY_PAIR_INDATA_LEN				4
 /// @endcond
 
     do
@@ -2064,9 +2065,9 @@ int32_t CmdLib_GenerateKeyPair(const sKeyPairOption_d* PpsKeyPairOption,sOutKeyP
             psBlobKey->wLen = wLen;
             wParsLen += (wLen + TAG_VALUE_OFFSET);
 
-        }while(wParsLen != sApduData.wResponseLength);
+        } while (wParsLen != sApduData.wResponseLength);
 
-    }while(FALSE);
+    } while(FALSE);
 
     //Free the allocated memory for buffer
     FREE_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer);
@@ -2247,38 +2248,38 @@ int32_t CmdLib_CalculateSharedSecret(const sCalcSSecOptions_d *PpsCalcSSec,sbBlo
 
         /// @cond hidden
         ///Minimum length of APDU InData in case of calculate shared secret.
-        ///[TLV Header(3) of OID Private key + OID Private key (2) + TLV Header(3) for public key algoId + algoId (1) + TLV Header(3) for public key + TLV Header(3) for alternative ]
-        #define CALCSSEC_APDU_LEN       15
+                ///[TLV Header(3) of OID Private key + OID Private key (2) + TLV Header(3) for public key algoId + algoId (1) + TLV Header(3) for public key + TLV Header(3) for alternative ]
+        #define CALCSSEC_APDU_LEN		15
         ///Tag for public key
-        #define TAG_PUBLIC_KEY          0x06
+        #define TAG_PUBLIC_KEY			0x06
         ///Len for privet key oid
         #define LEN_EXPORT_SHAR_SEC     0x0000
         ///Len for share sec oid
-        #define LEN_OID_SHARE_SEC       0x0002
+        #define	LEN_OID_SHARE_SEC		0x0002
         ///Share sec OID zero value
-        #define OID_SHARE_SEC_ZERO      0x0000
+        #define	OID_SHARE_SEC_ZERO	    0x0000
         ///Tag for export share secret
         #define TAG_EXPORT_SHARE_SEC    0x07
         ///Tag for share secret oid
-        #define TAG_OID_SHARE_SEC       0x08
+        #define TAG_OID_SHARE_SEC		0x08
         ///Minimum length of APDU
-        #define TX_LEN                  (CALCSSEC_APDU_LEN + PpsCalcSSec->sPubKey.wLen + 2)
+        #define TX_LEN					(CALCSSEC_APDU_LEN + PpsCalcSSec->sPubKey.wLen + 2)
         /// @endcond
 
-        //Considering the size of Indata for allocating memory as this size is also sufficient for storing the response
+                //Considering the size of Indata for allocating memory as this size is also sufficient for storing the response
         wCalApduLen = LEN_APDUHEADER + TX_LEN;
         //NULL checks
         if(OID_SHARE_SEC_ZERO == PpsCalcSSec->wOIDSharedSecret)
         {
             if(NULL == PpsSecret->prgbStream)
             {
-                i4Status = (int32_t)CMD_LIB_NULL_PARAM;
-                break;
+                    i4Status = (int32_t)CMD_LIB_NULL_PARAM;
+                    break;
             }
             wCalApduLen -=2;
         }
 
-        //Check max comms buffer size
+                //Check max comms buffer size
         if((wMaxCommsBuffer) < wCalApduLen)
         {
             i4Status = (int32_t)CMD_LIB_INSUFFICIENT_MEMORY;
@@ -2389,8 +2390,8 @@ int32_t CmdLib_CalculateSharedSecret(const sCalcSSecOptions_d *PpsCalcSSec,sbBlo
 * - If the memory buffer in PpsKey is not sufficient to store the derived key,#CMD_LIB_INSUFFICIENT_MEMORY is returned.
 
 *
-* \param[in] PpsDeriveKey   Pointer to #sDeriveKeyOptions_d to provide input for session key generation
-* \param[in,out] PpsKey     Pointer to #sbBlob_d that contains the derived key
+* \param[in] PpsDeriveKey	Pointer to #sDeriveKeyOptions_d to provide input for session key generation
+* \param[in,out] PpsKey		Pointer to #sbBlob_d that contains the derived key
 *
 * \retval  #CMD_LIB_OK
 * \retval  #CMD_LIB_ERROR
@@ -2417,22 +2418,22 @@ int32_t CmdLib_DeriveKey(const sDeriveKeyOptions_d *PpsDeriveKey,sbBlob_d *PpsKe
 
         /// @cond hidden
         ///Minimum length of APDU InData in case of calculate shared secret.
-        ///[TLV Header(3) of OID share secret + OID share secret (2) + TLV Header(3) for seed + TLV Header(3) for derive secret length + derive secret length(2) + TLV Header(3) for alternative ]
-        #define DERIVEKEY_APDU_LEN      16
+                ///[TLV Header(3) of OID share secret + OID share secret (2) + TLV Header(3) for seed + TLV Header(3) for derive secret length + derive secret length(2) + TLV Header(3) for alternative ]
+        #define DERIVEKEY_APDU_LEN		16
         ///Tag for derive key
-        #define TAG_DERIVE_KEY          0x03
+        #define TAG_DERIVE_KEY			0x03
         ///Len for export derive key
         #define LEN_EXPORT_DERIVE_KEY   0x0000
         ///Len for share sec oid
-        #define LEN_DERIVE_KEY          0x0002
+        #define	LEN_DERIVE_KEY			0x0002
         ///Derive key OID zero value
-        #define OID_DERIVE_SEC_ZERO     0x0000
+        #define	OID_DERIVE_SEC_ZERO	    0x0000
         ///Tag for export derive share secret
         #define TAG_EXPORT_DERIVE_KEY   0x07
         ///Tag for derive key oid
-        #define TAG_OID_DERIVE_KEY      0x08
+        #define TAG_OID_DERIVE_KEY		0x08
         ///Minimum length of APDU
-        #define TX_LEN                  (DERIVEKEY_APDU_LEN + 2)
+        #define TX_LEN					(DERIVEKEY_APDU_LEN + 2)
         /// @endcond
 
         //Considering the size of Indata for allocating memory as this size is also sufficient for storing the response
@@ -2492,7 +2493,7 @@ int32_t CmdLib_DeriveKey(const sDeriveKeyOptions_d *PpsDeriveKey,sbBlob_d *PpsKe
             //Set OID of signature key tag, length, data
             sApduData.prgbAPDUBuffer[wWritePosition] = TAG_OID_DERIVE_KEY;
             Utility_SetUint16(&sApduData.prgbAPDUBuffer[wWritePosition + TAG_LENGTH_OFFSET], LEN_DERIVE_KEY);
-            Utility_SetUint16(&sApduData.prgbAPDUBuffer[wWritePosition + TAG_VALUE_OFFSET], PpsDeriveKey->wOIDDerivedKey);
+                        Utility_SetUint16(&sApduData.prgbAPDUBuffer[wWritePosition + TAG_VALUE_OFFSET], PpsDeriveKey->wOIDDerivedKey);
             wWritePosition += TAG_VALUE_OFFSET + LEN_DERIVE_KEY;
         }
 
@@ -2526,13 +2527,13 @@ int32_t CmdLib_DeriveKey(const sDeriveKeyOptions_d *PpsDeriveKey,sbBlob_d *PpsKe
     FREE_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer);
 
     /// @cond hidden
-    #undef DERIVEKEY_APDU_LEN
-    #undef TAG_DERIVE_KEY
-    #undef LEN_EXPORT_DERIVE_KEY
-    #undef LEN_DERIVE_KEY
-    #undef OID_DERIVE_SEC_ZERO
-    #undef TAG_EXPORT_DERIVE_KEY
-    #undef TAG_OID_DERIVE_KEY
+        #undef DERIVEKEY_APDU_LEN
+        #undef TAG_DERIVE_KEY
+        #undef LEN_EXPORT_DERIVE_KEY
+        #undef LEN_DERIVE_KEY
+        #undef OID_DERIVE_SEC_ZERO
+        #undef TAG_EXPORT_DERIVE_KEY
+        #undef TAG_OID_DERIVE_KEY
     #undef TX_LEN
     /// @endcond
     return i4Status;
@@ -2595,7 +2596,7 @@ int32_t CmdLib_GetMessage(const sProcMsgData_d *PpsGMsgVector)
 
         //NULL checks
         if((NULL == PpsGMsgVector) || (NULL == PpsGMsgVector->psCallBack) ||
-            (NULL == PpsGMsgVector->psCallBack->pfAcceptMessage) || (NULL == PpsGMsgVector->psCallBack->fvParams))
+                        (NULL == PpsGMsgVector->psCallBack->pfAcceptMessage) || (NULL == PpsGMsgVector->psCallBack->fvParams))
         {
             i4Status = (int32_t)CMD_LIB_NULL_PARAM;
             break;
@@ -2638,7 +2639,7 @@ int32_t CmdLib_GetMessage(const sProcMsgData_d *PpsGMsgVector)
             //Add the session ID to the buffer
             sApduData.prgbAPDUBuffer[OFFSET_PAYLOAD] = (uint8_t)(PpsGMsgVector->wSessionKeyOID >> BITS_PER_BYTE);
             sApduData.prgbAPDUBuffer[OFFSET_PAYLOAD + 1] = (uint8_t)PpsGMsgVector->wSessionKeyOID;
-            sApduData.wResponseLength = MAX_APDU_BUFF_LEN;
+                        sApduData.wResponseLength = MAX_APDU_BUFF_LEN;
 
             if(((uint8_t)eClientHello == sApduData.bParam) && (NULL != PpsGMsgVector->puMsgParams))
             {
@@ -2706,9 +2707,9 @@ int32_t CmdLib_GetMessage(const sProcMsgData_d *PpsGMsgVector)
 
     //Free the allocated memory for buffer
 #ifndef STACK_ALLOC
-    FREE_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer);
+        FREE_HEAP_APDUBUFFER(sApduData.prgbAPDUBuffer);
 #else
-    #undef STACK_ALLOC
+        #undef STACK_ALLOC
 #endif
 
     return i4Status;
@@ -2728,7 +2729,7 @@ int32_t CmdLib_GetMessage(const sProcMsgData_d *PpsGMsgVector)
 * - The API will not recopy the Authentication message data but add the header and data<br>
 *   formatting information before it, in the same input buffer.
 *
-*   The puMsgParams and psCallBack pointer which is member of sProcMsgData_d should be set to NULL
+*	The puMsgParams and psCallBack pointer which is member of sProcMsgData_d should be set to NULL
 *
 * \param[in] PpsPMsgVector Pointer to DTLS Handshake Message parameters
 *
@@ -2870,7 +2871,7 @@ int32_t CmdLib_CloseSession(uint16_t PwSessionRefId)
         sApduData.prgbAPDUBuffer[OFFSET_PAYLOAD] = (uint8_t)( PwSessionRefId >> BITS_PER_BYTE);
         sApduData.prgbAPDUBuffer[OFFSET_PAYLOAD + 1] = (uint8_t)PwSessionRefId;
 
-        sApduData.wResponseLength = CLOSE_SESSION_APDU_BUF_LEN;
+                sApduData.wResponseLength = CLOSE_SESSION_APDU_BUF_LEN;
 
         //Transmit the Data
         i4Status = TransceiveAPDU(&sApduData,TRUE);
@@ -2924,7 +2925,7 @@ int32_t CmdLib_CloseSession(uint16_t PwSessionRefId)
 */
 int32_t CmdLib_Encrypt(sProcCryptoData_d *PpsEncVector)
 {
-    return CmdLib_EncDecHelper(PpsEncVector,CMD_ENCDATA,PARAM_ENC_DATA);
+        return CmdLib_EncDecHelper(PpsEncVector,CMD_ENCDATA,PARAM_ENC_DATA);
 }
 
 /**
@@ -2965,7 +2966,7 @@ int32_t CmdLib_Encrypt(sProcCryptoData_d *PpsEncVector)
 */
 int32_t CmdLib_Decrypt(sProcCryptoData_d *PpsDecVector)
 {
-    return CmdLib_EncDecHelper(PpsDecVector,CMD_DECDATA,PARAM_DEC_DATA);
+        return CmdLib_EncDecHelper(PpsDecVector,CMD_DECDATA,PARAM_DEC_DATA);
 }
 #endif /* MODULE_ENABLE_DTLS_MUTUAL_AUTH*/
 

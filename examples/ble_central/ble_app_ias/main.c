@@ -250,6 +250,7 @@ static void on_disconnect_battery_lvl_store(uint16_t conn_handle)
         // Store the last battery value.
         if (m_bas_bonded_clients.devices[i].conn_handle == conn_handle)
         {
+            m_bas_bonded_clients.devices[i].conn_handle      = BLE_CONN_HANDLE_INVALID;
             m_bas_bonded_clients.devices[i].last_battery_lvl = m_bas.battery_level_last;
 
             return;
@@ -320,7 +321,7 @@ static void battery_level_update(void)
  * @details This function send notification to bonded client after reconnection,
  *          if current value is different from the value during disconnection.
  */
-static void bettery_notify_send_handler(void * p_context)
+static void battery_notify_send_handler(void * p_context)
 {
     ret_code_t     err_code  = NRF_SUCCESS;
     uint8_t      * p_counter = &m_bas_bonded_clients.counter;
@@ -330,7 +331,8 @@ static void bettery_notify_send_handler(void * p_context)
     {
         if (m_bas_bonded_clients.devices[i].peer_id == *p_peer_id)
         {
-            if (m_bas_bonded_clients.devices[i].last_battery_lvl != m_bas.battery_level_last)
+            if ((m_bas_bonded_clients.devices[i].last_battery_lvl != m_bas.battery_level_last) &&
+                (m_bas_bonded_clients.devices[i].conn_handle != BLE_CONN_HANDLE_INVALID))
             {
                 err_code = ble_bas_battery_lvl_on_reconnection_update(&m_bas,
                                                                       m_bas_bonded_clients.devices[i].conn_handle);
@@ -382,7 +384,7 @@ static void timers_init(void)
 
     err_code = app_timer_create(&m_battery_notify_timer_id,
                                 APP_TIMER_MODE_SINGLE_SHOT,
-                                bettery_notify_send_handler);
+                                battery_notify_send_handler);
     APP_ERROR_CHECK(err_code);
 }
 

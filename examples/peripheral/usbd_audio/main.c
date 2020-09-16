@@ -255,7 +255,8 @@ APP_USBD_AUDIO_GLOBAL_DEF(m_app_audio_headphone,
                           0,
                           APP_USBD_AUDIO_AS_IFACE_FORMAT_PCM,
                           192,
-                          APP_USBD_AUDIO_SUBCLASS_AUDIOSTREAMING
+                          APP_USBD_AUDIO_SUBCLASS_AUDIOSTREAMING,
+                          1
 );
 
 
@@ -273,7 +274,8 @@ APP_USBD_AUDIO_GLOBAL_DEF(m_app_audio_microphone,
                           0,
                           APP_USBD_AUDIO_AS_IFACE_FORMAT_PCM,
                           192,
-                          APP_USBD_AUDIO_SUBCLASS_AUDIOSTREAMING
+                          APP_USBD_AUDIO_SUBCLASS_AUDIOSTREAMING,
+                          3
 );
 
 

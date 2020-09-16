@@ -48,28 +48,28 @@
  ****************************************************************************/
 
 /// Successful execution
-#define OCP_ML_OK                           0x75268512
+#define OCP_ML_OK 						    0x75268512
 
 /// Failure in execution
-#define OCP_ML_ERROR                        0xF4350158
+#define OCP_ML_ERROR 					    0xF4350158
 
 ///Null Parameter(s)
-#define OCP_ML_NULL_PARAM                   BASE_ERROR_MESSAGELAYER
+#define OCP_ML_NULL_PARAM 				    BASE_ERROR_MESSAGELAYER
 
 ///Zero Length input parameter(s)
-#define OCP_ML_ZERO_LEN                     (BASE_ERROR_MESSAGELAYER + 1)
+#define OCP_ML_ZERO_LEN 				    (BASE_ERROR_MESSAGELAYER + 1)
 
 ///Insufficient memory
-#define OCP_ML_INSUFFICIENT_MEMORY          (BASE_ERROR_MESSAGELAYER + 2)
+#define OCP_ML_INSUFFICIENT_MEMORY 			(BASE_ERROR_MESSAGELAYER + 2)
 
 ///Invalid unix time
-#define OCP_ML_INVALID_UNIXTIME             (BASE_ERROR_MESSAGELAYER + 3)
+#define OCP_ML_INVALID_UNIXTIME 			(BASE_ERROR_MESSAGELAYER + 3)
 
 ///Invalid certificate type
-#define OCP_ML_INVALID_CERTTYPE             (BASE_ERROR_MESSAGELAYER + 4)
+#define OCP_ML_INVALID_CERTTYPE 			(BASE_ERROR_MESSAGELAYER + 4)
 
 ///Invalid certificate type
-#define OCP_ML_MALLOC_FAILURE               (BASE_ERROR_MESSAGELAYER + 5)
+#define OCP_ML_MALLOC_FAILURE			    (BASE_ERROR_MESSAGELAYER + 5)
 
 /****************************************************************************
  *

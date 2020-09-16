@@ -154,7 +154,7 @@ extern "C" {
 #define APP_USBD_AUDIO_OUTPUT_TERMINAL_DSC(terminal_id, terminal_type, source_id) \
     /*.bLength =            */ sizeof(app_usbd_audio_output_terminal_desc_t),     \
     /*.bDescriptorType =    */ APP_USBD_AUDIO_DESCRIPTOR_INTERFACE,               \
-    /*.bDescriptorSubtype = */ APP_USBD_AUDIO_AC_IFACE_SUBTYPE_OUTPUT_TERNINAL,   \
+    /*.bDescriptorSubtype = */ APP_USBD_AUDIO_AC_IFACE_SUBTYPE_OUTPUT_TERMINAL,   \
     /*.bTerminalID =        */ (terminal_id),                                     \
     /*.wTerminalType =      */ APP_USBD_U16_TO_RAW_DSC(terminal_type),            \
     /*.bAssocTerminal =     */ 0,                                                 \
@@ -212,7 +212,7 @@ extern "C" {
     /*.bDescriptorSubtype = */ APP_USBD_AUDIO_AS_IFACE_SUBTYPE_FORMAT_TYPE,                    \
     /*.bFormatType =        */ (1),                                                            \
     /*.bNrChannels =        */ (nr_channels),                                                  \
-    /*.bSubframeSize =      */ (subframe_size),                                                \
+    /*.bSubFrameSize =      */ (subframe_size),                                                \
     /*.bBitResolution =     */ (resolution),                                                   \
     /*.bSamFreqType =       */ (freq_type),                                                    \
     /*.tSamFreq =           */ __VA_ARGS__,                                                    \
@@ -252,7 +252,7 @@ extern "C" {
     /*.bDescriptorSubtype = */ APP_USBD_AUDIO_AS_IFACE_SUBTYPE_FORMAT_TYPE,                      \
     /*.bFormatType =        */ (3),                                                              \
     /*.bNrChannels =        */ (nr_channels),                                                    \
-    /*.bSubframeSize =      */ (subframe_size),                                                  \
+    /*.bSubFrameSize =      */ (subframe_size),                                                  \
     /*.bBitResolution =     */ (resolution),                                                     \
     /*.bSamFreqType =       */ (freq_type),                                                      \
     /*.tSamFreq =           */ __VA_ARGS__,                                                      \

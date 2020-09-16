@@ -191,6 +191,15 @@ do                                                      \
 
 
 /**@brief Macro for verifying that the module is initialized. It will cause the exterior function to
+ *        return false if not.
+ *
+ * @note MODULE_INITIALIZED must be defined in each module using this macro. MODULE_INITIALIZED
+ *       should be true if the module is initialized, false if not.
+ */
+#define VERIFY_MODULE_INITIALIZED_BOOL() VERIFY_TRUE((MODULE_INITIALIZED), false)
+
+
+/**@brief Macro for verifying that the module is initialized. It will cause the exterior function to
  *        return if not.
  *
  * @param[in] param  The variable to check if is NULL.

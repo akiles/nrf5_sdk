@@ -55,7 +55,7 @@
 #if NRF_MODULE_ENABLED(NRF_CRYPTO_BACKEND_OBERON)
 
 #include "nrf_crypto_aead_shared.h"
-#include "occ_chacha20_poly1305.h"
+#include "ocrypto_chacha20_poly1305.h"
 #include "nrf_crypto_error.h"
 #include "nrf_crypto_types.h"
 

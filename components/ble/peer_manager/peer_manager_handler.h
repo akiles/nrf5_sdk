@@ -91,7 +91,7 @@ void pm_handler_pm_evt_log(pm_evt_t const * p_pm_evt);
  *
  * @note See also @ref pm_handler_flash_clean_on_return.
  * @note In normal circumstances, this function should be called for every Peer Manager event.
- * @note This function is a supplement to, not a replacement for @ref pm_handler_on_pm_evt.
+ * @note This function is a supplement to @ref pm_handler_on_pm_evt, not its replacement.
  *
  * @param[in]  p_pm_evt  Peer Manager event to handle.
  */
@@ -109,11 +109,26 @@ void pm_handler_flash_clean_on_return(void);
  * @ref PM_EVT_CONN_SEC_FAILED.
  *
  * @note In normal circumstances, this function should be called for every Peer Manager event.
- * @note This function is a supplement to, not a replacement for @ref pm_handler_on_pm_evt.
+ * @note This function is a supplement to @ref pm_handler_on_pm_evt, not its replacement.
  *
  * @param[in]  p_pm_evt  Peer Manager event to handle.
  */
 void pm_handler_disconnect_on_sec_failure(pm_evt_t const * p_pm_evt);
+
+/**@brief Auxiliary standard function for disconnecting on insufficient connection security.
+ *
+ * This function disconnects whenever the connection security succeeds, that is whenever it
+ * receives a @ref PM_EVT_CONN_SEC_SUCCEEDED, but the established security does not fulfill the
+ * provided criteria.
+ *
+ * @note In normal circumstances, this function should be called for every Peer Manager event.
+ * @note This function is a supplement to @ref pm_handler_on_pm_evt, not its replacement.
+ *
+ * @param[in]  p_pm_evt        Peer Manager event to handle.
+ * @param[in]  p_min_conn_sec  Minumum security status below which to disconnect the link.
+ */
+void pm_handler_disconnect_on_insufficient_sec(pm_evt_t const * p_pm_evt,
+                                               pm_conn_sec_status_t * p_min_conn_sec);
 
 /**@brief Function for securing a connection when it is established.
  *

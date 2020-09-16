@@ -130,6 +130,9 @@ BLE_LNS_DEF(m_lns);                                         /**< Location and na
 NRF_BLE_GATT_DEF(m_gatt);                                   /**< GATT module instance. */
 NRF_BLE_QWR_DEF(m_qwr);                                     /**< Context for the Queued Write module.*/
 BLE_ADVERTISING_DEF(m_advertising);                         /**< Advertising module instance. */
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                            /**< BLE GATT queue instance. */
+               NRF_SDH_BLE_PERIPHERAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
 
 static uint16_t  m_conn_handle = BLE_CONN_HANDLE_INVALID;   /**< Handle of the current connection. */
 
@@ -645,6 +648,7 @@ static void services_init(void)
     lns_init.evt_handler      = on_lns_evt;
     lns_init.lncp_evt_handler = on_ln_ctrlpt_evt;
     lns_init.error_handler    = lns_error_handler;
+    lns_init.p_gatt_queue     = &m_ble_gatt_queue;
 
     lns_init.is_position_quality_present = true;
     lns_init.is_control_point_present    = true;

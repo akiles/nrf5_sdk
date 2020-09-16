@@ -254,6 +254,8 @@ static nrf_gzll_host_rx_info_t prev_gzp_rx_info = {0, 0};                ///< RS
   #else
     #error
   #endif
+#elif defined(__GNUC__)
+static const uint32_t database[GZP_DEVICE_PARAMS_STORAGE_SIZE / 4] __attribute__((section(".gzll_paring")))
 #else
 static const uint32_t database[GZP_DEVICE_PARAMS_STORAGE_SIZE / 4] __attribute__((at(GZP_PARAMS_DB_ADR)))
 #endif

@@ -74,7 +74,7 @@
 #define APP_CONFIG_TLM_ADV_INTERLEAVE_RATIO                 5                           //!< How often should the TLM frame be advertised.
 
 
-#define APP_CONFIG_ADV_INTERVAL_MS_MAX                      16384                       //!< Maximum allowed advertisement interval. Can be undefined without int
+#define APP_CONFIG_ADV_INTERVAL_MS_MAX                      10240                       //!< Maximum allowed advertisement interval. Can be undefined without int
 #define APP_CONFIG_ADV_FRAME_SPACING_MS_MIN                 500                         //!< Minimum time between advertisement frames. Imposes limit on minumum accepted advertisement interval.
 #ifdef NRF52_SERIES
 #define APP_CONFIG_ADV_FRAME_ETLM_SPACING_MS                300                         //!< The time that is reqired for preparing an eTLM slot. Imposes limit on minimum accepted advertisement interval.
@@ -97,18 +97,18 @@
 
 
 // BLE CONFIGS
-#define APP_DEVICE_NAME                                     "nRF5x_Eddystone"           //!< Advertised device name in the scan response when in connectable mode.
-#define IS_SRVC_CHANGED_CHARACT_PRESENT                     0                           //!< Information whether the service changed characteristic is available. If it is not enabled, the server's database cannot be changed for the lifetime of the device.
-#define MAX_ADV_INTERVAL                                    (10240)                     //!< Maximum connection interval (in ms).
-#define MIN_CONN_ADV_INTERVAL                               (20)                        //!< Minimum connection interval (in ms).
-#define MIN_NON_CONN_ADV_INTERVAL                           (100)                       //!< Minimum advertisement interval for non-connectable advertisements (in ms).
+#define APP_DEVICE_NAME                                     "nRF5x_Eddystone"          //!< Advertised device name in the scan response when in connectable mode.
+#define IS_SRVC_CHANGED_CHARACT_PRESENT                     0                          //!< Information whether the service changed characteristic is available. If it is not enabled, the server's database cannot be changed for the lifetime of the device.
+#define MAX_ADV_INTERVAL                                    10240                      //!< Maximum advertising interval (in ms).
+#define MIN_CONN_ADV_INTERVAL                               20                         //!< Minimum advertising interval (in ms).
+#define MIN_NON_CONN_ADV_INTERVAL                           100                        //!< Minimum advertising interval for non-connectable advertisements (in ms).
 
 #define CENTRAL_LINK_COUNT                                  0                           //!< Number of central links used by the application. When changing this number, remember to adjust the RAM settings.
 #define PERIPHERAL_LINK_COUNT                               1                           //!< Number of peripheral links used by the application. When changing this number, remember to adjust the RAM settings.
 
 #define APP_CFG_NON_CONN_ADV_TIMEOUT                        0                           //!< Time for which the device must be advertising in non-connectable mode (in seconds). 0 disables the time-out.
 #define APP_CFG_NON_CONN_ADV_INTERVAL_MS                    1000                        //!< The advertising interval for non-connectable advertisement (in milliseconds). This value can vary between 100 ms and 10.24 s.
-#define APP_CFG_CONNECTABLE_ADV_TIMEOUT                     6000                        //!< Time for which the device must be advertising in connectable mode (in milliseconds). 0 disables the time-out.
+#define APP_CFG_CONNECTABLE_ADV_TIMEOUT                     6000                        //!< Time for which the device must be advertising in connectable mode (in 10 millisecond units). 0 disables the time-out.
 #define APP_CFG_CONNECTABLE_ADV_INTERVAL_MS                 100                         //!< The advertising interval for connectable advertisement (in milliseconds). This value can vary between 20 ms and 10.24 s.
 
 #define APP_CFG_DEFAULT_RADIO_TX_POWER                      0x00                        //!< Default TX power of the radio.

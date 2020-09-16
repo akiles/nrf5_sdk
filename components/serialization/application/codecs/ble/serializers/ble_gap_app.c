@@ -345,12 +345,9 @@ uint32_t ble_gap_device_name_get_rsp_dec(uint8_t const * const p_buf,
                                          uint32_t * const      p_result_code)
 {
     SER_RSP_DEC_BEGIN(SD_BLE_GAP_DEVICE_NAME_GET);
-
+    uint16_t cpy_len = 0xffff;
     SER_PULL_COND(&p_dev_name_len, uint16_t_dec);
-    if (p_dev_name_len)
-    {
-        SER_PULL_uint8array(p_dev_name, *p_dev_name_len);
-    }
+    SER_PULL_len16data((uint8_t **)&p_dev_name, &cpy_len);
 
     SER_RSP_DEC_END;
 }

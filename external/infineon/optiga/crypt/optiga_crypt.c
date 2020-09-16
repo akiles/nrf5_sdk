@@ -174,7 +174,6 @@ optiga_lib_status_t optiga_crypt_hash_update(optiga_hash_context_t * hash_ctx,
 
         if (CMD_LIB_OK != return_value)
         {
-            return_value = OPTIGA_LIB_ERROR;
             break;
         }
 
@@ -206,8 +205,6 @@ optiga_lib_status_t optiga_crypt_hash_update(optiga_hash_context_t * hash_ctx,
             }
             hash_options.sDataStream.wLen = remaining_comm_buffer_size;
         }
-
-        return_value = OPTIGA_LIB_SUCCESS;
     }
 
     return return_value;
@@ -269,7 +266,7 @@ optiga_lib_status_t optiga_crypt_ecc_generate_keypair(optiga_ecc_curve_t curve_i
         public_key_out.sPublicKey.prgbStream = public_key;
         public_key_out.sPublicKey.wLen       = *public_key_length;
         public_key_out.sPrivateKey.prgbStream = private_key;
-        public_key_out.sPrivateKey.wLen      = 0xffff;
+        public_key_out.sPrivateKey.wLen 	 = 0xffff;
     }
     else
     {
@@ -362,12 +359,12 @@ optiga_lib_status_t optiga_crypt_ecdsa_verify (uint8_t * digest,
     return_value = CmdLib_VerifySign(&verifysign_options, &dgst, &sign);
     pal_os_lock_release();
 
-    if(CMD_LIB_OK != return_value)
+    if(CMD_LIB_OK == return_value)
     {
-        return OPTIGA_LIB_ERROR;
+        return_value = OPTIGA_LIB_SUCCESS;
     }
 
-    return OPTIGA_LIB_SUCCESS;
+    return return_value;
 }
 
 optiga_lib_status_t optiga_crypt_ecdh(optiga_key_id_t private_key,
@@ -403,12 +400,12 @@ optiga_lib_status_t optiga_crypt_ecdh(optiga_key_id_t private_key,
     return_value = CmdLib_CalculateSharedSecret(&shared_secret_options, &sharedsecret);
     pal_os_lock_release();
 
-    if(CMD_LIB_OK != return_value)
+    if(CMD_LIB_OK == return_value)
     {
-        return_value = OPTIGA_LIB_ERROR;
+        return_value = OPTIGA_LIB_SUCCESS;
     }
 
-    return OPTIGA_LIB_SUCCESS;
+    return return_value;
 }
 
 
@@ -457,5 +454,5 @@ optiga_lib_status_t optiga_crypt_tls_prf_sha256(uint16_t secret,
         return_value = OPTIGA_LIB_SUCCESS;
     }
 
-    return OPTIGA_LIB_ERROR;
+    return return_value;
 }

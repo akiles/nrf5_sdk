@@ -240,6 +240,10 @@ static void csense_timeout_handler(void * p_context)
     }
 }
 
+/* APP_TIMER definition for csense example. */
+APP_TIMER_DEF(m_timer_0);
+APP_TIMER_DEF(m_timer_1);
+
 /**
  * @brief Function for initalizing app timer.
  */
@@ -247,20 +251,16 @@ void start_app_timer(void)
 {
     ret_code_t err_code;
 
-    /* APP_TIMER definition for csense example. */
-    APP_TIMER_DEF(timer_0);
-    APP_TIMER_DEF(timer_1);
-
-    err_code = app_timer_create(&timer_1, APP_TIMER_MODE_REPEATED, timer_handle);
+    err_code = app_timer_create(&m_timer_1, APP_TIMER_MODE_REPEATED, timer_handle);
     APP_ERROR_CHECK(err_code);
 
-    err_code = app_timer_start(timer_1, APP_TIMER_TICKS(100), NULL);
+    err_code = app_timer_start(m_timer_1, APP_TIMER_TICKS(100), NULL);
     APP_ERROR_CHECK(err_code);
 
-    err_code = app_timer_create(&timer_0, APP_TIMER_MODE_REPEATED, csense_timeout_handler);
+    err_code = app_timer_create(&m_timer_0, APP_TIMER_MODE_REPEATED, csense_timeout_handler);
     APP_ERROR_CHECK(err_code);
 
-    err_code = app_timer_start(timer_0, APP_TIMER_TICKS_TIMEOUT, NULL);
+    err_code = app_timer_start(m_timer_0, APP_TIMER_TICKS_TIMEOUT, NULL);
     APP_ERROR_CHECK(err_code);
 }
 

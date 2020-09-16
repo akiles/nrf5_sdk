@@ -89,7 +89,7 @@ NRF_CLI_DEF(m_cli_uart, "fds example:~$ ", &cli_uart.transport, '\r', 4);
 
 
 /* Defined in main.c */
-extern char const * fds_err_str[];
+extern char const * fds_err_str(ret_code_t ret);
 
 
 void cli_init(void)
@@ -162,11 +162,11 @@ static void record_write(nrf_cli_t const * p_cli,
                     fid, key, p_data, len);
 
     ret_code_t rc = fds_record_write(NULL, &rec);
-    if (rc != FDS_SUCCESS)
+    if (rc != NRF_SUCCESS)
     {
         nrf_cli_fprintf(p_cli, NRF_CLI_ERROR,
                         "error: fds_record_write() returned %s.\n",
-                        fds_err_str[rc]);
+                        fds_err_str(rc));
     }
 }
 
@@ -176,7 +176,7 @@ static void record_update(nrf_cli_t const * p_cli, configuration_t const * p_cfg
     fds_record_desc_t desc = {0};
     fds_find_token_t  ftok = {0};
 
-    if (fds_record_find(CONFIG_FILE, CONFIG_REC_KEY, &desc, &ftok) == FDS_SUCCESS)
+    if (fds_record_find(CONFIG_FILE, CONFIG_REC_KEY, &desc, &ftok) == NRF_SUCCESS)
     {
         fds_record_t const rec =
         {
@@ -187,11 +187,11 @@ static void record_update(nrf_cli_t const * p_cli, configuration_t const * p_cfg
         };
 
         ret_code_t rc = fds_record_update(&desc, &rec);
-        if (rc != FDS_SUCCESS)
+        if (rc != NRF_SUCCESS)
         {
             nrf_cli_fprintf(p_cli, NRF_CLI_ERROR,
                             "error: fds_record_update() returned %s.\n",
-                            fds_err_str[rc]);
+                            fds_err_str(rc));
         }
     }
     else
@@ -212,13 +212,13 @@ static void record_delete(nrf_cli_t const * p_cli, uint32_t fid, uint32_t key)
                     fid,
                     key);
 
-    if (fds_record_find(fid, key, &desc, &tok) == FDS_SUCCESS)
+    if (fds_record_find(fid, key, &desc, &tok) == NRF_SUCCESS)
     {
         ret_code_t rc = fds_record_delete(&desc);
-        if (rc != FDS_SUCCESS)
+        if (rc != NRF_SUCCESS)
         {
             nrf_cli_fprintf(p_cli, NRF_CLI_ERROR,
-                            "error: fds_record_delete() returned %s.\n", fds_err_str[rc]);
+                            "error: fds_record_delete() returned %s.\n", fds_err_str(rc));
 
             return;
         }
@@ -237,10 +237,10 @@ bool record_delete_next(void)
     fds_find_token_t  tok   = {0};
     fds_record_desc_t desc  = {0};
 
-    if (fds_record_iterate(&desc, &tok) == FDS_SUCCESS)
+    if (fds_record_iterate(&desc, &tok) == NRF_SUCCESS)
     {
         ret_code_t rc = fds_record_delete(&desc);
-        if (rc != FDS_SUCCESS)
+        if (rc != NRF_SUCCESS)
         {
             return false;
         }
@@ -277,7 +277,7 @@ static void print_cfg_cmd(nrf_cli_t const * p_cli, size_t argc, char ** argv)
     fds_record_desc_t desc = {0};
     fds_find_token_t  tok  = {0};
 
-    while (fds_record_find(CONFIG_FILE, CONFIG_REC_KEY, &desc, &tok) == FDS_SUCCESS)
+    while (fds_record_find(CONFIG_FILE, CONFIG_REC_KEY, &desc, &tok) == NRF_SUCCESS)
     {
         ret_code_t rc;
         fds_flash_record_t frec = {0};
@@ -285,7 +285,7 @@ static void print_cfg_cmd(nrf_cli_t const * p_cli, size_t argc, char ** argv)
         rc = fds_record_open(&desc, &frec);
         switch (rc)
         {
-            case FDS_SUCCESS:
+            case NRF_SUCCESS:
                 break;
 
             case FDS_ERR_CRC_CHECK_FAILED:
@@ -300,7 +300,7 @@ static void print_cfg_cmd(nrf_cli_t const * p_cli, size_t argc, char ** argv)
             {
                 nrf_cli_fprintf(p_cli, NRF_CLI_ERROR,
                                 "error: unexpecte error %s.\n",
-                                fds_err_str[rc]);
+                                fds_err_str(rc));
 
                 continue;
             }
@@ -343,7 +343,7 @@ static void print_all_cmd(nrf_cli_t const * p_cli, size_t argc, char ** argv)
         rc = fds_record_open(&desc, &frec);
         switch (rc)
         {
-            case FDS_SUCCESS:
+            case NRF_SUCCESS:
                 break;
 
             case FDS_ERR_CRC_CHECK_FAILED:
@@ -358,7 +358,7 @@ static void print_all_cmd(nrf_cli_t const * p_cli, size_t argc, char ** argv)
             {
                 nrf_cli_fprintf(p_cli, NRF_CLI_ERROR,
                                 "error: unexpecte error %s.\n",
-                                fds_err_str[rc]);
+                                fds_err_str(rc));
 
                 continue;
             }
@@ -525,12 +525,12 @@ static void gc_cmd(nrf_cli_t const * p_cli, size_t argc, char ** argv)
     ret_code_t rc = fds_gc();
     switch (rc)
     {
-        case FDS_SUCCESS:
+        case NRF_SUCCESS:
             break;
 
         default:
             nrf_cli_fprintf(p_cli, NRF_CLI_ERROR,
-                            "error: garbage collection returned %s\n", fds_err_str[rc]);
+                            "error: garbage collection returned %s\n", fds_err_str(rc));
             break;
     }
 }

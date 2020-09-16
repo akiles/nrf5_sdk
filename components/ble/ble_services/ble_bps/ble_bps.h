@@ -71,6 +71,7 @@
 #include "ble_srv_common.h"
 #include "ble_date_time.h"
 #include "nrf_sdh_ble.h"
+#include "nrf_ble_gq.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -130,9 +131,11 @@ typedef struct
 typedef struct
 {
     ble_bps_evt_handler_t        evt_handler;                               /**< Event handler to be called for handling events in the Blood Pressure Service. */
+    ble_srv_error_handler_t      error_handler;                             /**< Function to be called in case of an error. */
     security_req_t               bp_cccd_wr_sec;                            /**< Security requirement for writing blood pressure measurement characteristic CCCD. */
     security_req_t               bp_feature_rd_sec;                         /**< Security requirement for reading the blood pressure feature characteristic. */
     uint16_t                     feature;                                   /**< Initial value for blood pressure feature */
+    nrf_ble_gq_t               * p_gatt_queue;                              /**< Pointer to BLE GATT Queue instance. */
 } ble_bps_init_t;
 
 /**@brief Blood Pressure Service structure. This contains various status information for
@@ -140,11 +143,13 @@ typedef struct
 struct ble_bps_s
 {
     ble_bps_evt_handler_t        evt_handler;                               /**< Event handler to be called for handling events in the Blood Pressure Service. */
+    ble_srv_error_handler_t      error_handler;                             /**< Function to be called in case of an error. */
     uint16_t                     service_handle;                            /**< Handle of Blood Pressure Service (as provided by the BLE stack). */
     ble_gatts_char_handles_t     meas_handles;                              /**< Handles related to the Blood Pressure Measurement characteristic. */
     ble_gatts_char_handles_t     feature_handles;                           /**< Handles related to the Blood Pressure Feature characteristic. */
     uint16_t                     conn_handle;                               /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
     uint16_t                     feature;                                   /**< Value of Blood Pressure feature. */
+    nrf_ble_gq_t               * p_gatt_queue;                              /**< Pointer to BLE GATT Queue instance. */
 };
 
 /**@brief Blood Pressure Service measurement structure. This contains a Blood Pressure

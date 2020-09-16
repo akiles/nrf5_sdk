@@ -52,75 +52,6 @@
 #include "nrf_log.h"
 NRF_LOG_MODULE_REGISTER();
 
-#define TX_BUFFER_MASK         0x07                  /**< TX Buffer mask, must be a mask of continuous zeroes, followed by continuous sequence of ones: 000...111. */
-#define TX_BUFFER_SIZE         (TX_BUFFER_MASK + 1)  /**< Size of send buffer, which is 1 higher than the mask. */
-
-#define WRITE_MESSAGE_LENGTH   BLE_CCCD_VALUE_LEN    /**< Length of the write message for CCCD. */
-
-typedef enum
-{
-    READ_REQ,  /**< Type identifying that this tx_message is a read request. */
-    WRITE_REQ  /**< Type identifying that this tx_message is a write request. */
-} tx_request_t;
-
-/**@brief Structure for writing a message to the peer, i.e. CCCD.
- */
-typedef struct
-{
-    uint8_t                  gattc_value[WRITE_MESSAGE_LENGTH];  /**< The message to write. */
-    ble_gattc_write_params_t gattc_params;                       /**< GATTC parameters for this message. */
-} write_params_t;
-
-/**@brief Structure for holding data to be transmitted to the connected central.
- */
-typedef struct
-{
-    uint16_t     conn_handle;  /**< Connection handle to be used when transmitting this message. */
-    tx_request_t type;         /**< Type of this message, i.e. read or write message. */
-    union
-    {
-        uint16_t       read_handle;  /**< Read request message. */
-        write_params_t write_req;    /**< Write request message. */
-    } req;
-} tx_message_t;
-
-
-static tx_message_t   m_tx_buffer[TX_BUFFER_SIZE];  /**< Transmit buffer for messages to be transmitted to the central. */
-static uint32_t       m_tx_insert_index = 0;        /**< Current index in the transmit buffer where the next message should be inserted. */
-static uint32_t       m_tx_index = 0;               /**< Current index in the transmit buffer from where the next message to be transmitted resides. */
-
-
-/**@brief Function for passing any pending request from the buffer to the stack.
- */
-static void tx_buffer_process(void)
-{
-    if (m_tx_index != m_tx_insert_index)
-    {
-        uint32_t err_code;
-
-        if (m_tx_buffer[m_tx_index].type == READ_REQ)
-        {
-            err_code = sd_ble_gattc_read(m_tx_buffer[m_tx_index].conn_handle,
-                                         m_tx_buffer[m_tx_index].req.read_handle,
-                                         0);
-        }
-        else
-        {
-            err_code = sd_ble_gattc_write(m_tx_buffer[m_tx_index].conn_handle,
-                                          &m_tx_buffer[m_tx_index].req.write_req.gattc_params);
-        }
-
-        if (err_code == NRF_SUCCESS)
-        {
-            m_tx_index++;
-            m_tx_index &= TX_BUFFER_MASK;
-        }
-        else
-        {
-            NRF_LOG_DEBUG("SD Read/Write API returns error, will retry later.");
-        }
-    }
-}
 
 
 /**@brief     Function for handling Handle Value Notification received from the SoftDevice.
@@ -262,10 +193,12 @@ void nrf_ble_amtc_on_db_disc_evt(nrf_ble_amtc_t * p_ctx, ble_db_discovery_evt_t 
 }
 
 
-ret_code_t nrf_ble_amtc_init(nrf_ble_amtc_t * p_ctx, nrf_ble_amtc_evt_handler_t evt_handler)
+ret_code_t nrf_ble_amtc_init(nrf_ble_amtc_t * p_ctx, nrf_ble_amtc_init_t * p_amtc_init)
 {
     VERIFY_PARAM_NOT_NULL(p_ctx);
-    VERIFY_PARAM_NOT_NULL(evt_handler);
+    VERIFY_PARAM_NOT_NULL(p_amtc_init);
+    VERIFY_PARAM_NOT_NULL(p_amtc_init->p_gatt_queue);
+    VERIFY_PARAM_NOT_NULL(p_amtc_init->evt_handler);
 
     ble_uuid128_t base_uuid = {SERVICE_UUID_BASE};
     ble_uuid_t    amt_uuid;
@@ -276,7 +209,8 @@ ret_code_t nrf_ble_amtc_init(nrf_ble_amtc_t * p_ctx, nrf_ble_amtc_evt_handler_t 
     amt_uuid.type = p_ctx->uuid_type;
     amt_uuid.uuid = AMT_SERVICE_UUID;
 
-    p_ctx->evt_handler             = evt_handler;
+    p_ctx->evt_handler             = p_amtc_init->evt_handler;
+    p_ctx->p_gatt_queue            = p_amtc_init->p_gatt_queue;
     p_ctx->bytes_rcvd_cnt          = 0;
     p_ctx->conn_handle             = BLE_CONN_HANDLE_INVALID;
     p_ctx->peer_db.amt_cccd_handle = BLE_GATT_HANDLE_INVALID;
@@ -299,7 +233,7 @@ ret_code_t nrf_ble_amtc_handles_assign(nrf_ble_amtc_t   * p_ctx,
         p_ctx->peer_db = *p_peer_handles;
     }
 
-    return NRF_SUCCESS;
+    return nrf_ble_gq_conn_handle_register(p_ctx->p_gatt_queue, conn_handle);
 }
 
 
@@ -357,43 +291,34 @@ void nrf_ble_amtc_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
         default:
             break;
     }
-    // Check if the event if on the link for this instance
-    if (p_ctx->conn_handle != p_ble_evt->evt.gattc_evt.conn_handle)
-    {
-        return;
-    }
-    // Check if there is any message to be sent across to the peer and send it.
-    tx_buffer_process();
-
 }
 
 
 /**@brief Function for creating a message for writing to the CCCD.
  */
-static ret_code_t cccd_configure(uint16_t conn_handle, uint16_t handle_cccd, bool enable)
+static ret_code_t cccd_configure(nrf_ble_amtc_t * p_ctx, bool notification_enable)
 {
     NRF_LOG_DEBUG("Configuring CCCD. CCCD Handle = %d, Connection Handle = %d",
-        handle_cccd, conn_handle);
+        p_ctx->peer_db.amt_cccd_handle,
+        p_ctx->conn_handle);
 
-    tx_message_t * p_msg;
-    uint16_t       cccd_val = enable ? BLE_GATT_HVX_NOTIFICATION : 0;
+    nrf_ble_gq_req_t cccd_req;
+    uint16_t         cccd_val = notification_enable ? BLE_GATT_HVX_NOTIFICATION : 0;
+    uint8_t          cccd[BLE_CCCD_VALUE_LEN];
 
-    p_msg              = &m_tx_buffer[m_tx_insert_index++];
-    m_tx_insert_index &= TX_BUFFER_MASK;
+    cccd[0] = LSB_16(cccd_val);
+    cccd[1] = MSB_16(cccd_val);
 
-    p_msg->req.write_req.gattc_params.handle   = handle_cccd;
-    p_msg->req.write_req.gattc_params.len      = WRITE_MESSAGE_LENGTH;
-    p_msg->req.write_req.gattc_params.p_value  = p_msg->req.write_req.gattc_value;
-    p_msg->req.write_req.gattc_params.offset   = 0;
-    p_msg->req.write_req.gattc_params.write_op = BLE_GATT_OP_WRITE_REQ;
-    p_msg->req.write_req.gattc_value[0]        = LSB_16(cccd_val);
-    p_msg->req.write_req.gattc_value[1]        = MSB_16(cccd_val);
-    p_msg->conn_handle                         = conn_handle;
-    p_msg->type                                = WRITE_REQ;
+    memset(&cccd_req, 0, sizeof(nrf_ble_gq_req_t));
 
-    tx_buffer_process();
+    cccd_req.type                        = NRF_BLE_GQ_REQ_GATTC_WRITE;
+    cccd_req.params.gattc_write.handle   = p_ctx->peer_db.amt_cccd_handle;
+    cccd_req.params.gattc_write.len      = BLE_CCCD_VALUE_LEN;
+    cccd_req.params.gattc_write.offset   = 0;
+    cccd_req.params.gattc_write.p_value  = cccd;
+    cccd_req.params.gattc_write.write_op = BLE_GATT_OP_WRITE_REQ;
 
-    return NRF_SUCCESS;
+    return nrf_ble_gq_item_add(p_ctx->p_gatt_queue, &cccd_req, p_ctx->conn_handle);
 }
 
 
@@ -406,7 +331,7 @@ ret_code_t nrf_ble_amtc_notif_enable(nrf_ble_amtc_t * p_ctx)
         return NRF_ERROR_INVALID_STATE;
     }
 
-    return cccd_configure(p_ctx->conn_handle, p_ctx->peer_db.amt_cccd_handle, true);
+    return cccd_configure(p_ctx, true);
 }
 
 
@@ -419,16 +344,15 @@ ret_code_t nrf_ble_amtc_rcb_read(nrf_ble_amtc_t * p_ctx)
         return NRF_ERROR_INVALID_STATE;
     }
 
-    tx_message_t * p_msg = &m_tx_buffer[m_tx_insert_index++];
+    nrf_ble_gq_req_t read_req;
 
-    p_msg->req.read_handle = p_ctx->peer_db.amt_rbc_handle;
-    p_msg->conn_handle     = p_ctx->conn_handle;
-    p_msg->type            = READ_REQ;
+    memset(&read_req, 0, sizeof(nrf_ble_gq_req_t));
 
-    m_tx_insert_index &= TX_BUFFER_MASK;
-    tx_buffer_process();
+    read_req.type                     = NRF_BLE_GQ_REQ_GATTC_READ;
+    read_req.params.gattc_read.handle = p_ctx->peer_db.amt_rbc_handle;
+    read_req.params.gattc_read.offset = 0;
 
-    return NRF_SUCCESS;
+    return nrf_ble_gq_item_add(p_ctx->p_gatt_queue, &read_req, p_ctx->conn_handle);
 }
 
 /** @}

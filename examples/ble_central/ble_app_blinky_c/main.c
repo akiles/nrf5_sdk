@@ -91,6 +91,9 @@ NRF_BLE_SCAN_DEF(m_scan);                                       /**< Scanning mo
 BLE_LBS_C_DEF(m_ble_lbs_c);                                     /**< Main structure used by the LBS client module. */
 NRF_BLE_GATT_DEF(m_gatt);                                       /**< GATT module instance. */
 BLE_DB_DISCOVERY_DEF(m_db_disc);                                /**< DB discovery module instance. */
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_CENTRAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
 
 static char const m_target_periph_name[] = "Nordic_Blinky";     /**< Name of the device we try to connect to. This name is searched in the scan report data*/
 
@@ -109,6 +112,16 @@ static char const m_target_periph_name[] = "Nordic_Blinky";     /**< Name of the
 void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 {
     app_error_handler(0xDEADBEEF, line_num, p_file_name);
+}
+
+
+/**@brief Function for handling the LED Button Service client errors.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void lbs_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
 }
 
 
@@ -279,7 +292,9 @@ static void lbs_c_init(void)
     ret_code_t       err_code;
     ble_lbs_c_init_t lbs_c_init_obj;
 
-    lbs_c_init_obj.evt_handler = lbs_c_evt_handler;
+    lbs_c_init_obj.evt_handler   = lbs_c_evt_handler;
+    lbs_c_init_obj.p_gatt_queue  = &m_ble_gatt_queue;
+    lbs_c_init_obj.error_handler = lbs_error_handler;
 
     err_code = ble_lbs_c_init(&m_ble_lbs_c, &lbs_c_init_obj);
     APP_ERROR_CHECK(err_code);
@@ -401,7 +416,14 @@ static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
  */
 static void db_discovery_init(void)
 {
-    ret_code_t err_code = ble_db_discovery_init(db_disc_handler);
+    ble_db_discovery_init_t db_init;
+
+    memset(&db_init, 0, sizeof(db_init));
+
+    db_init.evt_handler  = db_disc_handler;
+    db_init.p_gatt_queue = &m_ble_gatt_queue;
+
+    ret_code_t err_code = ble_db_discovery_init(&db_init);
     APP_ERROR_CHECK(err_code);
 }
 

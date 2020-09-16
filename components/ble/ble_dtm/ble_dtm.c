@@ -130,7 +130,7 @@ static uint32_t          m_current_time = 0;                                 /**
 
 // Nordic specific configuration values (not defined by BLE standard).
 // Definition of initial values found in ble_dtm.h
-static int32_t           m_tx_power          = DEFAULT_TX_POWER;             /**< TX power for transmission test, default 0 dBm. */
+static uint32_t          m_tx_power          = DEFAULT_TX_POWER;             /**< TX power for transmission test, default 0 dBm. */
 static NRF_TIMER_Type *  mp_timer            = DEFAULT_TIMER;                /**< Timer to be used. */
 static IRQn_Type         m_timer_irq         = DEFAULT_TIMER_IRQn;           /**< which interrupt line to clear on every timeout */
 
@@ -186,13 +186,13 @@ static bool check_pdu(void)
         return false;
     }
 
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA) || defined(NRF52811_XXAA) 
     // If a long range radio mode is active, check that one of the four valid coded DTM packet types are selected.
     if ((m_radio_mode == RADIO_MODE_MODE_Ble_LR500Kbit || m_radio_mode == RADIO_MODE_MODE_Ble_LR125Kbit) && (pdu_packet_type > (dtm_pkt_type_t)DTM_PKT_0XFF))
     {
         return false;
     }
-#endif
+#endif //defined(NRF52840_XXAA) || defined(NRF52833_XXAA) || defined(NRF52811_XXAA)
 
     if (pdu_packet_type == DTM_PKT_PRBS9)
     {
@@ -267,7 +267,7 @@ static uint32_t radio_init(void)
     // Turn off radio before configuring it
     radio_reset();
 
-    NRF_RADIO->TXPOWER = m_tx_power & RADIO_TXPOWER_TXPOWER_Msk;
+    NRF_RADIO->TXPOWER = m_tx_power;
     NRF_RADIO->MODE    = m_radio_mode << RADIO_MODE_MODE_Pos;
 
     // Set the access address, address0/prefix0 used for both Rx and Tx address
@@ -289,7 +289,7 @@ static uint32_t radio_init(void)
                            (m_packetHeaderLFlen << RADIO_PCNF0_LFLEN_Pos) |
                            (m_packetHeaderPlen << RADIO_PCNF0_PLEN_Pos);
     }
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA) || defined(NRF52811_XXAA)
     else
     {
         // Coded PHY (Long range)
@@ -300,7 +300,7 @@ static uint32_t radio_init(void)
                        (2 << RADIO_PCNF0_CILEN_Pos) |
                        (m_packetHeaderPlen << RADIO_PCNF0_PLEN_Pos);
     }
-#endif
+#endif //defined(NRF52840_XXAA) || defined(NRF52833_XXAA) || defined(NRF52811_XXAA)
 
     NRF_RADIO->PCNF1 = (m_whitening          << RADIO_PCNF1_WHITEEN_Pos) |
                        (m_endian             << RADIO_PCNF1_ENDIAN_Pos)  |
@@ -546,7 +546,7 @@ static uint32_t dtm_packet_interval_calculate(uint32_t test_payload_length, uint
         // 24 CRC
         overhead_bits = 80; // 10 bytes
     }
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA) || defined(NRF52811_XXAA)
     else if (mode == RADIO_MODE_MODE_Ble_LR125Kbit)
     {
         // 80     preamble
@@ -573,10 +573,10 @@ static uint32_t dtm_packet_interval_calculate(uint32_t test_payload_length, uint
         //       assumption the radio will handle this
         overhead_bits = 462; // 57.75 bytes
     }
-#endif
+#endif //defined(NRF52840_XXAA) || defined(NRF52833_XXAA) || defined(NRF52811_XXAA)
     /* add PDU payload test_payload length */
     test_packet_length = (test_payload_length * 8); // in bits
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA) || defined(NRF52811_XXAA)
     // account for the encoding of PDU
     if (mode == RADIO_MODE_MODE_Ble_LR125Kbit)
     {
@@ -586,7 +586,7 @@ static uint32_t dtm_packet_interval_calculate(uint32_t test_payload_length, uint
     {
         test_packet_length *= 2; //  1 to 2 encoding
     }
-#endif
+#endif //defined(NRF52840_XXAA) || defined(NRF52833_XXAA) || defined(NRF52811_XXAA)
     // add overhead calculated above
     test_packet_length += overhead_bits;
     // we remember this bits are us in 1Mbit
@@ -626,7 +626,7 @@ uint32_t dtm_init(void)
     // Enable wake-up on event
     SCB->SCR |= SCB_SCR_SEVONPEND_Msk;
 
-#if defined(NRF52832_XXAA) || defined(NRF52840_XXAA)
+#if defined(NRF52832_XXAA) || defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
     // Enable cache
     NRF_NVMC->ICACHECNF = (NVMC_ICACHECNF_CACHEEN_Enabled << NVMC_ICACHECNF_CACHEEN_Pos) & NVMC_ICACHECNF_CACHEEN_Msk;
 #endif
@@ -863,10 +863,10 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
                     return radio_init();
 
                 case LE_PHY_LE_CODED_S8:
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA) || defined(NRF52811_XXAA)
                     m_radio_mode        = RADIO_MODE_MODE_Ble_LR125Kbit;
                     m_packetHeaderPlen  = RADIO_PCNF0_PLEN_LongRange;
-
+#ifdef NRF52840_XXAA
                     //  Workaround for Errata ID 191
                     *(volatile uint32_t *) 0x40001740 = ((*((volatile uint32_t *) 0x40001740)) & 0x7FFF00FF) | 0x80000000 | (((uint32_t)(196)) << 8);
 
@@ -875,17 +875,19 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
                     {
                         anomaly_172_wa_enabled = true;
                     }
+#endif //NRF52840_XXAA
 
                     return radio_init();
 #else
                     m_event = LE_TEST_STATUS_EVENT_ERROR;
                     return DTM_ERROR_ILLEGAL_CONFIGURATION;
-#endif // NRF52840_XXAA
+#endif //defined(NRF52840_XXAA) || defined(NRF52833_XXAA) || defined(NRF52811_XXAA)
                 case LE_PHY_LE_CODED_S2:
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA) || defined(NRF52811_XXAA)
                     m_radio_mode        = RADIO_MODE_MODE_Ble_LR500Kbit;
                     m_packetHeaderPlen  = RADIO_PCNF0_PLEN_LongRange;
 
+#ifdef NRF52840_XXAA
                     //  Workaround for Errata ID 191
                     *(volatile uint32_t *) 0x40001740 = ((*((volatile uint32_t *) 0x40001740)) & 0x7FFF00FF) | 0x80000000 | (((uint32_t)(196)) << 8);
 
@@ -894,6 +896,7 @@ uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t
                     {
                         anomaly_172_wa_enabled = true;
                     }
+#endif //NRF52840_XXAA
 
                     return radio_init();
 #else
@@ -1093,8 +1096,8 @@ bool dtm_event_get(dtm_event_t *p_dtm_event)
  */
 bool dtm_set_txpower(uint32_t new_tx_power)
 {
-    // radio->TXPOWER register is 32 bits, low octet a signed value, upper 24 bits zeroed
-    int8_t new_power8 = (int8_t)(new_tx_power & 0xFF);
+    // radio->TXPOWER register is 32 bits, low octet a tx power value, upper 24 bits zeroed
+    uint8_t new_power8 = (uint8_t)(new_tx_power & 0xFF);
 
     // The two most significant bits are not sent in the 6 bit field of the DTM command.
     // These two bits are 1's if and only if the tx_power is a negative number.

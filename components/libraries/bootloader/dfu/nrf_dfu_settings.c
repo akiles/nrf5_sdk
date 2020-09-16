@@ -121,6 +121,9 @@ uint8_t * mp_dfu_settings_backup_buffer = &m_mbr_params_page[0];
 #define NRF_DFU_IN_APP 0
 #endif
 
+
+#define UICR_PARAM_PAGE_ADDR 0x10001018
+
 #if !defined(BL_SETTINGS_ACCESS_ONLY) && !NRF_DFU_IN_APP
 /**@brief   This variable has the linker write the MBR parameters page address to the
  *          UICR register. This value will be written in the HEX file and thus to the
@@ -129,7 +132,7 @@ uint8_t * mp_dfu_settings_backup_buffer = &m_mbr_params_page[0];
 #if defined ( __CC_ARM )
 
     uint32_t const m_uicr_mbr_params_page_address
-        __attribute__((at(NRF_UICR_MBR_PARAMS_PAGE_ADDRESS))) = NRF_MBR_PARAMS_PAGE_ADDRESS;
+        __attribute__((at(UICR_PARAM_PAGE_ADDR))) = NRF_MBR_PARAMS_PAGE_ADDRESS;
 
 #elif defined ( __GNUC__ ) || defined ( __SES_ARM )
 
@@ -140,7 +143,7 @@ uint8_t * mp_dfu_settings_backup_buffer = &m_mbr_params_page[0];
 #elif defined ( __ICCARM__ )
 
     __root uint32_t const m_uicr_mbr_params_page_address
-        @ NRF_UICR_MBR_PARAMS_PAGE_ADDRESS = NRF_MBR_PARAMS_PAGE_ADDRESS;
+        @ UICR_PARAM_PAGE_ADDR = NRF_MBR_PARAMS_PAGE_ADDRESS;
 
 #else
 
@@ -222,18 +225,8 @@ static void settings_forbidden_parts_copy_from_backup(uint8_t * p_dst_addr)
 #endif
 }
 
-
-ret_code_t nrf_dfu_settings_init(bool sd_irq_initialized)
+void nrf_dfu_settings_reinit(void)
 {
-    NRF_LOG_DEBUG("Calling nrf_dfu_settings_init()...");
-
-    ret_code_t err_code = nrf_dfu_flash_init(sd_irq_initialized);
-    if (err_code != NRF_SUCCESS)
-    {
-        NRF_LOG_ERROR("nrf_dfu_flash_init() failed with error: %x", err_code);
-        return NRF_ERROR_INTERNAL;
-    }
-
     bool settings_valid        = settings_crc_ok();
     bool settings_backup_valid = settings_backup_crc_ok();
 
@@ -279,6 +272,22 @@ ret_code_t nrf_dfu_settings_init(bool sd_irq_initialized)
 
         s_dfu_settings.settings_version = NRF_DFU_SETTINGS_VERSION;
     }
+
+    return;
+}
+
+ret_code_t nrf_dfu_settings_init(bool sd_irq_initialized)
+{
+    NRF_LOG_DEBUG("Calling nrf_dfu_settings_init()...");
+
+    ret_code_t err_code = nrf_dfu_flash_init(sd_irq_initialized);
+    if (err_code != NRF_SUCCESS)
+    {
+        NRF_LOG_ERROR("nrf_dfu_flash_init() failed with error: %x", err_code);
+        return NRF_ERROR_INTERNAL;
+    }
+
+    nrf_dfu_settings_reinit();
 
     err_code = nrf_dfu_settings_write_and_backup(NULL);
 

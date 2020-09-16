@@ -72,17 +72,6 @@ extern "C" {
 #endif
 
 
-
-/**@brief Security status of a connection.
- */
-typedef struct
-{
-    uint8_t connected      : 1; /**< @brief The connection is active (not disconnected). */
-    uint8_t encrypted      : 1; /**< @brief Communication on this link is encrypted. */
-    uint8_t mitm_protected : 1; /**< @brief The encrypted communication is also protected against man-in-the-middle attacks. */
-    uint8_t bonded         : 1; /**< @brief The peer is bonded with us. */
-} pm_conn_sec_status_t;
-
 /**@brief Peer list filtrations. They determine which peer ID will be added to list.
  */
 typedef enum
@@ -199,8 +188,7 @@ void pm_conn_sec_config_reply(uint16_t conn_handle, pm_conn_sec_config_t * p_con
  *
  * @details This function is optional, and must be called in reply to a @ref
  *          PM_EVT_CONN_SEC_PARAMS_REQ event, before the Peer Manager event handler returns. If it
- *          is not called in time, the parameters given in @ref pm_sec_params_set are used. See @ref
- *          pm_conn_sec_config_t for the value of the default.
+ *          is not called in time, the parameters given in @ref pm_sec_params_set are used.
  *
  * @param[in]  conn_handle   The connection to set the parameters for.
  * @param[in]  p_sec_params  The parameters. If NULL, the security procedure is rejected.
@@ -243,6 +231,19 @@ void pm_local_database_has_changed(void);
  * @retval NRF_ERROR_INVALID_STATE        If the Peer Manager is not initialized.
  */
 ret_code_t pm_conn_sec_status_get(uint16_t conn_handle, pm_conn_sec_status_t * p_conn_sec_status);
+
+
+/**@brief Function for comparing the security status of a connection against a baseline.
+ *
+ * @param[in]  conn_handle       Connection handle of the link as provided by the SoftDevice.
+ * @param[out] p_sec_status_req  Target baseline security status to compare against.
+ *
+ * @retval true   If the security status of the connection matches or exceeds the baseline on all
+ *                points.
+ * @retval false  If the security status of the connection does not fulfil the baseline, or could
+ *                not be retrieved.
+ */
+bool pm_sec_is_sufficient(uint16_t conn_handle, pm_conn_sec_status_t * p_sec_status_req);
 
 
 /**@brief Experimental function for specifying the public key to use for LESC operations.
@@ -576,7 +577,7 @@ uint32_t pm_peer_count(void);
 ret_code_t pm_peer_data_load(pm_peer_id_t      peer_id,
                              pm_peer_data_id_t data_id,
                              void            * p_data,
-                             uint16_t        * p_len);
+                             uint32_t        * p_len);
 
 /**@brief Function for reading a peer's bonding data (@ref PM_PEER_DATA_ID_BONDING).
  * @details See @ref pm_peer_data_load for parameters and return values. */
@@ -587,13 +588,13 @@ ret_code_t pm_peer_data_bonding_load(pm_peer_id_t             peer_id,
  * @details See @ref pm_peer_data_load for parameters and return values. */
 ret_code_t pm_peer_data_remote_db_load(pm_peer_id_t        peer_id,
                                        ble_gatt_db_srv_t * p_data,
-                                       uint16_t          * p_len);
+                                       uint32_t          * p_len);
 
 /**@brief Function for reading a peer's application data. (@ref PM_PEER_DATA_ID_APPLICATION).
  * @details See @ref pm_peer_data_load for parameters and return values. */
 ret_code_t pm_peer_data_app_data_load(pm_peer_id_t peer_id,
                                       void       * p_data,
-                                      uint16_t   * p_len);
+                                      uint32_t   * p_len);
 /** @}*/
 
 
@@ -635,7 +636,7 @@ ret_code_t pm_peer_data_app_data_load(pm_peer_id_t peer_id,
 ret_code_t pm_peer_data_store(pm_peer_id_t       peer_id,
                               pm_peer_data_id_t  data_id,
                               void       const * p_data,
-                              uint16_t           len,
+                              uint32_t           len,
                               pm_store_token_t * p_token);
 
 /**@brief Function for setting or updating a peer's bonding data (@ref PM_PEER_DATA_ID_BONDING).
@@ -648,14 +649,14 @@ ret_code_t pm_peer_data_bonding_store(pm_peer_id_t                   peer_id,
  * @details See @ref pm_peer_data_store for parameters and return values. */
 ret_code_t pm_peer_data_remote_db_store(pm_peer_id_t              peer_id,
                                         ble_gatt_db_srv_t const * p_data,
-                                        uint16_t                  len,
+                                        uint32_t                  len,
                                         pm_store_token_t        * p_token);
 
 /**@brief Function for setting or updating a peer's application data. (@ref PM_PEER_DATA_ID_APPLICATION).
  * @details See @ref pm_peer_data_store for parameters and return values. */
 ret_code_t pm_peer_data_app_data_store(pm_peer_id_t       peer_id,
                                        void       const * p_data,
-                                       uint16_t           len,
+                                       uint32_t           len,
                                        pm_store_token_t * p_token);
 /** @}*/
 

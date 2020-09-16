@@ -72,13 +72,13 @@ int32_t HWCL_Init(sCL_d* PpsCL, const void* PpParam)
  * Encrypts the input plain text using Security chip.
  * Under some erroneous conditions, error codes from Command Library can also be returned. <br>
  *
- * \param[in]       PpsCL                 Pointer to #sHardwareCrypto_d structure.
- * \param[in]       PpsBlobPlainText      Pointer to sbBlob_d containing plain text.
- * \param[in,out]   PpsBlobCipherText     Pointer to sbBlob_d containing cipher text.
- * \param[in]       PwLen                 Length of data to be encrypted.
+ * \param[in]		PpsCL                 Pointer to #sHardwareCrypto_d structure.
+ * \param[in]		PpsBlobPlainText      Pointer to sbBlob_d containing plain text.
+ * \param[in,out]	PpsBlobCipherText     Pointer to sbBlob_d containing cipher text.
+ * \param[in]		PwLen                 Length of data to be encrypted.
  *
- * \retval    #OCP_CL_OK        Successful execution
- * \retval    #OCP_CL_ERROR     Failure in execution
+ * \retval    #OCP_CL_OK		Successful execution
+ * \retval    #OCP_CL_ERROR		Failure in execution
  *
  */
 int32_t HWCL_Encrypt(const sCL_d* PpsCL, const sbBlob_d* PpsBlobPlainText,sbBlob_d* PpsBlobCipherText,uint16_t PwLen)

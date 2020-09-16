@@ -91,8 +91,8 @@ typedef uint16_t pm_sec_error_code_t;
 
 /**@defgroup PM_SEC_ERRORS Peer Manager defined security errors
  *
- * @details The first 256 numbers in this range correspond to the status codes in
- *          @ref BLE_HCI_STATUS_CODES.
+ * @details The first 256 numbers, from PM_CONN_SEC_ERROR_BASE to (PM_CONN_SEC_ERROR_BASE + 0xFF),
+ *          correspond to the status codes in @ref BLE_HCI_STATUS_CODES.
  * @{ */
 #define PM_CONN_SEC_ERROR_PIN_OR_KEY_MISSING (PM_CONN_SEC_ERROR_BASE + 0x06)  /**< @brief Encryption failed because the peripheral has lost the LTK for this bond. See also @ref BLE_HCI_STATUS_CODE_PIN_OR_KEY_MISSING and Table 3.7 ("Pairing Failed Reason Codes") in the Bluetooth Core Specification 4.2, section 3.H.3.5.5 (@linkBLEcore).  */
 #define PM_CONN_SEC_ERROR_MIC_FAILURE        (PM_CONN_SEC_ERROR_BASE + 0x3D)  /**< @brief Encryption ended with disconnection because of mismatching keys or a stray packet during a procedure. See the SoftDevice GAP Message Sequence Charts on encryption (@linkBLEMSCgap), the Bluetooth Core Specification 4.2, sections 6.B.5.1.3.1 and 3.H.3.5.5 (@linkBLEcore), and @ref BLE_HCI_CONN_TERMINATED_DUE_TO_MIC_FAILURE. */
@@ -199,6 +199,19 @@ typedef struct
 typedef ble_gap_privacy_params_t pm_privacy_params_t;
 
 
+/**@brief Security status of a connection.
+ */
+typedef struct
+{
+    uint8_t connected      : 1; /**< @brief The connection is active (not disconnected). */
+    uint8_t encrypted      : 1; /**< @brief The communication on this link is encrypted. */
+    uint8_t mitm_protected : 1; /**< @brief The encrypted communication is also protected against man-in-the-middle attacks. */
+    uint8_t bonded         : 1; /**< @brief The peer is bonded. */
+    uint8_t lesc           : 1; /**< @brief The peer is paired using LESC. */
+    uint8_t reserved       : 3; /**< @brief Reserved for future use. */
+} pm_conn_sec_status_t;
+
+
 /**@brief Types of events that can come from the @ref peer_manager module.
  */
 typedef enum
@@ -291,7 +304,6 @@ typedef struct
     pm_peer_data_op_t action;    /**< @brief The action that failed. */
     pm_store_token_t  token;     /**< @brief Token that identifies the operation. For @ref PM_PEER_DATA_OP_DELETE actions, this token can be disregarded. For @ref PM_PEER_DATA_OP_UPDATE actions, compare this token with the token that is received from a call to a @ref PM_PEER_DATA_FUNCTIONS function. */
     ret_code_t        error;     /**< @brief An error code that describes the failure. */
-    bool              fds_error; /**< @brief If true, The error should be interpreted as an FDS error code. See @ref fds for a list of errors. */
 } pm_peer_data_update_failed_t;
 
 
@@ -300,17 +312,7 @@ typedef struct
 typedef struct
 {
     ret_code_t error;     /**< @brief The error that occurred. */
-    bool       fds_error; /**< @brief If true, The error should be interpreted as an FDS error code. See @ref fds for a list of errors. */
 } pm_failure_evt_t;
-
-
-/**@brief Events parameters specific to the @ref PM_EVT_SLAVE_SECURITY_REQ event.
- */
-typedef struct
-{
-    bool bond; /**< @brief Whether the peripheral requested bonding. */
-    bool mitm; /**< @brief Whether the peripheral requested man-in-the-middle protection. */
-} pm_evt_slave_security_req_t;
 
 
 /**@brief An event from the @ref peer_manager module.
@@ -333,7 +335,7 @@ typedef struct
         pm_failure_evt_t                    peer_delete_failed;         /**< @brief Parameters specific to the @ref PM_EVT_PEER_DELETE_FAILED event. */
         pm_failure_evt_t                    peers_delete_failed_evt;    /**< @brief Parameters specific to the @ref PM_EVT_PEERS_DELETE_FAILED event. */
         pm_failure_evt_t                    error_unexpected;           /**< @brief Parameters specific to the @ref PM_EVT_ERROR_UNEXPECTED event. */
-        pm_evt_slave_security_req_t         slave_security_req;         /**< @brief Parameters specific to the @ref PM_EVT_SLAVE_SECURITY_REQ event. */
+        ble_gap_evt_sec_request_t           slave_security_req;         /**< @brief Parameters specific to the @ref PM_EVT_SLAVE_SECURITY_REQ event. */
         pm_failure_evt_t                    garbage_collection_failed;  /**< @brief Parameters specific to the @ref PM_EVT_FLASH_GARBAGE_COLLECTION_FAILED event. */
     } params;
 } pm_evt_t;

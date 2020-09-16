@@ -443,7 +443,7 @@ static ret_code_t peers_id_keys_get(pm_peer_id_t   const * p_peers,
     pm_peer_data_bonding_t bond_data;
     pm_peer_data_t         peer_data;
 
-    uint16_t const buf_size = sizeof(bond_data);
+    uint32_t const buf_size = sizeof(bond_data);
 
     bool copy_addrs = false;
     bool copy_irks  = false;
@@ -526,6 +526,11 @@ ret_code_t im_device_identities_list_set(pm_peer_id_t const * p_peers,
     ble_gap_id_key_t         keys[BLE_GAP_DEVICE_IDENTITIES_MAX_COUNT];
     ble_gap_id_key_t const * key_ptrs[BLE_GAP_DEVICE_IDENTITIES_MAX_COUNT];
 
+    if (peer_cnt > BLE_GAP_DEVICE_IDENTITIES_MAX_COUNT)
+    {
+        return NRF_ERROR_INVALID_PARAM;
+    }
+
     if ((p_peers == NULL) || (peer_cnt == 0))
     {
         // Clear the device identities list.
@@ -533,7 +538,7 @@ ret_code_t im_device_identities_list_set(pm_peer_id_t const * p_peers,
     }
 
     peer_data.p_bonding_data = &bond_data;
-    uint16_t const buf_size  = sizeof(bond_data);
+    uint32_t const buf_size  = sizeof(bond_data);
 
     memset(keys, 0x00, sizeof(keys));
     for (uint32_t i = 0; i < BLE_GAP_DEVICE_IDENTITIES_MAX_COUNT; i++)

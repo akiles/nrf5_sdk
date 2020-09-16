@@ -157,6 +157,48 @@ static void flags_set_from_err_code(uint16_t conn_handle, ret_code_t err_code, b
 }
 
 
+static inline pm_evt_t new_evt(pm_evt_id_t evt_id, uint16_t conn_handle)
+{
+    pm_evt_t evt =
+    {
+        .evt_id = evt_id,
+        .conn_handle = conn_handle,
+        .peer_id = im_peer_id_get_by_conn_handle(conn_handle)
+    };
+    return evt;
+}
+
+
+/**@brief Function for sending a PM_EVT_ERROR_UNEXPECTED event.
+ *
+ * @param[in]  conn_handle  The connection handle the event pertains to.
+ * @param[in]  err_code     The unexpected error that occurred.
+ */
+static void send_unexpected_error(uint16_t conn_handle, ret_code_t err_code)
+{
+    pm_evt_t error_evt = new_evt(PM_EVT_ERROR_UNEXPECTED, conn_handle);
+    error_evt.params.error_unexpected.error = err_code;
+    evt_send(&error_evt);
+}
+
+
+/**@brief Returns whether the LTK came from LESC bonding.
+ *
+ * @param[in]  peer_id  The peer to check.
+ *
+ * @return  Whether the key is LESC or not.
+ */
+static bool key_is_lesc(pm_peer_id_t peer_id)
+{
+    pm_peer_data_flash_t peer_data;
+    ret_code_t           err_code;
+
+    err_code = pdb_peer_data_ptr_get(peer_id, PM_PEER_DATA_ID_BONDING, &peer_data);
+
+    return (err_code == NRF_SUCCESS) && (peer_data.p_bonding_data->own_ltk.enc_info.lesc);
+}
+
+
 /**@brief Function for sending an event based on error codes returned from @ref smd_link_secure or
  *        @ref smd_params_reply.
  *
@@ -172,23 +214,20 @@ static void events_send_from_err_code(uint16_t               conn_handle,
 {
     if ((err_code != NRF_SUCCESS) && (err_code != NRF_ERROR_BUSY) && (err_code != NRF_ERROR_INVALID_STATE))
     {
-        pm_evt_t evt =
-        {
-            .conn_handle = conn_handle,
-            .peer_id = im_peer_id_get_by_conn_handle(conn_handle),
-        };
         if (err_code == NRF_ERROR_TIMEOUT)
         {
             NRF_LOG_WARNING("Cannot secure link because a previous security procedure ended in timeout. "\
                             "Disconnect and retry. smd_params_reply() or smd_link_secure() returned "\
                             "NRF_ERROR_TIMEOUT. conn_handle: %d",
                             conn_handle);
-            evt.evt_id = PM_EVT_CONN_SEC_FAILED;
+
+            pm_evt_t evt = new_evt(PM_EVT_CONN_SEC_FAILED, conn_handle);
             evt.params.conn_sec_failed.procedure = ((p_sec_params != NULL) && p_sec_params->bond)
                                                  ? PM_CONN_SEC_PROCEDURE_BONDING
                                                  : PM_CONN_SEC_PROCEDURE_PAIRING;
             evt.params.conn_sec_failed.error_src = BLE_GAP_SEC_STATUS_SOURCE_LOCAL;
             evt.params.conn_sec_failed.error     = PM_CONN_SEC_ERROR_SMP_TIMEOUT;
+            evt_send(&evt);
         }
         else
         {
@@ -196,11 +235,8 @@ static void events_send_from_err_code(uint16_t               conn_handle,
                           "smd_link_secure() returned %s. conn_handle: %d",
                           nrf_strerror_get(err_code),
                           conn_handle);
-            evt.evt_id = PM_EVT_ERROR_UNEXPECTED;
-            evt.params.error_unexpected.error     = err_code;
-            evt.params.error_unexpected.fds_error = false;
+            send_unexpected_error(conn_handle, err_code);
         }
-        evt_send(&evt);
     }
 }
 
@@ -216,10 +252,7 @@ static void params_req_send(uint16_t                     conn_handle,
                             ble_gap_sec_params_t const * p_peer_params,
                             sec_params_reply_context_t * p_context)
 {
-    pm_evt_t evt;
-    evt.evt_id                                   = PM_EVT_CONN_SEC_PARAMS_REQ;
-    evt.conn_handle                              = conn_handle;
-    evt.peer_id                                  = im_peer_id_get_by_conn_handle(conn_handle);
+    pm_evt_t evt = new_evt(PM_EVT_CONN_SEC_PARAMS_REQ, conn_handle);
     evt.params.conn_sec_params_req.p_peer_params = p_peer_params;
     evt.params.conn_sec_params_req.p_context     = p_context;
 
@@ -349,32 +382,72 @@ static __INLINE void params_req_process(pm_evt_t const * p_event)
 }
 
 
+ret_code_t sm_conn_sec_status_get(uint16_t conn_handle, pm_conn_sec_status_t * p_conn_sec_status)
+{
+    VERIFY_PARAM_NOT_NULL(p_conn_sec_status);
+
+    ble_conn_state_status_t status = ble_conn_state_status(conn_handle);
+
+    if (status == BLE_CONN_STATUS_INVALID)
+    {
+        return BLE_ERROR_INVALID_CONN_HANDLE;
+    }
+
+    pm_peer_id_t peer_id = im_peer_id_get_by_conn_handle(conn_handle);
+
+    p_conn_sec_status->connected      = (status == BLE_CONN_STATUS_CONNECTED);
+    p_conn_sec_status->bonded         = (peer_id != PM_PEER_ID_INVALID);
+    p_conn_sec_status->encrypted      = ble_conn_state_encrypted(conn_handle);
+    p_conn_sec_status->mitm_protected = ble_conn_state_mitm_protected(conn_handle);
+    p_conn_sec_status->lesc           = ble_conn_state_lesc(conn_handle)
+                                        || (ble_conn_state_encrypted(conn_handle)
+                                            && key_is_lesc(peer_id));
+    return NRF_SUCCESS;
+}
+
+
+bool sm_sec_is_sufficient(uint16_t conn_handle, pm_conn_sec_status_t * p_sec_status_req)
+{
+    pm_conn_sec_status_t sec_status = {.reserved = ~0}; // Set all bits in reserved to 1 so they are
+                                                        // ignored in subsequent logic.
+    ret_code_t err_code = sm_conn_sec_status_get(conn_handle, &sec_status);
+
+    STATIC_ASSERT(sizeof(pm_conn_sec_status_t) == sizeof(uint8_t));
+
+    uint8_t unmet_reqs = (~(*((uint8_t *) &sec_status)) & *((uint8_t *) p_sec_status_req));
+
+    return (err_code == NRF_SUCCESS) && !unmet_reqs;
+}
+
+
 /**@brief Function for handling @ref PM_EVT_SLAVE_SECURITY_REQ events.
  *
  * @param[in]  p_event  The @ref PM_EVT_SLAVE_SECURITY_REQ event.
  */
 static void sec_req_process(pm_evt_t const * p_event)
 {
+    ret_code_t err_code;
     bool null_params = false;
+    bool force_repairing = false;
+
     if (mp_sec_params == NULL)
     {
         null_params = true;
     }
-    else if ((bool)m_sec_params.bond < (bool)p_event->params.slave_security_req.bond)
+    else if (ble_conn_state_encrypted(p_event->conn_handle))
     {
-        null_params = true;
+        pm_conn_sec_status_t sec_status_req =
+        {
+            .bonded         = p_event->params.slave_security_req.bond,
+            .mitm_protected = p_event->params.slave_security_req.mitm,
+            .lesc           = p_event->params.slave_security_req.lesc,
+        };
+
+        force_repairing = !sm_sec_is_sufficient(p_event->conn_handle, &sec_status_req);
     }
-    else if ((bool)m_sec_params.mitm < (bool)p_event->params.slave_security_req.mitm)
-    {
-        null_params = true;
-    }
-    else
-    {
-        // No action.
-    }
-    ret_code_t err_code = link_secure(p_event->conn_handle, null_params, false, true);
-    UNUSED_VARIABLE(err_code); // It is acceptable to ignore the return code because it is
-                               // acceptable to ignore a security request.
+
+    err_code = link_secure(p_event->conn_handle, null_params, force_repairing, true);
+    UNUSED_VARIABLE(err_code); // The error code has been properly handled inside link_secure().
 }
 
 

@@ -59,7 +59,7 @@ NRF_LOG_MODULE_REGISTER();
  * @ingroup  nrf_dfu
  * @brief    Device Firmware Update (DFU) transport layer using UART.
  */
- 
+
 #define NRF_SERIAL_OPCODE_SIZE          (sizeof(uint8_t))
 #define NRF_UART_MAX_RESPONSE_SIZE_SLIP (2 * NRF_SERIAL_MAX_RESPONSE_SIZE + 1)
 #define RX_BUF_SIZE                     (64) //to get 64bytes payload
@@ -105,9 +105,14 @@ static ret_code_t rsp_send(uint8_t const * p_data, uint32_t length)
 
 static __INLINE void on_rx_complete(nrf_dfu_serial_t * p_transport, uint8_t * p_data, uint8_t len)
 {
-    ret_code_t ret_code;
+    ret_code_t ret_code = NRF_ERROR_TIMEOUT;
 
-    ret_code = slip_decode_add_byte(&m_slip, p_data[0]);
+    // Check if there is byte to process. Zero length transfer means that RXTO occured.
+    if (len)
+    {
+        ret_code = slip_decode_add_byte(&m_slip, p_data[0]);
+    }
+
     (void) nrf_drv_uart_rx(&m_uart, &m_rx_byte, 1);
 
     if (ret_code == NRF_SUCCESS)

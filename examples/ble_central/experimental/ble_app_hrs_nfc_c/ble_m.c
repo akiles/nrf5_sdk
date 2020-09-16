@@ -63,7 +63,10 @@ NRF_LOG_MODULE_REGISTER();
 #define DEV_NAME_LEN                ((BLE_GAP_ADV_SET_DATA_SIZE_MAX + 1) - \
                                     AD_DATA_OFFSET)                     /**< Determines the device name length. */
 
-BLE_HRS_C_DEF(m_hrs_c);                                                 /**< Heart Rate Service client module instance. */
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                        /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_CENTRAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
+BLE_HRS_C_DEF(m_hrs_c);                                                 /**< Heart rate service client module instance. */
 BLE_BAS_C_DEF(m_bas_c);                                                 /**< Battery Service client module instance. */
 NRF_BLE_GATT_DEF(m_gatt);                                               /**< GATT module instance. */
 BLE_DB_DISCOVERY_DEF(m_db_discovery);                                   /**< Database Discovery module instance. */
@@ -73,6 +76,16 @@ static bool     m_is_connected              = false;                    /**< Fla
 static uint16_t m_conn_handle               = BLE_CONN_HANDLE_INVALID;  /**< Current connection handle. */
 static bool     m_memory_access_in_progress = false;                    /**< Flag to keep track of the ongoing operations on persistent memory. */
 static bool     m_hrs_notif_enabled         = false;                    /**< Flag indicating that HRS notification has been enabled. */
+
+
+/**@brief Function for handling the Heart Rate Service Client and Battery Service Client errors.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void service_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
+}
 
 
 /**@brief Function for handling database discovery events.
@@ -444,7 +457,9 @@ static void hrs_c_init(void)
 {
     ble_hrs_c_init_t hrs_c_init_obj;
 
-    hrs_c_init_obj.evt_handler = hrs_c_evt_handler;
+    hrs_c_init_obj.evt_handler   = hrs_c_evt_handler;
+    hrs_c_init_obj.error_handler = service_error_handler;
+    hrs_c_init_obj.p_gatt_queue  = &m_ble_gatt_queue;
 
     ret_code_t err_code = ble_hrs_c_init(&m_hrs_c, &hrs_c_init_obj);
     APP_ERROR_CHECK(err_code);
@@ -458,7 +473,9 @@ static void bas_c_init(void)
 {
     ble_bas_c_init_t bas_c_init_obj;
 
-    bas_c_init_obj.evt_handler = bas_c_evt_handler;
+    bas_c_init_obj.evt_handler   = bas_c_evt_handler;
+    bas_c_init_obj.error_handler = service_error_handler;
+    bas_c_init_obj.p_gatt_queue  = &m_ble_gatt_queue;
 
     ret_code_t err_code = ble_bas_c_init(&m_bas_c, &bas_c_init_obj);
     APP_ERROR_CHECK(err_code);
@@ -470,7 +487,14 @@ static void bas_c_init(void)
  */
 static void db_discovery_init(void)
 {
-    ret_code_t err_code = ble_db_discovery_init(db_disc_handler);
+    ble_db_discovery_init_t db_init;
+
+    memset(&db_init, 0, sizeof(ble_db_discovery_init_t));
+
+    db_init.evt_handler  = db_disc_handler;
+    db_init.p_gatt_queue = &m_ble_gatt_queue;
+
+    ret_code_t err_code = ble_db_discovery_init(&db_init);
     APP_ERROR_CHECK(err_code);
 }
 

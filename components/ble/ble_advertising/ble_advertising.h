@@ -76,10 +76,7 @@ extern "C" {
 static ble_advertising_t _name;                                                                     \
 NRF_SDH_BLE_OBSERVER(_name ## _ble_obs,                                                             \
                      BLE_ADV_BLE_OBSERVER_PRIO,                                                     \
-                     ble_advertising_on_ble_evt, &_name);                                           \
-NRF_SDH_SOC_OBSERVER(_name ## _soc_obs,                                                             \
-                     BLE_ADV_SOC_OBSERVER_PRIO,                                                     \
-                     ble_advertising_on_sys_evt, &_name)
+                     ble_advertising_on_ble_evt, &_name)
 
 
 /**@brief   Advertising modes. */
@@ -158,11 +155,11 @@ typedef struct
     uint8_t                 adv_handle;                                       /**< Handle for the advertising set. */
 
 #ifdef BLE_GAP_ADV_SET_DATA_SIZE_EXTENDED_CONNECTABLE_MAX_SUPPORTED
-    uint8_t                 enc_advdata[BLE_GAP_ADV_SET_DATA_SIZE_EXTENDED_CONNECTABLE_MAX_SUPPORTED];       /**< Current advertising data in encoded form. */
-    uint8_t                 enc_scan_rsp_data[BLE_GAP_ADV_SET_DATA_SIZE_EXTENDED_CONNECTABLE_MAX_SUPPORTED]; /**< Current scan response data in encoded form. */
+    uint8_t                 enc_advdata[2][BLE_GAP_ADV_SET_DATA_SIZE_EXTENDED_CONNECTABLE_MAX_SUPPORTED];       /**< Advertising data sets in encoded form. Current and swap buffer. */
+    uint8_t                 enc_scan_rsp_data[2][BLE_GAP_ADV_SET_DATA_SIZE_EXTENDED_CONNECTABLE_MAX_SUPPORTED]; /**< Scan response data sets in encoded form. Current and swap buffer. */
 #else
-    uint8_t                 enc_advdata[BLE_GAP_ADV_SET_DATA_SIZE_MAX];       /**< Current advertising data in encoded form. */
-    uint8_t                 enc_scan_rsp_data[BLE_GAP_ADV_SET_DATA_SIZE_MAX]; /**< Current scan response data in encoded form. */
+    uint8_t                 enc_advdata[2][BLE_GAP_ADV_SET_DATA_SIZE_MAX];       /**< Current advertising data in encoded form. */
+    uint8_t                 enc_scan_rsp_data[2][BLE_GAP_ADV_SET_DATA_SIZE_MAX]; /**< Current scan response data in encoded form. */
 #endif // BLE_GAP_ADV_SET_DATA_SIZE_EXTENDED_CONNECTABLE_MAX_SUPPORTED
 
     ble_gap_adv_data_t      adv_data;                                         /**< Advertising data. */
@@ -206,17 +203,6 @@ typedef struct
  * @param[in] p_adv         Advertising Module instance.
  */
 void ble_advertising_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_adv);
-
-
-/**@brief   Function for handling system events.
- *
- * @details This function must be called to handle system events that are relevant
- *          for the Advertising Module.
- *
- * @param[in] sys_evt       System event.
- * @param[in] p_adv         Advertising Module instance.
- */
-void ble_advertising_on_sys_evt(uint32_t sys_evt, void * p_adv);
 
 
 /**@brief   Function for initializing the Advertising Module.
@@ -339,21 +325,23 @@ void ble_advertising_modes_config_set(ble_advertising_t            * const p_adv
 /**@brief   Function for updating advertising data.
  *
  * @details This function can be called if you wish to reconfigure the advertising data The update
- *          will be effective even if advertising has already been started. If you set \p permanent
- *          to true, the advertising data will be permanently updated inside the module instance.
- *          Otherwise, the previous advertising data will be restored when there is transition to
- *          the next advertising mode (@ref ble_adv_mode_t).
+ *          will be effective even if advertising has already been started.
  *
- * @param[in]  p_advertising     Advertising Module instance.
- * @param[in]  p_new_advdata_buf Struct containing new advertising data buffer and scan response
- *                               data buffer.
- * @param[in]  permanent         Indicates if the advertising data update should be persistent.
+ * @param[in]  p_advertising Advertising Module instance.
+ * @param[in]  p_advdata     Pointer to the structure for specifying the content of advertising data.
+ *                           Or null if there should be no advertising data.
+ * @param[in]  p_srdata      Pointer to the structure for specifying the content of scan response data.
+ *                           Or null if there should be no advertising data.
  *
- * @return NRF_SUCCESS or any error from @ref sd_ble_gap_adv_set_configure().
+ * @retval @ref NRF_ERROR_NULL          If advertising instance was null.
+ *                                      If both \p p_advdata and \p p_srdata are null.
+ * @retval @ref NRF_ERROR_INVALID_STATE If advertising instance was not initialized.
+ * @retval @ref NRF_SUCCESS or any error from @ref ble_advdata_encode or
+ *         @ref sd_ble_gap_adv_set_configure().
  */
-ret_code_t ble_advertising_advdata_update(ble_advertising_t  * const p_advertising,
-                                          ble_gap_adv_data_t * const p_new_advdata_buf,
-                                          bool                       permanent);
+ret_code_t ble_advertising_advdata_update(ble_advertising_t   * const p_advertising,
+                                          ble_advdata_t const * const p_advdata,
+                                          ble_advdata_t const * const p_srdata);
 
 /** @} */
 

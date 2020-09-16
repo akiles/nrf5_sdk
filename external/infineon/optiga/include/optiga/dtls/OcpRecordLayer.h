@@ -43,7 +43,7 @@
 #define OCP_RL_ERROR                     0x55667F82
 
 /// Internal status for success.
-#define OCP_RL_OK                        0x297D9015
+#define OCP_RL_OK 					     0x297D9015
 
 ///Invalid record length
 #define OCP_RL_INVALID_RECORD_LENGTH     BASE_ERROR_RECORDLAYER
@@ -67,10 +67,10 @@
 #define OCP_RL_BAD_RECORD                (BASE_ERROR_RECORDLAYER + 6)
 
 /// No data
-#define OCP_RL_NO_DATA                   (BASE_ERROR_RECORDLAYER + 7)
+#define OCP_RL_NO_DATA 					 (BASE_ERROR_RECORDLAYER + 7)
 
 /// Data length is greater than PMTU
-#define OCP_RL_LEN_GREATER_PMTU          (BASE_ERROR_RECORDLAYER + 8)
+#define OCP_RL_LEN_GREATER_PMTU 		 (BASE_ERROR_RECORDLAYER + 8)
 
 ///Invalid record instance
 #define OCP_RL_INVALID_INSTANCE          (BASE_ERROR_RECORDLAYER + 9)

@@ -54,7 +54,7 @@
 
 NRF_SECTION_DEF(nrf_queue, nrf_queue_t);
 
-#if NRF_QUEUE_CLI_CMDS
+#if NRF_QUEUE_CLI_CMDS && NRF_CLI_ENABLED
 #include "nrf_cli.h"
 
 static void nrf_queue_status(nrf_cli_t const * p_cli, size_t argc, char **argv)
@@ -107,6 +107,18 @@ NRF_CLI_CREATE_STATIC_SUBCMD_SET(nrf_queue_commands)
 NRF_CLI_CMD_REGISTER(queue, &nrf_queue_commands, "Commands for BALLOC management", nrf_queue_status);
 #endif //NRF_QUEUE_CLI_CMDS
 
+__STATIC_INLINE size_t circullar_buffer_size_get(nrf_queue_t const * p_queue)
+{
+    static const uint8_t full_queue_indicator = 1;
+
+    /* When a queue is implemented as a cyclic buffer, it is not possible to
+     * distinguish a full queue from an empty queue. In order to solve this
+     * problem, the cyclic buffer has been implemented one element larger than
+     * the queue size.
+     */
+    return p_queue->size + full_queue_indicator;
+}
+
 /**@brief Get next element index.
  *
  * @param[in]   p_queue     Pointer to the queue instance.
@@ -130,7 +142,9 @@ __STATIC_INLINE size_t queue_utilization_get(nrf_queue_t const * p_queue)
 {
     size_t front    = p_queue->p_cb->front;
     size_t back     = p_queue->p_cb->back;
-    return (back >= front) ? (back - front) : (p_queue->size + 1 - front + back);
+
+    return (back >= front) ? (back - front) :
+        (circullar_buffer_size_get(p_queue) - front + back);
 }
 
 bool nrf_queue_is_full(nrf_queue_t const * p_queue)
@@ -267,6 +281,25 @@ ret_code_t nrf_queue_generic_pop(nrf_queue_t const * p_queue,
     return status;
 }
 
+/* Purpose of this function is to provide number of continous bytes in the queue's
+ * array before circullar buffer needs to wrapp.
+ */
+static size_t continous_items_get(nrf_queue_t const * p_queue, bool write)
+{
+    size_t front    = p_queue->p_cb->front;
+    size_t back     = p_queue->p_cb->back;
+
+    /* Number of continous items for queue write operation */
+    if (write)
+    {
+        return (back >= front) ? circullar_buffer_size_get(p_queue) - back : front - back;
+    }
+    else
+    {
+        return (back >= front) ? back - front : circullar_buffer_size_get(p_queue) - front;
+    }
+}
+
 /**@brief Write elements to the queue. This function assumes that there is enough room in the queue
  *        to write the requested number of elements and that this process will not be interrupted.
  *
@@ -277,9 +310,10 @@ ret_code_t nrf_queue_generic_pop(nrf_queue_t const * p_queue,
 static void queue_write(nrf_queue_t const * p_queue, void const * p_data, uint32_t element_count)
 {
     size_t prev_available = nrf_queue_available_get(p_queue);
-    size_t continuous     = p_queue->size + 1 - p_queue->p_cb->back;
+    size_t continuous     = continous_items_get(p_queue, true);
     void * p_write_ptr    = (void *)((size_t)p_queue->p_buffer
                           + p_queue->p_cb->back * p_queue->element_size);
+
     if (element_count <= continuous)
     {
         memcpy(p_write_ptr,
@@ -399,8 +433,7 @@ size_t nrf_queue_in(nrf_queue_t const * p_queue,
 static void queue_read(nrf_queue_t const * p_queue, void * p_data, uint32_t element_count)
 {
     size_t front        = p_queue->p_cb->front;
-    size_t back         = p_queue->p_cb->back;
-    size_t continuous   = (front <= back) ? (back - front) : (p_queue->size + 1 - front);
+    size_t continuous   = continous_items_get(p_queue, false);
     void const * p_read_ptr = (void const *)((size_t)p_queue->p_buffer
                                            + front * p_queue->element_size);
 

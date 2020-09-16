@@ -54,7 +54,7 @@
 #include <stdint.h>
 #include "ble_srv_common.h"
 #include "ble_date_time.h"
-#include "ble_hvx_buffering.h"
+#include "nrf_ble_gq.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -371,8 +371,9 @@ typedef struct
     security_req_t                feature_char_read_access;     /**< Read security level for the feature characteristic value. */
     ble_ots_object_chars_init_t   object_chars_init;            /**< The initialization structure of the object characteristics. */
     ble_ots_oacp_init_t           oacp_init;                    /**< The initialization structure of the object action control point. */
-    uint16_t                     rx_mps;                        /**< Size of L2CAP Rx MPS (must be at least BLE_L2CAP_MPS_MIN).*/
-    uint16_t                     rx_mtu;                        /**< Size of L2CAP Rx MTU (must be at least BLE_L2CAP_MTU_MIN).*/
+    uint16_t                      rx_mps;                       /**< Size of L2CAP Rx MPS (must be at least BLE_L2CAP_MPS_MIN).*/
+    uint16_t                      rx_mtu;                       /**< Size of L2CAP Rx MTU (must be at least BLE_L2CAP_MTU_MIN).*/
+    nrf_ble_gq_t                * p_gatt_queue;                 /**< Pointer to BLE GATT queue instance. */
 } ble_ots_init_t;
 
 struct ble_ots_s
@@ -385,7 +386,7 @@ struct ble_ots_s
     ble_ots_object_chars_t       object_chars;                  /**< The structure holding the object characteristics representation. */
     ble_ots_oacp_t               oacp_chars;                    /**< The structure holding the object action control point characteristics representation. */
     ble_ots_object_t           * p_current_object;              /**< Pointer to the currently selected object. */
-    ble_hvx_buf_t                hvx_buf;                       /**< A buffer holding unsent handle value indications/notifications. */
+    nrf_ble_gq_t               * p_gatt_queue;                  /**< Pointer to BLE GATT queue instance. */
 };
 
 

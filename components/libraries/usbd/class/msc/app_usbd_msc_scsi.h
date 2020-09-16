@@ -66,28 +66,28 @@ extern "C" {
  */
 
 /**
- * @brief SCSI command set
+ * @brief SCSI command set.
  *
  * Mandatory (and some optional) commands required by SBC-2.
  *
  */
 typedef enum {
-    APP_USBD_SCSI_CMD_TESTUNITREADY       = 0x00, /**< TESTUNITREADY       */
-    APP_USBD_SCSI_CMD_REQUESTSENSE        = 0x03, /**< REQUESTSENSE        */
-    APP_USBD_SCSI_CMD_FORMAT_UNIT         = 0x04, /**< FORMAT_UNIT         */
-    APP_USBD_SCSI_CMD_READ6               = 0x08, /**< READ6               */
-    APP_USBD_SCSI_CMD_WRITE6              = 0x0a, /**< WRITE6              */
-    APP_USBD_SCSI_CMD_INQUIRY             = 0x12, /**< INQUIRY             */
-    APP_USBD_SCSI_CMD_MODESELECT6         = 0x15, /**< MODESELECT6         */
-    APP_USBD_SCSI_CMD_MODESENSE6          = 0x1a, /**< MODESENSE6          */
-    APP_USBD_SCSI_CMD_STARTSTOPUNIT       = 0x1b, /**< STARTSTOPUNIT       */
-    APP_USBD_SCSI_CMD_SENDDIAGNOSTIC      = 0x1d, /**< SENDDIAGNOSTIC      */
-    APP_USBD_SCSI_CMD_PREVENTMEDIAREMOVAL = 0x1e, /**< PREVENTMEDIAREMOVAL */
-    APP_USBD_SCSI_CMD_READCAPACITY10      = 0x25, /**< READCAPACITY10      */
-    APP_USBD_SCSI_CMD_READ10              = 0x28, /**< READ10              */
-    APP_USBD_SCSI_CMD_WRITE10             = 0x2a, /**< WRITE10             */
-    APP_USBD_SCSI_CMD_MODESELECT10        = 0x55, /**< MODESELECT10        */
-    APP_USBD_SCSI_CMD_MODESENSE10         = 0x5a, /**< MODESENSE10         */
+    APP_USBD_SCSI_CMD_TESTUNITREADY       = 0x00, /**< Test unit ready.       */
+    APP_USBD_SCSI_CMD_REQUESTSENSE        = 0x03, /**< Request sense.         */
+    APP_USBD_SCSI_CMD_FORMAT_UNIT         = 0x04, /**< Format unit.           */
+    APP_USBD_SCSI_CMD_READ6               = 0x08, /**< Read 6.                */
+    APP_USBD_SCSI_CMD_WRITE6              = 0x0A, /**< Write 6.               */
+    APP_USBD_SCSI_CMD_INQUIRY             = 0x12, /**< Inquiry.               */
+    APP_USBD_SCSI_CMD_MODESELECT6         = 0x15, /**< Mode select 6.         */
+    APP_USBD_SCSI_CMD_MODESENSE6          = 0x1A, /**< Mode sense 6.          */
+    APP_USBD_SCSI_CMD_STARTSTOPUNIT       = 0x1B, /**< Start/stop unit.       */
+    APP_USBD_SCSI_CMD_SENDDIAGNOSTIC      = 0x1D, /**< Send diagnostic.       */
+    APP_USBD_SCSI_CMD_PREVENTMEDIAREMOVAL = 0x1E, /**< Prevent media removal. */
+    APP_USBD_SCSI_CMD_READCAPACITY10      = 0x25, /**< Read capacity 10.      */
+    APP_USBD_SCSI_CMD_READ10              = 0x28, /**< Read 10.               */
+    APP_USBD_SCSI_CMD_WRITE10             = 0x2A, /**< Write 10.              */
+    APP_USBD_SCSI_CMD_MODESELECT10        = 0x55, /**< Mode select 10.        */
+    APP_USBD_SCSI_CMD_MODESENSE10         = 0x5A, /**< Mode sense 10.         */
 } app_usbd_scsi_cmd_t;
 
 
@@ -125,7 +125,7 @@ typedef struct {
 #define APP_USBD_SCSI_CMD_REQSENSE_FLAG_DATAPROTECT    0x07 /**< Bits 3...0 @ref app_usbd_scsi_cmd_requestsense_resp_t::flags */
 #define APP_USBD_SCSI_CMD_REQSENSE_FLAG_BLANKCHECK     0x08 /**< Bits 3...0 @ref app_usbd_scsi_cmd_requestsense_resp_t::flags */
 #define APP_USBD_SCSI_CMD_REQSENSE_FLAG_VENDORSPECIFIC 0x09 /**< Bits 3...0 @ref app_usbd_scsi_cmd_requestsense_resp_t::flags */
-#define APP_USBD_SCSI_CMD_REQSENSE_FLAG_ABORTEDCOMMAND 0x0b /**< Bits 3...0 @ref app_usbd_scsi_cmd_requestsense_resp_t::flags */
+#define APP_USBD_SCSI_CMD_REQSENSE_FLAG_ABORTEDCOMMAND 0x0B /**< Bits 3...0 @ref app_usbd_scsi_cmd_requestsense_resp_t::flags */
 
 
 #define APP_USBD_SCSI_CMD_TESTUNITREADY_LEN 6 /**< @ref APP_USBD_SCSI_CMD_TESTUNITREADY command length*/
@@ -147,7 +147,7 @@ typedef struct {
 } app_usbd_scsi_cmd_requestsense_resp_t;
 
 /**
- * @brief Payload of @ref APP_USBD_SCSI_CMD_INQUIRY command
+ * @brief Payload of @ref APP_USBD_SCSI_CMD_INQUIRY command.
  */
 typedef struct {
     uint8_t opcode;        //!< @ref APP_USBD_SCSI_CMD_INQUIRY
@@ -169,13 +169,13 @@ typedef struct {
 #define  APP_USBD_MSC_SCSI_INQ_TYPE_CD_DVD      0x05   /**< CD/DVD device               */
 #define  APP_USBD_MSC_SCSI_INQ_TYPE_OPTICAL     0x07   /**< Optical Memory              */
 #define  APP_USBD_MSC_SCSI_INQ_TYPE_MC          0x08   /**< Medium Changer              */
-#define  APP_USBD_MSC_SCSI_INQ_TYPE_ARRAY       0x0c   /**< Storage Array Controller    */
-#define  APP_USBD_MSC_SCSI_INQ_TYPE_ENCLOSURE   0x0d   /**< Enclosure Services          */
-#define  APP_USBD_MSC_SCSI_INQ_TYPE_RBC         0x0e   /**< Simplified Direct Access    */
-#define  APP_USBD_MSC_SCSI_INQ_TYPE_OCRW        0x0f   /**< Optical card reader/writer  */
+#define  APP_USBD_MSC_SCSI_INQ_TYPE_ARRAY       0x0C   /**< Storage Array Controller    */
+#define  APP_USBD_MSC_SCSI_INQ_TYPE_ENCLOSURE   0x0D   /**< Enclosure Services          */
+#define  APP_USBD_MSC_SCSI_INQ_TYPE_RBC         0x0E   /**< Simplified Direct Access    */
+#define  APP_USBD_MSC_SCSI_INQ_TYPE_OCRW        0x0F   /**< Optical card reader/writer  */
 #define  APP_USBD_MSC_SCSI_INQ_TYPE_BCC         0x10   /**< Bridge Controller Commands  */
 #define  APP_USBD_MSC_SCSI_INQ_TYPE_OSD         0x11   /**< Object-based Storage        */
-#define  APP_USBD_MSC_SCSI_INQ_TYPE_NONE        0x1f   /**< No Peripheral               */
+#define  APP_USBD_MSC_SCSI_INQ_TYPE_NONE        0x1F   /**< No Peripheral               */
 
 
 #define  APP_USBD_MSC_SCSI_INQ_FLAG1_RMB        0x80   /**< Removable Medium */

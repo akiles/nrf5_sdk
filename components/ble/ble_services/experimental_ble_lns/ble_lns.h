@@ -68,6 +68,7 @@
 #include "ble_ln_cp.h"
 #include "sdk_common.h"
 #include "nrf_sdh_ble.h"
+#include "nrf_ble_gq.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -132,6 +133,8 @@ struct ble_lns_init_s
     ble_lncp_evt_handler_t  lncp_evt_handler;
     ble_srv_error_handler_t error_handler;                              /**< Errors will be sent back to this function. */
 
+    nrf_ble_gq_t          * p_gatt_queue;                               /**< Pointer to BLE GATT queue instance. */
+
     bool                    is_position_quality_present;                /**< If set to true, the position quality characteristic will be added. Else not. */
     bool                    is_control_point_present;                   /**< If set to true, the control point characteristic will be added. Else not. */
     bool                    is_navigation_present;                      /**< If set to true, the navigation characteristic will be added. Else not. */
@@ -161,6 +164,8 @@ struct ble_lns_s
 {
     ble_lns_evt_handler_t         evt_handler;                          /**< Event handler to be called for handling events in the Location and Navigation Service. */
     ble_srv_error_handler_t       error_handler;                        /**< Error handler. */
+
+    nrf_ble_gq_t                * p_gatt_queue;                         /**< Pointer to BLE GATT queue instance. */
 
     bool                          is_navigation_present;                /**< If set to true, the navigation characteristic is present. Else not. */
 

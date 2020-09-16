@@ -52,6 +52,28 @@
 #include "nrf_log.h"
 NRF_LOG_MODULE_REGISTER();
 
+
+/**@brief Function for intercepting the errors of GATTC and the BLE GATT Queue.
+ *
+ * @param[in] nrf_error   Error code.
+ * @param[in] p_ctx       Parameter from the event handler.
+ * @param[in] conn_handle Connection handle.
+ */
+static void gatt_error_handler(uint32_t   nrf_error,
+                               void     * p_ctx,
+                               uint16_t   conn_handle)
+{
+    ble_nus_c_t * p_ble_nus_c = (ble_nus_c_t *)p_ctx;
+
+    NRF_LOG_DEBUG("A GATT Client error has occurred on conn_handle: 0X%X", conn_handle);
+
+    if (p_ble_nus_c->error_handler != NULL)
+    {
+        p_ble_nus_c->error_handler(nrf_error);
+    }
+}
+
+
 void ble_nus_c_on_db_disc_evt(ble_nus_c_t * p_ble_nus_c, ble_db_discovery_evt_t * p_evt)
 {
     ble_nus_c_evt_t nus_c_evt;
@@ -92,11 +114,10 @@ void ble_nus_c_on_db_disc_evt(ble_nus_c_t * p_ble_nus_c, ble_db_discovery_evt_t 
 
 /**@brief     Function for handling Handle Value Notification received from the SoftDevice.
  *
- * @details   This function will uses the Handle Value Notification received from the SoftDevice
- *            and checks if it is a notification of the NUS TX characteristic from the peer. If
- *            it is, this function will decode the data and send it to the
- *            application.
- *
+ * @details   This function uses the Handle Value Notification received from the SoftDevice
+ *            and checks if it is a notification of the NUS TX characteristic from the peer.
+ *            If it is, this function decodes the data and sends it to the application.
+ *            
  * @param[in] p_ble_nus_c Pointer to the NUS Client structure.
  * @param[in] p_ble_evt   Pointer to the BLE event received.
  */
@@ -126,6 +147,7 @@ uint32_t ble_nus_c_init(ble_nus_c_t * p_ble_nus_c, ble_nus_c_init_t * p_ble_nus_
 
     VERIFY_PARAM_NOT_NULL(p_ble_nus_c);
     VERIFY_PARAM_NOT_NULL(p_ble_nus_c_init);
+    VERIFY_PARAM_NOT_NULL(p_ble_nus_c_init->p_gatt_queue);
 
     err_code = sd_ble_uuid_vs_add(&nus_base_uuid, &p_ble_nus_c->uuid_type);
     VERIFY_SUCCESS(err_code);
@@ -135,8 +157,10 @@ uint32_t ble_nus_c_init(ble_nus_c_t * p_ble_nus_c, ble_nus_c_init_t * p_ble_nus_
 
     p_ble_nus_c->conn_handle           = BLE_CONN_HANDLE_INVALID;
     p_ble_nus_c->evt_handler           = p_ble_nus_c_init->evt_handler;
+    p_ble_nus_c->error_handler         = p_ble_nus_c_init->error_handler;
     p_ble_nus_c->handles.nus_tx_handle = BLE_GATT_HANDLE_INVALID;
     p_ble_nus_c->handles.nus_rx_handle = BLE_GATT_HANDLE_INVALID;
+    p_ble_nus_c->p_gatt_queue          = p_ble_nus_c_init->p_gatt_queue;
 
     return ble_db_discovery_evt_register(&uart_uuid);
 }
@@ -150,8 +174,8 @@ void ble_nus_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
         return;
     }
 
-    if ( (p_ble_nus_c->conn_handle != BLE_CONN_HANDLE_INVALID)
-       &&(p_ble_nus_c->conn_handle != p_ble_evt->evt.gap_evt.conn_handle)
+    if ( (p_ble_nus_c->conn_handle == BLE_CONN_HANDLE_INVALID)
+       ||(p_ble_nus_c->conn_handle != p_ble_evt->evt.gap_evt.conn_handle)
        )
     {
         return;
@@ -183,24 +207,28 @@ void ble_nus_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 }
 
 /**@brief Function for creating a message for writing to the CCCD. */
-static uint32_t cccd_configure(uint16_t conn_handle, uint16_t cccd_handle, bool enable)
+static uint32_t cccd_configure(ble_nus_c_t * p_ble_nus_c, bool notification_enable)
 {
-    uint8_t buf[BLE_CCCD_VALUE_LEN];
+    nrf_ble_gq_req_t cccd_req;
+    uint8_t          cccd[BLE_CCCD_VALUE_LEN];
+    uint16_t         cccd_val = notification_enable ? BLE_GATT_HVX_NOTIFICATION : 0;
 
-    buf[0] = enable ? BLE_GATT_HVX_NOTIFICATION : 0;
-    buf[1] = 0;
+    memset(&cccd_req, 0, sizeof(nrf_ble_gq_req_t));
 
-    ble_gattc_write_params_t const write_params =
-    {
-        .write_op = BLE_GATT_OP_WRITE_REQ,
-        .flags    = BLE_GATT_EXEC_WRITE_FLAG_PREPARED_WRITE,
-        .handle   = cccd_handle,
-        .offset   = 0,
-        .len      = sizeof(buf),
-        .p_value  = buf
-    };
+    cccd[0] = LSB_16(cccd_val);
+    cccd[1] = MSB_16(cccd_val);
 
-    return sd_ble_gattc_write(conn_handle, &write_params);
+    cccd_req.type                        = NRF_BLE_GQ_REQ_GATTC_WRITE;
+    cccd_req.error_handler.cb            = gatt_error_handler;
+    cccd_req.error_handler.p_ctx         = p_ble_nus_c;
+    cccd_req.params.gattc_write.handle   = p_ble_nus_c->handles.nus_tx_cccd_handle;
+    cccd_req.params.gattc_write.len      = BLE_CCCD_VALUE_LEN;
+    cccd_req.params.gattc_write.offset   = 0;
+    cccd_req.params.gattc_write.p_value  = cccd;
+    cccd_req.params.gattc_write.write_op = BLE_GATT_OP_WRITE_REQ;
+    cccd_req.params.gattc_write.flags    = BLE_GATT_EXEC_WRITE_FLAG_PREPARED_WRITE;
+
+    return nrf_ble_gq_item_add(p_ble_nus_c->p_gatt_queue, &cccd_req, p_ble_nus_c->conn_handle);
 }
 
 
@@ -214,13 +242,17 @@ uint32_t ble_nus_c_tx_notif_enable(ble_nus_c_t * p_ble_nus_c)
     {
         return NRF_ERROR_INVALID_STATE;
     }
-    return cccd_configure(p_ble_nus_c->conn_handle,p_ble_nus_c->handles.nus_tx_cccd_handle, true);
+    return cccd_configure(p_ble_nus_c, true);
 }
 
 
 uint32_t ble_nus_c_string_send(ble_nus_c_t * p_ble_nus_c, uint8_t * p_string, uint16_t length)
 {
     VERIFY_PARAM_NOT_NULL(p_ble_nus_c);
+
+    nrf_ble_gq_req_t write_req;
+
+    memset(&write_req, 0, sizeof(nrf_ble_gq_req_t));
 
     if (length > BLE_NUS_MAX_DATA_LEN)
     {
@@ -233,17 +265,17 @@ uint32_t ble_nus_c_string_send(ble_nus_c_t * p_ble_nus_c, uint8_t * p_string, ui
         return NRF_ERROR_INVALID_STATE;
     }
 
-    ble_gattc_write_params_t const write_params =
-    {
-        .write_op = BLE_GATT_OP_WRITE_CMD,
-        .flags    = BLE_GATT_EXEC_WRITE_FLAG_PREPARED_WRITE,
-        .handle   = p_ble_nus_c->handles.nus_rx_handle,
-        .offset   = 0,
-        .len      = length,
-        .p_value  = p_string
-    };
+    write_req.type                        = NRF_BLE_GQ_REQ_GATTC_WRITE;
+    write_req.error_handler.cb            = gatt_error_handler;
+    write_req.error_handler.p_ctx         = p_ble_nus_c;
+    write_req.params.gattc_write.handle   = p_ble_nus_c->handles.nus_rx_handle;
+    write_req.params.gattc_write.len      = length;
+    write_req.params.gattc_write.offset   = 0;
+    write_req.params.gattc_write.p_value  = p_string;
+    write_req.params.gattc_write.write_op = BLE_GATT_OP_WRITE_CMD;
+    write_req.params.gattc_write.flags    = BLE_GATT_EXEC_WRITE_FLAG_PREPARED_WRITE;
 
-    return sd_ble_gattc_write(p_ble_nus_c->conn_handle, &write_params);
+    return nrf_ble_gq_item_add(p_ble_nus_c->p_gatt_queue, &write_req, p_ble_nus_c->conn_handle);
 }
 
 
@@ -260,6 +292,6 @@ uint32_t ble_nus_c_handles_assign(ble_nus_c_t               * p_ble_nus,
         p_ble_nus->handles.nus_tx_handle      = p_peer_handles->nus_tx_handle;
         p_ble_nus->handles.nus_rx_handle      = p_peer_handles->nus_rx_handle;
     }
-    return NRF_SUCCESS;
+    return nrf_ble_gq_conn_handle_register(p_ble_nus->p_gatt_queue, conn_handle);
 }
 #endif // NRF_MODULE_ENABLED(BLE_NUS_C)

@@ -138,7 +138,11 @@ host_lib_status_t ifx_i2c_open(ifx_i2c_context_t *p_ctx)
     if ((IFX_I2C_STATUS_BUSY != p_ctx->status))
     {
         p_ctx->p_pal_i2c_ctx->upper_layer_ctx = p_ctx;
+#ifndef OPTIGA_USE_SOFT_RESET
         p_ctx->reset_type = (uint8_t)IFX_I2C_COLD_RESET;
+#else
+        p_ctx->reset_type = (uint8_t)IFX_I2C_SOFT_RESET;
+#endif
         p_ctx->reset_state = IFX_I2C_STATE_RESET_PIN_LOW;
         p_ctx->do_pal_init = TRUE;
         p_ctx->state = IFX_I2C_STATE_UNINIT;
@@ -288,7 +292,7 @@ host_lib_status_t ifx_i2c_close(ifx_i2c_context_t *p_ctx)
     // Proceed, if not busy and in idle state
     if (IFX_I2C_STATUS_BUSY != p_ctx->status)
     {
-        api_status = IFX_I2C_STACK_SUCCESS;
+                api_status = IFX_I2C_STACK_SUCCESS;
         //lint --e{534} suppress "Return value is not required to be checked"
         // Close I2C master
         pal_i2c_deinit(p_ctx->p_pal_i2c_ctx);
@@ -375,51 +379,51 @@ static host_lib_status_t ifx_i2c_init(ifx_i2c_context_t* p_ifx_i2c_context)
 {
     host_lib_status_t api_status = IFX_I2C_STACK_ERROR;
 
-    if ((p_ifx_i2c_context->reset_type == (uint8_t)IFX_I2C_WARM_RESET)||
-        (p_ifx_i2c_context->reset_type == (uint8_t)IFX_I2C_COLD_RESET))
-    {
-        switch(p_ifx_i2c_context->reset_state)
+        if ((p_ifx_i2c_context->reset_type == (uint8_t)IFX_I2C_WARM_RESET)||
+            (p_ifx_i2c_context->reset_type == (uint8_t)IFX_I2C_COLD_RESET))
         {
-            case IFX_I2C_STATE_RESET_PIN_LOW:
-                // Setting the Vdd & Reset pin to low
-                if (p_ifx_i2c_context->reset_type == (uint8_t)IFX_I2C_COLD_RESET)
+                switch(p_ifx_i2c_context->reset_state)
                 {
-                    pal_gpio_set_low(p_ifx_i2c_context->p_slave_vdd_pin);
-                }
-                pal_gpio_set_low(p_ifx_i2c_context->p_slave_reset_pin);
-                p_ifx_i2c_context->reset_state = IFX_I2C_STATE_RESET_PIN_HIGH;
-                pal_os_event_register_callback_oneshot((register_callback)ifx_i2c_init,
+                        case IFX_I2C_STATE_RESET_PIN_LOW:
+                                // Setting the Vdd & Reset pin to low
+                                if (p_ifx_i2c_context->reset_type == (uint8_t)IFX_I2C_COLD_RESET)
+                                {
+                                        pal_gpio_set_low(p_ifx_i2c_context->p_slave_vdd_pin);
+                                }
+                                pal_gpio_set_low(p_ifx_i2c_context->p_slave_reset_pin);
+                                p_ifx_i2c_context->reset_state = IFX_I2C_STATE_RESET_PIN_HIGH;
+                                pal_os_event_register_callback_oneshot((register_callback)ifx_i2c_init,
                                                        (void *)p_ifx_i2c_context, RESET_LOW_TIME_MSEC);
-                api_status = IFX_I2C_STACK_SUCCESS;
-                break;
+                                api_status = IFX_I2C_STACK_SUCCESS;
+                                break;
 
-            case IFX_I2C_STATE_RESET_PIN_HIGH:
-                // Setting the Vdd & Reset pin to high
-                if (p_ifx_i2c_context->reset_type == (uint8_t)IFX_I2C_COLD_RESET)
-                {
-                    pal_gpio_set_high(p_ifx_i2c_context->p_slave_vdd_pin);
-                }
-                pal_gpio_set_high(p_ifx_i2c_context->p_slave_reset_pin);
-                p_ifx_i2c_context->reset_state = IFX_I2C_STATE_RESET_INIT;
-                pal_os_event_register_callback_oneshot((register_callback)ifx_i2c_init,
+                        case IFX_I2C_STATE_RESET_PIN_HIGH:
+                                // Setting the Vdd & Reset pin to high
+                                if (p_ifx_i2c_context->reset_type == (uint8_t)IFX_I2C_COLD_RESET)
+                                {
+                                        pal_gpio_set_high(p_ifx_i2c_context->p_slave_vdd_pin);
+                                }
+                                pal_gpio_set_high(p_ifx_i2c_context->p_slave_reset_pin);
+                                p_ifx_i2c_context->reset_state = IFX_I2C_STATE_RESET_INIT;
+                                pal_os_event_register_callback_oneshot((register_callback)ifx_i2c_init,
                                                        (void *)p_ifx_i2c_context, STARTUP_TIME_MSEC);
-                api_status = IFX_I2C_STACK_SUCCESS;
-                break;
+                                api_status = IFX_I2C_STACK_SUCCESS;
+                                break;
 
-            case IFX_I2C_STATE_RESET_INIT:
-                //Frequency and frame size negotiation
-                api_status = ifx_i2c_tl_init(p_ifx_i2c_context,ifx_i2c_tl_event_handler);
-                break;
-            default:
-                break;
+                        case IFX_I2C_STATE_RESET_INIT:
+                                //Frequency and frame size negotiation
+                                api_status = ifx_i2c_tl_init(p_ifx_i2c_context,ifx_i2c_tl_event_handler);
+                                break;
+                        default:
+                                break;
+                }
         }
-    }
-    //soft reset
-    else
-    {
-        p_ifx_i2c_context->pl.request_soft_reset = (uint8_t)TRUE;   //Soft reset
-        api_status = ifx_i2c_tl_init(p_ifx_i2c_context,ifx_i2c_tl_event_handler);
-    }
+        //soft reset
+        else
+        {
+                p_ifx_i2c_context->pl.request_soft_reset = (uint8_t)TRUE;	//Soft reset
+                api_status = ifx_i2c_tl_init(p_ifx_i2c_context,ifx_i2c_tl_event_handler);
+        }
 
     return api_status;
 }

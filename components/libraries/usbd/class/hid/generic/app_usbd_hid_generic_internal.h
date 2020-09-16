@@ -116,6 +116,7 @@ typedef struct {
  *
  * @param report_buff_in            Input report buffers array.
  * @param report_buff_out           Output report buffer.
+ * @param report_buff_feature       Feature report buffer.
  * @param user_ev_handler           User event handler.
  * @param in_report_queue           IN report queue.
  * @param subclass_descriptors      HID subclass descriptors.
@@ -125,6 +126,7 @@ typedef struct {
  */
 #define APP_USBD_HID_GENERIC_INST_CONFIG(report_buff_in,                      \
                                          report_buff_out,                     \
+                                         report_buff_feature,                 \
                                          user_ev_handler,                     \
                                          in_report_queue,                     \
                                          subclass_descriptors,                \
@@ -137,6 +139,7 @@ typedef struct {
                                               protocol,                       \
                                               report_buff_in,                 \
                                               report_buff_out,                \
+                                              report_buff_feature,            \
                                               user_ev_handler,                \
                                               &app_usbd_hid_generic_methods,  \
                                               endpoint_list),                 \
@@ -166,11 +169,14 @@ extern const app_usbd_class_methods_t app_usbd_generic_class_methods;
                                                  subclass_descriptors,              \
                                                  report_in_queue_size,              \
                                                  report_out_maxsize,                \
+                                                 report_feature_maxsize,            \
                                                  subclass_boot,                     \
                                                  protocol)                          \
     static app_usbd_hid_report_buffer_t CONCAT_2(instance_name, _in);               \
     APP_USBD_HID_GENERIC_GLOBAL_OUT_REP_DEF(CONCAT_2(instance_name, _out),          \
                                             report_out_maxsize + 1);                \
+    APP_USBD_HID_GENERIC_GLOBAL_FEATURE_REP_DEF(CONCAT_2(instance_name, _feature),  \
+                                            report_feature_maxsize + 1);            \
     static uint8_t CONCAT_2(instance_name, _ep)[]=                                  \
         {MACRO_MAP(APP_USBD_HID_GENERIC_INTERVAL,BRACKET_EXTRACT(endpoint_list))};  \
     NRF_QUEUE_DEF(app_usbd_hid_report_buffer_t,                                     \
@@ -184,6 +190,7 @@ extern const app_usbd_class_methods_t app_usbd_generic_class_methods;
         APP_USBD_HID_GENERIC_CONFIG(interface_number, endpoint_list),               \
         (APP_USBD_HID_GENERIC_INST_CONFIG(&CONCAT_2(instance_name, _in),            \
                                           &CONCAT_2(instance_name, _out),           \
+                                          &CONCAT_2(instance_name, _feature),       \
                                           user_ev_handler,                          \
                                           &instance_name##_queue,                   \
                                           subclass_descriptors,                     \

@@ -64,12 +64,16 @@ extern "C" {
  * @brief MSC subclass possible value.
  */
 typedef enum {
-    APP_USBD_MSC_SUBCLASS_RBC          = 0x01,    /**< Reduced Block Commands */
-    APP_USBD_MSC_SUBCLASS_ATAPI        = 0x02,    /**< CD/DVD devices         */
-    APP_USBD_MSC_SUBCLASS_QIC_157      = 0x03,    /**< Tape devices           */
-    APP_USBD_MSC_SUBCLASS_UFI          = 0x04,    /**< Floppy disk drives     */
-    APP_USBD_MSC_SUBCLASS_SFF_8070I    = 0x05,    /**< Floppy disk drives     */
-    APP_USBD_MSC_SUBCLASS_TRANSPARENT  = 0x06,    /**< Determined by INQUIRY  */
+    APP_USBD_MSC_SUBCLASS_NOT_REPORTED = 0x00,    /**< Command set not reported     */
+    APP_USBD_MSC_SUBCLASS_RBC          = 0x01,    /**< Reduced Block Commands       */
+    APP_USBD_MSC_SUBCLASS_ATAPI        = 0x02,    /**< CD/DVD devices               */
+    APP_USBD_MSC_SUBCLASS_QIC_157      = 0x03,    /**< Tape devices                 */
+    APP_USBD_MSC_SUBCLASS_UFI          = 0x04,    /**< Floppy disk drives           */
+    APP_USBD_MSC_SUBCLASS_SFF_8070I    = 0x05,    /**< Floppy disk drives           */
+    APP_USBD_MSC_SUBCLASS_TRANSPARENT  = 0x06,    /**< Determined by INQUIRY        */
+    APP_USBD_MSC_SUBCLASS_LSD_FS       = 0x07,    /**< LSD FS specified negitiation */
+    APP_USBD_MSC_SUBCLASS_IEEE_1667    = 0x08,    /**< IEEE 1607                    */
+    APP_USBD_MSC_SUBCLASS_VENDOR       = 0xFF,    /**< Vendor specific              */
 } app_usbd_msc_subclass_t;
 
 /**
@@ -83,22 +87,25 @@ typedef enum {
     APP_USBD_MSC_PROTOCOL_CBI      = 0x00,    /**< Command/Bulk/Interrupt */
     APP_USBD_MSC_PROTOCOL_CBI_ALT  = 0x01,    /**< W/o command completion */
     APP_USBD_MSC_PROTOCOL_BULK     = 0x50,    /**< Bulk-only              */
+    APP_USBD_MSC_PROTOCOL_UAS      = 0x62,    /**< UAS                    */
+    APP_USBD_MSC_PROTOCOL_VENDOR   = 0xFF,    /**< Vendor specific        */
 } app_usbd_msc_protocol_t;
 
 /**
  * @brief MSC USB requests @ref nrf_drv_usbd_setup_t::bmRequestType
- *
- * @note Requests are limited only to @ref APP_USBD_MSC_PROTOCOL_BULK protocol type.
  */
 typedef enum {
-    APP_USBD_MSC_REQ_BULK_RESET  = 0xFF, /**< Mass Storage Reset */
-    APP_USBD_MSC_REQ_GET_MAX_LUN = 0xFE, /**< Get Max LUN        */
+    APP_USBD_MSC_REQ_ADSC        = 0x00, /**< Accept Device-Specific Command */
+    APP_USBD_MSC_REQ_GET_REQS    = 0xFC, /**< Get Requests                   */
+    APP_USBD_MSC_REQ_PUT_REQS    = 0xFD, /**< Put Requests                   */
+    APP_USBD_MSC_REQ_GET_MAX_LUN = 0xFE, /**< Get Max LUN                    */
+    APP_USBD_MSC_REQ_BULK_RESET  = 0xFF, /**< Mass Storage Reset             */
 } app_usbd_msc_req_t;
 
 #pragma pack(push, 1)
 
 #define  APP_USBD_MSC_CBW_SIGNATURE     {'U', 'S', 'B', 'C'} /**< CBW signature      */
-#define  APP_USBD_MSC_CBW_DIRECTION_IN  (1u <<7)             /**< CBW direction flag */
+#define  APP_USBD_MSC_CBW_DIRECTION_IN  (1u << 7)             /**< CBW direction flag */
 
 /**
  * @brief Command Block Wrapper (CBW).

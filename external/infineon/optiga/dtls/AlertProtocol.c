@@ -179,8 +179,8 @@ _STATIC_H Void Alert_FormMsg(int32_t Pi4ErrorCode,sbBlob_d* PpsAlertMsg);
 /**
  * Maps the error code to Alert types and level.<br>
  *
- * \param[in]       Pi4ErrorCode     DTLS Internal error code
- * \param[in,out]   PpsAlertMsg      Pointer to a blob containing Alert message as per DTLS Specification
+ * \param[in]		Pi4ErrorCode	 DTLS Internal error code
+ * \param[in,out]	PpsAlertMsg	 	 Pointer to a blob containing Alert message as per DTLS Specification
  *
  */
 _STATIC_H Void DtlsErrorAlertMapping(int32_t Pi4ErrorCode, sbBlob_d* PpsAlertMsg)
@@ -265,8 +265,8 @@ _STATIC_H Void DtlsErrorAlertMapping(int32_t Pi4ErrorCode, sbBlob_d* PpsAlertMsg
 /**
  * Forms the alert message based on the given internal error code.<br>
  *
- * \param[in]       Pi4ErrorCode     DTLS Internal error code
- * \param[in,out]   PpsAlertMsg      Pointer to a blob containing Alert message as per DTLS Specification
+ * \param[in]	    Pi4ErrorCode	 DTLS Internal error code
+ * \param[in,out]	PpsAlertMsg		 Pointer to a blob containing Alert message as per DTLS Specification
  *
  */
 _STATIC_H Void Alert_FormMsg(int32_t Pi4ErrorCode,sbBlob_d* PpsAlertMsg)
@@ -280,8 +280,8 @@ _STATIC_H Void Alert_FormMsg(int32_t Pi4ErrorCode,sbBlob_d* PpsAlertMsg)
 /**
  * Maps the Alert types and level to error code.<br>
  *
- * \param[in]       PpsAlertMsg      Pointer to a blob containing Alert message as per DTLS Specification
- * \param[in,out]   Ppi4ErrorCode    Pointer to the DTLS Internal error code
+ * \param[in]	    PpsAlertMsg	 	 Pointer to a blob containing Alert message as per DTLS Specification
+ * \param[in,out]	Ppi4ErrorCode	 Pointer to the DTLS Internal error code
  *
  * \retval    #OCP_AL_OK  Successful execution
  * \retval    #OCP_AL_ERROR    Failure in execution
@@ -370,8 +370,8 @@ _STATIC_H int32_t DtlsAlertErrorMapping(const sbBlob_d* PpsAlertMsg, int32_t* Pp
 /**
  * Sends Alert based on the internal error code via the Record Layer.<br>
  *
- * \param[in]   PpsConfigRL     Pointer to structure containing Record Layer information.
- * \param[in]   Pi4ErrorCode    DTLS Internal error code
+ * \param[in]	PpsConfigRL		Pointer to structure containing Record Layer information.
+ * \param[in]	Pi4ErrorCode	DTLS Internal error code
  *
  */
 void Alert_Send(sConfigRL_d *PpsConfigRL,int32_t Pi4ErrorCode)
@@ -438,15 +438,15 @@ void Alert_Send(sConfigRL_d *PpsConfigRL,int32_t Pi4ErrorCode)
  * Processes the received Alert Message<br>
  * Returns the corresponding internal error code.<br>
  *
- * \param[in]       PpsAlertMsg      Pointer to a blob containing Alert message as per DTLS Specification
- * \param[in,out]   Ppi4ErrorCode    Pointer to the DTLS Internal error code
+ * \param[in]	    PpsAlertMsg		 Pointer to a blob containing Alert message as per DTLS Specification
+ * \param[in,out]	Ppi4ErrorCode	 Pointer to the DTLS Internal error code
  *
- * \retval    #OCP_AL_OK                Successful execution
- * \retval    #OCP_AL_ERROR             Failure in execution
+ * \retval    #OCP_AL_OK  			    Successful execution
+ * \retval    #OCP_AL_ERROR    			Failure in execution
 \if ENABLE_NULL_CHECKS
- * \retval    #OCP_AL_NULL_PARAM        Null parameter(s)
+ * \retval    #OCP_AL_NULL_PARAM    	Null parameter(s)
 \endif
- * \retval    #OCP_AL_LENZERO_ERROR     Length of input parameter is zero
+ * \retval    #OCP_AL_LENZERO_ERROR    	Length of input parameter is zero
  *
  */
 int32_t Alert_ProcessMsg(const sbBlob_d* PpsAlertMsg,int32_t* Ppi4ErrorCode)

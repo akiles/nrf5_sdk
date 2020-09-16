@@ -28,29 +28,26 @@
 *
 *
 * \addtogroup  grMutualAuth
-* @{
+*
 */
 
 #ifndef _MEMMGMT_H_
 #define _MEMMGMT_H_
 
 ///Malloc function to allocate the heap memory
-#define OCP_MALLOC(size)            malloc(size)
+#define OCP_MALLOC(size)			malloc(size)
 
 ///Malloc function to allocate the heap memory
-#define OCP_CALLOC(block,blocksize) calloc(block,blocksize)
+#define OCP_CALLOC(block,blocksize)	calloc(block,blocksize)
 
 ///To free the allocated memory
-#define OCP_FREE(node)              free(node)
+#define OCP_FREE(node)				free(node)
 
 ///To copy the data from source to destination
-#define OCP_MEMCPY(dst,src,size)    memcpy(dst,src,size)
+#define OCP_MEMCPY(dst,src,size)	memcpy(dst,src,size)
 
 ///To copy the data from source to destination
-#define OCP_MEMSET(src,val,size)    memset(src,val,size)
+#define OCP_MEMSET(src,val,size)	memset(src,val,size)
 
 #endif /* _MEMMGMT_H_ */
 
-/**
-* @}
-*/

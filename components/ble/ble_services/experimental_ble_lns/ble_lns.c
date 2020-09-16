@@ -137,12 +137,23 @@ static void notification_buffer_process(ble_lns_t * p_lns)
  */
 static void on_connect(ble_lns_t * p_lns, ble_evt_t const * p_ble_evt)
 {
+    ret_code_t err_code;
+
     p_lns->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
 
     // clear pending notifications
     p_lns->pending_loc_speed_notifications[0].is_pending    = false;
     p_lns->pending_loc_speed_notifications[1].is_pending    = false;
     p_lns->pending_navigation_notification.is_pending       = false;
+
+    err_code = nrf_ble_gq_conn_handle_register(p_lns->p_gatt_queue, 
+                                               p_ble_evt->evt.gap_evt.conn_handle);
+
+    if ((p_lns->error_handler != NULL) &&
+        (err_code != NRF_SUCCESS))
+    {
+        p_lns->error_handler(err_code);
+    }
 }
 
 
@@ -793,6 +804,7 @@ ret_code_t ble_lns_init(ble_lns_t * p_lns, ble_lns_init_t const * p_lns_init)
 {
     VERIFY_PARAM_NOT_NULL(p_lns);
     VERIFY_PARAM_NOT_NULL(p_lns_init);
+    VERIFY_PARAM_NOT_NULL(p_lns_init->p_gatt_queue);
 
     if (init_param_mismatch_present(p_lns_init) == true)
     {
@@ -809,6 +821,7 @@ ret_code_t ble_lns_init(ble_lns_t * p_lns, ble_lns_init_t const * p_lns_init)
     p_lns->conn_handle           = BLE_CONN_HANDLE_INVALID;
     p_lns->available_features    = p_lns_init->available_features;
     p_lns->is_navigation_present = p_lns_init->is_navigation_present;
+    p_lns->p_gatt_queue          = p_lns_init->p_gatt_queue;
 
     // clear pending notifications
     p_lns->pending_loc_speed_notifications[0].is_pending = false;
@@ -875,6 +888,7 @@ ret_code_t ble_lns_init(ble_lns_t * p_lns, ble_lns_init_t const * p_lns_init)
         lncp_init.available_features            = p_lns_init->available_features;
         lncp_init.is_position_quality_present   = p_lns_init->is_position_quality_present;
         lncp_init.is_navigation_present         = p_lns_init->is_navigation_present;
+        lncp_init.p_gatt_queue                  = p_lns_init->p_gatt_queue;
 
         lncp_init.total_distance                = p_lns_init->p_location_speed->total_distance;
         lncp_init.elevation                     = p_lns_init->p_location_speed->elevation;

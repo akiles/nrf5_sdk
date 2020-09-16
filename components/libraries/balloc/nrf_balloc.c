@@ -69,7 +69,7 @@
 
 NRF_SECTION_DEF(nrf_balloc, nrf_balloc_t);
 
-#if NRF_BALLOC_CLI_CMDS
+#if NRF_BALLOC_CLI_CMDS && NRF_CLI_ENABLED
 #include "nrf_cli.h"
 
 static void nrf_balloc_status(nrf_cli_t const * p_cli, size_t argc, char **argv)

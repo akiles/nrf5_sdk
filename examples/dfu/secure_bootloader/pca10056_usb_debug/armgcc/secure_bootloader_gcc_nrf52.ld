@@ -7,9 +7,9 @@ MEMORY
 {
   FLASH (rx) : ORIGIN = 0xec000, LENGTH = 0x12000
   RAM (rwx) :  ORIGIN = 0x20000008, LENGTH = 0x3fff8
-  uicr_bootloader_start_address (r) : ORIGIN = 0x00000FF8, LENGTH = 0x4
+  uicr_bootloader_start_address (r) : ORIGIN = 0x10001014, LENGTH = 0x4
   bootloader_settings_page (r) : ORIGIN = 0x000FF000, LENGTH = 0x1000
-  uicr_mbr_params_page (r) : ORIGIN = 0x00000FFC, LENGTH = 0x4
+  uicr_mbr_params_page (r) : ORIGIN = 0x10001018, LENGTH = 0x4
   mbr_params_page (r) : ORIGIN = 0x000FE000, LENGTH = 0x1000
 }
 

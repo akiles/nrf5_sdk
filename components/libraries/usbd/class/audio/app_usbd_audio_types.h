@@ -98,7 +98,7 @@ typedef enum {
     APP_USBD_AUDIO_AC_IFACE_SUBTYPE_UNDEFINED = 0x00, /**< Audio control interface subtype UNDEFINED       */
     APP_USBD_AUDIO_AC_IFACE_SUBTYPE_HEADER,           /**< Audio control interface subtype HEADER          */
     APP_USBD_AUDIO_AC_IFACE_SUBTYPE_INPUT_TERMINAL,   /**< Audio control interface subtype INPUT_TERMINAL  */
-    APP_USBD_AUDIO_AC_IFACE_SUBTYPE_OUTPUT_TERNINAL,  /**< Audio control interface subtype OUTPUT_TERNINAL */
+    APP_USBD_AUDIO_AC_IFACE_SUBTYPE_OUTPUT_TERMINAL,  /**< Audio control interface subtype OUTPUT_TERMINAL */
     APP_USBD_AUDIO_AC_IFACE_SUBTYPE_MIXER_UNIT,       /**< Audio control interface subtype MIXER_UNIT      */
     APP_USBD_AUDIO_AC_IFACE_SUBTYPE_SELECTOR_UNIT,    /**< Audio control interface subtype SELECTOR_UNIT   */
     APP_USBD_AUDIO_AC_IFACE_SUBTYPE_FEATURE_UNIT,     /**< Audio control interface subtype FEATURE_UNIT    */
@@ -191,7 +191,7 @@ typedef enum {
 typedef struct {
     uint8_t bLength;             //!< Length of the descriptor
     uint8_t bDescriptorType;     //!< Descriptor type @ref APP_USBD_AUDIO_DESCRIPTOR_INTERFACE
-    uint8_t bDescriptorSubType;  //!< Descriptor subtype @ref APP_USBD_AUDIO_AC_IFACE_SUBTYPE_HEADER
+    uint8_t bDescriptorSubtype;  //!< Descriptor subtype @ref APP_USBD_AUDIO_AC_IFACE_SUBTYPE_HEADER
     uint8_t bcdADC[2];           //!< BCD ADC
     uint8_t wTotalLength[2];     //!< Total interfaces length
     uint8_t bInCollection;       //!< Input collection
@@ -225,7 +225,7 @@ typedef enum {
 typedef struct {
     uint8_t bLength;             //!< Length of the descriptor
     uint8_t bDescriptorType;     //!< Descriptor type @ref APP_USBD_AUDIO_DESCRIPTOR_INTERFACE
-    uint8_t bDescriptorSubType;  //!< Descriptor subtype @ref APP_USBD_AUDIO_AC_IFACE_SUBTYPE_INPUT_TERMINAL
+    uint8_t bDescriptorSubtype;  //!< Descriptor subtype @ref APP_USBD_AUDIO_AC_IFACE_SUBTYPE_INPUT_TERMINAL
     uint8_t bTerminalID;         //!< Terminal ID
     uint8_t wTerminalType[2];    //!< Terminal type
     uint8_t bAssocTerminal;      //!< Association terminal
@@ -241,7 +241,7 @@ typedef struct {
 typedef struct {
     uint8_t bLength;            //!< Length of the descriptor
     uint8_t bDescriptorType;    //!< Descriptor type @ref APP_USBD_AUDIO_DESCRIPTOR_INTERFACE
-    uint8_t bDescriptorSubType; //!< Descriptor subtype @ref APP_USBD_AUDIO_AC_IFACE_SUBTYPE_OUTPUT_TERNINAL
+    uint8_t bDescriptorSubtype; //!< Descriptor subtype @ref APP_USBD_AUDIO_AC_IFACE_SUBTYPE_OUTPUT_TERMINAL
     uint8_t bTerminalID;        //!< Terminal ID
     uint8_t wTerminalType[2];   //!< Terminal type
     uint8_t bAssocTerminal;     //!< Association terminal
@@ -271,7 +271,7 @@ typedef enum {
 typedef struct {
     uint8_t bLength;                //!< Length of the descriptor
     uint8_t bDescriptorType;        //!< Descriptor type @ref APP_USBD_AUDIO_DESCRIPTOR_INTERFACE
-    uint8_t bDescriptorSubType;     //!< Descriptor subtype @ref APP_USBD_AUDIO_AC_IFACE_SUBTYPE_FEATURE_UNIT
+    uint8_t bDescriptorSubtype;     //!< Descriptor subtype @ref APP_USBD_AUDIO_AC_IFACE_SUBTYPE_FEATURE_UNIT
     uint8_t bUnitID;                //!< Unit ID
     uint8_t bSourceID;              //!< Source ID
     uint8_t bControlSize;           //!< Control size
@@ -310,7 +310,7 @@ typedef enum {
 typedef struct {
     uint8_t bLength;                //!< Length of the descriptor
     uint8_t bDescriptorType;        //!< Descriptor type @ref APP_USBD_AUDIO_DESCRIPTOR_INTERFACE
-    uint8_t bDescriptorSubType;     //!< Descriptor subtype @ref app_usbd_audio_ac_iface_subtype_t
+    uint8_t bDescriptorSubtype;     //!< Descriptor subtype @ref app_usbd_audio_ac_iface_subtype_t
     uint8_t bTerminalLink;          //!< Terminal link
     uint8_t bDelay;                 //!< Delay
     uint8_t wFormatTag[2];          //!< Format TAG
@@ -322,7 +322,7 @@ typedef struct {
 typedef struct {
     uint8_t bLength;                //!< Length of the descriptor
     uint8_t bDescriptorType;        //!< Descriptor type @ref APP_USBD_AUDIO_DESCRIPTOR_INTERFACE
-    uint8_t bDescriptorSubType;     //!< Descriptor subtype @ref app_usbd_audio_as_iface_subtype_t
+    uint8_t bDescriptorSubtype;     //!< Descriptor subtype @ref app_usbd_audio_as_iface_subtype_t
     uint8_t bFormatType;            //!< Format type: fixed value 1
     uint8_t bNrChannels;            //!< Number of channels
     uint8_t bSubframeSize;          //!< Subframe size
@@ -338,7 +338,7 @@ typedef struct {
 typedef struct {
     uint8_t bLength;                //!< Length of the descriptor
     uint8_t bDescriptorType;        //!< Descriptor type @ref APP_USBD_AUDIO_DESCRIPTOR_INTERFACE
-    uint8_t bDescriptorSubType;     //!< Descriptor subtype @ref app_usbd_audio_as_iface_subtype_t
+    uint8_t bDescriptorSubtype;     //!< Descriptor subtype @ref app_usbd_audio_as_iface_subtype_t
     uint8_t bFormatType;            //!< Format type: fixed value 2
     uint8_t wMaxBitRate[2];         //!< Maximum bitrate
     uint8_t wSamplesPerFrame[2];    //!< Samples per frame
@@ -352,7 +352,7 @@ typedef struct {
 typedef struct {
     uint8_t bLength;              //!< Length of the descriptor
     uint8_t bDescriptorType;      //!< Descriptor type @ref APP_USBD_AUDIO_DESCRIPTOR_INTERFACE
-    uint8_t bDescriptorSubType;   //!< Descriptor subtype @ref app_usbd_audio_as_iface_subtype_t
+    uint8_t bDescriptorSubtype;   //!< Descriptor subtype @ref app_usbd_audio_as_iface_subtype_t
     uint8_t bFormatType;          //!< Format type: fixed value 1
     uint8_t bNrChannels;          //!< Number of channels
     uint8_t bSubframeSize;        //!< Subframe size
@@ -367,7 +367,7 @@ typedef struct {
 typedef struct {
     uint8_t bLength;                //!< Length of the descriptor
     uint8_t bDescriptorType;        //!< Descriptor type @ref APP_USBD_AUDIO_DESCRIPTOR_ENDPOINT
-    uint8_t bDescriptorSubType;     //!< Descriptor subtype @ref APP_USBD_AUDIO_EP_SUBTYPE_GENERAL
+    uint8_t bDescriptorSubtype;     //!< Descriptor subtype @ref APP_USBD_AUDIO_EP_SUBTYPE_GENERAL
     uint8_t bmAttributes;           //!< Audio endpoint attributes
     uint8_t bLockDelayUnits;        //!< Lock delay units
     uint8_t wLockDelay[2];          //!< Lock delay value

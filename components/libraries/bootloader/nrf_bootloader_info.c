@@ -38,7 +38,10 @@
  *
  */
 #include "nrf_bootloader_info.h"
+#include "nrf_dfu_types.h"
+#include "nrf_nvmc.h"
 
+#define UICR_BOOTLOADER_ADDR 0x10001014
 
 /** @brief  This variable ensures that the linker script will write the bootloader start address
  *          to the UICR register. This value will be written in the HEX file and thus written to
@@ -47,13 +50,42 @@
 #if defined (__CC_ARM )
     #pragma push
     #pragma diag_suppress 1296
-    uint32_t  m_uicr_bootloader_start_address __attribute__((at(NRF_UICR_BOOTLOADER_START_ADDRESS)))
+    uint32_t  m_uicr_bootloader_start_address __attribute__((at(UICR_BOOTLOADER_ADDR)))
                                                     = BOOTLOADER_START_ADDR;
     #pragma pop
 #elif defined ( __GNUC__ ) || defined ( __SES_ARM )
     volatile uint32_t m_uicr_bootloader_start_address  __attribute__ ((section(".uicr_bootloader_start_address")))
                                             = BOOTLOADER_START_ADDR;
 #elif defined ( __ICCARM__ )
-    __root    const uint32_t m_uicr_bootloader_start_address @ NRF_UICR_BOOTLOADER_START_ADDRESS
+    __root    const uint32_t m_uicr_bootloader_start_address @ UICR_BOOTLOADER_ADDR
                                             = BOOTLOADER_START_ADDR;
 #endif
+
+void nrf_bootloader_mbr_addrs_populate(void)
+{
+    if (*(const uint32_t *)MBR_BOOTLOADER_ADDR == 0xFFFFFFFF)
+    {
+        nrf_nvmc_write_word(MBR_BOOTLOADER_ADDR, BOOTLOADER_START_ADDR);
+    }
+    if (*(const uint32_t *)MBR_PARAM_PAGE_ADDR == 0xFFFFFFFF)
+    {
+        nrf_nvmc_write_word(MBR_PARAM_PAGE_ADDR, NRF_MBR_PARAMS_PAGE_ADDRESS);
+    }
+}
+
+
+void nrf_bootloader_debug_port_disable(void)
+{
+    if (NRF_UICR->APPROTECT != 0x0)
+    {
+        nrf_nvmc_write_word((uint32_t)&NRF_UICR->APPROTECT, 0x0);
+        NVIC_SystemReset();
+    }
+#if (!defined (NRF52810_XXAA) && !defined (NRF52811_XXAA) && !defined (NRF52832_XXAA) && !defined (NRF52832_XXAB))
+    if (NRF_UICR->DEBUGCTRL != 0x0)
+    {
+        nrf_nvmc_write_word((uint32_t)&NRF_UICR->DEBUGCTRL, 0x0);
+        NVIC_SystemReset();
+    }
+#endif
+}

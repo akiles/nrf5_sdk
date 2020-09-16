@@ -72,8 +72,8 @@ static void oacp_response(nrf_ble_ots_c_t const * const p_ots_c,
 
 /**@brief Function for handling the indication and notifications from the GATT Service Server.
 
-   @param[in] p_ots_c       Pointer to Object Transfer client structure.
-   @param[in] p_ble_gattc_evt Pointer to a gattc event.
+   @param[in] p_ots_c       	Pointer to Object Transfer client structure.
+   @param[in] p_ble_gattc_evt 	Pointer to a GATTC event.
 */
 static void on_hvx(nrf_ble_ots_c_t const * const p_ots_c,
                    ble_gattc_evt_t const * const p_ble_gattc_evt)
@@ -103,10 +103,10 @@ static void on_hvx(nrf_ble_ots_c_t const * const p_ots_c,
 
 /**@brief Function for checking whether the peer's Object Transfer Service instance has been discovered.
 
-   @param[in] p_ots_c Pointer to the GATT Service client structure instance.
+   @param[in] p_ots_c Pointer to the GATT Service Client structure instance.
 
-   @return True if the Object Transfer service handles are valid.
-   @return False if the Object Transfer service handles are invalid
+   @return True if the Object Transfer Service handles are valid.
+   @return False if the Object Transfer Service handles are invalid.
  */
 static bool ots_gatt_handles_are_valid(const nrf_ble_ots_c_t * const p_ots_c)
 {
@@ -118,7 +118,7 @@ static bool ots_gatt_handles_are_valid(const nrf_ble_ots_c_t * const p_ots_c)
 
 
 ret_code_t nrf_ble_ots_c_indication_enable(nrf_ble_ots_c_t * const p_ots_c,
-                                           bool const              enable)
+                                           bool const             indication_enable)
 {
     VERIFY_MODULE_INITIALIZED();
     VERIFY_TRUE(ots_gatt_handles_are_valid(p_ots_c), NRF_ERROR_INVALID_STATE);
@@ -128,21 +128,25 @@ ret_code_t nrf_ble_ots_c_indication_enable(nrf_ble_ots_c_t * const p_ots_c,
         return NRF_ERROR_INVALID_STATE;
     }
 
-    ret_code_t err_code = NRF_SUCCESS;
+    uint8_t          cccd[BLE_CCCD_VALUE_LEN];
+    nrf_ble_gq_req_t cccd_req;
+    uint16_t         cccd_val = (indication_enable) ? BLE_GATT_HVX_INDICATION : 0;
 
-    ble_gattc_write_params_t gattc_params;
-    
-    memset(&gattc_params, 0x00, sizeof(gattc_params));
-    uint16_t cccd_val = (enable) ? BLE_GATT_HVX_INDICATION : 0;
+    cccd[0] = LSB_16(cccd_val);
+    cccd[1] = MSB_16(cccd_val);
 
-    gattc_params.handle   = p_ots_c->service.object_action_cp_cccd.handle;
-    gattc_params.len      = BLE_CCCD_VALUE_LEN;
-    gattc_params.p_value  = (uint8_t *)&cccd_val;
-    gattc_params.offset   = 0;
-    gattc_params.write_op = BLE_GATT_OP_WRITE_REQ;
+    memset(&cccd_req, 0, sizeof(nrf_ble_gq_req_t));
 
-    err_code = sd_ble_gattc_write(p_ots_c->conn_handle, &gattc_params);
-    return err_code;
+    cccd_req.type                        = NRF_BLE_GQ_REQ_GATTC_WRITE;
+    cccd_req.error_handler.cb            = p_ots_c->gatt_err_handler;
+    cccd_req.error_handler.p_ctx         = (nrf_ble_ots_c_t *)p_ots_c;
+    cccd_req.params.gattc_write.handle   = p_ots_c->service.object_action_cp_cccd.handle;
+    cccd_req.params.gattc_write.len      = BLE_CCCD_VALUE_LEN;
+    cccd_req.params.gattc_write.offset   = 0;
+    cccd_req.params.gattc_write.p_value  = cccd;
+    cccd_req.params.gattc_write.write_op = BLE_GATT_OP_WRITE_REQ;
+
+    return nrf_ble_gq_item_add(p_ots_c->p_gatt_queue, &cccd_req, p_ots_c->conn_handle);
 }
 
 
@@ -173,16 +177,22 @@ ret_code_t nrf_ble_ots_c_oacp_write_object(nrf_ble_ots_c_t * const p_ots_c, uint
     i += uint32_encode(len, &val[i]);
 
     val[i] |= (truncate << 0);
-    ble_gattc_write_params_t gattc_params;
-    memset(&gattc_params, 0, sizeof(ble_gattc_write_params_t));
 
-    gattc_params.handle   = p_ots_c->service.object_action_cp_char.handle_value;
-    gattc_params.len      = i;
-    gattc_params.p_value  = (uint8_t *)val;
-    gattc_params.offset   = 0;
-    gattc_params.write_op = BLE_GATT_OP_WRITE_REQ;
+    nrf_ble_gq_req_t write_req;
 
-    err_code = sd_ble_gattc_write(p_ots_c->conn_handle, &gattc_params);
+    memset(&write_req, 0, sizeof(nrf_ble_gq_req_t));
+
+    write_req.type                        = NRF_BLE_GQ_REQ_GATTC_WRITE;
+    write_req.error_handler.cb            = p_ots_c->gatt_err_handler;
+    write_req.error_handler.p_ctx         = (nrf_ble_ots_c_t *)p_ots_c;
+    write_req.params.gattc_write.handle   = p_ots_c->service.object_action_cp_char.handle_value;
+    write_req.params.gattc_write.len      = i;
+    write_req.params.gattc_write.offset   = 0;
+    write_req.params.gattc_write.p_value  = val;
+    write_req.params.gattc_write.write_op = BLE_GATT_OP_WRITE_REQ;
+
+    err_code = nrf_ble_gq_item_add(p_ots_c->p_gatt_queue, &write_req, p_ots_c->conn_handle);
+
     if(err_code != NRF_SUCCESS)
     {
         p_ots_c->err_handler(err_code);
@@ -200,8 +210,6 @@ ret_code_t nrf_ble_ots_c_oacp_read_object(nrf_ble_ots_c_t * const p_ots_c, uint3
         return NRF_ERROR_INVALID_STATE;
     }
 
-    ret_code_t err_code = NRF_SUCCESS;
-
     uint8_t val[BLE_OTS_OACP_READ_OP_SIZE];
     memset(val, 0, sizeof(val));
 
@@ -216,17 +224,20 @@ ret_code_t nrf_ble_ots_c_oacp_read_object(nrf_ble_ots_c_t * const p_ots_c, uint3
     //Len
     i += uint32_encode(len, &val[i]);
 
-    ble_gattc_write_params_t gattc_params;
-    memset(&gattc_params, 0, sizeof(ble_gattc_write_params_t));
+    nrf_ble_gq_req_t write_req;
 
-    gattc_params.handle   = p_ots_c->service.object_action_cp_char.handle_value;
-    gattc_params.len      = sizeof(val);
-    gattc_params.p_value  = (uint8_t *)val;
-    gattc_params.offset   = 0;
-    gattc_params.write_op = BLE_GATT_OP_WRITE_REQ;
+    memset(&write_req, 0, sizeof(nrf_ble_gq_req_t));
 
-    err_code = sd_ble_gattc_write(p_ots_c->conn_handle, &gattc_params);
-    return err_code;
+    write_req.type                        = NRF_BLE_GQ_REQ_GATTC_WRITE;
+    write_req.error_handler.cb            = p_ots_c->gatt_err_handler;
+    write_req.error_handler.p_ctx         = (nrf_ble_ots_c_t *)p_ots_c;
+    write_req.params.gattc_write.handle   = p_ots_c->service.object_action_cp_char.handle_value;
+    write_req.params.gattc_write.len      = sizeof(val);
+    write_req.params.gattc_write.offset   = 0;
+    write_req.params.gattc_write.p_value  = val;
+    write_req.params.gattc_write.write_op = BLE_GATT_OP_WRITE_REQ;
+
+    return nrf_ble_gq_item_add(p_ots_c->p_gatt_queue, &write_req, p_ots_c->conn_handle);
 }
 
 

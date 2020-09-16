@@ -58,20 +58,19 @@
  */
 typedef void (*register_callback)(void*);
 
+#ifdef PAL_OS_HAS_EVENT_INIT
 /**
-* Platform specific event call back registration function to trigger once when timer expires.
-* <br>
-*
-* <b>API Details:</b>
-*         This function registers the callback function supplied by the caller.<br>
-*         It triggers a timer with the supplied time interval in microseconds.<br>
-*         Once the timer expires, the registered callback function gets called.<br>
-*
-* \param[in] callback              Callback function pointer
-* \param[in] callback_args         Callback arguments
-* \param[in] time_us               time in micro seconds to trigger the call back
-*/
+ * @brief Platform specific event init function.
+ */
+pal_status_t pal_os_event_init(void);
+#endif
+
+/**
+ * @brief Callback registration function to trigger once when timer expires.
+ */
 void pal_os_event_register_callback_oneshot(register_callback callback, void* callback_args, uint32_t time_us);
+
+
 
 #endif //_PAL_OS_EVENT_H_
 

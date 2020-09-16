@@ -56,10 +56,32 @@ NRF_LOG_MODULE_REGISTER();
 static const ble_uuid_t m_gatts_uuid = {BLE_UUID_GATT, BLE_UUID_TYPE_BLE};  /**< Service Changed indication UUID. */
 
 
+/**@brief Function for intercepting the errors of GATTC and the BLE GATT Queue.
+ *
+ * @param[in] nrf_error   Error code.
+ * @param[in] p_ctx       Parameter from the event handler.
+ * @param[in] conn_handle Connection handle.
+ */
+static void gatt_error_handler(uint32_t   nrf_error,
+                               void     * p_ctx,
+                               uint16_t   conn_handle)
+{
+    nrf_ble_gatts_c_t * p_gattc = (nrf_ble_gatts_c_t *)p_ctx;
+
+    NRF_LOG_DEBUG("A GATT Client error has occurred on conn_handle: 0X%X", conn_handle);
+
+    if (p_gattc->err_handler != NULL)
+    {
+        p_gattc->err_handler(nrf_error);
+    }
+}
+
+
+
 /**@brief Function for handling the indication and notifications from the GATT Service Server.
 
-   @param[in] p_gatts_c       Pointer to Service Changed client structure.
-   @param[in] p_ble_gattc_evt Pointer to a gattc event.
+   @param[in] p_gatts_c       Pointer to Service Changed Client structure.
+   @param[in] p_ble_gattc_evt Pointer to a GATTC event.
 */
 static void on_hvx(nrf_ble_gatts_c_t const * const p_gatts_c,
                    ble_gattc_evt_t   const * const p_ble_gattc_evt)
@@ -88,7 +110,7 @@ static void on_hvx(nrf_ble_gatts_c_t const * const p_gatts_c,
         evt.evt_type    = NRF_BLE_GATTS_C_EVT_SRV_CHANGED;
         evt.conn_handle = p_ble_gattc_evt->conn_handle;
 
-        GATTS_LOG ("Service Changed Indication.\n\r");
+        GATTS_LOG ("Service Changed indication.\n\r");
         evt_handler(&evt);
 
     }
@@ -102,10 +124,13 @@ ret_code_t nrf_ble_gatts_c_init(nrf_ble_gatts_c_t      * p_gatts_c,
     VERIFY_PARAM_NOT_NULL(p_gatts_c);
     VERIFY_PARAM_NOT_NULL(p_gatts_c_init);
     VERIFY_PARAM_NOT_NULL(p_gatts_c_init->evt_handler);
+    VERIFY_PARAM_NOT_NULL(p_gatts_c_init->p_gatt_queue);
+
     memset (p_gatts_c, 0, sizeof(nrf_ble_gatts_c_t));
 
-    p_gatts_c->conn_handle = BLE_CONN_HANDLE_INVALID;
-    p_gatts_c->evt_handler = p_gatts_c_init->evt_handler;
+    p_gatts_c->conn_handle  = BLE_CONN_HANDLE_INVALID;
+    p_gatts_c->evt_handler  = p_gatts_c_init->evt_handler;
+    p_gatts_c->p_gatt_queue = p_gatts_c_init->p_gatt_queue; 
 
     err_code = ble_db_discovery_evt_register(&m_gatts_uuid);
     VERIFY_SUCCESS(err_code);
@@ -116,12 +141,12 @@ ret_code_t nrf_ble_gatts_c_init(nrf_ble_gatts_c_t      * p_gatts_c,
 
 
 /**@brief Function for checking whether the peer's GATT Service instance and the Service Changed
-          Characteristic have been discovered.
+          characteristic have been discovered.
 
-   @param[in] p_gatts_c Pointer to the GATT Service client structure instance.
+   @param[in] p_gatts_c Pointer to the GATT Service Client structure instance.
 
-   @return True if the Service Changed Characteristic handle is valid.
-   @return False if the Service Changed Characteristic handle is invalid.
+   @return True if the Service Changed characteristic handle is valid.
+   @return False if the Service Changed characteristic handle is invalid.
  */
 static bool gatts_gatt_handles_are_valid(nrf_ble_gatts_c_t const * const p_gatts_c)
 {
@@ -130,7 +155,7 @@ static bool gatts_gatt_handles_are_valid(nrf_ble_gatts_c_t const * const p_gatts
 
 
 ret_code_t nrf_ble_gatts_c_enable_indication(nrf_ble_gatts_c_t * const p_gatts_c,
-                                             bool const                enable)
+                                             bool const                indication_enable)
 {
     VERIFY_MODULE_INITIALIZED();
 
@@ -140,20 +165,25 @@ ret_code_t nrf_ble_gatts_c_enable_indication(nrf_ble_gatts_c_t * const p_gatts_c
         return NRF_ERROR_INVALID_STATE;
     }
 
-    ret_code_t err_code = NRF_SUCCESS;
-    uint16_t   cccd_val = (enable) ? BLE_GATT_HVX_INDICATION : 0;
+    uint16_t         cccd_val = (indication_enable) ? BLE_GATT_HVX_INDICATION : 0;
+    uint8_t          cccd[BLE_CCCD_VALUE_LEN];
+    nrf_ble_gq_req_t cccd_req;
 
-    ble_gattc_write_params_t gattc_params =
-    {
-        .handle   = p_gatts_c->srv_changed_char.cccd_handle,
-        .len      = BLE_CCCD_VALUE_LEN,
-        .p_value  = (uint8_t *)&cccd_val,
-        .offset   = 0,
-        .write_op = BLE_GATT_OP_WRITE_REQ,
-    };
+    cccd[0] = LSB_16(cccd_val);
+    cccd[1] = MSB_16(cccd_val);
 
-    err_code = sd_ble_gattc_write(p_gatts_c->conn_handle, &gattc_params);
-    return err_code;
+    memset(&cccd_req, 0, sizeof(nrf_ble_gq_req_t));
+
+    cccd_req.type                        = NRF_BLE_GQ_REQ_GATTC_WRITE;
+    cccd_req.error_handler.cb            = gatt_error_handler;
+    cccd_req.error_handler.p_ctx         = p_gatts_c;
+    cccd_req.params.gattc_write.handle   = p_gatts_c->srv_changed_char.cccd_handle;
+    cccd_req.params.gattc_write.len      = BLE_CCCD_VALUE_LEN;
+    cccd_req.params.gattc_write.offset   = 0;
+    cccd_req.params.gattc_write.p_value  = cccd;
+    cccd_req.params.gattc_write.write_op = BLE_GATT_OP_WRITE_REQ;
+
+    return nrf_ble_gq_item_add(p_gatts_c->p_gatt_queue, &cccd_req, p_gatts_c->conn_handle);
 }
 
 
@@ -165,14 +195,13 @@ void nrf_ble_gatts_c_on_db_disc_evt(nrf_ble_gatts_c_t const * const p_gatts_c,
     nrf_ble_gatts_c_evt_t evt;
     ble_gatt_db_char_t  * p_chars;
 
-    p_chars      = p_evt->params.discovered_db.charateristics;
-    evt.evt_type = NRF_BLE_GATTS_C_EVT_DISCOVERY_FAILED;
+    p_chars = p_evt->params.discovered_db.charateristics;
 
     if (   (p_evt->evt_type == BLE_DB_DISCOVERY_COMPLETE)
         && (p_evt->params.discovered_db.srv_uuid.uuid == BLE_UUID_GATT)
         && (p_evt->params.discovered_db.srv_uuid.type == BLE_UUID_TYPE_BLE))
     {
-        // Find the handles of the Service Changed Characteristics.
+        // Find the handles of the Service Changed characteristics.
         for (uint32_t i = 0; i < p_evt->params.discovered_db.char_count; i++)
         {
             if (   (p_chars[i].characteristic.uuid.uuid == BLE_UUID_GATT_CHARACTERISTIC_SERVICE_CHANGED)
@@ -183,11 +212,21 @@ void nrf_ble_gatts_c_on_db_disc_evt(nrf_ble_gatts_c_t const * const p_gatts_c,
                        sizeof(ble_gatt_db_char_t));
 
                 evt.evt_type           = NRF_BLE_GATTS_C_EVT_DISCOVERY_COMPLETE;
-                GATTS_LOG("Service Changed Characteristic found.\n\r");
+                GATTS_LOG("Service Changed characteristic found.\n\r");
                 break;
             }
         }
     }
+    else if ((p_evt->evt_type == BLE_DB_DISCOVERY_SRV_NOT_FOUND) ||
+             (p_evt->evt_type == BLE_DB_DISCOVERY_ERROR))
+    {
+        evt.evt_type = NRF_BLE_GATTS_C_EVT_DISCOVERY_FAILED;
+    }
+    else
+    {
+        return;
+    }
+    
 
     if (p_gatts_c->evt_handler != NULL)
     {
@@ -200,7 +239,7 @@ void nrf_ble_gatts_c_on_db_disc_evt(nrf_ble_gatts_c_t const * const p_gatts_c,
 
 /**@brief Function for handling the Disconnect event.
 
-   @param[in] p_cts      Pointer to the GATT Service client structure instance.
+   @param[in] p_cts      Pointer to the GATT Service Client structure instance.
    @param[in] p_ble_evt  Event received from the BLE stack.
  */
 static void on_disconnect(nrf_ble_gatts_c_t * p_gatts_c, ble_evt_t const * p_ble_evt)
@@ -212,7 +251,7 @@ static void on_disconnect(nrf_ble_gatts_c_t * p_gatts_c, ble_evt_t const * p_ble
         if (gatts_gatt_handles_are_valid(p_gatts_c))
         {
             // There was a valid instance of GATTS on the peer. Send an event to the
-            // application, so that it can do any clean up related to this module.
+            // application, so that it can do a cleanup related to this module.
             nrf_ble_gatts_c_evt_t evt;
 
             evt.evt_type = NRF_BLE_GATTS_C_EVT_DISCONN_COMPLETE;
@@ -271,6 +310,7 @@ ret_code_t nrf_ble_gatts_c_handles_assign(nrf_ble_gatts_c_t        * const p_gat
         p_gatts_c->srv_changed_char.characteristic.handle_value = p_peer_handles->characteristic.handle_value;
 
     }
-    return NRF_SUCCESS;
+
+    return nrf_ble_gq_conn_handle_register(p_gatts_c->p_gatt_queue, conn_handle);
 }
 #endif // NRF_MODULE_ENABLED(BLE_GATTS_C)

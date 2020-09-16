@@ -82,6 +82,8 @@
 #define L2CAP_HDR_LEN                  4                                      /**< Length of a L2CAP header, in bytes. */
 #define BATTERY_INITIAL_LVL            100                                    /**< Battery initial level. */
 #define UUID_STRING_LEN                5                                      /**< UUID uint16_t string length. */
+#define UUID_16_POS                    12                                     /**< Position of 2 - bytes which identifies 16 UUID inside of 128 - bit UUID. */
+#define UUID_128_OFFSET                3                                      /**< Offset of 128 - bit UUID in declarative handle read response data. */
 
 /**@brief   Priority of the application BLE event handler.
  * @note    There is no need to modify this value.
@@ -103,11 +105,11 @@ typedef struct
 
 typedef struct
 {
-    ble_uuid_t uuid;              /**< UUID of the characteristic. */
-    uint16_t   decl_handle;       /**< Handle of the characteristic declaration. */
-    uint16_t   value_handle;      /**< Handle of the characteristic value. */
-    uint16_t   cccd_desc_handle;  /**< Handle of the CCCD descriptors. */
-    bool       notify;            /**< True when notification of the value permitted. */
+    ble_uuid_t            uuid;              /**< UUID of the characteristic. */
+    uint16_t              decl_handle;       /**< Handle of the characteristic declaration. */
+    uint16_t              value_handle;      /**< Handle of the characteristic value. */
+    uint16_t              cccd_desc_handle;  /**< Handle of the CCCD descriptors. */
+    ble_gatt_char_props_t char_props;        /**< GATT Characteristic Properties. */
 } char_data_t;
 
 // Structure storing the data of all discovered characteristics.
@@ -127,6 +129,7 @@ static uint16_t    m_num_comp_conn_handle;                       /**< Numeric co
 static conn_peer_t m_connected_peers[NRF_BLE_LINK_COUNT];        /**< Connected devices data. */
 bool               m_scanning = false;                           /**< Variable that informs about the ongoing scanning. True when scan is ON. */
 bool               m_vendor_uuid_read = false;                   /**< Variable that informs about the read request for a 128-bit service UUID. */
+bool               m_vendor_char_uuid_read = false;              /**< Variable that informs about the read request for a 128-bit characteristic UUID. */
 uint8_t            m_uuid_attr_handle;
 
 NRF_BALLOC_DEF(m_srv_pool, sizeof(device_srv_t), NRF_BLE_LINK_COUNT);
@@ -252,7 +255,9 @@ uint16_t cccd_descriptors_handle_get(char const * const p_char_uuid_str)
 
         sprintf(uuid_str, "%X", m_srv_char.char_data[i].uuid.uuid);
 
-        if ((!strcmp(uuid_str, p_char_uuid_str)) && m_srv_char.char_data[i].notify)
+        if ((!strcmp(uuid_str, p_char_uuid_str)) &&
+            (m_srv_char.char_data[i].char_props.notify ||
+             m_srv_char.char_data[i].char_props.indicate))
         {
            return m_srv_char.char_data[i].cccd_desc_handle;
         }
@@ -299,7 +304,7 @@ static void cccd_descriptors_search(uint16_t char_uuid, uint16_t conn_handle)
         {
             if ((start_handle >
                  mp_device_srv[conn_handle]->services[j].handle_range.start_handle) &&
-                (start_handle < mp_device_srv[conn_handle]->services[j].handle_range.end_handle))
+                (start_handle <= mp_device_srv[conn_handle]->services[j].handle_range.end_handle))
             {
                 end_handle = mp_device_srv[conn_handle]->services[j].handle_range.end_handle;
                 break;
@@ -491,6 +496,28 @@ static void uuid_print(uint16_t conn_handle, ble_gattc_service_t const * p_servi
                          "type", 
                          p_service[i].uuid.type);
     }
+}
+
+static void characteristics_print(void)
+{
+    for (uint8_t i = 0; i < m_srv_char.count; i++)
+    {
+           ble_gatt_char_props_t const * p_char_props = 
+                                 &m_srv_char.char_data[i].char_props;
+           NRF_LOG_RAW_INFO("Characteristic UUID: %X\r\n",
+                            m_srv_char.char_data[i].uuid.uuid);
+           NRF_LOG_RAW_INFO("Parameters:\r\n");
+           NRF_LOG_RAW_INFO("broadcast: %d ", p_char_props->broadcast);
+           NRF_LOG_RAW_INFO("read: %d ", p_char_props->read);
+           NRF_LOG_RAW_INFO("write_wo_resp: %d ", p_char_props->write_wo_resp);
+           NRF_LOG_RAW_INFO("write: %d ", p_char_props->write);
+           NRF_LOG_RAW_INFO("notify: %d\r\n", p_char_props->notify);
+           NRF_LOG_RAW_INFO("indicate: %d ", p_char_props->indicate);
+           NRF_LOG_RAW_INFO("auth_signed_wr: %d\r\n", p_char_props->auth_signed_wr);
+    }
+
+    NRF_LOG_RAW_INFO("Number of characteristics: %d\r\n", m_srv_char.count);
+
 }
 
 
@@ -801,10 +828,14 @@ static void cccd_descriptors_discovery(ble_gattc_evt_t const * p_ble_gattc_evt)
     for (uint8_t i = 0; i < m_srv_char.count; i++)
     {
         // If it is possible to enable notification.
-        if (m_srv_char.char_data[i].notify)
+        if ((m_srv_char.char_data[i].char_props.notify ||
+             m_srv_char.char_data[i].char_props.indicate) &&
+            (m_srv_char.char_data[i].cccd_desc_handle == 0))
         {
             // Search for CCCD descriptor handle
             cccd_descriptors_search(m_srv_char.char_data[i].uuid.uuid, p_ble_gattc_evt->conn_handle);
+
+            break;
         }
     }
 }
@@ -817,7 +848,7 @@ static void cccd_descriptors_discovery(ble_gattc_evt_t const * p_ble_gattc_evt)
 static void on_characteristics_discovery_rsp(ble_gattc_evt_t const * p_ble_gattc_evt)
 {
     uint16_t        count;
-    static uint16_t offset = 0;;
+    static uint16_t offset = 0;
     uint16_t        bytes_to_copy;
     ret_code_t      err_code;
     uint16_t        conn_handle = p_ble_gattc_evt->conn_handle;
@@ -841,34 +872,16 @@ static void on_characteristics_discovery_rsp(ble_gattc_evt_t const * p_ble_gattc
         }
 
         // Save characteristics data.
-       for (uint8_t i = offset; i < bytes_to_copy; i++)
+       for (uint8_t i = 0; i < bytes_to_copy; i++)
        {
-           m_srv_char.char_data[i].decl_handle      = p_char_disc_rsp_evt->chars[i].handle_decl;
-           m_srv_char.char_data[i].value_handle     = p_char_disc_rsp_evt->chars[i].handle_value;
-           m_srv_char.char_data[i].uuid             = p_char_disc_rsp_evt->chars[i].uuid;
-           m_srv_char.char_data[i].notify           = p_char_disc_rsp_evt->chars[i].char_props.notify;
-           m_srv_char.char_data[i].cccd_desc_handle = 0;
-
-           offset++;
+           m_srv_char.char_data[i + offset].decl_handle      = p_char_disc_rsp_evt->chars[i].handle_decl;
+           m_srv_char.char_data[i + offset].value_handle     = p_char_disc_rsp_evt->chars[i].handle_value;
+           m_srv_char.char_data[i + offset].uuid             = p_char_disc_rsp_evt->chars[i].uuid;
+           m_srv_char.char_data[i + offset].char_props       = p_char_disc_rsp_evt->chars[i].char_props;
+           m_srv_char.char_data[i + offset].cccd_desc_handle = 0;
        }
 
-       // Display characteristics data.
-       for (uint8_t i = 0; i < offset; i++)
-       {
-           ble_gatt_char_props_t char_param =
-                p_ble_gattc_evt->params.char_disc_rsp.chars[i].char_props;
-
-           NRF_LOG_RAW_INFO("Characteristic UUID: %X\r\n",
-                            p_ble_gattc_evt->params.char_disc_rsp.chars[i].uuid.uuid);
-           NRF_LOG_RAW_INFO("Parameters:\r\n");
-           NRF_LOG_RAW_INFO("broadcast: %d ", char_param.broadcast);
-           NRF_LOG_RAW_INFO("read: %d ", char_param.read);
-           NRF_LOG_RAW_INFO("write_wo_resp: %d ", char_param.write_wo_resp);
-           NRF_LOG_RAW_INFO("write: %d ", char_param.write);
-           NRF_LOG_RAW_INFO("notify: %d\r\n", char_param.notify);
-           NRF_LOG_RAW_INFO("indicate: %d ", char_param.indicate);
-           NRF_LOG_RAW_INFO("auth_signed_wr: %d\r\n", char_param.auth_signed_wr);
-       }
+       offset += bytes_to_copy;
     }
     // If the last characteristic has not been reached, look for a new handle range.
     ble_gattc_handle_range_t handle_range;
@@ -878,8 +891,9 @@ static void on_characteristics_discovery_rsp(ble_gattc_evt_t const * p_ble_gattc
     // Search for end handle.
     for (uint8_t j = 0; j < mp_device_srv[conn_handle]->count; j++)
     {
-        if (handle_range.start_handle >
-             mp_device_srv[conn_handle]->services[j].handle_range.start_handle)
+        if ((handle_range.start_handle >
+             mp_device_srv[conn_handle]->services[j].handle_range.start_handle) &&
+            (handle_range.start_handle < mp_device_srv[conn_handle]->services[j].handle_range.end_handle))
         {
             handle_range.end_handle =
                 mp_device_srv[conn_handle]->services[j].handle_range.end_handle;
@@ -894,10 +908,24 @@ static void on_characteristics_discovery_rsp(ble_gattc_evt_t const * p_ble_gattc
         (offset == MAX_CHARACTERISTIC_COUNT) ||
         (p_ble_gattc_evt->gatt_status != BLE_GATT_STATUS_SUCCESS))
     {
-        NRF_LOG_RAW_INFO("Number of characteristics: %d\r\n", offset);
         m_srv_char.count = offset;
         offset           = 0;
 
+        for (uint8_t i = 0; i < m_srv_char.count; i++)
+        {
+            if (m_srv_char.char_data[i].uuid.type == BLE_UUID_TYPE_UNKNOWN)
+            {
+                m_vendor_char_uuid_read = true;
+                // Read char 128-bit UUID.
+                err_code = sd_ble_gattc_read(conn_handle, m_srv_char.char_data[i].decl_handle, 0);
+                APP_ERROR_CHECK(err_code);
+
+                return;
+            }
+        }
+
+        // Print characteristic data.
+        characteristics_print();
         // Search for the CCCD descriptors.
         cccd_descriptors_discovery(p_ble_gattc_evt);
 
@@ -942,12 +970,19 @@ static void on_descriptor_discovery_rsp(const ble_gattc_evt_t * const p_ble_gatt
         {
             for (uint8_t j = 0; j < m_srv_char.count; j++)
             {
-                if (m_srv_char.char_data[j].cccd_desc_handle == 0 && m_srv_char.char_data[j].notify)
+                if (m_srv_char.char_data[j].cccd_desc_handle == 0 &&
+                    (m_srv_char.char_data[j].char_props.notify ||
+                     m_srv_char.char_data[j].char_props.indicate))
                 {
                     m_srv_char.char_data[j].cccd_desc_handle =
                         p_ble_gattc_evt->params.desc_disc_rsp.descs[i].handle;
+                    
+                    break;
                 }
             }
+            
+            cccd_descriptors_discovery(p_ble_gattc_evt);
+
             return;
         }
     }
@@ -1015,6 +1050,9 @@ static void on_read_rsp(const ble_gattc_evt_t * const p_ble_gattc_evt)
                 //lint -restore
                 err_code = sd_ble_uuid_vs_add(&uuid, &mp_device_srv[conn_handle]->services[i].uuid.type);
                 APP_ERROR_CHECK(err_code);
+
+                mp_device_srv[conn_handle]->services[i].uuid.uuid = uint16_decode(&uuid.uuid128[UUID_16_POS]);
+
                 break;
             }
         }
@@ -1036,9 +1074,52 @@ static void on_read_rsp(const ble_gattc_evt_t * const p_ble_gattc_evt)
             {
                 NRF_LOG_INFO("Services count: %d", mp_device_srv[conn_handle]->count);
                 m_vendor_uuid_read = false;
-                // Print services UUID. When you first discover services, the 128-bit UUIDs may not be displayed.
-                // In such case, you should rediscover the services.
+                // Print services UUID.
                 uuid_print(p_ble_gattc_evt->conn_handle, mp_device_srv[conn_handle]->services);
+            }
+        }
+
+        return;
+    }
+
+    if (m_vendor_char_uuid_read)
+    {
+        for (uint8_t i = 0; i < m_srv_char.count; i++)
+        {
+            if (p_read_rsp->handle == m_srv_char.char_data[i].decl_handle)
+            {
+                //lint -save -e420
+                memcpy(uuid.uuid128, p_read_rsp->data + UUID_128_OFFSET, sizeof(uuid.uuid128));
+                //lint -restore
+                err_code = sd_ble_uuid_vs_add(&uuid, &m_srv_char.char_data[i].uuid.type);
+                APP_ERROR_CHECK(err_code);
+
+                m_srv_char.char_data[i].uuid.uuid = uint16_decode(&uuid.uuid128[UUID_16_POS]);
+
+                break;
+            }
+        }
+
+        // If characteristic UUID type is unknown, then try to search for the 128-bit UUID.
+        for (uint8_t i = 0; i < m_srv_char.count; i++)
+        {
+            if (m_srv_char.char_data[i].uuid.type == BLE_UUID_TYPE_UNKNOWN)
+            {
+                m_vendor_char_uuid_read = true;
+                // Look for service 128-bit UUID.
+                err_code = sd_ble_gattc_read(conn_handle, m_srv_char.char_data[i].decl_handle, 0);
+                APP_ERROR_CHECK(err_code);
+                return;
+            }
+
+            // If characteristic is last.
+            if (i == (m_srv_char.count - 1))
+            {
+                m_vendor_char_uuid_read = false;
+                // Print characteristics data.
+                characteristics_print();
+                // Search for the CCCD descriptors.
+                cccd_descriptors_discovery(p_ble_gattc_evt);
             }
         }
 

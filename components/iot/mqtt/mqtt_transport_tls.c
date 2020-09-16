@@ -147,35 +147,37 @@ uint32_t mqtt_client_tls_write(mqtt_client_t * p_client,
 }
 
 
-uint32_t mqtt_client_tls_read(mqtt_client_t * p_client, uint8_t * p_data, uint32_t datalen)
+uint32_t mqtt_client_tls_read(mqtt_client_t * p_client,
+                              uint8_t       * p_data,
+                              uint32_t        datalen)
 {
-    uint32_t err = nrf_tls_input(&p_client->tls_instance, p_data, datalen);
+    uint32_t err_code = nrf_tls_input(&p_client->tls_instance, p_data, datalen);
 
-    if ((err == NRF_SUCCESS) && (p_client->p_pending_packet == NULL))
+    if ((err_code == NRF_SUCCESS) && (p_client->p_pending_packet == NULL))
     {
         uint32_t   rx_datalen  = 1024;
         uint8_t  * p_mqtt_data = nrf_malloc(1024);
 
-        if (p_data != NULL)
+        if (p_mqtt_data != NULL)
         {
             MQTT_MUTEX_UNLOCK ();
 
-            err = nrf_tls_read(&p_client->tls_instance,
-                               p_mqtt_data,
-                               &rx_datalen);
+            err_code = nrf_tls_read(&p_client->tls_instance,
+                                    p_mqtt_data,
+                                    &rx_datalen);
 
             MQTT_MUTEX_LOCK ();
 
-            if ((err == NRF_SUCCESS) && (rx_datalen > 0))
+            if ((err_code == NRF_SUCCESS) && (rx_datalen > 0))
             {
-                 err = mqtt_handle_rx_data(p_client, p_mqtt_data, rx_datalen);
+                 err_code = mqtt_handle_rx_data(p_client, p_mqtt_data, rx_datalen);
             }
 
             nrf_free(p_mqtt_data);
         }
     }
 
-    return err;
+    return err_code;
 }
 
 

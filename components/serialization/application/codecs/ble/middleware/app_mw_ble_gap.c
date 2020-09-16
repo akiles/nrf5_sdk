@@ -1907,8 +1907,8 @@ static uint32_t gap_adv_set_configure_rsp_dec(const uint8_t * p_buffer, uint16_t
 
     if (result_code != NRF_SUCCESS)
     {
-    	app_ble_gap_adv_buf_addr_unregister(mp_out_params[0], false);
     	app_ble_gap_adv_buf_addr_unregister(mp_out_params[1], false);
+    	app_ble_gap_adv_buf_addr_unregister(mp_out_params[2], false);
     }
 
     //@note: Should never fail.
@@ -1930,16 +1930,17 @@ uint32_t _sd_ble_gap_adv_set_configure(uint8_t *p_adv_handle,
     uint32_t  buffer_length = 0;
 
     tx_buf_alloc(&p_buffer, (uint16_t *)&buffer_length);
-
+    
+    mp_out_params[0] = p_adv_handle;
     if (p_adv_handle)
     {
-        mp_out_params[0] = p_adv_data->adv_data.p_data;
-        mp_out_params[1] = p_adv_data->scan_rsp_data.p_data;
+        mp_out_params[1] = p_adv_data->adv_data.p_data;
+        mp_out_params[2] = p_adv_data->scan_rsp_data.p_data;
     }
     else
     {
-        mp_out_params[0] =  NULL;
         mp_out_params[1] =  NULL;
+        mp_out_params[2] =  NULL;
     }
 
     const uint32_t err_code = ble_gap_adv_set_configure_req_enc(p_adv_handle, p_adv_data, p_adv_params,

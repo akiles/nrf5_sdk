@@ -35,57 +35,57 @@
 /*
 The following defines the Error code layering for a 4 byte error code.
 Each byte is represented as XX, where X being a single nibble.
-    |8X|XX|XX|XX|
-      |  |  |  |---->Error Codes
+	|8X|XX|XX|XX|
+	  |  |  |  |---->Error Codes
       |  |  |------->Layer
       |  |---------->Unused
       |------------->80
 */
 
  /// Base Error Code
-#define ERROR_CODE_BASE                     0x80000000
+#define ERROR_CODE_BASE				        0x80000000
 
 ///Base Error code for Comms
-#define BASE_ERROR_COMMS                    (ERROR_CODE_BASE | 0x00000000)
+#define BASE_ERROR_COMMS			        (ERROR_CODE_BASE | 0x00000000)
 
 ///Base Error code for Command Lib
-#define BASE_ERROR_CMDLIB                   (ERROR_CODE_BASE | 0x00000100)
+#define BASE_ERROR_CMDLIB			        (ERROR_CODE_BASE | 0x00000100)
 
 ///Base Error code for Integration Lib
-#define BASE_ERROR_INTLIB                   (ERROR_CODE_BASE | 0x00000200)
+#define BASE_ERROR_INTLIB			        (ERROR_CODE_BASE | 0x00000200)
 
 ///Base Error code for Crypto Lib
-#define BASE_ERROR_CRYPTOLIB                (ERROR_CODE_BASE | 0x00000300)
+#define BASE_ERROR_CRYPTOLIB			    (ERROR_CODE_BASE | 0x00000300)
 
 ///Base Error code for Alert
-#define BASE_ERROR_ALERT                    (ERROR_CODE_BASE | 0x00000500)
+#define BASE_ERROR_ALERT			        (ERROR_CODE_BASE | 0x00000500)
 
 ///Base Error code for Handshake Layer
-#define BASE_ERROR_HANDSHAKELAYER           (ERROR_CODE_BASE | 0x00000600)
+#define BASE_ERROR_HANDSHAKELAYER			(ERROR_CODE_BASE | 0x00000600)
 
 ///Base Error code for Transport Layer
-#define BASE_ERROR_TRANSPORTLAYER           (ERROR_CODE_BASE | 0x00000700)
+#define BASE_ERROR_TRANSPORTLAYER			(ERROR_CODE_BASE | 0x00000700)
 
 ///Base Error code for OCP
-#define BASE_ERROR_OCPLAYER                 (ERROR_CODE_BASE | 0x00000800)
+#define BASE_ERROR_OCPLAYER			        (ERROR_CODE_BASE | 0x00000800)
 
 ///Base Error code for Record Layer
-#define BASE_ERROR_RECORDLAYER              (ERROR_CODE_BASE | 0x00000900)
+#define BASE_ERROR_RECORDLAYER   		    (ERROR_CODE_BASE | 0x00000900)
 
 ///Base Error code for Windowing
-#define BASE_ERROR_WINDOW                   (ERROR_CODE_BASE | 0x00000A00)
+#define BASE_ERROR_WINDOW   		        (ERROR_CODE_BASE | 0x00000A00)
 
 ///Base Error code for Message Layer
-#define BASE_ERROR_MESSAGELAYER             (ERROR_CODE_BASE | 0x00000B00)
+#define BASE_ERROR_MESSAGELAYER			    (ERROR_CODE_BASE | 0x00000B00)
 
 ///Base Error code for Flight Handler
-#define BASE_ERROR_FLIGHT                   (ERROR_CODE_BASE | 0x00000C00)
+#define BASE_ERROR_FLIGHT			        (ERROR_CODE_BASE | 0x00000C00)
 
 ///Base Error code for Crypto Layer
-#define BASE_ERROR_CRYPTO_LAYER             (ERROR_CODE_BASE | 0x00000D00)
+#define BASE_ERROR_CRYPTO_LAYER			    (ERROR_CODE_BASE | 0x00000D00)
 
 ///Base Error code UDP
-#define BASE_ERROR_UDP                      (ERROR_CODE_BASE | 0x00000E00)
+#define BASE_ERROR_UDP			            (ERROR_CODE_BASE | 0x00000E00)
 
 #endif //_BASEERRORCODE_H_
 /**

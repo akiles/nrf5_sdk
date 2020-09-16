@@ -228,7 +228,8 @@ static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
         case APP_USBD_HID_REQ_GET_REPORT:
         {
             if ((p_setup_ev->setup.wValue.hb == APP_USBD_HID_REPORT_TYPE_INPUT) ||
-                (p_setup_ev->setup.wValue.hb == APP_USBD_HID_REPORT_TYPE_OUTPUT))
+                (p_setup_ev->setup.wValue.hb == APP_USBD_HID_REPORT_TYPE_OUTPUT) ||
+                (p_setup_ev->setup.wValue.hb == APP_USBD_HID_REPORT_TYPE_FEATURE))
             {
                 return p_hinst->p_hid_methods->on_get_report(p_inst, p_setup_ev);
             }
@@ -275,12 +276,9 @@ static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
     switch (p_setup_ev->setup.bRequest)
     {
         case APP_USBD_HID_REQ_SET_REPORT:
-            if (p_setup_ev->setup.wValue.hb != APP_USBD_HID_REPORT_TYPE_OUTPUT)
-            {
-                break;
-            }
-
-            if (p_hinst->p_hid_methods->on_set_report == NULL)
+            if (((p_setup_ev->setup.wValue.hb != APP_USBD_HID_REPORT_TYPE_OUTPUT) &&
+                 (p_setup_ev->setup.wValue.hb != APP_USBD_HID_REPORT_TYPE_FEATURE)) ||
+                p_hinst->p_hid_methods->on_set_report == NULL)
             {
                 break;
             }
@@ -616,6 +614,12 @@ app_usbd_hid_report_buffer_t * app_usbd_hid_rep_buff_in_get(app_usbd_hid_inst_t 
 {
     ASSERT(p_hinst);
     return p_hinst->p_rep_buffer_in;
+}
+
+app_usbd_hid_report_buffer_t const * app_usbd_hid_rep_buff_feature_get(app_usbd_hid_inst_t const * p_hinst)
+{
+    ASSERT(p_hinst);
+    return p_hinst->p_rep_buffer_feature;
 }
 
 #endif //NRF_MODULE_ENABLED(APP_USBD_HID)

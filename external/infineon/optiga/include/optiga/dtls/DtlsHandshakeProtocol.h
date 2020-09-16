@@ -45,37 +45,37 @@
  *
  ****************************************************************************/
 ///Invalid Fragment size
-#define OCP_HL_INVALID_FRAGMENT_SIZE    (BASE_ERROR_HANDSHAKELAYER + 2)
+#define OCP_HL_INVALID_FRAGMENT_SIZE	(BASE_ERROR_HANDSHAKELAYER + 2)
 
 ///Invalid Current offset
-#define OCP_HL_INVALID_OFFSET_LEN       (BASE_ERROR_HANDSHAKELAYER + 3)
+#define OCP_HL_INVALID_OFFSET_LEN		(BASE_ERROR_HANDSHAKELAYER + 3)
 
 ///Insufficient memory
-#define OCP_HL_INSUFFICIENT_MEMORY      (BASE_ERROR_HANDSHAKELAYER + 4)
+#define OCP_HL_INSUFFICIENT_MEMORY		(BASE_ERROR_HANDSHAKELAYER + 4)
 
 ///Invalid Length
-#define OCP_HL_INVALID_LENGTH           (BASE_ERROR_HANDSHAKELAYER + 5)
+#define OCP_HL_INVALID_LENGTH			(BASE_ERROR_HANDSHAKELAYER + 5)
 
 ///Fragment Length mismatch
-#define OCP_HL_LEN_MISMATCH             (BASE_ERROR_HANDSHAKELAYER + 6)
+#define OCP_HL_LEN_MISMATCH				(BASE_ERROR_HANDSHAKELAYER + 6)
 
 ///Total Length mismatch
-#define OCP_HL_TOTALLEN_MISMATCH        (BASE_ERROR_HANDSHAKELAYER + 7)
+#define OCP_HL_TOTALLEN_MISMATCH		(BASE_ERROR_HANDSHAKELAYER + 7)
 
 ///Invalid message type
-#define OCP_HL_INVALID_MSGTYPE          (BASE_ERROR_HANDSHAKELAYER + 8)
+#define OCP_HL_INVALID_MSGTYPE			(BASE_ERROR_HANDSHAKELAYER + 8)
 
 ///Previous flight message received
-#define OCP_HL_RETRANSMISSION           (BASE_ERROR_HANDSHAKELAYER + 9)
+#define OCP_HL_RETRANSMISSION			(BASE_ERROR_HANDSHAKELAYER + 9)
 
 ///Future flight message received
-#define OCP_HL_CONTINUE                 (BASE_ERROR_HANDSHAKELAYER + 10)
+#define OCP_HL_CONTINUE					(BASE_ERROR_HANDSHAKELAYER + 10)
 
 ///Future flight message received
-#define OCP_HL_TIMEOUT                  (BASE_ERROR_HANDSHAKELAYER + 11)
+#define OCP_HL_TIMEOUT					(BASE_ERROR_HANDSHAKELAYER + 11)
 
 ///Malloc failure
-#define OCP_HL_MALLOC_FAILURE           (BASE_ERROR_HANDSHAKELAYER + 12)
+#define OCP_HL_MALLOC_FAILURE			(BASE_ERROR_HANDSHAKELAYER + 12)
 
 ///Ignore the Record
 #define OCP_HL_IGNORE_RECORD            (BASE_ERROR_HANDSHAKELAYER + 13)
@@ -96,7 +96,7 @@
  *
  ****************************************************************************/
 ///Maximum value of message type
-#define MAX_MSG_TYPE_VALUE              20
+#define MAX_MSG_TYPE_VALUE				20
 
 /**
  * \brief Structure to hold fragmentation data

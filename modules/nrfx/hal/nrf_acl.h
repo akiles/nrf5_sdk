@@ -47,14 +47,14 @@
 extern "C" {
 #endif
 
+#define NRF_ACL_REGION_SIZE_MAX (512 * 1024UL)
+
 /**
  * @defgroup nrf_acl_hal ACL HAL
  * @{
  * @ingroup nrf_acl
  * @brief   Hardware access layer for managing the Access Control List (ACL) peripheral.
  */
-
-#define NRF_ACL_REGION_SIZE_MAX (512 * 1024UL)
 
 /** @brief ACL permissions. */
 typedef enum
@@ -65,11 +65,11 @@ typedef enum
 } nrf_acl_perm_t;
 
 /**
- * @brief Function for setting region parameters  for given ACL region.
+ * @brief Function for setting region parameters for given ACL region.
  *
  * Address must be word and page aligned. Size must be page aligned.
  *
- * @param[in] p_reg     Pointer to the peripheral register structure.
+ * @param[in] p_reg     Pointer to the structure of registers of the peripheral.
  * @param[in] region_id ACL region index.
  * @param[in] address   Start address.
  * @param[in] size      Size of region to protect in bytes.
@@ -84,7 +84,7 @@ __STATIC_INLINE void nrf_acl_region_set(NRF_ACL_Type * p_reg,
 /**
  * @brief Function for getting the configured region address of a specific ACL region.
  *
- * @param[in] p_reg     Pointer to the peripheral register structure.
+ * @param[in] p_reg     Pointer to the structure of registers of the peripheral.
  * @param[in] region_id ACL region index.
  *
  * @return Configured region address of given ACL region.
@@ -94,7 +94,7 @@ __STATIC_INLINE uint32_t nrf_acl_region_address_get(NRF_ACL_Type * p_reg, uint32
 /**
  * @brief Function for getting the configured region size of a specific ACL region.
  *
- * @param[in] p_reg     Pointer to the peripheral register structure.
+ * @param[in] p_reg     Pointer to the structure of registers of the peripheral.
  * @param[in] region_id ACL region index.
  *
  * @return Configured region size of given ACL region.
@@ -104,7 +104,7 @@ __STATIC_INLINE size_t nrf_acl_region_size_get(NRF_ACL_Type * p_reg, uint32_t re
 /**
  * @brief Function for getting the configured region permissions of a specific ACL region.
  *
- * @param[in] p_reg     Pointer to the peripheral register structure.
+ * @param[in] p_reg     Pointer to the structure of registers of the peripheral.
  * @param[in] region_id ACL region index.
  *
  * @return Configured region permissions of given ACL region.

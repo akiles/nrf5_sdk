@@ -69,6 +69,8 @@
 #include "nrf_fstorage.h"
 #include "ble_conn_state.h"
 #include "nrf_ble_gatt.h"
+#include "nrf_ble_gq.h"
+#include "nrf_drv_power.h"
 #include "nrf_pwr_mgmt.h"
 #include "nrf_ble_scan.h"
 
@@ -125,7 +127,9 @@ static char const * const m_dis_char_names[] =
     "PnP ID"
 };
 
-
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                            /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_CENTRAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
 BLE_DIS_C_DEF(m_ble_dis_c);                                 /**< Device Information Service client instance. */
 BLE_RSCS_C_DEF(m_rscs_c);                                   /**< Running Speed and Cadence Service client instance. */
 NRF_BLE_GATT_DEF(m_gatt);                                   /**< GATT module instance. */
@@ -165,6 +169,17 @@ static void scan_start(void);
 void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 {
     app_error_handler(0xDEADBEEF, line_num, p_file_name);
+}
+
+
+/**@brief Function for handling the Running Speed and Cadence Service Client and 
+ *        Device Information Service Client errors.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void service_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
 }
 
 
@@ -670,7 +685,9 @@ static void rscs_c_init(void)
 {
     ble_rscs_c_init_t rscs_c_init_obj;
 
-    rscs_c_init_obj.evt_handler = rscs_c_evt_handler;
+    rscs_c_init_obj.evt_handler   = rscs_c_evt_handler;
+    rscs_c_init_obj.error_handler = service_error_handler;
+    rscs_c_init_obj.p_gatt_queue  = &m_ble_gatt_queue;
 
     ret_code_t err_code = ble_rscs_c_init(&m_rscs_c, &rscs_c_init_obj);
     APP_ERROR_CHECK(err_code);
@@ -684,7 +701,9 @@ static void dis_c_init(void)
     ble_dis_c_init_t init;
 
     memset(&init, 0, sizeof(ble_dis_c_init_t));
-    init.evt_handler = ble_dis_c_evt_handler;
+    init.evt_handler   = ble_dis_c_evt_handler;
+    init.error_handler = service_error_handler;
+    init.p_gatt_queue  = &m_ble_gatt_queue;
 
     err_code = ble_dis_c_init(&m_ble_dis_c, &init);
     APP_ERROR_CHECK(err_code);
@@ -744,7 +763,14 @@ static void delete_bonds(void){
  */
 static void db_discovery_init(void)
 {
-    ret_code_t err_code = ble_db_discovery_init(db_disc_handler);
+    ble_db_discovery_init_t db_init;
+
+    memset(&db_init, 0, sizeof(ble_db_discovery_init_t));
+
+    db_init.evt_handler  = db_disc_handler;
+    db_init.p_gatt_queue = &m_ble_gatt_queue;
+
+    ret_code_t err_code = ble_db_discovery_init(&db_init);
     APP_ERROR_CHECK(err_code);
 }
 

@@ -92,7 +92,7 @@ void dtm_constant_carrier(void);
  * @retval DTM_SUCCESS                     if input parameters values are correct.
  * @retval DTM_ERROR_ILLEGAL_CONFIGURATION if input parameters values are not correct.
  */
-uint32_t dtm_radio_validate(int32_t m_tx_power, uint8_t m_radio_mode);
+uint32_t dtm_radio_validate(uint32_t m_tx_power, uint8_t m_radio_mode);
 
 #ifdef __cplusplus
 }

@@ -639,7 +639,10 @@ static void uart_event_handler(nrf_drv_uart_event_t * p_event,
             {
                 uint8_t rx_byte = m_rx_buf[0];
                 APP_ERROR_CHECK(nrf_drv_uart_rx(&m_uart, m_rx_buf, 1));
-                ser_phi_hci_rx_byte(rx_byte);
+                if (p_event->data.rxtx.bytes)
+                {
+                    ser_phi_hci_rx_byte(rx_byte);
+                }
             }
             break;
 

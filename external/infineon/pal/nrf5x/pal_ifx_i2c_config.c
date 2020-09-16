@@ -38,7 +38,7 @@
 #include "optiga/pal/pal_gpio.h"
 #include "optiga/pal/pal_i2c.h"
 #include "optiga/ifx_i2c/ifx_i2c_config.h"
-#include "boards.h"
+#include "pal_pin_config.h"
 
 /*********************************************************************************************************************
  * pal ifx i2c instance
@@ -59,7 +59,8 @@ pal_i2c_t optiga_pal_i2c_context_0 =
 };
 
 /*********************************************************************************************************************
- * PAL GPIO configurations defined for nrf52 development boards PCA10040 and PCA10056 with the Trust X Shield
+ * PAL GPIO configurations defined for nrf52 development boards PCA10040 and PCA10056 with the Trust X Shield and
+ * Trust M 2Go board plugged in.
  *********************************************************************************************************************/
 /**
 * \brief PAL vdd pin configuration for OPTIGA.
@@ -67,7 +68,8 @@ pal_i2c_t optiga_pal_i2c_context_0 =
 pal_gpio_t optiga_vdd_0 =
 {
     // Platform specific GPIO context for the pin used to toggle Vdd.
-    (void*)ARDUINO_9_PIN  // Power pin for the onboard OPTIGA
+    // Casting the uint32_t to a void* is possible, because nrf52 is a 32Bit platform
+    (void*) OPTIGA_PIN_VDD
 };
 
 /**
@@ -76,7 +78,8 @@ pal_gpio_t optiga_vdd_0 =
 pal_gpio_t optiga_reset_0 =
 {
     // Platform specific GPIO context for the pin used to toggle Reset.
-    (void*)ARDUINO_7_PIN
+    // Casting the uint32_t to a void* is possible, because nrf52 is a 32Bit platform
+    (void*) OPTIGA_PIN_RST
 };
 
 

@@ -106,7 +106,7 @@ static char     m_hello_world[] = "hello world";
  */
 static uint32_t nrf5_flash_end_addr_get()
 {
-    uint32_t const bootloader_addr = NRF_UICR->NRFFW[0];
+    uint32_t const bootloader_addr = BOOTLOADER_ADDRESS;
     uint32_t const page_sz         = NRF_FICR->CODEPAGESIZE;
     uint32_t const code_sz         = NRF_FICR->CODESIZE;
 

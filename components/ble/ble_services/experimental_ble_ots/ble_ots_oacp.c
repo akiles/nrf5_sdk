@@ -54,6 +54,26 @@ NRF_LOG_MODULE_REGISTER();
 #define OTS_FILE_ID 1234
 #define OTS_FDS_KEY 4321
 
+#define OACP_INDICATION_LEN 3 /**< Indication data length. */
+
+/**@brief Function for interception of GATT errors and @ref nrf_ble_gq errors.
+ *
+ * @param[in] nrf_error   Error code.
+ * @param[in] p_ctx       Parameter from the event handler.
+ * @param[in] conn_handle Connection handle.
+ */
+static void gatt_error_handler(uint32_t   nrf_error,
+                               void     * p_ctx,
+                               uint16_t   conn_handle)
+{
+    ble_ots_t * p_ots = (ble_ots_t *)p_ctx;
+
+    if (p_ots->error_handler != NULL)
+    {
+        p_ots->error_handler(nrf_error);
+    }
+}
+
 
 /**@brief Checks if the cccd handle is configured for indication
  *
@@ -348,32 +368,33 @@ static uint32_t ble_ots_oacp_response_send(ble_ots_oacp_t *          p_ots_oacp,
                                            ble_ots_oacp_res_code_t   result_code,
                                            uint16_t                  conn_handle)
 {
-    uint16_t  index = 0;
-    uint8_t * p_data;
-    ble_gatts_hvx_params_t *p_hvx_params;
+    uint16_t           index = 0;
+    uint8_t            data[OACP_INDICATION_LEN];
+    nrf_ble_gq_req_t   ots_req;
 
-    ble_hvx_t * p_hvx = ble_hvx_get_p_to_next_hvx(&p_ots_oacp->p_ots->hvx_buf);
-    p_data       = p_hvx->data;
-    p_hvx_params = &p_hvx->params;
-
-    p_data[index++] = BLE_OTS_OACP_PROC_RESP;
+    data[index++] = BLE_OTS_OACP_PROC_RESP;
 
     // Encode the Request Op code
-    p_data[index++] = (uint8_t)req_op_code;
+    data[index++] = (uint8_t)req_op_code;
 
     // Encode the Result code.
-    p_data[index++] = (uint8_t)result_code;
+    data[index++] = (uint8_t)result_code;
 
 
-    memset(p_hvx_params, 0, sizeof(ble_gatts_hvx_params_t));
+    memset(&ots_req, 0, sizeof(nrf_ble_gq_req_t));
 
-    p_hvx_params->handle   = p_ots_oacp->oacp_handles.value_handle;
-    p_hvx_params->type     = BLE_GATT_HVX_INDICATION;
-    p_hvx_params->offset   = 0;
-    p_hvx_params->p_len    = &index;
-    p_hvx_params->p_data   = p_data;
+    ots_req.type                    = NRF_BLE_GQ_REQ_GATTS_HVX;
+    ots_req.error_handler.cb        = gatt_error_handler;
+    ots_req.error_handler.p_ctx     = p_ots_oacp->p_ots;
+    ots_req.params.gatts_hvx.type   = BLE_GATT_HVX_INDICATION;
+    ots_req.params.gatts_hvx.handle = p_ots_oacp->oacp_handles.value_handle;
+    ots_req.params.gatts_hvx.offset = 0;
+    ots_req.params.gatts_hvx.p_data = data;
+    ots_req.params.gatts_hvx.p_len  = &index;
 
-    return ble_hvx_buffer_process(&p_ots_oacp->p_ots->hvx_buf);
+    return nrf_ble_gq_item_add(p_ots_oacp->p_ots->p_gatt_queue,
+                               &ots_req,
+                               conn_handle);
 }
 
 /**@brief Decode an OACP command, and extract its data.

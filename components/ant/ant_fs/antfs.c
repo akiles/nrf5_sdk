@@ -1659,7 +1659,7 @@ static void transport_layer_cmd_decode(uint8_t control_byte, const uint8_t * p_c
                 break;
             }
 
-            if ((control_byte & ~SEQUENCE_LAST_MESSAGE) == 0x00)
+            if ((control_byte & SEQUENCE_NUMBER_MASK) == SEQUENCE_FIRST_MESSAGE)
             {
                 // First burst packet.
 

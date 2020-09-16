@@ -185,7 +185,7 @@
           <state>FLOAT_ABI_HARD</state>
           <state>HCI_TIMER2</state>
           <state>NRF52840_XXAA</state>
-          <state>NRF_SD_BLE_API_VERSION=6</state>
+          <state>NRF_SD_BLE_API_VERSION=7</state>
           <state>S140</state>
           <state>SER_CONNECTIVITY</state>
           <state>SER_PHY_HCI</state>
@@ -341,7 +341,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sortlist</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\experimental</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm</state>
@@ -537,7 +536,7 @@
           <state>FLOAT_ABI_HARD</state>
           <state>HCI_TIMER2</state>
           <state>NRF52840_XXAA</state>
-          <state>NRF_SD_BLE_API_VERSION=6</state>
+          <state>NRF_SD_BLE_API_VERSION=7</state>
           <state>S140</state>
           <state>SER_CONNECTIVITY</state>
           <state>SER_PHY_HCI</state>
@@ -660,7 +659,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sortlist</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\experimental</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm</state>
@@ -1085,7 +1083,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_handler_iar.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\experimental\app_timer2.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer2.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\app_usbd.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm\app_usbd_cdc_acm.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\app_usbd_core.c</name>    </file>    <file>
@@ -1094,7 +1092,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\app_usbd_string_desc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crc16\crc16.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\experimental\drv_rtc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\drv_rtc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo\nrf_atfifo.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic\nrf_atomic.c</name>    </file>    <file>

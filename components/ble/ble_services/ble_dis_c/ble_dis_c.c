@@ -46,7 +46,6 @@
 #include "ble_dis_c.h"
 #include "ble_gattc.h"
 #include "nrf_bitmask.h"
-#include "nrf_queue.h"
 #include "app_error.h"
 
 #define NRF_LOG_MODULE_NAME ble_dis
@@ -68,19 +67,23 @@ NRF_LOG_MODULE_REGISTER();
 #define BLE_DIS_C_ALL_CHARS_ENABLED_MASK  0xFFFF /**< All DIS characteristics should be enabled. */
 
 
-/**@brief Structure for describing Client read request.
+/**@brief Function for interception of gattc errors.
+ *
+ * @param[in] nrf_error    Error code returned by SoftDevice.
+ * @param[in] p_contex     Parameter from the event handler.
+ * @param[in] conn_handle  Connection handle.
  */
-typedef struct
+static void gatt_error_handler(uint32_t nrf_error, void * p_contex, uint16_t conn_handle)
 {
-    uint16_t conn_handle; /**< Connection handle for the read request. */
-    uint16_t att_handle;  /**< Attribute handle for the read request. */
-} ble_dis_c_req_t;
+    UNUSED_PARAMETER(conn_handle);
 
-/**@brief Queue for holding Client read requests.
- */
-NRF_QUEUE_DEF(ble_dis_c_req_t, m_ble_dis_c_queue, BLE_DIS_C_QUEUE_SIZE, NRF_QUEUE_MODE_NO_OVERFLOW);
-NRF_QUEUE_INTERFACE_DEC(ble_dis_c_req_t, ble_dis_c_queue);
-NRF_QUEUE_INTERFACE_DEF(ble_dis_c_req_t, ble_dis_c_queue, &m_ble_dis_c_queue);
+    ble_dis_c_t const * const p_ble_disc_c = (ble_dis_c_t *)p_contex;
+
+    if (p_ble_disc_c != NULL)
+    {
+         p_ble_disc_c->error_handler(nrf_error);
+    }
+}
 
 
 /**@brief Function for decoding System ID characteristic value.
@@ -177,47 +180,6 @@ static ble_dis_c_char_type_t char_type_get(ble_dis_c_t * p_ble_dis_c, uint16_t r
         }
     }
     return BLE_DIS_C_CHAR_TYPES_NUM;
-}
-
-
-/**@brief Function for passing any pending request from the queue to the stack.
- *
- * @param[in] p_ble_dis_c   Pointer to the Device Information Client Structure.
- */
-static void queue_process(ble_dis_c_t * p_ble_dis_c)
-{
-    ret_code_t      err_code;
-    ble_dis_c_req_t dis_c_req;
-
-    err_code = ble_dis_c_queue_peek(&dis_c_req);
-    if (err_code == NRF_SUCCESS) // Queue is not empty
-    {
-        err_code = sd_ble_gattc_read(dis_c_req.conn_handle,
-                                     dis_c_req.att_handle,
-                                     0);
-        if (err_code == NRF_ERROR_BUSY) // SoftDevice is processing another Client procedure
-        {
-            NRF_LOG_DEBUG("SD is currently busy. This request for Client Read procedure will be \
-                          attempted again.",
-                          err_code);
-        }
-        else
-        {
-            UNUSED_RETURN_VALUE(ble_dis_c_queue_pop(&dis_c_req));
-            if (err_code == NRF_SUCCESS)
-            {
-                NRF_LOG_DEBUG("SD Read/Write API returns Success.");
-            }
-            else
-            {
-                NRF_LOG_ERROR("SD Read API returns error: 0x%08X.", err_code);
-                if (p_ble_dis_c->error_handler != NULL)
-                {
-                    p_ble_dis_c->error_handler(err_code);
-                }
-            }
-        }
-    }
 }
 
 
@@ -359,6 +321,7 @@ ret_code_t ble_dis_c_init(ble_dis_c_t * p_ble_dis_c, ble_dis_c_init_t * p_ble_di
     dis_uuid.uuid = BLE_UUID_DEVICE_INFORMATION_SERVICE;
 
     p_ble_dis_c->conn_handle   = BLE_CONN_HANDLE_INVALID;
+    p_ble_dis_c->p_gatt_queue  = p_ble_dis_c_init->p_gatt_queue;
     p_ble_dis_c->evt_handler   = p_ble_dis_c_init->evt_handler;
     p_ble_dis_c->error_handler = p_ble_dis_c_init->error_handler;
     memset(p_ble_dis_c->handles, BLE_GATT_HANDLE_INVALID, sizeof(p_ble_dis_c->handles));
@@ -502,16 +465,13 @@ void ble_dis_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
             // No implementation needed.
             break;
     }
-
-    // Process any DIS Client read requests that are pending.
-    queue_process(p_ble_dis_c);
 }
 
 
 ret_code_t ble_dis_c_read(ble_dis_c_t * p_ble_dis_c, ble_dis_c_char_type_t char_type)
 {
-    ret_code_t      err_code;
-    ble_dis_c_req_t dis_c_req;
+    ret_code_t       err_code;
+    nrf_ble_gq_req_t dis_c_req;
 
     VERIFY_PARAM_NOT_NULL(p_ble_dis_c);
     VERIFY_TRUE(char_type < BLE_DIS_C_CHAR_TYPES_NUM, NRF_ERROR_INVALID_PARAM);
@@ -522,13 +482,13 @@ ret_code_t ble_dis_c_read(ble_dis_c_t * p_ble_dis_c, ble_dis_c_char_type_t char_
         return NRF_ERROR_INVALID_STATE;
     }
 
-    dis_c_req.conn_handle = p_ble_dis_c->conn_handle;
-    dis_c_req.att_handle  = p_ble_dis_c->handles[char_type];
+    memset(&dis_c_req, 0, sizeof(dis_c_req));
+    dis_c_req.type                     = NRF_BLE_GQ_REQ_GATTC_READ;
+    dis_c_req.error_handler.cb         = gatt_error_handler;
+    dis_c_req.error_handler.p_ctx      = p_ble_dis_c;
+    dis_c_req.params.gattc_read.handle = p_ble_dis_c->handles[char_type];
 
-    err_code = ble_dis_c_queue_push(&dis_c_req);
-    VERIFY_SUCCESS(err_code);
-
-    queue_process(p_ble_dis_c);
+    err_code = nrf_ble_gq_item_add(p_ble_dis_c->p_gatt_queue, &dis_c_req, p_ble_dis_c->conn_handle);
     return err_code;
 }
 
@@ -540,7 +500,6 @@ ret_code_t ble_dis_c_handles_assign(ble_dis_c_t              * p_ble_dis_c,
     VERIFY_PARAM_NOT_NULL(p_ble_dis_c);
 
     p_ble_dis_c->conn_handle = conn_handle;
-    ble_dis_c_queue_reset();
     if (p_peer_handles != NULL)
     {
         memcpy(p_ble_dis_c->handles, p_peer_handles, sizeof(p_ble_dis_c->handles));
@@ -549,7 +508,7 @@ ret_code_t ble_dis_c_handles_assign(ble_dis_c_t              * p_ble_dis_c,
     {
         memset(p_ble_dis_c->handles, BLE_GATT_HANDLE_INVALID, sizeof(p_ble_dis_c->handles));
     }
-    return NRF_SUCCESS;
+    return nrf_ble_gq_conn_handle_register(p_ble_dis_c->p_gatt_queue, conn_handle);
 }
 
 

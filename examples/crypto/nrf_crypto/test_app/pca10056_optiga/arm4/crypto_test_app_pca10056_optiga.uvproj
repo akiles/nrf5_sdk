@@ -13,7 +13,7 @@
         <TargetCommonOption>
           <Device>nRF52840_xxAA</Device>
           <Vendor>Nordic Semiconductor</Vendor>
-          <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x10000) CPUTYPE("Cortex-M4") FPU2 CLOCK(64000000) ELITTLE</Cpu>
+          <Cpu>IROM(0x00000000,0x100000) IRAM(0x20000000,0x40000) CPUTYPE("Cortex-M4") FPU2 CLOCK(64000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
           <FlashDriverDll>UL2CM3(-UM0364FCE -O78 -S0 -C0 -TO18 -TC16000000 -TP21 -TDS800D -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC2000 -FN1 -FF0nRF52xxx -FS00 -FL0200000)</FlashDriverDll>
@@ -350,9 +350,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99 --reduce_paths</MiscControls>
-              <Define> BOARD_PCA10056 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET DL_MAX_FRAME_SIZE=250 FLOAT_ABI_HARD NRF52840_XXAA SWI_DISABLE0 __HEAP_SIZE=8192 __STACK_SIZE=16384</Define>
+              <Define> APP_TIMER_V2 APP_TIMER_V2_RTC1_ENABLED BOARD_PCA10056 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET DL_MAX_FRAME_SIZE=250 FLOAT_ABI_HARD NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=16384</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\crypto;..\..\..\..\..\..\components\libraries\crypto\backend\cc310;..\..\..\..\..\..\components\libraries\crypto\backend\cc310_bl;..\..\..\..\..\..\components\libraries\crypto\backend\cifra;..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls;..\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc;..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw;..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw;..\..\..\..\..\..\components\libraries\crypto\backend\oberon;..\..\..\..\..\..\components\libraries\crypto\backend\optiga;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\mem_manager;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\stack_info;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\twi_mngr;..\..\..\..\..\..\components\libraries\util;..\..;..\..\common_test;..\..\test_cases;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\infineon\optiga\include;..\..\..\..\..\..\external\nrf_oberon;..\..\..\..\..\..\external\nrf_oberon\include;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
+              <IncludePath>..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\crypto;..\..\..\..\..\..\components\libraries\crypto\backend\cc310;..\..\..\..\..\..\components\libraries\crypto\backend\cc310_bl;..\..\..\..\..\..\components\libraries\crypto\backend\cifra;..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls;..\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc;..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw;..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw;..\..\..\..\..\..\components\libraries\crypto\backend\oberon;..\..\..\..\..\..\components\libraries\crypto\backend\optiga;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\mem_manager;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\stack_info;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\twi_mngr;..\..\..\..\..\..\components\libraries\util;..\..;..\..\common_test;..\..\test_cases;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\infineon\examples\ecdsa_utils;..\..\..\..\..\..\external\infineon\optiga\include;..\..\..\..\..\..\external\nrf_oberon;..\..\..\..\..\..\external\nrf_oberon\include;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,10 +365,10 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DBOARD_PCA10056,-DBSP_DEFINES_ONLY,-DCONFIG_GPIO_AS_PINRESET,-DDL_MAX_FRAME_SIZE=250,-DFLOAT_ABI_HARD,-DNRF52840_XXAA,-DSWI_DISABLE0,-D__HEAP_SIZE=8192,-D__STACK_SIZE=16384</MiscControls>
-              <Define> BOARD_PCA10056 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET DL_MAX_FRAME_SIZE=250 FLOAT_ABI_HARD NRF52840_XXAA SWI_DISABLE0 __HEAP_SIZE=8192 __STACK_SIZE=16384</Define>
+              <MiscControls> --cpreproc_opts=-DAPP_TIMER_V2,-DAPP_TIMER_V2_RTC1_ENABLED,-DBOARD_PCA10056,-DBSP_DEFINES_ONLY,-DCONFIG_GPIO_AS_PINRESET,-DDL_MAX_FRAME_SIZE=250,-DFLOAT_ABI_HARD,-DNRF52840_XXAA,-D__HEAP_SIZE=8192,-D__STACK_SIZE=16384</MiscControls>
+              <Define> APP_TIMER_V2 APP_TIMER_V2_RTC1_ENABLED BOARD_PCA10056 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET DL_MAX_FRAME_SIZE=250 FLOAT_ABI_HARD NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=16384</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\crypto;..\..\..\..\..\..\components\libraries\crypto\backend\cc310;..\..\..\..\..\..\components\libraries\crypto\backend\cc310_bl;..\..\..\..\..\..\components\libraries\crypto\backend\cifra;..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls;..\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc;..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw;..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw;..\..\..\..\..\..\components\libraries\crypto\backend\oberon;..\..\..\..\..\..\components\libraries\crypto\backend\optiga;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\mem_manager;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\stack_info;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\twi_mngr;..\..\..\..\..\..\components\libraries\util;..\..;..\..\common_test;..\..\test_cases;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\infineon\optiga\include;..\..\..\..\..\..\external\nrf_oberon;..\..\..\..\..\..\external\nrf_oberon\include;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
+              <IncludePath>..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\crypto;..\..\..\..\..\..\components\libraries\crypto\backend\cc310;..\..\..\..\..\..\components\libraries\crypto\backend\cc310_bl;..\..\..\..\..\..\components\libraries\crypto\backend\cifra;..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls;..\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc;..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw;..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw;..\..\..\..\..\..\components\libraries\crypto\backend\oberon;..\..\..\..\..\..\components\libraries\crypto\backend\optiga;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\mem_manager;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\stack_info;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\twi_mngr;..\..\..\..\..\..\components\libraries\util;..\..;..\..\common_test;..\..\test_cases;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\infineon\examples\ecdsa_utils;..\..\..\..\..\..\external\infineon\optiga\include;..\..\..\..\..\..\external\nrf_oberon;..\..\..\..\..\..\external\nrf_oberon\include;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -428,6 +428,9 @@
               <FileName>Util.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\external\infineon\optiga\common\Util.c</FilePath>            </File>            <File>
+              <FileName>ecdsa_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\external\infineon\examples\ecdsa_utils\ecdsa_utils.c</FilePath>            </File>            <File>
               <FileName>ifx_i2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\external\infineon\optiga\comms\ifx_i2c\ifx_i2c.c</FilePath>            </File>            <File>
@@ -568,10 +571,7 @@
               <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_init.c</FilePath>            </File>            <File>
               <FileName>optiga_backend_rng.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_rng.c</FilePath>            </File>            <File>
-              <FileName>optiga_backend_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_utils.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_rng.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Drivers</GroupName>
           <Files>            <File>
@@ -620,18 +620,24 @@
               <FileName>app_scheduler.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</FilePath>            </File>            <File>
-              <FileName>app_timer.c</FileName>
+              <FileName>app_timer2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\timer\app_timer.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\libraries\timer\app_timer2.c</FilePath>            </File>            <File>
               <FileName>app_util_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\app_util_platform.c</FilePath>            </File>            <File>
+              <FileName>drv_rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\timer\drv_rtc.c</FilePath>            </File>            <File>
               <FileName>mem_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\mem_manager\mem_manager.c</FilePath>            </File>            <File>
               <FileName>nrf_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\nrf_assert.c</FilePath>            </File>            <File>
+              <FileName>nrf_atfifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\atomic_fifo\nrf_atfifo.c</FilePath>            </File>            <File>
               <FileName>nrf_atomic.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\atomic\nrf_atomic.c</FilePath>            </File>            <File>
@@ -659,6 +665,9 @@
               <FileName>nrf_section_iter.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</FilePath>            </File>            <File>
+              <FileName>nrf_sortlist.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\sortlist\nrf_sortlist.c</FilePath>            </File>            <File>
               <FileName>nrf_strerror.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</FilePath>            </File>            <File>
@@ -686,9 +695,9 @@
         </Group>        <Group>
           <GroupName>nRF_Oberon_Crypto</GroupName>
           <Files>            <File>
-              <FileName>oberon_2.0.7.lib</FileName>
+              <FileName>oberon_3.0.1.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\oberon_2.0.7.lib</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\oberon_3.0.1.lib</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Segger_RTT</GroupName>
           <Files>            <File>

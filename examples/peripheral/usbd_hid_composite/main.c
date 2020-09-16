@@ -64,6 +64,7 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
+#if NRF_CLI_ENABLED
 /**
  * @brief CLI interface over UART
  */
@@ -73,6 +74,7 @@ NRF_CLI_DEF(m_cli_uart,
             &m_cli_uart_transport.transport,
             '\r',
             4);
+#endif
 
 /**
  * @brief Enable USB power detection
@@ -410,6 +412,7 @@ static void init_bsp(void)
     bsp_board_init(BSP_INIT_LEDS);
 }
 
+#if NRF_CLI_ENABLED
 static void init_cli(void)
 {
     ret_code_t ret;
@@ -424,6 +427,7 @@ static void init_cli(void)
     ret = nrf_cli_start(&m_cli_uart);
     APP_ERROR_CHECK(ret);
 }
+#endif
 
 int main(void)
 {
@@ -451,7 +455,10 @@ int main(void)
     APP_ERROR_CHECK(ret);
 
     init_bsp();
+
+#if NRF_CLI_ENABLED
     init_cli();
+#endif
 
     ret = app_usbd_init(&usbd_config);
     APP_ERROR_CHECK(ret);
@@ -495,7 +502,9 @@ int main(void)
         {
             /* Nothing to do */
         }
+#if NRF_CLI_ENABLED
         nrf_cli_process(&m_cli_uart);
+#endif
 
         UNUSED_RETURN_VALUE(NRF_LOG_PROCESS());
         /* Sleep CPU only if there was no interrupt since last loop processing */

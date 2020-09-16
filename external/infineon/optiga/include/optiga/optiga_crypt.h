@@ -25,8 +25,7 @@
 *
 * \brief This file implements the prototype declarations of OPTIGA Crypt.
 *
-* \defgroup  grOptigaCrypt OPTIGA Crypt API
-* \ingroup infineon_api
+* \addtogroup  grOptigaCrypt
 * @{
 */
 #ifndef _OPTIGA_CRYPT_H_
@@ -36,7 +35,24 @@
 extern "C" {
 #endif
 
+#include "optiga/common/Datatypes.h"
 #include "optiga/cmd/CommandLib.h"
+
+/**
+ * OPTIGA crypt module return values
+ */
+///OPTIGA crypt API execution is successful
+#define OPTIGA_CRYPT_SUCCESS                        (0x0000)
+///OPTIGA crypt module in busy state
+#define OPTIGA_CRYPT_BUSY                           (0x0001)
+///OPTIGA crypt API failed
+#define OPTIGA_CRYPT_ERROR                          (0x0402)
+///OPTIGA crypt API called with invalid inputs
+#define OPTIGA_CRYPT_ERROR_INVALID_INPUT            (0x0403)
+///OPTIGA crypt API called with insufficient memory buffer
+#define OPTIGA_CRYPT_ERROR_MEMORY_INSUFFICIENT      (0x0404)
+///OPTIGA crypt API called when, a request of same instance is already in service
+#define OPTIGA_CRYPT_ERROR_INSTANCE_IN_USE          (0x0405)
 
 /**
  * \brief  Typedef for Key IDs
@@ -68,7 +84,7 @@ typedef enum optiga_key_id
 
 
 /**
- * \brief OPTIGA Random Generation types
+ * OPTIGA Random Generation types
  */
 typedef enum optiga_rng_types
 {
@@ -78,18 +94,15 @@ typedef enum optiga_rng_types
     OPTIGA_RNG_TYPE_DRNG  = 0x01,
 } optiga_rng_types_t;
 
-/**
- * \brief enumeration of OPTIGA(TM) ECC curve type
- */
 typedef enum optiga_ecc_curve
 {
+    //TBD: values to be aligned as per the specification
+    ///
     OPTIGA_ECC_NIST_P_256 = 0x03,
+    ///
     OPTIGA_ECC_NIST_P_384 = 0x04,
 } optiga_ecc_curve_t;
 
-/**
- * \brief enumeration of OPTIGA(TM) key usage
- */
 typedef enum optiga_key_usage
 {
     /// This enables the private key for the signature generation as part of authentication commands
@@ -167,7 +180,7 @@ typedef struct public_key_from_host
 /**
  * \brief To specify the OID which holds the shared secret.
  */
-typedef struct key_from_optiga
+typedef struct key_from_opitga
 {
     ///
     uint16_t key_oid;
@@ -180,30 +193,33 @@ typedef struct key_from_optiga
  *
  *
  *<b>Pre Conditions:</b>
- * - The application on OPTIGA must be opened using #optiga_util_open_application before using this API.<br>
+ * - The application on OPTIGA must be opened using optiga_util_open_application before using this API.<br>
  *
  *<b>API Details:</b>
- * - Invokes #CmdLib_GetRandom API, based on the input arguments to retrieve random data .<br>
+ * - Invokes optiga_cmd_get_random API, based on the input arguments to retrieve random data .<br>
  *<br>
  *
  *<b>Notes:</b>
+ * - Error codes from lower layers will be returned as it is.<br>
  * - The maximum value of the <b>random_data_length</b> parameter is size of buffer <b>random_data</b>.
  *   In case the value is greater than buffer size, memory corruption can occur.<br>
  *
  * \param[in]      rng_type               Type of random data generator.
- *                                        - The input must be from #optiga_rng_types.
+ *                                        - The input must be from optiga_rng_type.
  *                                        - Argument check for rng_type is not done since OPTIGA will provide an error for invalid rng_type.
  * \param[in,out]  random_data            Pointer to the buffer into which random data is stored, must not be NULL.
  * \param[in]      random_data_length     Length of random data to be generated.
  *                                        - Range should be 8 - 256 bytes.
  *                                        - Length validation is not done, since OPTIGA will provide an error for invalid random_data_length.
  *
- * \retval  #OPTIGA_LIB_SUCCESS           Successful invocation of optiga cmd module
- * \retval  #OPTIGA_LIB_ERROR             The execution failed because of an internal error
+ * \retval  OPTIGA_CRYPT_SUCCESS                           Successful invocation of optiga cmd module
+ * \retval  OPTIGA_CRYPT_ERROR_INVALID_INPUT               Wrong Input arguments provided
+ * \retval  OPTIGA_CRYPT_ERROR_INSTANCE_IN_USE             Same instance with ongoing request servicing is used
+ * \retval  OPTIGA_DEVICE_ERROR                            Command execution failure in OPTIGA and the LSB indicates the error code.(Refer Solution Reference Manual)
  */
-optiga_lib_status_t optiga_crypt_random(optiga_rng_types_t rng_type,
-                                        uint8_t * random_data,
-                                        uint16_t random_data_length);
+LIBRARY_EXPORTS optiga_lib_status_t optiga_crypt_random(optiga_rng_types_t rng_type,
+                                                        uint8_t * random_data,
+                                                        uint16_t random_data_length);
 
 
 
@@ -214,23 +230,27 @@ optiga_lib_status_t optiga_crypt_random(optiga_rng_types_t rng_type,
  * Sets up a hash context and exports it.<br>
  *
  *<b>Pre Conditions:</b>
- * - The application on OPTIGA must be opened using #optiga_util_open_application before using this API.<br>
+ * - The application on OPTIGA must be opened using optiga_util_open_application before using this API.<br>
  *
  *<b>API Details:</b><br>
  * - Initializes a new hash context.<br>
  * - Exports the hash context to caller.<br>
  *
  *<b>Notes:</b><br>
+
+ *  - Error codes from lower layer will be returned as it is.<br>
  *  - User must save the output hash context for further usage as OPTIGA does not store it internally.<br>
  *
  *<br>
- * \param[inout]   hash_ctx     Pointer to #optiga_hash_context_t to store the hash context from OPTIGA
- *                              - The input <b>hash_algo</b> in  <b>hash_ctx</b> must be from #optiga_hash_type.
+ * \param[inout]   hash_ctx     Pointer to optiga_hash_context_t to store the hash context from OPTIGA
+ *                              - The input <b>hash_algo</b> in  <b>hash_ctx</b> must be from optiga_hash_type.
  *
- * \retval  #OPTIGA_LIB_SUCCESS           Successful invocation of optiga cmd module
- * \retval  #OPTIGA_LIB_ERROR             The execution failed because of an internal error
+ * \retval  OPTIGA_CRYPT_SUCCESS                           Successful invocation of optiga cmd module
+ * \retval  OPTIGA_CRYPT_ERROR_INVALID_INPUT               Wrong Input arguments provided
+ * \retval  OPTIGA_CRYPT_ERROR_INSTANCE_IN_USE             Same instance with ongoing request servicing is used
+ * \retval  OPTIGA_DEVICE_ERROR                            Command execution failure in OPTIGA and the LSB indicates the error code.(Refer Solution Reference Manual)
  */
-optiga_lib_status_t optiga_crypt_hash_start(optiga_hash_context_t * hash_ctx);
+LIBRARY_EXPORTS optiga_lib_status_t optiga_crypt_hash_start(optiga_hash_context_t * hash_ctx);
 
 
  /**
@@ -241,29 +261,33 @@ optiga_lib_status_t optiga_crypt_hash_start(optiga_hash_context_t * hash_ctx);
  *
  *
  *<b>Pre Conditions:</b>
- * - The application on OPTIGA must be opened using #optiga_util_open_application before using this API.<br>
- * - #optiga_hash_context_t from #optiga_crypt_hash_start or #optiga_crypt_hash_update must be available.
+ * - The application on OPTIGA must be opened using optiga_util_open_application before using this API.<br>
+ * - optiga_hash_context_t from optiga_crypt_hash_start or optiga_crypt_hash_update must be available.
  *
  *<b>API Details:</b><br>
  * - Update the input hash context.<br>
  * - Exports the hash context to caller.<br>
  *
  *<b>Notes:</b><br>
+
+ *  - Error codes from lower layer will be returned as it is.<br>
  *  - User must save the output hash context for further usage as OPTIGA does not store it internally.<br>
  *
  *<br>
- * \param[in]   hash_ctx                  Pointer to #optiga_hash_context_t containing hash context from OPTIGA, must not be NULL
+ * \param[in]   hash_ctx                  Pointer to optiga_hash_context_t containing hash context from OPTIGA, must not be NULL
  * \param[in]   source_of_data_to_hash    Data from host / Data in optiga. Must be one of the below
- *                                        - #OPTIGA_CRYPT_HOST_DATA,if source of data is from Host.
- *                                        - #OPTIGA_CRYPT_OID_DATA,if the source of data is from OPITGA.
- * \param[in]   data_to_hash              Data for hashing either in #hash_data_from_host or in #hash_data_in_optiga
+ *                                        - OPTIGA_CRYPT_HOST_DATA,if source of data is from Host.
+ *                                        - OPTIGA_CRYPT_OID_DATA,if the source of data is from OPITGA.
+ * \param[in]   data_to_hash              Data for hashing either in hash_data_from_host or in hash_data_in_optiga
  *
- * \retval  #OPTIGA_LIB_SUCCESS           Successful invocation of optiga cmd module
- * \retval  #OPTIGA_LIB_ERROR             The execution failed because of an internal error
+ * \retval  OPTIGA_CRYPT_SUCCESS                           Successful invocation of optiga cmd module
+ * \retval  OPTIGA_CRYPT_ERROR_INVALID_INPUT               Wrong Input arguments provided
+ * \retval  OPTIGA_CRYPT_ERROR_INSTANCE_IN_USE             Same instance with ongoing request servicing is used
+ * \retval  OPTIGA_DEVICE_ERROR                            Command execution failure in OPTIGA and the LSB indicates the error code.(Refer Solution Reference Manual)
  */
-optiga_lib_status_t optiga_crypt_hash_update(optiga_hash_context_t * hash_ctx,
-                                             uint8_t source_of_data_to_hash,
-                                             void * data_to_hash);
+LIBRARY_EXPORTS optiga_lib_status_t optiga_crypt_hash_update(optiga_hash_context_t * hash_ctx,
+                                                             uint8_t source_of_data_to_hash,
+                                                             void * data_to_hash);
 
  /**
  *
@@ -272,26 +296,30 @@ optiga_lib_status_t optiga_crypt_hash_update(optiga_hash_context_t * hash_ctx,
  * Finalizes the hash context and returns hash as output.<br>
  *
  *<b>Pre Conditions:</b>
- * - The application on OPTIGA must be opened using #optiga_util_open_application before using this API.<br>
- * - #optiga_hash_context_t from #optiga_crypt_hash_start or #optiga_crypt_hash_update must be available.
+ * - The application on OPTIGA must be opened using optiga_util_open_application before using this API.<br>
+ * - optiga_hash_context_t from optiga_crypt_hash_start or optiga_crypt_hash_update must be available.
  *
  *<b>API Details:</b><br>
  * - Finalize the hash from the input hash context
  * - Exports the finalized hash.
  *
  *<b>Notes:</b><br>
+
+ *  - Error codes from lower layer will be returned as it is.<br>
  *  - hash context is not updated by this API. This can be used later to fulfill intermediate hash use-cases<br>
  *  - User must save the output hash context for further usage as OPTIGA does not store it internally.<br>
  *
  *<br>
- * \param[in]   hash_ctx         Pointer to #optiga_hash_context_t containing hash context from OPTIGA, must not be NULL
+ * \param[in]   hash_ctx         Pointer to optiga_hash_context_t containing hash context from OPTIGA, must not be NULL
  * \param[inout]   hash_output   Output Hash
  *
- * \retval  #OPTIGA_LIB_SUCCESS  Successful invocation of optiga cmd module
- * \retval  #OPTIGA_LIB_ERROR    The execution failed because of an internal error
+ * \retval  OPTIGA_CRYPT_SUCCESS                           Successful invocation of optiga cmd module
+ * \retval  OPTIGA_CRYPT_ERROR_INVALID_INPUT               Wrong Input arguments provided
+ * \retval  OPTIGA_CRYPT_ERROR_INSTANCE_IN_USE     Same instance with ongoing request servicing is used
+ * \retval  OPTIGA_DEVICE_ERROR                            Command execution failure in OPTIGA and the LSB indicates the error code.(Refer Solution Reference Manual)
  */
-optiga_lib_status_t optiga_crypt_hash_finalize(optiga_hash_context_t * hash_ctx,
-                                               uint8_t * hash_output);
+LIBRARY_EXPORTS optiga_lib_status_t optiga_crypt_hash_finalize(optiga_hash_context_t * hash_ctx,
+                                                               uint8_t * hash_output);
 
 
 
@@ -303,7 +331,7 @@ optiga_lib_status_t optiga_crypt_hash_finalize(optiga_hash_context_t * hash_ctx,
  *
  *
  *<b>Pre Conditions:</b>
- * - The application on OPTIGA must be opened using #optiga_util_open_application before using this API.<br>
+ * - The application on OPTIGA must be opened using optiga_util_open_application before using this API.<br>
  *
  *<b>API Details:</b>
  * - Generate an ECC key pair using OPTIGA.<br>
@@ -311,28 +339,34 @@ optiga_lib_status_t optiga_crypt_hash_finalize(optiga_hash_context_t * hash_ctx,
  * - Exports the public key always.<br>
  *<br>
  *
+ *<b>Notes:</b>
+
+ * - Error codes from lower layers will be returned as it is.<br>
+ *
  * \param[in]   curve_id                 ECC curve id.
- * \param[in]   key_usage                Key usage defined by #optiga_key_usage_t.
- *                                       - Values from #optiga_key_usage can be logically ORed and passed.<br>
+ * \param[in]   key_usage                Key usage defined by optiga_key_usage_t.
+ *                                       - Values from optiga_key_usage can be logically ORed and passed.<br>
  *                                       - It is ignored if export_private_key is FALSE (0).
  * \param[in]   export_private_key       TRUE (1) - Exports both private key and public key to the host.<br>
  *                                       FALSE (0) - Exports only public key to the host. The input key_usage is ignored.
  * \param[in]    private_key             Buffer to store private key or private key OID of OPTIGA, must not be NULL.
  *                                       - If export_private_key is TRUE, assign pointer to a buffer to store private key.
  *                                       - The size of the buffer must be sufficient enough to accommodate the key type and additional DER encoding formats.
- *                                       - If export_private_key is FALSE, assign pointer to variable of type #optiga_key_id_t.
+ *                                       - If export_private_key is FALSE, assign pointer to variable of type optiga_key_id_t.
  * \param[in,out]    public_key          Buffer to store public key, must not be NULL.
  * \param[in]    public_key_length       Initially set as length of public_key, later updated as actual length of public_key.
  *
- * \retval  #OPTIGA_LIB_SUCCESS          Successful invocation of optiga cmd module
- * \retval  #OPTIGA_LIB_ERROR            The execution failed because of an internal error
+ * \retval  OPTIGA_CRYPT_SUCCESS                           Successful invocation of optiga cmd module
+ * \retval  OPTIGA_CRYPT_ERROR_INVALID_INPUT               Wrong Input arguments provided
+ * \retval  OPTIGA_CRYPT_ERROR_INSTANCE_IN_USE             Same instance with ongoing request servicing is used
+ * \retval  OPTIGA_DEVICE_ERROR                            Command execution failure in OPTIGA and the LSB indicates the error code.(Refer Solution Reference Manual)
  */
-optiga_lib_status_t optiga_crypt_ecc_generate_keypair(optiga_ecc_curve_t curve_id,
-                                                      uint8_t key_usage,
-                                                      bool_t export_private_key,
-                                                      void * private_key,
-                                                      uint8_t * public_key,
-                                                      uint16_t * public_key_length);
+ LIBRARY_EXPORTS optiga_lib_status_t optiga_crypt_ecc_generate_keypair(optiga_ecc_curve_t curve_id,
+                                                                       uint8_t key_usage,
+                                                                       bool_t export_private_key,
+                                                                       void * private_key,
+                                                                       uint8_t * public_key,
+                                                                       uint16_t * public_key_length);
 
 
  /**
@@ -343,12 +377,16 @@ optiga_lib_status_t optiga_crypt_ecc_generate_keypair(optiga_ecc_curve_t curve_i
  *
  *
  *<b>Pre Conditions:</b>
- * - The application on OPTIGA must be opened using #optiga_util_open_application before using this API.<br>.
+ * - The application on OPTIGA must be opened using optiga_util_open_application before using this API.<br>.
  *
  *<b>API Details:</b>
  * - Generated signature for the input digest.<br>
  * - Exports the generated signature.<br>
  *<br>
+ *
+ *<b>Notes:</b>
+
+ * - Error codes from lower layers will be returned as it is.<br>
  *
  * \param[in]   digest               Digest on which signature is generated.
  * \param[in]   digest_length        Length of the input digest.
@@ -357,14 +395,16 @@ optiga_lib_status_t optiga_crypt_ecc_generate_keypair(optiga_ecc_curve_t curve_i
  *                                   - The size of the buffer must be sufficient enough to accommodate the additional DER encoding formatting for R and S components of signature.
  * \param[in]   signature_length     Length of signature.Intial value set as length of buffer, later updated as the actual length of generated signature.
  *
- * \retval  #OPTIGA_LIB_SUCCESS      Successful invocation of optiga cmd module
- * \retval  #OPTIGA_LIB_ERROR        The execution failed because of an internal error
+ * \retval  OPTIGA_CRYPT_SUCCESS                           Successful invocation of optiga cmd module
+ * \retval  OPTIGA_CRYPT_ERROR_INVALID_INPUT               Wrong Input arguments provided
+ * \retval  OPTIGA_CRYPT_ERROR_INSTANCE_IN_USE             Same instance with ongoing request servicing is used
+ * \retval  OPTIGA_DEVICE_ERROR                            Command execution failure in OPTIGA and the LSB indicates the error code.(Refer Solution Reference Manual)
  */
-optiga_lib_status_t optiga_crypt_ecdsa_sign(uint8_t * digest,
-                                            uint8_t digest_length,
-                                            optiga_key_id_t private_key,
-                                            uint8_t * signature,
-                                            uint16_t * signature_length);
+LIBRARY_EXPORTS optiga_lib_status_t optiga_crypt_ecdsa_sign(uint8_t * digest,
+                                                            uint8_t digest_length,
+                                                            optiga_key_id_t private_key,
+                                                            uint8_t * signature,
+                                                            uint16_t * signature_length);
 
 /**
  *
@@ -373,31 +413,36 @@ optiga_lib_status_t optiga_crypt_ecdsa_sign(uint8_t * digest,
  * Verifies the signature over a given digest provided with the input data.<br>
  *
  *<b>Pre Conditions:</b>
- * - The application on OPTIGA must be opened using #optiga_util_open_application.<br>
+ * - The application on OPTIGA must be opened using optiga_util_open_application.<br>
  *
  *<b>API Details:</b>
  * - Verifies the signature over the given provided with the input data using public key.
+ *
+ *<b>Notes:</b>
+ * - Error codes from lower layers will be returned as it is to the application.<br>
  *
  * \param[in]   digest                 Pointer to a given digest buffer, must not be NULL.
  * \param[in]   digest_length          Length of digest
  * \param[in]   signature              Pointer to a given signature buffer, must not be NULL.
  * \param[in]   signature_length       Length of signature
  * \param[in]   public_key_source_type Public key from host / public key of certificate OID from OPTIGA. Value must be one of the below
- *                                     - #OPTIGA_CRYPT_OID_DATA, if the public key is to used from the certificate data object from OPTIGA.
- *                                     - #OPTIGA_CRYPT_HOST_DATA, if the public key is provided by host.
+ *                                     - OPTIGA_CRYPT_OID_DATA, if the public key is to used from the certificate data object from OPTIGA.
+ *                                     - OPTIGA_CRYPT_HOST_DATA, if the public key is provided by host.
  * \param[in]   public_key             Public key from host / public key of certificate OID. Value must be one of the below
  *                                     - For certificate OID, pointer OID value must be passed.
- *                                     - For Public key from host, pointer to #public_key_from_host_t instance.
+ *                                     - For Public key from host, pointer to public_key_from_host_t instance.
  *
- * \retval  #OPTIGA_LIB_SUCCESS        Successful invocation of optiga cmd module
- * \retval  #OPTIGA_LIB_ERROR          The execution failed because of an internal error
+ * \retval  OPTIGA_CRYPT_SUCCESS                           Successful invocation of optiga cmd module
+ * \retval  OPTIGA_CRYPT_ERROR_INVALID_INPUT               Wrong Input arguments provided
+ * \retval  OPTIGA_CRYPT_ERROR_INSTANCE_IN_USE             Same instance with ongoing request servicing is used
+ * \retval  OPTIGA_DEVICE_ERROR                            Command execution failure in OPTIGA and the LSB indicates the error code.(Refer Solution Reference Manual)
  */
-optiga_lib_status_t optiga_crypt_ecdsa_verify(uint8_t * digest,
-                                              uint8_t digest_length,
-                                              uint8_t * signature,
-                                              uint16_t signature_length,
-                                              uint8_t public_key_source_type,
-                                              void * public_key);
+LIBRARY_EXPORTS optiga_lib_status_t optiga_crypt_ecdsa_verify(uint8_t * digest,
+                                                              uint8_t digest_length,
+                                                              uint8_t * signature,
+                                                              uint16_t signature_length,
+                                                              uint8_t public_key_source_type,
+                                                              void * public_key);
 
  /**
  * @brief Calculates the shared secret using ECDH algorithm.
@@ -406,7 +451,7 @@ optiga_lib_status_t optiga_crypt_ecdsa_verify(uint8_t * digest,
  *
  *
  *<b>Pre Conditions:</b>
- * - The application on OPTIGA must be opened using #optiga_util_open_application.<br>
+ * - The application on OPTIGA must be opened using optiga_util_open_application.<br>
  * - There must be a secret available in the "session context / data object OID" provided as input parameter.<br>
  *
  *<b>API Details:</b>
@@ -415,27 +460,30 @@ optiga_lib_status_t optiga_crypt_ecdsa_verify(uint8_t * digest,
  *<br>
  *
  *<b>Notes:</b>
+ * - Error codes from lower layers will be returned as it is.<br>
  * - The buffer size for shared secret should be appropriately provided by the user
  * - If the user provides <b>private_key</b> as session based and <b>export_to_host</b> as FALSE,<br>
  *   then the shared secret generated will overwrite the private key stored in the session object ID
  *
  * \param[in]      private_key            Object ID of the private key stored in OPTIGA.<br>
- *                                        - Possible values are from the #optiga_key_id_t <br>
+ *                                        - Possible values are from the optiga_key_id_t <br>
  *                                        - Argument check for private_key is not done since OPTIGA will provide an error for invalid private_key.
  * \param[in]      public_key             Pointer to the public key structure for shared secret generation with its properties, must not be NULL.<br>
- *                                        - Provide the inputs according to the structure type #public_key_from_host_t
+ *                                        - Provide the inputs according to the structure type public_key_from_host_t
  * \param[in]      export_to_host         TRUE (1) - Exports the generated shared secret to Host. <br>
  *                                        FALSE (0) - Stores the generated shared secret into the session object ID acquired by the instance.
  * \param[in,out]   shared_secret          Pointer to the shared secret buffer, only if <b>export_to_host</b> is TRUE. <br>
  *                                        Otherwise supply NULL as input.
  *
- * \retval  #OPTIGA_LIB_SUCCESS           Successful invocation of optiga cmd module Reference Manual)
- * \retval  #OPTIGA_LIB_ERROR             The execution failed because of an internal error
+ * \retval  OPTIGA_CRYPT_SUCCESS                           Successful invocation of optiga cmd module
+ * \retval  OPTIGA_CRYPT_ERROR_INVALID_INPUT               Wrong Input arguments provided
+ * \retval  OPTIGA_CRYPT_ERROR_INSTANCE_IN_USE             Same instance with ongoing request servicing is used
+ * \retval  OPTIGA_DEVICE_ERROR                            Command execution failure in OPTIGA and the LSB indicates the error code.(Refer Solution Reference Manual)
  */
-optiga_lib_status_t optiga_crypt_ecdh(optiga_key_id_t private_key,
-                                      public_key_from_host_t * public_key,
-                                      bool_t export_to_host,
-                                      uint8_t * shared_secret);
+LIBRARY_EXPORTS optiga_lib_status_t optiga_crypt_ecdh(optiga_key_id_t private_key,
+                                                      public_key_from_host_t * public_key,
+                                                      bool_t export_to_host,
+                                                      uint8_t * shared_secret);
 
 /**
  * @brief Derives a key.
@@ -443,8 +491,9 @@ optiga_lib_status_t optiga_crypt_ecdh(optiga_key_id_t private_key,
  * Derives a key using the secret stored in OPTIGA.<br>
  *
  *<b>Pre Conditions:</b>
- * - The application on OPTIGA must be opened using #optiga_util_open_application.<br>
+ * - The application on OPTIGA must be opened using optiga_util_open_application.<br>
  * - There must be a secret available in the "session context / data object OID" provided as input parameter.<br>
+ * - An instance of optiga_crypt_t must be created using the optiga_crypt_create API.
  *
  *<b>API Details:</b>
  * - Derives a key using the secret stored in OPTIGA.
@@ -453,9 +502,12 @@ optiga_lib_status_t optiga_crypt_ecdh(optiga_key_id_t private_key,
  *
  *<b>Notes:</b>
  * - At present, the minimum length of the output derived key is 16.
+ * - Error codes from lower layers will be returned as it is to the application.<br>
  *
  * \param[in]      secret                 Object ID of the secret stored in OPTIGA.
- *                                        - Any OPTIGA data object ID(16 bit OID) which holds the secret.
+ *                                        - OPTIGA_KEY_ID_SESSION_BASED from optiga_key_id_t, indicates the secret is available.
+ *                                          in the session context acquired by the instance.
+ *                                        - or any OPTIGA data object ID(16 bit OID) which holds the secret.
  * \param[in]      label                  Pointer to the label, can be NULL if not applicable.
  * \param[in]      label_length           Length of the label.
  * \param[in]      seed                   Valid pointer to the seed, must not be NULL.
@@ -466,17 +518,19 @@ optiga_lib_status_t optiga_crypt_ecdh(optiga_key_id_t private_key,
  * \param[in,out]     derived_key          Pointer to the valid buffer with a minimum size of derived_key_length,
  *                                        in case of exporting the key to host(<b>export_to_host= TRUE</b>). Otherwise set to NULL.
  *
- * \retval  #OPTIGA_LIB_SUCCESS           Successful invocation of optiga cmd module
- * \retval  #OPTIGA_LIB_ERROR             The execution failed because of an internal error
+ * \retval  OPTIGA_CRYPT_SUCCESS                           Successful invocation of optiga cmd module
+ * \retval  OPTIGA_CRYPT_ERROR_INVALID_INPUT               Wrong Input arguments provided
+ * \retval  OPTIGA_CRYPT_ERROR_INSTANCE_IN_USE             Same instance with ongoing request servicing is used
+ * \retval  OPTIGA_DEVICE_ERROR                            Command execution failure in OPTIGA and the LSB indicates the error code.(Refer Solution Reference Manual)
  */
-optiga_lib_status_t optiga_crypt_tls_prf_sha256(uint16_t secret,
-                                                uint8_t * label,
-                                                uint16_t label_length,
-                                                uint8_t * seed,
-                                                uint16_t seed_length,
-                                                uint16_t derived_key_length,
-                                                bool_t export_to_host,
-                                                uint8_t * derived_key);
+LIBRARY_EXPORTS optiga_lib_status_t optiga_crypt_tls_prf_sha256(uint16_t secret,
+                                                                uint8_t * label,
+                                                                uint16_t label_length,
+                                                                uint8_t * seed,
+                                                                uint16_t seed_length,
+                                                                uint16_t derived_key_length,
+                                                                bool_t export_to_host,
+                                                                uint8_t * derived_key);
 
 
 #ifdef __cplusplus

@@ -19,7 +19,7 @@ define memory mem with size = 4G;
 define region ROM_region   = mem:[from __ICFEDIT_region_ROM_start__   to __ICFEDIT_region_ROM_end__];
 define region RAM_region   = mem:[from __ICFEDIT_region_RAM_start__   to __ICFEDIT_region_RAM_end__];
 
-define symbol __region_uicr_bootloader_start_address_start = 0x00000FF8;
+define symbol __region_uicr_bootloader_start_address_start = 0x10001014;
 define symbol __region_uicr_bootloader_start_address_length = 0x4;
 define symbol __start_uicr_bootloader_start_address = __region_uicr_bootloader_start_address_start;
 define symbol __stop_uicr_bootloader_start_address = __region_uicr_bootloader_start_address_start + __region_uicr_bootloader_start_address_length;
@@ -31,7 +31,7 @@ define symbol __start_bootloader_settings_page = __region_bootloader_settings_pa
 define symbol __stop_bootloader_settings_page = __region_bootloader_settings_page_start + __region_bootloader_settings_page_length;
 export symbol __start_bootloader_settings_page;
 export symbol __stop_bootloader_settings_page;
-define symbol __region_uicr_mbr_params_page_start = 0x00000FFC;
+define symbol __region_uicr_mbr_params_page_start = 0x10001018;
 define symbol __region_uicr_mbr_params_page_length = 0x4;
 define symbol __start_uicr_mbr_params_page = __region_uicr_mbr_params_page_start;
 define symbol __stop_uicr_mbr_params_page = __region_uicr_mbr_params_page_start + __region_uicr_mbr_params_page_length;

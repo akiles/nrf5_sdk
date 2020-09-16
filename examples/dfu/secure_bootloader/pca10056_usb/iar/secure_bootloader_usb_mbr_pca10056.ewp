@@ -349,7 +349,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd\class\cdc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd\class\cdc\acm</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\softdevice\mbr\headers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..</state>
           <state>$PROJ_DIR$\..\..\..\..\..\external\fprintf</state>
@@ -663,7 +663,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd\class\cdc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd\class\cdc\acm</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\softdevice\mbr\headers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..</state>
           <state>$PROJ_DIR$\..\..\..\..\..\external\fprintf</state>
@@ -1115,7 +1115,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_systick.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_usbd.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_3.0.1.a</name>    </file>  </group>  <group>
   <name>nRF_Crypto</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecdsa.c</name>    </file>    <file>

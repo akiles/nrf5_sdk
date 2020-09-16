@@ -43,6 +43,7 @@
 #include "ble_srv_common.h"
 #include "cgms_sst.h"
 #include "cgms_socp.h"
+#include "nrf_ble_gq.h"
 
 
 #define NRF_BLE_CGMS_PLUS_INFINTE                     0x07FE
@@ -175,59 +176,33 @@ ret_code_t cgms_socp_char_add(nrf_ble_cgms_t * p_cgms)
  */
 static void socp_send(nrf_ble_cgms_t * p_cgms)
 {
-    uint32_t               err_code;
-    uint8_t                encoded_resp[25];
-    uint8_t                len;
-    uint16_t               hvx_len;
-    ble_gatts_hvx_params_t hvx_params;
+    uint32_t         err_code;
+    uint8_t          encoded_resp[25];
+    uint16_t         len;
+    nrf_ble_gq_req_t cgms_req;
+
+    memset(&cgms_req, 0, sizeof(nrf_ble_gq_req_t));
 
     // Send indication
-    len     = ble_socp_encode(&(p_cgms->socp_response), encoded_resp);
-    hvx_len = len;
+    len = ble_socp_encode(&(p_cgms->socp_response), encoded_resp);
 
-    memset(&hvx_params, 0, sizeof(hvx_params));
+    cgms_req.type                               = NRF_BLE_GQ_REQ_GATTS_HVX;
+    cgms_req.error_handler.cb                   = p_cgms->gatt_err_handler;
+    cgms_req.error_handler.p_ctx                = p_cgms;
+    cgms_req.params.gatts_hvx.type    = BLE_GATT_HVX_INDICATION;
+    cgms_req.params.gatts_hvx.handle  = p_cgms->char_handles.socp.value_handle;
+    cgms_req.params.gatts_hvx.offset  = 0;
+    cgms_req.params.gatts_hvx.p_data  = encoded_resp;
+    cgms_req.params.gatts_hvx.p_len   = &len;
 
-    hvx_params.handle = p_cgms->char_handles.socp.value_handle;
-    hvx_params.type   = BLE_GATT_HVX_INDICATION;
-    hvx_params.offset = 0;
-    hvx_params.p_len  = &hvx_len;
-    hvx_params.p_data = encoded_resp;
+    err_code = nrf_ble_gq_item_add(p_cgms->p_gatt_queue, &cgms_req, p_cgms->conn_handle);
 
-    err_code = sd_ble_gatts_hvx(p_cgms->conn_handle, &hvx_params);
-
-    // Error handling
-    if ((err_code == NRF_SUCCESS) && (hvx_len != len))
+    // Report error to application
+    if ((p_cgms->error_handler != NULL) &&
+        (err_code != NRF_SUCCESS) &&
+        (err_code != NRF_ERROR_INVALID_STATE))
     {
-        err_code = NRF_ERROR_DATA_SIZE;
-    }
-
-    switch (err_code)
-    {
-        case NRF_SUCCESS:
-            // Wait for HVC event.
-            p_cgms->cgms_com_state = STATE_SOCP_RESPONSE_IND_VERIF;
-            break;
-
-        case NRF_ERROR_RESOURCES:
-            // Wait for TX_COMPLETE event to retry transmission.
-            p_cgms->cgms_com_state = STATE_SOCP_RESPONSE_PENDING;
-            break;
-
-        case NRF_ERROR_INVALID_STATE:
-            // Make sure state machine returns to the default state.
-            p_cgms->cgms_com_state = STATE_NO_COMM;
-            break;
-
-        default:
-            // Report error to application.
-            if (p_cgms->error_handler != NULL)
-            {
-                p_cgms->error_handler(err_code);
-            }
-
-            // Make sure state machine returns to the default state.
-            p_cgms->cgms_com_state = STATE_NO_COMM;
-            break;
+        p_cgms->error_handler(err_code);
     }
 }
 
@@ -416,15 +391,6 @@ void cgms_socp_on_rw_auth_req(nrf_ble_cgms_t                             * p_cgm
         {
             on_socp_value_write(p_cgms, &p_auth_req->request.write);
         }
-    }
-}
-
-
-void cgms_socp_on_tx_complete(nrf_ble_cgms_t * p_cgms)
-{
-    if (p_cgms->cgms_com_state == STATE_SOCP_RESPONSE_PENDING)
-    {
-        socp_send(p_cgms);
     }
 }
 

@@ -127,6 +127,7 @@ typedef enum app_usbd_audio_user_event_e {
  * @param format                    FormatTag (@ref app_usbd_audio_as_iface_format_tag_t).
  * @param ep_size                   Endpoint size.
  * @param type_str                  Streaming type MIDISTREAMING/AUDIOSTREAMING.
+ * @param terminal_link             Terminal link in AS Interface Descriptor.
  *
  * @note This macro is just simplified version of @ref APP_USBD_AUDIO_GLOBAL_DEF_INTERNAL
  *
@@ -141,7 +142,8 @@ typedef enum app_usbd_audio_user_event_e {
                                   delay,                    \
                                   format,                   \
                                   ep_size,                  \
-                                  type_str)                 \
+                                  type_str,                 \
+                                  terminal_link)            \
     APP_USBD_AUDIO_GLOBAL_DEF_INTERNAL(instance_name,       \
                                        interfaces_configs,  \
                                        user_ev_handler,     \
@@ -152,7 +154,8 @@ typedef enum app_usbd_audio_user_event_e {
                                        delay,               \
                                        format,              \
                                        ep_size,             \
-                                       type_str)
+                                       type_str,            \
+                                       terminal_link)
 
 
 /**
@@ -208,7 +211,7 @@ typedef enum app_usbd_audio_user_event_e {
     static const app_usbd_audio_subclass_desc_t name =          \
     {                                                           \
         sizeof(CONCAT_2(name, _data)),                          \
-        APP_USBD_AUDIO_AC_IFACE_SUBTYPE_OUTPUT_TERNINAL,        \
+        APP_USBD_AUDIO_AC_IFACE_SUBTYPE_OUTPUT_TERMINAL,        \
         CONCAT_2(name,_data)                                    \
     }
 

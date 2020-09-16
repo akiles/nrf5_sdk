@@ -45,9 +45,9 @@ extern "C" {
 #endif
 
 #include "nrf_cli.h"
-#include "nrf_libuarte.h"
 #include "nrf_ringbuf.h"
 #include "app_timer.h"
+#include "nrf_uarte.h"
 
 /**@file
  *

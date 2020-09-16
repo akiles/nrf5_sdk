@@ -65,7 +65,7 @@
 #include "common/Log_api.h"
 #define LOG_TL(args...) ifx_debug_log(IFX_I2C_LOG_ID_TL, args)
 #else
-#define LOG_TL(...) //printf(__VA_ARGS__);
+#define LOG_TL(...)	//printf(__VA_ARGS__);
 #endif
 /***********************************************************************************************************************
 * ENUMS

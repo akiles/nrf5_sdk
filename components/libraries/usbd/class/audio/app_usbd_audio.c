@@ -756,7 +756,7 @@ static bool audio_feed_descriptors(app_usbd_class_descriptor_ctx_t * p_ctx,
     APP_USBD_CLASS_DESCRIPTOR_WRITE(0x07); // bLength
     APP_USBD_CLASS_DESCRIPTOR_WRITE(APP_USBD_AUDIO_DESCRIPTOR_INTERFACE); // bDescriptorType = Audio Interface
     APP_USBD_CLASS_DESCRIPTOR_WRITE(APP_USBD_AUDIO_AS_IFACE_SUBTYPE_GENERAL); // bDescriptorSubtype = General
-    APP_USBD_CLASS_DESCRIPTOR_WRITE(audio_get_control_interface_number(p_inst) + 1); // bTerminalLink
+    APP_USBD_CLASS_DESCRIPTOR_WRITE(p_audio->specific.inst.terminal_link); // bTerminalLink
     APP_USBD_CLASS_DESCRIPTOR_WRITE(p_audio->specific.inst.delay); // bDelay
     APP_USBD_CLASS_DESCRIPTOR_WRITE(LSB_16(p_audio->specific.inst.format)); // wFormatTag LSB
     APP_USBD_CLASS_DESCRIPTOR_WRITE(MSB_16(p_audio->specific.inst.format)); // wFormatTag MSB

@@ -52,6 +52,7 @@
 
 #include "ble_srv_common.h"
 #include "sdk_common.h"
+#include "nrf_ble_gq.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -165,15 +166,6 @@ typedef enum
 } ble_lncp_op_code_t;
 
 
-/** @brief Location and Navigation Control Point procedure status */
-typedef enum
-{
-    LNCP_STATE_NO_PROC_IN_PROGRESS,                        /**< No procedure in progress. */
-    LNCP_STATE_INDICATION_PENDING,                         /**< Control Point indication is pending. */
-    LNCP_STATE_CONFIRMATION_PENDING,                 /**< Waiting for the indication confirmation. */
-} ble_lncp_procedure_status_t;
-
-
 /** @brief Information included in a control point write response indication. */
 typedef struct
 {
@@ -189,6 +181,8 @@ typedef struct
     uint16_t                    service_handle;
     ble_lncp_evt_handler_t      evt_handler;
     ble_srv_error_handler_t     error_handler;
+
+    nrf_ble_gq_t              * p_gatt_queue;                            /**< Pointer to BLE GATT queue instance. */
 
     uint32_t                    available_features;                      /**< Value of the LN feature. */
     bool                        is_position_quality_present;             /**< If set to true, the position quality characteristic will be added. Else not. */
@@ -212,8 +206,9 @@ struct ble_lncp_s
     ble_gatts_char_handles_t    navigation_handles;
     ble_lncp_evt_handler_t      evt_handler;
     ble_srv_error_handler_t     error_handler;
-    ble_lncp_procedure_status_t procedure_status;
     ble_lncp_rsp_t              pending_rsp;
+
+    nrf_ble_gq_t              * p_gatt_queue;                   /**< Pointer to BLE GATT queue instance. */
 
     ble_lncp_mask_t             mask;
     uint32_t                    total_distance;
@@ -228,6 +223,8 @@ struct ble_lncp_s
 
     bool                        is_ctrlpt_indication_enabled;   /**< True if indication is enabled on the Control Point characteristic. */
     bool                        is_nav_notification_enabled;    /**< True if notification is enabled on the Navigation characteristic. */
+
+    bool                        is_indication_pending;          /**< True if Control Point indication is pending. */
 };
 
 

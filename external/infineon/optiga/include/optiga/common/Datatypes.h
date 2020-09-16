@@ -27,8 +27,8 @@
 *
 * \brief This file contains the type definitions for the fundamental data types.
 *
-* \addtogroup grTypes
-* @{
+*
+*
 */
 
 #ifndef _DATATYPES_H_
@@ -98,13 +98,13 @@ typedef uint32_t* puint32_t;
 typedef uint16_t* puint16_t ;
 
 /// Typedef for a void
-typedef void            Void;
+typedef void			Void;
 
 /// Typedef for a double word
-typedef double          double_t;
+typedef double			double_t;
 
 /// Typedef for a float
-typedef float           float_t;
+typedef float			float_t;
 
 /// Typedef for a boolean
 typedef uint8_t         bool_t;
@@ -138,7 +138,3 @@ typedef void (*app_event_handler_t)(void* upper_layer_ctx, host_lib_status_t eve
 #define _STATIC_H static
 #endif
 #endif /* __DATATYPES_H__ */
-
-/**
-* @}
-*/

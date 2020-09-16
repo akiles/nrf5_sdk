@@ -40,11 +40,11 @@
 /**
 * Call back function to allocate memory to the received message from Security Chip.<br>
 *
-* \param[in,out]        PpCBParam           Pointer to structure containing information required to allocate memory
-* \param[in]            psInOutMsg          Pointer to sBlob containing the received Handshake message from Security Chip
+* \param[in,out]	    PpCBParam			Pointer to structure containing information required to allocate memory
+* \param[in]	        psInOutMsg			Pointer to sBlob containing the received Handshake message from Security Chip
 *
-* \retval       #CMD_LIB_OK     Successful Execution
-* \retval       #CMD_LIB_ERROR  Failure Execution
+* \retval 		#CMD_LIB_OK		Successful Execution
+* \retval 		#CMD_LIB_ERROR	Failure Execution
 */
 int32_t CallBack_GetMessage(Void* PpCBParam, const sbBlob_d* psInOutMsg)
 {
@@ -108,13 +108,13 @@ int32_t CallBack_GetMessage(Void* PpCBParam, const sbBlob_d* psInOutMsg)
  * Provide Handshake message using Command Library.<br>
  * Under some erroneous conditions, error codes from Command Library can also be returned.<br>
  *
- * \param[in]       eMsgType                Message type of the handshake message to be received from Security Chip
- * \param[in]       PpsMessageLayer         Pointer to structure containing information required for Message Layer
- * \param[out]       PpsMessage             Pointer to sBlob containing the Handshake message
+ * \param[in]	    eMsgType			    Message type of the handshake message to be received from Security Chip
+ * \param[in]	    PpsMessageLayer			Pointer to structure containing information required for Message Layer
+ * \param[out]	     PpsMessage			    Pointer to sBlob containing the Handshake message
  *
- * \retval      #OCP_ML_OK                  Successful Execution
- * \retval      #OCP_ML_ERROR               Failure Execution
- * \retval      #OCP_ML_INVALID_UNIXTIME    Invalid unix time provided by user
+ * \retval 		#OCP_ML_OK		            Successful Execution
+ * \retval 		#OCP_ML_ERROR	            Failure Execution
+ * \retval 		#OCP_ML_INVALID_UNIXTIME	Invalid unix time provided by user
  */
 int32_t MsgLayer_FormMessage(eMsgType_d eMsgType,const sMessageLayer_d* PpsMessageLayer, sbBlob_d* PpsMessage)
 {
@@ -207,12 +207,12 @@ return i4Status;
  * Process Handshake message using Command Library.<br>
  * Under some erroneous conditions, error codes from Command Library can also be returned. <br>
  *
- * \param[in]       eMsgType                Message type of the handshake message to be send to Security Chip
- * \param[in]       PpsMessageLayer         Pointer to structure containing information required for Message Layer
- * \param[in]       PpsMessage              Pointer to sBlob containing the Handshake message
+ * \param[in]	    eMsgType			    Message type of the handshake message to be send to Security Chip
+ * \param[in]	    PpsMessageLayer			Pointer to structure containing information required for Message Layer
+ * \param[in]	    PpsMessage			    Pointer to sBlob containing the Handshake message
  *
- * \retval      #OCP_ML_OK      Successful Execution
- * \retval      #OCP_ML_ERROR   Failure Execution
+ * \retval 		#OCP_ML_OK		Successful Execution
+ * \retval 		#OCP_ML_ERROR	Failure Execution
  */
 int32_t MsgLayer_ProcessMessage(eMsgType_d eMsgType,const sMessageLayer_d* PpsMessageLayer, sbBlob_d* PpsMessage)
 {

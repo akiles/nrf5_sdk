@@ -183,7 +183,7 @@
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_74</state>
-          <state>NRF_SD_BLE_API_VERSION=6</state>
+          <state>NRF_SD_BLE_API_VERSION=7</state>
           <state>S132</state>
           <state>SOFTDEVICE_PRESENT</state>
         </option>
@@ -424,6 +424,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\parser\record</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\text</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\uri</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\platform</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_lib</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_parser</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t4t_lib</state>
@@ -613,7 +614,7 @@
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_74</state>
-          <state>NRF_SD_BLE_API_VERSION=6</state>
+          <state>NRF_SD_BLE_API_VERSION=7</state>
           <state>S132</state>
           <state>SOFTDEVICE_PRESENT</state>
         </option>
@@ -821,6 +822,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\parser\record</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\text</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\uri</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\platform</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_lib</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_parser</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t4t_lib</state>

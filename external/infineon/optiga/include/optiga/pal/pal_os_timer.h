@@ -69,16 +69,11 @@ extern "C" {
 
 /**
  * @brief Gets tick count value in milliseconds
- *
- * \retval  uint32_t time in milliseconds
  */
 uint32_t pal_os_timer_get_time_in_milliseconds(void);
 
 /**
  * @brief Waits or delay until the supplied milliseconds
- *
- * \param[in] milliseconds Delay value in milliseconds
- *
  */
 void pal_os_timer_delay_in_milliseconds(uint16_t milliseconds);
 

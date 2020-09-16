@@ -176,16 +176,17 @@
         </option>
         <option>
           <name>CCDefines</name>
+          <state>APP_TIMER_V2</state>
+          <state>APP_TIMER_V2_RTC1_ENABLED</state>
           <state>BOARD_PCA10040</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>FLOAT_ABI_HARD</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_74</state>
-          <state>NRF_SD_BLE_API_VERSION=6</state>
+          <state>NRF_SD_BLE_API_VERSION=7</state>
           <state>S132</state>
           <state>SOFTDEVICE_PRESENT</state>
-          <state>SWI_DISABLE0</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -345,6 +346,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\ble_services\ble_tps</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_gatt</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_gq</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_qwr</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_scan</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager</state>
@@ -425,6 +427,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\ndef\parser\record</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\ndef\text</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\ndef\uri</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\platform</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t2t_lib</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t2t_parser</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t4t_lib</state>
@@ -604,16 +607,17 @@
         </option>
         <option>
       <name>ADefines</name>
+          <state>APP_TIMER_V2</state>
+          <state>APP_TIMER_V2_RTC1_ENABLED</state>
           <state>BOARD_PCA10040</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>FLOAT_ABI_HARD</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_74</state>
-          <state>NRF_SD_BLE_API_VERSION=6</state>
+          <state>NRF_SD_BLE_API_VERSION=7</state>
           <state>S132</state>
           <state>SOFTDEVICE_PRESENT</state>
-          <state>SWI_DISABLE0</state>
         </option>
         <option>
           <name>AList</name>
@@ -740,6 +744,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\ble_services\ble_tps</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_gatt</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_gq</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_qwr</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_scan</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager</state>
@@ -820,6 +825,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\ndef\parser\record</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\ndef\text</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\ndef\uri</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\platform</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t2t_lib</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t2t_parser</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t4t_lib</state>
@@ -1238,8 +1244,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\app_error_handler_iar.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\timer\app_timer.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\timer\app_timer2.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\timer\drv_rtc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\fnmatch\fnmatch.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\hardfault\hardfault_implementation.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
@@ -1256,6 +1263,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\queue\nrf_queue.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\ringbuf\nrf_ringbuf.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\sortlist\nrf_sortlist.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>  </group>  <group>
   <name>None</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\mdk\iar_startup_nrf52.s</name>    </file>    <file>
@@ -1290,6 +1298,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\ble_db_discovery\ble_db_discovery.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\common\ble_srv_common.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_gatt\nrf_ble_gatt.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_gq\nrf_ble_gq.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_qwr\nrf_ble_qwr.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_scan\nrf_ble_scan.c</name>    </file>  </group>  <group>
   <name>UTF8/UTF16 converter</name>    <file>

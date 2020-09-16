@@ -536,13 +536,23 @@ uint32_t conn_mw_ble_gap_device_name_get(uint8_t const * const p_rx_buf,
 
    uint16_t   len;
    uint16_t * p_len = &len;
+   uint16_t buf_len = 0;
 
    err_code = ble_gap_device_name_get_req_dec(p_rx_buf, rx_buf_len, &p_dev_name, &p_len);
    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
+   if (p_len)
+   {
+       buf_len = *p_len;
+   }
    sd_err_code = sd_ble_gap_device_name_get(p_dev_name, p_len);
+   if (p_len)
+   {
+       buf_len = MIN(buf_len, *p_len);
+   }
 
-   err_code = ble_gap_device_name_get_rsp_enc(sd_err_code, p_dev_name, p_len, p_tx_buf, p_tx_buf_len);
+   err_code = ble_gap_device_name_get_rsp_enc(sd_err_code, p_dev_name, p_len, buf_len,
+                                              p_tx_buf, p_tx_buf_len);
    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
    return err_code;

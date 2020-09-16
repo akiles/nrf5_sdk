@@ -346,6 +346,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\examples\ecdsa_utils</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\include</state>
@@ -651,6 +652,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\examples\ecdsa_utils</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\include</state>
@@ -1073,11 +1075,12 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\twi_mngr\nrf_twi_mngr.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_3.0.1.a</name>    </file>  </group>  <group>
   <name>Infineon</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\cmd\CommandLib.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\common\Logger.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\common\Util.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\examples\ecdsa_utils\ecdsa_utils.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\comms\ifx_i2c\ifx_i2c.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\comms\ifx_i2c\ifx_i2c_config.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\comms\ifx_i2c\ifx_i2c_data_link_layer.c</name>    </file>    <file>
@@ -1135,8 +1138,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_ecdh.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_ecdsa.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_init.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_rng.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_utils.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_rng.c</name>    </file>  </group>  <group>
   <name>nRF_Crypto backend Oberon</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_chacha_poly_aead.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_ecc.c</name>    </file>    <file>

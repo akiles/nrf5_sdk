@@ -59,6 +59,25 @@
 #define HTS_MEAS_FLAG_TEMP_TYPE_BIT  (0x01 << 2)  /**< Temperature Type flag. */
 
 
+/**@brief Function for interception of GATT errors and @ref nrf_ble_gq errors.
+ *
+ * @param[in] nrf_error   Error code.
+ * @param[in] p_ctx       Parameter from the event handler.
+ * @param[in] conn_handle Connection handle.
+ */
+static void gatt_error_handler(uint32_t   nrf_error,
+                               void     * p_ctx,
+                               uint16_t   conn_handle)
+{
+    ble_hts_t * p_hts = (ble_hts_t *)p_ctx;
+
+    if (p_hts->error_handler != NULL)
+    {
+        p_hts->error_handler(nrf_error);
+    }
+}
+
+
 /**@brief Function for handling the Connect event.
  *
  * @param[in]   p_hts       Health Thermometer Service structure.
@@ -66,7 +85,17 @@
  */
 static void on_connect(ble_hts_t * p_hts, ble_evt_t const * p_ble_evt)
 {
+    ret_code_t err_code;
+
     p_hts->conn_handle = p_ble_evt->evt.gatts_evt.conn_handle;
+
+    err_code = nrf_ble_gq_conn_handle_register(p_hts->p_gatt_queue, p_hts->conn_handle);
+
+    if ((p_hts->error_handler != NULL) &&
+        (err_code != NRF_SUCCESS))
+    {
+        p_hts->error_handler(err_code);
+    }
 }
 
 
@@ -241,6 +270,10 @@ static uint8_t hts_measurement_encode(ble_hts_t      * p_hts,
 
 uint32_t ble_hts_init(ble_hts_t * p_hts, ble_hts_init_t const * p_hts_init)
 {
+    VERIFY_PARAM_NOT_NULL(p_hts);
+    VERIFY_PARAM_NOT_NULL(p_hts_init);
+    VERIFY_PARAM_NOT_NULL(p_hts_init->p_gatt_queue);
+
     uint32_t              err_code;
     uint8_t               init_value[MAX_HTM_LEN];
     ble_hts_meas_t        initial_htm;
@@ -248,9 +281,11 @@ uint32_t ble_hts_init(ble_hts_t * p_hts, ble_hts_init_t const * p_hts_init)
     ble_add_char_params_t add_char_params;
 
     // Initialize service structure
-    p_hts->evt_handler = p_hts_init->evt_handler;
-    p_hts->conn_handle = BLE_CONN_HANDLE_INVALID;
-    p_hts->temp_type   = p_hts_init->temp_type;
+    p_hts->evt_handler   = p_hts_init->evt_handler;
+    p_hts->p_gatt_queue  = p_hts_init->p_gatt_queue;
+    p_hts->error_handler = p_hts_init->error_handler;
+    p_hts->conn_handle   = BLE_CONN_HANDLE_INVALID;
+    p_hts->temp_type     = p_hts_init->temp_type;
 
     // Add service
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_HEALTH_THERMOMETER_SERVICE);
@@ -311,27 +346,24 @@ uint32_t ble_hts_measurement_send(ble_hts_t * p_hts, ble_hts_meas_t * p_hts_meas
     // Send value if connected
     if (p_hts->conn_handle != BLE_CONN_HANDLE_INVALID)
     {
-        uint8_t                encoded_hts_meas[MAX_HTM_LEN];
-        uint16_t               len;
-        uint16_t               hvx_len;
-        ble_gatts_hvx_params_t hvx_params;
+        uint8_t          encoded_hts_meas[MAX_HTM_LEN];
+        uint16_t         len;
+        nrf_ble_gq_req_t hts_req;
 
         len     = hts_measurement_encode(p_hts, p_hts_meas, encoded_hts_meas);
-        hvx_len = len;
 
-        memset(&hvx_params, 0, sizeof(hvx_params));
+        memset(&hts_req, 0, sizeof(nrf_ble_gq_req_t));
 
-        hvx_params.handle = p_hts->meas_handles.value_handle;
-        hvx_params.type   = BLE_GATT_HVX_INDICATION;
-        hvx_params.offset = 0;
-        hvx_params.p_len  = &hvx_len;
-        hvx_params.p_data = encoded_hts_meas;
+        hts_req.type                               = NRF_BLE_GQ_REQ_GATTS_HVX;
+        hts_req.error_handler.cb                   = gatt_error_handler;
+        hts_req.error_handler.p_ctx                = p_hts;
+        hts_req.params.gatts_hvx.handle  = p_hts->meas_handles.value_handle;
+        hts_req.params.gatts_hvx.offset  = 0;
+        hts_req.params.gatts_hvx.p_data  = encoded_hts_meas;
+        hts_req.params.gatts_hvx.p_len   = &len;
+        hts_req.params.gatts_hvx.type    = BLE_GATT_HVX_INDICATION;
 
-        err_code = sd_ble_gatts_hvx(p_hts->conn_handle, &hvx_params);
-        if ((err_code == NRF_SUCCESS) && (hvx_len != len))
-        {
-            err_code = NRF_ERROR_DATA_SIZE;
-        }
+        err_code = nrf_ble_gq_item_add(p_hts->p_gatt_queue, &hts_req, p_hts->conn_handle);
     }
     else
     {

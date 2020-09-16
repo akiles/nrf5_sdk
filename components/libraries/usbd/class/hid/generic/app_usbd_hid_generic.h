@@ -95,6 +95,7 @@ APP_USBD_CLASS_TYPEDEF(app_usbd_hid_generic,                                    
  * @param subclass_descriptors      HID subclass descriptors.
  * @param report_in_queue_size      IN report queue size.
  * @param report_out_maxsize        Maximum output report size.
+ * @param report_feature_maxsize    Maximum feature report size.
  * @param subclass_boot             Subclass boot (@ref app_usbd_hid_subclass_t).
  * @param protocol                  HID protocol (@ref app_usbd_hid_protocol_t).
  *
@@ -122,29 +123,32 @@ APP_USBD_CLASS_TYPEDEF(app_usbd_hid_generic,                                    
                                        reps,
                                        REPORT_IN_QUEUE_SIZE,
                                        REPORT_OUT_MAXSIZE,
+                                       REPORT_FEATURE_MAXSIZE,
                                        APP_USBD_HID_SUBCLASS_BOOT,
                                        APP_USBD_HID_PROTO_MOUSE);
   @endcode
  *
  */
 /*lint -emacro( (40), APP_USBD_HID_GENERIC_GLOBAL_DEF) */
-#define APP_USBD_HID_GENERIC_GLOBAL_DEF(instance_name,              \
-                                        interface_number,           \
-                                        user_ev_handler,            \
-                                        endpoint_list,              \
-                                        subclass_descriptors,       \
-                                        report_in_queue_size,       \
-                                        report_out_maxsize,         \
-                                        subclass_boot,              \
-                                        protocol)                   \
-    APP_USBD_HID_GENERIC_GLOBAL_DEF_INTERNAL(instance_name,         \
-                                             interface_number,      \
-                                             user_ev_handler,       \
-                                             endpoint_list,         \
-                                             subclass_descriptors,  \
-                                             report_in_queue_size,  \
-                                             report_out_maxsize,    \
-                                             subclass_boot,         \
+#define APP_USBD_HID_GENERIC_GLOBAL_DEF(instance_name,                  \
+                                        interface_number,               \
+                                        user_ev_handler,                \
+                                        endpoint_list,                  \
+                                        subclass_descriptors,           \
+                                        report_in_queue_size,           \
+                                        report_out_maxsize,             \
+                                        report_feature_maxsize,         \
+                                        subclass_boot,                  \
+                                        protocol)                       \
+    APP_USBD_HID_GENERIC_GLOBAL_DEF_INTERNAL(instance_name,             \
+                                             interface_number,          \
+                                             user_ev_handler,           \
+                                             endpoint_list,             \
+                                             subclass_descriptors,      \
+                                             report_in_queue_size,      \
+                                             report_out_maxsize,        \
+                                             report_feature_maxsize,    \
+                                             subclass_boot,             \
                                              protocol)
 
 /**

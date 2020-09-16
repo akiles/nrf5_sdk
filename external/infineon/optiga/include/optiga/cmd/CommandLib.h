@@ -69,19 +69,19 @@
 #define CMD_LIB_INVALID_SESSIONID               (CMD_LIB_NULL_PARAM + 4)
 
 ///Invalid Tag
-#define CMD_LIB_INVALID_TAG                     (CMD_LIB_NULL_PARAM + 5)
+#define CMD_LIB_INVALID_TAG               		(CMD_LIB_NULL_PARAM + 5)
 
 ///Invalid Tag Length
-#define CMD_LIB_INVALID_TAGLEN                  (CMD_LIB_NULL_PARAM + 6)
+#define CMD_LIB_INVALID_TAGLEN               	(CMD_LIB_NULL_PARAM + 6)
 
 ///Invalid Length
-#define CMD_LIB_INVALID_LEN                     (CMD_LIB_NULL_PARAM + 7)
+#define CMD_LIB_INVALID_LEN		               	(CMD_LIB_NULL_PARAM + 7)
 
 ///Decryption failed
 #define CMD_LIB_DECRYPT_FAILURE                 (CMD_LIB_NULL_PARAM + 8)
 
 ///Invalid OID
-#define CMD_LIB_INVALID_OID                     (CMD_LIB_NULL_PARAM + 9)
+#define CMD_LIB_INVALID_OID						(CMD_LIB_NULL_PARAM + 9)
 
 ///Generic error condition
 #define CMD_LIB_ERROR                            0xF87ECF01
@@ -151,7 +151,6 @@ typedef struct sOpenApp_d
 
 /**
  * \brief Opens the Security Chip Application.
-
  */
 LIBRARY_EXPORTS int32_t CmdLib_OpenApplication(const sOpenApp_d* PpsOpenApp);
 
@@ -256,10 +255,10 @@ LIBRARY_EXPORTS uint16_t CmdLib_GetMaxCommsBufferSize(Void);
  ****************************************************************************/
 
 ///Challenge minimum length
-#define CHALLENGE_MIN_LEN               0x08
+#define CHALLENGE_MIN_LEN          		0x08
 
 ///Challenge maximum length
-#define CHALLENGE_MAX_LEN               0x100
+#define CHALLENGE_MAX_LEN          		0x100
 
 /**
  * \brief Enumeration to specify an authentication scheme.
@@ -715,13 +714,13 @@ LIBRARY_EXPORTS int32_t CmdLib_DeriveKey(const sDeriveKeyOptions_d *PpsDeriveKey
 #define LEN_APDUHEADER              0x04
 
 ///Number of bytes in Session ID field
-#define BYTES_SESSIONID             0x02
+#define BYTES_SESSIONID				0x02
 
 ///bits per byte
 #define BITS_PER_BYTE               0x08
 
 ///Tag Encoding length
-#define LEN_TAG_ENCODING            0x03
+#define LEN_TAG_ENCODING			0x03
 
 ///Additional bytes for Encryption/Decryption
 #define ADDITIONALBYTES_ENCDEC      10

@@ -46,22 +46,22 @@
  ****************************************************************************/
 
 /// Successful execution
-#define OCP_AL_OK                   0x74281527
+#define OCP_AL_OK 					0x74281527
 
 /// Failure in execution
-#define OCP_AL_ERROR                0xFC468021
+#define OCP_AL_ERROR 				0xFC468021
 
 ///Null Parameter(s)
-#define OCP_AL_NULL_PARAM           BASE_ERROR_ALERT
+#define OCP_AL_NULL_PARAM 			BASE_ERROR_ALERT
 
 ///Length of input is zero
-#define OCP_AL_LENZERO_ERROR        (BASE_ERROR_ALERT + 1)
+#define OCP_AL_LENZERO_ERROR 		(BASE_ERROR_ALERT + 1)
 
 ///Fatal error
-#define OCP_AL_FATAL_ERROR          (BASE_ERROR_ALERT + 2)
+#define OCP_AL_FATAL_ERROR 			(BASE_ERROR_ALERT + 2)
 
 ///Warning error
-#define OCP_AL_WARNING_ERROR        (BASE_ERROR_ALERT + 3)
+#define OCP_AL_WARNING_ERROR 		(BASE_ERROR_ALERT + 3)
 
 /**
  * \brief Process the Alert Messages.

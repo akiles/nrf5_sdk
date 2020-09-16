@@ -128,6 +128,48 @@ typedef struct
             NRF_LOG_INSTANCE_PTR_INIT(p_log, NRF_QUEUE_LOG_NAME, _name)                  \
         }
 
+#if !(defined(__LINT__))
+/**@brief Create multiple queue instances.
+ *
+ * @note  This macro reserves memory for array of queue instances.
+ *
+ * @param[in]   _type       Type which is stored.
+ * @param[in]   _name       Name of the array with queue instances.
+ * @param[in]   _size       Size of single queue instance.
+ * @param[in]   _mode       Mode of single queue instance.
+ * @param[in]   _num        Number of queue instances within array.
+ */
+#define NRF_QUEUE_ARRAY_DEF(_type, _name, _size, _mode, _num)                                 \
+    MACRO_REPEAT_FOR(_num, NRF_QUEUE_ARRAY_INSTANCE_ELEMS_DEC, _type, _name, _size, _mode)    \
+    static const nrf_queue_t _name[] =                                                        \
+        {                                                                                     \
+            MACRO_REPEAT_FOR(_num, NRF_QUEUE_ARRAY_INSTANCE_INIT, _type, _name, _size, _mode) \
+        };                                                                                    \
+    STATIC_ASSERT(ARRAY_SIZE(_name) == _num)
+#else
+#define NRF_QUEUE_ARRAY_DEF(_type, _name, _size, _mode, _num) \
+    static const nrf_queue_t _name[_num];
+#endif // !(defined(__LINT__))
+
+/**@brief Helping macro used to declare elements for nrf_queue_t instance.
+ *        Used in @ref NRF_QUEUE_ARRAY_DEF.
+ */
+#define NRF_QUEUE_ARRAY_INSTANCE_ELEMS_DEC(_num, _type, _name, _size, _mode)     \
+    static _type          CONCAT_3(_name, _num, _nrf_queue_buffer[(_size) + 1]); \
+    static nrf_queue_cb_t CONCAT_3(_name, _num, _nrf_queue_cb);
+
+/**@brief Helping macro used to initialize nrf_queue_t instance in an array fashion.
+ *        Used in @ref NRF_QUEUE_ARRAY_DEF.
+ */
+#define NRF_QUEUE_ARRAY_INSTANCE_INIT(_num, _type, _name, _size, _mode) \
+    {                                                                   \
+        .p_cb           = &CONCAT_3(_name, _num, _nrf_queue_cb),        \
+        .p_buffer       = CONCAT_3(_name, _num, _nrf_queue_buffer),     \
+        .size           = (_size),                                      \
+        .element_size   = sizeof(_type),                                \
+        .mode           = _mode,                                        \
+    },
+
 /**@brief Declare a queue interface.
  *
  * @param[in]   _type    Type which is stored.

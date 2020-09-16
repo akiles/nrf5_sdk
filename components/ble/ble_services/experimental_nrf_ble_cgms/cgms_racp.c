@@ -43,12 +43,14 @@
 #include "ble_srv_common.h"
 #include "cgms_racp.h"
 #include "cgms_db.h"
+#include "nrf_ble_gq.h"
 #include "cgms_meas.h"
 
 #define OPERAND_LESS_GREATER_FILTER_TYPE_SIZE  1 // !< 1 byte.
 #define OPERAND_LESS_GREATER_FILTER_PARAM_SIZE 2 // !< 2 bytes.
 #define OPERAND_LESS_GREATER_SIZE              OPERAND_LESS_GREATER_FILTER_TYPE_SIZE \
                                              + OPERAND_LESS_GREATER_FILTER_PARAM_SIZE  // !< Total size of the operand.
+
 
 /**@brief Function for adding a characteristic for the Record Access Control Point.
  *
@@ -86,69 +88,33 @@ ret_code_t cgms_racp_char_add(nrf_ble_cgms_t * p_cgms)
  */
 static void racp_send(nrf_ble_cgms_t * p_cgms, ble_racp_value_t * p_racp_val)
 {
-    uint32_t               err_code;
-    uint8_t                encoded_resp[25];
-    uint8_t                len;
-    uint16_t               hvx_len;
-    ble_gatts_hvx_params_t hvx_params;
+    uint32_t         err_code;
+    uint8_t          encoded_resp[25];
+    uint16_t         len;
+    nrf_ble_gq_req_t cgms_req;
 
-    if (
-        (p_cgms->cgms_com_state != STATE_RACP_RESPONSE_PENDING)
-        &&
-        (p_cgms->racp_data.racp_proc_records_reported_since_txcomplete > 0)
-       )
-    {
-        p_cgms->cgms_com_state = STATE_RACP_RESPONSE_PENDING;
-        return;
-    }
+    memset(&cgms_req, 0, sizeof(nrf_ble_gq_req_t));
 
     // Send indication
-    len     = ble_racp_encode(p_racp_val, encoded_resp);
-    hvx_len = len;
+    len = ble_racp_encode(p_racp_val, encoded_resp);
 
-    memset(&hvx_params, 0, sizeof(hvx_params));
+    cgms_req.type                               = NRF_BLE_GQ_REQ_GATTS_HVX;
+    cgms_req.error_handler.cb                   = p_cgms->gatt_err_handler;
+    cgms_req.error_handler.p_ctx                = p_cgms;
+    cgms_req.params.gatts_hvx.type    = BLE_GATT_HVX_INDICATION;
+    cgms_req.params.gatts_hvx.handle  = p_cgms->char_handles.racp.value_handle;
+    cgms_req.params.gatts_hvx.offset  = 0;
+    cgms_req.params.gatts_hvx.p_data  = encoded_resp;
+    cgms_req.params.gatts_hvx.p_len   = &len;
 
-    hvx_params.handle = p_cgms->char_handles.racp.value_handle;
-    hvx_params.type   = BLE_GATT_HVX_INDICATION;
-    hvx_params.offset = 0;
-    hvx_params.p_len  = &hvx_len;
-    hvx_params.p_data = encoded_resp;
+    err_code = nrf_ble_gq_item_add(p_cgms->p_gatt_queue, &cgms_req, p_cgms->conn_handle);
 
-    err_code = sd_ble_gatts_hvx(p_cgms->conn_handle, &hvx_params);
-
-    // Error handling
-    if ((err_code == NRF_SUCCESS) && (hvx_len != len))
+    // Report error to application
+    if ((p_cgms->error_handler != NULL) &&
+        (err_code != NRF_SUCCESS) &&
+        (err_code != NRF_ERROR_INVALID_STATE))
     {
-        err_code = NRF_ERROR_DATA_SIZE;
-    }
-
-    switch (err_code)
-    {
-        case NRF_SUCCESS:
-            // Wait for HVC event.
-            p_cgms->cgms_com_state = STATE_RACP_RESPONSE_IND_VERIF;
-            break;
-
-        case NRF_ERROR_RESOURCES:
-            // Wait for TX_COMPLETE event to retry transmission.
-            p_cgms->cgms_com_state = STATE_RACP_RESPONSE_PENDING;
-            break;
-
-        case NRF_ERROR_INVALID_STATE:
-            // Make sure state machine returns to the default state.
-            p_cgms->cgms_com_state = STATE_NO_COMM;
-            break;
-
-        default:
-            // Report error to application.
-            if (p_cgms->error_handler != NULL)
-            {
-                p_cgms->error_handler(err_code);
-            }
-
-            // Make sure state machine returns to the default state.
-            p_cgms->cgms_com_state = STATE_NO_COMM;
-            break;
+        p_cgms->error_handler(err_code);
     }
 }
 
@@ -189,7 +155,7 @@ static uint32_t racp_report_records_all(nrf_ble_cgms_t * p_cgms)
 
     if (p_cgms->racp_data.racp_proc_record_ndx >= total_records)
     {
-        p_cgms->cgms_com_state = STATE_NO_COMM;
+        p_cgms->racp_data.racp_procesing_active = false;
     }
     else
     {
@@ -240,7 +206,7 @@ static uint32_t racp_report_records_first_last(nrf_ble_cgms_t * p_cgms)
 
     if ((p_cgms->racp_data.racp_proc_records_reported != 0) || (total_records == 0))
     {
-        p_cgms->cgms_com_state = STATE_NO_COMM;
+        p_cgms->racp_data.racp_procesing_active = false;
     }
     else
     {
@@ -290,7 +256,7 @@ static ret_code_t racp_report_records_less_equal(nrf_ble_cgms_t * p_cgms)
 
     if (p_cgms->racp_data.racp_proc_record_ndx >= total_rec_nb_to_send)
     {
-        p_cgms->cgms_com_state = STATE_NO_COMM;
+        p_cgms->racp_data.racp_procesing_active = false;
     }
     else
     {
@@ -346,7 +312,8 @@ static ret_code_t racp_report_records_greater_equal(nrf_ble_cgms_t * p_cgms)
     total_rec_nb = cgms_db_num_records_get();
     if (p_cgms->racp_data.racp_proc_record_ndx >= total_rec_nb)
     {
-        p_cgms->cgms_com_state = STATE_NO_COMM;
+        p_cgms->racp_data.racp_procesing_active = false;
+
         return NRF_SUCCESS;
     }
 
@@ -410,7 +377,7 @@ static void racp_report_records_procedure(nrf_ble_cgms_t * p_cgms)
 {
     ret_code_t err_code = NRF_SUCCESS;
 
-    while (p_cgms->cgms_com_state == STATE_RACP_PROC_ACTIVE)
+    while (p_cgms->racp_data.racp_procesing_active)
     {
         // Execute requested procedure
         switch (p_cgms->racp_data.racp_proc_operator)
@@ -437,9 +404,8 @@ static void racp_report_records_procedure(nrf_ble_cgms_t * p_cgms)
                     p_cgms->error_handler(NRF_ERROR_INTERNAL);
                 }
 
-                // Make sure state machine returns to the default state
-                // state_set(STATE_NO_COMM);
-                p_cgms->cgms_com_state = STATE_NO_COMM;
+                p_cgms->racp_data.racp_procesing_active = false;
+
                 return;
         }
 
@@ -447,7 +413,7 @@ static void racp_report_records_procedure(nrf_ble_cgms_t * p_cgms)
         switch (err_code)
         {
             case NRF_SUCCESS:
-                if (p_cgms->cgms_com_state != STATE_RACP_PROC_ACTIVE)
+                if (!p_cgms->racp_data.racp_procesing_active)
                 {
                     racp_report_records_completed(p_cgms);
                 }
@@ -459,7 +425,7 @@ static void racp_report_records_procedure(nrf_ble_cgms_t * p_cgms)
 
             case NRF_ERROR_INVALID_STATE:
                 // Notification is probably not enabled. Ignore request.
-                p_cgms->cgms_com_state = STATE_NO_COMM;
+                p_cgms->racp_data.racp_procesing_active = false;;
                 return;
 
             default:
@@ -470,7 +436,7 @@ static void racp_report_records_procedure(nrf_ble_cgms_t * p_cgms)
                 }
 
                 // Make sure state machine returns to the default state.
-                p_cgms->cgms_com_state = STATE_NO_COMM;
+                p_cgms->racp_data.racp_procesing_active = false;
                 return;
         }
     }
@@ -496,7 +462,7 @@ static bool is_request_to_be_executed(nrf_ble_cgms_t         * p_cgms,
 
     if (p_racp_request->opcode == RACP_OPCODE_ABORT_OPERATION)
     {
-        if (p_cgms->cgms_com_state == STATE_RACP_PROC_ACTIVE)
+        if (p_cgms->racp_data.racp_procesing_active)
         {
             if (p_racp_request->operator != RACP_OPERATOR_NULL)
             {
@@ -516,7 +482,7 @@ static bool is_request_to_be_executed(nrf_ble_cgms_t         * p_cgms,
             *p_response_code = RACP_RESPONSE_ABORT_FAILED;
         }
     }
-    else if (p_cgms->cgms_com_state != STATE_NO_COMM)
+    else if (p_cgms->racp_data.racp_procesing_active)
     {
         return false;
     }
@@ -657,7 +623,7 @@ static ret_code_t record_index_offset_greater_or_equal_get(uint16_t offset, uint
 static void report_records_request_execute(nrf_ble_cgms_t   * p_cgms,
                                            ble_racp_value_t * p_racp_request)
 {
-    p_cgms->cgms_com_state = STATE_RACP_PROC_ACTIVE;
+    p_cgms->racp_data.racp_procesing_active = true;
 
     p_cgms->racp_data.racp_proc_record_ndx               = 0;
     p_cgms->racp_data.racp_proc_operator                 = p_racp_request->operator;
@@ -807,7 +773,7 @@ static void on_racp_value_write(nrf_ble_cgms_t * p_cgms, ble_gatts_evt_write_t c
             return;
         }
         // Abort any running procedure
-        p_cgms->cgms_com_state = STATE_NO_COMM;
+        p_cgms->racp_data.racp_procesing_active = false;
 
         // Respond with error code
         racp_response_code_send(p_cgms, p_cgms->racp_data.racp_request.opcode, response_code);
@@ -851,13 +817,7 @@ void cgms_racp_on_rw_auth_req(nrf_ble_cgms_t                             * p_cgm
  */
 void cgms_racp_on_tx_complete(nrf_ble_cgms_t * p_cgms)
 {
-    p_cgms->racp_data.racp_proc_records_reported_since_txcomplete = 0;
-
-    if (p_cgms->cgms_com_state == STATE_RACP_RESPONSE_PENDING)
-    {
-        racp_send(p_cgms, &p_cgms->racp_data.pending_racp_response);
-    }
-    else if (p_cgms->cgms_com_state == STATE_RACP_PROC_ACTIVE)
+    if (p_cgms->racp_data.racp_procesing_active)
     {
         racp_report_records_procedure(p_cgms);
     }

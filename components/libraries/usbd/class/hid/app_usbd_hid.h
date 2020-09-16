@@ -86,10 +86,11 @@ typedef enum {
    @endcode
  */
 typedef enum {
-    APP_USBD_HID_USER_EVT_SET_BOOT_PROTO,    /**< Event SET_BOOT_PROTOCOL.  */
-    APP_USBD_HID_USER_EVT_SET_REPORT_PROTO,  /**< Event SET_REPORT_PROTOCOL.*/
-    APP_USBD_HID_USER_EVT_OUT_REPORT_READY,  /**< Event OUT_REPORT_READY.   */
-    APP_USBD_HID_USER_EVT_IN_REPORT_DONE,    /**< Event IN_REPORT_DONE.     */
+    APP_USBD_HID_USER_EVT_SET_BOOT_PROTO,           /**< Event SET_BOOT_PROTOCOL.       */
+    APP_USBD_HID_USER_EVT_SET_REPORT_PROTO,         /**< Event SET_REPORT_PROTOCOL.     */
+    APP_USBD_HID_USER_EVT_OUT_REPORT_READY,         /**< Event OUT_REPORT_READY.        */
+    APP_USBD_HID_USER_EVT_IN_REPORT_DONE,           /**< Event IN_REPORT_DONE.          */
+    APP_USBD_HID_USER_EVT_FEATURE_REPORT_READY,     /**< Event FEATURE_REPORT_READY.    */
 } app_usbd_hid_user_event_t;
 
 
@@ -111,7 +112,9 @@ typedef void (*app_usbd_hid_user_ev_handler_t)(app_usbd_class_inst_t const * p_i
 typedef ret_code_t (*app_usbd_hid_idle_handler_t)(app_usbd_class_inst_t const * p_inst,
                                                   uint8_t report_id);
 
-/**@brief HID unified interface*/
+/**
+ * @brief HID unified interface
+ * */
 typedef struct {
 
     /**
@@ -214,7 +217,8 @@ typedef struct {
 
 
 
-/**@brief Define OUT report buffer structure @ref app_usbd_hid_report_buffer_t.
+/**
+ * @brief Define OUT report buffer structure @ref app_usbd_hid_report_buffer_t.
  *
  * @param name        Instance name.
  * @param rep_size    Output report size.
@@ -225,6 +229,20 @@ typedef struct {
             .p_buff = CONCAT_2(name, _buf),                      \
             .size = sizeof(CONCAT_2(name, _buf)),                \
     }
+
+/**
+ * @brief Define FEATURE report buffer structure @ref app_usbd_hid_report_buffer_t.
+ *
+ * @param name        Instance name.
+ * @param rep_size    Feature report size.
+ */
+#define APP_USBD_HID_GENERIC_GLOBAL_FEATURE_REP_DEF(name, rep_size)  \
+    static uint8_t CONCAT_2(name, _feature_buf)[(rep_size)];         \
+    const app_usbd_hid_report_buffer_t name = {                      \
+            .p_buff = CONCAT_2(name, _feature_buf),                  \
+            .size = sizeof(CONCAT_2(name, _feature_buf)),            \
+    }
+
 
 /**
  * @brief HID subclass descriptor.
@@ -285,6 +303,7 @@ typedef struct {
 
     app_usbd_hid_report_buffer_t       * p_rep_buffer_in;        //!< Report buffer IN.
     app_usbd_hid_report_buffer_t const * p_rep_buffer_out;       //!< Report buffer OUT (only one instance).
+    app_usbd_hid_report_buffer_t const * p_rep_buffer_feature;   //!< Report buffer FEATURE.
     app_usbd_hid_methods_t const       * p_hid_methods;          //!< Hid interface methods.
     app_usbd_hid_user_ev_handler_t       user_event_handler;     //!< User event handler.
 
@@ -294,14 +313,15 @@ typedef struct {
 /**
  * @brief USB HID instance initializer @ref app_usbd_hid_inst_t.
  *
- * @param subclass_dsc      HID subclass descriptors.
- * @param sub_boot          Subclass boot. (@ref app_usbd_hid_subclass_t)
- * @param protocl           HID protocol. (@ref app_usbd_hid_protocol_t)
- * @param report_buff_in    Input report buffer list.
- * @param report_buff_out   Output report buffer.
- * @param user_ev_handler   @ref app_usbd_hid_user_ev_handler_t.
- * @param hid_methods       @ref app_usbd_hid_methods_t.
- * @param ep_list           List of endpoints and intervals
+ * @param subclass_dsc          HID subclass descriptors.
+ * @param sub_boot              Subclass boot. (@ref app_usbd_hid_subclass_t)
+ * @param protocl               HID protocol. (@ref app_usbd_hid_protocol_t)
+ * @param report_buff_in        Input report buffer list.
+ * @param report_buff_out       Output report buffer.
+ * @param report_buff_feature   Feature report buffer.
+ * @param user_ev_handler       @ref app_usbd_hid_user_ev_handler_t.
+ * @param hid_methods           @ref app_usbd_hid_methods_t.
+ * @param ep_list               List of endpoints and intervals
  * */
 
 #define APP_USBD_HID_INST_CONFIG(subclass_dsc,               \
@@ -309,6 +329,7 @@ typedef struct {
                                  protocl,                    \
                                  report_buff_in,             \
                                  report_buff_out,            \
+                                 report_buff_feature,        \
                                  user_ev_handler,            \
                                  hid_methods,                \
                                  ep_list)                    \
@@ -317,6 +338,7 @@ typedef struct {
         .subclass_desc_count = ARRAY_SIZE(subclass_dsc),     \
         .p_rep_buffer_in = report_buff_in,                   \
         .p_rep_buffer_out = report_buff_out,                 \
+        .p_rep_buffer_feature = report_buff_feature,         \
         .user_event_handler = user_ev_handler,               \
         .p_hid_methods = hid_methods,                        \
         .subclass_boot = sub_boot,                           \
@@ -508,6 +530,15 @@ app_usbd_hid_rep_buff_out_get(app_usbd_hid_inst_t const * p_hinst)
     ASSERT(p_hinst);
     return p_hinst->p_rep_buffer_out;
 }
+
+/**
+ * @brief Returns FEATURE report buffer.
+ *
+ * @param[in] p_hinst       HID class instance.
+ *
+ * @return Report buffer handle or NULL if report doesn't exist.
+ */
+app_usbd_hid_report_buffer_t const * app_usbd_hid_rep_buff_feature_get(app_usbd_hid_inst_t const * p_hinst);
 
 /**
  * @brief Returns HID selected protocol.

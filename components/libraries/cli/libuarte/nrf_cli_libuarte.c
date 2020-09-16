@@ -41,7 +41,7 @@
 #include "nrf_cli_libuarte.h"
 #include "nrf_libuarte_async.h"
 #include "nrf_assert.h"
-
+#include "nrf_atomic.h"
 #define NRF_LOG_MODULE_NAME cli_libuarte
 #if NRF_CLI_LIBUARTE_CONFIG_LOG_ENABLED
 #define NRF_LOG_LEVEL       NRF_CLI_LIBUARTE_CONFIG_LOG_LEVEL
@@ -54,7 +54,7 @@
 NRF_LOG_MODULE_REGISTER();
 
 static cli_libuarte_internal_t * mp_internal;
-static bool m_uart_busy;
+static nrf_atomic_flag_t m_uart_busy;
 
 NRF_LIBUARTE_ASYNC_DEFINE(libuarte,
                           NRF_CLI_LIBUARTE_UARTE_INSTANCE,
@@ -152,6 +152,7 @@ static ret_code_t cli_libuarte_init(nrf_cli_transport_t const * p_transport,
             .parity     = p_cli_libuarte_config->parity,
             .hwfc       = p_cli_libuarte_config->hwfc,
             .timeout_us = 100,
+            .int_prio   = APP_IRQ_PRIORITY_LOW
     };
     ret_code_t err_code = nrf_libuarte_async_init(&libuarte, &uart_async_config, uart_event_handler, NULL);
     if (err_code == NRF_SUCCESS)
@@ -219,7 +220,7 @@ static ret_code_t cli_libuarte_write(nrf_cli_transport_t const * p_transport,
     {
         NRF_LOG_DEBUG("Requested write: %d, copied to ringbuf: %d.", length, *p_cnt);
 
-        if (m_uart_busy)
+        if (nrf_atomic_flag_set_fetch(&m_uart_busy))
         {
             return err_code;
         }
@@ -234,10 +235,7 @@ static ret_code_t cli_libuarte_write(nrf_cli_transport_t const * p_transport,
             if (p_instance->p_cb->blocking && (err_code == NRF_SUCCESS))
             {
                 (void)nrf_ringbuf_free(p_instance->p_tx_ringbuf, len);
-            }
-            else
-            {
-                m_uart_busy = true;
+                m_uart_busy = false;
             }
         }
     }

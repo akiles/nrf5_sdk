@@ -351,12 +351,11 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\stack_info</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\timer</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\timer\experimental</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd\class\cdc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd\class\cdc\acm</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\softdevice\mbr\headers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..</state>
           <state>$PROJ_DIR$\..\..\..\..\..\external\fprintf</state>
@@ -672,12 +671,11 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\stack_info</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\timer</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\timer\experimental</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd\class\cdc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd\class\cdc\acm</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\softdevice\mbr\headers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..</state>
           <state>$PROJ_DIR$\..\..\..\..\..\external\fprintf</state>
@@ -1096,7 +1094,7 @@
   <name>nRF_Libraries</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\timer\experimental\app_timer2.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\timer\app_timer2.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd\app_usbd.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd\class\cdc\acm\app_usbd_cdc_acm.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd\app_usbd_core.c</name>    </file>    <file>
@@ -1104,7 +1102,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\usbd\app_usbd_string_desc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crc32\crc32.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\timer\experimental\drv_rtc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\timer\drv_rtc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\led_softblink\led_softblink.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\low_power_pwm\low_power_pwm.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\mem_manager\mem_manager.c</name>    </file>    <file>
@@ -1134,7 +1132,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_systick.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_usbd.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_3.0.1.a</name>    </file>  </group>  <group>
   <name>nRF_Crypto</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecdsa.c</name>    </file>    <file>

@@ -133,7 +133,6 @@ typedef struct
     ble_gatts_char_handles_t            control_point_char;             /**< Handles related to the DFU Control Point characteristic. */
     uint32_t                            peers_count;                    /**< Counter to see how many persistently stored peers must be updated for Service Changed indication. This value will be counted down when comparing write requests. */
     ble_dfu_buttonless_evt_handler_t    evt_handler;                    /**< Event handler that is called upon Buttonless DFU events. See @ref ble_dfu_buttonless_evt_type_t. */
-    bool                                is_ctrlpt_indication_enabled;   /**< Flag indicating that indication is enabled for the control point. */
     bool                                is_waiting_for_reset;           /**< Flag indicating that the device will enter bootloader. */
     bool                                is_waiting_for_svci;            /**< Flag indicating that the device is waiting for async SVCI operation */
 } ble_dfu_buttonless_t;
@@ -143,7 +142,7 @@ typedef struct
  */
 typedef struct
 {
-    ble_dfu_buttonless_evt_handler_t evt_handler;                       /**< Bootloader event handler. */
+    ble_dfu_buttonless_evt_handler_t   evt_handler;                       /**< Bootloader event handler. */
 } ble_dfu_buttonless_init_t;
 
 

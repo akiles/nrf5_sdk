@@ -48,12 +48,32 @@
 #include "ble_db_discovery.h"
 
 
+/**@brief Function for intercepting the errors of GATTC and the BLE GATT Queue.
+ *
+ * @param[in] nrf_error   Error code.
+ * @param[in] p_ctx       Parameter from the event handler.
+ * @param[in] conn_handle Connection handle.
+ */
+static void gatt_error_handler(uint32_t   nrf_error,
+                               void     * p_ctx,
+                               uint16_t   conn_handle)
+{
+    UNUSED_PARAMETER(conn_handle);
+
+    ble_ias_c_t * p_ias_c = (ble_ias_c_t *)p_ctx;
+
+    if (p_ias_c->error_handler != NULL)
+    {
+        p_ias_c->error_handler(nrf_error);
+    }
+}
+
+
 void ble_ias_c_on_db_disc_evt(ble_ias_c_t * p_ias_c, ble_db_discovery_evt_t const * p_evt)
 {
     ble_ias_c_evt_t evt;
 
     memset(&evt, 0, sizeof(ble_ias_c_evt_t));
-    evt.evt_type = BLE_IAS_C_EVT_DISCOVERY_FAILED;
     evt.conn_handle = p_evt->conn_handle;
 
     ble_gatt_db_char_t const * p_chars = p_evt->params.discovered_db.charateristics;
@@ -83,7 +103,17 @@ void ble_ias_c_on_db_disc_evt(ble_ias_c_t * p_ias_c, ble_db_discovery_evt_t cons
                     break;
             }
         }
+    } 
+    else if ((p_evt->evt_type == BLE_DB_DISCOVERY_SRV_NOT_FOUND) ||
+             (p_evt->evt_type == BLE_DB_DISCOVERY_ERROR))
+    {
+        evt.evt_type = BLE_IAS_C_EVT_DISCOVERY_FAILED;
     }
+    else
+    {
+        return;
+    }
+
     if (evt.alert_level.handle_value != BLE_GATT_HANDLE_INVALID)
     {
         evt.evt_type = BLE_IAS_C_EVT_DISCOVERY_COMPLETE;
@@ -96,11 +126,13 @@ void ble_ias_c_on_db_disc_evt(ble_ias_c_t * p_ias_c, ble_db_discovery_evt_t cons
 uint32_t ble_ias_c_init(ble_ias_c_t * p_ias_c, ble_ias_c_init_t const * p_ias_c_init)
 {
     VERIFY_PARAM_NOT_NULL(p_ias_c);
-    VERIFY_PARAM_NOT_NULL(p_ias_c_init->evt_handler);
     VERIFY_PARAM_NOT_NULL(p_ias_c_init);
+    VERIFY_PARAM_NOT_NULL(p_ias_c_init->evt_handler);
+    VERIFY_PARAM_NOT_NULL(p_ias_c_init->p_gatt_queue);
 
     p_ias_c->evt_handler                   = p_ias_c_init->evt_handler;
     p_ias_c->error_handler                 = p_ias_c_init->error_handler;
+    p_ias_c->p_gatt_queue                  = p_ias_c_init->p_gatt_queue;
     p_ias_c->conn_handle                   = BLE_CONN_HANDLE_INVALID;
     p_ias_c->alert_level_char.handle_value = BLE_GATT_HANDLE_INVALID;
 
@@ -125,7 +157,7 @@ static void on_disconnect(ble_ias_c_t * p_ias_c, ble_evt_t const * p_ble_evt)
     if (ble_ias_c_is_discovered(p_ias_c))
     {
         // There was a valid instance of IAS on the peer. Send an event to the
-        // application, so that it can do any clean up related to this module.
+        // application, so that it can do a cleanup related to this module.
         ble_ias_c_evt_t evt;
 
         evt.evt_type = BLE_IAS_C_EVT_DISCONN_COMPLETE;
@@ -161,29 +193,30 @@ void ble_ias_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 
 /**@brief Function for performing a Write procedure.
  *
- * @param[in]   conn_handle    Handle of the connection on which to perform the write operation.
- * @param[in]   write_handle   Handle of the attribute to be written.
+ * @param[in]   p_ias_c        Pointer to Immediate Alert Service client structure.
  * @param[in]   length         Length of data to be written.
  * @param[in]   p_value        Data to be written.
  *
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
-static uint32_t write_characteristic_value(uint16_t  conn_handle,
-                                           uint16_t  write_handle,
-                                           uint16_t  length,
-                                           uint8_t * p_value)
+static uint32_t write_characteristic_value(ble_ias_c_t const * const p_ias_c,
+                                           uint16_t                  length,
+                                           uint8_t                 * p_value)
 {
-    ble_gattc_write_params_t write_params;
+    nrf_ble_gq_req_t write_req;
 
-    memset(&write_params, 0, sizeof(write_params));
+    memset(&write_req, 0, sizeof(nrf_ble_gq_req_t));
 
-    write_params.handle   = write_handle;
-    write_params.write_op = BLE_GATT_OP_WRITE_CMD;
-    write_params.offset   = 0;
-    write_params.len      = length;
-    write_params.p_value  = p_value;
+    write_req.type                        = NRF_BLE_GQ_REQ_GATTC_WRITE;
+    write_req.error_handler.cb            = gatt_error_handler;
+    write_req.error_handler.p_ctx         = (ble_ias_c_t *)p_ias_c;
+    write_req.params.gattc_write.handle   = p_ias_c->alert_level_char.handle_value;
+    write_req.params.gattc_write.write_op = BLE_GATT_OP_WRITE_CMD;
+    write_req.params.gattc_write.offset   = 0;
+    write_req.params.gattc_write.len      = length;
+    write_req.params.gattc_write.p_value  = p_value;
 
-    return sd_ble_gattc_write(conn_handle, &write_params);
+    return nrf_ble_gq_item_add(p_ias_c->p_gatt_queue, &write_req, p_ias_c->conn_handle);
 }
 
 
@@ -194,8 +227,7 @@ uint32_t ble_ias_c_send_alert_level(ble_ias_c_t const * p_ias_c, uint8_t alert_l
         return NRF_ERROR_NOT_FOUND;
     }
 
-    return write_characteristic_value(p_ias_c->conn_handle,
-                                      p_ias_c->alert_level_char.handle_value,
+    return write_characteristic_value(p_ias_c,
                                       sizeof(uint8_t),
                                       &alert_level);
 }
@@ -207,8 +239,9 @@ uint32_t ble_ias_c_handles_assign(ble_ias_c_t  * p_ias_c,
 {
     VERIFY_PARAM_NOT_NULL(p_ias_c);
 
-    p_ias_c->conn_handle = conn_handle;
+    p_ias_c->conn_handle                   = conn_handle;
     p_ias_c->alert_level_char.handle_value = alert_level_handle;
-    return NRF_SUCCESS;
+
+    return nrf_ble_gq_conn_handle_register(p_ias_c->p_gatt_queue, conn_handle);
 }
 #endif //NRF_MODULE_ENABLED(BLE_IAS_C)

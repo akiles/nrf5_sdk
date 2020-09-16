@@ -45,7 +45,7 @@ extern Void ConfigCL(sConfigCL_d* PpsConfigCL,eConfiguration_d PeConfiguration);
 extern int32_t DtlsHS_VerifyHR(uint8_t* PprgbData, uint16_t PwLen);
 
 ///Identifier for Session ID 1
-#define SESSIONID_1                 0xE100
+#define SESSIONID_1					0xE100
 
 ///Session key is in used
 #define INUSE                       0x4A
@@ -345,7 +345,7 @@ _STATIC_H int32_t Registry_ValidateHandleSessionID(const hdl_t PhOCPHandle)
  *
  * \param[in]    PhAppOCPCtx    OCP handle
  * \param[in]    PfFatalError    Flag indicating whether fatal error as occurred or not
- * \param[in]    PwSessionId    Session ID to be closed
+ * \param[in]    PwSessionId	Session ID to be closed
  *
  */
 _STATIC_H Void CloseSession(hdl_t PhAppOCPCtx, bool_t PfFatalError, uint16_t PwSessionId)
@@ -388,7 +388,7 @@ _STATIC_H Void CloseSession(hdl_t PhAppOCPCtx, bool_t PfFatalError, uint16_t PwS
  *<b>Pre Conditions:</b>
  * - Communication with the security chip is up and running. <br>
  *   #optiga_comms_open() must be successfully executed.<br>
- * - The optiga comms context for command library is registered using CmdLib_SetOptigaCommsContext().
+ * - The optiga comms context for command library is registered using #CmdLib_SetOptigaCommsContext().
  *
  *<b>API Details:</b>
  * - Checks for an available session OID.
@@ -898,7 +898,7 @@ int32_t OCP_Send(const hdl_t PhAppOCPCtx,const uint8_t* PprgbData,uint16_t PwLen
  * - User must provide the length of the buffer.<br>
  *   - If the length of the buffer is equal to zero, then #OCP_LIB_LENZERO_ERROR is returned.<br>
  * - User must provide the timeout value in milliseconds. The value should be greater than 0 and maximum up to (2^16)-1.
- *   - If the timeout is zero #OCP_LIB_INVALID_TIMEOUT is returned.
+ *	 - If the timeout is zero #OCP_LIB_INVALID_TIMEOUT is returned.
  *
  *<b>Notes:</b>
  * - The maximum length of data that can be received by the API depends upon the PMTU value set during #OCP_Init().This length is indicated by #MAX_APP_DATALEN(PhAppOCPCtx).<br>

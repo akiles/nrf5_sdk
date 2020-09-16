@@ -107,8 +107,7 @@ host_lib_status_t ifx_i2c_pl_receive_frame(ifx_i2c_context_t *p_ctx);
  *
  * @param[in]    p_ctx              Pointer to ifx i2c context.
  *\param[in]     slave_address      Holds new slave address[7 Bit] to be set.
- * \param[in]    storage_type       0 - To set the Slave address until next reset.<br>
- *                                  Non-zero - To set the slave address to persistent memory.
+ * \param[in]    storage_type       Storage type.
  *
  * @retval  IFX_I2C_STACK_SUCCESS If function was successful.
  * @retval  IFX_I2C_STACK_ERROR   If setting slave address fails.

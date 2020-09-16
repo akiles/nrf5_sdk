@@ -140,6 +140,9 @@ NRF_BLE_BMS_DEF(m_bms);                                                         
 NRF_BLE_GATT_DEF(m_gatt);                                                           /**< GATT module instance. */
 NRF_BLE_QWR_DEF(m_qwr);                                                             /**< Context for the Queued Write module. */
 BLE_ADVERTISING_DEF(m_advertising);                                                 /**< Advertising module instance. */
+NRF_BLE_GQ_DEF(m_ble_gatt_gueue,                                                    /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_PERIPHERAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
 
 static uint16_t     m_conn_handle = BLE_CONN_HANDLE_INVALID;                        /**< Handle of the current connection. */
 
@@ -674,6 +677,7 @@ static void services_init(void)
 
     cgms_init.evt_handler   = cgms_evt_handler;
     cgms_init.error_handler = service_error_handler;
+    cgms_init.p_gatt_queue  = &m_ble_gatt_gueue;
 
     cgms_init.initial_run_time = 20;
 

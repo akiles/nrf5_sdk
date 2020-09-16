@@ -55,6 +55,25 @@
 #define OPERAND_FILTER_TYPE_FACING_TIME 0x02 /**< Filter data using User Facing Time criteria. */
 
 
+/**@brief Function for interception of GATT errors and @ref nrf_ble_gq errors.
+ *
+ * @param[in] nrf_error   Error code.
+ * @param[in] p_ctx       Parameter from the event handler.
+ * @param[in] conn_handle Connection handle.
+ */
+static void gatt_error_handler(uint32_t   nrf_error,
+                               void     * p_ctx,
+                               uint16_t   conn_handle)
+{
+    nrf_ble_cgms_t * p_cgms = (nrf_ble_cgms_t *)p_ctx;
+
+    if ((p_cgms->error_handler) != NULL && (nrf_error != NRF_ERROR_INVALID_STATE))
+    {
+        p_cgms->error_handler(nrf_error);
+    }
+}
+
+
 /**@brief Function for setting next sequence number by reading the last record in the data base.
  *
  * @return      NRF_SUCCESS on successful initialization of service, otherwise an error code.
@@ -212,6 +231,7 @@ ret_code_t nrf_ble_cgms_init(nrf_ble_cgms_t * p_cgms, const nrf_ble_cgms_init_t 
     VERIFY_PARAM_NOT_NULL(p_cgms);
     VERIFY_PARAM_NOT_NULL(p_cgms_init);
     VERIFY_PARAM_NOT_NULL(p_cgms_init->evt_handler);
+    VERIFY_PARAM_NOT_NULL(p_cgms_init->p_gatt_queue);
 
     uint32_t   err_code;
     ble_uuid_t ble_uuid;
@@ -232,12 +252,14 @@ ret_code_t nrf_ble_cgms_init(nrf_ble_cgms_t * p_cgms, const nrf_ble_cgms_init_t 
     // Initialize service structure
     p_cgms->evt_handler        = p_cgms_init->evt_handler;
     p_cgms->error_handler      = p_cgms_init->error_handler;
+    p_cgms->p_gatt_queue       = p_cgms_init->p_gatt_queue;
     p_cgms->feature            = p_cgms_init->feature;
     p_cgms->sensor_status      = p_cgms_init->initial_sensor_status;
     p_cgms->session_run_time   = p_cgms_init->initial_run_time;
     p_cgms->is_session_started = false;
     p_cgms->nb_run_session     = 0;
     p_cgms->conn_handle        = BLE_CONN_HANDLE_INVALID;
+    p_cgms->gatt_err_handler   = gatt_error_handler;
 
     p_cgms->feature.feature         = 0;
     p_cgms->feature.feature        |= NRF_BLE_CGMS_FEAT_MULTIPLE_BOND_SUPPORTED;
@@ -247,10 +269,6 @@ ret_code_t nrf_ble_cgms_init(nrf_ble_cgms_t * p_cgms, const nrf_ble_cgms_init_t 
     p_cgms->feature.feature        |= NRF_BLE_CGMS_FEAT_MULTIPLE_BOND_SUPPORTED;
 
     memcpy(p_cgms->calibration_val[0].value, init_calib_val, NRF_BLE_CGMS_MAX_CALIB_LEN);
-
-    // Initialize global variables
-    p_cgms->cgms_com_state = STATE_NO_COMM;
-    p_cgms->racp_data.racp_proc_records_reported_since_txcomplete = 0;
 
     // Add service
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_CGM_SERVICE);
@@ -340,56 +358,7 @@ static void on_write(nrf_ble_cgms_t * p_cgms, ble_evt_t const * p_ble_evt)
  */
 static void on_tx_complete(nrf_ble_cgms_t * p_cgms, ble_evt_t const * p_ble_evt)
 {
-    p_cgms->racp_data.racp_proc_records_reported_since_txcomplete = 0;
-
     cgms_racp_on_tx_complete(p_cgms);
-    cgms_socp_on_tx_complete(p_cgms);
-}
-
-
-/**@brief Function for handling the HVC event.
- *
- * @details Handles HVC events from the BLE stack.
- *
- * @param[in]   p_cgms      Glucose Service structure.
- * @param[in]   p_ble_evt  Event received from the BLE stack.
- */
-static void on_hvc(nrf_ble_cgms_t * p_cgms, ble_evt_t const * p_ble_evt)
-{
-    ble_gatts_evt_hvc_t const * p_hvc = &p_ble_evt->evt.gatts_evt.params.hvc;
-
-    if (p_hvc->handle == p_cgms->char_handles.racp.value_handle)
-    {
-        if (p_cgms->cgms_com_state == STATE_RACP_RESPONSE_IND_VERIF)
-        {
-            // Indication has been acknowledged. Return to default state.
-            p_cgms->cgms_com_state = STATE_NO_COMM;
-        }
-        else
-        {
-            // We did not expect this event in this state. Report error to application.
-            if (p_cgms->error_handler != NULL)
-            {
-                p_cgms->error_handler(NRF_ERROR_INVALID_STATE);
-            }
-        }
-    }
-    if (p_hvc->handle == p_cgms->char_handles.socp.value_handle)
-    {
-        if (p_cgms->cgms_com_state == STATE_SOCP_RESPONSE_IND_VERIF)
-        {
-            // Indication has been acknowledged. Return to default state.
-            p_cgms->cgms_com_state = STATE_NO_COMM;
-        }
-        else
-        {
-            // We did not expect this event in this state. Report error to application.
-            if (p_cgms->error_handler != NULL)
-            {
-                p_cgms->error_handler(NRF_ERROR_INVALID_STATE);
-            }
-        }
-    }
 }
 
 
@@ -412,7 +381,6 @@ void nrf_ble_cgms_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
     {
         case BLE_GAP_EVT_CONNECTED:
             p_cgms->conn_handle    = p_ble_evt->evt.gap_evt.conn_handle;
-            p_cgms->cgms_com_state = STATE_NO_COMM;
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
@@ -429,10 +397,6 @@ void nrf_ble_cgms_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
             on_rw_authorize_request(p_cgms, &p_ble_evt->evt.gatts_evt);
-            break;
-
-        case BLE_GATTS_EVT_HVC:
-            on_hvc(p_cgms, p_ble_evt);
             break;
 
         default:
@@ -479,8 +443,10 @@ ret_code_t nrf_ble_cgms_update_status(nrf_ble_cgms_t * p_cgms, nrf_ble_cgm_statu
 ret_code_t nrf_ble_cgms_conn_handle_assign(nrf_ble_cgms_t * p_cgms, uint16_t conn_handle)
 {
     VERIFY_PARAM_NOT_NULL(p_cgms);
+
     p_cgms->conn_handle = conn_handle;
-    return NRF_SUCCESS;
+
+    return nrf_ble_gq_conn_handle_register(p_cgms->p_gatt_queue, conn_handle);
 }
 
 

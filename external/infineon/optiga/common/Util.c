@@ -44,8 +44,8 @@
  *
  * Compare PprgbBuf1 uint64 data with the PprgbBuf2 uint64 data.<br>
  *
- * \param[in]  PpsSrc1  Pointer to the uint64 structure
- * \param[in]  PpsSrc2  Pointer to the uint64 structure
+ * \param[in]  PpsSrc1	Pointer to the uint64 structure
+ * \param[in]  PpsSrc2	Pointer to the uint64 structure
  *
  * \retval    GREATER_THAN if PpsSrc1 > PpsSrc2
  * \retval    LESSER_THAN if PpsSrc1 < PpsSrc2
@@ -102,9 +102,9 @@ int32_t CompareUint64(const sUint64 *PpsSrc1, const sUint64 *PpsSrc2)
 * Subtraction of PpsSubtrahend uint64 data type from PpsMinuend uint64 data
 * PpsMinuend should be greater than PpsSubtrahend else will return error
 *
-* \param[in]  PpsMinuend    Minued
-* \param[in]  PpsSubtrahend Subtrahend
-* \param[in]  PpsDifference Difference
+* \param[in]  PpsMinuend	Minued
+* \param[in]  PpsSubtrahend	Subtrahend
+* \param[in]  PpsDifference	Difference
 *
 * \retval    UTIL_SUCCESS if PpsMinuend > PpsSubtrahend
 * \retval    UTIL_ERROR if PpsMinuend < PpsSubtrahend and for NULL parameter
@@ -237,6 +237,7 @@ int32_t ShiftLeftUint64(sUint64 *PpsWindow, sUint64 PsShiftCount, uint8_t PbWind
 }
 
 
+
 /**
 * Addition of two uint64 data type
 *
@@ -274,7 +275,7 @@ int32_t IncrementUint64(sUint64 *PpsSrc1)
  *
  * Prepares uint16 [Big endian] type value from the buffer.<br>
  *
- * \param[in]  PprgbData    Pointer to the buffer
+ * \param[in]  PprgbData	Pointer to the buffer
  *
  * \retval    return 16 bit value
  *
@@ -293,8 +294,8 @@ uint16_t Utility_GetUint16 (const uint8_t* PprgbData)
  *
  * Copies LSB 3 bytes of uint32 [Big endian] type value to the buffer and store .<br>
  *
- * \param[in,out]  PprgbData    Pointer to the buffer
- * \param[in]      Pdwvalue     32 bit value
+ * \param[in,out]  PprgbData	Pointer to the buffer
+ * \param[in]      Pdwvalue	    32 bit value
  *
  */
 void Utility_SetUint24 (uint8_t* PprgbData,uint32_t Pdwvalue)
@@ -312,7 +313,7 @@ void Utility_SetUint24 (uint8_t* PprgbData,uint32_t Pdwvalue)
  *
  * Prepares uint24 [Big endian] type value from the buffer and store .<br>
  *
- * \param[in]  PprgbData    Pointer to the buffer
+ * \param[in]  PprgbData	Pointer to the buffer
  *
  * \retval    return 32 bit value
  *
@@ -331,7 +332,7 @@ uint32_t Utility_GetUint24 (const uint8_t* PprgbData)
  *
  * Prepares uint24 [Big endian] type value from the buffer and store .<br>
  *
- * \param[in]  PprgbData    Pointer to the buffer
+ * \param[in]  PprgbData	Pointer to the buffer
  *
  * \retval    return 32 bit value
  *
@@ -348,8 +349,8 @@ uint32_t Utility_GetUint32 (const uint8_t* PprgbData)
  *
  * Copies 2 bytes of uint16 type value to the buffer<br>
  *
- * \param[in,out]  PprgbData    Pointer to the buffer
- * \param[in]      PwValue      16 bit value
+ * \param[in,out]  PprgbData	Pointer to the buffer
+ * \param[in]      PwValue	    16 bit value
  *
  */
 void Utility_SetUint16 (puint8_t PprgbData,uint16_t PwValue)
@@ -362,9 +363,9 @@ void Utility_SetUint16 (puint8_t PprgbData,uint16_t PwValue)
  *
  * sets the bit position to high in the window frame.<br>
  *
- * \param[in,out]  PprgbData    Pointer to the uint64 data
- * \param[in]      bWindowSize  Window size
- * \param[in]      bBitPosition bit position from low bound of the window(Bit is set at lowbound+bBitPosition )
+ * \param[in,out]  PprgbData	Pointer to the uint64 data
+ * \param[in]      bWindowSize	Window size
+ * \param[in]      bBitPosition	bit position from low bound of the window(Bit is set at lowbound+bBitPosition )
  *
  * \retval    UTIL_SUCCESS for successful execution
  * \retval    UTIL_ERROR if execution is failure
@@ -436,8 +437,8 @@ int32_t Utility_SetBitUint64(sUint64* PprgbData, uint8_t bWindowSize, uint8_t bB
  *
  * Copies 4 bytes of uint32 [Big endian] type value to the buffer and store .<br>
  *
- * \param[in,out]  PprgbData    Pointer to the buffer
- * \param[in]      Pdwvalue     32 bit value
+ * \param[in,out]  PprgbData	Pointer to the buffer
+ * \param[in]      Pdwvalue	    32 bit value
  *
  */
 void Utility_SetUint32 (uint8_t* PprgbData,uint32_t Pdwvalue)
@@ -456,9 +457,9 @@ void Utility_SetUint32 (uint8_t* PprgbData,uint32_t Pdwvalue)
  *
  * Copies the data from source buffer to destination buffer.<br>
  *
- * \param[in,out]  PprgbDestBuf Pointer to the destination buffer
- * \param[in,out]  PprgbSrcBuf  Pointer to the source buffer
- * \param[in]      PwLength     Number of bytes to be copied/moved
+ * \param[in,out]  PprgbDestBuf	Pointer to the destination buffer
+ * \param[in,out]  PprgbSrcBuf	Pointer to the source buffer
+ * \param[in]      PwLength	    Number of bytes to be copied/moved
  *
  */
 void Utility_Memmove(puint8_t PprgbDestBuf, const puint8_t PprgbSrcBuf, uint16_t PwLength)

@@ -135,6 +135,7 @@ typedef struct {
                                               APP_USBD_HID_PROTO_KEYBOARD,      \
                                               report_buff_in,                   \
                                               report_buff_out,                  \
+                                              NULL,                             \
                                               user_ev_handler,                  \
                                               &app_usbd_hid_kbd_methods,        \
                                               endpoint_list),                   \

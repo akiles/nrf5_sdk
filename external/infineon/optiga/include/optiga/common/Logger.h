@@ -53,6 +53,7 @@
 /// Flag to write to code coverage UART
 #define CODE_COVERAGE_PORT  2
 
+
 //Pointer to writer
 typedef int32_t (*pFWriteData)(uint32_t PdwPort, uint8_t* PprgbBuf, uint32_t PdwDataLen);
 ///This is pointer to log writer
@@ -133,27 +134,27 @@ extern void* pHandle;
 extern pFWriteData2 pfWriter2;
 
 ///Delimiter to indicate "Seperator Open"
-#define DELIMITER_OPEN                  "["
+#define DELIMITER_OPEN					"["
 ///Delimiter to indicate "Seperator Close"
-#define DELIMITER_CLOSE                 "]"
+#define DELIMITER_CLOSE					"]"
 ///Format to print time as [hh:mm:ss][level][type] :message newline
 #define LOG_FORMAT "[%s]%-4s%-2s:%s%s"
 
 ///Log message Level
 ///This indicates message is an Information
-#define LOGGER_LEVEL_INFO               DELIMITER_OPEN"Info"DELIMITER_CLOSE
+#define LOGGER_LEVEL_INFO				DELIMITER_OPEN"Info"DELIMITER_CLOSE
 ///This indicates message is a Warning
-#define LOGGER_LEVEL_WARNING            DELIMITER_OPEN"Warn"DELIMITER_CLOSE
+#define LOGGER_LEVEL_WARNING			DELIMITER_OPEN"Warn"DELIMITER_CLOSE
 ///This indicates message is an Error
-#define LOGGER_LEVEL_ERROR              DELIMITER_OPEN"Erro"DELIMITER_CLOSE
+#define LOGGER_LEVEL_ERROR				DELIMITER_OPEN"Erro"DELIMITER_CLOSE
 
 ///Log message Type
 ///This indicates message is logged from Handshake Layer
-#define LOGGER_TYPE_HANDSHAKE           DELIMITER_OPEN"HS"DELIMITER_CLOSE
+#define LOGGER_TYPE_HANDSHAKE			DELIMITER_OPEN"HS"DELIMITER_CLOSE
 ///This indicates message is logged from Record Layer
-#define LOGGER_TYPE_RECORDLAYER         DELIMITER_OPEN"RL"DELIMITER_CLOSE
+#define LOGGER_TYPE_RECORDLAYER			DELIMITER_OPEN"RL"DELIMITER_CLOSE
 ///This indicates message is logged from Transport Layer
-#define LOGGER_TYPE_TRANSPORTLAYER      DELIMITER_OPEN"TL"DELIMITER_CLOSE
+#define LOGGER_TYPE_TRANSPORTLAYER		DELIMITER_OPEN"TL"DELIMITER_CLOSE
 
 
 

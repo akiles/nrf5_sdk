@@ -200,6 +200,9 @@ int main(void)
 {
     uint32_t ret_val;
 
+    // Must happen before flash protection is applied, since it edits a protected page.
+    nrf_bootloader_mbr_addrs_populate();
+
     // Protect MBR and bootloader code from being overwritten.
     ret_val = nrf_bootloader_flash_protect(0, MBR_SIZE, false);
     APP_ERROR_CHECK(ret_val);
@@ -218,14 +221,10 @@ int main(void)
 
     NRF_LOG_FLUSH();
 
-    // Either there was no DFU functionality enabled in this project or the DFU module detected
-    // no ongoing DFU operation and found a valid main application.
-    // Boot the main application.
-    nrf_bootloader_app_start();
-
-    // Should never be reached.
-    NRF_LOG_INFO("After main");
+    NRF_LOG_ERROR("After main, should never be reached.");
     NRF_LOG_FLUSH();
+
+    APP_ERROR_CHECK_BOOL(false);
 }
 
 /**

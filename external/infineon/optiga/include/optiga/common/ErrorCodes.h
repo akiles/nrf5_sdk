@@ -26,8 +26,8 @@
 *
 * \brief This file defines the error codes.
 *
-* \addtogroup grError
-* @{
+*
+*
 */
 
 #ifndef _ERRORCODES_H_
@@ -56,10 +56,10 @@
 #define E_COMMS_SOFT_RESET_NOT_SUPPORTED    0x80000005
 
 /// Error code if network layer channel does not mismatch with that of the slave
-#define E_COMMS_CHANNEL_NUM_MISMATCH        0x80000006
+#define E_COMMS_CHANNEL_NUM_MISMATCH		0x80000006
 
 /// Error code if packet size could not be set
-#define E_COMMS_PACKET_SIZE_NOT_SET	        0x80000007
+#define E_COMMS_PACKET_SIZE_NOT_SET			0x80000007
 
 /// Error code for invalid key
 #define E_COMMS_INVALID_KEY                 0x80000008
@@ -104,10 +104,10 @@
 #define  E_COMMS_KEY_VALUE_NOT_SET          0x80000016
 
 /// Error code for setting a property within a session not allowed
-#define  E_COMMS_SET_PROPERTY_DENIED        0x80000017
+#define  E_COMMS_SET_PROPERTY_DENIED  		0x80000017
 
 /// Error code for opening the already opened protocol stack
-#define  E_COMMS_ALREADY_OPEN               0x80000018
+#define  E_COMMS_ALREADY_OPEN  		        0x80000018
 
 /// Error code for frame buffer overflow(at data link layer)
 #define  E_COMMS_FRAME_BUFFER_OVERFLOW      0x80000019
@@ -116,7 +116,7 @@
 #define  E_COMMS_FUNCTION_NOT_SUPPORTED     0x8000001A
 
 /// Error code for invalid channel number
-#define  E_COMMS_INVALID_CHANNEL_NO         0x8000001B
+#define  E_COMMS_INVALID_CHANNEL_NO			0x8000001B
 
 /// Error code for insufficient memory
 #define E_COMMS_INSUFFICIENT_MEMORY         0x8000001C
@@ -128,26 +128,26 @@
 #define E_COMMS_I2C_TXRX_ERROR             	0x8000001E
 
 /// Error code for I2C Tx/Rx Error
-#define E_COMMS_I2C_TIMEOUT                 0x8000001F
+#define E_COMMS_I2C_TIMEOUT             	0x8000001F
 
 /// Error code for I2C Tx/Rx Error
-#define E_COMMS_INVALID_REQUEST             0x80000020
+#define E_COMMS_INVALID_REQUEST            	0x80000020
 
 /// Error code for communication failure
 #define E_COMMS_FAILURE                     0xFFFFFFFF
 
+/// Indicates no session available at OPTIGA
+#define OPTIGA_LIB_NO_SESSION_AVAILABLE     0x0000
+
 /// OPTIGA Host Library API status - Success
-#define OPTIGA_LIB_SUCCESS                  0x0000
+#define OPTIGA_LIB_SUCCESS           		0x0000
 
 /// OPTIGA Host Library API status - Busy
-#define OPTIGA_LIB_STATUS_BUSY              0x0001
+#define OPTIGA_LIB_STATUS_BUSY       		0x0001
 
 /// OPTIGA Host Library API status - Failure
-#define OPTIGA_LIB_ERROR                    0xFFFF
+#define OPTIGA_LIB_ERROR             		0xFFFF
 
 #endif /* _ERRORCODES_H_ */
 
-/**
-* @}
-*/
 

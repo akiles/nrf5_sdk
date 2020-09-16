@@ -2221,7 +2221,7 @@ static void spaces_trim(char * p_char)
                 }
                 if (shift > 0)
                 {
-                    memmove(&p_char[i + 1], &p_char[j], len - shift + 1); // +1 for EOS
+                    memmove(&p_char[i + 1], &p_char[j], len - shift - i);
                     len -= shift;
                     shift = 0;
                 }
@@ -3358,12 +3358,9 @@ static void nrf_log_backend_cli_flush(nrf_log_backend_t const * p_backend)
 {
     nrf_cli_log_backend_t * p_backend_cli = (nrf_cli_log_backend_t *)p_backend->p_ctx;
     nrf_cli_t const *       p_cli = p_backend_cli->p_cli;
-    nrf_log_entry_t *       p_msg;
 
-    if (nrf_queue_pop(p_backend_cli->p_queue, &p_msg) == NRF_SUCCESS)
-    {
-        (void)cli_log_entry_process(p_cli, false);
-    }
+    (void)cli_log_entry_process(p_cli, true);
+
     UNUSED_PARAMETER(p_backend);
 }
 

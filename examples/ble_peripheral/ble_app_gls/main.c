@@ -134,6 +134,9 @@ NRF_BLE_GATT_DEF(m_gatt);                                                       
 NRF_BLE_QWR_DEF(m_qwr);                                                             /**< Context for the Queued Write module.*/
 BLE_ADVERTISING_DEF(m_advertising);                                                 /**< Advertising module instance. */
 APP_TIMER_DEF(m_battery_timer_id);                                                  /**< Battery timer. */
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                                    /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_PERIPHERAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
 
 static pm_peer_id_t m_peer_to_be_deleted = PM_PEER_ID_INVALID;
 static uint16_t     m_conn_handle        = BLE_CONN_HANDLE_INVALID;                 /**< Handle of the current connection. */
@@ -418,6 +421,7 @@ static void services_init(void)
     memset(&gls_init, 0, sizeof(gls_init));
 
     gls_init.evt_handler          = NULL;
+    gls_init.p_gatt_queue         = &m_ble_gatt_queue;
     gls_init.error_handler        = service_error_handler;
     gls_init.feature              = 0;
     gls_init.feature             |= BLE_GLS_FEATURE_LOW_BATT;

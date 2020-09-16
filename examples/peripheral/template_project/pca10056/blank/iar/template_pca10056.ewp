@@ -176,13 +176,14 @@
         </option>
         <option>
           <name>CCDefines</name>
+          <state>APP_TIMER_V2</state>
+          <state>APP_TIMER_V2_RTC1_ENABLED</state>
           <state>BOARD_PCA10056</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>FLOAT_ABI_HARD</state>
           <state>MBEDTLS_CONFIG_FILE=&lt;nrf_crypto_mbedtls_config.h&gt;</state>
           <state>NRF52840_XXAA</state>
           <state>NRF_CRYPTO_MAX_INSTANCE_COUNT=1</state>
-          <state>SWI_DISABLE0</state>
           <state>uECC_ENABLE_VLI_API=0</state>
           <state>uECC_OPTIMIZATION_LEVEL=3</state>
           <state>uECC_SQUARE_FUNC=0</state>
@@ -567,13 +568,14 @@
         </option>
         <option>
       <name>ADefines</name>
+          <state>APP_TIMER_V2</state>
+          <state>APP_TIMER_V2_RTC1_ENABLED</state>
           <state>BOARD_PCA10056</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>FLOAT_ABI_HARD</state>
           <state>MBEDTLS_CONFIG_FILE=&lt;nrf_crypto_mbedtls_config.h&gt;</state>
           <state>NRF52840_XXAA</state>
           <state>NRF_CRYPTO_MAX_INSTANCE_COUNT=1</state>
-          <state>SWI_DISABLE0</state>
           <state>uECC_ENABLE_VLI_API=0</state>
           <state>uECC_OPTIMIZATION_LEVEL=3</state>
           <state>uECC_SQUARE_FUNC=0</state>
@@ -1251,7 +1253,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls\mbedtls_backend_hmac.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls\mbedtls_backend_init.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_3.0.1.a</name>    </file>  </group>  <group>
   <name>nRF_TLS</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\mbedtls\library\aes.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\mbedtls\library\aesni.c</name>    </file>    <file>
@@ -1335,7 +1337,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\pwm\app_pwm.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sdcard\app_sdcard.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer2.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\app_usbd.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\audio\app_usbd_audio.c</name>    </file>    <file>
@@ -1353,6 +1355,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\cifra_AES128-EAX\cifra_eax_aes.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crc16\crc16.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crc32\crc32.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\drv_rtc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\cifra_AES128-EAX\eax.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fds\fds.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\fnmatch\fnmatch.c</name>    </file>    <file>

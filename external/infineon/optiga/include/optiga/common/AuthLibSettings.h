@@ -35,9 +35,9 @@
 #define _AUTH_LIB_SETTINGS_H_
 /*
 To enable a user in choosing required feature set, compilation switches are provided to build the code.
-1.FEATURE_ONEWAY_AUTH       : One Way authentication feature is enabled.
-2.FEATURE_DTLS_MUTUAL_AUTH  : Mutual authentication feature is enabled.
-3.FEATURE_TOOLBOX           : Tool box feature is enabled
+1.FEATURE_ONEWAY_AUTH		: One Way authentication feature is enabled.
+2.FEATURE_DTLS_MUTUAL_AUTH	: Mutual authentication feature is enabled.
+3.FEATURE_TOOLBOX			: Tool box feature is enabled
 4.By default all features are enabled.
 
 A user can define more switches in the following way and add it before the default #else directive
@@ -73,7 +73,7 @@ A user can define more switches in the following way and add it before the defau
 #ifndef FEATURE_ENABLED
     #define MODULE_ENABLE_READ_WRITE
     #define MODULE_ENABLE_ONE_WAY_AUTH
-//  #define MODULE_ENABLE_DTLS_MUTUAL_AUTH
+//	#define MODULE_ENABLE_DTLS_MUTUAL_AUTH
     #define MODULE_ENABLE_TOOLBOX
 #endif
 

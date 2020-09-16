@@ -83,6 +83,7 @@
 #include "nrf_ble_gatt.h"
 #include "nrf_ble_qwr.h"
 #include "nrf_pwr_mgmt.h"
+#include "nrf_ble_gq.h"
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
@@ -141,6 +142,9 @@ NRF_BLE_GATT_DEF(m_gatt);                                                     /*
 NRF_BLE_QWR_DEF(m_qwr);                                                       /**< Context for the Queued Write module.*/
 BLE_ADVERTISING_DEF(m_advertising);                                           /**< Advertising module instance. */
 BLE_DB_DISCOVERY_DEF(m_db_disc);                                              /**< DB Discovery module instance. */
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                              /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_PERIPHERAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
 
 static pm_peer_id_t      m_whitelist_peers[BLE_GAP_WHITELIST_ADDR_MAX_COUNT]; /**< List of peers currently in the whitelist. */
 static uint32_t          m_whitelist_peer_cnt;                                /**< Number of peers currently in the whitelist. */
@@ -304,7 +308,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         {
             if (p_evt->peer_id != PM_PEER_ID_INVALID)
             {
-                uint16_t data_len = sizeof(m_peer_srv_buf);
+                uint32_t data_len = sizeof(m_peer_srv_buf);
                 ret = pm_peer_data_remote_db_load(p_evt->peer_id, m_peer_srv_buf, &data_len);
                 if (ret == NRF_ERROR_NOT_FOUND)
                 {
@@ -1123,7 +1127,8 @@ static void services_init(void)
     // Init the GATTS client module.
     memset(&gatts_c_init, 0, sizeof(gatts_c_init));
 
-    gatts_c_init.evt_handler = gatts_c_evt_handler;
+    gatts_c_init.evt_handler  = gatts_c_evt_handler;
+    gatts_c_init.p_gatt_queue = &m_ble_gatt_queue;
 
     ret = nrf_ble_gatts_c_init(&m_gatts_c, &gatts_c_init);
     APP_ERROR_CHECK(ret);
@@ -1187,6 +1192,7 @@ static void services_init(void)
 
     ancs_c_init.evt_handler   = ancs_c_evt_handler;
     ancs_c_init.error_handler = apple_notification_error_handler;
+    ancs_c_init.p_gatt_queue  = &m_ble_gatt_queue;
 
     ret = ble_ancs_c_init(&m_ancs_c, &ancs_c_init);
     APP_ERROR_CHECK(ret);
@@ -1263,7 +1269,14 @@ static void scheduler_init(void)
  */
 static void db_discovery_init(void)
 {
-    ret_code_t ret = ble_db_discovery_init(db_disc_handler);
+    ble_db_discovery_init_t db_init;
+
+    memset(&db_init, 0, sizeof(ble_db_discovery_init_t));
+
+    db_init.evt_handler  = db_disc_handler;
+    db_init.p_gatt_queue = &m_ble_gatt_queue;
+
+    ret_code_t ret = ble_db_discovery_init(&db_init);
     APP_ERROR_CHECK(ret);
 }
 

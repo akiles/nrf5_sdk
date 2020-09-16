@@ -134,6 +134,9 @@ BLE_HTS_DEF(m_hts);                                                             
 NRF_BLE_GATT_DEF(m_gatt);                                                           /**< GATT module instance. */
 NRF_BLE_QWR_DEF(m_qwr);                                                             /**< Context for the Queued Write module.*/
 BLE_ADVERTISING_DEF(m_advertising);                                                 /**< Advertising module instance. */
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                                    /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_PERIPHERAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
 
 static uint16_t          m_conn_handle = BLE_CONN_HANDLE_INVALID;                   /**< Handle of the current connection. */
 static bool              m_hts_meas_ind_conf_pending = false;                       /**< Flag to keep track of when an indication confirmation is pending. */
@@ -169,6 +172,20 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 {
     app_error_handler(DEAD_BEEF, line_num, p_file_name);
 }
+
+
+/**@brief Function for handling Service errors.
+ *
+ * @details A pointer to this function will be passed to each service which may need to inform the
+ *          application about an error.
+ *
+ * @param[in] nrf_error  Error code containing information about what went wrong.
+ */
+static void service_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
+}
+
 
 /**@brief Function for handling Peer Manager events.
  *
@@ -435,6 +452,8 @@ static void services_init(void)
     memset(&hts_init, 0, sizeof(hts_init));
 
     hts_init.evt_handler                 = on_hts_evt;
+    hts_init.p_gatt_queue                = &m_ble_gatt_queue;
+    hts_init.error_handler               = service_error_handler;
     hts_init.temp_type_as_characteristic = TEMP_TYPE_AS_CHARACTERISTIC;
     hts_init.temp_type                   = BLE_HTS_TEMP_TYPE_BODY;
 

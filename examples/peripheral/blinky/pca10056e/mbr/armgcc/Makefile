@@ -1,13 +1,11 @@
 PROJECT_NAME     := blinky_pca10056e_mbr
-TARGETS          := nrf52811_xxaa flash_mbr
+TARGETS          := nrf52811_xxaa
 OUTPUT_DIRECTORY := _build
 
 SDK_ROOT := ../../../../../..
 PROJ_DIR := ../../..
 
 $(OUTPUT_DIRECTORY)/nrf52811_xxaa.out: \
-  LINKER_SCRIPT  := blinky_gcc_nrf52.ld
-$(OUTPUT_DIRECTORY)/flash_mbr.out: \
   LINKER_SCRIPT  := blinky_gcc_nrf52.ld
 
 # Source files common to all targets
@@ -36,8 +34,8 @@ SRC_FILES += \
 INC_FOLDERS += \
   $(SDK_ROOT)/components \
   $(SDK_ROOT)/modules/nrfx/mdk \
-  $(SDK_ROOT)/components/softdevice/mbr/nrf52810/headers \
   $(PROJ_DIR) \
+  $(SDK_ROOT)/components/softdevice/mbr/headers \
   $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/util \
@@ -86,7 +84,6 @@ CFLAGS += -fno-builtin -fshort-enums
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
-
 # Assembler flags common to all targets
 ASMFLAGS += -g3
 ASMFLAGS += -mcpu=cortex-m4
@@ -114,10 +111,6 @@ nrf52811_xxaa: CFLAGS += -D__HEAP_SIZE=2048
 nrf52811_xxaa: CFLAGS += -D__STACK_SIZE=2048
 nrf52811_xxaa: ASMFLAGS += -D__HEAP_SIZE=2048
 nrf52811_xxaa: ASMFLAGS += -D__STACK_SIZE=2048
-flash_mbr: CFLAGS += -D__HEAP_SIZE=2048
-flash_mbr: CFLAGS += -D__STACK_SIZE=2048
-flash_mbr: ASMFLAGS += -D__HEAP_SIZE=2048
-flash_mbr: ASMFLAGS += -D__STACK_SIZE=2048
 
 # Add standard libraries at the very end of the linker input, after all objects
 # that may need symbols provided by these libraries.
@@ -144,12 +137,18 @@ include $(TEMPLATE_PATH)/Makefile.common
 
 $(foreach target, $(TARGETS), $(call define_target, $(target)))
 
-.PHONY: flash erase
+.PHONY: flash flash_mbr erase
 
 # Flash the program
 flash: default
 	@echo Flashing: $(OUTPUT_DIRECTORY)/nrf52811_xxaa.hex
 	nrfjprog -f nrf52 --program $(OUTPUT_DIRECTORY)/nrf52811_xxaa.hex --sectorerase
+	nrfjprog -f nrf52 --reset
+
+# Flash softdevice
+flash_mbr:
+	@echo Flashing: mbr_nrf52_2.4.1_mbr.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/mbr/hex/mbr_nrf52_2.4.1_mbr.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

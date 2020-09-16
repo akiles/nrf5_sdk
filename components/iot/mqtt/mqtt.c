@@ -770,7 +770,7 @@ uint32_t mqtt_live(void)
             UNUSED_VARIABLE(iot_timer_wall_clock_delta_get(&p_client->last_activity,
                                                            &elapsed_time));
 
-            if ((MQTT_KEEPALIVE > 0) && (elapsed_time > ((MQTT_KEEPALIVE - 2) * 1000)))
+            if ((MQTT_KEEPALIVE > 0) && (elapsed_time >= (MQTT_KEEPALIVE * 1000)))
             {
                 UNUSED_VARIABLE(mqtt_ping(p_client));
             }

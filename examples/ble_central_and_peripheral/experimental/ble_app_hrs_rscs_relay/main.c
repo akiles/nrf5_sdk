@@ -139,16 +139,20 @@
  */
 #define APP_BLE_OBSERVER_PRIO           3
 
+#define DB_DISCOVERY_INSTANCE_CNT       2  /**< Number of DB Discovery instances. */
 
 static ble_hrs_t m_hrs;                                             /**< Heart Rate Service instance. */
 static ble_rscs_t m_rscs;                                           /**< Running Speed and Cadence Service instance. */
 static ble_hrs_c_t m_hrs_c;                                         /**< Heart Rate Service client instance. */
 static ble_rscs_c_t m_rscs_c;                                       /**< Running Speed and Cadence Service client instance. */
 
-NRF_BLE_GATT_DEF(m_gatt);                                           /**< GATT module instance. */
-NRF_BLE_QWRS_DEF(m_qwr, NRF_SDH_BLE_TOTAL_LINK_COUNT);              /**< Context for the Queued Write module.*/
-BLE_ADVERTISING_DEF(m_advertising);                                 /**< Advertising module instance. */
-BLE_DB_DISCOVERY_ARRAY_DEF(m_db_discovery, 2);                      /**< Database discovery module instances. */
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                    /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_CENTRAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
+NRF_BLE_GATT_DEF(m_gatt);                                              /**< GATT module instance. */
+NRF_BLE_QWRS_DEF(m_qwr, NRF_SDH_BLE_TOTAL_LINK_COUNT);                 /**< Context for the Queued Write module.*/
+BLE_ADVERTISING_DEF(m_advertising);                                    /**< Advertising module instance. */
+BLE_DB_DISCOVERY_ARRAY_DEF(m_db_discovery, 2);                         /**< Database discovery module instances. */
 NRF_BLE_SCAN_DEF(m_scan);                                           /**< Scanning module instance. */
 
 static uint16_t m_conn_handle_hrs_c  = BLE_CONN_HANDLE_INVALID;     /**< Connection handle for the HRS central application */
@@ -196,6 +200,18 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 {
     app_error_handler(0xDEADBEEF, line_num, p_file_name);
 }
+
+
+/**@brief Function for handling the Heart Rate Service Client
+ *        Running Speed and Cadence Service Client.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void service_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
+}
+
 
 /**@brief Function for handling errors from the Connection Parameters module.
  *
@@ -800,7 +816,9 @@ static void hrs_c_init(void)
     ret_code_t       err_code;
     ble_hrs_c_init_t hrs_c_init_obj;
 
-    hrs_c_init_obj.evt_handler = hrs_c_evt_handler;
+    hrs_c_init_obj.evt_handler   = hrs_c_evt_handler;
+    hrs_c_init_obj.error_handler = service_error_handler;
+    hrs_c_init_obj.p_gatt_queue  = &m_ble_gatt_queue;
 
     err_code = ble_hrs_c_init(&m_hrs_c, &hrs_c_init_obj);
     APP_ERROR_CHECK(err_code);
@@ -814,7 +832,9 @@ static void rscs_c_init(void)
     ret_code_t        err_code;
     ble_rscs_c_init_t rscs_c_init_obj;
 
-    rscs_c_init_obj.evt_handler = rscs_c_evt_handler;
+    rscs_c_init_obj.evt_handler   = rscs_c_evt_handler;
+    rscs_c_init_obj.error_handler = service_error_handler;
+    rscs_c_init_obj.p_gatt_queue  = &m_ble_gatt_queue;
 
     err_code = ble_rscs_c_init(&m_rscs_c, &rscs_c_init_obj);
     APP_ERROR_CHECK(err_code);
@@ -986,8 +1006,19 @@ static void conn_params_init(void)
  */
 static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
 {
+    ble_db_discovery_t const * p_db = (ble_db_discovery_t *)p_evt->params.p_db_instance;
+
     ble_hrs_on_db_disc_evt(&m_hrs_c, p_evt);
     ble_rscs_on_db_disc_evt(&m_rscs_c, p_evt);
+
+    if (p_evt->evt_type == BLE_DB_DISCOVERY_AVAILABLE) {
+        NRF_LOG_INFO("DB Discovery instance %p available on conn handle: %d",
+                     p_db,
+                     p_evt->conn_handle);
+        NRF_LOG_INFO("Found %d services on conn_handle: %d",
+                     p_db->srv_count,
+                     p_evt->conn_handle);
+    }
 }
 
 
@@ -996,7 +1027,14 @@ static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
  */
 static void db_discovery_init(void)
 {
-    ret_code_t err_code = ble_db_discovery_init(db_disc_handler);
+    ble_db_discovery_init_t db_init;
+
+    memset(&db_init, 0, sizeof(ble_db_discovery_init_t));
+
+    db_init.evt_handler  = db_disc_handler;
+    db_init.p_gatt_queue = &m_ble_gatt_queue;
+
+    ret_code_t err_code = ble_db_discovery_init(&db_init);
     APP_ERROR_CHECK(err_code);
 }
 

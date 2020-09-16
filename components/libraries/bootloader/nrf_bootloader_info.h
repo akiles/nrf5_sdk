@@ -84,15 +84,6 @@ extern "C" {
 #endif
 #endif
 
-
-/**
- * @brief Location of the pointer to the start of the bootloader.
- *
- * See also @c BOOTLOADER_ADDRESS in @c app_util.h.
- */
-#define NRF_UICR_BOOTLOADER_START_ADDRESS       (MBR_BOOTLOADER_ADDR)
-
-
 // The following macros are for accessing the SoftDevice information structure,
 // which is found inside the SoftDevice binary.
 
@@ -133,6 +124,14 @@ extern "C" {
 #define SD_VERSION_GET(baseaddr)    ((SD_INFO_STRUCT_SIZE(baseaddr) > (0x14)) \
                                     ? SD_OFFSET_GET_UINT32(baseaddr, 0x14)    \
                                     : 0)
+#endif
+
+/** @brief Defines a macro for retrieving the actual SoftDevice ID from a given base address. Use
+ *         @ref MBR_SIZE as the argument when the SoftDevice is installed just above the MBR (the
+ *         usual case). */
+#ifndef SD_ID_GET
+#define SD_ID_GET(baseaddr) ((SD_INFO_STRUCT_SIZE(baseaddr) > 0x10) \
+        ? SD_OFFSET_GET_UINT32(baseaddr, 0x10) : 0)
 #endif
 #endif
 
@@ -188,6 +187,20 @@ extern "C" {
 #define NRF_DFU_DEBUG 0
 #endif
 #endif
+
+/** @brief Function for populating addresses in the MBR code page.
+ *
+ * This function writes two words to flash if the flash is 0xFFFFFFFF. This is done in code because
+ * doing this through the hex file interferes with flashing algorithms. See nrf_mbr.h.
+ */
+void nrf_bootloader_mbr_addrs_populate(void);
+
+/** @brief Function for checking if the debug port access is disabled.
+ *
+ * If the debug port access is enabled, disable it. This function checks and writes to the UICR
+ * registers APPROTECT and DEBUGCTRL.
+ */
+void nrf_bootloader_debug_port_disable(void);
 
 #ifdef __cplusplus
 }

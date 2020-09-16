@@ -147,8 +147,7 @@ static void send_unexpected_error(uint16_t conn_handle, ret_code_t err_code)
         {
             .error_unexpected =
             {
-                .error     = err_code,
-                .fds_error = false
+                .error = err_code
             }
         }
     };
@@ -294,32 +293,34 @@ static bool local_db_update_in_evt(uint16_t conn_handle)
  * @param[in]  conn_handle  The connection to check.
  * @param[out] p_cccd       The CCCD value of the service changed characteristic for this link.
  *
- * @return Any error from @ref sd_ble_gatts_value_get.
+ * @return Any error from @ref sd_ble_gatts_value_get or @ref sd_ble_gatts_attr_get.
  */
 static ret_code_t service_changed_cccd(uint16_t conn_handle, uint16_t * p_cccd)
 {
     bool       sc_found = false;
     uint16_t   end_handle;
+
     ret_code_t err_code = sd_ble_gatts_initial_user_handle_get(&end_handle);
     ASSERT(err_code == NRF_SUCCESS);
 
     for (uint16_t handle = 1; handle < end_handle; handle++)
     {
-        uint16_t uuid;
-        ble_gatts_value_t value = {.p_value = (uint8_t *)&uuid, .len = 2, .offset = 0};
-        err_code = sd_ble_gatts_value_get(conn_handle, handle, &value);
+        ble_uuid_t uuid;
+        ble_gatts_value_t value = {.p_value = (uint8_t *)&uuid.uuid, .len = 2, .offset = 0};
+
+        err_code = sd_ble_gatts_attr_get(handle, &uuid, NULL);
         if (err_code != NRF_SUCCESS)
         {
             return err_code;
         }
-        else if (!sc_found && (uuid == BLE_UUID_GATT_CHARACTERISTIC_SERVICE_CHANGED))
+        else if (!sc_found && (uuid.uuid == BLE_UUID_GATT_CHARACTERISTIC_SERVICE_CHANGED))
         {
             sc_found = true;
         }
-        else if (sc_found && (uuid == BLE_UUID_DESCRIPTOR_CLIENT_CHAR_CONFIG))
+        else if (sc_found && (uuid.uuid == BLE_UUID_DESCRIPTOR_CLIENT_CHAR_CONFIG))
         {
             value.p_value = (uint8_t *)p_cccd;
-            return sd_ble_gatts_value_get(conn_handle, ++handle, &value);
+            return sd_ble_gatts_value_get(conn_handle, handle, &value);
         }
     }
     return NRF_ERROR_NOT_FOUND;

@@ -90,6 +90,9 @@ NRF_BLE_GATT_DEF(m_gatt);                                           /**< GATT mo
 NRF_BLE_GATTS_C_DEF(m_gatts_c);                                     /**< GATT Service client instance. Handles Service Changed indications from the peer. */
 NRF_BLE_QWR_DEF(m_qwr);                                             /**< Context for the Queued Write module.*/
 BLE_DB_DISCOVERY_DEF(m_ble_db_discovery);                           /**< DB discovery module instance. */
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                    /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_PERIPHERAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
 
 static bool    m_erase_bonds;                                       /**< Bool to determine if bonds should be erased before advertising starts. Based on button push upon startup. */
 
@@ -111,6 +114,16 @@ static uint8_t m_pm_peer_srv_buffer[ALIGN_NUM(4, sizeof(ble_gatt_db_srv_t))] = {
 void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 {
     app_error_handler(DEAD_BEEF, line_num, p_file_name);
+}
+
+
+/**@brief Function for handling the GATT Service Client errors.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void gatt_c_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
 }
 
 
@@ -274,7 +287,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
 
                 ble_gatt_db_srv_t * remote_db;
                 remote_db         = (ble_gatt_db_srv_t *)m_pm_peer_srv_buffer;
-                uint16_t data_len = sizeof(m_pm_peer_srv_buffer);
+                uint32_t data_len = sizeof(m_pm_peer_srv_buffer);
 
                 err_code = pm_peer_data_remote_db_load(peer_id, remote_db, &data_len);
                 if (err_code == NRF_ERROR_NOT_FOUND)
@@ -513,7 +526,14 @@ static void ble_stack_init(void)
 */
 static void db_discovery_init(void)
 {
-    ret_code_t err_code = ble_db_discovery_init(db_disc_handler);
+    ble_db_discovery_init_t db_init;
+
+    memset(&db_init, 0, sizeof(db_init));
+
+    db_init.evt_handler  = db_disc_handler;
+    db_init.p_gatt_queue = &m_ble_gatt_queue;
+
+    ret_code_t err_code = ble_db_discovery_init(&db_init);
 
     APP_ERROR_CHECK(err_code);
 }
@@ -591,7 +611,9 @@ static void services_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Initialize GATTS Client Module.
-    gatts_c_init.evt_handler = gatts_evt_handler;
+    gatts_c_init.evt_handler  = gatts_evt_handler;
+    gatts_c_init.err_handler  = gatt_c_error_handler;
+    gatts_c_init.p_gatt_queue = &m_ble_gatt_queue;
 
     err_code = nrf_ble_gatts_c_init(&m_gatts_c, &gatts_c_init);
     APP_ERROR_CHECK(err_code);

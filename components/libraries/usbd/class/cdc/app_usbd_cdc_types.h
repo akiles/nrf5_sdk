@@ -342,11 +342,11 @@ typedef enum {
  * @brief Possible values of @ref app_usbd_cdc_line_coding_t::bParityType.
  */
 typedef enum {
-    APP_USBD_CDC_LINE_PARITY_NONE  = 0,  /**< No parity.                 */
-    APP_USBD_CDC_LINE_PARITY_ODD   = 1,  /**< Odd parity.                */
-    APP_USBD_CDC_LINE_PARITY_EVEN  = 2,  /**< Even parity.               */
-    APP_USBD_CDC_LINE_PARITY_MARK  = 3,  /**< Parity forced to 0 (space).*/
-    APP_USBD_CDC_LINE_PARITY_SPACE = 4,  /**< Parity forced to 1 (mark). */
+    APP_USBD_CDC_LINE_PARITY_NONE  = 0,  /**< No parity.                  */
+    APP_USBD_CDC_LINE_PARITY_ODD   = 1,  /**< Odd parity.                 */
+    APP_USBD_CDC_LINE_PARITY_EVEN  = 2,  /**< Even parity.                */
+    APP_USBD_CDC_LINE_PARITY_MARK  = 3,  /**< Parity forced to 0 (mark).  */
+    APP_USBD_CDC_LINE_PARITY_SPACE = 4,  /**< Parity forced to 1 (space). */
 } app_usbd_cdc_line_parity_t;
 
 

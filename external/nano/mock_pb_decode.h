@@ -14,6 +14,7 @@
 #undef SUPPRESS_INLINE_IMPLEMENTATION
 #undef __STATIC_INLINE
 #define __STATIC_INLINE __STATIC_INLINE1
+#include <cmock_typedefs.h>
 
 void mock_pb_decode_Init(void);
 void mock_pb_decode_Destroy(void);

@@ -71,6 +71,7 @@
 #include "ble_srv_common.h"
 #include "ble_date_time.h"
 #include "nrf_sdh_ble.h"
+#include "nrf_ble_gq.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -132,10 +133,12 @@ typedef struct
 typedef struct
 {
     ble_hts_evt_handler_t        evt_handler;                               /**< Event handler to be called for handling events in the Health Thermometer Service. */
+    ble_srv_error_handler_t      error_handler;                             /**< Function to be called in case of an error. */
     security_req_t               ht_meas_cccd_wr_sec;                       /**< Security requirement for writing health thermometer measurement characteristic CCCD. */
     security_req_t               ht_type_rd_sec;                            /**< Security requirement for reading health thermometer type characteristic. */
     uint8_t                      temp_type_as_characteristic;               /**< Set non-zero if temp type given as characteristic */
     uint8_t                      temp_type;                                 /**< Temperature type if temperature characteristic is used */
+    nrf_ble_gq_t               * p_gatt_queue;                              /**< Pointer to BLE GATT Queue instance. */
 } ble_hts_init_t;
 
 /**@brief Health Thermometer Service structure. This contains various status information for
@@ -143,11 +146,13 @@ typedef struct
 struct ble_hts_s
 {
     ble_hts_evt_handler_t        evt_handler;                               /**< Event handler to be called for handling events in the Health Thermometer Service. */
+    ble_srv_error_handler_t      error_handler;                             /**< Function to be called in case of an error. */
     uint16_t                     service_handle;                            /**< Handle of Health Thermometer Service (as provided by the BLE stack). */
     ble_gatts_char_handles_t     meas_handles;                              /**< Handles related to the Health Thermometer Measurement characteristic. */
     ble_gatts_char_handles_t     temp_type_handles;                         /**< Handles related to the Health Thermometer Temperature Type characteristic. */
     uint16_t                     conn_handle;                               /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
     uint8_t                      temp_type;                                 /**< Temperature type indicates where the measurement was taken. */
+    nrf_ble_gq_t               * p_gatt_queue;                              /**< Pointer to BLE GATT Queue instance. */
 };
 
 /**@brief Health Thermometer Service measurement structure. This contains a Health Thermometer

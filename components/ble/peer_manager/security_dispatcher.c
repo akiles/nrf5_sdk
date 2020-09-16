@@ -166,8 +166,7 @@ static void send_unexpected_error(uint16_t conn_handle, ret_code_t err_code)
         {
             .error_unexpected =
             {
-                .error     = err_code,
-                .fds_error = false
+                .error = err_code,
             }
         }
     };
@@ -1001,16 +1000,10 @@ static void sec_request_process(ble_gap_evt_t const * p_gap_evt)
     pm_evt_t evt =
     {
         .evt_id = PM_EVT_SLAVE_SECURITY_REQ,
-        .conn_handle = p_gap_evt->conn_handle,
-        .params =
-        {
-            .slave_security_req =
-            {
-                .bond = p_gap_evt->params.sec_request.bond,
-                .mitm = p_gap_evt->params.sec_request.mitm,
-            }
-        }
+        .conn_handle = p_gap_evt->conn_handle
     };
+    memcpy(&evt.params.slave_security_req, &p_gap_evt->params.sec_request, sizeof(ble_gap_evt_sec_request_t));
+
     evt_send(&evt);
     return;
 }

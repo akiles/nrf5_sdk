@@ -145,7 +145,10 @@ static void uart_event_handler(nrf_drv_uart_event_t * p_event, void * p_context)
                 break;
             }
 
-            event_handler(p_serial, NRF_SERIAL_EVENT_RX_DATA);
+            if (p_event->data.rxtx.bytes)
+            {
+                event_handler(p_serial, NRF_SERIAL_EVENT_RX_DATA);
+            }
             nrf_serial_buffers_t const * p_buffs =
                     p_serial->p_ctx->p_config->p_buffers;
 

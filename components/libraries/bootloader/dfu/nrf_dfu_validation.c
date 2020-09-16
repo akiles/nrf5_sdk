@@ -744,6 +744,11 @@ static bool softdevice_info_ok(uint32_t sd_start_addr, uint32_t sd_size)
         NRF_LOG_ERROR("The SoftDevice size in the info struct is too small compared with the size reported in the init command.");
         result = false;
     }
+    else if (SD_PRESENT && (SD_ID_GET(MBR_SIZE) != SD_ID_GET(sd_start_addr)))
+    {
+        NRF_LOG_ERROR("The new SoftDevice is of a different family than the present SoftDevice. Compatibility cannot be guaranteed.");
+        result = false;
+    }
 
     return result;
 }

@@ -97,7 +97,7 @@ static void fds_gc_event(void * p_event_data, uint16_t event_size)
     ret_code_t fds_err_code;
 
     fds_err_code = fds_gc();
-    if (fds_err_code != FDS_SUCCESS)
+    if (fds_err_code != NRF_SUCCESS)
         APP_ERROR_CHECK_BOOL(NRF_ERROR_INTERNAL);
     m_num_pending_ops++;
 }

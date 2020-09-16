@@ -78,6 +78,9 @@ BLE_NUS_C_DEF(m_ble_nus_c);                                             /**< BLE
 NRF_BLE_GATT_DEF(m_gatt);                                               /**< GATT module instance. */
 BLE_DB_DISCOVERY_DEF(m_db_disc);                                        /**< Database discovery module instance. */
 NRF_BLE_SCAN_DEF(m_scan);                                               /**< Scanning Module instance. */
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                        /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_CENTRAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
 
 static uint16_t m_ble_nus_max_data_len = BLE_GATT_ATT_MTU_DEFAULT - OPCODE_LENGTH - HANDLE_LENGTH; /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
 
@@ -106,7 +109,17 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 }
 
 
-/**@brief Function for starting scanning. */
+/**@brief Function for handling the Nordic UART Service Client errors.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void nus_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
+}
+
+
+/**@brief Function to start scanning. */
 static void scan_start(void)
 {
     ret_code_t ret;
@@ -260,7 +273,9 @@ void uart_event_handle(app_uart_evt_t * p_event)
             UNUSED_VARIABLE(app_uart_get(&data_array[index]));
             index++;
 
-            if ((data_array[index - 1] == '\n') || (index >= (m_ble_nus_max_data_len)))
+            if ((data_array[index - 1] == '\n') ||
+                (data_array[index - 1] == '\r') ||
+                (index >= (m_ble_nus_max_data_len)))
             {
                 NRF_LOG_DEBUG("Ready to send data over BLE NUS");
                 NRF_LOG_HEXDUMP_DEBUG(data_array, index);
@@ -560,7 +575,9 @@ static void nus_c_init(void)
     ret_code_t       err_code;
     ble_nus_c_init_t init;
 
-    init.evt_handler = ble_nus_c_evt_handler;
+    init.evt_handler   = ble_nus_c_evt_handler;
+    init.error_handler = nus_error_handler;
+    init.p_gatt_queue  = &m_ble_gatt_queue;
 
     err_code = ble_nus_c_init(&m_ble_nus_c, &init);
     APP_ERROR_CHECK(err_code);
@@ -612,7 +629,14 @@ static void power_management_init(void)
 /** @brief Function for initializing the database discovery module. */
 static void db_discovery_init(void)
 {
-    ret_code_t err_code = ble_db_discovery_init(db_disc_handler);
+    ble_db_discovery_init_t db_init;
+
+    memset(&db_init, 0, sizeof(ble_db_discovery_init_t));
+
+    db_init.evt_handler  = db_disc_handler;
+    db_init.p_gatt_queue = &m_ble_gatt_queue;
+
+    ret_code_t err_code = ble_db_discovery_init(&db_init);
     APP_ERROR_CHECK(err_code);
 }
 

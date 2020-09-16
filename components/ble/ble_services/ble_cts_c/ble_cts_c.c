@@ -50,22 +50,43 @@
 #include "nrf_log.h"
 NRF_LOG_MODULE_REGISTER();
 
-#define CTS_YEAR_MIN 1582                     /**< The lowest valid Current Time year is the year when the western calendar was introduced. */
-#define CTS_YEAR_MAX 9999                     /**< The highest possible Current Time. */
+#define CTS_YEAR_MIN 1582                     /**< The lowest valid Current Time year is the year when the Western calendar was introduced. */
+#define CTS_YEAR_MAX 9999                     /**< The highest possible Current Time year. */
 
 #define CTS_C_CURRENT_TIME_EXPECTED_LENGTH 10 /**< |     Year        |Month   |Day     |Hours   |Minutes |Seconds |Weekday |Fraction|Reason  |
                                                    |     2 bytes     |1 byte  |1 byte  |1 byte  |1 byte  |1 byte  |1 byte  |1 byte  |1 byte  | = 10 bytes. */
 
 
-/**@brief Function for handling events from the database discovery module.
+/**@brief Function for intercepting errors of GATTC and the BLE GATT Queue.
  *
- * @details This function will handle an event from the database discovery module, and determine
- *          if it relates to the discovery of Current Time Service at the peer. If so, it will
- *          call the application's event handler indicating that the Current Time Service has been
- *          discovered at the peer. It also populates the event with the service related
+ * @param[in] nrf_error   Error code.
+ * @param[in] p_ctx       Parameter from the event handler.
+ * @param[in] conn_handle Connection handle.
+ */
+static void gatt_error_handler(uint32_t   nrf_error,
+                               void     * p_ctx,
+                               uint16_t   conn_handle)
+{
+    ble_cts_c_t * p_cts = (ble_cts_c_t *)p_ctx;
+
+    NRF_LOG_DEBUG("A GATT Client error has occurred on conn_handle: 0X%X", conn_handle);
+
+    if (p_cts->error_handler != NULL)
+    {
+        p_cts->error_handler(nrf_error);
+    }
+}
+
+
+/**@brief Function for handling events from the Database Discovery module.
+ *
+ * @details This function handles an event from the Database Discovery module, and determines
+ *          whether it relates to the discovery of Current Time Service at the peer. If it does, this function
+ *          calls the application's event handler to indicate that the Current Time Service was
+ *          discovered at the peer. The function also populates the event with service-related
  *          information before providing it to the application.
  *
- * @param[in] p_evt Pointer to the event received from the database discovery module.
+ * @param[in] p_evt Pointer to the event received from the Database Discovery module.
  *
  */
 void ble_cts_c_on_db_disc_evt(ble_cts_c_t * p_cts, ble_db_discovery_evt_t * p_evt)
@@ -75,7 +96,6 @@ void ble_cts_c_on_db_disc_evt(ble_cts_c_t * p_cts, ble_db_discovery_evt_t * p_ev
     ble_cts_c_evt_t evt;
     const ble_gatt_db_char_t * p_chars = p_evt->params.discovered_db.charateristics;
 
-    evt.evt_type    = BLE_CTS_C_EVT_DISCOVERY_FAILED;
     evt.conn_handle = p_evt->conn_handle;
 
     // Check if the Current Time Service was discovered.
@@ -100,17 +120,28 @@ void ble_cts_c_on_db_disc_evt(ble_cts_c_t * p_cts, ble_db_discovery_evt_t * p_ev
 
         evt.evt_type    = BLE_CTS_C_EVT_DISCOVERY_COMPLETE;
     }
+    else if ((p_evt->evt_type == BLE_DB_DISCOVERY_SRV_NOT_FOUND) ||
+             (p_evt->evt_type == BLE_DB_DISCOVERY_ERROR))
+    {
+        evt.evt_type    = BLE_CTS_C_EVT_DISCOVERY_FAILED;
+    }
+    else
+    {
+        return;
+    }
+
     p_cts->evt_handler(p_cts, &evt);
 }
 
 
 uint32_t ble_cts_c_init(ble_cts_c_t * p_cts, ble_cts_c_init_t const * p_cts_init)
 {
-    //Verify that the parameters needed for to initialize this instance of CTS are not NULL.
+    // Verify that the parameters needed to initialize this instance of CTS are not NULL.
     VERIFY_PARAM_NOT_NULL(p_cts);
     VERIFY_PARAM_NOT_NULL(p_cts_init);
     VERIFY_PARAM_NOT_NULL(p_cts_init->error_handler);
     VERIFY_PARAM_NOT_NULL(p_cts_init->evt_handler);
+    VERIFY_PARAM_NOT_NULL(p_cts_init->p_gatt_queue);
 
     static ble_uuid_t cts_uuid;
 
@@ -121,19 +152,20 @@ uint32_t ble_cts_c_init(ble_cts_c_t * p_cts, ble_cts_c_init_t const * p_cts_init
     p_cts->conn_handle                  = BLE_CONN_HANDLE_INVALID;
     p_cts->char_handles.cts_handle      = BLE_GATT_HANDLE_INVALID;
     p_cts->char_handles.cts_cccd_handle = BLE_GATT_HANDLE_INVALID;
+    p_cts->p_gatt_queue                 = p_cts_init->p_gatt_queue;
 
     return ble_db_discovery_evt_register(&cts_uuid);
 }
 
 
-/**@brief Function for decoding a read from the current time characteristic.
+/**@brief Function for decoding a read from the Current Time characteristic.
  *
  * @param[in] p_time  Current Time structure.
- * @param[in] p_data  Pointer to the buffer containing the current time.
- * @param[in] length  length of the buffer containing the current time.
+ * @param[in] p_data  Pointer to the buffer containing the Current Time.
+ * @param[in] length  Length of the buffer containing the Current Time.
  *
- * @return NRF_SUCCESS if the time struct is valid.
- * @return NRF_ERROR_DATA_SIZE if length does not match the expected size of the data.
+ * @retval NRF_SUCCESS 			If the time struct is valid.
+ * @retval NRF_ERROR_DATA_SIZE 	If the length does not match the expected size of the data.
  */
 static uint32_t current_time_decode(current_time_char_t * p_time,
                                     uint8_t const       * p_data,
@@ -143,7 +175,7 @@ static uint32_t current_time_decode(current_time_char_t * p_time,
 
     if (length != CTS_C_CURRENT_TIME_EXPECTED_LENGTH)
     {
-        // Return to prevent accessing out of bounds data.
+        // Return to prevent accessing the out-of-bounds data.
         return NRF_ERROR_DATA_SIZE;
     }
 
@@ -172,12 +204,12 @@ static uint32_t current_time_decode(current_time_char_t * p_time,
 }
 
 
-/**@brief Function for decoding a read from the current time characteristic.
+/**@brief Function for decoding a read from the Current Time characteristic.
  *
  * @param[in] p_time  Current Time struct.
  *
- * @return NRF_SUCCESS if the time struct is valid.
- * @return NRF_ERROR_INVALID_DATA if the time is out of bounds.
+ * @retval NRF_SUCCESS 				If the time struct is valid.
+ * @retval NRF_ERROR_INVALID_DATA 	If the time is out of bounds.
  */
 static uint32_t current_time_validate(current_time_char_t * p_time)
 {
@@ -229,9 +261,9 @@ static uint32_t current_time_validate(current_time_char_t * p_time)
 }
 
 
-/**@brief Function for reading the current time. The time is decoded, then it is validated.
- *        Depending on the outcome the cts event handler will be called with
- *        the current time event or an invalid time event.
+/**@brief Function for reading the Current Time. The time is decoded, and then validated.
+ *        Depending on the outcome, the CTS event handler will be called with
+ *        the Current Time event or an invalid time event.
  *
  * @param[in] p_cts      Current Time Service client structure.
  * @param[in] p_ble_evt  Event received from the BLE stack.
@@ -241,7 +273,7 @@ static void current_time_read(ble_cts_c_t * p_cts, ble_evt_t const * p_ble_evt)
     ble_cts_c_evt_t evt;
     uint32_t        err_code = NRF_SUCCESS;
 
-    // Check if the event is on the same connection as this cts instance
+    // Check whether the event is on the same connection as this CTS instance
     if (p_cts->conn_handle != p_ble_evt->evt.gattc_evt.conn_handle)
     {
         return;
@@ -255,12 +287,12 @@ static void current_time_read(ble_cts_c_t * p_cts, ble_evt_t const * p_ble_evt)
 
         if (err_code != NRF_SUCCESS)
         {
-            // The data length was invalid, decoding was not completed.
+            // The data length was invalid. Decoding was not completed.
             evt.evt_type = BLE_CTS_C_EVT_INVALID_TIME;
         }
         else
         {
-            // Verify That the time is valid.
+            // Verify that the time is valid.
             err_code = current_time_validate(&evt.params.current_time);
 
             if (err_code != NRF_SUCCESS)
@@ -293,7 +325,7 @@ static void on_disconnect(ble_cts_c_t * p_cts, ble_evt_t const * p_ble_evt)
 
     if (ble_cts_c_is_cts_discovered(p_cts))
     {
-        // There was a valid instance of cts on the peer. Send an event to the
+        // There was a valid instance of CTS on the peer. Send an event to the
         // application, so that it can do any clean up related to this module.
         ble_cts_c_evt_t evt;
 
@@ -335,7 +367,17 @@ uint32_t ble_cts_c_current_time_read(ble_cts_c_t const * p_cts)
         return NRF_ERROR_NOT_FOUND;
     }
 
-    return sd_ble_gattc_read(p_cts->conn_handle, p_cts->char_handles.cts_handle, 0);
+    nrf_ble_gq_req_t read_req;
+
+    memset(&read_req, 0, sizeof(nrf_ble_gq_req_t));
+
+    read_req.type                     = NRF_BLE_GQ_REQ_GATTC_READ;
+    read_req.error_handler.cb         = gatt_error_handler;
+    read_req.error_handler.p_ctx      = (ble_cts_c_t *)p_cts;
+    read_req.params.gattc_read.handle = p_cts->char_handles.cts_handle;
+    read_req.params.gattc_read.offset = 0;
+
+    return nrf_ble_gq_item_add(p_cts->p_gatt_queue, &read_req, p_cts->conn_handle);
 }
 
 
@@ -349,9 +391,9 @@ uint32_t ble_cts_c_handles_assign(ble_cts_c_t               * p_cts,
     if (p_peer_handles != NULL)
     {
         p_cts->char_handles.cts_cccd_handle = p_peer_handles->cts_cccd_handle;
-        p_cts->char_handles.cts_handle = p_peer_handles->cts_handle;
+        p_cts->char_handles.cts_handle      = p_peer_handles->cts_handle;
     }
 
-    return NRF_SUCCESS;
+    return nrf_ble_gq_conn_handle_register(p_cts->p_gatt_queue, conn_handle);
 }
 #endif // NRF_MODULE_ENABLED(BLE_CTS_C)

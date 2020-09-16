@@ -70,6 +70,7 @@
 #include "ble_db_discovery.h"
 #include "ble_srv_common.h"
 #include "ble_dis.h"
+#include "nrf_ble_gq.h"
 #include "nrf_sdh_ble.h"
 
 #include "sdk_config.h"
@@ -195,6 +196,7 @@ struct ble_dis_c_s
     ble_dis_c_handle_t      handles[BLE_DIS_C_CHAR_TYPES_NUM]; /**< Handles on the connected peer device needed to interact with it. */
     ble_srv_error_handler_t error_handler;                     /**< Application error handler to be called in case of an error. */
     ble_dis_c_evt_handler_t evt_handler;                       /**< Application event handler to be called when there is an event related to the DIS. */
+    nrf_ble_gq_t          * p_gatt_queue;                      /**< Pointer to BLE GATT Queue instance. */
 };
 
 /**@brief Structure describing the group of DIS characteristics with which this module can interact. */
@@ -210,6 +212,7 @@ typedef struct
     ble_dis_c_char_group_t  char_group;    /**< Group of DIS characteristics that should be enabled for this module instance. */
     ble_srv_error_handler_t error_handler; /**< Application error handler to be called in case of an error. */
     ble_dis_c_evt_handler_t evt_handler;   /**< Application event handler to be called when there is an event related to the Device Information service. */
+    nrf_ble_gq_t          * p_gatt_queue;  /**< Pointer to BLE GATT Queue instance. */
 } ble_dis_c_init_t;
 
 

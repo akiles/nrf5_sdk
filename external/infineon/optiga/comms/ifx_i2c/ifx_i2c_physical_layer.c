@@ -54,8 +54,8 @@
 #define PL_REG_LEN_MAX_SCL_FREQU        (4)
 #define PL_REG_LEN_I2C_MODE             (2)
 #define PL_REG_LEN_DATA_REG_LEN         (2)
-#define PL_REG_LEN_SOFT_RESET           (2)
-#define PL_REG_LEN_BASE_ADDR            (2)
+#define PL_REG_LEN_SOFT_RESET			(2)
+#define PL_REG_LEN_BASE_ADDR			(2)
 
 // Physical Layer State Register masks
 #define PL_REG_I2C_STATE_RESPONSE_READY (0x40)
@@ -562,7 +562,7 @@ static void ifx_i2c_pl_frame_event_handler(ifx_i2c_context_t *p_ctx,host_lib_sta
             case PL_STATE_READY:
             {
                 // Start polling status register
-                p_ctx->pl.frame_state           = PL_STATE_DATA_AVAILABLE;
+                p_ctx->pl.frame_state			= PL_STATE_DATA_AVAILABLE;
                 ifx_i2c_pl_read_register(p_ctx,PL_REG_I2C_STATE, PL_REG_LEN_I2C_STATE);
             }
             break;

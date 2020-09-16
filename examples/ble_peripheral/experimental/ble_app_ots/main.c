@@ -90,6 +90,9 @@
 BLE_ADVERTISING_DEF(m_advertising);                                            /**< Advertising module instance. */
 BLE_OTS_DEF(m_ots);                                                            /**< Object transfer service instance. */
 NRF_BLE_QWR_DEF(m_qwr);                                                        /**< Context for the Queued Write module.*/
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                               /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_PERIPHERAL_LINK_COUNT,                           
+               NRF_BLE_GQ_QUEUE_SIZE);
 
 static uint16_t         m_conn_handle;
 static ble_ots_object_t m_ots_object;
@@ -254,6 +257,7 @@ static void services_init(void)
     ots_init.error_handler     = ble_ots_error_handler;
     ots_init.evt_handler       = ble_ots_evt_handler;
     ots_init.p_object          = &m_ots_object;
+    ots_init.p_gatt_queue      = &m_ble_gatt_queue;
 
     ots_init.feature_char_read_access = SEC_OPEN;
 

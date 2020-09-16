@@ -53,12 +53,16 @@ static void uart_event_handler(nrf_drv_uart_event_t * p_event, void* p_context)
 {
     if (p_event->type == NRF_DRV_UART_EVT_RX_DONE)
     {
-        app_uart_evt_t app_uart_event;
-        app_uart_event.evt_type   = APP_UART_DATA;
-        app_uart_event.data.value = p_event->data.rxtx.p_data[0];
+        // Received bytes counter has to be checked, because there could be event from RXTO interrupt
+        if (p_event->data.rxtx.bytes)
+        {
+            app_uart_evt_t app_uart_event;
+            app_uart_event.evt_type   = APP_UART_DATA;
+            app_uart_event.data.value = p_event->data.rxtx.p_data[0];
+            rx_done = true;
+            m_event_handler(&app_uart_event);
+        }
         (void)nrf_drv_uart_rx(&app_uart_inst, rx_buffer, 1);
-        rx_done = true;
-        m_event_handler(&app_uart_event);
     }
     else if (p_event->type == NRF_DRV_UART_EVT_ERROR)
     {

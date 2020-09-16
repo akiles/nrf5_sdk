@@ -101,7 +101,7 @@ ret_code_t pds_init(void);
 ret_code_t pds_peer_data_read(pm_peer_id_t                    peer_id,
                               pm_peer_data_id_t               data_id,
                               pm_peer_data_t          * const p_data,
-                              uint16_t          const * const p_buf_len);
+                              uint32_t          const * const p_buf_len);
 
 
 /**@brief Function to prepare iterating over peer data in flash using @ref pds_peer_data_iterate.

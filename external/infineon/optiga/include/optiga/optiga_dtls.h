@@ -65,16 +65,16 @@
  ****************************************************************************/
 
  /// Successful execution
-#define OCP_LIB_OK                          0x75282512
+#define OCP_LIB_OK 						    0x75282512
 
 /// Failure in execution
-#define OCP_LIB_ERROR                       0xF3053159
+#define OCP_LIB_ERROR 					    0xF3053159
 
 /// Null Parameter(s)
-#define OCP_LIB_NULL_PARAM                  BASE_ERROR_OCPLAYER
+#define OCP_LIB_NULL_PARAM 				    BASE_ERROR_OCPLAYER
 
 /// Unsupported Configuration
-#define OCP_LIB_UNSUPPORTED_CONFIG          (BASE_ERROR_OCPLAYER + 1)
+#define OCP_LIB_UNSUPPORTED_CONFIG 		    (BASE_ERROR_OCPLAYER + 1)
 
 /// Connection already exists
 #define OCP_LIB_CONNECTION_ALREADY_EXISTS   (BASE_ERROR_OCPLAYER + 2)
@@ -104,13 +104,13 @@
 #define OCP_LIB_INSUFFICIENT_MEMORY         (BASE_ERROR_OCPLAYER + 10)
 
 ///Invalid timeout value
-#define OCP_LIB_INVALID_TIMEOUT             (BASE_ERROR_OCPLAYER + 11)
+#define OCP_LIB_INVALID_TIMEOUT				(BASE_ERROR_OCPLAYER + 11)
 
 ///Timeout occured
-#define OCP_LIB_TIMEOUT                     (BASE_ERROR_OCPLAYER + 12)
+#define OCP_LIB_TIMEOUT						(BASE_ERROR_OCPLAYER + 12)
 
 ///requested operation not allowed
-#define OCP_LIB_OPERATION_NOT_ALLOWED       (BASE_ERROR_OCPLAYER + 13)
+#define OCP_LIB_OPERATION_NOT_ALLOWED		(BASE_ERROR_OCPLAYER + 13)
 
 ///Decryption failure
 #define OCP_LIB_DECRYPT_FAILURE             (BASE_ERROR_OCPLAYER + 14)

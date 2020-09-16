@@ -5,7 +5,7 @@
 
   <Header>### uVision Project, (C) Keil Software</Header>
   <Target>
-    <TargetName>flash_mbr</TargetName>
+    <TargetName>nrf52811_xxaa_mbr</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -111,7 +111,7 @@
       <LintConfigFile></LintConfigFile>
     </TargetOption>
   </Target>  <Target>
-    <TargetName>nrf52811_xxaa_mbr</TargetName>
+    <TargetName>flash_mbr</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>

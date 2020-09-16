@@ -1,12 +1,10 @@
 PROJECT_NAME     := secure_bootloader_uart_mbr_pca10056e
-TARGETS          := flash_mbr nrf52811_xxaa_mbr
+TARGETS          := nrf52811_xxaa_mbr
 OUTPUT_DIRECTORY := _build
 
 SDK_ROOT := ../../../../..
 PROJ_DIR := ../..
 
-$(OUTPUT_DIRECTORY)/flash_mbr.out: \
-  LINKER_SCRIPT  := secure_bootloader_gcc_nrf52.ld
 $(OUTPUT_DIRECTORY)/nrf52811_xxaa_mbr.out: \
   LINKER_SCRIPT  := secure_bootloader_gcc_nrf52.ld
 
@@ -103,7 +101,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/integration/nrfx \
   $(SDK_ROOT)/components/libraries/crypto/backend/cc310_bl \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
-  $(SDK_ROOT)/components/softdevice/mbr/nrf52810/headers \
   $(SDK_ROOT)/components/libraries/log/src \
   $(SDK_ROOT)/components/libraries/bootloader/dfu \
   $(SDK_ROOT)/components/libraries/bootloader/serial_dfu \
@@ -118,12 +115,13 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/boards \
   $(SDK_ROOT)/components/libraries/crypto/backend/cc310 \
   $(SDK_ROOT)/components/libraries/bootloader \
-  $(SDK_ROOT)/external/fprintf \
+  $(SDK_ROOT)/components/softdevice/mbr/headers \
   $(SDK_ROOT)/components/libraries/crypto \
   ../config \
   $(SDK_ROOT)/components/libraries/crypto/backend/optiga \
   $(SDK_ROOT)/components/libraries/scheduler \
   $(SDK_ROOT)/components/libraries/slip \
+  $(SDK_ROOT)/external/fprintf \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/balloc \
   $(SDK_ROOT)/components/libraries/stack_info \
@@ -137,7 +135,7 @@ INC_FOLDERS += \
 
 # Libraries common to all targets
 LIB_FILES += \
-  $(SDK_ROOT)/external/nrf_oberon/lib/cortex-m4/soft-float/liboberon_2.0.7.a \
+  $(SDK_ROOT)/external/nrf_oberon/lib/cortex-m4/soft-float/liboberon_3.0.1.a \
   $(SDK_ROOT)/external/micro-ecc/nrf52nf_armgcc/armgcc/micro_ecc_lib_nrf52.a \
 
 # Optimization flags
@@ -171,7 +169,6 @@ CFLAGS += -fno-builtin -fshort-enums
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
-
 # Assembler flags common to all targets
 ASMFLAGS += -g3
 ASMFLAGS += -mcpu=cortex-m4
@@ -201,8 +198,6 @@ LDFLAGS += -Wl,--gc-sections
 # use newlib in nano version
 LDFLAGS += --specs=nano.specs
 
-flash_mbr: CFLAGS += -D__HEAP_SIZE=0
-flash_mbr: ASMFLAGS += -D__HEAP_SIZE=0
 nrf52811_xxaa_mbr: CFLAGS += -D__HEAP_SIZE=0
 nrf52811_xxaa_mbr: ASMFLAGS += -D__HEAP_SIZE=0
 
@@ -214,13 +209,13 @@ LIB_FILES += -lc -lnosys -lm
 .PHONY: default help
 
 # Default target - first one defined
-default: flash_mbr
+default: nrf52811_xxaa_mbr
 
 # Print all targets that can be built
 help:
 	@echo following targets are available:
-	@echo		flash_mbr
 	@echo		nrf52811_xxaa_mbr
+	@echo		flash_mbr
 	@echo		sdk_config - starting external tool for editing sdk_config.h
 	@echo		flash      - flashing binary
 
@@ -231,12 +226,18 @@ include $(TEMPLATE_PATH)/Makefile.common
 
 $(foreach target, $(TARGETS), $(call define_target, $(target)))
 
-.PHONY: flash erase
+.PHONY: flash flash_mbr erase
 
 # Flash the program
 flash: default
-	@echo Flashing: $(OUTPUT_DIRECTORY)/flash_mbr.hex
-	nrfjprog -f nrf52 --program $(OUTPUT_DIRECTORY)/flash_mbr.hex --sectorerase
+	@echo Flashing: $(OUTPUT_DIRECTORY)/nrf52811_xxaa_mbr.hex
+	nrfjprog -f nrf52 --program $(OUTPUT_DIRECTORY)/nrf52811_xxaa_mbr.hex --sectorerase
+	nrfjprog -f nrf52 --reset
+
+# Flash softdevice
+flash_mbr:
+	@echo Flashing: mbr_nrf52_2.4.1_mbr.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/mbr/hex/mbr_nrf52_2.4.1_mbr.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

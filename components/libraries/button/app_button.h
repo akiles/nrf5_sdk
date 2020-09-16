@@ -98,8 +98,6 @@ typedef struct
  * @details This function will initialize the specified pins as buttons, and configure the Button
  *          Handler module as a GPIOTE user (but it will not enable button detection).
  *
- * @note Normally initialization should be done using the APP_BUTTON_INIT() macro
- *
  * @note app_button_enable() function must be called in order to enable the button detection.
  *
  * @param[in]  p_buttons           Array of buttons to be used (NOTE: Must be static!).

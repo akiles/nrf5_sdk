@@ -21,10 +21,10 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/util/app_error_handler_gcc.c \
   $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
   $(SDK_ROOT)/components/libraries/scheduler/app_scheduler.c \
-  $(SDK_ROOT)/components/libraries/timer/experimental/app_timer2.c \
+  $(SDK_ROOT)/components/libraries/timer/app_timer2.c \
   $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
   $(SDK_ROOT)/components/libraries/crc16/crc16.c \
-  $(SDK_ROOT)/components/libraries/timer/experimental/drv_rtc.c \
+  $(SDK_ROOT)/components/libraries/timer/drv_rtc.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
   $(SDK_ROOT)/components/libraries/atomic_fifo/nrf_atfifo.c \
   $(SDK_ROOT)/components/libraries/atomic/nrf_atomic.c \
@@ -135,7 +135,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/serialization/common/struct_ser/ble \
   $(SDK_ROOT)/integration/nrfx \
   $(SDK_ROOT)/components/serialization/common/transport \
-  $(SDK_ROOT)/components/libraries/timer/experimental \
   $(SDK_ROOT)/components/softdevice/common \
   $(SDK_ROOT)/modules/nrfx/drivers/include \
   $(SDK_ROOT)/external/fprintf \
@@ -163,7 +162,7 @@ CFLAGS += -DFLOAT_ABI_SOFT
 CFLAGS += -DHCI_TIMER2
 CFLAGS += -DNRF52811_XXAA
 CFLAGS += -DNRFX_COREDEP_DELAY_US_LOOP_CYCLES=3
-CFLAGS += -DNRF_SD_BLE_API_VERSION=6
+CFLAGS += -DNRF_SD_BLE_API_VERSION=7
 CFLAGS += -DS112
 CFLAGS += -DSER_CONNECTIVITY
 CFLAGS += -DSER_PHY_HCI
@@ -178,7 +177,6 @@ CFLAGS += -fno-builtin -fshort-enums
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
-
 # Assembler flags common to all targets
 ASMFLAGS += -g3
 ASMFLAGS += -mcpu=cortex-m4
@@ -195,7 +193,7 @@ ASMFLAGS += -DFLOAT_ABI_SOFT
 ASMFLAGS += -DHCI_TIMER2
 ASMFLAGS += -DNRF52811_XXAA
 ASMFLAGS += -DNRFX_COREDEP_DELAY_US_LOOP_CYCLES=3
-ASMFLAGS += -DNRF_SD_BLE_API_VERSION=6
+ASMFLAGS += -DNRF_SD_BLE_API_VERSION=7
 ASMFLAGS += -DS112
 ASMFLAGS += -DSER_CONNECTIVITY
 ASMFLAGS += -DSER_PHY_HCI
@@ -250,8 +248,8 @@ flash: default
 
 # Flash softdevice
 flash_softdevice:
-	@echo Flashing: s112_nrf52_6.1.1_softdevice.hex
-	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s112/hex/s112_nrf52_6.1.1_softdevice.hex --sectorerase
+	@echo Flashing: s112_nrf52_7.0.1_softdevice.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s112/hex/s112_nrf52_7.0.1_softdevice.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

@@ -206,6 +206,22 @@ bool ble_conn_state_encrypted(uint16_t conn_handle);
 bool ble_conn_state_mitm_protected(uint16_t conn_handle);
 
 
+/**@brief Function for querying whether a connection was bonded using LE Secure Connections (LESC).
+ *
+ * The connection must currently be encrypted.
+ *
+ * @note This function will report false if bonded, and the LESC bonding was unauthenticated
+ *       ("Just Works") and happened in a previous connection. To detect such cases as well, check
+ *       the stored bonding key, e.g. in Peer Manager, which has a LESC flag associated with it.
+ *
+ * @param[in]  conn_handle  Handle of connection to get the LESC state for.
+ *
+ * @retval true   If the connection was bonded using LESC.
+ * @retval false  If the connection has not been bonded using LESC, or conn_handle is invalid.
+ */
+bool ble_conn_state_lesc(uint16_t conn_handle);
+
+
 /**@brief Function for querying the total number of connections.
  *
  * @return  The total number of valid connections for which the module has a record.

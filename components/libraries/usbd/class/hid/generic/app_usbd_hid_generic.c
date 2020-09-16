@@ -237,7 +237,7 @@ ret_code_t app_usbd_hid_generic_idle_report_set(app_usbd_hid_generic_t const * p
 {
     app_usbd_class_inst_t const  * p_inst        = (app_usbd_class_inst_t const *)p_generic;
     app_usbd_hid_generic_ctx_t   * p_generic_ctx = hid_generic_ctx_get(p_generic);
-
+    ret_code_t ret;
     nrf_drv_usbd_ep_t ep_addr = app_usbd_hid_epin_addr_get(p_inst);
 
     app_usbd_hid_state_flag_clr(&p_generic_ctx->hid_ctx,
@@ -246,7 +246,7 @@ ret_code_t app_usbd_hid_generic_idle_report_set(app_usbd_hid_generic_t const * p
     NRF_DRV_USBD_TRANSFER_IN(transfer, p_buff, size);
 
     CRITICAL_REGION_ENTER();
-    ret_code_t ret = app_usbd_ep_transfer(ep_addr, &transfer);
+    ret = app_usbd_ep_transfer(ep_addr, &transfer);
     if (ret == NRF_SUCCESS)
     {
         app_usbd_hid_state_flag_set(&p_generic_ctx->hid_ctx,
@@ -277,6 +277,14 @@ const void * app_usbd_hid_generic_out_report_get(app_usbd_hid_generic_t const * 
     return p_hinst->p_rep_buffer_out->p_buff;
 }
 
+const void * app_usbd_hid_generic_feature_report_get(app_usbd_hid_generic_t const * p_generic,
+                                                     size_t                       * p_size)
+{
+    app_usbd_hid_inst_t const * p_hinst = &p_generic->specific.inst.hid_inst;
+
+    *p_size = p_hinst->p_rep_buffer_feature->size;
+    return p_hinst->p_rep_buffer_feature->p_buff;
+}
 
 /**
  * @brief @ref app_usbd_hid_interface_t::on_get_report
@@ -295,6 +303,10 @@ static ret_code_t hid_generic_on_get_report(app_usbd_class_inst_t const * p_inst
     else if (p_setup_ev->setup.wValue.hb == APP_USBD_HID_REPORT_TYPE_OUTPUT)
     {
         p_rep_buffer = app_usbd_hid_generic_out_report_get(p_hinst, &buffer_size);
+    }
+    else if (p_setup_ev->setup.wValue.hb == APP_USBD_HID_REPORT_TYPE_FEATURE)
+    {
+        p_rep_buffer = app_usbd_hid_generic_feature_report_get(p_hinst, &buffer_size);
     }
     else
     {
@@ -322,6 +334,22 @@ static ret_code_t hid_generic_on_set_report_data_cb(nrf_drv_usbd_ep_status_t sta
     return NRF_SUCCESS;
 }
 
+static ret_code_t hid_generic_on_set_report_feature_data_cb(nrf_drv_usbd_ep_status_t status,
+                                                            void                   * p_context)
+{
+    app_usbd_hid_user_ev_handler_t handler;
+    app_usbd_hid_generic_t const * p_generic = (app_usbd_hid_generic_t const *)p_context;
+
+    if (status != NRF_USBD_EP_OK)
+    {
+        return NRF_ERROR_INTERNAL;
+    }
+
+    handler = p_generic->specific.inst.hid_inst.user_event_handler;
+    handler((app_usbd_class_inst_t const *)p_generic,
+            APP_USBD_HID_USER_EVT_FEATURE_REPORT_READY);
+    return NRF_SUCCESS;
+}
 
 /**
  * @brief @ref app_usbd_hid_interface_t::on_set_report
@@ -329,31 +357,61 @@ static ret_code_t hid_generic_on_set_report_data_cb(nrf_drv_usbd_ep_status_t sta
 static ret_code_t hid_generic_on_set_report(app_usbd_class_inst_t const * p_inst,
                                             app_usbd_setup_evt_t const  * p_setup_ev)
 {
-    app_usbd_hid_generic_t const * p_generic = hid_generic_get(p_inst);
-
-    /*Request setup data*/
-    app_usbd_hid_report_buffer_t const * p_rep_buff;
-
-    p_rep_buff = app_usbd_hid_rep_buff_out_get(&p_generic->specific.inst.hid_inst);
-
-    p_rep_buff->p_buff[0] = p_setup_ev->setup.wValue.lb;
-    NRF_DRV_USBD_TRANSFER_OUT(transfer, p_rep_buff->p_buff + 1, p_rep_buff->size - 1);
-
-    ret_code_t ret;
-    CRITICAL_REGION_ENTER();
-    ret = app_usbd_ep_transfer(NRF_DRV_USBD_EPOUT0, &transfer);
-    if (ret == NRF_SUCCESS)
+    if (p_setup_ev->setup.wValue.hb == APP_USBD_HID_REPORT_TYPE_OUTPUT)
     {
-        app_usbd_core_setup_data_handler_desc_t desc = {
-            .handler   = hid_generic_on_set_report_data_cb,
-            .p_context = (void *)p_generic
-        };
+        app_usbd_hid_generic_t const * p_generic = hid_generic_get(p_inst);
 
-        ret = app_usbd_core_setup_data_handler_set(NRF_DRV_USBD_EPOUT0, &desc);
+        /*Request setup data*/
+        app_usbd_hid_report_buffer_t const * p_rep_buff;
+
+        p_rep_buff = app_usbd_hid_rep_buff_out_get(&p_generic->specific.inst.hid_inst);
+
+        p_rep_buff->p_buff[0] = p_setup_ev->setup.wValue.lb;
+        NRF_DRV_USBD_TRANSFER_OUT(transfer, p_rep_buff->p_buff + 1, p_rep_buff->size - 1);
+
+        ret_code_t ret;
+        CRITICAL_REGION_ENTER();
+        ret = app_usbd_ep_transfer(NRF_DRV_USBD_EPOUT0, &transfer);
+        if (ret == NRF_SUCCESS)
+        {
+            app_usbd_core_setup_data_handler_desc_t desc = {
+                .handler   = hid_generic_on_set_report_data_cb,
+                .p_context = (void *)p_generic
+            };
+
+            ret = app_usbd_core_setup_data_handler_set(NRF_DRV_USBD_EPOUT0, &desc);
+        }
+        CRITICAL_REGION_EXIT();
+        return ret;
+
+     }
+    else if (p_setup_ev->setup.wValue.hb == APP_USBD_HID_REPORT_TYPE_FEATURE)
+    {
+         app_usbd_hid_generic_t const * p_generic = hid_generic_get(p_inst);
+
+        /*Request setup data*/
+        app_usbd_hid_report_buffer_t const * p_rep_buff;
+
+        p_rep_buff = app_usbd_hid_rep_buff_feature_get(&p_generic->specific.inst.hid_inst);
+
+        NRF_DRV_USBD_TRANSFER_OUT(transfer, p_rep_buff->p_buff, p_rep_buff->size);
+
+        ret_code_t ret;
+        CRITICAL_REGION_ENTER();
+        ret = app_usbd_ep_transfer(NRF_DRV_USBD_EPOUT0, &transfer);
+        if (ret == NRF_SUCCESS)
+        {
+            app_usbd_core_setup_data_handler_desc_t desc = {
+                .handler   = hid_generic_on_set_report_feature_data_cb,
+                .p_context = (void *)p_generic
+            };
+
+            ret = app_usbd_core_setup_data_handler_set(NRF_DRV_USBD_EPOUT0, &desc);
+        }
+        CRITICAL_REGION_EXIT();
+        return ret;
     }
-    CRITICAL_REGION_EXIT();
-
-    return ret;
+    return NRF_ERROR_NOT_SUPPORTED;
 }
 
 

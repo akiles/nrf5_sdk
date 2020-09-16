@@ -308,21 +308,17 @@ uint32_t ble_gap_device_name_get_req_dec(uint8_t const * const p_buf,
     SER_REQ_DEC_END;
 }
 
-
 uint32_t ble_gap_device_name_get_rsp_enc(uint32_t              return_code,
                                          uint8_t const * const p_dev_name,
                                          uint16_t  *           p_dev_name_len,
+                                         uint16_t              cpy_len,
                                          uint8_t * const       p_buf,
                                          uint32_t * const      p_buf_len)
 {
     SER_RSP_ENC_BEGIN(SD_BLE_GAP_DEVICE_NAME_GET);
 
     SER_PUSH_COND(p_dev_name_len, uint16_t_enc);
-
-    if (p_dev_name_len)
-    {
-        SER_PUSH_uint8array(p_dev_name, *p_dev_name_len);
-    }
+    SER_PUSH_len16data(p_dev_name, cpy_len);
 
     SER_RSP_ENC_END;
 }

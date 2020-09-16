@@ -58,7 +58,7 @@
 #include "optiga/optiga_crypt.h"
 #include "nrfx_clock.h"
 #include "optiga_backend_ecc.h"
-#include "optiga_backend_utils.h"
+#include "ecdsa_utils.h"
 
 #include "compiler_abstraction.h"
 
@@ -552,13 +552,12 @@ static void uc_secure_dfu(void)
     };
 
     // Convert signature format
-    uint8_t   sig_rs[100] = { 0 };
-    size_t    sig_rs_len  = sizeof(sig_rs);
+    uint8_t   sig_rs[NRF_CRYPTO_ECDSA_SECP256R1_SIGNATURE_SIZE] = { 0 };
     uint8_t * p_sig_asn   = &sig_asn[2];
     size_t    sig_asn_len = sizeof(sig_asn) - 2;
     //lint -save -e662 (Suspicious cast, Suspicious use of &)
-    nordic_err_code = asn1_to_ecdsa_rs(p_sig_asn, sig_asn_len, sig_rs, &sig_rs_len);
-    DEMO_ERROR_CHECK(nordic_err_code);
+    bool res = asn1_to_ecdsa_rs(p_sig_asn, sig_asn_len, sig_rs, NRF_CRYPTO_ECDSA_SECP256R1_SIGNATURE_SIZE);
+    DEMO_ERROR_CHECK(res ? NRF_SUCCESS : NRF_ERROR_INTERNAL);
 
     optiga_lib_status = optiga_util_write_data(oid, OPTIGA_UTIL_ERASE_AND_WRITE, 0, public_key_cert, sizeof(public_key_cert));
     DEMO_OPTIGA_ERROR_CHECK(optiga_lib_status);
@@ -584,7 +583,7 @@ static void uc_secure_dfu(void)
     // ### VERIFY VIA PUBLIC KEY CERTIFICATE IN OID ###
     // Verify using public contained in certificate in oid slot
     nrf_crypto_ecc_public_key_t pub_key = NRF_CRYPTO_INFINEON_SECP256R1_PUBLIC_KEY_FROM_OID(oid);
-    nordic_err_code = nrf_crypto_ecdsa_verify(NULL, &pub_key, hash, hash_len, sig_rs, sig_rs_len);
+    nordic_err_code = nrf_crypto_ecdsa_verify(NULL, &pub_key, hash, hash_len, sig_rs, NRF_CRYPTO_ECDSA_SECP256R1_SIGNATURE_SIZE);
     DEMO_ERROR_CHECK(nordic_err_code);
     NRF_LOG_INFO("Verify (OID): %s", nordic_err_code == NRF_SUCCESS ? "PASS" : "FAIL");
 
@@ -615,7 +614,7 @@ static void uc_secure_dfu(void)
                                                   &pub_key_raw[27], // hardcoded offset
                                                   NRF_CRYPTO_ECC_SECP256R1_RAW_PUBLIC_KEY_SIZE);
     DEMO_ERROR_CHECK(nordic_err_code);
-    nordic_err_code = nrf_crypto_ecdsa_verify(NULL, &pub_key2, hash, hash_len, sig_rs, sig_rs_len);
+    nordic_err_code = nrf_crypto_ecdsa_verify(NULL, &pub_key2, hash, hash_len, sig_rs, NRF_CRYPTO_ECDSA_SECP256R1_SIGNATURE_SIZE);
     DEMO_ERROR_CHECK(nordic_err_code);
     NRF_LOG_INFO("Verify (EXT): %s", nordic_err_code == NRF_SUCCESS ? "PASS" : "FAIL");
 

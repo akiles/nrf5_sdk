@@ -650,9 +650,9 @@
         </Group>        <Group>
           <GroupName>nRF_Oberon_Crypto</GroupName>
           <Files>            <File>
-              <FileName>oberon_2.0.7.lib</FileName>
+              <FileName>oberon_3.0.1.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\oberon_2.0.7.lib</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\oberon_3.0.1.lib</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Segger_RTT</GroupName>
           <Files>            <File>

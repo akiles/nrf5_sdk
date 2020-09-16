@@ -422,9 +422,8 @@ static bool write_buf_store_in_event(pdb_buffer_record_t * p_write_buffer_record
         }
         else
         {
-            event.evt_id                            = PM_EVT_ERROR_UNEXPECTED;
-            event.params.error_unexpected.error     = err_code;
-            event.params.error_unexpected.fds_error = false;
+            event.evt_id                        = PM_EVT_ERROR_UNEXPECTED;
+            event.params.error_unexpected.error = err_code;
 
             NRF_LOG_ERROR("Some peer data was not properly written to flash. write_buf_store() "\
                           "returned %s for peer_id: %d",

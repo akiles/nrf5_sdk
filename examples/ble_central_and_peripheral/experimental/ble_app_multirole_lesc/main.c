@@ -132,7 +132,9 @@ typedef struct
     ble_gap_addr_t address;
 } conn_peer_t;
 
-
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                            /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_CENTRAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
 BLE_HRS_DEF(m_hrs);                                                         /**< Heart Rate Service instance. */
 BLE_HRS_C_DEF(m_hrs_c);                                                     /**< Structure used to identify the Heart Rate client module. */
 NRF_BLE_GATT_DEF(m_gatt);                                                   /**< GATT module instance. */
@@ -182,6 +184,17 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 {
     app_error_handler(0xDEADBEEF, line_num, p_file_name);
 }
+
+
+/**@brief Function for handling the Heart Rate Service Client.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void hrs_c_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
+}
+
 
 
 /**@brief Function for handling errors from the Connection Parameters module.
@@ -735,7 +748,9 @@ static void hrs_c_init(void)
     ret_code_t       err_code;
     ble_hrs_c_init_t hrs_c_init_obj;
 
-    hrs_c_init_obj.evt_handler = hrs_c_evt_handler;
+    hrs_c_init_obj.evt_handler   = hrs_c_evt_handler;
+    hrs_c_init_obj.error_handler = hrs_c_error_handler;
+    hrs_c_init_obj.p_gatt_queue  = &m_ble_gatt_queue;
 
     err_code = ble_hrs_c_init(&m_hrs_c, &hrs_c_init_obj);
     APP_ERROR_CHECK(err_code);
@@ -1012,7 +1027,14 @@ static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
 /**@brief Function for initializing the database discovery module. */
 static void db_discovery_init(void)
 {
-    ret_code_t err_code = ble_db_discovery_init(db_disc_handler);
+    ble_db_discovery_init_t db_init;
+
+    memset(&db_init, 0, sizeof(db_init));
+
+    db_init.evt_handler =  db_disc_handler;
+    db_init.p_gatt_queue = &m_ble_gatt_queue;
+
+    ret_code_t err_code = ble_db_discovery_init(&db_init);
     APP_ERROR_CHECK(err_code);
 }
 

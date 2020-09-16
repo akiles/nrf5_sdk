@@ -64,8 +64,8 @@ void nrfx_dppi_free(void);
  *
  * @param[out] p_channel Pointer to the DPPI channel number that has been allocated.
  *
- * @retval NRFX_SUCCESS      If the channel was successfully allocated.
- * @retval NRFX_ERROR_NO_MEM If there is no available channel to be used.
+ * @retval NRFX_SUCCESS      The channel was successfully allocated.
+ * @retval NRFX_ERROR_NO_MEM There is no available channel to be used.
  */
 nrfx_err_t nrfx_dppi_channel_alloc(uint8_t * p_channel);
 
@@ -75,8 +75,8 @@ nrfx_err_t nrfx_dppi_channel_alloc(uint8_t * p_channel);
  *
  * @param[in] channel DPPI channel to be freed.
  *
- * @retval NRFX_SUCCESS             If the channel was successfully freed.
- * @retval NRFX_ERROR_INVALID_PARAM If the specified channel is not allocated.
+ * @retval NRFX_SUCCESS             The channel was successfully freed.
+ * @retval NRFX_ERROR_INVALID_PARAM The specified channel is not allocated.
  */
 nrfx_err_t nrfx_dppi_channel_free(uint8_t channel);
 
@@ -85,8 +85,8 @@ nrfx_err_t nrfx_dppi_channel_free(uint8_t channel);
  *
  * @param[in] channel DPPI channel to be enabled.
  *
- * @retval NRFX_SUCCESS             If the channel was successfully enabled.
- * @retval NRFX_ERROR_INVALID_PARAM If the specified channel is not allocated.
+ * @retval NRFX_SUCCESS             The channel was successfully enabled.
+ * @retval NRFX_ERROR_INVALID_PARAM The specified channel is not allocated.
  */
 nrfx_err_t nrfx_dppi_channel_enable(uint8_t channel);
 
@@ -95,8 +95,8 @@ nrfx_err_t nrfx_dppi_channel_enable(uint8_t channel);
  *
  * @param[in] channel DPPI channel to be disabled.
  *
- * @retval NRFX_SUCCESS             If the channel was successfully disabled.
- * @retval NRFX_ERROR_INVALID_PARAM If the specified channel is not allocated.
+ * @retval NRFX_SUCCESS             The channel was successfully disabled.
+ * @retval NRFX_ERROR_INVALID_PARAM The specified channel is not allocated.
  */
 nrfx_err_t nrfx_dppi_channel_disable(uint8_t channel);
 
@@ -106,8 +106,8 @@ nrfx_err_t nrfx_dppi_channel_disable(uint8_t channel);
  *
  * @param[out] p_group Pointer to the DPPI channel group that has been allocated.
  *
- * @retval NRFX_SUCCESS      If the channel group was successfully allocated.
- * @retval NRFX_ERROR_NO_MEM If there is no available channel group to be used.
+ * @retval NRFX_SUCCESS      The channel group was successfully allocated.
+ * @retval NRFX_ERROR_NO_MEM There is no available channel group to be used.
  */
 nrfx_err_t nrfx_dppi_group_alloc(nrf_dppi_channel_group_t * p_group);
 
@@ -117,8 +117,8 @@ nrfx_err_t nrfx_dppi_group_alloc(nrf_dppi_channel_group_t * p_group);
  *
  * @param[in] group DPPI channel group to be freed.
  *
- * @retval NRFX_SUCCESS             If the channel group was successfully freed.
- * @retval NRFX_ERROR_INVALID_PARAM If the specified group is not allocated.
+ * @retval NRFX_SUCCESS             The channel group was successfully freed.
+ * @retval NRFX_ERROR_INVALID_PARAM The specified group is not allocated.
  */
 nrfx_err_t nrfx_dppi_group_free(nrf_dppi_channel_group_t group);
 
@@ -128,8 +128,8 @@ nrfx_err_t nrfx_dppi_group_free(nrf_dppi_channel_group_t group);
  * @param[in] channel DPPI channel to be added.
  * @param[in] group   Channel group in which to include the channel.
  *
- * @retval NRFX_SUCCESS             If the channel was successfully included.
- * @retval NRFX_ERROR_INVALID_PARAM If the specified group or channel is not allocated.
+ * @retval NRFX_SUCCESS             The channel was successfully included.
+ * @retval NRFX_ERROR_INVALID_PARAM The specified group or channel is not allocated.
  */
 nrfx_err_t nrfx_dppi_channel_include_in_group(uint8_t                  channel,
                                               nrf_dppi_channel_group_t group);
@@ -140,8 +140,8 @@ nrfx_err_t nrfx_dppi_channel_include_in_group(uint8_t                  channel,
  * @param[in] channel DPPI channel to be removed.
  * @param[in] group   Channel group from which to remove the channel.
  *
- * @retval NRFX_SUCCESS             If the channel was successfully removed.
- * @retval NRFX_ERROR_INVALID_PARAM If the specified group or channel is not allocated.
+ * @retval NRFX_SUCCESS             The channel was successfully removed.
+ * @retval NRFX_ERROR_INVALID_PARAM The specified group or channel is not allocated.
  */
 nrfx_err_t nrfx_dppi_channel_remove_from_group(uint8_t                  channel,
                                                nrf_dppi_channel_group_t group);
@@ -151,8 +151,8 @@ nrfx_err_t nrfx_dppi_channel_remove_from_group(uint8_t                  channel,
  *
  * @param[in] group Channel group to be cleared.
  *
- * @retval NRFX_SUCCESS             If the group was successfully cleared.
- * @retval NRFX_ERROR_INVALID_PARAM If the specified group is not allocated.
+ * @retval NRFX_SUCCESS             The group was successfully cleared.
+ * @retval NRFX_ERROR_INVALID_PARAM The specified group is not allocated.
  */
 nrfx_err_t nrfx_dppi_group_clear(nrf_dppi_channel_group_t group);
 
@@ -161,8 +161,8 @@ nrfx_err_t nrfx_dppi_group_clear(nrf_dppi_channel_group_t group);
  *
  * @param[in] group Channel group to be enabled.
  *
- * @retval NRFX_SUCCESS             If the group was successfully enabled.
- * @retval NRFX_ERROR_INVALID_PARAM If the specified group is not allocated.
+ * @retval NRFX_SUCCESS             The group was successfully enabled.
+ * @retval NRFX_ERROR_INVALID_PARAM The specified group is not allocated.
  */
 nrfx_err_t nrfx_dppi_group_enable(nrf_dppi_channel_group_t group);
 
@@ -171,8 +171,8 @@ nrfx_err_t nrfx_dppi_group_enable(nrf_dppi_channel_group_t group);
  *
  * @param[in] group Channel group to be disabled.
  *
- * @retval NRFX_SUCCESS             If the group was successfully disabled.
- * @retval NRFX_ERROR_INVALID_PARAM If the specified group is not allocated.
+ * @retval NRFX_SUCCESS             The group was successfully disabled.
+ * @retval NRFX_ERROR_INVALID_PARAM The specified group is not allocated.
  */
 nrfx_err_t nrfx_dppi_group_disable(nrf_dppi_channel_group_t group);
 

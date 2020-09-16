@@ -84,8 +84,6 @@ extern "C" {
 #endif
 
   /** @} */
-  
-#define     NRF_ESB_RETRANSMIT_DELAY_MIN        135
 
 // Hardcoded parameters - change if necessary
 #ifndef NRF_ESB_MAX_PAYLOAD_LENGTH
@@ -143,7 +141,7 @@ STATIC_ASSERT(NRF_ESB_PIPE_COUNT <= 8);
 #define ESB_IRQ_PRIORITY_MSK                    0x03                //!< The mask used to enforce a valid IRQ priority.
 #endif
 
-/** @brief Default address configuration for ESB. 
+/** @brief Default address configuration for ESB.
  *  @details Roughly equal to the nRF24Lxx default (except for the number of pipes, because more pipes are supported). */
 #define NRF_ESB_ADDR_DEFAULT                                                    \
 {                                                                               \
@@ -157,7 +155,7 @@ STATIC_ASSERT(NRF_ESB_PIPE_COUNT <= 8);
 }
 
 
-/** @brief Default radio parameters. 
+/** @brief Default radio parameters.
  *  @details Roughly equal to the nRF24Lxx default parameters (except for CRC, which is set to 16 bit, and protocol, which is set to DPL). */
 #define NRF_ESB_DEFAULT_CONFIG {.protocol               = NRF_ESB_PROTOCOL_ESB_DPL,         \
                                 .mode                   = NRF_ESB_MODE_PTX,                 \
@@ -226,12 +224,12 @@ typedef enum {
 typedef enum {
     NRF_ESB_BITRATE_2MBPS     = RADIO_MODE_MODE_Nrf_2Mbit,      /**< 2 Mb radio mode.                                                */
     NRF_ESB_BITRATE_1MBPS     = RADIO_MODE_MODE_Nrf_1Mbit,      /**< 1 Mb radio mode.                                                */
-#if !( defined(NRF52840_XXAA) || defined(NRF52810_XXAA) || defined(NRF52811_XXAA) )
+#if defined(RADIO_MODE_MODE_Nrf_250Kbit)
     NRF_ESB_BITRATE_250KBPS   = RADIO_MODE_MODE_Nrf_250Kbit,    /**< 250 Kb radio mode.                                              */
 #endif //!( defined(NRF52840_XXAA) || defined(NRF52810_XXAA) || defined(NRF52811_XXAA) )
     NRF_ESB_BITRATE_1MBPS_BLE = RADIO_MODE_MODE_Ble_1Mbit,      /**< 1 Mb radio mode using @e Bluetooth low energy radio parameters. */
-#if defined(NRF52_SERIES)
-    NRF_ESB_BITRATE_2MBPS_BLE = 4                               /**< 2 Mb radio mode using @e Bluetooth low energy radio parameters. */
+#if defined(RADIO_MODE_MODE_Ble_2Mbit)
+    NRF_ESB_BITRATE_2MBPS_BLE = RADIO_MODE_MODE_Ble_2Mbit       /**< 2 Mb radio mode using @e Bluetooth low energy radio parameters. */
 #endif
 } nrf_esb_bitrate_t;
 
@@ -246,9 +244,24 @@ typedef enum {
 
 /**@brief Enhanced ShockBurst radio transmission power modes. */
 typedef enum {
+#if defined(RADIO_TXPOWER_TXPOWER_Pos8dBm)
+    NRF_ESB_TX_POWER_8DBM     = RADIO_TXPOWER_TXPOWER_Pos8dBm,  /**< 8 dBm radio transmit power.   */
+#endif
+#if defined(RADIO_TXPOWER_TXPOWER_Pos7dBm)
+    NRF_ESB_TX_POWER_7DBM     = RADIO_TXPOWER_TXPOWER_Pos7dBm,  /**< 7 dBm radio transmit power.   */
+#endif
+#if defined(RADIO_TXPOWER_TXPOWER_Pos6dBm)
+    NRF_ESB_TX_POWER_6DBM     = RADIO_TXPOWER_TXPOWER_Pos6dBm,  /**< 6 dBm radio transmit power.   */
+#endif
+#if defined(RADIO_TXPOWER_TXPOWER_Pos5dBm)
+    NRF_ESB_TX_POWER_5DBM     = RADIO_TXPOWER_TXPOWER_Pos5dBm,  /**< 5 dBm radio transmit power.   */
+#endif
     NRF_ESB_TX_POWER_4DBM     = RADIO_TXPOWER_TXPOWER_Pos4dBm,  /**< 4 dBm radio transmit power.   */
-#if defined(NRF52_SERIES)
+#if defined(RADIO_TXPOWER_TXPOWER_Pos3dBm)
     NRF_ESB_TX_POWER_3DBM     = RADIO_TXPOWER_TXPOWER_Pos3dBm,  /**< 3 dBm radio transmit power.   */
+#endif
+#if defined(RADIO_TXPOWER_TXPOWER_Pos2dBm)
+    NRF_ESB_TX_POWER_2DBM     = RADIO_TXPOWER_TXPOWER_Pos2dBm,  /**< 2 dBm radio transmit power.   */
 #endif
     NRF_ESB_TX_POWER_0DBM     = RADIO_TXPOWER_TXPOWER_0dBm,     /**< 0 dBm radio transmit power.   */
     NRF_ESB_TX_POWER_NEG4DBM  = RADIO_TXPOWER_TXPOWER_Neg4dBm,  /**< -4 dBm radio transmit power.  */
@@ -616,8 +629,8 @@ uint32_t nrf_esb_set_bitrate(nrf_esb_bitrate_t bitrate);
 /**@brief Function for reusing a packet ID for a specific pipe.
  *
  * The ESB protocol uses a 2-bit sequence number (packet ID) to identify
- * retransmitted packets. By default, the packet ID is incremented for every 
- * uploaded packet. Use this function to prevent this and send two different 
+ * retransmitted packets. By default, the packet ID is incremented for every
+ * uploaded packet. Use this function to prevent this and send two different
  * packets with the same packet ID.
  *
  * @param[in]   pipe                            Pipe.

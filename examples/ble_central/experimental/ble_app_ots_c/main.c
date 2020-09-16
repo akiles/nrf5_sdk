@@ -109,7 +109,10 @@
 NRF_BLE_GATT_DEF(m_gatt);                                                 /**< GATT module instance. */
 BLE_DB_DISCOVERY_DEF(m_db_disc);                                          /**< Database Discovery module instance. */
 NRF_BLE_OTS_C_DEF(m_ots_c);                                               /**< Object transfer service client instance. */
-NRF_BLE_SCAN_DEF(m_scan);                                               /**< Scanning Module instance. */
+NRF_BLE_SCAN_DEF(m_scan);                                                 /**< Scanning module instance. */
+NRF_BLE_GQ_DEF(m_ble_gatt_queue,                                          /**< BLE GATT Queue instance. */
+               NRF_SDH_BLE_CENTRAL_LINK_COUNT,
+               NRF_BLE_GQ_QUEUE_SIZE);
 
 static uint8_t m_object_rx[OBJECT_SIZE] = {0};                            /**< An empty buffer for the data of an object. It is possible to receive the object on the peer side into this buffer. */
 
@@ -176,6 +179,16 @@ static void scan_start(void);
 void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 {
     app_error_handler(0xDEADBEEF, line_num, p_file_name);
+}
+
+
+/**@brief Function for handling the Object Transfer Service Client errors.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void ots_c_service_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
 }
 
 
@@ -417,8 +430,14 @@ void bsp_event_handler(bsp_event_t event)
         {
             ret_code_t err_code;
             err_code = nrf_ble_ots_c_oacp_write_object(&m_ots_c, 0, OBJECT_SIZE, 0);
-            APP_ERROR_CHECK(err_code);
-            NRF_LOG_INFO("Write Object command sent to server Object Action Control Point.");
+            if (err_code == NRF_SUCCESS)
+            {
+                NRF_LOG_INFO("Write Object command sent to server Object Action Control Point.");
+            }
+            else
+            {
+                NRF_LOG_ERROR("Write Object failed with error: %d.", err_code);
+            }
         }
             break;
         case BSP_EVENT_KEY_1:
@@ -426,7 +445,10 @@ void bsp_event_handler(bsp_event_t event)
             ret_code_t err_code;
             NRF_LOG_INFO("Read the size of the selected object.");
             err_code = nrf_ble_ots_c_obj_size_read(&m_ots_c);
-            APP_ERROR_CHECK(err_code);
+            if (err_code != NRF_SUCCESS)
+            {
+                NRF_LOG_ERROR("Read object size failed with error: %d.", err_code);
+            }
         }break;
 
         case BSP_EVENT_KEY_2:
@@ -786,7 +808,10 @@ static void ots_c_init(void)
     fill_current_object();
 
     nrf_ble_ots_c_init_t init;
-    init.evt_handler = ots_c_evt_handler;
+
+    init.evt_handler  = ots_c_evt_handler;
+    init.err_handler  = ots_c_service_handler;
+    init.p_gatt_queue = &m_ble_gatt_queue;
 
     ret_code_t err_code = nrf_ble_ots_c_init(&m_ots_c, &init);
     APP_ERROR_CHECK(err_code);
@@ -847,7 +872,14 @@ static void delete_bonds(void)
  */
 static void db_discovery_init(void)
 {
-    ret_code_t err_code = ble_db_discovery_init(db_disc_handler);
+    ble_db_discovery_init_t db_init;
+
+    memset(&db_init, 0, sizeof(ble_db_discovery_init_t));
+
+    db_init.evt_handler  = db_disc_handler;
+    db_init.p_gatt_queue = &m_ble_gatt_queue;
+
+    ret_code_t err_code = ble_db_discovery_init(&db_init);
     APP_ERROR_CHECK(err_code);
 }
 

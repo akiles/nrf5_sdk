@@ -37,7 +37,6 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "optiga/pal/pal_os_event.h"
-#include "optiga/pal/pal_os_timer.h"
 #include "nrf_rtc.h"
 #include "nrf_drv_rtc.h"
 #include "nrf_delay.h"
@@ -100,6 +99,7 @@ static void ifx_rtc_handler(nrf_drv_rtc_int_type_t int_type)
             timer_elapsed = true;
             break;
         default:
+            // Do nothing
             break;
     }
 }
@@ -125,6 +125,20 @@ void pal_os_event_init()
     m_rtc2_is_initialized = true;
 }
 
+/**
+* Platform specific event call back registration function to trigger once when timer expires.
+* <br>
+*
+* <b>API Details:</b>
+*         This function registers the callback function supplied by the caller.<br>
+*         It triggers a timer with the supplied time interval in microseconds.<br>
+*         Once the timer expires, the registered callback function gets called.<br>
+*
+* \param[in] callback              Callback function pointer
+* \param[in] callback_args         Callback arguments
+* \param[in] time_us               time in micro seconds to trigger the call back
+*
+*/
 void pal_os_event_register_callback_oneshot(register_callback callback,
                                             void* callback_args,
                                             uint32_t time_us)
@@ -150,11 +164,23 @@ void pal_os_event_register_callback_oneshot(register_callback callback,
     APP_ERROR_CHECK(nrf_drv_rtc_cc_set(&rtc2, NRF_DRV_RTC_INT_COMPARE0, future_ticks, true));
 }
 
+/**
+* Get the current time in milliseconds<br>
+*
+*
+* \retval  uint32_t time in milliseconds
+*/
 uint32_t pal_os_timer_get_time_in_milliseconds(void)
 {
     return nrf_drv_rtc_counter_get(&rtc2)*1000/RTC_TICK_FREQ;
 }
 
+/**
+* Function to wait or delay until the given milliseconds time
+*
+* \param[in] milliseconds Delay value in milliseconds
+*
+*/
 void pal_os_timer_delay_in_milliseconds(uint16_t milliseconds)
 {
     timer_elapsed = false;

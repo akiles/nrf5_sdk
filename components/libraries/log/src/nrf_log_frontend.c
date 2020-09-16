@@ -555,7 +555,15 @@ static inline void std_n(uint32_t           severity_mid,
     }
     if (m_log_data.autoflush)
     {
+#if NRF_LOG_NON_DEFFERED_CRITICAL_REGION_ENABLED
+        CRITICAL_REGION_ENTER();
+#endif // NRF_LOG_NON_DEFFERED_CRITICAL_REGION_ENABLED
+
         NRF_LOG_FLUSH();
+
+#if NRF_LOG_NON_DEFFERED_CRITICAL_REGION_ENABLED
+        CRITICAL_REGION_EXIT();
+#endif // NRF_LOG_NON_DEFFERED_CRITICAL_REGION_ENABLED
     }
 
 }
@@ -681,7 +689,15 @@ void nrf_log_frontend_hexdump(uint32_t           severity_mid,
 
     if (m_log_data.autoflush)
     {
+#if NRF_LOG_NON_DEFFERED_CRITICAL_REGION_ENABLED
+        CRITICAL_REGION_ENTER();
+#endif // NRF_LOG_NON_DEFFERED_CRITICAL_REGION_ENABLED
+
         NRF_LOG_FLUSH();
+
+#if NRF_LOG_NON_DEFFERED_CRITICAL_REGION_ENABLED
+        CRITICAL_REGION_EXIT();
+#endif // NRF_LOG_NON_DEFFERED_CRITICAL_REGION_ENABLED
     }
 }
 
@@ -998,7 +1014,7 @@ ret_code_t nrf_log_config_store(void)
             }
     };
     ret_code_t ret = fds_record_find(LOG_CONFIG_FILE_ID, LOG_CONFIG_RECORD_ID, &desc, &token);
-    if (ret == FDS_SUCCESS)
+    if (ret == NRF_SUCCESS)
     {
         ret = fds_record_update(&desc, &record);
         NRF_LOG_INFO("Logger configuration file updated with result:%d", ret);
@@ -1021,7 +1037,7 @@ ret_code_t nrf_log_config_load(void)
     fds_find_token_t  token = {0};
 
     ret_code_t ret = fds_record_find(LOG_CONFIG_FILE_ID, LOG_CONFIG_RECORD_ID, &desc, &token);
-    if (ret == FDS_SUCCESS)
+    if (ret == NRF_SUCCESS)
     {
         fds_flash_record_t record = {0};
         ret = fds_record_open(&desc, &record);
@@ -1047,7 +1063,7 @@ ret_code_t nrf_log_config_load(void)
 }
 #endif //LOG_CONFIG_LOAD_STORE_ENABLED
 
-#if NRF_LOG_CLI_CMDS
+#if NRF_LOG_CLI_CMDS && NRF_CLI_ENABLED
 #include "nrf_cli.h"
 
 typedef void (*nrf_log_cli_backend_cmd_t)(nrf_cli_t const *         p_cli,

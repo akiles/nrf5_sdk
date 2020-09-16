@@ -52,6 +52,10 @@
 #include <sdk_errors.h>
 #include "nrf_section_iter.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**@brief Power management shutdown types. */
 typedef enum
 {
@@ -145,6 +149,10 @@ void nrf_pwr_mgmt_feed(void);
  * @details All callbacks will be executed prior to shutdown.
  */
 void nrf_pwr_mgmt_shutdown(nrf_pwr_mgmt_shutdown_t shutdown_type);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NRF_PWR_MGMT_H__
 /** @} */

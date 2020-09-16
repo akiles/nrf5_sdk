@@ -46,7 +46,7 @@
  *
  * @details This module implements parts of the Continuous Glucose Monitoring that relate to the
  *          Specific Operations Control Point. Events are propagated to this module from @ref ble_cgms
- *          using @ref cgms_socp_on_rw_auth_req and @ref cgms_socp_on_tx_complete.
+ *          using @ref cgms_socp_on_rw_auth_req.
  *
  */
 
@@ -91,12 +91,6 @@ ret_code_t cgms_socp_char_add(nrf_ble_cgms_t * p_cgms);
 void cgms_socp_on_rw_auth_req(nrf_ble_cgms_t                             * p_cgms,
                               ble_gatts_evt_rw_authorize_request_t const * p_auth_req);
 
-
-/**@brief Function for handling @ref BLE_GATTS_EVT_HVN_TX_COMPLETE events.
- *
- * @param[in] p_cgms Instance of the CGM Service.
- */
-void cgms_socp_on_tx_complete(nrf_ble_cgms_t * p_cgms);
 
 #ifdef __cplusplus
 }

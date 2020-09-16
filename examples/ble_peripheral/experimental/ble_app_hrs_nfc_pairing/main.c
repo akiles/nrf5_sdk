@@ -128,7 +128,6 @@ NRF_BLE_QWR_DEF(m_qwr);                                     /**< Context for the
 
 static ble_advertising_t m_advertising;                     /**< Advertising module instance. */
 NRF_SDH_BLE_OBSERVER(m_adv_ble_obs, BLE_ADV_BLE_OBSERVER_PRIO, ble_advertising_on_ble_evt, &m_advertising);
-NRF_SDH_SOC_OBSERVER(m_adv_soc_obs, BLE_ADV_SOC_OBSERVER_PRIO, ble_advertising_on_sys_evt, &m_advertising);
 
 static bool m_rr_interval_enabled = true;                   /**< Flag for enabling sending RR interval measurements. */
 
@@ -645,7 +644,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             sleep_mode_enter();
             break;
 
-#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -657,7 +655,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
             APP_ERROR_CHECK(err_code);
         } break;
-#endif
 
         case BLE_GATTC_EVT_TIMEOUT:
             // Disconnect on GATT Client timeout event.

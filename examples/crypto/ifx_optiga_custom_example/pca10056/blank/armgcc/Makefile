@@ -38,6 +38,7 @@ SRC_FILES += \
   $(SDK_ROOT)/external/infineon/optiga/cmd/CommandLib.c \
   $(SDK_ROOT)/external/infineon/optiga/common/Logger.c \
   $(SDK_ROOT)/external/infineon/optiga/common/Util.c \
+  $(SDK_ROOT)/external/infineon/examples/ecdsa_utils/ecdsa_utils.c \
   $(SDK_ROOT)/external/infineon/optiga/comms/ifx_i2c/ifx_i2c.c \
   $(SDK_ROOT)/external/infineon/optiga/comms/ifx_i2c/ifx_i2c_config.c \
   $(SDK_ROOT)/external/infineon/optiga/comms/ifx_i2c/ifx_i2c_data_link_layer.c \
@@ -88,7 +89,6 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/crypto/backend/optiga/optiga_backend_ecdsa.c \
   $(SDK_ROOT)/components/libraries/crypto/backend/optiga/optiga_backend_init.c \
   $(SDK_ROOT)/components/libraries/crypto/backend/optiga/optiga_backend_rng.c \
-  $(SDK_ROOT)/components/libraries/crypto/backend/optiga/optiga_backend_utils.c \
   $(SDK_ROOT)/components/libraries/crypto/backend/oberon/oberon_backend_chacha_poly_aead.c \
   $(SDK_ROOT)/components/libraries/crypto/backend/oberon/oberon_backend_ecc.c \
   $(SDK_ROOT)/components/libraries/crypto/backend/oberon/oberon_backend_ecdh.c \
@@ -130,6 +130,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/delay \
   $(SDK_ROOT)/external/nrf_oberon/include \
   $(SDK_ROOT)/components/libraries/stack_info \
+  $(SDK_ROOT)/external/infineon/examples/ecdsa_utils \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
   $(SDK_ROOT)/components/libraries/atomic \
   $(SDK_ROOT)/components/boards \
@@ -146,7 +147,7 @@ INC_FOLDERS += \
 
 # Libraries common to all targets
 LIB_FILES += \
-  $(SDK_ROOT)/external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_2.0.7.a \
+  $(SDK_ROOT)/external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_3.0.1.a \
 
 # Optimization flags
 OPT = -O3 -g3
@@ -173,7 +174,6 @@ CFLAGS += -fno-builtin -fshort-enums
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
-
 # Assembler flags common to all targets
 ASMFLAGS += -g3
 ASMFLAGS += -mcpu=cortex-m4

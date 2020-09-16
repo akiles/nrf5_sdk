@@ -98,6 +98,17 @@ void nrf_dfu_settings_backup(nrf_dfu_flash_callback_t callback);
 ret_code_t nrf_dfu_settings_write_and_backup(nrf_dfu_flash_callback_t callback);
 
 
+/**@brief   Function for initializing the DFU settings structure.
+ *
+ * Initializes the RAM structure from the flash contents.
+ * This function is called as part of @ref nrf_dfu_settings_init.
+ *
+ * @retval  NRF_SUCCESS         If the initialization was successful.
+ * @retval  NRF_ERROR_INTERNAL  If a flash error occurred.
+ */
+void nrf_dfu_settings_reinit(void);
+
+
 /**@brief   Function for initializing the DFU settings module.
  *
  * @retval  NRF_SUCCESS         If the initialization was successful.

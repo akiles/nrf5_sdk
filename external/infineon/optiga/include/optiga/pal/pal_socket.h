@@ -25,7 +25,6 @@
 * \file
 *
 * \brief    This file implements the prototype declarations of pal socket functionalities
-*
 * \addtogroup  grPAL
 * @{
 */

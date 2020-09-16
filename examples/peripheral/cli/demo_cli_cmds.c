@@ -411,11 +411,44 @@ static void cmd_stack_overflow(nrf_cli_t const * p_cli, size_t argc, char **argv
     cli_example_stack_overflow_force();
 }
 
+#if NRF_FPRINTF_DOUBLE_ENABLED
+
+/* Variable created to avoid compiler warnings due to division by 0. */
+static double zero = 0.0;
+
+static void cmd_float_print(nrf_cli_t const * p_cli, size_t argc, char **argv)
+{
+    nrf_cli_print(p_cli, "%.10f", 0.0000000002);
+    nrf_cli_print(p_cli, "%.10f", 153.0000000002);
+    nrf_cli_print(p_cli, "%f", 0.0);
+    nrf_cli_print(p_cli, "%f", 1.0);
+    nrf_cli_print(p_cli, "%f", 0.0/zero);
+    nrf_cli_print(p_cli, "%F", -0.0/zero);
+    nrf_cli_print(p_cli, "%f", 1.0/zero);
+    nrf_cli_print(p_cli, "%F", -1.0/zero);
+    nrf_cli_print(p_cli, "%f", 0.123123123);
+    nrf_cli_print(p_cli, "%f", 0.1111118);
+    nrf_cli_print(p_cli, "%f", 3.14);
+    nrf_cli_print(p_cli, "%f", -3.14);
+    nrf_cli_print(p_cli, "%f", -210.25);
+    nrf_cli_print(p_cli, "%f", 2.828);
+    nrf_cli_print(p_cli, "%10.2f", 132.123);
+    nrf_cli_print(p_cli, "%+10.2f", 132.123);
+    nrf_cli_print(p_cli, "%010.2f", 132.123);
+    nrf_cli_print(p_cli, "%-10.2f", 132.123);
+    nrf_cli_print(p_cli, "%+-10.2f", 132.123);
+    nrf_cli_print(p_cli, "%10.2f", 0.0/zero);
+}
+#endif // NRF_FPRINTF_DOUBLE_ENABLED
 
 /**
  * @brief Command set array
  * */
 NRF_CLI_CMD_REGISTER(nordic, NULL, "Print Nordic Semiconductor logo.", cmd_nordic);
+
+#if NRF_FPRINTF_DOUBLE_ENABLED
+NRF_CLI_CMD_REGISTER(float_print, NULL, "Print float values.", cmd_float_print);
+#endif // NRF_FPRINTF_DOUBLE_ENABLED
 
 NRF_CLI_CREATE_STATIC_SUBCMD_SET(m_sub_print)
 {

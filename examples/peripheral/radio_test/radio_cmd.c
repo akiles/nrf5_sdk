@@ -41,7 +41,7 @@
 #include "nrf_cli.h"
 #include "radio_test.h"
 
-#ifdef NRF52832_XXAA
+#if defined(NRF52832_XXAA) || defined(NRF52833_XXAA)
     #define TOGGLE_DCDC_HELP \
     "Toggle DCDC state <state>, if state = 1 then DC/DC converter is enabled"
 #else
@@ -72,7 +72,7 @@ static bool     m_sweep         = false;                      /**< If true, RX o
  static void radio_print_rx(nrf_cli_t const * p_cli, uint8_t mode)
 {
     size_t size;
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
     if (mode == RADIO_MODE_MODE_Ieee802154_250Kbit)
     {
         size = IEEE_MAX_PAYLOAD_LEN;
@@ -83,7 +83,7 @@ static bool     m_sweep         = false;                      /**< If true, RX o
     }
 #else
     size = sizeof(g_rx_packet);
-#endif // NRF52840_XXAA
+#endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
 
     nrf_cli_fprintf(p_cli, NRF_CLI_INFO, "Received payload:\r\n");
 
@@ -94,7 +94,7 @@ static bool     m_sweep         = false;                      /**< If true, RX o
 };
 
 
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
 static void ieee_channel_check(nrf_cli_t const * p_cli, uint8_t channel)
 {
     if (m_mode == RADIO_MODE_MODE_Ieee802154_250Kbit)
@@ -113,7 +113,7 @@ static void ieee_channel_check(nrf_cli_t const * p_cli, uint8_t channel)
 
     }
 }
-#endif // NRF52840_XXAA
+#endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
 
 
 static void cmd_start_channel_set(nrf_cli_t const * p_cli, size_t argc, char ** argv)
@@ -253,9 +253,9 @@ static void cmd_tx_carrier_start(nrf_cli_t const * p_cli, size_t argc, char ** a
         m_sweep = false;
     }
 
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
     ieee_channel_check(p_cli, m_channel_start);
-#endif //NRF52840_XXAA 
+#endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
     radio_unmodulated_tx_carrier(m_txpower, m_mode, m_channel_start);
 
     nrf_cli_fprintf(p_cli, NRF_CLI_INFO, "Start the TX carrier.\r\n");
@@ -276,9 +276,9 @@ static void cmd_tx_modulated_carrier_start(nrf_cli_t const * p_cli, size_t argc,
         m_sweep = false;
     }
 
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
     ieee_channel_check(p_cli, m_channel_start);
-#endif //NRF52840_XXAA 
+#endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA) 
     radio_modulated_tx_carrier(m_txpower, m_mode, m_channel_start);
 
     nrf_cli_fprintf(p_cli, NRF_CLI_INFO, "Start the modulated TX carrier.\r\n");
@@ -311,9 +311,9 @@ static void cmd_duty_cycle_set(nrf_cli_t const * p_cli, size_t argc, char ** arg
 
     m_duty_cycle = duty_cycle;
 
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
     ieee_channel_check(p_cli, m_channel_start);
-#endif //NRF52840_XXAA 
+#endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA) 
     radio_modulated_tx_carrier_duty_cycle(m_txpower, m_mode, m_channel_start, (uint8_t)m_duty_cycle);
 }
 
@@ -338,7 +338,7 @@ static void cmd_output_power_set(nrf_cli_t const * p_cli, size_t argc, char ** a
 }
 
 
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
 static void cmd_pos8dbm(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 {
     m_txpower = RADIO_TXPOWER_TXPOWER_Pos8dBm;
@@ -389,7 +389,7 @@ static void cmd_pos2dbm(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 }
 
 
-#endif // NRF52840_XXAA
+#endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
 
 
 static void cmd_pos3dbm(nrf_cli_t const * p_cli, size_t argc, char ** argv)
@@ -562,7 +562,7 @@ static void cmd_print(nrf_cli_t const * p_cli, size_t argc, char ** argv)
                             STRINGIFY_(RADIO_MODE_MODE_Ble_2Mbit));
             break;
 
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
         case RADIO_MODE_MODE_Ble_LR125Kbit:
             nrf_cli_fprintf(p_cli, 
                             NRF_CLI_INFO, 
@@ -584,7 +584,7 @@ static void cmd_print(nrf_cli_t const * p_cli, size_t argc, char ** argv)
                             STRINGIFY_(RADIO_MODE_MODE_Ieee802154_250Kbit));
             break;
 
-#endif // NRF52840_XXAA
+#endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
         default:
             nrf_cli_fprintf(p_cli, 
                             NRF_CLI_INFO, 
@@ -595,7 +595,7 @@ static void cmd_print(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
     switch (m_txpower)
     {
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
         case RADIO_TXPOWER_TXPOWER_Pos8dBm:
             nrf_cli_fprintf(p_cli, 
                             NRF_CLI_INFO, 
@@ -631,7 +631,7 @@ static void cmd_print(nrf_cli_t const * p_cli, size_t argc, char ** argv)
                             STRINGIFY_(RADIO_TXPOWER_TXPOWER_Pos2dBm));
             break;
 
-#endif // NRF52840_XXAA
+#endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
         case RADIO_TXPOWER_TXPOWER_Pos4dBm:
             nrf_cli_fprintf(p_cli, 
                             NRF_CLI_INFO, 
@@ -788,9 +788,9 @@ static void cmd_rx_start(nrf_cli_t const * p_cli, size_t argc, char ** argv)
         m_sweep = false;
     }
 
- #ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
     ieee_channel_check(p_cli, m_channel_start);
-#endif //NRF52840_XXAA 
+#endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA) 
 
     memset(g_rx_packet, 0, sizeof(g_rx_packet));
 
@@ -837,7 +837,7 @@ static void cmd_ble_2mbit(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 }
 
 
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
 static void cmd_ble_lr125kbit(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 {
     m_mode = RADIO_MODE_MODE_Ble_LR125Kbit;
@@ -868,7 +868,7 @@ static void cmd_ble_ieee(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 }
 
 
-#endif // NRF52840_XXAA
+#endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
 
 
 static void cmd_pattern_random(nrf_cli_t const * p_cli, size_t argc, char ** argv)
@@ -966,7 +966,7 @@ NRF_CLI_CREATE_STATIC_SUBCMD_SET(m_sub_data_rate)
     NRF_CLI_CMD(ble_1Mbit, NULL, "1 Mbit/s Bluetooth Low Energy", cmd_ble_1mbit),
     NRF_CLI_CMD(ble_2Mbit, NULL, "2 Mbit/s Bluetooth Low Energy", cmd_ble_2mbit),
 
-    #ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
     NRF_CLI_CMD(ble_lr250Kbit,
                 NULL,
                 "Long range 125 kbit/s TX, 125 kbit/s and 500 kbit/s RX",
@@ -976,7 +976,7 @@ NRF_CLI_CREATE_STATIC_SUBCMD_SET(m_sub_data_rate)
                 "Long range 500 kbit/s TX, 125 kbit/s and 500 kbit/s RX",
                 cmd_ble_lr500kbit),
     NRF_CLI_CMD(ieee802154_250Kbit, NULL, "IEEE 802.15.4-2006 250 kbit/s", cmd_ble_ieee),
-    #endif // NRF52840_XXAA
+    #endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
 
     NRF_CLI_SUBCMD_SET_END
 };
@@ -984,23 +984,23 @@ NRF_CLI_CREATE_STATIC_SUBCMD_SET(m_sub_data_rate)
 
 NRF_CLI_CREATE_STATIC_SUBCMD_SET(m_sub_output_power)
 {
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
     NRF_CLI_CMD(pos8dBm, NULL, "TX power: +8 dBm", cmd_pos8dbm),
     NRF_CLI_CMD(pos7dBm, NULL, "TX power: +7 dBm", cmd_pos7dbm),
     NRF_CLI_CMD(pos6dBm, NULL, "TX power: +6 dBm", cmd_pos6dbm),
     NRF_CLI_CMD(pos5dBm, NULL, "TX power: +5 dBm", cmd_pos5dbm),
     NRF_CLI_CMD(pos2dBm, NULL, "TX power: +2 dBm", cmd_pos2dbm),
-#endif // NRF52840_XXAA
+#endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
     NRF_CLI_CMD(pos3dBm, NULL, "TX power: +3 dBm", cmd_pos3dbm),
     NRF_CLI_CMD(pos4dBm, NULL, "TX power: +4 dBm", cmd_pos4dbm),
     NRF_CLI_CMD(pos0dBm, NULL, "TX power: 0 dBm", cmd_pos0dbm),
     NRF_CLI_CMD(neg4dBm, NULL, "TX power: -4 dBm", cmd_neg4dbm),
-    NRF_CLI_CMD(neg8dbm, NULL, "TX power: -8 dBm", cmd_neg8dbm),
-    NRF_CLI_CMD(neg12dbm, NULL, "TX power: -12 dBm", cmd_neg12dbm),
-    NRF_CLI_CMD(neg16dbm, NULL, "TX power: -16 dBm", cmd_neg16dbm),
-    NRF_CLI_CMD(neg20dbm, NULL, "TX power: -20 dBm", cmd_neg20dbm),
-    NRF_CLI_CMD(neg30dbm, NULL, "TX power: -30 dBm", cmd_neg30dbm),
-    NRF_CLI_CMD(neg40dbm, NULL, "TX power: -40 dBm", cmd_neg40dbm),
+    NRF_CLI_CMD(neg8dBm, NULL, "TX power: -8 dBm", cmd_neg8dbm),
+    NRF_CLI_CMD(neg12dBm, NULL, "TX power: -12 dBm", cmd_neg12dbm),
+    NRF_CLI_CMD(neg16dBm, NULL, "TX power: -16 dBm", cmd_neg16dbm),
+    NRF_CLI_CMD(neg20dBm, NULL, "TX power: -20 dBm", cmd_neg20dbm),
+    NRF_CLI_CMD(neg30dBm, NULL, "TX power: -30 dBm", cmd_neg30dbm),
+    NRF_CLI_CMD(neg40dBm, NULL, "TX power: -40 dBm", cmd_neg40dbm),
     NRF_CLI_SUBCMD_SET_END
 };
 

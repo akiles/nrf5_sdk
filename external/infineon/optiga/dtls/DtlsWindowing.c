@@ -49,12 +49,12 @@
  * Return status as #OCP_RL_WINDOW_IGNORE if record is already received or record sequence number is less then lower bound of window.<br>
  * Under some erroneous conditions, error codes from Record Layer can also be returned.<br>
  *
- * \param[in]   PpsWindow   Pointer to the structure that contains details required for windowing like
- *                          record sequence number, lower and higher boundaries.
+ * \param[in]	PpsWindow	Pointer to the structure that contains details required for windowing like
+ *							record sequence number, lower and higher boundaries.
  *
- * \retval      OCP_RL_WINDOW_UPDATED       Valid record is received and window is updated.
- * \retval      OCP_RL_WINDOW_MOVED         Valid record is received and window is updated and moved.
- * \retval      OCP_RL_WINDOW_IGNORE        Failure in execution and record already received.
+ * \retval 		OCP_RL_WINDOW_UPDATED	    Valid record is received and window is updated.
+ * \retval		OCP_RL_WINDOW_MOVED		    Valid record is received and window is updated and moved.
+ * \retval		OCP_RL_WINDOW_IGNORE		Failure in execution and record already received.
  *
  */
 int32_t DtlsCheckReplay(sWindow_d *PpsWindow)

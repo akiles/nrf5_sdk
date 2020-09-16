@@ -137,7 +137,7 @@ typedef void (*app_timer_timeout_handler_t)(void * p_context);
 typedef struct
 {
     nrf_sortlist_item_t         list_item;     /**< Token used by sortlist. */
-    volatile uint32_t           end_val;       /**< RTC counter value when timer expires. */
+    uint64_t                    end_val;       /**< RTC counter value when timer expires. */
     uint32_t                    repeat_period; /**< Repeat period (0 if single shot mode). */
     app_timer_timeout_handler_t handler;       /**< User handler. */
     void *                      p_context;     /**< User context. */

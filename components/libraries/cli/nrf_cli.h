@@ -150,7 +150,7 @@ struct nrf_cli_static_entry
     NRF_SECTION_ITEM_REGISTER(cli_command,                              \
                               nrf_cli_cmd_entry_t const CONCAT_3(nrf_cli_, p_syntax, _const)) = { \
                                 .is_dynamic = false,                    \
-                                .u.p_static = &CONCAT_3(nrf_cli_, p_syntax, _raw) \
+                                .u = {.p_static = &CONCAT_3(nrf_cli_, p_syntax, _raw)} \
     }; \
     NRF_SECTION_ITEM_REGISTER(cli_sorted_cmd_ptrs, char const * CONCAT_2(p_syntax, _str_ptr))
 
@@ -164,7 +164,7 @@ struct nrf_cli_static_entry
     static nrf_cli_static_entry_t const CONCAT_2(name, _raw)[]; \
     static nrf_cli_cmd_entry_t const name = {                   \
         .is_dynamic = false,                                    \
-        .u.p_static = CONCAT_2(name, _raw)                      \
+        .u = {.p_static = CONCAT_2(name, _raw) }                \
     };                                                          \
     static nrf_cli_static_entry_t const CONCAT_2(name, _raw)[] = /*lint -restore*/
 
@@ -184,8 +184,28 @@ struct nrf_cli_static_entry
     /*lint -save -e19*/                         \
     static nrf_cli_cmd_entry_t const name = {   \
         .is_dynamic  = true,                    \
-        .u.p_dynamic_get = p_get                \
+        .u = { .p_dynamic_get = p_get }         \
 }; /*lint -restore*/
+
+/** @brief Macro for creating subcommands when C++ compiler is used.
+ *
+ * Example usage:
+ * @code
+ * NRF_CLI_CPP_CREATE_STATIC_SUBCMD_SET(cmd_syntax,
+ * NRF_CLI_CMD(abc, ...),
+ * NRF_CLI_CMD(def, ...),
+ * NRF_CLI_SUBCMD_SET_END
+ * );
+ * @endcode
+ */
+#define NRF_CLI_CPP_CREATE_STATIC_SUBCMD_SET(name, ...)             \
+    static nrf_cli_static_entry_t const CONCAT_2(name, _raw)[] = {  \
+        __VA_ARGS__                                                 \
+    };                                                              \
+    static nrf_cli_cmd_entry_t const name = {                       \
+        .is_dynamic  = false,                                       \
+        .u = { .p_static = CONCAT_2(name, _raw) }                   \
+    }
 
 /**
  * @brief Initializes a CLI command (@ref nrf_cli_static_entry).
@@ -197,8 +217,8 @@ struct nrf_cli_static_entry
  */
 #define NRF_CLI_CMD(_p_syntax, _p_subcmd, _p_help, _p_handler) { \
     .p_syntax = (const char *)  STRINGIFY(_p_syntax), \
-    .p_subcmd =                 _p_subcmd,  \
     .p_help  = (const char *)   _p_help,    \
+    .p_subcmd =                 _p_subcmd,  \
     .handler =                  _p_handler  \
 }
 

@@ -40,7 +40,6 @@ CFLAGS += -fno-builtin -fshort-enums -fshort-wchar -Wno-unused-function
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
-
 # Assembler flags common to all targets
 ASMFLAGS += -g2
 ASMFLAGS += -mcpu=cortex-m0

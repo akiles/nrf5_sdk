@@ -45,10 +45,10 @@
  * @brief    Nordic UART Service Client module.
  *
  * @details  This module contains the APIs and types exposed by the Nordic UART Service Client
- *           module. These APIs and types can be used by the application to perform discovery of
- *           the Nordic UART Service at the peer and interact with it.
+ *           module. The application can use these APIs and types to perform the discovery of
+ *           the Nordic UART Service at the peer and to interact with it.
  *
- * @note    The application must register this module as BLE event observer using the
+ * @note    The application must register this module as the BLE event observer by using the
  *          NRF_SDH_BLE_OBSERVER macro. Example:
  *          @code
  *              ble_nus_c_t instance;
@@ -67,6 +67,8 @@
 #include "ble.h"
 #include "ble_gatt.h"
 #include "ble_db_discovery.h"
+#include "ble_srv_common.h"
+#include "nrf_ble_gq.h"
 #include "nrf_sdh_ble.h"
 
 #include "sdk_config.h"
@@ -98,7 +100,7 @@ NRF_SDH_BLE_OBSERVERS(_name ## _obs,                     \
                       BLE_NUS_C_BLE_OBSERVER_PRIO,       \
                       ble_nus_c_on_ble_evt, &_name, _cnt)
 
-#define NUS_BASE_UUID                   {{0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0x00, 0x00, 0x40, 0x6E}} /**< Used vendor specific UUID. */
+#define NUS_BASE_UUID                   {{0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 0x93, 0xF3, 0xA3, 0xB5, 0x00, 0x00, 0x40, 0x6E}} /**< Used vendor-specific UUID. */
 
 #define BLE_UUID_NUS_SERVICE            0x0001                      /**< The UUID of the Nordic UART Service. */
 #define BLE_UUID_NUS_RX_CHARACTERISTIC  0x0002                      /**< The UUID of the RX Characteristic. */
@@ -119,17 +121,17 @@ NRF_SDH_BLE_OBSERVERS(_name ## _obs,                     \
 /**@brief NUS Client event type. */
 typedef enum
 {
-    BLE_NUS_C_EVT_DISCOVERY_COMPLETE,   /**< Event indicating that the NUS service and its characteristics was found. */
-    BLE_NUS_C_EVT_NUS_TX_EVT,           /**< Event indicating that the central has received something from a peer. */
-    BLE_NUS_C_EVT_DISCONNECTED          /**< Event indicating that the NUS server has disconnected. */
+    BLE_NUS_C_EVT_DISCOVERY_COMPLETE,   /**< Event indicating that the NUS service and its characteristics were found. */
+    BLE_NUS_C_EVT_NUS_TX_EVT,           /**< Event indicating that the central received something from a peer. */
+    BLE_NUS_C_EVT_DISCONNECTED          /**< Event indicating that the NUS server disconnected. */
 } ble_nus_c_evt_type_t;
 
 /**@brief Handles on the connected peer device needed to interact with it. */
 typedef struct
 {
-    uint16_t nus_tx_handle;      /**< Handle of the NUS TX characteristic as provided by a discovery. */
-    uint16_t nus_tx_cccd_handle; /**< Handle of the CCCD of the NUS TX characteristic as provided by a discovery. */
-    uint16_t nus_rx_handle;      /**< Handle of the NUS RX characteristic as provided by a discovery. */
+    uint16_t nus_tx_handle;      /**< Handle of the NUS TX characteristic, as provided by a discovery. */
+    uint16_t nus_tx_cccd_handle; /**< Handle of the CCCD of the NUS TX characteristic, as provided by a discovery. */
+    uint16_t nus_rx_handle;      /**< Handle of the NUS RX characteristic, as provided by a discovery. */
 } ble_nus_c_handles_t;
 
 /**@brief Structure containing the NUS event data received from the peer. */
@@ -140,7 +142,7 @@ typedef struct
     uint16_t             max_data_len;
     uint8_t            * p_data;
     uint16_t             data_len;
-    ble_nus_c_handles_t  handles;     /**< Handles on which the Nordic Uart service characteristics was discovered on the peer device. This will be filled if the evt_type is @ref BLE_NUS_C_EVT_DISCOVERY_COMPLETE.*/
+    ble_nus_c_handles_t  handles;     /**< Handles on which the Nordic UART service characteristics were discovered on the peer device. This is filled if the evt_type is @ref BLE_NUS_C_EVT_DISCOVERY_COMPLETE.*/
 } ble_nus_c_evt_t;
 
 // Forward declaration of the ble_nus_t type.
@@ -148,7 +150,7 @@ typedef struct ble_nus_c_s ble_nus_c_t;
 
 /**@brief   Event handler type.
  *
- * @details This is the type of the event handler that should be provided by the application
+ * @details This is the type of the event handler that is to be provided by the application
  *          of this module to receive events.
  */
 typedef void (* ble_nus_c_evt_handler_t)(ble_nus_c_t * p_ble_nus_c, ble_nus_c_evt_t const * p_evt);
@@ -156,48 +158,51 @@ typedef void (* ble_nus_c_evt_handler_t)(ble_nus_c_t * p_ble_nus_c, ble_nus_c_ev
 /**@brief NUS Client structure. */
 struct ble_nus_c_s
 {
-    uint8_t                 uuid_type;      /**< UUID type. */
-    uint16_t                conn_handle;    /**< Handle of the current connection. Set with @ref ble_nus_c_handles_assign when connected. */
-    ble_nus_c_handles_t     handles;        /**< Handles on the connected peer device needed to interact with it. */
-    ble_nus_c_evt_handler_t evt_handler;    /**< Application event handler to be called when there is an event related to the NUS. */
+    uint8_t                   uuid_type;      /**< UUID type. */
+    uint16_t                  conn_handle;    /**< Handle of the current connection. Set with @ref ble_nus_c_handles_assign when connected. */
+    ble_nus_c_handles_t       handles;        /**< Handles on the connected peer device needed to interact with it. */
+    ble_nus_c_evt_handler_t   evt_handler;    /**< Application event handler to be called when there is an event related to the NUS. */
+    ble_srv_error_handler_t   error_handler;  /**< Function to be called in case of an error. */
+    nrf_ble_gq_t            * p_gatt_queue;   /**< Pointer to BLE GATT Queue instance. */
 };
 
 /**@brief NUS Client initialization structure. */
 typedef struct
 {
-    ble_nus_c_evt_handler_t evt_handler;
+    ble_nus_c_evt_handler_t   evt_handler;    /**< Application event handler to be called when there is an event related to the NUS. */
+    ble_srv_error_handler_t   error_handler;  /**< Function to be called in case of an error. */
+    nrf_ble_gq_t            * p_gatt_queue;   /**< Pointer to BLE GATT Queue instance. */
 } ble_nus_c_init_t;
 
 
 /**@brief     Function for initializing the Nordic UART client module.
  *
  * @details   This function registers with the Database Discovery module
- *            for the NUS. Doing so will make the Database Discovery
- *            module look for the presence of a NUS instance at the peer when a
- *            discovery is started.
- *
+ *            for the NUS. The Database Discovery module looks for the presence
+ *            of a NUS instance at the peer when a discovery is started.
+ *            
  * @param[in] p_ble_nus_c      Pointer to the NUS client structure.
- * @param[in] p_ble_nus_c_init Pointer to the NUS initialization structure containing the
+ * @param[in] p_ble_nus_c_init Pointer to the NUS initialization structure that contains the
  *                             initialization information.
  *
- * @retval    NRF_SUCCESS If the module was initialized successfully. Otherwise, an error
- *                        code is returned. This function
- *                        propagates the error code returned by the Database Discovery module API
+ * @retval    NRF_SUCCESS If the module was initialized successfully.
+ * @retval    err_code    Otherwise, this function propagates the error code
+ *                        returned by the Database Discovery module API
  *                        @ref ble_db_discovery_evt_register.
  */
 uint32_t ble_nus_c_init(ble_nus_c_t * p_ble_nus_c, ble_nus_c_init_t * p_ble_nus_c_init);
 
 
-/**@brief Function for handling events from the database discovery module.
+/**@brief Function for handling events from the Database Discovery module.
  *
- * @details This function will handle an event from the database discovery module, and determine
- *          if it relates to the discovery of NUS at the peer. If so, it will
- *          call the application's event handler indicating that NUS has been
- *          discovered at the peer. It also populates the event with the service related
+ * @details This function handles an event from the Database Discovery module, and determines
+ *          whether it relates to the discovery of NUS at the peer. If it does, the function
+ *          calls the application's event handler to indicate that NUS was
+ *          discovered at the peer. The function also populates the event with service-related
  *          information before providing it to the application.
  *
  * @param[in] p_ble_nus_c Pointer to the NUS client structure.
- * @param[in] p_evt       Pointer to the event received from the database discovery module.
+ * @param[in] p_evt       Pointer to the event received from the Database Discovery module.
  */
  void ble_nus_c_on_db_disc_evt(ble_nus_c_t * p_ble_nus_c, ble_db_discovery_evt_t * p_evt);
 
@@ -205,7 +210,7 @@ uint32_t ble_nus_c_init(ble_nus_c_t * p_ble_nus_c, ble_nus_c_init_t * p_ble_nus_
 /**@brief     Function for handling BLE events from the SoftDevice.
  *
  * @details   This function handles the BLE events received from the SoftDevice. If a BLE
- *            event is relevant to the NUS module, it is used to update
+ *            event is relevant to the NUS module, the function uses the event's data to update
  *            internal variables and, if necessary, send events to the application.
  *
  * @param[in] p_ble_evt     Pointer to the BLE event.
@@ -221,9 +226,8 @@ void ble_nus_c_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
  *
  * @param   p_ble_nus_c Pointer to the NUS client structure.
  *
- * @retval  NRF_SUCCESS If the SoftDevice has been requested to write to the CCCD of the peer.
- *                      Otherwise, an error code is returned. This function propagates the error
- *                      code returned by the SoftDevice API @ref sd_ble_gattc_write.
+ * @retval  NRF_SUCCESS If the operation was successful. 
+ * @retval  err_code 	Otherwise, this API propagates the error code returned by function @ref nrf_ble_gq_item_add.
  */
 uint32_t ble_nus_c_tx_notif_enable(ble_nus_c_t * p_ble_nus_c);
 
@@ -236,17 +240,18 @@ uint32_t ble_nus_c_tx_notif_enable(ble_nus_c_t * p_ble_nus_c);
  * @param[in] p_string    String to be sent.
  * @param[in] length      Length of the string.
  *
- * @retval NRF_SUCCESS If the string was sent successfully. Otherwise, an error code is returned.
+ * @retval NRF_SUCCESS If the string was sent successfully. 
+ * @retval err_code    Otherwise, this API propagates the error code returned by function @ref nrf_ble_gq_item_add.
  */
 uint32_t ble_nus_c_string_send(ble_nus_c_t * p_ble_nus_c, uint8_t * p_string, uint16_t length);
 
 
-/**@brief Function for assigning handles to a this instance of nus_c.
+/**@brief Function for assigning handles to this instance of nus_c.
  *
  * @details Call this function when a link has been established with a peer to
- *          associate this link to this instance of the module. This makes it
- *          possible to handle several link and associate each link to a particular
- *          instance of this module. The connection handle and attribute handles will be
+ *          associate the link to this instance of the module. This makes it
+ *          possible to handle several links and associate each link to a particular
+ *          instance of this module. The connection handle and attribute handles are
  *          provided from the discovery event @ref BLE_NUS_C_EVT_DISCOVERY_COMPLETE.
  *
  * @param[in] p_ble_nus_c    Pointer to the NUS client structure instance to associate with these
@@ -257,6 +262,8 @@ uint32_t ble_nus_c_string_send(ble_nus_c_t * p_ble_nus_c, uint8_t * p_string, ui
  *
  * @retval    NRF_SUCCESS    If the operation was successful.
  * @retval    NRF_ERROR_NULL If a p_nus was a NULL pointer.
+ * @retval    err_code       Otherwise, this API propagates the error code returned 
+ *                           by function @ref nrf_ble_gq_item_add.
  */
 uint32_t ble_nus_c_handles_assign(ble_nus_c_t *               p_ble_nus_c,
                                   uint16_t                    conn_handle,

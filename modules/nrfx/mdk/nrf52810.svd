@@ -229,6 +229,16 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                     <value>0x52810</value>
                   </enumeratedValue>
                   <enumeratedValue>
+                    <name>N52811</name>
+                    <description>nRF52811</description>
+                    <value>0x52811</value>
+                  </enumeratedValue>
+                  <enumeratedValue>
+                    <name>N52832</name>
+                    <description>nRF52832</description>
+                    <value>0x52832</value>
+                  </enumeratedValue>
+                  <enumeratedValue>
                     <name>Unspecified</name>
                     <description>Unspecified</description>
                     <value>0xFFFFFFFF</value>
@@ -321,6 +331,11 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                     <name>QC</name>
                     <description>QCxx - 32-pin QFN</description>
                     <value>0x2003</value>
+                  </enumeratedValue>
+                  <enumeratedValue>
+                    <name>CA</name>
+                    <description>CAxx - WLCSP</description>
+                    <value>0x2004</value>
                   </enumeratedValue>
                   <enumeratedValue>
                     <name>Unspecified</name>
@@ -663,7 +678,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
       <size>0x20</size>
       <registers>
         <register>
-          <dim>0xF</dim>
+          <dim>0xD</dim>
           <dimIncrement>0x4</dimIncrement>
           <name>NRFFW[%s]</name>
           <description>Description collection: Reserved for Nordic firmware design</description>
@@ -2476,13 +2491,13 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
       <registers>
         <register>
           <name>TASKS_CONSTLAT</name>
-          <description>Enable constant latency mode</description>
+          <description>Enable Constant Latency mode</description>
           <addressOffset>0x078</addressOffset>
           <access>write-only</access>
           <fields>
             <field>
               <name>TASKS_CONSTLAT</name>
-              <description>Enable constant latency mode</description>
+              <description>Enable Constant Latency mode</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <enumeratedValues>
@@ -2497,13 +2512,13 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         </register>
         <register>
           <name>TASKS_LOWPWR</name>
-          <description>Enable low power mode (variable latency)</description>
+          <description>Enable Low-power mode (variable latency)</description>
           <addressOffset>0x07C</addressOffset>
           <access>write-only</access>
           <fields>
             <field>
               <name>TASKS_LOWPWR</name>
-              <description>Enable low power mode (variable latency)</description>
+              <description>Enable Low-power mode (variable latency)</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <enumeratedValues>

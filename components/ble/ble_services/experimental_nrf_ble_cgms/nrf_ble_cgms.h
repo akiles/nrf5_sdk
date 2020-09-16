@@ -68,6 +68,7 @@
 #include "sdk_errors.h"
 #include "ble_racp.h"
 #include "nrf_sdh_ble.h"
+#include "nrf_ble_gq.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -192,17 +193,6 @@ typedef enum
 } nrf_ble_cgms_evt_type_t;
 
 
-/**@brief CGM Service communication states. */
-typedef enum
-{
-    STATE_NO_COMM,                 /**< The service is not in a communicating state. */
-    STATE_RACP_PROC_ACTIVE,        /**< Processing requested data. */
-    STATE_RACP_RESPONSE_PENDING,   /**< There is an RACP indication waiting to be sent. */
-    STATE_RACP_RESPONSE_IND_VERIF, /**< Waiting for a verification of an RACP indication. */
-    STATE_SOCP_RESPONSE_PENDING,   /**< There is an SOCP indication waiting to be sent. */
-    STATE_SOCP_RESPONSE_IND_VERIF  /**< Waiting for a verification of an SOCP indication. */
-} nrf_ble_cgms_com_state_t;
-
 /** @} */ // End tag for Enumeration group.
 
 /**
@@ -286,11 +276,12 @@ typedef struct
  *        initializing the service. */
 typedef struct
 {
-    ble_cgms_evt_handler_t  evt_handler;           /**< Event handler to be called for handling events in the CGM Service. */
-    ble_srv_error_handler_t error_handler;         /**< Function to be called when an error occurs. */
-    nrf_ble_cgms_feature_t  feature;               /**< Features supported by the service. */
-    nrf_ble_cgm_status_t    initial_sensor_status; /**< Sensor status. */
-    uint16_t                initial_run_time;      /**< Run time. */
+    ble_cgms_evt_handler_t    evt_handler;           /**< Event handler to be called for handling events in the CGM Service. */
+    ble_srv_error_handler_t   error_handler;         /**< Function to be called when an error occurs. */
+    nrf_ble_gq_t            * p_gatt_queue;          /**< Pointer to BLE GATT Queue instance. */
+    nrf_ble_cgms_feature_t    feature;               /**< Features supported by the service. */
+    nrf_ble_cgm_status_t      initial_sensor_status; /**< Sensor status. */
+    uint16_t                  initial_run_time;      /**< Run time. */
 } nrf_ble_cgms_init_t;
 
 
@@ -319,9 +310,9 @@ typedef struct
     uint16_t         racp_proc_record_ndx;                                                  /**< Current record index. */
     uint16_t         racp_proc_records_ndx_last_to_send;                                    /**< The last record to send, can be used together with racp_proc_record_ndx to determine a range of records to send. (used by greater/less filters). */
     uint16_t         racp_proc_records_reported;                                            /**< Number of reported records. */
-    uint16_t         racp_proc_records_reported_since_txcomplete;                           /**< Number of reported records since the last TX_COMPLETE event. */
     ble_racp_value_t racp_request;                                                          /**< RACP procedure that has been requested from the peer. */
     ble_racp_value_t pending_racp_response;                                                 /**< RACP response to be sent. */
+    bool             racp_procesing_active;                                                 /**< RACP processing active. */
     uint8_t          pending_racp_response_operand[NRF_BLE_CGMS_RACP_PENDING_OPERANDS_MAX]; /**< Operand of the RACP response to be sent. */
 } nrf_ble_cgms_racp_t;
 
@@ -344,6 +335,8 @@ struct ble_cgms_s
 {
     ble_cgms_evt_handler_t      evt_handler;                                 /**< Event handler to be called for handling events in the CGM Service. */
     ble_srv_error_handler_t     error_handler;                               /**< Function to be called if an error occurs. */
+    nrf_ble_gq_t              * p_gatt_queue;                                /**< Pointer to BLE GATT Queue instance. */
+    nrf_ble_gq_req_error_cb_t   gatt_err_handler;                            /**< Error handler to be called in case of an error from SoftDevice. */
     uint16_t                    service_handle;                              /**< Handle of the CGM Service (as provided by the BLE stack). */
     nrf_ble_cgms_char_handler_t char_handles;                                /**< GATTS characteristic handles for the different characteristics in the service. */
     uint16_t                    conn_handle;                                 /**< Handle of the current connection (as provided by the BLE stack; @ref BLE_CONN_HANDLE_INVALID if not in a connection). */
@@ -355,7 +348,6 @@ struct ble_cgms_s
     uint8_t                     nb_run_session;                              /**< Variable to keep track of the number of sessions that were run. */
     uint16_t                    session_run_time;                            /**< Variable to store the expected run time of a session. */
     nrf_ble_cgm_status_t        sensor_status;                               /**< Structure to keep track of the sensor status. */
-    nrf_ble_cgms_com_state_t    cgms_com_state;                              /**< Current communication state. */
     nrf_ble_cgms_racp_t         racp_data;                                   /**< Structure to manage Record Access requests. */
 };
 

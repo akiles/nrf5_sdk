@@ -71,6 +71,14 @@ static void uart_event_handler(nrf_drv_uart_event_t * p_event, void* p_context)
     switch (p_event->type)
     {
         case NRF_DRV_UART_EVT_RX_DONE:
+            // If 0, then this is a RXTO event with no new bytes.
+            if(p_event->data.rxtx.bytes == 0)
+            {
+               // A new start RX is needed to continue to receive data
+               (void)nrf_drv_uart_rx(&app_uart_inst, rx_buffer, 1);
+               break;
+            }
+
             // Write received byte to FIFO.
             err_code = app_fifo_put(&m_rx_fifo, p_event->data.rxtx.p_data[0]);
             if (err_code != NRF_SUCCESS)

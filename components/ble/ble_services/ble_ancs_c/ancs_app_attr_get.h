@@ -47,6 +47,8 @@
  * @{
  */
 
+#define BLE_ANCS_WRITE_MAX_MSG_LENGTH 20  /**< Maximum GATTC write length. */
+
 /**@brief Function for requesting attributes for an app.
  *
  * @param[in] p_ancs  iOS notification structure. This structure must be supplied by

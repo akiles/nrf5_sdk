@@ -107,34 +107,10 @@ __STATIC_INLINE void app_start(uint32_t vector_table_addr)
     __set_BASEPRI(0x00000000);   // Set BASEPRI to its reset value 0.
     __set_FAULTMASK(0x00000000); // Set FAULTMASK to its reset value 0.
 
-    if (current_isr_num == 0)
-    {
-        // The CPU is in Thread mode (main context).
-        jump_to_addr(new_msp, new_lr, reset_handler); // Jump directly to the App's Reset Handler.
-    }
-    else
-    {
-        // The CPU is in Handler mode (interrupt context).
+    ASSERT(current_isr_num == 0); // If this is triggered, the CPU is currently in an interrupt.
 
-        const uint32_t exception_stack[EXCEPTION_STACK_WORD_COUNT] = // To be copied onto the stack.
-        {
-            0x00000000,    // New value of R0. Cleared by setting to 0.
-            0x00000000,    // New value of R1. Cleared by setting to 0.
-            0x00000000,    // New value of R2. Cleared by setting to 0.
-            0x00000000,    // New value of R3. Cleared by setting to 0.
-            0x00000000,    // New value of R12. Cleared by setting to 0.
-            0xFFFFFFFF,    // New value of LR. Cleared by setting to all 1s.
-            reset_handler, // New value of PC. The CPU will continue by executing the App's Reset Handler.
-            xPSR_T_Msk,    // New value of xPSR (Thumb mode set).
-        };
-        const uint32_t exception_sp = new_msp - sizeof(exception_stack);
-
-        memcpy((uint32_t *)exception_sp, exception_stack, sizeof(exception_stack)); // 'Push' exception_stack onto the App's stack.
-
-        jump_to_addr(exception_sp, new_lr, HANDLER_MODE_EXIT); // 'Jump' to the special value to exit handler mode. new_lr is superfluous here.
-                                                               // exception_stack will be popped from the stack, so the resulting SP will be the new_msp.
-                                                               // Execution will continue from the App's Reset Handler.
-    }
+    // The CPU is in Thread mode (main context).
+    jump_to_addr(new_msp, new_lr, reset_handler); // Jump directly to the App's Reset Handler.
 }
 
 #if NRF_BOOTLOADER_READ_PROTECT
@@ -238,6 +214,10 @@ void nrf_bootloader_app_start_final(uint32_t vector_table_addr)
     uint32_t area_size;
 
     area_size = BOOTLOADER_SIZE + NRF_MBR_PARAMS_PAGE_SIZE;
+    if (!NRF_BL_DFU_ALLOW_UPDATE_FROM_APP && !NRF_BL_DFU_ENTER_METHOD_BUTTONLESS && !NRF_DFU_TRANSPORT_BLE)
+    {
+        area_size += BOOTLOADER_SETTINGS_PAGE_SIZE;
+    }
 
     ret_val = nrf_bootloader_flash_protect(BOOTLOADER_START_ADDR,
                                            area_size,
@@ -247,15 +227,17 @@ void nrf_bootloader_app_start_final(uint32_t vector_table_addr)
     {
         NRF_LOG_ERROR("Could not protect bootloader and settings pages, 0x%x.", ret_val);
     }
+    APP_ERROR_CHECK(ret_val);
 
     ret_val = nrf_bootloader_flash_protect(0,
-                                           nrf_dfu_bank0_start_addr() + s_dfu_settings.bank_0.image_size,
-                                           false);
+                    nrf_dfu_bank0_start_addr() + ALIGN_TO_PAGE(s_dfu_settings.bank_0.image_size),
+                    false);
 
     if (!NRF_BOOTLOADER_READ_PROTECT && (ret_val != NRF_SUCCESS))
     {
         NRF_LOG_ERROR("Could not protect SoftDevice and application, 0x%x.", ret_val);
     }
+    APP_ERROR_CHECK(ret_val);
 
     // Run application
     app_start(vector_table_addr);

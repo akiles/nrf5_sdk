@@ -30,7 +30,7 @@
 * @{
 */
 
-#include "optiga/dtls/DtlsFlighthandler.h"
+#include "optiga/dtls/DtlsFlightHandler.h"
 #ifdef MODULE_ENABLE_DTLS_MUTUAL_AUTH
 
 /// @cond hidden
@@ -249,13 +249,13 @@ _STATIC_H void DtlsHS_FreeMsgNode(sMsgInfo_d *PpsMsgNode);
 /**
  * Initializes the pointer to bit map representing message status.<br>
  *
- * \param[in]   PdwMsgLen       Total length of the message received.
- * \param[out]  PppbMapPtr      Pointer container to map pointer.
+ * \param[in]	PdwMsgLen       Total length of the message received.
+ * \param[out]	PppbMapPtr		Pointer container to map pointer.
  *
- * \retval      #OCP_FL_OK              Successful execution
- * \retval      #OCP_FL_MSG_ERROR       Failure in execution
+ * \retval		#OCP_FL_OK  			Successful execution
+ * \retval		#OCP_FL_MSG_ERROR    	Failure in execution
 \if ENABLE_NULL_CHECKS
- * \retval      #OCP_FL_NULL_PARAM      Null parameter
+ * \retval		#OCP_FL_NULL_PARAM    	Null parameter
 \endif
  */
 _STATIC_H int32_t DtlsHS_MsgCompleteInit(uint32_t PdwMsgLen, uint8_t** PppbMapPtr)
@@ -301,15 +301,15 @@ _STATIC_H int32_t DtlsHS_MsgCompleteInit(uint32_t PdwMsgLen, uint8_t** PppbMapPt
 /**
  * Sets the number of bits in bit map equal to the number of bytes received in message/ fragment.<br>
  *
- * \param[in]       PdwOffset       Offset of the message/ fragment received.
- * \param[in]       PdwFragLen      Length of the message/ fragment received.
- * \param[in,out]   PprgbMapPtr     Pointer to bit map.
- * \param[in]       PdwMsgLen       Length of the message/ fragment received.
+ * \param[in]	    PdwOffset       Offset of the message/ fragment received.
+ * \param[in]	    PdwFragLen      Length of the message/ fragment received.
+ * \param[in,out]	PprgbMapPtr		Pointer to bit map.
+ * \param[in]	    PdwMsgLen       Length of the message/ fragment received.
  *
- * \retval      #OCP_FL_OK              Successful execution
- * \retval      #OCP_FL_MSG_ERROR       Failure in execution
+ * \retval		#OCP_FL_OK  			Successful execution
+ * \retval		#OCP_FL_MSG_ERROR    	Failure in execution
 \if ENABLE_NULL_CHECKS
- * \retval      #OCP_FL_NULL_PARAM      Null parameter
+ * \retval		#OCP_FL_NULL_PARAM    	Null parameter
 \endif
  */
 _STATIC_H int32_t DtlsHS_MsgUptBitMsk(uint32_t PdwOffset, uint32_t PdwFragLen, uint8_t* PprgbMapPtr, uint32_t PdwMsgLen)
@@ -384,13 +384,13 @@ _STATIC_H int32_t DtlsHS_MsgUptBitMsk(uint32_t PdwOffset, uint32_t PdwFragLen, u
 /**
  * Checks if all the bits in the bitmap is set for the message completion.<br>
  *
- * \param[in]       PprgbMapPtr     Pointer to bit map.
- * \param[in]       PdwMsgLen       Total Length of the message received.
+ * \param[in]		PprgbMapPtr		Pointer to bit map.
+ * \param[in]	    PdwMsgLen       Total Length of the message received.
  *
- * \retval      #OCP_FL_OK              Successful execution
- * \retval      #OCP_FL_MSG_ERROR       Failure in execution
+ * \retval		#OCP_FL_OK  			Successful execution
+ * \retval		#OCP_FL_MSG_ERROR    	Failure in execution
 \if ENABLE_NULL_CHECKS
- * \retval      #OCP_FL_NULL_PARAM      Null parameter
+ * \retval		#OCP_FL_NULL_PARAM    	Null parameter
 \endif
  */
 
@@ -451,13 +451,13 @@ _STATIC_H int32_t DtlsHS_MsgCompleteCheck(uint8_t* PprgbMapPtr, uint32_t PdwMsgL
 /**
  * Clears all the bits in the bitmap.<br>
  *
- * \param[in,out]   PprgbMapPtr     Pointer to bit map.
- * \param[in]       PdwMsgLen       Total length of the message received.
+ * \param[in,out]	PprgbMapPtr		Pointer to bit map.
+ * \param[in]	    PdwMsgLen       Total length of the message received.
  *
- * \retval      #OCP_FL_OK              Successful execution
- * \retval      #OCP_FL_MSG_ERROR       Failure in execution
+ * \retval		#OCP_FL_OK  			Successful execution
+ * \retval		#OCP_FL_MSG_ERROR    	Failure in execution
 \if ENABLE_NULL_CHECKS
- * \retval      #OCP_FL_NULL_PARAM      Null parameter
+ * \retval		#OCP_FL_NULL_PARAM    	Null parameter
 \endif
  */
 _STATIC_H int32_t DtlsHS_MsgClearBitMap(uint8_t* PprgbMapPtr, uint32_t PdwMsgLen)
@@ -509,11 +509,11 @@ _STATIC_H int32_t DtlsHS_MsgClearBitMap(uint8_t* PprgbMapPtr, uint32_t PdwMsgLen
 /**
  * Searches the look-up table and returns the flight descriptor.<br>
  *
- * \param[in]       PbFlightID          Flight number
+ * \param[in]	    PbFlightID			Flight number
  * \param[in,out]   PpwFlightID         Container to flight descriptor
  *
- * \retval      #OCP_HL_OK      Successful Execution
- * \retval      #OCP_HL_ERROR   Failure Execution
+ * \retval 		#OCP_HL_OK		Successful Execution
+ * \retval 		#OCP_HL_ERROR	Failure Execution
  */
 _STATIC_H int32_t DtlsHS_GetFlightDescriptor(uint8_t PbFlightID, uint16_t* PpwFlightID)
 {
@@ -550,11 +550,11 @@ _STATIC_H int32_t DtlsHS_GetFlightDescriptor(uint8_t PbFlightID, uint16_t* PpwFl
 /**
  * Searches the look-up table and returns the flight handler.<br>
  *
- * \param[in]      PeFlightID           Flight number
+ * \param[in]	   PeFlightID			Flight number
  * \param[in,out]  PfHndler             Container to flight handler
  *
- * \retval      #OCP_HL_OK      Successful Execution
- * \retval      #OCP_HL_ERROR   Failure Execution
+ * \retval 		#OCP_HL_OK		Successful Execution
+ * \retval 		#OCP_HL_ERROR	Failure Execution
  */
 _STATIC_H int32_t DtlsHS_GetFlightHandler(uint8_t PeFlightID, fFlightHandler * PfHndler)
 {
@@ -592,7 +592,7 @@ _STATIC_H int32_t DtlsHS_GetFlightHandler(uint8_t PeFlightID, fFlightHandler * P
 /**
  * Inserts the message node to flight head node .<br>
  *
- * \param[in,out]   PppsNodeHead        Pointer container holding head node pointer.
+ * \param[in,out]	PppsNodeHead		Pointer container holding head node pointer.
  * \param[in]       PpsNewNode          Pointer to the message node to be inserted.
  *
  */
@@ -645,7 +645,7 @@ _STATIC_H void DtlsHS_InsertMsgNode(sMsgInfo_d** PppsNodeHead, sMsgInfo_d* PpsNe
 /**
  * Adds a message node to the end of the message list.<br>
  *
- * \param[in,out]   PppsNodeHead        Pointer container holding head node pointer.
+ * \param[in,out]	PppsNodeHead		Pointer container holding head node pointer.
  * \param[in]       PpsNewNode          Pointer to the message node to be added.
  *
  */
@@ -672,15 +672,15 @@ _STATIC_H void DtlsHS_AddMsgNode(sMsgInfo_d** PppsNodeHead, sMsgInfo_d* PpsNewNo
 }
 /**
  * Initialises message node to respective parameters.<br>
- *  -   Calls message layer to get the message.<br>
- *  -   Checks the header of the message received from message layer.<br>
- *  -   Updates the bit map.<br>
+ *	-	Calls message layer to get the message.<br>
+ *	-	Checks the header of the message received from message layer.<br>
+ *	-	Updates the bit map.<br>
  *
- * \param[in,out]   PpsMsgNode              Pointer to the message node.
- * \param[in]       PpsMessageLayer         Pointer to the structure containing message configuration information.
+ * \param[in,out]	PpsMsgNode			    Pointer to the message node.
+ * \param[in]		PpsMessageLayer			Pointer to the structure containing message configuration information.
  *
- * \retval      #OCP_FL_OK      Successful Execution
- * \retval      #OCP_FL_ERROR   Failure Execution
+ * \retval 		#OCP_FL_OK		Successful Execution
+ * \retval 		#OCP_FL_ERROR	Failure Execution
  */
 _STATIC_H int32_t DtlsHS_SInit_MessageNode(sMsgInfo_d* PpsMsgNode, const sMsgLyr_d* PpsMessageLayer)
 {
@@ -729,11 +729,11 @@ _STATIC_H int32_t DtlsHS_SInit_MessageNode(sMsgInfo_d* PpsMsgNode, const sMsgLyr
 /**
  * Checks if given optional message is in the list.<br>
  *
- * \param[in]       PbMsgID             Message type.
- * \param[in]       PpbOptMsgList       List of received optional messages.
+ * \param[in]       PbMsgID				Message type.
+ * \param[in]		PpbOptMsgList		List of received optional messages.
  *
- * \retval      #OCP_FL_OK              Requested message found in list
- * \retval      #OCP_FL_ERROR           Requested message not found in list
+ * \retval		#OCP_FL_OK				Requested message found in list
+ * \retval		#OCP_FL_ERROR			Requested message not found in list
  */
 _STATIC_H int32_t DtlsHS_CheckOptMsg(uint8_t PbMsgID, const uint8_t* PpbOptMsgList)
 {
@@ -763,12 +763,12 @@ _STATIC_H int32_t DtlsHS_CheckOptMsg(uint8_t PbMsgID, const uint8_t* PpbOptMsgLi
 /**
  * Checks if the given message can be sent to the server or not.<br>
  *
- * \param[in]       PbMsgID             Message type.
- * \param[in]       PpbOptMsgList       List of received optional messages.
+ * \param[in]       PbMsgID				Message type.
+ * \param[in]		PpbOptMsgList		List of received optional messages.
  * \param[in]       PpsMessageLayer     Pointer to the structure containing message configuration information.
  *
- * \retval      #OCP_FL_OK              Requested message can be sent
- * \retval      #OCP_FL_ERROR           Requested message cannot be sent
+ * \retval		#OCP_FL_OK				Requested message can be sent
+ * \retval		#OCP_FL_ERROR			Requested message cannot be sent
  */
 _STATIC_H int32_t DtlsHS_Flight5_CheckOptMsg(uint8_t PbMsgID, const uint8_t* PpbOptMsgList, const sMsgLyr_d* PpsMessageLayer)
 {
@@ -798,12 +798,12 @@ _STATIC_H int32_t DtlsHS_Flight5_CheckOptMsg(uint8_t PbMsgID, const uint8_t* Ppb
 
 /**
  * Initialises message node to respective parameters.<br>
- *  - Forms the change cipher spec message.<br>
+ *	- Forms the change cipher spec message.<br>
  *
- * \param[in,out]   PpsMsgNode              Pointer to the message node.
+ * \param[in,out]	PpsMsgNode			    Pointer to the message node.
  *
- * \retval      #OCP_FL_OK              Requested message can be sent
- * \retval      #OCP_FL_ERROR           Requested message cannot be sent
+ * \retval		#OCP_FL_OK				Requested message can be sent
+ * \retval		#OCP_FL_ERROR			Requested message cannot be sent
  */
 _STATIC_H int32_t DtlsHS_SInit_ChangeCipherSpec(sMsgInfo_d* PpsMsgNode)
 {
@@ -834,11 +834,11 @@ _STATIC_H int32_t DtlsHS_SInit_ChangeCipherSpec(sMsgInfo_d* PpsMsgNode)
 /**
  * Returns the sequence number of the last message in a flight.<br>
  *
- * \param[in]       PpsMessageList          Pointer to list of messages.
- * \param[out]      PwLastMsgSeqNum         Pointer to last sequence number.
+ * \param[in]		PpsMessageList			Pointer to list of messages.
+ * \param[out]		PwLastMsgSeqNum			Pointer to last sequence number.
  *
- * \retval      #OCP_FL_OK      Successful Execution
- * \retval      #OCP_FL_ERROR   Failure Execution
+ * \retval 		#OCP_FL_OK		Successful Execution
+ * \retval 		#OCP_FL_ERROR	Failure Execution
  */
 _STATIC_H void DtlsHS_FlightGetLastMsgSeqNum(const sMsgInfo_d *PpsMessageList, uint16_t *PwLastMsgSeqNum)
 {
@@ -860,12 +860,12 @@ _STATIC_H void DtlsHS_FlightGetLastMsgSeqNum(const sMsgInfo_d *PpsMessageList, u
 /**
  * Initializes the message node with respective parameters and updates the bit map.<br>
  *
- * \param[in,out]       PpsMsgNode          Pointer to new message node.
- * \param[in]           PpsMessageLayer     Pointer to the structure containing message configuration information.
+ * \param[in,out]		PpsMsgNode			Pointer to new message node.
+ * \param[in]			PpsMessageLayer		Pointer to the structure containing message configuration information.
  *
- * \retval      #OCP_FL_OK      Successful Execution
- * \retval      #OCP_FL_ERROR   Failure Execution
- * \retval      #OCP_FL_MSG_INCOMPLETE  Message is not completely received
+ * \retval 		#OCP_FL_OK		Successful Execution
+ * \retval 		#OCP_FL_ERROR	Failure Execution
+ * \retval		#OCP_FL_MSG_INCOMPLETE	Message is not completely received
  */
 _STATIC_H int32_t DtlsHS_RInit_MessageNode(sMsgInfo_d* PpsMsgNode, sMsgLyr_d* PpsMessageLayer)
 {
@@ -926,8 +926,8 @@ _STATIC_H int32_t DtlsHS_RInit_MessageNode(sMsgInfo_d* PpsMsgNode, sMsgLyr_d* Pp
 /**
  * Returns the total number of messages in a flight.<br>
  *
- * \param[in]       PwMsgDescList           Pointer to list of messages.
- * \param[out]      PbMsgCount              Pointer to message counter.
+ * \param[in]		PwMsgDescList			Pointer to list of messages.
+ * \param[out]		PbMsgCount				Pointer to message counter.
  *
  */
 _STATIC_H void DtlsHS_GetTotalMsgCount(const uint16_t *PwMsgDescList, uint8_t *PbMsgCount)
@@ -945,8 +945,8 @@ _STATIC_H void DtlsHS_GetTotalMsgCount(const uint16_t *PwMsgDescList, uint8_t *P
 /**
  * Returns the number of optional messages in a flight.<br>
  *
- * \param[in]       PwMsgDescList           Pointer to list of messages.
- * \param[out]      PbOptMsgCount               Pointer to message counter.
+ * \param[in]		PwMsgDescList			Pointer to list of messages.
+ * \param[out]		PbOptMsgCount				Pointer to message counter.
  *
  */
 _STATIC_H void DtlsHS_GetOptMsgCount(const uint16_t *PwMsgDescList, uint8_t *PbOptMsgCount)
@@ -966,9 +966,9 @@ _STATIC_H void DtlsHS_GetOptMsgCount(const uint16_t *PwMsgDescList, uint8_t *PbO
 /**
  * Returns the message descriptor from the list of messages.<br>
  *
- * \param[in]       PwMsgDescList           Pointer to list of messages.
- * \param[in]       PbMsgType               Message ID of which descriptor is required.
- * \param[out]      PwMsgDesc               Pointer to message descriptor.
+ * \param[in]		PwMsgDescList			Pointer to list of messages.
+ * \param[in]		PbMsgType				Message ID of which descriptor is required.
+ * \param[out]		PwMsgDesc				Pointer to message descriptor.
  *
  */
 _STATIC_H void DtlsHS_GetMsgDesc(const uint16_t *PwMsgDescList, uint8_t PbMsgType, uint16_t *PwMsgDesc)
@@ -987,9 +987,9 @@ _STATIC_H void DtlsHS_GetMsgDesc(const uint16_t *PwMsgDescList, uint8_t PbMsgTyp
 /**
  * Adds a optional message to the list of optional messages.<br>
  *
- * \param[in,out]       PpsMessageLayer         Pointer to the structure containing message configuration information.
- * \param[in]           PbMsgType               Optional Message ID.
- * \param[in]           PeFlightID              Flight ID.
+ * \param[in,out]		PpsMessageLayer			Pointer to the structure containing message configuration information.
+ * \param[in]			PbMsgType				Optional Message ID.
+ * \param[in]			PeFlightID				Flight ID.
  *
  */
 _STATIC_H void DtlsHS_Update_OptList(sMsgLyr_d* PpsMessageLayer, uint8_t PbMsgType, uint8_t PeFlightID)
@@ -1034,12 +1034,12 @@ _STATIC_H void DtlsHS_Update_OptList(sMsgLyr_d* PpsMessageLayer, uint8_t PbMsgTy
 /**
  * Checks if all the messages of a flight are completely received.<br>
  *
- * \param[in]       PpsMessageList          Pointer to list of messages of a flight.
- * \param[in]       PeFlightID              Flight ID.
- * \param[in]       PpsMessageLayer         Pointer to the structure containing message configuration information.
+ * \param[in]		PpsMessageList			Pointer to list of messages of a flight.
+ * \param[in]		PeFlightID				Flight ID.
+ * \param[in]		PpsMessageLayer			Pointer to the structure containing message configuration information.
  *
- * \retval      #OCP_FL_OK      All messages are completely received
- * \retval      #OCP_FL_ERROR   Atleast one message is incomplete
+ * \retval 		#OCP_FL_OK		All messages are completely received
+ * \retval 		#OCP_FL_ERROR	Atleast one message is incomplete
  */
 _STATIC_H int32_t DtlsHS_CheckFlight_Compl(sMsgInfo_d *PpsMessageList, uint8_t PeFlightID, const sMsgLyr_d* PpsMessageLayer)
 {
@@ -1131,10 +1131,10 @@ _STATIC_H int32_t DtlsHS_CheckFlight_Compl(sMsgInfo_d *PpsMessageList, uint8_t P
 /**
  * Checks if a message is received more than or equal to six times.<br>
  *
- * \param[in]       PpsMsgNode          Pointer to message node.
+ * \param[in]		PpsMsgNode			Pointer to message node.
  *
- * \retval      #OCP_FL_OK      Message is received less than six times
- * \retval      #OCP_FL_ERROR   Message is received six times
+ * \retval 		#OCP_FL_OK		Message is received less than six times
+ * \retval 		#OCP_FL_ERROR	Message is received six times
  */
 _STATIC_H int32_t DtlsHS_MessageLimitCheck(sMsgInfo_d *PpsMsgNode)
 {
@@ -1153,20 +1153,20 @@ _STATIC_H int32_t DtlsHS_MessageLimitCheck(sMsgInfo_d *PpsMsgNode)
 /**
  * Buffers the received message/ fragment.<br>
  *
- * \param[in,out]   PpsMessageList            Pointer to list of messages in a flight.
- * \param[in]       PbMsgID                   Received message type.
- * \param[in]       PpsMsgIn                  Pointer to the received message buffer.
- * \param[in]       PpsMessageLayer           Pointer to the structure containing message configuration information.
- * \param[in]       PeFlightID                Flight number.
+ * \param[in,out]	PpsMessageList		      Pointer to list of messages in a flight.
+ * \param[in]	    PbMsgID      		      Received message type.
+ * \param[in]	    PpsMsgIn		          Pointer to the received message buffer.
+ * \param[in]	    PpsMessageLayer		      Pointer to the structure containing message configuration information.
+ * \param[in]	    PeFlightID		          Flight number.
  *
- * \retval      #OCP_FL_OK                    Successful execution
- * \retval      #OCP_FL_ERROR                 Failure in execution
- * \retval      #OCP_FL_MSG_NODE_NOT_AVAIL    Node corresponding to message is not in the list of messages
- * \retval      #OCP_FL_MALLOC_FAILURE        Memory allocation failure
- * \retval      #OCP_FL_INVALID_MSG_LENGTH    Message Length of new fragment does not match the buffered message length
- * \retval      #OCP_FL_INVALID_MSG_SEQ       Sequence number of new fragment does not match the buffered message/ fragment sequence length
- * \retval      #OCP_FL_MSG_INCOMPLETE        Message is not completely received
- * \retval      #OCP_FL_MSG_MAXCOUNT          Message is received six times
+ * \retval		#OCP_FL_OK 			          Successful execution
+ * \retval		#OCP_FL_ERROR    	          Failure in execution
+ * \retval		#OCP_FL_MSG_NODE_NOT_AVAIL	  Node corresponding to message is not in the list of messages
+ * \retval		#OCP_FL_MALLOC_FAILURE		  Memory allocation failure
+ * \retval		#OCP_FL_INVALID_MSG_LENGTH	  Message Length of new fragment does not match the buffered message length
+ * \retval		#OCP_FL_INVALID_MSG_SEQ		  Sequence number of new fragment does not match the buffered message/ fragment sequence length
+ * \retval		#OCP_FL_MSG_INCOMPLETE		  Message is not completely received
+ * \retval		#OCP_FL_MSG_MAXCOUNT		  Message is received six times
  */
 _STATIC_H int32_t DtlsHS_FlightMsgChkAndBuffer(sMsgInfo_d *PpsMessageList, uint8_t PbMsgID, const sbBlob_d* PpsMsgIn, sMsgLyr_d* PpsMessageLayer, uint8_t PeFlightID)
 {
@@ -1265,11 +1265,11 @@ _STATIC_H int32_t DtlsHS_FlightMsgChkAndBuffer(sMsgInfo_d *PpsMessageList, uint8
 /**
  * Checks if the message type of the received message/ fragment belongs to the flight.<br>
  *
- * \param[in]       PbFlightID              Flight ID.
- * \param[in]       PbMsgID                 Received Message type
+ * \param[in]		PbFlightID				Flight ID.
+ * \param[in]	    PbMsgID      			Received Message type
  *
- * \retval      #OCP_FL_OK                    Successful execution
- * \retval      #OCP_FL_MSG_NOT_IN_FLIGHT     Received message is not in flight
+ * \retval		#OCP_FL_OK 			          Successful execution
+ * \retval		#OCP_FL_MSG_NOT_IN_FLIGHT     Received message is not in flight
  */
 _STATIC_H int32_t DtlsHS_Flight_LimitChk(uint8_t PbFlightID, uint8_t PbMsgID)
 {
@@ -1297,13 +1297,13 @@ _STATIC_H int32_t DtlsHS_Flight_LimitChk(uint8_t PbFlightID, uint8_t PbMsgID)
 /**
  * Sends the message to be processed to Security Chip.<br>
  *
- * \param[in]   PpsMessageList            Pointer to the structure containing message linked list.
- * \param[in]   PpsMessageLayer           Pointer to the structure containing message configuration information.
+ * \param[in]	PpsMessageList		      Pointer to the structure containing message linked list.
+ * \param[in]	PpsMessageLayer		      Pointer to the structure containing message configuration information.
  *
- * \retval      #OCP_ML_OK                          Successful execution
- * \retval      #OCP_ML_ERROR                       Failure in execution
- * \retval      #CMD_DEV_ERROR                      Command lib error
- * \retval      #OCP_FL_SEND_MSG_TO_OPTIGA_ERROR    Message processing failed on Security Chip
+ * \retval		#OCP_ML_OK 			            	Successful execution
+ * \retval		#OCP_ML_ERROR    	            	Failure in execution
+ * \retval		#CMD_DEV_ERROR						Command lib error
+ * \retval		#OCP_FL_SEND_MSG_TO_OPTIGA_ERROR	Message processing failed on Security Chip
  *
  */
 _STATIC_H int32_t DtlsHS_SendFlightToOptiga(sMsgInfo_d *PpsMessageList, const sMsgLyr_d* PpsMessageLayer)
@@ -1351,7 +1351,7 @@ _STATIC_H int32_t DtlsHS_SendFlightToOptiga(sMsgInfo_d *PpsMessageList, const sM
 /**
  * Resets the flight 2 node .<br>
  *
- * \param[in,out]   PpsThisFlight             Pointer to the structure containing flight status.
+ * \param[in,out]	PpsThisFlight		      Pointer to the structure containing flight status.
  *
  */
 _STATIC_H void DtlsHS_ResetFlight2MsgNode(const sFlightStats_d* PpsThisFlight)
@@ -1375,7 +1375,7 @@ _STATIC_H void DtlsHS_ResetFlight2MsgNode(const sFlightStats_d* PpsThisFlight)
 /**
  * Frees a node and all the pointers in it .<br>
  *
- * \param[in]   PpsMsgNode            Pointer to the message node.
+ * \param[in]	PpsMsgNode		      Pointer to the message node.
  *
  */
 _STATIC_H void DtlsHS_FreeMsgNode(sMsgInfo_d *PpsMsgNode)
@@ -1395,13 +1395,13 @@ _STATIC_H void DtlsHS_FreeMsgNode(sMsgInfo_d *PpsMsgNode)
 /**
  * Checks if message sequence number and length of received message/ fragment of flight4 is the same as the buffered one.<br>
  *
- * \param[in]       PbRxMsgType             Message type of received message/ fragment.
- * \param[in]       PwRxMsgSeqNum           Message sequence number of received message/ fragment.
- * \param[in]       PdwRxMsgLen             Message sequence number of received message/ fragment.
- * \param[in]       PpsMsgList              Pointer to list of messages in the flight.
+ * \param[in]       PbRxMsgType				Message type of received message/ fragment.
+ * \param[in]       PwRxMsgSeqNum			Message sequence number of received message/ fragment.
+ * \param[in]       PdwRxMsgLen				Message sequence number of received message/ fragment.
+ * \param[in]       PpsMsgList				Pointer to list of messages in the flight.
  *
- * \retval      #OCP_FL_OK                  Sequence number and message length of buffered message is same as re-received message/ fragment
- * \retval      #OCP_FL_ERROR               Received message/ fragment can be ignored
+ * \retval		#OCP_FL_OK  			    Sequence number and message length of buffered message is same as re-received message/ fragment
+ * \retval		#OCP_FL_ERROR    	        Received message/ fragment can be ignored
  */
 _STATIC_H int32_t DtlsHS_Flight4CheckBuffMsg(uint8_t PbRxMsgType, uint16_t PwRxMsgSeqNum, uint32_t PdwRxMsgLen, sMsgInfo_d *PpsMsgList)
 {
@@ -1427,10 +1427,10 @@ _STATIC_H int32_t DtlsHS_Flight4CheckBuffMsg(uint8_t PbRxMsgType, uint16_t PwRxM
 /**
  * Checks for flight4 completion.<br>
  *
- * \param[in]       PpsMsgList              Pointer to message list of the flight.
+ * \param[in]       PpsMsgList				Pointer to message list of the flight.
  *
- * \retval      #OCP_FL_OK                  Flight 4 is received completely
- * \retval      #OCP_FL_ERROR               Flight 4 is not received completely
+ * \retval		#OCP_FL_OK  			    Flight 4 is received completely
+ * \retval		#OCP_FL_ERROR    	        Flight 4 is not received completely
  */
 _STATIC_H int32_t DtlsHS_Flight4ReRxCompl(sMsgInfo_d *PpsMsgList)
 {
@@ -1454,12 +1454,12 @@ _STATIC_H int32_t DtlsHS_Flight4ReRxCompl(sMsgInfo_d *PpsMsgList)
 /**
  * Updates bit map and sets the message state.<br>
  *
- * \param[in]       PbMsgID                 Message type of received message/ fragment.
- * \param[in]       PpsMsgList              Pointer to message list of the flight.
- * \param[in]       PpsMessageLayer         Pointer to the structure containing message configuration information.
+ * \param[in]       PbMsgID				    Message type of received message/ fragment.
+ * \param[in]       PpsMsgList				Pointer to message list of the flight.
+ * \param[in]       PpsMessageLayer			Pointer to the structure containing message configuration information.
  *
- * \retval      #OCP_FL_OK                  Successful execution
- * \retval      #OCP_FL_ERROR               Received message/ fragment can be ignored
+ * \retval		#OCP_FL_OK  			    Successful execution
+ * \retval		#OCP_FL_ERROR    	        Received message/ fragment can be ignored
  */
 _STATIC_H int32_t DtlsHS_Flight4UpdateMsgStat(uint8_t PbMsgID, sMsgInfo_d *PpsMsgList, const sMsgLyr_d* PpsMessageLayer)
 {
@@ -1548,12 +1548,12 @@ _STATIC_H void DtlsHS_Flight4ClearMsgsInList(sMsgInfo_d *PpsMsgList)
 /**
  * Checks Message Sequence number of flight six messages.<br>
  *
- * \param[in]       PpsMessageLayer         Pointer to the structure containing message configuration information.
- * \param[in]       PbMsgID                 Message Type of the received message/ fragment.
- * \param[in]       PwMsgSeqNum             Message sequence number of received message.
+ * \param[in]       PpsMessageLayer			Pointer to the structure containing message configuration information.
+ * \param[in]       PbMsgID					Message Type of the received message/ fragment.
+ * \param[in]       PwMsgSeqNum				Message sequence number of received message.
  *
- * \retval      #OCP_FL_OK                  Sequence number is correct
- * \retval      #OCP_FL_ERROR               Sequence number is incorrect
+ * \retval		#OCP_FL_OK  			    Sequence number is correct
+ * \retval		#OCP_FL_ERROR    	        Sequence number is incorrect
  */
 _STATIC_H int32_t DtlsHS_Flight6CheckMsgSeqNum(const sMsgLyr_d* PpsMessageLayer, uint8_t PbMsgID, uint16_t PwMsgSeqNum)
 {
@@ -1579,8 +1579,8 @@ _STATIC_H int32_t DtlsHS_Flight6CheckMsgSeqNum(const sMsgLyr_d* PpsMessageLayer,
 /**
  * Searches the look-up table and returns the message descriptors of a flight.<br>
  *
- * \param[in]       PeFlightID      Flight number.
- * \param[in,out]       PpwMessageList       Pointer container to message descriptor.
+ * \param[in]		PeFlightID		Flight number.
+ * \param[in,out]	    PpwMessageList       Pointer container to message descriptor.
  *
  */
 void DtlsHS_GetFlightMsgInfo(uint8_t PeFlightID, uint16_t** PpwMessageList)
@@ -1616,11 +1616,11 @@ void DtlsHS_GetFlightMsgInfo(uint8_t PeFlightID, uint16_t** PpwMessageList)
 /**
  * Initialises flight node to default parameters.<br>
  *
- * \param[in,out]   PpsFlightNode               Pointer to flight node
- * \param[in]       PbLastProcFlight            Last processed flight ID
+ * \param[in,out]	PpsFlightNode			    Pointer to flight node
+ * \param[in]		PbLastProcFlight			Last processed flight ID
  *
- * \retval      #OCP_HL_OK      Successful Execution
- * \retval      #OCP_HL_ERROR   Failure Execution
+ * \retval 		#OCP_HL_OK		Successful Execution
+ * \retval 		#OCP_HL_ERROR	Failure Execution
  */
 int32_t DtlsHS_FlightNodeInit(sFlightDetails_d* PpsFlightNode, uint8_t PbLastProcFlight)
 {
@@ -1648,11 +1648,11 @@ int32_t DtlsHS_FlightNodeInit(sFlightDetails_d* PpsFlightNode, uint8_t PbLastPro
 /**
  * Gets the Flight type for the corresponding message type.<br>
  *
- * \param[in]       PbMsgType               Message type
- * \param[in,out]   PpFlightID              Pointer to the flight number
+ * \param[in]	    PbMsgType			    Message type
+ * \param[in,out]	PpFlightID			    Pointer to the flight number
  *
- * \retval      #OCP_FL_OK      Successful Execution
- * \retval      #OCP_FL_ERROR   Failure Execution
+ * \retval 		#OCP_FL_OK		Successful Execution
+ * \retval 		#OCP_FL_ERROR	Failure Execution
  */
 int32_t DtlsHS_GetFlightID(uint8_t PbMsgType, uint8_t* PpFlightID)
 {
@@ -1687,12 +1687,12 @@ int32_t DtlsHS_GetFlightID(uint8_t PbMsgType, uint8_t* PpFlightID)
 /**
  * Checks whether the received message belongs to the expected flight.<br>
  *
- * \param[in]       PbLastProcFlight            Last processed flight number
- * \param[in,out]   PpsBlobMessage              Pointer to the Blob containing record
- * \param[in]       PpsMessageLayer             Pointer to the structure containing message layer information
+ * \param[in]	    PbLastProcFlight			Last processed flight number
+ * \param[in,out]	PpsBlobMessage			    Pointer to the Blob containing record
+ * \param[in]	    PpsMessageLayer			    Pointer to the structure containing message layer information
  *
- * \retval      #OCP_FL_OK      Successful Execution
- * \retval      #OCP_FL_ERROR   Failure Execution
+ * \retval 		#OCP_FL_OK		Successful Execution
+ * \retval 		#OCP_FL_ERROR	Failure Execution
  */
 int32_t DtlsHS_MsgCheck(uint8_t PbLastProcFlight, const sbBlob_d* PpsBlobMessage, const sMsgLyr_d* PpsMessageLayer)
 {
@@ -1841,14 +1841,14 @@ int32_t DtlsHS_MsgCheck(uint8_t PbLastProcFlight, const sbBlob_d* PpsBlobMessage
  * Flight one handler to process flight 1 messages .<br>
  *
  * \param[in]       PbLastProcFlight          Last processed flight.
- * \param[in,out]   PpsThisFlight             Pointer to structure containing flight1 status.
+ * \param[in,out]	PpsThisFlight		      Pointer to structure containing flight1 status.
  * \param[in]       PpsMessageLayer           Pointer to the structure containing message configuration information.
  *
- * \retval      #OCP_FL_OK                          Successful execution
- * \retval      #OCP_FL_MSG_ERROR                   Failure in execution
- * \retval      #OCP_FL_MALLOC_FAILURE              Malloc failure
- * \retval      #OCP_FL_GET_MSG_FROM_OPTIGA_ERROR    Error from Security Chip
- * \retval      #OCP_FL_FLIGHTSEND_ERROR            Error while sending flight to Security Chip
+ * \retval		#OCP_FL_OK  			            Successful execution
+ * \retval		#OCP_FL_MSG_ERROR    	            Failure in execution
+ * \retval		#OCP_FL_MALLOC_FAILURE    	        Malloc failure
+ * \retval		#OCP_FL_GET_MSG_FROM_OPTIGA_ERROR    Error from Security Chip
+ * \retval		#OCP_FL_FLIGHTSEND_ERROR    	    Error while sending flight to Security Chip
  */
 //lint --e{818} suppress "This is ignored as same flight handler pointer is used for both send and receive"
 int32_t DtlsHS_Flight1Handler(uint8_t PbLastProcFlight, sFlightStats_d* PpsThisFlight, sMsgLyr_d* PpsMessageLayer)
@@ -1959,14 +1959,14 @@ int32_t DtlsHS_Flight1Handler(uint8_t PbLastProcFlight, sFlightStats_d* PpsThisF
  * Flight three handler to process flight 3 message.<br>
  *
  * \param[in]       PbLastProcFlight          Last processed flight.
- * \param[in,out]   PpsThisFlight             Pointer to structure containing flight3 status.
+ * \param[in,out]	PpsThisFlight		      Pointer to structure containing flight3 status.
  * \param[in]       PpsMessageLayer           Pointer to the structure containing message configuration information.
  *
- * \retval      #OCP_FL_OK                          Successful execution
- * \retval      #OCP_FL_MSG_ERROR                   Failure in execution
- * \retval      #OCP_FL_MALLOC_FAILURE              Malloc failure
- * \retval      #OCP_FL_GET_MSG_FROM_OPTIGA_ERROR    Error from Security Chip
- * \retval      #OCP_FL_FLIGHTSEND_ERROR            Error while sending flight to Security Chip
+ * \retval		#OCP_FL_OK  			            Successful execution
+ * \retval		#OCP_FL_MSG_ERROR    	            Failure in execution
+ * \retval		#OCP_FL_MALLOC_FAILURE    	        Malloc failure
+ * \retval		#OCP_FL_GET_MSG_FROM_OPTIGA_ERROR    Error from Security Chip
+ * \retval		#OCP_FL_FLIGHTSEND_ERROR    	    Error while sending flight to Security Chip
  */
 int32_t DtlsHS_Flight3Handler(uint8_t PbLastProcFlight, sFlightStats_d* PpsThisFlight, sMsgLyr_d* PpsMessageLayer)
 {
@@ -2090,14 +2090,14 @@ int32_t DtlsHS_Flight3Handler(uint8_t PbLastProcFlight, sFlightStats_d* PpsThisF
  * Flight five handler to process flight 5 messages .<br>
  *
  * \param[in]       PbLastProcFlight          Last processed flight.
- * \param[in,out]   PpsThisFlight             Pointer to structure containing flight5 status.
+ * \param[in,out]	PpsThisFlight		      Pointer to structure containing flight5 status.
  * \param[in]       PpsMessageLayer           Pointer to the structure containing message configuration information.
  *
- * \retval      #OCP_FL_OK                          Successful execution
- * \retval      #OCP_FL_MSG_ERROR                   Failure in execution
- * \retval      #OCP_FL_MALLOC_FAILURE              Malloc failure
- * \retval      #OCP_FL_GET_MSG_FROM_OPTIGA_ERROR    Error from Security Chip
- * \retval      #OCP_FL_FLIGHTSEND_ERROR            Error while sending flight to Security Chip
+ * \retval		#OCP_FL_OK  			            Successful execution
+ * \retval		#OCP_FL_MSG_ERROR    	            Failure in execution
+ * \retval		#OCP_FL_MALLOC_FAILURE    	        Malloc failure
+ * \retval		#OCP_FL_GET_MSG_FROM_OPTIGA_ERROR    Error from Security Chip
+ * \retval		#OCP_FL_FLIGHTSEND_ERROR    	    Error while sending flight to Security Chip
  */
 //lint --e{818} suppress "This is ignored as same flight handler pointer is used for both send and receive"
 int32_t DtlsHS_Flight5Handler(uint8_t PbLastProcFlight, sFlightStats_d* PpsThisFlight, sMsgLyr_d* PpsMessageLayer)
@@ -2213,12 +2213,12 @@ int32_t DtlsHS_Flight5Handler(uint8_t PbLastProcFlight, sFlightStats_d* PpsThisF
 /**
  * Validates the sequence number of message/ fragment received of flight 2.<br>
  *
- * \param[in]       PbRxMsgID           Message type of the received message/ fragment.
- * \param[in]   PwRxMsgSeqNum       Message sequence number of the received message/ fragment.
- * \param[in]       PpsMessageList      Pointer to list of messages.
+ * \param[in]		PbRxMsgID			Message type of the received message/ fragment.
+ * \param[in]	PwRxMsgSeqNum		Message sequence number of the received message/ fragment.
+ * \param[in]		PpsMessageList		Pointer to list of messages.
  *
- * \retval      #OCP_FL_OK                  Successful Execution
- * \retval      #OCP_FL_INVALID_MSG_SEQNUM  Sequence number does not match to buffered fragment sequence number
+ * \retval 		#OCP_FL_OK					Successful Execution
+ * \retval 		#OCP_FL_INVALID_MSG_SEQNUM	Sequence number does not match to buffered fragment sequence number
  */
 int32_t DtlsHS_Flight2CheckMsgSeqNum(uint8_t PbRxMsgID, uint16_t PwRxMsgSeqNum, const sMsgInfo_d *PpsMessageList)
 {
@@ -2252,15 +2252,15 @@ int32_t DtlsHS_Flight2CheckMsgSeqNum(uint8_t PbRxMsgID, uint16_t PwRxMsgSeqNum, 
  * Flight two handler to process flight 2 messages.<br>
  *
  * \param[in]       PbLastProcFlight          Last processed flight.
- * \param[in,out]   PpsThisFlight             Pointer to the structure containing flight2 status.
+ * \param[in,out]	PpsThisFlight		      Pointer to the structure containing flight2 status.
  * \param[in]       PpsMessageLayer           Pointer to the structure containing message configuration information.
  *
- * \retval      #OCP_FL_OK                          Successful execution
- * \retval      #OCP_FL_MSG_ERROR                   Failure in execution
- * \retval      #OCP_FL_MALLOC_FAILURE              Memory allocation failure
- * \retval      #OCP_FL_INVALID_MSG_SEQNUM          Invalid Message sequence number
- * \retval      #OCP_FL_MSG_NOT_IN_FLIGHT           Message doesn't belong to current flight
- * \retval      #OCP_FL_RXING                       Message is not yet completely received
+ * \retval		#OCP_FL_OK  			            Successful execution
+ * \retval		#OCP_FL_MSG_ERROR    	            Failure in execution
+ * \retval		#OCP_FL_MALLOC_FAILURE    	        Memory allocation failure
+ * \retval		#OCP_FL_INVALID_MSG_SEQNUM          Invalid Message sequence number
+ * \retval		#OCP_FL_MSG_NOT_IN_FLIGHT    	    Message doesn't belong to current flight
+ * \retval		#OCP_FL_RXING    	                Message is not yet completely received
  */
 //lint --e{818} suppress "This is ignored as same flight handler pointer is used for both send and receive"
 int32_t DtlsHS_Flight2Handler(uint8_t PbLastProcFlight, sFlightStats_d* PpsThisFlight, sMsgLyr_d* PpsMessageLayer)
@@ -2386,12 +2386,12 @@ int32_t DtlsHS_Flight2Handler(uint8_t PbLastProcFlight, sFlightStats_d* PpsThisF
 /**
  * Checks if message sequence number of received message/ fragment of flight4 is correct.<br>
  *
- * \param[in]       PpsMessageLayer             Pointer to the structure containing message configuration information.
- * \param[in]       PbRxMsgID                   Message type of received message/ fragment.
- * \param[in]       PwRxMsgSeqNum               Message sequence number of received message/ fragment.
+ * \param[in]       PpsMessageLayer				Pointer to the structure containing message configuration information.
+ * \param[in]       PbRxMsgID					Message type of received message/ fragment.
+ * \param[in]       PwRxMsgSeqNum				Message sequence number of received message/ fragment.
  *
- * \retval      #OCP_FL_OK                      Successful execution
- * \retval      #OCP_FL_ERROR                   Message Sequence number incorrect
+ * \retval		#OCP_FL_OK  			        Successful execution
+ * \retval		#OCP_FL_ERROR    	            Message Sequence number incorrect
  */
 int32_t DtlsHS_Flight4CheckMsgSeqNum(const sMsgLyr_d* PpsMessageLayer, uint8_t PbRxMsgID, uint16_t PwRxMsgSeqNum)
 {
@@ -2457,16 +2457,16 @@ int32_t DtlsHS_Flight4CheckMsgSeqNum(const sMsgLyr_d* PpsMessageLayer, uint8_t P
  * Flight four handler to process flight 4 messages.<br>
  *
  * \param[in]       PbLastProcFlight          Last processed flight.
- * \param[in,out]   PpsThisFlight             Pointer to the structure containing flight4 status.
+ * \param[in,out]	PpsThisFlight		      Pointer to the structure containing flight4 status.
  * \param[in]       PpsMessageLayer           Pointer to the structure containing message configuration information.
  *
- * \retval      #OCP_FL_OK                          Successful execution
- * \retval      #OCP_FL_MSG_ERROR                   Failure in execution
- * \retval      #OCP_FL_MALLOC_FAILURE              Memory allocation failure
- * \retval      #OCP_FL_INVALID_MSG_SEQNUM          Invalid Message sequence number
- * \retval      #OCP_FL_MSG_NOT_IN_FLIGHT           Message doesn't belong to current flight
- * \retval      #OCP_FL_RXING                       Message is not yet completely received
- * \retval      #OCP_FL_MSG_MAXCOUNT                Message is received at least 6 times
+ * \retval		#OCP_FL_OK  			            Successful execution
+ * \retval		#OCP_FL_MSG_ERROR    	            Failure in execution
+ * \retval		#OCP_FL_MALLOC_FAILURE    	        Memory allocation failure
+ * \retval		#OCP_FL_INVALID_MSG_SEQNUM          Invalid Message sequence number
+ * \retval		#OCP_FL_MSG_NOT_IN_FLIGHT    	    Message doesn't belong to current flight
+ * \retval		#OCP_FL_RXING    	                Message is not yet completely received
+ * \retval		#OCP_FL_MSG_MAXCOUNT				Message is received at least 6 times
  */
 int32_t DtlsHS_Flight4Handler(uint8_t PbLastProcFlight, sFlightStats_d* PpsThisFlight, sMsgLyr_d* PpsMessageLayer)
 {
@@ -2650,10 +2650,10 @@ int32_t DtlsHS_Flight4Handler(uint8_t PbLastProcFlight, sFlightStats_d* PpsThisF
 /**
  * Checks whether flight six is received.<br>
  *
- * \param[in]       PpsMessageList          Pointer to the list of messages of flight6.
+ * \param[in]       PpsMessageList			Pointer to the list of messages of flight6.
  *
- * \retval      #OCP_FL_OK                  Flight six is received
- * \retval      #OCP_FL_ERROR               Flight six is not received
+ * \retval		#OCP_FL_OK  			    Flight six is received
+ * \retval		#OCP_FL_ERROR    	        Flight six is not received
  */
 _STATIC_H int32_t DtlsHS_CheckFlight6_Compl(sMsgInfo_d *PpsMessageList)
 {
@@ -2691,16 +2691,16 @@ _STATIC_H int32_t DtlsHS_CheckFlight6_Compl(sMsgInfo_d *PpsMessageList)
  * Flight six handler to process flight 6 messages.<br>
  *
  * \param[in]       PbLastProcFlight          Last processed flight.
- * \param[in,out]   PpsThisFlight             Pointer to the structure containing flight6 status.
+ * \param[in,out]	PpsThisFlight		      Pointer to the structure containing flight6 status.
  * \param[in]       PpsMessageLayer           Pointer to the structure containing message configuration information.
  *
- * \retval      #OCP_FL_OK                          Successful execution
- * \retval      #OCP_FL_MSG_ERROR                   Failure in execution
- * \retval      #OCP_FL_MALLOC_FAILURE              Memory allocation failure
- * \retval      #OCP_FL_INVALID_MSG_SEQNUM          Invalid Message sequence number
- * \retval      #OCP_FL_MSG_NOT_IN_FLIGHT           Message doesn't belong to current flight
- * \retval      #OCP_FL_RXING                       Message is not yet completely received
- * \retval      #OCP_FL_MSG_MAXCOUNT                Message is received at least 6 times
+ * \retval		#OCP_FL_OK  			            Successful execution
+ * \retval		#OCP_FL_MSG_ERROR    	            Failure in execution
+ * \retval		#OCP_FL_MALLOC_FAILURE    	        Memory allocation failure
+ * \retval		#OCP_FL_INVALID_MSG_SEQNUM          Invalid Message sequence number
+ * \retval		#OCP_FL_MSG_NOT_IN_FLIGHT    	    Message doesn't belong to current flight
+ * \retval		#OCP_FL_RXING    	                Message is not yet completely received
+ * \retval		#OCP_FL_MSG_MAXCOUNT				Message is received at least 6 times
  */
 int32_t DtlsHS_Flight6Handler(uint8_t PbLastProcFlight, sFlightStats_d* PpsThisFlight, sMsgLyr_d* PpsMessageLayer)
 {

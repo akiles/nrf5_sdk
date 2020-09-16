@@ -176,13 +176,14 @@
         </option>
         <option>
           <name>CCDefines</name>
+          <state>APP_TIMER_V2</state>
+          <state>APP_TIMER_V2_RTC1_ENABLED</state>
           <state>BOARD_PCA10056</state>
           <state>BSP_DEFINES_ONLY</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>DL_MAX_FRAME_SIZE=250</state>
           <state>FLOAT_ABI_HARD</state>
           <state>NRF52840_XXAA</state>
-          <state>SWI_DISABLE0</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -316,6 +317,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto</state>
@@ -339,6 +341,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\queue</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ringbuf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sortlist</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\stack_info</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
@@ -349,6 +352,7 @@
           <state>$PROJ_DIR$\..\..\common_test</state>
           <state>$PROJ_DIR$\..\..\test_cases</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\examples\ecdsa_utils</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\include</state>
@@ -517,13 +521,14 @@
         </option>
         <option>
       <name>ADefines</name>
+          <state>APP_TIMER_V2</state>
+          <state>APP_TIMER_V2_RTC1_ENABLED</state>
           <state>BOARD_PCA10056</state>
           <state>BSP_DEFINES_ONLY</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>DL_MAX_FRAME_SIZE=250</state>
           <state>FLOAT_ABI_HARD</state>
           <state>NRF52840_XXAA</state>
-          <state>SWI_DISABLE0</state>
         </option>
         <option>
           <name>AList</name>
@@ -624,6 +629,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto</state>
@@ -647,6 +653,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\queue</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ringbuf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sortlist</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\stack_info</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
@@ -657,6 +664,7 @@
           <state>$PROJ_DIR$\..\..\common_test</state>
           <state>$PROJ_DIR$\..\..\test_cases</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\examples\ecdsa_utils</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\include</state>
@@ -1069,10 +1077,12 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_handler_iar.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer2.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\drv_rtc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\mem_manager\mem_manager.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo\nrf_atfifo.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic\nrf_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc\nrf_balloc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf\nrf_fprintf.c</name>    </file>    <file>
@@ -1082,6 +1092,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\queue\nrf_queue.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ringbuf\nrf_ringbuf.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sortlist\nrf_sortlist.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\twi_mngr\nrf_twi_mngr.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
@@ -1099,6 +1110,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\cmd\CommandLib.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\common\Logger.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\common\Util.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\examples\ecdsa_utils\ecdsa_utils.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\comms\ifx_i2c\ifx_i2c.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\comms\ifx_i2c\ifx_i2c_config.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\optiga\comms\ifx_i2c\ifx_i2c_data_link_layer.c</name>    </file>    <file>
@@ -1113,7 +1125,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\pal\nrf5x\pal_os.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\infineon\pal\nrf5x\pal_os_lock.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_3.0.1.a</name>    </file>  </group>  <group>
   <name>nRF_Crypto</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_aead.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_aes.c</name>    </file>    <file>
@@ -1145,8 +1157,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_ecdh.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_ecdsa.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_init.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_rng.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_utils.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga\optiga_backend_rng.c</name>    </file>  </group>  <group>
   <name>nRF_Crypto backend Oberon</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_chacha_poly_aead.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_ecc.c</name>    </file>    <file>

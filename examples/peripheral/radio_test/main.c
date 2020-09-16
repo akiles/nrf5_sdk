@@ -118,9 +118,9 @@ static void init(void)
 {
     NRF_RNG->TASKS_START = 1;
 
-#ifndef NRF52810_XXAA
+#ifdef NVMC_ICACHECNF_CACHEEN_Msk
     NRF_NVMC->ICACHECNF  = NVMC_ICACHECNF_CACHEEN_Enabled << NVMC_ICACHECNF_CACHEEN_Pos;
-#endif // NRF52810_XXAA 
+#endif // NVMC_ICACHECNF_CACHEEN_Msk
 
     // Start 64 MHz crystal oscillator.
     NRF_CLOCK->EVENTS_HFCLKSTARTED = 0;

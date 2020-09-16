@@ -89,7 +89,7 @@ NRF_LOG_MODULE_REGISTER();
 /**
  * @brief This macro is used for developer debugging.
  *
- * @note  Not enabled nromally as too many logs result and this level of detail is needed
+ * @note  Not enabled normally as too many logs result and this level of detail is needed
  *        less frequently.
  */
 #define TLS_TRC(...)
@@ -144,6 +144,7 @@ static interface_t * m_interface[NRF_TLS_MAX_INSTANCE_COUNT];                   
 static uint8_t       m_input_buffer[INPUT_BUFFER_SIZE * NRF_TLS_MAX_INSTANCE_COUNT];       /**< Input buffer that is statically reserved. */
 SDK_MUTEX_DEFINE(m_tls_mutex)                                                              /**< Mutex variable. Currently unused, this declaration does not occupy any space in RAM. */
 
+
 /**@brief Initializes the interface.
  *
  * @param[in] index Identifies instance in m_interface table to be initialized.
@@ -168,9 +169,9 @@ static __INLINE void * wrapper_calloc(size_t n, size_t s)
 }
 
 
-/**@brief Frees and allocated interface instance.
+/**@brief Frees an allocated interface instance.
  *
- *@param[in] p_instance Identifies the interface instance to be freed.
+ * @param[in] p_instance Identifies the interface instance to be freed.
  */
 static void interface_free(uint32_t index)
 {
@@ -195,11 +196,12 @@ static void interface_free(uint32_t index)
     interface_init(index);
 }
 
+
 /**@brief Allocates an interface instance.
  *
  * @param[inout] p_instance Provides transport identifier for the TLS instance.
  *               And if procedure was successful, will conatin allocated TLS instance identifier.
- * @param[in]    TLS options to be used for the instamce.
+ * @param[in]    p_options TLS options to be used for the instance.
  *
  * @retval NRF_SUCCESS if the procedure was successful, else an error code indicating reason
  (         for failure.
@@ -207,14 +209,14 @@ static void interface_free(uint32_t index)
 static uint32_t interface_alloc(nrf_tls_instance_t      * p_instance,
                                 nrf_tls_options_t const * p_options)
 {
-    uint32_t      index       = 0;
+    uint32_t      index;
     uint32_t      err_code    = NRF_TLS_NO_FREE_INSTANCE;
     interface_t * p_interface = NULL;
 
     TLS_ENTRY();
 
-    // allocate meory for the TLS instance.
-    for (index  = 0; index < NRF_TLS_MAX_INSTANCE_COUNT; index++)
+    // Allocate memory for the TLS instance.
+    for (index = 0; index < NRF_TLS_MAX_INSTANCE_COUNT; index++)
     {
         if (m_interface[index] == NULL)
         {
@@ -228,9 +230,9 @@ static uint32_t interface_alloc(nrf_tls_instance_t      * p_instance,
         }
     }
 
-    if ((index < NRF_TLS_MAX_INSTANCE_COUNT)&& (p_interface != NULL))
+    if ((index < NRF_TLS_MAX_INSTANCE_COUNT) && (p_interface != NULL))
     {
-        // Initialize the memory holding the sturcture.
+        // Initialize the memory holding the structure.
         memset(p_interface, 0, sizeof(interface_t));
 
         p_interface->output_fn = p_options->output_fn;
@@ -258,19 +260,16 @@ static uint32_t interface_alloc(nrf_tls_instance_t      * p_instance,
                                          OUTPUT_BUFFER_SIZE);
 
                 TLS_LOG("Output FIFO init result %08lx", err_code);
-
-                if (err_code == NRF_SUCCESS)
-                {
-                    // All pre-requisites for using the instance met.
-                    // Procedure was successful.
-                    TLS_LOG("Ind");
-
-                    p_interface->transport_id = p_instance->transport_id;
-                    p_instance->instance_id   = index;
-                }
             }
 
-            if (err_code != NRF_SUCCESS)
+            if (err_code == NRF_SUCCESS)
+            {
+                // All prerequisites for using the instance met.
+                // Procedure was successful.
+                p_interface->transport_id = p_instance->transport_id;
+                p_instance->instance_id   = index;
+            }
+            else
             {
                 err_code = (NRF_ERROR_INTERNAL | IOT_TLS_ERR_BASE);
             }
@@ -296,16 +295,18 @@ static uint32_t interface_alloc(nrf_tls_instance_t      * p_instance,
  * @details Data read on the transport is fed to the interface using the nrf_tls_input function.
  *          The TLS library requests the data based on state of SSL connection.
  *
- * @param[in]  p_ctx     Context registered with the library on creation of the TLS instance.
- * @param[out] p_buffer  Buffer where read data is fetched.
- * @param[in]  size      Size to be read.
+ * @param[in]  p_ctx    Context registered with the library on creation of the TLS instance.
+ * @param[out] p_buffer Buffer where read data is fetched.
+ * @param[in]  size     Size to be read.
  *
  * @retval size of data read if procedure was successful.
  * @retval MBEDTLS_ERR_SSL_CONN_EOF indicating there is not enough data received on the transport.
  */
-static int interface_transport_read(void * p_ctx, unsigned char * p_buffer, size_t buffer_size)
+static int interface_transport_read(void          * p_ctx,
+                                    unsigned char * p_buffer,
+                                    size_t          buffer_size)
 {
-    uint32_t            err;
+    uint32_t            err_code;
     uint32_t            length         = buffer_size;
     interface_t * const p_interface    = m_interface[(uint32_t)p_ctx];
     uint32_t            available_size = 0;
@@ -317,11 +318,11 @@ static int interface_transport_read(void * p_ctx, unsigned char * p_buffer, size
              buffer_size);
 
     // Verify how much data is available in the queue.
-    err = app_fifo_read(&p_interface->input_fifo, NULL, &available_size);
+    err_code = app_fifo_read(&p_interface->input_fifo, NULL, &available_size);
 
     TLS_TRC("[%p]: interface_transport_read, app_fifo_read result %ld",
              p_interface,
-             err);
+             err_code);
 
     // For datagram connection, read all that is available.
     // For stream sockets, read only if available data is at least as much as requested.
@@ -335,9 +336,9 @@ static int interface_transport_read(void * p_ctx, unsigned char * p_buffer, size
                  buffer_size,
                  available_size);
 
-        err = app_fifo_read(&p_interface->input_fifo, p_buffer, &length);
+        err_code = app_fifo_read(&p_interface->input_fifo, p_buffer, &length);
 
-        if (err == NRF_SUCCESS)
+        if (err_code == NRF_SUCCESS)
         {
             TLS_TRC("[%p]: interface_transport_read success, length 0x%08lx.",
                      p_interface,
@@ -346,6 +347,8 @@ static int interface_transport_read(void * p_ctx, unsigned char * p_buffer, size
             TLS_TRC("[NRF TLS]: ---------------- SSL Read data --------------");
             TLS_DUMP(p_buffer, length);
             TLS_TRC("[NRF TLS]: -------------------- End ------------------");
+
+            TLS_MUTEX_UNLOCK();
 
             return length;
         }
@@ -367,17 +370,19 @@ static int interface_transport_read(void * p_ctx, unsigned char * p_buffer, size
 
 /**@brief Write function that the TLS library calls to write on the transport.
  *
- * @param[in] p_ctx  Context registered with the library on creation of the TLS instance.
- * @param[in] p_buf  Buffer containing data to be written on the transport.
- * @param[in] len    Length of data to be written.
+ * @param[in] p_ctx Context registered with the library on creation of the TLS instance.
+ * @param[in] p_buf Buffer containing data to be written on the transport.
+ * @param[in] len   Length of data to be written.
  *
  * @retval length of data written on the transport if the procedure was successful.
  * @retval MBEDTLS_ERR_SSL_CONN_EOF in case the procedure failed.
  */
-static int interface_transport_write(void * p_ctx, const unsigned char * p_buf, size_t len)
+static int interface_transport_write(void                * p_ctx,
+                                     const unsigned char * p_buf,
+                                     size_t                len)
 {
-    int                      op_len      = len;
-    interface_t * const      p_interface = m_interface[(uint32_t)p_ctx];
+    int                 op_len      = len;
+    interface_t * const p_interface = m_interface[(uint32_t)p_ctx];
 
     TLS_MUTEX_LOCK();
 
@@ -386,8 +391,8 @@ static int interface_transport_write(void * p_ctx, const unsigned char * p_buf, 
         .instance_id  = (uint32_t)p_ctx
     };
 
-    TLS_LOG("[%p]: interface_transport_write requested 0x%08x",
-               p_interface, len);
+    TLS_TRC("[%p]: interface_transport_write requested 0x%08x",
+            p_interface, len);
 
     TLS_MUTEX_UNLOCK();
 
@@ -418,7 +423,9 @@ static int interface_transport_write(void * p_ctx, const unsigned char * p_buf, 
  *
  * @note This loop is time critical when available is less than requested size.
  */
-static int random_vector_generate(void * p_ctx, unsigned char * p_buffer, size_t size)
+static int random_vector_generate(void          * p_ctx,
+                                  unsigned char * p_buffer,
+                                  size_t          size)
 {
     uint8_t available = 0;
 
@@ -439,9 +446,9 @@ static int random_vector_generate(void * p_ctx, unsigned char * p_buffer, size_t
 }
 
 
-/**@brief Routine called periodically to adavnce the SSL context state.
+/**@brief Routine called periodically to advance the SSL context state.
  *
- * @param[in] index Identifies the instance in m_interface to be serviced.
+ * @param[in] p_instance Provides transport identifier for the TLS instance.
  */
 static void interface_continue(interface_t * p_interface)
 {
@@ -457,9 +464,8 @@ static void interface_continue(interface_t * p_interface)
 
         TLS_MUTEX_LOCK();
 
-        TLS_TRC("[%p]:[0x%08lx]mbedtls_ssl_read result(len) 0x%08lx",
+        TLS_TRC("[%p]: mbedtls_ssl_read result(len) 0x%08lx",
                 p_interface,
-                index,
                 len);
 
         if (len > 0)
@@ -477,19 +483,20 @@ static void interface_continue(interface_t * p_interface)
     }
 }
 
+
 /**@brief Debug log funciton registered with the TLS library.
  *
- * @param[in]  p_ctx    Context registered with the library on creation of the TLS instance.
- * @param[in]  level    Debug level of the log.
- * @param[in]  p_file   File requesting the log.
- * @param[in]  line     Line number in the file requesting the log.
- * @param[in]  p_str    String containing the log message.
+ * @param[in] p_ctx  Context registered with the library on creation of the TLS instance.
+ * @param[in] level  Debug level of the log.
+ * @param[in] p_file File requesting the log.
+ * @param[in] line   Line number in the file requesting the log.
+ * @param[in] p_str  String containing the log message.
  */
 static void mbedtls_log(void       * p_ctx,
-                     int          level,
-                     const char * p_file,
-                     int          line,
-                     const char * p_str)
+                        int          level,
+                        const char * p_file,
+                        int          line,
+                        const char * p_str)
 {
     TLS_LOG("[%s]:[%d]: %s", &p_file[strlen(p_file)-12], line, p_str);
 }
@@ -497,12 +504,14 @@ static void mbedtls_log(void       * p_ctx,
 
 /**@brief Function registered with TLS library to set (start/stop) timer.
  *
- * @param[in]  p_ctx    Context registered with the library on creation of the TLS instance.
- * @param[in]  int_ms   Intermediate timeout period in milliseconds.
- * @param[in]  fin_ms   Finaly timout period in milliseconds.
- *                      Value of zero indicates a request to stop the timer.
+ * @param[in] p_ctx  Context registered with the library on creation of the TLS instance.
+ * @param[in] int_ms Intermediate timeout period in milliseconds.
+ * @param[in] fin_ms Finaly timout period in milliseconds.
+ *                   Value of zero indicates a request to stop the timer.
  */
-static void tls_set_timer (void * p_ctx, uint32_t int_ms, uint32_t fin_ms)
+static void tls_set_timer(void     * p_ctx,
+                          uint32_t   int_ms,
+                          uint32_t   fin_ms)
 {
     TLS_MUTEX_LOCK();
 
@@ -537,15 +546,17 @@ static void tls_set_timer (void * p_ctx, uint32_t int_ms, uint32_t fin_ms)
 
 /**@brief Function registered with TLS library to get the status of the timer.
  *
- * @param[in]  p_ctx    Context registered with the library on creation of the TLS instance.
+ * @param[in] p_ctx Context registered with the library on creation of the TLS instance.
  *
  * @retval -1 if timer is cancelled
  * @retval  0 if none of the delays is expired
  * @retval  1 if the intermediate delay only is expired
  * @retval  2 if the final delay is expired
  */
-static int tls_get_timer (void * p_ctx)
+static int tls_get_timer(void * p_ctx)
 {
+    int retval = 0;
+
     TLS_MUTEX_LOCK();
 
     iot_timer_time_in_ms_t         elapsed_time;
@@ -553,7 +564,7 @@ static int tls_get_timer (void * p_ctx)
 
     uint32_t err_code = iot_timer_wall_clock_delta_get(&p_interface->start_tick, &elapsed_time);
 
-    TLS_TRC("[%p]:get_timer, start %d, final %d, intermediate %d, elapsed %d",
+    TLS_TRC("[%p]: get_timer, start %d, final %d, intermediate %d, elapsed %d",
             p_interface,
             p_interface->start_tick,
             p_interface->final_delay,
@@ -564,25 +575,22 @@ static int tls_get_timer (void * p_ctx)
     {
         if (p_interface->final_delay <= elapsed_time)
         {
-            return 2;
+            retval = 2;
         }
         else if (p_interface->intrmediate_delay <= elapsed_time)
         {
-           return 1;
+            retval = 1;
         }
-        else
+        else if ((p_interface->intrmediate_delay == TIME_PERIOD_INVALID) &&
+                 (p_interface->final_delay       == TIME_PERIOD_INVALID))
         {
-            if ((p_interface->intrmediate_delay ==  TIME_PERIOD_INVALID) &&
-                (p_interface->final_delay       ==  TIME_PERIOD_INVALID))
-            {
-                return -1;
-            }
+            retval = -1;
         }
     }
 
     TLS_MUTEX_UNLOCK();
 
-    return 0;
+    return retval;
 }
 
 
@@ -638,7 +646,7 @@ static void interface_conf_debug_print(interface_t * p_interface)
  *         failure.
  */
 static uint32_t own_certificate_set(interface_t                 * const p_interface,
-                                              nrf_tls_certificate_t const * p_own)
+                                    nrf_tls_certificate_t const * p_own)
 {
 #ifdef MBEDTLS_X509_CRT_PARSE_C
     uint32_t error_code = (NRF_ERROR_NO_MEM | IOT_TLS_ERR_BASE);
@@ -655,9 +663,9 @@ static uint32_t own_certificate_set(interface_t                 * const p_interf
                                         p_own->p_certificate,
                                         p_own->certificate_len);
 
-        if ( result == 0 )
+        if (result == 0)
         {
-            mbedtls_pk_init( &p_interface->pkey );
+            mbedtls_pk_init(&p_interface->pkey);
 
             result =  mbedtls_pk_parse_key(&p_interface->pkey,
                                            p_own->p_private_key,
@@ -668,13 +676,13 @@ static uint32_t own_certificate_set(interface_t                 * const p_interf
             result = mbedtls_ssl_conf_own_cert(&p_interface->conf,
                                                p_interface->p_owncert,
                                                &p_interface->pkey);
-            if (result != 0)
+            if (result == 0)
             {
-                error_code = NRF_TLS_OWN_CERT_SETUP_FAILED;
+                error_code = NRF_SUCCESS;
             }
             else
             {
-                error_code = NRF_SUCCESS;
+                error_code = NRF_TLS_OWN_CERT_SETUP_FAILED;
             }
         }
         else
@@ -698,7 +706,7 @@ static uint32_t own_certificate_set(interface_t                 * const p_interf
  * @retval NRF_SUCCESS if the procedure was successful, else an error code indicating reason for
  *         failure.
  */
-static uint32_t verify_options_set(interface_t                  * const  p_interface,
+static uint32_t verify_options_set(interface_t                  * const p_interface,
                                    nrf_tls_key_settings_t const * p_settings)
 {
     uint32_t err_code = NRF_SUCCESS;
@@ -718,13 +726,13 @@ static uint32_t verify_options_set(interface_t                  * const  p_inter
             int result = mbedtls_x509_crt_parse(p_interface->p_cacert,
                                                 p_settings->p_ca_cert_pem,
                                                 p_settings->ca_cert_pem_len);
-            if ( result < 0 )
+            if (result >= 0)
             {
-                err_code = NRF_TLS_INVALID_CA_CERTIFICATE;
+                mbedtls_ssl_conf_ca_chain(&p_interface->conf, p_interface->p_cacert, NULL);
             }
             else
             {
-                mbedtls_ssl_conf_ca_chain(&p_interface->conf, p_interface->p_cacert, NULL);
+                err_code = NRF_TLS_INVALID_CA_CERTIFICATE;
             }
         }
         else
@@ -750,9 +758,10 @@ static uint32_t verify_options_set(interface_t                  * const  p_inter
  * @retval NRF_SUCCESS if the procedure was successful, else an error indicating reason
  *         for failure.
  */
-static uint32_t interface_conf_setup(uint32_t instance_id, nrf_tls_options_t const * p_options)
+static uint32_t interface_conf_setup(uint32_t                  instance_id,
+                                     nrf_tls_options_t const * p_options)
 {
-    int           result      = 0;
+    int           result;
     interface_t * p_interface = m_interface[instance_id];
     uint32_t      err_code    = NRF_TLS_CONFIGURATION_FAILED;
 
@@ -766,7 +775,7 @@ static uint32_t interface_conf_setup(uint32_t instance_id, nrf_tls_options_t con
     mbedtls_ssl_conf_rng(&p_interface->conf, random_vector_generate, NULL);
     mbedtls_ssl_conf_dbg(&p_interface->conf, mbedtls_log, NULL);
 
-    TLS_TRC("[%p]: mbedtls_ssl_config_defaults result %08lx", p_conf, result);
+    TLS_TRC("[%p]: mbedtls_ssl_config_defaults result %08lx", p_interface, result);
 
 #ifdef MBEDTLS_KEY_EXCHANGE_PSK_ENABLED
     if (result == 0)
@@ -840,13 +849,13 @@ static uint32_t interface_conf_setup(uint32_t instance_id, nrf_tls_options_t con
  */
 static uint32_t interface_ssl_context_setup(uint32_t instance_id)
 {
-    int           result = 0;
+    int           result;
     interface_t * p_interface = m_interface[instance_id];
 
     TLS_TRC("[%p]: Major number: 0x%08lx Minor number: 0x%08lx",
-            p_conf,
-            p_conf->min_major_ver,
-            p_conf->min_minor_ver);
+            p_interface->conf,
+            p_interface->conf.min_major_ver,
+            p_interface->conf.min_minor_ver);
 
     mbedtls_ssl_init(&p_interface->context);
 
@@ -891,15 +900,14 @@ static uint32_t interface_ssl_context_setup(uint32_t instance_id)
 
 uint32_t nrf_tls_init(void)
 {
-    uint32_t           index = 0;
+    uint32_t index = 0;
 
     SDK_MUTEX_INIT(m_tls_mutex);
 
-    do
+    for (index = 0; index < NRF_TLS_MAX_INSTANCE_COUNT; index++)
     {
         interface_init(index);
-        index++;
-    } while (index < NRF_TLS_MAX_INSTANCE_COUNT);
+    }
 
     UNUSED_RETURN_VALUE(mbedtls_platform_set_calloc_free(wrapper_calloc, nrf_free));
 
@@ -972,7 +980,7 @@ uint32_t nrf_tls_input(nrf_tls_instance_t const * p_instance,
                 TLS_TRC("[%p]: >>  nrf_tls_input datalen 0x%08lx result 0x%08lx",
                         p_interface,
                         datalen,
-                        retval);
+                        err_code);
             }
             else
             {
@@ -988,7 +996,7 @@ uint32_t nrf_tls_input(nrf_tls_instance_t const * p_instance,
         else
         {
             // Not enough room in the FIFO, indicate error.
-            return (NRF_ERROR_NO_MEM | IOT_TLS_ERR_BASE);
+            err_code = (NRF_ERROR_NO_MEM | IOT_TLS_ERR_BASE);
         }
     }
 
@@ -1087,7 +1095,7 @@ uint32_t nrf_tls_free(nrf_tls_instance_t const * p_instance)
 
 void nrf_tls_process(void)
 {
-    uint32_t      index;
+    uint32_t index;
 
     TLS_MUTEX_LOCK();
 

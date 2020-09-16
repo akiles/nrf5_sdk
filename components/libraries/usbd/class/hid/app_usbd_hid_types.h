@@ -205,21 +205,21 @@ typedef union {
  * @brief HID requests defined by specification.
  */
 typedef enum {
-    APP_USBD_HID_REQ_GET_REPORT   = 0x01,  /**< REPORT: device -> host (required).                     */
-    APP_USBD_HID_REQ_GET_IDLE     = 0x02,  /**< IDLE: device -> host (not required).                   */
-    APP_USBD_HID_REQ_GET_PROTOCOL = 0x03,  /**< PROTOCOL: device -> host (required for boot protocol). */
-    APP_USBD_HID_REQ_SET_REPORT   = 0x09,  /**< REPORT: host -> device (not required).                 */
-    APP_USBD_HID_REQ_SET_IDLE     = 0x0A,  /**< IDLE: no data stage (required for boot protocol).      */
-    APP_USBD_HID_REQ_SET_PROTOCOL = 0x0B,  /**< PROTOCOL: no data stage(required for boot protocol).   */
+    APP_USBD_HID_REQ_GET_REPORT   = 0x01, /**< REPORT: device -> host (required).                     */
+    APP_USBD_HID_REQ_GET_IDLE     = 0x02, /**< IDLE: device -> host (not required).                   */
+    APP_USBD_HID_REQ_GET_PROTOCOL = 0x03, /**< PROTOCOL: device -> host (required for boot protocol). */
+    APP_USBD_HID_REQ_SET_REPORT   = 0x09, /**< REPORT: host -> device (not required).                 */
+    APP_USBD_HID_REQ_SET_IDLE     = 0x0A, /**< IDLE: no data stage (required for boot protocol).      */
+    APP_USBD_HID_REQ_SET_PROTOCOL = 0x0B, /**< PROTOCOL: no data stage (required for boot protocol).  */
 } app_usbd_hid_req_t;
 
 /**
  *  @brief HID report type.
  */
 typedef enum {
-    APP_USBD_HID_REPORT_TYPE_INPUT   = 0x01,/**< INPUT report type   */
-    APP_USBD_HID_REPORT_TYPE_OUTPUT  = 0x02,/**< OUTPUT report type  */
-    APP_USBD_HID_REPORT_TYPE_FEATURE = 0x03,/**< FEATURE report type */
+    APP_USBD_HID_REPORT_TYPE_INPUT   = 0x01, /**< INPUT report type   */
+    APP_USBD_HID_REPORT_TYPE_OUTPUT  = 0x02, /**< OUTPUT report type  */
+    APP_USBD_HID_REPORT_TYPE_FEATURE = 0x03, /**< FEATURE report type */
 } app_usbd_hid_report_type_t;
 
 
@@ -228,7 +228,7 @@ typedef enum {
  *
  * The version of the HID descriptors used.
  */
-#define APP_USBD_HID_BCD_VER APP_USBD_BCD_VER_MAKE(1, 11)
+#define APP_USBD_HID_BCD_VER APP_USBD_BCD_VER_MAKE(1, 1, 1)
 
 /**
  * @brief HID version BCD value definition distributed into bytes.

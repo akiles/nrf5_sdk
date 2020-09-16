@@ -129,7 +129,7 @@ static uint32_t rnd32(void)
  */
 static void radio_channel_set(uint8_t mode, uint8_t channel)
 {
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
     if (mode == RADIO_MODE_MODE_Ieee802154_250Kbit)
     {
         if (channel >= IEEE_MIN_CHANNEL && channel <= IEEE_MAX_CHANNEL)
@@ -149,7 +149,7 @@ static void radio_channel_set(uint8_t mode, uint8_t channel)
     }
 #else
     NRF_RADIO->FREQUENCY = channel;
-#endif // NRF52840_XXAA
+#endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
 }
 
 
@@ -202,7 +202,7 @@ static void radio_config(uint8_t mode)
 
     switch (mode)
     {
-     #ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
         case RADIO_MODE_MODE_Ieee802154_250Kbit:
         {
             // Packet configuration:
@@ -240,7 +240,7 @@ static void radio_config(uint8_t mode)
             NRF_RADIO->CRCCNF = (RADIO_CRCCNF_LEN_Three << RADIO_CRCCNF_LEN_Pos) |
                                 (RADIO_CRCCNF_SKIPADDR_Skip << RADIO_CRCCNF_SKIPADDR_Pos);
         } break;
-     #endif // NRF52840_XXAA
+     #endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
 
         case RADIO_MODE_MODE_Ble_2Mbit:
         {
@@ -276,7 +276,7 @@ static void generate_modulated_rf_packet(uint8_t mode)
     radio_config(mode);
 
     // One byte used for size, actual size is SIZE-1
-#ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
     if (mode == RADIO_MODE_MODE_Ieee802154_250Kbit)
     {
         m_tx_packet[0] = IEEE_MAX_PAYLOAD_LEN - 1;
@@ -287,7 +287,7 @@ static void generate_modulated_rf_packet(uint8_t mode)
     }
 #else
     m_tx_packet[0] = sizeof(m_tx_packet) - 1;
-#endif // NRF52840_XXAA
+#endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
 
     // Fill payload with random data.
     for (uint8_t i = 0; i < sizeof(m_tx_packet) - 1; i++)
@@ -365,14 +365,14 @@ void radio_modulated_tx_carrier(uint8_t txpower, uint8_t mode, uint8_t channel)
 
     switch (mode)
     {
-        #ifdef NRF52840_XXAA
+#if defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
         case RADIO_MODE_MODE_Ieee802154_250Kbit:
         case RADIO_MODE_MODE_Ble_LR125Kbit:
         case RADIO_MODE_MODE_Ble_LR500Kbit:
         {
             NRF_RADIO->SHORTS = RADIO_SHORTS_READY_START_Msk | RADIO_SHORTS_PHYEND_START_Msk;
         } break;
-        #endif // NRF52840_XXAA
+        #endif // defined(NRF52840_XXAA) || defined(NRF52833_XXAA)
 
         case RADIO_MODE_MODE_Ble_1Mbit:
         case RADIO_MODE_MODE_Ble_2Mbit:

@@ -65,6 +65,7 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
+#if NRF_CLI_ENABLED
 /**
  * @brief CLI interface over UART
  */
@@ -74,6 +75,7 @@ NRF_CLI_DEF(m_cli_uart,
             &m_cli_uart_transport.transport,
             '\r',
             4);
+#endif
 
 /**
  * @brief Enable USB power detection
@@ -145,6 +147,12 @@ NRF_CLI_DEF(m_cli_uart,
 #define REPORT_OUT_MAXSIZE  0
 
 /**
+ * @brief Feature report maximum size. HID generic class will reserve
+ *        this buffer size + 1 memory space. 
+ */
+#define REPORT_FEATURE_MAXSIZE  31
+
+/**
  * @brief HID generic class endpoints count.
  * */
 #define HID_GENERIC_EP_COUNT  1
@@ -208,6 +216,7 @@ APP_USBD_HID_GENERIC_GLOBAL_DEF(m_app_hid_generic,
                                 reps,
                                 REPORT_IN_QUEUE_SIZE,
                                 REPORT_OUT_MAXSIZE,
+                                REPORT_FEATURE_MAXSIZE,
                                 APP_USBD_HID_SUBCLASS_BOOT,
                                 APP_USBD_HID_PROTO_MOUSE);
 
@@ -518,6 +527,7 @@ static void init_bsp(void)
     bsp_board_init(BSP_INIT_LEDS);
 }
 
+#if NRF_CLI_ENABLED
 static void init_cli(void)
 {
     ret_code_t ret;
@@ -532,6 +542,7 @@ static void init_cli(void)
     ret = nrf_cli_start(&m_cli_uart);
     APP_ERROR_CHECK(ret);
 }
+#endif
 
 static ret_code_t idle_handle(app_usbd_class_inst_t const * p_inst, uint8_t report_id)
 {
@@ -578,7 +589,9 @@ int main(void)
     APP_ERROR_CHECK(ret);
 
     init_bsp();
+#if NRF_CLI_ENABLED
     init_cli();
+#endif
     NRF_LOG_INFO("Hello USB!");
 
     ret = app_usbd_init(&usbd_config);
@@ -615,7 +628,9 @@ int main(void)
             /* Nothing to do */
         }
         hid_generic_mouse_process_state();
+#if NRF_CLI_ENABLED
         nrf_cli_process(&m_cli_uart);
+#endif
 
         UNUSED_RETURN_VALUE(NRF_LOG_PROCESS());
         /* Sleep CPU only if there was no interrupt since last loop processing */

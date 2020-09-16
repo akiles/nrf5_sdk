@@ -198,15 +198,7 @@ static ble_advdata_manuf_data_t m_sp_manuf_advdata =                            
         .p_data = &m_sp_payload[0]
     }
 };
-static uint8_t            m_sp_enc_advdata[BLE_GAP_ADV_SET_DATA_SIZE_MAX];          /**< Advertising data buffer. */
-static ble_gap_adv_data_t m_sp_advdata_buf =                                        /**< Advertising data buffer descriptor. */
-{
-    .adv_data =
-    {
-        .p_data = m_sp_enc_advdata,
-        .len    = sizeof(m_sp_enc_advdata)
-    }
-};
+static ble_advdata_t m_sp_advdata;
 #endif
 
 static void on_hids_evt(ble_hids_t * p_hids, ble_hids_evt_t * p_evt);
@@ -822,16 +814,17 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
 
         case BLE_ADV_EVT_FAST:
             NRF_LOG_INFO("Fast advertising.");
-#if SWIFT_PAIR_SUPPORTED == 1
-            err_code = ble_advertising_advdata_update(&m_advertising, &m_sp_advdata_buf, false);
-            APP_ERROR_CHECK(err_code);
-#endif
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
             APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_ADV_EVT_SLOW:
             NRF_LOG_INFO("Slow advertising.");
+#if SWIFT_PAIR_SUPPORTED == 1
+            m_sp_advdata.p_manuf_specific_data = NULL;
+            err_code = ble_advertising_advdata_update(&m_advertising, &m_sp_advdata, NULL);
+            APP_ERROR_CHECK(err_code);
+#endif
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_SLOW);
             APP_ERROR_CHECK(err_code);
             break;
@@ -1038,32 +1031,6 @@ static void peer_manager_init(void)
 }
 
 
-#if SWIFT_PAIR_SUPPORTED == 1
-/**@brief Function for encoding Swift Pair advertising data set, which should be used in Swift Pair
- *        mode.
- *
- * @param[in]   p_new_advdata      Pointer to the structure which specifies content of encoded data.
- * @param[out]  p_new_advdata_buf  Pointer to the buffer where encoded data will be stored.
- */
-static void sp_advdata_prepare(ble_advdata_t const * const p_new_advdata,
-                               ble_gap_adv_data_t  * const p_new_advdata_buf)
-{
-    ret_code_t ret = ble_advdata_encode(p_new_advdata,
-                                        p_new_advdata_buf->adv_data.p_data,
-                                        &p_new_advdata_buf->adv_data.len);
-    APP_ERROR_CHECK(ret);
-
-    if (p_new_advdata_buf->scan_rsp_data.p_data != NULL)
-    {
-        ret = ble_advdata_encode(p_new_advdata,
-                                 p_new_advdata_buf->scan_rsp_data.p_data,
-                                 &p_new_advdata_buf->scan_rsp_data.len);
-        APP_ERROR_CHECK(ret);
-    }
-}
-#endif
-
-
 /**@brief Function for initializing the Advertising functionality.
  */
 static void advertising_init(void)
@@ -1080,6 +1047,10 @@ static void advertising_init(void)
     init.advdata.flags                   = adv_flags;
     init.advdata.uuids_complete.uuid_cnt = sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
     init.advdata.uuids_complete.p_uuids  = m_adv_uuids;
+#if SWIFT_PAIR_SUPPORTED == 1
+    init.advdata.p_manuf_specific_data = &m_sp_manuf_advdata;
+    memcpy(&m_sp_advdata, &init.advdata, sizeof(m_sp_advdata));
+#endif
 
     init.config.ble_adv_whitelist_enabled          = true;
     init.config.ble_adv_directed_high_duty_enabled = true;
@@ -1100,11 +1071,6 @@ static void advertising_init(void)
     APP_ERROR_CHECK(err_code);
 
     ble_advertising_conn_cfg_tag_set(&m_advertising, APP_BLE_CONN_CFG_TAG);
-
-#if SWIFT_PAIR_SUPPORTED == 1
-    init.advdata.p_manuf_specific_data = &m_sp_manuf_advdata;
-    sp_advdata_prepare(&init.advdata, &m_sp_advdata_buf);
-#endif
 }
 
 
