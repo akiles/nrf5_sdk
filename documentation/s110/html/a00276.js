@@ -1,4 +1,5 @@
 var a00276 =
 [
-    [ "evt_type", "a00276.html#a39db0aa9d490aabff63660a979a372fa", null ]
+    [ "handle", "a00276.html#ab1f14809099e66b0dc7a4a70cb3dc124", null ],
+    [ "included_srvc", "a00276.html#a3342baabc3197898f17ce875e7a5ba80", null ]
 ];

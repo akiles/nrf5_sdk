@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: BLE DTM</title>
+<title>nRF51 SDK - S120 SoftDevice: Debug Logger</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,70 +97,55 @@ $(document).ready(function(){initNavTree('a00062.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BLE DTM </div>  </div>
+<div class="title">Debug Logger </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#nrf51_dtm_init_encoding">DTM - ble_dtm_init</a><ul><li class="level2"><a href="#nrf51_dtm_init_encoding_sec">Function packet format</a></li>
-<li class="level2"><a href="#nrf51_dtm_init_encoding_rsp_dec">Response packet format</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="textblock"><h1><a class="anchor" id="nrf51_dtm_init_encoding"></a>
-DTM - ble_dtm_init</h1>
-<h2><a class="anchor" id="nrf51_dtm_init_encoding_sec"></a>
-Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00646.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> packet.</p>
-<p>The <a class="el" href="a00646.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> is encoded without a operation code byte. Packet contains only DTM UART configuration (TX pin, RX pin and baud rate).</p>
-<ul>
-<li>DTM UART transmit pin - <a class="el" href="a00091.html#aa13645e8ecb6cb1970dba53fabe08b40">app_uart_stream_comm_params_t::tx_pin_no</a>.</li>
-<li>DTM UART receive pin - <a class="el" href="a00091.html#a1bb6d6aa16efc7c4d2caee51d8058213">app_uart_stream_comm_params_t::rx_pin_no</a>.</li>
-<li>DTM UART baud rate - <a class="el" href="a00646.html#ga4f36ceda1498e6231fbd9a48ceebdb65">app_uart_stream_baud_rate_t</a>.</li>
-</ul>
-<p>The order of the encoding is:</p>
-<table class="doxtable">
-<tr>
-<th>Length </th><th>Parameter </th><th>Value</th></tr>
-<tr>
-<td>1 byte </td><td>UART TX </td><td>DTM UART transmit pin. </td></tr>
-<tr>
-<td>1 byte </td><td>UART RX </td><td>DTM UART receive pin. </td></tr>
-<tr>
-<td>1 byte </td><td>UART Baudrate </td><td>DTM UART baud rate. </td></tr>
-</table>
-<p><br/>
-</p>
-<div class="image">
-<img src="ble_dtm_init_packet.png" alt="ble_dtm_init_packet.png"/>
-<div class="caption">
-Figure 1: Encoding of ble_dtm_init.</div></div>
-<p> <br/>
-</p>
-<h2><a class="anchor" id="nrf51_dtm_init_encoding_rsp_dec"></a>
-Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00646.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> response packet:</p>
-<table class="doxtable">
-<tr>
-<th>Length </th><th>Parameter </th><th>Value</th></tr>
-<tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00646.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> </td></tr>
-</table>
-<p><br/>
-</p>
-<div class="image">
-<img src="response_only_error_code.png" alt="response_only_error_code.png"/>
-<div class="caption">
-Figure 2: Packet format for ble_dtm_init response.</div></div>
-<p> <br/>
- </p>
+<div class="textblock"><p>The logger module provides simple log messages over UART for debugging purposes. In case debug messages are to be enabled, ENABLE_DEBUG_LOG_SUPPORT should be defined in the project. Logging can be easily disabled by removing the define ENABLE_DEBUG_LOG_SUPPORT from the project.</p>
+<h1><a class="anchor" id="lib_trace_init"></a>
+Initialization</h1>
+<p>The module must be initialized before logging can be be done using the module API <a class="el" href="a00501.html#gae7a95b63891d69936ff23995fdd9fa53">app_trace_init</a>. Initialization routine takes care of initializing and configuring UART. UART configuration used by logger module in SDK uses a baud rate of 38400 bps, with no flow control or parity.</p>
+<div class="fragment"><div class="line">uint32_t retval;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Initialize module</span></div>
+<div class="line">retval = <a class="code" href="a00501.html#gae7a95b63891d69936ff23995fdd9fa53" title="Module Initialization.">app_trace_init</a>();</div>
+<div class="line"></div>
+<div class="line"><span class="keywordflow">if</span>(retval == <a class="code" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// Module successfully initialized.</span></div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">else</span></div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// Module initialization failed. Take corrective action.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="lib_logger_log"></a>
+Debug Logging</h1>
+<p>The application should use <a class="el" href="a00501.html#ga731dcef3cb5915b230fd9f55067f69bb">app_trace_log</a> API to print trace messages over UART. Please note that the string being printed should end with \r\n for neat formatting on the terminal.</p>
+<div class="fragment"><div class="line">.</div>
+<div class="line">.</div>
+<div class="line">.</div>
+<div class="line">uint32_t retval;</div>
+<div class="line"></div>
+<div class="line">retval =  some_api();</div>
+<div class="line"></div>
+<div class="line"><span class="keywordflow">if</span>(retval != <a class="code" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">{</div>
+<div class="line">    <a class="code" href="a00501.html#ga731dcef3cb5915b230fd9f55067f69bb" title="Log debug messages.">app_trace_log</a>(<span class="stringliteral">&quot;Some API failed, reason %X\r\n&quot;</span>, retval);</div>
+<div class="line">}</div>
+<div class="line">.</div>
+<div class="line">.</div>
+<div class="line">.</div>
+</div><!-- fragment --><h1><a class="anchor" id="lib_trace_usage"></a>
+Usage by SDK modules and recommendations</h1>
+<p>The logger module is used by the Connection Manager and application in SDK examples. It should be noted that these modules do not use the logger module directly through out the code. But a macro is used to enable logging. For example, connection manager defines a macro called the CONN_MNGR_LOG which is defined to app_trace_log. The advantage of this is to be able enable or disable selectively log messages from a certain module in case too many modules are logging messages and debugging gets convoluted.</p>
+<p>Further, practice of including a module signature is added in order to map each message with a particular module. For example, all messages from connection manager start with "[CM]:" followed by the message.</p>
+<dl class="section note"><dt>Note</dt><dd>For Keil, enabling use of microlib is needed to enable logging as currently, app_trace_log is mapped to printf. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00058.html">Serialization Codecs</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,9 +1,9 @@
 var a00372 =
 [
-    [ "callback_action", "a00372.html#ac938534ea4bdd342a3cb36c94071e073", null ],
-    [ "extend", "a00372.html#a48426ce014927276cfeb76dd0bf5e0d1", null ],
-    [ "length_us", "a00372.html#ae6f6fa462f50a24ee278512c394beb46", null ],
-    [ "p_next", "a00372.html#a3f55c9628d7b2e8dbecb594a49eb4a34", null ],
-    [ "params", "a00372.html#a35176f5804904d6d8c938391a643bc3a", null ],
-    [ "request", "a00372.html#a97335e042418113a980f8d8dac1c0648", null ]
+    [ "app_crc", "a00372.html#ad23c5de3d64733cea90d62aece2cf641", null ],
+    [ "app_size", "a00372.html#a5a3071d6e7b79e59aae9aa9022b462c1", null ],
+    [ "bl_size", "a00372.html#af34c4a8d41f65c0d8c1c431809417254", null ],
+    [ "sd_image_start", "a00372.html#aa68f84c4e5bd2283886d3dce05001262", null ],
+    [ "sd_size", "a00372.html#a92316af9b2c88f35230d266ee6f632d5", null ],
+    [ "status_code", "a00372.html#ac8f74ba3fe25a5db401c156ad55360b1", null ]
 ];

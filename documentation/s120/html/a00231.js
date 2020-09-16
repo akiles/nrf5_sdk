@@ -1,11 +1,7 @@
 var a00231 =
 [
-    [ "bit_order", "a00231.html#a27e8ba88d43c17e40e1c2cbf0f785648", null ],
-    [ "def_tx_character", "a00231.html#a4f274a8534602ab7cf7b3df09501e3e0", null ],
-    [ "mode", "a00231.html#a21dcdc253470ffeaf889d2b9ffa22472", null ],
-    [ "orc_tx_character", "a00231.html#a7d9dd3521043484438ffa72545b6db28", null ],
-    [ "pin_csn", "a00231.html#a1ff06608d64bb19ed48f49274231de9c", null ],
-    [ "pin_miso", "a00231.html#a65afb70f1cdb35519719efa4950294b7", null ],
-    [ "pin_mosi", "a00231.html#af40a3044730330e7c560f2a9913b6d55", null ],
-    [ "pin_sck", "a00231.html#ae98dbbcc5e16aea69a2f0922e266f908", null ]
+    [ "earliest", "a00231.html#a7ed176c3d465f35d68d00b70282bbb13", null ],
+    [ "normal", "a00231.html#a140d30391ab57e9fbd4e98536d687e09", null ],
+    [ "params", "a00231.html#a2578047d8488f7583ac55ffa58afc59a", null ],
+    [ "request_type", "a00231.html#af6c3fb2f810242bef92760745327f718", null ]
 ];

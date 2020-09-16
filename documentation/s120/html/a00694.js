@@ -1,8 +1,10 @@
 var a00694 =
 [
-    [ "ble_db_discovery_evt_type_t", "a00694.html#gaa16075c6c77a4f3f32fb567d5ce45462", [
-      [ "BLE_DB_DISCOVERY_COMPLETE", "a00694.html#ggaa16075c6c77a4f3f32fb567d5ce45462ad6925ee73dada1191de4934d7891dc1f", null ],
-      [ "BLE_DB_DISCOVERY_ERROR", "a00694.html#ggaa16075c6c77a4f3f32fb567d5ce45462aca629cd78939015c22a44c9e3797043b", null ],
-      [ "BLE_DB_DISCOVERY_SRV_NOT_FOUND", "a00694.html#ggaa16075c6c77a4f3f32fb567d5ce45462a16f218739c505cfa820990dce92e412d", null ]
-    ] ]
+    [ "Device Manager", "a00640.html", "a00640" ],
+    [ "Assert Handler for debug purposes.", "a00681.html", "a00681" ],
+    [ "DTM - Direct Test Mode", "a00682.html", "a00682" ],
+    [ "Error Log Module", "a00683.html", "a00683" ],
+    [ "Radio Notification Event Handler", "a00684.html", "a00684" ],
+    [ "BLE Date Time characteristic type", "a00685.html", "a00685" ],
+    [ "Flash Manager", "a00690.html", "a00690" ]
 ];

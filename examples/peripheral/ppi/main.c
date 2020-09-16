@@ -29,10 +29,18 @@
 #include "app_error.h"
 #include "app_gpiote.h"
 #include "boards.h"
+#include "nrf_drv_ppi.h"
+#include "nrf_drv_timer.h"
 #include "nordic_common.h"
 
 #define UART_TX_BUF_SIZE 256                                                          /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE 1                                                            /**< UART RX buffer size. */
+
+const nrf_drv_timer_t timer0 = NRF_DRV_TIMER_INSTANCE(0);
+const nrf_drv_timer_t timer1 = NRF_DRV_TIMER_INSTANCE(1);
+const nrf_drv_timer_t timer2 = NRF_DRV_TIMER_INSTANCE(2);
+
+nrf_ppi_channel_t ppi_channel1, ppi_channel2;
 
 void uart_error_handle(app_uart_evt_t * p_event)
 {
@@ -46,27 +54,39 @@ void uart_error_handle(app_uart_evt_t * p_event)
     }
 }
 
+// Timer even handler. Not used since timer is used only for PPI.
+void timer_event_handler(nrf_timer_events_t event_type){}
+
 /** @brief Function for initializing the PPI peripheral.
 */
 static void ppi_init(void)
 {
-    // Configure PPI channel 0 to stop Timer 0 counter at TIMER1 COMPARE[0] match, which is every even number of seconds.
-    NRF_PPI->CH[0].EEP = (uint32_t)(&NRF_TIMER1->EVENTS_COMPARE[0]);
-    NRF_PPI->CH[0].TEP = (uint32_t)(&NRF_TIMER0->TASKS_STOP);
+    uint32_t err_code = NRF_SUCCESS;
 
-    // Configure PPI channel 0 to stop Timer 0 counter at TIMER1 COMPARE[0] match, which is every even number of seconds.
-    NRF_PPI->CH[1].EEP = (uint32_t)(&NRF_TIMER1->EVENTS_COMPARE[0]);
-    NRF_PPI->CH[1].TEP = (uint32_t)(&NRF_TIMER0->TASKS_STOP);
+    err_code = nrf_drv_ppi_init();
+    APP_ERROR_CHECK(err_code);
 
-    // Configure PPI channel 1 to start timer0 counter at TIMER2 COMPARE[0] match, which is every odd number of seconds.
-    NRF_PPI->CH[2].EEP = (uint32_t)(&NRF_TIMER2->EVENTS_COMPARE[0]);
-    NRF_PPI->CH[2].TEP = (uint32_t)(&NRF_TIMER0->TASKS_START);
+    // Configure 1st available PPI channel to stop TIMER0 counter on TIMER1 COMPARE[0] match, which is every even number of seconds.
+    err_code = nrf_drv_ppi_channel_alloc(&ppi_channel1);
+    APP_ERROR_CHECK(err_code);
+    err_code = nrf_drv_ppi_channel_assign(ppi_channel1,
+                                          nrf_drv_timer_event_address_get(&timer1, NRF_TIMER_EVENTS_COMPARE0),
+                                          nrf_drv_timer_task_address_get(&timer0, NRF_TIMER_TASKS_STOP));
+    APP_ERROR_CHECK(err_code);
 
-    // Enable only PPI channels 0 and 1.
-    NRF_PPI->CHEN =
-        (PPI_CHEN_CH0_Enabled <<
-    PPI_CHEN_CH0_Pos) |
-        (PPI_CHEN_CH1_Enabled << PPI_CHEN_CH1_Pos) | (PPI_CHEN_CH2_Enabled << PPI_CHEN_CH2_Pos);
+    // Configure 2nd available PPI channel to start timer0 counter at TIMER2 COMPARE[0] match, which is every odd number of seconds.
+    err_code = nrf_drv_ppi_channel_alloc(&ppi_channel2);
+    APP_ERROR_CHECK(err_code);
+    err_code = nrf_drv_ppi_channel_assign(ppi_channel2,
+                                          nrf_drv_timer_event_address_get(&timer2, NRF_TIMER_EVENTS_COMPARE0),
+                                          nrf_drv_timer_task_address_get(&timer0, NRF_TIMER_TASKS_START));
+    APP_ERROR_CHECK(err_code);
+
+    // Enable both configured PPI channels
+    err_code = nrf_drv_ppi_channel_enable(ppi_channel1);
+    APP_ERROR_CHECK(err_code);
+    err_code = nrf_drv_ppi_channel_enable(ppi_channel2);
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -74,8 +94,8 @@ static void ppi_init(void)
 */
 static void timer0_init(void)
 {
-    NRF_TIMER0->MODE    = TIMER_MODE_MODE_Counter;                                    // Set the timer in counter Mode.
-    NRF_TIMER0->BITMODE = (TIMER_BITMODE_BITMODE_24Bit << TIMER_BITMODE_BITMODE_Pos); // 24-bit mode.
+    ret_code_t err_code = nrf_drv_timer_init(&timer0, NULL, timer_event_handler);
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -87,20 +107,13 @@ static void timer0_init(void)
 */
 static void timer1_init(void)
 {
-    // Configure Timer 1 to overflow every 2 seconds.
-    // SysClk = 16 Mhz
-    // BITMODE = 16 bit
-    // PRESCALER = 9
+    // Configure Timer 1 to overflow every 2 seconds. Check TIMER1 configuration for details
     // The overflow occurs every 0xFFFF/(SysClk/2^PRESCALER).
     // = 65535/31250 = 2.097 sec
-    NRF_TIMER1->BITMODE   = (TIMER_BITMODE_BITMODE_16Bit << TIMER_BITMODE_BITMODE_Pos);
-    NRF_TIMER1->PRESCALER = 9;
-    NRF_TIMER1->SHORTS    =
-        (TIMER_SHORTS_COMPARE0_CLEAR_Enabled << TIMER_SHORTS_COMPARE0_CLEAR_Pos);
+    ret_code_t err_code = nrf_drv_timer_init(&timer1, NULL, timer_event_handler);
+    APP_ERROR_CHECK(err_code);
 
-    // Trigger interrupt for compare[0] event.
-    NRF_TIMER1->MODE  = TIMER_MODE_MODE_Timer;
-    NRF_TIMER1->CC[0] = 0xFFFFUL; // Match at even number of seconds
+    nrf_drv_timer_extended_compare(&timer1, NRF_TIMER_CC_CHANNEL0, 0xFFFFUL, NRF_TIMER_SHORTS_COMPARE0_CLEAR_MASK, false);
 }
 
 
@@ -113,19 +126,13 @@ static void timer1_init(void)
 static void timer2_init(void)
 {
     // Generate interrupt/event when half of time before the timer overflows has past, that is at 1,3,5,7... seconds from start.
-    // SysClk = 16Mhz
-    // BITMODE = 16 bit
-    // PRESCALER = 9
+    // Check TIMER1 configuration for details
     // now the overflow occurs every 0xFFFF/(SysClk/2^PRESCALER)
     // = 65535/31250 = 2.097 sec */
-    NRF_TIMER2->BITMODE   = (TIMER_BITMODE_BITMODE_16Bit << TIMER_BITMODE_BITMODE_Pos);
-    NRF_TIMER2->PRESCALER = 9;
-    NRF_TIMER2->SHORTS    =
-        (TIMER_SHORTS_COMPARE0_CLEAR_Enabled << TIMER_SHORTS_COMPARE0_CLEAR_Pos);
+    ret_code_t err_code = nrf_drv_timer_init(&timer2, NULL, timer_event_handler);
+    APP_ERROR_CHECK(err_code);
 
-    // Trigger interrupt for compare[0] event.
-    NRF_TIMER2->MODE  = TIMER_MODE_MODE_Timer;
-    NRF_TIMER2->CC[0] = 0x7FFFUL; // Match at odd number of seconds.
+    nrf_drv_timer_extended_compare(&timer2, NRF_TIMER_CC_CHANNEL0, 0x7FFFUL, NRF_TIMER_SHORTS_COMPARE0_CLEAR_MASK, false);
 }
 
 
@@ -171,19 +178,18 @@ int main(void)
     NRF_POWER->TASKS_CONSTLAT = 1;
     
     // Start clock.
-    NRF_TIMER1->TASKS_START = 1;
-    NRF_TIMER2->TASKS_START = 1;
-
+    nrf_drv_timer_enable(&timer0);
+    nrf_drv_timer_enable(&timer1);
+    nrf_drv_timer_enable(&timer2);
 
     // Loop and increment the timer count value and capture value into LEDs. @note counter is only incremented between TASK_START and TASK_STOP.
     while (true)
     {
-        NRF_TIMER0->TASKS_CAPTURE[0] = 1;
 
-        printf("Current cout: %d\n\r", (uint8_t)NRF_TIMER0->CC[0]);
+        printf("Current cout: %d\n\r", (int)nrf_drv_timer_capture(&timer0,NRF_TIMER_CC_CHANNEL0));
 
         /* increment the counter */
-        NRF_TIMER0->TASKS_COUNT = 1;
+        nrf_drv_timer_increment(&timer0);
 
         nrf_delay_ms(100);
     }

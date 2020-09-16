@@ -19,7 +19,7 @@
 #include <stdint.h>
 
 /** @file
-* @brief Synaptics Touchpad driver.
+* @brief Synaptics Touchpad driver
 *
 *
 * @defgroup nrf_drivers_synaptics_touchpad Synaptics Touchpad driver.

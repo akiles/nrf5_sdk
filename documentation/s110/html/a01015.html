@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Advertising Data Encoder</title>
+<title>nRF51 SDK - S110 SoftDevice: Device Manager Sequence Charts</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,127 +97,28 @@ $(document).ready(function(){initNavTree('a01015.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Advertising Data Encoder<div class="ingroups"><a class="el" href="a01037.html">BLE Libraries</a></div></div>  </div>
+<div class="title">Device Manager Sequence Charts<div class="ingroups"><a class="el" href="a00976.html">Device Manager</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Function for encoding the advertising data and/or scan response data, and passing them to the stack.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html">ble_advdata_uuid_list_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">UUID list type.  <a href="a00153.html#details">More...</a><br/></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a01016"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01016.html">Security Set-Up &amp; Status Related</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html">ble_advdata_conn_int_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connection interval range structure.  <a href="a00149.html#details">More...</a><br/></td></tr>
+<tr class="memitem:a01019"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01019.html">Device Manager Context Management MSCs</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00150.html">ble_advdata_manuf_data_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manufacturer specific data structure.  <a href="a00150.html#details">More...</a><br/></td></tr>
+<tr class="memitem:a01021"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01021.html">Initialization and Setup</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00151.html">ble_advdata_service_data_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Service data structure.  <a href="a00151.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00152.html">ble_advdata_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advertising data structure. This contains all options and data needed for encoding and setting the advertising data.  <a href="a00152.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga03c5ccf232779001be9786021b1a563b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01015.html#ga03c5ccf232779001be9786021b1a563b">ble_advdata_name_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a01015.html#gga03c5ccf232779001be9786021b1a563ba6e99a7c49e28bdae76c43edce53516f7">BLE_ADVDATA_NO_NAME</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a01015.html#gga03c5ccf232779001be9786021b1a563ba28f0d09500400f6210b789bdfe89a0e0">BLE_ADVDATA_SHORT_NAME</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a01015.html#gga03c5ccf232779001be9786021b1a563ba63a26e22b9d6a0899edac755d0e2f488">BLE_ADVDATA_FULL_NAME</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga03c5ccf232779001be9786021b1a563b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advertising data name type. This contains the options available for the device name inside the advertising data.  <a href="a01015.html#ga03c5ccf232779001be9786021b1a563b">More...</a><br/></td></tr>
-<tr class="separator:ga03c5ccf232779001be9786021b1a563b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga180ff4057a0763688c734e98ab8d976b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01015.html#ga180ff4057a0763688c734e98ab8d976b">ble_advdata_set</a> (const <a class="el" href="a00152.html">ble_advdata_t</a> *p_advdata, const <a class="el" href="a00152.html">ble_advdata_t</a> *p_srdata)</td></tr>
-<tr class="memdesc:ga180ff4057a0763688c734e98ab8d976b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for encoding and setting the advertising data and/or scan response data.  <a href="#ga180ff4057a0763688c734e98ab8d976b">More...</a><br/></td></tr>
-<tr class="separator:ga180ff4057a0763688c734e98ab8d976b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Function for encoding the advertising data and/or scan response data, and passing them to the stack. </p>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga03c5ccf232779001be9786021b1a563b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a01015.html#ga03c5ccf232779001be9786021b1a563b">ble_advdata_name_type_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Advertising data name type. This contains the options available for the device name inside the advertising data. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga03c5ccf232779001be9786021b1a563ba6e99a7c49e28bdae76c43edce53516f7"></a>BLE_ADVDATA_NO_NAME</em>&nbsp;</td><td class="fielddoc">
-<p>Include no device name in advertising data. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga03c5ccf232779001be9786021b1a563ba28f0d09500400f6210b789bdfe89a0e0"></a>BLE_ADVDATA_SHORT_NAME</em>&nbsp;</td><td class="fielddoc">
-<p>Include short device name in advertising data. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga03c5ccf232779001be9786021b1a563ba63a26e22b9d6a0899edac755d0e2f488"></a>BLE_ADVDATA_FULL_NAME</em>&nbsp;</td><td class="fielddoc">
-<p>Include full device name in advertising data. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga180ff4057a0763688c734e98ab8d976b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_advdata_set </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00152.html">ble_advdata_t</a> *&#160;</td>
-          <td class="paramname"><em>p_advdata</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00152.html">ble_advdata_t</a> *&#160;</td>
-          <td class="paramname"><em>p_srdata</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for encoding and setting the advertising data and/or scan response data. </p>
-<p>This function encodes advertising data and/or scan response data based on the selections in the supplied structures, and passes the encoded data to the stack.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_advdata</td><td>Structure for specifying the content of the advertising data. Set to NULL if advertising data is not to be set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_srdata</td><td>Structure for specifying the content of the scan response data. Set to NULL if scan response data is not to be set.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, NRF_ERROR_DATA_SIZE if not all the requested data could fit into the advertising packet. The maximum size of the advertisement packet is <a class="el" href="a01047.html#ga6d6ae1b58ea2dc641e4dc30e8e2dcc0b">BLE_GAP_ADV_MAX_SIZE</a>.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>This API may override application's request to use the long name and use a short name instead. This truncation will occur in case the long name does not fit advertisement data size. Application is permitted to specify a preferred short name length in case truncation is required. For example, if the complete device name is ABCD_HRMonitor, application can specify short name length to 8 such that short device name appears as ABCD_HRM instead of ABCD_HRMo or ABCD_HRMoni etc if available size for short name is 9 or 12 respectively to have more apporpriate short name. However, it should be noted that this is just a preference that application can specify and if the preference too large to fit in Advertisement Data, this can be further truncated. </dd></dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:23 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,6 +1,8 @@
 var a00807 =
 [
-    [ "BLE_GAP_DISC_MODE_GENERAL", "a00807.html#ga124514248a211b305eeac9cc370c7d77", null ],
-    [ "BLE_GAP_DISC_MODE_LIMITED", "a00807.html#ga5c5243da93bae524088eefd608656012", null ],
-    [ "BLE_GAP_DISC_MODE_NOT_DISCOVERABLE", "a00807.html#gafdd0b7bc7d226295035ba29cee3280f6", null ]
+    [ "CRITICAL_REGION_ENTER", "a00807.html#ga61149a977f6ebdaeb8bdeed626dd9392", null ],
+    [ "CRITICAL_REGION_EXIT", "a00807.html#ga854878240b628e978f760f75aca4e1cc", null ],
+    [ "NRF_APP_PRIORITY_THREAD", "a00807.html#gac3db2bb99db38f42bf316a9d0d9ace99", null ],
+    [ "app_irq_priority_t", "a00807.html#ga1a193131d1d5911b1ec53f9541841b1b", null ],
+    [ "current_int_priority_get", "a00807.html#ga2462e81e0f0c058ca4c44c21a3d22a80", null ]
 ];

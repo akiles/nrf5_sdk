@@ -8,10 +8,7 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
  
    <project>
-    <PathAndName>pca10028\arm\ant_broadcast_tx_s210_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10031\arm\ant_broadcast_tx_s210_pca10031.uvproj</PathAndName>
+    <PathAndName>pca10028\arm4\ant_broadcast_tx_s210_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

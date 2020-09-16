@@ -1,7 +1,7 @@
 var a00394 =
 [
-    [ "data", "a00394.html#a800d239d1224cc1226201c6b9a635713", null ],
-    [ "data_count", "a00394.html#a370358835ed2aa53bcc515894b13eb87", null ],
-    [ "evt_type", "a00394.html#a622197dded7bfa292535944e6870c5f7", null ],
-    [ "type", "a00394.html#a6d7cb2ed26034e0c1cb5dcb0022a612a", null ]
+    [ "data", "a00394.html#a8d56210fd975e42c2b9d0558a5149929", null ],
+    [ "report", "a00394.html#a05207fa140ddc6e27ff4b1917d75b586", null ],
+    [ "sample", "a00394.html#a41b9730f7010c66f7311c1cbde202e35", null ],
+    [ "type", "a00394.html#a6bf33d5c66a14040814e347ee0456c45", null ]
 ];

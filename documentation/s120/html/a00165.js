@@ -1,7 +1,9 @@
 var a00165 =
 [
-    [ "cccd_handle", "a00165.html#a7764817bceb1a13dde2a2d614aaff900", null ],
-    [ "sccd_handle", "a00165.html#a0ebe446f83e8675203f224b1796939fa", null ],
-    [ "user_desc_handle", "a00165.html#a263781c226cad6bfeeb894e133b19c55", null ],
-    [ "value_handle", "a00165.html#a685865a59e73158fd661e9d64407e9d9", null ]
+    [ "rd_auth", "a00165.html#a0d2f2743a556d382513a43607a08c057", null ],
+    [ "read_perm", "a00165.html#a61a4ef92eba3a3b2b3f616557f6b74aa", null ],
+    [ "vlen", "a00165.html#a921e414734cd784e0c3b7309d3a14f39", null ],
+    [ "vloc", "a00165.html#abbd6b9b2d75565fc6fd66074a47308c7", null ],
+    [ "wr_auth", "a00165.html#affcd971025cbaa9525c2ed9ff95d913c", null ],
+    [ "write_perm", "a00165.html#af04a8d72352f3c02dbef021b360f477f", null ]
 ];

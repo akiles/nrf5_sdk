@@ -90,7 +90,7 @@ typedef struct
 
 /**@brief Health Thermometer Service structure. This contains various status information for
  *        the service. */
-typedef struct ble_hts_s
+struct ble_hts_s
 {
     ble_hts_evt_handler_t        evt_handler;                               /**< Event handler to be called for handling events in the Health Thermometer Service. */
     uint16_t                     service_handle;                            /**< Handle of Health Thermometer Service (as provided by the BLE stack). */
@@ -98,7 +98,7 @@ typedef struct ble_hts_s
     ble_gatts_char_handles_t     temp_type_handles;                         /**< Handles related to the Health Thermometer Temperature Type characteristic. */
     uint16_t                     conn_handle;                               /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
     uint8_t                      temp_type;                                 /**< Temperature type indicates where the measurement was taken. */
-} ble_hts_t;
+};
 
 /**@brief Health Thermometer Service measurement structure. This contains a Health Thermometer
  *        measurement. */

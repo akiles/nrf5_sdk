@@ -47,17 +47,17 @@
 
 #define DEAD_BEEF                       0xDEADBEEF                        /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
-#define APP_TIMER_PRESCALER             0                                                    /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            (2+BSP_APP_TIMERS_NUMBER)                            /**< Maximum number of simultaneously created timers. */
-#define APP_TIMER_OP_QUEUE_SIZE         4                                                    /**< Size of timer operation queues. */
+#define APP_TIMER_PRESCALER             0                                 /**< Value of the RTC1 PRESCALER register. */
+#define APP_TIMER_MAX_TIMERS            (2+BSP_APP_TIMERS_NUMBER)         /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_OP_QUEUE_SIZE         4                                 /**< Size of timer operation queues. */
 
 #if defined(USE_UICR_FOR_MAJ_MIN_VALUES)
 #define MAJ_VAL_OFFSET_IN_BEACON_INFO   18                                /**< Position of the MSB of the Major Value in m_beacon_info array. */
 #define UICR_ADDRESS                    0x10001080                        /**< Address of the UICR register used by this example. The major and minor versions to be encoded into the advertising data will be picked up from this location. */
 #endif
 
-static ble_gap_adv_params_t m_adv_params;                               /**< Parameters to be passed to the stack when starting advertising. */
-static uint8_t m_beacon_info[APP_BEACON_INFO_LENGTH] =                  /**< Information advertised by the Beacon. */
+static ble_gap_adv_params_t m_adv_params;                                 /**< Parameters to be passed to the stack when starting advertising. */
+static uint8_t m_beacon_info[APP_BEACON_INFO_LENGTH] =                    /**< Information advertised by the Beacon. */
 {
     APP_DEVICE_TYPE,     // Manufacturer specific information. Specifies the device type in this 
                          // implementation. 
@@ -130,8 +130,7 @@ static void advertising_init(void)
     memset(&advdata, 0, sizeof(advdata));
 
     advdata.name_type             = BLE_ADVDATA_NO_NAME;
-    advdata.flags.size            = sizeof (flags);
-    advdata.flags.p_data          = &flags;
+    advdata.flags                 = flags;
     advdata.p_manuf_specific_data = &manuf_specific_data;
 
     err_code = ble_advdata_set(&advdata, NULL);
@@ -169,7 +168,7 @@ static void advertising_start(void)
 static void ble_stack_init(void)
 {
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
     // Enable BLE stack 
     uint32_t err_code;

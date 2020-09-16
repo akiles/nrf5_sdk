@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ser_phy_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: hci_transport_ioctl_cmd_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,93 +106,26 @@ $(document).ready(function(){initNavTree('a00387.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ser_phy_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00920.html">Serialization PHY</a></div></div>  </div>
+<div class="title">hci_transport_ioctl_cmd_t Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>A struct containing events from a Serialization PHY module.  
- <a href="a00387.html#details">More...</a></p>
-
-<p><code>#include &lt;ser_phy.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ae588b73e9d0730410d87a4d1c246ff74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00920.html#gaef62df8feedfbe682684c6f1ea704061">ser_phy_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00387.html#ae588b73e9d0730410d87a4d1c246ff74">evt_type</a></td></tr>
-<tr class="separator:ae588b73e9d0730410d87a4d1c246ff74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2da9239b6914b59891ddf0aec5c40de"><td class="memItemLeft" ><a class="anchor" id="ac2da9239b6914b59891ddf0aec5c40de"></a>
-union {</td></tr>
-<tr class="memitem:abe2acc203d439190173f8a2dbf69572a"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00385.html">ser_phy_evt_rx_buf_request_params_t</a>&#160;&#160;&#160;<a class="el" href="a00387.html#aaa9e1f71188d261f85018a78e9e21455">rx_buf_request</a></td></tr>
-<tr class="separator:abe2acc203d439190173f8a2dbf69572a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dde51f6c547c22b6cd1557bd634a43f"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00386.html">ser_phy_evt_rx_pkt_received_params_t</a>&#160;&#160;&#160;<a class="el" href="a00387.html#a025d488d61f3d284d37bea8b37ec2284">rx_pkt_received</a></td></tr>
-<tr class="separator:a8dde51f6c547c22b6cd1557bd634a43f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a076fd4dd40e6563c85f6076aef33908d"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00384.html">ser_phy_evt_hw_error_params_t</a>&#160;&#160;&#160;<a class="el" href="a00387.html#a8c0fc51957a092a41e2161a3f7d400e0">hw_error</a></td></tr>
-<tr class="separator:a076fd4dd40e6563c85f6076aef33908d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2da9239b6914b59891ddf0aec5c40de"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>evt_params</b></td></tr>
-<tr class="separator:ac2da9239b6914b59891ddf0aec5c40de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4955a964032009d6b9b5cc167e758d32"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4955a964032009d6b9b5cc167e758d32"></a>
+hci_transport_ioctl_cmd_type_t&#160;</td><td class="memItemRight" valign="bottom"><b>cmd_type</b></td></tr>
+<tr class="separator:a4955a964032009d6b9b5cc167e758d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9e1ac1b373abcbd4e761600473340bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9e1ac1b373abcbd4e761600473340bc"></a>
+<a class="el" href="a00800.html#gae80211a61fd86e95a2ad0d7e8dcf8a5c">hci_transport_tx_done_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>tx_done_result</b></td></tr>
+<tr class="separator:ac9e1ac1b373abcbd4e761600473340bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A struct containing events from a Serialization PHY module. </p>
-<dl class="section note"><dt>Note</dt><dd>Some events do not have parameters, then whole information is contained in the evt_type. </dd></dl>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ae588b73e9d0730410d87a4d1c246ff74"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00920.html#gaef62df8feedfbe682684c6f1ea704061">ser_phy_evt_type_t</a> ser_phy_evt_t::evt_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Type of an event. </p>
-
-</div>
-</div>
-<a class="anchor" id="a8c0fc51957a092a41e2161a3f7d400e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00384.html">ser_phy_evt_hw_error_params_t</a> ser_phy_evt_t::hw_error</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters of the event of type <a class="el" href="a00920.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="aaa9e1f71188d261f85018a78e9e21455"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00385.html">ser_phy_evt_rx_buf_request_params_t</a> ser_phy_evt_t::rx_buf_request</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters of the event of type <a class="el" href="a00920.html#ggaef62df8feedfbe682684c6f1ea704061a6586d0863748060b1f669ed34a0a0a77">SER_PHY_EVT_RX_BUF_REQUEST</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="a025d488d61f3d284d37bea8b37ec2284"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00386.html">ser_phy_evt_rx_pkt_received_params_t</a> ser_phy_evt_t::rx_pkt_received</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters of the event of type <a class="el" href="a00920.html#ggaef62df8feedfbe682684c6f1ea704061ab7c2a10cee66d30f6f2502376857b387">SER_PHY_EVT_RX_PKT_RECEIVED</a>. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00387.html">ser_phy_evt_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00387.html">hci_transport_ioctl_cmd_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

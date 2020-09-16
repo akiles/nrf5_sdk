@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: app_mailbox_def Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_common_opt_radio_cpu_mutex_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,44 @@ $(document).ready(function(){initNavTree('a00087.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">app_mailbox_def Struct Reference</div>  </div>
+<div class="title">ble_common_opt_radio_cpu_mutex_t Struct Reference<div class="ingroups"><a class="el" href="a00698.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Mailbox definition structure.  
+<p>Mutual exclusion of radio activity and CPU execution.  
  <a href="a00087.html#details">More...</a></p>
 
-<p><code>#include &lt;app_mailbox.h&gt;</code></p>
+<p><code>#include &lt;ble.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a3f57e40b294eedf373ebd56ebc48d871"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a3f57e40b294eedf373ebd56ebc48d871">queue_sz</a></td></tr>
-<tr class="separator:a3f57e40b294eedf373ebd56ebc48d871"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a6172b2fd1d922b2fdd786722b608f5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a6a6172b2fd1d922b2fdd786722b608f5">item_sz</a></td></tr>
-<tr class="separator:a6a6172b2fd1d922b2fdd786722b608f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc2a8007d3403d94b1499961fff6402f"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#abc2a8007d3403d94b1499961fff6402f">pool</a></td></tr>
-<tr class="separator:abc2a8007d3403d94b1499961fff6402f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a750afb830aa9d1ea16fcddccce89dfa2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a750afb830aa9d1ea16fcddccce89dfa2">enable</a>: 1</td></tr>
+<tr class="separator:a750afb830aa9d1ea16fcddccce89dfa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Mailbox definition structure. </p>
+<div class="textblock"><p>Mutual exclusion of radio activity and CPU execution. </p>
+<pre class="fragment">   This option configures the application's access to the CPU when the radio is active. The
+   application can configure itself to be blocked from using the CPU while the radio is
+   active. By default, the application will be able to share CPU time with the SoftDevice
+   during radio activity. This parameter structure is used together with @ref sd_ble_opt_set
+   to configure the @ref BLE_COMMON_OPT_RADIO_CPU_MUTEX option.
+</pre><dl class="section note"><dt>Note</dt><dd>Note that the application should use this option to configure the SoftDevice to block the CPU during radio activity (i.e enable mutual exclusion) when running the SoftDevice on hardware affected by PAN #44 "CCM may exceed real time requirements"and PAN #45 "AAR may
+       exceed real time requirements".</dd>
+<dd>
+Note that when acting as a scanner, the mutex is only enabled for radio TX activity.</dd>
+<dd>
+<a class="el" href="a00699.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> is not supported for this option. </dd></dl>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a6a6172b2fd1d922b2fdd786722b608f5"></a>
+<a class="anchor" id="a750afb830aa9d1ea16fcddccce89dfa2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t app_mailbox_def::item_sz</td>
+          <td class="memname">uint8_t ble_common_opt_radio_cpu_mutex_t::enable</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>size of an item. </p>
-
-</div>
-</div>
-<a class="anchor" id="abc2a8007d3403d94b1499961fff6402f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* app_mailbox_def::pool</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>memory array for mail. </p>
-
-</div>
-</div>
-<a class="anchor" id="a3f57e40b294eedf373ebd56ebc48d871"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t app_mailbox_def::queue_sz</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>number of elements in the queue. </p>
+<p>Enable mutual exclusion of radio activity and the CPU execution. </p>
 
 </div>
 </div>
@@ -171,8 +152,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00087.html">app_mailbox_def</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00087.html">ble_common_opt_radio_cpu_mutex_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

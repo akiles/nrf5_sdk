@@ -1,7 +1,5 @@
 var a00248 =
 [
-    [ "data", "a00248.html#adaf3ed862b2c96947da60d9b576b31c9", null ],
-    [ "handle", "a00248.html#a54644f05780b15248eba975decdd4e48", null ],
-    [ "len", "a00248.html#a5131e80ad4da52f707a84aed7240f2ee", null ],
-    [ "offset", "a00248.html#a1ed66c83e153fd6471056d19b10fac67", null ]
+    [ "interval_s", "a00248.html#aac6428abddc0bf75fc092a553312661a", null ],
+    [ "p_irk", "a00248.html#a03cc47081b7b470ad239d1bf9055ea34", null ]
 ];

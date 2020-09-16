@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_hts_meas_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gls_meas_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,123 +106,138 @@ $(document).ready(function(){initNavTree('a00301.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hts_meas_s Struct Reference<div class="ingroups"><a class="el" href="a00970.html">Health Thermometer Service</a></div></div>  </div>
+<div class="title">ble_gls_meas_t Struct Reference<div class="ingroups"><a class="el" href="a00960.html">Glucose Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Health Thermometer Service measurement structure. This contains a Health Thermometer measurement.  
+<p>Glucose Measurement structure. This contains glucose measurement value.  
  <a href="a00301.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hts.h&gt;</code></p>
+<p><code>#include &lt;ble_gls.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a16e05739a1ac3b03a2b4dc683bc1eacd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a16e05739a1ac3b03a2b4dc683bc1eacd">temp_in_fahr_units</a></td></tr>
-<tr class="separator:a16e05739a1ac3b03a2b4dc683bc1eacd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21a7a430b8f85908438c9bd1fc2e0dce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a21a7a430b8f85908438c9bd1fc2e0dce">time_stamp_present</a></td></tr>
-<tr class="separator:a21a7a430b8f85908438c9bd1fc2e0dce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10dadb1129dd55a6d597e4e08764d7ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a10dadb1129dd55a6d597e4e08764d7ff">temp_type_present</a></td></tr>
-<tr class="separator:a10dadb1129dd55a6d597e4e08764d7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4065a89fde57ebf2effce6a1401e38c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00365.html">ieee_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a4065a89fde57ebf2effce6a1401e38c4">temp_in_celcius</a></td></tr>
-<tr class="separator:a4065a89fde57ebf2effce6a1401e38c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0120700a8a6185ce21e1a05391fbc706"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00365.html">ieee_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a0120700a8a6185ce21e1a05391fbc706">temp_in_fahr</a></td></tr>
-<tr class="separator:a0120700a8a6185ce21e1a05391fbc706"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab4240703a233a4bd2cd1a7b3a5997c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00187.html">ble_date_time_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#aab4240703a233a4bd2cd1a7b3a5997c0">time_stamp</a></td></tr>
-<tr class="separator:aab4240703a233a4bd2cd1a7b3a5997c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12b9d8fddee8e461bfcedb3489bd5f92"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a12b9d8fddee8e461bfcedb3489bd5f92">temp_type</a></td></tr>
-<tr class="separator:a12b9d8fddee8e461bfcedb3489bd5f92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaa211ee17f3d46654c641ab339b68db"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#adaa211ee17f3d46654c641ab339b68db">flags</a></td></tr>
+<tr class="separator:adaa211ee17f3d46654c641ab339b68db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e89e39efc4889fc00da13fa87efcbc2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a7e89e39efc4889fc00da13fa87efcbc2">sequence_number</a></td></tr>
+<tr class="separator:a7e89e39efc4889fc00da13fa87efcbc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50043eec02a9af09a81047f4eecfef33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00197.html">ble_date_time_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a50043eec02a9af09a81047f4eecfef33">base_time</a></td></tr>
+<tr class="separator:a50043eec02a9af09a81047f4eecfef33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a820a55933ac2e9e047193a846efbaf5d"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a820a55933ac2e9e047193a846efbaf5d">time_offset</a></td></tr>
+<tr class="separator:a820a55933ac2e9e047193a846efbaf5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d77eafd69ad69d3753fd043bdd31dc2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00420.html">sfloat_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a8d77eafd69ad69d3753fd043bdd31dc2">glucose_concentration</a></td></tr>
+<tr class="separator:a8d77eafd69ad69d3753fd043bdd31dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e79195531cf78dfd880479a6404cb44"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a4e79195531cf78dfd880479a6404cb44">type</a></td></tr>
+<tr class="separator:a4e79195531cf78dfd880479a6404cb44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21eed1c3fbda85ac65aa060787a589b4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a21eed1c3fbda85ac65aa060787a589b4">sample_location</a></td></tr>
+<tr class="separator:a21eed1c3fbda85ac65aa060787a589b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a765f2b453e27775757271598452e2c8a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a765f2b453e27775757271598452e2c8a">sensor_status_annunciation</a></td></tr>
+<tr class="separator:a765f2b453e27775757271598452e2c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Health Thermometer Service measurement structure. This contains a Health Thermometer measurement. </p>
+<div class="textblock"><p>Glucose Measurement structure. This contains glucose measurement value. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a4065a89fde57ebf2effce6a1401e38c4"></a>
+<a class="anchor" id="a50043eec02a9af09a81047f4eecfef33"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00365.html">ieee_float32_t</a> ble_hts_meas_s::temp_in_celcius</td>
+          <td class="memname"><a class="el" href="a00197.html">ble_date_time_t</a> ble_gls_meas_t::base_time</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Temperature Measurement Value (Celcius). </p>
+<p>Time stamp </p>
 
 </div>
 </div>
-<a class="anchor" id="a0120700a8a6185ce21e1a05391fbc706"></a>
+<a class="anchor" id="adaa211ee17f3d46654c641ab339b68db"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00365.html">ieee_float32_t</a> ble_hts_meas_s::temp_in_fahr</td>
+          <td class="memname">uint8_t ble_gls_meas_t::flags</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Temperature Measurement Value (Fahrenheit). </p>
+<p>Flags </p>
 
 </div>
 </div>
-<a class="anchor" id="a16e05739a1ac3b03a2b4dc683bc1eacd"></a>
+<a class="anchor" id="a8d77eafd69ad69d3753fd043bdd31dc2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool ble_hts_meas_s::temp_in_fahr_units</td>
+          <td class="memname"><a class="el" href="a00420.html">sfloat_t</a> ble_gls_meas_t::glucose_concentration</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>True if Temperature is in Fahrenheit units, Celcius otherwise. </p>
+<p>Glucose concentration </p>
 
 </div>
 </div>
-<a class="anchor" id="a12b9d8fddee8e461bfcedb3489bd5f92"></a>
+<a class="anchor" id="a21eed1c3fbda85ac65aa060787a589b4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_hts_meas_s::temp_type</td>
+          <td class="memname">uint8_t ble_gls_meas_t::sample_location</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Temperature Type. </p>
+<p>Sample location </p>
 
 </div>
 </div>
-<a class="anchor" id="a10dadb1129dd55a6d597e4e08764d7ff"></a>
+<a class="anchor" id="a765f2b453e27775757271598452e2c8a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool ble_hts_meas_s::temp_type_present</td>
+          <td class="memname">uint16_t ble_gls_meas_t::sensor_status_annunciation</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>True if Temperature Type is present. </p>
+<p>Sensor status annunciation </p>
 
 </div>
 </div>
-<a class="anchor" id="aab4240703a233a4bd2cd1a7b3a5997c0"></a>
+<a class="anchor" id="a7e89e39efc4889fc00da13fa87efcbc2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00187.html">ble_date_time_t</a> ble_hts_meas_s::time_stamp</td>
+          <td class="memname">uint16_t ble_gls_meas_t::sequence_number</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Time Stamp. </p>
+<p>Sequence number </p>
 
 </div>
 </div>
-<a class="anchor" id="a21a7a430b8f85908438c9bd1fc2e0dce"></a>
+<a class="anchor" id="a820a55933ac2e9e047193a846efbaf5d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool ble_hts_meas_s::time_stamp_present</td>
+          <td class="memname">int16_t ble_gls_meas_t::time_offset</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>True if Time Stamp is present. </p>
+<p>Time offset </p>
+
+</div>
+</div>
+<a class="anchor" id="a4e79195531cf78dfd880479a6404cb44"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gls_meas_t::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Type </p>
 
 </div>
 </div>
@@ -231,8 +246,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00301.html">ble_hts_meas_s</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00301.html">ble_gls_meas_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

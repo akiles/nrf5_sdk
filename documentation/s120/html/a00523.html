@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Events, type definitions and API calls</title>
+<title>nRF51 SDK - S120 SoftDevice: GAP Advertising interval max and min</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,34 +97,68 @@ $(document).ready(function(){initNavTree('a00523.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Events, type definitions and API calls<div class="ingroups"><a class="el" href="a00522.html">BLE SoftDevice Common</a></div></div>  </div>
+<div class="title">GAP Advertising interval max and min<div class="ingroups"><a class="el" href="a00701.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Module independent events, type definitions and API calls for the BLE SoftDevice.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00742"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00742.html">Enumerations</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00743"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html">Defines</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00744"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00744.html">Structures</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00745"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html">Functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaf61691584387648b33a032c934bcd094"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00523.html#gaf61691584387648b33a032c934bcd094">BLE_GAP_ADV_INTERVAL_MIN</a>&#160;&#160;&#160;0x0020</td></tr>
+<tr class="separator:gaf61691584387648b33a032c934bcd094"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0853bcb2a170efd2bb58e3a6b3c8ca5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00523.html#gaf0853bcb2a170efd2bb58e3a6b3c8ca5">BLE_GAP_ADV_NONCON_INTERVAL_MIN</a>&#160;&#160;&#160;0x00A0</td></tr>
+<tr class="separator:gaf0853bcb2a170efd2bb58e3a6b3c8ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada06c7f328e5bcc50ce55f9f567129ca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00523.html#gada06c7f328e5bcc50ce55f9f567129ca">BLE_GAP_ADV_INTERVAL_MAX</a>&#160;&#160;&#160;0x4000</td></tr>
+<tr class="separator:gada06c7f328e5bcc50ce55f9f567129ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Module independent events, type definitions and API calls for the BLE SoftDevice. </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gada06c7f328e5bcc50ce55f9f567129ca"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADV_INTERVAL_MAX&#160;&#160;&#160;0x4000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Maximum Advertising interval in 625 us units, i.e. 10.24 s. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaf61691584387648b33a032c934bcd094"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADV_INTERVAL_MIN&#160;&#160;&#160;0x0020</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Minimum Advertising interval in 625 us units, i.e. 20 ms. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaf0853bcb2a170efd2bb58e3a6b3c8ca5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADV_NONCON_INTERVAL_MIN&#160;&#160;&#160;0x00A0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Minimum Advertising interval in 625 us units for non connectable mode, i.e. 100 ms. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:53 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

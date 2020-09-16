@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_adv_params_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_enc_info_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,63 @@ $(document).ready(function(){initNavTree('a00108.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_adv_params_t Struct Reference<div class="ingroups"><a class="el" href="a00748.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_enc_info_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP advertising parameters.  
+<p>GAP Encryption Information.  
  <a href="a00108.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aece8d919208244b8085f64b613708427"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#aece8d919208244b8085f64b613708427">type</a></td></tr>
-<tr class="separator:aece8d919208244b8085f64b613708427"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae87243568d5b9a272a15df0cd4673cdb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00107.html">ble_gap_addr_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#ae87243568d5b9a272a15df0cd4673cdb">p_peer_addr</a></td></tr>
-<tr class="separator:ae87243568d5b9a272a15df0cd4673cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e2d44610c896a2d1466eb293688f226"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#a9e2d44610c896a2d1466eb293688f226">fp</a></td></tr>
-<tr class="separator:a9e2d44610c896a2d1466eb293688f226"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd7f1f2a29e883a60a17363bccc24dca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00141.html">ble_gap_whitelist_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#afd7f1f2a29e883a60a17363bccc24dca">p_whitelist</a></td></tr>
-<tr class="separator:afd7f1f2a29e883a60a17363bccc24dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a289b288f81c56920fea9a6373697c7f3"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#a289b288f81c56920fea9a6373697c7f3">interval</a></td></tr>
-<tr class="separator:a289b288f81c56920fea9a6373697c7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81b240f5be7e508a84467b7ac2ff6d15"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#a81b240f5be7e508a84467b7ac2ff6d15">timeout</a></td></tr>
-<tr class="separator:a81b240f5be7e508a84467b7ac2ff6d15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a545fe8321eef3b128572882aa3997f7f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#a545fe8321eef3b128572882aa3997f7f">ltk</a> [16]</td></tr>
+<tr class="separator:a545fe8321eef3b128572882aa3997f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f21ad24fa7cce2e56ae61beccdcb0b8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#a5f21ad24fa7cce2e56ae61beccdcb0b8">auth</a>: 1</td></tr>
+<tr class="separator:a5f21ad24fa7cce2e56ae61beccdcb0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91966f65c4bb6988f847a19ce0b1541e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#a91966f65c4bb6988f847a19ce0b1541e">ltk_len</a>: 7</td></tr>
+<tr class="separator:a91966f65c4bb6988f847a19ce0b1541e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GAP advertising parameters. </p>
+<div class="textblock"><p>GAP Encryption Information. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a9e2d44610c896a2d1466eb293688f226"></a>
+<a class="anchor" id="a5f21ad24fa7cce2e56ae61beccdcb0b8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_adv_params_t::fp</td>
+          <td class="memname">uint8_t ble_gap_enc_info_t::auth</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Filter Policy, see <a class="el" href="a00538.html">GAP Advertising filter policies</a>. </p>
+<p>Authenticated Key. </p>
 
 </div>
 </div>
-<a class="anchor" id="a289b288f81c56920fea9a6373697c7f3"></a>
+<a class="anchor" id="a545fe8321eef3b128572882aa3997f7f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gap_adv_params_t::interval</td>
+          <td class="memname">uint8_t ble_gap_enc_info_t::ltk[16]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Advertising interval between 0x0020 and 0x4000 in 0.625 ms units (20ms to 10.24s), see <a class="el" href="a00533.html">GAP Advertising interval max and min</a>. This parameter must be set to 0 if type equals <a class="el" href="a00537.html#gafefde83f6b598e7fb14868e0610bdf43">BLE_GAP_ADV_TYPE_ADV_DIRECT_IND</a>. </p>
+<p>Long Term Key. </p>
 
 </div>
 </div>
-<a class="anchor" id="ae87243568d5b9a272a15df0cd4673cdb"></a>
+<a class="anchor" id="a91966f65c4bb6988f847a19ce0b1541e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00107.html">ble_gap_addr_t</a>* ble_gap_adv_params_t::p_peer_addr</td>
+          <td class="memname">uint8_t ble_gap_enc_info_t::ltk_len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>For BLE_GAP_CONN_MODE_DIRECTED mode only, known peer address. </p>
-
-</div>
-</div>
-<a class="anchor" id="afd7f1f2a29e883a60a17363bccc24dca"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00141.html">ble_gap_whitelist_t</a>* ble_gap_adv_params_t::p_whitelist</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to whitelist, NULL if none is given. </p>
-
-</div>
-</div>
-<a class="anchor" id="a81b240f5be7e508a84467b7ac2ff6d15"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gap_adv_params_t::timeout</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Advertising timeout between 0x0001 and 0x3FFF in seconds, 0x0000 disables timeout. See also <a class="el" href="a00539.html">GAP Advertising timeout values</a>. This parameter must be set to 0 if type equals <a class="el" href="a00537.html#gafefde83f6b598e7fb14868e0610bdf43">BLE_GAP_ADV_TYPE_ADV_DIRECT_IND</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="aece8d919208244b8085f64b613708427"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_adv_params_t::type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>See <a class="el" href="a00537.html">GAP Advertising types</a>. </p>
+<p>LTK length in octets. </p>
 
 </div>
 </div>
@@ -216,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00108.html">ble_gap_adv_params_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00108.html">ble_gap_enc_info_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

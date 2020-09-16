@@ -1,7 +1,7 @@
 var a00085 =
 [
-    [ "active_state", "a00085.html#af55e02af042a4d038dac26a7658536f6", null ],
-    [ "button_handler", "a00085.html#ad06ea1e496c4b37802492b289b54a875", null ],
-    [ "pin_no", "a00085.html#af6a18934c420213be9eee710854e1ab9", null ],
-    [ "pull_cfg", "a00085.html#abf23ae362a2ecdfbc73c9f6736ce0ba8", null ]
+    [ "bl_cccd_handle", "a00085.html#a2ea89dfa950963404b32410a8e42a04f", null ],
+    [ "bl_handle", "a00085.html#a58c7f1553ce38426e3656bd61bd21748", null ],
+    [ "conn_handle", "a00085.html#a97ef9e28546757bc5c42fc566e331380", null ],
+    [ "evt_handler", "a00085.html#a13ed1988cc9320c7eaad37ec21272201", null ]
 ];

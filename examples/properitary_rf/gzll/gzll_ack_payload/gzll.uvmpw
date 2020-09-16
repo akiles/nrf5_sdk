@@ -8,10 +8,10 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
  
    <project>
-    <PathAndName>pca10028\device_ack_payload\arm\gzll_device_ack_payload_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10028\host_ack_payload\arm4\gzll_host_ack_payload_pca10028.uvproj</PathAndName>
   </project>
    <project>
-    <PathAndName>pca10028\host_ack_payload\arm\gzll_host_ack_payload_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10028\device_ack_payload\arm4\gzll_device_ack_payload_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

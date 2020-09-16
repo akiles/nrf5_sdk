@@ -20,6 +20,32 @@
 #include "ble_srv_common.h"
 
 
+/**@brief Function for handling the Connect event.
+ *
+ * @param[in]   p_tps       TX Power Service structure.
+ * @param[in]   p_ble_evt   Event received from the BLE stack.
+ */
+static void on_connect(ble_tps_t * p_tps, ble_evt_t * p_ble_evt)
+{
+    p_tps->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
+}
+
+
+void ble_tps_on_ble_evt(ble_tps_t * p_tps, ble_evt_t * p_ble_evt)
+{
+    switch (p_ble_evt->header.evt_id)
+    {
+        case BLE_GAP_EVT_CONNECTED:
+            on_connect(p_tps, p_ble_evt);
+            break;
+
+        default:
+            // No implementation needed.
+            break;
+    }
+}
+
+
 /**@brief Function for adding TX Power Level characteristics.
  *
  * @param[in]   p_tps        TX Power Service structure.
@@ -97,11 +123,17 @@ uint32_t ble_tps_init(ble_tps_t * p_tps, const ble_tps_init_t * p_tps_init)
 
 uint32_t ble_tps_tx_power_level_set(ble_tps_t * p_tps, int8_t tx_power_level)
 {
-    uint16_t len = sizeof(int8_t);
+    ble_gatts_value_t gatts_value;
+
+    // Initialize value struct.
+    memset(&gatts_value, 0, sizeof(gatts_value));
+
+    gatts_value.len     = sizeof(uint8_t);
+    gatts_value.offset  = 0;
+    gatts_value.p_value = (uint8_t*)&tx_power_level;
 
     // Update database
-    return sd_ble_gatts_value_set(p_tps->tx_power_level_handles.value_handle,
-                                  0,
-                                  &len,
-                                  (uint8_t*)&tx_power_level);
+    return sd_ble_gatts_value_set(p_tps->conn_handle,
+                                  p_tps->tx_power_level_handles.value_handle,
+                                  &gatts_value);
 }

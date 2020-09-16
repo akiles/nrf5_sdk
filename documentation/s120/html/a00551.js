@@ -1,6 +1,6 @@
 var a00551 =
 [
-    [ "BLE_GATT_HVX_INDICATION", "a00551.html#ga47f3222bcefb5eb4aed9a1dc7c796b1f", null ],
-    [ "BLE_GATT_HVX_INVALID", "a00551.html#gae454efaf8b3f8c6871dca5d2db5ac724", null ],
-    [ "BLE_GATT_HVX_NOTIFICATION", "a00551.html#gad5784996b45947f6d7f0cb81c9a4c9ed", null ]
+    [ "BLE_GATTS_VLOC_INVALID", "a00551.html#ga0b0c153e71bddb01a4ba803a9110a6e4", null ],
+    [ "BLE_GATTS_VLOC_STACK", "a00551.html#gaf51ee5f68c7eea401ee79cd250c1fb16", null ],
+    [ "BLE_GATTS_VLOC_USER", "a00551.html#gaddb51f959e18123c5e215e22af0c31a9", null ]
 ];

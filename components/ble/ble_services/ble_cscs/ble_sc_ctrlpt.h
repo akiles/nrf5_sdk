@@ -147,7 +147,7 @@ typedef struct
 
 /**@brief Speed and Cadence Control Point structure. This contains various status information for
  *        the Speed and Cadence Control Point behavior. */
-typedef struct ble_sc_ctrlpt_s
+struct ble_sc_ctrlpt_s
 {
     uint8_t                      supported_functions;                                     /**< supported control point functionalities see @ref BLE_SRV_SC_CTRLPT_SUPP_FUNC. */
     uint16_t                     service_handle;                                          /**< Handle of the parent service (as provided by the BLE stack). */
@@ -160,7 +160,7 @@ typedef struct ble_sc_ctrlpt_s
     ble_scpt_procedure_status_t  procedure_status;                                        /**< status of possible procedure*/
     ble_srv_error_handler_t      error_handler;                                           /**< Function to be called in case of an error. */
     ble_sc_ctrlpt_resp_t         response;                                                /**< pending response data.*/
-} ble_sc_ctrlpt_t;
+};
 
 #define SCPT_OPCODE_POS                   0                                               /**< Request opcode position. */
 #define SCPT_PARAMETER_POS                1                                               /**< Request parameter position. */

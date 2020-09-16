@@ -1,7 +1,6 @@
 var a00844 =
 [
-    [ "Defines", "a01065.html", "a01065" ],
-    [ "Enumerations", "a01066.html", "a01066" ],
-    [ "Types", "a01067.html", "a01067" ],
-    [ "Functions", "a01068.html", "a01068" ]
+    [ "BLE_GATT_HVX_INDICATION", "a00844.html#ga47f3222bcefb5eb4aed9a1dc7c796b1f", null ],
+    [ "BLE_GATT_HVX_INVALID", "a00844.html#gae454efaf8b3f8c6871dca5d2db5ac724", null ],
+    [ "BLE_GATT_HVX_NOTIFICATION", "a00844.html#gad5784996b45947f6d7f0cb81c9a4c9ed", null ]
 ];

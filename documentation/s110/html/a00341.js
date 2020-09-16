@@ -1,7 +1,7 @@
 var a00341 =
 [
-    [ "appl_id", "a00341.html#a381fcabb6c06cd4b56c37f2f074debc7", null ],
-    [ "connection_id", "a00341.html#aada12513e0b4856726d23729171c4c0f", null ],
-    [ "device_id", "a00341.html#ac60c519ad6b47720e22b172283fbf2d3", null ],
-    [ "service_id", "a00341.html#a61539581cba803dbeb074913ba5d0988", null ]
+    [ "opcode", "a00341.html#ac9347eb17ef67e3f06df043008ffb2fc", null ],
+    [ "operand_len", "a00341.html#af49baa0004db22db129862b609928a62", null ],
+    [ "operator", "a00341.html#a3d079df679dec85ecc10fe70a2d349f1", null ],
+    [ "p_operand", "a00341.html#a2560ddd094bfd6960dd5cc3a6ee54c48", null ]
 ];

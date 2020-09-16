@@ -1,6 +1,6 @@
 var a00658 =
 [
-    [ "power_system_off_req_enc", "a00658.html#ga70416ff6e25fd59181a1ffaf24aeece8", null ],
-    [ "temp_get_req_enc", "a00658.html#ga7a321d0c704f19df22bf2a901c15c4c2", null ],
-    [ "temp_get_rsp_dec", "a00658.html#ga0ce4e52b270e62aa7c772f31776b5e6c", null ]
+    [ "ble_hrs_c_hrm_notif_enable", "a00658.html#gab4bcaf5864ee2e17bc0abf2ae585a68b", null ],
+    [ "ble_hrs_c_init", "a00658.html#ga9ec622429b01bc15e65fbcd3613a8b8b", null ],
+    [ "ble_hrs_c_on_ble_evt", "a00658.html#ga062e0829a2ebd211d4e51a23c520ab1f", null ]
 ];

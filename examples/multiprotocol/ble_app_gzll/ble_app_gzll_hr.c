@@ -29,7 +29,7 @@
 #include "ble_hrs.h"
 #include "ble_dis.h"
 #include "ble_conn_params.h"
-#include "ble_sensorsim.h"
+#include "sensorsim.h"
 #include "softdevice_handler.h"
 #include "app_timer.h"
 #include "boards.h"
@@ -85,12 +85,12 @@ static ble_bas_t                          m_bas;                                
 static ble_hrs_t                          m_hrs;                                     /**< Structure used to identify the heart rate service. */
 static bool                               m_rr_interval_enabled = true;              /**< Flag for enabling and disabling the registration of new RR interval measurements (the purpose of disabling this is just to test sending HRM without RR interval data. */
 
-static ble_sensorsim_cfg_t                m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
-static ble_sensorsim_state_t              m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
-static ble_sensorsim_cfg_t                m_heart_rate_sim_cfg;                      /**< Heart Rate sensor simulator configuration. */
-static ble_sensorsim_state_t              m_heart_rate_sim_state;                    /**< Heart Rate sensor simulator state. */
-static ble_sensorsim_cfg_t                m_rr_interval_sim_cfg;                     /**< RR Interval sensor simulator configuration. */
-static ble_sensorsim_state_t              m_rr_interval_sim_state;                   /**< RR Interval sensor simulator state. */
+static sensorsim_cfg_t                    m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
+static sensorsim_state_t                  m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
+static sensorsim_cfg_t                    m_heart_rate_sim_cfg;                      /**< Heart Rate sensor simulator configuration. */
+static sensorsim_state_t                  m_heart_rate_sim_state;                    /**< Heart Rate sensor simulator state. */
+static sensorsim_cfg_t                    m_rr_interval_sim_cfg;                     /**< RR Interval sensor simulator configuration. */
+static sensorsim_state_t                  m_rr_interval_sim_state;                   /**< RR Interval sensor simulator state. */
 
 static app_timer_id_t                     m_battery_timer_id;                        /**< Battery timer. */
 static app_timer_id_t                     m_heart_rate_timer_id;                     /**< Heart rate measurement timer. */
@@ -105,7 +105,7 @@ static void battery_level_update(void)
     uint32_t err_code;
     uint8_t  battery_level;
     
-    battery_level = (uint8_t)ble_sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
+    battery_level = (uint8_t)sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
     
     err_code = ble_bas_battery_level_update(&m_bas, battery_level);
     if ((err_code != NRF_SUCCESS) &&
@@ -149,7 +149,7 @@ static void heart_rate_meas_timeout_handler(void * p_context)
     
     UNUSED_PARAMETER(p_context);
 
-    heart_rate = (uint16_t)ble_sensorsim_measure(&m_heart_rate_sim_state, &m_heart_rate_sim_cfg);
+    heart_rate = (uint16_t)sensorsim_measure(&m_heart_rate_sim_state, &m_heart_rate_sim_cfg);
 
     cnt++;
     err_code = ble_hrs_heart_rate_measurement_send(&m_hrs, heart_rate);
@@ -184,7 +184,7 @@ static void rr_interval_timeout_handler(void * p_context)
     {
         uint16_t rr_interval;
         
-        rr_interval = (uint16_t)ble_sensorsim_measure(&m_rr_interval_sim_state,
+        rr_interval = (uint16_t)sensorsim_measure(&m_rr_interval_sim_state,
                                                       &m_rr_interval_sim_cfg);
         ble_hrs_rr_interval_add(&m_hrs, rr_interval);
     }
@@ -266,8 +266,7 @@ static void advertising_init(void)
     
     advdata.name_type               = BLE_ADVDATA_FULL_NAME;
     advdata.include_appearance      = true;
-    advdata.flags.size              = sizeof(flags);
-    advdata.flags.p_data            = &flags;
+    advdata.flags                   = flags;
     advdata.uuids_complete.uuid_cnt = sizeof(adv_uuids) / sizeof(adv_uuids[0]);
     advdata.uuids_complete.p_uuids  = adv_uuids;
     
@@ -349,28 +348,28 @@ static void services_init(void)
 
 /**@brief Function for initializing the sensor simulators.
  */
-static void sensor_sim_init(void)
+static void sensor_simulator_init(void)
 {
     m_battery_sim_cfg.min          = MIN_BATTERY_LEVEL;
     m_battery_sim_cfg.max          = MAX_BATTERY_LEVEL;
     m_battery_sim_cfg.incr         = BATTERY_LEVEL_INCREMENT;
     m_battery_sim_cfg.start_at_max = true;
     
-    ble_sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
+    sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
     
     m_heart_rate_sim_cfg.min          = MIN_HEART_RATE;
     m_heart_rate_sim_cfg.max          = MAX_HEART_RATE;
     m_heart_rate_sim_cfg.incr         = HEART_RATE_INCREMENT;
     m_heart_rate_sim_cfg.start_at_max = false;
     
-    ble_sensorsim_init(&m_heart_rate_sim_state, &m_heart_rate_sim_cfg);
+    sensorsim_init(&m_heart_rate_sim_state, &m_heart_rate_sim_cfg);
     
     m_rr_interval_sim_cfg.min          = MIN_RR_INTERVAL;
     m_rr_interval_sim_cfg.max          = MAX_RR_INTERVAL;
     m_rr_interval_sim_cfg.incr         = RR_INTERVAL_INCREMENT;
     m_rr_interval_sim_cfg.start_at_max = false;
     
-    ble_sensorsim_init(&m_rr_interval_sim_state, &m_rr_interval_sim_cfg);
+    sensorsim_init(&m_rr_interval_sim_state, &m_rr_interval_sim_cfg);
 }
 
 
@@ -378,7 +377,6 @@ static void sensor_sim_init(void)
  */
 static void sec_params_init(void)
 {
-    m_sec_params.timeout      = SEC_PARAM_TIMEOUT;
     m_sec_params.bond         = SEC_PARAM_BOND;
     m_sec_params.mitm         = SEC_PARAM_MITM;
     m_sec_params.io_caps      = SEC_PARAM_IO_CAPABILITIES;
@@ -485,7 +483,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
     uint32_t                         err_code;
     static uint16_t                  s_conn_handle = BLE_CONN_HANDLE_INVALID;
-    static ble_gap_evt_auth_status_t s_auth_status;
+    static ble_gap_sec_keyset_t      s_sec_keyset;
     ble_gap_enc_info_t *             p_enc_info;
 
     switch (p_ble_evt->header.evt_id)
@@ -503,38 +501,42 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             break;
 
         case BLE_GAP_EVT_SEC_PARAMS_REQUEST:
+            s_sec_keyset.keys_central.p_enc_key = NULL;
+            s_sec_keyset.keys_central.p_id_key  = NULL;
+            s_sec_keyset.keys_central.p_enc_key = NULL;
             err_code = sd_ble_gap_sec_params_reply(s_conn_handle, 
-                                                   BLE_GAP_SEC_STATUS_SUCCESS, 
-                                                   &m_sec_params);
+                                                   BLE_GAP_SEC_STATUS_SUCCESS,        
+                                                   &m_sec_params,
+                                                   &s_sec_keyset);
             APP_ERROR_CHECK(err_code);
             break;
             
         case BLE_GAP_EVT_AUTH_STATUS:
-            s_auth_status = p_ble_evt->evt.gap_evt.params.auth_status;
             break;
 
         case BLE_GATTS_EVT_SYS_ATTR_MISSING:
-            err_code = sd_ble_gatts_sys_attr_set(s_conn_handle, NULL, 0);
+            err_code = sd_ble_gatts_sys_attr_set(s_conn_handle, NULL, 0, 0);
             APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GAP_EVT_SEC_INFO_REQUEST:
-            p_enc_info = &s_auth_status.periph_keys.enc_info;
-            if (p_enc_info->div == p_ble_evt->evt.gap_evt.params.sec_info_request.div)
+            if (s_sec_keyset.keys_periph.p_enc_key != NULL)
             {
-                err_code = sd_ble_gap_sec_info_reply(s_conn_handle, p_enc_info, NULL);
+                p_enc_info = &s_sec_keyset.keys_periph.p_enc_key->enc_info;
+
+                err_code = sd_ble_gap_sec_info_reply(s_conn_handle, p_enc_info, NULL, NULL);
                 APP_ERROR_CHECK(err_code);
             }
             else
             {
                 // No keys found for this device.
-                err_code = sd_ble_gap_sec_info_reply(s_conn_handle, NULL, NULL);
+                err_code = sd_ble_gap_sec_info_reply(s_conn_handle, NULL, NULL, NULL);
                 APP_ERROR_CHECK(err_code);
             }
             break;
 
         case BLE_GAP_EVT_TIMEOUT:
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT)
+            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
             { 
                 err_code = bsp_indication_set(BSP_INDICATE_IDLE);
                 APP_ERROR_CHECK(err_code);
@@ -590,7 +592,7 @@ void ble_stack_start(void)
 {
     uint32_t err_code;
     
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;
@@ -618,7 +620,7 @@ void ble_hrs_app_start(void)
     gap_params_init();
     advertising_init();
     services_init();
-    sensor_sim_init();
+    sensor_simulator_init();
     conn_params_init();
     application_timers_start();
     sec_params_init();

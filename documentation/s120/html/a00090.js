@@ -1,8 +1,5 @@
 var a00090 =
 [
-    [ "data", "a00090.html#a9241052870696d4d825c91c4a834a84f", null ],
-    [ "error_code", "a00090.html#ab2aeea864de0050ec22790a186a4e9b1", null ],
-    [ "error_communication", "a00090.html#ae2f48256edd4052e8273d098bb8249c4", null ],
-    [ "evt_type", "a00090.html#ae89e1d236d49d18fa5be6fa32ba3c0d8", null ],
-    [ "value", "a00090.html#a9e34eabccc01fe3eeff1c7392d737d84", null ]
+    [ "cccd_handle", "a00090.html#a7ec4f43c4adba9c33d6c52fa6637540b", null ],
+    [ "characteristic", "a00090.html#ac1bd337f6b1acc35a908b13ee4877a88", null ]
 ];

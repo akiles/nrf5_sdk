@@ -8,10 +8,7 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
  
    <project>
-    <PathAndName>pca10028\s110\arm\experimental_ble_app_ancs_s110_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10028\ser_s110_spi\arm\experimental_ble_app_ancs_s110_spi_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10028\s110\arm4\experimental_ble_app_ancs_s110_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

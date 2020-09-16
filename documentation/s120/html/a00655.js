@@ -1,9 +1,7 @@
 var a00655 =
 [
-    [ "ble_gatts_evt_hvc_dec", "a00655.html#ga055ddda0e576c6f9bc873cc7305f6032", null ],
-    [ "ble_gatts_evt_rw_authorize_request_dec", "a00655.html#ga86f038acc0952b4dbc4d19fce6e8e419", null ],
-    [ "ble_gatts_evt_sc_confirm_dec", "a00655.html#ga2eaa188f92315d4eae941b30b1fb0334", null ],
-    [ "ble_gatts_evt_sys_attr_missing_dec", "a00655.html#ga77c7e6565eb1ea9e8b433a867e1cfb90", null ],
-    [ "ble_gatts_evt_timeout_dec", "a00655.html#ga91b3c7a4305b04dc2e258d5efc9f9292", null ],
-    [ "ble_gatts_evt_write_dec", "a00655.html#gaf1f46ad018dc5bf3d8eb4255a7845c25", null ]
+    [ "ble_hrs_c_evt_type_t", "a00655.html#ga1cb65f3c0928fd75d0e186c28fca8c0e", [
+      [ "BLE_HRS_C_EVT_DISCOVERY_COMPLETE", "a00655.html#gga1cb65f3c0928fd75d0e186c28fca8c0eaab184fc5978897e328792f1672f80011", null ],
+      [ "BLE_HRS_C_EVT_HRM_NOTIFICATION", "a00655.html#gga1cb65f3c0928fd75d0e186c28fca8c0ea8c95bb250aab94f4b82257bdeadfa673", null ]
+    ] ]
 ];

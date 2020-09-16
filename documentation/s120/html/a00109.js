@@ -1,7 +1,5 @@
 var a00109 =
 [
-    [ "conn_sup_timeout", "a00109.html#ab644e629af7eb4915b0f3a93f682f7ae", null ],
-    [ "max_conn_interval", "a00109.html#abd7a6e16a723de1d779afadae3f3113e", null ],
-    [ "min_conn_interval", "a00109.html#a4d1975f7d25263004c405e0321fbae34", null ],
-    [ "slave_latency", "a00109.html#aa5caf55715aaac33f56cc996f91a92cc", null ]
+    [ "enc_info", "a00109.html#a13ede8af725f86dfd2a221e48a61b313", null ],
+    [ "master_id", "a00109.html#a652b5f7ec55ac6f4693515bda2f35176", null ]
 ];

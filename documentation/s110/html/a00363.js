@@ -1,5 +1,5 @@
 var a00363 =
 [
-    [ "cmd_type", "a00363.html#a4955a964032009d6b9b5cc167e758d32", null ],
-    [ "tx_done_result", "a00363.html#ac9e1ac1b373abcbd4e761600473340bc", null ]
+    [ "date_time", "a00363.html#a4334018af68514028c905fa9e4d58e0e", null ],
+    [ "day_of_week", "a00363.html#afd3a9437f681f24fd37a336a98a57d5c", null ]
 ];

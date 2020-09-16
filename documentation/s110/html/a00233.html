@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_sec_keys_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gap_evt_passkey_display_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,93 +106,33 @@ $(document).ready(function(){initNavTree('a00233.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_sec_keys_t Struct Reference<div class="ingroups"><a class="el" href="a00849.html">Generic Access Profile (GAP)</a></div></div>  </div>
+<div class="title">ble_gap_evt_passkey_display_t Struct Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Keys that have been exchanged.  
+<p>Event structure for <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefaedc549f5a6853a542bf93ff5d155292a">BLE_GAP_EVT_PASSKEY_DISPLAY</a>.  
  <a href="a00233.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a05e120327a8c048b4b1e8ce96f111a8a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#a05e120327a8c048b4b1e8ce96f111a8a">ltk</a>: 1</td></tr>
-<tr class="separator:a05e120327a8c048b4b1e8ce96f111a8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbf33f39d223b8ab1d88e2fa7c04ad95"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#abbf33f39d223b8ab1d88e2fa7c04ad95">ediv_rand</a>: 1</td></tr>
-<tr class="separator:abbf33f39d223b8ab1d88e2fa7c04ad95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2aaf5f7040b1bb4f7b259233fa841158"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#a2aaf5f7040b1bb4f7b259233fa841158">irk</a>: 1</td></tr>
-<tr class="separator:a2aaf5f7040b1bb4f7b259233fa841158"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebe8febe1baac5229c33166d94ffc981"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#aebe8febe1baac5229c33166d94ffc981">address</a>: 1</td></tr>
-<tr class="separator:aebe8febe1baac5229c33166d94ffc981"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a624abff1c299b8b5faf6bb321edf8ff5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#a624abff1c299b8b5faf6bb321edf8ff5">csrk</a>: 1</td></tr>
-<tr class="separator:a624abff1c299b8b5faf6bb321edf8ff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1966df5e1f2fc8e4c30f0af7b16b71c2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#a1966df5e1f2fc8e4c30f0af7b16b71c2">passkey</a> [6]</td></tr>
+<tr class="separator:a1966df5e1f2fc8e4c30f0af7b16b71c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Keys that have been exchanged. </p>
+<div class="textblock"><p>Event structure for <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefaedc549f5a6853a542bf93ff5d155292a">BLE_GAP_EVT_PASSKEY_DISPLAY</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aebe8febe1baac5229c33166d94ffc981"></a>
+<a class="anchor" id="a1966df5e1f2fc8e4c30f0af7b16b71c2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_sec_keys_t::address</td>
+          <td class="memname">uint8_t ble_gap_evt_passkey_display_t::passkey[6]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Public or static random address. </p>
-
-</div>
-</div>
-<a class="anchor" id="a624abff1c299b8b5faf6bb321edf8ff5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_sec_keys_t::csrk</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Connection Signature Resolving Key. </p>
-
-</div>
-</div>
-<a class="anchor" id="abbf33f39d223b8ab1d88e2fa7c04ad95"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_sec_keys_t::ediv_rand</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Encrypted Diversifier and Random value. </p>
-
-</div>
-</div>
-<a class="anchor" id="a2aaf5f7040b1bb4f7b259233fa841158"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_sec_keys_t::irk</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Identity Resolving Key. </p>
-
-</div>
-</div>
-<a class="anchor" id="a05e120327a8c048b4b1e8ce96f111a8a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_sec_keys_t::ltk</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Long Term Key. </p>
+<p>6-digit passkey in ASCII ('0'-'9' digits only). </p>
 
 </div>
 </div>
@@ -201,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00233.html">ble_gap_sec_keys_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00233.html">ble_gap_evt_passkey_display_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

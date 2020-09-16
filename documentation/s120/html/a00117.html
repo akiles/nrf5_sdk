@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_evt_conn_param_update_request_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_evt_disconnected_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,33 @@ $(document).ready(function(){initNavTree('a00117.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_evt_conn_param_update_request_t Struct Reference<div class="ingroups"><a class="el" href="a00748.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_evt_disconnected_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event data for connection parameter update request event.  
+<p>Event data for disconnected event.  
  <a href="a00117.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a092b4a58a335aedbf06c2ecd33b36f59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00109.html">ble_gap_conn_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00117.html#a092b4a58a335aedbf06c2ecd33b36f59">conn_params</a></td></tr>
-<tr class="separator:a092b4a58a335aedbf06c2ecd33b36f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11211be968ad2898f3dd9b4d31b5ce22"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00117.html#a11211be968ad2898f3dd9b4d31b5ce22">reason</a></td></tr>
+<tr class="separator:a11211be968ad2898f3dd9b4d31b5ce22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event data for connection parameter update request event. </p>
+<div class="textblock"><p>Event data for disconnected event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a092b4a58a335aedbf06c2ecd33b36f59"></a>
+<a class="anchor" id="a11211be968ad2898f3dd9b4d31b5ce22"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00109.html">ble_gap_conn_params_t</a> ble_gap_evt_conn_param_update_request_t::conn_params</td>
+          <td class="memname">uint8_t ble_gap_evt_disconnected_t::reason</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GAP Connection Parameters. </p>
+<p>HCI error code, see <a class="el" href="a00554.html">Bluetooth status codes</a>. </p>
 
 </div>
 </div>
@@ -141,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00117.html">ble_gap_evt_conn_param_update_request_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00117.html">ble_gap_evt_disconnected_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -38,7 +38,7 @@
 #include "ble_conn_params.h"
 #include "app_scheduler.h"
 #include "softdevice_handler.h"
-#include "app_timer.h"
+#include "app_timer_appsh.h"
 #include "app_gpiote.h"
 #include "bsp.h"
 
@@ -70,7 +70,6 @@
 
 #define BUTTON_DETECTION_DELAY          APP_TIMER_TICKS(50, APP_TIMER_PRESCALER)    /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
 
-#define SEC_PARAM_TIMEOUT               30                                          /**< Timeout for Pairing Request or Security Request (in seconds). */
 #define SEC_PARAM_BOND                  1                                           /**< Perform bonding. */
 #define SEC_PARAM_MITM                  0                                           /**< Man In The Middle protection not required. */
 #define SEC_PARAM_IO_CAPABILITIES       BLE_GAP_IO_CAPS_NONE                        /**< No I/O capabilities. */
@@ -129,7 +128,7 @@ static void service_error_handler(uint32_t nrf_error)
 static void timers_init(void)
 {
     // Initialize timer module, making it use the scheduler
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, true);
+    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, true);
 
     /* YOUR_JOB: Create any timers to be used by the application.
                  Below is an example of how to create a timer.
@@ -193,8 +192,7 @@ static void advertising_init(void)
 
     advdata.name_type               = BLE_ADVDATA_FULL_NAME;
     advdata.include_appearance      = true;
-    advdata.flags.size              = sizeof(flags);
-    advdata.flags.p_data            = &flags;
+    advdata.flags                   = flags;
     advdata.uuids_complete.uuid_cnt = sizeof(adv_uuids) / sizeof(adv_uuids[0]);
     advdata.uuids_complete.p_uuids  = adv_uuids;
 
@@ -215,7 +213,6 @@ static void services_init(void)
  */
 static void sec_params_init(void)
 {
-    m_sec_params.timeout      = SEC_PARAM_TIMEOUT;
     m_sec_params.bond         = SEC_PARAM_BOND;
     m_sec_params.mitm         = SEC_PARAM_MITM;
     m_sec_params.io_caps      = SEC_PARAM_IO_CAPABILITIES;
@@ -323,7 +320,16 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
     uint32_t                         err_code;
     static ble_gap_evt_auth_status_t m_auth_status;
+    bool                             master_id_matches;
+    ble_gap_sec_kdist_t *            p_distributed_keys;
     ble_gap_enc_info_t *             p_enc_info;
+    ble_gap_irk_t *                  p_id_info;
+    ble_gap_sign_info_t *            p_sign_info;
+
+    static ble_gap_enc_key_t         m_enc_key;           /**< Encryption Key (Encryption Info and Master ID). */
+    static ble_gap_id_key_t          m_id_key;            /**< Identity Key (IRK and address). */
+    static ble_gap_sign_info_t       m_sign_key;          /**< Signing Key (Connection Signature Resolving Key). */
+    static ble_gap_sec_keyset_t      m_keys = {.keys_periph = {&m_enc_key, &m_id_key, &m_sign_key}};
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -361,12 +367,16 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
         case BLE_GAP_EVT_SEC_PARAMS_REQUEST:
             err_code = sd_ble_gap_sec_params_reply(m_conn_handle,
                                                    BLE_GAP_SEC_STATUS_SUCCESS,
-                                                   &m_sec_params);
+                                                   &m_sec_params,
+                                                   &m_keys);
             APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GATTS_EVT_SYS_ATTR_MISSING:
-            err_code = sd_ble_gatts_sys_attr_set(m_conn_handle, NULL, 0);
+            err_code = sd_ble_gatts_sys_attr_set(m_conn_handle,
+                                                 NULL,
+                                                 0,
+                                                 BLE_GATTS_SYS_ATTR_FLAG_SYS_SRVCS | BLE_GATTS_SYS_ATTR_FLAG_USR_SRVCS);
             APP_ERROR_CHECK(err_code);
             break;
 
@@ -375,27 +385,26 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             break;
 
         case BLE_GAP_EVT_SEC_INFO_REQUEST:
-            p_enc_info = &m_auth_status.periph_keys.enc_info;
-            if (p_enc_info->div == p_ble_evt->evt.gap_evt.params.sec_info_request.div)
-            {
-                err_code = sd_ble_gap_sec_info_reply(m_conn_handle, p_enc_info, NULL);
-                APP_ERROR_CHECK(err_code);
-            }
-            else
-            {
-                // No keys found for this device
-                err_code = sd_ble_gap_sec_info_reply(m_conn_handle, NULL, NULL);
-                APP_ERROR_CHECK(err_code);
-            }
+            master_id_matches  = memcmp(&p_ble_evt->evt.gap_evt.params.sec_info_request.master_id,
+                                        &m_enc_key.master_id,
+                                        sizeof(ble_gap_master_id_t)) == 0;
+            p_distributed_keys = &m_auth_status.kdist_periph;
+
+            p_enc_info  = (p_distributed_keys->enc  && master_id_matches) ? &m_enc_key.enc_info : NULL;
+            p_id_info   = (p_distributed_keys->id   && master_id_matches) ? &m_id_key.id_info   : NULL;
+            p_sign_info = (p_distributed_keys->sign && master_id_matches) ? &m_sign_key         : NULL;
+
+            err_code = sd_ble_gap_sec_info_reply(m_conn_handle, p_enc_info, p_id_info, p_sign_info);
+            APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GAP_EVT_TIMEOUT:
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT)
+            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
             {
                 err_code = bsp_indication_set(BSP_INDICATE_IDLE);
                 APP_ERROR_CHECK(err_code);
                 // Configure buttons with sense level low as wakeup source.
-                err_code = bsp_buttons_enable(1 << WAKEUP_BUTTON_ID);;
+                err_code = bsp_buttons_enable(1 << WAKEUP_BUTTON_ID);
                 APP_ERROR_CHECK(err_code);
                 // Go to system-off mode (this function will not return; wakeup will cause a reset)                
                 err_code = sd_power_system_off();
@@ -450,7 +459,7 @@ static void ble_stack_init(void)
     uint32_t err_code;
 
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
 #ifdef S110
     // Enable BLE stack 

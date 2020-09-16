@@ -183,7 +183,7 @@ void button_event_handler(uint8_t pin_no, uint8_t button_action)
 void button_init(void)
 {
     // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
 
     // Initialize GPIOTE module.
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
@@ -195,8 +195,12 @@ void button_init(void)
         {BSP_BUTTON_1, false, BUTTON_PULL, button_event_handler},
     };
 
-    APP_BUTTON_INIT(buttons, sizeof(buttons) / sizeof(buttons[0]), BUTTON_DETECTION_DELAY, false);
-    uint32_t err_code = app_button_enable();
+    uint32_t err_code = app_button_init(buttons,
+                                        sizeof(buttons) / sizeof(buttons[0]),
+                                        BUTTON_DETECTION_DELAY);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = app_button_enable();
     APP_ERROR_CHECK(err_code);
 }
 

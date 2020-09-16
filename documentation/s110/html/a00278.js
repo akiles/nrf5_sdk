@@ -1,14 +1,9 @@
 var a00278 =
 [
-    [ "carbohydrate", "a00278.html#a9beb857a6df2f0813640626d818c4e4d", null ],
-    [ "carbohydrate_id", "a00278.html#a323005a484d605979ee196edc65b565a", null ],
-    [ "exercise_duration", "a00278.html#a8d38fe5be64903f80f797630db249455", null ],
-    [ "exercise_intensity", "a00278.html#ad339663b61c39d8d1c547def62931771", null ],
-    [ "extended_flags", "a00278.html#a44cd84da95e919dfd61bf31e8e582e27", null ],
-    [ "flags", "a00278.html#aeb34e1ef25f19e2bfaf246df822b2cea", null ],
-    [ "hba1c", "a00278.html#a509541df40935394dbaee9c1d4cab4f6", null ],
-    [ "meal", "a00278.html#a5f9f2d7f29fea28f00c9771f8bf8138d", null ],
-    [ "medication", "a00278.html#a6fbcf26226c924ca64c94fb52659eaa6", null ],
-    [ "medication_id", "a00278.html#adf0ae945c97e9a34a1c6ae48b90eac8d", null ],
-    [ "tester_and_health", "a00278.html#ac05ff23f10d9438197ae912cb4cec6b1", null ]
+    [ "flags", "a00278.html#ae9bf42dc0e530824c93ec423e6539220", null ],
+    [ "handle", "a00278.html#a4b5cec7a8b33f482114d99026b2ee92d", null ],
+    [ "len", "a00278.html#a068c40f218ed3932901529ac05b69c21", null ],
+    [ "offset", "a00278.html#a85d01254a43068218061ab21acabe980", null ],
+    [ "p_value", "a00278.html#a361b91f9ee1961598bc9c94520f8004b", null ],
+    [ "write_op", "a00278.html#a2c42a23118699b0fab8f49f1d9b4b386", null ]
 ];

@@ -1,16 +1,12 @@
 var a01052 =
 [
-    [ "ble_gatt_char_props_t", "a00239.html", [
-      [ "auth_signed_wr", "a00239.html#ad021e4c1c66a2595cb430d1e0598bc0d", null ],
-      [ "broadcast", "a00239.html#a66788f87aed20bf98b81af57051e9795", null ],
-      [ "indicate", "a00239.html#a256d8d59b59f7f1a079e962196e026dd", null ],
-      [ "notify", "a00239.html#a9dd91c1e55995665ef09ec4c5bd5eaf7", null ],
-      [ "read", "a00239.html#a1da688e4cfacf724ee7636dbf534716f", null ],
-      [ "write", "a00239.html#ae0ef9c3f220f06e735b534d232cb9108", null ],
-      [ "write_wo_resp", "a00239.html#a61fdb334c11f2a62accb48f297fb46ef", null ]
-    ] ],
-    [ "ble_gatt_char_ext_props_t", "a00238.html", [
-      [ "reliable_wr", "a00238.html#a8b4bb4c79bed8c8a6d75ca0dd08b7591", null ],
-      [ "wr_aux", "a00238.html#a0f36b2c312c08c22853231a3bc8b950c", null ]
-    ] ]
+    [ "sd_ble_gattc_char_value_by_uuid_read", "a01052.html#ga1e5d6f7c678b7db3205fa6b5c419f665", null ],
+    [ "sd_ble_gattc_char_values_read", "a01052.html#gac13467be9f6901defc8fc04258c88d36", null ],
+    [ "sd_ble_gattc_characteristics_discover", "a01052.html#gaf2bbf5162938f59bae419282d54f76fa", null ],
+    [ "sd_ble_gattc_descriptors_discover", "a01052.html#gaf896032d8502d0e535c2889955e3ad64", null ],
+    [ "sd_ble_gattc_hv_confirm", "a01052.html#ga173e2d16c9bbd24dcf2c724ded6708a5", null ],
+    [ "sd_ble_gattc_primary_services_discover", "a01052.html#gaa778ccc1990e05fffa4aaf304c95e614", null ],
+    [ "sd_ble_gattc_read", "a01052.html#ga813daa5810a1d2ed31d2d6fe49d3ef11", null ],
+    [ "sd_ble_gattc_relationships_discover", "a01052.html#ga2c03757248d02fc59591354688e402bc", null ],
+    [ "sd_ble_gattc_write", "a01052.html#ga90298b8dcd8bbe7bbe69d362d1133378", null ]
 ];

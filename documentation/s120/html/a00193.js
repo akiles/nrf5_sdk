@@ -1,5 +1,5 @@
 var a00193 =
 [
-    [ "type", "a00193.html#ae233c47cdd5f63de456f413a158bb16f", null ],
-    [ "uuid", "a00193.html#ac9ccd46e82b1b51d561f17d49282348c", null ]
+    [ "read_perm", "a00193.html#ac08fb7f662817574a3792609f0d92637", null ],
+    [ "write_perm", "a00193.html#aca8d641cf8e5b5811aa2a2c68035c395", null ]
 ];

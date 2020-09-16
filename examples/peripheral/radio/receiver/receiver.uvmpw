@@ -8,10 +8,10 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
  
    <project>
-    <PathAndName>pca10028\arm\receiver_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10031\arm4\receiver_pca10031.uvproj</PathAndName>
   </project>
    <project>
-    <PathAndName>pca10031\arm\receiver_pca10031.uvproj</PathAndName>
+    <PathAndName>pca10028\arm4\receiver_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

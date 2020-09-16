@@ -1,5 +1,6 @@
 var a00188 =
 [
-    [ "report_id", "a00188.html#a4db26fdff00f44138f9f684ff1dfd149", null ],
-    [ "report_type", "a00188.html#a765872684206db6d91ad6de596599434", null ]
+    [ "conn_handle", "a00188.html#ab843f6e96efbaf3d2bffee8c92c62f1a", null ],
+    [ "params", "a00188.html#ab63285db6028432fe959a66519f85139", null ],
+    [ "rx", "a00188.html#afc4cbc758b308e6698b16650310cc52b", null ]
 ];

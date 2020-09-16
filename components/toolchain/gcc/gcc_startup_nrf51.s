@@ -1,5 +1,5 @@
 /* 
-Copyright (c) 2013, Nordic Semiconductor ASA
+Copyright (c) 2015, Nordic Semiconductor ASA
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -90,39 +90,38 @@ __Vectors:
     .long   SysTick_Handler             /* SysTick Handler */
 
   /* External Interrupts */
-    .long 	POWER_CLOCK_IRQHandler		 /*POWER_CLOCK */
-    .long 	RADIO_IRQHandler		 /*RADIO */
-    .long 	UART0_IRQHandler		 /*UART0 */
-    .long 	SPI0_TWI0_IRQHandler		 /*SPI0_TWI0 */
-    .long 	SPI1_TWI1_IRQHandler		 /*SPI1_TWI1 */
-    .long 	0		 /*Reserved */
-    .long 	GPIOTE_IRQHandler		 /*GPIOTE */
-    .long 	ADC_IRQHandler		 /*ADC */
-    .long 	TIMER0_IRQHandler		 /*TIMER0 */
-    .long 	TIMER1_IRQHandler		 /*TIMER1 */
-    .long 	TIMER2_IRQHandler		 /*TIMER2 */
-    .long 	RTC0_IRQHandler		 /*RTC0 */
-    .long 	TEMP_IRQHandler		 /*TEMP */
-    .long 	RNG_IRQHandler		 /*RNG */
-    .long 	ECB_IRQHandler		 /*ECB */
-    .long 	CCM_AAR_IRQHandler		 /*CCM_AAR */
-    .long 	WDT_IRQHandler		 /*WDT */
-    .long 	RTC1_IRQHandler		 /*RTC1 */
-    .long 	QDEC_IRQHandler		 /*QDEC */
-    .long 	LPCOMP_IRQHandler		 /*LPCOMP */
-    .long 	SWI0_IRQHandler		 /*SWI0 */
-    .long 	SWI1_IRQHandler		 /*SWI1 */
-    .long 	SWI2_IRQHandler		 /*SWI2 */
-    .long 	SWI3_IRQHandler		 /*SWI3 */
-    .long 	SWI4_IRQHandler		 /*SWI4 */
-    .long 	SWI5_IRQHandler		 /*SWI5 */
-    .long 	0		 /*Reserved */
-    .long 	0		 /*Reserved */
-    .long 	0		 /*Reserved */
-    .long 	0		 /*Reserved */
-    .long 	0		 /*Reserved */
-    .long 	0		 /*Reserved */
-
+    .long   POWER_CLOCK_IRQHandler
+    .long   RADIO_IRQHandler
+    .long   UART0_IRQHandler
+    .long   SPI0_TWI0_IRQHandler
+    .long   SPI1_TWI1_IRQHandler
+    .long   0                         /*Reserved */
+    .long   GPIOTE_IRQHandler
+    .long   ADC_IRQHandler
+    .long   TIMER0_IRQHandler
+    .long   TIMER1_IRQHandler
+    .long   TIMER2_IRQHandler
+    .long   RTC0_IRQHandler
+    .long   TEMP_IRQHandler
+    .long   RNG_IRQHandler
+    .long   ECB_IRQHandler
+    .long   CCM_AAR_IRQHandler
+    .long   WDT_IRQHandler
+    .long   RTC1_IRQHandler
+    .long   QDEC_IRQHandler
+    .long   LPCOMP_IRQHandler
+    .long   SWI0_IRQHandler
+    .long   SWI1_IRQHandler
+    .long   SWI2_IRQHandler
+    .long   SWI3_IRQHandler
+    .long   SWI4_IRQHandler
+    .long   SWI5_IRQHandler
+    .long   0                         /*Reserved */
+    .long   0                         /*Reserved */
+    .long   0                         /*Reserved */
+    .long   0                         /*Reserved */
+    .long   0                         /*Reserved */
+    .long   0                         /*Reserved */
 
     .size    __Vectors, . - __Vectors
 
@@ -154,7 +153,6 @@ Reset_Handler:
     ORRS    R2, R1
     STR     R2, [R0]
 
-    
 /*     Loop to copy data from read only memory to RAM. The ranges
  *      of copy from/to are specified by following symbols evaluated in 
  *      linker script.
@@ -265,6 +263,4 @@ Default_Handler:
     IRQ  SWI4_IRQHandler
     IRQ  SWI5_IRQHandler
 
-
   .end
-

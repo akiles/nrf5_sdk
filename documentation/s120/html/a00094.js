@@ -1,7 +1,5 @@
 var a00094 =
 [
-    [ "bl_cccd_handle", "a00094.html#a2ea89dfa950963404b32410a8e42a04f", null ],
-    [ "bl_handle", "a00094.html#a58c7f1553ce38426e3656bd61bd21748", null ],
-    [ "conn_handle", "a00094.html#a97ef9e28546757bc5c42fc566e331380", null ],
-    [ "evt_handler", "a00094.html#a13ed1988cc9320c7eaad37ec21272201", null ]
+    [ "gap_enable_params", "a00094.html#ac14566b7abd979db7845a24bf6b11ee4", null ],
+    [ "gatts_enable_params", "a00094.html#ad2de18bc975930cadc754c5e3468c870", null ]
 ];

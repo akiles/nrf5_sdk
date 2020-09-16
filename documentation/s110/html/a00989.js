@@ -1,7 +1,8 @@
 var a00989 =
 [
-    [ "Device Module Set-up APIs", "a00990.html", "a00990" ],
-    [ "APIs to set up or read status of security on a link.", "a00991.html", "a00991" ],
-    [ "Context Management APIs", "a00992.html", "a00992" ],
-    [ "Utility APIs", "a00993.html", "a00993" ]
+    [ "Defines", "a00990.html", "a00990" ],
+    [ "Enumerations", "a00991.html", "a00991" ],
+    [ "Structures", "a00992.html", "a00992" ],
+    [ "Types", "a00993.html", "a00993" ],
+    [ "Functions", "a00994.html", "a00994" ]
 ];

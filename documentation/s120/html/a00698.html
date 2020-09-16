@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Types definitions for ANT support in SoftDevice handler.</title>
+<title>nRF51 SDK - S120 SoftDevice: Structures</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,112 +97,58 @@ $(document).ready(function(){initNavTree('a00698.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">Types definitions for ANT support in SoftDevice handler.<div class="ingroups"><a class="el" href="a00700.html">SoftDevice Event Handler</a></div></div>  </div>
+<div class="title">Structures<div class="ingroups"><a class="el" href="a00512.html">Events, type definitions and API calls</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00084.html">ant_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ANT stack event type.  <a href="a00084.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00195.html">ble_user_mem_block_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">User Memory Block.  <a href="a00195.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gafcf5a1211ca1625c5c111871c6139d79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#gafcf5a1211ca1625c5c111871c6139d79">ANT_STACK_EVT_MSG_BUF_SIZE</a>&#160;&#160;&#160;32</td></tr>
-<tr class="separator:gafcf5a1211ca1625c5c111871c6139d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#ga099e8f139d53724bf7238bb77c9e32e0">ANT_STACK_EVT_STRUCT_SIZE</a>&#160;&#160;&#160;(sizeof(<a class="el" href="a00084.html">ant_evt_t</a>))</td></tr>
-<tr class="separator:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2b0ca4dbb952df8f26cb58d4e7341115"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> )(<a class="el" href="a00084.html">ant_evt_t</a> *p_ant_evt)</td></tr>
-<tr class="memdesc:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application ANT stack event handler type. <br/></td></tr>
-<tr class="separator:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gac05d1d266aef077ae88818dff3775010"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#gac05d1d266aef077ae88818dff3775010">softdevice_ant_evt_handler_set</a> (<a class="el" href="a00698.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> ant_evt_handler)</td></tr>
-<tr class="memdesc:gac05d1d266aef077ae88818dff3775010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering for ANT events.  <a href="#gac05d1d266aef077ae88818dff3775010">More...</a><br/></td></tr>
-<tr class="separator:gac05d1d266aef077ae88818dff3775010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00098.html">ble_evt_tx_complete_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX complete event.  <a href="a00098.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html">ble_evt_user_mem_request_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure for <a class="el" href="a00696.html#ggaa55e423bfea45f03764a636f2cec7a8ba3b9d0631bda508c2657f746ffaa6ed97">BLE_EVT_USER_MEM_REQUEST</a>.  <a href="a00100.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00099.html">ble_evt_user_mem_release_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure for <a class="el" href="a00696.html#ggaa55e423bfea45f03764a636f2cec7a8ba7bbd162727156bd112cc471f8f9c8dea">BLE_EVT_USER_MEM_RELEASE</a>.  <a href="a00099.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00086.html">ble_common_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure for events not associated with a specific function module.  <a href="a00086.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00096.html">ble_evt_hdr_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">BLE Event header.  <a href="a00096.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html">ble_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common BLE Event type, wrapping the module specific event reports.  <a href="a00097.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00198.html">ble_version_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version Information.  <a href="a00198.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html">ble_common_opt_radio_cpu_mutex_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutual exclusion of radio activity and CPU execution.  <a href="a00087.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00088.html">ble_common_opt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Option structure for common options.  <a href="a00088.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00190.html">ble_opt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common BLE Option type, wrapping the module specific options.  <a href="a00190.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00094.html">ble_enable_params_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">BLE GATTS init options.  <a href="a00094.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gafcf5a1211ca1625c5c111871c6139d79"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ANT_STACK_EVT_MSG_BUF_SIZE&#160;&#160;&#160;32</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of ANT event message buffer. This will be provided to the SoftDevice while fetching an event. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga099e8f139d53724bf7238bb77c9e32e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ANT_STACK_EVT_STRUCT_SIZE&#160;&#160;&#160;(sizeof(<a class="el" href="a00084.html">ant_evt_t</a>))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of the <a class="el" href="a00084.html">ant_evt_t</a> structure. This will be used by the <a class="el" href="a00700.html">SoftDevice Event Handler</a> to internal event buffer size needed. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gac05d1d266aef077ae88818dff3775010"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t softdevice_ant_evt_handler_set </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00698.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a>&#160;</td>
-          <td class="paramname"><em>ant_evt_handler</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for registering for ANT events. </p>
-<p>The application should use this function to register for receiving ANT events from the SoftDevice. If the application does not call this function, then any ANT event that may be generated by the SoftDevice will NOT be fetched. Once the application has registered for the events, it is not possible to possible to cancel the registration. However, it is possible to register a different function for handling the events at any point of time.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ant_evt_handler</td><td>Function to be called for each received ANT event.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful registration. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Null pointer provided as input. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:37 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

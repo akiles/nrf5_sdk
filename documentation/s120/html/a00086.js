@@ -1,7 +1,8 @@
 var a00086 =
 [
-    [ "buf_size_mask", "a00086.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
-    [ "p_buf", "a00086.html#a64eafd180a65260208be3b845f6acbf5", null ],
-    [ "read_pos", "a00086.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
-    [ "write_pos", "a00086.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
+    [ "conn_handle", "a00086.html#ad7c997d8d0c6e0d3d24de3ecad426645", null ],
+    [ "params", "a00086.html#aa1bd5d9383036225f08d3dd0a9e62557", null ],
+    [ "tx_complete", "a00086.html#a0550e7a2c8b61ab27ea5a691b3f1fac4", null ],
+    [ "user_mem_release", "a00086.html#a21a25a889c763bceb2891d506331f484", null ],
+    [ "user_mem_request", "a00086.html#a4d36c1c20a1ff24a62abba8ea73c74c8", null ]
 ];

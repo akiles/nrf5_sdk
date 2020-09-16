@@ -1,6 +1,8 @@
 var a00169 =
 [
-    [ "context", "a00169.html#a66d632e13cd7d371036af6a90be224f4", null ],
-    [ "handle", "a00169.html#a79c55f70b9d10f1e11b35bb2cc13fdbd", null ],
-    [ "offset", "a00169.html#ac3c5c0c840625a5f28e90e9021eb2403", null ]
+    [ "desc", "a00169.html#a9133fc1220787c07ac21291dab7b8b22", null ],
+    [ "exponent", "a00169.html#a931b1bdd89be7d3aaa1d1522d20c7dd5", null ],
+    [ "format", "a00169.html#a9a79d570aa8f758c81ddddbf345b289e", null ],
+    [ "name_space", "a00169.html#a279e1e8de47b628414382aed4cec3c68", null ],
+    [ "unit", "a00169.html#ab28e4dc2a48e6329df85b3f974cf4466", null ]
 ];

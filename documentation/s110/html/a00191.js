@@ -1,9 +1,15 @@
 var a00191 =
 [
-    [ "conn_handle", "a00191.html#aea6b3ca0b15ba3d4684ac2dfaafb584b", null ],
-    [ "curr_char_ind", "a00191.html#a2ca30b7a259a7342dc23272fcd6d889f", null ],
-    [ "curr_srv_ind", "a00191.html#aa598c16586a07aa4b13e38c35b8b803d", null ],
-    [ "discovery_in_progress", "a00191.html#afca8a6f17e6b6d6c40f9fa490ed42b94", null ],
-    [ "services", "a00191.html#a982a55a9d1b9f10e010fcebeea5b8911", null ],
-    [ "srv_count", "a00191.html#a0cbdc7069a26178c67b3b558633fa261", null ]
+    [ "csc_ctrlpt_attr_md", "a00191.html#a7abd30a1cf1bd5370034ecd106770649", null ],
+    [ "csc_feature_attr_md", "a00191.html#a923061b93c1ccd5084a26a3473fe017f", null ],
+    [ "csc_meas_attr_md", "a00191.html#ab5e96f9cc92d4606148bdcbab1f267f8", null ],
+    [ "csc_sensor_loc_attr_md", "a00191.html#a8408f547469c37daf6f400b0e29ea728", null ],
+    [ "ctrlpt_evt_handler", "a00191.html#ae231dc1f9d43bda606fa4b727caf3884", null ],
+    [ "ctrplt_supported_functions", "a00191.html#a15059621d6cb93de8b90767f76adc6e7", null ],
+    [ "error_handler", "a00191.html#a4396c5044bb0f5e1220c29a87b6ca54d", null ],
+    [ "evt_handler", "a00191.html#a9f766010d9a6bc81bb6797c1b4d5daf6", null ],
+    [ "feature", "a00191.html#ab63bfc8e6831331b8094ddff39f9f450", null ],
+    [ "list_supported_locations", "a00191.html#a373d7b18dfbd5752d3289df0ac9c2c0b", null ],
+    [ "sensor_location", "a00191.html#a3d866076247845450b80114da2d67b48", null ],
+    [ "size_list_supported_locations", "a00191.html#ac680f9557c992b9e2443b2fec6c022d1", null ]
 ];

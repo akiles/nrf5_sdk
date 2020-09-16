@@ -1,6 +1,7 @@
 var a00343 =
 [
-    [ "addr", "a00343.html#a254efa46b45f5707510660ee0ae9edc3", null ],
-    [ "enc_info", "a00343.html#a8edc7904f78de5fddc021504d06ae029", null ],
-    [ "irk", "a00343.html#ac8c0e0d99c8c5cc39adfa07073253d58", null ]
+    [ "evt_handler", "a00343.html#ac8b3f40aba291bb2528c6e3d278e66bd", null ],
+    [ "feature", "a00343.html#afea901cdde73cddc72eb4cfe2f337c78", null ],
+    [ "rsc_feature_attr_md", "a00343.html#ada9c9294592f640a27a344965b22bc76", null ],
+    [ "rsc_meas_attr_md", "a00343.html#a4f33f2c4256a25ac20cdbb2b8fbc8538", null ]
 ];

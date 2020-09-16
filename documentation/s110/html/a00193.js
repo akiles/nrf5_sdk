@@ -1,6 +1,11 @@
 var a00193 =
 [
-    [ "error_handler", "a00193.html#a88a44f941a9a76c4b3c43db109bd07f2", null ],
-    [ "evt_handler", "a00193.html#a751feee2fb6a1c75f2f013256e40ff98", null ],
-    [ "revision", "a00193.html#a231060516b6bcba26e6cdf7a87206ba2", null ]
+    [ "conn_handle", "a00193.html#a84ba1f5c9a2f30359b12cc4dcbda3478", null ],
+    [ "ctrl_pt", "a00193.html#a90f150d8ecb3b79596f1ec3807867f1a", null ],
+    [ "evt_handler", "a00193.html#ac2e6ecdcdab44250a58bebd85104143b", null ],
+    [ "feature", "a00193.html#a32ce63e283663bde451653a25fc5b4bd", null ],
+    [ "feature_handles", "a00193.html#a967fca5b0492cbf671183eed800fcd3a", null ],
+    [ "meas_handles", "a00193.html#a9596e5fc4db125abaae55fc329982dfd", null ],
+    [ "sensor_loc_handles", "a00193.html#a3572c357aed7775240aee4a217ddaf60", null ],
+    [ "service_handle", "a00193.html#a3850255dd1cc2f89b7086771201eb8e0", null ]
 ];

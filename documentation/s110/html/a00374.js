@@ -1,5 +1,6 @@
 var a00374 =
 [
-    [ "high_to_low", "a00374.html#ae5b08a4f0525b94727edf87267f57c0b", null ],
-    [ "low_to_high", "a00374.html#ab74530adb87a0c8728839d2bbdc0f8f0", null ]
+    [ "flags", "a00374.html#a6410a73c4b824cd8411f93f4e801c2e2", null ],
+    [ "len", "a00374.html#a584d9c286a840f2aa29cf3f6e76362d4", null ],
+    [ "p_data", "a00374.html#acbcb29305bde09573e35ed7f4c214641", null ]
 ];

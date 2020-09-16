@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Bootloader/DFU Architecture with SoftDevice update</title>
+<title>nRF51 SDK - S110 SoftDevice: Current Time Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,72 +97,91 @@ $(document).ready(function(){initNavTree('a00064.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Bootloader/DFU Architecture with SoftDevice update </div>  </div>
+<div class="title">Current Time Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Bootloader/DFU example makes it possible to receive a SoftDevice, Bootloader, and Application image and write it to the internal flash of the nRF51.</p>
-<p>The image can be transferred over BLE or using serial wire (HCI/UART).</p>
-<p>During system start-up, the Bootloader/DFU will be started and during start-up it will determine if a valid application is present in bank 0. Location of bank 0 is following the location of SoftDevice. For SoftDevice v7.1.0, this address is <code>0x00016000</code> (see also <a class="el" href="a00069.html#ble_sdk_app_bootloader_banked_memory_layout_sec">Dual Bank Flash Layout</a> for detailed description). If a valid application is present in Bank 0 the Bootloader will start the application, otherwise the Bootloader will be in DFU mode expecting a Device Firmware Update. If it is desired to put a device with an existing application, restart with device with Button 7 pressed.</p>
-<p>A schematic overview of the blocks in Bootloader/DFU is seen in <b>Figure 1.</b></p>
-<div class="image">
-<img src="dfu_bootloader_overview.png" alt="dfu_bootloader_overview.png"/>
-<div class="caption">
-Figure 1: Architectural overview of Bootloader/DFU.</div></div>
-<h1><a class="anchor" id="dfu_bootloader_ble_transport_sec"></a>
-Bootloader/DFU BLE Transfer</h1>
-<p>The Bootloader/DFU supports transferring of an image using BLE.</p>
-<p>The DFU BLE Transport uses a BLE Service for data transfer (see <a class="el" href="a00071.html#ota_spec_sec">Device Firmware Update BLE Service</a>). The BLE DFU Service relies on S110 SoftDevice for data transfer. The DFU Bank Handling will ensure the writing of received data packets to flash.</p>
-<p><b>Figure 2</b> shows a schematic overview of the Bootloader/DFU project with BLE Support.</p>
-<div class="image">
-<img src="dfu_transfer_ble_overview.png" alt="dfu_transfer_ble_overview.png"/>
-<div class="caption">
-Figure 2: Architectural overview of Bootloader/DFU supporting BLE transfer.</div></div>
-<h1><a class="anchor" id="dfu_bootloader_serial_transport_sec"></a>
-Bootloader/DFU Serial (HCI) Transfer</h1>
-<p>The Bootloader/DFU supports transferring of an image using HCI over UART. HCI Transport layer over UART is used for increased robustness of the transfer. A detailed description of HCI is found in <a class="el" href="a00077.html#hci_transport">HCI Transport</a>.</p>
-<p>The DFU Bank Handling will ensure the writing of received data packets to flash.</p>
-<p><b>Figure 3</b> shows a schematic overview of the Bootloader/DFU project with UART Support.</p>
-<div class="image">
-<img src="dfu_transfer_serial_overview.png" alt="dfu_transfer_serial_overview.png"/>
-<div class="caption">
-Figure 3: Architectural overview of Bootloader/DFU supporting Serial transfer.</div></div>
-<h1><a class="anchor" id="dfu_bootloader_state_machine_sec"></a>
-The DFU State Machine</h1>
-<p>The DFU bootloader has an internal state machine independent of the transport layer used. All initializing and writing to non-volatile memory is controlled by the DFU module.</p>
-<p><b>Figure 3</b> illustrates the transitions in the state machine: </p>
-<div class="image">
-<img src="DFU_state_machine.png" alt="DFU_state_machine.png"/>
-<div class="caption">
-Figure 3: State machine transitions in the DFU.</div></div>
-<p><b>Entry point</b> indicates that the bootloader is started up, and would initialize the DFU. In this initialization the DFU would prepare the non-volatile memory region for the new application. Either using all available memory overwriting the old image, or using banked memory where the old application is retained until a new application is uploaded and validated. Also the selected transport layer would be initialized in this phase.</p>
-<h2><a class="anchor" id="dfu_bootloader_event_message_subsec"></a>
-DFU Event Message Types</h2>
-<table class="doxtable">
-<tr>
-<th>Message type </th><th>Description</th></tr>
-<tr>
-<td>- dfu_init </td><td>Message initializing the Device Firmware Update module. </td></tr>
-<tr>
-<td>- dfu_image_size_set </td><td>Message setting the DFU image size. </td></tr>
-<tr>
-<td>- dfu_data_pkt_handle </td><td>Message containing a portion of the new application. </td></tr>
-<tr>
-<td>- dfu_init_pkt_handle </td><td>Message for optional customer specific data. </td></tr>
-<tr>
-<td>- dfu_image_validate </td><td>Message triggering validation of the new application. </td></tr>
-<tr>
-<td>- dfu_image_activate </td><td>Message activating the transferred image after validation has successfully completed </td></tr>
-<tr>
-<td>- dfu_sys_reset </td><td>Can occur any time, making the DFU go into a reset of the chip. <br/>
- A bootloader time-out or an external message can trigger the system reset. </td></tr>
-</table>
+<div class="textblock"><p>The Current Time Application is an example that implements the client role of the Current Time Profile using the hardware delivered in the nRF51 Development Kit.</p>
+<p>This application utilizes the client implementation of the Current Time Service:</p>
+<ul>
+<li><a class="el" href="a01005.html">Current Time Service client</a></li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>This application is not power optimized!</dd></dl>
+<p>The purpose of this example is to use the Current Time Service to read the current time. The time is printed on the UART in the following format:</p>
+<p><a class="anchor" id="example_output"></a></p>
+<pre class="fragment">Date:
+  Day of week   Monday
+  Day of month  15
+  Month of year 11
+  Year          86
+
+Time:
+    Hours     13
+    Minutes   37
+    Seconds   42
+    Fractions 254/256 of a second
+
+Adjust Reason:
+    Daylight savings 0
+    Time zone        0
+    External update  0
+    Manual update    1
+</pre><p>Bonding is usually initiated by the central device. If it is not initiated within a specific time-out period, the application initiates bonding.</p>
+<p>The current implementation requires security to be established before service discovery. After service discovery has been completed, button 1 can be used to read the current time (if the Current Time Service and Characteristic are found on the central side).</p>
+<h1><a class="anchor" id="project_cts_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>ble_app_cts_c_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_cts_c</code> </p>
+<p>Button assignments when in system-off:</p>
+<ul>
+<li>Button 1: Wake up from system-off and restart advertising.</li>
+<li>Button 2: Wake up from system-off, erase all bonds, and restart advertising.</li>
+</ul>
+<p>Button assignments when connected:</p>
+<ul>
+<li>Button 1: Read the current time from the connected central.</li>
+</ul>
+<p>The Current Time Application does fast advertising for 30 seconds at power up and also after a disconnection. It will then switch to slow advertising mode for 180 seconds. After 180 seconds of slow advertising, the board will go to system-off.</p>
+<p>The application uses the following UART settings:</p>
+<ul>
+<li>
+Baud rate: 38.400</li>
+<li>
+8 data bits</li>
+<li>
+1 stop bit</li>
+<li>
+No parity</li>
+<li>
+HW flow control: RTS/CTS</li>
+</ul>
+<h1><a class="anchor" id="project_cts_test"></a>
+Testing</h1>
+<p>Test the Current Time Application with the Master Control Panel by performing the following steps:</p>
+<ol type="1">
+<li>Compile and download the application. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>In the Master Control Panel, create the Current Time Service (CTS) server by performing the following steps:<ol type="a">
+<li>Click File -&gt; Server Setup. In the window that opens up, click File -&gt; Load setup.</li>
+<li>In the resulting window, navigate to the <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_cts_c</code> folder. If you are using Keil packs, this folder is located at <code>&lt;KeilFolder&gt;\ARM\Pack\NordicSemiconductor\nRF_Examples\&lt;version&gt;\ble_peripheral\ble_app_cts_c</code>. Load the file <code>cts_central.bin</code>.</li>
+<li>Click 'Stop server' and then 'Start server'.</li>
+<li>You must keep the 'Server Setup' window opened.</li>
+</ol>
+</li>
+<li>Select the device from Master Control Panel (the device will be advertising as 'Nordic_CTS') and connect. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Wait for the Nordic_CTS peripheral to initiate bonding.</li>
+<li>After the security procedure is complete, verify that the Current Time Service on the server has been discovered. The message "Service Discovered!" will be printed on the UART.</li>
+<li>In the 'Server Setup' window, set the values of characteristics with UUID 0x2A2B to C2-07-0B-0F-0D-25-2A-06-FE-08 and press 'update'.</li>
+<li>Press button 1. Verify that the current time printed on the UART matches the time that was input in the Current Time Characteristic UUID 0x2A2B (see the <a class="el" href="a00064.html#example_output">example UART output</a>).</li>
+<li>Disconnect from the Master Control Panel and observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Wait until the application goes to system-off (<a class="el" href="a00057.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a>).</li>
+<li>Press button 1 and connect to the Master Control Panel. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Disconnect from the Master Control Panel. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00062.html">BLE Bootloader/DFU</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00058.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

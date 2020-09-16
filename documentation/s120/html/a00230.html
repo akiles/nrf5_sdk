@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: spi_master_evt_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: nrf_radio_request_normal_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,78 @@ $(document).ready(function(){initNavTree('a00230.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">spi_master_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00498.html">SPI Master driver</a></div></div>  </div>
+<div class="title">nrf_radio_request_normal_t Struct Reference<div class="ingroups"><a class="el" href="a00730.html">Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Struct containing parameters of the SPI MASTER event.  
+<p>Parameters for a normal radio request.  
  <a href="a00230.html#details">More...</a></p>
 
-<p><code>#include &lt;spi_5W_master.h&gt;</code></p>
+<p><code>#include &lt;nrf_soc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a6d7cb2ed26034e0c1cb5dcb0022a612a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00498.html#ga8e658ee16bfb5beb4d00e27c93f68f96">spi_master_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00230.html#a6d7cb2ed26034e0c1cb5dcb0022a612a">type</a></td></tr>
-<tr class="separator:a6d7cb2ed26034e0c1cb5dcb0022a612a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a800d239d1224cc1226201c6b9a635713"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00230.html#a800d239d1224cc1226201c6b9a635713">data</a></td></tr>
-<tr class="separator:a800d239d1224cc1226201c6b9a635713"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a622197dded7bfa292535944e6870c5f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00498.html#ga8e658ee16bfb5beb4d00e27c93f68f96">spi_master_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00230.html#a622197dded7bfa292535944e6870c5f7">evt_type</a></td></tr>
-<tr class="separator:a622197dded7bfa292535944e6870c5f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a370358835ed2aa53bcc515894b13eb87"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00230.html#a370358835ed2aa53bcc515894b13eb87">data_count</a></td></tr>
-<tr class="separator:a370358835ed2aa53bcc515894b13eb87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23b414675dc9b11671f55601075f541d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00230.html#a23b414675dc9b11671f55601075f541d">hfclk</a></td></tr>
+<tr class="separator:a23b414675dc9b11671f55601075f541d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18cc5dd5dc34877572e42ee8102fcb82"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00230.html#a18cc5dd5dc34877572e42ee8102fcb82">priority</a></td></tr>
+<tr class="separator:a18cc5dd5dc34877572e42ee8102fcb82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34cb59c0e80b3698a3df265ab88b34b5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00230.html#a34cb59c0e80b3698a3df265ab88b34b5">distance_us</a></td></tr>
+<tr class="separator:a34cb59c0e80b3698a3df265ab88b34b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf9603de0e582965d4bb1c0a42d8e88c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00230.html#adf9603de0e582965d4bb1c0a42d8e88c">length_us</a></td></tr>
+<tr class="separator:adf9603de0e582965d4bb1c0a42d8e88c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct containing parameters of the SPI MASTER event. </p>
+<div class="textblock"><p>Parameters for a normal radio request. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a800d239d1224cc1226201c6b9a635713"></a>
+<a class="anchor" id="a34cb59c0e80b3698a3df265ab88b34b5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t spi_master_evt_t::data</td>
+          <td class="memname">uint32_t nrf_radio_request_normal_t::distance_us</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>event data - context dependent </p>
+<p>Distance from the start of the previous radio timeslot (up to <a class="el" href="a00729.html#gac7cbde59b2b4ebe8d2b424f43ee7faf7">NRF_RADIO_DISTANCE_MAX_US</a> microseconds). </p>
 
 </div>
 </div>
-<a class="anchor" id="a370358835ed2aa53bcc515894b13eb87"></a>
+<a class="anchor" id="a23b414675dc9b11671f55601075f541d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t spi_master_evt_t::data_count</td>
+          <td class="memname">uint8_t nrf_radio_request_normal_t::hfclk</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Count of data sent. </p>
+<p>High frequency clock source, see <a class="el" href="a00730.html#gac7d87a0d58b5d7b5a619d7587cd139a4">NRF_RADIO_HFCLK_CFG</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="a622197dded7bfa292535944e6870c5f7"></a>
+<a class="anchor" id="adf9603de0e582965d4bb1c0a42d8e88c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00498.html#ga8e658ee16bfb5beb4d00e27c93f68f96">spi_master_evt_type_t</a> spi_master_evt_t::evt_type</td>
+          <td class="memname">uint32_t nrf_radio_request_normal_t::length_us</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of an event. </p>
+<p>The radio timeslot length (in the range [100..100,000] microseconds). </p>
 
 </div>
 </div>
-<a class="anchor" id="a6d7cb2ed26034e0c1cb5dcb0022a612a"></a>
+<a class="anchor" id="a18cc5dd5dc34877572e42ee8102fcb82"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00498.html#ga8e658ee16bfb5beb4d00e27c93f68f96">spi_master_evt_type_t</a> spi_master_evt_t::type</td>
+          <td class="memname">uint8_t nrf_radio_request_normal_t::priority</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of an event </p>
+<p>The radio timeslot priority, see <a class="el" href="a00730.html#ga5026e138e16d9a9664b804608062e9a1">NRF_RADIO_PRIORITY</a>. </p>
 
 </div>
 </div>
@@ -186,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00230.html">spi_master_evt_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00230.html">nrf_radio_request_normal_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

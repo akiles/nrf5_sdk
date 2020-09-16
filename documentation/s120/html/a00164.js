@@ -1,9 +1,9 @@
 var a00164 =
 [
-    [ "init_len", "a00164.html#a7722e94b0c079f7571a0607a13d46bde", null ],
-    [ "init_offs", "a00164.html#aa24ec5661c2ba830f906201285ca941c", null ],
-    [ "max_len", "a00164.html#a5cc60017697406f2f2624e0b15dad294", null ],
-    [ "p_attr_md", "a00164.html#afc04d5311dcd31df52f7d9aac7c05ab1", null ],
-    [ "p_uuid", "a00164.html#a87b18c161a362b54bd349aebd2a45c85", null ],
-    [ "p_value", "a00164.html#abf26555ce0ad9b481c3f638f89dc329a", null ]
+    [ "char_uuid", "a00164.html#adbbcf41424e48536f3c3e7f2665005fd", null ],
+    [ "desc_uuid", "a00164.html#a6d909918be5c3a58a93e3f345ad0ae5e", null ],
+    [ "srvc_handle", "a00164.html#a9ec74591a8b40af4354fed5c2ae33efd", null ],
+    [ "srvc_uuid", "a00164.html#a351c0654157494b748a0adcba003e42f", null ],
+    [ "type", "a00164.html#a59115313e869d01234cc2ed3ab2e25d9", null ],
+    [ "value_handle", "a00164.html#a770254b2ade294a3f24fa0db65a2d0fa", null ]
 ];

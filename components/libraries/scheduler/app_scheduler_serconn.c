@@ -38,13 +38,6 @@ static uint16_t         m_queue_size;          /**< Number of queue entries. */
 static uint32_t m_scheduler_paused_counter = 0; /**< Counter storing the difference between pausing
                                                      and resuming the scheduler. */
 
-/**@brief Macro for checking if a queue is full. */
-#define APP_SCHED_QUEUE_FULL() (next_index(m_queue_end_index) == m_queue_start_index)
-
-/**@brief Macro for checking if a queue is empty. */
-#define APP_SCHED_QUEUE_EMPTY() (m_queue_end_index == m_queue_start_index)
-
-
 /**@brief Function for incrementing a queue index, and handle wrap-around.
  *
  * @param[in]   index   Old index.
@@ -55,6 +48,24 @@ static __INLINE uint8_t next_index(uint8_t index)
 {
     return (index < m_queue_size) ? (index + 1) : 0;
 }
+
+static __INLINE uint8_t app_sched_queue_full(void)
+{
+  uint8_t tmp = m_queue_start_index;
+  return next_index(m_queue_end_index) == tmp;
+}
+
+/**@brief Macro for checking if a queue is full. */
+#define APP_SCHED_QUEUE_FULL() app_sched_queue_full()
+
+static __INLINE uint8_t app_sched_queue_empty(void)
+{
+  uint8_t tmp = m_queue_start_index;
+  return m_queue_end_index == tmp;
+}
+
+/**@brief Macro for checking if a queue is empty. */
+#define APP_SCHED_QUEUE_EMPTY() app_sched_queue_empty()
 
 
 uint32_t app_sched_init(uint16_t event_size, uint16_t queue_size, void * p_event_buffer)

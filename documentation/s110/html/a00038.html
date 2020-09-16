@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: UART Example</title>
+<title>nRF51 SDK - S110 SoftDevice: WDT Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,36 +97,32 @@ $(document).ready(function(){initNavTree('a00038.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">UART Example </div>  </div>
+<div class="title">WDT Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The UART Example demonstrates basic UART usage for communicating with a PC terminal. It transmits and receives data through the configured pins as a serial device. The configured pins must be redirected to a COM port. Terminal programs (for example PUTTY) can listen to this COM port through a terminal session.</p>
-<p>When the application starts, it transmits "START: " through the serial device using <a class="el" href="a00766.html#ga76e6bde269950e02affbff121c79d408">simple_uart_putstring</a>. This will be output on the terminal. If you type characters on the terminal, they are transmitted to the application through <a class="el" href="a00766.html#gabae30008064ce450ab819949a692c511">simple_uart_get</a>. If you type an exit character 'q' or 'Q', the program transmits "EXIT!" on a new line and ends into an infinite loop.</p>
-<p>This example can be used for any UART connection, not only COM ports. COM port redirection is used for visual verification.</p>
-<dl class="section note"><dt>Note</dt><dd>If you set the define ENABLE_LOOPBACK_TEST, the application will assume that the TX_PIN_NUMBER is connected to RX_PIN_NUMBER and RTS_PIN_NUMBER is connected to CTS_PIN_NUMBER, used to test in loopback. In this case, no COM port can be used because the data flows from TX to RX. If data is lost, ERROR_PIN is set high.</dd>
-<dd>
-Settings:<ul>
-<li>Baud: 38400</li>
-<li>Data bits: 8</li>
-<li>Stop bits: 1</li>
-</ul>
-</dd></dl>
-<p>The name of the example is <b>uart_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\example\peripheral\uart</code> </p>
-<h1><a class="anchor" id="uart_example_testing"></a>
+<div class="textblock"><p>The WDT Example demonstrates the usage of the watchdog peripherals.</p>
+<p>When the application starts, all LEDs are turned on one after the other. When all LEDs are lit, user input ("feeding the watchdog") is required to avoid system reset.</p>
+<p>Pressing Button 1 triggers feeding the watchdog. The watchdog time-out is two seconds. Therefore, it should be fed at least once every two seconds.</p>
+<p>The name of the example is <b>wdt_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\wdt</code> </p>
+<h1><a class="anchor" id="nrf_dev_wdt_example_testing"></a>
 Testing</h1>
-<p>Test the UART Example application by performing the following steps:</p>
+<p>Test the WDT Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port at 38400 baud rate. The text "Start:" should appear at the top of the terminal.</li>
-<li>Type 'Q' or 'q' in the terminal. The response should be 'Exit!'. </li>
+<li>Observe that the system is starting up and the LEDs are turned on.</li>
+<li>Feed the watchdog by pressing Button 1.<ul>
+<li>If the watchdog is fed regularly, all LEDs remain turned on.</li>
+<li>If the watchdog is not fed within two seconds, the watchdog timer will expire and the system will be reset. </li>
+</ul>
+</li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00019.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00029.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

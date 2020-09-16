@@ -48,9 +48,10 @@
 #include "ble.h"
 #include "ble_hci.h"
 #include "app_assert.h"
-#include "board_config.h"
-#include "uart.h"
+#include "app_trace.h"
+#include "app_uart.h"
 #include "rtc1.h"
+#include "bsp.h"
 
 /* Addresses of peer peripherals that are expeted to run Heart Rate Service. */
 #define NUMBER_OF_PERIPHERALS                   3
@@ -68,32 +69,37 @@ static const ble_gap_addr_t gs_hb_peripheral_address[NUMBER_OF_PERIPHERALS]
 
 /* Services on Peripherals */
 #define HEART_RATE_SERVICE                      0x180D
-#define HEART_RATE_SERVICE_CHARACTERISTICS      0x2A37              /* HR Measurement service characteristic */
-#define HEART_RATE_SERVICE_DESCRIPTOR           0x2902              /* HR Measurement service descriptor */
+#define HEART_RATE_SERVICE_CHARACTERISTICS      0x2A37              /**< HR Measurement service characteristic */
+#define HEART_RATE_SERVICE_DESCRIPTOR           0x2902              /**< HR Measurement service descriptor */
 #define BUFFER_SIZE                             16
-#define WRITE_VALUE_ENABLE_NOTIFICATIONS        0x0001              /* Enable notifications command. */
-#define WRITE_VALUE_DISABLE_NOTIFICATIONS       0x0000              /* Disable notifications command. */
+#define WRITE_VALUE_ENABLE_NOTIFICATIONS        0x0001              /**< Enable notifications command. */
+#define WRITE_VALUE_DISABLE_NOTIFICATIONS       0x0000              /**< Disable notifications command. */
 
 #define APPLICATION_NAME                        'S','1','3','0','d','e','m','o'
 #define APPLICATION_NAME_SIZE                   8
 #define SCAN_RESPONSE_DATA                      {0x04, 'D', 'E', 'M', 'O'}
 
-#define APP_ADV_INTERVAL                        MSEC_TO_UNITS(25, UNIT_0_625_MS)  /* The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
-#define APP_ADV_TIMEOUT_IN_SECONDS              60                                /* The advertising timeout in units of seconds. */
+#define APP_ADV_INTERVAL                        MSEC_TO_UNITS(25, UNIT_0_625_MS)  /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
+#define APP_ADV_TIMEOUT_IN_SECONDS              60                                /**< The advertising timeout in units of seconds. */
 
-#define CENTRAL_MIN_CONN_INTERVAL               MSEC_TO_UNITS(500, UNIT_1_25_MS)  /* Minimum acceptable connection interval (500 ms). */
-#define CENTRAL_MAX_CONN_INTERVAL               MSEC_TO_UNITS(500, UNIT_1_25_MS)  /* Maximum acceptable connection interval (500 ms). */
-#define CENTRAL_SLAVE_LATENCY                   0                                 /* Slave latency. */
-#define CENTRAL_CONN_SUP_TIMEOUT                MSEC_TO_UNITS(4000, UNIT_10_MS)   /* Connection supervisory timeout (4 seconds). */
+#define CENTRAL_MIN_CONN_INTERVAL               MSEC_TO_UNITS(500, UNIT_1_25_MS)  /**< Minimum acceptable connection interval (500 ms). */
+#define CENTRAL_MAX_CONN_INTERVAL               MSEC_TO_UNITS(500, UNIT_1_25_MS)  /**< Maximum acceptable connection interval (500 ms). */
+#define CENTRAL_SLAVE_LATENCY                   0                                 /**< Slave latency. */
+#define CENTRAL_CONN_SUP_TIMEOUT                MSEC_TO_UNITS(4000, UNIT_10_MS)   /**< Connection supervisory timeout (4 seconds). */
 
-#define PERIPHERAL_MIN_CONN_INTERVAL            MSEC_TO_UNITS(50, UNIT_1_25_MS)   /* Minimum acceptable connection interval ( 50 ms). */
-#define PERIPHERAL_MAX_CONN_INTERVAL            MSEC_TO_UNITS(50, UNIT_1_25_MS)   /* Maximum acceptable connection interval ( 50 ms). */
-#define PERIPHERAL_SLAVE_LATENCY                0                                 /* Slave latency. */
-#define PERIPHERAL_CONN_SUP_TIMEOUT             MSEC_TO_UNITS(1000, UNIT_10_MS)   /* Connection supervisory timeout (1 second). */
+#define PERIPHERAL_MIN_CONN_INTERVAL            MSEC_TO_UNITS(50, UNIT_1_25_MS)   /**< Minimum acceptable connection interval ( 50 ms). */
+#define PERIPHERAL_MAX_CONN_INTERVAL            MSEC_TO_UNITS(50, UNIT_1_25_MS)   /**< Maximum acceptable connection interval ( 50 ms). */
+#define PERIPHERAL_SLAVE_LATENCY                0                                 /**< Slave latency. */
+#define PERIPHERAL_CONN_SUP_TIMEOUT             MSEC_TO_UNITS(1000, UNIT_10_MS)   /**< Connection supervisory timeout (1 second). */
 
-#define SCAN_INTERVAL                           MSEC_TO_UNITS(100, UNIT_0_625_MS) /* Scan interval between 2.5ms to 10.24s  (100 ms).*/
-#define SCAN_WINDOW                             MSEC_TO_UNITS(80, UNIT_0_625_MS)  /* Scan window between 2.5ms to 10.24s    ( 80 ms). */
-#define SCAN_TIMEOUT                            0xFFFF                            /* Scan timeout between 0x0001 and 0xFFFF in seconds, 0x0000 disables timeout. */
+#define SCAN_INTERVAL                           MSEC_TO_UNITS(100, UNIT_0_625_MS) /**< Scan interval between 2.5ms to 10.24s  (100 ms).*/
+#define SCAN_WINDOW                             MSEC_TO_UNITS(80, UNIT_0_625_MS)  /**< Scan window between 2.5ms to 10.24s    ( 80 ms). */
+#define SCAN_TIMEOUT                            0xFFFF                            /**< Scan timeout between 0x0001 and 0xFFFF in seconds, 0x0000 disables timeout. */
+
+#define IS_SRVC_CHANGED_CHARACT_PRESENT         0                                 /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
+
+#define UART_TX_BUF_SIZE                        1024                              /**< UART TX buffer size. */
+#define UART_RX_BUF_SIZE                        1                                 /**< UART RX buffer size. */
 
 
 /**@brief To convert ticks from milliseconds
@@ -104,16 +110,15 @@ static const ble_gap_addr_t gs_hb_peripheral_address[NUMBER_OF_PERIPHERALS]
 
 enum time_unit_conversions_coefficiensts
 {
-    UNIT_0_625_MS = 625,                                                          /* Number of microseconds in 0.625 milliseconds. */
-    UNIT_1_25_MS  = 1250,                                                         /* Number of microseconds in 1.25 milliseconds. */
-    UNIT_10_MS    = 10000,                                                        /* Number of microseconds in 10 milliseconds. */
+    UNIT_0_625_MS = 625,                                                          /**< Number of microseconds in 0.625 milliseconds. */
+    UNIT_1_25_MS  = 1250,                                                         /**< Number of microseconds in 1.25 milliseconds. */
+    UNIT_10_MS    = 10000,                                                        /**< Number of microseconds in 10 milliseconds. */
 };
 
 
 /**@brief Local function prototypes. 
  */
 static void board_configure(void);
-static void uart_logf(const char *fmt, ...);
 static uint32_t advertise(void);
 static __INLINE uint32_t nrf_gpio_pin_read(uint32_t pin_number);
 
@@ -131,13 +136,13 @@ static __INLINE uint32_t nrf_gpio_pin_read(uint32_t pin_number);
                     If logging/printing is disabled, it will just yield a NOP instruction. 
 */
 #ifdef USE_UART_LOG_DEBUG
-    #define LOG_DEBUG(F, ...) (uart_logf("S130_DEMO_LOG: %s: %d: " F "\r\n", __FILE__, __LINE__, ##__VA_ARGS__))
+    #define LOG_DEBUG(F, ...) (printf("S130_DEMO_LOG: %s: %d: " F "\r\n", __FILE__, __LINE__, ##__VA_ARGS__))
 #else
     #define LOG_DEBUG(F, ...) (void)__NOP()
 #endif
 #ifdef USE_UART_LOG_INFO
-    #define _LOG_INFO(F, ...) (uart_logf(F, ##__VA_ARGS__))
-    #define LOG_INFO(F, ...) (uart_logf(F "\r\n", ##__VA_ARGS__))
+    #define _LOG_INFO(F, ...) (printf(F, ##__VA_ARGS__))
+    #define LOG_INFO(F, ...) (printf(F "\r\n", ##__VA_ARGS__))
 #else
     #define LOG_INFO(F, ...) (void)__NOP()
 #endif
@@ -380,6 +385,24 @@ static bool is_central(uint16_t conn_handle)
     }
 }
 
+
+
+/**@brief Function for handling UART errors.
+ *
+ * @param[in] nrf_error  Error code containing information about what went wrong.
+ */
+static void uart_error_handle(app_uart_evt_t * p_event)
+{
+    if (p_event->evt_type == APP_UART_COMMUNICATION_ERROR)
+    {
+        APP_ERROR_HANDLER(p_event->data.error_communication);
+    }
+    else if (p_event->evt_type == APP_UART_FIFO_ERROR)
+    {
+        APP_ERROR_HANDLER(p_event->data.error_code);
+    }
+}
+
 /*****************************************************************************
 * GAP events handling
 *****************************************************************************/
@@ -414,8 +437,8 @@ static __INLINE void disconnect_event_handle(ble_evt_t *p_ble_evt)
 {
     uint16_t peripheral_id = ID_NOT_FOUND;
 
-   LOG_DEBUG("BLE_GAP_EVT_DISCONNECTED (0x%x) from connection handle 0x%x.", p_ble_evt->header.evt_id, p_ble_evt->evt.gap_evt.conn_handle);
-   if (is_central(p_ble_evt->evt.gap_evt.conn_handle))
+    LOG_DEBUG("BLE_GAP_EVT_DISCONNECTED (0x%x) from connection handle 0x%x.", p_ble_evt->header.evt_id, p_ble_evt->evt.gap_evt.conn_handle);
+    if (is_central(p_ble_evt->evt.gap_evt.conn_handle))
     {
         central_info_reset();
         gs_advertising_is_running = false;
@@ -487,7 +510,7 @@ static __INLINE void write_event_handle(ble_evt_t *p_ble_evt)
     if ((write_data != WRITE_VALUE_ENABLE_NOTIFICATIONS) && (write_data != WRITE_VALUE_DISABLE_NOTIFICATIONS))
     {
         LOG_INFO("Central sent improper value.");
-        LOG_DEBUG("BLE_GATTS_EVT_WRITE data 0x%x out of range {0x01,0x00}", write_data, BLE_GATTS_ATTR_TYPE_DESC);
+        LOG_DEBUG("BLE_GATTS_EVT_WRITE data 0x%x out of range {0x01,0x00}", write_data);
         return;
     }
     if (write_data == WRITE_VALUE_ENABLE_NOTIFICATIONS)
@@ -644,7 +667,7 @@ uint32_t event_handle(uint8_t expected_event, uint32_t timeout_ms, uint8_t *p_ev
                     LOG_INFO("Pairing not supported.");
                     if ((error_code = sd_ble_gap_sec_params_reply(p_ble_evt->evt.gap_evt.conn_handle, BLE_GAP_SEC_STATUS_PAIRING_NOT_SUPP, NULL, NULL)) != NRF_SUCCESS)
                     {
-                       LOG_DEBUG("(Central) sd_ble_gap_sec_params_reply() error code 0x%x", error_code);
+                        LOG_DEBUG("(Central) sd_ble_gap_sec_params_reply() error code 0x%x", error_code);
                     }
                     break;
                 case BLE_GAP_EVT_AUTH_STATUS:
@@ -1105,7 +1128,7 @@ static void do_work(void)
                             {
                                 if ((error_code = notifications_enable(peripheral_id))!= NRF_SUCCESS)
                                 {
-                                    LOG_DEBUG("(Peripheral %i) Enablig notifications (writting CCCD) failed - error code 0x%x ", error_code);
+                                    LOG_DEBUG("(Peripheral %i) Enablig notifications (writting CCCD) failed - error code 0x%x ", peripheral_id, error_code);
                                 }
                                 if ((error_code = buffer_reset(peripheral_id)) == NRF_ERROR_INVALID_PARAM )
                                 {
@@ -1229,9 +1252,15 @@ int main(void)
     board_configure();
     rtc1_init();
 
-     LOG_DEBUG("%s: Enabling SoftDevice...", __FUNCTION__);
+    LOG_DEBUG("%s: Enabling SoftDevice...", __FUNCTION__);
     
     if (NRF_SUCCESS != sd_softdevice_enable((uint32_t)NRF_CLOCK_LFCLKSRC_XTAL_75_PPM, softdevice_assert_callback))
+    {
+        APP_ASSERT (false);
+    }
+
+    ble_enable_params_t ble_enable_params = {.gatts_enable_params = {.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT}};
+    if (NRF_SUCCESS != sd_ble_enable(&ble_enable_params))
     {
         APP_ASSERT (false);
     }
@@ -1243,9 +1272,9 @@ int main(void)
     LOG_INFO("#########################");
     LOG_INFO("# S130 Demo application #");
     LOG_INFO("#########################");
-    LOG_INFO("INFO: Press button 0 to connect to peripherals.");
-    LOG_INFO("INFO: Press button 1 to see the buffered data");
-    LOG_INFO("INFO: Press both 0 and 1 buttons to quit demo.");
+    LOG_INFO("INFO: Press button 1 to connect to peripherals.");
+    LOG_INFO("INFO: Press button 2 to see the buffered data");
+    LOG_INFO("INFO: Press both 1 and 2 buttons to quit demo.");
     
     own_service_setup();
     peripherals_info_reset();
@@ -1264,7 +1293,7 @@ void softdevice_assert_callback(uint32_t pc, uint16_t line_num, const uint8_t *f
     memset((void*)gs_sd_assert_file_name, 0x00, sizeof(gs_sd_assert_file_name));
     (void)strncpy((char*) gs_sd_assert_file_name, (const char*)file_name, sizeof(gs_sd_assert_file_name) - 1);
     
-     LOG_DEBUG("%s: SOFTDEVICE ASSERT: line = %d file = %s", __FUNCTION__, gs_sd_assert_line_num, gs_sd_assert_file_name);
+    LOG_DEBUG("%s: SOFTDEVICE ASSERT: line = %d file = %s", __FUNCTION__, gs_sd_assert_line_num, gs_sd_assert_file_name);
 
     while (1);
 }
@@ -1276,7 +1305,7 @@ void app_assert_callback(uint32_t line_num, const uint8_t *file_name)
     memset((void*)gs_app_assert_file_name, 0x00, sizeof(gs_app_assert_file_name));
     (void)strncpy((char*) gs_app_assert_file_name, (const char*)file_name, sizeof(gs_app_assert_file_name) - 1);
     
-     LOG_DEBUG("%s: APP ASSERT: line = %d file = %s", __FUNCTION__, gs_app_assert_line_num, gs_app_assert_file_name);
+    LOG_DEBUG("%s: APP ASSERT: line = %d file = %s", __FUNCTION__, gs_app_assert_line_num, gs_app_assert_file_name);
 
     while (1);
 }
@@ -1286,6 +1315,32 @@ void app_assert_callback(uint32_t line_num, const uint8_t *file_name)
  */
 void SD_EVT_IRQHandler(void)
 {
+}
+
+
+/**@brief Function for initializing the UART.
+ */
+static void uart_init(void)
+{
+    uint32_t                     err_code;
+    const app_uart_comm_params_t comm_params =
+    {
+        RX_PIN_NUMBER,
+        TX_PIN_NUMBER,
+        RTS_PIN_NUMBER,
+        CTS_PIN_NUMBER,
+        APP_UART_FLOW_CONTROL_ENABLED,
+        false,
+        UART_BAUDRATE_BAUDRATE_Baud38400
+    };
+
+    APP_UART_FIFO_INIT(&comm_params,
+                       UART_RX_BUF_SIZE,
+                       UART_TX_BUF_SIZE,
+                       uart_error_handle,
+                       APP_IRQ_PRIORITY_LOW,
+                       err_code);
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -1300,8 +1355,8 @@ static void board_configure(void)
         NRF_GPIO->DIRSET = 0xF0FF0000;
         NRF_GPIO->OUTCLR = 0xF0FF0000;
 #endif
-    
-    uart_init(UART_BAUD_19K2);
+    app_trace_init();
+    uart_init();
 
     NRF_GPIO->PIN_CNF[BUTTON_1] = (GPIO_PIN_CNF_SENSE_Disabled << GPIO_PIN_CNF_SENSE_Pos)
                                 | (GPIO_PIN_CNF_DRIVE_S0S1     << GPIO_PIN_CNF_DRIVE_Pos)
@@ -1316,41 +1371,9 @@ static void board_configure(void)
                                 | (GPIO_PIN_CNF_DIR_Input      << GPIO_PIN_CNF_DIR_Pos);
     
 #if (BOARD_PCA0028)
-     LOG_DEBUG("%s: Hardware initiated. Usign PCA10028 (Ev. kit)", __FUNCTION__);
+    LOG_DEBUG("%s: Hardware initiated. Using PCA10028 (Ev. kit)", __FUNCTION__);
 #else
-     LOG_DEBUG("%s: Hardware initiated. Usign PCA100xx (Dev. kit)", __FUNCTION__);
+    LOG_DEBUG("%s: Hardware initiated. Using PCA100xx (Dev. kit)", __FUNCTION__);
 #endif
 }
 
-/**@brief Logging function, used for formated output on the UART.
- */
-static void uart_logf(const char *fmt, ...)
-{
-    uint16_t i = 0;
-    static uint8_t logf_buf[150];
-    va_list args;
-    va_start(args, fmt);    
-    i = vsnprintf((char*)logf_buf, sizeof(logf_buf) - 1, fmt, args);
-    logf_buf[i] = 0x00; /* Make sure its zero terminated */
-    uart_write_buf((uint8_t*)logf_buf, i);
-    va_end(args);
-}
-
-/**
- * @brief Function for reading the input level of a GPIO pin.
- *
- * Note that the pin must have input connected for the value
- * returned from this function to be valid.
- *
- * @param pin_number specifies the pin number [0:31] to
- * read.
- *
- * @return
- * @retval 0 if the pin input level is low.
- * @retval 1 if the pin input level is high.
- * @retval > 1 should never occur.
- */
-static __INLINE uint32_t nrf_gpio_pin_read(uint32_t pin_number)
-{
-    return ((NRF_GPIO->IN >> pin_number) & 1UL);
-}

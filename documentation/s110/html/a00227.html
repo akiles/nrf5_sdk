@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_master_id_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gap_evt_auth_status_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,123 @@ $(document).ready(function(){initNavTree('a00227.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_master_id_t Struct Reference<div class="ingroups"><a class="el" href="a01048.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_evt_auth_status_t Struct Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP Master Identification.  
+<p>Event structure for <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa8958220152f7547da3b250b4f724877c">BLE_GAP_EVT_AUTH_STATUS</a>.  
  <a href="a00227.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a221a26308f709715e866c3111992ae9a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#a221a26308f709715e866c3111992ae9a">ediv</a></td></tr>
-<tr class="separator:a221a26308f709715e866c3111992ae9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5eed4e9e5a810616535ae08c4e860302"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#a5eed4e9e5a810616535ae08c4e860302">rand</a> [8]</td></tr>
-<tr class="separator:a5eed4e9e5a810616535ae08c4e860302"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7abaaec9ee09953586fa7ab79c106a25"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#a7abaaec9ee09953586fa7ab79c106a25">auth_status</a></td></tr>
+<tr class="separator:a7abaaec9ee09953586fa7ab79c106a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aace68175dd43ad9be164097ef656e04e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#aace68175dd43ad9be164097ef656e04e">error_src</a>: 2</td></tr>
+<tr class="separator:aace68175dd43ad9be164097ef656e04e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54615bc38138687aef17d617c49c6f2a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#a54615bc38138687aef17d617c49c6f2a">bonded</a>: 1</td></tr>
+<tr class="separator:a54615bc38138687aef17d617c49c6f2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6843023d29415f3ede4471a9fe359acf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00255.html">ble_gap_sec_levels_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#a6843023d29415f3ede4471a9fe359acf">sm1_levels</a></td></tr>
+<tr class="separator:a6843023d29415f3ede4471a9fe359acf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29d62f41ca47daabc4098310ceffd4e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00255.html">ble_gap_sec_levels_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#a29d62f41ca47daabc4098310ceffd4e1">sm2_levels</a></td></tr>
+<tr class="separator:a29d62f41ca47daabc4098310ceffd4e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fc7c09f814b1d3d0537d0411b2b143e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00252.html">ble_gap_sec_kdist_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#a8fc7c09f814b1d3d0537d0411b2b143e">kdist_periph</a></td></tr>
+<tr class="separator:a8fc7c09f814b1d3d0537d0411b2b143e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78ff491a0868d626e18245792325c4a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00252.html">ble_gap_sec_kdist_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#a78ff491a0868d626e18245792325c4a3">kdist_central</a></td></tr>
+<tr class="separator:a78ff491a0868d626e18245792325c4a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GAP Master Identification. </p>
+<div class="textblock"><p>Event structure for <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa8958220152f7547da3b250b4f724877c">BLE_GAP_EVT_AUTH_STATUS</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a221a26308f709715e866c3111992ae9a"></a>
+<a class="anchor" id="a7abaaec9ee09953586fa7ab79c106a25"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gap_master_id_t::ediv</td>
+          <td class="memname">uint8_t ble_gap_evt_auth_status_t::auth_status</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Encrypted Diversifier. </p>
+<p>Authentication status, see <a class="el" href="a00836.html">GAP Security status</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="a5eed4e9e5a810616535ae08c4e860302"></a>
+<a class="anchor" id="a54615bc38138687aef17d617c49c6f2a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_master_id_t::rand[8]</td>
+          <td class="memname">uint8_t ble_gap_evt_auth_status_t::bonded</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Random Number. </p>
+<p>Procedure resulted in a bond. </p>
+
+</div>
+</div>
+<a class="anchor" id="aace68175dd43ad9be164097ef656e04e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gap_evt_auth_status_t::error_src</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>On error, source that caused the failure, see <a class="el" href="a00837.html">GAP Security status sources</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a78ff491a0868d626e18245792325c4a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00252.html">ble_gap_sec_kdist_t</a> ble_gap_evt_auth_status_t::kdist_central</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Bitmap stating which keys were exchanged (distributed) by the central. </p>
+
+</div>
+</div>
+<a class="anchor" id="a8fc7c09f814b1d3d0537d0411b2b143e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00252.html">ble_gap_sec_kdist_t</a> ble_gap_evt_auth_status_t::kdist_periph</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Bitmap stating which keys were exchanged (distributed) by the peripheral. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6843023d29415f3ede4471a9fe359acf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00255.html">ble_gap_sec_levels_t</a> ble_gap_evt_auth_status_t::sm1_levels</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Levels supported in Security Mode 1. </p>
+
+</div>
+</div>
+<a class="anchor" id="a29d62f41ca47daabc4098310ceffd4e1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00255.html">ble_gap_sec_levels_t</a> ble_gap_evt_auth_status_t::sm2_levels</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Levels supported in Security Mode 2. </p>
 
 </div>
 </div>
@@ -156,8 +231,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00227.html">ble_gap_master_id_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00227.html">ble_gap_evt_auth_status_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,6 +1,8 @@
 var a00691 =
 [
-    [ "ble_hrs_c_hrm_notif_enable", "a00691.html#gab4bcaf5864ee2e17bc0abf2ae585a68b", null ],
-    [ "ble_hrs_c_init", "a00691.html#ga9ec622429b01bc15e65fbcd3613a8b8b", null ],
-    [ "ble_hrs_c_on_ble_evt", "a00691.html#ga062e0829a2ebd211d4e51a23c520ab1f", null ]
+    [ "Database Discovery", "a00675.html", "a00675" ],
+    [ "Peripheral Drivers", "a00692.html", "a00692" ],
+    [ "BLE Services", "a00693.html", "a00693" ],
+    [ "BLE Libraries", "a00694.html", "a00694" ],
+    [ "SDK Common Libraries", "a00695.html", "a00695" ]
 ];

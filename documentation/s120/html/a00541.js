@@ -1,8 +1,6 @@
 var a00541 =
 [
-    [ "BLE_GAP_IO_CAPS_DISPLAY_ONLY", "a00541.html#ga4e2f9010ba35ab6488ec181f75786435", null ],
-    [ "BLE_GAP_IO_CAPS_DISPLAY_YESNO", "a00541.html#ga88681e29c52a54de028e2ee164d2403b", null ],
-    [ "BLE_GAP_IO_CAPS_KEYBOARD_DISPLAY", "a00541.html#gaacd3ccc6340303a1edcc7c718f3c1e6f", null ],
-    [ "BLE_GAP_IO_CAPS_KEYBOARD_ONLY", "a00541.html#ga65df849ce31a65393bd89ef65a7575b4", null ],
-    [ "BLE_GAP_IO_CAPS_NONE", "a00541.html#gad11df80d3ac9d375b320363694ec0a03", null ]
+    [ "BLE_GATT_HVX_INDICATION", "a00541.html#ga47f3222bcefb5eb4aed9a1dc7c796b1f", null ],
+    [ "BLE_GATT_HVX_INVALID", "a00541.html#gae454efaf8b3f8c6871dca5d2db5ac724", null ],
+    [ "BLE_GATT_HVX_NOTIFICATION", "a00541.html#gad5784996b45947f6d7f0cb81c9a4c9ed", null ]
 ];

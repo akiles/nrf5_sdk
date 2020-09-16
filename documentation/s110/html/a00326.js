@@ -1,6 +1,5 @@
 var a00326 =
 [
-    [ "cumulative_value", "a00326.html#a9dce1ef6b333542b081df12273229b2e", null ],
-    [ "location", "a00326.html#a27be823fda46c3deb2f3fd98a38bf29f", null ],
-    [ "opcode", "a00326.html#a000223ebda70c1ccce85e8746a7d8207", null ]
+    [ "error_handler", "a00326.html#a83986799fa5972b6665f1dd70af89bca", null ],
+    [ "evt_handler", "a00326.html#a53302faad4381a87101012bf06af6101", null ]
 ];

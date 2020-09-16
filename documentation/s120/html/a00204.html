@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: dm_sec_keyset_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: dm_event_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,64 @@ $(document).ready(function(){initNavTree('a00204.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dm_sec_keyset_t Struct Reference<div class="ingroups"><a class="el" href="a00720.html">Device Manager Data Types</a></div></div>  </div>
+<div class="title">dm_event_t Struct Reference<div class="ingroups"><a class="el" href="a00669.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Device Manager security key set.  
+<p>Asynchronous events details notified to the application by the module.  
  <a href="a00204.html#details">More...</a></p>
 
 <p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a4488fee3125db8baa70ac98c3d2790bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00720.html#gaf399152e3dbaa0ac2e9a3384e056a16b">dm_sec_keys_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00204.html#a4488fee3125db8baa70ac98c3d2790bf">keys_periph</a></td></tr>
-<tr class="separator:a4488fee3125db8baa70ac98c3d2790bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ddb3932823918ebe433d5e53acdb4a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00720.html#gaf399152e3dbaa0ac2e9a3384e056a16b">dm_sec_keys_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00204.html#a9ddb3932823918ebe433d5e53acdb4a6">keys_central</a></td></tr>
-<tr class="separator:a9ddb3932823918ebe433d5e53acdb4a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a75f3476e816a31085bef063855687e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00204.html#a2a75f3476e816a31085bef063855687e">event_id</a></td></tr>
+<tr class="separator:a2a75f3476e816a31085bef063855687e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dbb0e734ebc009dcc98b7c5055d7112"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00203.html">dm_event_param_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00204.html#a2dbb0e734ebc009dcc98b7c5055d7112">event_param</a></td></tr>
+<tr class="separator:a2dbb0e734ebc009dcc98b7c5055d7112"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44a56d892899cd9a146cc4aaddd0d772"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00204.html#a44a56d892899cd9a146cc4aaddd0d772">event_paramlen</a></td></tr>
+<tr class="separator:a44a56d892899cd9a146cc4aaddd0d772"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Device Manager security key set. </p>
+<div class="textblock"><p>Asynchronous events details notified to the application by the module. </p>
+<p>Defines event type along with event parameters notified to the application by the module. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a9ddb3932823918ebe433d5e53acdb4a6"></a>
+<a class="anchor" id="a2a75f3476e816a31085bef063855687e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00720.html#gaf399152e3dbaa0ac2e9a3384e056a16b">dm_sec_keys_t</a> dm_sec_keyset_t::keys_central</td>
+          <td class="memname">uint8_t dm_event_t::event_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Keys distributed by the device in the Central role. </p>
+<p>Identifies the event. See <a class="el" href="a00665.html">Device Manager Events</a> for details on event types and their significance. </p>
 
 </div>
 </div>
-<a class="anchor" id="a4488fee3125db8baa70ac98c3d2790bf"></a>
+<a class="anchor" id="a2dbb0e734ebc009dcc98b7c5055d7112"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00720.html#gaf399152e3dbaa0ac2e9a3384e056a16b">dm_sec_keys_t</a> dm_sec_keyset_t::keys_periph</td>
+          <td class="memname"><a class="el" href="a00203.html">dm_event_param_t</a> dm_event_t::event_param</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Keys distributed by the device in the Peripheral role. </p>
+<p>Event parameters. Can be NULL if the event does not have any parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="a44a56d892899cd9a146cc4aaddd0d772"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t dm_event_t::event_paramlen</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Length of the event parameters, is zero if the event does not have any parameters. </p>
 
 </div>
 </div>
@@ -156,8 +172,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00204.html">dm_sec_keyset_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00204.html">dm_event_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

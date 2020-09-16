@@ -1,6 +1,7 @@
 var a00092 =
 [
-    [ "battery_level", "a00092.html#aa06f57fc8285fed61a3c0dd89671f6d3", null ],
-    [ "evt_type", "a00092.html#a19f2646a4734d1fc7cb27fdd7055fa55", null ],
-    [ "params", "a00092.html#aa515f62c36264cc034c90ac9963f9215", null ]
+    [ "char_count", "a00092.html#a199d43a17b0e41d7904da316db6b98ae", null ],
+    [ "charateristics", "a00092.html#aeeb1c850a101a81108ca109c2f117166", null ],
+    [ "handle_range", "a00092.html#a2300f7ac7bc453bc13fb060d3ff05efc", null ],
+    [ "srv_uuid", "a00092.html#a97887d3332bca8ac17806b8d328e4a2c", null ]
 ];

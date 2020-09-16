@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Error module</title>
+<title>nRF51 SDK - S110 SoftDevice: Running examples that use a SoftDevice</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,30 +97,55 @@ $(document).ready(function(){initNavTree('a00017.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Error module </div>  </div>
+<div class="title">Running examples that use a SoftDevice </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The error module provides the weak function <a class="el" href="a00782.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> for handling application errors. This function is used by most applications if it is not defined explicitly in the application code.</p>
-<p>The behavior of the error handler differs depending on whether the DEBUG flag is set:</p>
+<div class="textblock"><p>Before you can run more advanced examples that use <em>Bluetooth</em>, you must program the SoftDevice on the board. The SoftDevice binary is located in folder <code>Nordic\nrf51\components\softdevice\s110\hex</code> in the SDK.</p>
+<p>You can also download the S110 SoftDevice and other SoftDevice files from <a href="http://www.nordicsemi.com">http://www.nordicsemi.com</a>.</p>
+<p>There are three methods to program the SoftDevice:</p>
 <ul>
-<li><p class="startli"><b>If the DEBUG flag is not set:</b></p>
-<p class="startli">When <a class="el" href="a00782.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> is invoked, the MCU is reset.</p>
-</li>
+<li>using nRFgo Studio</li>
+<li>from an example project within ARM Keil</li>
+<li>using the GCC makefile of an example</li>
 </ul>
-<ul>
-<li><p class="startli"><b>If the DEBUG flag is set:</b></p>
-<p class="startli">When <a class="el" href="a00782.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> is invoked, the function parameters (error code, line number, and file name) are copied to global memory, interrupts are disabled, and the application enters an infinite loop.</p>
-<p class="startli">If the BSP_DEFINES_ONLY flag is set, all LEDs available on the board are turned on.</p>
-<p class="startli">If the BSP_DEFINES_ONLY flag is not set, the <a class="el" href="a00041.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> state is indicated. </p>
-</li>
-</ul>
+<p>See the following sections for detailed instructions on how to program the SoftDevice.</p>
+<p>After you programmed the SoftDevice, follow the steps described in <a class="el" href="a00018.html">Running a first example</a> to run an example that uses the SoftDevice. For example, test the <a class="el" href="a00069.html">Heart Rate Application</a>.</p>
+<h1><a class="anchor" id="getting_started_sd_studio"></a>
+nRFgo Studio</h1>
+<p>To program the SoftDevice using nRFgo Studio, perform the following steps:</p>
+<ol type="1">
+<li>Open nRFgo Studio.</li>
+<li>In the Device Manager, select the nRF51 Development board that you are working with (identified by the SEGGER serial number).</li>
+<li>Select the <b>Program SoftDevice</b> tab.</li>
+<li>Click <b>Browse</b> and navigate to the SoftDevice file that you want to use.</li>
+<li>Click <b>Program</b>.</li>
+</ol>
+<p>nRFgo Studio will erase any existing SoftDevice and program the selected SoftDevice.</p>
+<h1><a class="anchor" id="getting_started_sd_keil"></a>
+ARM Keil</h1>
+<p>To program the SoftDevice using an example project in Keil, perform the following steps:</p>
+<ol type="1">
+<li>Open an example project in Keil. The example must require a SoftDevice.</li>
+<li>Instead of the default target, select the <b>flash_softdevice</b> target.</li>
+<li>Click <b>Download</b> to program the SoftDevice.</li>
+</ol>
+<p>Keil will erase any existing SoftDevice and program the appropriate SoftDevice for the example.</p>
+<h1><a class="anchor" id="getting_started_sd_gcc"></a>
+GCC makefile</h1>
+<p>To program the SoftDevice using a GCC makefile, perform the following steps:</p>
+<ol type="1">
+<li>Open a command prompt in the folder that contains the makefile of an example. The example must require a SoftDevice.</li>
+<li>Ensure that nrfjprog.exe is in the path, thus the path to nrfjprog.exe is part of the PATH environment variable. The makefile issues a call to the nrfjprog tool.</li>
+<li>Run the following command: <b>make flash_softdevice</b></li>
+</ol>
+<p>Running the makefile will erase any existing SoftDevice and program the appropriate SoftDevice for the example. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00001.html">Getting Started</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

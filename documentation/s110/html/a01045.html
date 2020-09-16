@@ -99,82 +99,659 @@ $(document).ready(function(){initNavTree('a01045.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Functions<div class="ingroups"><a class="el" href="a00792.html">Events, type definitions and API calls</a></div></div>  </div>
+<div class="title">Functions<div class="ingroups"><a class="el" href="a00877.html">Generic Access Profile (GAP)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga0f632bec36100e4d2d74672ccbb4218b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga0f632bec36100e4d2d74672ccbb4218b">sd_ble_enable</a> (<a class="el" href="a00200.html">ble_enable_params_t</a> *p_ble_enable_params)</td></tr>
-<tr class="memdesc:ga0f632bec36100e4d2d74672ccbb4218b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the bluetooth stack.  <a href="#ga0f632bec36100e4d2d74672ccbb4218b">More...</a><br/></td></tr>
-<tr class="separator:ga0f632bec36100e4d2d74672ccbb4218b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga412b12b43c253dd744bcf574d6e86f43"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga412b12b43c253dd744bcf574d6e86f43">sd_ble_evt_get</a> (uint8_t *p_dest, uint16_t *p_len)</td></tr>
-<tr class="memdesc:ga412b12b43c253dd744bcf574d6e86f43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an event from the pending events queue.  <a href="#ga412b12b43c253dd744bcf574d6e86f43">More...</a><br/></td></tr>
-<tr class="separator:ga412b12b43c253dd744bcf574d6e86f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga37e443c585217475a97e40dfb443a1b6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> (uint8_t *p_count)</td></tr>
-<tr class="memdesc:ga37e443c585217475a97e40dfb443a1b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of available application transmission buffers in the BLE stack.  <a href="#ga37e443c585217475a97e40dfb443a1b6">More...</a><br/></td></tr>
-<tr class="separator:ga37e443c585217475a97e40dfb443a1b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab3101ab721b427d1548b5f77bf5118cf"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gab3101ab721b427d1548b5f77bf5118cf">sd_ble_uuid_vs_add</a> (<a class="el" href="a00336.html">ble_uuid128_t</a> const *const p_vs_uuid, uint8_t *const p_uuid_type)</td></tr>
-<tr class="memdesc:gab3101ab721b427d1548b5f77bf5118cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a Vendor Specific UUID.  <a href="#gab3101ab721b427d1548b5f77bf5118cf">More...</a><br/></td></tr>
-<tr class="separator:gab3101ab721b427d1548b5f77bf5118cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac27814ac145d826cda33446a51ad04a2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gac27814ac145d826cda33446a51ad04a2">sd_ble_uuid_decode</a> (uint8_t uuid_le_len, uint8_t const *const p_uuid_le, <a class="el" href="a00337.html">ble_uuid_t</a> *const p_uuid)</td></tr>
-<tr class="memdesc:gac27814ac145d826cda33446a51ad04a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode little endian raw UUID bytes (16-bit or 128-bit) into a 24 bit <a class="el" href="a00337.html">ble_uuid_t</a> structure.  <a href="#gac27814ac145d826cda33446a51ad04a2">More...</a><br/></td></tr>
-<tr class="separator:gac27814ac145d826cda33446a51ad04a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa2f13b287633d17f7500f0f39851b682"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gaa2f13b287633d17f7500f0f39851b682">sd_ble_uuid_encode</a> (<a class="el" href="a00337.html">ble_uuid_t</a> const *const p_uuid, uint8_t *const p_uuid_le_len, uint8_t *const p_uuid_le)</td></tr>
-<tr class="memdesc:gaa2f13b287633d17f7500f0f39851b682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a <a class="el" href="a00337.html">ble_uuid_t</a> structure into little endian raw UUID bytes (16-bit or 128-bit).  <a href="#gaa2f13b287633d17f7500f0f39851b682">More...</a><br/></td></tr>
-<tr class="separator:gaa2f13b287633d17f7500f0f39851b682"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab3ba7bb07fa809e8dccfd27cbba0210a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gab3ba7bb07fa809e8dccfd27cbba0210a">sd_ble_version_get</a> (<a class="el" href="a00338.html">ble_version_t</a> *p_version)</td></tr>
-<tr class="memdesc:gab3ba7bb07fa809e8dccfd27cbba0210a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Version Information.  <a href="#gab3ba7bb07fa809e8dccfd27cbba0210a">More...</a><br/></td></tr>
-<tr class="separator:gab3ba7bb07fa809e8dccfd27cbba0210a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga55b6ddb780c9715fffed628ae22ff6da"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga55b6ddb780c9715fffed628ae22ff6da">sd_ble_user_mem_reply</a> (uint16_t conn_handle, <a class="el" href="a00335.html">ble_user_mem_block_t</a> *p_block)</td></tr>
-<tr class="memdesc:ga55b6ddb780c9715fffed628ae22ff6da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide a user memory block.  <a href="#ga55b6ddb780c9715fffed628ae22ff6da">More...</a><br/></td></tr>
-<tr class="separator:ga55b6ddb780c9715fffed628ae22ff6da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga511d431bc3d9ccf9bef09ad20cbf855a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> (uint32_t opt_id, <a class="el" href="a00315.html">ble_opt_t</a> const *p_opt)</td></tr>
-<tr class="memdesc:ga511d431bc3d9ccf9bef09ad20cbf855a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a BLE option.  <a href="#ga511d431bc3d9ccf9bef09ad20cbf855a">More...</a><br/></td></tr>
-<tr class="separator:ga511d431bc3d9ccf9bef09ad20cbf855a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad64712eef7dba0287275d185768c5291"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> (uint32_t opt_id, <a class="el" href="a00315.html">ble_opt_t</a> *p_opt)</td></tr>
-<tr class="memdesc:gad64712eef7dba0287275d185768c5291"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a BLE option.  <a href="#gad64712eef7dba0287275d185768c5291">More...</a><br/></td></tr>
-<tr class="separator:gad64712eef7dba0287275d185768c5291"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf0deb48ed35d1e6ede6222dd72fe12c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gaaf0deb48ed35d1e6ede6222dd72fe12c">sd_ble_gap_address_set</a> (uint8_t addr_cycle_mode, const <a class="el" href="a00217.html">ble_gap_addr_t</a> *p_addr)</td></tr>
+<tr class="memdesc:gaaf0deb48ed35d1e6ede6222dd72fe12c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set local Bluetooth address.  <a href="#gaaf0deb48ed35d1e6ede6222dd72fe12c">More...</a><br/></td></tr>
+<tr class="separator:gaaf0deb48ed35d1e6ede6222dd72fe12c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64d7a3eae94b7bb803fa7db7d8e91cf2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga64d7a3eae94b7bb803fa7db7d8e91cf2">sd_ble_gap_address_get</a> (<a class="el" href="a00217.html">ble_gap_addr_t</a> *p_addr)</td></tr>
+<tr class="memdesc:ga64d7a3eae94b7bb803fa7db7d8e91cf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get local Bluetooth address.  <a href="#ga64d7a3eae94b7bb803fa7db7d8e91cf2">More...</a><br/></td></tr>
+<tr class="separator:ga64d7a3eae94b7bb803fa7db7d8e91cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaddbb12e078d536ef2e93b41d77ff6243"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gaddbb12e078d536ef2e93b41d77ff6243">sd_ble_gap_adv_data_set</a> (uint8_t const *p_data, uint8_t dlen, uint8_t const *p_sr_data, uint8_t srdlen)</td></tr>
+<tr class="memdesc:gaddbb12e078d536ef2e93b41d77ff6243"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set, clear or update advertising and scan response data.  <a href="#gaddbb12e078d536ef2e93b41d77ff6243">More...</a><br/></td></tr>
+<tr class="separator:gaddbb12e078d536ef2e93b41d77ff6243"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab82c978db30188c7f4fbf2dac1d97720"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gab82c978db30188c7f4fbf2dac1d97720">sd_ble_gap_adv_start</a> (<a class="el" href="a00219.html">ble_gap_adv_params_t</a> const *p_adv_params)</td></tr>
+<tr class="memdesc:gab82c978db30188c7f4fbf2dac1d97720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start advertising (GAP Discoverable, Connectable modes, Broadcast Procedure).  <a href="#gab82c978db30188c7f4fbf2dac1d97720">More...</a><br/></td></tr>
+<tr class="separator:gab82c978db30188c7f4fbf2dac1d97720"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa88eea8e9e95dd96a7633e2c62f3ce16"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gaa88eea8e9e95dd96a7633e2c62f3ce16">sd_ble_gap_adv_stop</a> (void)</td></tr>
+<tr class="memdesc:gaa88eea8e9e95dd96a7633e2c62f3ce16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop advertising (GAP Discoverable, Connectable modes, Broadcast Procedure).  <a href="#gaa88eea8e9e95dd96a7633e2c62f3ce16">More...</a><br/></td></tr>
+<tr class="separator:gaa88eea8e9e95dd96a7633e2c62f3ce16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf89b434841998ab384e0612dca9e12f8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gaf89b434841998ab384e0612dca9e12f8">sd_ble_gap_conn_param_update</a> (uint16_t conn_handle, <a class="el" href="a00220.html">ble_gap_conn_params_t</a> const *p_conn_params)</td></tr>
+<tr class="memdesc:gaf89b434841998ab384e0612dca9e12f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update connection parameters.  <a href="#gaf89b434841998ab384e0612dca9e12f8">More...</a><br/></td></tr>
+<tr class="separator:gaf89b434841998ab384e0612dca9e12f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4031d0e4034c6f5900ad6d35b763fb0d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga4031d0e4034c6f5900ad6d35b763fb0d">sd_ble_gap_disconnect</a> (uint16_t conn_handle, uint8_t hci_status_code)</td></tr>
+<tr class="memdesc:ga4031d0e4034c6f5900ad6d35b763fb0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disconnect (GAP Link Termination).  <a href="#ga4031d0e4034c6f5900ad6d35b763fb0d">More...</a><br/></td></tr>
+<tr class="separator:ga4031d0e4034c6f5900ad6d35b763fb0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f1931af876bef39520c58de5ac060ca"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga0f1931af876bef39520c58de5ac060ca">sd_ble_gap_tx_power_set</a> (int8_t tx_power)</td></tr>
+<tr class="memdesc:ga0f1931af876bef39520c58de5ac060ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the radio's transmit power.  <a href="#ga0f1931af876bef39520c58de5ac060ca">More...</a><br/></td></tr>
+<tr class="separator:ga0f1931af876bef39520c58de5ac060ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae5be2c237c81bb36ae370887b88da79f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gae5be2c237c81bb36ae370887b88da79f">sd_ble_gap_appearance_set</a> (uint16_t appearance)</td></tr>
+<tr class="memdesc:gae5be2c237c81bb36ae370887b88da79f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set GAP Appearance value.  <a href="#gae5be2c237c81bb36ae370887b88da79f">More...</a><br/></td></tr>
+<tr class="separator:gae5be2c237c81bb36ae370887b88da79f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c04cd773471e3e18e8b372cf7a284ad"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga4c04cd773471e3e18e8b372cf7a284ad">sd_ble_gap_appearance_get</a> (uint16_t *p_appearance)</td></tr>
+<tr class="memdesc:ga4c04cd773471e3e18e8b372cf7a284ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GAP Appearance value.  <a href="#ga4c04cd773471e3e18e8b372cf7a284ad">More...</a><br/></td></tr>
+<tr class="separator:ga4c04cd773471e3e18e8b372cf7a284ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7fa1d11a93b9738f7695ec3d6758da86"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga7fa1d11a93b9738f7695ec3d6758da86">sd_ble_gap_ppcp_set</a> (<a class="el" href="a00220.html">ble_gap_conn_params_t</a> const *p_conn_params)</td></tr>
+<tr class="memdesc:ga7fa1d11a93b9738f7695ec3d6758da86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set GAP Peripheral Preferred Connection Parameters.  <a href="#ga7fa1d11a93b9738f7695ec3d6758da86">More...</a><br/></td></tr>
+<tr class="separator:ga7fa1d11a93b9738f7695ec3d6758da86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab63c9daf732f27fc7e17b4e44a0b541e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gab63c9daf732f27fc7e17b4e44a0b541e">sd_ble_gap_ppcp_get</a> (<a class="el" href="a00220.html">ble_gap_conn_params_t</a> *p_conn_params)</td></tr>
+<tr class="memdesc:gab63c9daf732f27fc7e17b4e44a0b541e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GAP Peripheral Preferred Connection Parameters.  <a href="#gab63c9daf732f27fc7e17b4e44a0b541e">More...</a><br/></td></tr>
+<tr class="separator:gab63c9daf732f27fc7e17b4e44a0b541e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae779f7eed346027dc4cbaf438352e5db"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gae779f7eed346027dc4cbaf438352e5db">sd_ble_gap_device_name_set</a> (<a class="el" href="a00221.html">ble_gap_conn_sec_mode_t</a> const *p_write_perm, uint8_t const *p_dev_name, uint16_t len)</td></tr>
+<tr class="memdesc:gae779f7eed346027dc4cbaf438352e5db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set GAP device name.  <a href="#gae779f7eed346027dc4cbaf438352e5db">More...</a><br/></td></tr>
+<tr class="separator:gae779f7eed346027dc4cbaf438352e5db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga731a549371574e4a3e4450b07de3f447"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga731a549371574e4a3e4450b07de3f447">sd_ble_gap_device_name_get</a> (uint8_t *p_dev_name, uint16_t *p_len)</td></tr>
+<tr class="memdesc:ga731a549371574e4a3e4450b07de3f447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GAP device name.  <a href="#ga731a549371574e4a3e4450b07de3f447">More...</a><br/></td></tr>
+<tr class="separator:ga731a549371574e4a3e4450b07de3f447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga609617ead17f7c32cd6b27e63d96fe3a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga609617ead17f7c32cd6b27e63d96fe3a">sd_ble_gap_authenticate</a> (uint16_t conn_handle, <a class="el" href="a00256.html">ble_gap_sec_params_t</a> const *p_sec_params)</td></tr>
+<tr class="memdesc:ga609617ead17f7c32cd6b27e63d96fe3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiate the GAP Authentication procedure.  <a href="#ga609617ead17f7c32cd6b27e63d96fe3a">More...</a><br/></td></tr>
+<tr class="separator:ga609617ead17f7c32cd6b27e63d96fe3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b23027c97b3df21f6cbc23170e55663"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga7b23027c97b3df21f6cbc23170e55663">sd_ble_gap_sec_params_reply</a> (uint16_t conn_handle, uint8_t sec_status, <a class="el" href="a00256.html">ble_gap_sec_params_t</a> const *p_sec_params, <a class="el" href="a00254.html">ble_gap_sec_keyset_t</a> const *p_sec_keyset)</td></tr>
+<tr class="memdesc:ga7b23027c97b3df21f6cbc23170e55663"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reply with GAP security parameters.  <a href="#ga7b23027c97b3df21f6cbc23170e55663">More...</a><br/></td></tr>
+<tr class="separator:ga7b23027c97b3df21f6cbc23170e55663"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga01e04f368c8e7b3aaa31740dbd53bd12"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga01e04f368c8e7b3aaa31740dbd53bd12">sd_ble_gap_auth_key_reply</a> (uint16_t conn_handle, uint8_t key_type, uint8_t const *p_key)</td></tr>
+<tr class="memdesc:ga01e04f368c8e7b3aaa31740dbd53bd12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reply with an authentication key.  <a href="#ga01e04f368c8e7b3aaa31740dbd53bd12">More...</a><br/></td></tr>
+<tr class="separator:ga01e04f368c8e7b3aaa31740dbd53bd12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b10ba191122c7cf7cfccbdf76b3c657"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga5b10ba191122c7cf7cfccbdf76b3c657">sd_ble_gap_encrypt</a> (uint16_t conn_handle, <a class="el" href="a00243.html">ble_gap_master_id_t</a> const *p_master_id, <a class="el" href="a00223.html">ble_gap_enc_info_t</a> const *p_enc_info)</td></tr>
+<tr class="memdesc:ga5b10ba191122c7cf7cfccbdf76b3c657"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiate GAP Encryption procedure.  <a href="#ga5b10ba191122c7cf7cfccbdf76b3c657">More...</a><br/></td></tr>
+<tr class="separator:ga5b10ba191122c7cf7cfccbdf76b3c657"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9015143d731193672dc306f6e4aff684"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga9015143d731193672dc306f6e4aff684">sd_ble_gap_sec_info_reply</a> (uint16_t conn_handle, <a class="el" href="a00223.html">ble_gap_enc_info_t</a> const *p_enc_info, <a class="el" href="a00242.html">ble_gap_irk_t</a> const *p_id_info, <a class="el" href="a00257.html">ble_gap_sign_info_t</a> const *p_sign_info)</td></tr>
+<tr class="memdesc:ga9015143d731193672dc306f6e4aff684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reply with GAP security information.  <a href="#ga9015143d731193672dc306f6e4aff684">More...</a><br/></td></tr>
+<tr class="separator:ga9015143d731193672dc306f6e4aff684"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05ed7aaeb2d1f1ff91019a1ffeaf9fc0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga05ed7aaeb2d1f1ff91019a1ffeaf9fc0">sd_ble_gap_conn_sec_get</a> (uint16_t conn_handle, <a class="el" href="a00222.html">ble_gap_conn_sec_t</a> *p_conn_sec)</td></tr>
+<tr class="memdesc:ga05ed7aaeb2d1f1ff91019a1ffeaf9fc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current connection security.  <a href="#ga05ed7aaeb2d1f1ff91019a1ffeaf9fc0">More...</a><br/></td></tr>
+<tr class="separator:ga05ed7aaeb2d1f1ff91019a1ffeaf9fc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac369253b7f5ce0fc0093a6133faa791f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gac369253b7f5ce0fc0093a6133faa791f">sd_ble_gap_rssi_start</a> (uint16_t conn_handle, uint8_t threshold_dbm, uint8_t skip_count)</td></tr>
+<tr class="memdesc:gac369253b7f5ce0fc0093a6133faa791f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start reporting the received signal strength to the application.  <a href="#gac369253b7f5ce0fc0093a6133faa791f">More...</a><br/></td></tr>
+<tr class="separator:gac369253b7f5ce0fc0093a6133faa791f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a4a22fdfcab344701c6ab3b27bff339"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga6a4a22fdfcab344701c6ab3b27bff339">sd_ble_gap_rssi_stop</a> (uint16_t conn_handle)</td></tr>
+<tr class="memdesc:ga6a4a22fdfcab344701c6ab3b27bff339"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop reporting the received signal strength.  <a href="#ga6a4a22fdfcab344701c6ab3b27bff339">More...</a><br/></td></tr>
+<tr class="separator:ga6a4a22fdfcab344701c6ab3b27bff339"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51f25b5b74290f91aa92cb47dc8d4276"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga51f25b5b74290f91aa92cb47dc8d4276">sd_ble_gap_rssi_get</a> (uint16_t conn_handle, int8_t *p_rssi)</td></tr>
+<tr class="memdesc:ga51f25b5b74290f91aa92cb47dc8d4276"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the received signal strength for the last connection event.  <a href="#ga51f25b5b74290f91aa92cb47dc8d4276">More...</a><br/></td></tr>
+<tr class="separator:ga51f25b5b74290f91aa92cb47dc8d4276"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3db84fa4870b155489187103906cf318"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga3db84fa4870b155489187103906cf318">sd_ble_gap_scan_start</a> (<a class="el" href="a00251.html">ble_gap_scan_params_t</a> const *p_scan_params)</td></tr>
+<tr class="memdesc:ga3db84fa4870b155489187103906cf318"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start scanning (GAP Discovery procedure, Observer Procedure).  <a href="#ga3db84fa4870b155489187103906cf318">More...</a><br/></td></tr>
+<tr class="separator:ga3db84fa4870b155489187103906cf318"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e92b62656057a13747a2ef1e71fd128"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga0e92b62656057a13747a2ef1e71fd128">sd_ble_gap_scan_stop</a> (void)</td></tr>
+<tr class="memdesc:ga0e92b62656057a13747a2ef1e71fd128"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop scanning (GAP Discovery procedure, Observer Procedure).  <a href="#ga0e92b62656057a13747a2ef1e71fd128">More...</a><br/></td></tr>
+<tr class="separator:ga0e92b62656057a13747a2ef1e71fd128"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb36dc9947591179acb83aef50b04282"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#gacb36dc9947591179acb83aef50b04282">sd_ble_gap_connect</a> (<a class="el" href="a00217.html">ble_gap_addr_t</a> const *p_peer_addr, <a class="el" href="a00251.html">ble_gap_scan_params_t</a> const *p_scan_params, <a class="el" href="a00220.html">ble_gap_conn_params_t</a> const *p_conn_params)</td></tr>
+<tr class="memdesc:gacb36dc9947591179acb83aef50b04282"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a connection (GAP Link Establishment).  <a href="#gacb36dc9947591179acb83aef50b04282">More...</a><br/></td></tr>
+<tr class="separator:gacb36dc9947591179acb83aef50b04282"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ca336dec99490e0ed3c66479770e44e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html#ga9ca336dec99490e0ed3c66479770e44e">sd_ble_gap_connect_cancel</a> (void)</td></tr>
+<tr class="memdesc:ga9ca336dec99490e0ed3c66479770e44e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel a connection establishment.  <a href="#ga9ca336dec99490e0ed3c66479770e44e">More...</a><br/></td></tr>
+<tr class="separator:ga9ca336dec99490e0ed3c66479770e44e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga0f632bec36100e4d2d74672ccbb4218b"></a>
+<a class="anchor" id="ga64d7a3eae94b7bb803fa7db7d8e91cf2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_ble_enable </td>
+          <td class="memname">uint32_t sd_ble_gap_address_get </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00200.html">ble_enable_params_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_enable_params</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00217.html">ble_gap_addr_t</a> *&#160;</td>
+          <td class="paramname"><em>p_addr</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enable the bluetooth stack. </p>
+<p>Get local Bluetooth address. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_enable_params</td><td>Pointer to <a class="el" href="a00200.html" title="BLE GATTS init options.">ble_enable_params_t</a></td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_addr</td><td>Pointer to address structure to be filled in.</td></tr>
   </table>
   </dd>
 </dl>
-<p>This call initializes the bluetooth stack, no other BLE related call can be called before this one has been executed.</p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00838.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a> BLE stack has been initialized successfully </dd>
-<dd>
-<a class="el" href="a00838.html#gabc562e4ddfe2f427666a3acdd0b469a3">NRF_ERROR_INVALID_ADDR</a> Invalid or not sufficiently aligned pointer supplied. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Address successfully retrieved. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga412b12b43c253dd744bcf574d6e86f43"></a>
+<a class="anchor" id="gaaf0deb48ed35d1e6ede6222dd72fe12c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_ble_evt_get </td>
+          <td class="memname">uint32_t sd_ble_gap_address_set </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>addr_cycle_mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00217.html">ble_gap_addr_t</a> *&#160;</td>
+          <td class="paramname"><em>p_addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set local Bluetooth address. </p>
+<dl class="section note"><dt>Note</dt><dd>If the address cycle mode is <a class="el" href="a00823.html#gad1b508bba948e89462e018fecc38b13f">BLE_GAP_ADDR_CYCLE_MODE_AUTO</a>, the address type is required to be <a class="el" href="a00822.html#gae166d654401b0ed83ad7073f31467b70">BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE</a> or <a class="el" href="a00822.html#ga86fe5e506ba152ec4d60ac6daaca2aef">BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE</a>. The given address is ignored and the SoftDevice will generate a new private address automatically every <a class="el" href="a01043.html#ga09366f020307b3079d1038062b7e162d">BLE_GAP_DEFAULT_PRIVATE_ADDR_CYCLE_INTERVAL_S</a> seconds. If this API call is used again with the same parameters, the SoftDevice will immediately generate a new private address to replace the current address.</dd>
+<dd>
+If the application wishes to use a <a class="el" href="a00822.html#gaa5e499423d88b16817efd4d5ec10fd6e">BLE_GAP_ADDR_TYPE_PUBLIC</a> or <a class="el" href="a00822.html#gabe27b8f22c3a52413fa064c2ee1e4fba">BLE_GAP_ADDR_TYPE_RANDOM_STATIC</a> address, the cycle mode must be <a class="el" href="a00823.html#ga876e1c374d17d451d901e3e8d151a20d">BLE_GAP_ADDR_CYCLE_MODE_NONE</a>.</dd>
+<dd>
+If this API function is called while advertising or scanning, the softdevice will immediately update the advertising or scanning address without the need to stop the procedure in the following cases:<ul>
+<li>If the previously set address is of type <a class="el" href="a00822.html#gaa5e499423d88b16817efd4d5ec10fd6e">BLE_GAP_ADDR_TYPE_PUBLIC</a> and the new address is also of type <a class="el" href="a00822.html#gaa5e499423d88b16817efd4d5ec10fd6e">BLE_GAP_ADDR_TYPE_PUBLIC</a></li>
+<li>If the previously set address is not <a class="el" href="a00822.html#gaa5e499423d88b16817efd4d5ec10fd6e">BLE_GAP_ADDR_TYPE_PUBLIC</a> and the new address is also not <a class="el" href="a00822.html#gaa5e499423d88b16817efd4d5ec10fd6e">BLE_GAP_ADDR_TYPE_PUBLIC</a>. If the address is changed from a <a class="el" href="a00822.html#gaa5e499423d88b16817efd4d5ec10fd6e">BLE_GAP_ADDR_TYPE_PUBLIC</a> address to another type or from another type to a <a class="el" href="a00822.html#gaa5e499423d88b16817efd4d5ec10fd6e">BLE_GAP_ADDR_TYPE_PUBLIC</a> address, the change will take effect the next time an advertising or scanning procedure is started.</li>
+</ul>
+</dd>
+<dd>
+If the address cycle mode is <a class="el" href="a00823.html#ga876e1c374d17d451d901e3e8d151a20d">BLE_GAP_ADDR_CYCLE_MODE_NONE</a> and the application is using privacy, the application must take care to generate and set new private addresses periodically to comply with the Privacy specification in Bluetooth Core Spec.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr_cycle_mode</td><td>Address cycle mode, see <a class="el" href="a00823.html">GAP Address cycle modes</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_addr</td><td>Pointer to address structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Address successfully set. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameters. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00819.html#ga3eda228736d6c1dcbcf9aba2bd059068">BLE_ERROR_GAP_INVALID_BLE_ADDR</a></td><td>Invalid address. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga5d2d8608f6d6a0329f58961a969e946e" title="Busy.">NRF_ERROR_BUSY</a></td><td>The stack is busy, process pending events and retry. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaddbb12e078d536ef2e93b41d77ff6243"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_adv_data_set </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t const *&#160;</td>
+          <td class="paramname"><em>p_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>dlen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *&#160;</td>
+          <td class="paramname"><em>p_sr_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>srdlen</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set, clear or update advertising and scan response data. </p>
+<dl class="section note"><dt>Note</dt><dd>The format of the advertising data will be checked by this call to ensure interoperability. Limitations imposed by this API call to the data provided include having a flags data type in the scan response data and duplicating the local name in the advertising data and scan response data.</dd>
+<dd>
+To clear the advertising data and set it to a 0-length packet, simply provide a valid pointer (p_data/p_sr_data) with its corresponding length (dlen/srdlen) set to 0.</dd>
+<dd>
+The call will fail if p_data and p_sr_data are both NULL since this would have no effect.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Raw data to be placed in advertising packet. If NULL, no changes are made to the current advertising packet data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dlen</td><td>Data length for p_data. Max size: <a class="el" href="a01043.html#ga6d6ae1b58ea2dc641e4dc30e8e2dcc0b">BLE_GAP_ADV_MAX_SIZE</a> octets. Should be 0 if p_data is NULL, can be 0 if p_data is not NULL. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_sr_data</td><td>Raw data to be placed in scan response packet. If NULL, no changes are made to the current scan response packet data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srdlen</td><td>Data length for p_sr_data. Max size: <a class="el" href="a01043.html#ga6d6ae1b58ea2dc641e4dc30e8e2dcc0b">BLE_GAP_ADV_MAX_SIZE</a> octets. Should be 0 if p_sr_data is NULL, can be 0 if p_data is not NULL.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Advertising data successfully updated or cleared. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga10f61a8901fb865840da22a0792eca18" title="Invalid Flags.">NRF_ERROR_INVALID_FLAGS</a></td><td>Invalid combination of advertising flags supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaca6d57e218563351e7abdbdebb049f69" title="Invalid Data.">NRF_ERROR_INVALID_DATA</a></td><td>Invalid data type(s) supplied, check the advertising data format specification. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga59fe2a8fe184005aefa0835c7ff400fd" title="Invalid Length.">NRF_ERROR_INVALID_LENGTH</a></td><td>Invalid data length(s) supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaacf52836cc3860c5ffd4e129f725f138" title="Not supported.">NRF_ERROR_NOT_SUPPORTED</a></td><td>Unsupported data type. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00819.html#ga996146eb2c3b244f044b5cd121f8b826">BLE_ERROR_GAP_UUID_LIST_MISMATCH</a></td><td>Invalid UUID list supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab82c978db30188c7f4fbf2dac1d97720"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_adv_start </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00219.html">ble_gap_adv_params_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_adv_params</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start advertising (GAP Discoverable, Connectable modes, Broadcast Procedure). </p>
+<dl class="section note"><dt>Note</dt><dd>An application can start an advertising procedure for broadcasting purposes while a connection is active. After a <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefaa0b4789724d202a13a5e7eab85c52957">BLE_GAP_EVT_CONNECTED</a> event is received, this function may therefore be called to start a broadcast advertising procedure. The advertising procedure cannot however be connectable (it must be of type <a class="el" href="a00830.html#ga594ca8490efef1702e8ccb6a28d2a1de">BLE_GAP_ADV_TYPE_ADV_SCAN_IND</a> or <a class="el" href="a00830.html#ga8c86ca45ebffc3938fd97f9556daa49c">BLE_GAP_ADV_TYPE_ADV_NONCONN_IND</a>).</dd>
+<dd>
+Only one advertiser may be active at any time.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_adv_params</td><td>Pointer to advertising parameters structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>The BLE stack has started advertising. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied, check the accepted ranges and limits. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00819.html#ga3eda228736d6c1dcbcf9aba2bd059068">BLE_ERROR_GAP_INVALID_BLE_ADDR</a></td><td>Invalid Bluetooth address supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00819.html#gaa65c2f6a6eba52654e2b6febc5c3ba8c">BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST</a></td><td>Discoverable mode and whitelist incompatible. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga5d2d8608f6d6a0329f58961a969e946e" title="Busy.">NRF_ERROR_BUSY</a></td><td>The stack is busy, process pending events and retry. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa88eea8e9e95dd96a7633e2c62f3ce16"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_adv_stop </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop advertising (GAP Discoverable, Connectable modes, Broadcast Procedure). </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>The BLE stack has stopped advertising. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation (most probably not in advertising state). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4c04cd773471e3e18e8b372cf7a284ad"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_appearance_get </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>p_appearance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get GAP Appearance value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_appearance</td><td>Pointer to appearance (16-bit) to be filled in, see <a class="el" href="a00865.html">Bluetooth Appearance values</a>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Appearance value retrieved successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae5be2c237c81bb36ae370887b88da79f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_appearance_set </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>appearance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set GAP Appearance value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">appearance</td><td>Appearance (16-bit), see <a class="el" href="a00865.html">Bluetooth Appearance values</a>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Appearance value set successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga01e04f368c8e7b3aaa31740dbd53bd12"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_auth_key_reply </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>key_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *&#160;</td>
+          <td class="paramname"><em>p_key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reply with an authentication key. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>See <a class="el" href="a00835.html">GAP Authentication Key Types</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_key</td><td>If key type is <a class="el" href="a00835.html#ga869af3b1376d25aec9ae236e5772d7f1">BLE_GAP_AUTH_KEY_TYPE_NONE</a>, then NULL. If key type is <a class="el" href="a00835.html#ga914a323fb165826d2995ef9d79b341e6">BLE_GAP_AUTH_KEY_TYPE_PASSKEY</a>, then a 6-byte ASCII string (digit 0..9 only, no NULL termination). If key type is <a class="el" href="a00835.html#gaf9f173da3e04e3c8054cbbeaa488c3d1">BLE_GAP_AUTH_KEY_TYPE_OOB</a>, then a 16-byte OOB key value in Little Endian format.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function is only used to reply to a <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa64d5d52e3ca8d8957bce011ad43d0f67">BLE_GAP_EVT_AUTH_KEY_REQUEST</a>, calling it at other times will result in an <a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e">NRF_ERROR_INVALID_STATE</a>. </p>
+<dl class="section note"><dt>Note</dt><dd>If the call returns an error code, the request is still pending, and the reply call may be repeated with corrected parameters.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Authentication key successfully set. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00817.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid connection handle supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga609617ead17f7c32cd6b27e63d96fe3a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_authenticate </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00256.html">ble_gap_sec_params_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_sec_params</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initiate the GAP Authentication procedure. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_sec_params</td><td>Pointer to the <a class="el" href="a00256.html">ble_gap_sec_params_t</a> structure with the security parameters to be used during the pairing or bonding procedure. In the peripheral role, only the timeout, bond and mitm fields of this structure are used. In the central role, this pointer may be NULL to reject a Security Request.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>In the central role, this function will send an SMP Pairing Request (or an SMP Pairing Failed if rejected), otherwise in the peripheral role, an SMP Security Request will be sent.</p>
+<dl class="section note"><dt>Note</dt><dd>Calling this function may result in the following events depending on the outcome and parameters: <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa6c5eefbcfabbc1ce4a8bcbf550c285ae">BLE_GAP_EVT_SEC_PARAMS_REQUEST</a>, <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefaf1c60079f92820cb933ebdb66d2d8d7d">BLE_GAP_EVT_SEC_INFO_REQUEST</a>, <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa64d5d52e3ca8d8957bce011ad43d0f67">BLE_GAP_EVT_AUTH_KEY_REQUEST</a>, <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa361bcc6098a88825333464335f6d22cc">BLE_GAP_EVT_CONN_SEC_UPDATE</a>, <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa8958220152f7547da3b250b4f724877c">BLE_GAP_EVT_AUTH_STATUS</a>.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully initiated authentication procedure. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga5d2d8608f6d6a0329f58961a969e946e" title="Busy.">NRF_ERROR_BUSY</a></td><td>The stack is busy, process pending events and retry. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00817.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid connection handle supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf3ac440fa84dedc1a80baab36da36f80" title="Operation timed out.">NRF_ERROR_TIMEOUT</a></td><td>A SMP timout has occured, and further SMP operations on this link is prohibited. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf89b434841998ab384e0612dca9e12f8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_conn_param_update </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00220.html">ble_gap_conn_params_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_conn_params</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update connection parameters. </p>
+<p>In the central role this will initiate a Link Layer connection parameter update procedure, otherwise in the peripheral role, this will send the corresponding L2CAP request and wait for the central to perform the procedure. In both cases, and regardless of success or failure, the application will be informed of the result with a <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa9117fcf7efad580886dfad72e5d7cce7">BLE_GAP_EVT_CONN_PARAM_UPDATE</a> event.</p>
+<p>This function can be used as a central both to reply to a <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefaa06e32db1a202d1a9e2e21f202987039">BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST</a> or to start the procedure unrequested.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_conn_params</td><td>Pointer to desired connection parameters. If NULL is provided on a peripheral role, the parameters in the PPCP characteristic of the GAP service will be used instead. If NULL is provided on a central role and in response to a <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefaa06e32db1a202d1a9e2e21f202987039">BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST</a>, the peripheral request will be rejected</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>The Connection Update procedure has been started successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied, check parameter limits and constraints. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga5d2d8608f6d6a0329f58961a969e946e" title="Busy.">NRF_ERROR_BUSY</a></td><td>Procedure already in progress or not allowed at this time, process pending events and wait for pending procedures to complete and retry. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00817.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid connection handle supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7ef4d466b79b31c6325f8b7af5d4f75f" title="No Memory for operation.">NRF_ERROR_NO_MEM</a></td><td>Not enough memory to complete operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga05ed7aaeb2d1f1ff91019a1ffeaf9fc0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_conn_sec_get </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00222.html">ble_gap_conn_sec_t</a> *&#160;</td>
+          <td class="paramname"><em>p_conn_sec</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the current connection security. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_conn_sec</td><td>Pointer to a <a class="el" href="a00222.html">ble_gap_conn_sec_t</a> structure to be filled in.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Current connection security successfully retrieved. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00817.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid connection handle supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacb36dc9947591179acb83aef50b04282"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_connect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00217.html">ble_gap_addr_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_peer_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00251.html">ble_gap_scan_params_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_scan_params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00220.html">ble_gap_conn_params_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_conn_params</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a connection (GAP Link Establishment). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_peer_addr</td><td>Pointer to peer address. If the selective bit is set in <a class="el" href="a00251.html">ble_gap_scan_params_t</a>, then this must be NULL. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_scan_params</td><td>Pointer to scan parameters structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_conn_params</td><td>Pointer to desired connection parameters.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully initiated connection procedure. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid parameter(s) pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00819.html#ga3eda228736d6c1dcbcf9aba2bd059068">BLE_ERROR_GAP_INVALID_BLE_ADDR</a></td><td>Invalid Peer address. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7ef4d466b79b31c6325f8b7af5d4f75f" title="No Memory for operation.">NRF_ERROR_NO_MEM</a></td><td>limit of available connections reached. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga5d2d8608f6d6a0329f58961a969e946e" title="Busy.">NRF_ERROR_BUSY</a></td><td>The stack is busy, process pending events and retry. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9ca336dec99490e0ed3c66479770e44e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_connect_cancel </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cancel a connection establishment. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully cancelled an ongoing connection procedure. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga731a549371574e4a3e4450b07de3f447"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_device_name_get </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_dest</em>, </td>
+          <td class="paramname"><em>p_dev_name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -190,41 +767,47 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get an event from the pending events queue. </p>
+<p>Get GAP device name. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_dest</td><td>Pointer to buffer to be filled in with an event, or NULL to retrieve the event length. This buffer <b>must be 4-byte aligned in memory</b>. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_len</td><td>Pointer the length of the buffer, on return it is filled with the event length.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_dev_name</td><td>Pointer to an empty buffer where the UTF-8 <b>non NULL-terminated</b> string will be placed. Set to NULL to obtain the complete device name length. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_len</td><td>Length of the buffer pointed by p_dev_name, complete device name length on output.</td></tr>
   </table>
   </dd>
 </dl>
-<p>This call allows the application to pull a BLE event from the BLE stack. The application is signalled that an event is available from the BLE Stack by the triggering of the SD_EVT_IRQn interrupt (mapped to IRQ 22). The application is free to choose whether to call this function from thread mode (main context) or directly from the Interrupt Service Routine that maps to SD_EVT_IRQn. In any case however, and because the BLE stack runs at a higher priority than the application, this function should be called in a loop (until <a class="el" href="a00838.html#ga349d25ada15be023e0d507f45ada682c">NRF_ERROR_NOT_FOUND</a> is returned) every time SD_EVT_IRQn is raised to ensure that all available events are pulled from the stack. Failure to do so could potentially leave events in the internal queue without the application being aware of this fact. Sizing the p_dest buffer is equally important, since the application needs to provide all the memory necessary for the event to be copied into application memory. If the buffer provided is not large enough to fit the entire contents of the event, <a class="el" href="a00838.html#ga4c61f2b54667506e90cc296721b2e658">NRF_ERROR_DATA_SIZE</a> will be returned and the application can then call again with a larger buffer size. Please note that because of the variable length nature of some events, sizeof(ble_evt_t) will not always be large enough to fit certain events, and so it is the application's responsability to provide an amount of memory large enough so that the relevant event is copied in full. The application may "peek" the event length by providing p_dest as a NULL pointer and inspecting the value of *p_len upon return.</p>
-<dl class="section note"><dt>Note</dt><dd>The pointer supplied must be aligned to the extend defined by <a class="el" href="a01043.html#ga60320cd534c9f7f0f16a1da17d5afacb">BLE_EVTS_PTR_ALIGNMENT</a></dd></dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00838.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a> Event pulled and stored into the supplied buffer. </dd>
-<dd>
-<a class="el" href="a00838.html#gabc562e4ddfe2f427666a3acdd0b469a3">NRF_ERROR_INVALID_ADDR</a> Invalid or not sufficiently aligned pointer supplied. </dd>
-<dd>
-<a class="el" href="a00838.html#ga349d25ada15be023e0d507f45ada682c">NRF_ERROR_NOT_FOUND</a> No events ready to be pulled. </dd>
-<dd>
-<a class="el" href="a00838.html#ga4c61f2b54667506e90cc296721b2e658">NRF_ERROR_DATA_SIZE</a> Event ready but could not fit into the supplied buffer. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If the device name is longer than the size of the supplied buffer, p_len will return the complete device name length, and not the number of bytes actually returned in p_dev_name. The application may use this information to allocate a suitable buffer size.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>GAP device name retrieved successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga4c61f2b54667506e90cc296721b2e658" title="Data size exceeds limit.">NRF_ERROR_DATA_SIZE</a></td><td>Invalid data size(s) supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gad64712eef7dba0287275d185768c5291"></a>
+<a class="anchor" id="gae779f7eed346027dc4cbaf438352e5db"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_ble_opt_get </td>
+          <td class="memname">uint32_t sd_ble_gap_device_name_set </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>opt_id</em>, </td>
+          <td class="paramtype"><a class="el" href="a00221.html">ble_gap_conn_sec_mode_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_write_perm</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00315.html">ble_opt_t</a> *&#160;</td>
-          <td class="paramname"><em>p_opt</em>&#160;</td>
+          <td class="paramtype">uint8_t const *&#160;</td>
+          <td class="paramname"><em>p_dev_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -234,121 +817,33 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get a BLE option. </p>
-<p>This call allows the application to retrieve the value of an option.</p>
+<p>Set GAP device name. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">opt_id</td><td>Option ID. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_opt</td><td>Pointer to a <a class="el" href="a00315.html" title="Common BLE Option type, wrapping the module specific options.">ble_opt_t</a> structure to be filled in.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_write_perm</td><td>Write permissions for the Device Name characteristic, see <a class="el" href="a00221.html">ble_gap_conn_sec_mode_t</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_dev_name</td><td>Pointer to a UTF-8 encoded, <b>non NULL-terminated</b> string. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of the UTF-8, <b>non NULL-terminated</b> string pointed to by p_dev_name in octets (must be smaller or equal than <a class="el" href="a01043.html#gac2eb594dd57920a845941ba29990022d">BLE_GAP_DEVNAME_MAX_LEN</a>).</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00838.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Option retrieved successfully. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00838.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00794.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid Connection Handle. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00838.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied, check parameter limits and constraints. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00838.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Unable to retrieve the parameter at this time. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00838.html#ga5d2d8608f6d6a0329f58961a969e946e" title="Busy.">NRF_ERROR_BUSY</a></td><td>The stack is busy or the previous procedure has not completed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00838.html#gaacf52836cc3860c5ffd4e129f725f138" title="Not supported.">NRF_ERROR_NOT_SUPPORTED</a></td><td>This option is not supported. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>GAP device name and permissions set successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga4c61f2b54667506e90cc296721b2e658" title="Data size exceeds limit.">NRF_ERROR_DATA_SIZE</a></td><td>Invalid data size(s) supplied. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga511d431bc3d9ccf9bef09ad20cbf855a"></a>
+<a class="anchor" id="ga4031d0e4034c6f5900ad6d35b763fb0d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_ble_opt_set </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>opt_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00315.html">ble_opt_t</a> const *&#160;</td>
-          <td class="paramname"><em>p_opt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Set a BLE option. </p>
-<p>This call allows the application to set the value of an option.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">opt_id</td><td>Option ID. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_opt</td><td>Pointer to a <a class="el" href="a00315.html" title="Common BLE Option type, wrapping the module specific options.">ble_opt_t</a> structure containing the option value.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00838.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Option set successfully. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00838.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00794.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid Connection Handle. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00838.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied, check parameter limits and constraints. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00838.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Unable to set the parameter at this time. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00838.html#ga5d2d8608f6d6a0329f58961a969e946e" title="Busy.">NRF_ERROR_BUSY</a></td><td>The stack is busy or the previous procedure has not completed. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga37e443c585217475a97e40dfb443a1b6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t sd_ble_tx_buffer_count_get </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_count</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get the total number of available application transmission buffers in the BLE stack. </p>
-<p>This call allows the application to obtain the total number of transmission buffers available for application data. Please note that this does not give the number of free buffers, but rather the total amount of them. The application has two options to handle its own application transmission buffers:</p>
-<ul>
-<li>Use a simple arithmetic calculation: at boot time the application should use this function to find out the total amount of buffers available to it and store it in a variable. Every time a packet that consumes an application buffer is sent using any of the exposed functions in this BLE API, the application should decrement that variable. Conversely, whenever a <a class="el" href="a01044.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> event is received by the application it should retrieve the count field in such event and add that number to the same variable storing the number of available packets. This mechanism allows the application to be aware at any time of the number of application packets available in the BLE stack's internal buffers, and therefore it can know with certainty whether it is possible to send more data or it has to wait for a <a class="el" href="a01044.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> event before it proceeds.</li>
-<li>Choose to simply not keep track of available buffers at all, and instead handle the <a class="el" href="a00794.html#ga901e1bc3ccae29eff9fb31cabdbb5e02">BLE_ERROR_NO_TX_BUFFERS</a> error by queueing the packet to be transmitted and try again as soon as a <a class="el" href="a01044.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> event arrives.</li>
-</ul>
-<p>The API functions that <b>may</b> consume an application buffer depending on the parameters supplied to them can be found below:</p>
-<ul>
-<li><a class="el" href="a01056.html#gaf608cc468ddeb3504e7d175efaf5c4e3">sd_ble_gattc_write</a> (write witout response only)</li>
-<li><a class="el" href="a01060.html#ga00ea603adee7561e8bdc00c8853a0ba8">sd_ble_gatts_hvx</a> (notifications only)</li>
-<li><a class="el" href="a01063.html#gaddb9c946774f03aeb65bb19697759a7c">sd_ble_l2cap_tx</a> (all packets)</li>
-</ul>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_count</td><td>Pointer to a uint8_t which will contain the number of application transmission buffers upon successful return.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00838.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a> Number of application transmission buffers retrieved successfully. </dd>
-<dd>
-<a class="el" href="a00838.html#gabc562e4ddfe2f427666a3acdd0b469a3">NRF_ERROR_INVALID_ADDR</a> Invalid pointer supplied. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga55b6ddb780c9715fffed628ae22ff6da"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t sd_ble_user_mem_reply </td>
+          <td class="memname">uint32_t sd_ble_gap_disconnect </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>conn_handle</em>, </td>
@@ -356,8 +851,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00335.html">ble_user_mem_block_t</a> *&#160;</td>
-          <td class="paramname"><em>p_block</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>hci_status_code</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -367,44 +862,212 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Provide a user memory block. </p>
-<dl class="section note"><dt>Note</dt><dd>This call can only be used as a response to a <a class="el" href="a01044.html#ggaa55e423bfea45f03764a636f2cec7a8ba3b9d0631bda508c2657f746ffaa6ed97">BLE_EVT_USER_MEM_REQUEST</a> event issued to the application.</dd></dl>
+<p>Disconnect (GAP Link Termination). </p>
+<p>This call initiates the disconnection procedure, and its completion will be communicated to the application with a <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa057001bbd6ea9e615f19ef93cc0831ee">BLE_GAP_EVT_DISCONNECTED</a> event.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_block</td><td>Pointer to a user memory block structure.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hci_status_code</td><td>HCI status code, see <a class="el" href="a00858.html">Bluetooth status codes</a> (accepted values are <a class="el" href="a00858.html#gad4caeb4bcc901a4f1b00068c498a090c">BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION</a> and <a class="el" href="a00858.html#ga2050e416bf56097d8dfd499b268abcad">BLE_HCI_CONN_INTERVAL_UNACCEPTABLE</a>).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00838.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a> Successfully queued a response to the peer. </dd>
-<dd>
-<a class="el" href="a00794.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a> Invalid Connection Handle. </dd>
-<dd>
-<a class="el" href="a00838.html#gaf0aff2ba7864b34a36b4a96986e1851e">NRF_ERROR_INVALID_STATE</a> No execute write request pending. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>The disconnection procedure has been started successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00817.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid connection handle supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation (disconnection is already in progress). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gac27814ac145d826cda33446a51ad04a2"></a>
+<a class="anchor" id="ga5b10ba191122c7cf7cfccbdf76b3c657"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_ble_uuid_decode </td>
+          <td class="memname">uint32_t sd_ble_gap_encrypt </td>
           <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00243.html">ble_gap_master_id_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_master_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00223.html">ble_gap_enc_info_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_enc_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initiate GAP Encryption procedure. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_master_id</td><td>Pointer to a <a class="el" href="a00243.html">ble_gap_master_id_t</a> master identification structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_enc_info</td><td>Pointer to a <a class="el" href="a00223.html">ble_gap_enc_info_t</a> encryption information structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>In the central role, this function will initiate the encryption procedure using the encryption information provided.</p>
+<dl class="section note"><dt>Note</dt><dd>Calling this function may result in the following event depending on the outcome and parameters: <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa361bcc6098a88825333464335f6d22cc">BLE_GAP_EVT_CONN_SEC_UPDATE</a>.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully initiated authentication procedure. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00817.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid connection handle supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00817.html#ga1d92ffe1952beeff89e5bf768657460f">BLE_ERROR_INVALID_ROLE</a></td><td>Operation is not supported in the Peripheral role. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga5d2d8608f6d6a0329f58961a969e946e" title="Busy.">NRF_ERROR_BUSY</a></td><td>Procedure already in progress or not allowed at this time, wait for pending procedures to complete and retry. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab63c9daf732f27fc7e17b4e44a0b541e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_ppcp_get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00220.html">ble_gap_conn_params_t</a> *&#160;</td>
+          <td class="paramname"><em>p_conn_params</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get GAP Peripheral Preferred Connection Parameters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_conn_params</td><td>Pointer to a <a class="el" href="a00220.html">ble_gap_conn_params_t</a> structure where the parameters will be stored.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Peripheral Preferred Connection Parameters retrieved successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7fa1d11a93b9738f7695ec3d6758da86"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_ppcp_set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00220.html">ble_gap_conn_params_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_conn_params</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set GAP Peripheral Preferred Connection Parameters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_conn_params</td><td>Pointer to a <a class="el" href="a00220.html">ble_gap_conn_params_t</a> structure with the desired parameters.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Peripheral Preferred Connection Parameters set successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga51f25b5b74290f91aa92cb47dc8d4276"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_rssi_get </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t *&#160;</td>
+          <td class="paramname"><em>p_rssi</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the received signal strength for the last connection event. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_rssi</td><td>Pointer to the location where the RSSI measurement shall be stored.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><a class="el" href="a01045.html#gac369253b7f5ce0fc0093a6133faa791f">sd_ble_gap_rssi_start</a> must be called to start reporting RSSI before using this function. <a class="el" href="a00866.html#ga349d25ada15be023e0d507f45ada682c">NRF_ERROR_NOT_FOUND</a> will be returned until RSSI was sampled for the first time after calling <a class="el" href="a01045.html#gac369253b7f5ce0fc0093a6133faa791f">sd_ble_gap_rssi_start</a>.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully read the RSSI. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga349d25ada15be023e0d507f45ada682c" title="Not found.">NRF_ERROR_NOT_FOUND</a></td><td>No sample is available. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00817.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid connection handle supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>RSSI reporting is not ongoing, or disconnection in progress. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac369253b7f5ce0fc0093a6133faa791f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_rssi_start </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>uuid_le_len</em>, </td>
+          <td class="paramname"><em>threshold_dbm</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_uuid_le</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00337.html">ble_uuid_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_uuid</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>skip_count</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -414,48 +1077,147 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decode little endian raw UUID bytes (16-bit or 128-bit) into a 24 bit <a class="el" href="a00337.html">ble_uuid_t</a> structure. </p>
-<p>The raw UUID bytes excluding bytes 12 and 13 (i.e. bytes 0-11 and 14-15) of p_uuid_le are compared to the corresponding ones in each entry of the table of vendor specific UUIDs pouplated with <a class="el" href="a01045.html#gab3101ab721b427d1548b5f77bf5118cf">sd_ble_uuid_vs_add</a> to look for a match. If there is such a match, bytes 12 and 13 are returned as p_uuid-&gt;uuid and the index relative to <a class="el" href="a00836.html#ga7bdcaea9ea91ab20be755d78833da46d">BLE_UUID_TYPE_VENDOR_BEGIN</a> as p_uuid-&gt;type.</p>
-<dl class="section note"><dt>Note</dt><dd>If the UUID length supplied is 2, then the type set by this call will always be <a class="el" href="a00836.html#gae549d14b15783ba52dae5fdd5f9ac959">BLE_UUID_TYPE_BLE</a>.</dd></dl>
+<p>Start reporting the received signal strength to the application. </p>
+<p>A new event is reported whenever the RSSI value changes, until <a class="el" href="a01045.html#ga6a4a22fdfcab344701c6ab3b27bff339">sd_ble_gap_rssi_stop</a> is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">uuid_le_len</td><td>Length in bytes of the buffer pointed to by p_uuid_le (must be 2 or 16 bytes). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_uuid_le</td><td>Pointer pointing to little endian raw UUID bytes. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_uuid</td><td>Pointer to a <a class="el" href="a00337.html">ble_uuid_t</a> structure to be filled in.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">threshold_dbm</td><td>Minimum change in dBm before triggering the <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa4d1c7d552ad87b09c53a4d4352fc91e6">BLE_GAP_EVT_RSSI_CHANGED</a> event. Events are disabled if threshold_dbm equals <a class="el" href="a01043.html#gaaf406598e375512d38d7baf1087caf65">BLE_GAP_RSSI_THRESHOLD_INVALID</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">skip_count</td><td>Number of RSSI samples with a change of threshold_dbm or more before sending a new <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa4d1c7d552ad87b09c53a4d4352fc91e6">BLE_GAP_EVT_RSSI_CHANGED</a> event.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00838.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a> Successfully decoded into the <a class="el" href="a00337.html">ble_uuid_t</a> structure. </dd>
-<dd>
-<a class="el" href="a00838.html#gabc562e4ddfe2f427666a3acdd0b469a3">NRF_ERROR_INVALID_ADDR</a> Invalid pointer supplied. </dd>
-<dd>
-<a class="el" href="a00838.html#ga59fe2a8fe184005aefa0835c7ff400fd">NRF_ERROR_INVALID_LENGTH</a> Invalid UUID length. </dd>
-<dd>
-<a class="el" href="a00838.html#ga349d25ada15be023e0d507f45ada682c">NRF_ERROR_NOT_FOUND</a> For a 128-bit UUID, no match in the populated table of UUIDs. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully activated RSSI reporting. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Disconnection in progress. Invalid state to perform operation. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00817.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid connection handle supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gaa2f13b287633d17f7500f0f39851b682"></a>
+<a class="anchor" id="ga6a4a22fdfcab344701c6ab3b27bff339"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_ble_uuid_encode </td>
+          <td class="memname">uint32_t sd_ble_gap_rssi_stop </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00337.html">ble_uuid_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_uuid</em>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop reporting the received signal strength. </p>
+<dl class="section note"><dt>Note</dt><dd>An RSSI change detected before the call but not yet received by the application may be reported after <a class="el" href="a01045.html#ga6a4a22fdfcab344701c6ab3b27bff339">sd_ble_gap_rssi_stop</a> has been called.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully deactivated RSSI reporting. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00817.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid connection handle supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3db84fa4870b155489187103906cf318"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_scan_start </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00251.html">ble_gap_scan_params_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_scan_params</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start scanning (GAP Discovery procedure, Observer Procedure). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_scan_params</td><td>Pointer to scan parameters structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully initiated scanning procedure. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga5d2d8608f6d6a0329f58961a969e946e" title="Busy.">NRF_ERROR_BUSY</a></td><td>The stack is busy, process pending events and retry. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaacf52836cc3860c5ffd4e129f725f138" title="Not supported.">NRF_ERROR_NOT_SUPPORTED</a></td><td>A selected feature is not supported (selective scanning). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0e92b62656057a13747a2ef1e71fd128"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_scan_stop </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop scanning (GAP Discovery procedure, Observer Procedure). </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully stopped scanning procedure. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation (most probably not in scanning state). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9015143d731193672dc306f6e4aff684"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t sd_ble_gap_sec_info_reply </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_uuid_le_len</em>, </td>
+          <td class="paramtype"><a class="el" href="a00223.html">ble_gap_enc_info_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_enc_info</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_uuid_le</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00242.html">ble_gap_irk_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_id_info</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00257.html">ble_gap_sign_info_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_sign_info</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -465,39 +1227,59 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encode a <a class="el" href="a00337.html">ble_uuid_t</a> structure into little endian raw UUID bytes (16-bit or 128-bit). </p>
-<dl class="section note"><dt>Note</dt><dd>The pointer to the destination buffer p_uuid_le may be NULL, in which case only the validitiy and size of p_uuid is computed.</dd></dl>
+<p>Reply with GAP security information. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_uuid</td><td>Pointer to a <a class="el" href="a00337.html">ble_uuid_t</a> structure that will be encoded into bytes. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_uuid_le_len</td><td>Pointer to a uint8_t that will be filled with the encoded length (2 or 16 bytes). </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_uuid_le</td><td>Pointer to a buffer where the little endian raw UUID bytes (2 or 16) will be stored.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_enc_info</td><td>Pointer to a <a class="el" href="a00223.html">ble_gap_enc_info_t</a> encryption information structure. May be NULL to signal none is available. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_id_info</td><td>Pointer to a <a class="el" href="a00242.html">ble_gap_irk_t</a> identity information structure. May be NULL to signal none is available. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_sign_info</td><td>Pointer to a <a class="el" href="a00257.html">ble_gap_sign_info_t</a> signing information structure. May be NULL to signal none is available.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00838.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a> Successfully encoded into the buffer. </dd>
+<p>This function is only used to reply to a <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefaf1c60079f92820cb933ebdb66d2d8d7d">BLE_GAP_EVT_SEC_INFO_REQUEST</a>, calling it at other times will result in <a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e">NRF_ERROR_INVALID_STATE</a>. </p>
+<dl class="section note"><dt>Note</dt><dd>If the call returns an error code, the request is still pending, and the reply call may be repeated with corrected parameters. </dd>
 <dd>
-<a class="el" href="a00838.html#gabc562e4ddfe2f427666a3acdd0b469a3">NRF_ERROR_INVALID_ADDR</a> Invalid pointer supplied. </dd>
-<dd>
-<a class="el" href="a00838.html#ga0a5831cf5092e0dd43a01869676ee076">NRF_ERROR_INVALID_PARAM</a> Invalid UUID type. </dd></dl>
+Data signing is not yet supported, and p_sign_info must therefore be NULL.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully accepted security information. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00817.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid connection handle supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gab3101ab721b427d1548b5f77bf5118cf"></a>
+<a class="anchor" id="ga7b23027c97b3df21f6cbc23170e55663"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_ble_uuid_vs_add </td>
+          <td class="memname">uint32_t sd_ble_gap_sec_params_reply </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00336.html">ble_uuid128_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_vs_uuid</em>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_uuid_type</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>sec_status</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00256.html">ble_gap_sec_params_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_sec_params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00254.html">ble_gap_sec_keyset_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_sec_keyset</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -507,53 +1289,60 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Add a Vendor Specific UUID. </p>
-<p>This call enables the application to add a vendor specific UUID to the BLE stack's table, for later use all other modules and APIs. This then allows the application to use the shorter, 24-bit <a class="el" href="a00337.html">ble_uuid_t</a> format when dealing with both 16-bit and 128-bit UUIDs without having to check for lengths and having split code paths. The way that this is accomplished is by extending the grouping mechanism that the Bluetooth SIG standard base UUID uses for all other 128-bit UUIDs. The type field in the <a class="el" href="a00337.html">ble_uuid_t</a> structure is an index (relative to <a class="el" href="a00836.html#ga7bdcaea9ea91ab20be755d78833da46d">BLE_UUID_TYPE_VENDOR_BEGIN</a>) to the table populated by multiple calls to this function, and the uuid field in the same structure contains the 2 bytes at indices 12 and 13. The number of possible 128-bit UUIDs available to the application is therefore the number of Vendor Specific UUIDs added with the help of this function times 65536, although restricted to modifying bytes 12 and 13 for each of the entries in the supplied array.</p>
-<dl class="section note"><dt>Note</dt><dd>Bytes 12 and 13 of the provided UUID will not be used internally, since those are always replaced by the 16-bit uuid field in <a class="el" href="a00337.html">ble_uuid_t</a>.</dd></dl>
+<p>Reply with GAP security parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_vs_uuid</td><td>Pointer to a 16-octet (128-bit) little endian Vendor Specific UUID disregarding bytes 12 and 13. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_uuid_type</td><td>Pointer where the type field in <a class="el" href="a00337.html">ble_uuid_t</a> corresponding to this UUID will be stored.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">sec_status</td><td>Security status, see <a class="el" href="a00836.html">GAP Security status</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_sec_params</td><td>Pointer to a <a class="el" href="a00256.html">ble_gap_sec_params_t</a> security parameters structure. In the central role this must be set to NULL, as the parameters have already been provided during a previous call to <a class="el" href="a01045.html#ga609617ead17f7c32cd6b27e63d96fe3a">sd_ble_gap_authenticate</a>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_sec_keyset</td><td>Pointer to a <a class="el" href="a00254.html">ble_gap_sec_keyset_t</a> security keyset structure. Any keys distributed as a result of the ongoing security procedure will be stored into the memory referenced by the pointers inside this structure. The keys will be stored and available to the application upon reception of a <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa8958220152f7547da3b250b4f724877c">BLE_GAP_EVT_AUTH_STATUS</a> event. The pointer to the ID key data distributed by the <b>local device</b> constitutes however an exception. It can either point to ID key data filled in by the user before calling this function, in which case a user-supplied Bluetooth address and IRK will be distributed, or the pointer to the ID key data structure can be NULL, in which case the device's configured (or default, if none is configured) Bluetooth address and IRK will be distributed.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00838.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a> Successfully added the Vendor Specific UUID. </dd>
-<dd>
-<a class="el" href="a00838.html#gabc562e4ddfe2f427666a3acdd0b469a3">NRF_ERROR_INVALID_ADDR</a> If p_vs_uuid or p_uuid_type is NULL or invalid. </dd>
-<dd>
-<a class="el" href="a00838.html#ga7ef4d466b79b31c6325f8b7af5d4f75f">NRF_ERROR_NO_MEM</a> If there are no more free slots for VS UUIDs. </dd>
-<dd>
-<a class="el" href="a00838.html#ga85125dae5d7e9d4b9964acbc13f641b3">NRF_ERROR_FORBIDDEN</a> If p_vs_uuid has already been added to the VS UUID table. </dd></dl>
+<p>This function is only used to reply to a <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefa6c5eefbcfabbc1ce4a8bcbf550c285ae">BLE_GAP_EVT_SEC_PARAMS_REQUEST</a>, calling it at other times will result in an <a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e">NRF_ERROR_INVALID_STATE</a>. </p>
+<dl class="section note"><dt>Note</dt><dd>If the call returns an error code, the request is still pending, and the reply call may be repeated with corrected parameters.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully accepted security parameter from the application. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00817.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid connection handle supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gab3ba7bb07fa809e8dccfd27cbba0210a"></a>
+<a class="anchor" id="ga0f1931af876bef39520c58de5ac060ca"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_ble_version_get </td>
+          <td class="memname">uint32_t sd_ble_gap_tx_power_set </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00338.html">ble_version_t</a> *&#160;</td>
-          <td class="paramname"><em>p_version</em></td><td>)</td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname"><em>tx_power</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get Version Information. </p>
-<p>This call allows the application to get the BLE stack version information.</p>
+<p>Set the radio's transmit power. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_version</td><td>Pointer to <a class="el" href="a00338.html" title="Version Information.">ble_version_t</a> structure to be filled in.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tx_power</td><td>Radio transmit power in dBm (accepted values are -40, -30, -20, -16, -12, -8, -4, 0, and 4 dBm).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00838.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a> Version information stored successfully. </dd>
-<dd>
-<a class="el" href="a00838.html#gabc562e4ddfe2f427666a3acdd0b469a3">NRF_ERROR_INVALID_ADDR</a> Invalid pointer supplied. </dd>
-<dd>
-<a class="el" href="a00838.html#ga5d2d8608f6d6a0329f58961a969e946e">NRF_ERROR_BUSY</a> The stack is busy (typically doing a locally-initiated disconnection procedure). </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>-40 dBm will not actually give -40 dBm, but will instead be remapped to -30 dBm.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully changed the transmit power. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00866.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -562,7 +1351,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

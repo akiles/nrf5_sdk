@@ -142,7 +142,7 @@ int main(void)
 
     APP_ERROR_CHECK(err_code);
 
-    printf("Flashwrite example\n");
+    printf("Flashwrite example\n\r");
     patold  = 0;
     pg_size = NRF_FICR->CODEPAGESIZE;
     pg_num  = NRF_FICR->CODESIZE - 1;  // Use last page in flash

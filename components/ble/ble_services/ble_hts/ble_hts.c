@@ -408,12 +408,18 @@ uint32_t ble_hts_is_indication_enabled(ble_hts_t * p_hts, bool * p_indication_en
 {
     uint32_t err_code;
     uint8_t  cccd_value_buf[BLE_CCCD_VALUE_LEN];
-    uint16_t len = BLE_CCCD_VALUE_LEN;
+    ble_gatts_value_t gatts_value;
 
-    err_code = sd_ble_gatts_value_get(p_hts->meas_handles.cccd_handle,
-                                      0,
-                                      &len,
-                                      cccd_value_buf);
+    // Initialize value struct.
+    memset(&gatts_value, 0, sizeof(gatts_value));
+
+    gatts_value.len     = BLE_CCCD_VALUE_LEN;
+    gatts_value.offset  = 0;
+    gatts_value.p_value = cccd_value_buf;
+
+    err_code = sd_ble_gatts_value_get(p_hts->conn_handle,
+                                      p_hts->meas_handles.cccd_handle,
+                                      &gatts_value);
     if (err_code == NRF_SUCCESS)
     {
         *p_indication_enabled = ble_srv_is_indication_enabled(cccd_value_buf);

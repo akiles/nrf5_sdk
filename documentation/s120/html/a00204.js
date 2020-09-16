@@ -1,5 +1,6 @@
 var a00204 =
 [
-    [ "keys_central", "a00204.html#a9ddb3932823918ebe433d5e53acdb4a6", null ],
-    [ "keys_periph", "a00204.html#a4488fee3125db8baa70ac98c3d2790bf", null ]
+    [ "event_id", "a00204.html#a2a75f3476e816a31085bef063855687e", null ],
+    [ "event_param", "a00204.html#a2dbb0e734ebc009dcc98b7c5055d7112", null ],
+    [ "event_paramlen", "a00204.html#a44a56d892899cd9a146cc4aaddd0d772", null ]
 ];

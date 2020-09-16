@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: SDK Error codes</title>
+<title>nRF51 SDK - S120 SoftDevice: SVC return values specific to GAP</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,47 +97,59 @@ $(document).ready(function(){initNavTree('a00516.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">SDK Error codes<div class="ingroups"><a class="el" href="a00741.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">SVC return values specific to GAP<div class="ingroups"><a class="el" href="a00701.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00517"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00517.html">Base defined for SDK Modules</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00518"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00518.html">Codes reserved as identification for module where the error occurred.</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00519"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00519.html">Codes reserved as identification for common errors.</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00520"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00520.html">Error / status codes specific to device manager.</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga981ace296dd50082e82b56dc820295a9"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00516.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a></td></tr>
-<tr class="memdesc:ga981ace296dd50082e82b56dc820295a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">API Result.  <a href="#ga981ace296dd50082e82b56dc820295a9">More...</a><br/></td></tr>
-<tr class="separator:ga981ace296dd50082e82b56dc820295a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga996146eb2c3b244f044b5cd121f8b826"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00516.html#ga996146eb2c3b244f044b5cd121f8b826">BLE_ERROR_GAP_UUID_LIST_MISMATCH</a>&#160;&#160;&#160;(<a class="el" href="a00515.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x000)</td></tr>
+<tr class="separator:ga996146eb2c3b244f044b5cd121f8b826"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa65c2f6a6eba52654e2b6febc5c3ba8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00516.html#gaa65c2f6a6eba52654e2b6febc5c3ba8c">BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST</a>&#160;&#160;&#160;(<a class="el" href="a00515.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x001)</td></tr>
+<tr class="separator:gaa65c2f6a6eba52654e2b6febc5c3ba8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3eda228736d6c1dcbcf9aba2bd059068"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00516.html#ga3eda228736d6c1dcbcf9aba2bd059068">BLE_ERROR_GAP_INVALID_BLE_ADDR</a>&#160;&#160;&#160;(<a class="el" href="a00515.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x002)</td></tr>
+<tr class="separator:ga3eda228736d6c1dcbcf9aba2bd059068"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Error codes are 32-bit unsigned integers with the most significant 16-bit reserved for identifying the module where the error occurred while the least least significant LSB are used to provide the cause or nature of error. Each module is assigned a 16-bit unsigned integer. Which it will use to identify all errors that occurred in it. 16-bit LSB range is with module id as the MSB in the 32-bit error code is reserved for the module. As an example, if 0x8800 identifies a certain SDK module, all values from 0x88000000 - 0x8800FFFF are reserved for this module. It should be noted that common error reasons have been assigned values to make it possible to decode error reason easily. As an example, lets module uninitialized has been assigned an error code 0x000A0. Then, if application encounters an error code 0xZZZZ00A0, it knows that it accessing a certain module without initializing it. Apart from this, each module is allowed to define error codes that are not covered by the common ones, however, these values are defined in a range that does not conflict with common error values. For module, specific error however, it is possible that the same error value is used by two different modules to indicated errors of very different nature. If error is already defined by the NRF common error codes, these are reused. A range is reserved for application as well, it can use this range for defining application specific errors.</p>
-<dl class="section note"><dt>Note</dt><dd>Success code, NRF_SUCCESS, does not include any module identifier. </dd></dl>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga981ace296dd50082e82b56dc820295a9"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gaa65c2f6a6eba52654e2b6febc5c3ba8c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef uint32_t <a class="el" href="a00516.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a></td>
+          <td class="memname">#define BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST&#160;&#160;&#160;(<a class="el" href="a00515.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x001)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Use of Whitelist not permitted with discoverable advertising. </p>
 
-<p>API Result. </p>
-<p>Indicates success or failure of an API procedure. In case of failure, a comprehensive error code indicating cause or reason for failure is provided.</p>
-<p>Though called an API result, it could used in Asynchronous notifications callback along with asynchronous callback as event result. This mechanism is employed when an event marks the end of procedure initiated using API. API result, in this case, will only be an indicative of whether the procedure has been requested successfully. </p>
+</div>
+</div>
+<a class="anchor" id="ga3eda228736d6c1dcbcf9aba2bd059068"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_ERROR_GAP_INVALID_BLE_ADDR&#160;&#160;&#160;(<a class="el" href="a00515.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x002)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The upper two bits of the address do not correspond to the specified address type. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga996146eb2c3b244f044b5cd121f8b826"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_ERROR_GAP_UUID_LIST_MISMATCH&#160;&#160;&#160;(<a class="el" href="a00515.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x000)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UUID list does not contain an integral number of UUIDs. </p>
 
 </div>
 </div>
@@ -146,7 +158,7 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:53 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -427,6 +427,14 @@ void ble_hrs_sensor_contact_detected_update(ble_hrs_t * p_hrs, bool is_sensor_co
 
 uint32_t ble_hrs_body_sensor_location_set(ble_hrs_t * p_hrs, uint8_t body_sensor_location)
 {
-    uint16_t len = sizeof(uint8_t);
-    return sd_ble_gatts_value_set(p_hrs->bsl_handles.value_handle, 0, &len, &body_sensor_location);
+    ble_gatts_value_t gatts_value;
+
+    // Initialize value struct.
+    memset(&gatts_value, 0, sizeof(gatts_value));
+
+    gatts_value.len     = sizeof(uint8_t);
+    gatts_value.offset  = 0;
+    gatts_value.p_value = &body_sensor_location;
+
+    return sd_ble_gatts_value_set(p_hrs->conn_handle, p_hrs->bsl_handles.value_handle, &gatts_value);
 }

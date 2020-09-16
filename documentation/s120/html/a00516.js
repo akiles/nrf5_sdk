@@ -1,8 +1,6 @@
 var a00516 =
 [
-    [ "Base defined for SDK Modules", "a00517.html", "a00517" ],
-    [ "Codes reserved as identification for module where the error occurred.", "a00518.html", null ],
-    [ "Codes reserved as identification for common errors.", "a00519.html", null ],
-    [ "Error / status codes specific to device manager.", "a00520.html", null ],
-    [ "api_result_t", "a00516.html#ga981ace296dd50082e82b56dc820295a9", null ]
+    [ "BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST", "a00516.html#gaa65c2f6a6eba52654e2b6febc5c3ba8c", null ],
+    [ "BLE_ERROR_GAP_INVALID_BLE_ADDR", "a00516.html#ga3eda228736d6c1dcbcf9aba2bd059068", null ],
+    [ "BLE_ERROR_GAP_UUID_LIST_MISMATCH", "a00516.html#ga996146eb2c3b244f044b5cd121f8b826", null ]
 ];

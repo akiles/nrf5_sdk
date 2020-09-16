@@ -185,7 +185,7 @@ static __INLINE void module_init(void)
 
     // Initialize and start a single continuous mode timer, which is used to update the event time 
     // on the main data page. 
-    APP_TIMER_INIT(RTC_PRESCALER, 1u, 1u, false);
+    APP_TIMER_INIT(RTC_PRESCALER, 1u, 1u, NULL);
     app_timer_id_t timer_id;
     uint32_t err_code = app_timer_create(&timer_id, APP_TIMER_MODE_REPEATED, pulse_event_simulate);
     APP_ERROR_CHECK(err_code);

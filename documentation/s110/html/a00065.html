@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Init packet handling</title>
+<title>nRF51 SDK - S110 SoftDevice: Blood Glucose Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,60 +97,78 @@ $(document).ready(function(){initNavTree('a00065.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Init packet handling </div>  </div>
+<div class="title">Blood Glucose Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>When updating the application on the chip, you can use an init packet in DFU to perform a safety check of the application image before it is transferred. This init packet provides a mechanism to include safety checks as part of the update procedure, so that a device accepts only compatible applications.</p>
-<p>The init packet contains the following information that can be used for safety checks (see <a class="el" href="a00346.html">dfu_init_packet_t</a>):</p>
+<div class="textblock"><p>The Blood Glucose Application is an example that implements the Blood Glucose profile using the hardware delivered in the nRF51 Development Kit.</p>
+<p>The application includes the two services in the Blood Glucose profile:</p>
 <ul>
-<li>Device type: A 2-byte value specified by the developer that identifies the device type, for example Heart Rate Belt.</li>
-<li>Device revision: A 2-byte value that can be used to restrict the update to be accepted only on devices with a defined revision number.</li>
-<li>Application version: A 4-byte value identifying the version of the application that is being transferred. This value can be used to allow only software upgrades and prevent downgrades. No example code is provided for this feature.</li>
-<li>Supported SoftDevices: A list of 2-byte values identifying the SoftDevices that are compatible with the application, for example S110 v7.0 and S110 v7.1.</li>
-<li>Checksum: A 2-byte CRC-16-CCITT for the image to transfer.</li>
+<li><a class="el" href="a00960.html">Glucose Service</a></li>
+<li><a class="el" href="a00958.html">Device Information Service</a></li>
 </ul>
-<div class="image">
-<img src="dfu_init_packet.png" alt="dfu_init_packet.png"/>
-<div class="caption">
-Figure 1: DFU Init packet</div></div>
-<p> The nRF51 SDK provides a template, <code>dfu_init_template.c</code>, to perform safety checks of the init packet. This template can be used as starting point to develop procedures that increase the safety of DFU.</p>
-<h1><a class="anchor" id="dfu_init_dev_rev_sec"></a>
-Device and revision type</h1>
-<p>The device and revision types can be stored in the user-reserved area of <code>UICR</code> (<code>0x10001080</code>) on the nRF51 chip. If this location is used for other purposes, update the offset <a class="el" href="a00947.html#ga7dbc00b26886d263bc3ff6fed3314df0">UICR_CUSTOMER_DEVICE_INFO_OFFSET</a> in <code>dfu_init.h</code> to match a free location in UICR.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define UICR_CUSTOMER_DEVICE_INFO_OFFSET    0x0                                             </span><span class="comment">/**&lt; Device info offset inside the customer UICR reserved area. Customers may change this value to place the device information in a user-preferred location. */</span><span class="preprocessor"></span></div>
-</div><!-- fragment --><p> The default value in <code>UICR</code> is <code>0xFFFF</code>. If this value is present, any device and revision type provided in the init packet is accepted.</p>
-<h1><a class="anchor" id="dfu_init_app_ver_sec"></a>
-Application version</h1>
-<p>The DFU init packet supports checking the application version. The current Bootloader/DFU example does not use this feature. However, you should implement an application version check if required. Add this check to <code>dfu_init_template.c</code>.</p>
-<p>If you add an application version check, every application must be compiled with a version ID. This version ID should be placed at a predefined location in the application image, for example at the application start address + <code>0x0100</code>, similar to the principle used by Nordic SoftDevices.</p>
-<p>See the following code snippet from <code>dfu_init_template.c</code>, which illustrates where to extend the DFU Init packet handling with an application version safety check:</p>
-<div class="fragment"><div class="line">    <span class="comment">// In order to support application versioning this check should be updated.</span></div>
-<div class="line">    <span class="comment">// This template allows for any application to be installed however customer could place a</span></div>
-<div class="line">    <span class="comment">// revision number at bottom of application to be verified by bootloader. This could be done at</span></div>
-<div class="line">    <span class="comment">// a relative location to this papplication for example Application start address + 0x0100.</span></div>
-</div><!-- fragment --> <h1><a class="anchor" id="dfu_init_sd_list_sec"></a>
-SoftDevice list</h1>
-<p>Applications that are compiled for the nRF51 chip target a specific SoftDevice, for example S110 v7.1.0. Some applications might work with multiple SoftDevice versions if the API is backward compatible. For example, an application that is compiled for SoftDevice S110 v7.0.0 can also run on SoftDevice S110 v7.1.0.</p>
-<p>You can provide a list of supported SoftDevices for the application that is to be installed in the DFU init packet. The DFU checks the list that is provided in the init packet against the currently installed SoftDevice on the chip and continues the update procedure only if a matching SoftDevice is installed.</p>
-<p>A value of <code>0xFFFE</code> indicates that the application should be installed regardless of the SoftDevice that is present. This feature can be helpful during development, but you should not use it in a product.</p>
-<p>See the following table for the <code>FWID</code> values of current SoftDevices:</p>
-<table class="doxtable">
-<tr>
-<th>SoftDevice S110 </th><th><code>FWID</code> </th></tr>
-<tr>
-<td>S110 v7.0.0 </td><td><code>0x004F</code> </td></tr>
-<tr>
-<td>S110 v7.1.0 </td><td><code>0x005A</code> </td></tr>
-<tr>
-<td>Development/any </td><td><code>0xFFFE</code> </td></tr>
-</table>
+<p>In addition, use of the <a class="el" href="a00953.html">Battery Service</a> is also demonstrated.</p>
+<p>When the application starts, a timer for generating battery measurements is started.</p>
+<p>The actual measurements are hard-coded values. They get added when connected and bonded to a central, at each press of the button 1. The timestamps are simulated and it uses the Record Access Control point and implements the filtering on sequence number. It supports only glucose measurement characteristic, not glucose context.</p>
+<dl class="section note"><dt>Note</dt><dd>This application is not power optimized! </dd>
+<dd>
+The application will stop advertising after 3 minutes and go to system-off mode. Push the button 1 to restart advertising.</dd></dl>
+<h1><a class="anchor" id="project_gls_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>ble_app_gls_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_gls</code> </p>
+<p>Button assignments:</p>
+<ul>
+<li>Button 1: Wake up from system-off and restart advertising; in a connection, create a new record.</li>
+<li>Button 2: Wake up, erase all bonds, and restart advertising.</li>
+</ul>
+<h2><a class="anchor" id="mitm_protection"></a>
+MITM protection</h2>
+<p>The Blood Glucose Application secures the bond using Man-in-the-Middle protection (MITM). A passkey must be entered at the central to complete the bonding and ensure MITM protection. The Blood Glucose Application will present the passkey during bonding. It is sent on the UART. It is therefore important that UART is set up correctly on the receiving side. The application uses the following UART settings:</p>
+<ul>
+<li>
+Baud rate: 38.400</li>
+<li>
+8 data bits</li>
+<li>
+1 stop bit</li>
+<li>
+No parity</li>
+<li>
+HW flow control: RTS/CTS</li>
+</ul>
+<h1><a class="anchor" id="project_gls_profile"></a>
+Demonstrating the Blood Glucose Meter Profile</h1>
+<p>The Blood Glucose Meter Profile uses the Record Access Control Point characteristic to access all measurements. This means that the sensor does not automatically send new measurements, but the collector has to fetch them writing request to the control point (see <a href="http://developer.bluetooth.org/Pages/default.aspx">http://developer.bluetooth.org/Pages/default.aspx</a> for more detail on the RACP characteristic).</p>
+<h1><a class="anchor" id="project_gls_test"></a>
+Testing</h1>
+<p>Test the Glucose Meter Application with the nRF Toolbox app, which is available on both iOS (Apple Store) and Android (Google Play).</p>
+<p>You can also test the application with the Master Control Panel by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the application. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Connect and to the device from Master Control Panel (the device will be advertising as 'Nordic_Glucose')</li>
+<li>Bond to the device. A new window opens up and asks for a passkey. Enter the key received over the UART.</li>
+<li>Perform service discovery. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Click the 'Enable services' button on the Master Control Panel. Observe that Battery Level notifications are received every 10 seconds.</li>
+<li>Press Button 1 five times.</li>
+<li>Do a Read all records operation:<ul>
+<li>Write 0101 (OpCode : REPORT_STORED_RECORDS, Operator : ALL_STORED_RECORDS) to Record Access</li>
+<li>Control Point Characteristic (UUID 0x2A52).</li>
+<li>Observe that you receive five notification of the glucose measurements(UUID 0x2A18) and one indication of the RACP indicating success (06000101);</li>
+</ul>
+</li>
+<li>Read the number of stored records:<ul>
+<li>Write 0401 (OpCode: REPORT_NUM_STORED_RECORDS, Operator: ALL_STORED_RECORDS) to Record Access Control Point</li>
+<li>Characteristic (UUID 0x2A52).</li>
+<li>Observe that you get an indication of the RACP giving you the number of records, 5 (05000500). </li>
+</ul>
+</li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00062.html">BLE Bootloader/DFU</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00058.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

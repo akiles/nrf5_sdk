@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Bicycle Speed and Cadence</title>
+<title>nRF51 SDK - S210 SoftDevice: SPI Master Example to be used with SPI Slave Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,45 +97,28 @@ $(document).ready(function(){initNavTree('a00045.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Bicycle Speed and Cadence </div>  </div>
+<div class="title">SPI Master Example to be used with SPI Slave Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The combined bicycle speed and cadence sensor implementation implements all the features, which are required for this type of sensor to be compliant with the ANT+ Bicycle Speed and Cadence profile, as defined by the ANT+ Bike Speed and Cadence Device Profile specification:</p>
-<ul>
-<li>Transmit data about the users speed and cadence over a single ANT channel.</li>
-</ul>
-<p>The general architecture of the combined bicycle speed and cadence sensor is illustrated in the picture below.</p>
-<div class="image">
-<img src="bicycle_speed_and_cadence_sensor_design.png" alt="bicycle_speed_and_cadence_sensor_design.png"/>
-<div class="caption">
-Architecture overview</div></div>
- <dl class="section user"><dt>Combined bicycle speed and cadence sensor configuration options </dt><dd></dd></dl>
-<p>The following compile time configuration options are available to suite various combined bicycle speed and cadence sensor implementations:</p>
-<ul>
-<li>CBSC_NETWORK_KEY ANT PLUS network key.</li>
-<li>ANTPLUS_NETWORK_NUMBER Network number associated with the channel.</li>
-<li>CBSC_TX_ANT_CHANNEL Used channel number.</li>
-<li>CBSC_TX_DEVICE_NUMBER Used device number.</li>
-<li>CBSC_DEVICE_TYPE Used device type.</li>
-<li>CBSC_TX_TRANS_TYPE Used transmission type.</li>
-<li>CBSC_RF_FREQ Used channel radio frequency offset from 2400MHz.</li>
-<li>CBSC_MSG_PERIOD Used channel period used in 32 kHz counts.</li>
-</ul>
-<dl class="section user"><dt>Development phase configuration options</dt><dd></dd></dl>
-<p>The combined bicycle speed and cadence sensor will trace error handler specific information to UART depending on the selected compile time configuration options.</p>
-<p>The following compile time configuration options are available, and enabled by default, to assist in the development phase of the combined bicycle speed and cadence sensor implementation:</p>
-<ul>
-<li>TRACE_UART When defined UART trace outputting is enabled.</li>
-</ul>
-<p>The name of the example for PCA10028 is <b>ant_bicycle_comb_spd_cad_sensor_pca10028</b>, and for PCA10031 it is <b>ant_bicycle_comb_spd_cad_sensor_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ant\ant_bicycle_comb_spd_cad\sensor</code> </p>
-<dl class="section note"><dt>Note</dt><dd>The ANT+ Network Key is available for ANT+ Adopters. Please refer to <a href="http://thisisant.com">http://thisisant.com</a> to become an ANT+ Adopter and access the key. </dd></dl>
+<div class="textblock"><p>The SPI Master Example has been created for verifying the SPI connectivity link for the SPI Slave Example.</p>
+<p>The application executes SPI transactions every second and uses the <a class="el" href="a00335.html">Board Support Package</a> to indicate the status of the SPI transaction.</p>
+<p>The name of the example is <b>spi_master_with_spi_slave_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\spi_master_with_spi_slave</code> </p>
+<h1><a class="anchor" id="spi_master_example_with_spi_slave_testing"></a>
+Testing</h1>
+<p>Test the SPI Master Example application by performing the following steps:</p>
+<ol type="1">
+<li>Connect two boards using SPI.</li>
+<li>Compile and program both applications (<code>spi_master_with_spi_slave_pca10028</code> and <code>spi_slave_pca10028</code>).</li>
+<li>Observe that <a class="el" href="a00055.html#BSP_INDICATE_RCV_OK">BSP_INDICATE_RCV_OK</a> is indicated every second.</li>
+<li><a class="el" href="a00055.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> is indicated if an error occurred. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00041.html">ANT</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:41 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

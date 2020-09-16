@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: app_mailbox_def Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: Memory pool library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,76 +96,37 @@ $(document).ready(function(){initNavTree('a00144.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">app_mailbox_def Struct Reference</div>  </div>
+<div class="title">Memory pool library </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Mailbox definition structure.  
- <a href="a00144.html#details">More...</a></p>
-
-<p><code>#include &lt;app_mailbox.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a3f57e40b294eedf373ebd56ebc48d871"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00144.html#a3f57e40b294eedf373ebd56ebc48d871">queue_sz</a></td></tr>
-<tr class="separator:a3f57e40b294eedf373ebd56ebc48d871"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a6172b2fd1d922b2fdd786722b608f5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00144.html#a6a6172b2fd1d922b2fdd786722b608f5">item_sz</a></td></tr>
-<tr class="separator:a6a6172b2fd1d922b2fdd786722b608f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc2a8007d3403d94b1499961fff6402f"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00144.html#abc2a8007d3403d94b1499961fff6402f">pool</a></td></tr>
-<tr class="separator:abc2a8007d3403d94b1499961fff6402f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Mailbox definition structure. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a6a6172b2fd1d922b2fdd786722b608f5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t app_mailbox_def::item_sz</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>size of an item. </p>
-
-</div>
-</div>
-<a class="anchor" id="abc2a8007d3403d94b1499961fff6402f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* app_mailbox_def::pool</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>memory array for mail. </p>
-
-</div>
-</div>
-<a class="anchor" id="a3f57e40b294eedf373ebd56ebc48d871"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t app_mailbox_def::queue_sz</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>number of elements in the queue. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>Memory pool implementation, based on circular buffer data structure, which supports asynchronous processing of RX data. The current default implementation supports 1 TX buffer and 4 RX buffers. The memory managed by the pool is allocated from static storage instead of heap. The internal design of the circular buffer implementing the RX memory layout is illustrated in the picture below.</p>
+<div class="image">
+<img src="memory_pool.png" alt="memory_pool.png"/>
+<div class="caption">
+Circular buffer design</div></div>
+<p> The expected call order for the RX APIs is as follows:</p>
+<ul>
+<li>hci_mem_pool_rx_produce</li>
+<li>hci_mem_pool_rx_data_size_set</li>
+<li>hci_mem_pool_rx_extract</li>
+<li>hci_mem_pool_rx_consume</li>
+</ul>
+<dl class="section warning"><dt>Warning</dt><dd>If the above mentioned expected call order is violated the end result can be undefined.</dd></dl>
+<dl class="section user"><dt>Component specific configuration options</dt><dd></dd></dl>
+<p>The following compile time configuration options are available to suit various implementations:</p>
+<ul>
+<li>TX_BUF_SIZE TX buffer size in bytes.</li>
+<li>RX_BUF_SIZE RX buffer size in bytes.</li>
+<li>RX_BUF_QUEUE_SIZE RX buffer element size. </li>
+</ul>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00144.html">app_mailbox_def</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00142.html">Transport Services</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

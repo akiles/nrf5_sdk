@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_srv_utf8_str_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_opt_t Union Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,49 +106,48 @@ $(document).ready(function(){initNavTree('a00190.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_srv_utf8_str_t Struct Reference<div class="ingroups"><a class="el" href="a00731.html">Common service definitions</a></div></div>  </div>
+<div class="title">ble_opt_t Union Reference<div class="ingroups"><a class="el" href="a00698.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>UTF-8 string data type.  
+<p>Common BLE Option type, wrapping the module specific options.  
  <a href="a00190.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_srv_common.h&gt;</code></p>
+<p><code>#include &lt;ble.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a9238252fa096ecc458994d19aaf034d8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00190.html#a9238252fa096ecc458994d19aaf034d8">length</a></td></tr>
-<tr class="separator:a9238252fa096ecc458994d19aaf034d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b6d6d426c6ec244d1136b7ccf5deb30"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00190.html#a8b6d6d426c6ec244d1136b7ccf5deb30">p_str</a></td></tr>
-<tr class="separator:a8b6d6d426c6ec244d1136b7ccf5deb30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3becddeb5c692d603c116a348b69770a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00088.html">ble_common_opt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00190.html#a3becddeb5c692d603c116a348b69770a">common_opt</a></td></tr>
+<tr class="separator:a3becddeb5c692d603c116a348b69770a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a389cdb4378d2a7f989807dcf27145051"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00135.html">ble_gap_opt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00190.html#a389cdb4378d2a7f989807dcf27145051">gap_opt</a></td></tr>
+<tr class="separator:a389cdb4378d2a7f989807dcf27145051"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>UTF-8 string data type. </p>
-<dl class="section note"><dt>Note</dt><dd>The type can only hold a pointer to the string data (i.e. not the actual data). </dd></dl>
+<div class="textblock"><p>Common BLE Option type, wrapping the module specific options. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a9238252fa096ecc458994d19aaf034d8"></a>
+<a class="anchor" id="a3becddeb5c692d603c116a348b69770a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_srv_utf8_str_t::length</td>
+          <td class="memname"><a class="el" href="a00088.html">ble_common_opt_t</a> ble_opt_t::common_opt</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>String length. </p>
+<p>Common option, opt_id in BLE_COMMON_OPT_* series. </p>
 
 </div>
 </div>
-<a class="anchor" id="a8b6d6d426c6ec244d1136b7ccf5deb30"></a>
+<a class="anchor" id="a389cdb4378d2a7f989807dcf27145051"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* ble_srv_utf8_str_t::p_str</td>
+          <td class="memname"><a class="el" href="a00135.html">ble_gap_opt_t</a> ble_opt_t::gap_opt</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>String data. </p>
+<p>GAP option, opt_id in BLE_GAP_OPT_* series. </p>
 
 </div>
 </div>
@@ -157,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00190.html">ble_srv_utf8_str_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00190.html">ble_opt_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

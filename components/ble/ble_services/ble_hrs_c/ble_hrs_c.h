@@ -98,13 +98,13 @@ typedef void (* ble_hrs_c_evt_handler_t) (ble_hrs_c_t * p_ble_hrs_c, ble_hrs_c_e
 
 /**@brief Heart Rate Client structure.
  */
-typedef struct ble_hrs_c_s
+struct ble_hrs_c_s
 {
     uint16_t                conn_handle;      /**< Connection handle as provided by the SoftDevice. */
     uint16_t                hrm_cccd_handle;  /**< Handle of the CCCD of the Heart Rate Measurement characteristic. */
     uint16_t                hrm_handle;       /**< Handle of the Heart Rate Measurement characteristic as provided by the SoftDevice. */
     ble_hrs_c_evt_handler_t evt_handler;      /**< Application event handler to be called when there is an event related to the heart rate service. */
-} ble_hrs_c_t;
+};
 
 /**@brief Heart Rate Client initialization structure.
  */

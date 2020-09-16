@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: dm_id_key Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: dm_context_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,64 @@ $(document).ready(function(){initNavTree('a00201.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dm_id_key Struct Reference<div class="ingroups"><a class="el" href="a00720.html">Device Manager Data Types</a></div></div>  </div>
+<div class="title">dm_context_t Struct Reference<div class="ingroups"><a class="el" href="a00669.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Device Manager identity and address information.  
+<p>Definition of Data Context.  
  <a href="a00201.html#details">More...</a></p>
 
 <p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a7a76b44b4742836f0dffd4ce52418faf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00130.html">ble_gap_irk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00201.html#a7a76b44b4742836f0dffd4ce52418faf">id_info</a></td></tr>
-<tr class="separator:a7a76b44b4742836f0dffd4ce52418faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5dace1f70260c67a952b35558abe1848"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00107.html">ble_gap_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00201.html#a5dace1f70260c67a952b35558abe1848">id_addr_info</a></td></tr>
-<tr class="separator:a5dace1f70260c67a952b35558abe1848"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6410a73c4b824cd8411f93f4e801c2e2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00201.html#a6410a73c4b824cd8411f93f4e801c2e2">flags</a></td></tr>
+<tr class="separator:a6410a73c4b824cd8411f93f4e801c2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a584d9c286a840f2aa29cf3f6e76362d4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00201.html#a584d9c286a840f2aa29cf3f6e76362d4">len</a></td></tr>
+<tr class="separator:a584d9c286a840f2aa29cf3f6e76362d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbcb29305bde09573e35ed7f4c214641"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00201.html#acbcb29305bde09573e35ed7f4c214641">p_data</a></td></tr>
+<tr class="separator:acbcb29305bde09573e35ed7f4c214641"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Device Manager identity and address information. </p>
+<div class="textblock"><p>Definition of Data Context. </p>
+<p>Defines contextual data format, it consists of context data length and pointer to data. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a5dace1f70260c67a952b35558abe1848"></a>
+<a class="anchor" id="a6410a73c4b824cd8411f93f4e801c2e2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00107.html">ble_gap_addr_t</a> dm_id_key::id_addr_info</td>
+          <td class="memname">uint32_t dm_context_t::flags</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Identity address information. </p>
+<p>Additional flags identifying data. </p>
 
 </div>
 </div>
-<a class="anchor" id="a7a76b44b4742836f0dffd4ce52418faf"></a>
+<a class="anchor" id="a584d9c286a840f2aa29cf3f6e76362d4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00130.html">ble_gap_irk_t</a> dm_id_key::id_info</td>
+          <td class="memname">uint32_t dm_context_t::len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Identity information. </p>
+<p>Length of data. </p>
+
+</div>
+</div>
+<a class="anchor" id="acbcb29305bde09573e35ed7f4c214641"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* dm_context_t::p_data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to contextual data, a copy is made of the data. </p>
 
 </div>
 </div>
@@ -156,8 +172,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00201.html">dm_id_key</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00201.html">dm_context_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: SoftDevice Event Handler</title>
+<title>nRF51 SDK - S110 SoftDevice: Blood Pressure Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,168 +97,223 @@ $(document).ready(function(){initNavTree('a00954.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SoftDevice Event Handler<div class="ingroups"><a class="el" href="a01039.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">Blood Pressure Service<div class="ingroups"><a class="el" href="a01033.html">BLE Services</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>API for initializing and disabling the SoftDevice.  
+<p>Blood Pressure Service module.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00952"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00952.html">Types definitions for ANT support in SoftDevice handler.</a></td></tr>
-<tr class="memdesc:a00952"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined. <br/></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00180.html">ble_bps_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blood Pressure Service event.  <a href="a00180.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00953"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00953.html">Types definitions for BLE support in SoftDevice handler.</a></td></tr>
-<tr class="memdesc:a00953"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file contains the declarations of types required for BLE stack support. These types will be defined when the preprocessor define BLE_STACK_SUPPORT_REQD is defined. <br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00388.html">ieee_float16_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SFLOAT format (IEEE-11073 16-bit FLOAT, defined as a 16-bit vlue with 12-bit mantissa and 4-bit exponent.  <a href="a00388.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html">ble_bps_init_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blood Pressure Service init structure. This contains all options and data needed for initialization of the service.  <a href="a00181.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00183.html">ble_bps_s</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blood Pressure Service structure. This contains various status information for the service.  <a href="a00183.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00182.html">ble_bps_meas_s</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blood Pressure Service measurement structure. This contains a Blood Pressure measurement.  <a href="a00182.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga9977dc2f6256c9b2c6d23622fa4da975"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#ga9977dc2f6256c9b2c6d23622fa4da975">SOFTDEVICE_SCHED_EVT_SIZE</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ga9977dc2f6256c9b2c6d23622fa4da975"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33d256e5c8385694b358053139fe2153"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#ga33d256e5c8385694b358053139fe2153">SYS_EVT_MSG_BUF_SIZE</a>&#160;&#160;&#160;sizeof(uint32_t)</td></tr>
-<tr class="separator:ga33d256e5c8385694b358053139fe2153"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ff2f68caf148f0645c9953c93aa2ec7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#ga9ff2f68caf148f0645c9953c93aa2ec7">SOFTDEVICE_HANDLER_INIT</a>(CLOCK_SOURCE,USE_SCHEDULER)</td></tr>
-<tr class="memdesc:ga9ff2f68caf148f0645c9953c93aa2ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for initializing the stack event handler.  <a href="#ga9ff2f68caf148f0645c9953c93aa2ec7">More...</a><br/></td></tr>
-<tr class="separator:ga9ff2f68caf148f0645c9953c93aa2ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab290c8fad6602966bdf90d503234c1d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#gab290c8fad6602966bdf90d503234c1d4">BLE_BPS_FEATURE_BODY_MOVEMENT_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 0)</td></tr>
+<tr class="separator:gab290c8fad6602966bdf90d503234c1d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad99e5cdbef5e342fc386a0fe2fda3dbb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#gad99e5cdbef5e342fc386a0fe2fda3dbb">BLE_BPS_FEATURE_CUFF_FIT_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 1)</td></tr>
+<tr class="separator:gad99e5cdbef5e342fc386a0fe2fda3dbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab9c335e57d829d3025d24412c630ec01"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#gab9c335e57d829d3025d24412c630ec01">BLE_BPS_FEATURE_IRREGULAR_PULSE_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 2)</td></tr>
+<tr class="separator:gab9c335e57d829d3025d24412c630ec01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd2fb490c4220a74a6b3654b7c424500"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#gadd2fb490c4220a74a6b3654b7c424500">BLE_BPS_FEATURE_PULSE_RATE_RANGE_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 3)</td></tr>
+<tr class="separator:gadd2fb490c4220a74a6b3654b7c424500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a92ff47d40fe0c771b52bc3c40c2854"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#ga0a92ff47d40fe0c771b52bc3c40c2854">BLE_BPS_FEATURE_MEASUREMENT_POSITION_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 4)</td></tr>
+<tr class="separator:ga0a92ff47d40fe0c771b52bc3c40c2854"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e7f65094b9653a90bbfbc9c56176d76"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#ga4e7f65094b9653a90bbfbc9c56176d76">BLE_BPS_FEATURE_MULTIPLE_BOND_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 5)</td></tr>
+<tr class="separator:ga4e7f65094b9653a90bbfbc9c56176d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga25f319506f20e24ad71478dce23f7f39"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga25f319506f20e24ad71478dce23f7f39"></a>
-typedef uint32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#ga25f319506f20e24ad71478dce23f7f39">softdevice_evt_schedule_func_t</a> )(void)</td></tr>
-<tr class="memdesc:ga25f319506f20e24ad71478dce23f7f39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of function for passing events from the stack handler module to the scheduler. <br/></td></tr>
-<tr class="separator:ga25f319506f20e24ad71478dce23f7f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5daeb8e474f0ad143566e2045233a53e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5daeb8e474f0ad143566e2045233a53e"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#ga5daeb8e474f0ad143566e2045233a53e">sys_evt_handler_t</a> )(uint32_t evt_id)</td></tr>
-<tr class="memdesc:ga5daeb8e474f0ad143566e2045233a53e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application System (SOC) event handler type. <br/></td></tr>
-<tr class="separator:ga5daeb8e474f0ad143566e2045233a53e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga242d78f65ee0028e8b2e87a954811158"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga242d78f65ee0028e8b2e87a954811158"></a>
+typedef struct <a class="el" href="a00183.html">ble_bps_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ble_bps_t</b></td></tr>
+<tr class="separator:ga242d78f65ee0028e8b2e87a954811158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c7199796f540fc4ea76d6eb9cd98809"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4c7199796f540fc4ea76d6eb9cd98809"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#ga4c7199796f540fc4ea76d6eb9cd98809">ble_bps_evt_handler_t</a> )(<a class="el" href="a00183.html">ble_bps_t</a> *p_bps, <a class="el" href="a00180.html">ble_bps_evt_t</a> *p_evt)</td></tr>
+<tr class="memdesc:ga4c7199796f540fc4ea76d6eb9cd98809"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blood Pressure Service event handler type. <br/></td></tr>
+<tr class="separator:ga4c7199796f540fc4ea76d6eb9cd98809"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga806d743979c29aa0326b9b155ae920fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga806d743979c29aa0326b9b155ae920fd"></a>
+typedef struct <a class="el" href="a00182.html">ble_bps_meas_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#ga806d743979c29aa0326b9b155ae920fd">ble_bps_meas_t</a></td></tr>
+<tr class="memdesc:ga806d743979c29aa0326b9b155ae920fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blood Pressure Service measurement structure. This contains a Blood Pressure measurement. <br/></td></tr>
+<tr class="separator:ga806d743979c29aa0326b9b155ae920fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga98f1cefcd43052be0eede287994762e6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#ga98f1cefcd43052be0eede287994762e6">ble_bps_evt_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00954.html#gga98f1cefcd43052be0eede287994762e6a4ea1567592db55227fffc3d07af1ba09">BLE_BPS_EVT_INDICATION_ENABLED</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00954.html#gga98f1cefcd43052be0eede287994762e6a26c6a093dd2ab03e8a1a9f31cb3783ba">BLE_BPS_EVT_INDICATION_DISABLED</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00954.html#gga98f1cefcd43052be0eede287994762e6afbd5349a29d34a241d1380a7d6e28668">BLE_BPS_EVT_INDICATION_CONFIRMED</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga98f1cefcd43052be0eede287994762e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blood Pressure Service event type.  <a href="a00954.html#ga98f1cefcd43052be0eede287994762e6">More...</a><br/></td></tr>
+<tr class="separator:ga98f1cefcd43052be0eede287994762e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga33d6c5c2cf0d6cd1e89ef172d75e0975"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#ga33d6c5c2cf0d6cd1e89ef172d75e0975">softdevice_handler_init</a> (<a class="el" href="a01071.html#gabfecdd0b916a4022bd5688d4f842c473">nrf_clock_lfclksrc_t</a> clock_source, void *p_ble_evt_buffer, uint16_t ble_evt_buffer_size, <a class="el" href="a00954.html#ga25f319506f20e24ad71478dce23f7f39">softdevice_evt_schedule_func_t</a> evt_schedule_func)</td></tr>
-<tr class="memdesc:ga33d6c5c2cf0d6cd1e89ef172d75e0975"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the stack handler module.  <a href="#ga33d6c5c2cf0d6cd1e89ef172d75e0975">More...</a><br/></td></tr>
-<tr class="separator:ga33d6c5c2cf0d6cd1e89ef172d75e0975"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabbec783a89f93617d3661a819597d79c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#gabbec783a89f93617d3661a819597d79c">softdevice_handler_sd_disable</a> (void)</td></tr>
-<tr class="memdesc:gabbec783a89f93617d3661a819597d79c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for disabling the SoftDevice.  <a href="#gabbec783a89f93617d3661a819597d79c">More...</a><br/></td></tr>
-<tr class="separator:gabbec783a89f93617d3661a819597d79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga200d4e1f1c70a46e6de6343f0a7d84b1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#ga200d4e1f1c70a46e6de6343f0a7d84b1">softdevice_sys_evt_handler_set</a> (<a class="el" href="a00954.html#ga5daeb8e474f0ad143566e2045233a53e">sys_evt_handler_t</a> sys_evt_handler)</td></tr>
-<tr class="memdesc:ga200d4e1f1c70a46e6de6343f0a7d84b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering for System (SOC) events.  <a href="#ga200d4e1f1c70a46e6de6343f0a7d84b1">More...</a><br/></td></tr>
-<tr class="separator:ga200d4e1f1c70a46e6de6343f0a7d84b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaefd86b5ffa856f1d3b22a11939ea318b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#gaefd86b5ffa856f1d3b22a11939ea318b">ble_bps_init</a> (<a class="el" href="a00183.html">ble_bps_t</a> *p_bps, const <a class="el" href="a00181.html">ble_bps_init_t</a> *p_bps_init)</td></tr>
+<tr class="memdesc:gaefd86b5ffa856f1d3b22a11939ea318b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Blood Pressure Service.  <a href="#gaefd86b5ffa856f1d3b22a11939ea318b">More...</a><br/></td></tr>
+<tr class="separator:gaefd86b5ffa856f1d3b22a11939ea318b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5b69f0e2e6a3063254e198ca426c39a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#gaa5b69f0e2e6a3063254e198ca426c39a">ble_bps_on_ble_evt</a> (<a class="el" href="a00183.html">ble_bps_t</a> *p_bps, <a class="el" href="a00213.html">ble_evt_t</a> *p_ble_evt)</td></tr>
+<tr class="memdesc:gaa5b69f0e2e6a3063254e198ca426c39a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Application's BLE Stack events.  <a href="#gaa5b69f0e2e6a3063254e198ca426c39a">More...</a><br/></td></tr>
+<tr class="separator:gaa5b69f0e2e6a3063254e198ca426c39a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa33eb35e243d0fca55b44ac136f1f68"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#gafa33eb35e243d0fca55b44ac136f1f68">ble_bps_measurement_send</a> (<a class="el" href="a00183.html">ble_bps_t</a> *p_bps, <a class="el" href="a00954.html#ga806d743979c29aa0326b9b155ae920fd">ble_bps_meas_t</a> *p_bps_meas)</td></tr>
+<tr class="memdesc:gafa33eb35e243d0fca55b44ac136f1f68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for sending blood pressure measurement if indication has been enabled.  <a href="#gafa33eb35e243d0fca55b44ac136f1f68">More...</a><br/></td></tr>
+<tr class="separator:gafa33eb35e243d0fca55b44ac136f1f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2de420367180bd1762ea7dc7e269fee"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00954.html#gab2de420367180bd1762ea7dc7e269fee">ble_bps_is_indication_enabled</a> (<a class="el" href="a00183.html">ble_bps_t</a> *p_bps, bool *p_indication_enabled)</td></tr>
+<tr class="memdesc:gab2de420367180bd1762ea7dc7e269fee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if indication of Blood Pressure Measurement is currently enabled.  <a href="#gab2de420367180bd1762ea7dc7e269fee">More...</a><br/></td></tr>
+<tr class="separator:gab2de420367180bd1762ea7dc7e269fee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>API for initializing and disabling the SoftDevice. </p>
-<p>This API contains the functions and defines exposed by the <a class="el" href="a00140.html">SoftDevice Handler Library</a>. For more information on the library and how the application should use it, please refer <a class="el" href="a00140.html">SoftDevice Handler Library</a>.</p>
-<dl class="section note"><dt>Note</dt><dd>Use the USE_SCHEDULER parameter of the <a class="el" href="a00954.html#ga9ff2f68caf148f0645c9953c93aa2ec7" title="Macro for initializing the stack event handler.">SOFTDEVICE_HANDLER_INIT()</a> macro to select if the <a class="el" href="a00779.html">Scheduler</a> is to be used or not.</dd>
+<p>Blood Pressure Service module. </p>
+<p>This module implements the Blood Pressure Service. </p>
+<pre class="fragment">     If an event handler is supplied by the application, the Blood Pressure 
+     Service will generate Blood Pressure Service events to the application.
+</pre><dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Blood Pressure Service module by calling <a class="el" href="a00954.html#gaa5b69f0e2e6a3063254e198ca426c39a" title="Function for handling the Application&#39;s BLE Stack events.">ble_bps_on_ble_evt()</a> from the <a class="el" href="a00948.html">SoftDevice Event Handler</a> function.</dd>
 <dd>
-Even if the scheduler is not used, softdevice_handler.h will include app_scheduler.h. So when compiling, app_scheduler.h must be available in one of the compiler include paths. </dd></dl>
+Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profile qualification listings, this section of source code must not be modified. </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga9ff2f68caf148f0645c9953c93aa2ec7"></a>
+<a class="anchor" id="gab290c8fad6602966bdf90d503234c1d4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SOFTDEVICE_HANDLER_INIT</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">CLOCK_SOURCE, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">USE_SCHEDULER&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define BLE_BPS_FEATURE_BODY_MOVEMENT_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 0)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                                                             \</div>
-<div class="line">    {                                                                                              \</div>
-<div class="line">        static uint32_t BLE_EVT_BUFFER[<a class="code" href="a00783.html#ga7aaa817cfd7ed354f09db5675ffe1427" title="Perform integer division, making sure the result is rounded up.">CEIL_DIV</a>(<a class="code" href="a00953.html#gab11d82da68bcf71c064b936f8398fb26">BLE_STACK_EVT_MSG_BUF_SIZE</a>, <span class="keyword">sizeof</span>(uint32_t))];    \</div>
-<div class="line">        uint32_t ERR_CODE;                                                                         \</div>
-<div class="line">        ERR_CODE = <a class="code" href="a00954.html#ga33d6c5c2cf0d6cd1e89ef172d75e0975" title="Function for initializing the stack handler module.">softdevice_handler_init</a>((CLOCK_SOURCE),                                         \</div>
-<div class="line">                                           BLE_EVT_BUFFER,                                         \</div>
-<div class="line">                                           <span class="keyword">sizeof</span>(BLE_EVT_BUFFER),                                 \</div>
-<div class="line">                                           (USE_SCHEDULER) ? softdevice_evt_schedule : NULL);      \</div>
-<div class="line">        APP_ERROR_CHECK(ERR_CODE);                                                                 \</div>
-<div class="line">    } <span class="keywordflow">while</span> (0)</div>
-</div><!-- fragment -->
-<p>Macro for initializing the stack event handler. </p>
-<p>It will handle dimensioning and allocation of the memory buffer required for reading events from the stack, making sure the buffer is correctly aligned. It will also connect the stack event handler to the scheduler (if specified).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">CLOCK_SOURCE</td><td>Low frequency clock source and accuracy (type nrf_clock_lfclksrc_t, see <a class="el" href="a01072.html#ga26ecfde6eee7363f88bed8a8b711122a" title="Enables the SoftDevice and by extension the protocol stack.">sd_softdevice_enable()</a> for details). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">USE_SCHEDULER</td><td>TRUE if the application is using the event scheduler, FALSE otherwise.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Since this macro allocates a buffer, it must only be called once (it is OK to call it several times as long as it is from the same location, that is to do a reinitialization). </dd></dl>
+<p>Body Movement Detection Support bit. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga9977dc2f6256c9b2c6d23622fa4da975"></a>
+<a class="anchor" id="gad99e5cdbef5e342fc386a0fe2fda3dbb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SOFTDEVICE_SCHED_EVT_SIZE&#160;&#160;&#160;0</td>
+          <td class="memname">#define BLE_BPS_FEATURE_CUFF_FIT_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 1)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Size of button events being passed through the scheduler (is to be used for computing the maximum size of scheduler events). For SoftDevice events, this size is 0, since the events are being pulled in the event handler. </p>
+<p>Cuff Fit Detection Support bit. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga33d256e5c8385694b358053139fe2153"></a>
+<a class="anchor" id="gab9c335e57d829d3025d24412c630ec01"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SYS_EVT_MSG_BUF_SIZE&#160;&#160;&#160;sizeof(uint32_t)</td>
+          <td class="memname">#define BLE_BPS_FEATURE_IRREGULAR_PULSE_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 2)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Size of System (SOC) event message buffer. </p>
+<p>Irregular Pulse Detection Support bit. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga0a92ff47d40fe0c771b52bc3c40c2854"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_BPS_FEATURE_MEASUREMENT_POSITION_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 4)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Measurement Position Detection Support bit. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga4e7f65094b9653a90bbfbc9c56176d76"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_BPS_FEATURE_MULTIPLE_BOND_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 5)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Multiple Bond Support bit. </p>
+
+</div>
+</div>
+<a class="anchor" id="gadd2fb490c4220a74a6b3654b7c424500"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_BPS_FEATURE_PULSE_RATE_RANGE_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 3)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pulse Rate Range Detection Support bit. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga98f1cefcd43052be0eede287994762e6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00954.html#ga98f1cefcd43052be0eede287994762e6">ble_bps_evt_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Blood Pressure Service event type. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga98f1cefcd43052be0eede287994762e6a4ea1567592db55227fffc3d07af1ba09"></a>BLE_BPS_EVT_INDICATION_ENABLED</em>&nbsp;</td><td class="fielddoc">
+<p>Blood Pressure value indication enabled event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga98f1cefcd43052be0eede287994762e6a26c6a093dd2ab03e8a1a9f31cb3783ba"></a>BLE_BPS_EVT_INDICATION_DISABLED</em>&nbsp;</td><td class="fielddoc">
+<p>Blood Pressure value indication disabled event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga98f1cefcd43052be0eede287994762e6afbd5349a29d34a241d1380a7d6e28668"></a>BLE_BPS_EVT_INDICATION_CONFIRMED</em>&nbsp;</td><td class="fielddoc">
+<p>Confirmation of a blood pressure measurement indication has been received. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga33d6c5c2cf0d6cd1e89ef172d75e0975"></a>
+<a class="anchor" id="gaefd86b5ffa856f1d3b22a11939ea318b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t softdevice_handler_init </td>
+          <td class="memname">uint32_t ble_bps_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a01071.html#gabfecdd0b916a4022bd5688d4f842c473">nrf_clock_lfclksrc_t</a>&#160;</td>
-          <td class="paramname"><em>clock_source</em>, </td>
+          <td class="paramtype"><a class="el" href="a00183.html">ble_bps_t</a> *&#160;</td>
+          <td class="paramname"><em>p_bps</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>p_ble_evt_buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>ble_evt_buffer_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00954.html#ga25f319506f20e24ad71478dce23f7f39">softdevice_evt_schedule_func_t</a>&#160;</td>
-          <td class="paramname"><em>evt_schedule_func</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00181.html">ble_bps_init_t</a> *&#160;</td>
+          <td class="paramname"><em>p_bps_init</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -268,75 +323,121 @@ Even if the scheduler is not used, softdevice_handler.h will include app_schedul
       </table>
 </div><div class="memdoc">
 
-<p>Function for initializing the stack handler module. </p>
-<p>Enables the SoftDevice and the stack event interrupt handler.</p>
-<dl class="section note"><dt>Note</dt><dd>This function must be called before calling any function in the SoftDevice API.</dd>
-<dd>
-Normally initialization should be done using the <a class="el" href="a00954.html#ga9ff2f68caf148f0645c9953c93aa2ec7" title="Macro for initializing the stack event handler.">SOFTDEVICE_HANDLER_INIT()</a> macro, as that will both allocate the event buffer, and also align the buffer correctly.</dd></dl>
+<p>Function for initializing the Blood Pressure Service. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">clock_source</td><td>Low frequency clock source to be used by the SoftDevice. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt_buffer</td><td>Buffer for holding one BLE stack event. Since heap is not being used, this buffer must be provided by the application. The buffer must be large enough to hold the biggest stack event the application is supposed to handle. The buffer must be aligned to a 4 byte boundary. This parameter is unused if BLE stack support is not required. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">ble_evt_buffer_size</td><td>Size of SoftDevice BLE event buffer. This parameter is unused if BLE stack support is not required. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">evt_schedule_func</td><td>Function for passing events to the scheduler. Point to ble_ant_stack_evt_schedule() to connect to the scheduler. Set to NULL to make the stack handler module call the event handler directly from the stack event interrupt handler.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_bps</td><td>Blood Pressure Service structure. This structure will have to be supplied by the application. It will be initialized by this function, and will later be used to identify this particular service instance. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_bps_init</td><td>Information needed to initialize the service.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful initialization. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Invalid parameter (buffer not aligned to a 4 byte boundary) or NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization of service, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gabbec783a89f93617d3661a819597d79c"></a>
+<a class="anchor" id="gab2de420367180bd1762ea7dc7e269fee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t softdevice_handler_sd_disable </td>
+          <td class="memname">uint32_t ble_bps_is_indication_enabled </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00183.html">ble_bps_t</a> *&#160;</td>
+          <td class="paramname"><em>p_bps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>p_indication_enabled</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for disabling the SoftDevice. </p>
-<p>This function will disable the SoftDevice. It will also update the internal state of this module. </p>
+<p>Function for checking if indication of Blood Pressure Measurement is currently enabled. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_bps</td><td>Blood Pressure Service structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_indication_enabled</td><td>TRUE if indication is enabled, FALSE otherwise.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga200d4e1f1c70a46e6de6343f0a7d84b1"></a>
+<a class="anchor" id="gafa33eb35e243d0fca55b44ac136f1f68"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t softdevice_sys_evt_handler_set </td>
+          <td class="memname">uint32_t ble_bps_measurement_send </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00954.html#ga5daeb8e474f0ad143566e2045233a53e">sys_evt_handler_t</a>&#160;</td>
-          <td class="paramname"><em>sys_evt_handler</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00183.html">ble_bps_t</a> *&#160;</td>
+          <td class="paramname"><em>p_bps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00954.html#ga806d743979c29aa0326b9b155ae920fd">ble_bps_meas_t</a> *&#160;</td>
+          <td class="paramname"><em>p_bps_meas</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for registering for System (SOC) events. </p>
-<p>The application should use this function to register for receiving System (SOC) events from the SoftDevice. If the application does not call this function, then any System (SOC) events that may be generated by the SoftDevice will NOT be fetched. Once the application has registered for the events, it is not possible to possible to cancel the registration. However, it is possible to register a different function for handling the events at any point of time.</p>
+<p>Function for sending blood pressure measurement if indication has been enabled. </p>
+<p>The application calls this function after having performed a Blood Pressure measurement. If indication has been enabled, the measurement data is encoded and sent to the client.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">sys_evt_handler</td><td>Function to be called for each received System (SOC) event.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_bps</td><td>Blood Pressure Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_bps_meas</td><td>Pointer to new blood pressure measurement.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful registration. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Null pointer provided as input. </td></tr>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa5b69f0e2e6a3063254e198ca426c39a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ble_bps_on_ble_evt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00183.html">ble_bps_t</a> *&#160;</td>
+          <td class="paramname"><em>p_bps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00213.html">ble_evt_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_evt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for handling the Application's BLE Stack events. </p>
+<p>Handles all events from the BLE stack of interest to the Blood Pressure Service.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_bps</td><td>Blood Pressure Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Event received from the BLE stack. </td></tr>
   </table>
   </dd>
 </dl>
@@ -348,7 +449,7 @@ Normally initialization should be done using the <a class="el" href="a00954.html
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:23 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

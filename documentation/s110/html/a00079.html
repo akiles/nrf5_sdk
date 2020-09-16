@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: BLE DTM</title>
+<title>nRF51 SDK - S110 SoftDevice: Sharing bonding information</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,70 +97,63 @@ $(document).ready(function(){initNavTree('a00079.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BLE DTM </div>  </div>
+<div class="title">Sharing bonding information </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#nrf51_dtm_init_encoding">DTM - ble_dtm_init</a><ul><li class="level2"><a href="#nrf51_dtm_init_encoding_sec">Function packet format</a></li>
-<li class="level2"><a href="#nrf51_dtm_init_encoding_rsp_dec">Response packet format</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="textblock"><h1><a class="anchor" id="nrf51_dtm_init_encoding"></a>
-DTM - ble_dtm_init</h1>
-<h2><a class="anchor" id="nrf51_dtm_init_encoding_sec"></a>
-Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00905.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> packet.</p>
-<p>The <a class="el" href="a00905.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> is encoded without a operation code byte. Packet contains only DTM UART configuration (TX pin, RX pin and baud rate).</p>
-<ul>
-<li>DTM UART transmit pin - <a class="el" href="a00148.html#aa13645e8ecb6cb1970dba53fabe08b40">app_uart_stream_comm_params_t::tx_pin_no</a>.</li>
-<li>DTM UART receive pin - <a class="el" href="a00148.html#a1bb6d6aa16efc7c4d2caee51d8058213">app_uart_stream_comm_params_t::rx_pin_no</a>.</li>
-<li>DTM UART baud rate - <a class="el" href="a00905.html#ga4f36ceda1498e6231fbd9a48ceebdb65">app_uart_stream_baud_rate_t</a>.</li>
-</ul>
-<p>The order of the encoding is:</p>
-<table class="doxtable">
-<tr>
-<th>Length </th><th>Parameter </th><th>Value</th></tr>
-<tr>
-<td>1 byte </td><td>UART TX </td><td>DTM UART transmit pin. </td></tr>
-<tr>
-<td>1 byte </td><td>UART RX </td><td>DTM UART receive pin. </td></tr>
-<tr>
-<td>1 byte </td><td>UART Baudrate </td><td>DTM UART baud rate. </td></tr>
-</table>
-<p><br/>
-</p>
+<div class="textblock"><p>When BLE DFU Service support is added to an application that uses the Device Manager, it is possible to transfer bonding information from the application to the bootloader. This information is required to reconnect to bonded devices and share the encryption keys. If no bonding information is available, the connection is re-established using directed advertising.</p>
+<p>Bonding information consists of the peer address, the Identity Resolving Key (IRK), and the Long Term Key (LTK) of the connected peer.</p>
+<p>If you include the file <code>dfu_app_handler.c</code> in your application, bonding information is automatically shared, and either directed advertising or whitelist advertising is used to re-establish the secure connection between the devices. Whitelist advertising is only used if the device has a Resolvable Private Address (RPA) instead of a static address. In this case, the Identity Resolving Key (IRK) of only this device is added to the whitelist. So, in both cases, the device will connect only to the device that triggered the DFU mode. If the peer does not reconnect to the device, the system resets and loads the installed application again.</p>
+<p>The following figure shows the process of reconnecting to a bonded device:</p>
 <div class="image">
-<img src="ble_dtm_init_packet.png" alt="ble_dtm_init_packet.png"/>
+<img src="bledfu_bonding.svg" alt="bledfu_bonding.svg"/>
 <div class="caption">
-Figure 1: Encoding of ble_dtm_init.</div></div>
-<p> <br/>
-</p>
-<h2><a class="anchor" id="nrf51_dtm_init_encoding_rsp_dec"></a>
-Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00905.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> response packet:</p>
-<table class="doxtable">
-<tr>
-<th>Length </th><th>Parameter </th><th>Value</th></tr>
-<tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00905.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> </td></tr>
-</table>
-<p><br/>
-</p>
-<div class="image">
-<img src="response_only_error_code.png" alt="response_only_error_code.png"/>
-<div class="caption">
-Figure 2: Packet format for ble_dtm_init response.</div></div>
-<p> <br/>
- </p>
+DFU on a bonded device</div></div>
+<p> In bootloader mode, the device is advertising with the same address as in application mode if the application supports Service Changed indications. Otherwise, changes to the application cannot be indicated, and therefore the device must advertise as a new device. This is accomplished by the device advertising with the address increased by 1.</p>
+<h1><a class="anchor" id="bledfu_appbonding_impl"></a>
+Implementation</h1>
+<p>In the application, the keys that are needed to re-establish the secure connection are retrieved from the Device Manager using the function <a class="el" href="a00987.html#ga5c6619805bf83fc6ddc2b33a81695bb7">dm_distributed_keys_get</a>. They are then passed from the application to the bootloader. The following code from <code>dfu_app_handler.c</code> shows how to implement bond sharing:</p>
+<div class="fragment"><div class="line">    err_code = <a class="code" href="a00987.html#ga248327374b34372f7515fddd49e08c47" title="Function for getting the corresponding dm_handle_t based on the connection handle.">dm_handle_get</a>(conn_handle, &amp;m_dm_handle);</div>
+<div class="line">    <span class="keywordflow">if</span> (err_code == <a class="code" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">    {</div>
+<div class="line">        err_code = <a class="code" href="a00987.html#ga5c6619805bf83fc6ddc2b33a81695bb7" title="Function for getting distributed keys for a device.">dm_distributed_keys_get</a>(&amp;m_dm_handle, &amp;key_set);</div>
+<div class="line">        <span class="keywordflow">if</span> (err_code == <a class="code" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">        {</div>
+<div class="line">            <a class="code" href="a00805.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+<div class="line"></div>
+<div class="line">            m_peer_data.addr              = key_set.keys_central.p_id_key-&gt;id_addr_info;</div>
+<div class="line">            m_peer_data.irk               = key_set.keys_central.p_id_key-&gt;id_info;</div>
+<div class="line">            m_peer_data.enc_key.enc_info  = key_set.keys_periph.enc_key.p_enc_key-&gt;enc_info;</div>
+<div class="line">            m_peer_data.enc_key.master_id = key_set.keys_periph.enc_key.p_enc_key-&gt;master_id;</div>
+<div class="line"></div>
+<div class="line">            err_code = <a class="code" href="a00940.html#ga8d962d1d241de6a5778d01eaebfa0460" title="SVC Function for setting peer data containing address, IRK, and LTK to establish bonded connection in...">dfu_ble_svc_set_peer_data</a>(&amp;m_peer_data);</div>
+<div class="line">            <a class="code" href="a00805.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+<div class="line"></div>
+<div class="line">            app_context_data   = (<a class="code" href="a00938.html#ga9ba0681cf552c3b8f3ef9c1c35d49b29">DFU_APP_ATT_TABLE_CHANGED</a> &lt;&lt; <a class="code" href="a00938.html#gae4d83224a562ad15ffced4e677a950c2">DFU_APP_ATT_TABLE_POS</a>);</div>
+<div class="line">            app_context.len    = <span class="keyword">sizeof</span>(app_context_data);</div>
+<div class="line">            app_context.p_data = (uint8_t *)&amp;app_context_data;</div>
+<div class="line"></div>
+<div class="line">            err_code = <a class="code" href="a00986.html#ga8e5dc36911e6ea1588eec9a3dc320943" title="Function for setting Application Context for a peer device identified by the &#39;p_handle&#39; parameter...">dm_application_context_set</a>(&amp;m_dm_handle, &amp;app_context);</div>
+<div class="line">            <a class="code" href="a00805.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">else</span></div>
+<div class="line">        {</div>
+<div class="line">            <span class="comment">// Keys were not available, thus we have a non-encrypted connection.</span></div>
+<div class="line">            err_code = <a class="code" href="a00987.html#gae6081bb278eb73552df98684c73c8e7a" title="Function for getting a peer&#39;s device address.">dm_peer_addr_get</a>(&amp;m_dm_handle, &amp;m_peer_data.addr);</div>
+<div class="line">            <a class="code" href="a00805.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+<div class="line"></div>
+<div class="line">            err_code = <a class="code" href="a00940.html#ga8d962d1d241de6a5778d01eaebfa0460" title="SVC Function for setting peer data containing address, IRK, and LTK to establish bonded connection in...">dfu_ble_svc_set_peer_data</a>(&amp;m_peer_data);</div>
+<div class="line">            <a class="code" href="a00805.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+</div><!-- fragment --><p> The <a class="el" href="a00940.html#ga8d962d1d241de6a5778d01eaebfa0460">dfu_ble_svc_set_peer_data</a> function performs a supervisor call (SVC) to the bootloader to pass the bonding information. For the bootloader to receive the information, the application's SVCs must be forwarded correctly. To do so, call <a class="el" href="a01070.html#ga46d2ce943076d65947ea8919198be106">sd_softdevice_vector_table_base_set</a> with NRF_UICR-&gt;BOOTLOADERADDR as argument.</p>
+<p>To receive the bonding information, the bootloader must implement an SVC handler. If it does not, the system will end in the default SVC handler (which is an infinite loop) when the application tries to call <a class="el" href="a00940.html#ga8d962d1d241de6a5778d01eaebfa0460">dfu_ble_svc_set_peer_data</a>. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00073.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00075.html">Serialization Codecs</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00078.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00082.html">Adding DFU Service support to an application</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

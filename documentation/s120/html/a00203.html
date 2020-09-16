@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: dm_sec_keyset Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: dm_event_param_t Union Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,82 +106,79 @@ $(document).ready(function(){initNavTree('a00203.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dm_sec_keyset Struct Reference<div class="ingroups"><a class="el" href="a00720.html">Device Manager Data Types</a></div></div>  </div>
+<div class="title">dm_event_param_t Union Reference<div class="ingroups"><a class="el" href="a00669.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Security keys.  
+<p>Event parameters.  
  <a href="a00203.html#details">More...</a></p>
 
 <p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:abd810c2ef8212c715ff6b22969c19b39"><td class="memItemLeft" ><a class="anchor" id="abd810c2ef8212c715ff6b22969c19b39"></a>
-union {</td></tr>
-<tr class="memitem:a75d6ce558e8a0add14af7c87a4985e2a"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00720.html#gadd6aca8bf4cd897655618df17c575e76">dm_enc_key_t</a> *&#160;&#160;&#160;<a class="el" href="a00203.html#acb47eb790d404b15b97a680189d75061">p_enc_key</a></td></tr>
-<tr class="separator:a75d6ce558e8a0add14af7c87a4985e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a274807f622fffb8a1782737181bfa69c"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00112.html">ble_gap_enc_info_t</a> *&#160;&#160;&#160;<a class="el" href="a00203.html#af39222f467f706d5ee133c8b77f2982f">p_enc_info</a></td></tr>
-<tr class="separator:a274807f622fffb8a1782737181bfa69c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd810c2ef8212c715ff6b22969c19b39"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>enc_key</b></td></tr>
-<tr class="separator:abd810c2ef8212c715ff6b22969c19b39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa48365f0a84031d3dbb1d22c2f8ac2b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00720.html#ga38566c0de9c9fb2ad4eda1b7cd415321">dm_id_key_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#aa48365f0a84031d3dbb1d22c2f8ac2b9">p_id_key</a></td></tr>
-<tr class="separator:aa48365f0a84031d3dbb1d22c2f8ac2b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25fa7f5a74279f24f44607335f5138b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00720.html#ga4ecd6e25cc653bbe21a293f34f3c9dd6">dm_sign_key_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#a25fa7f5a74279f24f44607335f5138b7">p_sign_key</a></td></tr>
-<tr class="separator:a25fa7f5a74279f24f44607335f5138b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0e4a6616d2156de4d92277ea7f0df5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00124.html">ble_gap_evt_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#af0e4a6616d2156de4d92277ea7f0df5f">p_gap_param</a></td></tr>
+<tr class="separator:af0e4a6616d2156de4d92277ea7f0df5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9ad98969539dba415cfb4cd9e0f0564"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00669.html#gaca2973e52020d6f1078540f0b1a732fa">dm_application_context_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#ae9ad98969539dba415cfb4cd9e0f0564">p_app_context</a></td></tr>
+<tr class="separator:ae9ad98969539dba415cfb4cd9e0f0564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a1372003da3dd695160653c24e3eaf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00209.html">dm_service_context_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#a7a1372003da3dd695160653c24e3eaf8">p_service_context</a></td></tr>
+<tr class="separator:a7a1372003da3dd695160653c24e3eaf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeb2585ead8af941c5619bbfad06b963"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00669.html#ga7e116c1567d58a325c14a1b8a9a75d48">dm_device_context_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#abeb2585ead8af941c5619bbfad06b963">p_device_context</a></td></tr>
+<tr class="separator:abeb2585ead8af941c5619bbfad06b963"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Security keys. </p>
+<div class="textblock"><p>Event parameters. </p>
+<p>Defines event parameters for each of the events notified by the module. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af39222f467f706d5ee133c8b77f2982f"></a>
+<a class="anchor" id="ae9ad98969539dba415cfb4cd9e0f0564"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00112.html">ble_gap_enc_info_t</a>* dm_sec_keyset::p_enc_info</td>
+          <td class="memname"><a class="el" href="a00669.html#gaca2973e52020d6f1078540f0b1a732fa">dm_application_context_t</a>* dm_event_param_t::p_app_context</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to GAP encryption information. </p>
+<p>All events that are associated with application context procedures of store, load, and deletion have this as event parameter. </p>
 
 </div>
 </div>
-<a class="anchor" id="acb47eb790d404b15b97a680189d75061"></a>
+<a class="anchor" id="abeb2585ead8af941c5619bbfad06b963"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00720.html#gadd6aca8bf4cd897655618df17c575e76">dm_enc_key_t</a>* dm_sec_keyset::p_enc_key</td>
+          <td class="memname"><a class="el" href="a00669.html#ga7e116c1567d58a325c14a1b8a9a75d48">dm_device_context_t</a>* dm_event_param_t::p_device_context</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to Device Manager encryption information structure. </p>
+<p>All events that are associated with device context procedures of store, load and deletion have this as event parameter. </p>
 
 </div>
 </div>
-<a class="anchor" id="aa48365f0a84031d3dbb1d22c2f8ac2b9"></a>
+<a class="anchor" id="af0e4a6616d2156de4d92277ea7f0df5f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00720.html#ga38566c0de9c9fb2ad4eda1b7cd415321">dm_id_key_t</a>* dm_sec_keyset::p_id_key</td>
+          <td class="memname"><a class="el" href="a00124.html">ble_gap_evt_t</a>* dm_event_param_t::p_gap_param</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Identity key, or NULL. </p>
+<p>All events that are triggered in device manager as a result of GAP events, like connection, disconnection and security procedures are accompanied with GAP parameters. </p>
 
 </div>
 </div>
-<a class="anchor" id="a25fa7f5a74279f24f44607335f5138b7"></a>
+<a class="anchor" id="a7a1372003da3dd695160653c24e3eaf8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00720.html#ga4ecd6e25cc653bbe21a293f34f3c9dd6">dm_sign_key_t</a>* dm_sec_keyset::p_sign_key</td>
+          <td class="memname"><a class="el" href="a00209.html">dm_service_context_t</a>* dm_event_param_t::p_service_context</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Signing key, or NULL. </p>
+<p>All events that are associated with service context procedures of store, load and deletion have this as event parameter. </p>
 
 </div>
 </div>
@@ -190,8 +187,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00203.html">dm_sec_keyset</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00203.html">dm_event_param_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

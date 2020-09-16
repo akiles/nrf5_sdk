@@ -1,12 +1,9 @@
 var a00166 =
 [
-    [ "char_ext_props", "a00166.html#ac5e56544775870bc0dfcccbfe49546c5", null ],
-    [ "char_props", "a00166.html#a3d9381741f1a0b9e3ca5e2a5ddeb6877", null ],
-    [ "char_user_desc_max_size", "a00166.html#a5916d5b2468348a72e9dcbdfc8d09404", null ],
-    [ "char_user_desc_size", "a00166.html#a1fdf0123a1e5ae6591be0e16879c7bf4", null ],
-    [ "p_cccd_md", "a00166.html#a86233448bf572b753bb23acc21836887", null ],
-    [ "p_char_pf", "a00166.html#af7a06b2899457e00a555432106cc21f2", null ],
-    [ "p_char_user_desc", "a00166.html#a6d3f8e028fac8cba3158281ec6880118", null ],
-    [ "p_sccd_md", "a00166.html#a859f6ec1fc35c5983fc34a09c79b8b1e", null ],
-    [ "p_user_desc_md", "a00166.html#ae4858815d704c68d78b4a318011252b6", null ]
+    [ "init_len", "a00166.html#a7722e94b0c079f7571a0607a13d46bde", null ],
+    [ "init_offs", "a00166.html#aa24ec5661c2ba830f906201285ca941c", null ],
+    [ "max_len", "a00166.html#a5cc60017697406f2f2624e0b15dad294", null ],
+    [ "p_attr_md", "a00166.html#afc04d5311dcd31df52f7d9aac7c05ab1", null ],
+    [ "p_uuid", "a00166.html#a87b18c161a362b54bd349aebd2a45c85", null ],
+    [ "p_value", "a00166.html#abf26555ce0ad9b481c3f638f89dc329a", null ]
 ];

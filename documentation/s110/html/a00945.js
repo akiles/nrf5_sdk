@@ -1,14 +1,11 @@
 var a00945 =
 [
-    [ "DFU BLE SVC internal", "a00946.html", "a00946" ],
-    [ "dfu_ble_peer_data_t", "a00343.html", [
-      [ "addr", "a00343.html#a254efa46b45f5707510660ee0ae9edc3", null ],
-      [ "enc_info", "a00343.html#a8edc7904f78de5fddc021504d06ae029", null ],
-      [ "irk", "a00343.html#ac8c0e0d99c8c5cc39adfa07073253d58", null ]
-    ] ],
-    [ "BOOTLOADER_SVC_BASE", "a00945.html#ga40250c4367f60f8adf2f36ca02a620d2", null ],
-    [ "BOOTLOADER_SVCS", "a00945.html#gab61a9eaf497f22e66f7a0f76d8203133", [
-      [ "DFU_BLE_SVC_SET_PEER_DATA", "a00945.html#ggab61a9eaf497f22e66f7a0f76d8203133a343827596c1f6effeaf0ff0149cb5734", null ]
-    ] ],
-    [ "dfu_ble_svc_set_peer_data", "a00945.html#ga8d962d1d241de6a5778d01eaebfa0460", null ]
+    [ "HCI_SLIP_UART_BAUDRATE", "a00945.html#ga32bbc9330e57446dca60392c29857b89", null ],
+    [ "HCI_SLIP_UART_CTS_PIN_NUMBER", "a00945.html#ga9b29fdaf1844f05115940fbf2401fd5f", null ],
+    [ "HCI_SLIP_UART_MODE", "a00945.html#ga3f2a196e8e6fd828a7408cbce3625a39", null ],
+    [ "HCI_SLIP_UART_RTS_PIN_NUMBER", "a00945.html#gabef88f732922a13c3dc4e3dd514c36fc", null ],
+    [ "HCI_SLIP_UART_RX_PIN_NUMBER", "a00945.html#ga563b2db0be6fc39f6bdc43275fce4a6c", null ],
+    [ "HCI_SLIP_UART_TX_PIN_NUMBER", "a00945.html#ga37627f12f64e2d3a9ff5df63fd872003", null ],
+    [ "MAX_PACKET_SIZE_IN_BITS", "a00945.html#ga7f50bc31550595e28cbf7a9eb3597b69", null ],
+    [ "USED_BAUD_RATE", "a00945.html#ga191602a3878cbd9811815ba22f8fea51", null ]
 ];

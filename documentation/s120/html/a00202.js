@@ -1,4 +1,5 @@
 var a00202 =
 [
-    [ "clear_persistent_data", "a00202.html#ab5feebf730ecc50b0c78c0f4354d6fc3", null ]
+    [ "enc_info", "a00202.html#a86cd792e42804720a97e6f64884d0fd4", null ],
+    [ "master_id", "a00202.html#a6d0dc86cbbad08e963a13c3a4070454d", null ]
 ];

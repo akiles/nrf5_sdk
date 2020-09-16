@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_sensorsim_state_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ias_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,52 @@ $(document).ready(function(){initNavTree('a00328.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_sensorsim_state_t Struct Reference<div class="ingroups"><a class="el" href="a01032.html">Sensor Data Simulator</a></div></div>  </div>
+<div class="title">ble_ias_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00965.html">Immediate Alert Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Triangular waveform sensor simulator state.  
+<p>Immediate Alert Service event.  
  <a href="a00328.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_sensorsim.h&gt;</code></p>
+<p><code>#include &lt;ble_ias.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a607fd7c8e6f2f3e7bbe8dc5d5b44b54e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#a607fd7c8e6f2f3e7bbe8dc5d5b44b54e">current_val</a></td></tr>
-<tr class="separator:a607fd7c8e6f2f3e7bbe8dc5d5b44b54e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21bddc380a89ed66e20f88dfd4da4c8a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#a21bddc380a89ed66e20f88dfd4da4c8a">is_increasing</a></td></tr>
-<tr class="separator:a21bddc380a89ed66e20f88dfd4da4c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a730fff52efb38d8f5f61973ef47696b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00965.html#gaa55445ca6b845393a2dc353e0afa38ec">ble_ias_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#a730fff52efb38d8f5f61973ef47696b4">evt_type</a></td></tr>
+<tr class="separator:a730fff52efb38d8f5f61973ef47696b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a436ccefb86ad7804abe101b61110304d"><td class="memItemLeft" ><a class="anchor" id="a436ccefb86ad7804abe101b61110304d"></a>
+union {</td></tr>
+<tr class="memitem:a8ff742a1c14ccdf08f34ccf5e78ed3e3"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00328.html#aadc350acbcf634cf778a5a253049ebe0">alert_level</a></td></tr>
+<tr class="separator:a8ff742a1c14ccdf08f34ccf5e78ed3e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a436ccefb86ad7804abe101b61110304d"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
+<tr class="separator:a436ccefb86ad7804abe101b61110304d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Triangular waveform sensor simulator state. </p>
+<div class="textblock"><p>Immediate Alert Service event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a607fd7c8e6f2f3e7bbe8dc5d5b44b54e"></a>
+<a class="anchor" id="aadc350acbcf634cf778a5a253049ebe0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_sensorsim_state_t::current_val</td>
+          <td class="memname">uint8_t ble_ias_evt_t::alert_level</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Current sensor value. </p>
+<p>New Alert Level value. </p>
 
 </div>
 </div>
-<a class="anchor" id="a21bddc380a89ed66e20f88dfd4da4c8a"></a>
+<a class="anchor" id="a730fff52efb38d8f5f61973ef47696b4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool ble_sensorsim_state_t::is_increasing</td>
+          <td class="memname"><a class="el" href="a00965.html#gaa55445ca6b845393a2dc353e0afa38ec">ble_ias_evt_type_t</a> ble_ias_evt_t::evt_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TRUE if the simulator is in increasing state, FALSE otherwise. </p>
+<p>Type of event. </p>
 
 </div>
 </div>
@@ -156,8 +160,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00328.html">ble_sensorsim_state_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00328.html">ble_ias_evt_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

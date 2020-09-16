@@ -1,5 +1,7 @@
 var a00202 =
 [
-    [ "evt_id", "a00202.html#a2084aff335bd3cbb7e7b3d48c04f1d7a", null ],
-    [ "evt_len", "a00202.html#a982f138c7092a79876d0535522b76cfa", null ]
+    [ "ble_dfu_evt_type", "a00202.html#a48f6c7cc051e012565ba9b05dd55e05a", null ],
+    [ "ble_dfu_pkt_write", "a00202.html#acc15bfa51d868c165e8dcb85f0c89f3d", null ],
+    [ "evt", "a00202.html#a6916e3599db35f65bad77f4d3ee461e1", null ],
+    [ "pkt_rcpt_notif_req", "a00202.html#ac8054aef37b49a028cfee3dd3007becf", null ]
 ];

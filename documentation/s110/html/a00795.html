@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Module specific error code subranges</title>
+<title>nRF51 SDK - S110 SoftDevice: FIFO implementation</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,79 +97,201 @@ $(document).ready(function(){initNavTree('a00795.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Module specific error code subranges<div class="ingroups"><a class="el" href="a00791.html">BLE SoftDevice Common</a></div></div>  </div>
+<div class="title">FIFO implementation<div class="ingroups"><a class="el" href="a01035.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Assignment of subranges for module specific error codes.  
+<p>FIFO implementation.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga82756b5d44b6b5757c3968513b4928ac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00795.html#ga82756b5d44b6b5757c3968513b4928ac">NRF_L2CAP_ERR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00839.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x100)</td></tr>
-<tr class="separator:ga82756b5d44b6b5757c3968513b4928ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29249baa158d723505c601121d003034"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00795.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00839.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x200)</td></tr>
-<tr class="separator:ga29249baa158d723505c601121d003034"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga200400dc8ad79918acee9cd038336165"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00795.html#ga200400dc8ad79918acee9cd038336165">NRF_GATTC_ERR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00839.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x300)</td></tr>
-<tr class="separator:ga200400dc8ad79918acee9cd038336165"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7bc503f781e56a86cdd044d6043629b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00795.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00839.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x400)</td></tr>
-<tr class="separator:ga7bc503f781e56a86cdd044d6043629b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00150.html">app_fifo_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the information about which memory is allocated for the buffer and its size. This needs to be initialized by <a class="el" href="a00795.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init()</a> before use.  <a href="a00150.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gafc2ba3545e60f0134689fac2aa87f493"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00795.html#gafc2ba3545e60f0134689fac2aa87f493">app_fifo_init</a> (<a class="el" href="a00150.html">app_fifo_t</a> *p_fifo, uint8_t *p_buf, uint16_t buf_size)</td></tr>
+<tr class="memdesc:gafc2ba3545e60f0134689fac2aa87f493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the FIFO.  <a href="#gafc2ba3545e60f0134689fac2aa87f493">More...</a><br/></td></tr>
+<tr class="separator:gafc2ba3545e60f0134689fac2aa87f493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00795.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">app_fifo_put</a> (<a class="el" href="a00150.html">app_fifo_t</a> *p_fifo, uint8_t byte)</td></tr>
+<tr class="memdesc:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for adding an element to the FIFO.  <a href="#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">More...</a><br/></td></tr>
+<tr class="separator:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6292f78e91737ba0df83d6755e0abb9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00795.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a> (<a class="el" href="a00150.html">app_fifo_t</a> *p_fifo, uint8_t *p_byte)</td></tr>
+<tr class="memdesc:gab6292f78e91737ba0df83d6755e0abb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the next element from the FIFO.  <a href="#gab6292f78e91737ba0df83d6755e0abb9">More...</a><br/></td></tr>
+<tr class="separator:gab6292f78e91737ba0df83d6755e0abb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0944439787b55aafb3288a836efa3b9b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00795.html#ga0944439787b55aafb3288a836efa3b9b">app_fifo_flush</a> (<a class="el" href="a00150.html">app_fifo_t</a> *p_fifo)</td></tr>
+<tr class="memdesc:ga0944439787b55aafb3288a836efa3b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for flushing the FIFO.  <a href="#ga0944439787b55aafb3288a836efa3b9b">More...</a><br/></td></tr>
+<tr class="separator:ga0944439787b55aafb3288a836efa3b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Assignment of subranges for module specific error codes. </p>
-<dl class="section note"><dt>Note</dt><dd>For specific error codes, see ble_&lt;module&gt;.h or ble_error_&lt;module&gt;.h. </dd></dl>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga29249baa158d723505c601121d003034"></a>
+<p>FIFO implementation. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga0944439787b55aafb3288a836efa3b9b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NRF_GAP_ERR_BASE&#160;&#160;&#160;(<a class="el" href="a00839.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x200)</td>
+          <td class="memname">uint32_t app_fifo_flush </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00150.html">app_fifo_t</a> *&#160;</td>
+          <td class="paramname"><em>p_fifo</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GAP specific errors. </p>
+
+<p>Function for flushing the FIFO. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the FIFO flushed successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga200400dc8ad79918acee9cd038336165"></a>
+<a class="anchor" id="gab6292f78e91737ba0df83d6755e0abb9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NRF_GATTC_ERR_BASE&#160;&#160;&#160;(<a class="el" href="a00839.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x300)</td>
+          <td class="memname">uint32_t app_fifo_get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00150.html">app_fifo_t</a> *&#160;</td>
+          <td class="paramname"><em>p_fifo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GATT client specific errors. </p>
+
+<p>Function for getting the next element from the FIFO. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_byte</td><td>Byte fetched from the FIFO.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If an element was returned. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NOT_FOUND</td><td>If there is no more elements in the queue. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7bc503f781e56a86cdd044d6043629b8"></a>
+<a class="anchor" id="gafc2ba3545e60f0134689fac2aa87f493"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NRF_GATTS_ERR_BASE&#160;&#160;&#160;(<a class="el" href="a00839.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x400)</td>
+          <td class="memname">uint32_t app_fifo_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00150.html">app_fifo_t</a> *&#160;</td>
+          <td class="paramname"><em>p_fifo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>buf_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GATT server specific errors. </p>
+
+<p>Function for initializing the FIFO. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_fifo</td><td>FIFO object. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>FIFO buffer for storing data. The buffer size has to be a power of two. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf_size</td><td>Size of the FIFO buffer provided, has to be a power of 2.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If initialization was successful. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If a NULL pointer is provided as buffer. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>If size of buffer provided is not a power of two. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga82756b5d44b6b5757c3968513b4928ac"></a>
+<a class="anchor" id="ga76ac40c5174cc17b8b6ebd8d86cf0f0e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NRF_L2CAP_ERR_BASE&#160;&#160;&#160;(<a class="el" href="a00839.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x100)</td>
+          <td class="memname">uint32_t app_fifo_put </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00150.html">app_fifo_t</a> *&#160;</td>
+          <td class="paramname"><em>p_fifo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>L2CAP specific errors. </p>
+
+<p>Function for adding an element to the FIFO. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">byte</td><td>Data byte to add to the FIFO.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If an element has been successfully added to the FIFO. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>If the FIFO is full. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -178,7 +300,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:17 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:42 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

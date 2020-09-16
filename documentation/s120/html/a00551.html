@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: GATT Handle Value operations</title>
+<title>nRF51 SDK - S120 SoftDevice: GATT Value Locations</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,57 +99,57 @@ $(document).ready(function(){initNavTree('a00551.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GATT Handle Value operations<div class="ingroups"><a class="el" href="a00751.html">Defines</a></div></div>  </div>
+<div class="title">GATT Value Locations<div class="ingroups"><a class="el" href="a00712.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gae454efaf8b3f8c6871dca5d2db5ac724"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00551.html#gae454efaf8b3f8c6871dca5d2db5ac724">BLE_GATT_HVX_INVALID</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:gae454efaf8b3f8c6871dca5d2db5ac724"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad5784996b45947f6d7f0cb81c9a4c9ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00551.html#gad5784996b45947f6d7f0cb81c9a4c9ed">BLE_GATT_HVX_NOTIFICATION</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:gad5784996b45947f6d7f0cb81c9a4c9ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47f3222bcefb5eb4aed9a1dc7c796b1f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00551.html#ga47f3222bcefb5eb4aed9a1dc7c796b1f">BLE_GATT_HVX_INDICATION</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:ga47f3222bcefb5eb4aed9a1dc7c796b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b0c153e71bddb01a4ba803a9110a6e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00551.html#ga0b0c153e71bddb01a4ba803a9110a6e4">BLE_GATTS_VLOC_INVALID</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga0b0c153e71bddb01a4ba803a9110a6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf51ee5f68c7eea401ee79cd250c1fb16"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00551.html#gaf51ee5f68c7eea401ee79cd250c1fb16">BLE_GATTS_VLOC_STACK</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:gaf51ee5f68c7eea401ee79cd250c1fb16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaddb51f959e18123c5e215e22af0c31a9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00551.html#gaddb51f959e18123c5e215e22af0c31a9">BLE_GATTS_VLOC_USER</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:gaddb51f959e18123c5e215e22af0c31a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga47f3222bcefb5eb4aed9a1dc7c796b1f"></a>
+<a class="anchor" id="ga0b0c153e71bddb01a4ba803a9110a6e4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATT_HVX_INDICATION&#160;&#160;&#160;0x02</td>
+          <td class="memname">#define BLE_GATTS_VLOC_INVALID&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle Value Indication. </p>
+<p>Invalid Location. </p>
 
 </div>
 </div>
-<a class="anchor" id="gae454efaf8b3f8c6871dca5d2db5ac724"></a>
+<a class="anchor" id="gaf51ee5f68c7eea401ee79cd250c1fb16"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATT_HVX_INVALID&#160;&#160;&#160;0x00</td>
+          <td class="memname">#define BLE_GATTS_VLOC_STACK&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Invalid Operation. </p>
+<p>Attribute Value is located in stack memory, no user memory is required. </p>
 
 </div>
 </div>
-<a class="anchor" id="gad5784996b45947f6d7f0cb81c9a4c9ed"></a>
+<a class="anchor" id="gaddb51f959e18123c5e215e22af0c31a9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATT_HVX_NOTIFICATION&#160;&#160;&#160;0x01</td>
+          <td class="memname">#define BLE_GATTS_VLOC_USER&#160;&#160;&#160;0x02</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle Value Notification. </p>
+<p>Attribute Value is located in user memory. This requires the user to maintain a valid buffer through the lifetime of the attribute, since the stack will read and write directly to the memory using the pointer provided in the APIs. There are no alignment requirements for the buffer. </p>
 
 </div>
 </div>
@@ -158,7 +158,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:53 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

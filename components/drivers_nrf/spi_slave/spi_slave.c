@@ -50,16 +50,16 @@ uint32_t spi_slave_evt_handler_register(spi_slave_event_handler_t event_handler)
 }
 
 
-void spi_slave_set_cs_pull_up_config(uint32_t alternate_config)
+uint32_t spi_slave_set_cs_pull_up_config(uint32_t alternate_config)
 {
     m_cs_pullup_config = alternate_config;
-    return;
+    return NRF_SUCCESS;
 }
 
-void spi_slave_set_drive_config(uint32_t alternate_config)
+uint32_t spi_slave_set_drive_config(uint32_t alternate_config)
 {
     m_drive_config = alternate_config;
-    return;
+    return NRF_SUCCESS;
 }
 
 uint32_t spi_slave_init(const spi_slave_config_t * p_spi_slave_config)

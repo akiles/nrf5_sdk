@@ -1,8 +1,8 @@
 var a00573 =
 [
-    [ "SoftDevice Manager Error Codes", "a00574.html", "a00574" ],
-    [ "Defines", "a00771.html", "a00771" ],
-    [ "Enumerations", "a00772.html", "a00772" ],
-    [ "Types", "a00773.html", "a00773" ],
-    [ "Functions", "a00774.html", "a00774" ]
+    [ "Message Sequence Charts", "a00574.html", "a00574" ],
+    [ "Enumerations", "a00700.html", "a00700" ],
+    [ "Defines", "a00701.html", "a00701" ],
+    [ "Structures", "a00702.html", "a00702" ],
+    [ "Functions", "a00703.html", "a00703" ]
 ];

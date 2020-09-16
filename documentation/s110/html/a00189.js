@@ -1,8 +1,11 @@
 var a00189 =
 [
-    [ "conn_handle", "a00189.html#a38b408b3785dce063725d6fcc194b1c8", null ],
-    [ "discovered_db", "a00189.html#a551f5595d71fa2887fa74dff31eb5f40", null ],
-    [ "err_code", "a00189.html#aade9f798ada6b7c0f601cb7dfac3d85f", null ],
-    [ "evt_type", "a00189.html#accba73434b8696cbafbe758022bb45ec", null ],
-    [ "params", "a00189.html#a4acd4ae50b0d34689da113cb1ffa8b2b", null ]
+    [ "error_handler", "a00189.html#a5840a1605a5459c4e82ef773ac9d2e24", null ],
+    [ "evt_handler", "a00189.html#a96de686937df25c7bdc23206170ae50a", null ],
+    [ "list_supported_locations", "a00189.html#a43e3dbaf04322020621f80634fb4ab11", null ],
+    [ "sc_ctrlpt_attr_md", "a00189.html#ace531100dc9ba6f0ff3f62d27fd220f8", null ],
+    [ "sensor_location_handle", "a00189.html#aff182ef403314ac9e5fb3d6964d4e862", null ],
+    [ "service_handle", "a00189.html#a14e10c317dd498dc5ac6d17f162cb01e", null ],
+    [ "size_list_supported_locations", "a00189.html#accef6d6a6a4d4a5365c2a6043850c22a", null ],
+    [ "supported_functions", "a00189.html#a64788d2708103f5bbc852e2e1835182c", null ]
 ];

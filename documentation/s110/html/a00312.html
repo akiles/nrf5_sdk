@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_lls_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_hids_rep_map_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,52 +106,93 @@ $(document).ready(function(){initNavTree('a00312.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_lls_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00973.html">Link Loss Service</a></div></div>  </div>
+<div class="title">ble_hids_rep_map_init_t Struct Reference<div class="ingroups"><a class="el" href="a00962.html">Human Interface Device Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Link Loss Service event.  
+<p>HID Service Report Map characteristic init structure. This contains all options and data needed for initialization of the Report Map characteristic.  
  <a href="a00312.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_lls.h&gt;</code></p>
+<p><code>#include &lt;ble_hids.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a971a9cd94583dae76dcf5f94eb412686"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00973.html#ga94331ff0a90e8f8b61dcf230e1760ccf">ble_lls_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00312.html#a971a9cd94583dae76dcf5f94eb412686">evt_type</a></td></tr>
-<tr class="separator:a971a9cd94583dae76dcf5f94eb412686"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03bfd9896c9389b175cf494e4f548514"><td class="memItemLeft" ><a class="anchor" id="a03bfd9896c9389b175cf494e4f548514"></a>
-union {</td></tr>
-<tr class="memitem:a232562ab0f8bf87d9aac9f789a69fac5"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00312.html#adaf4d087319007c776df8baf3673fe8a">alert_level</a></td></tr>
-<tr class="separator:a232562ab0f8bf87d9aac9f789a69fac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03bfd9896c9389b175cf494e4f548514"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a03bfd9896c9389b175cf494e4f548514"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac68f34bc812fb78bd16a11acf3931297"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00312.html#ac68f34bc812fb78bd16a11acf3931297">p_data</a></td></tr>
+<tr class="separator:ac68f34bc812fb78bd16a11acf3931297"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad37a58093ba29da8205f825d524fde10"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00312.html#ad37a58093ba29da8205f825d524fde10">data_len</a></td></tr>
+<tr class="separator:ad37a58093ba29da8205f825d524fde10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dfff543d60774b7fe5bd69f23547e86"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00312.html#a9dfff543d60774b7fe5bd69f23547e86">ext_rep_ref_num</a></td></tr>
+<tr class="separator:a9dfff543d60774b7fe5bd69f23547e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a460e7c6bc062f9bd31fd72b4b696c2aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00359.html">ble_uuid_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00312.html#a460e7c6bc062f9bd31fd72b4b696c2aa">p_ext_rep_ref</a></td></tr>
+<tr class="separator:a460e7c6bc062f9bd31fd72b4b696c2aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcb39f07b266acfe8539c7ed9ed13532"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00353.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00312.html#adcb39f07b266acfe8539c7ed9ed13532">security_mode</a></td></tr>
+<tr class="separator:adcb39f07b266acfe8539c7ed9ed13532"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Link Loss Service event. </p>
+<div class="textblock"><p>HID Service Report Map characteristic init structure. This contains all options and data needed for initialization of the Report Map characteristic. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="adaf4d087319007c776df8baf3673fe8a"></a>
+<a class="anchor" id="ad37a58093ba29da8205f825d524fde10"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_lls_evt_t::alert_level</td>
+          <td class="memname">uint16_t ble_hids_rep_map_init_t::data_len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>New Alert Level value. </p>
+<p>Length of report map data. </p>
 
 </div>
 </div>
-<a class="anchor" id="a971a9cd94583dae76dcf5f94eb412686"></a>
+<a class="anchor" id="a9dfff543d60774b7fe5bd69f23547e86"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00973.html#ga94331ff0a90e8f8b61dcf230e1760ccf">ble_lls_evt_type_t</a> ble_lls_evt_t::evt_type</td>
+          <td class="memname">uint8_t ble_hids_rep_map_init_t::ext_rep_ref_num</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of event. </p>
+<p>Number of Optional External Report Reference descriptors. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac68f34bc812fb78bd16a11acf3931297"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* ble_hids_rep_map_init_t::p_data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Report map data. </p>
+
+</div>
+</div>
+<a class="anchor" id="a460e7c6bc062f9bd31fd72b4b696c2aa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00359.html">ble_uuid_t</a>* ble_hids_rep_map_init_t::p_ext_rep_ref</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Optional External Report Reference descriptor (will be added if != NULL). </p>
+
+</div>
+</div>
+<a class="anchor" id="adcb39f07b266acfe8539c7ed9ed13532"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00353.html">ble_srv_security_mode_t</a> ble_hids_rep_map_init_t::security_mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Security mode for the HID Service Report Map characteristic. </p>
 
 </div>
 </div>
@@ -160,8 +201,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00312.html">ble_lls_evt_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00312.html">ble_hids_rep_map_init_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

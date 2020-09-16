@@ -33,12 +33,13 @@
 #include "ble_hci.h"
 #include "ble_srv_common.h"
 #include "ble_advdata.h"
+#include "ble_advertising.h"
 #include "ble_bas.h"
 #include "ble_hts.h"
 #include "ble_dis.h"
 #include "ble_conn_params.h"
 #include "boards.h"
-#include "ble_sensorsim.h"
+#include "sensorsim.h"
 #include "softdevice_handler.h"
 #include "app_timer.h"
 #include "device_manager.h"
@@ -56,6 +57,7 @@
 #define IS_SRVC_CHANGED_CHARACT_PRESENT      0                                          /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
 #define SEND_MEAS_BUTTON_PIN_ID              0                                          /**< Button used for sending a measurement. */
+#define WAKEUP_BUTTON_ID                     SEND_MEAS_BUTTON_PIN_ID                    /**< Button used to wake up the application. */
 #define BOND_DELETE_ALL_BUTTON_ID            1                                          /**< Button used for deleting all bonded centrals during startup. */
 
 #define DEVICE_NAME                          "Nordic_HTS"                               /**< Name of device. Will be included in the advertising data. */
@@ -95,7 +97,6 @@
 
 #define BUTTON_DETECTION_DELAY               APP_TIMER_TICKS(50, APP_TIMER_PRESCALER)   /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
 
-#define SEC_PARAM_TIMEOUT                    30                                         /**< Timeout for Pairing Request or Security Request (in seconds). */
 #define SEC_PARAM_BOND                       1                                          /**< Perform bonding. */
 #define SEC_PARAM_MITM                       0                                          /**< Man In The Middle protection not required. */
 #define SEC_PARAM_IO_CAPABILITIES            BLE_GAP_IO_CAPS_NONE                       /**< No I/O capabilities. */
@@ -107,21 +108,22 @@
 
 
 static uint16_t                              m_conn_handle = BLE_CONN_HANDLE_INVALID;   /**< Handle of the current connection. */
-static ble_gap_adv_params_t                  m_adv_params;                              /**< Parameters to be passed to the stack when starting advertising. */
 static ble_bas_t                             m_bas;                                     /**< Structure used to identify the battery service. */
 static ble_hts_t                             m_hts;                                     /**< Structure used to identify the health thermometer service. */
 
-static ble_sensorsim_cfg_t                   m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
-static ble_sensorsim_state_t                 m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
+static sensorsim_cfg_t                       m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
+static sensorsim_state_t                     m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
 static bool                                  m_hts_meas_ind_conf_pending = false;       /**< Flag to keep track of when an indication confirmation is pending. */
 
-static ble_sensorsim_cfg_t                   m_temp_celcius_sim_cfg;                    /**< Temperature simulator configuration. */
-static ble_sensorsim_state_t                 m_temp_celcius_sim_state;                  /**< Temperature simulator state. */
+static sensorsim_cfg_t                       m_temp_celcius_sim_cfg;                    /**< Temperature simulator configuration. */
+static sensorsim_state_t                     m_temp_celcius_sim_state;                  /**< Temperature simulator state. */
 
 static app_timer_id_t                        m_battery_timer_id;                        /**< Battery timer. */
 static dm_application_instance_t             m_app_handle;                              /**< Application identifier allocated by device manager */
 
-static bool                                  m_memory_access_in_progress = false;       /**< Flag to keep track of ongoing operations on persistent memory. */
+static    ble_uuid_t m_adv_uuids[] = {{BLE_UUID_HEALTH_THERMOMETER_SERVICE, BLE_UUID_TYPE_BLE},
+                                    {BLE_UUID_BATTERY_SERVICE,            BLE_UUID_TYPE_BLE},
+                                    {BLE_UUID_DEVICE_INFORMATION_SERVICE, BLE_UUID_TYPE_BLE}}; /**< Universally unique service identifiers. */
 
 
 /**@brief Callback function for asserts in the SoftDevice.
@@ -148,7 +150,7 @@ static void battery_level_update(void)
     uint32_t err_code;
     uint8_t  battery_level;
 
-    battery_level = (uint8_t)ble_sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
+    battery_level = (uint8_t)sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
 
     err_code = ble_bas_battery_level_update(&m_bas, battery_level);
     if ((err_code != NRF_SUCCESS) &&
@@ -188,7 +190,7 @@ static void hts_sim_measurement(ble_hts_meas_t * p_meas)
     p_meas->time_stamp_present = true;
     p_meas->temp_type_present  = (TEMP_TYPE_AS_CHARACTERISTIC ? false : true);
 
-    celciusX100 = ble_sensorsim_measure(&m_temp_celcius_sim_state, &m_temp_celcius_sim_cfg);
+    celciusX100 = sensorsim_measure(&m_temp_celcius_sim_state, &m_temp_celcius_sim_cfg);
 
     p_meas->temp_in_celcius.exponent = -2;
     p_meas->temp_in_celcius.mantissa = celciusX100;
@@ -260,48 +262,6 @@ static void gap_params_init(void)
 
     err_code = sd_ble_gap_ppcp_set(&gap_conn_params);
     APP_ERROR_CHECK(err_code);
-}
-
-
-/**@brief Function for initializing the Advertising functionality.
- *
- * @details Encodes the required advertising data and passes it to the stack.
- *          Also builds a structure to be passed to the stack when starting advertising.
- */
-static void advertising_init(void)
-{
-    uint32_t      err_code;
-    ble_advdata_t advdata;
-    uint8_t       flags = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
-
-    ble_uuid_t adv_uuids[] =
-    {
-        {BLE_UUID_HEALTH_THERMOMETER_SERVICE, BLE_UUID_TYPE_BLE},
-        {BLE_UUID_BATTERY_SERVICE,            BLE_UUID_TYPE_BLE},
-        {BLE_UUID_DEVICE_INFORMATION_SERVICE, BLE_UUID_TYPE_BLE}
-    };
-
-    // Build and set advertising data
-    memset(&advdata, 0, sizeof(advdata));
-
-    advdata.name_type               = BLE_ADVDATA_FULL_NAME;
-    advdata.include_appearance      = true;
-    advdata.flags.size              = sizeof(flags);
-    advdata.flags.p_data            = &flags;
-    advdata.uuids_complete.uuid_cnt = sizeof(adv_uuids) / sizeof(adv_uuids[0]);
-    advdata.uuids_complete.p_uuids  = adv_uuids;
-
-    err_code = ble_advdata_set(&advdata, NULL);
-    APP_ERROR_CHECK(err_code);
-
-    // Initialize advertising parameters (used when starting advertising).
-    memset(&m_adv_params, 0, sizeof(m_adv_params));
-
-    m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_IND;
-    m_adv_params.p_peer_addr = NULL;                           // Undirected advertisement.
-    m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
-    m_adv_params.interval    = APP_ADV_INTERVAL;
-    m_adv_params.timeout     = APP_ADV_TIMEOUT_IN_SECONDS;
 }
 
 
@@ -433,14 +393,14 @@ static void services_init(void)
 
 /**@brief Function for initializing the sensor simulators.
  */
-static void sensor_sim_init(void)
+static void sensor_simulator_init(void)
 {
     m_battery_sim_cfg.min          = MIN_BATTERY_LEVEL;
     m_battery_sim_cfg.max          = MAX_BATTERY_LEVEL;
     m_battery_sim_cfg.incr         = BATTERY_LEVEL_INCREMENT;
     m_battery_sim_cfg.start_at_max = true;
 
-    ble_sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
+    sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
 
     // Temperature is in celcius (it is multiplied by 100 to avoid floating point arithmetic).
     m_temp_celcius_sim_cfg.min          = MIN_CELCIUS_DEGREES;
@@ -448,7 +408,7 @@ static void sensor_sim_init(void)
     m_temp_celcius_sim_cfg.incr         = CELCIUS_DEGREES_INCREMENT;
     m_temp_celcius_sim_cfg.start_at_max = false;
 
-    ble_sensorsim_init(&m_temp_celcius_sim_state, &m_temp_celcius_sim_cfg);
+    sensorsim_init(&m_temp_celcius_sim_state, &m_temp_celcius_sim_cfg);
 }
 
 
@@ -461,32 +421,6 @@ static void application_timers_start(void)
 
     // Start application timers.
     err_code = app_timer_start(m_battery_timer_id, BATTERY_LEVEL_MEAS_INTERVAL, NULL);
-    APP_ERROR_CHECK(err_code);
-}
-
-
-/**@brief Function for starting advertising.
- */
-static void advertising_start(void)
-{
-    uint32_t err_code;
-    uint32_t count;
-
-    // Verify if there is any flash access pending, if yes delay starting advertising until
-    // it's complete.
-    err_code = pstorage_access_status_get(&count);
-    APP_ERROR_CHECK(err_code);
-
-    if (count != 0)
-    {
-        m_memory_access_in_progress = true;
-        return;
-    }
-
-    err_code = sd_ble_gap_adv_start(&m_adv_params);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -546,6 +480,41 @@ static void conn_params_init(void)
 }
 
 
+/**@brief Function for handling advertising events.
+ *
+ * @details This function will be called for advertising events which are passed to the application.
+ *
+ * @param[in] ble_adv_evt  Advertising event.
+ */
+static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
+{
+    uint32_t err_code;
+
+    switch (ble_adv_evt)
+    {
+        case BLE_ADV_EVT_FAST:
+            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
+            APP_ERROR_CHECK(err_code);
+            break;
+        case BLE_ADV_EVT_IDLE:
+            err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+            APP_ERROR_CHECK(err_code);
+
+            // enable buttons to wake-up from power off
+            err_code = bsp_buttons_enable( (1 << WAKEUP_BUTTON_ID)
+                                         | (1 << BOND_DELETE_ALL_BUTTON_ID));
+            APP_ERROR_CHECK(err_code);
+
+            // Go to system-off mode. This function will not return; wakeup will cause a reset.
+            err_code = sd_power_system_off();
+            APP_ERROR_CHECK(err_code);
+            break;
+        default:
+            break;
+    }
+}
+
+
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @param[in]   p_ble_evt   Bluetooth stack event.
@@ -559,7 +528,6 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
         case BLE_GAP_EVT_CONNECTED:
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
-
             err_code = bsp_buttons_enable(1 << SEND_MEAS_BUTTON_PIN_ID);
             APP_ERROR_CHECK(err_code);
 
@@ -567,35 +535,8 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
-            err_code = bsp_indication_set(BSP_INDICATE_IDLE);
-            APP_ERROR_CHECK(err_code);
-
             m_conn_handle               = BLE_CONN_HANDLE_INVALID;
             m_hts_meas_ind_conf_pending = false;
-
-            // Stop detecting button presses when not connected.
-            err_code = bsp_buttons_enable(BSP_BUTTONS_NONE);
-            APP_ERROR_CHECK(err_code);
-
-            advertising_start();
-            break;
-
-        case BLE_GAP_EVT_TIMEOUT:
-
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT)
-            {
-                err_code = bsp_indication_set(BSP_INDICATE_IDLE);
-                APP_ERROR_CHECK(err_code);
-
-                // Configure buttons with sense level low as wakeup source.
-                /* disable all buttons except button 0 and button 1 */
-                err_code = bsp_buttons_enable( (1 << SEND_MEAS_BUTTON_PIN_ID) | (1 << BOND_DELETE_ALL_BUTTON_ID));
-                APP_ERROR_CHECK(err_code);
-                
-                // Go to system-off mode (this function will not return; wakeup will cause a reset).
-                err_code = sd_power_system_off();
-                APP_ERROR_CHECK(err_code);
-            }
             break;
 
         case BLE_GATTS_EVT_TIMEOUT:
@@ -615,37 +556,12 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 }
 
 
-/**@brief Function for handling the Application's system events.
- *
- * @param[in]   sys_evt   system event.
- */
-static void on_sys_evt(uint32_t sys_evt)
-{
-    switch(sys_evt)
-    {
-        case NRF_EVT_FLASH_OPERATION_SUCCESS:
-        case NRF_EVT_FLASH_OPERATION_ERROR:
-
-            if (m_memory_access_in_progress)
-            {
-                m_memory_access_in_progress = false;
-                advertising_start();
-            }
-            break;
-
-        default:
-            // No implementation needed.
-            break;
-    }
-}
-
-
 /**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
  *
  * @details This function is called from the BLE Stack event interrupt handler after a BLE stack
  *          event has been received.
  *
- * @param[in]   p_ble_evt   Bluetooth stack event.
+ * @param[in] p_ble_evt  Bluetooth stack event.
  */
 static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
@@ -654,6 +570,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
     ble_conn_params_on_ble_evt(p_ble_evt);
     dm_ble_evt_handler(p_ble_evt);
     on_ble_evt(p_ble_evt);
+    ble_advertising_on_ble_evt(p_ble_evt);
 }
 
 
@@ -662,12 +579,12 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
  * @details This function is called from the System event interrupt handler after a system
  *          event has been received.
  *
- * @param[in]   sys_evt   System stack event.
+ * @param[in] sys_evt  System stack event.
  */
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
     pstorage_sys_event_handler(sys_evt);
-    on_sys_evt(sys_evt);
+    ble_advertising_on_sys_evt(sys_evt);
 }
 
 
@@ -680,7 +597,7 @@ static void ble_stack_init(void)
     uint32_t err_code;
 
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;
@@ -697,6 +614,7 @@ static void ble_stack_init(void)
     err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
     APP_ERROR_CHECK(err_code);
 }
+
 
 static void bsp_events_handler(bsp_event_t event)
 {
@@ -725,7 +643,7 @@ static void gpiote_init(void)
  */
 static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
                                            dm_event_t const  * p_event,
-                                           api_result_t        event_result)
+                                           ret_code_t        event_result)
 {
     uint32_t err_code;
     bool     is_indication_enabled;
@@ -735,7 +653,7 @@ static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
         case DM_EVT_LINK_SECURED:
             // Send a single temperature measurement if indication is enabled.
             // NOTE: For this to work, make sure ble_hts_on_ble_evt() is called before
-            //       ble_bondmngr_on_ble_evt() in ble_evt_dispatch().
+            //       dm_ble_evt_handler() in ble_evt_dispatch().
             err_code = ble_hts_is_indication_enabled(&m_hts, &is_indication_enabled);
             APP_ERROR_CHECK(err_code);
 
@@ -766,15 +684,18 @@ static void device_manager_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded centrals if the Bonds Delete button is pushed.
-    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_data.clear_persistent_data));
-    APP_ERROR_CHECK(err_code);
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,
+                                     &(init_data.clear_persistent_data));
+    if(err_code == NRF_ERROR_INVALID_PARAM)
+    {
+        init_data.clear_persistent_data = false;
+    }
 
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
 
     memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
     
-    register_param.sec_param.timeout      = SEC_PARAM_TIMEOUT;
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
@@ -785,6 +706,35 @@ static void device_manager_init(void)
     register_param.service_type           = DM_PROTOCOL_CNTXT_GATT_SRVR_ID;
 
     err_code = dm_register(&m_app_handle, &register_param);
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for initializing the Advertising functionality.
+ *
+ * @details Encodes the required advertising data and passes it to the stack.
+ *          Also builds a structure to be passed to the stack when starting advertising.
+ */
+static void advertising_init(void)
+{
+    uint32_t      err_code;
+    ble_advdata_t advdata;
+
+    // Build and set advertising data
+    memset(&advdata, 0, sizeof(advdata));
+
+    advdata.name_type               = BLE_ADVDATA_FULL_NAME;
+    advdata.include_appearance      = true;
+    advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
+    advdata.uuids_complete.uuid_cnt = sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
+    advdata.uuids_complete.p_uuids  = m_adv_uuids;
+
+    ble_adv_modes_config_t options = {0};
+    options.ble_adv_fast_enabled  = BLE_ADV_FAST_ENABLED;
+    options.ble_adv_fast_interval = APP_ADV_INTERVAL;
+    options.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;
+
+    err_code = ble_advertising_init(&advdata, &options, on_adv_evt, NULL);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -802,12 +752,16 @@ static void power_manage(void)
  */
 int main(void)
 {
+    uint32_t err_code;
+
     // Initialize.
     app_trace_init();
     timers_init();
     gpiote_init();
 
-    uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), bsp_events_handler);
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
+                        bsp_events_handler);
     APP_ERROR_CHECK(err_code);
 
     ble_stack_init();
@@ -815,12 +769,13 @@ int main(void)
     gap_params_init();
     advertising_init();
     services_init();
-    sensor_sim_init();
+    sensor_simulator_init();
     conn_params_init();
 
     // Start execution.
     application_timers_start();
-    advertising_start();
+    err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
+    APP_ERROR_CHECK(err_code);
 
     // Enter main loop.
     for (;; )

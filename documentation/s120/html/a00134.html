@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_scan_params_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_opt_scan_req_report_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,45 @@ $(document).ready(function(){initNavTree('a00134.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_scan_params_t Struct Reference<div class="ingroups"><a class="el" href="a00748.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_opt_scan_req_report_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP scanning parameters.  
+<p>Scan request report option.  
  <a href="a00134.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a7f3eda85d15916ad467a81faba18f076"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#a7f3eda85d15916ad467a81faba18f076">active</a>: 1</td></tr>
-<tr class="separator:a7f3eda85d15916ad467a81faba18f076"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbe25b20112d8859f9ceff46b5711651"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#abbe25b20112d8859f9ceff46b5711651">selective</a>: 1</td></tr>
-<tr class="separator:abbe25b20112d8859f9ceff46b5711651"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c611522e99e67bd89d484bc2ad96463"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00141.html">ble_gap_whitelist_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#a2c611522e99e67bd89d484bc2ad96463">p_whitelist</a></td></tr>
-<tr class="separator:a2c611522e99e67bd89d484bc2ad96463"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a086b92604899521d85052d48d8552b7d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#a086b92604899521d85052d48d8552b7d">interval</a></td></tr>
-<tr class="separator:a086b92604899521d85052d48d8552b7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89a91dffe2c1b7edc26567c932a491b7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#a89a91dffe2c1b7edc26567c932a491b7">window</a></td></tr>
-<tr class="separator:a89a91dffe2c1b7edc26567c932a491b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ddedc25ebdb29351a7cbd0039ce6ed8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#a1ddedc25ebdb29351a7cbd0039ce6ed8">timeout</a></td></tr>
-<tr class="separator:a1ddedc25ebdb29351a7cbd0039ce6ed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26b299c2b740414aab7ac8f6cd96f5c8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#a26b299c2b740414aab7ac8f6cd96f5c8">enable</a>: 1</td></tr>
+<tr class="separator:a26b299c2b740414aab7ac8f6cd96f5c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GAP scanning parameters. </p>
+<div class="textblock"><p>Scan request report option. </p>
+<pre class="fragment">   This can be used with @ref sd_ble_opt_set to make the SoftDevice send
+   @ref BLE_GAP_EVT_SCAN_REQ_REPORT events.
+</pre><dl class="section note"><dt>Note</dt><dd>Due to the limited space reserved for scan request report events, not all received scan requests will be reported.</dd>
+<dd>
+If whitelisting is used, only whitelisted requests are reported.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Set successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00562.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>When advertising is ongoing while the option is set. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a7f3eda85d15916ad467a81faba18f076"></a>
+<a class="anchor" id="a26b299c2b740414aab7ac8f6cd96f5c8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_scan_params_t::active</td>
+          <td class="memname">uint8_t ble_gap_opt_scan_req_report_t::enable</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>If 1, perform active scanning (scan requests). </p>
-
-</div>
-</div>
-<a class="anchor" id="a086b92604899521d85052d48d8552b7d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gap_scan_params_t::interval</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Scan interval between 0x0004 and 0x4000 in 0.625ms units (2.5ms to 10.24s). </p>
-
-</div>
-</div>
-<a class="anchor" id="a2c611522e99e67bd89d484bc2ad96463"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00141.html">ble_gap_whitelist_t</a>* ble_gap_scan_params_t::p_whitelist</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to whitelist, NULL if none is given. </p>
-
-</div>
-</div>
-<a class="anchor" id="abbe25b20112d8859f9ceff46b5711651"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_scan_params_t::selective</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If 1, ignore unknown devices (non whitelisted). </p>
-
-</div>
-</div>
-<a class="anchor" id="a1ddedc25ebdb29351a7cbd0039ce6ed8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gap_scan_params_t::timeout</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Scan timeout between 0x0001 and 0xFFFF in seconds, 0x0000 disables timeout. </p>
-
-</div>
-</div>
-<a class="anchor" id="a89a91dffe2c1b7edc26567c932a491b7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gap_scan_params_t::window</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Scan window between 0x0004 and 0x4000 in 0.625ms units (2.5ms to 10.24s). </p>
+<p>Enable scan request reports. </p>
 
 </div>
 </div>
@@ -216,8 +153,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00134.html">ble_gap_scan_params_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00134.html">ble_gap_opt_scan_req_report_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

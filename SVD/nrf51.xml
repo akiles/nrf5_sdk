@@ -5,8 +5,8 @@
 <device schemaVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_0.xsd" >
   <vendor>Nordic Semiconductor</vendor>                           <!-- Name for Doxygroup -->
   <vendorID>Nordic</vendorID>                                     <!-- Vendor ID -->
-  <name>nRF51</name>                                              <!-- Official name of part or part series -->
-  <series>nRF51</series>
+  <name>nrf51</name>                                              <!-- Official name of part or part series -->
+  <series>nrf51</series>
   <version>522</version>                                          <!-- Version of this description. It is the run of the automatic generation of SUS. -->
   <description>nRF51 reference description for radio MCU with ARM 32-bit Cortex-M0 Microcontroller at 16MHz CPU clock</description>
   <licenseText>
@@ -184,36 +184,120 @@
               <name>RESETPIN</name>
               <description>Reset from pin-reset detected.</description>
               <lsb>0</lsb> <msb>0</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NotDetected</name>
+                  <description>Reset not detected.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Detected</name>
+                  <description>Reset detected.</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
             </field>
             <field>
               <name>DOG</name>
               <description>Reset from watchdog detected.</description>
               <lsb>1</lsb> <msb>1</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NotDetected</name>
+                  <description>Reset not detected.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Detected</name>
+                  <description>Reset detected.</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
             </field>
             <field>
               <name>SREQ</name>
               <description>Reset from AIRCR.SYSRESETREQ detected.</description>
               <lsb>2</lsb> <msb>2</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NotDetected</name>
+                  <description>Reset not detected.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Detected</name>
+                  <description>Reset detected.</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
             </field>
             <field>
               <name>LOCKUP</name>
               <description>Reset from CPU lock-up detected.</description>
               <lsb>3</lsb> <msb>3</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NotDetected</name>
+                  <description>Reset not detected.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Detected</name>
+                  <description>Reset detected.</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
             </field>
             <field>
               <name>OFF</name>
               <description>Reset from wake-up from OFF mode detected by the use of DETECT signal from GPIO.</description>
               <lsb>16</lsb> <msb>16</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NotDetected</name>
+                  <description>Reset not detected.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Detected</name>
+                  <description>Reset detected.</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
             </field>
             <field>
               <name>LPCOMP</name>
               <description>Reset from wake-up from OFF mode detected by the use of ANADETECT signal from LPCOMP.</description>
               <lsb>17</lsb> <msb>17</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NotDetected</name>
+                  <description>Reset not detected.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Detected</name>
+                  <description>Reset detected.</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
             </field>
             <field>
               <name>DIF</name>
               <description>Reset from wake-up from OFF mode detected by entering into debug interface mode.</description>
               <lsb>18</lsb> <msb>18</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>NotDetected</name>
+                  <description>Reset not detected.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Detected</name>
+                  <description>Reset detected.</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
             </field>
           </fields>
         </register>
@@ -6362,7 +6446,7 @@
         </register>
         <register>
           <name>EVENTS_BCMATCH</name>
-          <description>Bit counter reached bit count value specified in BC register.</description>
+          <description>Bit counter reached bit count value specified in BCC register.</description>
           <addressOffset>0x128</addressOffset>
         </register>
 
@@ -8740,7 +8824,7 @@
                 <enumeratedValue>
                   <name>Baud921600</name>
                   <description>921600 baud.</description>
-                  <value>0x0EBEDFA4</value>
+                  <value>0x0EBED000</value>
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Baud1M</name>
@@ -9583,6 +9667,32 @@
           <description>Two-wire error source. Write error field to 1 to clear error.</description>
           <addressOffset>0x4C4</addressOffset>
           <fields>
+            <field>
+              <name>OVERRUN</name>
+              <description>Byte received in RXD register before read of the last received byte (data loss).</description>
+              <lsb>0</lsb> <msb>0</msb>
+              <enumeratedValues>
+                <usage>read</usage>
+                <enumeratedValue>
+                  <name>NotPresent</name>
+                  <description>Error not present.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Present</name>
+                  <description>Error present.</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+              <enumeratedValues>
+                <usage>write</usage>
+                <enumeratedValue>
+                  <name>Clear</name>
+                  <description>Clear error on write.</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
             <field>
               <name>ANACK</name>
               <description>NACK received after sending the address.</description>
@@ -10740,32 +10850,6 @@
         </cluster>
         
         <register>
-          <name>RXDDATA</name>
-          <description>RXD register.</description>
-          <addressOffset>0x518</addressOffset>
-          <access>read-only</access>
-          <fields>
-            <field>
-              <name>RXD</name>
-              <description>RX data received. Double buffered.</description>
-              <lsb>0</lsb><msb>7</msb>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>TXDDATA</name>
-          <description>TXD register.</description>
-          <addressOffset>0x51C</addressOffset>
-          <fields>
-            <field>
-              <name>TXD</name>
-              <description>TX data to send. Double buffered.</description>
-              <lsb>0</lsb><msb>7</msb>
-            </field>
-          </fields>
-        </register>
-        
-        <register>
           <name>FREQUENCY</name>
           <description>SPI frequency.</description>
           <addressOffset>0x524</addressOffset>
@@ -11364,6 +11448,11 @@
               <description>Effects on output when in Task mode, or events on input that generates an event.</description>
               <lsb>16</lsb> <msb>17</msb>
               <enumeratedValues>
+                <enumeratedValue>
+                  <name>None</name>
+                  <description>No task or event.</description>
+                  <value>0x00</value>
+                </enumeratedValue>
                 <enumeratedValue>
                   <name>LoToHi</name>
                   <description>Low to high.</description>
@@ -16362,6 +16451,12 @@
           <description>Register for erasing a non-protected non-volatile memory page.</description>
           <addressOffset>0x508</addressOffset>
         </register>
+        <register>
+          <name>ERASEPCR1</name>
+          <description>Register for erasing a non-protected non-volatile memory page.</description>
+          <addressOffset>0x508</addressOffset>
+          <alternateRegister>ERASEPAGE</alternateRegister>
+        </register>
         
         <register>
           <name>ERASEALL</name>
@@ -16392,6 +16487,12 @@
           <name>ERASEPROTECTEDPAGE</name>
           <description>Register for erasing a protected non-volatile memory page.</description>
           <addressOffset>0x510</addressOffset>
+        </register>
+        <register>
+          <name>ERASEPCR0</name>
+          <description>Register for erasing a protected non-volatile memory page.</description>
+          <addressOffset>0x510</addressOffset>
+          <alternateRegister>ERASEPROTECTEDPAGE</alternateRegister>
         </register>
         
         <register>
@@ -19139,201 +19240,6 @@
           <addressOffset>0x0EC</addressOffset>
         </register>
         
-        <cluster>
-          <name>INFO</name>
-          <description>Device info</description>
-          <addressOffset>0x100</addressOffset>
-          <headerStructName>FICR_INFO</headerStructName>
-          <register>
-            <name>PART</name>
-            <description>Part code</description>
-            <addressOffset>0x0</addressOffset>
-            <access>read-only</access>
-            <resetValue>0xFFFFFFFF</resetValue>
-            <fields>
-              <field>
-                <name>PART</name>
-                <description>Part code</description>
-                <lsb>0</lsb>
-                <msb>31</msb>
-                <enumeratedValues>
-                  <enumeratedValue>
-                    <name>N51822</name>
-                    <description>nRF51822</description>
-                    <value>0x51822</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>N51422</name>
-                    <description>nRF51422</description>
-                    <value>0x51422</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>Unspecified</name>
-                    <description>Unspecified</description>
-                    <value>0xFFFFFFFF</value>
-                  </enumeratedValue>
-                </enumeratedValues>
-              </field>
-            </fields>
-          </register>
-          <register>
-            <name>VARIANT</name>
-            <description>Part variant</description>
-            <addressOffset>0x4</addressOffset>
-            <access>read-only</access>
-            <resetValue>0xFFFFFFFF</resetValue>
-            <fields>
-              <field>
-                <name>VARIANT</name>
-                <description>Part variant</description>
-                <lsb>0</lsb>
-                <msb>31</msb>
-                <enumeratedValues>
-                  <enumeratedValue>
-                    <name>nRF51C</name>
-                    <description>nRF51-C (XLR3)</description>
-                    <value>0x1002</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>nRF51D</name>
-                    <description>nRF51-D (L3)</description>
-                    <value>0x1003</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>nRF51E</name>
-                    <description>nRF51-E (XLR3P)</description>
-                    <value>0x1004</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>Unspecified</name>
-                    <description>Unspecified</description>
-                    <value>0xFFFFFFFF</value>
-                  </enumeratedValue>
-                </enumeratedValues>
-              </field>
-            </fields>
-          </register>
-          <register>
-            <name>PACKAGE</name>
-            <description>Package option</description>
-            <addressOffset>0x8</addressOffset>
-            <access>read-only</access>
-            <resetValue>0xFFFFFFFF</resetValue>
-            <fields>
-              <field>
-                <name>PACKAGE</name>
-                <description>Package option</description>
-                <lsb>0</lsb>
-                <msb>31</msb>
-                <enumeratedValues>
-                  <enumeratedValue>
-                    <name>QFN48</name>
-                    <description>48-pin QFN with 31 GPIO</description>
-                    <value>0x0000</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>nRF51CSP56A</name>
-                    <description>nRF51x22 CDxx - WLCSP 56 balls</description>
-                    <value>0x1000</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>nRF51CSP62A</name>
-                    <description>nRF51x22 CExx - WLCSP 62 balls</description>
-                    <value>0x1001</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>nRF51CSP62B</name>
-                    <description>nRF51x22 CFxx - WLCSP 62 balls</description>
-                    <value>0x1002</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>nRF51CSP62C</name>
-                    <description>nRF51x22 CTxx - WLCSP 62 balls</description>
-                    <value>0x1003</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>Unspecified</name>
-                    <description>Unspecified</description>
-                    <value>0xFFFFFFFF</value>
-                  </enumeratedValue>
-                </enumeratedValues>
-              </field>
-            </fields>
-          </register>
-          <register>
-            <name>RAM</name>
-            <description>RAM variant</description>
-            <addressOffset>0xc</addressOffset>
-            <access>read-only</access>
-            <resetValue>0xFFFFFFFF</resetValue>
-            <fields>
-              <field>
-                <name>RAM</name>
-                <description>RAM variant</description>
-                <lsb>0</lsb>
-                <msb>31</msb>
-                <enumeratedValues>
-                  <enumeratedValue>
-                    <name>K16</name>
-                    <description>16 kByte RAM.</description>
-                    <value>16</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>K32</name>
-                    <description>32 kByte RAM.</description>
-                    <value>32</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>Unspecified</name>
-                    <description>Unspecified</description>
-                    <value>0xFFFFFFFF</value>
-                  </enumeratedValue>
-                </enumeratedValues>
-              </field>
-            </fields>
-          </register>
-          <register>
-            <name>FLASH</name>
-            <description>Flash variant</description>
-            <addressOffset>0x10</addressOffset>
-            <access>read-only</access>
-            <resetValue>0xFFFFFFFF</resetValue>
-            <fields>
-              <field>
-                <name>FLASH</name>
-                <description>Flash variant</description>
-                <lsb>0</lsb>
-                <msb>31</msb>
-                <enumeratedValues>
-                  <enumeratedValue>
-                    <name>K128</name>
-                    <description>128 kByte FLASH.</description>
-                    <value>128</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>K256</name>
-                    <description>256 kByte FLASH.</description>
-                    <value>256</value>
-                  </enumeratedValue>
-                  <enumeratedValue>
-                    <name>Unspecified</name>
-                    <description>Unspecified</description>
-                    <value>0xFFFFFFFF</value>
-                  </enumeratedValue>
-                </enumeratedValues>
-              </field>
-            </fields>
-          </register>
-          <register>
-            <dim>3</dim>
-            <dimIncrement>0x04</dimIncrement>
-            <dimIndex>0-2</dimIndex>
-            <name>RESERVED[%s]</name>
-            <description>Reserved</description>
-            <addressOffset>0x14</addressOffset>
-          </register>
-        </cluster>
-        
       </registers>
     </peripheral>
 
@@ -19445,6 +19351,32 @@
           <name>BOOTLOADERADDR</name>
           <description>Bootloader start address.</description>
           <addressOffset>0x014</addressOffset>
+        </register>
+        
+        <register>
+          <dim>15</dim>
+          <dimIncrement>0x04</dimIncrement>
+          <dimIndex>0-14</dimIndex>
+          <name>NRFFW[%s]</name>
+          <description>Reserved for Nordic firmware design.</description>
+          <addressOffset>0x014</addressOffset>
+          <alternateRegister>BOOTLOADERADDR</alternateRegister>
+        </register>
+        <register>
+          <dim>12</dim>
+          <dimIncrement>0x04</dimIncrement>
+          <dimIndex>0-11</dimIndex>
+          <name>NRFHW[%s]</name>
+          <description>Reserved for Nordic hardware design.</description>
+          <addressOffset>0x050</addressOffset>
+        </register>
+        <register>
+          <dim>32</dim>
+          <dimIncrement>0x04</dimIncrement>
+          <dimIndex>0-31</dimIndex>
+          <name>CUSTOMER[%s]</name>
+          <description>Reserved for customer.</description>
+          <addressOffset>0x080</addressOffset>
         </register>
         
       </registers>

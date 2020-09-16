@@ -1,6 +1,8 @@
 var a00991 =
 [
-    [ "dm_security_setup_req", "a00991.html#ga4611de4e4f5cc68f0e3648e72e63283e", null ],
-    [ "dm_security_status_req", "a00991.html#ga3fe0567568f486ca25712c87522cb939", null ],
-    [ "dm_whitelist_create", "a00991.html#ga2c2148c29f11f7508ee4550ff3ac3db2", null ]
+    [ "ble_db_discovery_evt_type_t", "a00991.html#gaa16075c6c77a4f3f32fb567d5ce45462", [
+      [ "BLE_DB_DISCOVERY_COMPLETE", "a00991.html#ggaa16075c6c77a4f3f32fb567d5ce45462ad6925ee73dada1191de4934d7891dc1f", null ],
+      [ "BLE_DB_DISCOVERY_ERROR", "a00991.html#ggaa16075c6c77a4f3f32fb567d5ce45462aca629cd78939015c22a44c9e3797043b", null ],
+      [ "BLE_DB_DISCOVERY_SRV_NOT_FOUND", "a00991.html#ggaa16075c6c77a4f3f32fb567d5ce45462a16f218739c505cfa820990dce92e412d", null ]
+    ] ]
 ];

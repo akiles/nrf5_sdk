@@ -1,4 +1,6 @@
 var a00223 =
 [
-    [ "num_of_bytes", "a00223.html#a7f6d69ce5cc415b31050e5ed4846c2ff", null ]
+    [ "instance_id", "a00223.html#adddb0bddab148beb1b7ebbd61287aa7c", null ],
+    [ "irq", "a00223.html#a4d46eefc5f87c6e7e469f5a87ff554ba", null ],
+    [ "p_reg", "a00223.html#ab45287af2512c2277a6bb35c4e37c3c0", null ]
 ];

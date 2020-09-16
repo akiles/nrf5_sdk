@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: spi_master_evt_t Struct Reference</title>
+<title>nRF51 SDK - S210 SoftDevice: hci_slip_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,63 @@ $(document).ready(function(){initNavTree('a00073.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">spi_master_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00221.html">SPI Master driver</a></div></div>  </div>
+<div class="title">hci_slip_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00321.html">SLIP module</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Struct containing parameters of the SPI MASTER event.  
+<p>Structure containing an event from the SLIP layer.  
  <a href="a00073.html#details">More...</a></p>
 
-<p><code>#include &lt;spi_master.h&gt;</code></p>
+<p><code>#include &lt;hci_slip.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a6d7cb2ed26034e0c1cb5dcb0022a612a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00221.html#ga8e658ee16bfb5beb4d00e27c93f68f96">spi_master_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a6d7cb2ed26034e0c1cb5dcb0022a612a">type</a></td></tr>
-<tr class="separator:a6d7cb2ed26034e0c1cb5dcb0022a612a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a800d239d1224cc1226201c6b9a635713"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a800d239d1224cc1226201c6b9a635713">data</a></td></tr>
-<tr class="separator:a800d239d1224cc1226201c6b9a635713"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a622197dded7bfa292535944e6870c5f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00221.html#ga8e658ee16bfb5beb4d00e27c93f68f96">spi_master_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a622197dded7bfa292535944e6870c5f7">evt_type</a></td></tr>
-<tr class="separator:a622197dded7bfa292535944e6870c5f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a370358835ed2aa53bcc515894b13eb87"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a370358835ed2aa53bcc515894b13eb87">data_count</a></td></tr>
-<tr class="separator:a370358835ed2aa53bcc515894b13eb87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7e76a07c099aed4eb9d8180a15368d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00321.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ac7e76a07c099aed4eb9d8180a15368d8">evt_type</a></td></tr>
+<tr class="separator:ac7e76a07c099aed4eb9d8180a15368d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a005a67172eb3d6a4645d536db7fbb98f"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a005a67172eb3d6a4645d536db7fbb98f">packet</a></td></tr>
+<tr class="separator:a005a67172eb3d6a4645d536db7fbb98f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac31d16ccc1a5fc4bd8852c58d710f821"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ac31d16ccc1a5fc4bd8852c58d710f821">packet_length</a></td></tr>
+<tr class="separator:ac31d16ccc1a5fc4bd8852c58d710f821"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct containing parameters of the SPI MASTER event. </p>
+<div class="textblock"><p>Structure containing an event from the SLIP layer. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a800d239d1224cc1226201c6b9a635713"></a>
+<a class="anchor" id="ac7e76a07c099aed4eb9d8180a15368d8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t spi_master_evt_t::data</td>
+          <td class="memname"><a class="el" href="a00321.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a> hci_slip_evt_t::evt_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>event data - context dependent </p>
+<p>Type of event. </p>
 
 </div>
 </div>
-<a class="anchor" id="a370358835ed2aa53bcc515894b13eb87"></a>
+<a class="anchor" id="a005a67172eb3d6a4645d536db7fbb98f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t spi_master_evt_t::data_count</td>
+          <td class="memname">const uint8_t* hci_slip_evt_t::packet</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Count of data sent. </p>
+<p>This field contains a pointer to the packet for which the event relates, i.e. SLIP_TX_DONE: the packet transmitted, SLIP_RX_RDY: the packet received, SLIP_RX_OVERFLOW: The packet which overflow/or NULL if no receive buffer is available. </p>
 
 </div>
 </div>
-<a class="anchor" id="a622197dded7bfa292535944e6870c5f7"></a>
+<a class="anchor" id="ac31d16ccc1a5fc4bd8852c58d710f821"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00221.html#ga8e658ee16bfb5beb4d00e27c93f68f96">spi_master_evt_type_t</a> spi_master_evt_t::evt_type</td>
+          <td class="memname">uint32_t hci_slip_evt_t::packet_length</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of an event. </p>
-
-</div>
-</div>
-<a class="anchor" id="a6d7cb2ed26034e0c1cb5dcb0022a612a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00221.html#ga8e658ee16bfb5beb4d00e27c93f68f96">spi_master_evt_type_t</a> spi_master_evt_t::type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Type of an event </p>
+<p>Packet length, i.e. SLIP_TX_DONE: Bytes transmitted, SLIP_RX_RDY: Bytes received, SLIP_RX_OVERFLOW: index at which the packet overflowed. </p>
 
 </div>
 </div>
@@ -186,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00073.html">spi_master_evt_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:41 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00073.html">hci_slip_evt_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

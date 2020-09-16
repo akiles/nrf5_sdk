@@ -1,5 +1,7 @@
 var a00176 =
 [
-    [ "length", "a00176.html#a802b4878f42ffda788977e071d267759", null ],
-    [ "p_buffer", "a00176.html#a5e0fc51e041a89bcfda60e48b789d021", null ]
+    [ "bl_cccd_handle", "a00176.html#a2ea89dfa950963404b32410a8e42a04f", null ],
+    [ "bl_handle", "a00176.html#a58c7f1553ce38426e3656bd61bd21748", null ],
+    [ "conn_handle", "a00176.html#a97ef9e28546757bc5c42fc566e331380", null ],
+    [ "evt_handler", "a00176.html#a13ed1988cc9320c7eaad37ec21272201", null ]
 ];

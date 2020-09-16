@@ -1,9 +1,11 @@
 var a00986 =
 [
-    [ "DM_EVT_CONNECTION", "a00986.html#ga0f770455b2a8d43faf3e18570163a3d8", null ],
-    [ "DM_EVT_DISCONNECTION", "a00986.html#ga7909152aa711df2ab18ddef129af9597", null ],
-    [ "DM_EVT_LINK_SECURED", "a00986.html#gaf572cf54f12fa19eec469c0fff0c9a38", null ],
-    [ "DM_EVT_SECURITY_SETUP", "a00986.html#gabeb39b4bbdb79dc5df6feffc467deae3", null ],
-    [ "DM_EVT_SECURITY_SETUP_COMPLETE", "a00986.html#ga44bd57374aa0379152253c85b3f2f898", null ],
-    [ "DM_EVT_SECURITY_SETUP_REFRESH", "a00986.html#gaf45fa4ad220ac72b86b2aa66aeb8979d", null ]
+    [ "dm_application_context_delete", "a00986.html#gaff35c970367a7966cbb393fe24147ca5", null ],
+    [ "dm_application_context_get", "a00986.html#gac60803907fbc03b492f28cc254b0799f", null ],
+    [ "dm_application_context_set", "a00986.html#ga8e5dc36911e6ea1588eec9a3dc320943", null ],
+    [ "dm_device_delete", "a00986.html#gaf267e34f237c41665fd9df15dd32c531", null ],
+    [ "dm_device_delete_all", "a00986.html#ga677524b3230bd620c91a83e4f68e3e01", null ],
+    [ "dm_service_context_delete", "a00986.html#ga5aa5e62e38607fa93a2bd33ca101bed9", null ],
+    [ "dm_service_context_get", "a00986.html#gad7ee88165a162a5754ea971c2cca1df4", null ],
+    [ "dm_service_context_set", "a00986.html#ga8cc7db88fe9495e3d3da074bfd4800ba", null ]
 ];

@@ -146,7 +146,7 @@ typedef struct
 typedef void (*ble_ans_c_evt_handler_t) (ble_ans_c_evt_t * p_evt);
 
 /**@brief Alert Notification structure. This contains various status information for the client. */
-typedef struct ble_ans_c_s
+struct ble_ans_c_s
 {
     ble_ans_c_evt_handler_t             evt_handler;                                      /**< Event handler to be called for handling events in the Alert Notification Client Application. */
     ble_srv_error_handler_t             error_handler;                                    /**< Function to be called in case of an error. */
@@ -155,7 +155,7 @@ typedef struct ble_ans_c_s
     uint8_t                             service_handle;                                   /**< Handle to the service in the database to use for this instance. */
     uint32_t                            message_buffer_size;                              /**< Size of message buffer to hold the additional text messages received on notifications. */
     uint8_t *                           p_message_buffer;                                 /**< Pointer to the buffer to be used for additional text message handling. */
-} ble_ans_c_t;
+};
 
 /**@brief Alert Notification init structure. This contains all options and data needed for
  *        initialization of the client.*/

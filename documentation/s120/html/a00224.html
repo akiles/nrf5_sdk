@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ser_phy_evt_rx_pkt_received_params_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: nrf_drv_timer_config_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,78 @@ $(document).ready(function(){initNavTree('a00224.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ser_phy_evt_rx_pkt_received_params_t Struct Reference<div class="ingroups"><a class="el" href="a00662.html">Serialization PHY</a></div></div>  </div>
+<div class="title">nrf_drv_timer_config_t Struct Reference<div class="ingroups"><a class="el" href="a00466.html">Timer driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>A struct containing parameters of the event of type <a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061ab7c2a10cee66d30f6f2502376857b387">SER_PHY_EVT_RX_PKT_RECEIVED</a>.  
+<p>Struct for TIMER instance configuration.  
  <a href="a00224.html#details">More...</a></p>
 
-<p><code>#include &lt;ser_phy.h&gt;</code></p>
+<p><code>#include &lt;nrf_drv_timer.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a99d0194bb9ca302f67969e1ed923cb1b"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00224.html#a99d0194bb9ca302f67969e1ed923cb1b">p_buffer</a></td></tr>
-<tr class="separator:a99d0194bb9ca302f67969e1ed923cb1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb3880102935019faab8a8d2b9e51af7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00224.html#aeb3880102935019faab8a8d2b9e51af7">num_of_bytes</a></td></tr>
-<tr class="separator:aeb3880102935019faab8a8d2b9e51af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc77482beb52c3d8102c65ddc67c01c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00463.html#ga28862835cd77a9c8481ed04c7b1918eb">nrf_timer_frequency_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00224.html#acc77482beb52c3d8102c65ddc67c01c7">frequency</a></td></tr>
+<tr class="separator:acc77482beb52c3d8102c65ddc67c01c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3211f3bb290d9bab58bf069bd477bc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00463.html#ga61044c286dc20ccb08df3988bc57a6f2">nrf_timer_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00224.html#ac3211f3bb290d9bab58bf069bd477bc3">mode</a></td></tr>
+<tr class="separator:ac3211f3bb290d9bab58bf069bd477bc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb3f5d76f1cc9f033474a5c24d116025"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00463.html#ga567f81d672267a218a5b2f0155be3043">nrf_timer_bit_width_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00224.html#abb3f5d76f1cc9f033474a5c24d116025">bit_width</a></td></tr>
+<tr class="separator:abb3f5d76f1cc9f033474a5c24d116025"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0b6c866ca3e572ba89747f507675375"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00224.html#ad0b6c866ca3e572ba89747f507675375">interrupt_priority</a></td></tr>
+<tr class="separator:ad0b6c866ca3e572ba89747f507675375"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A struct containing parameters of the event of type <a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061ab7c2a10cee66d30f6f2502376857b387">SER_PHY_EVT_RX_PKT_RECEIVED</a>. </p>
+<div class="textblock"><p>Struct for TIMER instance configuration. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aeb3880102935019faab8a8d2b9e51af7"></a>
+<a class="anchor" id="abb3f5d76f1cc9f033474a5c24d116025"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ser_phy_evt_rx_pkt_received_params_t::num_of_bytes</td>
+          <td class="memname"><a class="el" href="a00463.html#ga567f81d672267a218a5b2f0155be3043">nrf_timer_bit_width_t</a> nrf_drv_timer_config_t::bit_width</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Length of a received packet in octets. </p>
+<p>Bit width. </p>
 
 </div>
 </div>
-<a class="anchor" id="a99d0194bb9ca302f67969e1ed923cb1b"></a>
+<a class="anchor" id="acc77482beb52c3d8102c65ddc67c01c7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* ser_phy_evt_rx_pkt_received_params_t::p_buffer</td>
+          <td class="memname"><a class="el" href="a00463.html#ga28862835cd77a9c8481ed04c7b1918eb">nrf_timer_frequency_t</a> nrf_drv_timer_config_t::frequency</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to a buffer containing received packet. </p>
+<p>Frequency. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad0b6c866ca3e572ba89747f507675375"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t nrf_drv_timer_config_t::interrupt_priority</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TIMER interrupt priority </p>
+
+</div>
+</div>
+<a class="anchor" id="ac3211f3bb290d9bab58bf069bd477bc3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00463.html#ga61044c286dc20ccb08df3988bc57a6f2">nrf_timer_mode_t</a> nrf_drv_timer_config_t::mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Mode of operation. </p>
 
 </div>
 </div>
@@ -156,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00224.html">ser_phy_evt_rx_pkt_received_params_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00224.html">nrf_drv_timer_config_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

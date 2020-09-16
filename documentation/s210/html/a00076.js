@@ -1,5 +1,6 @@
 var a00076 =
 [
-    [ "p_data", "a00076.html#af0aec898e61ff702225ab7cb8e81419a", null ],
-    [ "size", "a00076.html#a0ea03f9dd5df67309f05eeddf0b854ff", null ]
+    [ "reference", "a00076.html#a52dc01c53528ebb080237d4f94d5ef09", null ],
+    [ "resolution", "a00076.html#aeabcce3f7814da03f223ad2a992865d1", null ],
+    [ "scaling", "a00076.html#a280529b228ebb915939ab2b9720d73da", null ]
 ];

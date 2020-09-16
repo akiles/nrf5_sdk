@@ -1,26 +1,26 @@
-/*
+/* 
  * Copyright (c) Nordic Semiconductor ASA
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- *
+ * 
  *   1. Redistributions of source code must retain the above copyright notice, this
  *   list of conditions and the following disclaimer.
- *
+ * 
  *   2. Redistributions in binary form must reproduce the above copyright notice, this
  *   list of conditions and the following disclaimer in the documentation and/or
  *   other materials provided with the distribution.
- *
+ * 
  *   3. Neither the name of Nordic Semiconductor ASA nor the names of other
  *   contributors to this software may be used to endorse or promote products
  *   derived from this software without specific prior written permission.
- *
+ * 
  *   4. This software must only be used in a processor manufactured by Nordic
  *   Semiconductor ASA, or in a processor manufactured by a third party that
  *   is used in combination with a processor manufactured by Nordic Semiconductor.
- *
- *
+ * 
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -31,7 +31,7 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+ * 
  */
 /**
   @defgroup nrf_mbr_api Master Boot Record API
@@ -54,6 +54,9 @@
 
 /**@brief MBR SVC Base number. */
 #define MBR_SVC_BASE 0x18   
+
+/**@brief Page size in words. */
+#define PAGE_SIZE_IN_WORDS 256
 /** @} */
 
 /** @addtogroup NRF_MBR_ENUMS Enumerations
@@ -68,10 +71,11 @@ enum NRF_MBR_SVCS
 /**@brief Possible values for ::sd_mbr_command_t.command */
 enum NRF_MBR_COMMANDS
 {
-  SD_MBR_COMMAND_COPY_BL,  /**< Copy a new a new BootLoader. @see sd_mbr_command_copy_bl_t */
-  SD_MBR_COMMAND_COPY_SD,  /**< Copy a new SoftDevice. @see ::sd_mbr_command_copy_sd_t*/
-  SD_MBR_COMMAND_INIT_SD,  /**< Init forwarding interrupts to SD, and run reset function in SD*/
-  SD_MBR_COMMAND_COMPARE,  /**< This command works like memcmp. @see ::sd_mbr_command_compare_t*/
+  SD_MBR_COMMAND_COPY_BL,               /**< Copy a new a new BootLoader. @see sd_mbr_command_copy_bl_t */
+  SD_MBR_COMMAND_COPY_SD,               /**< Copy a new SoftDevice. @see ::sd_mbr_command_copy_sd_t*/
+  SD_MBR_COMMAND_INIT_SD,               /**< Init forwarding interrupts to SD, and run reset function in SD*/
+  SD_MBR_COMMAND_COMPARE,               /**< This command works like memcmp. @see ::sd_mbr_command_compare_t*/
+  SD_MBR_COMMAND_VECTOR_TABLE_BASE_SET, /**< Start forwarding all exception to this address @see ::sd_mbr_command_vector_table_base_set_t*/
 };
 
 /** @} */
@@ -93,7 +97,7 @@ typedef struct
 {
   uint32_t *src;  /**< Pointer to the source of data to be copied.*/
   uint32_t *dst;  /**< Pointer to the destination where the content is to be copied.*/
-  uint32_t len;   /**< Number of 32 bit words to copy. Must be a multiple of 256 words*/
+  uint32_t len;   /**< Number of 32 bit words to copy. Must be a multiple of 256 words.*/
 }sd_mbr_command_copy_sd_t;
 
 
@@ -104,9 +108,9 @@ typedef struct
  */
 typedef struct
 {
-  uint32_t *ptr1; /**< Pointer to block of memory */
-  uint32_t *ptr2; /**< Pointer to block of memory */
-  uint32_t len;   /**< Number of 32 bit words to compare*/
+  uint32_t *ptr1; /**< Pointer to block of memory. */
+  uint32_t *ptr2; /**< Pointer to block of memory. */
+  uint32_t len;   /**< Number of 32 bit words to compare.*/
 }sd_mbr_command_compare_t;
 
 
@@ -122,23 +126,38 @@ typedef struct
  *
  * @retval ::NRF_ERROR_INVALID_STATE indicates that something was wrong.
  * @retval ::NRF_ERROR_INTERNAL indicates an internal error that should not happen.
- * @retval ::NRF_ERROR_FORBIDDEN if NRF_UICR->BOOTADDR is not set
+ * @retval ::NRF_ERROR_FORBIDDEN if NRF_UICR->BOOTADDR is not set.
  * @retval ::NRF_ERROR_INVALID_LENGTH is invalid.
  */
 typedef struct
 {
   uint32_t *bl_src;  /**< Pointer to the source of the Bootloader to be be copied.*/
-  uint32_t bl_len;   /**< Number of 32 bit words to copy for BootLoader */
+  uint32_t bl_len;   /**< Number of 32 bit words to copy for BootLoader. */
 }sd_mbr_command_copy_bl_t;
+
+/**@brief Sets the base address of the interrupt vector table for interrupts forwarded from the MBR
+ * 
+ * Once this function has been called, this address is where the MBR will start to forward interrupts to after a reset.
+ *
+ * To restore default forwarding thiss function should be called with @param address set to 0.
+ * The MBR will then start forwarding to interrupts to the adress in NFR_UICR->BOOTADDR or to the SoftDevice if the BOOTADDR is not set.
+ *
+ * @retval ::NRF_SUCCESS
+ */
+typedef struct
+{ 
+  uint32_t address; /**< The base address of the interrupt vector table for forwarded interrupts.*/
+}sd_mbr_command_vector_table_base_set_t;
 
 typedef struct
 {
   uint32_t command;  /**< type of command to be issued see @ref NRF_MBR_COMMANDS. */
   union 
   {
-    sd_mbr_command_copy_sd_t copy_sd;  /**< Parameters for copy*/
-    sd_mbr_command_copy_bl_t copy_bl;  /**< Parameters for copy SoftDevice and BootLoader*/
-    sd_mbr_command_compare_t compare;  /**< Parameters for verify*/
+    sd_mbr_command_copy_sd_t copy_sd;  /**< Parameters for copy.*/
+    sd_mbr_command_copy_bl_t copy_bl;  /**< Parameters for copy SoftDevice and BootLoader.*/
+    sd_mbr_command_compare_t compare;  /**< Parameters for verify.*/
+    sd_mbr_command_vector_table_base_set_t base_set; /**< Parameters for vector table base set.*/
   } params;
 }sd_mbr_command_t;
 
@@ -149,9 +168,9 @@ typedef struct
 
 /**@brief Issue Master Boot Record commands
  *
- * Commands used when updating a SoftDevice and bootloader
+ * Commands used when updating a SoftDevice and bootloader.
  *
- * @param[in]  param Pointer to a struct describing the command
+ * @param[in]  param Pointer to a struct describing the command.
  *
  *@note for retvals see ::sd_mbr_command_copy_sd_t ::sd_mbr_command_copy_bl_t ::sd_mbr_command_compare_t
 

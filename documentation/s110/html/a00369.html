@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_radio_request_earliest_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dfu_init_packet_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,93 @@ $(document).ready(function(){initNavTree('a00369.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_radio_request_earliest_t Struct Reference<div class="ingroups"><a class="el" href="a01074.html">Types</a></div></div>  </div>
+<div class="title">dfu_init_packet_t Struct Reference<div class="ingroups"><a class="el" href="a00942.html">Init packet handling in DFU.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Parameters for a request for a timeslot as early as possible.  
+<p>Structure contained in an init packet. Contains information on device type, revision, and supported SoftDevices.  
  <a href="a00369.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_soc.h&gt;</code></p>
+<p><code>#include &lt;dfu_init.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a5d6e28106247179b7cde2e289f0f9c39"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#a5d6e28106247179b7cde2e289f0f9c39">hfclk</a></td></tr>
-<tr class="separator:a5d6e28106247179b7cde2e289f0f9c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad45d8189eff4584a13d7069d3c877a55"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#ad45d8189eff4584a13d7069d3c877a55">priority</a></td></tr>
-<tr class="separator:ad45d8189eff4584a13d7069d3c877a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0495f3c5f7e2fd20663af081ca7e4c0b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#a0495f3c5f7e2fd20663af081ca7e4c0b">length_us</a></td></tr>
-<tr class="separator:a0495f3c5f7e2fd20663af081ca7e4c0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af56601d1b7ef92d49dbd1567bd1d39e0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#af56601d1b7ef92d49dbd1567bd1d39e0">timeout_us</a></td></tr>
-<tr class="separator:af56601d1b7ef92d49dbd1567bd1d39e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a880fe28496a9999f4554b47662485064"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#a880fe28496a9999f4554b47662485064">device_type</a></td></tr>
+<tr class="separator:a880fe28496a9999f4554b47662485064"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfdd24f9e67a34b585c49d43d5fb9230"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#acfdd24f9e67a34b585c49d43d5fb9230">device_rev</a></td></tr>
+<tr class="separator:acfdd24f9e67a34b585c49d43d5fb9230"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2af05679dfa350f574a5aa0d403ca05e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#a2af05679dfa350f574a5aa0d403ca05e">app_version</a></td></tr>
+<tr class="separator:a2af05679dfa350f574a5aa0d403ca05e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86e254a1d13edd634ce1c1aad34e87ea"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#a86e254a1d13edd634ce1c1aad34e87ea">softdevice_len</a></td></tr>
+<tr class="separator:a86e254a1d13edd634ce1c1aad34e87ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b1f79aeef3c148827d1740aec3daa3d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#a3b1f79aeef3c148827d1740aec3daa3d">softdevice</a> [1]</td></tr>
+<tr class="separator:a3b1f79aeef3c148827d1740aec3daa3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Parameters for a request for a timeslot as early as possible. </p>
+<div class="textblock"><p>Structure contained in an init packet. Contains information on device type, revision, and supported SoftDevices. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a5d6e28106247179b7cde2e289f0f9c39"></a>
+<a class="anchor" id="a2af05679dfa350f574a5aa0d403ca05e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_radio_request_earliest_t::hfclk</td>
+          <td class="memname">uint32_t dfu_init_packet_t::app_version</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>High frequency clock source, see <a class="el" href="a01074.html#gac7d87a0d58b5d7b5a619d7587cd139a4">NRF_RADIO_HFCLK_CFG</a>. </p>
+<p>Application version for the image software. This field allows for additional checking, for example ensuring that a downgrade is not allowed. </p>
 
 </div>
 </div>
-<a class="anchor" id="a0495f3c5f7e2fd20663af081ca7e4c0b"></a>
+<a class="anchor" id="acfdd24f9e67a34b585c49d43d5fb9230"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t nrf_radio_request_earliest_t::length_us</td>
+          <td class="memname">uint16_t dfu_init_packet_t::device_rev</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The radio timeslot length (in the range 100 to 100,000] microseconds). </p>
+<p>Device revision (2 bytes), for example major revision 1, minor revision 0. This number must be defined by the customer before production. It can be located in UICR or FICR. </p>
 
 </div>
 </div>
-<a class="anchor" id="ad45d8189eff4584a13d7069d3c877a55"></a>
+<a class="anchor" id="a880fe28496a9999f4554b47662485064"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_radio_request_earliest_t::priority</td>
+          <td class="memname">uint16_t dfu_init_packet_t::device_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The radio timeslot priority, see <a class="el" href="a01074.html#ga5026e138e16d9a9664b804608062e9a1">NRF_RADIO_PRIORITY</a>. </p>
+<p>Device type (2 bytes), for example Heart Rate. This number must be defined by the customer before production. It can be located in UICR or FICR. </p>
 
 </div>
 </div>
-<a class="anchor" id="af56601d1b7ef92d49dbd1567bd1d39e0"></a>
+<a class="anchor" id="a3b1f79aeef3c148827d1740aec3daa3d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t nrf_radio_request_earliest_t::timeout_us</td>
+          <td class="memname">uint16_t dfu_init_packet_t::softdevice[1]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Longest acceptable delay until the start of the requested timeslot (up to <a class="el" href="a01073.html#gace6d931f266ad76277d7de831a6b45ee">NRF_RADIO_EARLIEST_TIMEOUT_MAX_US</a> microseconds). </p>
+<p>Variable length array of SoftDevices compatible with this application. The length of the array is specified in the length field. SoftDevice firmware id 0xFFFE indicates any SoftDevice. </p>
+
+</div>
+</div>
+<a class="anchor" id="a86e254a1d13edd634ce1c1aad34e87ea"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t dfu_init_packet_t::softdevice_len</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Number of different SoftDevice revisions compatible with this application. The list of SoftDevice firmware IDs is defined in <a class="el" href="a00369.html#a3b1f79aeef3c148827d1740aec3daa3d">softdevice</a>. </p>
 
 </div>
 </div>
@@ -186,8 +201,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00369.html">nrf_radio_request_earliest_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00369.html">dfu_init_packet_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

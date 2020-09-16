@@ -78,7 +78,7 @@ typedef struct
 
 /**@brief Running Speed and Cadence Service structure. This contains various status information for
  *        the service. */
-typedef struct ble_rscs_s
+struct ble_rscs_s
 {
     ble_rscs_evt_handler_t       evt_handler;                               /**< Event handler to be called for handling events in the Running Speed and Cadence Service. */
     uint16_t                     service_handle;                            /**< Handle of Running Speed and Cadence Service (as provided by the BLE stack). */
@@ -86,7 +86,7 @@ typedef struct ble_rscs_s
     ble_gatts_char_handles_t     feature_handles;                           /**< Handles related to the Running Speed and Cadence feature characteristic. */
     uint16_t                     conn_handle;                               /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
     uint16_t                     feature;                                   /**< Bit mask of features available on sensor. */
-} ble_rscs_t;
+};
 
 /**@brief Running Speed and Cadence Service measurement structure. This contains a Running Speed and
  *        Cadence measurement. */

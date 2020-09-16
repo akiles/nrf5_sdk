@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gatts_evt_timeout_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gattc_evt_rel_disc_rsp_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,48 @@ $(document).ready(function(){initNavTree('a00270.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_evt_timeout_t Struct Reference<div class="ingroups"><a class="el" href="a01059.html">Structures</a></div></div>  </div>
+<div class="title">ble_gattc_evt_rel_disc_rsp_t Struct Reference<div class="ingroups"><a class="el" href="a01051.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for BLE_GATTS_EVT_TIMEOUT.  
+<p>Event structure for <a class="el" href="a01049.html#ggafd9b8b42eeb832d688e33f4561f97efcac52e2f11dc65da2efe53f7041d0ead6b">BLE_GATTC_EVT_REL_DISC_RSP</a>.  
  <a href="a00270.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gatts.h&gt;</code></p>
+<p><code>#include &lt;ble_gattc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a400157c31004116309fd4c33afeedb72"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00270.html#a400157c31004116309fd4c33afeedb72">src</a></td></tr>
-<tr class="separator:a400157c31004116309fd4c33afeedb72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d254feed32dd66c692ad6cdcec386b9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00270.html#a6d254feed32dd66c692ad6cdcec386b9">count</a></td></tr>
+<tr class="separator:a6d254feed32dd66c692ad6cdcec386b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46a0118ff8e260244d2cf342d249e7cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00276.html">ble_gattc_include_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00270.html#a46a0118ff8e260244d2cf342d249e7cc">includes</a> [1]</td></tr>
+<tr class="separator:a46a0118ff8e260244d2cf342d249e7cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for BLE_GATTS_EVT_TIMEOUT. </p>
+<div class="textblock"><p>Event structure for <a class="el" href="a01049.html#ggafd9b8b42eeb832d688e33f4561f97efcac52e2f11dc65da2efe53f7041d0ead6b">BLE_GATTC_EVT_REL_DISC_RSP</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a400157c31004116309fd4c33afeedb72"></a>
+<a class="anchor" id="a6d254feed32dd66c692ad6cdcec386b9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gatts_evt_timeout_t::src</td>
+          <td class="memname">uint16_t ble_gattc_evt_rel_disc_rsp_t::count</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Timeout source, see <a class="el" href="a00815.html">GATT Timeout sources</a>. </p>
+<p>Include count. </p>
+
+</div>
+</div>
+<a class="anchor" id="a46a0118ff8e260244d2cf342d249e7cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00276.html">ble_gattc_include_t</a> ble_gattc_evt_rel_disc_rsp_t::includes[1]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Include data, variable length. </p>
 
 </div>
 </div>
@@ -141,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00270.html">ble_gatts_evt_timeout_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00270.html">ble_gattc_evt_rel_disc_rsp_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

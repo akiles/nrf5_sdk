@@ -1,5 +1,7 @@
 var a00224 =
 [
-    [ "num_of_bytes", "a00224.html#aeb3880102935019faab8a8d2b9e51af7", null ],
-    [ "p_buffer", "a00224.html#a99d0194bb9ca302f67969e1ed923cb1b", null ]
+    [ "bit_width", "a00224.html#abb3f5d76f1cc9f033474a5c24d116025", null ],
+    [ "frequency", "a00224.html#acc77482beb52c3d8102c65ddc67c01c7", null ],
+    [ "interrupt_priority", "a00224.html#ad0b6c866ca3e572ba89747f507675375", null ],
+    [ "mode", "a00224.html#ac3211f3bb290d9bab58bf069bd477bc3", null ]
 ];

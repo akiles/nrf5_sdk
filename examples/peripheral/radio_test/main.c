@@ -113,18 +113,18 @@ void get_datarate(void)
 {
     uint8_t c;
 
-    printf("Enter data rate ('0'=250 Kbit/s, '1'=1 Mbit/s and '2'=2 Mbit/s):");
+    printf("Enter data rate ('0'=250 Kbit/s, '1'=1 Mbit/s and '2'=2 Mbit/s):\r\n");
     while (true)
     {
         scanf("%c",&c);
         if ((c >= '0') && (c <= '2'))
         {
-            printf("%c",c);
+            printf("%c\r\n",c);
             break;
         }
         else
         {
-            printf("%c",BELL);
+            printf("%c\r\n",BELL);
         }
     }
     if (c == '0')
@@ -149,7 +149,7 @@ void get_power(void)
 {
     uint8_t c;
 
-    printf("Enter output power ('0'=+4 dBm, '1'=0 dBm,...,'7'=-30 dBm):");
+    printf("Enter output power ('0'=+4 dBm, '1'=0 dBm,...,'7'=-30 dBm):\r\n");
     while (true)
     {
         scanf("%c",&c);
@@ -264,9 +264,9 @@ void print_parameters(void)
             break;
         
     }
-    printf("(Start) Channel.....: %d",channel_start_);
-    printf("\r\nEnd Channel.........: %d",channel_end_);
-    printf("\r\nTime on each channel: %d",delayms_);
+    printf("(Start) Channel.....: %d\r\n",channel_start_);
+    printf("End Channel.........: %d\r\n",channel_end_);
+    printf("Time on each channel: %d\r\n",delayms_);
     printf(" ms\r\n");
 }
 
@@ -302,7 +302,6 @@ int main(void)
     printf("RF Test\r\n");
     NVIC_EnableIRQ(TIMER0_IRQn);
     __enable_irq();
-    
     while (true)
     {
         uint8_t control;
@@ -312,8 +311,7 @@ int main(void)
             case 'a':
                 while (true)
                 {
-                    printf("Enter start channel \
-                                   (two decimal digits, 00 to 80):");
+                    printf("Enter start channel (two decimal digits, 00 to 80):\r\n");
                     scanf("%d",&channel_start_);
                     if ((channel_start_ <= 80)&&(channel_start_ >= 0))
                     {
@@ -330,7 +328,7 @@ int main(void)
                 while (true)
                 {
                     printf("Enter end channel \
-                                   (two decimal digits, 00 to 80):");
+                            (two decimal digits, 00 to 80):\r\n");
                     scanf("%d",&channel_end_);
                     if ((channel_end_ <= 80)&&(channel_start_ >= 0))
                     {
@@ -349,8 +347,7 @@ int main(void)
             case 'd':
                 while (true)
                 {
-                    printf("Enter delay in ms \
-                                   (two decimal digits, 01 to 99):");
+                    printf("Enter delay in ms (two decimal digits, 01 to 99):\r\n");
                     scanf("%d",&delayms_);
                     if ((delayms_ > 0) && (delayms_ < 100))   
                     {

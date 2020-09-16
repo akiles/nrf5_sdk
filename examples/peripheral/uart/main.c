@@ -20,39 +20,36 @@
  * 
  */
 
-#include "simple_uart.h"
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
+#include "app_uart.h"
+#include "app_error.h"
+#include "nrf_delay.h"
 #include "nrf.h"
 #include "bsp.h"
 
-//#define ENABLE_LOOPBACK_TEST  /**< if defined, then this example will be a loopback test, which means that TX should be connected to RX to get data loopback. */
+#define ENABLE_LOOPBACK_TEST  /**< if defined, then this example will be a loopback test, which means that TX should be connected to RX to get data loopback. */
 
 #define MAX_TEST_DATA_BYTES     (15U)                /**< max number of test bytes to be used for tx and rx. */
+#define UART_TX_BUF_SIZE 256                         /**< UART TX buffer size. */
+#define UART_RX_BUF_SIZE 1                           /**< UART RX buffer size. */
 
-#ifndef ENABLE_LOOPBACK_TEST
-
-/** @brief Function for sending 'Exit!' string to UART. 
- * 
- *  @note Execution is blocked until UART peripheral detects all characters have been sent.
- */
-static __INLINE void uart_quit()
+void uart_error_handle(app_uart_evt_t * p_event)
 {
-    simple_uart_putstring((const uint8_t *)" \n\rExit!\n\r");
+    if (p_event->evt_type == APP_UART_COMMUNICATION_ERROR)
+    {
+        APP_ERROR_HANDLER(p_event->data.error_communication);
+    }
+    else if (p_event->evt_type == APP_UART_FIFO_ERROR)
+    {
+        APP_ERROR_HANDLER(p_event->data.error_code);
+    }
 }
 
 
-/** @brief Function for sending 'Start:' string to UART. 
- *  @details Execution is blocked until UART peripheral detects all characters have been sent.
- */
-static __INLINE void uart_start()
-{
-    simple_uart_putstring((const uint8_t *)" \n\rStart: ");
-}
 
-
-#else
-
+#ifdef ENABLE_LOOPBACK_TEST
 /** @brief Function for setting the @ref ERROR_PIN high, and then enter an infinite loop.
  */
 static void show_error(void)
@@ -72,17 +69,19 @@ static void show_error(void)
  */
 static void uart_loopback_test()
 {
-    uint8_t * tx_data = (uint8_t *)("\n\rLOOPBACK_TEST");
+    uint8_t * tx_data = (uint8_t *)("\n\rLOOPBACK_TEST\n\r");
     uint8_t   rx_data;
 
     // Start sending one byte and see if you get the same
     for (uint32_t i = 0; i < MAX_TEST_DATA_BYTES; i++)
     {
-        bool status;
-        simple_uart_put(tx_data[i]);
-        status = simple_uart_get_with_timeout(2, &rx_data);
+        uint32_t err_code;
+        while(app_uart_put(tx_data[i]) != NRF_SUCCESS);
 
-        if ((rx_data != tx_data[i]) || (!status))
+        nrf_delay_ms(10);
+        err_code = app_uart_get(&rx_data);
+
+        if ((rx_data != tx_data[i]) || (err_code != NRF_SUCCESS))
         {
             show_error();
         }
@@ -100,20 +99,40 @@ static void uart_loopback_test()
 int main(void)
 {
     LEDS_CONFIGURE(LEDS_MASK);
-	  LEDS_OFF(LEDS_MASK);
-    simple_uart_config(RTS_PIN_NUMBER, TX_PIN_NUMBER, CTS_PIN_NUMBER, RX_PIN_NUMBER, HWFC);
+    LEDS_OFF(LEDS_MASK);
+    uint32_t err_code;
+    const app_uart_comm_params_t comm_params =
+      {
+          RX_PIN_NUMBER,
+          TX_PIN_NUMBER,
+          RTS_PIN_NUMBER,
+          CTS_PIN_NUMBER,
+          APP_UART_FLOW_CONTROL_ENABLED,
+          false,
+          UART_BAUDRATE_BAUDRATE_Baud38400
+      };
+
+    APP_UART_FIFO_INIT(&comm_params,
+                         UART_RX_BUF_SIZE,
+                         UART_TX_BUF_SIZE,
+                         uart_error_handle,
+                         APP_IRQ_PRIORITY_LOW,
+                         err_code);
+
+    APP_ERROR_CHECK(err_code);
 
 #ifndef ENABLE_LOOPBACK_TEST
-    uart_start();
+    printf("\n\rStart: \n\r");
 
     while (true)
     {
-        uint8_t cr = simple_uart_get();
-        simple_uart_put(cr);
+        uint8_t cr;
+        while(app_uart_get(&cr) != NRF_SUCCESS);
+        while(app_uart_put(cr) != NRF_SUCCESS);
 
         if (cr == 'q' || cr == 'Q')
         {
-            uart_quit();
+            printf(" \n\rExit!\n\r");
 
             while (true)
             {

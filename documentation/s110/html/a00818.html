@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: GATT Handle Value operations</title>
+<title>nRF51 SDK - S110 SoftDevice: Module specific error code subranges</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,57 +99,77 @@ $(document).ready(function(){initNavTree('a00818.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GATT Handle Value operations<div class="ingroups"><a class="el" href="a01051.html">Defines</a></div></div>  </div>
+<div class="title">Module specific error code subranges<div class="ingroups"><a class="el" href="a00814.html">BLE SoftDevice Common</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Assignment of subranges for module specific error codes.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gae454efaf8b3f8c6871dca5d2db5ac724"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00818.html#gae454efaf8b3f8c6871dca5d2db5ac724">BLE_GATT_HVX_INVALID</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:gae454efaf8b3f8c6871dca5d2db5ac724"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad5784996b45947f6d7f0cb81c9a4c9ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00818.html#gad5784996b45947f6d7f0cb81c9a4c9ed">BLE_GATT_HVX_NOTIFICATION</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:gad5784996b45947f6d7f0cb81c9a4c9ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47f3222bcefb5eb4aed9a1dc7c796b1f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00818.html#ga47f3222bcefb5eb4aed9a1dc7c796b1f">BLE_GATT_HVX_INDICATION</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:ga47f3222bcefb5eb4aed9a1dc7c796b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga82756b5d44b6b5757c3968513b4928ac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00818.html#ga82756b5d44b6b5757c3968513b4928ac">NRF_L2CAP_ERR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00867.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x100)</td></tr>
+<tr class="separator:ga82756b5d44b6b5757c3968513b4928ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29249baa158d723505c601121d003034"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00818.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00867.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x200)</td></tr>
+<tr class="separator:ga29249baa158d723505c601121d003034"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga200400dc8ad79918acee9cd038336165"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00818.html#ga200400dc8ad79918acee9cd038336165">NRF_GATTC_ERR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00867.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x300)</td></tr>
+<tr class="separator:ga200400dc8ad79918acee9cd038336165"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bc503f781e56a86cdd044d6043629b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00818.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00867.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x400)</td></tr>
+<tr class="separator:ga7bc503f781e56a86cdd044d6043629b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Assignment of subranges for module specific error codes. </p>
+<dl class="section note"><dt>Note</dt><dd>For specific error codes, see ble_&lt;module&gt;.h or ble_error_&lt;module&gt;.h. </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga47f3222bcefb5eb4aed9a1dc7c796b1f"></a>
+<a class="anchor" id="ga29249baa158d723505c601121d003034"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATT_HVX_INDICATION&#160;&#160;&#160;0x02</td>
+          <td class="memname">#define NRF_GAP_ERR_BASE&#160;&#160;&#160;(<a class="el" href="a00867.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x200)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle Value Indication. </p>
+<p>GAP specific errors. </p>
 
 </div>
 </div>
-<a class="anchor" id="gae454efaf8b3f8c6871dca5d2db5ac724"></a>
+<a class="anchor" id="ga200400dc8ad79918acee9cd038336165"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATT_HVX_INVALID&#160;&#160;&#160;0x00</td>
+          <td class="memname">#define NRF_GATTC_ERR_BASE&#160;&#160;&#160;(<a class="el" href="a00867.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x300)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Invalid Operation. </p>
+<p>GATT client specific errors. </p>
 
 </div>
 </div>
-<a class="anchor" id="gad5784996b45947f6d7f0cb81c9a4c9ed"></a>
+<a class="anchor" id="ga7bc503f781e56a86cdd044d6043629b8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATT_HVX_NOTIFICATION&#160;&#160;&#160;0x01</td>
+          <td class="memname">#define NRF_GATTS_ERR_BASE&#160;&#160;&#160;(<a class="el" href="a00867.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x400)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle Value Notification. </p>
+<p>GATT server specific errors. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga82756b5d44b6b5757c3968513b4928ac"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NRF_L2CAP_ERR_BASE&#160;&#160;&#160;(<a class="el" href="a00867.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x100)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>L2CAP specific errors. </p>
 
 </div>
 </div>
@@ -158,7 +178,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:17 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:42 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

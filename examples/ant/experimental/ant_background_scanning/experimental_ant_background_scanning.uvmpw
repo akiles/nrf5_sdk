@@ -8,10 +8,7 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
  
    <project>
-    <PathAndName>pca10028\arm\experimental_ant_background_scanning_s210_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10031\arm\experimental_ant_background_scanning_s210_pca10031.uvproj</PathAndName>
+    <PathAndName>pca10028\arm4\experimental_ant_background_scanning_s210_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

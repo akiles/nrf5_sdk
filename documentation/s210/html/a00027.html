@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Radio Test Example</title>
+<title>nRF51 SDK - S210 SoftDevice: Hardware Peripheral Examples</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,45 +97,43 @@ $(document).ready(function(){initNavTree('a00027.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Radio Test Example </div>  </div>
+<div class="title">Hardware Peripheral Examples </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Radio Test Example shows how to configure the radio as a constant RX/TX carrier, modulated TX carrier, and RX/TX sweep. The tests are controlled with simple one-letter commands via the serial port at 38400 baud. At any time during the tests, you can set the radio parameters output power, bit rate, and channel. You can also set the time on each channel in sweep mode, in steps of 1 millisecond from 1 millisecond to 99 milliseconds.</p>
-<p>The application starts with enabling the 16 MHz crystal oscillator and configuring the UART and interrupts. The main loop waits until it receives a command through the UART. Then it initiates the requested command.</p>
-<p>The following one-letter commands are available:<br/>
-</p>
-<ul>
-<li>a: Enter start channel for sweep/channel for constant carrier.</li>
-<li>b: Enter end channel for sweep.</li>
-<li>c: Start TX carrier.</li>
-<li>d: Enter time on each channel (1 ms - 99 ms).</li>
-<li>e: Cancel sweep/carrier.</li>
-<li>m: Enter data rate.</li>
-<li>o: Start modulated TX carrier.</li>
-<li>p: Enter output power.</li>
-<li>s: Print current delay, channels and so on.</li>
-<li>r: Start RX sweep.</li>
-<li>t: Start TX sweep.</li>
-<li>x: Start RX carrier.</li>
-</ul>
-<p>The name of the example is <b>radio_test_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\radio_test</code> </p>
-<h1><a class="anchor" id="nrf_radio_test_example_testing"></a>
-Testing</h1>
-<p>Test the Radio Test Example application by performing the following steps:</p>
-<ol type="1">
-<li>Compile and program the application.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port at 38400 baud rate.</li>
-<li>The text "RF Test" should appear at the top of the terminal.</li>
-<li>Type any of the letters described above. An output text should be displayed in the PUTTY window, or a sweep or signal should be started.</li>
-<li>Use a spectrum analyzer to confirm the behavior of the radio module. </li>
-</ol>
+<div class="textblock"><p>The following Hardware Peripheral device examples are available for the nRF51 chip:</p>
+<p><a class="el" href="a00028.html">Blinky Example</a></p>
+<p><a class="el" href="a00050.html">ADC HAL Example</a></p>
+<p><a class="el" href="a00029.html">BSP Example</a></p>
+<p><a class="el" href="a00035.html">Clock Example</a></p>
+<p><a class="el" href="a00030.html">Flash Write Example</a></p>
+<p><a class="el" href="a00031.html">GPIOTE Example</a></p>
+<p><a class="el" href="a00051.html">LPCOMP Example</a></p>
+<p><a class="el" href="a00038.html">Radio Receiver Example</a></p>
+<p><a class="el" href="a00040.html">Radio Transmitter Example</a></p>
+<p><a class="el" href="a00032.html">Pin Change Interrupt Example</a></p>
+<p><a class="el" href="a00033.html">PPI Example</a></p>
+<p><a class="el" href="a00037.html">PWM Example</a></p>
+<p><a class="el" href="a00034.html">QDEC Example</a></p>
+<p><a class="el" href="a00039.html">Radio Test Example</a></p>
+<p><a class="el" href="a00041.html">RAM Retention Example</a></p>
+<p><a class="el" href="a00042.html">Random Number Generator Example</a></p>
+<p><a class="el" href="a00043.html">Real Time Counter Example</a></p>
+<p><a class="el" href="a00044.html">SPI Master Loopback Example</a></p>
+<p><a class="el" href="a00045.html">SPI Master Example to be used with SPI Slave Example</a></p>
+<p><a class="el" href="a00046.html">SPI Slave Example</a></p>
+<p><a class="el" href="a00047.html">Temperature Example</a></p>
+<p><a class="el" href="a00048.html">Timer Example</a></p>
+<p><a class="el" href="a00049.html">Simple Timer Example</a></p>
+<p><a class="el" href="a00036.html">WDT Example</a></p>
+<p><a class="el" href="a00052.html">UART Example</a></p>
+<p><a class="el" href="a00053.html">UICR Config Example</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00018.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:40 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

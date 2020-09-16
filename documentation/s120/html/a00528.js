@@ -1,6 +1,7 @@
 var a00528 =
 [
-    [ "BLE_GAP_ROLE_CENTRAL", "a00528.html#ga6b9440660a70146392d27c849431fadb", null ],
-    [ "BLE_GAP_ROLE_INVALID", "a00528.html#ga8164b32f4fd65997d0523cd7c5735166", null ],
-    [ "BLE_GAP_ROLE_PERIPH", "a00528.html#ga12e431897d73a3ce88fab8a4dbd90497", null ]
+    [ "BLE_GAP_ADV_FP_ANY", "a00528.html#ga0b0393df73db101d6cbfaede2dbb7ea6", null ],
+    [ "BLE_GAP_ADV_FP_FILTER_BOTH", "a00528.html#ga38ff579b96a5ad3abd2e4eb370dd1de6", null ],
+    [ "BLE_GAP_ADV_FP_FILTER_CONNREQ", "a00528.html#gac37d0158c7458cb4250f9bdfba593858", null ],
+    [ "BLE_GAP_ADV_FP_FILTER_SCANREQ", "a00528.html#gae2dcdb81f0e1e024b82b244058656d26", null ]
 ];

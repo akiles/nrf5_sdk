@@ -1,7 +1,21 @@
 var a01011 =
 [
-    [ "ble_hrs_c_evt_type_t", "a01011.html#ga1cb65f3c0928fd75d0e186c28fca8c0e", [
-      [ "BLE_HRS_C_EVT_DISCOVERY_COMPLETE", "a01011.html#gga1cb65f3c0928fd75d0e186c28fca8c0eaab184fc5978897e328792f1672f80011", null ],
-      [ "BLE_HRS_C_EVT_HRM_NOTIFICATION", "a01011.html#gga1cb65f3c0928fd75d0e186c28fca8c0ea8c95bb250aab94f4b82257bdeadfa673", null ]
-    ] ]
+    [ "ble_nus_init_t", "a00337.html", [
+      [ "data_handler", "a00337.html#a90887a591bd183b070e63b95223886e1", null ]
+    ] ],
+    [ "ble_nus_s", "a00338.html", [
+      [ "conn_handle", "a00338.html#a5589730c5497c481f0f99ca6227c391e", null ],
+      [ "data_handler", "a00338.html#a3498c57b658b1b9f56f378fa6bb045de", null ],
+      [ "is_notification_enabled", "a00338.html#a726d493a3aac2e394939ea4337168d02", null ],
+      [ "rx_handles", "a00338.html#a5324863bc68492bd5e642a4919766e8b", null ],
+      [ "service_handle", "a00338.html#a4d129d53a387dcfb5ba89d5470134142", null ],
+      [ "tx_handles", "a00338.html#a1bac23a03714af564607eb0e07ffc964", null ],
+      [ "uuid_type", "a00338.html#aa8f53c69b9fe61ec89594c1cd0ba7832", null ]
+    ] ],
+    [ "BLE_NUS_MAX_DATA_LEN", "a01011.html#ga70ca7af22270eab5a6a67f386b8258ea", null ],
+    [ "BLE_UUID_NUS_SERVICE", "a01011.html#gacc9be63ac54721bee2146217e17d9587", null ],
+    [ "ble_nus_data_handler_t", "a01011.html#ga7d7f1e71e9a1916d993023871b08b4b6", null ],
+    [ "ble_nus_init", "a01011.html#ga2df986dbfb31c18cd0ceb0cb732b2fa3", null ],
+    [ "ble_nus_on_ble_evt", "a01011.html#ga39b3e5453712ed0e009ca381bb89e35e", null ],
+    [ "ble_nus_string_send", "a01011.html#gacaf254f54b8edc3d2558845b89a93e4c", null ]
 ];

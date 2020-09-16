@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: GAP Functions for managing memory for security keys on connectivity device.</title>
+<title>nRF51 SDK - S120 SoftDevice: Database Discovery</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,154 +97,44 @@ $(document).ready(function(){initNavTree('a00675.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">GAP Functions for managing memory for security keys on connectivity device.<div class="ingroups"><a class="el" href="a00785.html">Connectivity s120 codecs</a></div></div>  </div>
+<div class="title">Database Discovery<div class="ingroups"><a class="el" href="a00691.html">nRF51 SDK</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP Connectivity auxiliary functions for providing static memory required by Soft Device. This memory is used to store GAP security keys.  
+<p>Database discovery module.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00218.html">ser_ble_gap_conn_keyset_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP connection - keyset mapping structure.  <a href="a00218.html#details">More...</a><br/></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00676"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00676.html">Defines</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga69ba29396e15dd159dfd65df2f3f4307"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga69ba29396e15dd159dfd65df2f3f4307"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SER_MAX_CONNECTIONS</b>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:ga69ba29396e15dd159dfd65df2f3f4307"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga1e23b738df1b767a50535a47f145d724"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00675.html#ga1e23b738df1b767a50535a47f145d724">conn_ble_gap_sec_context_create</a> (uint32_t *p_index)</td></tr>
-<tr class="memdesc:ga1e23b738df1b767a50535a47f145d724"><td class="mdescLeft">&#160;</td><td class="mdescRight">allocates instance in m_conn_keys_table[] for storage of encryption keys.  <a href="#ga1e23b738df1b767a50535a47f145d724">More...</a><br/></td></tr>
-<tr class="separator:ga1e23b738df1b767a50535a47f145d724"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga28de569724945daa8558dfad4a57b446"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00675.html#ga28de569724945daa8558dfad4a57b446">conn_ble_gap_sec_context_destroy</a> (uint16_t conn_handle)</td></tr>
-<tr class="memdesc:ga28de569724945daa8558dfad4a57b446"><td class="mdescLeft">&#160;</td><td class="mdescRight">release instance identified by a connection handle.  <a href="#ga28de569724945daa8558dfad4a57b446">More...</a><br/></td></tr>
-<tr class="separator:ga28de569724945daa8558dfad4a57b446"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga59d315ca793a01b33a607b530abfad5a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00675.html#ga59d315ca793a01b33a607b530abfad5a">conn_ble_gap_sec_context_find</a> (uint16_t conn_handle, uint32_t *p_index)</td></tr>
-<tr class="memdesc:ga59d315ca793a01b33a607b530abfad5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">finds index of instance identified by a connection handle in m_conn_keys_table[].  <a href="#ga59d315ca793a01b33a607b530abfad5a">More...</a><br/></td></tr>
-<tr class="separator:ga59d315ca793a01b33a607b530abfad5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00677"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00677.html">Enumerations</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00678"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00678.html">Structures</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00679"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00679.html">Types</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00680"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00680.html">Functions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>GAP Connectivity auxiliary functions for providing static memory required by Soft Device. This memory is used to store GAP security keys. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga1e23b738df1b767a50535a47f145d724"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t conn_ble_gap_sec_context_create </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>p_index</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>allocates instance in m_conn_keys_table[] for storage of encryption keys. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_index</td><td>pointer to the index of allocated instance</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>great success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>no free instance available. </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<p>Database discovery module. </p>
+<p>This module contains the APIs and types exposed by the DB Discovery module. These APIs and types can be used by the application to perform discovery of a service and its characteristics at the peer server. This module can also be used to discover the desired services in multiple remote devices. A typical use of this library is described in the figure below. </p>
+<div class="image">
+<img src="db_discovery.jpg" alt="db_discovery.jpg"/>
 </div>
-</div>
-<a class="anchor" id="ga28de569724945daa8558dfad4a57b446"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t conn_ble_gap_sec_context_destroy </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>conn_handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>release instance identified by a connection handle. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>conn_handle</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Context released. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NOT_FOUND</td><td>instance with conn_handle not found </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga59d315ca793a01b33a607b530abfad5a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t conn_ble_gap_sec_context_find </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>conn_handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>p_index</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>finds index of instance identified by a connection handle in m_conn_keys_table[]. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>conn_handle</td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_index</td><td>Pointer to the index of entry in the context table corresponding to the given conn_handle</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Context table entry found </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NOT_FOUND</td><td>instance with conn_handle not found </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
+<dl class="section warning"><dt>Warning</dt><dd>The maximum number of characteristics per service that can be discovered by this module is indicated by the value of <a class="el" href="a00676.html#gae17633bce497fe1c216826ed096ababd">BLE_DB_DISCOVERY_MAX_CHAR_PER_SRV</a>. If the peer has more than the supported number of characteristics, then the first found will be discovered and any further characteristics will be ignored. No descriptors other than Client Characteristic Configuration Descriptors will be searched for at the peer.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Presently only one instance of a Primary Service can be discovered by this module. If there are multiple instances of the service at the peer, only the first instance of it at the peer is fetched and returned to the application.</dd>
+<dd>
+The application must propagate BLE stack events to this module by calling <a class="el" href="a00680.html#ga60575c004188a08a78063884356bf15f" title="Function for handling the Application&#39;s BLE Stack events.">ble_db_discovery_on_ble_evt()</a>. </dd></dl>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:36 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

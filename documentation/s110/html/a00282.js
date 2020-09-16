@@ -1,6 +1,7 @@
 var a00282 =
 [
-    [ "rep_index", "a00282.html#a06b63ec45cda32c75e842421f1235063", null ],
-    [ "rep_type", "a00282.html#affea5bdaeda61718d00cf34afa060f20", null ],
-    [ "uuid", "a00282.html#a47c01b1e08f6757e61e2dd38dcb67044", null ]
+    [ "cccd_handle", "a00282.html#a7764817bceb1a13dde2a2d614aaff900", null ],
+    [ "sccd_handle", "a00282.html#a0ebe446f83e8675203f224b1796939fa", null ],
+    [ "user_desc_handle", "a00282.html#a263781c226cad6bfeeb894e133b19c55", null ],
+    [ "value_handle", "a00282.html#a685865a59e73158fd661e9d64407e9d9", null ]
 ];

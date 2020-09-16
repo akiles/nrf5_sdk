@@ -121,7 +121,7 @@ int main(void)
     uint32_t err_code = NRF_SUCCESS;
 
     clock_initialization();
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
 
     const app_uart_comm_params_t comm_params =  
     {

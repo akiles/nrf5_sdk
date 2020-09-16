@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Broadcast</title>
+<title>nRF51 SDK - S210 SoftDevice: SPI Slave Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,24 +97,28 @@ $(document).ready(function(){initNavTree('a00046.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Broadcast </div>  </div>
+<div class="title">SPI Slave Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Basic examples to test ANT connectivity between Master and Slave.</p>
-<p>They both use public network key {0, 0, 0 , 0 , 0, 0, 0}</p>
-<p><b>ANT Broadcast TX</b></p>
-<p>The channel period is set to 4 Hz (8192). When a packet is transmitted, it will indicate the state <a class="el" href="a00040.html#BSP_INDICATE_SENT_OK">BSP_INDICATE_SENT_OK</a>. Whenever the processor enters sleep state, the state <a class="el" href="a00040.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> ist set. The <a class="el" href="a00040.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a> state is set when woken up by (any / RF ) interrupt.</p>
-<p>The name of the example for PCA10028 is <b>ant_broadcast_tx_pca10028</b>, and for PCA10031 it is <b>ant_broadcast_tx_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ant\ant_broadcast\broadcast_tx</code> </p>
-<p><b>ANT Broadcast RX</b></p>
-<p>The example uses wildcard connection, which implies that it will connect to the nearest ANT device that is broadcasting. The channel period is set to 4 Hz (8192). When a packet is received, it will indicate the state <a class="el" href="a00040.html#BSP_INDICATE_RCV_OK">BSP_INDICATE_RCV_OK</a>. Whenever the processor enters sleep state, the state <a class="el" href="a00040.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> ist set. The <a class="el" href="a00040.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a> state is set when woken up by (any / RF ) interrupt.</p>
-<p>The name of the example for PCA10028 is <b>ant_broadcast_rx_pca10028</b>, and for PCA10031 it is <b>ant_broadcast_rx_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ant\ant_broadcast\broadcast_rx</code> </p>
+<div class="textblock"><p>The SPI Slave Example has been created for verifying the SPI connectivity link for the SPI Master Example.</p>
+<p>The application uses the <a class="el" href="a00335.html">Board Support Package</a> to indicate the status of the SPI transaction.</p>
+<p>The name of the example is <b>spi_slave_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\spi_slave</code> </p>
+<h1><a class="anchor" id="spi_slave_example_testing"></a>
+Testing</h1>
+<p>Test the SPI Slave Example application by performing the following steps:</p>
+<ol type="1">
+<li>Connect two boards using SPI.</li>
+<li>Compile and program both applications (<code>spi_master_with_spi_slave_pca10028</code> and <code>spi_slave_pca10028</code>).</li>
+<li>Observe that <a class="el" href="a00055.html#BSP_INDICATE_RCV_OK">BSP_INDICATE_RCV_OK</a> indicates each incoming packet.</li>
+<li><a class="el" href="a00055.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> is indicated if an error occurred. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00041.html">ANT</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:41 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

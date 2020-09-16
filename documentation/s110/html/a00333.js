@@ -1,5 +1,5 @@
 var a00333 =
 [
-    [ "initial_tx_power_level", "a00333.html#a5be1f2c1c00932c36837e70c02679072", null ],
-    [ "tps_attr_md", "a00333.html#afc4915bf42eeee72f61614aa1161aa80", null ]
+    [ "cid", "a00333.html#a6e40f192db4382919b6c1f3db8e70d46", null ],
+    [ "len", "a00333.html#a754900407e75298f4af89a59febed5b8", null ]
 ];

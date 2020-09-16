@@ -1,5 +1,5 @@
 var a00391 =
 [
-    [ "exponent", "a00391.html#a831aa262a275e9fe9b611e074ab357fe", null ],
-    [ "mantissa", "a00391.html#a3f8b946e6d4361fa7a8e427a1c5cc0ef", null ]
+    [ "cal_interval", "a00391.html#a8c8d61f45d2a74cc5958d825706d0d19", null ],
+    [ "interrupt_priority", "a00391.html#a846e56e628b146020a6ce96259e52bfd", null ]
 ];

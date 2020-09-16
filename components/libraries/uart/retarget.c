@@ -16,15 +16,18 @@
 #include "nordic_common.h"
 #include "nrf_error.h"
 
+#if !defined(__ICCARM__)
 struct __FILE 
 {
     int handle;
 };
+#endif
+
 FILE __stdout;
 FILE __stdin;
 
 
-#if defined(__CC_ARM)
+#if defined(__CC_ARM) ||  defined(__ICCARM__)
 int fgetc(FILE * p_file)
 {
     uint8_t input;
@@ -63,21 +66,13 @@ int _write(int file, const char * p_char, int len)
 
 int _read(int file, char * p_char, int len)
 {
-    int ret_len = len;
-    uint8_t input;
-
     UNUSED_PARAMETER(file);
-
-    while (len--)
+    while (app_uart_get((uint8_t *)p_char) == NRF_ERROR_NOT_FOUND)
     {
-        while (app_uart_get(&input) == NRF_ERROR_NOT_FOUND)
-        {
-            // No implementation needed.
-        }
-        *p_char++ = input;
+        // No implementation needed.
     }
 
-    return ret_len;
+    return 1;
 }
 #endif
 

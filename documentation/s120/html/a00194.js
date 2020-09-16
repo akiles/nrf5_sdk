@@ -1,6 +1,5 @@
 var a00194 =
 [
-    [ "company_id", "a00194.html#a39ff6a37dbb096bf608d850d0845d252", null ],
-    [ "subversion_number", "a00194.html#abd81a16510bfbcf3778af4daab021369", null ],
-    [ "version_number", "a00194.html#af18ca1a9b3d80b05042d9121e9d3c9ed", null ]
+    [ "length", "a00194.html#a9238252fa096ecc458994d19aaf034d8", null ],
+    [ "p_str", "a00194.html#a8b6d6d426c6ec244d1136b7ccf5deb30", null ]
 ];

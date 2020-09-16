@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_addr_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_dis_pnp_id_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,78 @@ $(document).ready(function(){initNavTree('a00207.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_addr_t Struct Reference<div class="ingroups"><a class="el" href="a01048.html">Structures</a></div></div>  </div>
+<div class="title">ble_dis_pnp_id_t Struct Reference<div class="ingroups"><a class="el" href="a00958.html">Device Information Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Bluetooth Low Energy address.  
+<p>PnP ID parameters.  
  <a href="a00207.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gap.h&gt;</code></p>
+<p><code>#include &lt;ble_dis.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ad056845594972dd031a09700194d660c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00207.html#ad056845594972dd031a09700194d660c">addr_type</a></td></tr>
-<tr class="separator:ad056845594972dd031a09700194d660c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e756ddbde7ebf78f17a043d7ebe602c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00207.html#a7e756ddbde7ebf78f17a043d7ebe602c">addr</a> [6]</td></tr>
-<tr class="separator:a7e756ddbde7ebf78f17a043d7ebe602c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3a10730991ad81e94ce05ff3dfdb6e3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00207.html#af3a10730991ad81e94ce05ff3dfdb6e3">vendor_id_source</a></td></tr>
+<tr class="separator:af3a10730991ad81e94ce05ff3dfdb6e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06800d391cc463d5be9e1a7987e04c78"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00207.html#a06800d391cc463d5be9e1a7987e04c78">vendor_id</a></td></tr>
+<tr class="separator:a06800d391cc463d5be9e1a7987e04c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0d1f51b878c90d2ee68e8c332194345"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00207.html#aa0d1f51b878c90d2ee68e8c332194345">product_id</a></td></tr>
+<tr class="separator:aa0d1f51b878c90d2ee68e8c332194345"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39d73de0dca55716ebcaed3ecf7a43e9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00207.html#a39d73de0dca55716ebcaed3ecf7a43e9">product_version</a></td></tr>
+<tr class="separator:a39d73de0dca55716ebcaed3ecf7a43e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Bluetooth Low Energy address. </p>
+<div class="textblock"><p>PnP ID parameters. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a7e756ddbde7ebf78f17a043d7ebe602c"></a>
+<a class="anchor" id="aa0d1f51b878c90d2ee68e8c332194345"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_addr_t::addr[6]</td>
+          <td class="memname">uint16_t ble_dis_pnp_id_t::product_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>48-bit address, LSB format. </p>
+<p>Product ID. </p>
 
 </div>
 </div>
-<a class="anchor" id="ad056845594972dd031a09700194d660c"></a>
+<a class="anchor" id="a39d73de0dca55716ebcaed3ecf7a43e9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_addr_t::addr_type</td>
+          <td class="memname">uint16_t ble_dis_pnp_id_t::product_version</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>See <a class="el" href="a00799.html">GAP Address types</a>. </p>
+<p>Product Version. </p>
+
+</div>
+</div>
+<a class="anchor" id="a06800d391cc463d5be9e1a7987e04c78"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_dis_pnp_id_t::vendor_id</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Vendor ID. </p>
+
+</div>
+</div>
+<a class="anchor" id="af3a10730991ad81e94ce05ff3dfdb6e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_dis_pnp_id_t::vendor_id_source</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Vendor ID Source. see <a class="el" href="a00959.html">Vendor ID Source values</a>. </p>
 
 </div>
 </div>
@@ -156,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00207.html">ble_gap_addr_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00207.html">ble_dis_pnp_id_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

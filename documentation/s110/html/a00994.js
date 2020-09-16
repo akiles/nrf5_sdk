@@ -1,8 +1,8 @@
 var a00994 =
 [
-    [ "Defines", "a00995.html", "a00995" ],
-    [ "Enumerations", "a00996.html", "a00996" ],
-    [ "Structures", "a00997.html", "a00997" ],
-    [ "Types", "a00998.html", "a00998" ],
-    [ "Functions", "a00999.html", "a00999" ]
+    [ "ble_db_discovery_close", "a00994.html#ga4f60f77194de81c2254b858e7773e17a", null ],
+    [ "ble_db_discovery_evt_register", "a00994.html#gad3a1e96c90efbe2cf4171d624bafd9cc", null ],
+    [ "ble_db_discovery_init", "a00994.html#gadf327d19a60bf442f7151ae68b601c8a", null ],
+    [ "ble_db_discovery_on_ble_evt", "a00994.html#ga60575c004188a08a78063884356bf15f", null ],
+    [ "ble_db_discovery_start", "a00994.html#gad35f52c46e9942291e2d69e2743c4d45", null ]
 ];

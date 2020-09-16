@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ser_phy_evt_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: nrf_drv_timer_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,83 +106,63 @@ $(document).ready(function(){initNavTree('a00225.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ser_phy_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00662.html">Serialization PHY</a></div></div>  </div>
+<div class="title">nrf_drv_timer_t Struct Reference<div class="ingroups"><a class="el" href="a00466.html">Timer driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>A struct containing events from a Serialization PHY module.  
+<p>Struct for TIMER instance.  
  <a href="a00225.html#details">More...</a></p>
 
-<p><code>#include &lt;ser_phy.h&gt;</code></p>
+<p><code>#include &lt;nrf_drv_timer.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ae588b73e9d0730410d87a4d1c246ff74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00662.html#gaef62df8feedfbe682684c6f1ea704061">ser_phy_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#ae588b73e9d0730410d87a4d1c246ff74">evt_type</a></td></tr>
-<tr class="separator:ae588b73e9d0730410d87a4d1c246ff74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23a7ae683a6a44f59b55865c206e7154"><td class="memItemLeft" ><a class="anchor" id="a23a7ae683a6a44f59b55865c206e7154"></a>
-union {</td></tr>
-<tr class="memitem:ad19f4f1b0b78384f84c743ba3d1dae8a"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00223.html">ser_phy_evt_rx_buf_request_params_t</a>&#160;&#160;&#160;<a class="el" href="a00225.html#aaa9e1f71188d261f85018a78e9e21455">rx_buf_request</a></td></tr>
-<tr class="separator:ad19f4f1b0b78384f84c743ba3d1dae8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22ecc09b082333ef519139fd7004f3a0"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00224.html">ser_phy_evt_rx_pkt_received_params_t</a>&#160;&#160;&#160;<a class="el" href="a00225.html#a025d488d61f3d284d37bea8b37ec2284">rx_pkt_received</a></td></tr>
-<tr class="separator:a22ecc09b082333ef519139fd7004f3a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7605cd7246cfb18c172ccc08c82817d"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00222.html">ser_phy_evt_hw_error_params_t</a>&#160;&#160;&#160;<a class="el" href="a00225.html#a8c0fc51957a092a41e2161a3f7d400e0">hw_error</a></td></tr>
-<tr class="separator:aa7605cd7246cfb18c172ccc08c82817d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23a7ae683a6a44f59b55865c206e7154"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>evt_params</b></td></tr>
-<tr class="separator:a23a7ae683a6a44f59b55865c206e7154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a485c160d231915b3ea3155106b07826f"><td class="memItemLeft" align="right" valign="top">NRF_TIMER_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#a485c160d231915b3ea3155106b07826f">p_reg</a></td></tr>
+<tr class="separator:a485c160d231915b3ea3155106b07826f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0da7a46f813f94e2499cf3d2f38498fb"><td class="memItemLeft" align="right" valign="top">IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#a0da7a46f813f94e2499cf3d2f38498fb">irq</a></td></tr>
+<tr class="separator:a0da7a46f813f94e2499cf3d2f38498fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3d35b697eb00153c57c93bcc7878a22"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html#ad3d35b697eb00153c57c93bcc7878a22">instance_id</a></td></tr>
+<tr class="separator:ad3d35b697eb00153c57c93bcc7878a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A struct containing events from a Serialization PHY module. </p>
-<dl class="section note"><dt>Note</dt><dd>Some events do not have parameters, then whole information is contained in the evt_type. </dd></dl>
+<div class="textblock"><p>Struct for TIMER instance. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ae588b73e9d0730410d87a4d1c246ff74"></a>
+<a class="anchor" id="ad3d35b697eb00153c57c93bcc7878a22"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00662.html#gaef62df8feedfbe682684c6f1ea704061">ser_phy_evt_type_t</a> ser_phy_evt_t::evt_type</td>
+          <td class="memname">uint8_t nrf_drv_timer_t::instance_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of an event. </p>
+<p>Instance ID. </p>
 
 </div>
 </div>
-<a class="anchor" id="a8c0fc51957a092a41e2161a3f7d400e0"></a>
+<a class="anchor" id="a0da7a46f813f94e2499cf3d2f38498fb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00222.html">ser_phy_evt_hw_error_params_t</a> ser_phy_evt_t::hw_error</td>
+          <td class="memname">IRQn_Type nrf_drv_timer_t::irq</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Parameters of the event of type <a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a>. </p>
+<p>Instance IRQ id. </p>
 
 </div>
 </div>
-<a class="anchor" id="aaa9e1f71188d261f85018a78e9e21455"></a>
+<a class="anchor" id="a485c160d231915b3ea3155106b07826f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00223.html">ser_phy_evt_rx_buf_request_params_t</a> ser_phy_evt_t::rx_buf_request</td>
+          <td class="memname">NRF_TIMER_Type* nrf_drv_timer_t::p_reg</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Parameters of the event of type <a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061a6586d0863748060b1f669ed34a0a0a77">SER_PHY_EVT_RX_BUF_REQUEST</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="a025d488d61f3d284d37bea8b37ec2284"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00224.html">ser_phy_evt_rx_pkt_received_params_t</a> ser_phy_evt_t::rx_pkt_received</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters of the event of type <a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061ab7c2a10cee66d30f6f2502376857b387">SER_PHY_EVT_RX_PKT_RECEIVED</a>. </p>
+<p>Pointer to timer instance registers struct. </p>
 
 </div>
 </div>
@@ -191,8 +171,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00225.html">ser_phy_evt_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00225.html">nrf_drv_timer_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

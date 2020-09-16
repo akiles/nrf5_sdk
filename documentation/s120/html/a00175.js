@@ -1,8 +1,10 @@
 var a00175 =
 [
-    [ "handle", "a00175.html#a1a0552b266c588f67d3a6abc712bbfd6", null ],
-    [ "offset", "a00175.html#a07033f6e0e63974b67627ae84bc12fc9", null ],
-    [ "p_data", "a00175.html#a68325153be760c7742d1bec69da625cf", null ],
-    [ "p_len", "a00175.html#a8b0b2dadb3128b0838c71235661f8174", null ],
-    [ "type", "a00175.html#a2971c791821bea067f3bc2bbc35b9193", null ]
+    [ "authorize_request", "a00175.html#a27802389d2c209e149fd644a35eae956", null ],
+    [ "conn_handle", "a00175.html#abeb8d79046f5ed809e6ac8b5fd40614d", null ],
+    [ "hvc", "a00175.html#a9be30265f4a80ba2d5982bc7eda48891", null ],
+    [ "params", "a00175.html#a750065b8cf4aae2c44cfe89c1b5e273b", null ],
+    [ "sys_attr_missing", "a00175.html#ab8c7e34509068fb9d8b78e4cdc2ab0f2", null ],
+    [ "timeout", "a00175.html#a5a5ade5ed126bc40ac43a302b4c7ae44", null ],
+    [ "write", "a00175.html#aaef77783fee30e58006d76bbc976bc9e", null ]
 ];

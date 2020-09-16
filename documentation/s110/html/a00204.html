@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_evt_tx_complete_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_dfu_pkt_write_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,49 @@ $(document).ready(function(){initNavTree('a00204.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_evt_tx_complete_t Struct Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
+<div class="title">ble_dfu_pkt_write_t Struct Reference<div class="ingroups"><a class="el" href="a00957.html">Device Firmware Update Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>TX complete event.  
+<p>DFU Packet structure.  
  <a href="a00204.html#details">More...</a></p>
 
-<p><code>#include &lt;ble.h&gt;</code></p>
+<p><code>#include &lt;ble_dfu.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2f0ff85ec5add11dad58af0a0ba5a5a8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00204.html#a2f0ff85ec5add11dad58af0a0ba5a5a8">count</a></td></tr>
-<tr class="separator:a2f0ff85ec5add11dad58af0a0ba5a5a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac28ec8c8ca6292b7987cf6b49a07da4f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00204.html#ac28ec8c8ca6292b7987cf6b49a07da4f">len</a></td></tr>
+<tr class="separator:ac28ec8c8ca6292b7987cf6b49a07da4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e52a5c33d9b8e7f3f605f60f906652c"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00204.html#a6e52a5c33d9b8e7f3f605f60f906652c">p_data</a></td></tr>
+<tr class="separator:a6e52a5c33d9b8e7f3f605f60f906652c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TX complete event. </p>
+<div class="textblock"><p>DFU Packet structure. </p>
+<p>This structure contains the value of the DFU Packet characteristic as written by the peer and the length of the value written. It will be filled by the DFU Service when the peer writes to the DFU Packet characteristic. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a2f0ff85ec5add11dad58af0a0ba5a5a8"></a>
+<a class="anchor" id="ac28ec8c8ca6292b7987cf6b49a07da4f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_evt_tx_complete_t::count</td>
+          <td class="memname">uint8_t ble_dfu_pkt_write_t::len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of packets transmitted. </p>
+<p>Length of the packet received. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6e52a5c33d9b8e7f3f605f60f906652c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* ble_dfu_pkt_write_t::p_data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to the received packet. This will point to a word aligned memory location. </p>
 
 </div>
 </div>
@@ -141,8 +157,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00204.html">ble_evt_tx_complete_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00204.html">ble_dfu_pkt_write_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

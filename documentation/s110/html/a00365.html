@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ieee_float32_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dfu_bank_func_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,63 @@ $(document).ready(function(){initNavTree('a00365.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ieee_float32_t Struct Reference<div class="ingroups"><a class="el" href="a00970.html">Health Thermometer Service</a></div></div>  </div>
+<div class="title">dfu_bank_func_t Struct Reference<div class="ingroups"><a class="el" href="a00939.html">Device Firmware Update internal header for bank handling in DFU.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>FLOAT format (IEEE-11073 32-bit FLOAT, defined as a 32-bit value with a 24-bit mantissa and an 8-bit exponent.  
+<p>Structure for holding of function pointers for needed prepare and activate procedure for the requested update procedure.  
  <a href="a00365.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hts.h&gt;</code></p>
+<p><code>#include &lt;dfu_bank_internal.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ad2b0d21fa7152a4afd8d98ec81bbe15a"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00365.html#ad2b0d21fa7152a4afd8d98ec81bbe15a">exponent</a></td></tr>
-<tr class="separator:ad2b0d21fa7152a4afd8d98ec81bbe15a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af54051e1c850e7ca43fc5e7b49c91261"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00365.html#af54051e1c850e7ca43fc5e7b49c91261">mantissa</a></td></tr>
-<tr class="separator:af54051e1c850e7ca43fc5e7b49c91261"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a836a20b948e91ba36fb2a77f09d97aa4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00939.html#gaf68c07fc7834b9c16aae9a748f43bdc8">dfu_bank_prepare_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00365.html#a836a20b948e91ba36fb2a77f09d97aa4">prepare</a></td></tr>
+<tr class="separator:a836a20b948e91ba36fb2a77f09d97aa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4f65f28daba87c601079fdb99ed986b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00939.html#ga7c3f98f2a92d87008ba13e9dae8484d8">dfu_bank_cleared_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00365.html#ae4f65f28daba87c601079fdb99ed986b">cleared</a></td></tr>
+<tr class="separator:ae4f65f28daba87c601079fdb99ed986b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af00135287925be9fcd8216ca9f926106"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00939.html#gad9ce0b70db1ec648acc0bd50629e22ff">dfu_bank_activate_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00365.html#af00135287925be9fcd8216ca9f926106">activate</a></td></tr>
+<tr class="separator:af00135287925be9fcd8216ca9f926106"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>FLOAT format (IEEE-11073 32-bit FLOAT, defined as a 32-bit value with a 24-bit mantissa and an 8-bit exponent. </p>
+<div class="textblock"><p>Structure for holding of function pointers for needed prepare and activate procedure for the requested update procedure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ad2b0d21fa7152a4afd8d98ec81bbe15a"></a>
+<a class="anchor" id="af00135287925be9fcd8216ca9f926106"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int8_t ieee_float32_t::exponent</td>
+          <td class="memname"><a class="el" href="a00939.html#gad9ce0b70db1ec648acc0bd50629e22ff">dfu_bank_activate_t</a> dfu_bank_func_t::activate</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Base 10 exponent </p>
+<p>Function pointer to the activate function called on finalizing the update procedure. </p>
 
 </div>
 </div>
-<a class="anchor" id="af54051e1c850e7ca43fc5e7b49c91261"></a>
+<a class="anchor" id="ae4f65f28daba87c601079fdb99ed986b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int32_t ieee_float32_t::mantissa</td>
+          <td class="memname"><a class="el" href="a00939.html#ga7c3f98f2a92d87008ba13e9dae8484d8">dfu_bank_cleared_t</a> dfu_bank_func_t::cleared</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Mantissa, should be using only 24 bits </p>
+<p>Function pointer to the cleared function called after prepare function completes. </p>
+
+</div>
+</div>
+<a class="anchor" id="a836a20b948e91ba36fb2a77f09d97aa4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00939.html#gaf68c07fc7834b9c16aae9a748f43bdc8">dfu_bank_prepare_t</a> dfu_bank_func_t::prepare</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Function pointer to the prepare function called on start of update procedure. </p>
 
 </div>
 </div>
@@ -156,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00365.html">ieee_float32_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00365.html">dfu_bank_func_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_evt_hdr_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_adv_ch_mask_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,63 @@ $(document).ready(function(){initNavTree('a00102.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_evt_hdr_t Struct Reference<div class="ingroups"><a class="el" href="a00744.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_adv_ch_mask_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>BLE Event header.  
+<p>Channel mask for RF channels used in advertising and scanning.  
  <a href="a00102.html#details">More...</a></p>
 
-<p><code>#include &lt;ble.h&gt;</code></p>
+<p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2084aff335bd3cbb7e7b3d48c04f1d7a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#a2084aff335bd3cbb7e7b3d48c04f1d7a">evt_id</a></td></tr>
-<tr class="separator:a2084aff335bd3cbb7e7b3d48c04f1d7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a982f138c7092a79876d0535522b76cfa"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#a982f138c7092a79876d0535522b76cfa">evt_len</a></td></tr>
-<tr class="separator:a982f138c7092a79876d0535522b76cfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a276e0c5ca59f82040b5b165c0f5600d1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#a276e0c5ca59f82040b5b165c0f5600d1">ch_37_off</a>: 1</td></tr>
+<tr class="separator:a276e0c5ca59f82040b5b165c0f5600d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6db0baee9116bd59a91cc015b94d3190"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#a6db0baee9116bd59a91cc015b94d3190">ch_38_off</a>: 1</td></tr>
+<tr class="separator:a6db0baee9116bd59a91cc015b94d3190"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abba6b57ff2812fa36ec3da0b4949f492"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#abba6b57ff2812fa36ec3da0b4949f492">ch_39_off</a>: 1</td></tr>
+<tr class="separator:abba6b57ff2812fa36ec3da0b4949f492"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>BLE Event header. </p>
+<div class="textblock"><p>Channel mask for RF channels used in advertising and scanning. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a2084aff335bd3cbb7e7b3d48c04f1d7a"></a>
+<a class="anchor" id="a276e0c5ca59f82040b5b165c0f5600d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_evt_hdr_t::evt_id</td>
+          <td class="memname">uint8_t ble_gap_adv_ch_mask_t::ch_37_off</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Value from a BLE_&lt;module&gt;_EVT series. </p>
+<p>Setting this bit to 1 will turn off advertising on channel 37 </p>
 
 </div>
 </div>
-<a class="anchor" id="a982f138c7092a79876d0535522b76cfa"></a>
+<a class="anchor" id="a6db0baee9116bd59a91cc015b94d3190"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_evt_hdr_t::evt_len</td>
+          <td class="memname">uint8_t ble_gap_adv_ch_mask_t::ch_38_off</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Length in octets excluding this header. </p>
+<p>Setting this bit to 1 will turn off advertising on channel 38 </p>
+
+</div>
+</div>
+<a class="anchor" id="abba6b57ff2812fa36ec3da0b4949f492"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gap_adv_ch_mask_t::ch_39_off</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Setting this bit to 1 will turn off advertising on channel 39 </p>
 
 </div>
 </div>
@@ -156,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00102.html">ble_evt_hdr_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00102.html">ble_gap_adv_ch_mask_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

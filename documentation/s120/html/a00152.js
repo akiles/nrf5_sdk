@@ -1,7 +1,7 @@
 var a00152 =
 [
-    [ "data", "a00152.html#adaf3ed862b2c96947da60d9b576b31c9", null ],
-    [ "handle", "a00152.html#a54644f05780b15248eba975decdd4e48", null ],
-    [ "len", "a00152.html#a5131e80ad4da52f707a84aed7240f2ee", null ],
-    [ "offset", "a00152.html#a1ed66c83e153fd6471056d19b10fac67", null ]
+    [ "data", "a00152.html#af239b9ba3cff6d1fc678f3f71711a2f3", null ],
+    [ "handle", "a00152.html#a96ee6ce1546af608cf4b3b9d81cd7f09", null ],
+    [ "len", "a00152.html#a173be268109e2223c485a9a10a6a9ba3", null ],
+    [ "type", "a00152.html#ac1de2368e40b7e4c7eab1fcb770605f2", null ]
 ];

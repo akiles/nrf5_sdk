@@ -57,7 +57,7 @@
 #define SCAN_INTERVAL              0x00A0                             /**< Determines scan interval in units of 0.625 millisecond. */
 #define SCAN_WINDOW                0x0050                             /**< Determines scan window in units of 0.625 millisecond. */
 
-#define MIN_CONNECTION_INTERVAL    MSEC_TO_UNITS(7.5, UNIT_1_25_MS)   /**< Determines maximum connection interval in millisecond. */
+#define MIN_CONNECTION_INTERVAL    MSEC_TO_UNITS(7.5, UNIT_1_25_MS)   /**< Determines minimum connection interval in millisecond. */
 #define MAX_CONNECTION_INTERVAL    MSEC_TO_UNITS(30, UNIT_1_25_MS)    /**< Determines maximum connection interval in millisecond. */
 #define SLAVE_LATENCY              0                                  /**< Determines slave latency in counts of connection events. */
 #define SUPERVISION_TIMEOUT        MSEC_TO_UNITS(4000, UNIT_10_MS)    /**< Determines supervision time-out in units of 10 millisecond. */
@@ -169,9 +169,9 @@ void uart_error_handle(app_uart_evt_t * p_event)
  * @param[in]   p_event       Pointer to the device manager event.
  * @param[in]   event_status  Status of the event.
  */
-static api_result_t device_manager_event_handler(const dm_handle_t    * p_handle,
+static ret_code_t device_manager_event_handler(const dm_handle_t    * p_handle,
                                                  const dm_event_t     * p_event,
-                                                 const api_result_t     event_result)
+                                                 const ret_code_t     event_result)
 {
     uint32_t err_code;
 
@@ -485,7 +485,17 @@ static void ble_stack_init(void)
     uint32_t err_code;
 
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
+
+    // Enable BLE stack.
+    ble_enable_params_t ble_enable_params;
+    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+
+    ble_enable_params.gatts_enable_params.service_changed = false;
+    ble_enable_params.gap_enable_params.role              = BLE_GAP_ROLE_CENTRAL;
+
+    err_code = sd_ble_enable(&ble_enable_params);
+    APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
     err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
@@ -759,7 +769,7 @@ int main(void)
 
     APP_ERROR_CHECK(err_code);
     app_trace_init();
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
     APP_GPIOTE_INIT(1);
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),NULL);
     APP_ERROR_CHECK(err_code);

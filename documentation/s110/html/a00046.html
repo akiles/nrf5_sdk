@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Beacon Transmitter Sample Application</title>
+<title>nRF51 SDK - S110 SoftDevice: SPI Master Loopback Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,55 +97,36 @@ $(document).ready(function(){initNavTree('a00046.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Beacon Transmitter Sample Application </div>  </div>
+<div class="title">SPI Master Loopback Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Beacon Transmitter Sample Application is an example that implements a transmitter beacon using the hardware delivered in the nRF51 Development Kit.</p>
-<p>The beacon broadcasts information to all compatible devices in its range as Manufacturer Specific Data in the advertisement packets.</p>
-<p>This information includes:</p>
+<div class="textblock"><p>The SPI Master Loopback Example demonstrates how to use a loopback for verifying the SPI master. To complete the loopback, the MOSI and MISO pins of the SPI master must be wired together.</p>
+<p>TX_RX_MSG_LENGTH number of bytes are transmitted through the master. The received bytes are verified to be the same as the bytes transmitted. If there is an error, <a class="el" href="a00057.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> is indicated.</p>
+<p>The application starts with configuring the <a class="el" href="a00813.html">Board Support Package</a>. Both SPI_MASTER_0 and SPI_MASTER_1 are tested, first with shifting LSB first, then by shifting MSB first.</p>
+<h1><a class="anchor" id="spi_master_loopback_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>spi_master_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\spi_master</code> </p>
+<p>Configuration:<br/>
+</p>
 <ul>
-<li>A 128-bit UUID to identify the beacon's provider.</li>
-<li>An arbitrary Major value for coarse differentiation between beacons.</li>
-<li>An arbitrary Minor value for fine differentiation between beacons.</li>
-<li>The RSSI value of the beacon measured at 1 meter distance, which can be used for estimating the distance from the beacon.</li>
+<li>MOSI0 should be connected to MISO0.</li>
+<li>MOSI1 should be connected to MISO1.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>This application is not power optimized!</dd></dl>
-<p>The name of the example is <b>ble_app_beacon_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_beacon</code> </p>
-<h1><a class="anchor" id="project_beacon_maj_min_config"></a>
-Configuring Major and Minor values</h1>
-<p>This example implements an optional feature which allows the change of Major and Minor values used in the advertisement packets without the need to recompile the application each time. To use this feature, the compiler define USE_UICR_FOR_MAJ_MIN_VALUES should be defined during compilation. If this is done, the application uses the value of the UICR (User Information Configuration Register) located at address 0x10001080 to populate the major and minor values. Whenever the values need to be updated, the user must set the UICR to a desired value using the nrfjprog tool and restart the application to bring the changes into effect. The byte ordering used when decoding the UICR value is shown in the image below.</p>
-<div class="image">
-<img src="ble_app_beacon_maj_min_from_uicr.jpg" alt="ble_app_beacon_maj_min_from_uicr.jpg"/>
-<div class="caption">
-Byte ordering used while reading UICR</div></div>
-<p> See <a class="el" href="a00046.html#project_beacon_test">Testing</a> for more information about how to use this feature.</p>
-<dl class="section note"><dt>Note</dt><dd>This application can be used as a starting point to write an iBeacon application. The procedure for creating an iBeacon application and the specification should be available at <a href="https://mfi.apple.com">https://mfi.apple.com</a>. Once the specification is obtained, this application can be modified to fit the requirements of iBeacon.</dd></dl>
-<h1><a class="anchor" id="project_beacon_test"></a>
+<h1><a class="anchor" id="spi_master_example_testing"></a>
 Testing</h1>
-<p>Test the Beacon Transmitter Sample Application with the Master Control Panel by performing the following steps:</p>
+<p>Test the SPI Master Loopback Example application by performing the following steps:</p>
 <ol type="1">
-<li>Compile and program the application. Observe that the <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
-<li>After starting discovery in the Master Control Panel main window, observe that the beacon is advertising with its <em>Bluetooth</em> device address without a Device Name.</li>
-<li>Click the plus sign next to the beacon's address to view the full advertisement data.</li>
-<li><p class="startli">Observe that the <b>Advertising Type</b> is 'Non-connectable' and the <b>Manufacturer Specific Data</b> field of the Advertising Data is as follows:</p>
-<p class="startli">59-00-02-15-01-12-23-34-45-56-67-78-89-9A-AB-BC-CD-DE-EF-F0-01-02-03-04-C3</p>
-</li>
-</ol>
-<ol type="1">
-<li>Define the compiler define USE_UICR_FOR_MAJ_MIN_VALUES and recompile and flash.</li>
-<li>Use nrfjprog tool to write the value 0xabcd0102 to the UICR register as follows: <div class="fragment"><div class="line">nrfjprog --snr &lt;Segger-chip-Serial-Number&gt; --memwr 0x10001080 --val 0xabcd0102</div>
-</div><!-- fragment --></li>
-<li><p class="startli">Reset the board and observe the bytes in bold below are seen in the <b>Manufacturer Specific Data</b> field of the Advertising Data. This indicates that the Major and Minor values have been picked up from the UICR register written in the above step.</p>
-<p class="startli">xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-<b>AB-CD-01-02</b>-xx </p>
-</li>
+<li>Compile and program the application.</li>
+<li>Observe that <a class="el" href="a00057.html#BSP_INDICATE_RCV_OK">BSP_INDICATE_RCV_OK</a> is indicated every second.</li>
+<li><a class="el" href="a00057.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> is indicated if an error occurred. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00043.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00029.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

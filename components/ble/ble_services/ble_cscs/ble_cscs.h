@@ -98,7 +98,7 @@ typedef struct
 
 /**@brief Cycling Speed and Cadence Service structure. This contains various status information for
  *        the service. */
-typedef struct ble_cscs_s
+struct ble_cscs_s
 {
     ble_cscs_evt_handler_t       evt_handler;                           /**< Event handler to be called for handling events in the Cycling Speed and Cadence Service. */
     uint16_t                     service_handle;                        /**< Handle of Cycling Speed and Cadence Service (as provided by the BLE stack). */
@@ -108,7 +108,7 @@ typedef struct ble_cscs_s
     uint16_t                     conn_handle;                           /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
     uint16_t                     feature;                               /**< Bit mask of features available on sensor. */
     ble_sc_ctrlpt_t              ctrl_pt;                               /**< data for speed and cadence control point */
-} ble_cscs_t;
+};
 
 /**@brief Cycling Speed and Cadence Service measurement structure. This contains a Cycling Speed and
  *        Cadence Service measurement. */

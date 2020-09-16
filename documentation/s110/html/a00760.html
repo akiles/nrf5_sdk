@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: TEMP (temperature) abstraction</title>
+<title>nRF51 SDK - S110 SoftDevice: Non-volatile memory controller</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,102 +97,213 @@ $(document).ready(function(){initNavTree('a00760.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">TEMP (temperature) abstraction<div class="ingroups"><a class="el" href="a01035.html">Peripheral Drivers</a></div></div>  </div>
+<div class="title">Non-volatile memory controller<div class="ingroups"><a class="el" href="a01032.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Temperature module init and read functions.  
+<p>Driver for the nRF51 NVMC peripheral.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga35bcd12671e3b2efd6081c847750b825"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga35bcd12671e3b2efd6081c847750b825"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MASK_SIGN</b>&#160;&#160;&#160;(0x00000200UL)</td></tr>
-<tr class="separator:ga35bcd12671e3b2efd6081c847750b825"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04cf7aed7e99e20a6d6d4e54d128179e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga04cf7aed7e99e20a6d6d4e54d128179e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MASK_SIGN_EXTENSION</b>&#160;&#160;&#160;(0xFFFFFC00UL)</td></tr>
-<tr class="separator:ga04cf7aed7e99e20a6d6d4e54d128179e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaac6989281c66a701979e172df40e39ab"><td class="memItemLeft" align="right" valign="top">static __INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00760.html#gaac6989281c66a701979e172df40e39ab">nrf_temp_init</a> (void)</td></tr>
-<tr class="memdesc:gaac6989281c66a701979e172df40e39ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for preparing the temp module for temperature measurement.  <a href="#gaac6989281c66a701979e172df40e39ab">More...</a><br/></td></tr>
-<tr class="separator:gaac6989281c66a701979e172df40e39ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga15d7acdef48ce1cb1e5e83dc02465dc7"><td class="memItemLeft" align="right" valign="top">static __INLINE int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00760.html#ga15d7acdef48ce1cb1e5e83dc02465dc7">nrf_temp_read</a> (void)</td></tr>
-<tr class="memdesc:ga15d7acdef48ce1cb1e5e83dc02465dc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading temperature measurement.  <a href="#ga15d7acdef48ce1cb1e5e83dc02465dc7">More...</a><br/></td></tr>
-<tr class="separator:ga15d7acdef48ce1cb1e5e83dc02465dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8cf428dbb2a28a342c3b57cc07869d9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00760.html#ga8cf428dbb2a28a342c3b57cc07869d9d">nrf_nvmc_page_erase</a> (uint32_t address)</td></tr>
+<tr class="memdesc:ga8cf428dbb2a28a342c3b57cc07869d9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erase a page in flash. This is required before writing to any address in the page.  <a href="#ga8cf428dbb2a28a342c3b57cc07869d9d">More...</a><br/></td></tr>
+<tr class="separator:ga8cf428dbb2a28a342c3b57cc07869d9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga008c6a4096bda07d67f33294af00ad9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00760.html#ga008c6a4096bda07d67f33294af00ad9b">nrf_nvmc_write_byte</a> (uint32_t address, uint8_t value)</td></tr>
+<tr class="memdesc:ga008c6a4096bda07d67f33294af00ad9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a single byte to flash.  <a href="#ga008c6a4096bda07d67f33294af00ad9b">More...</a><br/></td></tr>
+<tr class="separator:ga008c6a4096bda07d67f33294af00ad9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1347c44095f9486554be7c3d62737925"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00760.html#ga1347c44095f9486554be7c3d62737925">nrf_nvmc_write_word</a> (uint32_t address, uint32_t value)</td></tr>
+<tr class="memdesc:ga1347c44095f9486554be7c3d62737925"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a 32-bit word to flash.  <a href="#ga1347c44095f9486554be7c3d62737925">More...</a><br/></td></tr>
+<tr class="separator:ga1347c44095f9486554be7c3d62737925"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d566edd65fdc5655ce7be3cd17faba0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00760.html#ga7d566edd65fdc5655ce7be3cd17faba0">nrf_nvmc_write_bytes</a> (uint32_t address, const uint8_t *src, uint32_t num_bytes)</td></tr>
+<tr class="memdesc:ga7d566edd65fdc5655ce7be3cd17faba0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write consecutive bytes to flash.  <a href="#ga7d566edd65fdc5655ce7be3cd17faba0">More...</a><br/></td></tr>
+<tr class="separator:ga7d566edd65fdc5655ce7be3cd17faba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ac0536be3127139fb91992e1c5b46c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00760.html#ga9ac0536be3127139fb91992e1c5b46c4">nrf_nvmc_write_words</a> (uint32_t address, const uint32_t *src, uint32_t num_words)</td></tr>
+<tr class="memdesc:ga9ac0536be3127139fb91992e1c5b46c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write consecutive words to flash.  <a href="#ga9ac0536be3127139fb91992e1c5b46c4">More...</a><br/></td></tr>
+<tr class="separator:ga9ac0536be3127139fb91992e1c5b46c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Temperature module init and read functions. </p>
+<p>Driver for the nRF51 NVMC peripheral. </p>
+<p>This driver allows writing to the non-volatile memory (NVM) regions of the nRF51. In order to write to NVM the controller must be powered on and the relevant page must be erased. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaac6989281c66a701979e172df40e39ab"></a>
+<a class="anchor" id="ga8cf428dbb2a28a342c3b57cc07869d9d"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static __INLINE void nrf_temp_init </td>
+          <td class="memname">void nrf_nvmc_page_erase </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Function for preparing the temp module for temperature measurement. </p>
-<p>This function initializes the TEMP module and writes to the hidden configuration register.</p>
+<p>Erase a page in flash. This is required before writing to any address in the page. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">none</td><td></td></tr>
+    <tr><td class="paramname">address</td><td>Start address of the page. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Workaround for PAN_028 rev2.0A anomaly 31 - TEMP: Temperature offset value has to be manually loaded to the TEMP module </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga15d7acdef48ce1cb1e5e83dc02465dc7"></a>
+<a class="anchor" id="ga008c6a4096bda07d67f33294af00ad9b"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static __INLINE int32_t nrf_temp_read </td>
+          <td class="memname">void nrf_nvmc_write_byte </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Function for reading temperature measurement. </p>
-<p>The function reads the 10 bit 2's complement value and transforms it to a 32 bit 2's complement value.</p>
+<p>Write a single byte to flash. </p>
+<p>The function reads the word containing the byte, and then rewrites the entire word.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">none</td><td></td></tr>
+    <tr><td class="paramname">address</td><td>Address to write to. </td></tr>
+    <tr><td class="paramname">value</td><td>Value to write. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Workaround for PAN_028 rev2.0A anomaly 28 - TEMP: Negative measured values are not represented correctly </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7d566edd65fdc5655ce7be3cd17faba0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_nvmc_write_bytes </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>num_bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write consecutive bytes to flash. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Address to write to. </td></tr>
+    <tr><td class="paramname">src</td><td>Pointer to data to copy from. </td></tr>
+    <tr><td class="paramname">num_bytes</td><td>Number of bytes in src to write. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1347c44095f9486554be7c3d62737925"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_nvmc_write_word </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write a 32-bit word to flash. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Address to write to. </td></tr>
+    <tr><td class="paramname">value</td><td>Value to write. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9ac0536be3127139fb91992e1c5b46c4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_nvmc_write_words </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>num_words</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write consecutive words to flash. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Address to write to. </td></tr>
+    <tr><td class="paramname">src</td><td>Pointer to data to copy from. </td></tr>
+    <tr><td class="paramname">num_words</td><td>Number of bytes in src to write. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -201,7 +312,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:17 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

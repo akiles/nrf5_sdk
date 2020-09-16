@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Software controlled SPI Slave driver.</title>
+<title>nRF51 SDK - S120 SoftDevice: Simple Timer</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,208 +97,136 @@ $(document).ready(function(){initNavTree('a00499.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Software controlled SPI Slave driver.<div class="ingroups"><a class="el" href="a00737.html">Peripheral Drivers</a></div></div>  </div>
+<div class="title">Simple Timer<div class="ingroups"><a class="el" href="a00695.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Software controlled SPI Slave driver.  
+<p>Simple timer module.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html">spi_slave_config_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI peripheral device configuration data.  <a href="a00231.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00232.html">spi_slave_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct containing event context from the SPI slave driver.  <a href="a00232.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga0c5517095d30c2d6dc739a7dcb6e7d01"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#ga0c5517095d30c2d6dc739a7dcb6e7d01">spi_slave_event_handler_t</a> )(<a class="el" href="a00232.html">spi_slave_evt_t</a> event)</td></tr>
-<tr class="memdesc:ga0c5517095d30c2d6dc739a7dcb6e7d01"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI slave event callback function type.  <a href="#ga0c5517095d30c2d6dc739a7dcb6e7d01">More...</a><br/></td></tr>
-<tr class="separator:ga0c5517095d30c2d6dc739a7dcb6e7d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga483768f93042f5718cc9e194936a8918"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga483768f93042f5718cc9e194936a8918"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#ga483768f93042f5718cc9e194936a8918">app_simple_timer_timeout_handler_t</a> )(void *p_context)</td></tr>
+<tr class="memdesc:ga483768f93042f5718cc9e194936a8918"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer time-out handler type. <br/></td></tr>
+<tr class="separator:ga483768f93042f5718cc9e194936a8918"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga348be3a931288103790b15b689696f25"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#ga348be3a931288103790b15b689696f25">spi_slave_endian_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00499.html#gga348be3a931288103790b15b689696f25aec8b43120ad55a6a995f3147f887b662">SPIM_LSB_FIRST</a>, 
+<tr class="memitem:gad7076002d6f9bc89a678c94a49c061e4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#gad7076002d6f9bc89a678c94a49c061e4">app_simple_timer_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00499.html#ggad7076002d6f9bc89a678c94a49c061e4a189bddae8d6e0965ca9a12c83dc8a35a">APP_SIMPLE_TIMER_MODE_SINGLE_SHOT</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00499.html#gga348be3a931288103790b15b689696f25a06efdba330b7a4d360ad97c5f26eaaed">SPIM_MSB_FIRST</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga348be3a931288103790b15b689696f25"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI transaction bit order definitions.  <a href="a00499.html#ga348be3a931288103790b15b689696f25">More...</a><br/></td></tr>
-<tr class="separator:ga348be3a931288103790b15b689696f25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1febfa1b05a4e0d259877752c6c53c33"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#ga1febfa1b05a4e0d259877752c6c53c33">spi_slave_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00499.html#gga1febfa1b05a4e0d259877752c6c53c33a152359b11fb4b43ed0c5485eb0ab0673">SPI_MODE_0</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00499.html#gga1febfa1b05a4e0d259877752c6c53c33a7c1990cc15e9d69621be8e0e757e634c">SPI_MODE_1</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00499.html#gga1febfa1b05a4e0d259877752c6c53c33a4d350945d895a4acdc45ae96b0b82fc3">SPI_MODE_2</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00499.html#gga1febfa1b05a4e0d259877752c6c53c33af06ec36087996d6f328df39866ff5de6">SPI_MODE_3</a>
+&#160;&#160;<a class="el" href="a00499.html#ggad7076002d6f9bc89a678c94a49c061e4a7ac2ba9bfb3b1b37c0eb0acb06a9a9f7">APP_SIMPLE_TIMER_MODE_REPEATED</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga1febfa1b05a4e0d259877752c6c53c33"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI mode definitions for clock polarity and phase.  <a href="a00499.html#ga1febfa1b05a4e0d259877752c6c53c33">More...</a><br/></td></tr>
-<tr class="separator:ga1febfa1b05a4e0d259877752c6c53c33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c080d3b9fbe05708273eadef309094e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#ga8c080d3b9fbe05708273eadef309094e">spi_slave_evt_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00499.html#gga8c080d3b9fbe05708273eadef309094eae05604d49f7c5d272f2325f8405baec9">SPI_SLAVE_BUFFERS_SET_DONE</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00499.html#gga8c080d3b9fbe05708273eadef309094eabe9f17960cda631b4c223f50e09eff9c">SPI_SLAVE_XFER_DONE</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00499.html#gga8c080d3b9fbe05708273eadef309094ead8e6b1a309aa74e535a6a3262376743a">SPI_SLAVE_EVT_TYPE_MAX</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga8c080d3b9fbe05708273eadef309094e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event callback function event definitions.  <a href="a00499.html#ga8c080d3b9fbe05708273eadef309094e">More...</a><br/></td></tr>
-<tr class="separator:ga8c080d3b9fbe05708273eadef309094e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gad7076002d6f9bc89a678c94a49c061e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer modes.  <a href="a00499.html#gad7076002d6f9bc89a678c94a49c061e4">More...</a><br/></td></tr>
+<tr class="separator:gad7076002d6f9bc89a678c94a49c061e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaa7d934e9bcf58eadcb7680f9964d028d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#gaa7d934e9bcf58eadcb7680f9964d028d">spi_slave_evt_handler_register</a> (<a class="el" href="a00499.html#ga0c5517095d30c2d6dc739a7dcb6e7d01">spi_slave_event_handler_t</a> event_handler)</td></tr>
-<tr class="memdesc:gaa7d934e9bcf58eadcb7680f9964d028d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering a handler for SPI slave driver event.  <a href="#gaa7d934e9bcf58eadcb7680f9964d028d">More...</a><br/></td></tr>
-<tr class="separator:gaa7d934e9bcf58eadcb7680f9964d028d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8e5e7f859116cd6dab99017d094a6003"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#ga8e5e7f859116cd6dab99017d094a6003">spi_slave_init</a> (const <a class="el" href="a00231.html">spi_slave_config_t</a> *p_spi_slave_config)</td></tr>
-<tr class="memdesc:ga8e5e7f859116cd6dab99017d094a6003"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the SPI slave device.  <a href="#ga8e5e7f859116cd6dab99017d094a6003">More...</a><br/></td></tr>
-<tr class="separator:ga8e5e7f859116cd6dab99017d094a6003"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga122922caa9f1e8fb449c49322105afaf"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#ga122922caa9f1e8fb449c49322105afaf">spi_slave_buffers_set</a> (uint8_t *p_tx_buf, uint8_t *p_rx_buf, uint8_t tx_buf_length, uint8_t rx_buf_length)</td></tr>
-<tr class="memdesc:ga122922caa9f1e8fb449c49322105afaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for preparing the SPI slave device ready for a single SPI transaction.  <a href="#ga122922caa9f1e8fb449c49322105afaf">More...</a><br/></td></tr>
-<tr class="separator:ga122922caa9f1e8fb449c49322105afaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2b0e2f58211a1d2784228b6f42dd5fb9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#ga2b0e2f58211a1d2784228b6f42dd5fb9">spi_slave_set_cs_pull_up_config</a> (uint32_t alternate_config)</td></tr>
-<tr class="memdesc:ga2b0e2f58211a1d2784228b6f42dd5fb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for changing defult pull-up configuration for CSN pin.  <a href="#ga2b0e2f58211a1d2784228b6f42dd5fb9">More...</a><br/></td></tr>
-<tr class="separator:ga2b0e2f58211a1d2784228b6f42dd5fb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7763826e316676eefab5416529f2da18"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#ga7763826e316676eefab5416529f2da18">app_simple_timer_init</a> (void)</td></tr>
+<tr class="memdesc:ga7763826e316676eefab5416529f2da18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for configuring and setting up the timer hardware.  <a href="#ga7763826e316676eefab5416529f2da18">More...</a><br/></td></tr>
+<tr class="separator:ga7763826e316676eefab5416529f2da18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb5a3205c34aa67769059f8fa7f63b3f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#gadb5a3205c34aa67769059f8fa7f63b3f">app_simple_timer_start</a> (<a class="el" href="a00499.html#gad7076002d6f9bc89a678c94a49c061e4">app_simple_timer_mode_t</a> mode, <a class="el" href="a00499.html#ga483768f93042f5718cc9e194936a8918">app_simple_timer_timeout_handler_t</a> timeout_handler, uint16_t timeout_ticks, void *p_context)</td></tr>
+<tr class="memdesc:gadb5a3205c34aa67769059f8fa7f63b3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting a timer.  <a href="#gadb5a3205c34aa67769059f8fa7f63b3f">More...</a><br/></td></tr>
+<tr class="separator:gadb5a3205c34aa67769059f8fa7f63b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2de31d54126b0f7ee6ac7c6f8a1bec51"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#ga2de31d54126b0f7ee6ac7c6f8a1bec51">app_simple_timer_stop</a> (void)</td></tr>
+<tr class="memdesc:ga2de31d54126b0f7ee6ac7c6f8a1bec51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for stopping the timer.  <a href="#ga2de31d54126b0f7ee6ac7c6f8a1bec51">More...</a><br/></td></tr>
+<tr class="separator:ga2de31d54126b0f7ee6ac7c6f8a1bec51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga20e4f91287f50df937981e64f8f29e1a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00499.html#ga20e4f91287f50df937981e64f8f29e1a">app_simple_timer_uninit</a> (void)</td></tr>
+<tr class="memdesc:ga20e4f91287f50df937981e64f8f29e1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for uninitializing the timer. Should be called also when the timer is not used anymore to reach lowest power consumption in system.  <a href="#ga20e4f91287f50df937981e64f8f29e1a">More...</a><br/></td></tr>
+<tr class="separator:ga20e4f91287f50df937981e64f8f29e1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Software controlled SPI Slave driver. </p>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga0c5517095d30c2d6dc739a7dcb6e7d01"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef void(* spi_slave_event_handler_t)(<a class="el" href="a00232.html">spi_slave_evt_t</a> event)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>SPI slave event callback function type. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>SPI slave driver event. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
+<p>Simple timer module. </p>
+<p>Supported features and limitations:</p>
+<ul>
+<li>Two modes: single shot mode and repeated mode.</li>
+<li>No more than one timer can run simultaneously.</li>
+<li>The timer is hard-coded to use the TIMER1 peripheral and compare channel 0. </li>
+</ul>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga348be3a931288103790b15b689696f25"></a>
+<a class="anchor" id="gad7076002d6f9bc89a678c94a49c061e4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00499.html#ga348be3a931288103790b15b689696f25">spi_slave_endian_t</a></td>
+          <td class="memname">enum <a class="el" href="a00499.html#gad7076002d6f9bc89a678c94a49c061e4">app_simple_timer_mode_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>SPI transaction bit order definitions. </p>
+<p>Timer modes. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga348be3a931288103790b15b689696f25aec8b43120ad55a6a995f3147f887b662"></a>SPIM_LSB_FIRST</em>&nbsp;</td><td class="fielddoc">
-<p>Least significant bit shifted out first. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad7076002d6f9bc89a678c94a49c061e4a189bddae8d6e0965ca9a12c83dc8a35a"></a>APP_SIMPLE_TIMER_MODE_SINGLE_SHOT</em>&nbsp;</td><td class="fielddoc">
+<p>The timer will expire only once. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga348be3a931288103790b15b689696f25a06efdba330b7a4d360ad97c5f26eaaed"></a>SPIM_MSB_FIRST</em>&nbsp;</td><td class="fielddoc">
-<p>Most significant bit shifted out first. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga8c080d3b9fbe05708273eadef309094e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00499.html#ga8c080d3b9fbe05708273eadef309094e">spi_slave_evt_type_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Event callback function event definitions. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8c080d3b9fbe05708273eadef309094eae05604d49f7c5d272f2325f8405baec9"></a>SPI_SLAVE_BUFFERS_SET_DONE</em>&nbsp;</td><td class="fielddoc">
-<p>Memory buffer set event. Memory buffers have been set successfully to the SPI slave device and SPI transactions can be done. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8c080d3b9fbe05708273eadef309094eabe9f17960cda631b4c223f50e09eff9c"></a>SPI_SLAVE_XFER_DONE</em>&nbsp;</td><td class="fielddoc">
-<p>SPI transaction event. SPI transaction has been completed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8c080d3b9fbe05708273eadef309094ead8e6b1a309aa74e535a6a3262376743a"></a>SPI_SLAVE_EVT_TYPE_MAX</em>&nbsp;</td><td class="fielddoc">
-<p>Enumeration upper bound. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga1febfa1b05a4e0d259877752c6c53c33"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00499.html#ga1febfa1b05a4e0d259877752c6c53c33">spi_slave_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>SPI mode definitions for clock polarity and phase. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1febfa1b05a4e0d259877752c6c53c33a152359b11fb4b43ed0c5485eb0ab0673"></a>SPI_MODE_0</em>&nbsp;</td><td class="fielddoc">
-<p>(CPOL = 0, CPHA = 0). </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1febfa1b05a4e0d259877752c6c53c33a7c1990cc15e9d69621be8e0e757e634c"></a>SPI_MODE_1</em>&nbsp;</td><td class="fielddoc">
-<p>(CPOL = 0, CPHA = 1). </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1febfa1b05a4e0d259877752c6c53c33a4d350945d895a4acdc45ae96b0b82fc3"></a>SPI_MODE_2</em>&nbsp;</td><td class="fielddoc">
-<p>(CPOL = 1, CPHA = 0). </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1febfa1b05a4e0d259877752c6c53c33af06ec36087996d6f328df39866ff5de6"></a>SPI_MODE_3</em>&nbsp;</td><td class="fielddoc">
-<p>(CPOL = 1, CPHA = 1). </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad7076002d6f9bc89a678c94a49c061e4a7ac2ba9bfb3b1b37c0eb0acb06a9a9f7"></a>APP_SIMPLE_TIMER_MODE_REPEATED</em>&nbsp;</td><td class="fielddoc">
+<p>The timer will restart each time it expires. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga122922caa9f1e8fb449c49322105afaf"></a>
+<a class="anchor" id="ga7763826e316676eefab5416529f2da18"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t spi_slave_buffers_set </td>
+          <td class="memname">uint32_t app_simple_timer_init </td>
           <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_tx_buf</em>, </td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for configuring and setting up the timer hardware. </p>
+<dl class="section note"><dt>Note</dt><dd>Configuration parameters should be set in nrf_drv_config.h file. The TIMER1_CONFIG_MODE has to be set to NRF_TIMER_MODE_TIMER value. The TIMER1_CONFIG_BIT_WIDTH has to be set to NRF_TIMER_BIT_WIDTH_16 value.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the operation is successful. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the operation fails because the timer is already initialized. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>If the operation fails because some configuration parameter is not valid. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gadb5a3205c34aa67769059f8fa7f63b3f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t app_simple_timer_start </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00499.html#gad7076002d6f9bc89a678c94a49c061e4">app_simple_timer_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_rx_buf</em>, </td>
+          <td class="paramtype"><a class="el" href="a00499.html#ga483768f93042f5718cc9e194936a8918">app_simple_timer_timeout_handler_t</a>&#160;</td>
+          <td class="paramname"><em>timeout_handler</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>tx_buf_length</em>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>timeout_ticks</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>rx_buf_length</em>&#160;</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_context</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -308,117 +236,75 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for preparing the SPI slave device ready for a single SPI transaction. </p>
-<p>Function prepares the SPI slave device to be ready for a single SPI transaction. It configures the SPI slave device to use the memory, supplied with the function call, in SPI transactions.</p>
-<p>The <a class="el" href="a00499.html#ga0c5517095d30c2d6dc739a7dcb6e7d01">spi_slave_event_handler_t</a> will be called with appropriate event <a class="el" href="a00499.html#ga8c080d3b9fbe05708273eadef309094e">spi_slave_evt_type_t</a> when either the memory buffer configuration or SPI transaction has been completed.</p>
-<dl class="section note"><dt>Note</dt><dd>The callback function <a class="el" href="a00499.html#ga0c5517095d30c2d6dc739a7dcb6e7d01">spi_slave_event_handler_t</a> can be called before returning from this function, since it is called from the SPI slave interrupt context.</dd>
-<dd>
-This function can be called from the callback function <a class="el" href="a00499.html#ga0c5517095d30c2d6dc739a7dcb6e7d01">spi_slave_event_handler_t</a> context.</dd>
-<dd>
-Client application must call this function after every <a class="el" href="a00499.html#gga8c080d3b9fbe05708273eadef309094eabe9f17960cda631b4c223f50e09eff9c">SPI_SLAVE_XFER_DONE</a> event if it wants the SPI slave driver to be ready for possible new SPI transaction.</dd></dl>
+<p>Function for starting a timer. </p>
+<dl class="section note"><dt>Note</dt><dd>If this function is called for a timer that is already running, the currently running timer is stopped before starting the new one.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_tx_buf</td><td>Pointer to the TX buffer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_rx_buf</td><td>Pointer to the RX buffer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">tx_buf_length</td><td>Length of the TX buffer in bytes. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rx_buf_length</td><td>Length of the RX buffer in bytes.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>Timer mode (see <a class="el" href="a00499.html#gad7076002d6f9bc89a678c94a49c061e4">app_simple_timer_mode_t</a>). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout_handler</td><td>Function to be executed when the timer expires (see <a class="el" href="a00499.html#ga483768f93042f5718cc9e194936a8918">app_simple_timer_timeout_handler_t</a>). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout_ticks</td><td>Number of timer ticks to time-out event. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>General purpose pointer. Will be passed to the time-out handler when the timer expires.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Operation failure. SPI slave device in incorrect state. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INTERNAL</td><td>Operation failure. Internal error ocurred. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the operation is successful. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the operation fails because <a class="el" href="a00499.html#ga7763826e316676eefab5416529f2da18">app_simple_timer_init</a> has not been called and the operation is not allowed in this state. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If the operation fails because timeout_handler is NULL. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>If the operation fails because "mode" parameter is not valid. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaa7d934e9bcf58eadcb7680f9964d028d"></a>
+<a class="anchor" id="ga2de31d54126b0f7ee6ac7c6f8a1bec51"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t spi_slave_evt_handler_register </td>
+          <td class="memname">uint32_t app_simple_timer_stop </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00499.html#ga0c5517095d30c2d6dc739a7dcb6e7d01">spi_slave_event_handler_t</a>&#160;</td>
-          <td class="paramname"><em>event_handler</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for registering a handler for SPI slave driver event. </p>
-<dl class="section note"><dt>Note</dt><dd>Multiple registration requests will overwrite any possible existing registration.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_handler</td><td>The function to be called by the SPI slave driver upon event.</td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Function for stopping the timer. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation success. NULL handler registered. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the operation is successful. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga8e5e7f859116cd6dab99017d094a6003"></a>
+<a class="anchor" id="ga20e4f91287f50df937981e64f8f29e1a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t spi_slave_init </td>
+          <td class="memname">uint32_t app_simple_timer_uninit </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00231.html">spi_slave_config_t</a> *&#160;</td>
-          <td class="paramname"><em>p_spi_slave_config</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for initializing the SPI slave device. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_spi_slave_config</td><td>SPI peripheral device configuration data.</td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Function for uninitializing the timer. Should be called also when the timer is not used anymore to reach lowest power consumption in system. </p>
+<dl class="section note"><dt>Note</dt><dd>The function switches off the internal core of the timer to reach lowest power consumption in system. The startup time from this state may be longer compared to starting the timer from the stopped state.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Operation failure. Invalid parameter supplied. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the operation is successful. </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2b0e2f58211a1d2784228b6f42dd5fb9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void spi_slave_set_cs_pull_up_config </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>alternate_config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for changing defult pull-up configuration for CSN pin. </p>
-<p>Function for changing defult drive for MISO pin.</p>
-<p>In default configuration pull-up at CSN pin disabled. If alternate configuration is required this function might be called before <a class="el" href="a00499.html#ga8e5e7f859116cd6dab99017d094a6003" title="Function for initializing the SPI slave device.">spi_slave_init()</a> to change default settings for CSN pin</p>
-<p>In default configuration pin drive is set to S0S1. If alternate configuration is required this function might be called before <a class="el" href="a00499.html#ga8e5e7f859116cd6dab99017d094a6003" title="Function for initializing the SPI slave device.">spi_slave_init()</a> to change default settings for MISO pin </p>
 
 </div>
 </div>
@@ -427,7 +313,7 @@ Client application must call this function after every <a class="el" href="a0049
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:53 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

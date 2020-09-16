@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gattc_write_params_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gap_sign_info_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,109 +106,33 @@ $(document).ready(function(){initNavTree('a00257.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gattc_write_params_t Struct Reference<div class="ingroups"><a class="el" href="a01055.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_sign_info_t Struct Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Write Parameters.  
+<p>GAP Signing Information.  
  <a href="a00257.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gattc.h&gt;</code></p>
+<p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2c42a23118699b0fab8f49f1d9b4b386"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00257.html#a2c42a23118699b0fab8f49f1d9b4b386">write_op</a></td></tr>
-<tr class="separator:a2c42a23118699b0fab8f49f1d9b4b386"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b5cec7a8b33f482114d99026b2ee92d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00257.html#a4b5cec7a8b33f482114d99026b2ee92d">handle</a></td></tr>
-<tr class="separator:a4b5cec7a8b33f482114d99026b2ee92d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85d01254a43068218061ab21acabe980"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00257.html#a85d01254a43068218061ab21acabe980">offset</a></td></tr>
-<tr class="separator:a85d01254a43068218061ab21acabe980"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a068c40f218ed3932901529ac05b69c21"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00257.html#a068c40f218ed3932901529ac05b69c21">len</a></td></tr>
-<tr class="separator:a068c40f218ed3932901529ac05b69c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a361b91f9ee1961598bc9c94520f8004b"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00257.html#a361b91f9ee1961598bc9c94520f8004b">p_value</a></td></tr>
-<tr class="separator:a361b91f9ee1961598bc9c94520f8004b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9bf42dc0e530824c93ec423e6539220"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00257.html#ae9bf42dc0e530824c93ec423e6539220">flags</a></td></tr>
-<tr class="separator:ae9bf42dc0e530824c93ec423e6539220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7391524e0075eaebdf6f1be1920bc88"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00257.html#ae7391524e0075eaebdf6f1be1920bc88">csrk</a> [16]</td></tr>
+<tr class="separator:ae7391524e0075eaebdf6f1be1920bc88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Write Parameters. </p>
+<div class="textblock"><p>GAP Signing Information. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ae9bf42dc0e530824c93ec423e6539220"></a>
+<a class="anchor" id="ae7391524e0075eaebdf6f1be1920bc88"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gattc_write_params_t::flags</td>
+          <td class="memname">uint8_t ble_gap_sign_info_t::csrk[16]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Flags, see <a class="el" href="a00817.html">GATT Execute Write flags</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="a4b5cec7a8b33f482114d99026b2ee92d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gattc_write_params_t::handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle to the attribute to be written. </p>
-
-</div>
-</div>
-<a class="anchor" id="a068c40f218ed3932901529ac05b69c21"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gattc_write_params_t::len</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Length of data in bytes. </p>
-
-</div>
-</div>
-<a class="anchor" id="a85d01254a43068218061ab21acabe980"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gattc_write_params_t::offset</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Offset in bytes.</p>
-<dl class="section note"><dt>Note</dt><dd>For WRITE_CMD and WRITE_REQ, offset must be 0. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a361b91f9ee1961598bc9c94520f8004b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* ble_gattc_write_params_t::p_value</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to the value data. </p>
-
-</div>
-</div>
-<a class="anchor" id="a2c42a23118699b0fab8f49f1d9b4b386"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gattc_write_params_t::write_op</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Write Operation to be performed, see <a class="el" href="a00816.html">GATT Write operations</a>. </p>
+<p>Connection Signature Resolving Key. </p>
 
 </div>
 </div>
@@ -217,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00257.html">ble_gattc_write_params_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00257.html">ble_gap_sign_info_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

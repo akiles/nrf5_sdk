@@ -1,8 +1,7 @@
 var a00515 =
 [
-    [ "CRITICAL_REGION_ENTER", "a00515.html#ga61149a977f6ebdaeb8bdeed626dd9392", null ],
-    [ "CRITICAL_REGION_EXIT", "a00515.html#ga854878240b628e978f760f75aca4e1cc", null ],
-    [ "NRF_APP_PRIORITY_THREAD", "a00515.html#gac3db2bb99db38f42bf316a9d0d9ace99", null ],
-    [ "app_irq_priority_t", "a00515.html#ga1a193131d1d5911b1ec53f9541841b1b", null ],
-    [ "current_int_priority_get", "a00515.html#ga2462e81e0f0c058ca4c44c21a3d22a80", null ]
+    [ "NRF_GAP_ERR_BASE", "a00515.html#ga29249baa158d723505c601121d003034", null ],
+    [ "NRF_GATTC_ERR_BASE", "a00515.html#ga200400dc8ad79918acee9cd038336165", null ],
+    [ "NRF_GATTS_ERR_BASE", "a00515.html#ga7bc503f781e56a86cdd044d6043629b8", null ],
+    [ "NRF_L2CAP_ERR_BASE", "a00515.html#ga82756b5d44b6b5757c3968513b4928ac", null ]
 ];

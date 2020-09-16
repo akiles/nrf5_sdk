@@ -1,4 +1,8 @@
 var a00294 =
 [
-    [ "evt_handler", "a00294.html#a223e36fe74ad9b01944bad0289393ed5", null ]
+    [ "gatt_status", "a00294.html#a76066ec0dfed065ff7e58a709eaf8042", null ],
+    [ "len", "a00294.html#a5242203755359060a29308d0e64b6da7", null ],
+    [ "offset", "a00294.html#a7b823765dc8e01aa1dfc9a3124f92bc9", null ],
+    [ "p_data", "a00294.html#a777067adc297b1e3fa67a4671663ba2f", null ],
+    [ "update", "a00294.html#a27015e208127d98d0600657e4f9224fc", null ]
 ];

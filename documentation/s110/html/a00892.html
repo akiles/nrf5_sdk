@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: GATTS Queued Writes: App handled, no attributes require authorization</title>
+<title>nRF51 SDK - S110 SoftDevice: GAP Failed Pairing: Pairing aborted by the application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,19 +97,21 @@ $(document).ready(function(){initNavTree('a00892.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">GATTS Queued Writes: App handled, no attributes require authorization<div class="ingroups"><a class="el" href="a00883.html">Message Sequence Charts</a></div></div>  </div>
+<div class="title">GAP Failed Pairing: Pairing aborted by the application<div class="ingroups"><a class="el" href="a00878.html">Message Sequence Charts</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+<p>When the application detects that the pairing should not be performed, for example an insufficient IO combination, it can use <a class="el" href="a01045.html#ga7b23027c97b3df21f6cbc23170e55663" title="Reply with GAP security parameters.">sd_ble_gap_sec_params_reply()</a> to send SMP Pairing failed to the peer.</p>
+<p>When the stack handles the response from the application it will also validate the passkey (SMP_STC_PASSKEY_ENTRY_FAILED). If any error is detected it will be reported when <a class="el" href="a01045.html#ga7b23027c97b3df21f6cbc23170e55663" title="Reply with GAP security parameters.">sd_ble_gap_sec_params_reply()</a> is called. </p>
 <div align="center">
-<img src="msc_inline_mscgraph_41.png" alt="msc_inline_mscgraph_41" border="0" usemap="#msc_inline_mscgraph_41.map"/>
-<map name="msc_inline_mscgraph_41.map" id="msc_inline_mscgraph_41.map"></map>
+<img src="msc_inline_mscgraph_17.png" alt="msc_inline_mscgraph_17" border="0" usemap="#msc_inline_mscgraph_17.map"/>
+<map name="msc_inline_mscgraph_17.map" id="msc_inline_mscgraph_17.map"></map>
 </div>
  </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:21 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:44 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

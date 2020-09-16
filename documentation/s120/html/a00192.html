@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_uuid128_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_srv_report_ref_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,49 @@ $(document).ready(function(){initNavTree('a00192.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_uuid128_t Struct Reference<div class="ingroups"><a class="el" href="a00766.html">Structures</a></div></div>  </div>
+<div class="title">ble_srv_report_ref_t Struct Reference<div class="ingroups"><a class="el" href="a00686.html">Common service definitions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>128 bit UUID values.  
+<p>Value of a Report Reference descriptor.  
  <a href="a00192.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_types.h&gt;</code></p>
+<p><code>#include &lt;ble_srv_common.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a13339a8ee220b2ad2f4b8e130e730407"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html#a13339a8ee220b2ad2f4b8e130e730407">uuid128</a> [16]</td></tr>
-<tr class="separator:a13339a8ee220b2ad2f4b8e130e730407"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4db26fdff00f44138f9f684ff1dfd149"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html#a4db26fdff00f44138f9f684ff1dfd149">report_id</a></td></tr>
+<tr class="separator:a4db26fdff00f44138f9f684ff1dfd149"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a765872684206db6d91ad6de596599434"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html#a765872684206db6d91ad6de596599434">report_type</a></td></tr>
+<tr class="separator:a765872684206db6d91ad6de596599434"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>128 bit UUID values. </p>
+<div class="textblock"><p>Value of a Report Reference descriptor. </p>
+<p>This is mapping information which maps the parent characteristic to the Report ID(s) and Report Type(s) defined within a Report Map characteristic. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a13339a8ee220b2ad2f4b8e130e730407"></a>
+<a class="anchor" id="a4db26fdff00f44138f9f684ff1dfd149"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned char ble_uuid128_t::uuid128[16]</td>
+          <td class="memname">uint8_t ble_srv_report_ref_t::report_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Little-Endian UUID bytes. </p>
+<p>Non-zero value if these is more than one instance of the same Report Type </p>
+
+</div>
+</div>
+<a class="anchor" id="a765872684206db6d91ad6de596599434"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_srv_report_ref_t::report_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Type of Report characteristic </p>
 
 </div>
 </div>
@@ -141,8 +157,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00192.html">ble_uuid128_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00192.html">ble_srv_report_ref_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

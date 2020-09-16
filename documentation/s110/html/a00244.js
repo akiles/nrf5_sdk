@@ -1,5 +1,5 @@
 var a00244 =
 [
-    [ "len", "a00244.html#a6ece59636f724d7a7759d4bc11cec8d9", null ],
-    [ "values", "a00244.html#ac586dcb02b8f378127157ee8c45abea9", null ]
+    [ "ch_map", "a00244.html#a71bb5ea1d8eecc86f819a1f5a3807818", null ],
+    [ "conn_handle", "a00244.html#adbf93719ab5531a19758504bdeb6c469", null ]
 ];

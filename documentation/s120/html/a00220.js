@@ -1,5 +1,4 @@
 var a00220 =
 [
-    [ "num_of_bytes", "a00220.html#ac7195123250d62fa6ea18a433f1b002c", null ],
-    [ "p_buffer", "a00220.html#a54c012dbcda11f6bc5af7bbab3ba07d5", null ]
+    [ "value", "a00220.html#a6abcc1a7af7712feb6998ec7cb7f3f86", null ]
 ];

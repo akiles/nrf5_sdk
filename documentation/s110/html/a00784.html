@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Utility Functions and Definitions (Platform)</title>
+<title>nRF51 SDK - S110 SoftDevice: SDIO driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,142 +97,129 @@ $(document).ready(function(){initNavTree('a00784.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Utility Functions and Definitions (Platform)<div class="ingroups"><a class="el" href="a01039.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">SDIO driver<div class="ingroups"><a class="el" href="a01032.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Various types and definitions available to all applications when using SoftDevice.  
+<p>2-wire serial interface driver.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gac3db2bb99db38f42bf316a9d0d9ace99"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00784.html#gac3db2bb99db38f42bf316a9d0d9ace99">NRF_APP_PRIORITY_THREAD</a>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:gac3db2bb99db38f42bf316a9d0d9ace99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9864421b965a73b1feef47c3813bf0e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9864421b965a73b1feef47c3813bf0e2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PACKED</b>(TYPE)&#160;&#160;&#160;__packed TYPE</td></tr>
-<tr class="separator:ga9864421b965a73b1feef47c3813bf0e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga61149a977f6ebdaeb8bdeed626dd9392"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00784.html#ga61149a977f6ebdaeb8bdeed626dd9392">CRITICAL_REGION_ENTER</a>()&#160;&#160;&#160;critical_region_enter()</td></tr>
-<tr class="memdesc:ga61149a977f6ebdaeb8bdeed626dd9392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for entering a critical region.  <a href="#ga61149a977f6ebdaeb8bdeed626dd9392">More...</a><br/></td></tr>
-<tr class="separator:ga61149a977f6ebdaeb8bdeed626dd9392"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga854878240b628e978f760f75aca4e1cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00784.html#ga854878240b628e978f760f75aca4e1cc">CRITICAL_REGION_EXIT</a>()&#160;&#160;&#160;critical_region_exit()</td></tr>
-<tr class="memdesc:ga854878240b628e978f760f75aca4e1cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for leaving a critical region.  <a href="#ga854878240b628e978f760f75aca4e1cc">More...</a><br/></td></tr>
-<tr class="separator:ga854878240b628e978f760f75aca4e1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga1a193131d1d5911b1ec53f9541841b1b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00784.html#ga1a193131d1d5911b1ec53f9541841b1b">app_irq_priority_t</a> { <br/>
-&#160;&#160;<b>APP_IRQ_PRIORITY_HIGH</b> = 1, 
-<br/>
-&#160;&#160;<b>APP_IRQ_PRIORITY_MID</b> = 2, 
-<br/>
-&#160;&#160;<b>APP_IRQ_PRIORITY_LOW</b> = 3
-<br/>
- }</td></tr>
-<tr class="memdesc:ga1a193131d1d5911b1ec53f9541841b1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interrupt priorities available to the application while the SoftDevice is active. <br/></td></tr>
-<tr class="separator:ga1a193131d1d5911b1ec53f9541841b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gafd8142d17a1fd843d3e0bbf7dfbf10a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd8142d17a1fd843d3e0bbf7dfbf10a3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>critical_region_enter</b> (void)</td></tr>
-<tr class="separator:gafd8142d17a1fd843d3e0bbf7dfbf10a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31258aceb4080335b54832e5ee5ad7d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga31258aceb4080335b54832e5ee5ad7d9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>critical_region_exit</b> (void)</td></tr>
-<tr class="separator:ga31258aceb4080335b54832e5ee5ad7d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2462e81e0f0c058ca4c44c21a3d22a80"><td class="memItemLeft" align="right" valign="top">static __INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00784.html#ga2462e81e0f0c058ca4c44c21a3d22a80">current_int_priority_get</a> (void)</td></tr>
-<tr class="memdesc:ga2462e81e0f0c058ca4c44c21a3d22a80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for finding the current interrupt level.  <a href="#ga2462e81e0f0c058ca4c44c21a3d22a80">More...</a><br/></td></tr>
-<tr class="separator:ga2462e81e0f0c058ca4c44c21a3d22a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd362e60216c5346709cac28c7cc175b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd362e60216c5346709cac28c7cc175b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00784.html#gafd362e60216c5346709cac28c7cc175b">sdio_init</a> (void)</td></tr>
+<tr class="memdesc:gafd362e60216c5346709cac28c7cc175b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing 2-wire serial interface and trying to handle stuck slaves. <br/></td></tr>
+<tr class="separator:gafd362e60216c5346709cac28c7cc175b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ff0f4956042d92b01fc2dbeffe26284"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00784.html#ga1ff0f4956042d92b01fc2dbeffe26284">sdio_read_byte</a> (uint8_t address)</td></tr>
+<tr class="memdesc:ga1ff0f4956042d92b01fc2dbeffe26284"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading a byte over 2-wire serial interface.  <a href="#ga1ff0f4956042d92b01fc2dbeffe26284">More...</a><br/></td></tr>
+<tr class="separator:ga1ff0f4956042d92b01fc2dbeffe26284"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95ee69dbe058216ef73012a1ff04c077"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00784.html#ga95ee69dbe058216ef73012a1ff04c077">sdio_read_burst</a> (uint8_t *target_buffer, uint8_t target_buffer_size)</td></tr>
+<tr class="memdesc:ga95ee69dbe058216ef73012a1ff04c077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading several bytes over 2-wire serial interface using burst mode.  <a href="#ga95ee69dbe058216ef73012a1ff04c077">More...</a><br/></td></tr>
+<tr class="separator:ga95ee69dbe058216ef73012a1ff04c077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e5d560f80ba374b7fe18f4e8a565ffd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00784.html#ga2e5d560f80ba374b7fe18f4e8a565ffd">sdio_write_byte</a> (uint8_t address, uint8_t data_byte)</td></tr>
+<tr class="memdesc:ga2e5d560f80ba374b7fe18f4e8a565ffd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for writing a byte over 2-wire serial interface.  <a href="#ga2e5d560f80ba374b7fe18f4e8a565ffd">More...</a><br/></td></tr>
+<tr class="separator:ga2e5d560f80ba374b7fe18f4e8a565ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Various types and definitions available to all applications when using SoftDevice. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga61149a977f6ebdaeb8bdeed626dd9392"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CRITICAL_REGION_ENTER</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;critical_region_enter()</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Macro for entering a critical region. </p>
-<dl class="section note"><dt>Note</dt><dd>Due to implementation details, there must exist one and only one call to <a class="el" href="a00784.html#ga854878240b628e978f760f75aca4e1cc" title="Macro for leaving a critical region.">CRITICAL_REGION_EXIT()</a> for each call to <a class="el" href="a00784.html#ga61149a977f6ebdaeb8bdeed626dd9392" title="Macro for entering a critical region.">CRITICAL_REGION_ENTER()</a>, and they must be located in the same scope. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga854878240b628e978f760f75aca4e1cc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CRITICAL_REGION_EXIT</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;critical_region_exit()</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Macro for leaving a critical region. </p>
-<dl class="section note"><dt>Note</dt><dd>Due to implementation details, there must exist one and only one call to <a class="el" href="a00784.html#ga854878240b628e978f760f75aca4e1cc" title="Macro for leaving a critical region.">CRITICAL_REGION_EXIT()</a> for each call to <a class="el" href="a00784.html#ga61149a977f6ebdaeb8bdeed626dd9392" title="Macro for entering a critical region.">CRITICAL_REGION_ENTER()</a>, and they must be located in the same scope. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac3db2bb99db38f42bf316a9d0d9ace99"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define NRF_APP_PRIORITY_THREAD&#160;&#160;&#160;4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>"Interrupt level" when running in Thread Mode. </p>
-
-</div>
-</div>
+<p>2-wire serial interface driver. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga2462e81e0f0c058ca4c44c21a3d22a80"></a>
+<a class="anchor" id="ga95ee69dbe058216ef73012a1ff04c077"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static __INLINE uint8_t current_int_priority_get </td>
+          <td class="memname">void sdio_read_burst </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>target_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>target_buffer_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Function for finding the current interrupt level. </p>
-<dl class="section return"><dt>Returns</dt><dd>Current interrupt level. </dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">APP_IRQ_PRIORITY_HIGH</td><td>We are running in Application High interrupt level. </td></tr>
-    <tr><td class="paramname">APP_IRQ_PRIORITY_LOW</td><td>We are running in Application Low interrupt level. </td></tr>
-    <tr><td class="paramname">APP_IRQ_PRIORITY_THREAD</td><td>We are running in Thread Mode. </td></tr>
+<p>Function for reading several bytes over 2-wire serial interface using burst mode. </p>
+<p>Developer needs to implement this function in a way that suits the hardware. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target_buffer</td><td>Buffer location to store read bytes to </td></tr>
+    <tr><td class="paramname">target_buffer_size</td><td>Bytes allocated for target_buffer </td></tr>
   </table>
   </dd>
 </dl>
-<p>&lt; "Interrupt level" when running in Thread Mode. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga1ff0f4956042d92b01fc2dbeffe26284"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t sdio_read_byte </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for reading a byte over 2-wire serial interface. </p>
+<p>Developer needs to implement this function in a way that suits the hardware. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Register address to read from </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Byte read </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2e5d560f80ba374b7fe18f4e8a565ffd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sdio_write_byte </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>data_byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for writing a byte over 2-wire serial interface. </p>
+<p>Developer needs to implement this function in a way that suits the hardware. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Register address to write to </td></tr>
+    <tr><td class="paramname">data_byte</td><td>Data byte to write </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -241,7 +228,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>critical_region_exit<
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:17 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:42 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,8 +1,11 @@
 var searchData=
 [
-  ['peripheral_20drivers',['Peripheral Drivers',['../a00266.html',1,'']]],
-  ['persistent_20storage_20interface',['Persistent Storage Interface',['../a00215.html',1,'']]],
-  ['persistent_20storage_20access_20operation_20codes',['Persistent Storage Access Operation Codes',['../a00216.html',1,'']]],
-  ['persistent_20memory_20interface_20data_20types',['Persistent Memory Interface Data Types',['../a00217.html',1,'']]],
-  ['persistent_20storage_20access_20routines',['Persistent Storage Access Routines',['../a00218.html',1,'']]]
+  ['ppi_20driver',['PPI driver',['../a00314.html',1,'']]],
+  ['peripheral_20drivers',['Peripheral Drivers',['../a00348.html',1,'']]],
+  ['ppi_20hal_20and_20driver',['PPI HAL and driver',['../a00313.html',1,'']]],
+  ['ppi_20hal',['PPI HAL',['../a00283.html',1,'']]],
+  ['persistent_20storage_20interface',['Persistent Storage Interface',['../a00300.html',1,'']]],
+  ['persistent_20storage_20access_20operation_20codes',['Persistent Storage Access Operation Codes',['../a00301.html',1,'']]],
+  ['persistent_20memory_20interface_20data_20types',['Persistent Memory Interface Data Types',['../a00302.html',1,'']]],
+  ['persistent_20storage_20access_20routines',['Persistent Storage Access Routines',['../a00303.html',1,'']]]
 ];

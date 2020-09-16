@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ser_hal_transport_evt_rx_pkt_received_params_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: nrf_drv_qdec_sample_data_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,33 @@ $(document).ready(function(){initNavTree('a00220.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ser_hal_transport_evt_rx_pkt_received_params_t Struct Reference<div class="ingroups"><a class="el" href="a00661.html">Serialization HAL Transport</a></div></div>  </div>
+<div class="title">nrf_drv_qdec_sample_data_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00468.html">QDEC driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>A struct containing parameters of the event of type <a class="el" href="a00661.html#ggab7b90215a20408a7c7f9a411304ecc08afbb4ad51e8b5e1d062b6d50176a4a6df">SER_HAL_TRANSP_EVT_RX_PKT_RECEIVED</a>.  
+<p>QDEC sample event data.  
  <a href="a00220.html#details">More...</a></p>
 
-<p><code>#include &lt;ser_hal_transport.h&gt;</code></p>
+<p><code>#include &lt;nrf_drv_qdec.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a54c012dbcda11f6bc5af7bbab3ba07d5"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#a54c012dbcda11f6bc5af7bbab3ba07d5">p_buffer</a></td></tr>
-<tr class="separator:a54c012dbcda11f6bc5af7bbab3ba07d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7195123250d62fa6ea18a433f1b002c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ac7195123250d62fa6ea18a433f1b002c">num_of_bytes</a></td></tr>
-<tr class="separator:ac7195123250d62fa6ea18a433f1b002c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6abcc1a7af7712feb6998ec7cb7f3f86"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#a6abcc1a7af7712feb6998ec7cb7f3f86">value</a></td></tr>
+<tr class="separator:a6abcc1a7af7712feb6998ec7cb7f3f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A struct containing parameters of the event of type <a class="el" href="a00661.html#ggab7b90215a20408a7c7f9a411304ecc08afbb4ad51e8b5e1d062b6d50176a4a6df">SER_HAL_TRANSP_EVT_RX_PKT_RECEIVED</a>. </p>
+<div class="textblock"><p>QDEC sample event data. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ac7195123250d62fa6ea18a433f1b002c"></a>
+<a class="anchor" id="a6abcc1a7af7712feb6998ec7cb7f3f86"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ser_hal_transport_evt_rx_pkt_received_params_t::num_of_bytes</td>
+          <td class="memname">int8_t nrf_drv_qdec_sample_data_evt_t::value</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Length of a received packet in octets. </p>
-
-</div>
-</div>
-<a class="anchor" id="a54c012dbcda11f6bc5af7bbab3ba07d5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* ser_hal_transport_evt_rx_pkt_received_params_t::p_buffer</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to a buffer containing a packet to read. </p>
+<p>Sample value. </p>
 
 </div>
 </div>
@@ -156,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00220.html">ser_hal_transport_evt_rx_pkt_received_params_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00220.html">nrf_drv_qdec_sample_data_evt_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

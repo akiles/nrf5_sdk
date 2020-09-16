@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Error / status codes specific to device manager.</title>
+<title>nRF51 SDK - S120 SoftDevice: GAP Address cycle modes</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,32 +99,51 @@ $(document).ready(function(){initNavTree('a00520.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Error / status codes specific to device manager.<div class="ingroups"><a class="el" href="a00516.html">SDK Error codes</a></div></div>  </div>
+<div class="title">GAP Address cycle modes<div class="ingroups"><a class="el" href="a00701.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga55eca152e2013d7639dba4c7e6cef990"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga55eca152e2013d7639dba4c7e6cef990"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DM_NO_APP_CONTEXT</b>&#160;&#160;&#160;(DEVICE_MANAGER_ERR_BASE+0x0040)</td></tr>
-<tr class="separator:ga55eca152e2013d7639dba4c7e6cef990"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0863f11b3767098efb225445eaabe423"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0863f11b3767098efb225445eaabe423"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DM_SERVICE_CONTEXT_NOT_APPLIED</b>&#160;&#160;&#160;(DEVICE_MANAGER_ERR_BASE+0x0041)</td></tr>
-<tr class="separator:ga0863f11b3767098efb225445eaabe423"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga957f49596dd450d74ecd2be31d258555"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga957f49596dd450d74ecd2be31d258555"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DM_CONTEXT_INFO_LOST</b>&#160;&#160;&#160;(DEVICE_MANAGER_ERR_BASE+0x0042)</td></tr>
-<tr class="separator:ga957f49596dd450d74ecd2be31d258555"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga23ba0194bd15059b37dc11400984a4a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga23ba0194bd15059b37dc11400984a4a1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DM_DEVICE_CONTEXT_FULL</b>&#160;&#160;&#160;(DEVICE_MANAGER_ERR_BASE+0x0043)</td></tr>
-<tr class="separator:ga23ba0194bd15059b37dc11400984a4a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga876e1c374d17d451d901e3e8d151a20d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00520.html#ga876e1c374d17d451d901e3e8d151a20d">BLE_GAP_ADDR_CYCLE_MODE_NONE</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga876e1c374d17d451d901e3e8d151a20d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1b508bba948e89462e018fecc38b13f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00520.html#gad1b508bba948e89462e018fecc38b13f">BLE_GAP_ADDR_CYCLE_MODE_AUTO</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:gad1b508bba948e89462e018fecc38b13f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gad1b508bba948e89462e018fecc38b13f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADDR_CYCLE_MODE_AUTO&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Automatically generate and update private addresses. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga876e1c374d17d451d901e3e8d151a20d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADDR_CYCLE_MODE_NONE&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set addresses directly, no automatic address cycling. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:53 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_lls_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_hrm_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,33 @@ $(document).ready(function(){initNavTree('a00314.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_lls_s Struct Reference<div class="ingroups"><a class="el" href="a00973.html">Link Loss Service</a></div></div>  </div>
+<div class="title">ble_hrm_t Struct Reference<div class="ingroups"><a class="el" href="a01008.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Link Loss Service structure. This contains various status information for the service.  
+<p>Structure containing the heart rate measurement received from the peer.  
  <a href="a00314.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_lls.h&gt;</code></p>
+<p><code>#include &lt;ble_hrs_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a331d5f75c24c9f4be6b9f4464ce828c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00973.html#ga2ff59fd3c572afa373d8731265a2daee">ble_lls_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#a331d5f75c24c9f4be6b9f4464ce828c9">evt_handler</a></td></tr>
-<tr class="separator:a331d5f75c24c9f4be6b9f4464ce828c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a22ac8304ea3a4bc7dacb72a8d65bc0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00977.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#a4a22ac8304ea3a4bc7dacb72a8d65bc0">error_handler</a></td></tr>
-<tr class="separator:a4a22ac8304ea3a4bc7dacb72a8d65bc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8ad660b1350238c9bb1f4ff6e043ef7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#ae8ad660b1350238c9bb1f4ff6e043ef7">service_handle</a></td></tr>
-<tr class="separator:ae8ad660b1350238c9bb1f4ff6e043ef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee2e9a72478596b53d8d99a398360591"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00261.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#aee2e9a72478596b53d8d99a398360591">alert_level_handles</a></td></tr>
-<tr class="separator:aee2e9a72478596b53d8d99a398360591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53ecfc95060fa37c8a748a769c90eb37"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#a53ecfc95060fa37c8a748a769c90eb37">hr_value</a></td></tr>
+<tr class="separator:a53ecfc95060fa37c8a748a769c90eb37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Link Loss Service structure. This contains various status information for the service. </p>
+<div class="textblock"><p>Structure containing the heart rate measurement received from the peer. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aee2e9a72478596b53d8d99a398360591"></a>
+<a class="anchor" id="a53ecfc95060fa37c8a748a769c90eb37"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00261.html">ble_gatts_char_handles_t</a> ble_lls_s::alert_level_handles</td>
+          <td class="memname">uint16_t ble_hrm_t::hr_value</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handles related to the Alert Level characteristic. </p>
-
-</div>
-</div>
-<a class="anchor" id="a4a22ac8304ea3a4bc7dacb72a8d65bc0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00977.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_lls_s::error_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Function to be called in case of an error. </p>
-
-</div>
-</div>
-<a class="anchor" id="a331d5f75c24c9f4be6b9f4464ce828c9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00973.html#ga2ff59fd3c572afa373d8731265a2daee">ble_lls_evt_handler_t</a> ble_lls_s::evt_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event handler to be called for handling events in the Link Loss Service. </p>
-
-</div>
-</div>
-<a class="anchor" id="ae8ad660b1350238c9bb1f4ff6e043ef7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_lls_s::service_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle of Link Loss Service (as provided by the BLE stack). </p>
+<p>Heart Rate Value. </p>
 
 </div>
 </div>
@@ -186,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00314.html">ble_lls_s</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00314.html">ble_hrm_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

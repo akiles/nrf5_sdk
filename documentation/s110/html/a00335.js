@@ -1,5 +1,7 @@
 var a00335 =
 [
-    [ "len", "a00335.html#a14ab9ae8747f2add25b332c15d20647e", null ],
-    [ "p_mem", "a00335.html#ab5fa5a7ab3575057522e07be1581c659", null ]
+    [ "error_handler", "a00335.html#ad807ea2ae006260b7c63872abc7961a9", null ],
+    [ "evt_handler", "a00335.html#aba9fc4fcd56873873aa82aace5c804f7", null ],
+    [ "initial_alert_level", "a00335.html#a7e1cfca38578d65b9e40d1dffd69ebf6", null ],
+    [ "lls_attr_md", "a00335.html#a4107eb4f75941f56faea5db0b273c863", null ]
 ];

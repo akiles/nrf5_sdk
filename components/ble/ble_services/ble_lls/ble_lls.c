@@ -24,11 +24,14 @@
 /**@brief Function for handling the Connect event.
  *
  * @param[in]   p_lls   Link Loss Service structure.
+ * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_connect(ble_lls_t * p_lls)
+static void on_connect(ble_lls_t * p_lls, ble_evt_t * p_ble_evt)
 {
     // Link reconnected, notify application with a no_alert event
     ble_lls_evt_t evt;
+
+    p_lls->conn_handle     = p_ble_evt->evt.gap_evt.conn_handle;
 
     evt.evt_type           = BLE_LLS_EVT_LINK_LOSS_ALERT;
     evt.params.alert_level = BLE_CHAR_ALERT_LEVEL_NO_ALERT;
@@ -93,7 +96,7 @@ void ble_lls_on_ble_evt(ble_lls_t * p_lls, ble_evt_t * p_ble_evt)
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
-            on_connect(p_lls);
+            on_connect(p_lls, p_ble_evt);
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
@@ -196,7 +199,16 @@ uint32_t ble_lls_init(ble_lls_t * p_lls, const ble_lls_init_t * p_lls_init)
 
 uint32_t ble_lls_alert_level_get(ble_lls_t * p_lls, uint8_t * p_alert_level)
 {
-    uint16_t len = sizeof(uint8_t);
+    ble_gatts_value_t gatts_value;
 
-    return sd_ble_gatts_value_get(p_lls->alert_level_handles.value_handle, 0, &len, p_alert_level);
+    // Initialize value struct.
+    memset(&gatts_value, 0, sizeof(gatts_value));
+
+    gatts_value.len     = sizeof(uint8_t);
+    gatts_value.offset  = 0;
+    gatts_value.p_value = p_alert_level;
+
+    return sd_ble_gatts_value_get(p_lls->conn_handle,
+                                  p_lls->alert_level_handles.value_handle,
+                                  &gatts_value);
 }

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ser_phy_evt_hw_error_params_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: nrf_drv_rtc_config_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,78 @@ $(document).ready(function(){initNavTree('a00222.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ser_phy_evt_hw_error_params_t Struct Reference<div class="ingroups"><a class="el" href="a00662.html">Serialization PHY</a></div></div>  </div>
+<div class="title">nrf_drv_rtc_config_t Struct Reference<div class="ingroups"><a class="el" href="a00480.html">RTC driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>A struct containing parameters of the event of type <a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a>.  
+<p>RTC driver instance configuration structure.  
  <a href="a00222.html#details">More...</a></p>
 
-<p><code>#include &lt;ser_phy.h&gt;</code></p>
+<p><code>#include &lt;nrf_drv_rtc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2624b8e32e14b6e9b83cfeb552c58077"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00222.html#a2624b8e32e14b6e9b83cfeb552c58077">error_code</a></td></tr>
-<tr class="separator:a2624b8e32e14b6e9b83cfeb552c58077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ac8172aee26fd5776591235c8629d25"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00222.html#a2ac8172aee26fd5776591235c8629d25">prescaler</a></td></tr>
+<tr class="separator:a2ac8172aee26fd5776591235c8629d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b53fb2a65842e8795e7f3e1c9e4f7dd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00222.html#a6b53fb2a65842e8795e7f3e1c9e4f7dd">interrupt_priority</a></td></tr>
+<tr class="separator:a6b53fb2a65842e8795e7f3e1c9e4f7dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e9620aa4a400df2c94fbd71355378dd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00222.html#a7e9620aa4a400df2c94fbd71355378dd">tick_latency</a></td></tr>
+<tr class="separator:a7e9620aa4a400df2c94fbd71355378dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bfb5f366a8b6ed0b6c4ee87ea5db74e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00222.html#a6bfb5f366a8b6ed0b6c4ee87ea5db74e">reliable</a></td></tr>
+<tr class="separator:a6bfb5f366a8b6ed0b6c4ee87ea5db74e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A struct containing parameters of the event of type <a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a>. </p>
+<div class="textblock"><p>RTC driver instance configuration structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a2624b8e32e14b6e9b83cfeb552c58077"></a>
+<a class="anchor" id="a6b53fb2a65842e8795e7f3e1c9e4f7dd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ser_phy_evt_hw_error_params_t::error_code</td>
+          <td class="memname">uint8_t nrf_drv_rtc_config_t::interrupt_priority</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Hardware error code - specific for any microcontroller. </p>
+<p>Interrupt priority. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2ac8172aee26fd5776591235c8629d25"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t nrf_drv_rtc_config_t::prescaler</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prescaler. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6bfb5f366a8b6ed0b6c4ee87ea5db74e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool nrf_drv_rtc_config_t::reliable</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reliable mode flag. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7e9620aa4a400df2c94fbd71355378dd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t nrf_drv_rtc_config_t::tick_latency</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Maximum length of interrupt handler in ticks (max 7.7 ms). </p>
 
 </div>
 </div>
@@ -141,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00222.html">ser_phy_evt_hw_error_params_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00222.html">nrf_drv_rtc_config_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

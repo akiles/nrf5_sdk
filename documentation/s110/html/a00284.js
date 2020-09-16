@@ -1,7 +1,8 @@
 var a00284 =
 [
-    [ "max_len", "a00284.html#a021ad724a66d2f8e54c1bdff8def4b4c", null ],
-    [ "read_resp", "a00284.html#a9ed64286300a70a9d26f1839f2396221", null ],
-    [ "rep_ref", "a00284.html#af12bb312c4056f52bc2e83ff0ef66233", null ],
-    [ "security_mode", "a00284.html#a88082cfc1a5360f43e333ea838257ccb", null ]
+    [ "desc", "a00284.html#a9133fc1220787c07ac21291dab7b8b22", null ],
+    [ "exponent", "a00284.html#a931b1bdd89be7d3aaa1d1522d20c7dd5", null ],
+    [ "format", "a00284.html#a9a79d570aa8f758c81ddddbf345b289e", null ],
+    [ "name_space", "a00284.html#a279e1e8de47b628414382aed4cec3c68", null ],
+    [ "unit", "a00284.html#ab28e4dc2a48e6329df85b3f974cf4466", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Schedule handling library</title>
+<title>nRF51 SDK - S110 SoftDevice: TWI</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,68 +97,164 @@ $(document).ready(function(){initNavTree('a00014.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Schedule handling library </div>  </div>
+<div class="title">TWI </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The scheduler is used for transferring execution from the interrupt context to the main context.</p>
-<h1><a class="anchor" id="app_scheduler_req"></a>
-Requirements:</h1>
-<h2><a class="anchor" id="main_context_logic"></a>
-Logic in main context:</h2>
-<ul>
-<li>Define an event handler for each type of event expected.</li>
-<li>Initialize the scheduler by calling the <a class="el" href="a00779.html#gaa9670ed0053a67304c3d2d0cb3eb1333" title="Macro for initializing the event scheduler.">APP_SCHED_INIT()</a> macro before entering the application main loop.</li>
-<li>Call <a class="el" href="a00779.html#gab725820c32a8d05379db4567cf30e862" title="Function for executing all scheduled events.">app_sched_execute()</a> from the main loop each time the application wakes up because of an event (typically when <a class="el" href="a01075.html#ga11d88d38ac99fb72cde74c9385d36433" title="Waits for an application event.">sd_app_evt_wait()</a> returns).</li>
+<div class="textblock"><p>Software/Hardware controlled TWI Master driver.</p>
+<dl class="section user"><dt>Features supported</dt><dd><ul>
+<li>Repeated start</li>
+<li>No multi-master</li>
+<li>Only 7-bit addressing</li>
+<li>Supports clock stretching (with optional SMBus style slave timeout using software driver)</li>
+<li>Tries to handle slaves stuck in the middle of transfer</li>
 </ul>
-<h2><a class="anchor" id="int_context_logic"></a>
-Logic in interrupt context:</h2>
-<ul>
-<li>In the interrupt handler, call <a class="el" href="a00779.html#ga49ec0ad278ece44b5dc56b86ac44489c" title="Function for scheduling an event.">app_sched_event_put()</a> with the appropriate data and event handler. This will insert an event into the scheduler's queue. The <a class="el" href="a00779.html#gab725820c32a8d05379db4567cf30e862" title="Function for executing all scheduled events.">app_sched_execute()</a> function will pull this event and call its handler in the main context.</li>
-</ul>
-<p>For an example usage of the scheduler, please see the implementations of <a class="el" href="a00052.html">HID Mouse Application</a> and <a class="el" href="a00051.html">HID Keyboard Application</a>.</p>
-<div class="image">
-<img src="scheduler_working.jpg" alt="scheduler_working.jpg"/>
-<div class="caption">
-The high level design of the scheduler</div></div>
-<h1><a class="anchor" id="seq_diagrams_sched"></a>
-Applications using the Scheduler</h1>
-<p>Sequence diagrams illustrating the flow of events for various scenarios in the example applications when using the Scheduler. <br/>
- <br/>
-</p>
-<div class="image">
-<img src="ble_event_with_scheduler.jpg" alt="ble_event_with_scheduler.jpg"/>
-<div class="caption">
-Figure 1: Receiving an event from the ble stack causing a service event</div></div>
-<p><br/>
- </p>
-<div class="image">
-<img src="battery_timer_with_scheduler.jpg" alt="battery_timer_with_scheduler.jpg"/>
-<div class="caption">
-Figure 2: The battery timer expires</div></div>
-<p><br/>
-</p>
-<h1><a class="anchor" id="seq_diagrams_no_sched"></a>
-Applications not using the Scheduler</h1>
-<p>Sequence diagrams illustrating the flow of events for various scenarios in the example applications when not using the Scheduler. <br/>
- <br/>
-</p>
-<div class="image">
-<img src="ble_event_without_scheduler.jpg" alt="ble_event_without_scheduler.jpg"/>
-<div class="caption">
-Figure 3: Receiving an event from the ble stack causing a service event</div></div>
-<p><br/>
- </p>
-<div class="image">
-<img src="battery_timer_without_scheduler.jpg" alt="battery_timer_without_scheduler.jpg"/>
-<div class="caption">
-Figure 4: The battery timer expires</div></div>
-</div></div><!-- contents -->
+</dd></dl>
+<dl class="section user"><dt>Documentation specific to HW controlled TWI master driver.</dt><dd></dd></dl>
+<p>Code snippet below illustrates the write sequence of the HW controlled TWI master driver. </p>
+<div class="fragment"><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">while</span> (NRF_TWI1-&gt;EVENTS_TXDSENT == 0 &amp;&amp; NRF_TWI1-&gt;EVENTS_ERROR == 0 &amp;&amp; (--timeout))</div>
+<div class="line">        {</div>
+<div class="line">            <span class="comment">// Do nothing.</span></div>
+<div class="line">        }</div>
+<div class="line"></div>
+<div class="line">        <span class="keywordflow">if</span> (timeout == 0 || NRF_TWI1-&gt;EVENTS_ERROR != 0)</div>
+<div class="line">        {</div>
+<div class="line">            <span class="comment">// Recover the peripheral as indicated by PAN 56: &quot;TWI: TWI module lock-up.&quot; found at</span></div>
+<div class="line">            <span class="comment">// Product Anomaly Notification document found at </span></div>
+<div class="line">            <span class="comment">// https://www.nordicsemi.com/eng/Products/Bluetooth-R-low-energy/nRF51822/#Downloads</span></div>
+<div class="line">            NRF_TWI1-&gt;EVENTS_ERROR = 0;</div>
+<div class="line">            NRF_TWI1-&gt;ENABLE       = TWI_ENABLE_ENABLE_Disabled &lt;&lt; TWI_ENABLE_ENABLE_Pos; </div>
+<div class="line">            NRF_TWI1-&gt;POWER        = 0;</div>
+<div class="line">            nrf_delay_us(5);</div>
+<div class="line">            NRF_TWI1-&gt;POWER        = 1;</div>
+<div class="line">            NRF_TWI1-&gt;ENABLE       = TWI_ENABLE_ENABLE_Enabled &lt;&lt; TWI_ENABLE_ENABLE_Pos;</div>
+<div class="line"></div>
+<div class="line">            (void)<a class="code" href="a00787.html#ga148f1dd10bc0248c6c6c5336ce07a540" title="Function for initializing TWI bus IO pins and checks if the bus is operational.">twi_master_init</a>();</div>
+<div class="line"></div>
+<div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line">        }</div>
+<div class="line">        NRF_TWI1-&gt;EVENTS_TXDSENT = 0;</div>
+<div class="line">        <span class="keywordflow">if</span> (--data_length == 0)</div>
+<div class="line">        {</div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
+<div class="line">        }</div>
+<div class="line"></div>
+<div class="line">        NRF_TWI1-&gt;TXD = *data++;</div>
+<div class="line">    }</div>
+</div><!-- fragment --><p> Code snippet below illustrates the read sequence of the HW controlled TWI master driver. </p>
+<div class="fragment"><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">while</span> (NRF_TWI1-&gt;EVENTS_RXDREADY == 0 &amp;&amp; NRF_TWI1-&gt;EVENTS_ERROR == 0 &amp;&amp; (--timeout))</div>
+<div class="line">        {</div>
+<div class="line">            <span class="comment">// Do nothing.</span></div>
+<div class="line">        }</div>
+<div class="line">        NRF_TWI1-&gt;EVENTS_RXDREADY = 0;</div>
+<div class="line"></div>
+<div class="line">        <span class="keywordflow">if</span> (timeout == 0 || NRF_TWI1-&gt;EVENTS_ERROR != 0)</div>
+<div class="line">        {</div>
+<div class="line">            <span class="comment">// Recover the peripheral as indicated by PAN 56: &quot;TWI: TWI module lock-up.&quot; found at</span></div>
+<div class="line">            <span class="comment">// Product Anomaly Notification document found at</span></div>
+<div class="line">            <span class="comment">// https://www.nordicsemi.com/eng/Products/Bluetooth-R-low-energy/nRF51822/#Downloads</span></div>
+<div class="line">            NRF_TWI1-&gt;EVENTS_ERROR = 0;</div>
+<div class="line">            NRF_TWI1-&gt;ENABLE       = TWI_ENABLE_ENABLE_Disabled &lt;&lt; TWI_ENABLE_ENABLE_Pos;</div>
+<div class="line">            NRF_TWI1-&gt;POWER        = 0;</div>
+<div class="line">            nrf_delay_us(5);</div>
+<div class="line">            NRF_TWI1-&gt;POWER        = 1;</div>
+<div class="line">            NRF_TWI1-&gt;ENABLE       = TWI_ENABLE_ENABLE_Enabled &lt;&lt; TWI_ENABLE_ENABLE_Pos;</div>
+<div class="line"></div>
+<div class="line">            (void)<a class="code" href="a00787.html#ga148f1dd10bc0248c6c6c5336ce07a540" title="Function for initializing TWI bus IO pins and checks if the bus is operational.">twi_master_init</a>();</div>
+<div class="line"></div>
+<div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line">        }</div>
+<div class="line"></div>
+<div class="line">        *data++ = NRF_TWI1-&gt;RXD;</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">/* Configure PPI to stop TWI master before we get last BB event */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (--data_length == 1)</div>
+<div class="line">        {</div>
+<div class="line">            NRF_PPI-&gt;CH[0].TEP = (uint32_t)&amp;NRF_TWI1-&gt;TASKS_STOP;</div>
+<div class="line">        }</div>
+<div class="line"></div>
+<div class="line">        <span class="keywordflow">if</span> (data_length == 0)</div>
+<div class="line">        {</div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
+<div class="line">        }</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">// Recover the peripheral as indicated by PAN 56: &quot;TWI: TWI module lock-up.&quot; found at</span></div>
+<div class="line">        <span class="comment">// Product Anomaly Notification document found at</span></div>
+<div class="line">        <span class="comment">// https://www.nordicsemi.com/eng/Products/Bluetooth-R-low-energy/nRF51822/#Downloads</span></div>
+<div class="line">        nrf_delay_us(20);</div>
+<div class="line">        NRF_TWI1-&gt;TASKS_RESUME = 1;</div>
+<div class="line">    }</div>
+</div><!-- fragment --> <dl class="section user"><dt>Documentation specific to SW controlled TWI master driver.</dt><dd></dd></dl>
+<p>Code snippet below illustrates the write sequence of the SW controlled TWI master driver. </p>
+<div class="fragment"><div class="line">    <span class="comment">// Make sure SDA is an output</span></div>
+<div class="line">    <a class="code" href="a00787.html#gaa6c311f207bff59456fb22648965c53b">TWI_SDA_OUTPUT</a>();</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// MSB first</span></div>
+<div class="line">    <span class="keywordflow">for</span> (uint_fast8_t i = 0x80; i != 0; i &gt;&gt;= 1)</div>
+<div class="line">    {</div>
+<div class="line">        <a class="code" href="a00787.html#gafef260a0ebd7d5669cd2731d2c20f55d">TWI_SCL_LOW</a>();</div>
+<div class="line">        <a class="code" href="a00787.html#ga0bdffa7178084c5e1b2e11d3a95c5e85">TWI_DELAY</a>();</div>
+<div class="line"></div>
+<div class="line">        <span class="keywordflow">if</span> (databyte &amp; i)</div>
+<div class="line">        {</div>
+<div class="line">            <a class="code" href="a00787.html#ga112251118224f5623c20423efce89ae8">TWI_SDA_HIGH</a>();</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">else</span></div>
+<div class="line">        {</div>
+<div class="line">            <a class="code" href="a00787.html#ga6b884c7770898bf063884f3f1893d492">TWI_SDA_LOW</a>();</div>
+<div class="line">        }</div>
+<div class="line"></div>
+<div class="line">        <span class="keywordflow">if</span> (!twi_master_wait_while_scl_low())</div>
+<div class="line">        {</div>
+<div class="line">            transfer_succeeded = <span class="keyword">false</span>; <span class="comment">// Timeout</span></div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Finish last data bit by pulling SCL low</span></div>
+<div class="line">    <a class="code" href="a00787.html#gafef260a0ebd7d5669cd2731d2c20f55d">TWI_SCL_LOW</a>();</div>
+<div class="line">    <a class="code" href="a00787.html#ga0bdffa7178084c5e1b2e11d3a95c5e85">TWI_DELAY</a>();</div>
+<div class="line"></div>
+</div><!-- fragment --><p> Code snippet below illustrates the read sequence of the SW controlled TWI master driver. </p>
+<div class="fragment"><div class="line">    <span class="comment">// Make sure SDA is an input</span></div>
+<div class="line">    <a class="code" href="a00787.html#ga63ae25f476902e9df0c31b057e2bb527">TWI_SDA_INPUT</a>();</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// SCL state is guaranteed to be high here</span></div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// MSB first</span></div>
+<div class="line">    <span class="keywordflow">for</span> (uint_fast8_t i = 0x80; i != 0; i &gt;&gt;= 1)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">if</span> (!twi_master_wait_while_scl_low())</div>
+<div class="line">        {</div>
+<div class="line">            transfer_succeeded = <span class="keyword">false</span>;</div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
+<div class="line">        }</div>
+<div class="line"></div>
+<div class="line">        <span class="keywordflow">if</span> (<a class="code" href="a00787.html#ga0a7e559c3bceb5b50ff3e51cabb21f73">TWI_SDA_READ</a>())</div>
+<div class="line">        {</div>
+<div class="line">            byte_read |= i;</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">else</span></div>
+<div class="line">        {</div>
+<div class="line">            <span class="comment">// No need to do anything</span></div>
+<div class="line">        }</div>
+<div class="line"></div>
+<div class="line">        <a class="code" href="a00787.html#gafef260a0ebd7d5669cd2731d2c20f55d">TWI_SCL_LOW</a>();</div>
+<div class="line">        <a class="code" href="a00787.html#ga0bdffa7178084c5e1b2e11d3a95c5e85">TWI_DELAY</a>();</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Make sure SDA is an output before we exit the function</span></div>
+<div class="line">    <a class="code" href="a00787.html#gaa6c311f207bff59456fb22648965c53b">TWI_SDA_OUTPUT</a>();</div>
+</div><!-- fragment --></div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00002.html">Hardware Drivers</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

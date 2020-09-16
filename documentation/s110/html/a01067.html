@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Types</title>
+<title>nRF51 SDK - S110 SoftDevice: Defines</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,28 +97,18 @@ $(document).ready(function(){initNavTree('a01067.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Types<div class="ingroups"><a class="el" href="a00844.html">Master Boot Record API</a></div></div>  </div>
+<div class="title">Defines<div class="ingroups"><a class="el" href="a00868.html">SoftDevice Manager API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00378.html">sd_mbr_command_copy_sd_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This command copies part of a new SoftDevice The destination area is erased before copying. If dst is in the middle of a flash page, that whole flash page will be erased. If (dst+len) is in the middle of a flash page, that whole flash page will be erased.  <a href="a00378.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html">sd_mbr_command_compare_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This command works like memcmp, but takes the length in words.  <a href="a00376.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00377.html">sd_mbr_command_copy_bl_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This command copies a new BootLoader. With this command, destination of BootLoader is always the address written in NRF_UICR-&gt;BOOTADDR.  <a href="a00377.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html">sd_mbr_command_vector_table_base_set_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the base address of the interrupt vector table for interrupts forwarded from the MBR.  <a href="a00380.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00379.html">sd_mbr_command_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaa620a383a50dd98d8319832cedc20a19"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa620a383a50dd98d8319832cedc20a19"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01067.html#gaa620a383a50dd98d8319832cedc20a19">SDM_SVC_BASE</a>&#160;&#160;&#160;0x10</td></tr>
+<tr class="memdesc:gaa620a383a50dd98d8319832cedc20a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoftDevice Manager SVC Base number. <br/></td></tr>
+<tr class="separator:gaa620a383a50dd98d8319832cedc20a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 </div><!-- contents -->
@@ -126,7 +116,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

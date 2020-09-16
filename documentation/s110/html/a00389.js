@@ -1,5 +1,5 @@
 var a00389 =
 [
-    [ "num_of_bytes", "a00389.html#a52ba1214757a5bbc308333735cdbf0d2", null ],
-    [ "p_buffer", "a00389.html#ae2d1620a22cdf63f23e5f13965412cb8", null ]
+    [ "exponent", "a00389.html#ad2b0d21fa7152a4afd8d98ec81bbe15a", null ],
+    [ "mantissa", "a00389.html#af54051e1c850e7ca43fc5e7b49c91261", null ]
 ];

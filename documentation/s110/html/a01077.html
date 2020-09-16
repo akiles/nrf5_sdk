@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: User memory layout for Queued Writes</title>
+<title>nRF51 SDK - S110 SoftDevice: Proprietary stacks</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,31 +96,40 @@ $(document).ready(function(){initNavTree('a01077.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">User memory layout for Queued Writes<div class="ingroups"><a class="el" href="a00882.html">Generic Attribute Profile (GATT) Server</a></div></div>  </div>
+<div class="title">Proprietary stacks</div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>The following table shows the memory layout used by the SoftDevice to queue a Queued Write operation (Prepare Write ATT packet) in user memory:</p>
-<table  style="border:1px solid black;border-collapse:collapse;">
-<caption align="bottom">Queued Write</caption>
-<tr>
-<th style="border:1px solid black;padding:5px;">Parameter </th><th style="border:1px solid black;padding:5px;">Size (octets) </th><th style="border:1px solid black;padding:5px;">Description  </th></tr>
-<tr>
-<td style="border:1px solid black;padding:5px;">Handle </td><td style="border:1px solid black;padding:5px;">2 </td><td style="border:1px solid black;padding:5px;">Attribute Handle  </td></tr>
-<tr>
-<td style="border:1px solid black;padding:5px;">Offset </td><td style="border:1px solid black;padding:5px;">2 </td><td style="border:1px solid black;padding:5px;">Value Offset  </td></tr>
-<tr>
-<td style="border:1px solid black;padding:5px;">Length </td><td style="border:1px solid black;padding:5px;">2 </td><td style="border:1px solid black;padding:5px;">Value Length  </td></tr>
-<tr>
-<td style="border:1px solid black;padding:5px;">Value </td><td style="border:1px solid black;padding:5px;">Length </td><td style="border:1px solid black;padding:5px;">Attribute Value  </td></tr>
+
+<p>Application Programming Interface for proprietary protocols.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a01078"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01078.html">Common</a></td></tr>
+<tr class="memdesc:a01078"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definitions, macros, error codes, common to all proprietary modules. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00949"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00949.html">Enhanced ShockBurst</a></td></tr>
+<tr class="memdesc:a00949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enhanced ShockBurst Application Programming Interface (API). <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00950"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00950.html">Gazell Link Layer</a></td></tr>
+<tr class="memdesc:a00950"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gazell Link Layer Application Programming Interface (API). <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00951"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00951.html">Gazell Pairing</a></td></tr>
+<tr class="memdesc:a00951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gazell Pairing API. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<p>The application can parse the array of Queued Write instances at any time, but it is recommended to do so whenever an Execute Write ATT packet has been received over the air. See the GATT Server Queued Writes MSCs for more details. The array will be terminated by an Queued Write instance with its handle set to <a class="el" href="a01051.html#ga755613d0f9d0979be50a3814c1436ab9">BLE_GATT_HANDLE_INVALID</a>. </p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Application Programming Interface for proprietary protocols. </p>
+<p>For more information about the... </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

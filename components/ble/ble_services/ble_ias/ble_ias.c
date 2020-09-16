@@ -23,6 +23,16 @@
 #define INITIAL_ALERT_LEVEL BLE_CHAR_ALERT_LEVEL_NO_ALERT
 
 
+/**@brief Function for handling the Connect event.
+ *
+ * @param[in]   p_ias       Immediate Alert Service structure.
+ * @param[in]   p_ble_evt   Event received from the BLE stack.
+ */
+static void on_connect(ble_ias_t * p_ias, ble_evt_t * p_ble_evt)
+{
+    p_ias->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
+}
+
 /**@brief Function for handling the Write event.
  *
  * @param[in]   p_ias       Immediate Alert Service structure.
@@ -49,6 +59,10 @@ void ble_ias_on_ble_evt(ble_ias_t * p_ias, ble_evt_t * p_ble_evt)
 {
     switch (p_ble_evt->header.evt_id)
     {
+        case BLE_GAP_EVT_CONNECTED:
+            on_connect(p_ias, p_ble_evt);
+            break;
+
         case BLE_GATTS_EVT_WRITE:
             on_write(p_ias, p_ble_evt);
             break;
@@ -144,7 +158,16 @@ uint32_t ble_ias_init(ble_ias_t * p_ias, const ble_ias_init_t * p_ias_init)
 
 uint32_t ble_ias_alert_level_get(ble_ias_t * p_ias, uint8_t * p_alert_level)
 {
-    uint16_t len = sizeof (uint8_t);
+    ble_gatts_value_t gatts_value;
 
-    return sd_ble_gatts_value_get(p_ias->alert_level_handles.value_handle, 0, &len, p_alert_level);
+    // Initialize value struct.
+    memset(&gatts_value, 0, sizeof(gatts_value));
+
+    gatts_value.len     = sizeof(uint8_t);
+    gatts_value.offset  = 0;
+    gatts_value.p_value = p_alert_level;
+
+    return sd_ble_gatts_value_get(p_ias->conn_handle,
+                                  p_ias->alert_level_handles.value_handle,
+                                  &gatts_value);
 }

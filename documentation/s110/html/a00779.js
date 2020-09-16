@@ -1,10 +1,8 @@
 var a00779 =
 [
-    [ "APP_SCHED_BUF_SIZE", "a00779.html#ga197748a0733d615e809ce71effa6dc48", null ],
-    [ "APP_SCHED_EVENT_HEADER_SIZE", "a00779.html#ga6ec6d3a526d13df66e0aff7d20049e20", null ],
-    [ "APP_SCHED_INIT", "a00779.html#gaa9670ed0053a67304c3d2d0cb3eb1333", null ],
-    [ "app_sched_event_handler_t", "a00779.html#gad36ea5cb15b82aa724a13f1ba24ef005", null ],
-    [ "app_sched_event_put", "a00779.html#ga49ec0ad278ece44b5dc56b86ac44489c", null ],
-    [ "app_sched_execute", "a00779.html#gab725820c32a8d05379db4567cf30e862", null ],
-    [ "app_sched_init", "a00779.html#gaf021e02dd6ca1767b428c250d1ded56c", null ]
+    [ "PSTORAGE_CLEAR_OP_CODE", "a00779.html#gaf2ce8b4e460358a23ae82516167df79c", null ],
+    [ "PSTORAGE_ERROR_OP_CODE", "a00779.html#ga31c301088ac2d5534ebdc5ed44bd3b55", null ],
+    [ "PSTORAGE_LOAD_OP_CODE", "a00779.html#ga4e04e36e3adf60869073dce4af46b7d5", null ],
+    [ "PSTORAGE_STORE_OP_CODE", "a00779.html#gad1415b8815fc4e0ba8f4f6bc2d8e3ce6", null ],
+    [ "PSTORAGE_UPDATE_OP_CODE", "a00779.html#gae66936fc791b79a9f85a7058ea83423a", null ]
 ];

@@ -1,26 +1,26 @@
-/*
+/* 
  * Copyright (c) Nordic Semiconductor ASA
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- *
+ * 
  *   1. Redistributions of source code must retain the above copyright notice, this
  *   list of conditions and the following disclaimer.
- *
+ * 
  *   2. Redistributions in binary form must reproduce the above copyright notice, this
  *   list of conditions and the following disclaimer in the documentation and/or
  *   other materials provided with the distribution.
- *
+ * 
  *   3. Neither the name of Nordic Semiconductor ASA nor the names of other
  *   contributors to this software may be used to endorse or promote products
  *   derived from this software without specific prior written permission.
- *
+ * 
  *   4. This software must only be used in a processor manufactured by Nordic
  *   Semiconductor ASA, or in a processor manufactured by a third party that
  *   is used in combination with a processor manufactured by Nordic Semiconductor.
- *
- *
+ * 
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -31,7 +31,7 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+ * 
  */
 
 /**
@@ -63,7 +63,8 @@
  */
 enum BLE_COMMON_SVCS
 {
-  SD_BLE_EVT_GET  = BLE_SVC_BASE,       /**< Get an event from the pending events queue. */
+  SD_BLE_ENABLE = BLE_SVC_BASE,         /**< Enable and initialize the BLE stack */
+  SD_BLE_EVT_GET,                       /**< Get an event from the pending events queue. */
   SD_BLE_TX_BUFFER_COUNT_GET,           /**< Get the total number of available application transmission buffers from the stack. */
   SD_BLE_UUID_VS_ADD,                   /**< Add a Vendor Specific UUID. */
   SD_BLE_UUID_DECODE,                   /**< Decode UUID bytes. */
@@ -84,6 +85,13 @@ enum BLE_COMMON_EVTS
   BLE_EVT_USER_MEM_RELEASE              /**< User Memory release. */
 };
 
+/**@brief Common Option IDs.
+ * IDs that uniquely identify a common option.
+ */
+enum BLE_COMMON_OPTS
+{
+  BLE_COMMON_OPT_RADIO_CPU_MUTEX = BLE_OPT_BASE    /**< Radio CPU mutex option. @ref ble_common_opt_radio_cpu_mutex_t */
+};
 /** @} */
 
 /** @addtogroup BLE_COMMON_DEFINES Defines
@@ -123,13 +131,13 @@ typedef struct
   uint8_t count;                        /**< Number of packets transmitted. */
 } ble_evt_tx_complete_t;
 
-/**@brief Event structure for BLE_EVT_USER_MEM_REQUEST. */
+/**@brief Event structure for @ref BLE_EVT_USER_MEM_REQUEST. */
 typedef struct
 {
   uint8_t                     type;     /**< User memory type, see @ref BLE_USER_MEM_TYPES. */
 } ble_evt_user_mem_request_t;
 
-/**@brief Event structure for BLE_EVT_USER_MEM_RELEASE. */
+/**@brief Event structure for @ref BLE_EVT_USER_MEM_RELEASE. */
 typedef struct
 {
   uint8_t                     type;       /**< User memory type, see @ref BLE_USER_MEM_TYPES. */
@@ -181,16 +189,68 @@ typedef struct
   uint16_t  subversion_number;          /**< Link Layer Sub Version number, corresponds to the SoftDevice Config ID or Firmware ID (FWID). */
 } ble_version_t;
 
+/**@brief Mutual exclusion of radio activity and CPU execution.
+ *
+ *        This option configures the application's access to the CPU when the radio is active. The
+ *        application can configure itself to be blocked from using the CPU while the radio is
+ *        active. By default, the application will be able to share CPU time with the SoftDevice
+ *        during radio activity. This parameter structure is used together with @ref sd_ble_opt_set
+ *        to configure the @ref BLE_COMMON_OPT_RADIO_CPU_MUTEX option.
+ *
+ * @note  Note that the application should use this option to configure the SoftDevice to block the
+ *        CPU during radio activity (i.e enable mutual exclusion) when running the SoftDevice on
+ *        hardware affected by PAN #44 "CCM may exceed real time requirements"and PAN #45 "AAR may
+ *        exceed real time requirements".
+ *
+ * @note  Note that when acting as a scanner, the mutex is only enabled for radio TX activity.
+ *
+ * @note  @ref sd_ble_opt_get is not supported for this option.
+ *
+ */
+typedef struct
+{
+  uint8_t enable : 1;                          /**< Enable mutual exclusion of radio activity and the CPU execution. */
+} ble_common_opt_radio_cpu_mutex_t;
+
+/**@brief Option structure for common options. */
+typedef union
+{
+  ble_common_opt_radio_cpu_mutex_t  radio_cpu_mutex;        /**< Parameters for the option for the mutual exclusion of radio activity and CPU execution. */
+} ble_common_opt_t;
+
 /**@brief Common BLE Option type, wrapping the module specific options. */
 typedef union
 {
-  ble_gap_opt_t     gap;            /**< GAP option, opt_id in BLE_GAP_OPT_* series. */
+  ble_common_opt_t  common_opt;         /**< Common option, opt_id in BLE_COMMON_OPT_* series. */
+  ble_gap_opt_t     gap_opt;            /**< GAP option, opt_id in BLE_GAP_OPT_* series. */
 } ble_opt_t;
+
+/**
+ * @brief BLE GATTS init options
+ */
+typedef struct
+{
+  ble_gap_enable_params_t    gap_enable_params;   /**< GAP init options @ref ble_gap_enable_params_t */
+  ble_gatts_enable_params_t  gatts_enable_params; /**< GATTS init options @ref ble_gatts_enable_params_t. */  
+} ble_enable_params_t;
 
 /** @} */
 
 /** @addtogroup BLE_COMMON_FUNCTIONS Functions
  * @{ */
+
+/**@brief Enable the bluetooth stack
+ *
+ * @param[in] p_ble_enable_params Pointer to ble_enable_params_t
+ *
+ * @details This call initializes the bluetooth stack, no other BLE related call can be called before this one has been executed.
+ *
+ * @return @ref NRF_SUCCESS BLE stack has been initialized successfully
+ * @retval @ref NRF_ERROR_INVALID_STATE stack had already been initialized and cannot be reinitialized.
+ * @return @ref NRF_ERROR_INVALID_ADDR Invalid or not sufficiently aligned pointer supplied.
+ * @retval @ref NRF_ERROR_INVALID_PARAM Invalid parameter supplied.
+ */
+SVCALL(SD_BLE_ENABLE, uint32_t, sd_ble_enable(ble_enable_params_t * p_ble_enable_params));
 
 /**@brief Get an event from the pending events queue.
  *
@@ -349,7 +409,6 @@ SVCALL(SD_BLE_VERSION_GET, uint32_t, sd_ble_version_get(ble_version_t *p_version
  */
 SVCALL(SD_BLE_USER_MEM_REPLY, uint32_t, sd_ble_user_mem_reply(uint16_t conn_handle, ble_user_mem_block_t const *p_block));
 
-
 /**@brief Set a BLE option.
  *
  * @details This call allows the application to set the value of an option.
@@ -366,6 +425,7 @@ SVCALL(SD_BLE_USER_MEM_REPLY, uint32_t, sd_ble_user_mem_reply(uint16_t conn_hand
  */
 SVCALL(SD_BLE_OPT_SET, uint32_t, sd_ble_opt_set(uint32_t opt_id, ble_opt_t const *p_opt));
 
+
 /**@brief Get a BLE option.
  *
  * @details This call allows the application to retrieve the value of an option.
@@ -379,9 +439,10 @@ SVCALL(SD_BLE_OPT_SET, uint32_t, sd_ble_opt_set(uint32_t opt_id, ble_opt_t const
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied, check parameter limits and constraints.
  * @retval ::NRF_ERROR_INVALID_STATE Unable to retrieve the parameter at this time.
  * @retval ::NRF_ERROR_BUSY The stack is busy or the previous procedure has not completed.
+ * @retval ::NRF_ERROR_NOT_SUPPORTED This option is not supported.
+ *
  */
 SVCALL(SD_BLE_OPT_GET, uint32_t, sd_ble_opt_get(uint32_t opt_id, ble_opt_t *p_opt));
-
 
 /** @} */
 

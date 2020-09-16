@@ -1,5 +1,5 @@
 var a00241 =
 [
-    [ "handle", "a00241.html#ada1f0c9228867fd73fd596d6d7241c67", null ],
-    [ "uuid", "a00241.html#a039854704d107784b185fb11b00b1258", null ]
+    [ "id_addr_info", "a00241.html#a1bd1659b09527f11f048c6e26cc7dfbe", null ],
+    [ "id_info", "a00241.html#afacb110ee8e9be828954f516a04008ad", null ]
 ];

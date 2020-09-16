@@ -1,73 +1,45 @@
 var a00767 =
 [
-    [ "spi_master_config_t", "a00393.html", [
-      [ "SPI_CONFIG_CPHA", "a00393.html#a8d9ec5e520efd6528eac731dc6ec1d09", null ],
-      [ "SPI_CONFIG_CPOL", "a00393.html#afcfa3b91400e01c58ed4bcb01579957b", null ],
-      [ "SPI_CONFIG_ORDER", "a00393.html#a9ae7b60e2bf798c6c3c2a31e05d71436", null ],
-      [ "SPI_CPHA", "a00393.html#a19f2a3a33b059fe627b89a04bdcd69b6", null ],
-      [ "SPI_CPOL", "a00393.html#af4d3bd41e35948de16b495e1fe29d867", null ],
-      [ "SPI_DisableAllIRQ", "a00393.html#a8eb5716e03de5b39ef991a7fe237b77d", null ],
-      [ "SPI_Freq", "a00393.html#afd21a8a469598aaa408f4e13a9a3040f", null ],
-      [ "SPI_ORDER", "a00393.html#a38633561e69f0d3e8dbb8a14c34fa61f", null ],
-      [ "SPI_Pin_MISO", "a00393.html#aee3ebe39323764d06cef34ab601ed870", null ],
-      [ "SPI_Pin_MOSI", "a00393.html#a104ebda3a0069d2dc638022dd4e4d385", null ],
-      [ "SPI_Pin_SCK", "a00393.html#a0beff1248c5fd9d9f257fc2c3ea12a84", null ],
-      [ "SPI_Pin_SS", "a00393.html#a0203f17b181806c009086cce9c5c044c", null ],
-      [ "SPI_PriorityIRQ", "a00393.html#ae73b65ac984bdc5b1855cb026009ff0e", null ]
+    [ "nrf_wdt_behaviour_t", "a00767.html#ga9bd7626dfc8bf23cc2a5c9b71b961c4f", [
+      [ "NRF_WDT_BEHAVIOUR_RUN_SLEEP", "a00767.html#gga9bd7626dfc8bf23cc2a5c9b71b961c4facbfd99c9b870fcccbfd3bf9b7fa397d3", null ],
+      [ "NRF_WDT_BEHAVIOUR_RUN_HALT", "a00767.html#gga9bd7626dfc8bf23cc2a5c9b71b961c4fac63fcb49c55161abcec51b514e970a43", null ],
+      [ "NRF_WDT_BEHAVIOUR_RUN_SLEEP_HALT", "a00767.html#gga9bd7626dfc8bf23cc2a5c9b71b961c4fa65d8377d90c2b35fc2827d8d7f961d8a", null ],
+      [ "NRF_WDT_BEHAVIOUR_PAUSE_SLEEP_HALT", "a00767.html#gga9bd7626dfc8bf23cc2a5c9b71b961c4face6d0e94dbbaf1501f0a5f191ce7af19", null ]
     ] ],
-    [ "spi_master_evt_t", "a00394.html", [
-      [ "data", "a00394.html#a800d239d1224cc1226201c6b9a635713", null ],
-      [ "data_count", "a00394.html#a370358835ed2aa53bcc515894b13eb87", null ],
-      [ "evt_type", "a00394.html#a622197dded7bfa292535944e6870c5f7", null ],
-      [ "type", "a00394.html#a6d7cb2ed26034e0c1cb5dcb0022a612a", null ]
+    [ "nrf_wdt_events_t", "a00767.html#ga6b8d30d5fe1f12444159c18f641dec93", [
+      [ "NRF_WDT_EVENTS_TIMEOUT", "a00767.html#gga6b8d30d5fe1f12444159c18f641dec93a312a6d007176e9c092455b7cc1a9bdf2", null ]
     ] ],
-    [ "SPI_DEFAULT_TX_BYTE", "a00767.html#ga6ab8549e69d7db67767780b4a437e871", null ],
-    [ "SPI_MASTER_INIT_DEFAULT", "a00767.html#gac60ab1614b729be681ca7268fee84350", null ],
-    [ "SPI_PIN_DISCONNECTED", "a00767.html#ga8e14bea8a6a4f612ee61ad0e6b1c42a4", null ],
-    [ "spi_master_event_handler_t", "a00767.html#ga2df76693a9ed10e7d44b0e1663b50738", null ],
-    [ "spi_master_evt_type_t", "a00767.html#ga8e658ee16bfb5beb4d00e27c93f68f96", null ],
-    [ "spi_master_evt_type_t", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789", [
-      [ "SPI_MASTER_EVT_TRANSFER_STARTED", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789a24504bd3bcb0bb7778ee2b99dfb1f4d4", null ],
-      [ "SPI_MASTER_EVT_TRANSFER_COMPLETED", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789ac7b903657b890c123f4b51fd2a26e53e", null ],
-      [ "SPI_MASTER_EVT_TRANSFER_ABORTED", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789ad0cc67e8670c97871ca89da95f024d03", null ],
-      [ "SPI_MASTER_EVT_TRANSFER_RESTARTED", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789a400353916204f619a2576b167f65d084", null ],
-      [ "SPI_MASTER_EVT_FIRST_BYTE_RECEIVED", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789a451dd18e393c493a8311f670af245ca4", null ],
-      [ "SPI_MASTER_EVT_TYPE_MAX", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789aa4eba2079274bf69027092844ac7d161", null ],
-      [ "SPI_MASTER_EVT_TRANSFER_STARTED", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789a24504bd3bcb0bb7778ee2b99dfb1f4d4", null ],
-      [ "SPI_MASTER_EVT_TRANSFER_COMPLETED", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789ac7b903657b890c123f4b51fd2a26e53e", null ],
-      [ "SPI_MASTER_EVT_TYPE_MAX", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789aa4eba2079274bf69027092844ac7d161", null ],
-      [ "SPI_MASTER_EVT_TRANSFER_STARTED", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789a24504bd3bcb0bb7778ee2b99dfb1f4d4", null ],
-      [ "SPI_MASTER_EVT_TRANSFER_COMPLETED", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789ac7b903657b890c123f4b51fd2a26e53e", null ],
-      [ "SPI_MASTER_EVT_TRANSFER_ABORTED", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789ad0cc67e8670c97871ca89da95f024d03", null ],
-      [ "SPI_MASTER_EVT_TRANSFER_RESTARTED", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789a400353916204f619a2576b167f65d084", null ],
-      [ "SPI_MASTER_EVT_FIRST_BYTE_RECEIVED", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789a451dd18e393c493a8311f670af245ca4", null ],
-      [ "SPI_MASTER_EVT_TYPE_MAX", "a00767.html#ga31240c0ee79ef65d920c9d3fa8899789aa4eba2079274bf69027092844ac7d161", null ]
+    [ "nrf_wdt_int_mask_t", "a00767.html#ga481c5b1827479b7a63209de9877b010a", [
+      [ "NRF_WDT_INT_TIMEOUT_MASK", "a00767.html#gga481c5b1827479b7a63209de9877b010aa15cb5f84a1b1dfe1bc5fb99c83c73d00", null ]
     ] ],
-    [ "spi_master_hw_instance_t", "a00767.html#ga84f5e5074c1cb0163acc71cd9b4d1107", [
-      [ "SPI_MASTER_0", "a00767.html#ga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d", null ],
-      [ "SPI_MASTER_1", "a00767.html#ga84f5e5074c1cb0163acc71cd9b4d1107a83453ab7546115900d25a83c533fb0fc", null ],
-      [ "SPI_MASTER_HW_ENABLED_COUNT", "a00767.html#ga84f5e5074c1cb0163acc71cd9b4d1107ad189c52211b6de22a7e6aed4d078406a", null ],
-      [ "SPI_MASTER_0", "a00767.html#ga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d", null ],
-      [ "SPI_MASTER_1", "a00767.html#ga84f5e5074c1cb0163acc71cd9b4d1107a83453ab7546115900d25a83c533fb0fc", null ],
-      [ "SPI_MASTER_HW_ENABLED_COUNT", "a00767.html#ga84f5e5074c1cb0163acc71cd9b4d1107ad189c52211b6de22a7e6aed4d078406a", null ],
-      [ "SPI_MASTER_0", "a00767.html#ga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d", null ],
-      [ "SPI_MASTER_1", "a00767.html#ga84f5e5074c1cb0163acc71cd9b4d1107a83453ab7546115900d25a83c533fb0fc", null ],
-      [ "SPI_MASTER_HW_ENABLED_COUNT", "a00767.html#ga84f5e5074c1cb0163acc71cd9b4d1107ad189c52211b6de22a7e6aed4d078406a", null ]
+    [ "nrf_wdt_rr_register_t", "a00767.html#gad49f6a91acfd021376d8fe9281768682", [
+      [ "NRF_WDT_RR0", "a00767.html#ggad49f6a91acfd021376d8fe9281768682a72d7831db7b9a6a0550941a11112b7f7", null ],
+      [ "NRF_WDT_RR1", "a00767.html#ggad49f6a91acfd021376d8fe9281768682ae6a1af4921d76ce760f18b59b3f019f0", null ],
+      [ "NRF_WDT_RR2", "a00767.html#ggad49f6a91acfd021376d8fe9281768682af4590924963428264d9db24e62f861a1", null ],
+      [ "NRF_WDT_RR3", "a00767.html#ggad49f6a91acfd021376d8fe9281768682a61aa4c84aac04cab876faa44f3739545", null ],
+      [ "NRF_WDT_RR4", "a00767.html#ggad49f6a91acfd021376d8fe9281768682a18bfcbdb8ace4091ac25de2c71e45d45", null ],
+      [ "NRF_WDT_RR5", "a00767.html#ggad49f6a91acfd021376d8fe9281768682acba6f055b490c4f7bddc39e148dd5495", null ],
+      [ "NRF_WDT_RR6", "a00767.html#ggad49f6a91acfd021376d8fe9281768682a280da3e21e70b175b2a515de2a293c30", null ],
+      [ "NRF_WDT_RR7", "a00767.html#ggad49f6a91acfd021376d8fe9281768682a9b76c8ea515eb5318ddb817a928e9fc0", null ]
     ] ],
-    [ "spi_master_state_t", "a00767.html#gac3471b7aba2dd998dd08263d80a46d44", [
-      [ "SPI_MASTER_STATE_DISABLED", "a00767.html#gac3471b7aba2dd998dd08263d80a46d44a06bb576779307e515a0f9f1f1711f2d1", null ],
-      [ "SPI_MASTER_STATE_BUSY", "a00767.html#gac3471b7aba2dd998dd08263d80a46d44a4a4ae82272756db931981e38786c2b3d", null ],
-      [ "SPI_MASTER_STATE_IDLE", "a00767.html#gac3471b7aba2dd998dd08263d80a46d44a2f2ddd197a11b1c3eac344d93accae07", null ],
-      [ "SPI_MASTER_STATE_DISABLED", "a00767.html#gac3471b7aba2dd998dd08263d80a46d44a06bb576779307e515a0f9f1f1711f2d1", null ],
-      [ "SPI_MASTER_STATE_BUSY", "a00767.html#gac3471b7aba2dd998dd08263d80a46d44a4a4ae82272756db931981e38786c2b3d", null ],
-      [ "SPI_MASTER_STATE_IDLE", "a00767.html#gac3471b7aba2dd998dd08263d80a46d44a2f2ddd197a11b1c3eac344d93accae07", null ],
-      [ "SPI_MASTER_STATE_DISABLED", "a00767.html#gac3471b7aba2dd998dd08263d80a46d44a06bb576779307e515a0f9f1f1711f2d1", null ],
-      [ "SPI_MASTER_STATE_BUSY", "a00767.html#gac3471b7aba2dd998dd08263d80a46d44a4a4ae82272756db931981e38786c2b3d", null ],
-      [ "SPI_MASTER_STATE_IDLE", "a00767.html#gac3471b7aba2dd998dd08263d80a46d44a2f2ddd197a11b1c3eac344d93accae07", null ]
+    [ "nrf_wdt_tasks_t", "a00767.html#ga9f8b169b5daedaf5613dabe830514c13", [
+      [ "NRF_WDT_TASKS_START", "a00767.html#gga9f8b169b5daedaf5613dabe830514c13a29c9d56462aee3ee405badd6b88f97da", null ]
     ] ],
-    [ "spi_master_close", "a00767.html#ga50bc5bf9e8334ef1387826e0a2af4256", null ],
-    [ "spi_master_evt_handler_reg", "a00767.html#ga76af017b1ce006baeed02f2668c00e7d", null ],
-    [ "spi_master_get_state", "a00767.html#gaa052cc71238a379eaeb7d227bd060d46", null ],
-    [ "spi_master_open", "a00767.html#ga3cf5563d474f5b41080b6ae53be0ee51", null ],
-    [ "spi_master_send_recv", "a00767.html#ga4e03ec39c566925e98fe0ec79c6d7623", null ]
+    [ "nrf_wdt_behaviour_set", "a00767.html#ga327eeaf0b8725521a1fdf5ae904d9671", null ],
+    [ "nrf_wdt_event_address_get", "a00767.html#gafec01aeed4db4c3e7269cace5e4e94c5", null ],
+    [ "nrf_wdt_event_check", "a00767.html#ga1104d6b1fe07d810ae18361ef236753b", null ],
+    [ "nrf_wdt_event_clear", "a00767.html#ga076fd0e5722b89815751eb08f181948a", null ],
+    [ "nrf_wdt_int_disable", "a00767.html#gacf3e5c81a569d8b892f327d81b58c826", null ],
+    [ "nrf_wdt_int_enable", "a00767.html#gaeb6c6640c539ebb6e382c7d8335d2e7a", null ],
+    [ "nrf_wdt_int_enable_check", "a00767.html#gadda25c448408070cca435edded0e3012", null ],
+    [ "nrf_wdt_reload_request_disable", "a00767.html#ga5b84009c610c06a24b2df95d005410cf", null ],
+    [ "nrf_wdt_reload_request_enable", "a00767.html#gad9611bdc136568bc3b86cf263f9adebc", null ],
+    [ "nrf_wdt_reload_request_is_enabled", "a00767.html#ga9780573128618dd6152af37ed0fa1142", null ],
+    [ "nrf_wdt_reload_request_set", "a00767.html#ga135ae024588e7d105ba1003b5da1e488", null ],
+    [ "nrf_wdt_reload_value_get", "a00767.html#gad8213f183b7a612694ad21bb308605b0", null ],
+    [ "nrf_wdt_reload_value_set", "a00767.html#ga9f5b4d2dfecb475999f4dcf6e2ddac53", null ],
+    [ "nrf_wdt_request_status", "a00767.html#ga1be20294e14ff66eb7503526e2ff3267", null ],
+    [ "nrf_wdt_started", "a00767.html#ga8ba8fab4de537513ad89e0a1364ddeac", null ],
+    [ "nrf_wdt_task_address_get", "a00767.html#ga9bb0df13a21456b969512e79662744a3", null ],
+    [ "nrf_wdt_task_set", "a00767.html#gacf4c5d86e35c350141d523ceadf9bb87", null ]
 ];

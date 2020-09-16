@@ -1,5 +1,5 @@
 var a00823 =
 [
-    [ "BLE_ERROR_GATTS_INVALID_ATTR_TYPE", "a00823.html#ga050988950fb5cfb9e64b1f91f8872b45", null ],
-    [ "BLE_ERROR_GATTS_SYS_ATTR_MISSING", "a00823.html#ga1d0833ac31d0c319e5286623b6301d0a", null ]
+    [ "BLE_GAP_ADDR_CYCLE_MODE_AUTO", "a00823.html#gad1b508bba948e89462e018fecc38b13f", null ],
+    [ "BLE_GAP_ADDR_CYCLE_MODE_NONE", "a00823.html#ga876e1c374d17d451d901e3e8d151a20d", null ]
 ];

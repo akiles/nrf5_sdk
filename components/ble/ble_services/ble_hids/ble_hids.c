@@ -70,19 +70,24 @@ static ble_hids_char_id_t make_char_id(uint16_t uuid, uint8_t rep_type, uint8_t 
 static void on_connect(ble_hids_t * p_hids, ble_evt_t * p_ble_evt)
 {
     uint32_t err_code;
-    uint16_t len;
     uint8_t  default_protocol_mode;
+    ble_gatts_value_t gatts_value;
 
     p_hids->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
 
     // Set Protocol Mode characteristic value to default value
-    len                   = sizeof(uint8_t);
     default_protocol_mode = DEFAULT_PROTOCOL_MODE;
 
-    err_code = sd_ble_gatts_value_set(p_hids->protocol_mode_handles.value_handle,
-                                      0,
-                                      &len,
-                                      &default_protocol_mode);
+    // Initialize value struct.
+    memset(&gatts_value, 0, sizeof(gatts_value));
+
+    gatts_value.len     = sizeof(uint8_t);
+    gatts_value.offset  = 0;
+    gatts_value.p_value = &default_protocol_mode;
+
+    err_code = sd_ble_gatts_value_set(p_hids->conn_handle,
+                                      p_hids->protocol_mode_handles.value_handle,
+                                      &gatts_value);
     if ((err_code != NRF_SUCCESS) && (p_hids->error_handler != NULL))
     {
         p_hids->error_handler(err_code);
@@ -1353,10 +1358,18 @@ uint32_t ble_hids_outp_rep_get(ble_hids_t * p_hids,
                                uint8_t      offset,
                                uint8_t    * p_outp_rep)
 {
-    return sd_ble_gatts_value_get(p_hids->outp_rep_array[rep_index].char_handles.value_handle,
-                                  offset,
-                                  &len,
-                                  p_outp_rep);
+    ble_gatts_value_t gatts_value;
+
+    // Initialize value struct.
+    memset(&gatts_value, 0, sizeof(gatts_value));
+
+    gatts_value.len     = len;
+    gatts_value.offset  = offset;
+    gatts_value.p_value = p_outp_rep;
+
+    return sd_ble_gatts_value_get(p_hids->conn_handle,
+                                  p_hids->outp_rep_array[rep_index].char_handles.value_handle,
+                                  &gatts_value);
 }
 
 /**

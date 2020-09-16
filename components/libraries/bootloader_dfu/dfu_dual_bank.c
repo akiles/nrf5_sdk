@@ -163,7 +163,7 @@ static void dfu_prepare_func_swap_erase(uint32_t image_size)
     mp_storage_handle_active = &m_storage_handle_swap;
 
     m_dfu_state = DFU_STATE_PREPARING;
-    err_code    = pstorage_raw_clear(&m_storage_handle_swap, DFU_IMAGE_MAX_SIZE_BANKED - 0x0400);
+    err_code    = pstorage_raw_clear(&m_storage_handle_swap, DFU_IMAGE_MAX_SIZE_BANKED);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -172,8 +172,7 @@ static void dfu_prepare_func_swap_erase(uint32_t image_size)
  */
 static void dfu_cleared_func_swap(void)
 {
-//    dfu_update_status_t update_status = {DFU_BANK_1_ERASED, };
-//    bootloader_dfu_update_process(update_status);
+    // Do nothing.
 }
 
 
@@ -379,7 +378,7 @@ uint32_t dfu_start_pkt_handle(dfu_update_packet_t * p_packet)
 
     if (IS_UPDATING_SD(m_start_packet))
     {
-        if (m_image_size > (DFU_IMAGE_MAX_SIZE_FULL - CODE_PAGE_SIZE))
+        if (m_image_size > (DFU_IMAGE_MAX_SIZE_FULL))
         {
             return NRF_ERROR_DATA_SIZE;
         }

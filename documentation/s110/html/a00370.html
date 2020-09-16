@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_radio_request_normal_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dfu_start_packet_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,78 @@ $(document).ready(function(){initNavTree('a00370.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_radio_request_normal_t Struct Reference<div class="ingroups"><a class="el" href="a01074.html">Types</a></div></div>  </div>
+<div class="title">dfu_start_packet_t Struct Reference<div class="ingroups"><a class="el" href="a00944.html">Types and definitions.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Parameters for a normal radio request.  
+<p>Structure holding a start packet containing update mode and image sizes.  
  <a href="a00370.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_soc.h&gt;</code></p>
+<p><code>#include &lt;dfu_types.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a23b414675dc9b11671f55601075f541d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#a23b414675dc9b11671f55601075f541d">hfclk</a></td></tr>
-<tr class="separator:a23b414675dc9b11671f55601075f541d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18cc5dd5dc34877572e42ee8102fcb82"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#a18cc5dd5dc34877572e42ee8102fcb82">priority</a></td></tr>
-<tr class="separator:a18cc5dd5dc34877572e42ee8102fcb82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34cb59c0e80b3698a3df265ab88b34b5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#a34cb59c0e80b3698a3df265ab88b34b5">distance_us</a></td></tr>
-<tr class="separator:a34cb59c0e80b3698a3df265ab88b34b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf9603de0e582965d4bb1c0a42d8e88c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#adf9603de0e582965d4bb1c0a42d8e88c">length_us</a></td></tr>
-<tr class="separator:adf9603de0e582965d4bb1c0a42d8e88c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a271c95e67d665b66ce9874ccf3c6bf06"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#a271c95e67d665b66ce9874ccf3c6bf06">dfu_update_mode</a></td></tr>
+<tr class="separator:a271c95e67d665b66ce9874ccf3c6bf06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2354b9f4313acad5c73ebd01107d68b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#af2354b9f4313acad5c73ebd01107d68b">sd_image_size</a></td></tr>
+<tr class="separator:af2354b9f4313acad5c73ebd01107d68b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a5a89e5964fb6ed069b9c790449848b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#a5a5a89e5964fb6ed069b9c790449848b">bl_image_size</a></td></tr>
+<tr class="separator:a5a5a89e5964fb6ed069b9c790449848b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5283e751eac2c4b317c3429f9138ea5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#ab5283e751eac2c4b317c3429f9138ea5">app_image_size</a></td></tr>
+<tr class="separator:ab5283e751eac2c4b317c3429f9138ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Parameters for a normal radio request. </p>
+<div class="textblock"><p>Structure holding a start packet containing update mode and image sizes. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a34cb59c0e80b3698a3df265ab88b34b5"></a>
+<a class="anchor" id="ab5283e751eac2c4b317c3429f9138ea5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t nrf_radio_request_normal_t::distance_us</td>
+          <td class="memname">uint32_t dfu_start_packet_t::app_image_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Distance from the start of the previous radio timeslot (up to <a class="el" href="a01073.html#gac7cbde59b2b4ebe8d2b424f43ee7faf7">NRF_RADIO_DISTANCE_MAX_US</a> microseconds). </p>
+<p>Size of the application image to be transmitted. Zero if no Bootloader image will be transfered. </p>
 
 </div>
 </div>
-<a class="anchor" id="a23b414675dc9b11671f55601075f541d"></a>
+<a class="anchor" id="a5a5a89e5964fb6ed069b9c790449848b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_radio_request_normal_t::hfclk</td>
+          <td class="memname">uint32_t dfu_start_packet_t::bl_image_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>High frequency clock source, see <a class="el" href="a01074.html#gac7d87a0d58b5d7b5a619d7587cd139a4">NRF_RADIO_HFCLK_CFG</a>. </p>
+<p>Size of the Bootloader image to be transferred. Zero if no Bootloader image will be transfered. </p>
 
 </div>
 </div>
-<a class="anchor" id="adf9603de0e582965d4bb1c0a42d8e88c"></a>
+<a class="anchor" id="a271c95e67d665b66ce9874ccf3c6bf06"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t nrf_radio_request_normal_t::length_us</td>
+          <td class="memname">uint8_t dfu_start_packet_t::dfu_update_mode</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The radio timeslot length (in the range [100..100,000] microseconds). </p>
+<p>Packet type, used to identify the content of the received packet referenced by data packet. </p>
 
 </div>
 </div>
-<a class="anchor" id="a18cc5dd5dc34877572e42ee8102fcb82"></a>
+<a class="anchor" id="af2354b9f4313acad5c73ebd01107d68b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_radio_request_normal_t::priority</td>
+          <td class="memname">uint32_t dfu_start_packet_t::sd_image_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The radio timeslot priority, see <a class="el" href="a01074.html#ga5026e138e16d9a9664b804608062e9a1">NRF_RADIO_PRIORITY</a>. </p>
+<p>Size of the SoftDevice image to be transferred. Zero if no SoftDevice image will be transfered. </p>
 
 </div>
 </div>
@@ -186,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00370.html">nrf_radio_request_normal_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00370.html">dfu_start_packet_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

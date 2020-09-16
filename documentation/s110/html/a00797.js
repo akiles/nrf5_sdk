@@ -1,6 +1,12 @@
 var a00797 =
 [
-    [ "BLE_GAP_ROLE_CENTRAL", "a00797.html#ga6b9440660a70146392d27c849431fadb", null ],
-    [ "BLE_GAP_ROLE_INVALID", "a00797.html#ga8164b32f4fd65997d0523cd7c5735166", null ],
-    [ "BLE_GAP_ROLE_PERIPH", "a00797.html#ga12e431897d73a3ce88fab8a4dbd90497", null ]
+    [ "RX_BUF_QUEUE_SIZE", "a00797.html#gae8e478dba1ce71687ba038123e8da2f4", null ],
+    [ "RX_BUF_QUEUE_SIZE", "a00797.html#gae8e478dba1ce71687ba038123e8da2f4", null ],
+    [ "RX_BUF_QUEUE_SIZE", "a00797.html#gae8e478dba1ce71687ba038123e8da2f4", null ],
+    [ "RX_BUF_SIZE", "a00797.html#ga690f985c933da2ce6fe62b6c61dfa662", null ],
+    [ "RX_BUF_SIZE", "a00797.html#ga690f985c933da2ce6fe62b6c61dfa662", null ],
+    [ "RX_BUF_SIZE", "a00797.html#ga690f985c933da2ce6fe62b6c61dfa662", null ],
+    [ "TX_BUF_SIZE", "a00797.html#ga5d3fb1970e1e98050006978a14b3d95e", null ],
+    [ "TX_BUF_SIZE", "a00797.html#ga5d3fb1970e1e98050006978a14b3d95e", null ],
+    [ "TX_BUF_SIZE", "a00797.html#ga5d3fb1970e1e98050006978a14b3d95e", null ]
 ];

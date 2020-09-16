@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Codes reserved as identification for common errors.</title>
+<title>nRF51 SDK - S120 SoftDevice: GAP Address types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,41 +99,81 @@ $(document).ready(function(){initNavTree('a00519.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Codes reserved as identification for common errors.<div class="ingroups"><a class="el" href="a00516.html">SDK Error codes</a></div></div>  </div>
+<div class="title">GAP Address types<div class="ingroups"><a class="el" href="a00701.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gaf36f5aa75ed47d08734e99a6b0e8cef6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf36f5aa75ed47d08734e99a6b0e8cef6"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MODULE_NOT_INITIALZED</b>&#160;&#160;&#160;(<a class="el" href="a00517.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0000)</td></tr>
-<tr class="separator:gaf36f5aa75ed47d08734e99a6b0e8cef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gace3482ba7221dffbc669dcb5f364b7a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gace3482ba7221dffbc669dcb5f364b7a0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MUTEX_INIT_FAILED</b>&#160;&#160;&#160;(<a class="el" href="a00517.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0001)</td></tr>
-<tr class="separator:gace3482ba7221dffbc669dcb5f364b7a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga050aa951766a4f680d48802bcddf1055"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga050aa951766a4f680d48802bcddf1055"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MUTEX_LOCK_FAILED</b>&#160;&#160;&#160;(<a class="el" href="a00517.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0002)</td></tr>
-<tr class="separator:ga050aa951766a4f680d48802bcddf1055"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7498ea6962aba7ab6fab8de092ebb9bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7498ea6962aba7ab6fab8de092ebb9bd"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MUTEX_UNLOCK_FAILED</b>&#160;&#160;&#160;(<a class="el" href="a00517.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0003)</td></tr>
-<tr class="separator:ga7498ea6962aba7ab6fab8de092ebb9bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4e0c3de188ddca6e30a1af513f47a6f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4e0c3de188ddca6e30a1af513f47a6f1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MUTEX_COND_INIT_FAILED</b>&#160;&#160;&#160;(<a class="el" href="a00517.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0004)</td></tr>
-<tr class="separator:ga4e0c3de188ddca6e30a1af513f47a6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ff6730e744e4d5a9f724d0f7d0e3299"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5ff6730e744e4d5a9f724d0f7d0e3299"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>API_NOT_IMPLEMENTED</b>&#160;&#160;&#160;(<a class="el" href="a00517.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0010)</td></tr>
-<tr class="separator:ga5ff6730e744e4d5a9f724d0f7d0e3299"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9973a5348a547679d95c0d9d5c4f171c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9973a5348a547679d95c0d9d5c4f171c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>FEATURE_NOT_ENABLED</b>&#160;&#160;&#160;(<a class="el" href="a00517.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0011)</td></tr>
-<tr class="separator:ga9973a5348a547679d95c0d9d5c4f171c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5e499423d88b16817efd4d5ec10fd6e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00519.html#gaa5e499423d88b16817efd4d5ec10fd6e">BLE_GAP_ADDR_TYPE_PUBLIC</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gaa5e499423d88b16817efd4d5ec10fd6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe27b8f22c3a52413fa064c2ee1e4fba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00519.html#gabe27b8f22c3a52413fa064c2ee1e4fba">BLE_GAP_ADDR_TYPE_RANDOM_STATIC</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:gabe27b8f22c3a52413fa064c2ee1e4fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae166d654401b0ed83ad7073f31467b70"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00519.html#gae166d654401b0ed83ad7073f31467b70">BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:gae166d654401b0ed83ad7073f31467b70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga86fe5e506ba152ec4d60ac6daaca2aef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00519.html#ga86fe5e506ba152ec4d60ac6daaca2aef">BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE</a>&#160;&#160;&#160;0x03</td></tr>
+<tr class="separator:ga86fe5e506ba152ec4d60ac6daaca2aef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gaa5e499423d88b16817efd4d5ec10fd6e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADDR_TYPE_PUBLIC&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Public address. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga86fe5e506ba152ec4d60ac6daaca2aef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE&#160;&#160;&#160;0x03</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Private Non-Resolvable address. </p>
+
+</div>
+</div>
+<a class="anchor" id="gae166d654401b0ed83ad7073f31467b70"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE&#160;&#160;&#160;0x02</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Private Resolvable address. </p>
+
+</div>
+</div>
+<a class="anchor" id="gabe27b8f22c3a52413fa064c2ee1e4fba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADDR_TYPE_RANDOM_STATIC&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Random Static address. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:53 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

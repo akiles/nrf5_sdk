@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_irk_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_opt_compat_mode_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,43 @@ $(document).ready(function(){initNavTree('a00130.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_irk_t Struct Reference<div class="ingroups"><a class="el" href="a00748.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_opt_compat_mode_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Identity Resolving Key.  
+<p>Compatibility mode option.  
  <a href="a00130.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:acc23b6ef2a67e097245fbcbf79d88f67"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00130.html#acc23b6ef2a67e097245fbcbf79d88f67">irk</a> [16]</td></tr>
-<tr class="separator:acc23b6ef2a67e097245fbcbf79d88f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31a0c4f5b1772c99ccafa37ec3a03c37"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00130.html#a31a0c4f5b1772c99ccafa37ec3a03c37">mode_1_enable</a>: 1</td></tr>
+<tr class="separator:a31a0c4f5b1772c99ccafa37ec3a03c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Identity Resolving Key. </p>
+<div class="textblock"><p>Compatibility mode option. </p>
+<pre class="fragment">   This can be used with @ref sd_ble_opt_set to enable and disable
+   compatibility modes. Compatibility modes are disabled by default.
+</pre><dl class="section note"><dt>Note</dt><dd>Compatibility mode 1 enables interoperability with devices that do not support a value of 0 for the WinOffset parameter in the Link Layer CONNECT_REQ packet.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Set successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00562.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>When connection creation is ongoing while mode 1 is set. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="acc23b6ef2a67e097245fbcbf79d88f67"></a>
+<a class="anchor" id="a31a0c4f5b1772c99ccafa37ec3a03c37"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_irk_t::irk[16]</td>
+          <td class="memname">uint8_t ble_gap_opt_compat_mode_t::mode_1_enable</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Array containing IRK. </p>
+<p>Enable compatibility mode 1. </p>
 
 </div>
 </div>
@@ -141,8 +151,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00130.html">ble_gap_irk_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00130.html">ble_gap_opt_compat_mode_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

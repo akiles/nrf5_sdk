@@ -187,7 +187,7 @@ static void bsp_configuration()
         // Do nothing.
     }
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
     APP_GPIOTE_INIT(1);
 
     uint32_t err_code;

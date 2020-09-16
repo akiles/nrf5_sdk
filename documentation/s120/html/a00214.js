@@ -1,5 +1,6 @@
 var a00214 =
 [
-    [ "bl_len", "a00214.html#a197755f22bcc92adc7c8288f48bd9ef8", null ],
-    [ "bl_src", "a00214.html#a504481143eb43e52488288d7de70a6f1", null ]
+    [ "reference", "a00214.html#a52dc01c53528ebb080237d4f94d5ef09", null ],
+    [ "resolution", "a00214.html#aeabcce3f7814da03f223ad2a992865d1", null ],
+    [ "scaling", "a00214.html#a280529b228ebb915939ab2b9720d73da", null ]
 ];

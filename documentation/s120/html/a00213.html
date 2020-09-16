@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: sd_mbr_command_compare_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: hci_transport_ioctl_cmd_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,80 +106,26 @@ $(document).ready(function(){initNavTree('a00213.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">sd_mbr_command_compare_t Struct Reference<div class="ingroups"><a class="el" href="a00769.html">Types</a></div></div>  </div>
+<div class="title">hci_transport_ioctl_cmd_t Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>This command works like memcmp, but takes the length in words.  
- <a href="a00213.html#details">More...</a></p>
-
-<p><code>#include &lt;nrf_mbr.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a03e88994f8127e877c2fd08800e64768"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00213.html#a03e88994f8127e877c2fd08800e64768">ptr1</a></td></tr>
-<tr class="separator:a03e88994f8127e877c2fd08800e64768"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f670b76c31a7b6badf0bfadd1dc08b0"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00213.html#a3f670b76c31a7b6badf0bfadd1dc08b0">ptr2</a></td></tr>
-<tr class="separator:a3f670b76c31a7b6badf0bfadd1dc08b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7fb48410ecb00dec1dca60d45cbc606"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00213.html#ae7fb48410ecb00dec1dca60d45cbc606">len</a></td></tr>
-<tr class="separator:ae7fb48410ecb00dec1dca60d45cbc606"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4955a964032009d6b9b5cc167e758d32"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4955a964032009d6b9b5cc167e758d32"></a>
+hci_transport_ioctl_cmd_type_t&#160;</td><td class="memItemRight" valign="bottom"><b>cmd_type</b></td></tr>
+<tr class="separator:a4955a964032009d6b9b5cc167e758d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9e1ac1b373abcbd4e761600473340bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9e1ac1b373abcbd4e761600473340bc"></a>
+<a class="el" href="a00497.html#gae80211a61fd86e95a2ad0d7e8dcf8a5c">hci_transport_tx_done_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>tx_done_result</b></td></tr>
+<tr class="separator:ac9e1ac1b373abcbd4e761600473340bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This command works like memcmp, but takes the length in words. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>indicates that the contents of both memory blocks are equal. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00571.html#gaf6e08e45224ec612e6c95660eb1bcfa0" title="Null Pointer.">NRF_ERROR_NULL</a></td><td>indicates that the contents of the memory blocks are not equal. </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ae7fb48410ecb00dec1dca60d45cbc606"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t sd_mbr_command_compare_t::len</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Number of 32 bit words to compare </p>
-
-</div>
-</div>
-<a class="anchor" id="a03e88994f8127e877c2fd08800e64768"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t* sd_mbr_command_compare_t::ptr1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to block of memory </p>
-
-</div>
-</div>
-<a class="anchor" id="a3f670b76c31a7b6badf0bfadd1dc08b0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t* sd_mbr_command_compare_t::ptr2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to block of memory </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00213.html">sd_mbr_command_compare_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00213.html">hci_transport_ioctl_cmd_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

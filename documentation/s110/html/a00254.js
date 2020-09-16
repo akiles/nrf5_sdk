@@ -1,5 +1,5 @@
 var a00254 =
 [
-    [ "handle", "a00254.html#af1b50c1fd1d5be05d0d0cf25e0925fd0", null ],
-    [ "p_value", "a00254.html#a6e842e1c975c50acf7eec947baa405e8", null ]
+    [ "keys_central", "a00254.html#a823705c8aecd73949bb7d7b0f2639c0f", null ],
+    [ "keys_periph", "a00254.html#a129763caaa3dc397a06a4e4757f1aac9", null ]
 ];

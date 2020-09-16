@@ -86,7 +86,6 @@
 
 #define BUTTON_DETECTION_DELAY          APP_TIMER_TICKS(50, APP_TIMER_PRESCALER)             /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
 
-#define SEC_PARAM_TIMEOUT               30                                                   /**< Timeout for Pairing Request or Security Request (in seconds). */
 #define SEC_PARAM_BOND                  1                                                    /**< Perform bonding. */
 #define SEC_PARAM_MITM                  0                                                    /**< Man In The Middle protection not required. */
 #define SEC_PARAM_IO_CAPABILITIES       BLE_GAP_IO_CAPS_NONE                                 /**< No I/O capabilities. */
@@ -309,8 +308,7 @@ static void advertising_init(void)
     
     advdata.name_type               = BLE_ADVDATA_FULL_NAME;
     advdata.include_appearance      = true;
-    advdata.flags.size              = sizeof(flags);
-    advdata.flags.p_data            = &flags;
+    advdata.flags                   = flags;
     advdata.uuids_complete.uuid_cnt = 0;
     advdata.uuids_complete.p_uuids  = NULL;
     advdata.uuids_solicited.uuid_cnt = 1;
@@ -411,7 +409,7 @@ static void conn_params_init(void)
  */
 static uint32_t device_manager_evt_handler(dm_handle_t const    * p_handle,
                                            dm_event_t const     * p_event,
-                                           api_result_t           event_result)
+                                           ret_code_t           event_result)
 {
     APP_ERROR_CHECK(event_result);
     ble_ancs_c_on_device_manager_evt(&m_ancs_c, p_handle, p_event);
@@ -440,13 +438,12 @@ static void device_manager_init(void)
     // Clear all bonded centrals if the "delete all bonds" button is pushed.
     err_code = bsp_button_is_pressed(BOND_DELETE_ALL_WAKEUP_BUTTON_ID,&(init_data.clear_persistent_data));
     APP_ERROR_CHECK(err_code);
-	
+
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
     
     memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
 
-    register_param.sec_param.timeout      = SEC_PARAM_TIMEOUT;
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
@@ -505,7 +502,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             break;
 
         case BLE_GAP_EVT_TIMEOUT:
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT)
+            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
             {
                 if (m_advertising_mode == BLE_FAST_ADVERTISING)
                 {
@@ -599,7 +596,7 @@ static void ble_stack_init(void)
     uint32_t err_code;
     
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;

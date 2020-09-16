@@ -15,9 +15,11 @@
 #include <stdint.h>
 #include "nordic_common.h"
 
+#if !defined(__ICCARM__)
 struct __FILE { int handle; };
 FILE __stdout;
 FILE __stdin;
+#endif
 
 int fputc(int ch, FILE * p_file) 
 {

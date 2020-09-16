@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Running examples that use a SoftDevice</title>
+<title>nRF51 SDK - S210 SoftDevice: RNG</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,27 +97,20 @@ $(document).ready(function(){initNavTree('a00009.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Running examples that use a SoftDevice </div>  </div>
+<div class="title">RNG </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Before you can run more advanced examples that use ANT, you must program the SoftDevice on the board.</p>
-<p>Download the S210 SoftDevice from <a href="http://www.nordicsemi.com">http://www.nordicsemi.com</a>. You must register on My Page and enter your product key for the development kit.</p>
-<p>To program the SoftDevice, perform the following steps:</p>
-<ol type="1">
-<li>Open nRFgo Studio.</li>
-<li>In the Device Manager, select the nRF51 Development board that you are working with (identified by the SEGGER serial number).</li>
-<li>Select the <b>Program SoftDevice</b> tab.</li>
-<li>Click <b>Browse</b> and navigate to the SoftDevice file that you downloaded.</li>
-<li>Click <b>Program</b>.</li>
-</ol>
-<p>After you programmed the SoftDevice, follow the steps described in <a class="el" href="a00010.html">Running a first example</a> to run an example that uses the SoftDevice. For example, test the ANT <a class="el" href="a00046.html">Broadcast</a> example. </p>
+<div class="textblock"><p>The random number generator (RNG) driver includes two layers: the hardware abstraction layer (HAL) and the driver layer (DRV).</p>
+<p>The hardware abstraction layer provides basic APIs for accessing the registers of the random number generator. See the API documentation for the <a class="el" href="a00311.html">RNG HAL and driver</a> for details.</p>
+<p>The driver layer provides APIs on a higher level than the HAL. See the API documentation for the <a class="el" href="a00312.html">RNG driver</a> for details.</p>
+<p>The <a class="el" href="a00042.html">Random Number Generator Example</a> provides sample code that you can use to quickly get started. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00001.html">Getting Started</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:40 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00002.html">Hardware Drivers</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_sec_keyset_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_sec_kdist_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,63 @@ $(document).ready(function(){initNavTree('a00137.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_sec_keyset_t Struct Reference<div class="ingroups"><a class="el" href="a00748.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_sec_kdist_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Security key set (both Peripheral and Central keys). Note that when distributing Bluetooth addresses pertaining to the local device those will have to be filled in by the user.  
+<p>Keys that can be exchanged.  
  <a href="a00137.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a129763caaa3dc397a06a4e4757f1aac9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00136.html">ble_gap_sec_keys_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00137.html#a129763caaa3dc397a06a4e4757f1aac9">keys_periph</a></td></tr>
-<tr class="separator:a129763caaa3dc397a06a4e4757f1aac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a823705c8aecd73949bb7d7b0f2639c0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00136.html">ble_gap_sec_keys_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00137.html#a823705c8aecd73949bb7d7b0f2639c0f">keys_central</a></td></tr>
-<tr class="separator:a823705c8aecd73949bb7d7b0f2639c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa84265de1334d3ddeed29a09209f02a9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00137.html#aa84265de1334d3ddeed29a09209f02a9">enc</a>: 1</td></tr>
+<tr class="separator:aa84265de1334d3ddeed29a09209f02a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6319f6981dbbcff973574420e81090ce"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00137.html#a6319f6981dbbcff973574420e81090ce">id</a>: 1</td></tr>
+<tr class="separator:a6319f6981dbbcff973574420e81090ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91ecd2873c5ed1bd4902929bb9194c9e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00137.html#a91ecd2873c5ed1bd4902929bb9194c9e">sign</a>: 1</td></tr>
+<tr class="separator:a91ecd2873c5ed1bd4902929bb9194c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Security key set (both Peripheral and Central keys). Note that when distributing Bluetooth addresses pertaining to the local device those will have to be filled in by the user. </p>
+<div class="textblock"><p>Keys that can be exchanged. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a823705c8aecd73949bb7d7b0f2639c0f"></a>
+<a class="anchor" id="aa84265de1334d3ddeed29a09209f02a9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00136.html">ble_gap_sec_keys_t</a> ble_gap_sec_keyset_t::keys_central</td>
+          <td class="memname">uint8_t ble_gap_sec_kdist_t::enc</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Keys distributed by the device in the Central role. </p>
+<p>Long Term Key and Master Identification. </p>
 
 </div>
 </div>
-<a class="anchor" id="a129763caaa3dc397a06a4e4757f1aac9"></a>
+<a class="anchor" id="a6319f6981dbbcff973574420e81090ce"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00136.html">ble_gap_sec_keys_t</a> ble_gap_sec_keyset_t::keys_periph</td>
+          <td class="memname">uint8_t ble_gap_sec_kdist_t::id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Keys distributed by the device in the Peripheral role. </p>
+<p>Identity Resolving Key and Identity Address Information. </p>
+
+</div>
+</div>
+<a class="anchor" id="a91ecd2873c5ed1bd4902929bb9194c9e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gap_sec_kdist_t::sign</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Connection Signature Resolving Key. </p>
 
 </div>
 </div>
@@ -156,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00137.html">ble_gap_sec_keyset_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00137.html">ble_gap_sec_kdist_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: spi_master_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: nrf_drv_qdec_event_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,55 @@ $(document).ready(function(){initNavTree('a00394.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">spi_master_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00767.html">SPI Master driver</a></div></div>  </div>
+<div class="title">nrf_drv_qdec_event_t Struct Reference<div class="ingroups"><a class="el" href="a00771.html">QDEC driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Struct containing parameters of the SPI MASTER event.  
+<p>QDEC event handler structure.  
  <a href="a00394.html#details">More...</a></p>
 
-<p><code>#include &lt;spi_5W_master.h&gt;</code></p>
+<p><code>#include &lt;nrf_drv_qdec.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a6d7cb2ed26034e0c1cb5dcb0022a612a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00767.html#ga8e658ee16bfb5beb4d00e27c93f68f96">spi_master_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00394.html#a6d7cb2ed26034e0c1cb5dcb0022a612a">type</a></td></tr>
-<tr class="separator:a6d7cb2ed26034e0c1cb5dcb0022a612a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a800d239d1224cc1226201c6b9a635713"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00394.html#a800d239d1224cc1226201c6b9a635713">data</a></td></tr>
-<tr class="separator:a800d239d1224cc1226201c6b9a635713"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a622197dded7bfa292535944e6870c5f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00767.html#ga8e658ee16bfb5beb4d00e27c93f68f96">spi_master_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00394.html#a622197dded7bfa292535944e6870c5f7">evt_type</a></td></tr>
-<tr class="separator:a622197dded7bfa292535944e6870c5f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a370358835ed2aa53bcc515894b13eb87"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00394.html#a370358835ed2aa53bcc515894b13eb87">data_count</a></td></tr>
-<tr class="separator:a370358835ed2aa53bcc515894b13eb87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bf33d5c66a14040814e347ee0456c45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bf33d5c66a14040814e347ee0456c45"></a>
+<a class="el" href="a00762.html#ga2168e9d37b06b393b523e636057e77ec">nrf_qdec_events_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
+<tr class="separator:a6bf33d5c66a14040814e347ee0456c45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d56210fd975e42c2b9d0558a5149929"><td class="memItemLeft" ><a class="anchor" id="a8d56210fd975e42c2b9d0558a5149929"></a>
+union {</td></tr>
+<tr class="memitem:aa56fcdc8f11013670fc13bf3041db006"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00396.html">nrf_drv_qdec_sample_data_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00394.html#a41b9730f7010c66f7311c1cbde202e35">sample</a></td></tr>
+<tr class="separator:aa56fcdc8f11013670fc13bf3041db006"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62605bcf573041c63aff72308957559b"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00395.html">nrf_drv_qdec_report_data_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00394.html#a05207fa140ddc6e27ff4b1917d75b586">report</a></td></tr>
+<tr class="separator:a62605bcf573041c63aff72308957559b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d56210fd975e42c2b9d0558a5149929"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
+<tr class="separator:a8d56210fd975e42c2b9d0558a5149929"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct containing parameters of the SPI MASTER event. </p>
+<div class="textblock"><p>QDEC event handler structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a800d239d1224cc1226201c6b9a635713"></a>
+<a class="anchor" id="a05207fa140ddc6e27ff4b1917d75b586"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t spi_master_evt_t::data</td>
+          <td class="memname"><a class="el" href="a00395.html">nrf_drv_qdec_report_data_evt_t</a> nrf_drv_qdec_event_t::report</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>event data - context dependent </p>
+<p>Report event data. </p>
 
 </div>
 </div>
-<a class="anchor" id="a370358835ed2aa53bcc515894b13eb87"></a>
+<a class="anchor" id="a41b9730f7010c66f7311c1cbde202e35"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t spi_master_evt_t::data_count</td>
+          <td class="memname"><a class="el" href="a00396.html">nrf_drv_qdec_sample_data_evt_t</a> nrf_drv_qdec_event_t::sample</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Count of data sent. </p>
-
-</div>
-</div>
-<a class="anchor" id="a622197dded7bfa292535944e6870c5f7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00767.html#ga8e658ee16bfb5beb4d00e27c93f68f96">spi_master_evt_type_t</a> spi_master_evt_t::evt_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Type of an event. </p>
-
-</div>
-</div>
-<a class="anchor" id="a6d7cb2ed26034e0c1cb5dcb0022a612a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00767.html#ga8e658ee16bfb5beb4d00e27c93f68f96">spi_master_evt_type_t</a> spi_master_evt_t::type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Type of an event </p>
+<p>Sample event data. </p>
 
 </div>
 </div>
@@ -186,8 +163,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00394.html">spi_master_evt_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00394.html">nrf_drv_qdec_event_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

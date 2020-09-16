@@ -1,5 +1,5 @@
 var a00397 =
 [
-    [ "p_data", "a00397.html#af0aec898e61ff702225ab7cb8e81419a", null ],
-    [ "size", "a00397.html#a0ea03f9dd5df67309f05eeddf0b854ff", null ]
+    [ "error_correction", "a00397.html#af58a8aa9061b77b4f2cd95080a438352", null ],
+    [ "interrupt_priority", "a00397.html#afbf813c769e9c5f2929fe116ed6b882b", null ]
 ];

@@ -231,10 +231,6 @@ void bootloader_dfu_update_process(dfu_update_status_t update_status)
     }
     else if (update_status.status_code == DFU_RESET)
     {
-        // Reset requested. Close the connection with the DFU Controller.
-        uint32_t err_code = dfu_transport_close();
-        APP_ERROR_CHECK(err_code);
-
         m_update_status = BOOTLOADER_RESET;
     }
     else

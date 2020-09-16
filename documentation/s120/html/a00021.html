@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Flash Write Example</title>
+<title>nRF51 SDK - S120 SoftDevice: Timer library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,27 +97,20 @@ $(document).ready(function(){initNavTree('a00021.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Flash Write Example </div>  </div>
+<div class="title">Timer library </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Flash Write Example reads characters from UART, writes them to flash, and echos them.</p>
-<p>The application first erases a page in flash. Next, it reads a character from the UART port. If a new character is detected, the character is written to flash and the flash address is incremented. The value is then read again from flash and output using UART. This output can be tracked in a COM listener (for example PUTTY).</p>
-<p>The name of the example is <b>flashwrite_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\flashwrite</code> </p>
-<h1><a class="anchor" id="flashwrite_example_testing"></a>
-Testing</h1>
-<p>Test the Flash Write Example application by performing the following steps:</p>
-<ol type="1">
-<li>Compile and program the application.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port at 38400 baud rate.</li>
-<li>Write a character and observe the echo. </li>
-</ol>
+<div class="textblock"><p>It enables the application to create multiple timer instances based on the RTC1 peripheral. Checking for timeouts and invokation of user timeout handlers is performed in the RTC1 interrupt handler. List handling is done using a software interrupt (SWI0). Both interrupt handlers are running in APP_LOW priority level.</p>
+<dl class="section note"><dt>Note</dt><dd>When calling <a class="el" href="a00500.html#ga03fb5f5fa85d16289db0d3c15bb0f24d" title="Function for starting a timer.">app_timer_start()</a> or <a class="el" href="a00500.html#gad40fbb2a6a9e5bf7d00f838763f5514c" title="Function for stopping the specified timer.">app_timer_stop()</a>, the timer operation is just queued, and the software interrupt is triggered. The actual timer start/stop operation is executed by the SWI0 interrupt handler. Since the SWI0 interrupt is running in APP_LOW, if the application code calling the timer function is running in APP_LOW or APP_HIGH, the timer operation will not be performed until the application handler has returned. This will be the case e.g. when stopping a timer from a timeout handler when not using the scheduler.</dd></dl>
+<p>Use the USE_SCHEDULER parameter of the <a class="el" href="a00500.html#ga5aaf67f18b79941f9a160d287aa5f245" title="Macro for initializing the application timer module.">APP_TIMER_INIT()</a> macro to select if the <a class="el" href="a00498.html">Scheduler</a> is to be used or not.</p>
+<dl class="section note"><dt>Note</dt><dd>Even if the scheduler is not used, app_timer.h will include app_scheduler.h, so when compiling, app_scheduler.h must be available in one of the compiler include paths. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00018.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

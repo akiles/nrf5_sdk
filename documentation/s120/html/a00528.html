@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: GAP Roles</title>
+<title>nRF51 SDK - S120 SoftDevice: GAP Advertising filter policies</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,58 +99,72 @@ $(document).ready(function(){initNavTree('a00528.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GAP Roles<div class="ingroups"><a class="el" href="a00747.html">Defines</a></div></div>  </div>
+<div class="title">GAP Advertising filter policies<div class="ingroups"><a class="el" href="a00701.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga8164b32f4fd65997d0523cd7c5735166"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00528.html#ga8164b32f4fd65997d0523cd7c5735166">BLE_GAP_ROLE_INVALID</a>&#160;&#160;&#160;0x0</td></tr>
-<tr class="separator:ga8164b32f4fd65997d0523cd7c5735166"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga12e431897d73a3ce88fab8a4dbd90497"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00528.html#ga12e431897d73a3ce88fab8a4dbd90497">BLE_GAP_ROLE_PERIPH</a>&#160;&#160;&#160;0x1</td></tr>
-<tr class="separator:ga12e431897d73a3ce88fab8a4dbd90497"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6b9440660a70146392d27c849431fadb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00528.html#ga6b9440660a70146392d27c849431fadb">BLE_GAP_ROLE_CENTRAL</a>&#160;&#160;&#160;0x2</td></tr>
-<tr class="separator:ga6b9440660a70146392d27c849431fadb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b0393df73db101d6cbfaede2dbb7ea6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00528.html#ga0b0393df73db101d6cbfaede2dbb7ea6">BLE_GAP_ADV_FP_ANY</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga0b0393df73db101d6cbfaede2dbb7ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2dcdb81f0e1e024b82b244058656d26"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00528.html#gae2dcdb81f0e1e024b82b244058656d26">BLE_GAP_ADV_FP_FILTER_SCANREQ</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:gae2dcdb81f0e1e024b82b244058656d26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac37d0158c7458cb4250f9bdfba593858"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00528.html#gac37d0158c7458cb4250f9bdfba593858">BLE_GAP_ADV_FP_FILTER_CONNREQ</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:gac37d0158c7458cb4250f9bdfba593858"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38ff579b96a5ad3abd2e4eb370dd1de6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00528.html#ga38ff579b96a5ad3abd2e4eb370dd1de6">BLE_GAP_ADV_FP_FILTER_BOTH</a>&#160;&#160;&#160;0x03</td></tr>
+<tr class="separator:ga38ff579b96a5ad3abd2e4eb370dd1de6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<dl class="section note"><dt>Note</dt><dd>Not explicitly used in peripheral API, but will be relevant for central API. </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga6b9440660a70146392d27c849431fadb"></a>
+<a class="anchor" id="ga0b0393df73db101d6cbfaede2dbb7ea6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GAP_ROLE_CENTRAL&#160;&#160;&#160;0x2</td>
+          <td class="memname">#define BLE_GAP_ADV_FP_ANY&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Central Role. </p>
+<p>Allow scan requests and connect requests from any device. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga8164b32f4fd65997d0523cd7c5735166"></a>
+<a class="anchor" id="ga38ff579b96a5ad3abd2e4eb370dd1de6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GAP_ROLE_INVALID&#160;&#160;&#160;0x0</td>
+          <td class="memname">#define BLE_GAP_ADV_FP_FILTER_BOTH&#160;&#160;&#160;0x03</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Invalid Role. </p>
+<p>Filter both scan and connect requests with whitelist. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga12e431897d73a3ce88fab8a4dbd90497"></a>
+<a class="anchor" id="gac37d0158c7458cb4250f9bdfba593858"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GAP_ROLE_PERIPH&#160;&#160;&#160;0x1</td>
+          <td class="memname">#define BLE_GAP_ADV_FP_FILTER_CONNREQ&#160;&#160;&#160;0x02</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Peripheral Role. </p>
+<p>Filter connect requests with whitelist. </p>
+
+</div>
+</div>
+<a class="anchor" id="gae2dcdb81f0e1e024b82b244058656d26"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADV_FP_FILTER_SCANREQ&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Filter scan requests with whitelist. </p>
 
 </div>
 </div>
@@ -159,7 +173,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:53 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

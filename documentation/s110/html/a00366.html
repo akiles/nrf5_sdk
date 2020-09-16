@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_ecb_hal_data_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dfu_ble_peer_data_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,79 @@ $(document).ready(function(){initNavTree('a00366.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_ecb_hal_data_t Struct Reference<div class="ingroups"><a class="el" href="a01074.html">Types</a></div></div>  </div>
+<div class="title">dfu_ble_peer_data_t Struct Reference<div class="ingroups"><a class="el" href="a00940.html">DFU BLE SVC</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>AES ECB data structure.  
+<p>DFU Peer data structure.  
  <a href="a00366.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_soc.h&gt;</code></p>
+<p><code>#include &lt;dfu_ble_svc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aab4ea408dd38499ceff3935ecb5fa39f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00366.html#aab4ea408dd38499ceff3935ecb5fa39f">key</a> [(16)]</td></tr>
-<tr class="separator:aab4ea408dd38499ceff3935ecb5fa39f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4c798195f0d6d399a7f75d09ef89793"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00366.html#ad4c798195f0d6d399a7f75d09ef89793">cleartext</a> [(16)]</td></tr>
-<tr class="separator:ad4c798195f0d6d399a7f75d09ef89793"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a478942ae65d7433678164a95e4944115"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00366.html#a478942ae65d7433678164a95e4944115">ciphertext</a> [((16))]</td></tr>
-<tr class="separator:a478942ae65d7433678164a95e4944115"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a254efa46b45f5707510660ee0ae9edc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html">ble_gap_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00366.html#a254efa46b45f5707510660ee0ae9edc3">addr</a></td></tr>
+<tr class="separator:a254efa46b45f5707510660ee0ae9edc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8c0e0d99c8c5cc39adfa07073253d58"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html">ble_gap_irk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00366.html#ac8c0e0d99c8c5cc39adfa07073253d58">irk</a></td></tr>
+<tr class="separator:ac8c0e0d99c8c5cc39adfa07073253d58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a837caf1d352f1371a74e3e388d9a1ae0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html">ble_gap_enc_key_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00366.html#a837caf1d352f1371a74e3e388d9a1ae0">enc_key</a></td></tr>
+<tr class="separator:a837caf1d352f1371a74e3e388d9a1ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9e820600255718d1d9ff79340803a38"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00366.html#ae9e820600255718d1d9ff79340803a38">sys_serv_attr</a> [8]</td></tr>
+<tr class="separator:ae9e820600255718d1d9ff79340803a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>AES ECB data structure. </p>
+<div class="textblock"><p>DFU Peer data structure. </p>
+<p>This structure contains peer data needed for connection to a bonded device during DFU. The peer data must be provided by the application to the bootloader during buttonless update. See <a class="el" href="a00940.html#ga8d962d1d241de6a5778d01eaebfa0460">dfu_ble_svc_set_peer_data</a>. It contains bond information about the desired DFU peer. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a478942ae65d7433678164a95e4944115"></a>
+<a class="anchor" id="a254efa46b45f5707510660ee0ae9edc3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_ecb_hal_data_t::ciphertext[((16))]</td>
+          <td class="memname"><a class="el" href="a00217.html">ble_gap_addr_t</a> dfu_ble_peer_data_t::addr</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Cipher Text data. </p>
+<p>BLE GAP address of the device that initiated the DFU process. </p>
 
 </div>
 </div>
-<a class="anchor" id="ad4c798195f0d6d399a7f75d09ef89793"></a>
+<a class="anchor" id="a837caf1d352f1371a74e3e388d9a1ae0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_ecb_hal_data_t::cleartext[(16)]</td>
+          <td class="memname"><a class="el" href="a00224.html">ble_gap_enc_key_t</a> dfu_ble_peer_data_t::enc_key</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Clear Text data. </p>
+<p>Encryption key structure containing encrypted diversifier and LTK for re-establishing the bond. </p>
 
 </div>
 </div>
-<a class="anchor" id="aab4ea408dd38499ceff3935ecb5fa39f"></a>
+<a class="anchor" id="ac8c0e0d99c8c5cc39adfa07073253d58"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_ecb_hal_data_t::key[(16)]</td>
+          <td class="memname"><a class="el" href="a00242.html">ble_gap_irk_t</a> dfu_ble_peer_data_t::irk</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Encryption key. </p>
+<p>IRK of the device that initiated the DFU process if this device uses Private Resolvable Addresses. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae9e820600255718d1d9ff79340803a38"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t dfu_ble_peer_data_t::sys_serv_attr[8]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>System service attributes for restoring of Service Changed Indication setting in DFU mode. </p>
 
 </div>
 </div>
@@ -171,8 +187,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00366.html">nrf_ecb_hal_data_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00366.html">dfu_ble_peer_data_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

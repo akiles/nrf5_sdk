@@ -38,7 +38,7 @@
 #include "ble_bps.h"
 #include "ble_dis.h"
 #include "ble_conn_params.h"
-#include "ble_sensorsim.h"
+#include "sensorsim.h"
 #include "softdevice_handler.h"
 #include "app_timer.h"
 #include "app_gpiote.h"
@@ -105,7 +105,6 @@
 
 #define BUTTON_DETECTION_DELAY               APP_TIMER_TICKS(50, APP_TIMER_PRESCALER)   /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
 
-#define SEC_PARAM_TIMEOUT                    30                                         /**< Timeout for Pairing Request or Security Request (in seconds). */
 #define SEC_PARAM_BOND                       1                                          /**< Perform bonding. */
 #define SEC_PARAM_MITM                       0                                          /**< Man In The Middle protection not required. */
 #define SEC_PARAM_IO_CAPABILITIES            BLE_GAP_IO_CAPS_NONE                       /**< No I/O capabilities. */
@@ -132,8 +131,8 @@ static ble_bps_t                             m_bps;                             
 static bps_meas_sim_value_t                  m_bps_meas_sim_val[NUM_SIM_MEAS_VALUES];   /**< Blood Pressure simulated measurements. */
 static bool                                  m_bps_meas_ind_conf_pending = false;       /**< Flag to keep track of when an indication confirmation is pending. */
 
-static ble_sensorsim_cfg_t                   m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
-static ble_sensorsim_state_t                 m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
+static sensorsim_cfg_t                       m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
+static sensorsim_state_t                     m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
 
 static app_timer_id_t                        m_battery_timer_id;                        /**< Battery timer. */
 static dm_application_instance_t             m_app_handle;                              /**< Application identifier allocated by device manager. */
@@ -166,7 +165,7 @@ static void battery_level_update(void)
     uint32_t err_code;
     uint8_t  battery_level;
 
-    battery_level = (uint8_t)ble_sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
+    battery_level = (uint8_t)sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
 
     err_code = ble_bas_battery_level_update(&m_bas, battery_level);
     if ((err_code != NRF_SUCCESS) &&
@@ -317,8 +316,7 @@ static void advertising_init(void)
 
     advdata.name_type               = BLE_ADVDATA_FULL_NAME;
     advdata.include_appearance      = true;
-    advdata.flags.size              = sizeof(flags);
-    advdata.flags.p_data            = &flags;
+    advdata.flags                   = flags;
     advdata.uuids_complete.uuid_cnt = sizeof(adv_uuids) / sizeof(adv_uuids[0]);
     advdata.uuids_complete.p_uuids  = adv_uuids;
 
@@ -467,14 +465,14 @@ static void services_init(void)
 
 /**@brief Function for initializing the sensor simulators.
  */
-static void sensor_sim_init(void)
+static void sensor_simulator_init(void)
 {
     m_battery_sim_cfg.min          = MIN_BATTERY_LEVEL;
     m_battery_sim_cfg.max          = MAX_BATTERY_LEVEL;
     m_battery_sim_cfg.incr         = BATTERY_LEVEL_INCREMENT;
     m_battery_sim_cfg.start_at_max = true;
 
-    ble_sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
+    sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
 
     // Simulated measurement #1.
     m_bps_meas_sim_val[0].systolic.mantissa      = SIM_MEAS_1_SYSTOLIC;
@@ -647,7 +645,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             break;
 
         case BLE_GAP_EVT_TIMEOUT:
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT)
+            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
             {
                 err_code = bsp_indication_set(BSP_INDICATE_IDLE);
                 APP_ERROR_CHECK(err_code);
@@ -743,7 +741,7 @@ static void ble_stack_init(void)
     uint32_t err_code;
 
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;
@@ -786,7 +784,7 @@ static void button_event_handler(bsp_event_t event)
  */
 static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
                                            dm_event_t const  * p_event,
-                                           api_result_t        event_result)
+                                           ret_code_t        event_result)
 {
     uint32_t err_code;
     bool     is_indication_enabled;
@@ -838,7 +836,6 @@ static void device_manager_init(void)
 
     memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
     
-    register_param.sec_param.timeout      = SEC_PARAM_TIMEOUT;
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
@@ -878,7 +875,7 @@ int main(void)
     gap_params_init();
     advertising_init();
     services_init();
-    sensor_sim_init();
+    sensor_simulator_init();
     conn_params_init();
 
     // Start execution.

@@ -334,7 +334,7 @@ uint32_t dfu_start_pkt_handle(dfu_update_packet_t * p_packet)
         return NRF_ERROR_DATA_SIZE;
     }
 
-    if (m_image_size > (DFU_IMAGE_MAX_SIZE_FULL - CODE_PAGE_SIZE))
+    if (m_image_size > (DFU_IMAGE_MAX_SIZE_FULL))
     {
         return NRF_ERROR_DATA_SIZE;
     }

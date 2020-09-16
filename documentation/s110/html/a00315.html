@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_opt_t Union Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_hrs_c_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,52 @@ $(document).ready(function(){initNavTree('a00315.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_opt_t Union Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
+<div class="title">ble_hrs_c_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01008.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Common BLE Option type, wrapping the module specific options.  
+<p>Heart Rate Event structure.  
  <a href="a00315.html#details">More...</a></p>
 
-<p><code>#include &lt;ble.h&gt;</code></p>
+<p><code>#include &lt;ble_hrs_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a3becddeb5c692d603c116a348b69770a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00179.html">ble_common_opt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00315.html#a3becddeb5c692d603c116a348b69770a">common_opt</a></td></tr>
-<tr class="separator:a3becddeb5c692d603c116a348b69770a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a389cdb4378d2a7f989807dcf27145051"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00231.html">ble_gap_opt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00315.html#a389cdb4378d2a7f989807dcf27145051">gap_opt</a></td></tr>
-<tr class="separator:a389cdb4378d2a7f989807dcf27145051"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab349bf82213ea8f4ae3b547b2a3a4f5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01007.html#ga1cb65f3c0928fd75d0e186c28fca8c0e">ble_hrs_c_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00315.html#ab349bf82213ea8f4ae3b547b2a3a4f5f">evt_type</a></td></tr>
+<tr class="separator:ab349bf82213ea8f4ae3b547b2a3a4f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bc3734c98a487e13baac2d52d0b1ed9"><td class="memItemLeft" ><a class="anchor" id="a3bc3734c98a487e13baac2d52d0b1ed9"></a>
+union {</td></tr>
+<tr class="memitem:a3aad7ff3c929d18293b5d0bae3ce21e8"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00314.html">ble_hrm_t</a>&#160;&#160;&#160;<a class="el" href="a00315.html#abbddddc557dc3729730e6ccd02041fa9">hrm</a></td></tr>
+<tr class="separator:a3aad7ff3c929d18293b5d0bae3ce21e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bc3734c98a487e13baac2d52d0b1ed9"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
+<tr class="separator:a3bc3734c98a487e13baac2d52d0b1ed9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Common BLE Option type, wrapping the module specific options. </p>
+<div class="textblock"><p>Heart Rate Event structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a3becddeb5c692d603c116a348b69770a"></a>
+<a class="anchor" id="ab349bf82213ea8f4ae3b547b2a3a4f5f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00179.html">ble_common_opt_t</a> ble_opt_t::common_opt</td>
+          <td class="memname"><a class="el" href="a01007.html#ga1cb65f3c0928fd75d0e186c28fca8c0e">ble_hrs_c_evt_type_t</a> ble_hrs_c_evt_t::evt_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Common option, opt_id in BLE_COMMON_OPT_* series. </p>
+<p>Type of the event. </p>
 
 </div>
 </div>
-<a class="anchor" id="a389cdb4378d2a7f989807dcf27145051"></a>
+<a class="anchor" id="abbddddc557dc3729730e6ccd02041fa9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00231.html">ble_gap_opt_t</a> ble_opt_t::gap_opt</td>
+          <td class="memname"><a class="el" href="a00314.html">ble_hrm_t</a> ble_hrs_c_evt_t::hrm</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GAP option, opt_id in BLE_GAP_OPT_* series. </p>
+<p>Heart rate measurement received. This will be filled if the evt_type is <a class="el" href="a01007.html#gga1cb65f3c0928fd75d0e186c28fca8c0ea8c95bb250aab94f4b82257bdeadfa673">BLE_HRS_C_EVT_HRM_NOTIFICATION</a>. </p>
 
 </div>
 </div>
@@ -156,8 +160,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00315.html">ble_opt_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00315.html">ble_hrs_c_evt_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

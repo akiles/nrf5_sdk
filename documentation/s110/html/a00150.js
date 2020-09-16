@@ -1,5 +1,7 @@
 var a00150 =
 [
-    [ "company_identifier", "a00150.html#a82bb52823dc2e6f1d5da1103e90eb34f", null ],
-    [ "data", "a00150.html#ac19b78af581334531c4b7eff27494ea3", null ]
+    [ "buf_size_mask", "a00150.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
+    [ "p_buf", "a00150.html#a64eafd180a65260208be3b845f6acbf5", null ],
+    [ "read_pos", "a00150.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
+    [ "write_pos", "a00150.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
 ];

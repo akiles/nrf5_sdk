@@ -1,5 +1,5 @@
 var a00381 =
 [
-    [ "error_type", "a00381.html#a5e8316b48a23107bf7983adeae181ee6", null ],
-    [ "hw_error_code", "a00381.html#ae3d54d4d1e511ad693f7927ea4da5d05", null ]
+    [ "keys_central", "a00381.html#a9ddb3932823918ebe433d5e53acdb4a6", null ],
+    [ "keys_periph", "a00381.html#a4488fee3125db8baa70ac98c3d2790bf", null ]
 ];

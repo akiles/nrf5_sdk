@@ -1,9 +1,6 @@
 var a00108 =
 [
-    [ "fp", "a00108.html#a9e2d44610c896a2d1466eb293688f226", null ],
-    [ "interval", "a00108.html#a289b288f81c56920fea9a6373697c7f3", null ],
-    [ "p_peer_addr", "a00108.html#ae87243568d5b9a272a15df0cd4673cdb", null ],
-    [ "p_whitelist", "a00108.html#afd7f1f2a29e883a60a17363bccc24dca", null ],
-    [ "timeout", "a00108.html#a81b240f5be7e508a84467b7ac2ff6d15", null ],
-    [ "type", "a00108.html#aece8d919208244b8085f64b613708427", null ]
+    [ "auth", "a00108.html#a5f21ad24fa7cce2e56ae61beccdcb0b8", null ],
+    [ "ltk", "a00108.html#a545fe8321eef3b128572882aa3997f7f", null ],
+    [ "ltk_len", "a00108.html#a91966f65c4bb6988f847a19ce0b1541e", null ]
 ];

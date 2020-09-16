@@ -10,10 +10,10 @@
  *
  */
 
-/* Attention! 
-*  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile 
-*  qualification listings, this section of source code must not be modified.
-*/
+/* Attention!
+ * To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
+ * qualification listings, this section of source code must not be modified.
+ */
 
 #include "ble_sc_ctrlpt.h"
 #include <string.h>
@@ -208,13 +208,19 @@ static bool is_cccd_configured(ble_sc_ctrlpt_t * p_sc_ctrlpt)
 {
     uint32_t err_code;
     uint8_t  cccd_value_buf[BLE_CCCD_VALUE_LEN];
-    uint16_t len                   = BLE_CCCD_VALUE_LEN;
     bool     is_sccp_indic_enabled = false;
+    ble_gatts_value_t gatts_value;
 
-    err_code = sd_ble_gatts_value_get(p_sc_ctrlpt->sc_ctrlpt_handles.cccd_handle,
-                                      0,
-                                      &len,
-                                      cccd_value_buf);
+    // Initialize value struct.
+    memset(&gatts_value, 0, sizeof(gatts_value));
+
+    gatts_value.len     = BLE_CCCD_VALUE_LEN;
+    gatts_value.offset  = 0;
+    gatts_value.p_value = cccd_value_buf;
+
+    err_code = sd_ble_gatts_value_get(p_sc_ctrlpt->conn_handle,
+                                      p_sc_ctrlpt->sc_ctrlpt_handles.cccd_handle,
+                                      &gatts_value);
     if (err_code != NRF_SUCCESS)
     {
         // Report error to application
@@ -265,10 +271,12 @@ static void sc_ctrlpt_resp_send(ble_sc_ctrlpt_t * p_sc_ctrlpt)
                 p_sc_ctrlpt->procedure_status = BLE_SCPT_IND_CONFIRM_PENDING;
                 // Wait for HVC event
                 break;
+
             case BLE_ERROR_NO_TX_BUFFERS:
                 // Wait for TX_COMPLETE event to retry transmission
                 p_sc_ctrlpt->procedure_status = BLE_SCPT_INDICATION_PENDING;
                 break;
+
             default:
                 // Report error to application
                 p_sc_ctrlpt->procedure_status = BLE_SCPT_NO_PROC_IN_PROGRESS;
@@ -276,7 +284,6 @@ static void sc_ctrlpt_resp_send(ble_sc_ctrlpt_t * p_sc_ctrlpt)
                 {
                     p_sc_ctrlpt->error_handler(err_code);
                 }
-
                 break;
         }
     }
@@ -291,7 +298,9 @@ static void sc_ctrlpt_resp_send(ble_sc_ctrlpt_t * p_sc_ctrlpt)
 static void on_ctrlpt_write(ble_sc_ctrlpt_t       * p_sc_ctrlpt,
                             ble_gatts_evt_write_t * p_evt_write)
 {
-    ble_sc_ctrlpt_val_t                   rcvd_ctrlpt = { BLE_SCPT_RESPONSE_CODE , 0, BLE_SENSOR_LOCATION_OTHER };
+    ble_sc_ctrlpt_val_t                   rcvd_ctrlpt =
+    { BLE_SCPT_RESPONSE_CODE , 0, BLE_SENSOR_LOCATION_OTHER };
+
     ble_sc_ctrlpt_rsp_t                   rsp;
     uint32_t                              err_code;
     ble_gatts_rw_authorize_reply_params_t auth_reply;
@@ -366,9 +375,16 @@ static void on_ctrlpt_write(ble_sc_ctrlpt_t       * p_sc_ctrlpt,
                 {
                     if (is_location_supported(p_sc_ctrlpt, rcvd_ctrlpt.location))
                     {
+                        ble_gatts_value_t gatts_value;
                         uint8_t  rcvd_location = (uint8_t)rcvd_ctrlpt.location;
-                        uint16_t set_len       = sizeof(uint8_t);
                         rsp.status = BLE_SCPT_SUCCESS;
+
+                        // Initialize value struct.
+                        memset(&gatts_value, 0, sizeof(gatts_value));
+
+                        gatts_value.len     = sizeof(uint8_t);
+                        gatts_value.offset  = 0;
+                        gatts_value.p_value = &rcvd_location;
 
                         evt.evt_type               = BLE_SC_CTRLPT_EVT_UPDATE_LOCATION;
                         evt.params.update_location = rcvd_ctrlpt.location;
@@ -378,10 +394,9 @@ static void on_ctrlpt_write(ble_sc_ctrlpt_t       * p_sc_ctrlpt,
                         }
                         if (rsp.status == BLE_SCPT_SUCCESS)
                         {
-                            err_code = sd_ble_gatts_value_set(p_sc_ctrlpt->sensor_location_handle,
-                                                              0,
-                                                              &set_len,
-                                                              &rcvd_location);
+                            err_code = sd_ble_gatts_value_set(p_sc_ctrlpt->conn_handle,
+                                                              p_sc_ctrlpt->sensor_location_handle,
+                                                              &gatts_value);
                             if (err_code != NRF_SUCCESS)
                             {
                                 // Report error to application
@@ -436,7 +451,7 @@ static void on_ctrlpt_write(ble_sc_ctrlpt_t       * p_sc_ctrlpt,
                         rsp.status = p_sc_ctrlpt->evt_handler(p_sc_ctrlpt, &evt);
                         if (rsp.status != BLE_SCPT_SUCCESS)
                         {
-                            p_sc_ctrlpt->procedure_status = BLE_SCPT_INDICATION_PENDING;  //if the application returns an error, the response is to be sent right away and the calibration is considered as not started.
+                            p_sc_ctrlpt->procedure_status = BLE_SCPT_INDICATION_PENDING; // If the application returns an error, the response is to be sent right away and the calibration is considered as not started.
                         }
                     }
                 }
@@ -477,9 +492,18 @@ static void on_rw_authorize_request(ble_sc_ctrlpt_t * p_sc_ctrlpt, ble_gatts_evt
     ble_gatts_evt_rw_authorize_request_t * p_auth_req = &p_gatts_evt->params.authorize_request;
     if (p_auth_req->type == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
     {
-        if (p_auth_req->request.write.handle == p_sc_ctrlpt->sc_ctrlpt_handles.value_handle)
+        if (   (p_gatts_evt->params.authorize_request.request.write.op
+                != BLE_GATTS_OP_PREP_WRITE_REQ)
+            && (p_gatts_evt->params.authorize_request.request.write.op
+                != BLE_GATTS_OP_EXEC_WRITE_REQ_NOW)
+            && (p_gatts_evt->params.authorize_request.request.write.op
+                != BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL)
+           )
         {
-            on_ctrlpt_write(p_sc_ctrlpt, &p_auth_req->request.write);
+            if (p_auth_req->request.write.handle == p_sc_ctrlpt->sc_ctrlpt_handles.value_handle)
+            {
+                on_ctrlpt_write(p_sc_ctrlpt, &p_auth_req->request.write);
+            }
         }
     }
 }

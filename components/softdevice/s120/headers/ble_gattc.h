@@ -1,26 +1,26 @@
-/*
+/* 
  * Copyright (c) Nordic Semiconductor ASA
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- *
+ * 
  *   1. Redistributions of source code must retain the above copyright notice, this
  *   list of conditions and the following disclaimer.
- *
+ * 
  *   2. Redistributions in binary form must reproduce the above copyright notice, this
  *   list of conditions and the following disclaimer in the documentation and/or
  *   other materials provided with the distribution.
- *
+ * 
  *   3. Neither the name of Nordic Semiconductor ASA nor the names of other
  *   contributors to this software may be used to endorse or promote products
  *   derived from this software without specific prior written permission.
- *
+ * 
  *   4. This software must only be used in a processor manufactured by Nordic
  *   Semiconductor ASA, or in a processor manufactured by a third party that
  *   is used in combination with a processor manufactured by Nordic Semiconductor.
- *
- *
+ * 
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -31,9 +31,10 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+ * 
  */
- /**
+
+/**
   @addtogroup BLE_GATTC Generic Attribute Profile (GATT) Client
   @{
   @brief  Definitions and prototypes for the GATT Client interface.
@@ -153,28 +154,28 @@ typedef struct
   uint8_t   *p_value;                  /**< Pointer to the value data. */
 } ble_gattc_write_params_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP. */
 typedef struct
 {
   uint16_t             count;           /**< Service count. */
   ble_gattc_service_t services[1];      /**< Service data, variable length. */
 } ble_gattc_evt_prim_srvc_disc_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_REL_DISC_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_REL_DISC_RSP. */
 typedef struct
 {
   uint16_t             count;           /**< Include count. */
   ble_gattc_include_t includes[1];      /**< Include data, variable length. */
 } ble_gattc_evt_rel_disc_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_CHAR_DISC_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_CHAR_DISC_RSP. */
 typedef struct
 {
   uint16_t            count;          /**< Characteristic count. */
   ble_gattc_char_t    chars[1];       /**< Characteristic data, variable length. */
 } ble_gattc_evt_char_disc_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_DESC_DISC_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_DESC_DISC_RSP. */
 typedef struct
 {
   uint16_t            count;          /**< Descriptor count. */
@@ -190,7 +191,7 @@ typedef struct
                                             so it will effectively point to a location inside the handle_value array. */
 } ble_gattc_handle_value_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP. */
 typedef struct
 {
   uint16_t                  count;            /**< Handle-Value Pair Count. */
@@ -198,7 +199,7 @@ typedef struct
   ble_gattc_handle_value_t  handle_value[1];  /**< Handle-Value(s) list, variable length. */
 } ble_gattc_evt_char_val_by_uuid_read_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_READ_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_READ_RSP. */
 typedef struct
 {
   uint16_t            handle;         /**< Attribute Handle. */
@@ -207,14 +208,14 @@ typedef struct
   uint8_t             data[1];        /**< Attribute data, variable length. */
 } ble_gattc_evt_read_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_CHAR_VALS_READ_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_CHAR_VALS_READ_RSP. */
 typedef struct
 {
   uint16_t            len;            /**< Concatenated Attribute values length. */
   uint8_t             values[1];      /**< Attribute values, variable length. */
 } ble_gattc_evt_char_vals_read_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_WRITE_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_WRITE_RSP. */
 typedef struct
 {
   uint16_t            handle;           /**< Attribute Handle. */
@@ -224,7 +225,7 @@ typedef struct
   uint8_t             data[1];          /**< Data, variable length. */
 } ble_gattc_evt_write_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_HVX. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_HVX. */
 typedef struct
 {
   uint16_t            handle;         /**< Handle to which the HVx operation applies. */
@@ -233,7 +234,7 @@ typedef struct
   uint8_t             data[1];        /**< Attribute data, variable length. */
 } ble_gattc_evt_hvx_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_TIMEOUT. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_TIMEOUT. */
 typedef struct
 {
   uint8_t          src;                       /**< Timeout source, see @ref BLE_GATT_TIMEOUT_SOURCES. */
@@ -244,7 +245,7 @@ typedef struct
 {
   uint16_t            conn_handle;                /**< Connection Handle on which event occured. */
   uint16_t            gatt_status;                /**< GATT status code for the operation, see @ref BLE_GATT_STATUS_CODES. */
-  uint16_t            error_handle;               /**< In case of error: The handle causing the error. In all other cases BLE_GATT_HANDLE_INVALID. */
+  uint16_t            error_handle;               /**< In case of error: The handle causing the error. In all other cases @ref BLE_GATT_HANDLE_INVALID. */
   union
   {
     ble_gattc_evt_prim_srvc_disc_rsp_t          prim_srvc_disc_rsp;         /**< Primary Service Discovery Response Event Parameters. */
@@ -257,7 +258,7 @@ typedef struct
     ble_gattc_evt_write_rsp_t                   write_rsp;                  /**< Write Response Event Parameters. */
     ble_gattc_evt_hvx_t                         hvx;                        /**< Handle Value Notification/Indication Event Parameters. */
     ble_gattc_evt_timeout_t                     timeout;                    /**< Timeout Event Parameters. */
-  } params;                                                                 /**< Event Parameters. @note Only valid if @ref gatt_status == BLE_GATT_STATUS_SUCCESS. */
+  } params;                                                                 /**< Event Parameters. @note Only valid if @ref gatt_status == @ref BLE_GATT_STATUS_SUCCESS. */
 } ble_gattc_evt_t;
 /** @} */
 
@@ -270,7 +271,7 @@ typedef struct
  *          If the last service has not been reached, this must be called again with an updated start handle value to continue the search.
  *
  * @note If any of the discovered services have 128-bit UUIDs which are not present in the table provided to ble_vs_uuids_assign, a UUID structure with
- *       type BLE_UUID_TYPE_UNKNOWN will be received in the corresponding event.
+ *       type @ref BLE_UUID_TYPE_UNKNOWN will be received in the corresponding event.
  *
  * @param[in] conn_handle The connection handle identifying the connection to perform this procedure on.
  * @param[in] start_handle Handle to start searching from.
@@ -309,7 +310,7 @@ SVCALL(SD_BLE_GATTC_RELATIONSHIPS_DISCOVER, uint32_t, sd_ble_gattc_relationships
  *          this must be called again with an updated handle range to continue the discovery.
  *
  * @note If any of the discovered characteristics have 128-bit UUIDs which are not present in the table provided to ble_vs_uuids_assign, a UUID structure with
- *       type BLE_UUID_TYPE_UNKNOWN will be received in the corresponding event.
+ *       type @ref BLE_UUID_TYPE_UNKNOWN will be received in the corresponding event.
  *
  * @param[in] conn_handle The connection handle identifying the connection to perform this procedure on.
  * @param[in] p_handle_range A pointer to the range of handles of the Service to perform this procedure on.

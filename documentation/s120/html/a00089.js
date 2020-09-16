@@ -1,10 +1,9 @@
 var a00089 =
 [
-    [ "baud_rate", "a00089.html#aed401d2ee067394f8996bd5c0f4ff894", null ],
-    [ "cts_pin_no", "a00089.html#afd55bb9fe47cfd5eff8b468083b2dfed", null ],
-    [ "flow_control", "a00089.html#a0f003e30e3587f068bf45fad9f99bbc4", null ],
-    [ "rts_pin_no", "a00089.html#a836f131cb64d3cdf9831c0354483a65f", null ],
-    [ "rx_pin_no", "a00089.html#a30ae0cdf9181248fa08411af42a938a9", null ],
-    [ "tx_pin_no", "a00089.html#a7153a5ce2ab2d164224a7a17d5b1c56c", null ],
-    [ "use_parity", "a00089.html#a0851da050a073c86c13d0734e78f9d97", null ]
+    [ "day", "a00089.html#a94bdc52cbceff5f14951b6f7e8c02263", null ],
+    [ "hours", "a00089.html#a5288a98f74703cf1c5f9d0b9b1119461", null ],
+    [ "minutes", "a00089.html#a1328373bafcaa7e7ed28e2a3f52ec6e4", null ],
+    [ "month", "a00089.html#a49262472d4a8f721997adc626ae4f693", null ],
+    [ "seconds", "a00089.html#a20bab791a65115383e5e355e97078e27", null ],
+    [ "year", "a00089.html#a469839121af0c966717424b7649e0532", null ]
 ];

@@ -1,7 +1,6 @@
 var a00347 =
 [
-    [ "app_image_size", "a00347.html#ab5283e751eac2c4b317c3429f9138ea5", null ],
-    [ "bl_image_size", "a00347.html#a5a5a89e5964fb6ed069b9c790449848b", null ],
-    [ "dfu_update_mode", "a00347.html#a271c95e67d665b66ce9874ccf3c6bf06", null ],
-    [ "sd_image_size", "a00347.html#af2354b9f4313acad5c73ebd01107d68b", null ]
+    [ "encoded_ctrl_rsp", "a00347.html#adf17b1a0cd599ca5bd71dba42e318e06", null ],
+    [ "len", "a00347.html#afb2e07899dd914805f45b9da0694e0af", null ],
+    [ "status", "a00347.html#a978ed1543a79395ebdefc4f92233dfb7", null ]
 ];

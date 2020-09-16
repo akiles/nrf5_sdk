@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_version_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_srv_utf8_str_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,49 @@ $(document).ready(function(){initNavTree('a00194.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_version_t Struct Reference<div class="ingroups"><a class="el" href="a00744.html">Structures</a></div></div>  </div>
+<div class="title">ble_srv_utf8_str_t Struct Reference<div class="ingroups"><a class="el" href="a00686.html">Common service definitions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Version Information.  
+<p>UTF-8 string data type.  
  <a href="a00194.html#details">More...</a></p>
 
-<p><code>#include &lt;ble.h&gt;</code></p>
+<p><code>#include &lt;ble_srv_common.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:af18ca1a9b3d80b05042d9121e9d3c9ed"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#af18ca1a9b3d80b05042d9121e9d3c9ed">version_number</a></td></tr>
-<tr class="separator:af18ca1a9b3d80b05042d9121e9d3c9ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39ff6a37dbb096bf608d850d0845d252"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#a39ff6a37dbb096bf608d850d0845d252">company_id</a></td></tr>
-<tr class="separator:a39ff6a37dbb096bf608d850d0845d252"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd81a16510bfbcf3778af4daab021369"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#abd81a16510bfbcf3778af4daab021369">subversion_number</a></td></tr>
-<tr class="separator:abd81a16510bfbcf3778af4daab021369"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9238252fa096ecc458994d19aaf034d8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#a9238252fa096ecc458994d19aaf034d8">length</a></td></tr>
+<tr class="separator:a9238252fa096ecc458994d19aaf034d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b6d6d426c6ec244d1136b7ccf5deb30"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html#a8b6d6d426c6ec244d1136b7ccf5deb30">p_str</a></td></tr>
+<tr class="separator:a8b6d6d426c6ec244d1136b7ccf5deb30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Version Information. </p>
+<div class="textblock"><p>UTF-8 string data type. </p>
+<dl class="section note"><dt>Note</dt><dd>The type can only hold a pointer to the string data (i.e. not the actual data). </dd></dl>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a39ff6a37dbb096bf608d850d0845d252"></a>
+<a class="anchor" id="a9238252fa096ecc458994d19aaf034d8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_version_t::company_id</td>
+          <td class="memname">uint16_t ble_srv_utf8_str_t::length</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Company ID, Nordic Semiconductor's company ID is 89 (0x0059) (<a href="https://www.bluetooth.org/apps/content/Default.aspx?doc_id=49708">https://www.bluetooth.org/apps/content/Default.aspx?doc_id=49708</a>). </p>
+<p>String length. </p>
 
 </div>
 </div>
-<a class="anchor" id="abd81a16510bfbcf3778af4daab021369"></a>
+<a class="anchor" id="a8b6d6d426c6ec244d1136b7ccf5deb30"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_version_t::subversion_number</td>
+          <td class="memname">uint8_t* ble_srv_utf8_str_t::p_str</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Link Layer Sub Version number, corresponds to the SoftDevice Config ID or Firmware ID (FWID). </p>
-
-</div>
-</div>
-<a class="anchor" id="af18ca1a9b3d80b05042d9121e9d3c9ed"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_version_t::version_number</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Link Layer Version number for BT 4.1 spec is 7 (<a href="https://www.bluetooth.org/en-us/specification/assigned-numbers/link-layer">https://www.bluetooth.org/en-us/specification/assigned-numbers/link-layer</a>). </p>
+<p>String data. </p>
 
 </div>
 </div>
@@ -171,8 +157,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00194.html">ble_version_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00194.html">ble_srv_utf8_str_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

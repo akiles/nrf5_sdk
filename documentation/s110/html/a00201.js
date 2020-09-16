@@ -1,8 +1,9 @@
 var a00201 =
 [
-    [ "err_code", "a00201.html#a7399b78d2931ca67335028b94e40fd05", null ],
-    [ "failure", "a00201.html#a0cf6e103864e7945f14c1505b813e6d0", null ],
-    [ "line_number", "a00201.html#a9d8a550dba94f817123c14d6ca401156", null ],
-    [ "message", "a00201.html#aaa3ce88fed3cd597fbd326d647c1b6f8", null ],
-    [ "stack_info", "a00201.html#a4355c5cefad7e512433098a13cbcb706", null ]
+    [ "conn_handle", "a00201.html#aea6b3ca0b15ba3d4684ac2dfaafb584b", null ],
+    [ "curr_char_ind", "a00201.html#a2ca30b7a259a7342dc23272fcd6d889f", null ],
+    [ "curr_srv_ind", "a00201.html#aa598c16586a07aa4b13e38c35b8b803d", null ],
+    [ "discovery_in_progress", "a00201.html#afca8a6f17e6b6d6c40f9fa490ed42b94", null ],
+    [ "services", "a00201.html#a982a55a9d1b9f10e010fcebeea5b8911", null ],
+    [ "srv_count", "a00201.html#a0cbdc7069a26178c67b3b558633fa261", null ]
 ];

@@ -1,27 +1,21 @@
 var a00972 =
 [
-    [ "ble_ias_c_evt_t", "a00303.html", [
-      [ "evt_type", "a00303.html#aa03cb513eb320bde9c8f800162a7142f", null ]
-    ] ],
-    [ "ble_ias_c_s", "a00305.html", [
-      [ "alert_level_handle", "a00305.html#ad136ca554bce057fd4cd38ba0f796ea6", null ],
-      [ "conn_handle", "a00305.html#ad18ae38bccb88d086eedbc1647ce2386", null ],
-      [ "error_handler", "a00305.html#a6cecf3d78ec7d72912dd4215455720ed", null ],
-      [ "evt_handler", "a00305.html#ac306d48fcd140ddbffb4d4c64ca4d007", null ]
-    ] ],
-    [ "ble_ias_c_init_t", "a00304.html", [
-      [ "error_handler", "a00304.html#a83986799fa5972b6665f1dd70af89bca", null ],
-      [ "evt_handler", "a00304.html#a53302faad4381a87101012bf06af6101", null ]
-    ] ],
-    [ "ble_ias_c_evt_handler_t", "a00972.html#ga96adb4273980cee3c28140485a07884f", null ],
-    [ "ble_ias_c_t", "a00972.html#ga4de8fe9971720f3186d60ea307026c54", null ],
-    [ "ble_ias_c_evt_type_t", "a00972.html#ga1363ef6107e67c26fd0ace31f6afa7cd", [
-      [ "BLE_IAS_C_EVT_SRV_DISCOVERED", "a00972.html#gga1363ef6107e67c26fd0ace31f6afa7cda108c1542b350d15f6acf09092cda957a", null ],
-      [ "BLE_IAS_C_EVT_SRV_NOT_FOUND", "a00972.html#gga1363ef6107e67c26fd0ace31f6afa7cdaccf3636bb38605fd6b836dc01c05459a", null ],
-      [ "BLE_IAS_C_EVT_DISCONN_COMPLETE", "a00972.html#gga1363ef6107e67c26fd0ace31f6afa7cdac1eac62d545a853750a6b3f5a8ceb3f5", null ]
-    ] ],
-    [ "ble_ias_c_init", "a00972.html#gaf0c1bf8a8837220f03442c18448e50ad", null ],
-    [ "ble_ias_c_is_ias_discovered", "a00972.html#gae637c4c4a92e401ddfdd382861c36767", null ],
-    [ "ble_ias_c_on_ble_evt", "a00972.html#ga7f98bafec49ce5bf78e444e46c628a1f", null ],
-    [ "ble_ias_c_send_alert_level", "a00972.html#gab37ce69f8533cd510dc5620effba4409", null ]
+    [ "BLE_UUID_ALERT_NOTIFICATION_SERVICE", "a00972.html#gaeff9147171963f817ff821afaf714345", null ],
+    [ "BLE_UUID_BATTERY_SERVICE", "a00972.html#ga4090520f3007fe6f90f06a6f4f8d5845", null ],
+    [ "BLE_UUID_BLOOD_PRESSURE_SERVICE", "a00972.html#ga3d14d365f34d59d4772c9f2ea2eed035", null ],
+    [ "BLE_UUID_CURRENT_TIME_SERVICE", "a00972.html#ga3873aff1b932b662369cfea9adbc470e", null ],
+    [ "BLE_UUID_CYCLING_SPEED_AND_CADENCE", "a00972.html#ga1b67bef7af4f69fe4b72a8f035628a97", null ],
+    [ "BLE_UUID_DEVICE_INFORMATION_SERVICE", "a00972.html#gab8eac87431b53cdfaeccd6d3a15ed5ac", null ],
+    [ "BLE_UUID_GLUCOSE_SERVICE", "a00972.html#gab0db0c25a5adfbc20c267fa33af88b63", null ],
+    [ "BLE_UUID_HEALTH_THERMOMETER_SERVICE", "a00972.html#gad977302141caea8b19e11638a93ac76d", null ],
+    [ "BLE_UUID_HEART_RATE_SERVICE", "a00972.html#gada8a8d4952d86f3557365ce0ead40e15", null ],
+    [ "BLE_UUID_HUMAN_INTERFACE_DEVICE_SERVICE", "a00972.html#gaafd551131de655ea5987ed148170bf2d", null ],
+    [ "BLE_UUID_IMMEDIATE_ALERT_SERVICE", "a00972.html#ga4badeabf171b217259b1f67f554e8064", null ],
+    [ "BLE_UUID_LINK_LOSS_SERVICE", "a00972.html#gabdc9cfe9d896039bef555b0bfe14cbd4", null ],
+    [ "BLE_UUID_NEXT_DST_CHANGE_SERVICE", "a00972.html#gaaee29ba322e3872e56c903750b8bd7b2", null ],
+    [ "BLE_UUID_PHONE_ALERT_STATUS_SERVICE", "a00972.html#gae82dc7ee84342443d18c56a180b4a373", null ],
+    [ "BLE_UUID_REFERENCE_TIME_UPDATE_SERVICE", "a00972.html#ga6f93844f0577874ffd4cd437cca028fd", null ],
+    [ "BLE_UUID_RUNNING_SPEED_AND_CADENCE", "a00972.html#ga4e56766fb49c578820a0b738d078e446", null ],
+    [ "BLE_UUID_SCAN_PARAMETERS_SERVICE", "a00972.html#ga68511464f08fdbba54de28898662f6fe", null ],
+    [ "BLE_UUID_TX_POWER_SERVICE", "a00972.html#gabe5ff0bce57a32f58a1e16913a38ce04", null ]
 ];

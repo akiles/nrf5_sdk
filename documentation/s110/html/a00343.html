@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dfu_ble_peer_data_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_rscs_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,37 +106,88 @@ $(document).ready(function(){initNavTree('a00343.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dfu_ble_peer_data_t Struct Reference<div class="ingroups"><a class="el" href="a00945.html">DFU BLE SVC</a></div></div>  </div>
+<div class="title">ble_rscs_init_t Struct Reference<div class="ingroups"><a class="el" href="a00968.html">Running Speed and Cadence Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>DFU Peer data structure.  
+<p>Running Speed and Cadence Service init structure. This contains all options and data needed for initialization of the service.  
  <a href="a00343.html#details">More...</a></p>
 
-<p><code>#include &lt;dfu_ble_svc.h&gt;</code></p>
+<p><code>#include &lt;ble_rscs.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a8edc7904f78de5fddc021504d06ae029"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8edc7904f78de5fddc021504d06ae029"></a>
-<a class="el" href="a00212.html">ble_gap_enc_info_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>enc_info</b></td></tr>
-<tr class="separator:a8edc7904f78de5fddc021504d06ae029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8c0e0d99c8c5cc39adfa07073253d58"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8c0e0d99c8c5cc39adfa07073253d58"></a>
-<a class="el" href="a00226.html">ble_gap_irk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>irk</b></td></tr>
-<tr class="separator:ac8c0e0d99c8c5cc39adfa07073253d58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a254efa46b45f5707510660ee0ae9edc3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a254efa46b45f5707510660ee0ae9edc3"></a>
-<a class="el" href="a00207.html">ble_gap_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>addr</b></td></tr>
-<tr class="separator:a254efa46b45f5707510660ee0ae9edc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8b3f40aba291bb2528c6e3d278e66bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00968.html#ga04b6f149d88df65ebffd5b8297bd657f">ble_rscs_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00343.html#ac8b3f40aba291bb2528c6e3d278e66bd">evt_handler</a></td></tr>
+<tr class="separator:ac8b3f40aba291bb2528c6e3d278e66bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f33f2c4256a25ac20cdbb2b8fbc8538"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00343.html#a4f33f2c4256a25ac20cdbb2b8fbc8538">rsc_meas_attr_md</a></td></tr>
+<tr class="separator:a4f33f2c4256a25ac20cdbb2b8fbc8538"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada9c9294592f640a27a344965b22bc76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00353.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00343.html#ada9c9294592f640a27a344965b22bc76">rsc_feature_attr_md</a></td></tr>
+<tr class="separator:ada9c9294592f640a27a344965b22bc76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afea901cdde73cddc72eb4cfe2f337c78"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00343.html#afea901cdde73cddc72eb4cfe2f337c78">feature</a></td></tr>
+<tr class="separator:afea901cdde73cddc72eb4cfe2f337c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>DFU Peer data structure. </p>
-<p>This structure contains peer data needed for connection to a bonded device during DFU. The peer data must be provided by the application to the bootloader during buttonless update. See <a class="el" href="a00945.html#ga8d962d1d241de6a5778d01eaebfa0460">dfu_ble_svc_set_peer_data</a>. It contains bond information about the desired DFU peer. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>Running Speed and Cadence Service init structure. This contains all options and data needed for initialization of the service. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="ac8b3f40aba291bb2528c6e3d278e66bd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00968.html#ga04b6f149d88df65ebffd5b8297bd657f">ble_rscs_evt_handler_t</a> ble_rscs_init_t::evt_handler</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event handler to be called for handling events in the Running Speed and Cadence Service. </p>
+
+</div>
+</div>
+<a class="anchor" id="afea901cdde73cddc72eb4cfe2f337c78"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_rscs_init_t::feature</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initial value for features of sensor. </p>
+
+</div>
+</div>
+<a class="anchor" id="ada9c9294592f640a27a344965b22bc76"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00353.html">ble_srv_security_mode_t</a> ble_rscs_init_t::rsc_feature_attr_md</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initial security level for feature attribute </p>
+
+</div>
+</div>
+<a class="anchor" id="a4f33f2c4256a25ac20cdbb2b8fbc8538"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a> ble_rscs_init_t::rsc_meas_attr_md</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initial security level for running speed and cadence measurement attribute </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00343.html">dfu_ble_peer_data_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00343.html">ble_rscs_init_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

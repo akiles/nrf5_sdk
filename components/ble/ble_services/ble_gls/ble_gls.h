@@ -210,7 +210,7 @@ typedef struct
 } ble_gls_init_t;
 
 /**@brief Glucose Service structure. This contains various status information for the service. */
-typedef struct ble_gls_s
+struct ble_gls_s
 {
     ble_gls_evt_handler_t     evt_handler;                     /**< Event handler to be called for handling events in the Glucose Service. */
     ble_srv_error_handler_t   error_handler;                   /**< Function to be called in case of an error. */
@@ -222,7 +222,7 @@ typedef struct ble_gls_s
     uint16_t                  conn_handle;                     /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
     uint16_t                  feature;
     bool                      is_context_supported;
-} ble_gls_t;
+};
 
 /**@brief Function for initializing the Glucose Service.
  *

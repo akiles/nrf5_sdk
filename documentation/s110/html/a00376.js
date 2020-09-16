@@ -1,6 +1,7 @@
 var a00376 =
 [
-    [ "len", "a00376.html#ae7fb48410ecb00dec1dca60d45cbc606", null ],
-    [ "ptr1", "a00376.html#a03e88994f8127e877c2fd08800e64768", null ],
-    [ "ptr2", "a00376.html#a3f670b76c31a7b6badf0bfadd1dc08b0", null ]
+    [ "p_app_context", "a00376.html#ae9ad98969539dba415cfb4cd9e0f0564", null ],
+    [ "p_device_context", "a00376.html#abeb2585ead8af941c5619bbfad06b963", null ],
+    [ "p_gap_param", "a00376.html#af0e4a6616d2156de4d92277ea7f0df5f", null ],
+    [ "p_service_context", "a00376.html#a7a1372003da3dd695160653c24e3eaf8", null ]
 ];

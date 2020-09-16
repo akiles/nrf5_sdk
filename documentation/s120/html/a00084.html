@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ant_evt_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_bas_c_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,33 @@ $(document).ready(function(){initNavTree('a00084.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ant_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00698.html">Types definitions for ANT support in SoftDevice handler.</a></div></div>  </div>
+<div class="title">ble_bas_c_init_t Struct Reference<div class="ingroups"><a class="el" href="a00661.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ANT stack event type.  
+<p>Battery Service Client initialization structure.  
  <a href="a00084.html#details">More...</a></p>
 
-<p><code>#include &lt;ant_stack_handler_types.h&gt;</code></p>
+<p><code>#include &lt;ble_bas_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a5e084957ed6c0f93b78203d74a268e36"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00084.html#a5e084957ed6c0f93b78203d74a268e36">channel</a></td></tr>
-<tr class="separator:a5e084957ed6c0f93b78203d74a268e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8449b66e97f4dfce737478dc751199e1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00084.html#a8449b66e97f4dfce737478dc751199e1">event</a></td></tr>
-<tr class="separator:a8449b66e97f4dfce737478dc751199e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0945895af053724b710662f5beea9ed5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00084.html#a0945895af053724b710662f5beea9ed5">evt_buffer</a> [32]</td></tr>
-<tr class="separator:a0945895af053724b710662f5beea9ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4304bbf50589e7dea41870223731602d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00662.html#ga13d2aed8afc44d31865195d77b09c4ba">ble_bas_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00084.html#a4304bbf50589e7dea41870223731602d">evt_handler</a></td></tr>
+<tr class="separator:a4304bbf50589e7dea41870223731602d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ANT stack event type. </p>
+<div class="textblock"><p>Battery Service Client initialization structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a5e084957ed6c0f93b78203d74a268e36"></a>
+<a class="anchor" id="a4304bbf50589e7dea41870223731602d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ant_evt_t::channel</td>
+          <td class="memname"><a class="el" href="a00662.html#ga13d2aed8afc44d31865195d77b09c4ba">ble_bas_c_evt_handler_t</a> ble_bas_c_init_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Channel number. </p>
-
-</div>
-</div>
-<a class="anchor" id="a8449b66e97f4dfce737478dc751199e1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ant_evt_t::event</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event code. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0945895af053724b710662f5beea9ed5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ant_evt_t::evt_buffer[32]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event message buffer. </p>
+<p>Event handler to be called by the Battery Service Client module whenever there is an event related to the Battery Service. </p>
 
 </div>
 </div>
@@ -171,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00084.html">ant_evt_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00084.html">ble_bas_c_init_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

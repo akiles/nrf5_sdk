@@ -1,6 +1,9 @@
 var a00232 =
 [
-    [ "evt_type", "a00232.html#acbc2e2d26c15219ff593c40aabab3815", null ],
-    [ "rx_amount", "a00232.html#a7b54206d997d599a2c3ee5751c208c58", null ],
-    [ "tx_amount", "a00232.html#a080b88a554c371f8220691fc28117ebd", null ]
+    [ "callback_action", "a00232.html#ac938534ea4bdd342a3cb36c94071e073", null ],
+    [ "extend", "a00232.html#a07c71b95235fc1f947730c0eb68450b6", null ],
+    [ "length_us", "a00232.html#ae6f6fa462f50a24ee278512c394beb46", null ],
+    [ "p_next", "a00232.html#a3f55c9628d7b2e8dbecb594a49eb4a34", null ],
+    [ "params", "a00232.html#a1bfa769ae244408f40a866229c1deeb5", null ],
+    [ "request", "a00232.html#a5574ea584b5bb5c1537fe280902d58d0", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: SPI_5W RAW protocol</title>
+<title>nRF51 SDK - S110 SoftDevice: Running the BLE bootloader example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,90 +97,100 @@ $(document).ready(function(){initNavTree('a00091.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">SPI_5W RAW protocol </div>  </div>
+<div class="title">Running the BLE bootloader example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="SPI_5W_RAW_PROTOCOL"></a>
-SPI_5W RAW Protocol</h1>
-<p><b>SPI_5W RAW</b> protocol implements <a class="el" href="a00076.html">Serialization PHY</a> <b>API</b> for <b>SPI</b> interface. <br/>
- In 5W implementation <b>SPI</b> interface uses 5 lines: four standard (<b>CLK</b>,<b>MOSI</b>,<b>MISO</b>,<b>/CS</b>) and one additional - <b>/RDY</b>. <br/>
- Application processor is a <b>SPI</b> bus master, <b>nRF51</b> chip acts as a slave device. <br/>
-</p>
-<p>In principle, the operation of <b>SPI_5W</b> is similar to standard 6 wire implementation ( <a class="el" href="a00090.html">SPI RAW protocol</a> ). <br/>
- The major difference is lack of <b>/RDY</b> line, which in 6 wire implementation is used to indicate readiness of slave device for a data transaction. <br/>
- Without <b>/RDY</b> line master device has to speculate by initiating transfer without prior knowledge if slave device is ready to accept data. <br/>
- To distinguish a transactions with slave device, which is ready for data, from transactions with slave device, which is not ready for data, a signalling on MISO line is used. <br/>
-</p>
-<p><b>nRF51 SPI</b> slave device hardware clocks out <b>DEFAULT</b> byte (programmed as <b>[0xFF]</b>) , when device is not ready for data transaction. <br/>
- Since, only <b>MISO</b> line is used for signalling of <b>READY</b> state, it works slightly differently for writing and reading operation. <br/>
-</p>
-<p>For packet writing, signalling is straightforward, when slave device is ready for data, it clocks out zero <b>[0x00] </b>for all data bytes. <br/>
- The same rule applies when packet is read, but only for the first byte in each transaction. <br/>
- Physical layer driver precedes each reading transaction with <b><em>'guard byte'</em></b> <b>[0x00]</b>. <br/>
-</p>
-<p>If during read/write operation master detect invalid (nonzero) <b><em>'guard byte'</em></b>, transaction is aborted (<b>/CS</b> is deasserted) and master device initiates a new transaction. <br/>
- Backoff is determined by time needed for processing interrupts and resetting internal state machines. <br/>
-</p>
-<p>The size of <b>MTU</b> defines size of physical frames. Due to the <b><em>'guard byte'</em></b> overhead, the effective frame size is smaller by 1 byte in reading transactions. <br/>
- The <b>SPI_5W</b> driver is controlled by <b>'<b>SPI_5W</b>'</b> flag. <br/>
- If <b>__SPI_5W__</b> flag is not defined, line <b>/RDY</b> is used as in standard 6 wire implementation, yet with frames including <b><em>'guard byte'</em></b>. <br/>
-</p>
-<h1><a class="anchor" id="SPI_5W_RAW_BUS_TX"></a>
-SPI_5W RAW - packet writing</h1>
-<p>Packets are transmitted in a following format :<br/>
-</p>
-<p><b>TX_RAW_PACKET = [TX_HEADER][TX_FRAME][TX_FRAME][TX_FRAME]... </b><br/>
-</p>
-<div class="image">
-<img src="spi_5W_tx_medium.png" alt="spi_5W_tx_medium.png"/>
+<div class="textblock"><p>Before you create your own DFU bootloader, run and test one of the provided DFU bootloader examples to understand the underlying concepts. Start with the basic example that uses BLE as transport protocol. See <a class="el" href="a00096.html">Running the serial bootloader example</a> for information about the examples that use serial transport.</p>
+<h1><a class="anchor" id="bledfu_example_running_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>dfu_dual_bank_ble_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\dfu\bootloader</code> </p>
+<p>LED assignments:</p>
+<ul>
+<li>LED 1: Advertising</li>
+<li>LED 2: Connected</li>
+<li>LED 3: Bootloader mode active</li>
+</ul>
+<p>Button assignments:</p>
+<ul>
+<li>Button 4 (during startup): Enter bootloader mode</li>
+</ul>
+<h1><a class="anchor" id="bledfu_example_running_program"></a>
+Programming the DFU bootloader</h1>
+<p>Complete the following steps to program the DFU bootloader example on your device using Keil:</p>
+<ol type="1">
+<li>Erase the device.</li>
+<li>Program the S110 SoftDevice. See <a class="el" href="a00017.html">Running examples that use a SoftDevice</a> for instructions.</li>
+<li>Compile the project <b>dfu_dual_bank_ble_s110_pca10028</b>.</li>
+<li>Select <b>Project</b> &gt; <b>Options for Target '<em>xxx</em>'</b> and make sure that <code>nrfjprog.exe</code> is configured as the tool for flash programming in the project options. The default J-Link target driver cannot correctly program the bootloader. The example project is preconfigured to use <code>nrfjprog.exe</code>, which is installed with the nRF51 MDK and must be in the Windows system path.<br/>
+The following screenshot shows the required settings for nrfjprog.exe: <div class="image">
+<img src="keil_project_flash_tool.png" alt="keil_project_flash_tool.png"/>
 <div class="caption">
-Figure 1: Transmission of single packet </div></div>
-<p>Packet length is send as a <b>[TX_HEADER]=[0x0004]</b> in the first transaction. <br/>
- Since, first byte of data clocked in <b>[0x0000]</b> is a valid <b><em>'guard byte'</em></b>, transaction is considered to be successful.<br/>
- Second transaction attempts to transfer payload <b>[TX_FRAME]=[0x00, 0x78, 0x41, 0x03]</b>, but due to invalid <b><em>'guard byte'</em></b>, is aborted. <br/>
- During third transaction valid <b><em>'guard byte'</em></b> is clocked in and transaction is completed. <br/>
- Note, that <b>/RDY</b> line is deasserted during transaction, because it is not driven by slave device.</p>
-<h1><a class="anchor" id="SPI_5W_RAW_BUS_RX"></a>
-SPI_5W RAW packet reading</h1>
-<p>Packets are received in a following format: <br/>
-</p>
-<p><b>SPI_RAW_PACKET = [ZERO_HEADER][RX_HEADER][RX_FRAME][RX_FRAME][RX_FRAME]... </b> <br/>
-</p>
-<div class="image">
-<img src="spi_5W_rx_medium.png" alt="spi_5W_rx_medium.png"/>
-<div class="caption">
-Figure 2: Reception of the packet </div></div>
-<p>Slave request for reading of a packet is signalled by assertion of <b>/REQ</b> line. <br/>
- When master device is ready to read a packet, it sends a <b>[ZERO_HEADER] =[0x0000]</b>. <br/>
- <b>[ZERO_HEADER]</b> is used as indication, that master device initiates a packet read operation. <br/>
- When <b>[ZERO_HEADER]</b> is detected by slave, <b>/REQ</b> line is deasserted.<br/>
- In the next transaction <b>[RX_HEADER] =[0x00][0x0006]</b> is read. <br/>
- First byte in <b>[RX_HEADER]</b> is a valid <em><b>'guard byte'</b></em>, which indicates that remainder of payload has meaningful data. <br/>
- In third transaction <em><b>'guard byte'</b></em> together with a payload of 6 bytes <b>[0x00][0x01, 0x78, 0x00, 0x00, 0x00, 0x00]</b> is clocked in.</p>
-<h1><a class="anchor" id="SPI_5W_RAW_DRIVER_MASTER"></a>
-master device driver</h1>
-<p><b>SPI_5W RAW</b> protocol for master device is implemented in ser_phy_nrf51_spi_5W_master file. <br/>
- The operation of ser_phy_switch_state() is almost identical as for standard driver <a class="el" href="a00090.html#SPI_RAW_DRIVER_MASTER">Master device driver</a>, except for the fact, that slave device is assumed to be always <b>READY</b>. Therefore, when interpreting a graph, one should assume that, <b>RDY</b> flag is always <b>TRUE</b> and there will be no <b>RDY_EVT</b> event. Once transaction is scheduled by <b>PHY</b> driver, its execution is controlled by adaptation state machine, which captures events from hardware driver. Operation of adaptation state machine is illustrated by <a href="http://en.wikipedia.org/wiki/State_diagram_(UML)">UML state diagram .</a> <br/>
- </p>
-<div class="image">
-<img src="adapt_5W_uml1_medium.png" alt="adapt_5W_uml1_medium.png"/>
-<div class="caption">
-Figure 3: UML state machine for adaptation layer</div></div>
-<p> If <b>__SPI_5W__</b> flag is not defined, adaptation layer is disabled and line <b>/RDY</b> is used as in standard 6 wire implementation<br/>
-</p>
-<h1><a class="anchor" id="SPI_5W_RAW_DRIVER_SLAVE"></a>
-slave device driver</h1>
-<p><b>SPI RAW </b> protocol for slave device is implemented in ser_phy_nrf51_spi_5W_slave file. <br/>
- The operation spi_slave_event_handle() is almost identical as in standard driver <a class="el" href="a00090.html#SPI_RAW_DRIVER_SLAVE">Slave device driver</a>, except for the line <b>/RDY</b> is not driven. <br/>
- If <b>__SPI_5W__</b> flag is not defined, line <b>/RDY</b> is used as in standard 6 wire implementation<br/>
- </p>
+Flash tool configuration in Keil</div></div>
+</li>
+<li>Program the DFU bootloader. If several J-Link emulators are connected, select the one that contains the nRF51 IC that you want to flash.</li>
+</ol>
+<h1><a class="anchor" id="bledfu_example_running_test"></a>
+Updating the device firmware</h1>
+<p>Complete the following steps to perform a Device Firmware Update:</p>
+<ol type="1">
+<li><a class="el" href="a00092.html">Create a firmware file</a> or use one of the supplied example files: <table class="doxtable">
+<tr>
+<th>Image </th><th>Description</th></tr>
+<tr>
+<td>dfu_test_bootloader_b.zip </td><td>Zip file containing a bootloader image and the corresponding init packet </td></tr>
+<tr>
+<td>dfu_test_softdevice_b.zip </td><td>Zip file containing a SoftDevice image and the corresponding init packet </td></tr>
+<tr>
+<td>dfu_test_softdevice_w_bootloader_b.zip </td><td>Zip file containing a combined bootloader and SoftDevice image and the corresponding init packet </td></tr>
+<tr>
+<td>dfu_test_app_hrm.zip </td><td>Zip file containing an application image and the corresponding init packet </td></tr>
+</table>
+All images are located in the <code>&lt;BaseFolder&gt;\dfu\ble_dfu_send_hex\test_images_update</code> folder. If you are using Keil packs, the default <code>&lt;BaseFolder&gt;</code> is <code>C:\Keil\ARM\Pack\NordicSemiconductor\nRF_Examples\&lt;version&gt;</code>. If you are using the repository distribution variant of the SDK, <code>&lt;BaseFolder&gt;</code> is <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples</code>.</li>
+<li>Make sure that you are using Master Control Panel v3.8 or later.</li>
+<li>Start the device in bootloader mode. If there is no existing application on the device, the device will be started in bootloader mode automatically. Otherwise, press Button 4 during startup to put the device into bootloader mode. The advertising LED is lit.</li>
+<li>Select the device in Master Control Panel. The device is advertising as "DfuTarg".</li>
+<li>Connect to the device and perform service discovery. Observe that the connected LED is lit and the advertising LED is off. Master Control Panel will recognize that the device supports Device Firmware Update, and the "DFU" button in the user interface will become available.<ol type="a">
+<li>Click "DFU" and select the zip file that contains the firmware image.</li>
+<li>Click "Program". Observe that the update procedure starts. When the progress bar reaches 100%, the update is complete.</li>
+</ol>
+</li>
+</ol>
+<p>If an application was transferred, the application is started automatically. Observe that the Advertising LED is lit. If a bootloader or SoftDevice was transferred and no application is installed, the system will restart in bootloader mode.</p>
+<h1><a class="anchor" id="bledfu_example_running_verify"></a>
+Verifying the transferred firmware</h1>
+<p>If you used one of the provided example image files, you can verify that the Device Firmware Update completed as expected as follows: </p>
+<table class="doxtable">
+<tr>
+<th>Image </th><th>Verification</th></tr>
+<tr>
+<td>dfu_test_bootloader_b.zip<br/>
+dfu_test_softdevice_w_bootloader_b.zip </td><td>Open the Master Control Panel. The device is now advertising as "DfuTest" instead of "DfuTarg". </td></tr>
+<tr>
+<td>dfu_test_softdevice_b.zip<br/>
+dfu_test_softdevice_w_bootloader_b.zip </td><td>Check the data at location 0x00003000 by issuing the following command:<br/>
+ <b>nrfjprog &ndash;memrd 0x3000 &ndash;w 32 &ndash;n 16</b><br/>
+The data has changed to <code>FFFFFF10 51B1E5DB 00018000 FFFF<b>FFFF</b></code>. Before the update, the last two bytes were 0064 (for SoftDevice S110 8.0.0; other SoftDevices might have a different value). </td></tr>
+<tr>
+<td>dfu_test_app_hrm.zip </td><td>Open the Master Control Panel. The device is now advertising as "Dfu_HRM" instead of "DfuTarg". </td></tr>
+</table>
+<h1><a class="anchor" id="bledfu_example_running_advanced"></a>
+Advanced: IronPython script for DFU</h1>
+<p>Instead of using Master Control Panel to perform a Device Firmware Update, you can also use an IronPython script. In most cases, using the Master Control Panel is sufficient, but if you need or prefer a command line interface, you can use the IronPython script directly. The script is also used internally when you perform the DFU in Master Control Panel, so the provided functionality is the same.</p>
+<p>The script requires IronPython and must be run on a Microsoft Windows operating system. By default, it is located in the <code>C:\Program Files (x86)\Nordic Semiconductor\Master Control Panel\&lt;version&gt;\lib\dfu\</code> folder.</p>
+<p>Before you run the script, determine the device address of the device, which is advertising as "DfuTarg". You can find out the device address in Master Control Panel. However, make sure to close Master Control Panel before you run the script.</p>
+<p>The script uses the following syntax: </p>
+<pre class="fragment">ipy main.py --file &lt;image_file.zip&gt; --address &lt;target_address&gt;
+</pre><ul>
+<li><code>&lt;image_file.zip&gt;</code> contains the firmware image and the init packet.</li>
+<li><code>&lt;target_address&gt;</code> is the address of the device that is advertising as "DfuTarg". </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00073.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00076.html">Serialization PHY</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00078.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00089.html">Creating a DFU bootloader</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

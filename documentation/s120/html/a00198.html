@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: dm_enc_key Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_version_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,63 @@ $(document).ready(function(){initNavTree('a00198.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dm_enc_key Struct Reference<div class="ingroups"><a class="el" href="a00720.html">Device Manager Data Types</a></div></div>  </div>
+<div class="title">ble_version_t Struct Reference<div class="ingroups"><a class="el" href="a00698.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Device Manager Master identification and encryption information.  
+<p>Version Information.  
  <a href="a00198.html#details">More...</a></p>
 
-<p><code>#include &lt;device_manager.h&gt;</code></p>
+<p><code>#include &lt;ble.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a86cd792e42804720a97e6f64884d0fd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00112.html">ble_gap_enc_info_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00198.html#a86cd792e42804720a97e6f64884d0fd4">enc_info</a></td></tr>
-<tr class="separator:a86cd792e42804720a97e6f64884d0fd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d0dc86cbbad08e963a13c3a4070454d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00131.html">ble_gap_master_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00198.html#a6d0dc86cbbad08e963a13c3a4070454d">master_id</a></td></tr>
-<tr class="separator:a6d0dc86cbbad08e963a13c3a4070454d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af18ca1a9b3d80b05042d9121e9d3c9ed"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00198.html#af18ca1a9b3d80b05042d9121e9d3c9ed">version_number</a></td></tr>
+<tr class="separator:af18ca1a9b3d80b05042d9121e9d3c9ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39ff6a37dbb096bf608d850d0845d252"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00198.html#a39ff6a37dbb096bf608d850d0845d252">company_id</a></td></tr>
+<tr class="separator:a39ff6a37dbb096bf608d850d0845d252"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd81a16510bfbcf3778af4daab021369"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00198.html#abd81a16510bfbcf3778af4daab021369">subversion_number</a></td></tr>
+<tr class="separator:abd81a16510bfbcf3778af4daab021369"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Device Manager Master identification and encryption information. </p>
+<div class="textblock"><p>Version Information. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a86cd792e42804720a97e6f64884d0fd4"></a>
+<a class="anchor" id="a39ff6a37dbb096bf608d850d0845d252"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00112.html">ble_gap_enc_info_t</a> dm_enc_key::enc_info</td>
+          <td class="memname">uint16_t ble_version_t::company_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GAP encryption information. </p>
+<p>Company ID, Nordic Semiconductor's company ID is 89 (0x0059) (<a href="https://www.bluetooth.org/apps/content/Default.aspx?doc_id=49708">https://www.bluetooth.org/apps/content/Default.aspx?doc_id=49708</a>). </p>
 
 </div>
 </div>
-<a class="anchor" id="a6d0dc86cbbad08e963a13c3a4070454d"></a>
+<a class="anchor" id="abd81a16510bfbcf3778af4daab021369"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00131.html">ble_gap_master_id_t</a> dm_enc_key::master_id</td>
+          <td class="memname">uint16_t ble_version_t::subversion_number</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Master identification. </p>
+<p>Link Layer Sub Version number, corresponds to the SoftDevice Config ID or Firmware ID (FWID). </p>
+
+</div>
+</div>
+<a class="anchor" id="af18ca1a9b3d80b05042d9121e9d3c9ed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_version_t::version_number</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Link Layer Version number for BT 4.1 spec is 7 (<a href="https://www.bluetooth.org/en-us/specification/assigned-numbers/link-layer">https://www.bluetooth.org/en-us/specification/assigned-numbers/link-layer</a>). </p>
 
 </div>
 </div>
@@ -156,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00198.html">dm_enc_key</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00198.html">ble_version_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

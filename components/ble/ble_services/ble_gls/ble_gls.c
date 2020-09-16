@@ -21,41 +21,41 @@
 #include "ble_gls_db.h"
 
 
-#define OPERAND_FILTER_TYPE_SEQ_NUM     0x01                              /**< Filter data using Sequence Number criteria. */
-#define OPERAND_FILTER_TYPE_FACING_TIME 0x02                              /**< Filter data using User Facing Time criteria. */
-#define OPERAND_FILTER_TYPE_RFU_START   0x07                              /**< Start of filter types reserved For Future Use range */
-#define OPERAND_FILTER_TYPE_RFU_END     0xFF                              /**< End of filter types reserved For Future Use range */
+#define OPERAND_FILTER_TYPE_SEQ_NUM     0x01                                     /**< Filter data using Sequence Number criteria. */
+#define OPERAND_FILTER_TYPE_FACING_TIME 0x02                                     /**< Filter data using User Facing Time criteria. */
+#define OPERAND_FILTER_TYPE_RFU_START   0x07                                     /**< Start of filter types reserved For Future Use range */
+#define OPERAND_FILTER_TYPE_RFU_END     0xFF                                     /**< End of filter types reserved For Future Use range */
 
-#define OPCODE_LENGTH 1                                                    /**< Length of opcode inside Glucose Measurement packet. */
-#define HANDLE_LENGTH 2                                                    /**< Length of handle inside Glucose Measurement packet. */
-#define MAX_GLM_LEN   (BLE_L2CAP_MTU_DEF - OPCODE_LENGTH - HANDLE_LENGTH)  /**< Maximum size of a transmitted Glucose Measurement. */
+#define OPCODE_LENGTH 1                                                          /**< Length of opcode inside Glucose Measurement packet. */
+#define HANDLE_LENGTH 2                                                          /**< Length of handle inside Glucose Measurement packet. */
+#define MAX_GLM_LEN   (BLE_L2CAP_MTU_DEF - OPCODE_LENGTH - HANDLE_LENGTH)        /**< Maximum size of a transmitted Glucose Measurement. */
 
-#define GLS_NACK_PROC_ALREADY_IN_PROGRESS   BLE_GATT_STATUS_ATTERR_APP_BEGIN + 0
-#define GLS_NACK_CCCD_IMPROPERLY_CONFIGURED BLE_GATT_STATUS_ATTERR_APP_BEGIN + 1
+#define GLS_NACK_PROC_ALREADY_IN_PROGRESS   BLE_GATT_STATUS_ATTERR_APP_BEGIN + 0 /**< Reply when a requested procedure is already in progress. */
+#define GLS_NACK_CCCD_IMPROPERLY_CONFIGURED BLE_GATT_STATUS_ATTERR_APP_BEGIN + 1 /**< Reply when the a s CCCD is improperly configured. */
 
 /**@brief Glucose Service communication state. */
 typedef enum
 {
-    STATE_NO_COMM,                                                         /**< The service is not in a communicating state. */
-    STATE_RACP_PROC_ACTIVE,                                                /**< Processing requested data. */
-    STATE_RACP_RESPONSE_PENDING,                                           /**< There is a RACP indication waiting to be sent. */
-    STATE_RACP_RESPONSE_IND_VERIF                                          /**< Waiting for a verification of a RACP indication. */
+    STATE_NO_COMM,                                                     /**< The service is not in a communicating state. */
+    STATE_RACP_PROC_ACTIVE,                                            /**< Processing requested data. */
+    STATE_RACP_RESPONSE_PENDING,                                       /**< There is a RACP indication waiting to be sent. */
+    STATE_RACP_RESPONSE_IND_VERIF                                      /**< Waiting for a verification of a RACP indication. */
 } gls_state_t;
 
-static gls_state_t      m_gls_state;                                       /**< Current communication state. */
-static uint16_t         m_next_seq_num;                                    /**< Sequence number of the next database record. */
-static uint8_t          m_racp_proc_operator;                              /**< Operator of current request. */
-static uint16_t         m_racp_proc_seq_num;                               /**< Sequence number of current request. */
-static uint8_t          m_racp_proc_record_ndx;                            /**< Current record index. */
-static uint8_t          m_racp_proc_records_reported;                      /**< Number of reported records. */
-static uint8_t          m_racp_proc_records_reported_since_txcomplete;     /**< Number of reported records since last TX_COMPLETE event. */
-static ble_racp_value_t m_pending_racp_response;                           /**< RACP response to be sent. */
-static uint8_t          m_pending_racp_response_operand[2];                /**< Operand of RACP response to be sent. */
+static gls_state_t      m_gls_state;                                   /**< Current communication state. */
+static uint16_t         m_next_seq_num;                                /**< Sequence number of the next database record. */
+static uint8_t          m_racp_proc_operator;                          /**< Operator of current request. */
+static uint16_t         m_racp_proc_seq_num;                           /**< Sequence number of current request. */
+static uint8_t          m_racp_proc_record_ndx;                        /**< Current record index. */
+static uint8_t          m_racp_proc_records_reported;                  /**< Number of reported records. */
+static uint8_t          m_racp_proc_records_reported_since_txcomplete; /**< Number of reported records since last TX_COMPLETE event. */
+static ble_racp_value_t m_pending_racp_response;                       /**< RACP response to be sent. */
+static uint8_t          m_pending_racp_response_operand[2];            /**< Operand of RACP response to be sent. */
 
 
 /**@brief Function for setting the GLS communication state.
  *
- * @param[in]   new_state   New communication state.
+ * @param[in] new_state  New communication state.
  */
 static void state_set(gls_state_t new_state)
 {
@@ -65,7 +65,7 @@ static void state_set(gls_state_t new_state)
 
 /**@brief Function for setting the next sequence number by reading the last record in the data base.
  *
- * @return      NRF_SUCCESS on successful initialization of service, otherwise an error code.
+ * @return NRF_SUCCESS on successful initialization of service, otherwise an error code.
  */
 static uint32_t next_sequence_number_set(void)
 {
@@ -94,10 +94,10 @@ static uint32_t next_sequence_number_set(void)
 
 /**@brief Function for encoding a Glucose measurement.
  *
- * @param[in]   p_meas             Measurement to be encoded.
- * @param[out]  p_encoded_buffer   Pointer to buffer where the encoded measurement is to be stored.
+ * @param[in]  p_meas            Measurement to be encoded.
+ * @param[out] p_encoded_buffer  Pointer to buffer where the encoded measurement is to be stored.
  *
- * @return      Size of encoded measurement.
+ * @return Size of encoded measurement.
  */
 static uint8_t gls_meas_encode(const ble_gls_meas_t * p_meas, uint8_t * p_encoded_buffer)
 {
@@ -136,9 +136,9 @@ static uint8_t gls_meas_encode(const ble_gls_meas_t * p_meas, uint8_t * p_encode
 
 /**@brief Function for adding the characteristic for a glucose measurement.
  *
- * @param[in]   p_gls   Service instance.
+ * @param[in] p_gls  Service instance.
  *
- * @return      NRF_SUCCESS if characteristic was successfully added, otherwise an error code.
+ * @return NRF_SUCCESS if characteristic was successfully added, otherwise an error code.
  */
 static uint32_t glucose_measurement_char_add(ble_gls_t * p_gls)
 {
@@ -205,9 +205,9 @@ static uint32_t glucose_measurement_char_add(ble_gls_t * p_gls)
 
 /**@brief Function for adding the characteristic for a glucose feature.
  *
- * @param[in]   p_gls   Service instance.
+ * @param[in] p_gls  Service instance.
  *
- * @return      NRF_SUCCESS if characteristic was successfully added, otherwise an error code.
+ * @return NRF_SUCCESS if characteristic was successfully added, otherwise an error code.
  */
 static uint32_t glucose_feature_char_add(ble_gls_t * p_gls)
 {
@@ -259,9 +259,9 @@ static uint32_t glucose_feature_char_add(ble_gls_t * p_gls)
 
 /**@brief Function for adding the characteristic for a record access control point.
  *
- * @param[in]   p_gls   Service instance.
+ * @param[in] p_gls  Service instance.
  *
- * @return      NRF_SUCCESS if characteristic was successfully added, otherwise an error code.
+ * @return NRF_SUCCESS if characteristic was successfully added, otherwise an error code.
  */
 static uint32_t record_access_control_point_char_add(ble_gls_t * p_gls)
 {
@@ -381,8 +381,8 @@ uint32_t ble_gls_init(ble_gls_t * p_gls, const ble_gls_init_t * p_gls_init)
 
 /**@brief Function for sending a response from the Record Access Control Point.
  *
- * @param[in]   p_gls        Service instance.
- * @param[in]   p_racp_val   RACP value to be sent.
+ * @param[in] p_gls       Service instance.
+ * @param[in] p_racp_val  RACP value to be sent.
  */
 static void racp_send(ble_gls_t * p_gls, ble_racp_value_t * p_racp_val)
 {
@@ -454,9 +454,9 @@ static void racp_send(ble_gls_t * p_gls, ble_racp_value_t * p_racp_val)
 
 /**@brief Function for sending a RACP response containing a Response Code Op Code and a Response Code Value.
  *
- * @param[in]   p_gls    Service instance.
- * @param[in]   opcode   RACP Op Code.
- * @param[in]   value    RACP Response Code Value.
+ * @param[in] p_gls   Service instance.
+ * @param[in] opcode  RACP Op Code.
+ * @param[in] value   RACP Response Code Value.
  */
 static void racp_response_code_send(ble_gls_t * p_gls, uint8_t opcode, uint8_t value)
 {
@@ -474,10 +474,10 @@ static void racp_response_code_send(ble_gls_t * p_gls, uint8_t opcode, uint8_t v
 
 /**@brief Function for sending a glucose measurement/context.
  *
- * @param[in]   p_gls   Service instance.
- * @param[in]   p_rec   Measurement to be sent.
+ * @param[in] p_gls  Service instance.
+ * @param[in] p_rec  Measurement to be sent.
  *
- * @return      NRF_SUCCESS on success, otherwise an error code.
+ * @return NRF_SUCCESS on success, otherwise an error code.
  */
 static uint32_t glucose_meas_send(ble_gls_t * p_gls, ble_gls_rec_t * p_rec)
 {
@@ -519,9 +519,9 @@ static uint32_t glucose_meas_send(ble_gls_t * p_gls, ble_gls_rec_t * p_rec)
 
 /**@brief Function for responding to the ALL operation.
  *
- * @param[in]   p_gls   Service instance.
+ * @param[in] p_gls  Service instance.
  *
- * @return      NRF_SUCCESS on success, otherwise an error code.
+ * @return NRF_SUCCESS on success, otherwise an error code.
  */
 static uint32_t racp_report_records_all(ble_gls_t * p_gls)
 {
@@ -555,9 +555,9 @@ static uint32_t racp_report_records_all(ble_gls_t * p_gls)
 
 /**@brief Function for responding to the FIRST or the LAST operation.
  *
- * @param[in]   p_gls   Service instance.
+ * @param[in] p_gls  Service instance.
  *
- * @return      NRF_SUCCESS on success, otherwise an error code.
+ * @return  NRF_SUCCESS on success, otherwise an error code.
  */
 static uint32_t racp_report_records_first_last(ble_gls_t * p_gls)
 {
@@ -603,9 +603,9 @@ static uint32_t racp_report_records_first_last(ble_gls_t * p_gls)
 
 /**@brief Function for responding to the GREATER_OR_EQUAL operation.
  *
- * @param[in]   p_gls   Service instance.
+ * @param[in] p_gls  Service instance.
  *
- * @return      NRF_SUCCESS on success, otherwise an error code.
+ * @return NRF_SUCCESS on success, otherwise an error code.
  */
 static uint32_t racp_report_records_greater_or_equal(ble_gls_t * p_gls)
 {
@@ -644,7 +644,7 @@ static uint32_t racp_report_records_greater_or_equal(ble_gls_t * p_gls)
 
 /**@brief Function for informing that the REPORT RECORDS procedure is completed.
  *
- * @param[in]   p_gls   Service instance.
+ * @param[in] p_gls  Service instance.
  */
 static void racp_report_records_completed(ble_gls_t * p_gls)
 {
@@ -665,7 +665,7 @@ static void racp_report_records_completed(ble_gls_t * p_gls)
 
 /**@brief Function for the RACP report records procedure.
  *
- * @param[in]   p_gls   Service instance.
+ * @param[in] p_gls  Service instance.
  */
 static void racp_report_records_procedure(ble_gls_t * p_gls)
 {
@@ -741,14 +741,14 @@ static void racp_report_records_procedure(ble_gls_t * p_gls)
 
 /**@brief Function for testing if the received request is to be executed.
  *
- * @param[in]   p_racp_request    Request to be checked.
- * @param[out]  p_response_code   Response code to be sent in case the request is rejected.
- *                                RACP_RESPONSE_RESERVED is returned if the received message is
- *                                to be rejected without sending a response.
+ * @param[in]  p_racp_request   Request to be checked.
+ * @param[out] p_response_code  Response code to be sent in case the request is rejected.
+ *                              RACP_RESPONSE_RESERVED is returned if the received message is
+ *                              to be rejected without sending a response.
  *
- * @return      TRUE if the request is to be executed, FALSE if it is to be rejected.
- *              If it is to be rejected, p_response_code will contain the response code to be
- *              returned to the central.
+ * @return TRUE if the request is to be executed, FALSE if it is to be rejected.
+ *         If it is to be rejected, p_response_code will contain the response code to be
+ *         returned to the central.
  */
 static bool is_request_to_be_executed(const ble_racp_value_t * p_racp_request,
                                       uint8_t                * p_response_code)
@@ -781,13 +781,13 @@ static bool is_request_to_be_executed(const ble_racp_value_t * p_racp_request,
     {
         return false;
     }
-    // supported opcodes
+    // Supported opcodes.
     else if ((p_racp_request->opcode == RACP_OPCODE_REPORT_RECS) ||
              (p_racp_request->opcode == RACP_OPCODE_REPORT_NUM_RECS))
     {
         switch (p_racp_request->operator)
         {
-            // operators WITHOUT a filter
+            // Operators WITHOUT a filter.
             case RACP_OPERATOR_ALL:
             case RACP_OPERATOR_FIRST:
             case RACP_OPERATOR_LAST:
@@ -797,7 +797,7 @@ static bool is_request_to_be_executed(const ble_racp_value_t * p_racp_request,
                 }
                 break;
 
-            // operators WITH a filter
+            // Operators WITH a filter.
             case RACP_OPERATOR_GREATER_OR_EQUAL:
                 if (p_racp_request->p_operand[0] == OPERAND_FILTER_TYPE_SEQ_NUM)
                 {
@@ -820,13 +820,13 @@ static bool is_request_to_be_executed(const ble_racp_value_t * p_racp_request,
                 }
                 break;
 
-            // unsupported operators
+            // Unsupported operators.
             case RACP_OPERATOR_LESS_OR_EQUAL:
             case RACP_OPERATOR_RANGE:
                 *p_response_code = RACP_RESPONSE_OPERATOR_UNSUPPORTED;
                  break;
 
-            // invalid operators
+            // Invalid operators.
             case RACP_OPERATOR_NULL:
             default:
                 if (p_racp_request->operator >= RACP_OPERATOR_RFU_START)
@@ -840,12 +840,12 @@ static bool is_request_to_be_executed(const ble_racp_value_t * p_racp_request,
                 break;
         }
     }
-    // unsupported opcodes
+    // Unsupported opcodes,
     else if (p_racp_request->opcode == RACP_OPCODE_DELETE_RECS)
     {
         *p_response_code = RACP_RESPONSE_OPCODE_UNSUPPORTED;
     }
-    // unknown opcodes
+    // Unknown opcodes.
     else
     {
         *p_response_code = RACP_RESPONSE_OPCODE_UNSUPPORTED;
@@ -859,8 +859,8 @@ static bool is_request_to_be_executed(const ble_racp_value_t * p_racp_request,
 
 /**@brief Function for processing a REPORT RECORDS request.
  *
- * @param[in]   p_gls            Service instance.
- * @param[in]   p_racp_request   Request to be executed.
+ * @param[in] p_gls           Service instance.
+ * @param[in] p_racp_request  Request to be executed.
  */
 static void report_records_request_execute(ble_gls_t * p_gls, ble_racp_value_t * p_racp_request)
 {
@@ -879,8 +879,8 @@ static void report_records_request_execute(ble_gls_t * p_gls, ble_racp_value_t *
 
 /**@brief Function for processing a REPORT NUM RECORDS request.
  *
- * @param[in]   p_gls            Service instance.
- * @param[in]   p_racp_request   Request to be executed.
+ * @param[in] p_gls           Service instance.
+ * @param[in] p_racp_request  Request to be executed.
  */
 static void report_num_records_request_execute(ble_gls_t * p_gls, ble_racp_value_t * p_racp_request)
 {
@@ -945,31 +945,36 @@ static void report_num_records_request_execute(ble_gls_t * p_gls, ble_racp_value
 
 /**@brief Function for checking if the CCCDs are configured.
  *
- * @param[in]   p_gls                   Service instance.
- * @param[in]   p_are_cccd_configured   boolean indicating if both cccds are configured
+ * @param[in] p_gls                  Service instance.
+ * @param[in] p_are_cccd_configured  boolean indicating if both cccds are configured
  */
 uint32_t ble_gls_are_cccd_configured(ble_gls_t * p_gls, bool * p_are_cccd_configured)
 {
     uint32_t err_code;
     uint8_t  cccd_value_buf[BLE_CCCD_VALUE_LEN];
-    uint16_t len                   = BLE_CCCD_VALUE_LEN;
     bool     is_glm_notif_enabled  = false;
     bool     is_racp_indic_enabled = false;
+    ble_gatts_value_t gatts_value;
 
-    err_code = sd_ble_gatts_value_get(p_gls->glm_handles.cccd_handle,
-                                      0,
-                                      &len,
-                                      cccd_value_buf);
+    // Initialize value struct.
+    memset(&gatts_value, 0, sizeof(gatts_value));
+
+    gatts_value.len     = BLE_CCCD_VALUE_LEN;
+    gatts_value.offset  = 0;
+    gatts_value.p_value = cccd_value_buf;
+
+    err_code = sd_ble_gatts_value_get(p_gls->conn_handle,
+                                      p_gls->glm_handles.cccd_handle,
+                                      &gatts_value);
     if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
     is_glm_notif_enabled = ble_srv_is_notification_enabled(cccd_value_buf);
 
-    err_code = sd_ble_gatts_value_get(p_gls->racp_handles.cccd_handle,
-                                      0,
-                                      &len,
-                                      cccd_value_buf);
+    err_code = sd_ble_gatts_value_get(p_gls->conn_handle,
+                                      p_gls->racp_handles.cccd_handle,
+                                      &gatts_value);
     if (err_code != NRF_SUCCESS)
     {
         return err_code;
@@ -989,8 +994,8 @@ uint32_t ble_gls_are_cccd_configured(ble_gls_t * p_gls, bool * p_are_cccd_config
 
 /**@brief Function for handling a write event to the Record Access Control Point.
  *
- * @param[in]   p_gls         Service instance.
- * @param[in]   p_evt_write   WRITE event to be handled.
+ * @param[in] p_gls        Service instance.
+ * @param[in] p_evt_write  WRITE event to be handled.
  */
 static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt_write)
 {
@@ -1028,10 +1033,10 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
         return;
     }
 
-    // Decode request
+    // Decode request.
     ble_racp_decode(p_evt_write->len, p_evt_write->data, &racp_request);
 
-    // Check if request is to be executed
+    // Check if request is to be executed.
     if (is_request_to_be_executed(&racp_request, &response_code))
     {
         auth_reply.params.write.gatt_status = BLE_GATT_STATUS_SUCCESS;
@@ -1046,7 +1051,7 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
             }
             return;
         }
-        // Execute request
+        // Execute request.
         if (racp_request.opcode == RACP_OPCODE_REPORT_RECS)
         {
             report_records_request_execute(p_gls, &racp_request);
@@ -1071,10 +1076,10 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
             return;
         }
 
-        // Abort any running procedure
+        // Abort any running procedure.
         state_set(STATE_NO_COMM);
 
-        // Respond with error code
+        // Respond with error code.
         racp_response_code_send(p_gls, racp_request.opcode, response_code);
     }
     else
@@ -1097,8 +1102,8 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
 
 /**@brief Function for handling the Glucose measurement CCCD write event.
  *
- * @param[in]   p_gls         Service instance.
- * @param[in]   p_evt_write   WRITE event to be handled.
+ * @param[in] p_gls        Service instance.
+ * @param[in] p_evt_write  WRITE event to be handled.
  */
 static void on_glm_cccd_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt_write)
 {
@@ -1128,8 +1133,8 @@ static void on_glm_cccd_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt_w
  *
  * @details Handles WRITE events from the BLE stack.
  *
- * @param[in]   p_gls      Glucose Service structure.
- * @param[in]   p_ble_evt  Event received from the BLE stack.
+ * @param[in] p_gls      Glucose Service structure.
+ * @param[in] p_ble_evt  Event received from the BLE stack.
  */
 static void on_write(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
 {
@@ -1150,8 +1155,8 @@ static void on_write(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
  *
  * @details Handles TX_COMPLETE events from the BLE stack.
  *
- * @param[in]   p_gls      Glucose Service structure.
- * @param[in]   p_ble_evt  Event received from the BLE stack.
+ * @param[in] p_gls      Glucose Service structure.
+ * @param[in] p_ble_evt  Event received from the BLE stack.
  */
 static void on_tx_complete(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
 {
@@ -1172,8 +1177,8 @@ static void on_tx_complete(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
  *
  * @details Handles HVC events from the BLE stack.
  *
- * @param[in]   p_gls      Glucose Service structure.
- * @param[in]   p_ble_evt  Event received from the BLE stack.
+ * @param[in] p_gls      Glucose Service structure.
+ * @param[in] p_ble_evt  Event received from the BLE stack.
  */
 static void on_hvc(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
 {
@@ -1203,9 +1208,18 @@ static void on_rw_authorize_request(ble_gls_t * p_gls, ble_gatts_evt_t * p_gatts
     ble_gatts_evt_rw_authorize_request_t * p_auth_req = &p_gatts_evt->params.authorize_request;
     if (p_auth_req->type == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
     {
-        if (p_auth_req->request.write.handle == p_gls->racp_handles.value_handle)
+        if (   (p_gatts_evt->params.authorize_request.request.write.op
+                != BLE_GATTS_OP_PREP_WRITE_REQ)
+            && (p_gatts_evt->params.authorize_request.request.write.op
+                != BLE_GATTS_OP_EXEC_WRITE_REQ_NOW)
+            && (p_gatts_evt->params.authorize_request.request.write.op
+                != BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL)
+           )
         {
-            on_racp_value_write(p_gls, &p_auth_req->request.write);
+            if (p_auth_req->request.write.handle == p_gls->racp_handles.value_handle)
+            {
+                on_racp_value_write(p_gls, &p_auth_req->request.write);
+            }
         }
     }
 }

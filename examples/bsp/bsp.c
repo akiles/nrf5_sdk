@@ -132,26 +132,22 @@ uint32_t bsp_buttons_state_get(uint32_t * p_buttons_state)
 }
 
 
-uint32_t bsp_button_is_pressed(uint32_t button, bool * p_state){
-
-    uint32_t result;
-
+uint32_t bsp_button_is_pressed(uint32_t button, bool * p_state)
+{
 #if BUTTONS_NUMBER > 0
     if(button < BUTTONS_NUMBER)
-        {
-            uint32_t buttons = ~NRF_GPIO->IN;
-            result = NRF_SUCCESS;
-            *p_state = (buttons & (1 << m_buttons_list[button])) ? true : false;
-        }
-        else
-        {
-            result = NRF_ERROR_INVALID_PARAM;
-        }
-
+    {
+        uint32_t buttons = ~NRF_GPIO->IN;
+        *p_state = (buttons & (1 << m_buttons_list[button])) ? true : false;
+    }
+    else
+    {
+        *p_state = false;
+    }
 #else
-        result = NRF_ERROR_INVALID_PARAM;
+    *p_state = false;
 #endif // BUTTONS_NUMBER > 0
-    return result;
+    return NRF_SUCCESS;
 }
 
 
@@ -496,8 +492,13 @@ uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t 
         {
             err_code = bsp_event_to_button_assign(cnt, (bsp_event_t)(BSP_EVENT_KEY_0 + cnt) );
         }
-        APP_BUTTON_INIT((app_button_cfg_t *)app_buttons, BUTTONS_NUMBER, ticks_per_100ms / 2,
-                        false);
+
+        if (err_code == NRF_SUCCESS)
+        {
+            err_code = app_button_init((app_button_cfg_t *)app_buttons,
+                                       BUTTONS_NUMBER,
+                                       ticks_per_100ms / 2);
+        }
 
         if (err_code == NRF_SUCCESS)
         {
@@ -522,7 +523,6 @@ uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t 
 
     if (type & BSP_INIT_LED)
     {
-        NRF_GPIO->DIRCLR = BUTTONS_MASK;
         LEDS_OFF(LEDS_MASK);
         NRF_GPIO->DIRSET = LEDS_MASK;
     }

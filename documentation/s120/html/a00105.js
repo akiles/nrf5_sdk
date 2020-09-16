@@ -1,5 +1,5 @@
 var a00105 =
 [
-    [ "mem_block", "a00105.html#a9663c005ebf68e15d7ba6740238bbe30", null ],
-    [ "type", "a00105.html#a597b8f59bf2ab45d0d5ccf9329b50d13", null ]
+    [ "lv", "a00105.html#a3c0b55f3c9f8c589ca46e85d2c8f235c", null ],
+    [ "sm", "a00105.html#ab1014e45933756f4e790ef8181730f7f", null ]
 ];

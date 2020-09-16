@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: uint8_array_t Struct Reference</title>
+<title>nRF51 SDK - S210 SoftDevice: nrf_adc_config_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,63 @@ $(document).ready(function(){initNavTree('a00076.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">uint8_array_t Struct Reference<div class="ingroups"><a class="el" href="a00237.html">Utility Functions and Definitions</a></div></div>  </div>
+<div class="title">nrf_adc_config_t Struct Reference<div class="ingroups"><a class="el" href="a00276.html">ADC HAL</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Byte array type.  
+<p>Analog-to-digital converter configuration.  
  <a href="a00076.html#details">More...</a></p>
 
-<p><code>#include &lt;app_util.h&gt;</code></p>
+<p><code>#include &lt;nrf_adc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a0ea03f9dd5df67309f05eeddf0b854ff"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a0ea03f9dd5df67309f05eeddf0b854ff">size</a></td></tr>
-<tr class="separator:a0ea03f9dd5df67309f05eeddf0b854ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0aec898e61ff702225ab7cb8e81419a"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#af0aec898e61ff702225ab7cb8e81419a">p_data</a></td></tr>
-<tr class="separator:af0aec898e61ff702225ab7cb8e81419a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeabcce3f7814da03f223ad2a992865d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00276.html#ga0e2d579c008431f61b5edff7fe7221a1">nrf_adc_config_resolution_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#aeabcce3f7814da03f223ad2a992865d1">resolution</a></td></tr>
+<tr class="separator:aeabcce3f7814da03f223ad2a992865d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a280529b228ebb915939ab2b9720d73da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00276.html#gad7b74a0d0016edbf83a72bb0b0aa038a">nrf_adc_config_scaling_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a280529b228ebb915939ab2b9720d73da">scaling</a></td></tr>
+<tr class="separator:a280529b228ebb915939ab2b9720d73da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52dc01c53528ebb080237d4f94d5ef09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00276.html#gadfd4f9444fc622b4c9222cb41e9e10ac">nrf_adc_config_reference_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a52dc01c53528ebb080237d4f94d5ef09">reference</a></td></tr>
+<tr class="separator:a52dc01c53528ebb080237d4f94d5ef09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Byte array type. </p>
+<div class="textblock"><p>Analog-to-digital converter configuration. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af0aec898e61ff702225ab7cb8e81419a"></a>
+<a class="anchor" id="a52dc01c53528ebb080237d4f94d5ef09"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* uint8_array_t::p_data</td>
+          <td class="memname"><a class="el" href="a00276.html#gadfd4f9444fc622b4c9222cb41e9e10ac">nrf_adc_config_reference_t</a> nrf_adc_config_t::reference</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to array entries. </p>
+<p>ADC reference. </p>
 
 </div>
 </div>
-<a class="anchor" id="a0ea03f9dd5df67309f05eeddf0b854ff"></a>
+<a class="anchor" id="aeabcce3f7814da03f223ad2a992865d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t uint8_array_t::size</td>
+          <td class="memname"><a class="el" href="a00276.html#ga0e2d579c008431f61b5edff7fe7221a1">nrf_adc_config_resolution_t</a> nrf_adc_config_t::resolution</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of array entries. </p>
+<p>ADC resolution. </p>
+
+</div>
+</div>
+<a class="anchor" id="a280529b228ebb915939ab2b9720d73da"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00276.html#gad7b74a0d0016edbf83a72bb0b0aa038a">nrf_adc_config_scaling_t</a> nrf_adc_config_t::scaling</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ADC scaling factor. </p>
 
 </div>
 </div>
@@ -156,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00076.html">uint8_array_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:41 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00076.html">nrf_adc_config_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

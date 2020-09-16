@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_hrs_c_s Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gatts_write_authorize_params_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,33 @@ $(document).ready(function(){initNavTree('a00182.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hrs_c_s Struct Reference<div class="ingroups"><a class="el" href="a00689.html">Structures</a></div></div>  </div>
+<div class="title">ble_gatts_write_authorize_params_t Struct Reference<div class="ingroups"><a class="el" href="a00713.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Heart Rate Client structure.  
+<p>GATT Write Authorisation parameters.  
  <a href="a00182.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hrs_c.h&gt;</code></p>
+<p><code>#include &lt;ble_gatts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ab8700a2ae7c425ac15d6622e66967f74"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00182.html#ab8700a2ae7c425ac15d6622e66967f74">conn_handle</a></td></tr>
-<tr class="separator:ab8700a2ae7c425ac15d6622e66967f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa39c35324a4a66fc088ca76085d2a932"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00182.html#aa39c35324a4a66fc088ca76085d2a932">hrm_cccd_handle</a></td></tr>
-<tr class="separator:aa39c35324a4a66fc088ca76085d2a932"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77ef344286d863fa38ebd60dc06e5e62"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00182.html#a77ef344286d863fa38ebd60dc06e5e62">hrm_handle</a></td></tr>
-<tr class="separator:a77ef344286d863fa38ebd60dc06e5e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1c46431c0465c0d35c17aef3e184a07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00690.html#ga877f2faf397dff36652766f1a6c31b85">ble_hrs_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00182.html#ad1c46431c0465c0d35c17aef3e184a07">evt_handler</a></td></tr>
-<tr class="separator:ad1c46431c0465c0d35c17aef3e184a07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e360fe54c33885b6e23e57c483f6959"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00182.html#a1e360fe54c33885b6e23e57c483f6959">gatt_status</a></td></tr>
+<tr class="separator:a1e360fe54c33885b6e23e57c483f6959"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Heart Rate Client structure. </p>
+<div class="textblock"><p>GATT Write Authorisation parameters. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ab8700a2ae7c425ac15d6622e66967f74"></a>
+<a class="anchor" id="a1e360fe54c33885b6e23e57c483f6959"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_hrs_c_s::conn_handle</td>
+          <td class="memname">uint16_t ble_gatts_write_authorize_params_t::gatt_status</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Connection handle as provided by the SoftDevice. </p>
-
-</div>
-</div>
-<a class="anchor" id="ad1c46431c0465c0d35c17aef3e184a07"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00690.html#ga877f2faf397dff36652766f1a6c31b85">ble_hrs_c_evt_handler_t</a> ble_hrs_c_s::evt_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Application event handler to be called when there is an event related to the heart rate service. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa39c35324a4a66fc088ca76085d2a932"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_hrs_c_s::hrm_cccd_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle of the CCCD of the Heart Rate Measurement characteristic. </p>
-
-</div>
-</div>
-<a class="anchor" id="a77ef344286d863fa38ebd60dc06e5e62"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_hrs_c_s::hrm_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle of the Heart Rate Measurement characteristic as provided by the SoftDevice. </p>
+<p>GATT status code for the operation, see <a class="el" href="a00542.html">GATT Status Codes</a>. </p>
 
 </div>
 </div>
@@ -186,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00182.html">ble_hrs_c_s</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00182.html">ble_gatts_write_authorize_params_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

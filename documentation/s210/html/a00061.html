@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: nrf_radio_request_earliest_t Struct Reference</title>
+<title>nRF51 SDK - S210 SoftDevice: Broadcast</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,91 +96,25 @@ $(document).ready(function(){initNavTree('a00061.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_radio_request_earliest_t Struct Reference<div class="ingroups"><a class="el" href="a00277.html">Types</a></div></div>  </div>
+<div class="title">Broadcast </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Parameters for a request for a timeslot as early as possible.  
- <a href="a00061.html#details">More...</a></p>
-
-<p><code>#include &lt;nrf_soc.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a5d6e28106247179b7cde2e289f0f9c39"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a5d6e28106247179b7cde2e289f0f9c39">hfclk</a></td></tr>
-<tr class="separator:a5d6e28106247179b7cde2e289f0f9c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad45d8189eff4584a13d7069d3c877a55"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ad45d8189eff4584a13d7069d3c877a55">priority</a></td></tr>
-<tr class="separator:ad45d8189eff4584a13d7069d3c877a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0495f3c5f7e2fd20663af081ca7e4c0b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a0495f3c5f7e2fd20663af081ca7e4c0b">length_us</a></td></tr>
-<tr class="separator:a0495f3c5f7e2fd20663af081ca7e4c0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af56601d1b7ef92d49dbd1567bd1d39e0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#af56601d1b7ef92d49dbd1567bd1d39e0">timeout_us</a></td></tr>
-<tr class="separator:af56601d1b7ef92d49dbd1567bd1d39e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Parameters for a request for a timeslot as early as possible. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a5d6e28106247179b7cde2e289f0f9c39"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t nrf_radio_request_earliest_t::hfclk</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>High frequency clock source, see <a class="el" href="a00277.html#gac7d87a0d58b5d7b5a619d7587cd139a4">NRF_RADIO_HFCLK_CFG</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0495f3c5f7e2fd20663af081ca7e4c0b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t nrf_radio_request_earliest_t::length_us</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The radio timeslot length (in the range 100 to 100,000] microseconds). </p>
-
-</div>
-</div>
-<a class="anchor" id="ad45d8189eff4584a13d7069d3c877a55"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t nrf_radio_request_earliest_t::priority</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The radio timeslot priority, see <a class="el" href="a00277.html#ga5026e138e16d9a9664b804608062e9a1">NRF_RADIO_PRIORITY</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="af56601d1b7ef92d49dbd1567bd1d39e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t nrf_radio_request_earliest_t::timeout_us</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Longest acceptable delay until the start of the requested timeslot (up to <a class="el" href="a00276.html#gace6d931f266ad76277d7de831a6b45ee">NRF_RADIO_EARLIEST_TIMEOUT_MAX_US</a> microseconds). </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>Basic examples to test ANT connectivity between Master and Slave.</p>
+<p>They both use public network key {0, 0, 0 , 0 , 0, 0, 0}</p>
+<p><b>ANT Broadcast TX</b></p>
+<p>The channel period is set to 4 Hz (8192). When a packet is transmitted, it will indicate the state <a class="el" href="a00055.html#BSP_INDICATE_SENT_OK">BSP_INDICATE_SENT_OK</a>. Whenever the processor enters sleep state, the state <a class="el" href="a00055.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> ist set. The <a class="el" href="a00055.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a> state is set when woken up by (any / RF ) interrupt.</p>
+<p>The name of the example for PCA10028 is <b>ant_broadcast_tx_s210_pca10028</b>, and for PCA10031 it is <b>ant_broadcast_tx_s210_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ant\ant_broadcast\broadcast_tx</code> </p>
+<p><b>ANT Broadcast RX</b></p>
+<p>The example uses wildcard connection, which implies that it will connect to the nearest ANT device that is broadcasting. The channel period is set to 4 Hz (8192). When a packet is received, it will indicate the state <a class="el" href="a00055.html#BSP_INDICATE_RCV_OK">BSP_INDICATE_RCV_OK</a>. Whenever the processor enters sleep state, the state <a class="el" href="a00055.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> ist set. The <a class="el" href="a00055.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a> state is set when woken up by (any / RF ) interrupt.</p>
+<p>The name of the example for PCA10028 is <b>ant_broadcast_rx_s210_pca10028</b>, and for PCA10031 it is <b>ant_broadcast_rx_s210_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ant\ant_broadcast\broadcast_rx</code> </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00061.html">nrf_radio_request_earliest_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:41 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00056.html">ANT</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

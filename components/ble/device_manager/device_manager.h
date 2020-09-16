@@ -257,7 +257,6 @@ typedef struct dm_sec_keyset
     union 
     {
         dm_enc_key_t       * p_enc_key;  /**< Pointer to Device Manager encryption information structure. */
-        ble_gap_enc_info_t * p_enc_info; /**< Pointer to GAP encryption information. */
     } enc_key;
     dm_id_key_t   * p_id_key;            /**< Identity key, or NULL. */
     dm_sign_key_t * p_sign_key;          /**< Signing key, or NULL. */
@@ -294,7 +293,8 @@ typedef struct device_handle
  */
 typedef struct
 {
-    uint32_t  len;    /**< Length of data . */
+    uint32_t  flags;  /**< Additional flags identifying data. */
+    uint32_t  len;    /**< Length of data. */
     uint8_t * p_data; /**< Pointer to contextual data, a copy is made of the data. */
 } dm_context_t;
 
@@ -371,9 +371,9 @@ typedef struct
  * @retval NRF_SUCCESS on success, or a failure to indicate if it could handle the event
  *         successfully. There is no action taken in case application returns a failure.
  */
-typedef api_result_t (*dm_event_cb_t)(dm_handle_t const * p_handle,
-                                      dm_event_t const  * p_event,
-                                      api_result_t        event_result);
+typedef ret_code_t (*dm_event_cb_t)(dm_handle_t const * p_handle,
+                                    dm_event_t const  * p_event,
+                                    ret_code_t        event_result);
 
 /**
  * @brief Initialization Parameters.
@@ -406,9 +406,9 @@ typedef struct
  */
 typedef enum
 {
-    NOT_ENCRYPTED,                  /**< The link does not security. */
-    ENCRYPTION_IN_PROGRESS, /**< Security is in progress of being established.*/
-    ENCRYPTED              /**< The link is secure.*/
+    NOT_ENCRYPTED,          /**< The link is not secured. */
+    ENCRYPTION_IN_PROGRESS, /**< Link security is being established.*/
+    ENCRYPTED               /**< The link is secure.*/
 } dm_security_status_t;
 /** @} */
 
@@ -449,7 +449,7 @@ typedef enum
  *
  * @note It is mandatory that pstorage is initialized before initializing this module.
  */
-api_result_t dm_init(dm_init_param_t const * p_init_param);
+ret_code_t dm_init(dm_init_param_t const * p_init_param);
 
 /**
  * @brief Function for registering the application.
@@ -473,8 +473,8 @@ api_result_t dm_init(dm_init_param_t const * p_init_param);
  *
  * @note Currently only one application instance is supported by the module.
  */
-api_result_t dm_register(dm_application_instance_t    * p_appl_instance,
-                         dm_application_param_t const * p_appl_param);
+ret_code_t dm_register(dm_application_instance_t    * p_appl_instance,
+                       dm_application_param_t const * p_appl_param);
 
 /**
  * @brief Function for handling BLE events.
@@ -521,7 +521,7 @@ void dm_ble_evt_handler(ble_evt_t * p_ble_evt);
  * @retval NRF_ERROR_INVALID_ADDR  If the peer is not identified by the handle provided by the application
  *                                 or if the peer is not connected when this procedure is requested.
  */
-api_result_t dm_security_setup_req(dm_handle_t * p_handle);
+ret_code_t dm_security_setup_req(dm_handle_t * p_handle);
 
 /**
  * @brief Function for reading the status of the security on a link.
@@ -539,7 +539,7 @@ api_result_t dm_security_setup_req(dm_handle_t * p_handle);
  * @retval NRF_ERROR_INVALID_ADDR  If peer is not identified by the handle provided by the application
  *                                 or if peer is not connected when this procedure is requested.
  */
-api_result_t dm_security_status_req(dm_handle_t const * p_handle, dm_security_status_t * p_status);
+ret_code_t dm_security_status_req(dm_handle_t const * p_handle, dm_security_status_t * p_status);
 
 /**
  * @brief Function for creating the whitelist.
@@ -563,8 +563,8 @@ api_result_t dm_security_status_req(dm_handle_t const * p_handle, dm_security_st
  *                                 application registration.
  * @retval NRF_ERROR_NULL          If p_handle or p_whitelist is NULL.
  */
-api_result_t dm_whitelist_create(dm_application_instance_t const * p_handle,
-                                 ble_gap_whitelist_t             * p_whitelist);
+ret_code_t dm_whitelist_create(dm_application_instance_t const * p_handle,
+                               ble_gap_whitelist_t             * p_whitelist);
 
 /** @} */
 
@@ -582,9 +582,9 @@ api_result_t dm_whitelist_create(dm_application_instance_t const * p_handle,
  * @{
  */
 
-api_result_t dm_device_add(dm_handle_t               * p_handle,
-                           dm_device_context_t const * p_context);
-                           
+ret_code_t dm_device_add(dm_handle_t               * p_handle,
+                         dm_device_context_t const * p_context);
+
 /**
  * @brief Function for deleting a peer device context and all related information from the database.
  *
@@ -605,7 +605,7 @@ api_result_t dm_device_add(dm_handle_t               * p_handle,
  *       bonded device. The respective events DM_EVT_SERVICE_CONTEXT_DELETED and
  *       DM_EVT_APPL_CONTEXT_DELETED are not notified to the application.
  */
-api_result_t dm_device_delete(dm_handle_t const * p_handle);
+ret_code_t dm_device_delete(dm_handle_t const * p_handle);
 
 /**
  * @brief Function for deleting all peer device context and all related information from the database.
@@ -628,7 +628,7 @@ api_result_t dm_device_delete(dm_handle_t const * p_handle);
  *       bonded device. The respective events DM_EVT_SERVICE_CONTEXT_DELETED and
  *       DM_EVT_APPL_CONTEXT_DELETED are not notified to the application.
  */
-api_result_t dm_device_delete_all(dm_application_instance_t const * p_handle);
+ret_code_t dm_device_delete_all(dm_application_instance_t const * p_handle);
 
 /**
  * @brief Function for setting Service Context for a peer device identified by 'p_handle' parameter.
@@ -655,8 +655,8 @@ api_result_t dm_device_delete_all(dm_application_instance_t const * p_handle);
  * @retval NRF_ERROR_NULL          If p_handle is NULL.
  * @retval NRF_ERROR_INVALID_ADDR  If the peer is not identified by the handle provided by the application.
  */
-api_result_t dm_service_context_set(dm_handle_t const          * p_handle,
-                                    dm_service_context_t const * p_context);
+ret_code_t dm_service_context_set(dm_handle_t const          * p_handle,
+                                  dm_service_context_t const * p_context);
 
 /**
  * @brief Function for getting Service Context for a peer device identified by 'p_handle' parameter.
@@ -678,8 +678,8 @@ api_result_t dm_service_context_set(dm_handle_t const          * p_handle,
  * @retval NRF_ERROR_NULL          If p_handle is NULL.
  * @retval NRF_ERROR_INVALID_ADDR  If the peer is not identified by the handle provided by the application.
  */
-api_result_t dm_service_context_get(dm_handle_t const    * p_handle,
-                                    dm_service_context_t * p_context);
+ret_code_t dm_service_context_get(dm_handle_t const    * p_handle,
+                                  dm_service_context_t * p_context);
 
 /**
  * @brief Function for deleting a Service Context for a peer device identified by the 'p_handle' parameter.
@@ -698,7 +698,7 @@ api_result_t dm_service_context_get(dm_handle_t const    * p_handle,
  * @retval NRF_ERROR_NULL          If p_handle is NULL.
  * @retval NRF_ERROR_INVALID_ADDR  If the peer is not identified by the handle provided by the application.
  */
-api_result_t dm_service_context_delete(dm_handle_t const * p_handle);
+ret_code_t dm_service_context_delete(dm_handle_t const * p_handle);
 
 /**
  * @brief Function for setting Application Context for a peer device identified by the 'p_handle' parameter.
@@ -728,8 +728,8 @@ api_result_t dm_service_context_delete(dm_handle_t const * p_handle);
  *
  * @note The API returns FEATURE_NOT_ENABLED in case DEVICE_MANAGER_APP_CONTEXT_SIZE is set to zero.
  */
-api_result_t dm_application_context_set(dm_handle_t const              * p_handle,
-                                        dm_application_context_t const * p_context);
+ret_code_t dm_application_context_set(dm_handle_t const              * p_handle,
+                                      dm_application_context_t const * p_context);
 
 /**
  * @brief Function for getting Application Context for a peer device identified by the 'p_handle' parameter.
@@ -753,8 +753,8 @@ api_result_t dm_application_context_set(dm_handle_t const              * p_handl
  * @note The API returns FEATURE_NOT_ENABLED in case DEVICE_MANAGER_APP_CONTEXT_SIZE is set to
  *       zero.
  */
-api_result_t dm_application_context_get(dm_handle_t const        * p_handle,
-                                        dm_application_context_t * p_context);
+ret_code_t dm_application_context_get(dm_handle_t const        * p_handle,
+                                      dm_application_context_t * p_context);
 
 /**
  * @brief Function for deleting Application Context for a peer device identified by the 'p_handle' parameter.
@@ -775,7 +775,7 @@ api_result_t dm_application_context_get(dm_handle_t const        * p_handle,
  *
  * @note The API returns FEATURE_NOT_ENABLED if the DEVICE_MANAGER_APP_CONTEXT_SIZE is set to zero.
  */
-api_result_t dm_application_context_delete(dm_handle_t const * p_handle);
+ret_code_t dm_application_context_delete(dm_handle_t const * p_handle);
 
 /** @} */
 
@@ -798,8 +798,8 @@ api_result_t dm_application_context_delete(dm_handle_t const * p_handle);
  *                                 application registration.
  * @retval NRF_ERROR_NULL          If p_handle and/or p_addr is NULL.
  */
-api_result_t dm_application_instance_set(dm_application_instance_t const * p_appl_instance,
-                                         dm_handle_t                     * p_handle);
+ret_code_t dm_application_instance_set(dm_application_instance_t const * p_appl_instance,
+                                       dm_handle_t                     * p_handle);
 
 /**
  * @brief Function for getting a peer's device address.
@@ -813,8 +813,8 @@ api_result_t dm_application_instance_set(dm_application_instance_t const * p_app
  * @retval NRF_ERROR_NULL          If p_handle and/or p_addr is NULL.
  * @retval NRF_ERROR_NOT_FOUND     If the peer could not be identified.
  */
-api_result_t dm_peer_addr_get(dm_handle_t const * p_handle,
-                              ble_gap_addr_t    * p_addr);
+ret_code_t dm_peer_addr_get(dm_handle_t const * p_handle,
+                            ble_gap_addr_t    * p_addr);
 
 /**
  * @brief Function for setting/updating a peer's device address.
@@ -837,8 +837,8 @@ api_result_t dm_peer_addr_get(dm_handle_t const * p_handle,
  *       recommended to not invite/initiate connections on the updated address unless this event
  *       has been notified.
  */
-api_result_t dm_peer_addr_set(dm_handle_t const    * p_handle,
-                              ble_gap_addr_t const * p_addr);
+ret_code_t dm_peer_addr_set(dm_handle_t const    * p_handle,
+                            ble_gap_addr_t const * p_addr);
 
 /**
  * @brief Function for initializing Device Manager handle.
@@ -850,16 +850,12 @@ api_result_t dm_peer_addr_set(dm_handle_t const    * p_handle,
  *
  * @note This routine is permitted before initialization of the module.
  */
-api_result_t dm_handle_initialize(dm_handle_t * p_handle);
+ret_code_t dm_handle_initialize(dm_handle_t * p_handle);
 
 /**
  * @brief Function for getting distributed keys for a device.
  *
- * @details This routine is used to get distributed keys with a bonded device. This API is currently
- *          only available on S120 (GAP Central role).
- *
- * @param[in] p_handle Device Manager handle identifying the peer.
- *
+ * @param[in]  p_handle   Device Manager handle identifying the peer.
  * @param[out] p_key_dist Pointer to distributed keys.
  *
  * @retval NRF_SUCCESS             On success, else an error code indicating reason for failure.
@@ -868,8 +864,22 @@ api_result_t dm_handle_initialize(dm_handle_t * p_handle);
  * @retval NRF_ERROR_NULL          If the p_handle and/or p_key_dist pointer is NULL.
  * @retval NRF_ERROR_INVALID_ADDR  If the peer is not identified by the handle provided by the application.
  */
-api_result_t dm_distributed_keys_get(dm_handle_t const * p_handle,
-                                     dm_sec_keyset_t   * p_key_dist);
+ret_code_t dm_distributed_keys_get(dm_handle_t const * p_handle,
+                                   dm_sec_keyset_t   * p_key_dist);
+
+/**
+ * @brief Function for getting the corresponding dm_handle_t based on the connection handle.
+ *
+ * @param[in]     conn_handle Connection handle as provided by the SoftDevice.
+ * @param[in,out] p_handle    Pointer to the p_handle containg the application instance for the 
+ *                            registered application. If the application instance is valid then 
+ *                            the p_handle will be filled with requested data.
+ *
+ * @retval NRF_SUCCESS          On success, else an error code indicating reason for failure.
+ * @retval NRF_ERROR_NULL       If the p_handle pointer is NULL.
+ * @retval NRF_ERROR_NOT_FOUND  If no p_handle is found for the provided connection handle.
+ */
+ret_code_t dm_handle_get(uint16_t conn_handle, dm_handle_t * p_handle);
 
 /** @} */
 /** @} */

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: BLE S120 L2CAP Events</title>
+<title>nRF51 SDK - S120 SoftDevice: RTOS support</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,53 +97,17 @@ $(document).ready(function(){initNavTree('a00067.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BLE S120 L2CAP Events </div>  </div>
+<div class="title">RTOS support </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#nrf51_l2cap_evt_rx_encoding">0x70 - BLE_L2CAP_EVT_RX</a><ul><li class="level2"><a href="#nrf51_l2cap_evt_rx_encoding_sec">Event packet encoding</a></li>
-<li class="level2"><a href="#nrf51_l2cap_evt_rx_encoding_sub_a">Encoding of BLE L2CAP packet received event</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="textblock"><h1><a class="anchor" id="nrf51_l2cap_evt_rx_encoding"></a>
-0x70 - BLE_L2CAP_EVT_RX</h1>
-<h2><a class="anchor" id="nrf51_l2cap_evt_rx_encoding_sec"></a>
-Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00761.html#gga200c8684032d8e5fe10d295b2f3a1555af6d68dde17c172258858ea9d9c4488e3">BLE_L2CAP_EVT_RX</a> packet.</p>
-<p>Event ID = 0x70 for BLE_L2CAP_EVT_RX.</p>
-<p>The BLE L2CAP event contains a connection handle, and for the BLE L2CAP event RX, the <a class="el" href="a00183.html">ble_l2cap_evt_rx_t</a> is encoded after connection handle as seen in Figure 1.</p>
-<p>The order of the encoding is: </p>
-<table class="doxtable">
-<tr>
-<th>Length </th><th>Parameter </th><th>Value</th></tr>
-<tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00184.html#ab843f6e96efbaf3d2bffee8c92c62f1a">ble_l2cap_evt_t::conn_handle</a> </td></tr>
-<tr>
-<td>2 bytes </td><td>Data Length </td><td>see <a class="el" href="a00185.html#a754900407e75298f4af89a59febed5b8">ble_l2cap_header_t::len</a> </td></tr>
-<tr>
-<td>2 bytes </td><td>CID </td><td>see <a class="el" href="a00185.html#a6e40f192db4382919b6c1f3db8e70d46">ble_l2cap_header_t::cid</a> </td></tr>
-<tr>
-<td>0..'Data Length' bytes </td><td>Data </td><td>see <a class="el" href="a00183.html#ad3df37c1998b3d1d213a6e7b5cfbcd5e">ble_l2cap_evt_rx_t::data</a> </td></tr>
-</table>
-<p><br/>
-</p>
-<h2><a class="anchor" id="nrf51_l2cap_evt_rx_encoding_sub_a"></a>
-Encoding of BLE L2CAP packet received event</h2>
-<div class="image">
-<img src="l2cap_evt_rx.png" alt="l2cap_evt_rx.png"/>
-<div class="caption">
-Figure 1: Encoding of BLE L2CAP packet received event.</div></div>
-<p> <br/>
- </p>
+<div class="textblock"><p><a class="el" href="a00068.html">RTX Support</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00058.html">Serialization Codecs</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

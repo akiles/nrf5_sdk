@@ -1,4 +1,4 @@
 var a00555 =
 [
-    [ "BLE_ERROR_GATTC_PROC_NOT_PERMITTED", "a00555.html#gaec4c26bdcc1235411c5feec6d38b3465", null ]
+    [ "BLE_ERROR_L2CAP_CID_IN_USE", "a00555.html#ga258b4a1e6ac5f32e23036ef0b88af3fa", null ]
 ];

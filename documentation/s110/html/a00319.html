@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_rscs_init_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_hrs_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,93 @@ $(document).ready(function(){initNavTree('a00319.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_rscs_init_t Struct Reference<div class="ingroups"><a class="el" href="a00974.html">Running Speed and Cadence Service</a></div></div>  </div>
+<div class="title">ble_hrs_init_t Struct Reference<div class="ingroups"><a class="el" href="a00963.html">Heart Rate Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Running Speed and Cadence Service init structure. This contains all options and data needed for initialization of the service.  
+<p>Heart Rate Service init structure. This contains all options and data needed for initialization of the service.  
  <a href="a00319.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_rscs.h&gt;</code></p>
+<p><code>#include &lt;ble_hrs.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac8b3f40aba291bb2528c6e3d278e66bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00974.html#ga04b6f149d88df65ebffd5b8297bd657f">ble_rscs_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00319.html#ac8b3f40aba291bb2528c6e3d278e66bd">evt_handler</a></td></tr>
-<tr class="separator:ac8b3f40aba291bb2528c6e3d278e66bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f33f2c4256a25ac20cdbb2b8fbc8538"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00329.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00319.html#a4f33f2c4256a25ac20cdbb2b8fbc8538">rsc_meas_attr_md</a></td></tr>
-<tr class="separator:a4f33f2c4256a25ac20cdbb2b8fbc8538"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada9c9294592f640a27a344965b22bc76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00319.html#ada9c9294592f640a27a344965b22bc76">rsc_feature_attr_md</a></td></tr>
-<tr class="separator:ada9c9294592f640a27a344965b22bc76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afea901cdde73cddc72eb4cfe2f337c78"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00319.html#afea901cdde73cddc72eb4cfe2f337c78">feature</a></td></tr>
-<tr class="separator:afea901cdde73cddc72eb4cfe2f337c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa86b9c7d2205607e9e77fa9c3affabbe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00963.html#ga85836949ab0f55e7ffcaec72dd0ee6e1">ble_hrs_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00319.html#aa86b9c7d2205607e9e77fa9c3affabbe">evt_handler</a></td></tr>
+<tr class="separator:aa86b9c7d2205607e9e77fa9c3affabbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af531586afe7aa4c124e96e04d42e70d1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00319.html#af531586afe7aa4c124e96e04d42e70d1">is_sensor_contact_supported</a></td></tr>
+<tr class="separator:af531586afe7aa4c124e96e04d42e70d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6950ba718a00b8236331be362d3a9beb"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00319.html#a6950ba718a00b8236331be362d3a9beb">p_body_sensor_location</a></td></tr>
+<tr class="separator:a6950ba718a00b8236331be362d3a9beb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8023c653b5f45b8fd6de1fc61761275a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00319.html#a8023c653b5f45b8fd6de1fc61761275a">hrs_hrm_attr_md</a></td></tr>
+<tr class="separator:a8023c653b5f45b8fd6de1fc61761275a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12b40292268a248ca7341f0298d16b1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00353.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00319.html#a12b40292268a248ca7341f0298d16b1a">hrs_bsl_attr_md</a></td></tr>
+<tr class="separator:a12b40292268a248ca7341f0298d16b1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Running Speed and Cadence Service init structure. This contains all options and data needed for initialization of the service. </p>
+<div class="textblock"><p>Heart Rate Service init structure. This contains all options and data needed for initialization of the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ac8b3f40aba291bb2528c6e3d278e66bd"></a>
+<a class="anchor" id="aa86b9c7d2205607e9e77fa9c3affabbe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00974.html#ga04b6f149d88df65ebffd5b8297bd657f">ble_rscs_evt_handler_t</a> ble_rscs_init_t::evt_handler</td>
+          <td class="memname"><a class="el" href="a00963.html#ga85836949ab0f55e7ffcaec72dd0ee6e1">ble_hrs_evt_handler_t</a> ble_hrs_init_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event handler to be called for handling events in the Running Speed and Cadence Service. </p>
+<p>Event handler to be called for handling events in the Heart Rate Service. </p>
 
 </div>
 </div>
-<a class="anchor" id="afea901cdde73cddc72eb4cfe2f337c78"></a>
+<a class="anchor" id="a12b40292268a248ca7341f0298d16b1a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_rscs_init_t::feature</td>
+          <td class="memname"><a class="el" href="a00353.html">ble_srv_security_mode_t</a> ble_hrs_init_t::hrs_bsl_attr_md</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial value for features of sensor. </p>
+<p>Initial security level for body sensor location attribute </p>
 
 </div>
 </div>
-<a class="anchor" id="ada9c9294592f640a27a344965b22bc76"></a>
+<a class="anchor" id="a8023c653b5f45b8fd6de1fc61761275a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00331.html">ble_srv_security_mode_t</a> ble_rscs_init_t::rsc_feature_attr_md</td>
+          <td class="memname"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a> ble_hrs_init_t::hrs_hrm_attr_md</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial security level for feature attribute </p>
+<p>Initial security level for heart rate service measurement attribute </p>
 
 </div>
 </div>
-<a class="anchor" id="a4f33f2c4256a25ac20cdbb2b8fbc8538"></a>
+<a class="anchor" id="af531586afe7aa4c124e96e04d42e70d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00329.html">ble_srv_cccd_security_mode_t</a> ble_rscs_init_t::rsc_meas_attr_md</td>
+          <td class="memname">bool ble_hrs_init_t::is_sensor_contact_supported</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial security level for running speed and cadence measurement attribute </p>
+<p>Determines if sensor contact detection is to be supported. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6950ba718a00b8236331be362d3a9beb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* ble_hrs_init_t::p_body_sensor_location</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If not NULL, initial value of the Body Sensor Location characteristic. </p>
 
 </div>
 </div>
@@ -186,8 +201,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00319.html">ble_rscs_init_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00319.html">ble_hrs_init_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

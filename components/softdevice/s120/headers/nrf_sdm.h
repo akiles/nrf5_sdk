@@ -1,26 +1,26 @@
-/*
+/* 
  * Copyright (c) Nordic Semiconductor ASA
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- *
+ * 
  *   1. Redistributions of source code must retain the above copyright notice, this
  *   list of conditions and the following disclaimer.
- *
+ * 
  *   2. Redistributions in binary form must reproduce the above copyright notice, this
  *   list of conditions and the following disclaimer in the documentation and/or
  *   other materials provided with the distribution.
- *
+ * 
  *   3. Neither the name of Nordic Semiconductor ASA nor the names of other
  *   contributors to this software may be used to endorse or promote products
  *   derived from this software without specific prior written permission.
- *
+ * 
  *   4. This software must only be used in a processor manufactured by Nordic
  *   Semiconductor ASA, or in a processor manufactured by a third party that
  *   is used in combination with a processor manufactured by Nordic Semiconductor.
- *
- *
+ * 
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -31,7 +31,7 @@
  * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
+ * 
  */
 /**
   @defgroup nrf_sdm_api SoftDevice Manager API
@@ -53,10 +53,36 @@
 /** @addtogroup NRF_SDM_DEFINES Defines
  * @{ */
 
-/**@brief SoftDevice Manager SVC Base number. */
+/** @brief SoftDevice Manager SVC Base number. */
 #define SDM_SVC_BASE 0x10   
 
 /** @} */
+
+/** @brief Defines the SoftDevice Information Structure location (address) as an offset from 
+the start of the softdevice (without MBR)*/
+#define SOFTDEVICE_INFO_STRUCT_OFFSET (0x2000)
+
+/** @brief Defines the usual size reserverd for the MBR when a softdevice is written to flash. 
+This is the offset where the first byte of the softdevice hex file is written.*/
+#define MBR_SIZE (0x1000)
+
+/** @brief Defines the absolute Softdevice information structure location (address)*/
+#define SOFTDEVICE_INFO_STRUCT_ADDRESS (SOFTDEVICE_INFO_STRUCT_OFFSET + MBR_SIZE)
+
+/** @brief Defines the offset for Softdevice size value relative to Softdevice base address*/
+#define SD_SIZE_OFFSET (SOFTDEVICE_INFO_STRUCT_OFFSET + 0x08)
+
+/** @brief Defines the offset for FWID value relative to Softdevice base address*/
+#define SD_FWID_OFFSET (SOFTDEVICE_INFO_STRUCT_OFFSET + 0x0C)
+
+/** @brief Defines a macro for retreiving the actual Softdevice size value from a given base address
+           use @ref MBR_SIZE when Softdevice is installed just above the MBR (the usual case)*/
+#define SD_SIZE_GET(baseaddr) (*((uint32_t *) ((baseaddr) + SD_SIZE_OFFSET)))
+
+/** @brief Defines a macro for retreiving the actual FWID value from a given base address
+           use @ref MBR_SIZE when Softdevice is installed just above the MBR (the usual case)*/
+#define SD_FWID_GET(baseaddr) ((*((uint32_t *) ((baseaddr) + SD_FWID_OFFSET))) & 0xFFFF)
+
 
 /** @addtogroup NRF_SDM_ENUMS Enumerations
  * @{ */
@@ -67,7 +93,7 @@ enum NRF_SD_SVCS
   SD_SOFTDEVICE_ENABLE = SDM_SVC_BASE, /**< ::sd_softdevice_enable */
   SD_SOFTDEVICE_DISABLE,               /**< ::sd_softdevice_disable */
   SD_SOFTDEVICE_IS_ENABLED,            /**< ::sd_softdevice_is_enabled */
-  SD_SOFTDEVICE_FORWARD_TO_APPLICATION,/**< ::sd_softdevice_forward_to_application */
+  SD_SOFTDEVICE_VECTOR_TABLE_BASE_SET, /**< ::sd_softdevice_vector_table_base_set */
   SVC_SDM_LAST                         /**< Placeholder for last SDM SVC */
 };
 
@@ -135,20 +161,21 @@ typedef void (*softdevice_assertion_handler_t)(uint32_t pc, uint16_t line_number
  * @note This function has no effect when returning with an error.
  *
  * @post If return code is ::NRF_SUCCESS 
- *       - SoC library and protocol stack APIs are made available
- *       - A portion of RAM will be unavailable (see relevant SDS documentation)
- *       - Some peripherals will be unavailable or available only through the SoC API (see relevant SDS documentation)
- *       - Interrupts will not arrive from protected peripherals or interrupts
+ *       - SoC library and protocol stack APIs are made available.
+ *       - A portion of RAM will be unavailable (see relevant SDS documentation).
+ *       - Some peripherals will be unavailable or available only through the SoC API (see relevant SDS documentation).
+ *       - Interrupts will not arrive from protected peripherals or interrupts.
  *       - nrf_nvic_ functions must be used instead of CMSIS NVIC_ functions for reliable usage of the softdevice.
- *       - Interrupt latency may be affected by the SoftDevice  (see relevant SDS documentation)
- *       - Chosen low frequency clock source will be running
+ *       - Interrupt latency may be affected by the SoftDevice  (see relevant SDS documentation).
+ *       - Chosen low frequency clock source will be running.
  *
  * @param clock_source Low frequency clock source and accuracy. (Note: In the case of XTAL source, the PPM accuracy of the chosen clock source must be greater than or equal to the actual characteristics of your XTAL clock).
  * @param assertion_handler Callback for SoftDevice assertions.
  *
  * @retval ::NRF_SUCCESS
- * @retval ::NRF_ERROR_SDM_INCORRECT_INTERRUPT_CONFIGURATION SoftDeviceinterrupt is already enabled, or an enabled interrupt has an illegal priority level
- * @retval ::NRF_ERROR_SDM_LFCLK_SOURCE_UNKNOWN Unknown low frequency clock source selected
+ * @retval ::NRF_ERROR_INVALID_STATE SoftDevice is already enabled, and the clock source and assertion handler cannot be updated.
+ * @retval ::NRF_ERROR_SDM_INCORRECT_INTERRUPT_CONFIGURATION SoftDeviceinterrupt is already enabled, or an enabled interrupt has an illegal priority level.
+ * @retval ::NRF_ERROR_SDM_LFCLK_SOURCE_UNKNOWN Unknown low frequency clock source selected.
  */
 SVCALL(SD_SOFTDEVICE_ENABLE, uint32_t, sd_softdevice_enable(nrf_clock_lfclksrc_t clock_source, softdevice_assertion_handler_t assertion_handler));
 
@@ -175,26 +202,15 @@ SVCALL(SD_SOFTDEVICE_DISABLE, uint32_t, sd_softdevice_disable(void));
  */
 SVCALL(SD_SOFTDEVICE_IS_ENABLED, uint32_t, sd_softdevice_is_enabled(uint8_t * p_softdevice_enabled));
 
-/**@brief Start forwarding interrupts to application.
+/**@brief Sets the base address of the interrupt vector table for interrupts forwarded from the SoftDevice
  * 
  * This function is only intended to be called when a bootloader is enabled.
- * This function will tell the SoftDevice to start forwarding interrupts to the address in the parameter.
  *
- * To get interrupts forwarded to itself, the bootloader must first call MBR with command SD_MBR_COMMAND_INIT_SD,
- * and then call this function with it's own start address as parameter.
- * 
- * To get interrupts forwarded to the application the bootloader must first call MBR with command SD_MBR_COMMAND_INIT_SD,
- * and then call this function with the applications start address.
- *
- * It is recommended that all interrupt sources are off when this is called, 
- * or you could end up having interrupts in the application being executed before main() of the application.
- *
- *       
- * @param[in] address The address at which to start forwarding interrupts.
+ * @param[in] address The base address of the interrupt vector table for forwarded interrupts.
  
  * @retval ::NRF_SUCCESS
  */
-SVCALL(SD_SOFTDEVICE_FORWARD_TO_APPLICATION, uint32_t, sd_softdevice_forward_to_application(uint32_t address)); 
+SVCALL(SD_SOFTDEVICE_VECTOR_TABLE_BASE_SET, uint32_t, sd_softdevice_vector_table_base_set(uint32_t address)); 
 
 /** @} */
 

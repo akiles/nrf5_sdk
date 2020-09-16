@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Button handling library</title>
+<title>nRF51 SDK - S110 SoftDevice: SPI Slave</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,19 +97,27 @@ $(document).ready(function(){initNavTree('a00012.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Button handling library </div>  </div>
+<div class="title">SPI Slave </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The button handler uses the <a class="el" href="a00774.html">GPIOTE Handler</a> to detect that a button has been pushed. To handle debouncing, it will start a timer in the GPIOTE event handler. The button will only be reported as pushed if the corresponding pin is still active when the timer expires. If there is a new GPIOTE event while the timer is running, the timer is restarted. Use the USE_SCHEDULER parameter of the <a class="el" href="a00771.html#ga6b3e6aee33c6befc718d84f2dcc02fd5" title="Macro for initializing the Button Handler module.">APP_BUTTON_INIT()</a> macro to select if the <a class="el" href="a00779.html">Scheduler</a> is to be used or not.</p>
-<p>The app_button module uses the app_timer module. The user must ensure that the queue in app_timer is large enough to hold the <a class="el" href="a00780.html#gad40fbb2a6a9e5bf7d00f838763f5514c" title="Function for stopping the specified timer.">app_timer_stop()</a> / <a class="el" href="a00780.html#ga03fb5f5fa85d16289db0d3c15bb0f24d" title="Function for starting a timer.">app_timer_start()</a> operations which will be executed on each event from GPIOTE module (2 operations), as well as other app_timer operations queued simultaneously in the application.</p>
-<p>Even if the scheduler is not used, app_button.h will include app_scheduler.h, so when compiling, app_scheduler.h must be available in one of the compiler include paths. </p>
-</div></div><!-- contents -->
+<div class="textblock"><dl class="section user"><dt>Features supported</dt><dd><ul>
+<li>Full duplex communication through SPI.</li>
+<li>SPI slave EasyDMA functionality for reading and writing from and to the RAM.</li>
+<li>SPI1_TWI1_IRQHandler used as IRQ handler.</li>
+</ul>
+</dd></dl>
+<p>The internal design of the SPI slave driver is illustrated by the statemachine below.</p>
+<div class="image">
+<img src="spi_slave_driver_sm.png" alt="spi_slave_driver_sm.png"/>
+<div class="caption">
+SPI slave driver statemachine</div></div>
+ </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00002.html">Hardware Drivers</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

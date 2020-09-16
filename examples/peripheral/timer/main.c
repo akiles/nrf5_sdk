@@ -25,78 +25,63 @@
 #include "nrf.h"
 #include "bsp.h"
 
+#include "nrf_drv_timer.h"
+#include "bsp.h"
+#include "app_error.h"
 
-#define TIMER_DELAY_MS           (500UL)             /**< Timer Delay in milli-seconds. */
-
-static void timer_init(void);
-static void nrf_timer_delay_ms(uint_fast16_t volatile number_of_ms);
+const nrf_drv_timer_t TIMER_LED = NRF_DRV_TIMER_INSTANCE(0);
 
 const uint8_t leds_list[LEDS_NUMBER] = LEDS_LIST;
+
+/**
+ * @brief Handler for timer events.
+ */
+void timer_led_event_handler(nrf_timer_events_t event_type)
+{
+    static uint32_t i;
+    uint32_t led_to_invert = (1 << leds_list[(i++) % LEDS_NUMBER]);
+    
+    switch(event_type)
+    {
+        case NRF_TIMER_EVENTS_COMPARE0:
+            LEDS_INVERT(led_to_invert);
+            break;
+        
+        default:
+            //Do nothing.
+            break;
+    }    
+}
+
 
 /**
  * @brief Function for main application entry.
  */
 int main(void)
 {
+    uint32_t time_ms = 500; //Time(in miliseconds) between consecutive compare events.
+    uint32_t time_ticks;
+    uint32_t err_code = NRF_SUCCESS;
+    
+    //Configure all leds on board.
     LEDS_CONFIGURE(LEDS_MASK);
     LEDS_OFF(LEDS_MASK);
-    timer_init();
+    
+    //Configure TIMER_LED for generating simple light effect - leds on board will invert his state one after the other.
+    err_code = nrf_drv_timer_init(&TIMER_LED, NULL, timer_led_event_handler);
+    APP_ERROR_CHECK(err_code);
+    
+    time_ticks = nrf_drv_timer_ms_to_ticks(&TIMER_LED, time_ms);
+    
+    nrf_drv_timer_extended_compare(
+         &TIMER_LED, NRF_TIMER_CC_CHANNEL0, time_ticks, NRF_TIMER_SHORTS_COMPARE0_CLEAR_MASK, true);
+    
+    nrf_drv_timer_enable(&TIMER_LED);
 
-	  // Toggle LEDs.
-    while (true)
+    while(1)
     {
-        for (int i = 0; i < LEDS_NUMBER; i++)
-        {
-            LEDS_INVERT(1 << leds_list[i]);
-            nrf_timer_delay_ms(TIMER_DELAY_MS);
-        }
+        __WFI();
     }
 }
-
-
-/**
- * @brief Function for timer initialization.
- */
-static void timer_init()
-{
-    // Start 16 MHz crystal oscillator.
-    NRF_CLOCK->EVENTS_HFCLKSTARTED = 0;
-    NRF_CLOCK->TASKS_HFCLKSTART    = 1;
-
-    // Wait for the external oscillator to start up.
-    while (NRF_CLOCK->EVENTS_HFCLKSTARTED == 0)
-    {
-        // Do nothing.
-    }
-    NRF_TIMER0->MODE        = TIMER_MODE_MODE_Timer;       // Set the timer in Timer Mode.
-    NRF_TIMER0->PRESCALER   = 9;                           // Prescaler 9 produces 31250 Hz timer frequency => 1 tick = 32 us.
-    NRF_TIMER0->BITMODE     = TIMER_BITMODE_BITMODE_16Bit; // 16 bit mode.
-}
-
-
-/** @brief Function for using the peripheral hardware timers to generate an event after requested number of milliseconds.
- *
- * @param[in] timer Timer to be used for delay, values from @ref p_timer
- * @param[in] number_of_ms Number of milliseconds the timer will count.
- * @note This function will power ON the requested timer, wait until the delay, and then power OFF that timer.
- */
-static void nrf_timer_delay_ms(uint_fast16_t volatile number_of_ms)
-{
-    NRF_TIMER0->TASKS_CLEAR = 1;                           // clear the task first to be usable for later.
-
-    // With 32 us ticks, we need to multiply by 31.25 to get milliseconds.
-    NRF_TIMER0->CC[0]       = number_of_ms * 31;
-    NRF_TIMER0->CC[0]      += number_of_ms / 4;
-    NRF_TIMER0->TASKS_START = 1; // Start timer.
-
-    while (NRF_TIMER0->EVENTS_COMPARE[0] == 0)
-    {
-        // Do nothing.
-    }
-
-    NRF_TIMER0->EVENTS_COMPARE[0] = 0;
-    NRF_TIMER0->TASKS_STOP        = 1; // Stop timer.
-}
-
 
 /** @} */

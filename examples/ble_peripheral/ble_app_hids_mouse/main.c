@@ -43,45 +43,50 @@
 #include "ble_dis.h"
 #include "ble_conn_params.h"
 #include "bsp.h"
-#include "ble_sensorsim.h"
+#include "sensorsim.h"
 #include "app_scheduler.h"
-#include "softdevice_handler.h"
-#include "app_timer.h"
+#include "softdevice_handler_appsh.h"
+#include "app_timer_appsh.h"
 #include "device_manager.h"
 #include "app_gpiote.h"
 #include "app_button.h"
 #include "pstorage.h"
 #include "app_trace.h"
+#include "ble_advertising.h"
+
 
 #if BUTTONS_NUMBER < 4
 #error "Not enough resources on board to run example"
 #endif
 
-#define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                           /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
+#define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                          /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
-#define LEFT_BUTTON_ID                  0                                           /**< Button used for moving the mouse pointer to the left. */
-#define UP_BUTTON_ID                    1                                           /**< Button used for moving the mouse pointer upwards. */
-#define RIGHT_BUTTON_ID                 2                                           /**< Button used for moving the mouse pointer to the right. */
-#define DOWN_BUTTON_ID                  3                                           /**< Button used for moving the mouse pointer downwards. */
-#define BOND_DELETE_ALL_BUTTON_ID       1                                           /**< Button used for deleting all bonded centrals during startup. */
+#define UART_TX_BUF_SIZE 256                                                       /**< UART TX buffer size. */
+#define UART_RX_BUF_SIZE 1                                                         /**< UART RX buffer size. */
 
-#define DEVICE_NAME                     "Nordic_Mouse"                              /**< Name of device. Will be included in the advertising data. */
-#define MANUFACTURER_NAME               "NordicSemiconductor"                       /**< Manufacturer. Will be passed to Device Information Service. */
+#define LEFT_BUTTON_ID                  0                                          /**< Button used for moving the mouse pointer to the left. */
+#define UP_BUTTON_ID                    1                                          /**< Button used for moving the mouse pointer upwards. */
+#define RIGHT_BUTTON_ID                 2                                          /**< Button used for moving the mouse pointer to the right. */
+#define DOWN_BUTTON_ID                  3                                          /**< Button used for moving the mouse pointer downwards. */
+#define BOND_DELETE_ALL_BUTTON_ID       1                                          /**< Button used for deleting all bonded centrals during startup. */
 
-#define APP_TIMER_PRESCALER             0                                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            (4+BSP_APP_TIMERS_NUMBER)                    /**< Maximum number of simultaneously created timers. */
-#define APP_TIMER_OP_QUEUE_SIZE         4                                           /**< Size of timer operation queues. */
+#define DEVICE_NAME                     "Nordic_Mouse"                             /**< Name of device. Will be included in the advertising data. */
+#define MANUFACTURER_NAME               "NordicSemiconductor"                      /**< Manufacturer. Will be passed to Device Information Service. */
 
-#define BATTERY_LEVEL_MEAS_INTERVAL     APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER)  /**< Battery level measurement interval (ticks). */
-#define MIN_BATTERY_LEVEL               81                                          /**< Minimum simulated battery level. */
-#define MAX_BATTERY_LEVEL               100                                         /**< Maximum simulated battery level. */
-#define BATTERY_LEVEL_INCREMENT         1                                           /**< Increment between each simulated battery level measurement. */
+#define APP_TIMER_PRESCALER             0                                          /**< Value of the RTC1 PRESCALER register. */
+#define APP_TIMER_MAX_TIMERS            (4 + BSP_APP_TIMERS_NUMBER)                /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_OP_QUEUE_SIZE         4                                          /**< Size of timer operation queues. */
 
-#define APP_ADV_INTERVAL_FAST           0x0028                                      /**< Fast advertising interval (in units of 0.625 ms. This value corresponds to 25 ms.). */
-#define APP_ADV_INTERVAL_SLOW           0x0C80                                      /**< Slow advertising interval (in units of 0.625 ms. This value corrsponds to 2 seconds). */
-#define APP_FAST_ADV_TIMEOUT            30                                          /**< The duration of the fast advertising period (in seconds). */
-#define APP_SLOW_ADV_TIMEOUT            180                                         /**< The duration of the slow advertising period (in seconds). */
-#define APP_DIRECTED_ADV_TIMEOUT        5                                           /**< Number of direct advertisement (each lasting 1.28seconds). */
+#define BATTERY_LEVEL_MEAS_INTERVAL     APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). */
+#define MIN_BATTERY_LEVEL               81                                         /**< Minimum simulated battery level. */
+#define MAX_BATTERY_LEVEL               100                                        /**< Maximum simulated battery level. */
+#define BATTERY_LEVEL_INCREMENT         1                                          /**< Increment between each simulated battery level measurement. */
+
+//#define APP_ADV_INTERVAL_FAST           0x0028                                      /**< Fast advertising interval (in units of 0.625 ms. This value corresponds to 25 ms.). */
+//#define APP_ADV_INTERVAL_SLOW           0x0C80                                      /**< Slow advertising interval (in units of 0.625 ms. This value corrsponds to 2 seconds). */
+//#define APP_FAST_ADV_TIMEOUT            30                                          /**< The duration of the fast advertising period (in seconds). */
+//#define APP_SLOW_ADV_TIMEOUT            180                                         /**< The duration of the slow advertising period (in seconds). */
+//#define APP_DIRECTED_ADV_TIMEOUT        5                                           /**< Number of direct advertisement (each lasting 1.28seconds). */
 
 #define PNP_ID_VENDOR_ID_SOURCE         0x02                                        /**< Vendor ID Source. */
 #define PNP_ID_VENDOR_ID                0x1915                                      /**< Vendor ID. */
@@ -91,8 +96,8 @@
 /*lint -emacro(524, MIN_CONN_INTERVAL) // Loss of precision */
 #define MIN_CONN_INTERVAL               MSEC_TO_UNITS(7.5, UNIT_1_25_MS)            /**< Minimum connection interval (7.5 ms). */
 #define MAX_CONN_INTERVAL               MSEC_TO_UNITS(15, UNIT_1_25_MS)             /**< Maximum connection interval (15 ms). */
-#define SLAVE_LATENCY                   25                                          /**< Slave latency. */
-#define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(3000, UNIT_10_MS)             /**< Connection supervisory timeout (300 ms). */
+#define SLAVE_LATENCY                   20                                          /**< Slave latency. */
+#define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(3000, UNIT_10_MS)             /**< Connection supervisory timeout (3000 ms). */
 
 #define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)  /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
 #define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER) /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
@@ -102,7 +107,6 @@
 
 #define BUTTON_DETECTION_DELAY          APP_TIMER_TICKS(50, APP_TIMER_PRESCALER)    /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
 
-#define SEC_PARAM_TIMEOUT               30                                          /**< Timeout for Pairing Request or Security Request (in seconds). */
 #define SEC_PARAM_BOND                  1                                           /**< Perform bonding. */
 #define SEC_PARAM_MITM                  0                                           /**< Man In The Middle protection not required. */
 #define SEC_PARAM_IO_CAPABILITIES       BLE_GAP_IO_CAPS_NONE                        /**< No I/O capabilities. */
@@ -130,34 +134,34 @@
 
 #define DEAD_BEEF                       0xDEADBEEF                                  /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
-typedef enum
-{
-    BLE_NO_ADV,                                                                         /**< No advertising running. */
-    BLE_DIRECTED_ADV,                                                                   /**< Direct advertising to the latest central. */
-    BLE_FAST_ADV_WHITELIST,                                                             /**< Advertising with whitelist. */
-    BLE_FAST_ADV,                                                                       /**< Fast advertising running. */
-    BLE_SLOW_ADV,                                                                       /**< Slow advertising running. */
-    BLE_SLEEP,                                                                          /**< Go to system-off. */
-} ble_advertising_mode_t;
+#define APP_FEATURE_NOT_SUPPORTED       BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2        /**< Reply when unsupported features are requested. */
+
+#define APP_ADV_FAST_INTERVAL     0x0028   /**< Fast advertising interval (in units of 0.625 ms. This value corresponds to 25 ms.). */
+#define APP_ADV_SLOW_INTERVAL     0x0C80   /**< Slow advertising interval (in units of 0.625 ms. This value corrsponds to 2 seconds). */
+
+#define APP_ADV_FAST_TIMEOUT      30       /**< The duration of the fast advertising period (in seconds). */
+#define APP_ADV_SLOW_TIMEOUT      180      /**< The duration of the slow advertising period (in seconds). */
+
+#define APP_ADV_DIRECTED_TIMEOUT  5        /**< Number of direct advertisement (each lasting 1.28seconds). */
 
 static ble_hids_t                       m_hids;                                     /**< Structure used to identify the HID service. */
 static ble_bas_t                        m_bas;                                      /**< Structure used to identify the battery service. */
 static bool                             m_in_boot_mode = false;                     /**< Current protocol mode. */
 
-static ble_sensorsim_cfg_t              m_battery_sim_cfg;                          /**< Battery Level sensor simulator configuration. */
-static ble_sensorsim_state_t            m_battery_sim_state;                        /**< Battery Level sensor simulator state. */
+static sensorsim_cfg_t                  m_battery_sim_cfg;                          /**< Battery Level sensor simulator configuration. */
+static sensorsim_state_t                m_battery_sim_state;                        /**< Battery Level sensor simulator state. */
 
 static app_timer_id_t                   m_battery_timer_id;                         /**< Battery timer. */
 
-static uint8_t                          m_advertising_mode;                         /**< Variable to keep track of when we are advertising. */
-static uint8_t                          m_direct_adv_cnt;                           /**< Counter of direct advertisements. */
 static dm_application_instance_t        m_app_handle;                               /**< Application identifier allocated by device manager. */
 static dm_handle_t                      m_bonded_peer_handle;                       /**< Device reference handle to the current connected peer. */
-static ble_gap_addr_t                   m_ble_addr;                                 /**< Variable for getting and setting of BLE device address. */
 
-static bool                             m_memory_access_in_progress = false;        /**< Flag to keep track of ongoing operations on persistent memory. */
+static ble_uuid_t m_adv_uuids[] = {{BLE_UUID_HUMAN_INTERFACE_DEVICE_SERVICE, BLE_UUID_TYPE_BLE}}; /**< Universally unique service identifiers. */
+
 
 static void on_hids_evt(ble_hids_t * p_hids, ble_hids_evt_t * p_evt);
+
+
 
 /**@brief Callback function for asserts in the SoftDevice.
  *
@@ -189,6 +193,16 @@ static void service_error_handler(uint32_t nrf_error)
 }
 
 
+/**@brief Function for handling advertising errors.
+ *
+ * @param[in] nrf_error  Error code containing information about what went wrong.
+ */
+static void ble_advertising_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
+}
+
+
 /**@brief Function for performing a battery measurement, and update the Battery Level characteristic in the Battery Service.
  */
 static void battery_level_update(void)
@@ -196,7 +210,7 @@ static void battery_level_update(void)
     uint32_t err_code;
     uint8_t  battery_level;
 
-    battery_level = (uint8_t)ble_sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
+    battery_level = (uint8_t)sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
 
     err_code = ble_bas_battery_level_update(&m_bas, battery_level);
     if ((err_code != NRF_SUCCESS) &&
@@ -223,6 +237,7 @@ static void battery_level_meas_timeout_handler(void * p_context)
     battery_level_update();
 }
 
+
 /**@brief Function for the Timer initialization.
  *
  * @details Initializes the timer module.
@@ -232,7 +247,7 @@ static void timers_init(void)
     uint32_t err_code;
 
     // Initialize timer module, making it use the scheduler.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, true);
+    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, true);
 
     // Create battery timer.
     err_code = app_timer_create(&m_battery_timer_id,
@@ -271,43 +286,6 @@ static void gap_params_init(void)
     gap_conn_params.conn_sup_timeout  = CONN_SUP_TIMEOUT;
 
     err_code = sd_ble_gap_ppcp_set(&gap_conn_params);
-    APP_ERROR_CHECK(err_code);
-}
-
-
-/**@brief Function for initializing the Advertising functionality.
- *
- * @details Encodes the required advertising data and passes it to the stack.
- *          Also builds a structure to be passed to the stack when starting advertising.
- *
- * @param[in]  adv_flags  Indicates which type of advertisement to use, see @ref BLE_GAP_DISC_MODES.
- */
-static void advertising_init(uint8_t adv_flags)
-{
-    uint32_t      err_code;
-    ble_advdata_t advdata;
-
-    ble_uuid_t adv_uuids[] = {{BLE_UUID_HUMAN_INTERFACE_DEVICE_SERVICE, BLE_UUID_TYPE_BLE}};
-
-    err_code = sd_ble_gap_address_get(&m_ble_addr);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = sd_ble_gap_address_set(BLE_GAP_ADDR_CYCLE_MODE_NONE, &m_ble_addr);
-    APP_ERROR_CHECK(err_code);
-
-    m_advertising_mode = BLE_NO_ADV;
-
-    // Build and set advertising data
-    memset(&advdata, 0, sizeof(advdata));
-
-    advdata.name_type               = BLE_ADVDATA_FULL_NAME;
-    advdata.include_appearance      = true;
-    advdata.flags.size              = sizeof(adv_flags);
-    advdata.flags.p_data            = &adv_flags;
-    advdata.uuids_complete.uuid_cnt = sizeof(adv_uuids) / sizeof(adv_uuids[0]);
-    advdata.uuids_complete.p_uuids  = adv_uuids;
-
-    err_code = ble_advdata_set(&advdata, NULL);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -381,76 +359,76 @@ static void hids_init(void)
         0xA1, 0x01,                     // Collection (Application)
 
         // Report ID 1: Mouse buttons + scroll/pan
-        0x85, 0x01,                     //     Report Id 1
-        0x09, 0x01,                     //     Usage (Pointer)
-        0xA1, 0x00,                     //     Collection (Physical)
-        0x95, 0x05,                     //         Report Count (3)
-        0x75, 0x01,                     //         Report Size (1)
-        0x05, 0x09,                     //         Usage Page (Buttons)
-        0x19, 0x01,                     //             Usage Minimum (01)
-        0x29, 0x05,                     //             Usage Maximum (05)
-        0x15, 0x00,                     //             Logical Minimum (0)
-        0x25, 0x01,                     //             Logical Maximum (1)
-        0x81, 0x02,                     //             Input (Data, Variable, Absolute)
-        0x95, 0x01,                     //             Report Count (1)
-        0x75, 0x03,                     //             Report Size (3)
-        0x81, 0x01,                     //             Input (Constant) for padding
-        0x75, 0x08,                     //             Report Size (8)
-        0x95, 0x01,                     //             Report Count (1)
-        0x05, 0x01,                     //         Usage Page (Generic Desktop)
-        0x09, 0x38,                     //             Usage (Wheel)
-        0x15, 0x81,                     //             Logical Minimum (-127)
-        0x25, 0x7F,                     //             Logical Maximum (127)
-        0x81, 0x06,                     //             Input (Data, Variable, Relative)
-        0x05, 0x0C,                     //         Usage Page (Consumer)
-        0x0A, 0x38, 0x02,               //             Usage (AC Pan)
-        0x95, 0x01,                     //             Report Count (1)
-        0x81, 0x06,                     //             Input (Data,Value,Relative,Bit Field)
-        0xC0,                           //     End Collection (Physical)
+        0x85, 0x01,       //     Report Id 1
+        0x09, 0x01,       //     Usage (Pointer)
+        0xA1, 0x00,       //     Collection (Physical)
+        0x95, 0x05,       //         Report Count (3)
+        0x75, 0x01,       //         Report Size (1)
+        0x05, 0x09,       //         Usage Page (Buttons)
+        0x19, 0x01,       //             Usage Minimum (01)
+        0x29, 0x05,       //             Usage Maximum (05)
+        0x15, 0x00,       //             Logical Minimum (0)
+        0x25, 0x01,       //             Logical Maximum (1)
+        0x81, 0x02,       //             Input (Data, Variable, Absolute)
+        0x95, 0x01,       //             Report Count (1)
+        0x75, 0x03,       //             Report Size (3)
+        0x81, 0x01,       //             Input (Constant) for padding
+        0x75, 0x08,       //             Report Size (8)
+        0x95, 0x01,       //             Report Count (1)
+        0x05, 0x01,       //         Usage Page (Generic Desktop)
+        0x09, 0x38,       //             Usage (Wheel)
+        0x15, 0x81,       //             Logical Minimum (-127)
+        0x25, 0x7F,       //             Logical Maximum (127)
+        0x81, 0x06,       //             Input (Data, Variable, Relative)
+        0x05, 0x0C,       //         Usage Page (Consumer)
+        0x0A, 0x38, 0x02, //             Usage (AC Pan)
+        0x95, 0x01,       //             Report Count (1)
+        0x81, 0x06,       //             Input (Data,Value,Relative,Bit Field)
+        0xC0,             //     End Collection (Physical)
 
         // Report ID 2: Mouse motion
-        0x85, 0x02,                     //     Report Id 2
-        0x09, 0x01,                     //     Usage (Pointer)
-        0xA1, 0x00,                     //     Collection (Physical)
-        0x75, 0x0C,                     //         Report Size (12)
-        0x95, 0x02,                     //         Report Count (2)
-        0x05, 0x01,                     //         Usage Page (Generic Desktop)
-        0x09, 0x30,                     //             Usage (X)
-        0x09, 0x31,                     //             Usage (Y)
-        0x16, 0x01, 0xF8,               //             Logical maximum (2047)
-        0x26, 0xFF, 0x07,               //             Logical minimum (-2047)
-        0x81, 0x06,                     //             Input (Data, Variable, Relative)
-        0xC0,                           //     End Collection (Physical)
-        0xC0,                           // End Collection (Application)
+        0x85, 0x02,       //     Report Id 2
+        0x09, 0x01,       //     Usage (Pointer)
+        0xA1, 0x00,       //     Collection (Physical)
+        0x75, 0x0C,       //         Report Size (12)
+        0x95, 0x02,       //         Report Count (2)
+        0x05, 0x01,       //         Usage Page (Generic Desktop)
+        0x09, 0x30,       //             Usage (X)
+        0x09, 0x31,       //             Usage (Y)
+        0x16, 0x01, 0xF8, //             Logical maximum (2047)
+        0x26, 0xFF, 0x07, //             Logical minimum (-2047)
+        0x81, 0x06,       //             Input (Data, Variable, Relative)
+        0xC0,             //     End Collection (Physical)
+        0xC0,             // End Collection (Application)
 
         // Report ID 3: Advanced buttons
-        0x05, 0x0C,                     // Usage Page (Consumer)
-        0x09, 0x01,                     // Usage (Consumer Control)
-        0xA1, 0x01,                     // Collection (Application)
-        0x85, 0x03,                     //     Report Id (3)
-        0x15, 0x00,                     //     Logical minimum (0)
-        0x25, 0x01,                     //     Logical maximum (1)
-        0x75, 0x01,                     //     Report Size (1)
-        0x95, 0x01,                     //     Report Count (1)
+        0x05, 0x0C,       // Usage Page (Consumer)
+        0x09, 0x01,       // Usage (Consumer Control)
+        0xA1, 0x01,       // Collection (Application)
+        0x85, 0x03,       //     Report Id (3)
+        0x15, 0x00,       //     Logical minimum (0)
+        0x25, 0x01,       //     Logical maximum (1)
+        0x75, 0x01,       //     Report Size (1)
+        0x95, 0x01,       //     Report Count (1)
 
-        0x09, 0xCD,                     //     Usage (Play/Pause)
-        0x81, 0x06,                     //     Input (Data,Value,Relative,Bit Field)
-        0x0A, 0x83, 0x01,               //     Usage (AL Consumer Control Configuration)
-        0x81, 0x06,                     //     Input (Data,Value,Relative,Bit Field)
-        0x09, 0xB5,                     //     Usage (Scan Next Track)
-        0x81, 0x06,                     //     Input (Data,Value,Relative,Bit Field)
-        0x09, 0xB6,                     //     Usage (Scan Previous Track)
-        0x81, 0x06,                     //     Input (Data,Value,Relative,Bit Field)
+        0x09, 0xCD,       //     Usage (Play/Pause)
+        0x81, 0x06,       //     Input (Data,Value,Relative,Bit Field)
+        0x0A, 0x83, 0x01, //     Usage (AL Consumer Control Configuration)
+        0x81, 0x06,       //     Input (Data,Value,Relative,Bit Field)
+        0x09, 0xB5,       //     Usage (Scan Next Track)
+        0x81, 0x06,       //     Input (Data,Value,Relative,Bit Field)
+        0x09, 0xB6,       //     Usage (Scan Previous Track)
+        0x81, 0x06,       //     Input (Data,Value,Relative,Bit Field)
 
-        0x09, 0xEA,                     //     Usage (Volume Down)
-        0x81, 0x06,                     //     Input (Data,Value,Relative,Bit Field)
-        0x09, 0xE9,                     //     Usage (Volume Up)
-        0x81, 0x06,                     //     Input (Data,Value,Relative,Bit Field)
-        0x0A, 0x25, 0x02,               //     Usage (AC Forward)
-        0x81, 0x06,                     //     Input (Data,Value,Relative,Bit Field)
-        0x0A, 0x24, 0x02,               //     Usage (AC Back)
-        0x81, 0x06,                     //     Input (Data,Value,Relative,Bit Field)
-        0xC0                            // End Collection
+        0x09, 0xEA,       //     Usage (Volume Down)
+        0x81, 0x06,       //     Input (Data,Value,Relative,Bit Field)
+        0x09, 0xE9,       //     Usage (Volume Up)
+        0x81, 0x06,       //     Input (Data,Value,Relative,Bit Field)
+        0x0A, 0x25, 0x02, //     Usage (AC Forward)
+        0x81, 0x06,       //     Input (Data,Value,Relative,Bit Field)
+        0x0A, 0x24, 0x02, //     Usage (AC Back)
+        0x81, 0x06,       //     Input (Data,Value,Relative,Bit Field)
+        0xC0              // End Collection
     };
 
     memset(inp_rep_array, 0, sizeof(inp_rep_array));
@@ -538,14 +516,14 @@ static void services_init(void)
 
 /**@brief Function for initializing the battery sensor simulator.
  */
-static void sensor_sim_init(void)
+static void sensor_simulator_init(void)
 {
     m_battery_sim_cfg.min          = MIN_BATTERY_LEVEL;
     m_battery_sim_cfg.max          = MAX_BATTERY_LEVEL;
     m_battery_sim_cfg.incr         = BATTERY_LEVEL_INCREMENT;
     m_battery_sim_cfg.start_at_max = true;
 
-    ble_sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
+    sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
 }
 
 
@@ -593,133 +571,6 @@ static void timers_start(void)
 }
 
 
-/**@brief Function for starting advertising.
- */
-static void advertising_start(void)
-{
-    uint32_t             err_code;
-    ble_gap_adv_params_t adv_params;
-    ble_gap_whitelist_t  whitelist;
-    ble_gap_addr_t       peer_address;
-    uint32_t             count;
-
-    // Verify if there is any flash access pending, if yes delay starting advertising until 
-    // it's complete.
-    err_code = pstorage_access_status_get(&count);
-    APP_ERROR_CHECK(err_code);
-    
-    if (count != 0)
-    {
-        m_memory_access_in_progress = true;
-        return;
-    }
-    // Initialize advertising parameters with defaults values
-    memset(&adv_params, 0, sizeof(adv_params));
-
-    adv_params.type        = BLE_GAP_ADV_TYPE_ADV_IND;
-    adv_params.p_peer_addr = NULL;
-    adv_params.fp          = BLE_GAP_ADV_FP_ANY;
-    adv_params.p_whitelist = NULL;
-
-    // Configure advertisement according to current advertising state.
-    if (m_advertising_mode == BLE_DIRECTED_ADV)
-    {
-        err_code = dm_peer_addr_get(&m_bonded_peer_handle, &peer_address);
-        if (err_code != NRF_SUCCESS)
-        {
-            m_advertising_mode = BLE_FAST_ADV_WHITELIST;
-        }
-    }
-
-    switch (m_advertising_mode)
-    {
-        case BLE_NO_ADV:
-            m_advertising_mode = BLE_FAST_ADV_WHITELIST;
-            // Fall through.
-
-        case BLE_FAST_ADV_WHITELIST:
-        {
-            ble_gap_addr_t       * p_whitelist_addr[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
-            ble_gap_irk_t        * p_whitelist_irk[BLE_GAP_WHITELIST_IRK_MAX_COUNT];
-            
-            whitelist.addr_count = BLE_GAP_WHITELIST_ADDR_MAX_COUNT;
-            whitelist.irk_count  = BLE_GAP_WHITELIST_IRK_MAX_COUNT;
-            whitelist.pp_addrs   = p_whitelist_addr;
-            whitelist.pp_irks    = p_whitelist_irk;
-            
-            err_code = dm_whitelist_create(&m_app_handle, &whitelist);
-            APP_ERROR_CHECK(err_code);
-
-            if ((whitelist.addr_count != 0) || (whitelist.irk_count != 0))
-            {
-                adv_params.fp          = BLE_GAP_ADV_FP_FILTER_CONNREQ;
-                adv_params.p_whitelist = &whitelist;
-
-                advertising_init(BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED);
-                m_advertising_mode = BLE_FAST_ADV;
-
-                err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_WHITELIST);
-                APP_ERROR_CHECK(err_code);
-            }
-            else
-            {
-                err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_SLOW);
-                APP_ERROR_CHECK(err_code);
-							
-                m_advertising_mode = BLE_SLOW_ADV;
-            }
-
-            adv_params.interval = APP_ADV_INTERVAL_FAST;
-            adv_params.timeout  = APP_FAST_ADV_TIMEOUT;
-            break;
-        }
-
-        case BLE_DIRECTED_ADV:
-            adv_params.p_peer_addr = &peer_address;
-            adv_params.type        = BLE_GAP_ADV_TYPE_ADV_DIRECT_IND;
-            adv_params.timeout     = 0;
-
-            m_direct_adv_cnt--;
-            if (m_direct_adv_cnt == 0)
-            {
-                m_advertising_mode = BLE_FAST_ADV_WHITELIST;
-            }
-            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_DIRECTED);
-            APP_ERROR_CHECK(err_code);
-            break;
-
-        case BLE_FAST_ADV:
-            advertising_init(BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE);
-
-            adv_params.interval = APP_ADV_INTERVAL_FAST;
-            adv_params.timeout  = APP_FAST_ADV_TIMEOUT;
-            m_advertising_mode  = BLE_SLOW_ADV;
-            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
-            APP_ERROR_CHECK(err_code);
-            break;
-
-        case BLE_SLOW_ADV:
-            advertising_init(BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE);
-
-            adv_params.interval = APP_ADV_INTERVAL_SLOW;
-            adv_params.timeout  = APP_SLOW_ADV_TIMEOUT;
-            m_advertising_mode  = BLE_SLEEP;
-
-            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_SLOW);
-            APP_ERROR_CHECK(err_code);
-            break;
-
-        default:
-            // No implementation needed.
-            break;
-    }
-
-    // Start advertising.
-    err_code = sd_ble_gap_adv_start(&adv_params);
-    APP_ERROR_CHECK(err_code);
-}
-
-
 /**@brief Function for handling HID events.
  *
  * @details This function will be called for all HID events which are passed to the application.
@@ -741,9 +592,9 @@ static void on_hids_evt(ble_hids_t * p_hids, ble_hids_evt_t *p_evt)
 
         case BLE_HIDS_EVT_NOTIF_ENABLED:
         {
-            dm_service_context_t   service_context;
-            service_context.service_type = DM_PROTOCOL_CNTXT_GATT_SRVR_ID;
-            service_context.context_data.len = 0;
+            dm_service_context_t service_context;
+            service_context.service_type        = DM_PROTOCOL_CNTXT_GATT_SRVR_ID;
+            service_context.context_data.len    = 0;
             service_context.context_data.p_data = NULL;
             if (m_in_boot_mode)
             {
@@ -814,14 +665,103 @@ static void on_hids_evt(ble_hids_t * p_hids, ble_hids_evt_t *p_evt)
 }
 
 
+/**@brief Function for handling advertising events.
+ *
+ * @details This function will be called for advertising events which are passed to the application.
+ *
+ * @param[in] ble_adv_evt  Advertising event.
+ */
+static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
+{
+    uint32_t err_code;
+
+    switch (ble_adv_evt)
+    {
+        case BLE_ADV_EVT_DIRECTED:
+            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_DIRECTED);
+            APP_ERROR_CHECK(err_code);
+            break;
+        case BLE_ADV_EVT_FAST:
+            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
+            APP_ERROR_CHECK(err_code);
+            break;
+        case BLE_ADV_EVT_SLOW:
+            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_SLOW);
+            APP_ERROR_CHECK(err_code);
+            break;
+        case BLE_ADV_EVT_FAST_WHITELIST:
+            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_WHITELIST);
+            APP_ERROR_CHECK(err_code);
+            break;
+        case BLE_ADV_EVT_SLOW_WHITELIST:
+            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_WHITELIST);
+            APP_ERROR_CHECK(err_code);
+            err_code = ble_advertising_restart_without_whitelist();
+            APP_ERROR_CHECK(err_code);
+            break;
+        case BLE_ADV_EVT_IDLE:
+            err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+            APP_ERROR_CHECK(err_code);
+
+            err_code = bsp_buttons_enable(  (1 << LEFT_BUTTON_ID)
+                                          | (1 << BOND_DELETE_ALL_BUTTON_ID));
+            APP_ERROR_CHECK(err_code);
+
+            // Go to system-off mode. This function will not return; wakeup will cause a reset.
+            err_code = sd_power_system_off();
+            APP_ERROR_CHECK(err_code);
+            break;
+
+        case BLE_ADV_EVT_WHITELIST_REQUEST:
+        {
+            ble_gap_whitelist_t whitelist;
+            ble_gap_addr_t    * p_whitelist_addr[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
+            ble_gap_irk_t     * p_whitelist_irk[BLE_GAP_WHITELIST_IRK_MAX_COUNT];
+
+            whitelist.addr_count = BLE_GAP_WHITELIST_ADDR_MAX_COUNT;
+            whitelist.irk_count  = BLE_GAP_WHITELIST_IRK_MAX_COUNT;
+            whitelist.pp_addrs   = p_whitelist_addr;
+            whitelist.pp_irks    = p_whitelist_irk;
+
+            err_code = dm_whitelist_create(&m_app_handle, &whitelist);
+            APP_ERROR_CHECK(err_code);
+
+            err_code = ble_advertising_whitelist_reply(&whitelist);
+            APP_ERROR_CHECK(err_code);
+            break;
+        }
+        case BLE_ADV_EVT_PEER_ADDR_REQUEST:
+        {
+            ble_gap_addr_t peer_address;
+
+            // Only Give peer address if we have a handle to the bonded peer.
+            if(m_bonded_peer_handle.appl_id != DM_INVALID_ID)
+            {
+                            
+                err_code = dm_peer_addr_get(&m_bonded_peer_handle, &peer_address);
+                APP_ERROR_CHECK(err_code);
+            
+                err_code = ble_advertising_peer_addr_reply(&peer_address);
+                APP_ERROR_CHECK(err_code);
+                
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @param[in]   p_ble_evt   Bluetooth stack event.
  */
 static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
-    uint32_t        err_code;
-    static uint16_t m_conn_handle = BLE_CONN_HANDLE_INVALID;
+    uint32_t                              err_code;
+    static uint16_t                       m_conn_handle = BLE_CONN_HANDLE_INVALID;
+    ble_gatts_rw_authorize_reply_params_t auth_reply;
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -830,12 +770,12 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             APP_ERROR_CHECK(err_code);
 
             // Start handling button presses.
-            err_code = bsp_buttons_enable((1 << LEFT_BUTTON_ID) | (1 << UP_BUTTON_ID) |
-                               (1 << RIGHT_BUTTON_ID) | (1<<DOWN_BUTTON_ID) | (1<<BOND_DELETE_ALL_BUTTON_ID));
+            err_code = bsp_buttons_enable( (1 << LEFT_BUTTON_ID)  | (1 << UP_BUTTON_ID)
+                                         | (1 << RIGHT_BUTTON_ID) | (1 << DOWN_BUTTON_ID)
+                                         | (1 << BOND_DELETE_ALL_BUTTON_ID));
             APP_ERROR_CHECK(err_code);
 
             m_conn_handle      = p_ble_evt->evt.gap_evt.conn_handle;
-            m_advertising_mode = BLE_NO_ADV;
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
@@ -847,36 +787,36 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             // Stop detecting button presses when not connected.
             err_code = bsp_buttons_enable(BSP_BUTTONS_NONE);
             APP_ERROR_CHECK(err_code);
-
-            m_advertising_mode = BLE_DIRECTED_ADV;
-            m_direct_adv_cnt   = APP_DIRECTED_ADV_TIMEOUT;
-            advertising_start();
             break;
 
-        case BLE_GAP_EVT_TIMEOUT:
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT)
+        case BLE_EVT_USER_MEM_REQUEST:
+            err_code = sd_ble_user_mem_reply(m_conn_handle, NULL);
+            APP_ERROR_CHECK(err_code);
+            break;
+
+        case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
+            if(p_ble_evt->evt.gatts_evt.params.authorize_request.type
+               != BLE_GATTS_AUTHORIZE_TYPE_INVALID)
             {
-                if (m_advertising_mode == BLE_SLEEP)
+                if ((p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
+                     == BLE_GATTS_OP_PREP_WRITE_REQ)
+                    || (p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
+                     == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW)
+                    || (p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
+                     == BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL))
                 {
-                    m_advertising_mode = BLE_NO_ADV;
-
-
-                    err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+                    if (p_ble_evt->evt.gatts_evt.params.authorize_request.type
+                        == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
+                    {
+                    auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
+                    }
+                    else
+                    {
+                        auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_READ;
+                    }
+                    auth_reply.params.write.gatt_status = APP_FEATURE_NOT_SUPPORTED;
+                    err_code = sd_ble_gatts_rw_authorize_reply(m_conn_handle,&auth_reply);
                     APP_ERROR_CHECK(err_code);
-
-                    // Configure buttons with sense level low as wakeup source.
-                    err_code = bsp_buttons_enable((1 << LEFT_BUTTON_ID) |
-                                                        (1 << BOND_DELETE_ALL_BUTTON_ID));
-                    APP_ERROR_CHECK(err_code);
-                    
-                    // Go to system-off mode.
-                    // (this function will not return; wakeup will cause a reset).
-                    err_code = sd_power_system_off();
-                    APP_ERROR_CHECK(err_code);
-                }
-                else
-                {
-                    advertising_start();
                 }
             }
             break;
@@ -887,30 +827,6 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             err_code = sd_ble_gap_disconnect(m_conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
-            break;
-
-        default:
-            // No implementation needed.
-            break;
-    }
-}
-
-
-/**@brief Function for handling the Application's system events.
- *
- * @param[in]   sys_evt   system event.
- */
-static void on_sys_evt(uint32_t sys_evt)
-{
-    switch(sys_evt)
-    {
-        case NRF_EVT_FLASH_OPERATION_SUCCESS:
-        case NRF_EVT_FLASH_OPERATION_ERROR:
-            if (m_memory_access_in_progress)
-            {
-                m_memory_access_in_progress = false;
-                advertising_start();
-            }
             break;
         default:
             // No implementation needed.
@@ -930,6 +846,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
     dm_ble_evt_handler(p_ble_evt);
     on_ble_evt(p_ble_evt);
+    ble_advertising_on_ble_evt(p_ble_evt);
     ble_conn_params_on_ble_evt(p_ble_evt);
     ble_hids_on_ble_evt(&m_hids, p_ble_evt);
     ble_bas_on_ble_evt(&m_bas, p_ble_evt);
@@ -946,7 +863,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
     pstorage_sys_event_handler(sys_evt);
-    on_sys_evt(sys_evt);
+    ble_advertising_on_sys_evt(sys_evt);
 }
 
 
@@ -959,9 +876,9 @@ static void ble_stack_init(void)
     uint32_t err_code;
 
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, true);
+    SOFTDEVICE_HANDLER_APPSH_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, true);
 
-    // Enable BLE stack 
+    // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
@@ -974,6 +891,37 @@ static void ble_stack_init(void)
 
     // Register with the SoftDevice handler module for BLE events.
     err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for initializing the Advertising functionality.
+ */
+static void advertising_init(void)
+{
+    uint32_t       err_code;
+    uint8_t        adv_flags;
+    ble_advdata_t  advdata;
+
+    // Build and set advertising data
+    memset(&advdata, 0, sizeof(advdata));
+
+    adv_flags                       = BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE;
+    advdata.name_type               = BLE_ADVDATA_FULL_NAME;
+    advdata.include_appearance      = true;
+    advdata.flags                   = adv_flags;
+    advdata.uuids_complete.uuid_cnt = sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
+    advdata.uuids_complete.p_uuids  = m_adv_uuids;
+
+    ble_adv_modes_config_t options =
+    {
+        BLE_ADV_WHITELIST_ENABLED,
+        BLE_ADV_DIRECTED_ENABLED, APP_ADV_DIRECTED_TIMEOUT,
+        BLE_ADV_FAST_ENABLED, APP_ADV_FAST_INTERVAL, APP_ADV_FAST_TIMEOUT,
+        BLE_ADV_SLOW_ENABLED, APP_ADV_SLOW_INTERVAL, APP_ADV_SLOW_TIMEOUT
+    };
+
+    err_code = ble_advertising_init(&advdata, &options, on_adv_evt, ble_advertising_error_handler);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -1047,12 +995,15 @@ static void button_event_handler(bsp_event_t event)
         case BSP_EVENT_KEY_0:
             mouse_movement_send(-MOVEMENT_SPEED, 0);
             break;
+
         case BSP_EVENT_KEY_1:
             mouse_movement_send(0, -MOVEMENT_SPEED);
             break;
+
         case BSP_EVENT_KEY_2:
             mouse_movement_send(MOVEMENT_SPEED, 0);
             break;
+
         case BSP_EVENT_KEY_3:
             mouse_movement_send(0, MOVEMENT_SPEED);
             break;
@@ -1073,13 +1024,13 @@ static void gpiote_init(void)
  *
  * @param[in]   p_evt   Data associated to the device manager event.
  */
-static uint32_t device_manager_evt_handler(dm_handle_t const    * p_handle,
-                                           dm_event_t const     * p_event,
-                                           api_result_t           event_result)
+static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
+                                           dm_event_t const  * p_event,
+                                           ret_code_t        event_result)
 {
     APP_ERROR_CHECK(event_result);
 
-    switch(p_event->event_id)
+    switch (p_event->event_id)
     {
         case DM_EVT_DEVICE_CONTEXT_LOADED: // Fall through.
         case DM_EVT_SECURITY_SETUP_COMPLETE:
@@ -1095,14 +1046,14 @@ static uint32_t device_manager_evt_handler(dm_handle_t const    * p_handle,
  */
 static void device_manager_init(void)
 {
-    uint32_t                err_code;
-    dm_init_param_t         init_data;
-    dm_application_param_t  register_param;
+    uint32_t               err_code;
+    dm_init_param_t        init_data;
+    dm_application_param_t register_param;
 
     // Initialize peer device handle.
     err_code = dm_handle_initialize(&m_bonded_peer_handle);
     APP_ERROR_CHECK(err_code);
-    
+
     // Initialize persistent storage module.
     err_code = pstorage_init();
     APP_ERROR_CHECK(err_code);
@@ -1113,10 +1064,9 @@ static void device_manager_init(void)
 
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
-    
+
     memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
 
-    register_param.sec_param.timeout      = SEC_PARAM_TIMEOUT;
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
@@ -1144,25 +1094,30 @@ static void power_manage(void)
  */
 int main(void)
 {
+    uint32_t err_code;
+
     // Initialize.
     app_trace_init();
     timers_init();
     gpiote_init();
     ble_stack_init();
-    uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), button_event_handler);
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
+                        button_event_handler);
     APP_ERROR_CHECK(err_code);
 
     scheduler_init();
     device_manager_init();
     gap_params_init();
-    advertising_init(BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE);
+    advertising_init();
     services_init();
-    sensor_sim_init();
+    sensor_simulator_init();
     conn_params_init();
 
     // Start execution.
     timers_start();
-    advertising_start();
+    err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
+    APP_ERROR_CHECK(err_code);
 
     // Enter main loop.
     for (;;)

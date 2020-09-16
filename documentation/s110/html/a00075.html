@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Serialization Codecs</title>
+<title>nRF51 SDK - S110 SoftDevice: Running Speed and Cadence Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,73 +97,50 @@ $(document).ready(function(){initNavTree('a00075.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Serialization Codecs </div>  </div>
+<div class="title">Running Speed and Cadence Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="packet_encoding_format"></a>
-Packet Encoding Format</h1>
-<div class="image">
-<img src="frame_general.png" alt="frame_general.png"/>
-<div class="caption">
-Figure 1: Frame format.</div></div>
-<p>For an architectural overview of Serialized <em>Bluetooth</em> Application, please see the <a class="el" href="a00073.html#nrf51_arch_serialization">Architecture</a> module. <br/>
-</p>
-<h2><a class="anchor" id="packet_encoding_format_commands"></a>
-Commands and responses</h2>
-<div class="image">
-<img src="command_and_response_diagram.png" alt="command_and_response_diagram.png"/>
-<div class="caption">
-Figure 2: Command and Response packet course.</div></div>
-<p><br/>
-</p>
-<table class="doxtable">
-<tr>
-<th>Packet Type </th><th>Description</th></tr>
-<tr>
-<td>0x00 Command </td><td>The packet is sent from the application chip to the BLE Connectivity Chip, where it will be decoded and the corresponding <a class="el" href="a00085.html">function</a>&#160;in the SoftDevice is executed. </td></tr>
-<tr>
-<td>0x01 Command Response </td><td>After a function in the SoftDevice is received, the <a class="el" href="a00085.html">response</a>&#160;is encoded in the BLE Connectivity Chip and a response packet is sent to the application chip. </td></tr>
-<tr>
-<td>0x03 DTM Command </td><td>The packet is sent from the application chip to the BLE Connectivity Chip, where it will be decoded and the chip will enter in the DTM mode. </td></tr>
-<tr>
-<td>0x04 DTM Command Response </td><td>Before BLE Connectivity Chip enter in the DTM mode it sends response packet to the application chip. </td></tr>
-</table>
-<p><b>Note:</b> If the length field is invalid for the specific command, the call will return error code NRF_ERROR_INVALID_LENGTH from the codec in the Application Chip. <br/>
-</p>
-<h2><a class="anchor" id="packet_encoding_format_events"></a>
-Events</h2>
-<div class="image">
-<img src="event_send_diagram.png" alt="event_send_diagram.png"/>
-<div class="caption">
-Figure 3: Event packet course.</div></div>
-<p><br/>
-</p>
-<table class="doxtable">
-<tr>
-<th>Packet Type </th><th>Description</th></tr>
-<tr>
-<td>0x02 Event </td><td>If an <a class="el" href="a00080.html">event</a>&#160;is triggered in the SoftDevice, an event packet is is sent from the BLE Connectivity Chip to the application chip. </td></tr>
-</table>
-<p><br/>
-</p>
-<p><a class="el" href="a00080.html">BLE S110 Events</a></p>
-<p><a class="el" href="a00081.html">BLE S110 GAP Events</a></p>
-<p><a class="el" href="a00082.html">BLE S110 GATTC Events</a></p>
-<p><a class="el" href="a00083.html">BLE S110 GATTS Events</a></p>
-<p><a class="el" href="a00084.html">BLE S110 L2CAP Events</a></p>
-<p><a class="el" href="a00085.html">BLE S110 Functions</a></p>
-<p><a class="el" href="a00086.html">BLE S110 GAP Functions</a></p>
-<p><a class="el" href="a00087.html">BLE S110 GATTC Functions</a></p>
-<p><a class="el" href="a00088.html">BLE S110 GATTS Functions</a></p>
-<p><a class="el" href="a00089.html">BLE S110 L2CAP Functions</a></p>
-<p><a class="el" href="a00079.html">BLE DTM</a> </p>
+<div class="textblock"><p>The Running Speed and Cadence Application is an example that implements the Running Speed and Cadence profile using the hardware delivered in the nRF51 Development Kit.</p>
+<p>The application includes the two services in the Running Speed and Cadence profile:</p>
+<ul>
+<li><a class="el" href="a00968.html">Running Speed and Cadence Service</a></li>
+<li><a class="el" href="a00958.html">Device Information Service</a></li>
+</ul>
+<p>In addition, use of the <a class="el" href="a00953.html">Battery Service</a> is also demonstrated.</p>
+<p>When the application starts, it starts a timer to simulate Running Speed and Cadence Measurements.</p>
+<p>Also, a timer for generating battery measurements is started.</p>
+<p>The sensor measurements are simulated the following way:</p>
+<ul>
+<li>Instantaneous speed and instantaneous cadence: see <a class="el" href="a01029.html">Sensor Data Simulator</a>.</li>
+<li>Battery Level: see <a class="el" href="a01029.html">Sensor Data Simulator</a>.</li>
+</ul>
+<p>When notification of Running Speed and Cadence Measurement characteristic is enabled, the Running Speed and Cadence Measurement, containing the current value for all the components of the Running Speed and Cadence Measurement characteristic, is notified each time the Running Speed and Cadence measurement timer expires. When notification of Battery Level characteristic is enabled, the Battery Level is notified each time the Battery Level measurement timer expires.</p>
+<dl class="section note"><dt>Note</dt><dd>This application is not power optimized! </dd>
+<dd>
+The application will stop advertising after 3 minutes and go to system-off mode. Push the button 1 restart advertising.</dd></dl>
+<h1><a class="anchor" id="project_rscs_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>ble_app_rscs_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_rscs</code> </p>
+<p>Button assignments:</p>
+<ul>
+<li>Button 1: Wake up from system-off and restart advertising.</li>
+<li>Button 2: Wake up from system-off, erase all bonds, and restart advertising.</li>
+</ul>
+<h1><a class="anchor" id="project_rscs_test"></a>
+Testing</h1>
+<p>Test the Running Speed and Cadence Application with the Master Control Panel by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the application. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_RSC'), then perform service discovery. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Click the 'Enable services' button on the Master Control Panel. Observe that Running Speed and Cadence notifications are received every second, and Battery Level notifications are received every two seconds. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00073.html">BLE Serialization</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00058.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

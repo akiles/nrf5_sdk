@@ -1,7 +1,7 @@
 var a00230 =
 [
-    [ "data", "a00230.html#a800d239d1224cc1226201c6b9a635713", null ],
-    [ "data_count", "a00230.html#a370358835ed2aa53bcc515894b13eb87", null ],
-    [ "evt_type", "a00230.html#a622197dded7bfa292535944e6870c5f7", null ],
-    [ "type", "a00230.html#a6d7cb2ed26034e0c1cb5dcb0022a612a", null ]
+    [ "distance_us", "a00230.html#a34cb59c0e80b3698a3df265ab88b34b5", null ],
+    [ "hfclk", "a00230.html#a23b414675dc9b11671f55601075f541d", null ],
+    [ "length_us", "a00230.html#adf9603de0e582965d4bb1c0a42d8e88c", null ],
+    [ "priority", "a00230.html#a18cc5dd5dc34877572e42ee8102fcb82", null ]
 ];

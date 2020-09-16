@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_srv_utf8_str_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_l2cap_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,49 +106,64 @@ $(document).ready(function(){initNavTree('a00332.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_srv_utf8_str_t Struct Reference<div class="ingroups"><a class="el" href="a00977.html">Common service definitions</a></div></div>  </div>
+<div class="title">ble_l2cap_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01059.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>UTF-8 string data type.  
+<p>L2CAP event callback event structure.  
  <a href="a00332.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_srv_common.h&gt;</code></p>
+<p><code>#include &lt;ble_l2cap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a9238252fa096ecc458994d19aaf034d8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#a9238252fa096ecc458994d19aaf034d8">length</a></td></tr>
-<tr class="separator:a9238252fa096ecc458994d19aaf034d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b6d6d426c6ec244d1136b7ccf5deb30"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#a8b6d6d426c6ec244d1136b7ccf5deb30">p_str</a></td></tr>
-<tr class="separator:a8b6d6d426c6ec244d1136b7ccf5deb30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab843f6e96efbaf3d2bffee8c92c62f1a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#ab843f6e96efbaf3d2bffee8c92c62f1a">conn_handle</a></td></tr>
+<tr class="separator:ab843f6e96efbaf3d2bffee8c92c62f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab63285db6028432fe959a66519f85139"><td class="memItemLeft" >union {</td></tr>
+<tr class="memitem:a68b046d6bb64bf2f31179a1329e3f1cc"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00331.html">ble_l2cap_evt_rx_t</a>&#160;&#160;&#160;<a class="el" href="a00332.html#afc4cbc758b308e6698b16650310cc52b">rx</a></td></tr>
+<tr class="separator:a68b046d6bb64bf2f31179a1329e3f1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab63285db6028432fe959a66519f85139"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#ab63285db6028432fe959a66519f85139">params</a></td></tr>
+<tr class="separator:ab63285db6028432fe959a66519f85139"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>UTF-8 string data type. </p>
-<dl class="section note"><dt>Note</dt><dd>The type can only hold a pointer to the string data (i.e. not the actual data). </dd></dl>
+<div class="textblock"><p>L2CAP event callback event structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a9238252fa096ecc458994d19aaf034d8"></a>
+<a class="anchor" id="ab843f6e96efbaf3d2bffee8c92c62f1a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_srv_utf8_str_t::length</td>
+          <td class="memname">uint16_t ble_l2cap_evt_t::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>String length. </p>
+<p>Connection Handle on which event occured. </p>
 
 </div>
 </div>
-<a class="anchor" id="a8b6d6d426c6ec244d1136b7ccf5deb30"></a>
+<a class="anchor" id="ab63285db6028432fe959a66519f85139"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* ble_srv_utf8_str_t::p_str</td>
+          <td class="memname">union { ... }   ble_l2cap_evt_t::params</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>String data. </p>
+<p>Event Parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="afc4cbc758b308e6698b16650310cc52b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00331.html">ble_l2cap_evt_rx_t</a> ble_l2cap_evt_t::rx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RX Event parameters. </p>
 
 </div>
 </div>
@@ -157,8 +172,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00332.html">ble_srv_utf8_str_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00332.html">ble_l2cap_evt_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

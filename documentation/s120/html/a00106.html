@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_evt_user_mem_request_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_conn_sec_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,48 @@ $(document).ready(function(){initNavTree('a00106.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_evt_user_mem_request_t Struct Reference<div class="ingroups"><a class="el" href="a00744.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_conn_sec_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for BLE_EVT_USER_MEM_REQUEST.  
+<p>GAP connection security status.  
  <a href="a00106.html#details">More...</a></p>
 
-<p><code>#include &lt;ble.h&gt;</code></p>
+<p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac0a51b3ce3131df1dcc57a440f5a816c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00106.html#ac0a51b3ce3131df1dcc57a440f5a816c">type</a></td></tr>
-<tr class="separator:ac0a51b3ce3131df1dcc57a440f5a816c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada618e26f99059e7ccbe5be9f5d1049d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00105.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00106.html#ada618e26f99059e7ccbe5be9f5d1049d">sec_mode</a></td></tr>
+<tr class="separator:ada618e26f99059e7ccbe5be9f5d1049d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abca3beb1304d60fd03f5ae098495dd6f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00106.html#abca3beb1304d60fd03f5ae098495dd6f">encr_key_size</a></td></tr>
+<tr class="separator:abca3beb1304d60fd03f5ae098495dd6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for BLE_EVT_USER_MEM_REQUEST. </p>
+<div class="textblock"><p>GAP connection security status. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ac0a51b3ce3131df1dcc57a440f5a816c"></a>
+<a class="anchor" id="abca3beb1304d60fd03f5ae098495dd6f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_evt_user_mem_request_t::type</td>
+          <td class="memname">uint8_t ble_gap_conn_sec_t::encr_key_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>User memory type, see <a class="el" href="a00524.html">User Memory Types</a>. </p>
+<p>Length of currently active encryption key, 7 to 16 octets (only applicable for bonding procedures). </p>
+
+</div>
+</div>
+<a class="anchor" id="ada618e26f99059e7ccbe5be9f5d1049d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00105.html">ble_gap_conn_sec_mode_t</a> ble_gap_conn_sec_t::sec_mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Currently active security mode for this connection. </p>
 
 </div>
 </div>
@@ -141,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00106.html">ble_evt_user_mem_request_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00106.html">ble_gap_conn_sec_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

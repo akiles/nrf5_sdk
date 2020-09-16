@@ -1,7 +1,6 @@
 var a00246 =
 [
-    [ "data", "a00246.html#af239b9ba3cff6d1fc678f3f71711a2f3", null ],
-    [ "handle", "a00246.html#a96ee6ce1546af608cf4b3b9d81cd7f09", null ],
-    [ "len", "a00246.html#a173be268109e2223c485a9a10a6a9ba3", null ],
-    [ "type", "a00246.html#ac1de2368e40b7e4c7eab1fcb770605f2", null ]
+    [ "conn_handle", "a00246.html#a2c0b8fc1f46e4360b34a1806061e828a", null ],
+    [ "p_actual_latency", "a00246.html#a769493b896a8e6709956d5248aaa94d6", null ],
+    [ "requested_latency", "a00246.html#ac06a0a4e53f12763e0966c9bff3e0545", null ]
 ];

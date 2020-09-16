@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: SVC return values specific to GATTS</title>
+<title>nRF51 SDK - S110 SoftDevice: GAP Address cycle modes</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,42 +99,42 @@ $(document).ready(function(){initNavTree('a00823.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">SVC return values specific to GATTS<div class="ingroups"><a class="el" href="a01058.html">Defines</a></div></div>  </div>
+<div class="title">GAP Address cycle modes<div class="ingroups"><a class="el" href="a01043.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga050988950fb5cfb9e64b1f91f8872b45"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00823.html#ga050988950fb5cfb9e64b1f91f8872b45">BLE_ERROR_GATTS_INVALID_ATTR_TYPE</a>&#160;&#160;&#160;(<a class="el" href="a00795.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x000)</td></tr>
-<tr class="separator:ga050988950fb5cfb9e64b1f91f8872b45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1d0833ac31d0c319e5286623b6301d0a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00823.html#ga1d0833ac31d0c319e5286623b6301d0a">BLE_ERROR_GATTS_SYS_ATTR_MISSING</a>&#160;&#160;&#160;(<a class="el" href="a00795.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x001)</td></tr>
-<tr class="separator:ga1d0833ac31d0c319e5286623b6301d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga876e1c374d17d451d901e3e8d151a20d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00823.html#ga876e1c374d17d451d901e3e8d151a20d">BLE_GAP_ADDR_CYCLE_MODE_NONE</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga876e1c374d17d451d901e3e8d151a20d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1b508bba948e89462e018fecc38b13f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00823.html#gad1b508bba948e89462e018fecc38b13f">BLE_GAP_ADDR_CYCLE_MODE_AUTO</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:gad1b508bba948e89462e018fecc38b13f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga050988950fb5cfb9e64b1f91f8872b45"></a>
+<a class="anchor" id="gad1b508bba948e89462e018fecc38b13f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_ERROR_GATTS_INVALID_ATTR_TYPE&#160;&#160;&#160;(<a class="el" href="a00795.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x000)</td>
+          <td class="memname">#define BLE_GAP_ADDR_CYCLE_MODE_AUTO&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Invalid attribute type. </p>
+<p>Automatically generate and update private addresses. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga1d0833ac31d0c319e5286623b6301d0a"></a>
+<a class="anchor" id="ga876e1c374d17d451d901e3e8d151a20d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_ERROR_GATTS_SYS_ATTR_MISSING&#160;&#160;&#160;(<a class="el" href="a00795.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x001)</td>
+          <td class="memname">#define BLE_GAP_ADDR_CYCLE_MODE_NONE&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>System Attributes missing. </p>
+<p>Set addresses directly, no automatic address cycling. </p>
 
 </div>
 </div>
@@ -143,7 +143,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:17 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:42 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dm_id_key Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_tps_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,48 @@ $(document).ready(function(){initNavTree('a00355.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dm_id_key Struct Reference<div class="ingroups"><a class="el" href="a00988.html">Device Manager Data Types</a></div></div>  </div>
+<div class="title">ble_tps_init_t Struct Reference<div class="ingroups"><a class="el" href="a00975.html">TX Power Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Device Manager identity and address information.  
+<p>TX Power Service init structure. This contains all options and data needed for initialization of the service.  
  <a href="a00355.html#details">More...</a></p>
 
-<p><code>#include &lt;device_manager.h&gt;</code></p>
+<p><code>#include &lt;ble_tps.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a7a76b44b4742836f0dffd4ce52418faf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00226.html">ble_gap_irk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#a7a76b44b4742836f0dffd4ce52418faf">id_info</a></td></tr>
-<tr class="separator:a7a76b44b4742836f0dffd4ce52418faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5dace1f70260c67a952b35558abe1848"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00207.html">ble_gap_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#a5dace1f70260c67a952b35558abe1848">id_addr_info</a></td></tr>
-<tr class="separator:a5dace1f70260c67a952b35558abe1848"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5be1f2c1c00932c36837e70c02679072"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#a5be1f2c1c00932c36837e70c02679072">initial_tx_power_level</a></td></tr>
+<tr class="separator:a5be1f2c1c00932c36837e70c02679072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc4915bf42eeee72f61614aa1161aa80"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00353.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#afc4915bf42eeee72f61614aa1161aa80">tps_attr_md</a></td></tr>
+<tr class="separator:afc4915bf42eeee72f61614aa1161aa80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Device Manager identity and address information. </p>
+<div class="textblock"><p>TX Power Service init structure. This contains all options and data needed for initialization of the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a5dace1f70260c67a952b35558abe1848"></a>
+<a class="anchor" id="a5be1f2c1c00932c36837e70c02679072"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00207.html">ble_gap_addr_t</a> dm_id_key::id_addr_info</td>
+          <td class="memname">int8_t ble_tps_init_t::initial_tx_power_level</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Identity address information. </p>
+<p>Initial value of the TX Power Level characteristic (in dBm). </p>
 
 </div>
 </div>
-<a class="anchor" id="a7a76b44b4742836f0dffd4ce52418faf"></a>
+<a class="anchor" id="afc4915bf42eeee72f61614aa1161aa80"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00226.html">ble_gap_irk_t</a> dm_id_key::id_info</td>
+          <td class="memname"><a class="el" href="a00353.html">ble_srv_security_mode_t</a> ble_tps_init_t::tps_attr_md</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Identity information. </p>
+<p>Initial Security Setting for TX Power Service Characteristics. </p>
 
 </div>
 </div>
@@ -156,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00355.html">dm_id_key</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00355.html">ble_tps_init_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,9 +1,6 @@
 var a00392 =
 [
-    [ "firmware_id", "a00392.html#a71d3fb8b5eb37e1b988cf4d24e83ff05", null ],
-    [ "info_size", "a00392.html#a0dfa8dc981701b47ad619d778bb646bf", null ],
-    [ "magic_number", "a00392.html#a8e3c0ed915d2c32a3a486ce625155466", null ],
-    [ "reserved1", "a00392.html#aa17f21260d985fdbf5eeabd8ff4ab0ca", null ],
-    [ "reserved2", "a00392.html#ac3ab6d531e4101f61f2b86443d9abb06", null ],
-    [ "softdevice_size", "a00392.html#ab12be31117d5f9746bd9ea8920863540", null ]
+    [ "hal", "a00392.html#aa4bb9bf17e4cf04d2c9b1db1151324f7", null ],
+    [ "input", "a00392.html#acad9446d75e78c3ecd98a7a2ac9cabd0", null ],
+    [ "interrupt_priority", "a00392.html#a7254d65f29337e4023b86096d06b60c0", null ]
 ];

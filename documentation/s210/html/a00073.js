@@ -1,7 +1,6 @@
 var a00073 =
 [
-    [ "data", "a00073.html#a800d239d1224cc1226201c6b9a635713", null ],
-    [ "data_count", "a00073.html#a370358835ed2aa53bcc515894b13eb87", null ],
-    [ "evt_type", "a00073.html#a622197dded7bfa292535944e6870c5f7", null ],
-    [ "type", "a00073.html#a6d7cb2ed26034e0c1cb5dcb0022a612a", null ]
+    [ "evt_type", "a00073.html#ac7e76a07c099aed4eb9d8180a15368d8", null ],
+    [ "packet", "a00073.html#a005a67172eb3d6a4645d536db7fbb98f", null ],
+    [ "packet_length", "a00073.html#ac31d16ccc1a5fc4bd8852c58d710f821", null ]
 ];

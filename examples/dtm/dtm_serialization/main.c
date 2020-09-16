@@ -97,8 +97,7 @@ static void advertising_init(void)
 
     advdata.name_type          = BLE_ADVDATA_FULL_NAME;
     advdata.include_appearance = false;
-    advdata.flags.size         = sizeof (flags);
-    advdata.flags.p_data       = &flags;
+    advdata.flags              = flags;
 
     err_code = ble_advdata_set(&advdata, NULL);
     APP_ERROR_CHECK(err_code);
@@ -192,7 +191,7 @@ static void ble_stack_init(void)
     uint32_t err_code;
 
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
     // Enable BLE stack
     ble_enable_params_t ble_enable_params;
@@ -211,7 +210,7 @@ int main(void)
 
     // Initialize.
     ble_stack_init();
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
 
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,

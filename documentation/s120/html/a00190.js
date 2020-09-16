@@ -1,5 +1,5 @@
 var a00190 =
 [
-    [ "length", "a00190.html#a9238252fa096ecc458994d19aaf034d8", null ],
-    [ "p_str", "a00190.html#a8b6d6d426c6ec244d1136b7ccf5deb30", null ]
+    [ "common_opt", "a00190.html#a3becddeb5c692d603c116a348b69770a", null ],
+    [ "gap_opt", "a00190.html#a389cdb4378d2a7f989807dcf27145051", null ]
 ];

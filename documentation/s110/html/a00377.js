@@ -1,5 +1,6 @@
 var a00377 =
 [
-    [ "bl_len", "a00377.html#a197755f22bcc92adc7c8288f48bd9ef8", null ],
-    [ "bl_src", "a00377.html#a504481143eb43e52488288d7de70a6f1", null ]
+    [ "event_id", "a00377.html#a2a75f3476e816a31085bef063855687e", null ],
+    [ "event_param", "a00377.html#a2dbb0e734ebc009dcc98b7c5055d7112", null ],
+    [ "event_paramlen", "a00377.html#a44a56d892899cd9a146cc4aaddd0d772", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: BLE S120 Events</title>
+<title>nRF51 SDK - S120 SoftDevice: Transport Services</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,50 +97,19 @@ $(document).ready(function(){initNavTree('a00063.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BLE S120 Events </div>  </div>
+<div class="title">Transport Services </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#nrf51_evt_tx_complete_encoding">0x01 - BLE_EVT_TX_COMPLETE</a><ul><li class="level2"><a href="#nrf51_evt_tx_complete_encoding_sec">Event encoding</a></li>
-<li class="level2"><a href="#nrf51_evt_tx_complete_encoding_sub_a">Packet layout</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="textblock"><h1><a class="anchor" id="nrf51_evt_tx_complete_encoding"></a>
-0x01 - BLE_EVT_TX_COMPLETE</h1>
-<h2><a class="anchor" id="nrf51_evt_tx_complete_encoding_sec"></a>
-Event encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00742.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> packet.</p>
-<p>Event ID = 0x01 for BLE_EVT_TX_COMPLETE</p>
-<p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
-<p>The event contains a connection handle, and for the BLE TX complete, the <a class="el" href="a00104.html">ble_evt_tx_complete_t</a> is encoded after connection handle as seen in Figure 1.</p>
-<p>The order of the encoding is:</p>
-<table class="doxtable">
-<tr>
-<th>Length </th><th>Parameter </th><th>Value</th></tr>
-<tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00095.html#ad7c997d8d0c6e0d3d24de3ecad426645">ble_common_evt_t::conn_handle</a> </td></tr>
-<tr>
-<td>1 byte </td><td>Count </td><td>see <a class="el" href="a00104.html">ble_evt_tx_complete_t</a> </td></tr>
-</table>
-<p><br/>
-</p>
-<h2><a class="anchor" id="nrf51_evt_tx_complete_encoding_sub_a"></a>
-Packet layout</h2>
-<div class="image">
-<img src="event_tx_complete.png" alt="event_tx_complete.png"/>
-<div class="caption">
-Figure 1: Encoding of BLE_EVT_TX_COMPLETE event.</div></div>
-<p> <br/>
- </p>
+<div class="textblock"><p><a class="el" href="a00064.html">HCI transport library</a></p>
+<p><a class="el" href="a00065.html">Memory pool library</a></p>
+<p><a class="el" href="a00066.html">SLIP handling library</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00058.html">Serialization Codecs</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

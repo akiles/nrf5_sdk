@@ -76,7 +76,7 @@ typedef struct
 } ble_bas_init_t;
 
 /**@brief Battery Service structure. This contains various status information for the service. */
-typedef struct ble_bas_s
+struct ble_bas_s
 {
     ble_bas_evt_handler_t         evt_handler;                    /**< Event handler to be called for handling events in the Battery Service. */
     uint16_t                      service_handle;                 /**< Handle of Battery Service (as provided by the BLE stack). */
@@ -85,7 +85,7 @@ typedef struct ble_bas_s
     uint8_t                       battery_level_last;             /**< Last Battery Level measurement passed to the Battery Service. */
     uint16_t                      conn_handle;                    /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
     bool                          is_notification_supported;      /**< TRUE if notification of Battery Level is supported. */
-} ble_bas_t;
+};
 
 /**@brief Function for initializing the Battery Service.
  *

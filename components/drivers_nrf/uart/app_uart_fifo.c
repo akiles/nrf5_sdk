@@ -18,7 +18,15 @@
 #include "app_util.h"
 #include "app_gpiote.h"
 
-#define FIFO_LENGTH(F)             (F.write_pos - F.read_pos)               /**< Macro to calculate length of a FIFO. */
+static __INLINE uint32_t fifo_length(app_fifo_t * const fifo)
+{
+  uint32_t tmp = fifo->read_pos;
+  return fifo->write_pos - tmp;
+}
+
+#define FIFO_LENGTH(F) fifo_length(&F)              /**< Macro to calculate length of a FIFO. */
+
+
 #define UART_INSTANCE_GPIOTE_BASE  0x00FF                                   /**< Define the base for UART instance ID when flow control is used. The userid from GPIOTE will be used with padded 0xFF at LSB for easy converting the instance id to GPIOTE id. */
 #define UART_INSTANCE_ID_INVALID   0x0000                                   /**< Value 0x0000 is used to indicate an invalid instance id. When 0 is provided as instance id upon initialization, the module will provide a valid id to the caller. */
 

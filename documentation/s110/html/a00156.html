@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ancs_c_evt_notif_attribute_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_adv_modes_config_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,35 +106,164 @@ $(document).ready(function(){initNavTree('a00156.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ancs_c_evt_notif_attribute_t Struct Reference<div class="ingroups"><a class="el" href="a01031.html">Apple Notification Service Client</a></div></div>  </div>
+<div class="title">ble_adv_modes_config_t Struct Reference<div class="ingroups"><a class="el" href="a00988.html">Advertising Module</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Options for the different advertisement modes.  
+ <a href="a00156.html#details">More...</a></p>
+
+<p><code>#include &lt;ble_advertising.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a8a8e2cd58a0a579159397ad4c4532ee5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a8e2cd58a0a579159397ad4c4532ee5"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>command_id</b></td></tr>
-<tr class="separator:a8a8e2cd58a0a579159397ad4c4532ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2de713787637343b123d4912cd0aa129"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2de713787637343b123d4912cd0aa129"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>notification_uid</b> [4]</td></tr>
-<tr class="separator:a2de713787637343b123d4912cd0aa129"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91ad99b533291a9bd4ace32d24b6c11e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91ad99b533291a9bd4ace32d24b6c11e"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>attribute_id</b></td></tr>
-<tr class="separator:a91ad99b533291a9bd4ace32d24b6c11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4ba23bbecdf56110773a54e11c0305f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad4ba23bbecdf56110773a54e11c0305f"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>attribute_len</b></td></tr>
-<tr class="separator:ad4ba23bbecdf56110773a54e11c0305f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ea2b73942a8314da74c64075ad076f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ea2b73942a8314da74c64075ad076f2"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>data</b> [32]</td></tr>
-<tr class="separator:a8ea2b73942a8314da74c64075ad076f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad34bab35df0220c5e7fb3a21e11f9623"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#ad34bab35df0220c5e7fb3a21e11f9623">ble_adv_whitelist_enabled</a></td></tr>
+<tr class="separator:ad34bab35df0220c5e7fb3a21e11f9623"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a022364c3a05eec09c1f477ae59eb6c8b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a022364c3a05eec09c1f477ae59eb6c8b">ble_adv_directed_enabled</a></td></tr>
+<tr class="separator:a022364c3a05eec09c1f477ae59eb6c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68a4f2038bb1b60cb81672a6b806db44"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a68a4f2038bb1b60cb81672a6b806db44">ble_adv_directed_timeout</a></td></tr>
+<tr class="separator:a68a4f2038bb1b60cb81672a6b806db44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75f559dde193549661ef9d69b78e057d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a75f559dde193549661ef9d69b78e057d">ble_adv_fast_enabled</a></td></tr>
+<tr class="separator:a75f559dde193549661ef9d69b78e057d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1113347e2fd0e86b7decd9485d14ba26"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a1113347e2fd0e86b7decd9485d14ba26">ble_adv_fast_interval</a></td></tr>
+<tr class="separator:a1113347e2fd0e86b7decd9485d14ba26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f7025bcb28e3622313487edb0a2e966"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a0f7025bcb28e3622313487edb0a2e966">ble_adv_fast_timeout</a></td></tr>
+<tr class="separator:a0f7025bcb28e3622313487edb0a2e966"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cc0a66107b75af49ffa817f251dd706"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a6cc0a66107b75af49ffa817f251dd706">ble_adv_slow_enabled</a></td></tr>
+<tr class="separator:a6cc0a66107b75af49ffa817f251dd706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad95cae5d7c26b6a4690c307cafee99c2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#ad95cae5d7c26b6a4690c307cafee99c2">ble_adv_slow_interval</a></td></tr>
+<tr class="separator:ad95cae5d7c26b6a4690c307cafee99c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a106c33de5cbcd870019071e287366fa9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a106c33de5cbcd870019071e287366fa9">ble_adv_slow_timeout</a></td></tr>
+<tr class="separator:a106c33de5cbcd870019071e287366fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Options for the different advertisement modes. </p>
+<p>This structure is used to enable or disable advertising modes and to configure time-out periods and advertising intervals. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a022364c3a05eec09c1f477ae59eb6c8b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_adv_modes_config_t::ble_adv_directed_enabled</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable or disable direct advertising mode. </p>
+
+</div>
+</div>
+<a class="anchor" id="a68a4f2038bb1b60cb81672a6b806db44"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_directed_timeout</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Time-out (number of tries) for direct advertising. </p>
+
+</div>
+</div>
+<a class="anchor" id="a75f559dde193549661ef9d69b78e057d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_adv_modes_config_t::ble_adv_fast_enabled</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable or disable fast advertising mode. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1113347e2fd0e86b7decd9485d14ba26"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_fast_interval</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Advertising interval for fast advertising. </p>
+
+</div>
+</div>
+<a class="anchor" id="a0f7025bcb28e3622313487edb0a2e966"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_fast_timeout</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Time-out (in seconds) for fast advertising. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6cc0a66107b75af49ffa817f251dd706"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_adv_modes_config_t::ble_adv_slow_enabled</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable or disable slow advertising mode. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad95cae5d7c26b6a4690c307cafee99c2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_slow_interval</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Advertising interval for slow advertising. </p>
+
+</div>
+</div>
+<a class="anchor" id="a106c33de5cbcd870019071e287366fa9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_slow_timeout</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Time-out (in seconds) for slow advertising. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad34bab35df0220c5e7fb3a21e11f9623"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_adv_modes_config_t::ble_adv_whitelist_enabled</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable or disable use of the whitelist. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00156.html">ble_ancs_c_evt_notif_attribute_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00156.html">ble_adv_modes_config_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

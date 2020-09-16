@@ -1,5 +1,5 @@
 var a00355 =
 [
-    [ "id_addr_info", "a00355.html#a5dace1f70260c67a952b35558abe1848", null ],
-    [ "id_info", "a00355.html#a7a76b44b4742836f0dffd4ce52418faf", null ]
+    [ "initial_tx_power_level", "a00355.html#a5be1f2c1c00932c36837e70c02679072", null ],
+    [ "tps_attr_md", "a00355.html#afc4915bf42eeee72f61614aa1161aa80", null ]
 ];

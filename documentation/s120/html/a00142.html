@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gatt_char_ext_props_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_sign_info_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,33 @@ $(document).ready(function(){initNavTree('a00142.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatt_char_ext_props_t Struct Reference<div class="ingroups"><a class="el" href="a00752.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_sign_info_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GATT Characteristic Extended Properties.  
+<p>GAP Signing Information.  
  <a href="a00142.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gatt.h&gt;</code></p>
+<p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a8b4bb4c79bed8c8a6d75ca0dd08b7591"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00142.html#a8b4bb4c79bed8c8a6d75ca0dd08b7591">reliable_wr</a>:1</td></tr>
-<tr class="separator:a8b4bb4c79bed8c8a6d75ca0dd08b7591"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f36b2c312c08c22853231a3bc8b950c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00142.html#a0f36b2c312c08c22853231a3bc8b950c">wr_aux</a>:1</td></tr>
-<tr class="separator:a0f36b2c312c08c22853231a3bc8b950c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7391524e0075eaebdf6f1be1920bc88"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00142.html#ae7391524e0075eaebdf6f1be1920bc88">csrk</a> [16]</td></tr>
+<tr class="separator:ae7391524e0075eaebdf6f1be1920bc88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GATT Characteristic Extended Properties. </p>
+<div class="textblock"><p>GAP Signing Information. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a8b4bb4c79bed8c8a6d75ca0dd08b7591"></a>
+<a class="anchor" id="ae7391524e0075eaebdf6f1be1920bc88"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gatt_char_ext_props_t::reliable_wr</td>
+          <td class="memname">uint8_t ble_gap_sign_info_t::csrk[16]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Writing value with Queued Write Request permitted. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0f36b2c312c08c22853231a3bc8b950c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gatt_char_ext_props_t::wr_aux</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Writing the Characteristic User Description permitted. </p>
+<p>Connection Signature Resolving Key. </p>
 
 </div>
 </div>
@@ -156,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00142.html">ble_gatt_char_ext_props_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00142.html">ble_gap_sign_info_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

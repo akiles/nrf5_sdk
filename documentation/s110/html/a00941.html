@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Types and definitions.</title>
+<title>nRF51 SDK - S110 SoftDevice: DFU BLE SVC internal</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,57 +97,61 @@ $(document).ready(function(){initNavTree('a00941.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Types and definitions.<div class="ingroups"><a class="el" href="a00939.html">Bootloader API.</a></div></div>  </div>
+<div class="title">DFU BLE SVC internal<div class="ingroups"><a class="el" href="a01036.html">Bootloader/DFU API</a> &#124; <a class="el" href="a00940.html">DFU BLE SVC</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Bootloader module type and definitions.  
+<p>DFU BLE SVC internal functions in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader. This interface provides internal Bootloader DFU functions for retrieving data exchanged through SuperVisor Calls.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html">bootloader_settings_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure holding bootloader settings for application and bank data.  <a href="a00339.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga5590b8ff0089e88358e46c506f54a688"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5590b8ff0089e88358e46c506f54a688"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOTLOADER_DFU_START</b>&#160;&#160;&#160;0xB1</td></tr>
-<tr class="separator:ga5590b8ff0089e88358e46c506f54a688"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1a6cf12d596e671a8a7a47d2bb35c6e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1a6cf12d596e671a8a7a47d2bb35c6e9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOTLOADER_SVC_APP_DATA_PTR_GET</b>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:ga1a6cf12d596e671a8a7a47d2bb35c6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gaa42a54966d007c04ca5fbca6775187f2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00941.html#gaa42a54966d007c04ca5fbca6775187f2">bootloader_bank_code_t</a> { <br/>
-&#160;&#160;<b>BANK_VALID_APP</b> = 0x01, 
-<br/>
-&#160;&#160;<b>BANK_VALID_SD</b> = 0xA5, 
-<br/>
-&#160;&#160;<b>BANK_VALID_BOOT</b> = 0xAA, 
-<br/>
-&#160;&#160;<b>BANK_ERASED</b> = 0xFE, 
-<br/>
-&#160;&#160;<b>BANK_INVALID_APP</b> = 0xFF
-<br/>
- }</td></tr>
-<tr class="memdesc:gaa42a54966d007c04ca5fbca6775187f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU Bank state code, which indicates wether the bank contains: A valid image, invalid image, or an erased flash. <br/></td></tr>
-<tr class="separator:gaa42a54966d007c04ca5fbca6775187f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaae1ae9e244a40aeee3537eeb9e7d455e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00941.html#gaae1ae9e244a40aeee3537eeb9e7d455e">dfu_ble_get_peer_data</a> (<a class="el" href="a00366.html">dfu_ble_peer_data_t</a> *p_peer_data)</td></tr>
+<tr class="memdesc:gaae1ae9e244a40aeee3537eeb9e7d455e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal bootloader/DFU function for retrieving peer data provided from application.  <a href="#gaae1ae9e244a40aeee3537eeb9e7d455e">More...</a><br/></td></tr>
+<tr class="separator:gaae1ae9e244a40aeee3537eeb9e7d455e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Bootloader module type and definitions. </p>
+<p>DFU BLE SVC internal functions in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader. This interface provides internal Bootloader DFU functions for retrieving data exchanged through SuperVisor Calls. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gaae1ae9e244a40aeee3537eeb9e7d455e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t dfu_ble_get_peer_data </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00366.html">dfu_ble_peer_data_t</a> *&#160;</td>
+          <td class="paramname"><em>p_peer_data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Internal bootloader/DFU function for retrieving peer data provided from application. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_peer_data</td><td>Peer data set by application to be used for DFU connection.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCES</td><td>If peer data is valid and can be used for connection. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>If peer data is not available or invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:23 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

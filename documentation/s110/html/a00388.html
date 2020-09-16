@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ser_phy_hci_evt_hw_error_params_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ieee_float16_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,48 @@ $(document).ready(function(){initNavTree('a00388.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ser_phy_hci_evt_hw_error_params_t Struct Reference<div class="ingroups"><a class="el" href="a00921.html">HCI Serialization PHY</a></div></div>  </div>
+<div class="title">ieee_float16_t Struct Reference<div class="ingroups"><a class="el" href="a00954.html">Blood Pressure Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>A struct containing parameters of the event of type <a class="el" href="a00921.html#gga696fce5dc53c4c227b5fe54e832f09eca225618d1f1520ae3abb97334ea1c2c21">SER_PHY_HCI_SLIP_EVT_HW_ERROR</a>.  
+<p>SFLOAT format (IEEE-11073 16-bit FLOAT, defined as a 16-bit vlue with 12-bit mantissa and 4-bit exponent.  
  <a href="a00388.html#details">More...</a></p>
 
-<p><code>#include &lt;ser_phy_hci.h&gt;</code></p>
+<p><code>#include &lt;ble_bps.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a7eaf11dd296c086b350d204844e30c6d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00388.html#a7eaf11dd296c086b350d204844e30c6d">error_code</a></td></tr>
-<tr class="separator:a7eaf11dd296c086b350d204844e30c6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42d83a992fc160d167482ec70b58d17c"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00388.html#a42d83a992fc160d167482ec70b58d17c">exponent</a></td></tr>
+<tr class="separator:a42d83a992fc160d167482ec70b58d17c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4668d8cc50fe654da1cfff425c16c5c0"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00388.html#a4668d8cc50fe654da1cfff425c16c5c0">mantissa</a></td></tr>
+<tr class="separator:a4668d8cc50fe654da1cfff425c16c5c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A struct containing parameters of the event of type <a class="el" href="a00921.html#gga696fce5dc53c4c227b5fe54e832f09eca225618d1f1520ae3abb97334ea1c2c21">SER_PHY_HCI_SLIP_EVT_HW_ERROR</a>. </p>
+<div class="textblock"><p>SFLOAT format (IEEE-11073 16-bit FLOAT, defined as a 16-bit vlue with 12-bit mantissa and 4-bit exponent. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a7eaf11dd296c086b350d204844e30c6d"></a>
+<a class="anchor" id="a42d83a992fc160d167482ec70b58d17c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ser_phy_hci_evt_hw_error_params_t::error_code</td>
+          <td class="memname">int8_t ieee_float16_t::exponent</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Hardware error code - specific for any microcontroller. </p>
+<p>Base 10 exponent, only 4 bits </p>
+
+</div>
+</div>
+<a class="anchor" id="a4668d8cc50fe654da1cfff425c16c5c0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int16_t ieee_float16_t::mantissa</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Mantissa, only 12 bits </p>
 
 </div>
 </div>
@@ -141,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00388.html">ser_phy_hci_evt_hw_error_params_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00388.html">ieee_float16_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

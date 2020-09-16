@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: AES ECB encryption</title>
+<title>nRF51 SDK - S120 SoftDevice: RNG driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,43 +97,180 @@ $(document).ready(function(){initNavTree('a00487.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">AES ECB encryption<div class="ingroups"><a class="el" href="a00737.html">Peripheral Drivers</a></div></div>  </div>
+<div class="title">RNG driver<div class="ingroups"><a class="el" href="a00486.html">RNG HAL and driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Driver for the nRF51 AES Electronic Code Book (ECB) peripheral.  
+<p>Driver for managing the random number generator (RNG).  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00221.html">nrf_drv_rng_config_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct for RNG configuration.  <a href="a00221.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gacd95b328ba041760f72b26e582772ba8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00487.html#gacd95b328ba041760f72b26e582772ba8">NRF_DRV_RNG_DEFAULT_CONFIG</a></td></tr>
+<tr class="memdesc:gacd95b328ba041760f72b26e582772ba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">RNG default configuration.  <a href="#gacd95b328ba041760f72b26e582772ba8">More...</a><br/></td></tr>
+<tr class="separator:gacd95b328ba041760f72b26e582772ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gae9609bc1e796e528ca2f4ad3311662e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00487.html#gae9609bc1e796e528ca2f4ad3311662e4">nrf_ecb_init</a> (void)</td></tr>
-<tr class="separator:gae9609bc1e796e528ca2f4ad3311662e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaa8745b5d94900452e525ba60f783cd0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00487.html#gaaa8745b5d94900452e525ba60f783cd0">nrf_ecb_crypt</a> (uint8_t *dst, const uint8_t *src)</td></tr>
-<tr class="separator:gaaa8745b5d94900452e525ba60f783cd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga69e4fcd00a7c2249c5c94210c1c21c90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00487.html#ga69e4fcd00a7c2249c5c94210c1c21c90">nrf_ecb_set_key</a> (const uint8_t *key)</td></tr>
-<tr class="separator:ga69e4fcd00a7c2249c5c94210c1c21c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9fc4ad11787a6f615a0dd31ae6de52f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00505.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00487.html#ga9fc4ad11787a6f615a0dd31ae6de52f1">nrf_drv_rng_init</a> (<a class="el" href="a00221.html">nrf_drv_rng_config_t</a> const *p_config)</td></tr>
+<tr class="memdesc:ga9fc4ad11787a6f615a0dd31ae6de52f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the nrf_drv_rng module.  <a href="#ga9fc4ad11787a6f615a0dd31ae6de52f1">More...</a><br/></td></tr>
+<tr class="separator:ga9fc4ad11787a6f615a0dd31ae6de52f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f6aac44ace0783da1778ac85ac0d55a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3f6aac44ace0783da1778ac85ac0d55a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00487.html#ga3f6aac44ace0783da1778ac85ac0d55a">nrf_drv_rng_uninit</a> (void)</td></tr>
+<tr class="memdesc:ga3f6aac44ace0783da1778ac85ac0d55a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for uninitializing the nrf_drv_rng module. <br/></td></tr>
+<tr class="separator:ga3f6aac44ace0783da1778ac85ac0d55a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef08926f38b99bd5b49fcaec5e41be2e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00505.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00487.html#gaef08926f38b99bd5b49fcaec5e41be2e">nrf_drv_rng_bytes_available</a> (uint8_t *p_bytes_available)</td></tr>
+<tr class="memdesc:gaef08926f38b99bd5b49fcaec5e41be2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the number of currently available random bytes.  <a href="#gaef08926f38b99bd5b49fcaec5e41be2e">More...</a><br/></td></tr>
+<tr class="separator:gaef08926f38b99bd5b49fcaec5e41be2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3af7b2047c83fb644af4e188d3900982"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00505.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00487.html#ga3af7b2047c83fb644af4e188d3900982">nrf_drv_rng_pool_capacity</a> (uint8_t *p_pool_capacity)</td></tr>
+<tr class="memdesc:ga3af7b2047c83fb644af4e188d3900982"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for querying the capacity of the application random pool.  <a href="#ga3af7b2047c83fb644af4e188d3900982">More...</a><br/></td></tr>
+<tr class="separator:ga3af7b2047c83fb644af4e188d3900982"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa6db13138b4b6b288ed31ac3d52dbe90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00505.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00487.html#gaa6db13138b4b6b288ed31ac3d52dbe90">nrf_drv_rng_rand</a> (uint8_t *p_buff, uint8_t length)</td></tr>
+<tr class="memdesc:gaa6db13138b4b6b288ed31ac3d52dbe90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the vector of random numbers.  <a href="#gaa6db13138b4b6b288ed31ac3d52dbe90">More...</a><br/></td></tr>
+<tr class="separator:gaa6db13138b4b6b288ed31ac3d52dbe90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Driver for the nRF51 AES Electronic Code Book (ECB) peripheral. </p>
-<p>In order to encrypt and decrypt data the peripheral must be powered on using <a class="el" href="a00487.html#gae9609bc1e796e528ca2f4ad3311662e4">nrf_ecb_init()</a> and then the key set using nrf_ecb_set_key. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaaa8745b5d94900452e525ba60f783cd0"></a>
+<p>Driver for managing the random number generator (RNG). </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gacd95b328ba041760f72b26e582772ba8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool nrf_ecb_crypt </td>
+          <td class="memname">#define NRF_DRV_RNG_DEFAULT_CONFIG</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">{                                                                                 \</div>
+<div class="line">        .error_correction   = RNG_CONFIG_ERROR_CORRECTION,                            \</div>
+<div class="line">        .interrupt_priority = RNG_CONFIG_IRQ_PRIORITY,                                \</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+<p>RNG default configuration. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gaef08926f38b99bd5b49fcaec5e41be2e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00505.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a> nrf_drv_rng_bytes_available </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>dst</em>, </td>
+          <td class="paramname"><em>p_bytes_available</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for getting the number of currently available random bytes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_bytes_available</td><td>The number of bytes currently available in the pool.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the number of available random bytes was written to p_bytes_available. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the driver was not initialized. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9fc4ad11787a6f615a0dd31ae6de52f1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00505.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a> nrf_drv_rng_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00221.html">nrf_drv_rng_config_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for initializing the nrf_drv_rng module. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_config</td><td>Initial configuration. Default configuration used if NULL.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Driver was successfully initialized. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Driver was already initialized. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Pool size have to be a power of 2. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_SOFTDEVICE_NOT_ENABLED</td><td>SoftDevice is present, but not enabled. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3af7b2047c83fb644af4e188d3900982"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00505.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a> nrf_drv_rng_pool_capacity </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_pool_capacity</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for querying the capacity of the application random pool. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_pool_capacity</td><td>The capacity of the pool.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the capacity of the pool was written to p_pool_capacity. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the driver was not initialized. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa6db13138b4b6b288ed31ac3d52dbe90"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00505.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a> nrf_drv_rng_rand </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_buff</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>src</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -142,67 +279,21 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Encrypt/decrypt 16-byte data using current key.</p>
-<p>The function avoids unnecessary copying of data if the point to the correct locations in the ECB data structure.</p>
+
+<p>Function for getting the vector of random numbers. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dst</td><td>Result of encryption/decryption. 16 bytes will be written. </td></tr>
-    <tr><td class="paramname">src</td><td>Source with 16-byte data to be encrypted/decrypted.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_buff</td><td>Pointer to unit8_t buffer for storing the bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Number of bytes to take from the pool and place in p_buff.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">true</td><td>If the encryption operation completed. </td></tr>
-    <tr><td class="paramname">false</td><td>If the encryption operation did not complete. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gae9609bc1e796e528ca2f4ad3311662e4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool nrf_ecb_init </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initialize and power on the ECB peripheral.</p>
-<p>Allocates memory for the ECBDATAPTR. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>Initialization was successful. </td></tr>
-    <tr><td class="paramname">false</td><td>Powering up failed. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga69e4fcd00a7c2249c5c94210c1c21c90"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void nrf_ecb_set_key </td>
-          <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Set the key to be used for encryption/decryption.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">key</td><td>Pointer to key. 16 bytes will be read. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the requested bytes were written to p_buff. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the driver was not initialized. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>If no bytes were written to the buffer because there were not enough bytes available in p_buff. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_SOC_RAND_NOT_ENOUGH_VALUES</td><td>If no bytes were written to the buffer because there were not enough bytes available in the pool. </td></tr>
   </table>
   </dd>
 </dl>
@@ -214,7 +305,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:53 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

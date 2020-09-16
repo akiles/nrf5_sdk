@@ -22,7 +22,6 @@
 static app_button_cfg_t *             mp_buttons = NULL;           /**< Button configuration. */
 static uint8_t                        m_button_count;              /**< Number of configured buttons. */
 static uint32_t                       m_detection_delay;           /**< Delay before a button is reported as pushed. */
-static app_button_evt_schedule_func_t m_evt_schedule_func;         /**< Pointer to function for propagating button events to the scheduler. */
 static app_gpiote_user_id_t           m_gpiote_user_id;            /**< GPIOTE user id for buttons module. */
 static app_timer_id_t                 m_detection_delay_timer_id;  /**< Polling timer id. */
 static pin_transition_t               m_pin_transition;            /**< pin transaction direction. */
@@ -34,21 +33,13 @@ static pin_transition_t               m_pin_transition;            /**< pin tran
  */
 static void button_handler_execute(app_button_cfg_t * p_btn, uint32_t transition)
 {
-    if (m_evt_schedule_func != NULL)
+    if(transition == APP_BUTTON_PUSH)
     {
-        uint32_t err_code = m_evt_schedule_func(p_btn->button_handler, p_btn->pin_no,transition);
-        APP_ERROR_CHECK(err_code);
+        p_btn->button_handler(p_btn->pin_no, APP_BUTTON_PUSH);
     }
-    else
+    else if(transition == APP_BUTTON_RELEASE)
     {
-        if(transition == APP_BUTTON_PUSH)
-        {
-            p_btn->button_handler(p_btn->pin_no, APP_BUTTON_PUSH);
-        }
-        else if(transition == APP_BUTTON_RELEASE)
-        {
-            p_btn->button_handler(p_btn->pin_no, APP_BUTTON_RELEASE);
-        }
+        p_btn->button_handler(p_btn->pin_no, APP_BUTTON_RELEASE);
     }
 }
 
@@ -157,8 +148,7 @@ static void gpiote_event_handler(uint32_t event_pins_low_to_high, uint32_t event
 
 uint32_t app_button_init(app_button_cfg_t *             p_buttons,
                          uint8_t                        button_count,
-                         uint32_t                       detection_delay,
-                         app_button_evt_schedule_func_t evt_schedule_func)
+                         uint32_t                       detection_delay)
 {
     uint32_t err_code;
     
@@ -171,7 +161,6 @@ uint32_t app_button_init(app_button_cfg_t *             p_buttons,
     mp_buttons          = p_buttons;
     m_button_count      = button_count;
     m_detection_delay   = detection_delay;
-    m_evt_schedule_func = evt_schedule_func;
   
     // Configure pins.
     uint32_t pins_transition_mask = 0;

@@ -1,7 +1,5 @@
 var a00099 =
 [
-    [ "char_count", "a00099.html#a199d43a17b0e41d7904da316db6b98ae", null ],
-    [ "charateristics", "a00099.html#aeeb1c850a101a81108ca109c2f117166", null ],
-    [ "handle_range", "a00099.html#a2300f7ac7bc453bc13fb060d3ff05efc", null ],
-    [ "srv_uuid", "a00099.html#a97887d3332bca8ac17806b8d328e4a2c", null ]
+    [ "mem_block", "a00099.html#a9663c005ebf68e15d7ba6740238bbe30", null ],
+    [ "type", "a00099.html#a597b8f59bf2ab45d0d5ccf9329b50d13", null ]
 ];

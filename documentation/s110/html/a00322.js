@@ -1,7 +1,8 @@
 var a00322 =
 [
-    [ "cumulative_value", "a00322.html#ad226d0754bf0b129e4202d6468918de8", null ],
-    [ "evt_type", "a00322.html#a4ae317b0ff9170a27f7315dfb3c12bb6", null ],
-    [ "params", "a00322.html#acd770df4b6ee2c4694f4a5bac2b5f875", null ],
-    [ "update_location", "a00322.html#a64e560612783b28ce208966239c7ec07", null ]
+    [ "evt_handler", "a00322.html#ac6fbae8371e9336d3acb46b8903a8947", null ],
+    [ "hts_meas_attr_md", "a00322.html#a5c4a4bc737442da34f2b9cfd367bb5e8", null ],
+    [ "hts_temp_type_attr_md", "a00322.html#a1f216c81224e94f40db0d5b4aaa1898b", null ],
+    [ "temp_type", "a00322.html#a7d233be4574d7bdd2f28c9afa8d0efc2", null ],
+    [ "temp_type_as_characteristic", "a00322.html#a6ac11fedc2f4a022e482c6342880e30f", null ]
 ];

@@ -8,7 +8,7 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
  
    <project>
-    <PathAndName>pca10028\arm\radio_test_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10028\arm4\radio_test_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

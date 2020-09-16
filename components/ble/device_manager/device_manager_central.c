@@ -393,7 +393,7 @@ typedef struct
  *
  * @retval Operation result code.
  */
-typedef api_result_t (* service_context_access_t)(pstorage_handle_t const * p_block_handle,
+typedef ret_code_t (* service_context_access_t)(pstorage_handle_t const * p_block_handle,
                                                   dm_handle_t const       * p_handle);
 
 /**@brief Function for performing necessary action of applying the context information.
@@ -402,7 +402,7 @@ typedef api_result_t (* service_context_access_t)(pstorage_handle_t const * p_bl
  *
  * @retval Operation result code.
  */
-typedef api_result_t (* service_context_apply_t)(dm_handle_t * p_handle);
+typedef ret_code_t (* service_context_apply_t)(dm_handle_t * p_handle);
 
 /**@brief Function for performing necessary functions of storing or updating. 
  *
@@ -442,37 +442,37 @@ static bool                    m_module_initialized = false;                    
 SDK_MUTEX_DEFINE(m_dm_mutex) /**< Mutex variable. Currently unused, this declaration does not occupy any space in RAM. */
 /** @} */
 
-static __INLINE api_result_t no_service_context_store(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t no_service_context_store(pstorage_handle_t const * p_block_handle,
                                                       dm_handle_t const       * p_handle);
 
-static __INLINE api_result_t gatts_context_store(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t gatts_context_store(pstorage_handle_t const * p_block_handle,
                                                  dm_handle_t const       * p_handle);
 
-static __INLINE api_result_t gattc_context_store(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t gattc_context_store(pstorage_handle_t const * p_block_handle,
                                                  dm_handle_t const       * p_handle);
 
-static __INLINE api_result_t gattsc_context_store(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t gattsc_context_store(pstorage_handle_t const * p_block_handle,
                                                   dm_handle_t const       * p_handle);
 
-static __INLINE api_result_t no_service_context_load(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t no_service_context_load(pstorage_handle_t const * p_block_handle,
                                                      dm_handle_t const       * p_handle);
 
-static __INLINE api_result_t gatts_context_load(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t gatts_context_load(pstorage_handle_t const * p_block_handle,
                                                 dm_handle_t const       * p_handle);
 
-static __INLINE api_result_t gattc_context_load(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t gattc_context_load(pstorage_handle_t const * p_block_handle,
                                                 dm_handle_t const       * p_handle);
 
-static __INLINE api_result_t gattsc_context_load(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t gattsc_context_load(pstorage_handle_t const * p_block_handle,
                                                  dm_handle_t const       * p_handle);
 
-static __INLINE api_result_t no_service_context_apply(dm_handle_t * p_handle);
+static __INLINE ret_code_t no_service_context_apply(dm_handle_t * p_handle);
 
-static __INLINE api_result_t gatts_context_apply(dm_handle_t * p_handle);
+static __INLINE ret_code_t gatts_context_apply(dm_handle_t * p_handle);
 
-static __INLINE api_result_t gattc_context_apply(dm_handle_t * p_handle);
+static __INLINE ret_code_t gattc_context_apply(dm_handle_t * p_handle);
 
-static __INLINE api_result_t gattsc_context_apply(dm_handle_t * p_handle);
+static __INLINE ret_code_t gattsc_context_apply(dm_handle_t * p_handle);
 
 
 /**< Array of function pointers based on the types of service registered. */
@@ -610,11 +610,11 @@ static __INLINE void peer_instance_init(uint32_t index)
  * @retval NRF_ERROR_INVALID_STATE Operation failure. Invalid state
  * @retval NRF_ERROR_NOT_FOUND     Operation failure. Not found
  */
-static api_result_t connection_instance_find(uint16_t   conn_handle,
+static ret_code_t connection_instance_find(uint16_t   conn_handle,
                                              uint8_t    state,
                                              uint32_t * p_instance)
 {
-    api_result_t err_code;
+    ret_code_t err_code;
     uint32_t     index;
 
     err_code = NRF_ERROR_INVALID_STATE;
@@ -653,10 +653,10 @@ static api_result_t connection_instance_find(uint16_t   conn_handle,
  * @retval NRF_SUCCESS            Operation success.
  * @retval DM_DEVICE_CONTEXT_FULL Operation failure.
  */
-static __INLINE api_result_t device_instance_allocate(uint8_t *              p_device_index,
+static __INLINE ret_code_t device_instance_allocate(uint8_t *              p_device_index,
                                                       ble_gap_addr_t const * p_addr)
 {
-    api_result_t err_code;
+    ret_code_t err_code;
     uint32_t     index;
 
     err_code = DM_DEVICE_CONTEXT_FULL;
@@ -704,9 +704,9 @@ static __INLINE api_result_t device_instance_allocate(uint8_t *              p_d
  *
  * @retval NRF_SUCCESS On success, else an error code indicating reason for failure.
  */
-static __INLINE api_result_t device_instance_free(uint32_t device_index)
+static __INLINE ret_code_t device_instance_free(uint32_t device_index)
 {
-    api_result_t      err_code;
+    ret_code_t      err_code;
     pstorage_handle_t block_handle;
 
     //Get the block handle.
@@ -737,9 +737,9 @@ static __INLINE api_result_t device_instance_free(uint32_t device_index)
  * @retval NRF_SUCCESS         Operation success.
  * @retval NRF_ERROR_NOT_FOUND Operation failure.
  */
-static api_result_t device_instance_find(ble_gap_addr_t const * p_addr, uint32_t * p_device_index)
+static ret_code_t device_instance_find(ble_gap_addr_t const * p_addr, uint32_t * p_device_index)
 {
-    api_result_t err_code;
+    ret_code_t err_code;
     uint32_t     index;
 
     err_code = NRF_ERROR_NOT_FOUND;
@@ -883,7 +883,7 @@ static __INLINE void device_context_store(dm_handle_t const * p_handle, device_s
 {
     pstorage_handle_t block_handle;
     storage_operation store_fn;
-    api_result_t      err_code;
+    ret_code_t      err_code;
 
     DM_LOG("[DM]: --> device_context_store\r\n");
 
@@ -973,7 +973,7 @@ static __INLINE void device_context_store(dm_handle_t const * p_handle, device_s
  *
  * @retval NRF_SUCCESS
  */
-static __INLINE api_result_t no_service_context_store(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t no_service_context_store(pstorage_handle_t const * p_block_handle,
                                                       dm_handle_t const       * p_handle)
 {
     DM_LOG("[DM]: --> no_service_context_store\r\n");
@@ -989,7 +989,7 @@ static __INLINE api_result_t no_service_context_store(pstorage_handle_t const * 
  *
  * @retval NRF_SUCCESS Operation success.
  */
-static __INLINE api_result_t gatts_context_store(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t gatts_context_store(pstorage_handle_t const * p_block_handle,
                                                  dm_handle_t const       * p_handle)
 {
     storage_operation store_fn;
@@ -1001,7 +1001,8 @@ static __INLINE api_result_t gatts_context_store(pstorage_handle_t const * p_blo
     uint32_t err_code = sd_ble_gatts_sys_attr_get(
         m_connection_table[p_handle->connection_id].conn_handle,
         sys_data,
-        &attr_len);
+        &attr_len,
+        BLE_GATTS_SYS_ATTR_FLAG_SYS_SRVCS | BLE_GATTS_SYS_ATTR_FLAG_USR_SRVCS);
 
     if (err_code == NRF_SUCCESS)
     {
@@ -1077,7 +1078,7 @@ static __INLINE api_result_t gatts_context_store(pstorage_handle_t const * p_blo
  *
  * @retval NRF_SUCCESS Operation success.
  */
-static __INLINE api_result_t gattc_context_store(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t gattc_context_store(pstorage_handle_t const * p_block_handle,
                                                  dm_handle_t const       * p_handle)
 {
     DM_LOG("[DM]: --> gattc_context_store\r\n");
@@ -1093,12 +1094,12 @@ static __INLINE api_result_t gattc_context_store(pstorage_handle_t const * p_blo
  *
  * @retval NRF_SUCCESS On success, else an error code indicating reason for failure.
  */
-static __INLINE api_result_t gattsc_context_store(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t gattsc_context_store(pstorage_handle_t const * p_block_handle,
                                                   dm_handle_t const       * p_handle)
 {
     DM_LOG("[DM]: --> gattsc_context_store\r\n");
 
-    api_result_t err_code = gatts_context_store(p_block_handle, p_handle);
+    ret_code_t err_code = gatts_context_store(p_block_handle, p_handle);
 
     if (NRF_SUCCESS == err_code)
     {
@@ -1116,7 +1117,7 @@ static __INLINE api_result_t gattsc_context_store(pstorage_handle_t const * p_bl
  *
  * @retval NRF_SUCCESS
  */
-static __INLINE api_result_t no_service_context_load(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t no_service_context_load(pstorage_handle_t const * p_block_handle,
                                                      dm_handle_t const       * p_handle)
 {
     DM_LOG("[DM]: --> no_service_context_load\r\n");
@@ -1132,14 +1133,14 @@ static __INLINE api_result_t no_service_context_load(pstorage_handle_t const * p
  *
  * @retval NRF_SUCCESS On success, else an error code indicating reason for failure.
  */
-static __INLINE api_result_t gatts_context_load(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t gatts_context_load(pstorage_handle_t const * p_block_handle,
                                                 dm_handle_t const       * p_handle)
 {
     DM_LOG("[DM]:[CI 0x%02X]:[DI 0x%02X]: --> gatts_context_load\r\n",
            p_handle->connection_id,
            p_handle->device_id);
 
-    api_result_t err_code = pstorage_load((uint8_t *)&m_gatts_table[p_handle->connection_id],
+    ret_code_t err_code = pstorage_load((uint8_t *)&m_gatts_table[p_handle->connection_id],
                                           (pstorage_handle_t *)p_block_handle,
                                           GATTS_SERVICE_CONTEXT_SIZE,
                                           SERVICE_STORAGE_OFFSET);
@@ -1175,7 +1176,7 @@ static __INLINE api_result_t gatts_context_load(pstorage_handle_t const * p_bloc
  *
  * @retval NRF_SUCCESS
  */
-static __INLINE api_result_t gattc_context_load(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t gattc_context_load(pstorage_handle_t const * p_block_handle,
                                                 dm_handle_t const       * p_handle)
 {
     DM_LOG("[DM]: --> gattc_context_load\r\n");
@@ -1191,12 +1192,12 @@ static __INLINE api_result_t gattc_context_load(pstorage_handle_t const * p_bloc
  *
  * @retval NRF_SUCCESS On success, else an error code indicating reason for failure.
  */
-static __INLINE api_result_t gattsc_context_load(pstorage_handle_t const * p_block_handle,
+static __INLINE ret_code_t gattsc_context_load(pstorage_handle_t const * p_block_handle,
                                                  dm_handle_t const       * p_handle)
 {
     DM_LOG("[DM]: --> gattsc_context_load\r\n");
 
-    api_result_t err_code = gatts_context_load(p_block_handle, p_handle);
+    ret_code_t err_code = gatts_context_load(p_block_handle, p_handle);
 
     if (NRF_SUCCESS == err_code)
     {
@@ -1213,7 +1214,7 @@ static __INLINE api_result_t gattsc_context_load(pstorage_handle_t const * p_blo
  *
  * @retval NRF_SUCCESS
  */
-static __INLINE api_result_t no_service_context_apply(dm_handle_t * p_handle)
+static __INLINE ret_code_t no_service_context_apply(dm_handle_t * p_handle)
 {
     DM_LOG("[DM]: --> no_service_context_apply\r\n");
     DM_LOG("[DM]:[CI 0x%02X]: No Service context\r\n", p_handle->connection_id);
@@ -1229,7 +1230,7 @@ static __INLINE api_result_t no_service_context_apply(dm_handle_t * p_handle)
  * @retval NRF_SUCCESS                    On success.
  * @retval DM_SERVICE_CONTEXT_NOT_APPLIED On failure.
  */
-static __INLINE api_result_t gatts_context_apply(dm_handle_t * p_handle)
+static __INLINE ret_code_t gatts_context_apply(dm_handle_t * p_handle)
 {
     uint32_t err_code;
 
@@ -1258,7 +1259,8 @@ static __INLINE api_result_t gatts_context_apply(dm_handle_t * p_handle)
 
     err_code = sd_ble_gatts_sys_attr_set(m_connection_table[p_handle->connection_id].conn_handle,
                                          p_gatts_context,
-                                         context_len);
+                                         context_len,
+                                         BLE_GATTS_SYS_ATTR_FLAG_SYS_SRVCS | BLE_GATTS_SYS_ATTR_FLAG_USR_SRVCS);
 
     if (err_code != NRF_SUCCESS)
     {
@@ -1277,7 +1279,7 @@ static __INLINE api_result_t gatts_context_apply(dm_handle_t * p_handle)
  *
  * @retval NRF_SUCCESS On success.
  */
-static __INLINE api_result_t gattc_context_apply(dm_handle_t * p_handle)
+static __INLINE ret_code_t gattc_context_apply(dm_handle_t * p_handle)
 {
     DM_LOG("[DM]: --> gattc_context_apply\r\n");
 
@@ -1291,7 +1293,7 @@ static __INLINE api_result_t gattc_context_apply(dm_handle_t * p_handle)
  *
  * @retval NRF_SUCCESS On success, else an error code indicating reason for failure.
  */
-static __INLINE api_result_t gattsc_context_apply(dm_handle_t * p_handle)
+static __INLINE ret_code_t gattsc_context_apply(dm_handle_t * p_handle)
 {
     uint32_t err_code;
 
@@ -1561,11 +1563,11 @@ static void dm_pstorage_cb_handler(pstorage_handle_t * p_handle,
 }
 
 
-api_result_t dm_init(dm_init_param_t const * const p_init_param)
+ret_code_t dm_init(dm_init_param_t const * const p_init_param)
 {
     pstorage_module_param_t param;
     pstorage_handle_t       block_handle;
-    api_result_t            err_code;
+    ret_code_t            err_code;
     uint32_t                index;
 
     DM_LOG("[DM]: >> dm_init.\r\n");
@@ -1686,7 +1688,7 @@ api_result_t dm_init(dm_init_param_t const * const p_init_param)
 }
 
 
-api_result_t dm_register(dm_application_instance_t    * p_appl_instance,
+ret_code_t dm_register(dm_application_instance_t    * p_appl_instance,
                          dm_application_param_t const * p_appl_param)
 {
     VERIFY_MODULE_INITIALIZED();
@@ -1727,7 +1729,7 @@ api_result_t dm_register(dm_application_instance_t    * p_appl_instance,
 }
 
 
-api_result_t dm_security_setup_req(dm_handle_t * p_handle)
+ret_code_t dm_security_setup_req(dm_handle_t * p_handle)
 {
     VERIFY_MODULE_INITIALIZED();
     NULL_PARAM_CHECK(p_handle);
@@ -1791,7 +1793,7 @@ api_result_t dm_security_setup_req(dm_handle_t * p_handle)
 }
 
 
-api_result_t dm_security_status_req(dm_handle_t const    * p_handle,
+ret_code_t dm_security_status_req(dm_handle_t const    * p_handle,
                                     dm_security_status_t * p_status)
 {
     VERIFY_MODULE_INITIALIZED();
@@ -1826,7 +1828,7 @@ api_result_t dm_security_status_req(dm_handle_t const    * p_handle,
 }
 
 
-api_result_t dm_whitelist_create(dm_application_instance_t const * p_handle,
+ret_code_t dm_whitelist_create(dm_application_instance_t const * p_handle,
                                  ble_gap_whitelist_t             * p_whitelist)
 {
     VERIFY_MODULE_INITIALIZED();
@@ -1891,14 +1893,14 @@ api_result_t dm_whitelist_create(dm_application_instance_t const * p_handle,
 }
 
 
-api_result_t dm_device_add(dm_handle_t               * p_handle,
+ret_code_t dm_device_add(dm_handle_t               * p_handle,
                            dm_device_context_t const * p_context)
 {
     return (API_NOT_IMPLEMENTED | DEVICE_MANAGER_ERR_BASE);
 }
 
 
-api_result_t dm_device_delete(dm_handle_t const * p_handle)
+ret_code_t dm_device_delete(dm_handle_t const * p_handle)
 {
     VERIFY_MODULE_INITIALIZED();
     NULL_PARAM_CHECK(p_handle);
@@ -1919,7 +1921,7 @@ api_result_t dm_device_delete(dm_handle_t const * p_handle)
 }
 
 
-api_result_t dm_device_delete_all(dm_application_instance_t const * p_handle)
+ret_code_t dm_device_delete_all(dm_application_instance_t const * p_handle)
 {
     VERIFY_MODULE_INITIALIZED();
     NULL_PARAM_CHECK(p_handle);
@@ -1947,7 +1949,7 @@ api_result_t dm_device_delete_all(dm_application_instance_t const * p_handle)
 }
 
 
-api_result_t dm_service_context_set(dm_handle_t const          * p_handle,
+ret_code_t dm_service_context_set(dm_handle_t const          * p_handle,
                                     dm_service_context_t const * p_context)
 {
     VERIFY_MODULE_INITIALIZED();
@@ -1991,7 +1993,7 @@ api_result_t dm_service_context_set(dm_handle_t const          * p_handle,
 }
 
 
-api_result_t dm_service_context_get(dm_handle_t const    * p_handle,
+ret_code_t dm_service_context_get(dm_handle_t const    * p_handle,
                                     dm_service_context_t * p_context)
 {
     VERIFY_MODULE_INITIALIZED();
@@ -2036,7 +2038,7 @@ api_result_t dm_service_context_get(dm_handle_t const    * p_handle,
 }
 
 
-api_result_t dm_service_context_delete(dm_handle_t const * p_handle)
+ret_code_t dm_service_context_delete(dm_handle_t const * p_handle)
 {
     VERIFY_MODULE_INITIALIZED();
     NULL_PARAM_CHECK(p_handle);
@@ -2049,7 +2051,7 @@ api_result_t dm_service_context_delete(dm_handle_t const * p_handle)
 }
 
 
-api_result_t dm_application_context_set(dm_handle_t const              * p_handle,
+ret_code_t dm_application_context_set(dm_handle_t const              * p_handle,
                                         dm_application_context_t const * p_context)
 {
 #if (DEVICE_MANAGER_APP_CONTEXT_SIZE != 0)
@@ -2131,7 +2133,7 @@ api_result_t dm_application_context_set(dm_handle_t const              * p_handl
 }
 
 
-api_result_t dm_application_context_get(dm_handle_t const        * p_handle,
+ret_code_t dm_application_context_get(dm_handle_t const        * p_handle,
                                         dm_application_context_t * p_context)
 {
 #if (DEVICE_MANAGER_APP_CONTEXT_SIZE != 0)
@@ -2199,7 +2201,7 @@ api_result_t dm_application_context_get(dm_handle_t const        * p_handle,
 }
 
 
-api_result_t dm_application_context_delete(const dm_handle_t * p_handle)
+ret_code_t dm_application_context_delete(const dm_handle_t * p_handle)
 {
 #if (DEVICE_MANAGER_APP_CONTEXT_SIZE != 0)
     VERIFY_MODULE_INITIALIZED();
@@ -2255,7 +2257,7 @@ api_result_t dm_application_context_delete(const dm_handle_t * p_handle)
 }
 
 
-api_result_t dm_application_instance_set(dm_application_instance_t const * p_appl_instance,
+ret_code_t dm_application_instance_set(dm_application_instance_t const * p_appl_instance,
                                          dm_handle_t                     * p_handle)
 {
     VERIFY_MODULE_INITIALIZED();
@@ -2282,7 +2284,7 @@ uint32_t dm_handle_initialize(dm_handle_t * p_handle)
 }
 
 
-api_result_t dm_peer_addr_set(dm_handle_t const    * p_handle,
+ret_code_t dm_peer_addr_set(dm_handle_t const    * p_handle,
                               ble_gap_addr_t const * p_addr)
 {
     VERIFY_MODULE_INITIALIZED();
@@ -2295,7 +2297,7 @@ api_result_t dm_peer_addr_set(dm_handle_t const    * p_handle,
 
     DM_TRC("[DM]: >> dm_peer_addr_set\r\n");
 
-    api_result_t err_code;
+    ret_code_t err_code;
 
     if ((p_handle->connection_id == DM_INVALID_ID) &&
         (p_addr->addr_type != BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE))
@@ -2318,7 +2320,7 @@ api_result_t dm_peer_addr_set(dm_handle_t const    * p_handle,
 }
 
 
-api_result_t dm_peer_addr_get(dm_handle_t const * p_handle,
+ret_code_t dm_peer_addr_get(dm_handle_t const * p_handle,
                               ble_gap_addr_t    * p_addr)
 {
     VERIFY_MODULE_INITIALIZED();
@@ -2330,7 +2332,7 @@ api_result_t dm_peer_addr_get(dm_handle_t const * p_handle,
 
     DM_TRC("[DM]: >> dm_peer_addr_get\r\n");
 
-    api_result_t err_code;
+    ret_code_t err_code;
 
     err_code = (NRF_ERROR_NOT_FOUND | DEVICE_MANAGER_ERR_BASE);
 
@@ -2367,7 +2369,7 @@ api_result_t dm_peer_addr_get(dm_handle_t const * p_handle,
 }
 
 
-api_result_t dm_distributed_keys_get(dm_handle_t const * p_handle,
+ret_code_t dm_distributed_keys_get(dm_handle_t const * p_handle,
                                      dm_sec_keyset_t   * p_key_dist)
 {
     VERIFY_MODULE_INITIALIZED();
@@ -2380,7 +2382,7 @@ api_result_t dm_distributed_keys_get(dm_handle_t const * p_handle,
 
     DM_TRC("[DM]: >> dm_distributed_keys_get\r\n");
 
-    api_result_t      err_code;
+    ret_code_t      err_code;
     ble_gap_enc_key_t peer_enc_key;
     pstorage_handle_t block_handle;
 
@@ -2594,7 +2596,7 @@ void dm_ble_evt_handler(ble_evt_t * p_ble_evt)
                    p_ble_evt->evt.gap_evt.params.sec_params_request.peer_params.bond);
 
             keys_exchanged.keys_central.p_enc_key  = NULL;
-            keys_exchanged.keys_central.p_id_key   = &m_local_id_info;
+            keys_exchanged.keys_central.p_id_key   = NULL;
             keys_exchanged.keys_central.p_sign_key = NULL;
             keys_exchanged.keys_periph.p_enc_key   = &m_bond_table[index].peer_enc_key;
             keys_exchanged.keys_periph.p_id_key    =
@@ -2647,7 +2649,7 @@ void dm_ble_evt_handler(ble_evt_t * p_ble_evt)
                         //IRK and/or public address is shared, update it.
                         if (p_ble_evt->evt.gap_evt.params.auth_status.kdist_periph.id == 1)
                         {
-                            m_peer_table[index].id_bitmap &= (~IRK_ENTRY);
+                            m_peer_table[handle.device_id].id_bitmap &= (~IRK_ENTRY);
                         }
 
                         if (m_connection_table[index].bonded_dev_id != DM_INVALID_ID)

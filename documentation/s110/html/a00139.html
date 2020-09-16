@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: SLIP handling library</title>
+<title>nRF51 SDK - S110 SoftDevice: Flash handling library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,20 +97,17 @@ $(document).ready(function(){initNavTree('a00139.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">SLIP handling library </div>  </div>
+<div class="title">Flash handling library </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>SLIP layer for supporting packet framing in HCI transport.</p>
-<p>This module implements SLIP packet framing as described in the <em>Bluetooth</em> Core Specification 4.0, Volume 4, Part D, Chapter 3 SLIP Layer.</p>
-<p>SLIP framing ensures that all packets sent on the UART are framed as: &lt;0xC0&gt; SLIP packet 1 &lt;0xC0&gt; &lt;0xC0&gt; SLIP packet 2 &lt;0xC0&gt;.</p>
-<p>The SLIP layer uses events to notify the upper layer when data transmission is complete and when a SLIP packet is received. </p>
+<div class="textblock"><p>This driver allows writing to the non-volatile memory (NVM) regions of the nRF51. In order to write to NVM the controller must be powered on and the relevant page must be erased. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00136.html">Transport Services</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:17 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -8,13 +8,13 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
  
    <project>
-    <PathAndName>pca10028\arm\gzp_device_dynamic_pairing_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10031\host\arm4\gzp_host_dynamic_pairing_pca10031.uvproj</PathAndName>
   </project>
    <project>
-    <PathAndName>pca10028\arm\gzp_host_dynamic_pairing_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10028\host\arm4\gzp_host_dynamic_pairing_pca10028.uvproj</PathAndName>
   </project>
    <project>
-    <PathAndName>pca10031\arm\gzp_host_dynamic_pairing_pca10031.uvproj</PathAndName>
+    <PathAndName>pca10028\device\arm4\gzp_device_dynamic_pairing_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

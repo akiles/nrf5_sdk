@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Proximity Application</title>
+<title>nRF51 SDK - S110 SoftDevice: Direct Test Mode</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,87 +97,96 @@ $(document).ready(function(){initNavTree('a00056.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Proximity Application </div>  </div>
+<div class="title">Direct Test Mode </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Proximity Application is an example that implements the Proximity profile using the hardware delivered in the nRF51 Development Kit. The Proximity profile alerts the user when connected devices are too far apart.</p>
-<p>The application includes all three services in the Proximity profile:</p>
+<div class="textblock"><p>The DTM application enables the DTM test functions described in <em>Bluetooth</em> Specification Version 4.0, Vol. 6, Part F.</p>
+<p>The purpose of DTM is to test the operation of the radio at the physical level, such as:</p>
 <ul>
-<li><a class="el" href="a00973.html">Link Loss Service</a></li>
-<li><a class="el" href="a00971.html">Immediate Alert Service</a></li>
-<li><a class="el" href="a00981.html">TX Power Service</a></li>
+<li>transmission power and receiver sensitivity</li>
+<li>frequency offset and drift</li>
+<li>modulation characteristics</li>
+<li>packet error rate</li>
+<li>intermodulation performance</li>
 </ul>
-<p>In addition, use of the <a class="el" href="a00959.html">Battery Service</a> and <a class="el" href="a00982.html">Device Manager</a> are also demonstrated.</p>
-<p>At each power up and disconnect, the Proximity Application will do 20 seconds of fast advertising with whitelist followed by 40 seconds of fast advertising without whitelist. It will then switch to slow advertising mode, and the state <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING_WHITELIST">BSP_INDICATE_ADVERTISING_WHITELIST</a> is indicated. When the link is lost, or when an alert is signaled using the <a class="el" href="a00971.html">Immediate Alert Service</a>, an alert is indicated using the state <a class="el" href="a00041.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> or <a class="el" href="a00041.html#BSP_INDICATE_ALERT_1">BSP_INDICATE_ALERT_1</a>, depending on the value of the Alert Level characteristic.</p>
-<dl class="section note"><dt>Note</dt><dd>This application is not power optimized!</dd>
-<dd>
+<p>Test procedures are defined the document "<em>Bluetooth</em> Low Energy RF PHY Test Specification", Document no RF-PHY.TS/4.0.0. Conformance tests are carried out by dedicated test equipment (such as the Anritsu MT8852 or similar), the nRF51 with the DTM application as the DUT.</p>
+<p>The nRF51 DTM application includes two parts:</p>
 <ul>
-<li>The device must be in bonded state to change any characteristic in this application. </li>
-<li>The TX Power Level characteristic is not writable. </li>
-<li>The application will stop advertising and go to system-off mode after 3 minutes and 30 seconds (if no advertising with whitelist was done) or after 4 minutes (if advertising with whitelist was done). Push button 1 to restart advertising, or push and hold button 1 for 5 seconds to erase all bonds and restart advertising. </li>
-<li>Upon disconnecting a bonded connection, the application will advertise with whitelist for ADV_INTERVAL_FAST_PERIOD seconds. After this time-out, the application will be able to bond to a new central.</li>
+<li><a class="el" href="a00996.html">DTM - Direct Test Mode</a> library, which manages the nRF radio and controls the standard DTM procedures</li>
+<li>an application providing an external interface to the library</li>
 </ul>
-</dd></dl>
-<h1><a class="anchor" id="project_proximity_setup"></a>
-Setup</h1>
-<p>The name of the example is <b>ble_app_proximity_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_proximity</code> </p>
-<p>There is also a power-optimized version of this example. The name of the example is <b>ble_app_proximity_low_power_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_proximity_low_power</code> </p>
-<p>Button assignments:</p>
+<p>The DTM application contains a driver for a 2-wire UART interface, mapping two-octet commands and events as specified by the BLE DTM specification to the dtmlib.</p>
+<p>The name of the example is <b>direct_test_mode_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\dtm\direct_test_mode</code> </p>
+<p>Source code and project file for the ble_dtm module can be found in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\components\ble\ble_dtm</code> </p>
+<div class="image">
+<img src="DTM_DUT.png" alt="DTM_DUT.png"/>
+<div class="caption">
+nRF51 with DTM as a DUT</div></div>
+<p> The implementation is self-contained and requires no BLE protocol stack for its operation. The MPU is initialized in the standard way (files <code>startup_nRF51502.s</code> and <code>system_nRF51502.c</code>. The dtmlib function <a class="el" href="a00996.html#ga45f73017a4ba401da34571bcc741b564" title="Function for initializing or re-initializing DTM module.">dtm_init()</a> will do all configuration of interrupts, timers and radio. Initialization of the UART is done by the dtm_serial2w code.</p>
+<p><code>main.c</code> may be replaced with other interface implementations, such as an HCI interface, USB, or other interface required by the Upper Tester.</p>
+<p>The interface to the Lower Tester uses the antenna connector of the nRF51. While in principle an aerial may be used, conformance tests cover reading the transmission power delivered by the DUT; hence a coax connection between the DUT and the Lower Tester is employed for all conformance testing.</p>
+<h1><a class="anchor" id="ble_sdk_dtm_lib_interface"></a>
+BLE DTM module interface</h1>
+<p>ble_dtm.c function <a class="el" href="a00996.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a> implements the four commands defined by the BLE standard</p>
 <ul>
-<li>Button 1: Wake up from system-off and restart advertising. In connected state, this button is used to raise/clear High Alert to the central, which has an Immediate Alert Service instance.</li>
-<li>Button 2: Hold for 5 seconds to wake up from system-off, erase all bonds, and restart advertising.</li>
+<li>RESET</li>
+<li>RECEIVER_TEST</li>
+<li>TRANSMITTER_TEST</li>
+<li>TEST_END</li>
 </ul>
-<h1><a class="anchor" id="project_proximity_test"></a>
-Testing</h1>
-<p>Test the Proximity Application with the nRF Toolbox app, which is available on both iOS (Apple Store) and Android (Google Play).</p>
-<p>You can also test the application with the Master Control Panel by performing the following steps:</p>
-<ol type="1">
-<li>Compile and program the application. Observe that the <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
-<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_Prox'), then bond and perform service discovery. Observe that the <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Set the AlertLevel characteristic in <a class="el" href="a00971.html">Immediate Alert Service</a> to 1 (click the 'hex' radio button, enter '01' in the text box, and click the 'Send update' button), and observe the Mild alert (<a class="el" href="a00041.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a>).</li>
-<li>Change the AlertLevel value to 2 and observe the High alert (<a class="el" href="a00041.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a>).</li>
-<li>Change the AlertLevel value to 0 and observe <a class="el" href="a00041.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a>.</li>
-<li>Set the AlertLevel characteristic in <a class="el" href="a00973.html">Link Loss Service</a> to 1.</li>
-<li>Simulate a link loss situation (for example by shielding the Master Emulator) and observe that both <a class="el" href="a00041.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> and <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> are indicated.</li>
-<li>Reconnect and observe that only the <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Set the AlertLevel characteristic in <a class="el" href="a00973.html">Link Loss Service</a> to 2.</li>
-<li>Simulate a link loss situation, for example by disconnecting the Master Emulator, and observe that the <a class="el" href="a00041.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a> and <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> are indicated.</li>
-<li>Reconnect and observe that only the <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Select the TxPowerLevel characteristic in <a class="el" href="a00981.html">TX Power Service</a>, click the 'Read' button, and verify that it was successfully read.</li>
-<li>Click the 'Enable services' button to start notification of Battery Level and observe that the battery level is notified periodically (every 2 minutes).</li>
-<li>Disconnect from the Master Control Panel and observe that <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> is indicated.</li>
-<li>Wait until the application goes to system-off (<a class="el" href="a00041.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a>).</li>
-<li>Press button 1 and connect to the Master Control Panel. Observe that <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> is indicated and that the battery level is notified periodically (every 2 minutes).</li>
-<li>Disconnect from the Master Control Panel.</li>
-<li>Connect with a different central and bond and disconnect.</li>
-<li>Wait until the application goes to system-off (<a class="el" href="a00041.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a>).</li>
-<li>Press button 1 and reconnect to the first Master Control Panel. Observe that <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> is indicated and that the battery level is notified periodically (every 2 minutes).</li>
-<li>Disconnect from the Master Control Panel.</li>
-<li>Connect with the second central and observe that the link encryption is on and that the battery level is not notified.</li>
-<li>Disconnect from the second central and wait for the application to go to system-off.</li>
-<li>Press and hold button 2 (erase bonds) for 5 seconds and connect with the first Master Control Panel. Observe that the link encryption is OFF and that no notifications are received.</li>
-<li>Disconnect from Master Control Panel.</li>
-</ol>
-<p>Test the Find Me locater (Immediate Alert Service Client) functionality by performing the following steps:</p>
-<ol type="1">
-<li>In the Master Control Panel, create the Immediate Alert Service (IAS) server by performing the following steps:<ul>
-<li>Click File -&gt; Server Setup. In the window that is displayed, click File -&gt; Load setup.</li>
-<li>In the resulting window, navigate to the <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_proximity</code> folder. If you are using Keil packs, this folder is located at <code>&lt;KeilFolder&gt;\ARM\Pack\NordicSemiconductor\nRF_Examples\&lt;version&gt;\ble_peripheral\ble_app_proximity</code>. Load the file <code>findMeMasterServer.bin</code>.</li>
-<li>Click the 'Stop Server' button and then 'Start Server'. This restarts the server with Immediate Alert Service configured.</li>
-<li>You must keep the 'Server Setup' window opened.</li>
+<p>In the <a class="el" href="a00996.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a> interface, each of the parameters (cmd,freq, length, payload) is a word size value. Note that the currently supported parameter values are limited to those defined for BLE. (HCI allows a greater value range for use with BR/EDR.)</p>
+<p>The following DTM events are polled using the <a class="el" href="a00996.html#ga574ceb36cc9cee237a6e9f77e3c32b36" title="Function for reading the result of a DTM command.">dtm_event_get()</a> function:</p>
+<ul>
+<li>PACKET_REPORTING_EVENT</li>
+<li>TEST_STATUS_EVENT [SUCCESS|FAIL]</li>
 </ul>
-</li>
-<li>Go to the Master Control Panel main window and connect to the device.</li>
-<li>Press button 1 and observe that the AlertLevel value at the 'Server setup' window of the Master Control Panel changes to 02. This indicates that the device was able to signal a High Alert to the central.</li>
-<li>Press button 1 again and observe that the AlertLevel value changes to 00. This indicates that the device was able to clear the High Alert previously signalled to the central. </li>
-</ol>
+<div class="image">
+<img src="dtm_engine.jpg" alt="dtm_engine.jpg"/>
+<div class="caption">
+State machine overview of the dtm engine.</div></div>
+ <h1><a class="anchor" id="ble_sdk_dtm_proprietary"></a>
+Vendor Specific Packet Payload</h1>
+<p>The BLE 2-wire UART DTM interface standard reserves Packet Type (payload parameter) binary value '11' for a <em>Vendor Specific</em> Packet Payload. The dtm_serial2w adaptation layer maps this to value 0xFFF..FFF in the <a class="el" href="a00996.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a> interface. The rationale for this mapping is to allow later extensions to a 4-bit Packet Type field, as specified in the HCI interface and in the DTM PDU layout.</p>
+<p>The <em>Vendor Specific</em> payload (parameter 4) is interpreted as follows:</p>
+<p>If Command, parameter 1, is set to Transmitter Test (binary '10') and parameter 4, payload, to <em>Vendor Specific</em> (binary '11' in the 2wire physical interface, all bits set to 1 in the dtmlib interface):</p>
+<ul>
+<li>If parameter 3 (length) is set to 0 (symbol CARRIER_TEST), an unmodulated carrier is turned on at the channel indicated by parameter 2 (freq). It remains turned on until a TEST_END or RESET command is issued.</li>
+</ul>
+<ul>
+<li>Parameter 3 (length) equal to 1 (symbol CARRIER_TEST_STUDIO) is used by the nRFgo studio to indicate an unmodulated carrier is turned on at the channel. It remains turned on until a TEST_END or RESET command is issued.</li>
+</ul>
+<ul>
+<li>If parameter 3 (length) is set to 2 (symbol SET_TX_POWER), parameter 2 (length) sets the tx power in dBm, ranging from -40 to +4 in steps of 4, 0 dBm being the reset value. The tx power can only be modified while no Transmitter Test or Receiver Test is running.</li>
+</ul>
+<ul>
+<li>If parameter 3 (freq) is set to 3 (symbol SELECT_TIMER), parameter 2 (length) selects the timer to be used by dtmlib for Transmitter Test timing. Valid timer identifiers are 0, 1 and 2. Configuring the timer to be used allows dtmlib to be integrated in a larger test environment where other modules may be occupying the default timer (timer 0).</li>
+</ul>
+<ul>
+<li>All other values of parameter 2 (freq) and 4 (length) are reserved.</li>
+</ul>
+<h1><a class="anchor" id="ble_sdk_dtm_serial2w"></a>
+The DTM to Serial adaptation layer</h1>
+<p><code>main.c</code> is a sample adaptation layer, implementing the UART interface as specified in Volume 6, part F, chapter 3 of the <em>Bluetooth</em> specification.</p>
+<p>The default selection of GPIO pins are pin 11 for RX and pin 9 for TX. These defaults are defined in <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\bsp\pca10028.h</code> and can be changed by editing the values of the symbols RX_PIN_NUMBER and TX_PIN_NUMBER.</p>
+<h1><a class="anchor" id="ble_sdk_dtm_testing"></a>
+Running DTM tests</h1>
+<p>Conformance testing is done using a certified tester. The setup depends on the actual tester, and details about the test operation must be found from the tester documentation.</p>
+<p>The BLE DTM UART interface standard specifies:</p>
+<ul>
+<li>8 data bits</li>
+<li>No parity</li>
+<li>1 stop bit</li>
+<li>CTS/RTS Flow control</li>
+<li>A selection of bit rates from 1200 to 115200, one of which must be supported by the DUT</li>
+</ul>
+<p>The default bit rate of the DTM UART driver is 19200 bps, which is supported by most certified testers. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00043.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

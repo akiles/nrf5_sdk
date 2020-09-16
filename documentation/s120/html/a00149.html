@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gattc_evt_desc_disc_rsp_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gattc_evt_char_val_by_uuid_read_rsp_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,63 @@ $(document).ready(function(){initNavTree('a00149.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gattc_evt_desc_disc_rsp_t Struct Reference<div class="ingroups"><a class="el" href="a00755.html">Structures</a></div></div>  </div>
+<div class="title">ble_gattc_evt_char_val_by_uuid_read_rsp_t Struct Reference<div class="ingroups"><a class="el" href="a00709.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for BLE_GATTC_EVT_DESC_DISC_RSP.  
+<p>Event structure for <a class="el" href="a00707.html#ggafd9b8b42eeb832d688e33f4561f97efca9741363d5e934220a35f1c01f62a194c">BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</a>.  
  <a href="a00149.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gattc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a50815a26acf0eaa4a6d7ef9bebf7f58d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html#a50815a26acf0eaa4a6d7ef9bebf7f58d">count</a></td></tr>
-<tr class="separator:a50815a26acf0eaa4a6d7ef9bebf7f58d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d41c7255fa19fa2b55acd6962be26ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00145.html">ble_gattc_desc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html#a3d41c7255fa19fa2b55acd6962be26ee">descs</a> [1]</td></tr>
-<tr class="separator:a3d41c7255fa19fa2b55acd6962be26ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50e19076a010925f0ec9c71d40c33eff"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html#a50e19076a010925f0ec9c71d40c33eff">count</a></td></tr>
+<tr class="separator:a50e19076a010925f0ec9c71d40c33eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91e554093e8f445960abff9c0015193c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html#a91e554093e8f445960abff9c0015193c">value_len</a></td></tr>
+<tr class="separator:a91e554093e8f445960abff9c0015193c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e8890391646f5df02ede436e3f1d987"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00160.html">ble_gattc_handle_value_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html#a0e8890391646f5df02ede436e3f1d987">handle_value</a> [1]</td></tr>
+<tr class="separator:a0e8890391646f5df02ede436e3f1d987"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for BLE_GATTC_EVT_DESC_DISC_RSP. </p>
+<div class="textblock"><p>Event structure for <a class="el" href="a00707.html#ggafd9b8b42eeb832d688e33f4561f97efca9741363d5e934220a35f1c01f62a194c">BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a50815a26acf0eaa4a6d7ef9bebf7f58d"></a>
+<a class="anchor" id="a50e19076a010925f0ec9c71d40c33eff"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gattc_evt_desc_disc_rsp_t::count</td>
+          <td class="memname">uint16_t ble_gattc_evt_char_val_by_uuid_read_rsp_t::count</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Descriptor count. </p>
+<p>Handle-Value Pair Count. </p>
 
 </div>
 </div>
-<a class="anchor" id="a3d41c7255fa19fa2b55acd6962be26ee"></a>
+<a class="anchor" id="a0e8890391646f5df02ede436e3f1d987"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00145.html">ble_gattc_desc_t</a> ble_gattc_evt_desc_disc_rsp_t::descs[1]</td>
+          <td class="memname"><a class="el" href="a00160.html">ble_gattc_handle_value_t</a> ble_gattc_evt_char_val_by_uuid_read_rsp_t::handle_value[1]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Descriptor data, variable length. </p>
+<p>Handle-Value(s) list, variable length. </p>
+
+</div>
+</div>
+<a class="anchor" id="a91e554093e8f445960abff9c0015193c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gattc_evt_char_val_by_uuid_read_rsp_t::value_len</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Length of the value in Handle-Value(s) list. </p>
 
 </div>
 </div>
@@ -156,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00149.html">ble_gattc_evt_desc_disc_rsp_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00149.html">ble_gattc_evt_char_val_by_uuid_read_rsp_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

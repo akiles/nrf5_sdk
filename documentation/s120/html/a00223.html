@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ser_phy_evt_rx_buf_request_params_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: nrf_drv_rtc_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,34 +106,63 @@ $(document).ready(function(){initNavTree('a00223.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ser_phy_evt_rx_buf_request_params_t Struct Reference<div class="ingroups"><a class="el" href="a00662.html">Serialization PHY</a></div></div>  </div>
+<div class="title">nrf_drv_rtc_t Struct Reference<div class="ingroups"><a class="el" href="a00480.html">RTC driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>A struct containing parameters of the event of type <a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061a6586d0863748060b1f669ed34a0a0a77">SER_PHY_EVT_RX_BUF_REQUEST</a>.  
+<p>RTC driver instance structure.  
  <a href="a00223.html#details">More...</a></p>
 
-<p><code>#include &lt;ser_phy.h&gt;</code></p>
+<p><code>#include &lt;nrf_drv_rtc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a7f6d69ce5cc415b31050e5ed4846c2ff"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#a7f6d69ce5cc415b31050e5ed4846c2ff">num_of_bytes</a></td></tr>
-<tr class="separator:a7f6d69ce5cc415b31050e5ed4846c2ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab45287af2512c2277a6bb35c4e37c3c0"><td class="memItemLeft" align="right" valign="top">NRF_RTC_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#ab45287af2512c2277a6bb35c4e37c3c0">p_reg</a></td></tr>
+<tr class="separator:ab45287af2512c2277a6bb35c4e37c3c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d46eefc5f87c6e7e469f5a87ff554ba"><td class="memItemLeft" align="right" valign="top">IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#a4d46eefc5f87c6e7e469f5a87ff554ba">irq</a></td></tr>
+<tr class="separator:a4d46eefc5f87c6e7e469f5a87ff554ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adddb0bddab148beb1b7ebbd61287aa7c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00223.html#adddb0bddab148beb1b7ebbd61287aa7c">instance_id</a></td></tr>
+<tr class="separator:adddb0bddab148beb1b7ebbd61287aa7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A struct containing parameters of the event of type <a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061a6586d0863748060b1f669ed34a0a0a77">SER_PHY_EVT_RX_BUF_REQUEST</a>. </p>
+<div class="textblock"><p>RTC driver instance structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a7f6d69ce5cc415b31050e5ed4846c2ff"></a>
+<a class="anchor" id="adddb0bddab148beb1b7ebbd61287aa7c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ser_phy_evt_rx_buf_request_params_t::num_of_bytes</td>
+          <td class="memname">uint8_t nrf_drv_rtc_t::instance_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">  Length of a buffer in octets that layer above PHY module should
-</pre><p> deliver to enable PHY module to receive packet. </p>
+<p>Instance index. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4d46eefc5f87c6e7e469f5a87ff554ba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">IRQn_Type nrf_drv_rtc_t::irq</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Instance IRQ ID. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab45287af2512c2277a6bb35c4e37c3c0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">NRF_RTC_Type* nrf_drv_rtc_t::p_reg</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to instance register set. </p>
 
 </div>
 </div>
@@ -142,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00223.html">ser_phy_evt_rx_buf_request_params_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00223.html">nrf_drv_rtc_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

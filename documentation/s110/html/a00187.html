@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_date_time_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_conn_params_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,45 +106,43 @@ $(document).ready(function(){initNavTree('a00187.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_date_time_t Struct Reference<div class="ingroups"><a class="el" href="a01017.html">BLE Date Time characteristic type</a></div></div>  </div>
+<div class="title">ble_conn_params_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01013.html">Connection Parameters Negotiation</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Date and Time structure.  
+<p>Connection Parameters Module event.  
  <a href="a00187.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_date_time.h&gt;</code></p>
+<p><code>#include &lt;ble_conn_params.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a469839121af0c966717424b7649e0532"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a469839121af0c966717424b7649e0532"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>year</b></td></tr>
-<tr class="separator:a469839121af0c966717424b7649e0532"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49262472d4a8f721997adc626ae4f693"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49262472d4a8f721997adc626ae4f693"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>month</b></td></tr>
-<tr class="separator:a49262472d4a8f721997adc626ae4f693"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94bdc52cbceff5f14951b6f7e8c02263"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94bdc52cbceff5f14951b6f7e8c02263"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>day</b></td></tr>
-<tr class="separator:a94bdc52cbceff5f14951b6f7e8c02263"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5288a98f74703cf1c5f9d0b9b1119461"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5288a98f74703cf1c5f9d0b9b1119461"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>hours</b></td></tr>
-<tr class="separator:a5288a98f74703cf1c5f9d0b9b1119461"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1328373bafcaa7e7ed28e2a3f52ec6e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1328373bafcaa7e7ed28e2a3f52ec6e4"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>minutes</b></td></tr>
-<tr class="separator:a1328373bafcaa7e7ed28e2a3f52ec6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20bab791a65115383e5e355e97078e27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a20bab791a65115383e5e355e97078e27"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>seconds</b></td></tr>
-<tr class="separator:a20bab791a65115383e5e355e97078e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6efeb9489be1517dba8b60d09a51583a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01013.html#gae819a1b14dbebf447254ec41f644ec42">ble_conn_params_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00187.html#a6efeb9489be1517dba8b60d09a51583a">evt_type</a></td></tr>
+<tr class="separator:a6efeb9489be1517dba8b60d09a51583a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Date and Time structure. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>Connection Parameters Module event. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a6efeb9489be1517dba8b60d09a51583a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01013.html#gae819a1b14dbebf447254ec41f644ec42">ble_conn_params_evt_type_t</a> ble_conn_params_evt_t::evt_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Type of event. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00187.html">ble_date_time_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00187.html">ble_conn_params_evt_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

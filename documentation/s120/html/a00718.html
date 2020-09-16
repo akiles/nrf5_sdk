@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Link Status Events</title>
+<title>nRF51 SDK - S120 SoftDevice: Functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,109 +97,145 @@ $(document).ready(function(){initNavTree('a00718.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Link Status Events<div class="ingroups"><a class="el" href="a00716.html">Device Manager Events</a></div></div>  </div>
+<div class="title">Functions<div class="ingroups"><a class="el" href="a00634.html">Logical Link Control and Adaptation Protocol (L2CAP)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Link Status Events.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga0f770455b2a8d43faf3e18570163a3d8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga0f770455b2a8d43faf3e18570163a3d8">DM_EVT_CONNECTION</a>&#160;&#160;&#160;0x11</td></tr>
-<tr class="separator:ga0f770455b2a8d43faf3e18570163a3d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7909152aa711df2ab18ddef129af9597"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga7909152aa711df2ab18ddef129af9597">DM_EVT_DISCONNECTION</a>&#160;&#160;&#160;0x12</td></tr>
-<tr class="separator:ga7909152aa711df2ab18ddef129af9597"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabeb39b4bbdb79dc5df6feffc467deae3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#gabeb39b4bbdb79dc5df6feffc467deae3">DM_EVT_SECURITY_SETUP</a>&#160;&#160;&#160;0x13</td></tr>
-<tr class="separator:gabeb39b4bbdb79dc5df6feffc467deae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44bd57374aa0379152253c85b3f2f898"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga44bd57374aa0379152253c85b3f2f898">DM_EVT_SECURITY_SETUP_COMPLETE</a>&#160;&#160;&#160;0x14</td></tr>
-<tr class="separator:ga44bd57374aa0379152253c85b3f2f898"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf572cf54f12fa19eec469c0fff0c9a38"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#gaf572cf54f12fa19eec469c0fff0c9a38">DM_EVT_LINK_SECURED</a>&#160;&#160;&#160;0x15</td></tr>
-<tr class="separator:gaf572cf54f12fa19eec469c0fff0c9a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf45fa4ad220ac72b86b2aa66aeb8979d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#gaf45fa4ad220ac72b86b2aa66aeb8979d">DM_EVT_SECURITY_SETUP_REFRESH</a>&#160;&#160;&#160;0x16</td></tr>
-<tr class="separator:gaf45fa4ad220ac72b86b2aa66aeb8979d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga124cd974cfc529057218a14af8ee9780"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga124cd974cfc529057218a14af8ee9780">sd_ble_l2cap_cid_register</a> (uint16_t cid)</td></tr>
+<tr class="memdesc:ga124cd974cfc529057218a14af8ee9780"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a CID with L2CAP.  <a href="#ga124cd974cfc529057218a14af8ee9780">More...</a><br/></td></tr>
+<tr class="separator:ga124cd974cfc529057218a14af8ee9780"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78af254844e078b90868b3c827200e25"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga78af254844e078b90868b3c827200e25">sd_ble_l2cap_cid_unregister</a> (uint16_t cid)</td></tr>
+<tr class="memdesc:ga78af254844e078b90868b3c827200e25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregister a CID with L2CAP.  <a href="#ga78af254844e078b90868b3c827200e25">More...</a><br/></td></tr>
+<tr class="separator:ga78af254844e078b90868b3c827200e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace234d2360cf35ac03317771b041294e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#gace234d2360cf35ac03317771b041294e">sd_ble_l2cap_tx</a> (uint16_t conn_handle, <a class="el" href="a00189.html">ble_l2cap_header_t</a> const *p_header, uint8_t const *p_data)</td></tr>
+<tr class="memdesc:gace234d2360cf35ac03317771b041294e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit an L2CAP packet.  <a href="#gace234d2360cf35ac03317771b041294e">More...</a><br/></td></tr>
+<tr class="separator:gace234d2360cf35ac03317771b041294e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Link Status Events. </p>
-<p>This category of events notify the application of the link status. Event result associated with the event is provided along with the event in the callback to provide more details of whether a procedure succeeded or failed and assist the application in decision making of how to proceed. For example if a DM_DEVICE_CONNECT_IND is indicated with NRF_SUCCESS result, the application may want to proceed with discovering and association with service of the peer. However, if indicated with a failure result, the application may want to take an alternate action such as reattempting to connect or go into a sleep mode. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga0f770455b2a8d43faf3e18570163a3d8"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga124cd974cfc529057218a14af8ee9780"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_CONNECTION&#160;&#160;&#160;0x11</td>
+          <td class="memname">uint32_t sd_ble_l2cap_cid_register </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>cid</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicates that link with the peer is established. </p>
+
+<p>Register a CID with L2CAP. </p>
+<p>This registers a higher protocol layer with the L2CAP multiplexer, and is requried prior to all operations on the CID.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cid</td><td>L2CAP CID.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully registered a CID with the L2CAP layer. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00562.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied, CID must be above <a class="el" href="a00716.html#ga04c14ff9adffadf03baad98d7632b620">BLE_L2CAP_CID_DYN_BASE</a>. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00555.html#ga258b4a1e6ac5f32e23036ef0b88af3fa">BLE_ERROR_L2CAP_CID_IN_USE</a></td><td>L2CAP CID already in use. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00562.html#ga7ef4d466b79b31c6325f8b7af5d4f75f" title="No Memory for operation.">NRF_ERROR_NO_MEM</a></td><td>Not enough memory to complete operation. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7909152aa711df2ab18ddef129af9597"></a>
+<a class="anchor" id="ga78af254844e078b90868b3c827200e25"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_DISCONNECTION&#160;&#160;&#160;0x12</td>
+          <td class="memname">uint32_t sd_ble_l2cap_cid_unregister </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>cid</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicates that link with peer is torn down. </p>
+
+<p>Unregister a CID with L2CAP. </p>
+<p>This unregisters a previously registerd higher protocol layer with the L2CAP multiplexer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cid</td><td>L2CAP CID.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully unregistered the CID. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00562.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00562.html#ga349d25ada15be023e0d507f45ada682c" title="Not found.">NRF_ERROR_NOT_FOUND</a></td><td>CID not previously registered. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf572cf54f12fa19eec469c0fff0c9a38"></a>
+<a class="anchor" id="gace234d2360cf35ac03317771b041294e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_LINK_SECURED&#160;&#160;&#160;0x15</td>
+          <td class="memname">uint32_t sd_ble_l2cap_tx </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00189.html">ble_l2cap_header_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_header</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *&#160;</td>
+          <td class="paramname"><em>p_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicates that link with the peer is secured. For bonded devices, subsequent reconnections with bonded peer will result only in this event when the link is secured and setup procedures will not occur unless the bonding information is either lost or deleted on either or both sides. </p>
 
-</div>
-</div>
-<a class="anchor" id="gabeb39b4bbdb79dc5df6feffc467deae3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_SECURITY_SETUP&#160;&#160;&#160;0x13</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Security procedure for link started indication </p>
-
-</div>
-</div>
-<a class="anchor" id="ga44bd57374aa0379152253c85b3f2f898"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_SECURITY_SETUP_COMPLETE&#160;&#160;&#160;0x14</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Security procedure for link completion indication. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaf45fa4ad220ac72b86b2aa66aeb8979d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_SECURITY_SETUP_REFRESH&#160;&#160;&#160;0x16</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates that the security on the link was re-established. </p>
+<p>Transmit an L2CAP packet. </p>
+<dl class="section note"><dt>Note</dt><dd>It is important to note that a call to this function will <b>consume an application buffer</b>, and will therefore generate a <a class="el" href="a00696.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> event when the packet has been transmitted. Please see the documentation of <a class="el" href="a00699.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> for more details.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection Handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_header</td><td>Pointer to a packet header containing length and CID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Pointer to the data to be transmitted.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully queued an L2CAP packet for transmission. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00562.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00562.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied, CIDs must be registered beforehand with <a class="el" href="a00718.html#ga124cd974cfc529057218a14af8ee9780">sd_ble_l2cap_cid_register</a>. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00562.html#ga349d25ada15be023e0d507f45ada682c" title="Not found.">NRF_ERROR_NOT_FOUND</a></td><td>CID not found. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00562.html#ga7ef4d466b79b31c6325f8b7af5d4f75f" title="No Memory for operation.">NRF_ERROR_NO_MEM</a></td><td>Not enough memory to complete operation. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00514.html#ga901e1bc3ccae29eff9fb31cabdbb5e02">BLE_ERROR_NO_TX_BUFFERS</a></td><td>Not enough application buffers available. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00562.html#ga4c61f2b54667506e90cc296721b2e658" title="Data size exceeds limit.">NRF_ERROR_DATA_SIZE</a></td><td>Invalid data size(s) supplied, see <a class="el" href="a00716.html#gacc63c6e5847699642179a1ec792fe1c1">BLE_L2CAP_MTU_DEF</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -208,7 +244,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:37 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

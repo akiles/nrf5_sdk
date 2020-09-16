@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Device Manager Data Types</title>
+<title>nRF51 SDK - S110 SoftDevice: Advertising Module</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,290 +98,423 @@ $(document).ready(function(){initNavTree('a00988.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Device Manager Data Types<div class="ingroups"><a class="el" href="a00982.html">Device Manager</a></div></div>  </div>
+<div class="title">Advertising Module<div class="ingroups"><a class="el" href="a01034.html">BLE Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This section describes all the data types exposed by the module to the application.  
+<p>Module for handling connectable BLE advertising.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00352.html">dm_enc_key</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Manager Master identification and encryption information.  <a href="a00352.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html">ble_adv_modes_config_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Options for the different advertisement modes.  <a href="a00156.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html">dm_id_key</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Manager identity and address information.  <a href="a00355.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html">ble_adv_init_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization parameters for the Advertising Module.  <a href="a00155.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00360.html">dm_sign_key</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Manager signing information.  <a href="a00360.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00357.html">dm_sec_keyset</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Security keys.  <a href="a00357.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00358.html">dm_sec_keyset_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Manager security key set.  <a href="a00358.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00341.html">device_handle</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Handle used for unique identification of each peer.  <a href="a00341.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00351.html">dm_context_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of Data Context.  <a href="a00351.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html">dm_service_context_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Service Context.  <a href="a00359.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00353.html">dm_event_param_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event parameters.  <a href="a00353.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00354.html">dm_event_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronous events details notified to the application by the module.  <a href="a00354.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00356.html">dm_init_param_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization Parameters.  <a href="a00356.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html">dm_application_param_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application Registration Parameters.  <a href="a00350.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga8fa0b6f695f0a4ea9a1ac17f081652b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8fa0b6f695f0a4ea9a1ac17f081652b5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_ADV_DIRECTED_ENABLED</b>&#160;&#160;&#160;true</td></tr>
+<tr class="separator:ga8fa0b6f695f0a4ea9a1ac17f081652b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga97005dd9cb5b3dc1c7fd4c37a90f011d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga97005dd9cb5b3dc1c7fd4c37a90f011d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_ADV_DIRECTED_DISABLED</b>&#160;&#160;&#160;false</td></tr>
+<tr class="separator:ga97005dd9cb5b3dc1c7fd4c37a90f011d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b10a51d8d001f8730176d3354a5af86"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0b10a51d8d001f8730176d3354a5af86"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_ADV_FAST_ENABLED</b>&#160;&#160;&#160;true</td></tr>
+<tr class="separator:ga0b10a51d8d001f8730176d3354a5af86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga57c028fb419733850e4a92f1d4241ac7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga57c028fb419733850e4a92f1d4241ac7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_ADV_FAST_DISABLED</b>&#160;&#160;&#160;false</td></tr>
+<tr class="separator:ga57c028fb419733850e4a92f1d4241ac7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91eb0be4afba01e4c1067a0c9eb8eb5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga91eb0be4afba01e4c1067a0c9eb8eb5d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_ADV_SLOW_ENABLED</b>&#160;&#160;&#160;true</td></tr>
+<tr class="separator:ga91eb0be4afba01e4c1067a0c9eb8eb5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a2f41eab037515079c98a4cfd3a81b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5a2f41eab037515079c98a4cfd3a81b1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_ADV_SLOW_DISABLED</b>&#160;&#160;&#160;false</td></tr>
+<tr class="separator:ga5a2f41eab037515079c98a4cfd3a81b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga539a37163c0f44199e4caaf1855db0b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga539a37163c0f44199e4caaf1855db0b3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_ADV_WHITELIST_ENABLED</b>&#160;&#160;&#160;true</td></tr>
+<tr class="separator:ga539a37163c0f44199e4caaf1855db0b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9eb95abec9348a89750ee435028f367e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9eb95abec9348a89750ee435028f367e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_ADV_WHITELIST_DISABLED</b>&#160;&#160;&#160;false</td></tr>
+<tr class="separator:ga9eb95abec9348a89750ee435028f367e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga3c013385ac2ef5502370f598308d0339"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a></td></tr>
-<tr class="memdesc:ga3c013385ac2ef5502370f598308d0339"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application Instance.  <a href="#ga3c013385ac2ef5502370f598308d0339">More...</a><br/></td></tr>
-<tr class="separator:ga3c013385ac2ef5502370f598308d0339"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae005241eac710952713e896d52646858"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gae005241eac710952713e896d52646858">dm_connection_instance_t</a></td></tr>
-<tr class="memdesc:gae005241eac710952713e896d52646858"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connection Instance.  <a href="#gae005241eac710952713e896d52646858">More...</a><br/></td></tr>
-<tr class="separator:gae005241eac710952713e896d52646858"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf1a000e90688eea8d02bd3854440ec6b"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gaf1a000e90688eea8d02bd3854440ec6b">dm_device_instance_t</a></td></tr>
-<tr class="memdesc:gaf1a000e90688eea8d02bd3854440ec6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Instance.  <a href="#gaf1a000e90688eea8d02bd3854440ec6b">More...</a><br/></td></tr>
-<tr class="separator:gaf1a000e90688eea8d02bd3854440ec6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b2fb32d39e173997c5baa1e0383ace0"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#ga7b2fb32d39e173997c5baa1e0383ace0">dm_service_instance_t</a></td></tr>
-<tr class="memdesc:ga7b2fb32d39e173997c5baa1e0383ace0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Service Instance.  <a href="#ga7b2fb32d39e173997c5baa1e0383ace0">More...</a><br/></td></tr>
-<tr class="separator:ga7b2fb32d39e173997c5baa1e0383ace0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef588a149a4cc5b665658cfb032d6f6a"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gaef588a149a4cc5b665658cfb032d6f6a">service_type_t</a></td></tr>
-<tr class="memdesc:gaef588a149a4cc5b665658cfb032d6f6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Service/Protocol Type Identifier.  <a href="#gaef588a149a4cc5b665658cfb032d6f6a">More...</a><br/></td></tr>
-<tr class="separator:gaef588a149a4cc5b665658cfb032d6f6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd6aca8bf4cd897655618df17c575e76"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadd6aca8bf4cd897655618df17c575e76"></a>
-typedef struct <a class="el" href="a00352.html">dm_enc_key</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gadd6aca8bf4cd897655618df17c575e76">dm_enc_key_t</a></td></tr>
-<tr class="memdesc:gadd6aca8bf4cd897655618df17c575e76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Manager Master identification and encryption information. <br/></td></tr>
-<tr class="separator:gadd6aca8bf4cd897655618df17c575e76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga38566c0de9c9fb2ad4eda1b7cd415321"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga38566c0de9c9fb2ad4eda1b7cd415321"></a>
-typedef struct <a class="el" href="a00355.html">dm_id_key</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#ga38566c0de9c9fb2ad4eda1b7cd415321">dm_id_key_t</a></td></tr>
-<tr class="memdesc:ga38566c0de9c9fb2ad4eda1b7cd415321"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Manager identity and address information. <br/></td></tr>
-<tr class="separator:ga38566c0de9c9fb2ad4eda1b7cd415321"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4ecd6e25cc653bbe21a293f34f3c9dd6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4ecd6e25cc653bbe21a293f34f3c9dd6"></a>
-typedef struct <a class="el" href="a00360.html">dm_sign_key</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#ga4ecd6e25cc653bbe21a293f34f3c9dd6">dm_sign_key_t</a></td></tr>
-<tr class="memdesc:ga4ecd6e25cc653bbe21a293f34f3c9dd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Manager signing information. <br/></td></tr>
-<tr class="separator:ga4ecd6e25cc653bbe21a293f34f3c9dd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf399152e3dbaa0ac2e9a3384e056a16b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf399152e3dbaa0ac2e9a3384e056a16b"></a>
-typedef struct <a class="el" href="a00357.html">dm_sec_keyset</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gaf399152e3dbaa0ac2e9a3384e056a16b">dm_sec_keys_t</a></td></tr>
-<tr class="memdesc:gaf399152e3dbaa0ac2e9a3384e056a16b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Security keys. <br/></td></tr>
-<tr class="separator:gaf399152e3dbaa0ac2e9a3384e056a16b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf4616538d9102b901e86d92fc4e82c5c"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00341.html">device_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a></td></tr>
-<tr class="memdesc:gaf4616538d9102b901e86d92fc4e82c5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Handle used for unique identification of each peer.  <a href="#gaf4616538d9102b901e86d92fc4e82c5c">More...</a><br/></td></tr>
-<tr class="separator:gaf4616538d9102b901e86d92fc4e82c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7e116c1567d58a325c14a1b8a9a75d48"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00351.html">dm_context_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#ga7e116c1567d58a325c14a1b8a9a75d48">dm_device_context_t</a></td></tr>
-<tr class="memdesc:ga7e116c1567d58a325c14a1b8a9a75d48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Context.  <a href="#ga7e116c1567d58a325c14a1b8a9a75d48">More...</a><br/></td></tr>
-<tr class="separator:ga7e116c1567d58a325c14a1b8a9a75d48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca2973e52020d6f1078540f0b1a732fa"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00351.html">dm_context_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gaca2973e52020d6f1078540f0b1a732fa">dm_application_context_t</a></td></tr>
-<tr class="memdesc:gaca2973e52020d6f1078540f0b1a732fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application context.  <a href="#gaca2973e52020d6f1078540f0b1a732fa">More...</a><br/></td></tr>
-<tr class="separator:gaca2973e52020d6f1078540f0b1a732fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1d3589567c4e17c3d32ab53dcedf3fd2"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#ga1d3589567c4e17c3d32ab53dcedf3fd2">dm_event_cb_t</a> )(<a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> const *p_handle, <a class="el" href="a00354.html">dm_event_t</a> const *p_event, <a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> event_result)</td></tr>
-<tr class="memdesc:ga1d3589567c4e17c3d32ab53dcedf3fd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event notification callback registered by application with the module.  <a href="#ga1d3589567c4e17c3d32ab53dcedf3fd2">More...</a><br/></td></tr>
-<tr class="separator:ga1d3589567c4e17c3d32ab53dcedf3fd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae5ac649acd48e432e1135e2989385680"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae5ac649acd48e432e1135e2989385680"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gae5ac649acd48e432e1135e2989385680">ble_advertising_evt_handler_t</a> )(<a class="el" href="a00988.html#gab3aa9a7ef02ab319f71e2545d75f0300">ble_adv_evt_t</a> const adv_evt)</td></tr>
+<tr class="memdesc:gae5ac649acd48e432e1135e2989385680"><td class="mdescLeft">&#160;</td><td class="mdescRight">BLE advertising event handler type. <br/></td></tr>
+<tr class="separator:gae5ac649acd48e432e1135e2989385680"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8dbd1c0d3a994a2905077b5a69a8e190"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8dbd1c0d3a994a2905077b5a69a8e190"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#ga8dbd1c0d3a994a2905077b5a69a8e190">ble_advertising_error_handler_t</a> )(uint32_t nrf_error)</td></tr>
+<tr class="memdesc:ga8dbd1c0d3a994a2905077b5a69a8e190"><td class="mdescLeft">&#160;</td><td class="mdescRight">BLE advertising error handler type. <br/></td></tr>
+<tr class="separator:ga8dbd1c0d3a994a2905077b5a69a8e190"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga7404a8275ca6d38f7400881deb1e6b0e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#ga7404a8275ca6d38f7400881deb1e6b0e">dm_security_status_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00988.html#gga7404a8275ca6d38f7400881deb1e6b0ea0421f2bed1189cc7a24264c7b3082932">NOT_ENCRYPTED</a>, 
+<tr class="memitem:gae4fb26dd401f1fbdf501b935c9f73d2b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gae4fb26dd401f1fbdf501b935c9f73d2b">ble_adv_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00988.html#ggae4fb26dd401f1fbdf501b935c9f73d2baf8aede79967f55367e5aa732202f0606">BLE_ADV_MODE_IDLE</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00988.html#gga7404a8275ca6d38f7400881deb1e6b0eae759dd11c88380847924d25cac0997bb">ENCRYPTION_IN_PROGRESS</a>, 
+&#160;&#160;<a class="el" href="a00988.html#ggae4fb26dd401f1fbdf501b935c9f73d2bad6f9b98468925959cc440f75df01a1e5">BLE_ADV_MODE_DIRECTED</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00988.html#gga7404a8275ca6d38f7400881deb1e6b0eaaac875c4dc08055725dd966fd44e0839">ENCRYPTED</a>
+&#160;&#160;<a class="el" href="a00988.html#ggae4fb26dd401f1fbdf501b935c9f73d2ba1f176335ec5316d22eaa638d6ad4fa83">BLE_ADV_MODE_FAST</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00988.html#ggae4fb26dd401f1fbdf501b935c9f73d2ba6e1f3523897bd5b2bc3ec87bb8364ce4">BLE_ADV_MODE_SLOW</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga7404a8275ca6d38f7400881deb1e6b0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines possible security status/states.  <a href="a00988.html#ga7404a8275ca6d38f7400881deb1e6b0e">More...</a><br/></td></tr>
-<tr class="separator:ga7404a8275ca6d38f7400881deb1e6b0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gae4fb26dd401f1fbdf501b935c9f73d2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advertising modes.  <a href="a00988.html#gae4fb26dd401f1fbdf501b935c9f73d2b">More...</a><br/></td></tr>
+<tr class="separator:gae4fb26dd401f1fbdf501b935c9f73d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab3aa9a7ef02ab319f71e2545d75f0300"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gab3aa9a7ef02ab319f71e2545d75f0300">ble_adv_evt_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300ac5d98bfe62718bd79ef145c3b207dbcb">BLE_ADV_EVT_IDLE</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300a7e5ced92a803f37daaddeccbe6cf52af">BLE_ADV_EVT_DIRECTED</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300ad3e5afd0e2cac78d96d809ceb36637aa">BLE_ADV_EVT_FAST</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300a96cf28b78e8183919438c1f4ee58ee7e">BLE_ADV_EVT_SLOW</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300afd1680f47f4bba564b7d32c83a0866fe">BLE_ADV_EVT_FAST_WHITELIST</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300a15b812c93f6ba4399cbcd9093eaa9e6e">BLE_ADV_EVT_SLOW_WHITELIST</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300a41eb9db1c91e6da9396822400ab8eac2">BLE_ADV_EVT_WHITELIST_REQUEST</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300aa0328b61b0edca80793f9ff857ced1c5">BLE_ADV_EVT_PEER_ADDR_REQUEST</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gab3aa9a7ef02ab319f71e2545d75f0300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advertising events.  <a href="a00988.html#gab3aa9a7ef02ab319f71e2545d75f0300">More...</a><br/></td></tr>
+<tr class="separator:gab3aa9a7ef02ab319f71e2545d75f0300"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gae71402e2ca093acdcdd89cad211cc464"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gae71402e2ca093acdcdd89cad211cc464">ble_advertising_on_ble_evt</a> (const <a class="el" href="a00213.html">ble_evt_t</a> *const p_ble_evt)</td></tr>
+<tr class="memdesc:gae71402e2ca093acdcdd89cad211cc464"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling BLE events.  <a href="#gae71402e2ca093acdcdd89cad211cc464">More...</a><br/></td></tr>
+<tr class="separator:gae71402e2ca093acdcdd89cad211cc464"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf558d6d5aa918ad3623b5bd69d1557e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gabf558d6d5aa918ad3623b5bd69d1557e">ble_advertising_on_sys_evt</a> (uint32_t sys_evt)</td></tr>
+<tr class="memdesc:gabf558d6d5aa918ad3623b5bd69d1557e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling system events.  <a href="#gabf558d6d5aa918ad3623b5bd69d1557e">More...</a><br/></td></tr>
+<tr class="separator:gabf558d6d5aa918ad3623b5bd69d1557e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf8d1664161ec7e58e2825e95dae12db"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gabf8d1664161ec7e58e2825e95dae12db">ble_advertising_init</a> (<a class="el" href="a00160.html">ble_advdata_t</a> const *p_advdata, <a class="el" href="a00156.html">ble_adv_modes_config_t</a> const *p_config, <a class="el" href="a00988.html#gae5ac649acd48e432e1135e2989385680">ble_advertising_evt_handler_t</a> const evt_handler, <a class="el" href="a00988.html#ga8dbd1c0d3a994a2905077b5a69a8e190">ble_advertising_error_handler_t</a> const error_handler)</td></tr>
+<tr class="memdesc:gabf8d1664161ec7e58e2825e95dae12db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Advertising Module.  <a href="#gabf8d1664161ec7e58e2825e95dae12db">More...</a><br/></td></tr>
+<tr class="separator:gabf8d1664161ec7e58e2825e95dae12db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga944db395f3667276eb62a8bf3d0583ad"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#ga944db395f3667276eb62a8bf3d0583ad">ble_advertising_start</a> (<a class="el" href="a00988.html#gae4fb26dd401f1fbdf501b935c9f73d2b">ble_adv_mode_t</a> advertising_mode)</td></tr>
+<tr class="memdesc:ga944db395f3667276eb62a8bf3d0583ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting advertising.  <a href="#ga944db395f3667276eb62a8bf3d0583ad">More...</a><br/></td></tr>
+<tr class="separator:ga944db395f3667276eb62a8bf3d0583ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaebac038a287d71d9ddca0c161aa742ae"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gaebac038a287d71d9ddca0c161aa742ae">ble_advertising_peer_addr_reply</a> (<a class="el" href="a00217.html">ble_gap_addr_t</a> *p_peer_addr)</td></tr>
+<tr class="memdesc:gaebac038a287d71d9ddca0c161aa742ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the peer address.  <a href="#gaebac038a287d71d9ddca0c161aa742ae">More...</a><br/></td></tr>
+<tr class="separator:gaebac038a287d71d9ddca0c161aa742ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4ec5feaffac84de3d7f00b28f14baf5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gac4ec5feaffac84de3d7f00b28f14baf5">ble_advertising_whitelist_reply</a> (<a class="el" href="a00258.html">ble_gap_whitelist_t</a> *p_whitelist)</td></tr>
+<tr class="memdesc:gac4ec5feaffac84de3d7f00b28f14baf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting a whitelist.  <a href="#gac4ec5feaffac84de3d7f00b28f14baf5">More...</a><br/></td></tr>
+<tr class="separator:gac4ec5feaffac84de3d7f00b28f14baf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa135f00a3a31985476674f4ec4dbbb8a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html#gaa135f00a3a31985476674f4ec4dbbb8a">ble_advertising_restart_without_whitelist</a> (void)</td></tr>
+<tr class="memdesc:gaa135f00a3a31985476674f4ec4dbbb8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for disabling whitelist advertising.  <a href="#gaa135f00a3a31985476674f4ec4dbbb8a">More...</a><br/></td></tr>
+<tr class="separator:gaa135f00a3a31985476674f4ec4dbbb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>This section describes all the data types exposed by the module to the application. </p>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gaca2973e52020d6f1078540f0b1a732fa"></a>
+<p>Module for handling connectable BLE advertising. </p>
+<p>The Advertising Module handles connectable advertising for your application. It can be configured with advertising modes to suit most typical use cases. Your main application can react to changes in advertising modes if an event handler is provided.</p>
+<p>The application must propagate BLE stack events to this module by calling <a class="el" href="a00988.html#gae71402e2ca093acdcdd89cad211cc464">ble_advertising_on_ble_evt()</a> and system events by calling <a class="el" href="a00988.html#gabf558d6d5aa918ad3623b5bd69d1557e">ble_advertising_on_sys_evt()</a>. </p>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gab3aa9a7ef02ab319f71e2545d75f0300"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="a00351.html">dm_context_t</a> <a class="el" href="a00988.html#gaca2973e52020d6f1078540f0b1a732fa">dm_application_context_t</a></td>
+          <td class="memname">enum <a class="el" href="a00988.html#gab3aa9a7ef02ab319f71e2545d75f0300">ble_adv_evt_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Application context. </p>
-<p>The application context can be used by the application to map any application level information that is to be mapped with a particular peer. For bonded peers, this information will be stored by the bond manager persistently. Note that the device manager treats this information as an opaque block of bytes. Necessary APIs to get and set this context for a peer have been provided. </p>
+<p>Advertising events. </p>
+<p>These events are propagated to the main application if a handler was provided during initialization of the Advertising Module. Events for modes that are not used can be ignored. Similarly, BLE_ADV_EVT_WHITELIST_REQUEST and BLE_ADV_EVT_PEER_ADDR_REQUEST can be ignored if whitelist and direct advertising is not used. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab3aa9a7ef02ab319f71e2545d75f0300ac5d98bfe62718bd79ef145c3b207dbcb"></a>BLE_ADV_EVT_IDLE</em>&nbsp;</td><td class="fielddoc">
+<p>Idle; no connectable advertising is ongoing. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab3aa9a7ef02ab319f71e2545d75f0300a7e5ced92a803f37daaddeccbe6cf52af"></a>BLE_ADV_EVT_DIRECTED</em>&nbsp;</td><td class="fielddoc">
+<p>Direct advertising mode has started. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab3aa9a7ef02ab319f71e2545d75f0300ad3e5afd0e2cac78d96d809ceb36637aa"></a>BLE_ADV_EVT_FAST</em>&nbsp;</td><td class="fielddoc">
+<p>Fast advertising mode has started. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab3aa9a7ef02ab319f71e2545d75f0300a96cf28b78e8183919438c1f4ee58ee7e"></a>BLE_ADV_EVT_SLOW</em>&nbsp;</td><td class="fielddoc">
+<p>Slow advertising mode has started. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab3aa9a7ef02ab319f71e2545d75f0300afd1680f47f4bba564b7d32c83a0866fe"></a>BLE_ADV_EVT_FAST_WHITELIST</em>&nbsp;</td><td class="fielddoc">
+<p>Fast advertising mode using the whitelist has started. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab3aa9a7ef02ab319f71e2545d75f0300a15b812c93f6ba4399cbcd9093eaa9e6e"></a>BLE_ADV_EVT_SLOW_WHITELIST</em>&nbsp;</td><td class="fielddoc">
+<p>Slow advertising mode using the whitelist has started. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab3aa9a7ef02ab319f71e2545d75f0300a41eb9db1c91e6da9396822400ab8eac2"></a>BLE_ADV_EVT_WHITELIST_REQUEST</em>&nbsp;</td><td class="fielddoc">
+<p>Request a whitelist from the main application. For whitelist advertising to work, the whitelist must be set when this event occurs. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab3aa9a7ef02ab319f71e2545d75f0300aa0328b61b0edca80793f9ff857ced1c5"></a>BLE_ADV_EVT_PEER_ADDR_REQUEST</em>&nbsp;</td><td class="fielddoc">
+<p>Request a peer address from the main application. For directed advertising to work, the peer address must be set when this event occurs. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="ga3c013385ac2ef5502370f598308d0339"></a>
+<a class="anchor" id="gae4fb26dd401f1fbdf501b935c9f73d2b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef uint8_t <a class="el" href="a00988.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a></td>
+          <td class="memname">enum <a class="el" href="a00988.html#gae4fb26dd401f1fbdf501b935c9f73d2b">ble_adv_mode_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Application Instance. </p>
-<p>Application instance uniquely identifies an application. The identifier is allocated by the device manager when application registers with the module. The application is expected to identify itself with this instance identifier when initiating subsequent requests. Application should use the utility API <a class="el" href="a00993.html#gad3a18ce58b434ecdcf78c9071163df1d">dm_application_instance_set</a> in order to set its application instance in dm_handle_t needed for all subsequent APIs. See also <a class="el" href="a00990.html#ga62366984b8a674d9cadb48a8da2d3694">dm_register</a>. </p>
+<p>Advertising modes. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae4fb26dd401f1fbdf501b935c9f73d2baf8aede79967f55367e5aa732202f0606"></a>BLE_ADV_MODE_IDLE</em>&nbsp;</td><td class="fielddoc">
+<p>Idle; no connectable advertising is ongoing. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae4fb26dd401f1fbdf501b935c9f73d2bad6f9b98468925959cc440f75df01a1e5"></a>BLE_ADV_MODE_DIRECTED</em>&nbsp;</td><td class="fielddoc">
+<p>Directed advertising attempts to connect to the most recently disconnected peer. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae4fb26dd401f1fbdf501b935c9f73d2ba1f176335ec5316d22eaa638d6ad4fa83"></a>BLE_ADV_MODE_FAST</em>&nbsp;</td><td class="fielddoc">
+<p>Fast advertising will connect to any peer device, or filter with a whitelist if one exists. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae4fb26dd401f1fbdf501b935c9f73d2ba6e1f3523897bd5b2bc3ec87bb8364ce4"></a>BLE_ADV_MODE_SLOW</em>&nbsp;</td><td class="fielddoc">
+<p>Slow advertising is similar to fast advertising. By default, it uses a longer advertising interval and time-out than fast advertising. However, these options are defined by the user. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="gae005241eac710952713e896d52646858"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gabf8d1664161ec7e58e2825e95dae12db"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef uint8_t <a class="el" href="a00988.html#gae005241eac710952713e896d52646858">dm_connection_instance_t</a></td>
+          <td class="memname">uint32_t ble_advertising_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00160.html">ble_advdata_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_advdata</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Connection Instance. </p>
-<p>Identifies connection instance for an active device. This instance is allocated by the device manager when a connection is established and is notified with DM_EVT_CONNECTION with the event result NRF_SUCCESS. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga7e116c1567d58a325c14a1b8a9a75d48"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="a00351.html">dm_context_t</a> <a class="el" href="a00988.html#ga7e116c1567d58a325c14a1b8a9a75d48">dm_device_context_t</a></td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00156.html">ble_adv_modes_config_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_config</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Device Context. </p>
-<p>Defines "device context" type for a device managed by device manager. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaf1a000e90688eea8d02bd3854440ec6b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">typedef uint8_t <a class="el" href="a00988.html#gaf1a000e90688eea8d02bd3854440ec6b">dm_device_instance_t</a></td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00988.html#gae5ac649acd48e432e1135e2989385680">ble_advertising_evt_handler_t</a> const&#160;</td>
+          <td class="paramname"><em>evt_handler</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Device Instance. </p>
-<p>Uniquely identifies a bonded peer device. The peer device may or may not be connected. In case of the central: The bonded device instance to identify the peer is allocated when bonding procedure is initiated by the central using dm_security_setup_req. In case of the peripheral: When the bonding procedure is successful, the DM_EVT_SECURITY_SETUP_COMPLETE event with success event result, is received. In case the module cannot add more bonded devices, no instance is allocated, this is indicated by an appropriate error code for the API/event as the case may be. Application can choose to disconnect the link. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga1d3589567c4e17c3d32ab53dcedf3fd2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>(* dm_event_cb_t)(<a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> const *p_handle, <a class="el" href="a00354.html">dm_event_t</a> const *p_event, <a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> event_result)</td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00988.html#ga8dbd1c0d3a994a2905077b5a69a8e190">ble_advertising_error_handler_t</a> const&#160;</td>
+          <td class="paramname"><em>error_handler</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Event notification callback registered by application with the module. </p>
-<p>Event notification callback registered by application with the module when registering the module using <a class="el" href="a00990.html#ga62366984b8a674d9cadb48a8da2d3694">dm_register</a> API.</p>
+<p>Function for initializing the Advertising Module. </p>
+<p>Encodes the required advertising data and passes it to the stack. Also builds a structure to be passed to the stack when starting advertising. The supplied advertising data is copied to a local structure and is manipulated depending on what advertising modes are started in <a class="el" href="a00988.html#ga944db395f3667276eb62a8bf3d0583ad">ble_advertising_start</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Identifies the peer for which the event is being notified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Identifies the event, any associated parameters and parameter length. See <a class="el" href="a00984.html">Device Manager Events</a> for details on event types and their significance. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">event_result</td><td>Provide additional information on the event. In addition to SDK error codes there is also a return value indicating if maximum number of connections has been reached when connecting or bonding.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_advdata</td><td>Set advertising data, name, appearance, discovery flags, and more. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_config</td><td>Select which advertising modes and intervals will be utilized. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">evt_handler</td><td>Event handler that will be called upon advertising events. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">error_handler</td><td>Error handler that will propogate internal errors to the main applications.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, or a failure to indicate if it could handle the event successfully. There is no action taken in case application returns a failure. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If initialization was successful. Otherwise, an error code is returned. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf4616538d9102b901e86d92fc4e82c5c"></a>
+<a class="anchor" id="gae71402e2ca093acdcdd89cad211cc464"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="a00341.html">device_handle</a>  <a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a></td>
+          <td class="memname">void ble_advertising_on_ble_evt </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00213.html">ble_evt_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_ble_evt</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Device Handle used for unique identification of each peer. </p>
-<p>This data type is used to uniquely identify each peer device. A peer device could be active and/or bonded. Therefore an instance for active and bonded is provided. However, the application is expected to treat this is an opaque structure and use this for all API interactions once stored on appropriate events. See <a class="el" href="a00984.html">Device Manager Events</a>. </p>
+<p>Function for handling BLE events. </p>
+<p>This function must be called from the BLE stack event dispatcher for the module to handle BLE events that are relevant for the Advertising Module.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>BLE stack event. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7b2fb32d39e173997c5baa1e0383ace0"></a>
+<a class="anchor" id="gabf558d6d5aa918ad3623b5bd69d1557e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef uint8_t <a class="el" href="a00988.html#ga7b2fb32d39e173997c5baa1e0383ace0">dm_service_instance_t</a></td>
+          <td class="memname">void ble_advertising_on_sys_evt </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sys_evt</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Service Instance. </p>
-<p>Uniquely identifies a peer device. The peer device may or may not be connected. This instance is allocated by the device manager when a device is bonded and is notified when security procedures have been initiated. Security Procedures initiation is notified with DM_SECURITY_SETUP_IND with success event result. In case the event result indicates that the module cannot add more bonded devices, no instance is allocated. Application can chose to disconnect the link. </p>
+<p>Function for handling system events. </p>
+<p>This function must be called to handle system events that are relevant for the Advertising Module. Specifically, the advertising module can not use the softdevice as long as there are pending writes to the flash memory. This event handler is designed to delay advertising until there is no flash operation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">sys_evt</td><td>System event. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gaef588a149a4cc5b665658cfb032d6f6a"></a>
+<a class="anchor" id="gaebac038a287d71d9ddca0c161aa742ae"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef uint8_t <a class="el" href="a00988.html#gaef588a149a4cc5b665658cfb032d6f6a">service_type_t</a></td>
+          <td class="memname">uint32_t ble_advertising_peer_addr_reply </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00217.html">ble_gap_addr_t</a> *&#160;</td>
+          <td class="paramname"><em>p_peer_addr</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Service/Protocol Type Identifier. </p>
-<p>Uniquely identifies a service or a protocol type. Service/Protocol Type identification is needed as each service/protocol can have its own contextual data. This allows the peer to access more than one service at a time. <a class="el" href="a00983.html">Service/Protocol Types</a> describes the list of services/protocols supported. </p>
+<p>Function for setting the peer address. </p>
+<p>The peer address must be set by the application upon receiving a <a class="el" href="a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300aa0328b61b0edca80793f9ff857ced1c5">BLE_ADV_EVT_PEER_ADDR_REQUEST</a> event. Without the peer address, the directed advertising mode will not be run.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_peer_addr</td><td>Pointer to a peer address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">@ref</td><td>NRF_SUCCESS Successfully stored the peer address pointer in the advertising module. </td></tr>
+    <tr><td class="paramname">@ref</td><td>NRF_ERROR_INVALID_STATE If a reply was not expected. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga7404a8275ca6d38f7400881deb1e6b0e"></a>
+<a class="anchor" id="gaa135f00a3a31985476674f4ec4dbbb8a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00988.html#ga7404a8275ca6d38f7400881deb1e6b0e">dm_security_status_t</a></td>
+          <td class="memname">uint32_t ble_advertising_restart_without_whitelist </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Defines possible security status/states. </p>
-<p>Defines possible security status/states of a link when requested by application using the <a class="el" href="a00991.html#ga3fe0567568f486ca25712c87522cb939">dm_security_status_req</a>. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7404a8275ca6d38f7400881deb1e6b0ea0421f2bed1189cc7a24264c7b3082932"></a>NOT_ENCRYPTED</em>&nbsp;</td><td class="fielddoc">
-<p>The link does not security. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7404a8275ca6d38f7400881deb1e6b0eae759dd11c88380847924d25cac0997bb"></a>ENCRYPTION_IN_PROGRESS</em>&nbsp;</td><td class="fielddoc">
-<p>Security is in progress of being established. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7404a8275ca6d38f7400881deb1e6b0eaaac875c4dc08055725dd966fd44e0839"></a>ENCRYPTED</em>&nbsp;</td><td class="fielddoc">
-<p>The link is secure. </p>
-</td></tr>
-</table>
+<p>Function for disabling whitelist advertising. </p>
+<p>This function temporarily disables whitelist advertising. Calling this function resets the current time-out countdown.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">@ref</td><td>NRF_SUCCESS On success, else an error message propogated from the Softdevice. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga944db395f3667276eb62a8bf3d0583ad"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_advertising_start </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00988.html#gae4fb26dd401f1fbdf501b935c9f73d2b">ble_adv_mode_t</a>&#160;</td>
+          <td class="paramname"><em>advertising_mode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for starting advertising. </p>
+<p>You can start advertising in any of the advertising modes that you enabled during initialization.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">advertising_mode</td><td>Advertising mode.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">@ref</td><td>NRF_SUCCESS On success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">@ref</td><td>NRF_ERROR_INVALID_STATE </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac4ec5feaffac84de3d7f00b28f14baf5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_advertising_whitelist_reply </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00258.html">ble_gap_whitelist_t</a> *&#160;</td>
+          <td class="paramname"><em>p_whitelist</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for setting a whitelist. </p>
+<p>The whitelist must be set by the application upon receiving a <a class="el" href="a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300a41eb9db1c91e6da9396822400ab8eac2">BLE_ADV_EVT_WHITELIST_REQUEST</a> event. Without the whitelist, the whitelist advertising for fast and slow modes will not be run.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_whitelist</td><td>Pointer to a whitelist.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">@ref</td><td>NRF_SUCCESS Successfully stored pointers to the whitelist into the advertising module. </td></tr>
+    <tr><td class="paramname">@ref</td><td>NRF_ERROR_INVALID_STATE If a reply was not expected. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -390,7 +523,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:23 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

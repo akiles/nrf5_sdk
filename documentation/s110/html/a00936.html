@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Events encoder in the connectivity chip</title>
+<title>nRF51 SDK - S110 SoftDevice: Bootloader util API.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,56 +99,44 @@ $(document).ready(function(){initNavTree('a00936.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Events encoder in the connectivity chip<div class="ingroups"><a class="el" href="a01084.html">Connectivity application code</a></div></div>  </div>
+<div class="title">Bootloader util API.<div class="ingroups"><a class="el" href="a01036.html">Bootloader/DFU API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Events encoder for BLE SoftDevice.  
+<p>Bootloader util module interface.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaa5e926f38b8fe9d407948c3325bf2749"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00936.html#gaa5e926f38b8fe9d407948c3325bf2749">ser_conn_ble_event_encoder</a> (void *p_event_data, uint16_t event_size)</td></tr>
-<tr class="memdesc:gaa5e926f38b8fe9d407948c3325bf2749"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for encoding a <a class="el" href="a00203.html">ble_evt_t</a>. The function passes the serialized byte stream to the transport layer after encoding.  <a href="#gaa5e926f38b8fe9d407948c3325bf2749">More...</a><br/></td></tr>
-<tr class="separator:gaa5e926f38b8fe9d407948c3325bf2749"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1cae97837343b3feb5ff2f5dc5d3ed90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00936.html#ga1cae97837343b3feb5ff2f5dc5d3ed90">bootloader_util_app_start</a> (uint32_t start_addr)</td></tr>
+<tr class="memdesc:ga1cae97837343b3feb5ff2f5dc5d3ed90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting the application (or bootloader) at the provided address.  <a href="#ga1cae97837343b3feb5ff2f5dc5d3ed90">More...</a><br/></td></tr>
+<tr class="separator:ga1cae97837343b3feb5ff2f5dc5d3ed90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Events encoder for BLE SoftDevice. </p>
-<p>This file contains declaration of common function used for serializing BLE SoftDevice events. </p>
+<p>Bootloader util module interface. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaa5e926f38b8fe9d407948c3325bf2749"></a>
+<a class="anchor" id="ga1cae97837343b3feb5ff2f5dc5d3ed90"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ser_conn_ble_event_encoder </td>
+          <td class="memname">void bootloader_util_app_start </td>
           <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>p_event_data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>start_addr</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>event_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>A function for encoding a <a class="el" href="a00203.html">ble_evt_t</a>. The function passes the serialized byte stream to the transport layer after encoding. </p>
-<p>The function is called by the application scheduler to process an event previously pulled from BLE SoftDevice. The function creates a new packet, calls an appropriate event encoder and sends the packet to an Application Chip.</p>
+<p>Function for starting the application (or bootloader) at the provided address. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_event_data</td><td>Pointer to event data of type <a class="el" href="a00203.html">ble_evt_t</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_size</td><td>Event data size. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">start_addr</td><td>Start address.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>This function will never retrun. Instead it will reset into the application of the provided address. </dd></dl>
 
 </div>
 </div>
@@ -157,7 +145,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:23 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,7 +1,8 @@
 var a00369 =
 [
-    [ "hfclk", "a00369.html#a5d6e28106247179b7cde2e289f0f9c39", null ],
-    [ "length_us", "a00369.html#a0495f3c5f7e2fd20663af081ca7e4c0b", null ],
-    [ "priority", "a00369.html#ad45d8189eff4584a13d7069d3c877a55", null ],
-    [ "timeout_us", "a00369.html#af56601d1b7ef92d49dbd1567bd1d39e0", null ]
+    [ "app_version", "a00369.html#a2af05679dfa350f574a5aa0d403ca05e", null ],
+    [ "device_rev", "a00369.html#acfdd24f9e67a34b585c49d43d5fb9230", null ],
+    [ "device_type", "a00369.html#a880fe28496a9999f4554b47662485064", null ],
+    [ "softdevice", "a00369.html#a3b1f79aeef3c148827d1740aec3daa3d", null ],
+    [ "softdevice_len", "a00369.html#a86e254a1d13edd634ce1c1aad34e87ea", null ]
 ];

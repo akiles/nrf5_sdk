@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: GAP Authenticate request: Timeout</title>
+<title>nRF51 SDK - S110 SoftDevice: SoftDevice Manager API</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,21 +96,70 @@ $(document).ready(function(){initNavTree('a00868.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#groups">Modules</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GAP Authenticate request: Timeout<div class="ingroups"><a class="el" href="a00850.html">Message Sequence Charts</a></div></div>  </div>
+<div class="title">SoftDevice Manager API<div class="ingroups"><a class="el" href="a01074.html">S110 (BLE peripheral)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This occurs if the central device doesn't continue the pairing sequence after the security procedure timeout. </p>
-<div align="center">
-<img src="msc_inline_mscgraph_21.png" alt="msc_inline_mscgraph_21" border="0" usemap="#msc_inline_mscgraph_21.map"/>
-<map name="msc_inline_mscgraph_21.map" id="msc_inline_mscgraph_21.map"></map>
-</div>
- </div><!-- contents -->
+
+<p>APIs for SoftDevice management.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00869"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00869.html">SoftDevice Manager Error Codes</a></td></tr>
+<tr class="memdesc:a00869"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error definitions for the SDM API. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01067"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01067.html">Defines</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01068"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01068.html">Enumerations</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01069"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01069.html">Types</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01070"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01070.html">Functions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaaa4ad9dc8ecee6374573270fd79dfb26"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaa4ad9dc8ecee6374573270fd79dfb26"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00868.html#gaaa4ad9dc8ecee6374573270fd79dfb26">SOFTDEVICE_INFO_STRUCT_OFFSET</a>&#160;&#160;&#160;(0x2000)</td></tr>
+<tr class="memdesc:gaaa4ad9dc8ecee6374573270fd79dfb26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the SoftDevice Information Structure location (address) as an offset from the start of the softdevice (without MBR) <br/></td></tr>
+<tr class="separator:gaaa4ad9dc8ecee6374573270fd79dfb26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2f71568a2395dc0783c1e6142ef71d5b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2f71568a2395dc0783c1e6142ef71d5b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00868.html#ga2f71568a2395dc0783c1e6142ef71d5b">MBR_SIZE</a>&#160;&#160;&#160;(0x1000)</td></tr>
+<tr class="memdesc:ga2f71568a2395dc0783c1e6142ef71d5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the usual size reserverd for the MBR when a softdevice is written to flash. This is the offset where the first byte of the softdevice hex file is written. <br/></td></tr>
+<tr class="separator:ga2f71568a2395dc0783c1e6142ef71d5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8fec8c13f31f43d98916be2de5599e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad8fec8c13f31f43d98916be2de5599e2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00868.html#gad8fec8c13f31f43d98916be2de5599e2">SOFTDEVICE_INFO_STRUCT_ADDRESS</a>&#160;&#160;&#160;(<a class="el" href="a00868.html#gaaa4ad9dc8ecee6374573270fd79dfb26">SOFTDEVICE_INFO_STRUCT_OFFSET</a> + <a class="el" href="a00868.html#ga2f71568a2395dc0783c1e6142ef71d5b">MBR_SIZE</a>)</td></tr>
+<tr class="memdesc:gad8fec8c13f31f43d98916be2de5599e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the absolute Softdevice information structure location (address) <br/></td></tr>
+<tr class="separator:gad8fec8c13f31f43d98916be2de5599e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7516549adb41718fe920cb262c108dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab7516549adb41718fe920cb262c108dd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00868.html#gab7516549adb41718fe920cb262c108dd">SD_SIZE_OFFSET</a>&#160;&#160;&#160;(<a class="el" href="a00868.html#gaaa4ad9dc8ecee6374573270fd79dfb26">SOFTDEVICE_INFO_STRUCT_OFFSET</a> + 0x08)</td></tr>
+<tr class="memdesc:gab7516549adb41718fe920cb262c108dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the offset for Softdevice size value relative to Softdevice base address. <br/></td></tr>
+<tr class="separator:gab7516549adb41718fe920cb262c108dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaeb986ec22f9d0f8078b4cc72af678e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaeb986ec22f9d0f8078b4cc72af678e8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00868.html#gaaeb986ec22f9d0f8078b4cc72af678e8">SD_FWID_OFFSET</a>&#160;&#160;&#160;(<a class="el" href="a00868.html#gaaa4ad9dc8ecee6374573270fd79dfb26">SOFTDEVICE_INFO_STRUCT_OFFSET</a> + 0x0C)</td></tr>
+<tr class="memdesc:gaaeb986ec22f9d0f8078b4cc72af678e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the offset for FWID value relative to Softdevice base address. <br/></td></tr>
+<tr class="separator:gaaeb986ec22f9d0f8078b4cc72af678e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6127729e509af1507f2ec7264ca9127c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6127729e509af1507f2ec7264ca9127c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00868.html#ga6127729e509af1507f2ec7264ca9127c">SD_SIZE_GET</a>(baseaddr)&#160;&#160;&#160;(*((uint32_t *) ((baseaddr) + <a class="el" href="a00868.html#gab7516549adb41718fe920cb262c108dd">SD_SIZE_OFFSET</a>)))</td></tr>
+<tr class="memdesc:ga6127729e509af1507f2ec7264ca9127c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a macro for retreiving the actual Softdevice size value from a given base address use <a class="el" href="a00868.html#ga2f71568a2395dc0783c1e6142ef71d5b">MBR_SIZE</a> when Softdevice is installed just above the MBR (the usual case) <br/></td></tr>
+<tr class="separator:ga6127729e509af1507f2ec7264ca9127c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5952af335f9794ce1dea58e971fd2b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab5952af335f9794ce1dea58e971fd2b0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00868.html#gab5952af335f9794ce1dea58e971fd2b0">SD_FWID_GET</a>(baseaddr)&#160;&#160;&#160;((*((uint32_t *) ((baseaddr) + <a class="el" href="a00868.html#gaaeb986ec22f9d0f8078b4cc72af678e8">SD_FWID_OFFSET</a>))) &amp; 0xFFFF)</td></tr>
+<tr class="memdesc:gab5952af335f9794ce1dea58e971fd2b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a macro for retreiving the actual FWID value from a given base address use <a class="el" href="a00868.html#ga2f71568a2395dc0783c1e6142ef71d5b">MBR_SIZE</a> when Softdevice is installed just above the MBR (the usual case) <br/></td></tr>
+<tr class="separator:gab5952af335f9794ce1dea58e971fd2b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>APIs for SoftDevice management. </p>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:42 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

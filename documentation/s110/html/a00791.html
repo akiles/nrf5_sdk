@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: BLE SoftDevice Common</title>
+<title>nRF51 SDK - S110 SoftDevice: PPI HAL and driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,46 +99,31 @@ $(document).ready(function(){initNavTree('a00791.html','');});
   <div class="summary">
 <a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">BLE SoftDevice Common<div class="ingroups"><a class="el" href="a01076.html">S110 (BLE peripheral)</a></div></div>  </div>
+<div class="title">PPI HAL and driver<div class="ingroups"><a class="el" href="a01032.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Type definitions, macros, error codes, SVC and event number subranges etc. common to all S110 SoftDevice modules.  
+<p>Programmable Peripheral Interconnect (PPI) APIs.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00792"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00792.html">Events, type definitions and API calls</a></td></tr>
-<tr class="memdesc:a00792"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module independent events, type definitions and API calls for the S110 SoftDevice. <br/></td></tr>
+<tr class="memitem:a00761"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html">PPI HAL</a></td></tr>
+<tr class="memdesc:a00761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware abstraction layer for setting up Programmable Peripheral Interconnect (PPI) channels. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00794"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00794.html">General error codes</a></td></tr>
-<tr class="memdesc:a00794"><td class="mdescLeft">&#160;</td><td class="mdescRight">General error code definitions for the BLE API. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00795"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00795.html">Module specific error code subranges</a></td></tr>
-<tr class="memdesc:a00795"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment of subranges for module specific error codes. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00830"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00830.html">Bluetooth status codes</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00832"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00832.html">Module specific SVC and event number subranges</a></td></tr>
-<tr class="memdesc:a00832"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of SVC and event number subranges for each API module. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00833"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00833.html">Common types and macro definitions</a></td></tr>
-<tr class="memdesc:a00833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common types and macro definitions for the S110 SoftDevice. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00845"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00845.html">Message Sequence Charts</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00838"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00838.html">SoftDevice Global Error Codes</a></td></tr>
-<tr class="memdesc:a00838"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global Error definitions. <br/></td></tr>
+<tr class="memitem:a00792"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00792.html">PPI driver</a></td></tr>
+<tr class="memdesc:a00792"><td class="mdescLeft">&#160;</td><td class="mdescRight">Programmable Peripheral Interconnect (PPI) driver. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Type definitions, macros, error codes, SVC and event number subranges etc. common to all S110 SoftDevice modules. </p>
+<p>Programmable Peripheral Interconnect (PPI) APIs. </p>
+<p>The PPI HAL provides basic APIs for accessing the registers of the PPI. The PPI driver provides APIs on a higher level. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:17 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:42 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

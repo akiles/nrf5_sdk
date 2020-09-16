@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_dis_reg_cert_data_list_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_db_discovery_char_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,48 @@ $(document).ready(function(){initNavTree('a00198.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_dis_reg_cert_data_list_t Struct Reference<div class="ingroups"><a class="el" href="a00964.html">Device Information Service</a></div></div>  </div>
+<div class="title">ble_db_discovery_char_t Struct Reference<div class="ingroups"><a class="el" href="a00992.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>IEEE 11073-20601 Regulatory Certification Data List Structure.  
+<p>Structure for holding the characteristic and the handle of its CCCD found during the discovery process.  
  <a href="a00198.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_dis.h&gt;</code></p>
+<p><code>#include &lt;ble_db_discovery.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac2fd43c554a7b7ddc54d007a40bb5a81"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00198.html#ac2fd43c554a7b7ddc54d007a40bb5a81">p_list</a></td></tr>
-<tr class="separator:ac2fd43c554a7b7ddc54d007a40bb5a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fb27ab1e05a0b9ac07d6abf32012391"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00198.html#a0fb27ab1e05a0b9ac07d6abf32012391">list_len</a></td></tr>
-<tr class="separator:a0fb27ab1e05a0b9ac07d6abf32012391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1bd337f6b1acc35a908b13ee4877a88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00261.html">ble_gattc_char_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00198.html#ac1bd337f6b1acc35a908b13ee4877a88">characteristic</a></td></tr>
+<tr class="separator:ac1bd337f6b1acc35a908b13ee4877a88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ec4f43c4adba9c33d6c52fa6637540b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00198.html#a7ec4f43c4adba9c33d6c52fa6637540b">cccd_handle</a></td></tr>
+<tr class="separator:a7ec4f43c4adba9c33d6c52fa6637540b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>IEEE 11073-20601 Regulatory Certification Data List Structure. </p>
+<div class="textblock"><p>Structure for holding the characteristic and the handle of its CCCD found during the discovery process. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a0fb27ab1e05a0b9ac07d6abf32012391"></a>
+<a class="anchor" id="a7ec4f43c4adba9c33d6c52fa6637540b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_dis_reg_cert_data_list_t::list_len</td>
+          <td class="memname">uint16_t ble_db_discovery_char_t::cccd_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Length of the byte array. </p>
+<p>CCCD Handle value for this characteristic. This will be set to BLE_GATT_HANDLE_INVALID if a CCCD is not present at the server. </p>
 
 </div>
 </div>
-<a class="anchor" id="ac2fd43c554a7b7ddc54d007a40bb5a81"></a>
+<a class="anchor" id="ac1bd337f6b1acc35a908b13ee4877a88"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* ble_dis_reg_cert_data_list_t::p_list</td>
+          <td class="memname"><a class="el" href="a00261.html">ble_gattc_char_t</a> ble_db_discovery_char_t::characteristic</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer the byte array containing the encoded opaque structure based on IEEE 11073-20601 specification. </p>
+<p>Structure containing information about the characteristic. </p>
 
 </div>
 </div>
@@ -156,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00198.html">ble_dis_reg_cert_data_list_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00198.html">ble_db_discovery_char_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

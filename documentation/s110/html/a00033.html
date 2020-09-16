@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: SPI Master Loopback Example</title>
+<title>nRF51 SDK - S110 SoftDevice: GPIOTE Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,36 +97,47 @@ $(document).ready(function(){initNavTree('a00033.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">SPI Master Loopback Example </div>  </div>
+<div class="title">GPIOTE Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The SPI Master Loopback Example demonstrates how to use a loopback for verifying the SPI master. To complete the loopback, the MOSI and MISO pins of the SPI master must be wired together.</p>
-<p>TX_RX_MSG_LENGTH number of bytes are transmitted through the master. The received bytes are verified to be the same as the bytes transmitted. If there is an error, <a class="el" href="a00041.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> is indicated.</p>
-<p>The application starts with configuring the BSP module. Both SPI_MASTER_0 and SPI_MASTER_1 are tested, first with shifting LSB first, then by shifting MSB first.</p>
-<h1><a class="anchor" id="spi_master_loopback_setup"></a>
+<div class="textblock"><p>The GPIOTE Example shows how to use the GPIOTE peripheral by toggling a LED.</p>
+<p>The application starts with configuring the GPIOTE output pin to toggle on a GPIOTE task. Timer 0 is then configured to generate events every 200 milliseconds. The events are passed through the PPI peripheral to generate tasks, which are then used by GPIOTE (in task mode) to toggle the GPIO pin. This means that every time there is an EVENT_COMPARE event, the GPIO pin toggles automatically, which can only be achieved using the GPIOTE peripheral.</p>
+<p>The task flow is as follows:</p>
+<p>[TIMER0]-&gt;EVENT_COMPARE-&gt;[PPI]-&gt;GPIOTE_TASK_OUT-&gt;[GPIOTE]-&gt;toggle_pin</p>
+<pre class="fragment">*          ----------------                       --------------------------
+*  -Start-|    Timer0      |                     |   EEP |    PPI    |  TEP |-------
+*  ------&gt;|  CC[0] = 200ms |-----Timer0_Event---&gt;|       | Channel 0 |      |       |
+* |        ----------------                       --------------------------        |
+* |                                                                                 |
+* |    -----------------------------------------------------------------------------
+* |   |
+* |   |                 -----------------                      ---------------
+* |    ---------TASK--&gt;|     GPIO_TE     |--&gt;Toggled_Output--&gt;|  LED toggling |--
+* |                     -----------------                     |  every 200ms  |  |
+* |                                                            ---------------   |
+*  ------------------------------------------------------------------------------
+*
+* </pre><h1><a class="anchor" id="nrf_gpiote_example_setup"></a>
 Setup</h1>
-<p>The name of the example is <b>spi_master_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\spi_master</code> </p>
-<p>Configuration:<br/>
-</p>
+<p>The name of the example is <b>gpiote_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\gpiote</code> </p>
+<p>LED assignments:</p>
 <ul>
-<li>MOSI0 should be connected to MISO0.</li>
-<li>MOSI1 should be connected to MISO1.</li>
+<li>LED 1 shows the toggling done by the GPIOTE task.</li>
 </ul>
-<h1><a class="anchor" id="spi_master_example_testing"></a>
+<h1><a class="anchor" id="flashwrite_example_testing"></a>
 Testing</h1>
-<p>Test the SPI Master Loopback Example application by performing the following steps:</p>
+<p>Test the GPIOTE Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Observe that <a class="el" href="a00041.html#BSP_INDICATE_RCV_OK">BSP_INDICATE_RCV_OK</a> is indicated every second.</li>
-<li><a class="el" href="a00041.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> is indicated if an error occurred. </li>
+<li>Observe that LED 1 toggles at the rate of 200 milliseconds. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00019.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00029.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -8,7 +8,7 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
  
    <project>
-    <PathAndName>pca10028\arm\template_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10028\arm4\template_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

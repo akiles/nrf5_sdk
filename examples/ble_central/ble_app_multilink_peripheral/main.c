@@ -135,8 +135,7 @@ static void advertising_init(void)
 
     advdata.name_type               = BLE_ADVDATA_FULL_NAME;
     advdata.include_appearance      = false;
-    advdata.flags.size              = sizeof(flags);
-    advdata.flags.p_data            = &flags;
+    advdata.flags                   = flags;
     advdata.uuids_complete.uuid_cnt = 0;
 
     err_code = ble_advdata_set(&advdata, NULL);
@@ -358,7 +357,7 @@ static void ble_stack_init(void)
     uint32_t err_code;
 
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
 #ifdef S110
     // Enable BLE stack. 
@@ -430,7 +429,7 @@ static void button_event_handler(bsp_event_t button_action)
  */
 static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
                                            dm_event_t const  * p_event,
-                                           api_result_t        event_result)
+                                           ret_code_t        event_result)
 {   uint32_t err_code;
 
     switch(p_event->event_id)
@@ -464,13 +463,12 @@ static void device_manager_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded centrals if the Bonds Delete button is pushed.
-	  err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_data.clear_persistent_data));
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_data.clear_persistent_data));
     APP_ERROR_CHECK(err_code);
 
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
 
-    register_param.sec_param.timeout      = SEC_PARAM_TIMEOUT;
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
@@ -500,7 +498,7 @@ int main(void)
 {   uint32_t err_code;
 
     ble_stack_init();
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), button_event_handler);
     APP_ERROR_CHECK(err_code);

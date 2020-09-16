@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: hci_transport_ioctl_cmd_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: dm_service_context_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,26 +106,59 @@ $(document).ready(function(){initNavTree('a00209.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">hci_transport_ioctl_cmd_t Struct Reference</div>  </div>
+<div class="title">dm_service_context_t Struct Reference<div class="ingroups"><a class="el" href="a00669.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Service Context.  
+ <a href="a00209.html#details">More...</a></p>
+
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a4955a964032009d6b9b5cc167e758d32"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4955a964032009d6b9b5cc167e758d32"></a>
-hci_transport_ioctl_cmd_type_t&#160;</td><td class="memItemRight" valign="bottom"><b>cmd_type</b></td></tr>
-<tr class="separator:a4955a964032009d6b9b5cc167e758d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9e1ac1b373abcbd4e761600473340bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9e1ac1b373abcbd4e761600473340bc"></a>
-<a class="el" href="a00509.html#gae80211a61fd86e95a2ad0d7e8dcf8a5c">hci_transport_tx_done_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>tx_done_result</b></td></tr>
-<tr class="separator:ac9e1ac1b373abcbd4e761600473340bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fa1bd3f934dbc782a82fcdffda7316e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00669.html#gaef588a149a4cc5b665658cfb032d6f6a">service_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00209.html#a9fa1bd3f934dbc782a82fcdffda7316e">service_type</a></td></tr>
+<tr class="separator:a9fa1bd3f934dbc782a82fcdffda7316e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6692f2d4301c1ef4dc4d967dff35782"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html">dm_context_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00209.html#aa6692f2d4301c1ef4dc4d967dff35782">context_data</a></td></tr>
+<tr class="separator:aa6692f2d4301c1ef4dc4d967dff35782"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Service Context. </p>
+<p>Service context data for a service identified by the 'service_type' field. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="aa6692f2d4301c1ef4dc4d967dff35782"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00201.html">dm_context_t</a> dm_service_context_t::context_data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Contains length and pointer to context data </p>
+
+</div>
+</div>
+<a class="anchor" id="a9fa1bd3f934dbc782a82fcdffda7316e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00669.html#gaef588a149a4cc5b665658cfb032d6f6a">service_type_t</a> dm_service_context_t::service_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Identifies the service/protocol to which the context data is related. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00209.html">hci_transport_ioctl_cmd_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00209.html">dm_service_context_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,5 +1,4 @@
 var a00230 =
 [
-    [ "interval_s", "a00230.html#aac6428abddc0bf75fc092a553312661a", null ],
-    [ "p_irk", "a00230.html#a03cc47081b7b470ad239d1bf9055ea34", null ]
+    [ "conn_sec", "a00230.html#a7495cc138b411d5589196b79bca5bb7a", null ]
 ];

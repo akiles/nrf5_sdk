@@ -1,5 +1,5 @@
 var a00352 =
 [
-    [ "enc_info", "a00352.html#a86cd792e42804720a97e6f64884d0fd4", null ],
-    [ "master_id", "a00352.html#a6d0dc86cbbad08e963a13c3a4070454d", null ]
+    [ "report_id", "a00352.html#a4db26fdff00f44138f9f684ff1dfd149", null ],
+    [ "report_type", "a00352.html#a765872684206db6d91ad6de596599434", null ]
 ];

@@ -1,6 +1,4 @@
 var a00228 =
 [
-    [ "conn_handle", "a00228.html#a2c0b8fc1f46e4360b34a1806061e828a", null ],
-    [ "p_actual_latency", "a00228.html#a769493b896a8e6709956d5248aaa94d6", null ],
-    [ "requested_latency", "a00228.html#ac06a0a4e53f12763e0966c9bff3e0545", null ]
+    [ "conn_params", "a00228.html#a092b4a58a335aedbf06c2ecd33b36f59", null ]
 ];

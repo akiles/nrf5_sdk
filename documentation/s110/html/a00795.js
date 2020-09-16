@@ -1,7 +1,13 @@
 var a00795 =
 [
-    [ "NRF_GAP_ERR_BASE", "a00795.html#ga29249baa158d723505c601121d003034", null ],
-    [ "NRF_GATTC_ERR_BASE", "a00795.html#ga200400dc8ad79918acee9cd038336165", null ],
-    [ "NRF_GATTS_ERR_BASE", "a00795.html#ga7bc503f781e56a86cdd044d6043629b8", null ],
-    [ "NRF_L2CAP_ERR_BASE", "a00795.html#ga82756b5d44b6b5757c3968513b4928ac", null ]
+    [ "app_fifo_t", "a00150.html", [
+      [ "buf_size_mask", "a00150.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
+      [ "p_buf", "a00150.html#a64eafd180a65260208be3b845f6acbf5", null ],
+      [ "read_pos", "a00150.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
+      [ "write_pos", "a00150.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
+    ] ],
+    [ "app_fifo_flush", "a00795.html#ga0944439787b55aafb3288a836efa3b9b", null ],
+    [ "app_fifo_get", "a00795.html#gab6292f78e91737ba0df83d6755e0abb9", null ],
+    [ "app_fifo_init", "a00795.html#gafc2ba3545e60f0134689fac2aa87f493", null ],
+    [ "app_fifo_put", "a00795.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e", null ]
 ];

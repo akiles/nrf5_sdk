@@ -1,5 +1,7 @@
 var a00274 =
 [
-    [ "nrf_clock_lfclksrc_t", "a00274.html#gabfecdd0b916a4022bd5688d4f842c473", null ],
-    [ "softdevice_assertion_handler_t", "a00274.html#gaddfb569a9b86648e642ed0d7e3a83034", null ]
+    [ "mpu6050_init", "a00274.html#ga69d0fa94f347b662e7312e313595773e", null ],
+    [ "mpu6050_register_read", "a00274.html#ga2a262546c837f7d4841c95099eb93c87", null ],
+    [ "mpu6050_register_write", "a00274.html#ga2435390ec63c2d17ab67c32a55ccc867", null ],
+    [ "mpu6050_verify_product_id", "a00274.html#ga3af875981ed613d4377fd457753f323d", null ]
 ];

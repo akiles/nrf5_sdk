@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_common_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_bas_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,82 +106,33 @@ $(document).ready(function(){initNavTree('a00177.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_common_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
+<div class="title">ble_bas_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00953.html">Battery Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for events not associated with a specific function module.  
+<p>Battery Service event.  
  <a href="a00177.html#details">More...</a></p>
 
-<p><code>#include &lt;ble.h&gt;</code></p>
+<p><code>#include &lt;ble_bas.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ad7c997d8d0c6e0d3d24de3ecad426645"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00177.html#ad7c997d8d0c6e0d3d24de3ecad426645">conn_handle</a></td></tr>
-<tr class="separator:ad7c997d8d0c6e0d3d24de3ecad426645"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3bf138e5e86c00c38983ffc94fcc618"><td class="memItemLeft" ><a class="anchor" id="aa3bf138e5e86c00c38983ffc94fcc618"></a>
-union {</td></tr>
-<tr class="memitem:a5cdffc13693316635f857ed90b6adc59"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00204.html">ble_evt_tx_complete_t</a>&#160;&#160;&#160;<a class="el" href="a00177.html#a0550e7a2c8b61ab27ea5a691b3f1fac4">tx_complete</a></td></tr>
-<tr class="separator:a5cdffc13693316635f857ed90b6adc59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c5797c65c98da7989a7c6cbfd046ed1"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00206.html">ble_evt_user_mem_request_t</a>&#160;&#160;&#160;<a class="el" href="a00177.html#a4d36c1c20a1ff24a62abba8ea73c74c8">user_mem_request</a></td></tr>
-<tr class="separator:a1c5797c65c98da7989a7c6cbfd046ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2f09c6fb38a01b974225a084996b747"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00205.html">ble_evt_user_mem_release_t</a>&#160;&#160;&#160;<a class="el" href="a00177.html#a21a25a889c763bceb2891d506331f484">user_mem_release</a></td></tr>
-<tr class="separator:ae2f09c6fb38a01b974225a084996b747"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3bf138e5e86c00c38983ffc94fcc618"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:aa3bf138e5e86c00c38983ffc94fcc618"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c48fd8a78c416e452d5b01add737b6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00953.html#gab63b7f474ce48636cd355f6b75ea1ca9">ble_bas_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00177.html#a6c48fd8a78c416e452d5b01add737b6e">evt_type</a></td></tr>
+<tr class="separator:a6c48fd8a78c416e452d5b01add737b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for events not associated with a specific function module. </p>
+<div class="textblock"><p>Battery Service event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ad7c997d8d0c6e0d3d24de3ecad426645"></a>
+<a class="anchor" id="a6c48fd8a78c416e452d5b01add737b6e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_common_evt_t::conn_handle</td>
+          <td class="memname"><a class="el" href="a00953.html#gab63b7f474ce48636cd355f6b75ea1ca9">ble_bas_evt_type_t</a> ble_bas_evt_t::evt_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Connection Handle on which this event occured. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0550e7a2c8b61ab27ea5a691b3f1fac4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00204.html">ble_evt_tx_complete_t</a> ble_common_evt_t::tx_complete</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Transmission Complete. </p>
-
-</div>
-</div>
-<a class="anchor" id="a21a25a889c763bceb2891d506331f484"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00205.html">ble_evt_user_mem_release_t</a> ble_common_evt_t::user_mem_release</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>User Memory Release Event Parameters. </p>
-
-</div>
-</div>
-<a class="anchor" id="a4d36c1c20a1ff24a62abba8ea73c74c8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00206.html">ble_evt_user_mem_request_t</a> ble_common_evt_t::user_mem_request</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>User Memory Request Event Parameters. </p>
+<p>Type of event. </p>
 
 </div>
 </div>
@@ -190,8 +141,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00177.html">ble_common_evt_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00177.html">ble_bas_evt_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

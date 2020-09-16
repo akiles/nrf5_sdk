@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Pin Change Interrupt Example</title>
+<title>nRF51 SDK - S110 SoftDevice: Simple timer</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,36 +97,29 @@ $(document).ready(function(){initNavTree('a00024.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Pin Change Interrupt Example </div>  </div>
+<div class="title">Simple timer </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Pin Change Interrupt Example demonstrates interrupts on PIN_IN change. PIN_OUT is configured as output and toggled in the PIN_IN change interrupt handler.</p>
-<p>The application starts with configuring the pins and configuring GPIOTE to give an interrupt on PIN_IN change. The interrupt handler toggles PIN_OUT (LED 1) when PIN_IN (button 1) is pressed or released.</p>
-<h1><a class="anchor" id="pin_change_int_example_setup"></a>
-Setup</h1>
-<p>The name of the example is <b>pin_change_int_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\pin_change_int</code> </p>
-<p>LED assignments:</p>
+<div class="textblock"><p>The simple timer driver can be used to create a single timer instance based on the TIMER1 peripheral. On time-out, a user-defined time-out handler is called directly from the TIMER1 interrupt handler.</p>
+<p>The interrupt handler runs at priority level APP_LOW.</p>
+<p>The following features are supported:</p>
 <ul>
-<li>LED 1 is toggled by interrupt.</li>
+<li>Tickless timer.</li>
+<li>Two modes: single shot mode and repeated mode.</li>
 </ul>
-<p>Button assignments:</p>
+<p>The following limitations are known:</p>
 <ul>
-<li>Button 1 triggers interrupt that toggles LED 1.</li>
+<li>No more than one timer can run simultaneously.</li>
+<li>The timer is hard-coded to use the TIMER1 peripheral.</li>
+<li>The timer is hard-coded to 16-bit width mode. </li>
 </ul>
-<h1><a class="anchor" id="pin_change_int_example_testing"></a>
-Testing</h1>
-<p>Test the Pin Change Interrupt Example application by performing the following steps:</p>
-<ol type="1">
-<li>Compile and program the application.</li>
-<li>Press button 1 and check if LED 1 toggles. </li>
-</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00019.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

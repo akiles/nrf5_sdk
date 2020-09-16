@@ -1,10 +1,8 @@
 var a00164 =
 [
-    [ "central_handle", "a00164.html#a0522feee52899c6d746fb496458c8681", null ],
-    [ "conn_handle", "a00164.html#aafc23bf2964f2476098f8841b808829a", null ],
-    [ "error_handler", "a00164.html#ad18e423fbc97fa13b4f5f99097b5c3e6", null ],
-    [ "evt_handler", "a00164.html#a5125f0b98f069ac8c455b109212d3d33", null ],
-    [ "message_buffer_size", "a00164.html#af58f6202418c1aab68d7224dcec9ba95", null ],
-    [ "p_message_buffer", "a00164.html#a12d3fef2b50b34a7cf6e42fbbc55308e", null ],
-    [ "service_handle", "a00164.html#ae696c92497734c92e20a628893a621b3", null ]
+    [ "attribute_id", "a00164.html#a91ad99b533291a9bd4ace32d24b6c11e", null ],
+    [ "attribute_len", "a00164.html#ad4ba23bbecdf56110773a54e11c0305f", null ],
+    [ "command_id", "a00164.html#a8a8e2cd58a0a579159397ad4c4532ee5", null ],
+    [ "data", "a00164.html#a8ea2b73942a8314da74c64075ad076f2", null ],
+    [ "notification_uid", "a00164.html#a2de713787637343b123d4912cd0aa129", null ]
 ];

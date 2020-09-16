@@ -1,10 +1,7 @@
 var a00171 =
 [
-    [ "battery_level_handles", "a00171.html#ade3d3767c6bec8d2c8fc37ed8303d4fb", null ],
-    [ "battery_level_last", "a00171.html#a90db9b31ace864a1952fd520957cb831", null ],
-    [ "conn_handle", "a00171.html#a4906d1aa3c702704f4392d90cd8102f0", null ],
-    [ "evt_handler", "a00171.html#a84827e57e33bae7cf628c4c5826b1ac4", null ],
-    [ "is_notification_supported", "a00171.html#a877690be6248d047f102fc238ab0c527", null ],
-    [ "report_ref_handle", "a00171.html#a70d124cbed946045d133aa76acd9581a", null ],
-    [ "service_handle", "a00171.html#af8c61a4fe0b938cc1b47989d67a20c4c", null ]
+    [ "error_handler", "a00171.html#a595f52194b0dbb3300a9e7dc0f0f360f", null ],
+    [ "evt_handler", "a00171.html#aad8ea29f7f384965a82424a4ca3c8e50", null ],
+    [ "message_buffer_size", "a00171.html#a0ac3fed59a0cbf329cc6611ab584ef69", null ],
+    [ "p_message_buffer", "a00171.html#a146d527b7a4824fb4e4f585e455b14f0", null ]
 ];

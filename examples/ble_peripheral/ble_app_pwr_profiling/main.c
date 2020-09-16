@@ -280,8 +280,7 @@ static void advertising_data_init(void)
     manuf_data.company_identifier = COMPANY_IDENTIFIER;
     manuf_data.data.size          = ADV_ADDL_MANUF_DATA_LEN;
     manuf_data.data.p_data        = m_addl_adv_manuf_data;
-    advdata.flags.size            = sizeof(flags);
-    advdata.flags.p_data          = &flags;
+    advdata.flags                 = flags;
     advdata.p_manuf_specific_data = &manuf_data;
 
     err_code = ble_advdata_set(&advdata, NULL);
@@ -541,12 +540,15 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             break;
 
         case BLE_GATTS_EVT_SYS_ATTR_MISSING:
-            err_code = sd_ble_gatts_sys_attr_set(m_conn_handle, NULL, 0);
+            err_code = sd_ble_gatts_sys_attr_set(m_conn_handle,
+                                                 NULL,
+                                                 0,
+                                                 BLE_GATTS_SYS_ATTR_FLAG_SYS_SRVCS | BLE_GATTS_SYS_ATTR_FLAG_USR_SRVCS);
             APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GAP_EVT_TIMEOUT:
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT)
+            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
             { 
                 // Go to system-off mode (this function will not return; wakeup will cause a reset).
                 err_code = sd_power_system_off(); 
@@ -600,7 +602,7 @@ static void ble_stack_init(void)
     uint32_t err_code;
 
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;

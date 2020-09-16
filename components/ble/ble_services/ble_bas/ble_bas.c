@@ -251,37 +251,41 @@ uint32_t ble_bas_init(ble_bas_t * p_bas, const ble_bas_init_t * p_bas_init)
 uint32_t ble_bas_battery_level_update(ble_bas_t * p_bas, uint8_t battery_level)
 {
     uint32_t err_code = NRF_SUCCESS;
+    ble_gatts_value_t gatts_value;
 
     if (battery_level != p_bas->battery_level_last)
     {
-        uint16_t len = sizeof(uint8_t);
+        // Initialize value struct.
+        memset(&gatts_value, 0, sizeof(gatts_value));
 
-        // Save new battery value
+        gatts_value.len     = sizeof(uint8_t);
+        gatts_value.offset  = 0;
+        gatts_value.p_value = &battery_level;
+
+        // Save new battery value.
         p_bas->battery_level_last = battery_level;
 
-        // Update database
-        err_code = sd_ble_gatts_value_set(p_bas->battery_level_handles.value_handle,
-                                          0,
-                                          &len,
-                                          &battery_level);
+        // Update database.
+        err_code = sd_ble_gatts_value_set(p_bas->conn_handle,
+                                          p_bas->battery_level_handles.value_handle,
+                                          &gatts_value);
         if (err_code != NRF_SUCCESS)
         {
             return err_code;
         }
 
-        // Send value if connected and notifying
+        // Send value if connected and notifying.
         if ((p_bas->conn_handle != BLE_CONN_HANDLE_INVALID) && p_bas->is_notification_supported)
         {
             ble_gatts_hvx_params_t hvx_params;
 
             memset(&hvx_params, 0, sizeof(hvx_params));
-            len = sizeof(uint8_t);
 
             hvx_params.handle = p_bas->battery_level_handles.value_handle;
             hvx_params.type   = BLE_GATT_HVX_NOTIFICATION;
-            hvx_params.offset = 0;
-            hvx_params.p_len  = &len;
-            hvx_params.p_data = &battery_level;
+            hvx_params.offset = gatts_value.offset;
+            hvx_params.p_len  = &gatts_value.len;
+            hvx_params.p_data = gatts_value.p_value;
 
             err_code = sd_ble_gatts_hvx(p_bas->conn_handle, &hvx_params);
         }

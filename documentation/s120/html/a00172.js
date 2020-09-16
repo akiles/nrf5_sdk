@@ -1,10 +1,6 @@
 var a00172 =
 [
-    [ "authorize_request", "a00172.html#a27802389d2c209e149fd644a35eae956", null ],
-    [ "conn_handle", "a00172.html#abeb8d79046f5ed809e6ac8b5fd40614d", null ],
-    [ "hvc", "a00172.html#a9be30265f4a80ba2d5982bc7eda48891", null ],
-    [ "params", "a00172.html#a8efeaa2eee88bd69cd626b32215361a3", null ],
-    [ "sys_attr_missing", "a00172.html#ab8c7e34509068fb9d8b78e4cdc2ab0f2", null ],
-    [ "timeout", "a00172.html#a5a5ade5ed126bc40ac43a302b4c7ae44", null ],
-    [ "write", "a00172.html#aaef77783fee30e58006d76bbc976bc9e", null ]
+    [ "context", "a00172.html#a66d632e13cd7d371036af6a90be224f4", null ],
+    [ "handle", "a00172.html#a79c55f70b9d10f1e11b35bb2cc13fdbd", null ],
+    [ "offset", "a00172.html#ac3c5c0c840625a5f28e90e9021eb2403", null ]
 ];

@@ -1,4 +1,7 @@
 var a00220 =
 [
-    [ "rssi", "a00220.html#a7521901a129bf1516c0bab404045616e", null ]
+    [ "conn_sup_timeout", "a00220.html#ab644e629af7eb4915b0f3a93f682f7ae", null ],
+    [ "max_conn_interval", "a00220.html#abd7a6e16a723de1d779afadae3f3113e", null ],
+    [ "min_conn_interval", "a00220.html#a4d1975f7d25263004c405e0321fbae34", null ],
+    [ "slave_latency", "a00220.html#aa5caf55715aaac33f56cc996f91a92cc", null ]
 ];

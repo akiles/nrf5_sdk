@@ -1,5 +1,4 @@
 var a00107 =
 [
-    [ "addr", "a00107.html#a7e756ddbde7ebf78f17a043d7ebe602c", null ],
-    [ "addr_type", "a00107.html#ad056845594972dd031a09700194d660c", null ]
+    [ "role", "a00107.html#acc6caaca1efb0836d6c9a0258a28e8ad", null ]
 ];

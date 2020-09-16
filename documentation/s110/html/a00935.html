@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: DTM Command Decoder in the connectivity chip</title>
+<title>nRF51 SDK - S110 SoftDevice: Types and definitions.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,95 +97,57 @@ $(document).ready(function(){initNavTree('a00935.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">DTM Command Decoder in the connectivity chip<div class="ingroups"><a class="el" href="a01084.html">Connectivity application code</a></div></div>  </div>
+<div class="title">Types and definitions.<div class="ingroups"><a class="el" href="a00933.html">Bootloader API.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Decoder for serialized DTM commands from an Application Chip.  
+<p>Bootloader module type and definitions.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gacfb3c2ef316693343db81a60b90825c9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00935.html#gacfb3c2ef316693343db81a60b90825c9">ser_conn_dtm_command_process</a> (uint8_t *p_command, uint16_t command_len)</td></tr>
-<tr class="memdesc:gacfb3c2ef316693343db81a60b90825c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for processing the encoded DTM commands from an Application Chip.  <a href="#gacfb3c2ef316693343db81a60b90825c9">More...</a><br/></td></tr>
-<tr class="separator:gacfb3c2ef316693343db81a60b90825c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaa54a0f290a11c67643ff1b3da42a59f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00935.html#gaaa54a0f290a11c67643ff1b3da42a59f">ser_conn_is_ready_to_enter_dtm</a> (void)</td></tr>
-<tr class="memdesc:gaaa54a0f290a11c67643ff1b3da42a59f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for checking if Connectivity Chip is ready to enter the DTM mode.  <a href="#gaaa54a0f290a11c67643ff1b3da42a59f">More...</a><br/></td></tr>
-<tr class="separator:gaaa54a0f290a11c67643ff1b3da42a59f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html">bootloader_settings_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure holding bootloader settings for application and bank data.  <a href="a00361.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga5590b8ff0089e88358e46c506f54a688"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5590b8ff0089e88358e46c506f54a688"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOTLOADER_DFU_START</b>&#160;&#160;&#160;0xB1</td></tr>
+<tr class="separator:ga5590b8ff0089e88358e46c506f54a688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a6cf12d596e671a8a7a47d2bb35c6e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1a6cf12d596e671a8a7a47d2bb35c6e9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOTLOADER_SVC_APP_DATA_PTR_GET</b>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga1a6cf12d596e671a8a7a47d2bb35c6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaa42a54966d007c04ca5fbca6775187f2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00935.html#gaa42a54966d007c04ca5fbca6775187f2">bootloader_bank_code_t</a> { <br/>
+&#160;&#160;<b>BANK_VALID_APP</b> = 0x01, 
+<br/>
+&#160;&#160;<b>BANK_VALID_SD</b> = 0xA5, 
+<br/>
+&#160;&#160;<b>BANK_VALID_BOOT</b> = 0xAA, 
+<br/>
+&#160;&#160;<b>BANK_ERASED</b> = 0xFE, 
+<br/>
+&#160;&#160;<b>BANK_INVALID_APP</b> = 0xFF
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaa42a54966d007c04ca5fbca6775187f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU Bank state code, which indicates wether the bank contains: A valid image, invalid image, or an erased flash. <br/></td></tr>
+<tr class="separator:gaa42a54966d007c04ca5fbca6775187f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Decoder for serialized DTM commands from an Application Chip. </p>
-<p>This file contains declaration of common function used for DTM commands decoding and sending responses back to an Application Chip after a DTM command is processed. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gacfb3c2ef316693343db81a60b90825c9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ser_conn_dtm_command_process </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_command</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>command_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function for processing the encoded DTM commands from an Application Chip. </p>
-<p>The function decodes encoded DTM commands and calls the appropriate DTM API. Then creates a DTM Command Response packet with the return value from the DTM API encoded in it and sends it to an Application Chip.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_command</td><td>The encoded command. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">command_len</td><td>Length of the encoded command.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If the decoding of the command was successful, the DTM API was called, and the command response was sent to peer, otherwise an error code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaaa54a0f290a11c67643ff1b3da42a59f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ser_conn_is_ready_to_enter_dtm </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function for checking if Connectivity Chip is ready to enter the DTM mode. </p>
-<p>The function checks if Connectivity Chip is ready to enter into DTM mode. If it is ready then it disables SoftDevice, closes HAL Transport Layer and starts DTM mode. </p>
-
-</div>
-</div>
+<p>Bootloader module type and definitions. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:23 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

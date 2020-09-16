@@ -30,6 +30,7 @@
 #include "nordic_common.h"
 #include "nrf.h"
 #include "nrf_soc.h"
+#include "nrf_adc.h"
 #include "app_error.h"
 #include "nrf51_bitfields.h"
 #include "ble.h"
@@ -41,8 +42,7 @@
 #include "ble_lls.h"
 #include "ble_bas.h"
 #include "ble_conn_params.h"
-#include "boards.h"
-#include "ble_sensorsim.h"
+#include "sensorsim.h"
 #include "softdevice_handler.h"
 #include "app_timer.h"
 #include "device_manager.h"
@@ -59,7 +59,7 @@
 #define SIGNAL_ALERT_BUTTON_ID            0                                                 /**< Button used for send or cancel High Alert to the peer. */
 #define WAKEUP_BUTTON_ID                  0                                                 /**< Button used to wakeup MCU from power off mode */
 #define STOP_ALERTING_BUTTON_ID           1                                                 /**< Button used for clearing the Alert LED that may be blinking or turned ON because of alerts from the central. */
-#define BOND_DELETE_ALL_BUTTON_ID         1                                                 /**< Button used for deleting all bonded centrals during startup. */
+#define BOND_DELETE_ALL_BUTTON_ID         1                                                 /**< Button used for deleting all stored bonding data during startup. */
 
 #define DEVICE_NAME                       "Nordic_Prox"                                     /**< Name of device. Will be included in the advertising data. */
 #define APP_ADV_INTERVAL_FAST             0x0028                                            /**< Fast advertising interval (in units of 0.625 ms. This value corresponds to 25 ms.). */
@@ -92,7 +92,6 @@
 
 #define BUTTON_DETECTION_DELAY            APP_TIMER_TICKS(50, APP_TIMER_PRESCALER)          /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
 
-#define SEC_PARAM_TIMEOUT                 30                                                /**< Timeout for Pairing Request or Security Request (in seconds). */
 #define SEC_PARAM_BOND                    1                                                 /**< Perform bonding. */
 #define SEC_PARAM_MITM                    0                                                 /**< Man In The Middle protection not required. */
 #define SEC_PARAM_IO_CAPABILITIES         BLE_GAP_IO_CAPS_NONE                              /**< No I/O capabilities. */
@@ -112,6 +111,7 @@
 /**@brief Macro to convert the result of ADC conversion in millivolts.
  *
  * @param[in]  ADC_VALUE   ADC result.
+ *
  * @retval     Result converted to millivolts.
  */
 #define ADC_RESULT_IN_MILLI_VOLTS(ADC_VALUE)\
@@ -181,21 +181,22 @@ static void service_error_handler(uint32_t nrf_error)
 
 
 /**@brief Function for handling the ADC interrupt.
+ *
  * @details  This function will fetch the conversion result from the ADC, convert the value into
  *           percentage and send it to peer.
  */
 void ADC_IRQHandler(void)
 {
-    if (NRF_ADC->EVENTS_END != 0)
+    if (nrf_adc_conversion_finished())
     {
         uint8_t  adc_result;
         uint16_t batt_lvl_in_milli_volts;
         uint8_t  percentage_batt_lvl;
         uint32_t err_code;
 
-        NRF_ADC->EVENTS_END = 0;
-        adc_result          = NRF_ADC->RESULT;
-        NRF_ADC->TASKS_STOP = 1;
+        nrf_adc_conversion_event_clean();
+
+        adc_result = nrf_adc_result_get();
 
         batt_lvl_in_milli_volts = ADC_RESULT_IN_MILLI_VOLTS(adc_result) +
                                   DIODE_FWD_VOLT_DROP_MILLIVOLTS;
@@ -210,7 +211,7 @@ void ADC_IRQHandler(void)
             (err_code != BLE_ERROR_NO_TX_BUFFERS)
             &&
             (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
-            )
+           )
         {
             APP_ERROR_HANDLER(err_code);
         }
@@ -218,23 +219,21 @@ void ADC_IRQHandler(void)
 }
 
 
-/**@brief Function for making the ADC start a battery level conversion.
+/**@brief Function for configuring ADC to do battery level conversion.
  */
-static void adc_start(void)
+static void adc_configure(void)
 {
     uint32_t err_code;
+    nrf_adc_config_t adc_config = NRF_ADC_CONFIG_DEFAULT;
 
     // Configure ADC
-    NRF_ADC->INTENSET   = ADC_INTENSET_END_Msk;
-    NRF_ADC->CONFIG     = (ADC_CONFIG_RES_8bit                        << ADC_CONFIG_RES_Pos)     |
-                          (ADC_CONFIG_INPSEL_SupplyOneThirdPrescaling << ADC_CONFIG_INPSEL_Pos)  |
-                          (ADC_CONFIG_REFSEL_VBG                      << ADC_CONFIG_REFSEL_Pos)  |
-                          (ADC_CONFIG_PSEL_Disabled                   << ADC_CONFIG_PSEL_Pos)    |
-                          (ADC_CONFIG_EXTREFSEL_None                  << ADC_CONFIG_EXTREFSEL_Pos);
-    NRF_ADC->EVENTS_END = 0;
-    NRF_ADC->ENABLE     = ADC_ENABLE_ENABLE_Enabled;
+    adc_config.reference  = NRF_ADC_CONFIG_REF_VBG;
+    adc_config.resolution = NRF_ADC_CONFIG_RES_8BIT;
+    adc_config.scaling    = NRF_ADC_CONFIG_SCALING_SUPPLY_ONE_THIRD;
+    nrf_adc_configure(&adc_config);
 
     // Enable ADC interrupt
+    nrf_adc_int_enable(ADC_INTENSET_END_Msk);
     err_code = sd_nvic_ClearPendingIRQ(ADC_IRQn);
     APP_ERROR_CHECK(err_code);
 
@@ -243,9 +242,6 @@ static void adc_start(void)
 
     err_code = sd_nvic_EnableIRQ(ADC_IRQn);
     APP_ERROR_CHECK(err_code);
-
-    NRF_ADC->EVENTS_END  = 0;    // Stop any running conversions.
-    NRF_ADC->TASKS_START = 1;
 }
 
 
@@ -313,6 +309,7 @@ static void advertising_start(void)
 
             adv_params.interval = APP_ADV_INTERVAL_FAST;
             adv_params.timeout  = APP_FAST_ADV_TIMEOUT;
+
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_WHITELIST);
             APP_ERROR_CHECK(err_code);
             break;
@@ -334,6 +331,7 @@ static void advertising_start(void)
             adv_params.interval = APP_ADV_INTERVAL_SLOW;
             adv_params.timeout  = APP_SLOW_ADV_TIMEOUT;
             m_advertising_mode  = BLE_SLEEP;
+
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_SLOW);
             APP_ERROR_CHECK(err_code);
             break;
@@ -360,7 +358,7 @@ static void advertising_start(void)
 static void battery_level_meas_timeout_handler(void * p_context)
 {
     UNUSED_PARAMETER(p_context);
-    adc_start();
+    nrf_adc_start();
 }
 
 
@@ -447,8 +445,7 @@ static void advertising_init(uint8_t adv_flags)
 
     advdata.name_type               = BLE_ADVDATA_FULL_NAME;
     advdata.include_appearance      = true;
-    advdata.flags.size              = sizeof(adv_flags);
-    advdata.flags.p_data            = &adv_flags;
+    advdata.flags                   = adv_flags;
     advdata.p_tx_power_level        = &tx_power_level;
     advdata.uuids_complete.uuid_cnt = sizeof(adv_uuids) / sizeof(adv_uuids[0]);
     advdata.uuids_complete.p_uuids  = adv_uuids;
@@ -510,7 +507,6 @@ static void lls_init(void)
 
     err_code = ble_lls_init(&m_lls, &lls_init_obj);
     APP_ERROR_CHECK(err_code);
-
 }
 
 
@@ -540,6 +536,7 @@ static void bas_init(void)
 
 
 /**@brief Function for initializing the immediate alert service client.
+ *
  * @details This will initialize the client side functionality of the Find Me profile.
  */
 static void ias_client_init(void)
@@ -692,10 +689,15 @@ static void on_lls_evt(ble_lls_t * p_lls, ble_lls_evt_t * p_evt)
 static void on_ias_c_evt(ble_ias_c_t * p_ias_c, ble_ias_c_evt_t * p_evt)
 {
     uint32_t err_code;
+
     switch (p_evt->evt_type)
     {
         case BLE_IAS_C_EVT_SRV_DISCOVERED:
             // IAS is found on peer. The Find Me Locator functionality of this app will work.
+            // Start handling button presses
+            err_code = bsp_buttons_enable( (1 << SIGNAL_ALERT_BUTTON_ID)
+                                         | ( 1 << STOP_ALERTING_BUTTON_ID));
+            APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_IAS_C_EVT_SRV_NOT_FOUND:
@@ -703,7 +705,7 @@ static void on_ias_c_evt(ble_ias_c_t * p_ias_c, ble_ias_c_evt_t * p_evt)
             break;
 
         case BLE_IAS_C_EVT_DISCONN_COMPLETE:
-            // Stop detecting button presses when not connected
+            // Disable alert buttons
             err_code = bsp_buttons_enable(BSP_BUTTONS_NONE);
             APP_ERROR_CHECK(err_code);
             break;
@@ -722,7 +724,7 @@ static void on_ias_c_evt(ble_ias_c_t * p_ias_c, ble_ias_c_evt_t * p_evt)
  * @param[in]   p_bas  Battery Service structure.
  * @param[in]   p_evt  Event received from the Battery Service.
  */
-static void on_bas_evt(ble_bas_t * p_bas, ble_bas_evt_t * p_evt)
+static void on_bas_evt(ble_bas_t * p_bas, ble_bas_evt_t *p_evt)
 {
     uint32_t err_code;
 
@@ -763,10 +765,6 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             
             m_advertising_mode = BLE_NO_ADV;
             m_conn_handle      = p_ble_evt->evt.gap_evt.conn_handle;
-
-            // Start handling button presses
-            err_code = bsp_buttons_enable( (1 << SIGNAL_ALERT_BUTTON_ID) | (1 << STOP_ALERTING_BUTTON_ID) );
-            APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
@@ -775,23 +773,22 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
 
-            err_code = bsp_buttons_enable(BSP_BUTTONS_NONE);
-            APP_ERROR_CHECK(err_code);
-
             advertising_start();
             break;
 
         case BLE_GAP_EVT_TIMEOUT:
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT)
+            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
             {
                 if (m_advertising_mode == BLE_SLEEP)
                 {
                     err_code = bsp_indication_set(BSP_INDICATE_IDLE);
                     APP_ERROR_CHECK(err_code);
-                    
+
                     m_advertising_mode = BLE_NO_ADV;
 
-                    err_code = bsp_buttons_enable( (1 << WAKEUP_BUTTON_ID) | (1 << BOND_DELETE_ALL_BUTTON_ID));
+                    // enable buttons to wake-up from power off
+                    err_code = bsp_buttons_enable( (1 << WAKEUP_BUTTON_ID)
+                                                 | (1 << BOND_DELETE_ALL_BUTTON_ID));
                     APP_ERROR_CHECK(err_code);
 
                     // Go to system-off mode
@@ -861,6 +858,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
     ble_lls_on_ble_evt(&m_lls, p_ble_evt);
     ble_bas_on_ble_evt(&m_bas, p_ble_evt);
     ble_ias_c_on_ble_evt(&m_ias_c, p_ble_evt);
+    ble_tps_on_ble_evt(&m_tps, p_ble_evt);
     on_ble_evt(p_ble_evt);
 }
 
@@ -888,9 +886,9 @@ static void ble_stack_init(void)
     uint32_t err_code;
 
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
-    // Enable BLE stack 
+    // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
@@ -913,7 +911,7 @@ static void ble_stack_init(void)
  */
 static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
                                            dm_event_t const  * p_event,
-                                           api_result_t        event_result)
+                                           ret_code_t        event_result)
 {
     APP_ERROR_CHECK(event_result);
     return NRF_SUCCESS;
@@ -935,13 +933,12 @@ static void device_manager_init(void)
     // Clear all bonded centrals if the Bonds Delete button is pushed.
     err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID, &(init_data.clear_persistent_data));
     APP_ERROR_CHECK(err_code);
-    
+
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
 
     memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
     
-    register_param.sec_param.timeout      = SEC_PARAM_TIMEOUT;
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
@@ -958,7 +955,7 @@ static void device_manager_init(void)
 
 /**@brief Function for handling button events.
  *
- * @param[in]   event   Event generated when button pressed.
+ * @param[in]   event   Event generated when button is pressed.
  */
 static void button_event_handler(bsp_event_t event)
 {
@@ -966,7 +963,7 @@ static void button_event_handler(bsp_event_t event)
 
     switch (event)
     {
-        case BSP_EVENT_KEY_0:
+        case BSP_EVENT_KEY_0: //SIGNAL_ALERT_BOND_DELETE_BUTTON_ID
 
             if (!m_is_high_alert_signalled)
             {
@@ -993,7 +990,7 @@ static void button_event_handler(bsp_event_t event)
             }
             break;
 
-        case BSP_EVENT_KEY_1:
+        case BSP_EVENT_KEY_1: //STOP_ALERTING_BUTTON_ID
             err_code = bsp_indication_set(BSP_INDICATE_ALERT_OFF);
             APP_ERROR_CHECK(err_code);
             break;
@@ -1030,9 +1027,12 @@ int main(void)
     app_trace_init();
     timers_init();
     gpiote_init();
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), button_event_handler);
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
+                        button_event_handler);
     APP_ERROR_CHECK(err_code);
     ble_stack_init();
+    adc_configure();
     device_manager_init();
     gap_params_init();
     advertising_init(BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE);
@@ -1043,7 +1043,7 @@ int main(void)
     advertising_start();
 
     // Enter main loop.
-    for (;; )
+    for (;;)
     {
         power_manage();
     }

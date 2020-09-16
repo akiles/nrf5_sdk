@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: L2CAP Application event decoders</title>
+<title>nRF51 SDK - S120 SoftDevice: Types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,81 +97,35 @@ $(document).ready(function(){initNavTree('a00657.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">L2CAP Application event decoders<div class="ingroups"><a class="el" href="a00782.html">Application s120 codecs</a></div></div>  </div>
+<div class="title">Types<div class="ingroups"><a class="el" href="a00654.html">Heart Rate Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>L2CAP Application event decoders.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga01fadfae59ffbf5b43b5ef8d028d9a54"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00657.html#ga01fadfae59ffbf5b43b5ef8d028d9a54">ble_l2cap_evt_rx_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00103.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
-<tr class="memdesc:ga01fadfae59ffbf5b43b5ef8d028d9a54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_l2cap_evt_rx event.  <a href="#ga01fadfae59ffbf5b43b5ef8d028d9a54">More...</a><br/></td></tr>
-<tr class="separator:ga01fadfae59ffbf5b43b5ef8d028d9a54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaff74b227fdcb0906d5333821b4d06217"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaff74b227fdcb0906d5333821b4d06217"></a>
+typedef struct <a class="el" href="a00186.html">ble_hrs_c_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ble_hrs_c_t</b></td></tr>
+<tr class="separator:gaff74b227fdcb0906d5333821b4d06217"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga877f2faf397dff36652766f1a6c31b85"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00657.html#ga877f2faf397dff36652766f1a6c31b85">ble_hrs_c_evt_handler_t</a> )(<a class="el" href="a00186.html">ble_hrs_c_t</a> *p_ble_hrs_c, <a class="el" href="a00184.html">ble_hrs_c_evt_t</a> *p_evt)</td></tr>
+<tr class="memdesc:ga877f2faf397dff36652766f1a6c31b85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event handler type.  <a href="#ga877f2faf397dff36652766f1a6c31b85">More...</a><br/></td></tr>
+<tr class="separator:ga877f2faf397dff36652766f1a6c31b85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>L2CAP Application event decoders. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga01fadfae59ffbf5b43b5ef8d028d9a54"></a>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga877f2faf397dff36652766f1a6c31b85"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_l2cap_evt_rx_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00103.html">ble_evt_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_event</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_event_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">typedef void(*  ble_hrs_c_evt_handler_t)(<a class="el" href="a00186.html">ble_hrs_c_t</a> *p_ble_hrs_c, <a class="el" href="a00184.html">ble_hrs_c_evt_t</a> *p_evt)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes ble_l2cap_evt_rx event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00067.html#nrf51_l2cap_evt_rx_encoding">0x70 - BLE_L2CAP_EVT_RX</a> for packet format.</dd></dl>
-<p>If <code>p_event</code> is null, the required length of <code>p_event</code> is returned in <code>p_event_len</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of an event packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of the event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00103.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event_len</td><td><code>in:</code> Size (in bytes) of <code>p_event</code> buffer. <code>out:</code> Length of decoded contents of <code>p_event</code>.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_DATA_SIZE</td><td>Decoding failure. Length of <code>p_event</code> is too small to hold decoded event. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Event handler type. </p>
+<p>This is the type of the event handler that should be provided by the application of this module in order to receive events. </p>
 
 </div>
 </div>
@@ -180,7 +134,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:36 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

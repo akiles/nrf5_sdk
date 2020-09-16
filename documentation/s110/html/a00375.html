@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: pstorage_module_param_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dm_enc_key Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,45 +106,48 @@ $(document).ready(function(){initNavTree('a00375.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">pstorage_module_param_t Struct Reference<div class="ingroups"><a class="el" href="a00763.html">Persistent Memory Interface Data Types</a></div></div>  </div>
+<div class="title">dm_enc_key Struct Reference<div class="ingroups"><a class="el" href="a00982.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Device Manager Master identification and encryption information.  
+ <a href="a00375.html#details">More...</a></p>
+
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a3495db72b9ff587f0c9ea0ab38d5e9f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00763.html#gaac1d429f24eb2850da6d8f8773a14c47">pstorage_ntf_cb_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00375.html#a3495db72b9ff587f0c9ea0ab38d5e9f8">cb</a></td></tr>
-<tr class="separator:a3495db72b9ff587f0c9ea0ab38d5e9f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95b58714824957d4c930a5da78d7109a"><td class="memItemLeft" align="right" valign="top">pstorage_size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00375.html#a95b58714824957d4c930a5da78d7109a">block_size</a></td></tr>
-<tr class="separator:a95b58714824957d4c930a5da78d7109a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7bb96f4e9d1b68cb94fd5c75570e5a99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7bb96f4e9d1b68cb94fd5c75570e5a99"></a>
-pstorage_size_t&#160;</td><td class="memItemRight" valign="bottom"><b>block_count</b></td></tr>
-<tr class="separator:a7bb96f4e9d1b68cb94fd5c75570e5a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86cd792e42804720a97e6f64884d0fd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00223.html">ble_gap_enc_info_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00375.html#a86cd792e42804720a97e6f64884d0fd4">enc_info</a></td></tr>
+<tr class="separator:a86cd792e42804720a97e6f64884d0fd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d0dc86cbbad08e963a13c3a4070454d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00243.html">ble_gap_master_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00375.html#a6d0dc86cbbad08e963a13c3a4070454d">master_id</a></td></tr>
+<tr class="separator:a6d0dc86cbbad08e963a13c3a4070454d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a95b58714824957d4c930a5da78d7109a"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Device Manager Master identification and encryption information. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a86cd792e42804720a97e6f64884d0fd4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">pstorage_size_t pstorage_module_param_t::block_size</td>
+          <td class="memname"><a class="el" href="a00223.html">ble_gap_enc_info_t</a> dm_enc_key::enc_info</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">     Desired block size for persistent memory storage, for example, if a module has a table with 10 entries, each entry is size 64 bytes,
-</pre><p> it can request 10 blocks with block size 64 bytes. On the other hand, the module can also request one block of size 640 based on how it would like to access or alter memory in persistent memory. First option is preferred when single entries that need to be updated often when having no impact on the other entries. While second option is preferred when entries of table are not changed on individually but have common point of loading and storing data. </p>
+<p>GAP encryption information. </p>
 
 </div>
 </div>
-<a class="anchor" id="a3495db72b9ff587f0c9ea0ab38d5e9f8"></a>
+<a class="anchor" id="a6d0dc86cbbad08e963a13c3a4070454d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00763.html#gaac1d429f24eb2850da6d8f8773a14c47">pstorage_ntf_cb_t</a> pstorage_module_param_t::cb</td>
+          <td class="memname"><a class="el" href="a00243.html">ble_gap_master_id_t</a> dm_enc_key::master_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Callback registered with the module to be notified of any error occurring in persistent memory management </p>
+<p>Master identification. </p>
 
 </div>
 </div>
@@ -153,8 +156,8 @@ pstorage_size_t&#160;</td><td class="memItemRight" valign="bottom"><b>block_coun
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00375.html">pstorage_module_param_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00375.html">dm_enc_key</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,6 +1,9 @@
 var a00976 =
 [
-    [ "BLE_SRV_SC_CTRLPT_CUM_VAL_OP_SUPPORTED", "a00976.html#ga057b47633228ff5da51d9c924f346637", null ],
-    [ "BLE_SRV_SC_CTRLPT_SENSOR_LOCATIONS_OP_SUPPORTED", "a00976.html#ga70169283f5203ae8eac233136d7d8bcb", null ],
-    [ "BLE_SRV_SC_CTRLPT_START_CALIB_OP_SUPPORTED", "a00976.html#gac5b9d61593d9037072ebf7a6202424f4", null ]
+    [ "Service/Protocol Types", "a00977.html", "a00977" ],
+    [ "Device Manager Events", "a00978.html", "a00978" ],
+    [ "Device Manager Data Types", "a00982.html", "a00982" ],
+    [ "Device Module APIs", "a00983.html", "a00983" ],
+    [ "Device Manager Sequence Charts", "a01015.html", "a01015" ],
+    [ "DM_INVALID_ID", "a00976.html#gaffbf0ad98e25546a4645eb2cac9bef8a", null ]
 ];

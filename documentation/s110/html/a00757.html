@@ -100,7 +100,7 @@ $(document).ready(function(){initNavTree('a00757.html','');});
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">GPIO abstraction<div class="ingroups"><a class="el" href="a01035.html">Peripheral Drivers</a></div></div>  </div>
+<div class="title">GPIO abstraction<div class="ingroups"><a class="el" href="a01032.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -137,21 +137,21 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:gaa1a5c145e334817f2d960317d64fcb3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerator used for selecting between port 0 - 3.  <a href="a00757.html#gaa1a5c145e334817f2d960317d64fcb3d">More...</a><br/></td></tr>
 <tr class="separator:gaa1a5c145e334817f2d960317d64fcb3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga07e0c8c0b30499cf0a7b79dbe62d3fcc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc">nrf_gpio_pin_pull_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00757.html#gga07e0c8c0b30499cf0a7b79dbe62d3fcca13ffcb94eb78be866c66b5f5b516af65">NRF_GPIO_PIN_NOPULL</a> = (0x00UL), 
+&#160;&#160;<a class="el" href="a00757.html#gga07e0c8c0b30499cf0a7b79dbe62d3fcca13ffcb94eb78be866c66b5f5b516af65">NRF_GPIO_PIN_NOPULL</a> = GPIO_PIN_CNF_PULL_Disabled, 
 <br/>
-&#160;&#160;<a class="el" href="a00757.html#gga07e0c8c0b30499cf0a7b79dbe62d3fcca314d4b349d7e59ea3373a1ced4f32e4d">NRF_GPIO_PIN_PULLDOWN</a> = (0x01UL), 
+&#160;&#160;<a class="el" href="a00757.html#gga07e0c8c0b30499cf0a7b79dbe62d3fcca314d4b349d7e59ea3373a1ced4f32e4d">NRF_GPIO_PIN_PULLDOWN</a> = GPIO_PIN_CNF_PULL_Pulldown, 
 <br/>
-&#160;&#160;<a class="el" href="a00757.html#gga07e0c8c0b30499cf0a7b79dbe62d3fccad60f768c699495d9976a45fa7a9f51c6">NRF_GPIO_PIN_PULLUP</a> = (0x03UL)
+&#160;&#160;<a class="el" href="a00757.html#gga07e0c8c0b30499cf0a7b79dbe62d3fccad60f768c699495d9976a45fa7a9f51c6">NRF_GPIO_PIN_PULLUP</a> = GPIO_PIN_CNF_PULL_Pullup
 <br/>
  }</td></tr>
 <tr class="memdesc:ga07e0c8c0b30499cf0a7b79dbe62d3fcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerator used for selecting the pin to be pulled down or up at the time of pin configuration.  <a href="a00757.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc">More...</a><br/></td></tr>
 <tr class="separator:ga07e0c8c0b30499cf0a7b79dbe62d3fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0708136c752d69015962a2ccb4c59fbd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html#ga0708136c752d69015962a2ccb4c59fbd">nrf_gpio_pin_sense_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00757.html#gga0708136c752d69015962a2ccb4c59fbda60d9e9b3abe91c66a618e34d88444e95">NRF_GPIO_PIN_NOSENSE</a> = (0x00UL), 
+&#160;&#160;<a class="el" href="a00757.html#gga0708136c752d69015962a2ccb4c59fbda60d9e9b3abe91c66a618e34d88444e95">NRF_GPIO_PIN_NOSENSE</a> = GPIO_PIN_CNF_SENSE_Disabled, 
 <br/>
-&#160;&#160;<a class="el" href="a00757.html#gga0708136c752d69015962a2ccb4c59fbda48aaaa3fc33a295d9c65f094e03aba24">NRF_GPIO_PIN_SENSE_LOW</a> = (0x03UL), 
+&#160;&#160;<a class="el" href="a00757.html#gga0708136c752d69015962a2ccb4c59fbda48aaaa3fc33a295d9c65f094e03aba24">NRF_GPIO_PIN_SENSE_LOW</a> = GPIO_PIN_CNF_SENSE_Low, 
 <br/>
-&#160;&#160;<a class="el" href="a00757.html#gga0708136c752d69015962a2ccb4c59fbda8fe882a266370654fa6d664be3e1ecce">NRF_GPIO_PIN_SENSE_HIGH</a> = (0x02UL)
+&#160;&#160;<a class="el" href="a00757.html#gga0708136c752d69015962a2ccb4c59fbda8fe882a266370654fa6d664be3e1ecce">NRF_GPIO_PIN_SENSE_HIGH</a> = GPIO_PIN_CNF_SENSE_High
 <br/>
  }</td></tr>
 <tr class="memdesc:ga0708136c752d69015962a2ccb4c59fbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerator used for selecting the pin to sense high or low level on the pin input.  <a href="a00757.html#ga0708136c752d69015962a2ccb4c59fbd">More...</a><br/></td></tr>
@@ -259,15 +259,12 @@ Functions</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga07e0c8c0b30499cf0a7b79dbe62d3fcca13ffcb94eb78be866c66b5f5b516af65"></a>NRF_GPIO_PIN_NOPULL</em>&nbsp;</td><td class="fielddoc">
 <p>Pin pullup resistor disabled. </p>
-<p>No pull. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga07e0c8c0b30499cf0a7b79dbe62d3fcca314d4b349d7e59ea3373a1ced4f32e4d"></a>NRF_GPIO_PIN_PULLDOWN</em>&nbsp;</td><td class="fielddoc">
 <p>Pin pulldown resistor enabled. </p>
-<p>Pulldown on pin. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga07e0c8c0b30499cf0a7b79dbe62d3fccad60f768c699495d9976a45fa7a9f51c6"></a>NRF_GPIO_PIN_PULLUP</em>&nbsp;</td><td class="fielddoc">
 <p>Pin pullup resistor enabled. </p>
-<p>Pullup on pin. </p>
 </td></tr>
 </table>
 
@@ -287,15 +284,12 @@ Functions</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0708136c752d69015962a2ccb4c59fbda60d9e9b3abe91c66a618e34d88444e95"></a>NRF_GPIO_PIN_NOSENSE</em>&nbsp;</td><td class="fielddoc">
 <p>Pin sense level disabled. </p>
-<p>Disabled. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga0708136c752d69015962a2ccb4c59fbda48aaaa3fc33a295d9c65f094e03aba24"></a>NRF_GPIO_PIN_SENSE_LOW</em>&nbsp;</td><td class="fielddoc">
 <p>Pin sense low level. </p>
-<p>Wakeup on low level. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga0708136c752d69015962a2ccb4c59fbda8fe882a266370654fa6d664be3e1ecce"></a>NRF_GPIO_PIN_SENSE_HIGH</em>&nbsp;</td><td class="fielddoc">
 <p>Pin sense high level. </p>
-<p>Wakeup on high level. </p>
 </td></tr>
 </table>
 
@@ -393,15 +387,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Sense capability on the pin is disabled, and input is connected to buffer so that the GPIO-&gt;IN register is readable </dd></dl>
-<p>&lt; Disabled.</p>
-<p>&lt; Position of SENSE field.</p>
-<p>&lt; Standard '0', Standard '1'.</p>
-<p>&lt; Position of DRIVE field.</p>
-<p>&lt; Position of PULL field.</p>
-<p>&lt; Connect input pin.</p>
-<p>&lt; Position of INPUT field.</p>
-<p>&lt; Configure pin as an input pin.</p>
-<p>&lt; Position of DIR field. </p>
 
 </div>
 </div>
@@ -435,16 +420,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Sense capability on the pin is disabled, and input is disconnected from the buffer as the pins are configured as output. </dd></dl>
-<p>&lt; Disabled.</p>
-<p>&lt; Position of SENSE field.</p>
-<p>&lt; Standard '0', Standard '1'.</p>
-<p>&lt; Position of DRIVE field.</p>
-<p>&lt; No pull.</p>
-<p>&lt; Position of PULL field.</p>
-<p>&lt; Disconnect input pin.</p>
-<p>&lt; Position of INPUT field.</p>
-<p>&lt; Configure pin as an output pin.</p>
-<p>&lt; Position of DIR field. </p>
 
 </div>
 </div>
@@ -495,14 +470,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>&lt; Position of SENSE field.</p>
-<p>&lt; Standard '0', Standard '1'.</p>
-<p>&lt; Position of DRIVE field.</p>
-<p>&lt; Position of PULL field.</p>
-<p>&lt; Connect input pin.</p>
-<p>&lt; Position of INPUT field.</p>
-<p>&lt; Configure pin as an input pin.</p>
-<p>&lt; Position of DIR field. </p>
 
 </div>
 </div>
@@ -579,16 +546,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>&lt; Disabled.</p>
-<p>&lt; Position of SENSE field.</p>
-<p>&lt; Standard '0', Standard '1'.</p>
-<p>&lt; Position of DRIVE field.</p>
-<p>&lt; No pull.</p>
-<p>&lt; Position of PULL field.</p>
-<p>&lt; Connect input pin.</p>
-<p>&lt; Position of INPUT field.</p>
-<p>&lt; Configure pin as an input pin.</p>
-<p>&lt; Position of DIR field. </p>
 
 </div>
 </div>
@@ -1004,15 +961,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>For configuring only one pin as input use <a class="el" href="a00757.html#ga4e63d442ebd572126be3e030b3df4dc6">nrf_gpio_cfg_input</a> Sense capability on the pin is disabled, and input is connected to buffer so that the GPIO-&gt;IN register is readable </dd></dl>
-<p>&lt; Disabled.</p>
-<p>&lt; Position of SENSE field.</p>
-<p>&lt; Standard '0', Standard '1'.</p>
-<p>&lt; Position of DRIVE field.</p>
-<p>&lt; Position of PULL field.</p>
-<p>&lt; Connect input pin.</p>
-<p>&lt; Position of INPUT field.</p>
-<p>&lt; Configure pin as an input pin.</p>
-<p>&lt; Position of DIR field. </p>
 
 </div>
 </div>
@@ -1057,16 +1005,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>For configuring only one pin as output use <a class="el" href="a00757.html#ga0271806dc37bffea02d199474d526a35">nrf_gpio_cfg_output</a> Sense capability on the pin is disabled, and input is disconnected from the buffer as the pins are configured as output. </dd></dl>
-<p>&lt; Disabled.</p>
-<p>&lt; Position of SENSE field.</p>
-<p>&lt; Standard '0', Standard '1'.</p>
-<p>&lt; Position of DRIVE field.</p>
-<p>&lt; No pull.</p>
-<p>&lt; Position of PULL field.</p>
-<p>&lt; Disconnect input pin.</p>
-<p>&lt; Position of INPUT field.</p>
-<p>&lt; Configure pin as an output pin.</p>
-<p>&lt; Position of DIR field. </p>
 
 </div>
 </div>
@@ -1171,7 +1109,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:17 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

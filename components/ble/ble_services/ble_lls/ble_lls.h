@@ -75,13 +75,14 @@ typedef struct
 } ble_lls_init_t;
 
 /**@brief Link Loss Service structure. This contains various status information for the service. */
-typedef struct ble_lls_s
+struct ble_lls_s
 {
     ble_lls_evt_handler_t     evt_handler;              /**< Event handler to be called for handling events in the Link Loss Service. */
     ble_srv_error_handler_t   error_handler;            /**< Function to be called in case of an error. */
     uint16_t                  service_handle;           /**< Handle of Link Loss Service (as provided by the BLE stack). */
     ble_gatts_char_handles_t  alert_level_handles;      /**< Handles related to the Alert Level characteristic. */
-} ble_lls_t;
+    uint16_t                  conn_handle;              /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
+};
 
 /**@brief Function for initializing the Link Loss Service.
  *

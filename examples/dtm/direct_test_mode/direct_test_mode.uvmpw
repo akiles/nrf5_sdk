@@ -8,16 +8,13 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
  
    <project>
-    <PathAndName>pca10028\blank\arm\direct_test_mode_blank_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10028\s110\arm4\direct_test_mode_s110_pca10028.uvproj</PathAndName>
   </project>
    <project>
-    <PathAndName>pca10028\s110\arm\direct_test_mode_s110_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10028\s120\arm4\direct_test_mode_s120_pca10028.uvproj</PathAndName>
   </project>
    <project>
-    <PathAndName>pca10028\s120\arm\direct_test_mode_s120_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10028\s310\arm\direct_test_mode_s310_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10028\blank\arm4\direct_test_mode_blank_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

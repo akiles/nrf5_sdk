@@ -1,11 +1,9 @@
 var a00279 =
 [
-    [ "base_time", "a00279.html#a50043eec02a9af09a81047f4eecfef33", null ],
-    [ "flags", "a00279.html#adaa211ee17f3d46654c641ab339b68db", null ],
-    [ "glucose_concentration", "a00279.html#a8d77eafd69ad69d3753fd043bdd31dc2", null ],
-    [ "sample_location", "a00279.html#a21eed1c3fbda85ac65aa060787a589b4", null ],
-    [ "sensor_status_annunciation", "a00279.html#a765f2b453e27775757271598452e2c8a", null ],
-    [ "sequence_number", "a00279.html#a7e89e39efc4889fc00da13fa87efcbc2", null ],
-    [ "time_offset", "a00279.html#a820a55933ac2e9e047193a846efbaf5d", null ],
-    [ "type", "a00279.html#a4e79195531cf78dfd880479a6404cb44", null ]
+    [ "char_uuid", "a00279.html#adbbcf41424e48536f3c3e7f2665005fd", null ],
+    [ "desc_uuid", "a00279.html#a6d909918be5c3a58a93e3f345ad0ae5e", null ],
+    [ "srvc_handle", "a00279.html#a9ec74591a8b40af4354fed5c2ae33efd", null ],
+    [ "srvc_uuid", "a00279.html#a351c0654157494b748a0adcba003e42f", null ],
+    [ "type", "a00279.html#a59115313e869d01234cc2ed3ab2e25d9", null ],
+    [ "value_handle", "a00279.html#a770254b2ade294a3f24fa0db65a2d0fa", null ]
 ];

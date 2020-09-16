@@ -171,12 +171,6 @@ void power_manage(void)
  */
 static void initialize()
 {
-
-#ifdef DEBUG_UART
-    // Configure and make UART ready for debug usage.
-    simple_uart_config(RTS_PIN_NUMBER, TX_PIN_NUMBER, CTS_PIN_NUMBER, CTS_PIN_NUMBER, HWFC);
-#endif   //DEBUG_UART
-
 #ifdef DEBUG_UART_MAIN
     printf("MAIN: Initialize\n");
 #endif   //DEBUG_UART_MAIN

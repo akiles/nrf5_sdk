@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: app_fifo_t Struct Reference</title>
+<title>nRF51 SDK - S210 SoftDevice: UICR Config Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,91 +96,81 @@ $(document).ready(function(){initNavTree('a00053.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">app_fifo_t Struct Reference<div class="ingroups"><a class="el" href="a00227.html">FIFO implementation</a></div></div>  </div>
+<div class="title">UICR Config Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the information about which memory is allocated for the buffer and its size. This needs to be initialized by <a class="el" href="a00227.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init()</a> before use.  
- <a href="a00053.html#details">More...</a></p>
-
-<p><code>#include &lt;app_fifo.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a64eafd180a65260208be3b845f6acbf5"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a64eafd180a65260208be3b845f6acbf5">p_buf</a></td></tr>
-<tr class="separator:a64eafd180a65260208be3b845f6acbf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03c6c7fcf087b5c1e0cfd5ce09661870"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a03c6c7fcf087b5c1e0cfd5ce09661870">buf_size_mask</a></td></tr>
-<tr class="separator:a03c6c7fcf087b5c1e0cfd5ce09661870"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabcc538faf2ea4a374702c9896ae52d6"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#aabcc538faf2ea4a374702c9896ae52d6">read_pos</a></td></tr>
-<tr class="separator:aabcc538faf2ea4a374702c9896ae52d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12631a6575aae2c98f1cca4034b38eaf"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a12631a6575aae2c98f1cca4034b38eaf">write_pos</a></td></tr>
-<tr class="separator:a12631a6575aae2c98f1cca4034b38eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><p>This example shows how to include UICR values into the application hex file. Also, it shows how to setup Keil to download and debug the hexfile generated.</p>
+<p>The project uses the "uicr_config.h" to define the User Information Configuration Registers (UICR) values to be included into the hex file.</p>
+<p>The file declares one variable per register of the UICR area and informs the linker where to place them. To include the desired value in the desired address, uncomment the variable with the proper address at the target area and update the assignment value. As shown below, the UICR register with address 0x10001080 will be assigned the value 0x12345678.</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> uint32_t UICR_ADDR_0x80 __attribute__((at(0x10001080))) __attribute__((used)) = 0x12345678;</div>
+<div class="line"><span class="comment">// const uint32_t UICR_ADDR_0x84 __attribute__((at(0x10001084))) __attribute__((used)) = 0xFFFFFFFF;</span></div>
+<div class="line"><span class="comment">// const uint32_t UICR_ADDR_0x88 __attribute__((at(0x10001088))) __attribute__((used)) = 0xFFFFFFFF;</span></div>
+</div><!-- fragment --><p>When compiling the project with the uicr_config.h stated above it will add the section shown below into the hex. The two lines (intel hex format) shows that we have successfully generated a hex file which will fill the value 0x12345678 into the UICR address. </p>
+<div class="fragment"><div class="line">:020000041000EA</div>
+<div class="line">:041080007856341258</div>
+</div><!-- fragment --><p>Note that UICR values are stored in a reserved area of the flash and should only be stored into when downloading a hex file. Do not use these defined variables to store data at run time.</p>
+<dl class="section note"><dt>Note</dt><dd>The file uses one non-standard attribute ("at"). It will only function with the ARMCC compiler toolset.</dd></dl>
+<p>The hex file generated when this file is included will fail to download when using the standard download algorithm provided by Nordic. How to configure Keil to download the hex is shown below.</p>
+<p>The name of the example is <b>uicr_config_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\uicr_config</code> </p>
+<h1><a class="anchor" id="uicr_config_keil_config"></a>
+Keil Configuration</h1>
+<p>To configure Keil to not use the standard download algorithm follow these steps:</p>
+<ul>
+<li>Open "Target Options" by selecting the target in the project window, then pressing Alt+F7.</li>
+<li>Select the tab labeled "Utilities".</li>
+<li>Select the radio button "Use External Tool for Flash Programming".</li>
+<li>Fill in "nrfjprog.exe" in the "Command" text field.</li>
+<li>Fill "Arguments" according to the chip variant and use of SoftDevice (See below).</li>
+</ul>
+<p><code>nrfjprog.exe</code> is an extra tool installed with the SDK. And will be located in system path.</p>
+<h2><a class="anchor" id="uicr_config_example_ant"></a>
+nrf51422 256K with S210 SoftDevice (ANT)</h2>
+<div class="image">
+<img src="uicr_example_ant_aa.png" alt="uicr_example_ant_aa.png"/>
+<div class="caption">
+Figure 1: Example settings for nrf51422.</div></div>
+<h2><a class="anchor" id="uicr_config_example_nrf51822_blank"></a>
+nrf51822 128K/256K without SoftDevice</h2>
+<div class="image">
+<img src="uicr_example_blank_aa_ab.png" alt="uicr_example_blank_aa_ab.png"/>
+<div class="caption">
+Figure 2: Example settings for nrf51822 without SoftDevice.</div></div>
+<h2><a class="anchor" id="uicr_config_example_nrf51822_ble"></a>
+nrf51822 128K/256K with S110 SoftDevice (BLE)</h2>
+<p>The SoftDevice must first be flashed by other means. If using nRFgo Studio, remember to uncheck "Enable SoftDevice protection". </p>
+<div class="image">
+<img src="uicr_example_ble_aa_ab.png" alt="uicr_example_ble_aa_ab.png"/>
+<div class="caption">
+Figure 3: Example settings for nrf51822 with SoftDevice. SoftDevice must be flashed separately.</div></div>
+<h1><a class="anchor" id="uicr_trouble_sec"></a>
+Troubleshooting</h1>
+<p>This section covers some known issues and their solution for the UICR example project</p>
+<table class="doxtable">
+<tr>
+<th>Error </th><th>Solution</th></tr>
+<tr>
+<td>No Algorithm found for: 10001014H - 10001017H <br/>
+ Partial Erase Done (areas with no algorithms skipped!) <br/>
+ No Algorithm found for: 10001014H - 10001017H </td><td>Those error messages are seen when trying to flash with the J-Link Target Driver, as it does not support writing of UICR. Use <code>nrjjprog.exe</code> instead. </td></tr>
+<tr>
+<td>&mdash; Error: failed to execute '"nrfjprog.exe" ..... </td><td>nrfjprog.exe could not be found in windows path. Add nrfjprog.exe to windows %PATH% or specify full path to nrfjprog in Keil-'Options for Target'-'Utilities' as seen in the above figures. </td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the information about which memory is allocated for the buffer and its size. This needs to be initialized by <a class="el" href="a00227.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init()</a> before use. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a03c6c7fcf087b5c1e0cfd5ce09661870"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t app_fifo_t::buf_size_mask</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Read/write index mask. Also used for size checking. </p>
-
-</div>
-</div>
-<a class="anchor" id="a64eafd180a65260208be3b845f6acbf5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* app_fifo_t::p_buf</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to FIFO buffer memory. </p>
-
-</div>
-</div>
-<a class="anchor" id="aabcc538faf2ea4a374702c9896ae52d6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">volatile uint32_t app_fifo_t::read_pos</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Next read position in the FIFO buffer. </p>
-
-</div>
-</div>
-<a class="anchor" id="a12631a6575aae2c98f1cca4034b38eaf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">volatile uint32_t app_fifo_t::write_pos</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Next write position in the FIFO buffer. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<h1><a class="anchor" id="uicr_config_example_testing"></a>
+Testing</h1>
+<p>Test the UICR Configuration Example application by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the application with the chip variant configuration as described in <a class="el" href="a00053.html#uicr_config_keil_config">Keil Configuration</a>.</li>
+<li>Verify that the UICR register with the address 0x10001080 has been assigned the value 0x12345678 with this nrfjprog command: <div class="fragment"><div class="line">nrfjprog --memrd 0x10001080 --n 4</div>
+</div><!-- fragment --> </li>
+</ol>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00053.html">app_fifo_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:41 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

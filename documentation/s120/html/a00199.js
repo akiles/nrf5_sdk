@@ -1,7 +1,7 @@
 var a00199 =
 [
-    [ "p_app_context", "a00199.html#ae9ad98969539dba415cfb4cd9e0f0564", null ],
-    [ "p_device_context", "a00199.html#abeb2585ead8af941c5619bbfad06b963", null ],
-    [ "p_gap_param", "a00199.html#af0e4a6616d2156de4d92277ea7f0df5f", null ],
-    [ "p_service_context", "a00199.html#a7a1372003da3dd695160653c24e3eaf8", null ]
+    [ "appl_id", "a00199.html#a381fcabb6c06cd4b56c37f2f074debc7", null ],
+    [ "connection_id", "a00199.html#aada12513e0b4856726d23729171c4c0f", null ],
+    [ "device_id", "a00199.html#ac60c519ad6b47720e22b172283fbf2d3", null ],
+    [ "service_id", "a00199.html#a61539581cba803dbeb074913ba5d0988", null ]
 ];

@@ -32,7 +32,7 @@
 #include "ble_dis.h"
 #include "ble_conn_params.h"
 #include "bsp.h"
-#include "ble_sensorsim.h"
+#include "sensorsim.h"
 #include "softdevice_handler.h"
 #include "app_timer.h"
 #include "device_manager.h"
@@ -123,7 +123,6 @@ static ble_beacon_scanner_init_t beacon_scanner_init;
 #define NEXT_CONN_PARAMS_UPDATE_DELAY        APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER)/**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
 #define MAX_CONN_PARAMS_UPDATE_COUNT         3                                          /**< Number of attempts before giving up the connection parameter negotiation. */
 
-#define SEC_PARAM_TIMEOUT                    30                                         /**< Timeout for Pairing Request or Security Request (in seconds). */
 #define SEC_PARAM_BOND                       1                                          /**< Perform bonding. */
 #define SEC_PARAM_MITM                       0                                          /**< Man In The Middle protection not required. */
 #define SEC_PARAM_IO_CAPABILITIES            BLE_GAP_IO_CAPS_NONE                       /**< No I/O capabilities. */
@@ -151,12 +150,12 @@ static ble_bas_t                             m_bas;                             
 static ble_hrs_t                             m_hrs;                                     /**< Structure used to identify the heart rate service. */
 static bool                                  m_rr_interval_enabled = true;              /**< Flag for enabling and disabling the registration of new RR interval measurements (the purpose of disabling this is just to test sending HRM without RR interval data. */
 
-static ble_sensorsim_cfg_t                   m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
-static ble_sensorsim_state_t                 m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
-static ble_sensorsim_cfg_t                   m_heart_rate_sim_cfg;                      /**< Heart Rate sensor simulator configuration. */
-static ble_sensorsim_state_t                 m_heart_rate_sim_state;                    /**< Heart Rate sensor simulator state. */
-static ble_sensorsim_cfg_t                   m_rr_interval_sim_cfg;                     /**< RR Interval sensor simulator configuration. */
-static ble_sensorsim_state_t                 m_rr_interval_sim_state;                   /**< RR Interval sensor simulator state. */
+static sensorsim_cfg_t                       m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
+static sensorsim_state_t                     m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
+static sensorsim_cfg_t                       m_heart_rate_sim_cfg;                      /**< Heart Rate sensor simulator configuration. */
+static sensorsim_state_t                     m_heart_rate_sim_state;                    /**< Heart Rate sensor simulator state. */
+static sensorsim_cfg_t                       m_rr_interval_sim_cfg;                     /**< RR Interval sensor simulator configuration. */
+static sensorsim_state_t                     m_rr_interval_sim_state;                   /**< RR Interval sensor simulator state. */
 
 static app_timer_id_t                        m_battery_timer_id;                        /**< Battery timer. */
 static app_timer_id_t                        m_heart_rate_timer_id;                     /**< Heart rate measurement timer. */
@@ -191,7 +190,7 @@ static void battery_level_update(void)
     uint32_t err_code;
     uint8_t  battery_level;
 
-    battery_level = (uint8_t)ble_sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
+    battery_level = (uint8_t)sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
 
     err_code = ble_bas_battery_level_update(&m_bas, battery_level);
     if ((err_code != NRF_SUCCESS) &&
@@ -235,7 +234,7 @@ static void heart_rate_meas_timeout_handler(void * p_context)
 
     UNUSED_PARAMETER(p_context);
 
-    heart_rate = (uint16_t)ble_sensorsim_measure(&m_heart_rate_sim_state, &m_heart_rate_sim_cfg);
+    heart_rate = (uint16_t)sensorsim_measure(&m_heart_rate_sim_state, &m_heart_rate_sim_cfg);
 
     cnt++;
     err_code = ble_hrs_heart_rate_measurement_send(&m_hrs, heart_rate);
@@ -270,7 +269,7 @@ static void rr_interval_timeout_handler(void * p_context)
     {
         uint16_t rr_interval;
 
-        rr_interval = (uint16_t)ble_sensorsim_measure(&m_rr_interval_sim_state,
+        rr_interval = (uint16_t)sensorsim_measure(&m_rr_interval_sim_state,
                                                       &m_rr_interval_sim_cfg);
         ble_hrs_rr_interval_add(&m_hrs, rr_interval);
     }
@@ -384,8 +383,7 @@ static void advertising_init(void)
 
     advdata.name_type               = BLE_ADVDATA_FULL_NAME;
     advdata.include_appearance      = true;
-    advdata.flags.size              = sizeof(flags);
-    advdata.flags.p_data            = &flags;
+    advdata.flags                   = flags;
     advdata.uuids_complete.uuid_cnt = sizeof(adv_uuids) / sizeof(adv_uuids[0]);
     advdata.uuids_complete.p_uuids  = adv_uuids;
 
@@ -468,28 +466,28 @@ static void services_init(void)
 
 /**@brief Function for initializing the sensor simulators.
  */
-static void sensor_sim_init(void)
+static void sensor_simulator_init(void)
 {
     m_battery_sim_cfg.min          = MIN_BATTERY_LEVEL;
     m_battery_sim_cfg.max          = MAX_BATTERY_LEVEL;
     m_battery_sim_cfg.incr         = BATTERY_LEVEL_INCREMENT;
     m_battery_sim_cfg.start_at_max = true;
 
-    ble_sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
+    sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
 
     m_heart_rate_sim_cfg.min          = MIN_HEART_RATE;
     m_heart_rate_sim_cfg.max          = MAX_HEART_RATE;
     m_heart_rate_sim_cfg.incr         = HEART_RATE_INCREMENT;
     m_heart_rate_sim_cfg.start_at_max = false;
 
-    ble_sensorsim_init(&m_heart_rate_sim_state, &m_heart_rate_sim_cfg);
+    sensorsim_init(&m_heart_rate_sim_state, &m_heart_rate_sim_cfg);
 
     m_rr_interval_sim_cfg.min          = MIN_RR_INTERVAL;
     m_rr_interval_sim_cfg.max          = MAX_RR_INTERVAL;
     m_rr_interval_sim_cfg.incr         = RR_INTERVAL_INCREMENT;
     m_rr_interval_sim_cfg.start_at_max = false;
 
-    ble_sensorsim_init(&m_rr_interval_sim_state, &m_rr_interval_sim_cfg);
+    sensorsim_init(&m_rr_interval_sim_state, &m_rr_interval_sim_cfg);
 }
 
 
@@ -624,7 +622,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             break;
 
         case BLE_GAP_EVT_TIMEOUT:
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT)
+            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
             {
                 err_code = bsp_indication_set(BSP_INDICATE_IDLE);
                 APP_ERROR_CHECK(err_code);
@@ -694,7 +692,7 @@ static void ble_stack_init(void)
     uint32_t err_code;
 
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;
@@ -718,7 +716,7 @@ static void ble_stack_init(void)
  */
 static uint32_t device_manager_evt_handler(dm_handle_t const    * p_handle,
                                            dm_event_t const     * p_event,
-                                           api_result_t           event_result)
+                                           ret_code_t           event_result)
 {
     APP_ERROR_CHECK(event_result);
     return NRF_SUCCESS;
@@ -746,7 +744,6 @@ static void device_manager_init(void)
 
     memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
     
-    register_param.sec_param.timeout      = SEC_PARAM_TIMEOUT;
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
@@ -787,7 +784,7 @@ int main(void)
     gap_params_init();
     advertising_init();
     services_init();
-    sensor_sim_init();
+    sensor_simulator_init();
     conn_params_init();
     
     beacon_scanner_init.evt_handler   = beacon_evt_handler;

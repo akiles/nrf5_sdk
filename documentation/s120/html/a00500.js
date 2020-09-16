@@ -1,18 +1,26 @@
 var a00500 =
 [
-    [ "TWI_DELAY", "a00500.html#ga0bdffa7178084c5e1b2e11d3a95c5e85", null ],
-    [ "TWI_DONT_ISSUE_STOP", "a00500.html#gaedaa985feb5cea808d8811bd7ceeb318", null ],
-    [ "TWI_ISSUE_STOP", "a00500.html#ga13a824cf1c6a37f2ddea21c962128a3e", null ],
-    [ "TWI_READ_BIT", "a00500.html#ga67c0f91739433360f513b097acf11946", null ],
-    [ "TWI_SCL_HIGH", "a00500.html#ga7635564961ef4b40ebe54c566b25dc75", null ],
-    [ "TWI_SCL_LOW", "a00500.html#gafef260a0ebd7d5669cd2731d2c20f55d", null ],
-    [ "TWI_SCL_OUTPUT", "a00500.html#gaa73e62b201f371e4d2e543f0ba2bb4cb", null ],
-    [ "TWI_SCL_READ", "a00500.html#ga45cf9fc8c9487711c3b8457b8e1116b2", null ],
-    [ "TWI_SDA_HIGH", "a00500.html#ga112251118224f5623c20423efce89ae8", null ],
-    [ "TWI_SDA_INPUT", "a00500.html#ga63ae25f476902e9df0c31b057e2bb527", null ],
-    [ "TWI_SDA_LOW", "a00500.html#ga6b884c7770898bf063884f3f1893d492", null ],
-    [ "TWI_SDA_OUTPUT", "a00500.html#gaa6c311f207bff59456fb22648965c53b", null ],
-    [ "TWI_SDA_READ", "a00500.html#ga0a7e559c3bceb5b50ff3e51cabb21f73", null ],
-    [ "twi_master_init", "a00500.html#ga148f1dd10bc0248c6c6c5336ce07a540", null ],
-    [ "twi_master_transfer", "a00500.html#ga36e8039d4cbb4f66c0cf0cf1e3a72445", null ]
+    [ "APP_TIMER_BUF_SIZE", "a00500.html#gabacf4cc12b8ec08002818cd3a038550c", null ],
+    [ "APP_TIMER_CLOCK_FREQ", "a00500.html#ga12adbc81bda12c46605edc8fcd9e5d19", null ],
+    [ "APP_TIMER_INIT", "a00500.html#ga5aaf67f18b79941f9a160d287aa5f245", null ],
+    [ "APP_TIMER_INT_LEVELS", "a00500.html#ga191e41b150c033b065b213998814e71e", null ],
+    [ "APP_TIMER_MIN_TIMEOUT_TICKS", "a00500.html#ga30c7af1b67835f8031ccc934af7d1af7", null ],
+    [ "APP_TIMER_NODE_SIZE", "a00500.html#gafb37507319ac388ad5e89be2525c7c1f", null ],
+    [ "APP_TIMER_TICKS", "a00500.html#gafdaf90781af071b0c295cd5b2b08da3d", null ],
+    [ "APP_TIMER_USER_OP_SIZE", "a00500.html#ga58bd0b3796949136aca4e18865df281a", null ],
+    [ "APP_TIMER_USER_SIZE", "a00500.html#ga9c4c5113918b3e6e33dc05ba51823ece", null ],
+    [ "app_timer_evt_schedule_func_t", "a00500.html#ga647843379c9e94deff5c30435a79736b", null ],
+    [ "app_timer_id_t", "a00500.html#gad024aa9066b1ca640dd171d83ee39290", null ],
+    [ "app_timer_timeout_handler_t", "a00500.html#ga6d96125cb0c1cd1dbc753acff3036ea3", null ],
+    [ "app_timer_mode_t", "a00500.html#gaae9566b4f8c39bd6e7b364940ca1b73b", [
+      [ "APP_TIMER_MODE_SINGLE_SHOT", "a00500.html#ggaae9566b4f8c39bd6e7b364940ca1b73ba795e93cf3bcc214a35478b80f8e0186d", null ],
+      [ "APP_TIMER_MODE_REPEATED", "a00500.html#ggaae9566b4f8c39bd6e7b364940ca1b73bafe8186388a11806af86157f592b5a9ad", null ]
+    ] ],
+    [ "app_timer_cnt_diff_compute", "a00500.html#gaad9b5fc66ed908c54281370f690d0c4e", null ],
+    [ "app_timer_cnt_get", "a00500.html#ga497a82797a160ef7f13f8aa26c637018", null ],
+    [ "app_timer_create", "a00500.html#ga8aa81f9e8bde352865be0502c7037592", null ],
+    [ "app_timer_init", "a00500.html#ga96087520ca79dfa28fb6ba6bb562a88f", null ],
+    [ "app_timer_start", "a00500.html#ga03fb5f5fa85d16289db0d3c15bb0f24d", null ],
+    [ "app_timer_stop", "a00500.html#gad40fbb2a6a9e5bf7d00f838763f5514c", null ],
+    [ "app_timer_stop_all", "a00500.html#gac3c9d0975a786efe561a7be1eb37f247", null ]
 ];

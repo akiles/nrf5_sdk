@@ -1,5 +1,7 @@
 var a00364 =
 [
-    [ "exponent", "a00364.html#a42d83a992fc160d167482ec70b58d17c", null ],
-    [ "mantissa", "a00364.html#a4668d8cc50fe654da1cfff425c16c5c0", null ]
+    [ "appl_id", "a00364.html#a381fcabb6c06cd4b56c37f2f074debc7", null ],
+    [ "connection_id", "a00364.html#aada12513e0b4856726d23729171c4c0f", null ],
+    [ "device_id", "a00364.html#ac60c519ad6b47720e22b172283fbf2d3", null ],
+    [ "service_id", "a00364.html#a61539581cba803dbeb074913ba5d0988", null ]
 ];

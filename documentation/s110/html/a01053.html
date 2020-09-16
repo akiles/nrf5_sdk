@@ -99,75 +99,135 @@ $(document).ready(function(){initNavTree('a01053.html','');});
   <div class="summary">
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Enumerations<div class="ingroups"><a class="el" href="a00869.html">Generic Attribute Profile (GATT) Client</a></div></div>  </div>
+<div class="title">Enumerations<div class="ingroups"><a class="el" href="a00910.html">Generic Attribute Profile (GATT) Server</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga1861d83550e6998efd13d44b09ec1ba9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01053.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> { <br/>
-&#160;&#160;<a class="el" href="a01053.html#gga1861d83550e6998efd13d44b09ec1ba9a6362074e02b0a5e960257ceaa0886f51">SD_BLE_GATTC_PRIMARY_SERVICES_DISCOVER</a> = 0x90, 
+<tr class="memitem:gac817a87689e9c2c82f813a5221d0bd27"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01053.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> { <br/>
+&#160;&#160;<a class="el" href="a01053.html#ggac817a87689e9c2c82f813a5221d0bd27a8e890298dc03f9799a287dce916db7d5">SD_BLE_GATTS_SERVICE_ADD</a> = 0xA0, 
 <br/>
-&#160;&#160;<a class="el" href="a01053.html#gga1861d83550e6998efd13d44b09ec1ba9a84e92548312cd9db93e3b6943ce83e65">SD_BLE_GATTC_RELATIONSHIPS_DISCOVER</a>, 
+&#160;&#160;<a class="el" href="a01053.html#ggac817a87689e9c2c82f813a5221d0bd27a577ae7b415f484f5e3ce44c20f9603ae">SD_BLE_GATTS_INCLUDE_ADD</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a01053.html#gga1861d83550e6998efd13d44b09ec1ba9aa07c8e5ddc5a267dd9561787695d48ee">SD_BLE_GATTC_CHARACTERISTICS_DISCOVER</a>, 
+&#160;&#160;<a class="el" href="a01053.html#ggac817a87689e9c2c82f813a5221d0bd27a433be374af78720d42a377e4cad2f05a">SD_BLE_GATTS_CHARACTERISTIC_ADD</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a01053.html#gga1861d83550e6998efd13d44b09ec1ba9acbf16ad32f9408da33a6fdb9c969f455">SD_BLE_GATTC_DESCRIPTORS_DISCOVER</a>, 
+&#160;&#160;<a class="el" href="a01053.html#ggac817a87689e9c2c82f813a5221d0bd27afb8c998b39146476bffa546519d7d710">SD_BLE_GATTS_DESCRIPTOR_ADD</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a01053.html#gga1861d83550e6998efd13d44b09ec1ba9aba39e3ced819d191f10a368eb4d28595">SD_BLE_GATTC_CHAR_VALUE_BY_UUID_READ</a>, 
+&#160;&#160;<a class="el" href="a01053.html#ggac817a87689e9c2c82f813a5221d0bd27a7c07fba90eb73b66af555a0dd52a23e4">SD_BLE_GATTS_VALUE_SET</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a01053.html#gga1861d83550e6998efd13d44b09ec1ba9a8cd119e7dac7c5a94a6b9b209cd072f9">SD_BLE_GATTC_READ</a>, 
+&#160;&#160;<a class="el" href="a01053.html#ggac817a87689e9c2c82f813a5221d0bd27a42f0e408b0d60e992ded1508734a61b2">SD_BLE_GATTS_VALUE_GET</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a01053.html#gga1861d83550e6998efd13d44b09ec1ba9aefadfe6aebd0e0f3111d9514e3387c90">SD_BLE_GATTC_CHAR_VALUES_READ</a>, 
+&#160;&#160;<a class="el" href="a01053.html#ggac817a87689e9c2c82f813a5221d0bd27a6501f213d3f433b0588413fa536d347c">SD_BLE_GATTS_HVX</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a01053.html#gga1861d83550e6998efd13d44b09ec1ba9ae34d35052cd94de5fd4e6c5263d898ab">SD_BLE_GATTC_WRITE</a>, 
+&#160;&#160;<a class="el" href="a01053.html#ggac817a87689e9c2c82f813a5221d0bd27a4a3dce1ea0ef369d33f44fd380396f47">SD_BLE_GATTS_SERVICE_CHANGED</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a01053.html#gga1861d83550e6998efd13d44b09ec1ba9a3bb17168d2477e2fce1b66481ebcfb02">SD_BLE_GATTC_HV_CONFIRM</a>
+&#160;&#160;<a class="el" href="a01053.html#ggac817a87689e9c2c82f813a5221d0bd27a52831e0a13dbfe549c7c2cfd57886ed8">SD_BLE_GATTS_RW_AUTHORIZE_REPLY</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01053.html#ggac817a87689e9c2c82f813a5221d0bd27a9a2a1240d6bb8dfd1c77e28ae88e3e3b">SD_BLE_GATTS_SYS_ATTR_SET</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01053.html#ggac817a87689e9c2c82f813a5221d0bd27aa3147b54b63b44fb040177ee5b175b61">SD_BLE_GATTS_SYS_ATTR_GET</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga1861d83550e6998efd13d44b09ec1ba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">GATTC API SVC numbers.  <a href="a01053.html#ga1861d83550e6998efd13d44b09ec1ba9">More...</a><br/></td></tr>
-<tr class="separator:ga1861d83550e6998efd13d44b09ec1ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gac817a87689e9c2c82f813a5221d0bd27"><td class="mdescLeft">&#160;</td><td class="mdescRight">GATTS API SVC numbers.  <a href="a01053.html#gac817a87689e9c2c82f813a5221d0bd27">More...</a><br/></td></tr>
+<tr class="separator:gac817a87689e9c2c82f813a5221d0bd27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae537647902af1b05c1e32f12d6b401c7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01053.html#gae537647902af1b05c1e32f12d6b401c7">BLE_GATTS_EVTS</a> { <br/>
+&#160;&#160;<a class="el" href="a01053.html#ggae537647902af1b05c1e32f12d6b401c7aa68b7764f5264ff092d2ad17851355ed">BLE_GATTS_EVT_WRITE</a> = 0x50, 
+<br/>
+&#160;&#160;<a class="el" href="a01053.html#ggae537647902af1b05c1e32f12d6b401c7a333a0e896f77ea1c7f9a0e1e11f8240d">BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01053.html#ggae537647902af1b05c1e32f12d6b401c7ae3776204f11a583e105aed0e477601da">BLE_GATTS_EVT_SYS_ATTR_MISSING</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01053.html#ggae537647902af1b05c1e32f12d6b401c7af6a065c5c7e0682989ddd6cc557e0ffa">BLE_GATTS_EVT_HVC</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01053.html#ggae537647902af1b05c1e32f12d6b401c7a052eae0b3eb431b7e984107b2308ad50">BLE_GATTS_EVT_SC_CONFIRM</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01053.html#ggae537647902af1b05c1e32f12d6b401c7a6a06b6ca6c9e46ed778b79522867301c">BLE_GATTS_EVT_TIMEOUT</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gae537647902af1b05c1e32f12d6b401c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">GATT Server Event IDs.  <a href="a01053.html#gae537647902af1b05c1e32f12d6b401c7">More...</a><br/></td></tr>
+<tr class="separator:gae537647902af1b05c1e32f12d6b401c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga1861d83550e6998efd13d44b09ec1ba9"></a>
+<a class="anchor" id="gae537647902af1b05c1e32f12d6b401c7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a01053.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a></td>
+          <td class="memname">enum <a class="el" href="a01053.html#gae537647902af1b05c1e32f12d6b401c7">BLE_GATTS_EVTS</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>GATTC API SVC numbers. </p>
+<p>GATT Server Event IDs. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9a6362074e02b0a5e960257ceaa0886f51"></a>SD_BLE_GATTC_PRIMARY_SERVICES_DISCOVER</em>&nbsp;</td><td class="fielddoc">
-<p>Primary Service Discovery. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae537647902af1b05c1e32f12d6b401c7aa68b7764f5264ff092d2ad17851355ed"></a>BLE_GATTS_EVT_WRITE</em>&nbsp;</td><td class="fielddoc">
+<p>GATTS BLE Event base. Write operation performed. <a class="el" href="a00292.html">ble_gatts_evt_write_t</a> </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9a84e92548312cd9db93e3b6943ce83e65"></a>SD_BLE_GATTC_RELATIONSHIPS_DISCOVER</em>&nbsp;</td><td class="fielddoc">
-<p>Relationship Discovery. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae537647902af1b05c1e32f12d6b401c7a333a0e896f77ea1c7f9a0e1e11f8240d"></a>BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST</em>&nbsp;</td><td class="fielddoc">
+<p>Read/Write Authorization request.<a class="el" href="a00288.html">ble_gatts_evt_rw_authorize_request_t</a> </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9aa07c8e5ddc5a267dd9561787695d48ee"></a>SD_BLE_GATTC_CHARACTERISTICS_DISCOVER</em>&nbsp;</td><td class="fielddoc">
-<p>Characteristic Discovery. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae537647902af1b05c1e32f12d6b401c7ae3776204f11a583e105aed0e477601da"></a>BLE_GATTS_EVT_SYS_ATTR_MISSING</em>&nbsp;</td><td class="fielddoc">
+<p>A persistent system attribute access is pending, awaiting a <a class="el" href="a01056.html#ga577c788e199b1a2c0d19602b07ef2515" title="Update persistent system attribute information.">sd_ble_gatts_sys_attr_set()</a>. <a class="el" href="a00289.html">ble_gatts_evt_sys_attr_missing_t</a> </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9acbf16ad32f9408da33a6fdb9c969f455"></a>SD_BLE_GATTC_DESCRIPTORS_DISCOVER</em>&nbsp;</td><td class="fielddoc">
-<p>Characteristic Descriptor Discovery. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae537647902af1b05c1e32f12d6b401c7af6a065c5c7e0682989ddd6cc557e0ffa"></a>BLE_GATTS_EVT_HVC</em>&nbsp;</td><td class="fielddoc">
+<p>Handle Value Confirmation. <a class="el" href="a00286.html">ble_gatts_evt_hvc_t</a> </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9aba39e3ced819d191f10a368eb4d28595"></a>SD_BLE_GATTC_CHAR_VALUE_BY_UUID_READ</em>&nbsp;</td><td class="fielddoc">
-<p>Read Characteristic Value by UUID. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae537647902af1b05c1e32f12d6b401c7a052eae0b3eb431b7e984107b2308ad50"></a>BLE_GATTS_EVT_SC_CONFIRM</em>&nbsp;</td><td class="fielddoc">
+<p>Service Changed Confirmation. No additional event structure applies. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9a8cd119e7dac7c5a94a6b9b209cd072f9"></a>SD_BLE_GATTC_READ</em>&nbsp;</td><td class="fielddoc">
-<p>Generic read. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae537647902af1b05c1e32f12d6b401c7a6a06b6ca6c9e46ed778b79522867301c"></a>BLE_GATTS_EVT_TIMEOUT</em>&nbsp;</td><td class="fielddoc">
+<p>Timeout. <a class="el" href="a00291.html">ble_gatts_evt_timeout_t</a> </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9aefadfe6aebd0e0f3111d9514e3387c90"></a>SD_BLE_GATTC_CHAR_VALUES_READ</em>&nbsp;</td><td class="fielddoc">
-<p>Read multiple Characteristic Values. </p>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gac817a87689e9c2c82f813a5221d0bd27"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a01053.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>GATTS API SVC numbers. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac817a87689e9c2c82f813a5221d0bd27a8e890298dc03f9799a287dce916db7d5"></a>SD_BLE_GATTS_SERVICE_ADD</em>&nbsp;</td><td class="fielddoc">
+<p>GATTS BLE SVC base. Add a service. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9ae34d35052cd94de5fd4e6c5263d898ab"></a>SD_BLE_GATTC_WRITE</em>&nbsp;</td><td class="fielddoc">
-<p>Generic write. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac817a87689e9c2c82f813a5221d0bd27a577ae7b415f484f5e3ce44c20f9603ae"></a>SD_BLE_GATTS_INCLUDE_ADD</em>&nbsp;</td><td class="fielddoc">
+<p>Add an included service. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9a3bb17168d2477e2fce1b66481ebcfb02"></a>SD_BLE_GATTC_HV_CONFIRM</em>&nbsp;</td><td class="fielddoc">
-<p>Handle Value Confirmation. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac817a87689e9c2c82f813a5221d0bd27a433be374af78720d42a377e4cad2f05a"></a>SD_BLE_GATTS_CHARACTERISTIC_ADD</em>&nbsp;</td><td class="fielddoc">
+<p>Add a characteristic. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac817a87689e9c2c82f813a5221d0bd27afb8c998b39146476bffa546519d7d710"></a>SD_BLE_GATTS_DESCRIPTOR_ADD</em>&nbsp;</td><td class="fielddoc">
+<p>Add a generic attribute. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac817a87689e9c2c82f813a5221d0bd27a7c07fba90eb73b66af555a0dd52a23e4"></a>SD_BLE_GATTS_VALUE_SET</em>&nbsp;</td><td class="fielddoc">
+<p>Set an attribute value. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac817a87689e9c2c82f813a5221d0bd27a42f0e408b0d60e992ded1508734a61b2"></a>SD_BLE_GATTS_VALUE_GET</em>&nbsp;</td><td class="fielddoc">
+<p>Get an attribute value. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac817a87689e9c2c82f813a5221d0bd27a6501f213d3f433b0588413fa536d347c"></a>SD_BLE_GATTS_HVX</em>&nbsp;</td><td class="fielddoc">
+<p>Handle Value Notification or Indication. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac817a87689e9c2c82f813a5221d0bd27a4a3dce1ea0ef369d33f44fd380396f47"></a>SD_BLE_GATTS_SERVICE_CHANGED</em>&nbsp;</td><td class="fielddoc">
+<p>Perform a Service Changed Indication to one or more peers. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac817a87689e9c2c82f813a5221d0bd27a52831e0a13dbfe549c7c2cfd57886ed8"></a>SD_BLE_GATTS_RW_AUTHORIZE_REPLY</em>&nbsp;</td><td class="fielddoc">
+<p>Reply to an authorization request for a read or write operation on one or more attributes. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac817a87689e9c2c82f813a5221d0bd27a9a2a1240d6bb8dfd1c77e28ae88e3e3b"></a>SD_BLE_GATTS_SYS_ATTR_SET</em>&nbsp;</td><td class="fielddoc">
+<p>Set the persistent system attributes for a connection. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac817a87689e9c2c82f813a5221d0bd27aa3147b54b63b44fb040177ee5b175b61"></a>SD_BLE_GATTS_SYS_ATTR_GET</em>&nbsp;</td><td class="fielddoc">
+<p>Retrieve the persistent system attributes. </p>
 </td></tr>
 </table>
 
@@ -178,7 +238,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

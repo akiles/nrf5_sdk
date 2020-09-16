@@ -37,7 +37,7 @@
 #include "ble_dis.h"
 #include "ble_conn_params.h"
 #include "boards.h"
-#include "ble_sensorsim.h"
+#include "sensorsim.h"
 #include "softdevice_handler.h"
 #include "app_timer.h"
 #include "device_manager.h"
@@ -89,7 +89,6 @@
 #define NEXT_CONN_PARAMS_UPDATE_DELAY    APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER)/**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
 #define MAX_CONN_PARAMS_UPDATE_COUNT     3                                          /**< Number of attempts before giving up the connection parameter negotiation. */
 
-#define SEC_PARAM_TIMEOUT                30                                         /**< Timeout for Pairing Request or Security Request (in seconds). */
 #define SEC_PARAM_BOND                   1                                          /**< Perform bonding. */
 #define SEC_PARAM_MITM                   0                                          /**< Man In The Middle protection not required. */
 #define SEC_PARAM_IO_CAPABILITIES        BLE_GAP_IO_CAPS_NONE                       /**< No I/O capabilities. */
@@ -100,6 +99,8 @@
 #define APP_GPIOTE_MAX_USERS             1                                          /**< Maximum number of users of the GPIOTE handler. */
 
 #define DEAD_BEEF                        0xDEADBEEF                                 /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
+
+#define APP_FEATURE_NOT_SUPPORTED       BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2        /**< Reply when unsupported features are requested. */
 
 typedef enum
 {
@@ -116,15 +117,15 @@ static ble_gap_adv_params_t              m_adv_params;                          
 static ble_bas_t                         m_bas;                                     /**< Structure used to identify the battery service. */
 static ble_rscs_t                        m_rscs;                                    /**< Structure used to identify the running speed and cadence service. */
 
-static ble_sensorsim_cfg_t               m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
-static ble_sensorsim_state_t             m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
+static sensorsim_cfg_t                   m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
+static sensorsim_state_t                 m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
 
-static ble_sensorsim_cfg_t               m_speed_mps_sim_cfg;                       /**< Speed simulator configuration. */
-static ble_sensorsim_state_t             m_speed_mps_sim_state;                     /**< Speed simulator state. */
-static ble_sensorsim_cfg_t               m_cadence_rpm_sim_cfg;                     /**< Cadence simulator configuration. */
-static ble_sensorsim_state_t             m_cadence_rpm_sim_state;                   /**< Cadence simulator state. */
-static ble_sensorsim_cfg_t               m_cadence_stl_sim_cfg;                     /**< stride length simulator configuration. */
-static ble_sensorsim_state_t             m_cadence_stl_sim_state;                   /**< stride length simulator state. */
+static sensorsim_cfg_t                   m_speed_mps_sim_cfg;                       /**< Speed simulator configuration. */
+static sensorsim_state_t                 m_speed_mps_sim_state;                     /**< Speed simulator state. */
+static sensorsim_cfg_t                   m_cadence_rpm_sim_cfg;                     /**< Cadence simulator configuration. */
+static sensorsim_state_t                 m_cadence_rpm_sim_state;                   /**< Cadence simulator state. */
+static sensorsim_cfg_t                   m_cadence_stl_sim_cfg;                     /**< stride length simulator configuration. */
+static sensorsim_state_t                 m_cadence_stl_sim_state;                   /**< stride length simulator state. */
 
 static app_timer_id_t                    m_battery_timer_id;                        /**< Battery timer. */
 static app_timer_id_t                    m_rsc_meas_timer_id;                       /**< RSC measurement timer. */
@@ -158,7 +159,7 @@ static void battery_level_update(void)
     uint32_t err_code;
     uint8_t  battery_level;
 
-    battery_level = (uint8_t)ble_sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
+    battery_level = (uint8_t)sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
 
     err_code = ble_bas_battery_level_update(&m_bas, battery_level);
     if ((err_code != NRF_SUCCESS) &&
@@ -194,13 +195,13 @@ static void rsc_sim_measurement(ble_rscs_meas_t * p_measurement)
     p_measurement->is_total_distance_present  = false;
     p_measurement->is_running                 = false;
 
-    p_measurement->inst_speed         = ble_sensorsim_measure(&m_speed_mps_sim_state,
+    p_measurement->inst_speed         = sensorsim_measure(&m_speed_mps_sim_state,
                                                               &m_speed_mps_sim_cfg);
 
-    p_measurement->inst_cadence       = ble_sensorsim_measure(&m_cadence_rpm_sim_state,
+    p_measurement->inst_cadence       = sensorsim_measure(&m_cadence_rpm_sim_state,
                                                               &m_cadence_rpm_sim_cfg);
 
-    p_measurement->inst_stride_length = ble_sensorsim_measure(&m_cadence_stl_sim_state,
+    p_measurement->inst_stride_length = sensorsim_measure(&m_cadence_stl_sim_state,
                                                               &m_cadence_stl_sim_cfg);
 
     if (p_measurement->inst_speed > (uint32_t)(MIN_RUNNING_SPEED * 256))
@@ -324,8 +325,7 @@ static void advertising_init(void)
 
     advdata.name_type               = BLE_ADVDATA_FULL_NAME;
     advdata.include_appearance      = true;
-    advdata.flags.size              = sizeof(flags);
-    advdata.flags.p_data            = &flags;
+    advdata.flags                   = flags;
     advdata.uuids_complete.uuid_cnt = sizeof(adv_uuids) / sizeof(adv_uuids[0]);
     advdata.uuids_complete.p_uuids  = adv_uuids;
 
@@ -406,14 +406,14 @@ static void services_init(void)
 
 /**@brief Function for initializing the sensor simulators.
  */
-static void sensor_sim_init(void)
+static void sensor_simulator_init(void)
 {
     m_battery_sim_cfg.min          = MIN_BATTERY_LEVEL;
     m_battery_sim_cfg.max          = MAX_BATTERY_LEVEL;
     m_battery_sim_cfg.incr         = BATTERY_LEVEL_INCREMENT;
     m_battery_sim_cfg.start_at_max = true;
 
-    ble_sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
+    sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
 
     // speed is in units of meters per second divided by 256
     m_speed_mps_sim_cfg.min          = (uint32_t)(MIN_SPEED_MPS * 256);
@@ -421,21 +421,21 @@ static void sensor_sim_init(void)
     m_speed_mps_sim_cfg.incr         = (uint32_t)(SPEED_MPS_INCREMENT * 256);
     m_speed_mps_sim_cfg.start_at_max = false;
 
-    ble_sensorsim_init(&m_speed_mps_sim_state, &m_speed_mps_sim_cfg);
+    sensorsim_init(&m_speed_mps_sim_state, &m_speed_mps_sim_cfg);
 
     m_cadence_rpm_sim_cfg.min          = MIN_CADENCE_RPM;
     m_cadence_rpm_sim_cfg.max          = MAX_CADENCE_RPM;
     m_cadence_rpm_sim_cfg.incr         = CADENCE_RPM_INCREMENT;
     m_cadence_rpm_sim_cfg.start_at_max = false;
 
-    ble_sensorsim_init(&m_cadence_rpm_sim_state, &m_cadence_rpm_sim_cfg);
+    sensorsim_init(&m_cadence_rpm_sim_state, &m_cadence_rpm_sim_cfg);
 
     m_cadence_stl_sim_cfg.min          = MIN_STRIDE_LENGTH;
     m_cadence_stl_sim_cfg.max          = MAX_STRIDE_LENGTH;
     m_cadence_stl_sim_cfg.incr         = STRIDE_LENGTH_INCREMENT;
     m_cadence_stl_sim_cfg.start_at_max = false;
 
-    ble_sensorsim_init(&m_cadence_stl_sim_state, &m_cadence_stl_sim_cfg);
+    sensorsim_init(&m_cadence_stl_sim_state, &m_cadence_stl_sim_cfg);
 }
 
 
@@ -564,13 +564,14 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
         case BLE_GAP_EVT_TIMEOUT:
 
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT)
+            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
             {
                 err_code = bsp_indication_set(BSP_INDICATE_IDLE);
                 APP_ERROR_CHECK(err_code);
 
                 // enable buttons to allow MCU wakeup from power off mode
-                err_code = bsp_buttons_enable( (1 << WAKEUP_BUTTON_ID) | (1 << BOND_DELETE_ALL_BUTTON_ID) );
+                err_code = bsp_buttons_enable( (1 << WAKEUP_BUTTON_ID)
+                                             | (1 << BOND_DELETE_ALL_BUTTON_ID));
                 APP_ERROR_CHECK(err_code);
 
                 // Go to system-off mode (this function will not return; wakeup will cause a reset).
@@ -651,7 +652,7 @@ static void ble_stack_init(void)
     uint32_t err_code;
 
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
     // Enable BLE stack
     ble_enable_params_t ble_enable_params;
@@ -676,7 +677,7 @@ static void ble_stack_init(void)
  */
 static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
                                            dm_event_t const  * p_event,
-                                           api_result_t        event_result)
+                                           ret_code_t        event_result)
 {
     APP_ERROR_CHECK(event_result);
     return NRF_SUCCESS;
@@ -698,13 +699,11 @@ static void device_manager_init(void)
     // Clear all bonded centrals if the Bonds Delete button is pushed.
     err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_data.clear_persistent_data));
     APP_ERROR_CHECK(err_code);
-	
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
 
     memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
     
-    register_param.sec_param.timeout      = SEC_PARAM_TIMEOUT;
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
@@ -739,12 +738,14 @@ int main(void)
     device_manager_init();
     timers_init();
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
+                        NULL);
     APP_ERROR_CHECK(err_code);
     gap_params_init();
     advertising_init();
     services_init();
-    sensor_sim_init();
+    sensor_simulator_init();
     conn_params_init();
 
     // Start execution.

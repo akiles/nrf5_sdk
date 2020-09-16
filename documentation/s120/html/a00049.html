@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Transport Services</title>
+<title>nRF51 SDK - S120 SoftDevice: Simple Timer Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,19 +97,37 @@ $(document).ready(function(){initNavTree('a00049.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Transport Services </div>  </div>
+<div class="title">Simple Timer Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="a00050.html">HCI transport library</a></p>
-<p><a class="el" href="a00051.html">Memory pool library</a></p>
-<p><a class="el" href="a00052.html">SLIP handling library</a> </p>
+<div class="textblock"><p>The Simple Timer Example demonstrates the usage of the <a class="el" href="a00022.html">Simple timer</a>. It demonstrates the two modes of the module (single shot mode and repeated mode) to blink two LEDs.</p>
+<p>When the application starts, the GPIO pins are configured as outputs to drive the LEDs. The application then uses the simple timer driver library and alternates between the two timer modes. During startup, both LEDs are lit for one second. Then the application enters single shot mode for 2 seconds before repeated timer mode is started. After 2 seconds, both LEDs are lit again and the application loops.</p>
+<p>See the following illustration for details.</p>
+<div class="image">
+<img src="timer_example_sm.png" alt="timer_example_sm.png"/>
+<div class="caption">
+Simple timer example state machine</div></div>
+<p>The name of the example is <b>simple_timer_example_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\simple_timer_example</code> </p>
+<h1><a class="anchor" id="nrf_dev_simple_timer_example_testing"></a>
+Testing</h1>
+<p>Test the Simple Timer Example application by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the application.</li>
+<li>Observe that the LED state is changed as expected:<ol type="a">
+<li>Both LEDs are lit for one second.</li>
+<li>LED 1 blinks for 2 seconds.</li>
+<li>LED 2 blinks for 2 seconds.</li>
+<li>The application loops. </li>
+</ol>
+</li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

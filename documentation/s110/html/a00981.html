@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: TX Power Service</title>
+<title>nRF51 SDK - S110 SoftDevice: Context Management Events</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,109 +97,154 @@ $(document).ready(function(){initNavTree('a00981.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">TX Power Service<div class="ingroups"><a class="el" href="a01036.html">BLE Services</a></div></div>  </div>
+<div class="title">Context Management Events<div class="ingroups"><a class="el" href="a00978.html">Device Manager Events</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>TX Power Service module.  
+<p>Context Management Events.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00333.html">ble_tps_init_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX Power Service init structure. This contains all options and data needed for initialization of the service.  <a href="a00333.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00334.html">ble_tps_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX Power Service structure. This contains various status information for the service.  <a href="a00334.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gadf50170201ca904944d8ba0ecb485ba7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#gadf50170201ca904944d8ba0ecb485ba7">ble_tps_init</a> (<a class="el" href="a00334.html">ble_tps_t</a> *p_hrs, const <a class="el" href="a00333.html">ble_tps_init_t</a> *p_tps_init)</td></tr>
-<tr class="memdesc:gadf50170201ca904944d8ba0ecb485ba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the TX Power Service.  <a href="#gadf50170201ca904944d8ba0ecb485ba7">More...</a><br/></td></tr>
-<tr class="separator:gadf50170201ca904944d8ba0ecb485ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6fccb23ed9c10d23d370e5709cdf6d9f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga6fccb23ed9c10d23d370e5709cdf6d9f">ble_tps_tx_power_level_set</a> (<a class="el" href="a00334.html">ble_tps_t</a> *p_tps, int8_t tx_power_level)</td></tr>
-<tr class="memdesc:ga6fccb23ed9c10d23d370e5709cdf6d9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the state of the Sensor Contact Detected bit.  <a href="#ga6fccb23ed9c10d23d370e5709cdf6d9f">More...</a><br/></td></tr>
-<tr class="separator:ga6fccb23ed9c10d23d370e5709cdf6d9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga0031b878e929a75ec8271ad0c94eef50"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga0031b878e929a75ec8271ad0c94eef50">DM_EVT_DEVICE_CONTEXT_LOADED</a>&#160;&#160;&#160;0x21</td></tr>
+<tr class="separator:ga0031b878e929a75ec8271ad0c94eef50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga914c5f8e7244019d80470eb488afe51c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga914c5f8e7244019d80470eb488afe51c">DM_EVT_DEVICE_CONTEXT_STORED</a>&#160;&#160;&#160;0x22</td></tr>
+<tr class="separator:ga914c5f8e7244019d80470eb488afe51c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac14de4b8aad6be951c60c421942eb7a7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#gac14de4b8aad6be951c60c421942eb7a7">DM_EVT_DEVICE_CONTEXT_DELETED</a>&#160;&#160;&#160;0x23</td></tr>
+<tr class="separator:gac14de4b8aad6be951c60c421942eb7a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f701544ed21d80e9f5c6198bd0de3d1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga5f701544ed21d80e9f5c6198bd0de3d1">DM_EVT_SERVICE_CONTEXT_LOADED</a>&#160;&#160;&#160;0x31</td></tr>
+<tr class="separator:ga5f701544ed21d80e9f5c6198bd0de3d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4918299ce9ecf37463834a62e4cc28b0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga4918299ce9ecf37463834a62e4cc28b0">DM_EVT_SERVICE_CONTEXT_STORED</a>&#160;&#160;&#160;0x32</td></tr>
+<tr class="separator:ga4918299ce9ecf37463834a62e4cc28b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45acfe7588e09f49236071ca79f123f7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga45acfe7588e09f49236071ca79f123f7">DM_EVT_SERVICE_CONTEXT_DELETED</a>&#160;&#160;&#160;0x33</td></tr>
+<tr class="separator:ga45acfe7588e09f49236071ca79f123f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4ce522c3a6565d1b96b94ae14bac67c5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga4ce522c3a6565d1b96b94ae14bac67c5">DM_EVT_APPL_CONTEXT_LOADED</a>&#160;&#160;&#160;0x41</td></tr>
+<tr class="separator:ga4ce522c3a6565d1b96b94ae14bac67c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad12d77f6d3eccb97277869480549ee5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#gaad12d77f6d3eccb97277869480549ee5">DM_EVT_APPL_CONTEXT_STORED</a>&#160;&#160;&#160;0x42</td></tr>
+<tr class="separator:gaad12d77f6d3eccb97277869480549ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a76738f1010b5aa7c2e46c709821a27"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga1a76738f1010b5aa7c2e46c709821a27">DM_EVT_APPL_CONTEXT_DELETED</a>&#160;&#160;&#160;0x43</td></tr>
+<tr class="separator:ga1a76738f1010b5aa7c2e46c709821a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>TX Power Service module. </p>
-<p>This module implements the TX Power Service with the TX Power Level characteristic. During initialization it adds the TX Power Service and TX Power Level characteristic with the specified initial value to the BLE stack database.</p>
-<p>It provides a function for letting the application update the TX Power Level characteristic.</p>
-<dl class="section note"><dt>Note</dt><dd>Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profile qualification listings, this section of source code must not be modified. </dd></dl>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gadf50170201ca904944d8ba0ecb485ba7"></a>
+<p>Context Management Events. </p>
+<p>These events notify the application of the status of context loading and storing. </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga1a76738f1010b5aa7c2e46c709821a27"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_tps_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00334.html">ble_tps_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hrs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00333.html">ble_tps_init_t</a> *&#160;</td>
-          <td class="paramname"><em>p_tps_init</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define DM_EVT_APPL_CONTEXT_DELETED&#160;&#160;&#160;0x43</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Function for initializing the TX Power Service. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_hrs</td><td>TX Power Service structure. This structure will have to be supplied by the application. It will be initialized by this function, and will later be used to identify this particular service instance. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_tps_init</td><td>Information needed to initialize the service.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization of service, otherwise an error code. </dd></dl>
+<p>Indicates that application context is deleted. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga6fccb23ed9c10d23d370e5709cdf6d9f"></a>
+<a class="anchor" id="ga4ce522c3a6565d1b96b94ae14bac67c5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_tps_tx_power_level_set </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00334.html">ble_tps_t</a> *&#160;</td>
-          <td class="paramname"><em>p_tps</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>tx_power_level</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define DM_EVT_APPL_CONTEXT_LOADED&#160;&#160;&#160;0x41</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Indicates that application context for a peer is loaded. </p>
 
-<p>Function for setting the state of the Sensor Contact Detected bit. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_tps</td><td>TX Power Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">tx_power_level</td><td>New TX Power Level (unit dBm, range -100 to 20).</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
+</div>
+</div>
+<a class="anchor" id="gaad12d77f6d3eccb97277869480549ee5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DM_EVT_APPL_CONTEXT_STORED&#160;&#160;&#160;0x42</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates that application context is stored persistently. </p>
+
+</div>
+</div>
+<a class="anchor" id="gac14de4b8aad6be951c60c421942eb7a7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DM_EVT_DEVICE_CONTEXT_DELETED&#160;&#160;&#160;0x23</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates that device context is deleted. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga0031b878e929a75ec8271ad0c94eef50"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DM_EVT_DEVICE_CONTEXT_LOADED&#160;&#160;&#160;0x21</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates that device context for a peer is loaded. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga914c5f8e7244019d80470eb488afe51c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DM_EVT_DEVICE_CONTEXT_STORED&#160;&#160;&#160;0x22</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates that device context is stored persistently. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga45acfe7588e09f49236071ca79f123f7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DM_EVT_SERVICE_CONTEXT_DELETED&#160;&#160;&#160;0x33</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates that service context is deleted. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga5f701544ed21d80e9f5c6198bd0de3d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DM_EVT_SERVICE_CONTEXT_LOADED&#160;&#160;&#160;0x31</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates that service context for a peer is loaded. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga4918299ce9ecf37463834a62e4cc28b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DM_EVT_SERVICE_CONTEXT_STORED&#160;&#160;&#160;0x32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indicates that service context is stored persistently. </p>
 
 </div>
 </div>
@@ -208,7 +253,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:23 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

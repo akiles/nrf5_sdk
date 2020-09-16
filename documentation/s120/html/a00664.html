@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: DTM Connectivity command request decoder and command response encoder</title>
+<title>nRF51 SDK - S120 SoftDevice: Service/Protocol Types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,126 +97,79 @@ $(document).ready(function(){initNavTree('a00664.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">DTM Connectivity command request decoder and command response encoder<div class="ingroups"><a class="el" href="a00784.html">Connectivity common codecs</a></div></div>  </div>
+<div class="title">Service/Protocol Types<div class="ingroups"><a class="el" href="a00640.html">Device Manager</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>DTM Connectivity command request decoder and command response encoder.  
+<p>Describes the possible types of Service/Protocol Contexts for a bonded/peer device.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga83c3902e3f26071b27f53d8394ea6fed"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#ga83c3902e3f26071b27f53d8394ea6fed">ble_dtm_init_req_dec</a> (uint8_t const *const p_buf, uint16_t packet_len, <a class="el" href="a00091.html">app_uart_stream_comm_params_t</a> *p_comm_params)</td></tr>
-<tr class="memdesc:ga83c3902e3f26071b27f53d8394ea6fed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes <a class="el" href="a00646.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> command request.  <a href="#ga83c3902e3f26071b27f53d8394ea6fed">More...</a><br/></td></tr>
-<tr class="separator:ga83c3902e3f26071b27f53d8394ea6fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga17ecedcb46b8807bb5af3f3ae3bef469"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#ga17ecedcb46b8807bb5af3f3ae3bef469">ble_dtm_init_rsp_enc</a> (uint32_t return_code, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga17ecedcb46b8807bb5af3f3ae3bef469"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a00646.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> command response.  <a href="#ga17ecedcb46b8807bb5af3f3ae3bef469">More...</a><br/></td></tr>
-<tr class="separator:ga17ecedcb46b8807bb5af3f3ae3bef469"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaf4cac13e3128b3131c16d52760393932"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#gaf4cac13e3128b3131c16d52760393932">DM_PROTOCOL_CNTXT_NONE</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gaf4cac13e3128b3131c16d52760393932"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40fd38aabb6b0c4ab56549d5189ff366"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#ga40fd38aabb6b0c4ab56549d5189ff366">DM_PROTOCOL_CNTXT_GATT_SRVR_ID</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga40fd38aabb6b0c4ab56549d5189ff366"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga20cd764cccd94fd71cc07c9f5f2c681a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#ga20cd764cccd94fd71cc07c9f5f2c681a">DM_PROTOCOL_CNTXT_GATT_CLI_ID</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga20cd764cccd94fd71cc07c9f5f2c681a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf3d92dc785166cb06763af1c6616b94"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00664.html#gabf3d92dc785166cb06763af1c6616b94">DM_PROTOCOL_CNTXT_ALL</a>&#160;&#160;&#160;(<a class="el" href="a00664.html#ga40fd38aabb6b0c4ab56549d5189ff366">DM_PROTOCOL_CNTXT_GATT_SRVR_ID</a> | <a class="el" href="a00664.html#ga20cd764cccd94fd71cc07c9f5f2c681a">DM_PROTOCOL_CNTXT_GATT_CLI_ID</a>)</td></tr>
+<tr class="separator:gabf3d92dc785166cb06763af1c6616b94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>DTM Connectivity command request decoder and command response encoder. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga83c3902e3f26071b27f53d8394ea6fed"></a>
+<p>Describes the possible types of Service/Protocol Contexts for a bonded/peer device. </p>
+<p>Possible Service/Protocol context per peer device. The Device Manager provides the functionality of persistently storing the Service/Protocol context and can automatically load them when needed. For example system attributes for a GATT Server. Based on the nature of the application, not all service types may be needed. The application can specify only the service/protocol context it wants to use at the time of registration. </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gabf3d92dc785166cb06763af1c6616b94"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_dtm_init_req_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00091.html">app_uart_stream_comm_params_t</a> *&#160;</td>
-          <td class="paramname"><em>p_comm_params</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define DM_PROTOCOL_CNTXT_ALL&#160;&#160;&#160;(<a class="el" href="a00664.html#ga40fd38aabb6b0c4ab56549d5189ff366">DM_PROTOCOL_CNTXT_GATT_SRVR_ID</a> | <a class="el" href="a00664.html#ga20cd764cccd94fd71cc07c9f5f2c681a">DM_PROTOCOL_CNTXT_GATT_CLI_ID</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Decodes <a class="el" href="a00646.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00062.html#nrf51_dtm_init_encoding_sec">Function packet format</a> for packet format, <a class="el" href="a00664.html#ga17ecedcb46b8807bb5af3f3ae3bef469">ble_dtm_init_rsp_enc</a> for response encoding.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command request packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of request packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_comm_params</td><td>Pointer to the structure with DTM Uart configuration.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>All Service/Protocol Context, this implies that the application wants to associate all Service/Protocol Information with the bonded device. This is configurable based on system requirements. If the application has only one type of service, this define could be altered to reflect the same. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga17ecedcb46b8807bb5af3f3ae3bef469"></a>
+<a class="anchor" id="ga20cd764cccd94fd71cc07c9f5f2c681a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_dtm_init_rsp_enc </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>return_code</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define DM_PROTOCOL_CNTXT_GATT_CLI_ID&#160;&#160;&#160;0x02</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>GATT Client Service Context, this implies the application does associate GATT Client with the peer device and this information will be loaded when needed for a bonded device </p>
 
-<p>Encodes <a class="el" href="a00646.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> command response. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00062.html#nrf51_dtm_init_encoding_sec">Function packet format</a> for packet format. <a class="el" href="a00664.html#ga83c3902e3f26071b27f53d8394ea6fed">ble_dtm_init_req_dec</a> for request decoding.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">return_code</td><td>Return code indicating if command was successful or not. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command response will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command response packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
+</div>
+</div>
+<a class="anchor" id="ga40fd38aabb6b0c4ab56549d5189ff366"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DM_PROTOCOL_CNTXT_GATT_SRVR_ID&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>GATT Server Service Context, this implies the application does associate GATT Server with the peer device and this information will be loaded when needed for a bonded device </p>
+
+</div>
+</div>
+<a class="anchor" id="gaf4cac13e3128b3131c16d52760393932"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DM_PROTOCOL_CNTXT_NONE&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>No Service Context, this implies the application does not want to associate any service/protocol context with the peer device </p>
 
 </div>
 </div>
@@ -225,7 +178,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:36 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,72 +1,82 @@
 var a00949 =
 [
-    [ "SOFTDEVICE_INFORMATION_Type", "a00392.html", [
-      [ "firmware_id", "a00392.html#a71d3fb8b5eb37e1b988cf4d24e83ff05", null ],
-      [ "info_size", "a00392.html#a0dfa8dc981701b47ad619d778bb646bf", null ],
-      [ "magic_number", "a00392.html#a8e3c0ed915d2c32a3a486ce625155466", null ],
-      [ "reserved1", "a00392.html#aa17f21260d985fdbf5eeabd8ff4ab0ca", null ],
-      [ "reserved2", "a00392.html#ac3ab6d531e4101f61f2b86443d9abb06", null ],
-      [ "softdevice_size", "a00392.html#ab12be31117d5f9746bd9ea8920863540", null ]
+    [ "nrf_esb_base_address_length_t", "a00949.html#gad2f71a66caf0510ecfe2f5efd604eafb", [
+      [ "NRF_ESB_BASE_ADDRESS_LENGTH_2B", "a00949.html#ggad2f71a66caf0510ecfe2f5efd604eafba3eb543d84d839038b94ca1383e845d5e", null ],
+      [ "NRF_ESB_BASE_ADDRESS_LENGTH_3B", "a00949.html#ggad2f71a66caf0510ecfe2f5efd604eafbaade7c7db59c4d838798e37d9a8a4201b", null ],
+      [ "NRF_ESB_BASE_ADDRESS_LENGTH_4B", "a00949.html#ggad2f71a66caf0510ecfe2f5efd604eafbabb9b2ba7abf7943c93ac48740022558d", null ]
     ] ],
-    [ "dfu_start_packet_t", "a00347.html", [
-      [ "app_image_size", "a00347.html#ab5283e751eac2c4b317c3429f9138ea5", null ],
-      [ "bl_image_size", "a00347.html#a5a5a89e5964fb6ed069b9c790449848b", null ],
-      [ "dfu_update_mode", "a00347.html#a271c95e67d665b66ce9874ccf3c6bf06", null ],
-      [ "sd_image_size", "a00347.html#af2354b9f4313acad5c73ebd01107d68b", null ]
+    [ "nrf_esb_crc_length_t", "a00949.html#ga8ac1d67fc30ee4054d657b595be8e5a3", [
+      [ "NRF_ESB_CRC_OFF", "a00949.html#gga8ac1d67fc30ee4054d657b595be8e5a3ac075f5f08c33854b7c810a704be73d36", null ],
+      [ "NRF_ESB_CRC_LENGTH_1_BYTE", "a00949.html#gga8ac1d67fc30ee4054d657b595be8e5a3a93b6dc5536fad26653346a6ad19a9a48", null ],
+      [ "NRF_ESB_CRC_LENGTH_2_BYTE", "a00949.html#gga8ac1d67fc30ee4054d657b595be8e5a3a88781c382ff471cb6d5b599f608fe0aa", null ]
     ] ],
-    [ "dfu_data_packet_t", "a00344.html", [
-      [ "p_data_packet", "a00344.html#af89346860abb77469214502848213a43", null ],
-      [ "packet_length", "a00344.html#a5ad00469248e979253ea6df7e43e09f3", null ]
+    [ "nrf_esb_datarate_t", "a00949.html#ga1c8ae2c90a475b46c43582f051aff4c3", [
+      [ "NRF_ESB_DATARATE_250_KBPS", "a00949.html#gga1c8ae2c90a475b46c43582f051aff4c3a5cd874f2d37a18663e366c1cd1bfa796", null ],
+      [ "NRF_ESB_DATARATE_1_MBPS", "a00949.html#gga1c8ae2c90a475b46c43582f051aff4c3a7d2cbbef6e9f49f752bdc8f72c805133", null ],
+      [ "NRF_ESB_DATARATE_2_MBPS", "a00949.html#gga1c8ae2c90a475b46c43582f051aff4c3a8739754b95a1ce7d4e9178d076b213cf", null ]
     ] ],
-    [ "dfu_update_packet_t", "a00348.html", [
-      [ "data_packet", "a00348.html#acefd384a51f51514c417758c5d870a10", null ],
-      [ "packet_type", "a00348.html#ab181d68ce3f0f88e0f4020c1e07bb14d", null ],
-      [ "params", "a00348.html#a2c3103bae03f6af6824b7cf81834469f", null ],
-      [ "start_packet", "a00348.html#a3a677307c9b4796855cdc9d208cd8dee", null ]
+    [ "nrf_esb_mode_t", "a00949.html#ga86fb552224a080814a7e3ac856b57be3", [
+      [ "NRF_ESB_MODE_PTX", "a00949.html#gga86fb552224a080814a7e3ac856b57be3a0fc486926b06e9107d3f7459532f7713", null ],
+      [ "NRF_ESB_MODE_PRX", "a00949.html#gga86fb552224a080814a7e3ac856b57be3acea8d8b1efbb200a93e5438a8a21bd39", null ]
     ] ],
-    [ "dfu_update_status_t", "a00349.html", [
-      [ "app_crc", "a00349.html#ad23c5de3d64733cea90d62aece2cf641", null ],
-      [ "app_size", "a00349.html#a5a3071d6e7b79e59aae9aa9022b462c1", null ],
-      [ "bl_size", "a00349.html#af34c4a8d41f65c0d8c1c431809417254", null ],
-      [ "sd_image_start", "a00349.html#aa68f84c4e5bd2283886d3dce05001262", null ],
-      [ "sd_size", "a00349.html#a92316af9b2c88f35230d266ee6f632d5", null ],
-      [ "status_code", "a00349.html#ac8f74ba3fe25a5db401c156ad55360b1", null ]
+    [ "nrf_esb_output_power_t", "a00949.html#ga8256184eed90f88914d9a90bd85b5d98", [
+      [ "NRF_ESB_OUTPUT_POWER_4_DBM", "a00949.html#gga8256184eed90f88914d9a90bd85b5d98a64dee006569b72203be78adcc710da46", null ],
+      [ "NRF_ESB_OUTPUT_POWER_0_DBM", "a00949.html#gga8256184eed90f88914d9a90bd85b5d98ab0a5bdca886a3fd20036ae12684a84dc", null ],
+      [ "NRF_ESB_OUTPUT_POWER_N4_DBM", "a00949.html#gga8256184eed90f88914d9a90bd85b5d98ace28766caf20daf01fcd298e697e7046", null ],
+      [ "NRF_ESB_OUTPUT_POWER_N8_DBM", "a00949.html#gga8256184eed90f88914d9a90bd85b5d98a1bca8e99300503df877a746d28e82f6b", null ],
+      [ "NRF_ESB_OUTPUT_POWER_N12_DBM", "a00949.html#gga8256184eed90f88914d9a90bd85b5d98a052ca5c7daa96d8299433615c537cfcb", null ],
+      [ "NRF_ESB_OUTPUT_POWER_N16_DBM", "a00949.html#gga8256184eed90f88914d9a90bd85b5d98ae39bf0e9287338af77669ccb0a9093a0", null ],
+      [ "NRF_ESB_OUTPUT_POWER_N20_DBM", "a00949.html#gga8256184eed90f88914d9a90bd85b5d98a19e4aa7cfbe6e3d40123b85b540465b1", null ]
     ] ],
-    [ "BOOTLOADER_REGION_START", "a00949.html#ga86b4872454e09cda5b4156b2f9f5f689", null ],
-    [ "BOOTLOADER_SETTINGS_ADDRESS", "a00949.html#ga8687288e1e7caeb179750df2f7f8bc5b", null ],
-    [ "CODE_PAGE_SIZE", "a00949.html#ga8b56633cd2604d9fae053b04ff288841", null ],
-    [ "CODE_REGION_1_START", "a00949.html#ga1e59438986d1f2183af8cabb1ab3be0c", null ],
-    [ "DATA_PACKET", "a00949.html#ga86e7dedb53f2e6ef40f80f6189bb6fe9", null ],
-    [ "DFU_APP_DATA_RESERVED", "a00949.html#gaf49d4bee15109a6a5df89a77cfac5d7d", null ],
-    [ "DFU_BANK_0_REGION_START", "a00949.html#ga39e80d54dfce36ce719b5d546a8b1326", null ],
-    [ "DFU_BANK_1_REGION_START", "a00949.html#ga5421283a7de3ec7880344d6e4298f6ee", null ],
-    [ "DFU_BL_IMAGE_MAX_SIZE", "a00949.html#ga149639b9838418166e52e5a826e4b411", null ],
-    [ "DFU_IMAGE_MAX_SIZE_BANKED", "a00949.html#gaa6268d940194dff6e27f45e76513267b", null ],
-    [ "DFU_IMAGE_MAX_SIZE_FULL", "a00949.html#gabc90b80116dbf40ae1ddb295083f52d1", null ],
-    [ "DFU_INIT_COMPLETE", "a00949.html#ga2ddaa58073dd641c23bfd0ab3fefd732", null ],
-    [ "DFU_INIT_RX", "a00949.html#ga9fcb3131da271cdbb8d12ce9e802c460", null ],
-    [ "DFU_REGION_TOTAL_SIZE", "a00949.html#ga434c978acd8c95e68d5c3ec9215682e5", null ],
-    [ "DFU_UPDATE_APP", "a00949.html#gab3b062de629de930998df9fd2b4db211", null ],
-    [ "DFU_UPDATE_BL", "a00949.html#gaaa08307e5a2685ab04f0c050ec07eecc", null ],
-    [ "DFU_UPDATE_SD", "a00949.html#gade73fb50e744973809bc684c9e905e2b", null ],
-    [ "EMPTY_FLASH_MASK", "a00949.html#ga2bc37a969778bef19412ae6f71222b77", null ],
-    [ "INIT_PACKET", "a00949.html#gae02af92ec21d81054f48ac15053b6c15", null ],
-    [ "INVALID_PACKET", "a00949.html#gac3bee55047af40b236d425d24834b5ee", null ],
-    [ "NRF_UICR_BOOT_START_ADDRESS", "a00949.html#gae4ec3580aab0657ce2c1212adec2c0b8", null ],
-    [ "SOFTDEVICE_INFORMATION", "a00949.html#gaab39eb82cd517f5d6b50d7b2df9c1929", null ],
-    [ "SOFTDEVICE_INFORMATION_BASE", "a00949.html#ga7dbc283cb0c0e330a468ad120ef5742a", null ],
-    [ "SOFTDEVICE_REGION_START", "a00949.html#gaab44696b85971088c0a7d999b051184a", null ],
-    [ "START_PACKET", "a00949.html#gafa9a52a3e6c43ccf00cf680f944d67a3", null ],
-    [ "STOP_DATA_PACKET", "a00949.html#gaf1e48eef414ae5da4bdd9fb0762b77e5", null ],
-    [ "STOP_INIT_PACKET", "a00949.html#ga727e7db2f6f939350d0185d8a851df4a", null ],
-    [ "dfu_complete_handler_t", "a00949.html#ga5b444fa2f9c32807670ef86dca59b797", null ],
-    [ "dfu_update_status_code_t", "a00949.html#ga53842ec56bb0c14aa506551bfdc0c652", [
-      [ "DFU_UPDATE_APP_COMPLETE", "a00949.html#gga53842ec56bb0c14aa506551bfdc0c652a0cf80a65601f1f7085fd043aad7f4c3f", null ],
-      [ "DFU_UPDATE_SD_COMPLETE", "a00949.html#gga53842ec56bb0c14aa506551bfdc0c652a726ca6074dabac21a84fa51ff2633429", null ],
-      [ "DFU_UPDATE_SD_SWAPPED", "a00949.html#gga53842ec56bb0c14aa506551bfdc0c652a43737d9d072e35007802223df48e9d6d", null ],
-      [ "DFU_UPDATE_BOOT_COMPLETE", "a00949.html#gga53842ec56bb0c14aa506551bfdc0c652abc485c0c24f01480b93a56a89aad0f1d", null ],
-      [ "DFU_BANK_0_ERASED", "a00949.html#gga53842ec56bb0c14aa506551bfdc0c652a4334cd4f468d0f560262f6af6202f711", null ],
-      [ "DFU_TIMEOUT", "a00949.html#gga53842ec56bb0c14aa506551bfdc0c652a0e2b2bfbf1980322e38f326efa38a841", null ],
-      [ "DFU_RESET", "a00949.html#gga53842ec56bb0c14aa506551bfdc0c652aa600c9698af874adb51d134f729395a5", null ]
-    ] ]
+    [ "nrf_esb_packet_t", "a00949.html#ga22b4239274a204804ec90a75464af66c", [
+      [ "NRF_ESB_PACKET_USE_ACK", "a00949.html#gga22b4239274a204804ec90a75464af66ca5e01e008cf46eeb426a18660bff8523c", null ],
+      [ "NRF_ESB_PACKET_NO_ACK", "a00949.html#gga22b4239274a204804ec90a75464af66caaaff00d187cdd6c74a727dda75e9659b", null ]
+    ] ],
+    [ "nrf_esb_xosc_ctl_t", "a00949.html#gafccf4aacc8d0f3fd9b735add3e1c1219", [
+      [ "NRF_ESB_XOSC_CTL_AUTO", "a00949.html#ggafccf4aacc8d0f3fd9b735add3e1c1219ad26c38cf907e9f1d17054c2092c7bc52", null ],
+      [ "NRF_ESB_XOSC_CTL_MANUAL", "a00949.html#ggafccf4aacc8d0f3fd9b735add3e1c1219ae73d4cc15239054087561cec8e038bd9", null ]
+    ] ],
+    [ "nrf_esb_add_packet_to_tx_fifo", "a00949.html#ga659a456d3f20b95961dcbe07769a17e6", null ],
+    [ "nrf_esb_disable", "a00949.html#ga1888b9ea163638d761af804e89de4122", null ],
+    [ "nrf_esb_disable_dyn_ack", "a00949.html#gae64be7be4004a77f77b52323b8672bfd", null ],
+    [ "nrf_esb_disabled", "a00949.html#ga5e82709bd23aa952a883db3af5b987e0", null ],
+    [ "nrf_esb_enable", "a00949.html#gaa7f7be8b058378a3b31d38ce88e0600f", null ],
+    [ "nrf_esb_enable_dyn_ack", "a00949.html#gac0ed60fbf51bd9bff3c46481a5e8dd82", null ],
+    [ "nrf_esb_fetch_packet_from_rx_fifo", "a00949.html#gaef1dcdb47f1c29b01badecdeb6fb3459", null ],
+    [ "nrf_esb_flush_rx_fifo", "a00949.html#ga5225a16b0da5052a4c37af8887ab1b23", null ],
+    [ "nrf_esb_flush_tx_fifo", "a00949.html#gadc578cb2ebd91e3aa3fa2769ad4cc8d2", null ],
+    [ "nrf_esb_get_address_prefix_byte", "a00949.html#gaa626b990775752902ba6f076e177f585", null ],
+    [ "nrf_esb_get_base_address_0", "a00949.html#gaf789add12aaa6d2053d0f16df8243e01", null ],
+    [ "nrf_esb_get_base_address_1", "a00949.html#gaede7058c7a4e4349b6abd5e097f2ba1d", null ],
+    [ "nrf_esb_get_base_address_length", "a00949.html#ga6a71fac6048b08b5ffcc31411d39fcec", null ],
+    [ "nrf_esb_get_channel", "a00949.html#ga101eacd9b8e0ad6975cd50cb7ee48fd0", null ],
+    [ "nrf_esb_get_crc_length", "a00949.html#ga419c9e0ba6b07300b7dd32369dcecd54", null ],
+    [ "nrf_esb_get_datarate", "a00949.html#ga3ac86a94e958f73fe4302958a0f6ba54", null ],
+    [ "nrf_esb_get_enabled_prx_pipes", "a00949.html#gac10f1854641b40ce4c54cc90db6cd22c", null ],
+    [ "nrf_esb_get_max_number_of_tx_attempts", "a00949.html#ga1dedce2516be1d372757e5c23f9fbc89", null ],
+    [ "nrf_esb_get_mode", "a00949.html#ga92cb3834b22f178c91e9f01f590c5424", null ],
+    [ "nrf_esb_get_output_power", "a00949.html#gae21c80360acaf054e0010caf665454ce", null ],
+    [ "nrf_esb_get_retransmit_delay", "a00949.html#ga8be34074d3d1ef199650b854a6d0f347", null ],
+    [ "nrf_esb_get_rx_fifo_packet_count", "a00949.html#ga531356c6c3ab315135ab4cf1c1f776fb", null ],
+    [ "nrf_esb_get_tx_attempts", "a00949.html#gae4cd52fdd23ab3a0dca21300480e0dff", null ],
+    [ "nrf_esb_get_tx_fifo_packet_count", "a00949.html#gad20351036a910b022d8bad4f802110fb", null ],
+    [ "nrf_esb_get_xosc_ctl", "a00949.html#ga7190e97668ba2d89c42aa930fd541dfa", null ],
+    [ "nrf_esb_init", "a00949.html#ga155377fe2e8a0b40352c21a5ec7979ec", null ],
+    [ "nrf_esb_is_enabled", "a00949.html#ga3d35fe839f4e0ce1950aa506cd466af9", null ],
+    [ "nrf_esb_rx_data_ready", "a00949.html#gab3042dde4c3151c1517f4998378f52ce", null ],
+    [ "nrf_esb_set_address_prefix_byte", "a00949.html#ga31a7b7aa543a7f84afe37145826c91f1", null ],
+    [ "nrf_esb_set_base_address_0", "a00949.html#gaeffa41d59bf749fdbbda53c2773e9754", null ],
+    [ "nrf_esb_set_base_address_1", "a00949.html#gabc4e67308a18eff072b2612d516ed83d", null ],
+    [ "nrf_esb_set_base_address_length", "a00949.html#ga5d8fbce95ff41513da85b9bd05d6452d", null ],
+    [ "nrf_esb_set_channel", "a00949.html#gaca97648d85e0dcb1dde56545efb36df8", null ],
+    [ "nrf_esb_set_crc_length", "a00949.html#ga64be2966329bb2a22f19e4146132a020", null ],
+    [ "nrf_esb_set_datarate", "a00949.html#ga04652eea0a4f993be06dafba248d8ba6", null ],
+    [ "nrf_esb_set_enabled_prx_pipes", "a00949.html#ga4f5a6c59b96874d036f33601343aaac2", null ],
+    [ "nrf_esb_set_max_number_of_tx_attempts", "a00949.html#ga8cdcef8f56272380546af260bcea0ad8", null ],
+    [ "nrf_esb_set_mode", "a00949.html#ga9fc8cc49f0942c4cccd4d35d23510248", null ],
+    [ "nrf_esb_set_output_power", "a00949.html#ga48a7e57c65a8503fce75dcac40734be9", null ],
+    [ "nrf_esb_set_retransmit_delay", "a00949.html#gaf745d55ede0ad93b7e24af33e3ef9df2", null ],
+    [ "nrf_esb_set_xosc_ctl", "a00949.html#gaef8510def050950bbbe4a0ee324e3394", null ],
+    [ "nrf_esb_tx_failed", "a00949.html#ga03993c4e0419bbcac77aa0965ecce6ad", null ],
+    [ "nrf_esb_tx_success", "a00949.html#ga416a6ef0fc94e7df9054e71c8784095a", null ]
 ];

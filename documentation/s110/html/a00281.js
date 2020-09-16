@@ -1,13 +1,9 @@
 var a00281 =
 [
-    [ "conn_handle", "a00281.html#a58872790eba51c45b267473235ebd32d", null ],
-    [ "error_handler", "a00281.html#a99953e3d617e280b5e2af8cefce53786", null ],
-    [ "evt_handler", "a00281.html#aea357d52245f373e6aed7e75d10c0e80", null ],
-    [ "feature", "a00281.html#a738170bfd0b71e8a4befe527b74b8377", null ],
-    [ "glf_handles", "a00281.html#ab165cc78412830043bb851ffc6e6dc85", null ],
-    [ "glm_context_handles", "a00281.html#a04a7dd42f5a8645f568c5ad91a36cc85", null ],
-    [ "glm_handles", "a00281.html#ac6d4433547db64cf7b1d166f83d72c10", null ],
-    [ "is_context_supported", "a00281.html#ae8550b67974545fd563afbbaaddf2bf7", null ],
-    [ "racp_handles", "a00281.html#ab48807f749f83b1d6b48101e3409cced", null ],
-    [ "service_handle", "a00281.html#af41bbddc33e6fd21be56b5953733ea92", null ]
+    [ "init_len", "a00281.html#a7722e94b0c079f7571a0607a13d46bde", null ],
+    [ "init_offs", "a00281.html#aa24ec5661c2ba830f906201285ca941c", null ],
+    [ "max_len", "a00281.html#a5cc60017697406f2f2624e0b15dad294", null ],
+    [ "p_attr_md", "a00281.html#afc04d5311dcd31df52f7d9aac7c05ab1", null ],
+    [ "p_uuid", "a00281.html#a87b18c161a362b54bd349aebd2a45c85", null ],
+    [ "p_value", "a00281.html#abf26555ce0ad9b481c3f638f89dc329a", null ]
 ];

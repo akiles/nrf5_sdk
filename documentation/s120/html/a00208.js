@@ -1,4 +1,5 @@
 var a00208 =
 [
-    [ "evt_type", "a00208.html#ad8b8284f5d85ee34da6a3db177c35d20", null ]
+    [ "keys_central", "a00208.html#a9ddb3932823918ebe433d5e53acdb4a6", null ],
+    [ "keys_periph", "a00208.html#a4488fee3125db8baa70ac98c3d2790bf", null ]
 ];

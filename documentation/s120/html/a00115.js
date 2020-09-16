@@ -1,4 +1,4 @@
 var a00115 =
 [
-    [ "key_type", "a00115.html#a29472c8dcb6c9298ca6b007b633a06a6", null ]
+    [ "conn_sec", "a00115.html#a7495cc138b411d5589196b79bca5bb7a", null ]
 ];

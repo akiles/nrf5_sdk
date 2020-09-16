@@ -1,8 +1,8 @@
 var a00808 =
 [
-    [ "BLE_GAP_IO_CAPS_DISPLAY_ONLY", "a00808.html#ga4e2f9010ba35ab6488ec181f75786435", null ],
-    [ "BLE_GAP_IO_CAPS_DISPLAY_YESNO", "a00808.html#ga88681e29c52a54de028e2ee164d2403b", null ],
-    [ "BLE_GAP_IO_CAPS_KEYBOARD_DISPLAY", "a00808.html#gaacd3ccc6340303a1edcc7c718f3c1e6f", null ],
-    [ "BLE_GAP_IO_CAPS_KEYBOARD_ONLY", "a00808.html#ga65df849ce31a65393bd89ef65a7575b4", null ],
-    [ "BLE_GAP_IO_CAPS_NONE", "a00808.html#gad11df80d3ac9d375b320363694ec0a03", null ]
+    [ "Base defined for SDK Modules", "a00809.html", "a00809" ],
+    [ "Codes reserved as identification for module where the error occurred.", "a00810.html", null ],
+    [ "Codes reserved as identification for common errors.", "a00811.html", null ],
+    [ "Error / status codes specific to device manager.", "a00812.html", null ],
+    [ "ret_code_t", "a00808.html#gaf6c20fb483036617204f12e99e0b997b", null ]
 ];

@@ -1,10 +1,39 @@
-/* Copyright (c) 2011 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is confidential property of Nordic Semiconductor. The use,
- * copying, transfer or disclosure of such information is prohibited except by express written
- * agreement with Nordic Semiconductor.
- *
+/* 
+ * Copyright (c) Nordic Semiconductor ASA
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ * 
+ *   1. Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
+ * 
+ *   2. Redistributions in binary form must reproduce the above copyright notice, this
+ *   list of conditions and the following disclaimer in the documentation and/or
+ *   other materials provided with the distribution.
+ * 
+ *   3. Neither the name of Nordic Semiconductor ASA nor the names of other
+ *   contributors to this software may be used to endorse or promote products
+ *   derived from this software without specific prior written permission.
+ * 
+ *   4. This software must only be used in a processor manufactured by Nordic
+ *   Semiconductor ASA, or in a processor manufactured by a third party that
+ *   is used in combination with a processor manufactured by Nordic Semiconductor.
+ * 
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
  */
+
 /**
   @addtogroup BLE_GATTS Generic Attribute Profile (GATT) Server
   @{
@@ -54,7 +83,6 @@ enum BLE_GATTS_EVTS
   BLE_GATTS_EVT_SC_CONFIRM,                       /**< Service Changed Confirmation. */
   BLE_GATTS_EVT_TIMEOUT                           /**< Timeout. */
 };
-
 /** @} */
 
 /** @addtogroup BLE_GATTS_DEFINES Defines
@@ -125,6 +153,14 @@ enum BLE_GATTS_EVTS
 /** @addtogroup BLE_GATTS_STRUCTURES Structures
  * @{ */
 
+/**
+ * @brief BLE GATTS init options
+ */
+typedef struct
+{
+  uint8_t   service_changed:1;             /**< Include the Service Changed characteristic in the local attributes. */
+} ble_gatts_enable_params_t;
+
 /**@brief Attribute metadata. */
 typedef struct
 {
@@ -147,8 +183,18 @@ typedef struct
   uint16_t             max_len;         /**< Maximum attribute value length in bytes, see @ref BLE_GATTS_ATTR_LENS_MAX for maximum values. */
   uint8_t*             p_value;         /**< Pointer to the attribute data. Please note that if the @ref BLE_GATTS_VLOC_USER value location is selected in the attribute metadata, this will have to point to a buffer
                                              that remains valid through the lifetime of the attribute. This excludes usage of automatic variables that may go out of scope or any other temporary location. 
-                                             The stack may access that memory directly without the application's knowledge. */
+                                             The stack may access that memory directly without the application's knowledge. For writable characteristics, this value should not be a location in flash memory.*/
 } ble_gatts_attr_t;
+
+/**@brief GATT Attribute Value. */
+typedef struct
+{
+  uint16_t  len;        /**< Length in bytes to be written or read. Length in bytes written or read after successful return.*/
+  uint16_t  offset;     /**< Attribute value offset. */
+  uint8_t*  p_value;    /**< Pointer to where value is stored or will be stored. 
+                             If value is stored in user memory, only the attribute length is updated when p_value == NULL.
+                             Set to NULL when reading to obtain the complete length of the attribute value*/
+} ble_gatts_value_t;
 
 
 /**@brief GATT Attribute Context. */
@@ -389,10 +435,9 @@ SVCALL(SD_BLE_GATTS_DESCRIPTOR_ADD, uint32_t, sd_ble_gatts_descriptor_add(uint16
 
 /**@brief Set the value of a given attribute.
  *
- * @param[in] handle    Attribute handle.
- * @param[in] offset    Offset in bytes to write from.
- * @param[in,out] p_len Length in bytes to be written, length in bytes written after successful return.
- * @param[in] p_value   Pointer to a buffer (at least len bytes long) containing the desired attribute value.
+ * @param[in] conn_handle  Connection handle. If there is no connection (and value is not a CCCD), then @ref BLE_CONN_HANDLE_INVALID can be used.
+ * @param[in] handle       Attribute handle.
+ * @param[in,out] p_value  Attribute value information.
  *
  * @retval ::NRF_SUCCESS Successfully set the value of the attribute.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
@@ -401,14 +446,13 @@ SVCALL(SD_BLE_GATTS_DESCRIPTOR_ADD, uint32_t, sd_ble_gatts_descriptor_add(uint16
  * @retval ::NRF_ERROR_FORBIDDEN Forbidden handle supplied, certain attributes are not modifiable by the application.
  * @retval ::NRF_ERROR_DATA_SIZE Invalid data size(s) supplied, attribute lengths are restricted by @ref BLE_GATTS_ATTR_LENS_MAX.
  */
-SVCALL(SD_BLE_GATTS_VALUE_SET, uint32_t, sd_ble_gatts_value_set(uint16_t handle, uint16_t offset, uint16_t *p_len, uint8_t const *p_value));
+SVCALL(SD_BLE_GATTS_VALUE_SET, uint32_t, sd_ble_gatts_value_set(uint16_t conn_handle, uint16_t handle, ble_gatts_value_t *p_value));
 
 /**@brief Get the value of a given attribute.
  *
- * @param[in] handle     Attribute handle.
- * @param[in] offset     Offset in bytes to read from.
- * @param[in,out] p_len  Length in bytes to be read, total length of attribute value (in bytes, starting from offset) after successful return.
- * @param[out] p_data Pointer to a buffer (at least len bytes long) where to store the attribute value. Set to NULL to obtain the complete length of the attribute value.
+ * @param[in] conn_handle  Connection handle. If there is no connection (and value is not a CCCD), then @ref BLE_CONN_HANDLE_INVALID can be used.
+ * @param[in] handle       Attribute handle.
+ * @param[in,out] p_value  Attribute value information.
  *
  * @note                 If the attribute value is longer than the size of the supplied buffer,
  *                       p_len will return the total attribute value length (excluding offset),
@@ -419,7 +463,7 @@ SVCALL(SD_BLE_GATTS_VALUE_SET, uint32_t, sd_ble_gatts_value_set(uint16_t handle,
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_NOT_FOUND Attribute not found.
  */
-SVCALL(SD_BLE_GATTS_VALUE_GET, uint32_t, sd_ble_gatts_value_get(uint16_t handle, uint16_t offset, uint16_t *p_len, uint8_t *p_data));
+SVCALL(SD_BLE_GATTS_VALUE_GET, uint32_t, sd_ble_gatts_value_get(uint16_t conn_handle, uint16_t handle, ble_gatts_value_t *p_value));
 
 /**@brief Notify or Indicate an attribute value.
  *

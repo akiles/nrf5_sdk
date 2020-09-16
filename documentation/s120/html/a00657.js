@@ -1,4 +1,4 @@
 var a00657 =
 [
-    [ "ble_l2cap_evt_rx_dec", "a00657.html#ga01fadfae59ffbf5b43b5ef8d028d9a54", null ]
+    [ "ble_hrs_c_evt_handler_t", "a00657.html#ga877f2faf397dff36652766f1a6c31b85", null ]
 ];

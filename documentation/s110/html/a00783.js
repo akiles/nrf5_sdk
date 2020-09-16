@@ -1,24 +1,43 @@
 var a00783 =
 [
-    [ "uint8_array_t", "a00397.html", [
-      [ "p_data", "a00397.html#af0aec898e61ff702225ab7cb8e81419a", null ],
-      [ "size", "a00397.html#a0ea03f9dd5df67309f05eeddf0b854ff", null ]
+    [ "nrf_drv_rtc_t", "a00399.html", [
+      [ "instance_id", "a00399.html#adddb0bddab148beb1b7ebbd61287aa7c", null ],
+      [ "irq", "a00399.html#a4d46eefc5f87c6e7e469f5a87ff554ba", null ],
+      [ "p_reg", "a00399.html#ab45287af2512c2277a6bb35c4e37c3c0", null ]
     ] ],
-    [ "CEIL_DIV", "a00783.html#ga7aaa817cfd7ed354f09db5675ffe1427", null ],
-    [ "IS_POWER_OF_TWO", "a00783.html#ga93157dfd3f26159fb0a1a542723def55", null ],
-    [ "MSEC_TO_UNITS", "a00783.html#gae7c9ee84adc7fdda8b3b8e2175245717", null ],
-    [ "ROUNDED_DIV", "a00783.html#ga25e8110559dbc9665dfb9485be8ac60f", null ],
-    [ "STATIC_ASSERT", "a00783.html#ga5efe7d9be4898d0ad40b4ba7182f69e2", null ],
-    [ "uint16_le_t", "a00783.html#gaa6f104ea023a4a6a56ef05f30b0cfdc3", null ],
-    [ "uint32_le_t", "a00783.html#ga634aa3136e273c2a368023ce97e73f01", [
-      [ "UNIT_0_625_MS", "a00783.html#ggadf764cbdea00d65edcd07bb9953ad2b7a448dcb5272567df7360a964e7c9b91b1", null ],
-      [ "UNIT_1_25_MS", "a00783.html#ggadf764cbdea00d65edcd07bb9953ad2b7abd6cc6c5518e69158001db0a5b3c4410", null ],
-      [ "UNIT_10_MS", "a00783.html#ggadf764cbdea00d65edcd07bb9953ad2b7adfbb1465ed01976b118bae937a90cc60", null ]
+    [ "nrf_drv_rtc_config_t", "a00398.html", [
+      [ "interrupt_priority", "a00398.html#a6b53fb2a65842e8795e7f3e1c9e4f7dd", null ],
+      [ "prescaler", "a00398.html#a2ac8172aee26fd5776591235c8629d25", null ],
+      [ "reliable", "a00398.html#a6bfb5f366a8b6ed0b6c4ee87ea5db74e", null ],
+      [ "tick_latency", "a00398.html#a7e9620aa4a400df2c94fbd71355378dd", null ]
     ] ],
-    [ "battery_level_in_percent", "a00783.html#ga8902704fe018646ace7d303994320f45", null ],
-    [ "is_word_aligned", "a00783.html#gad1c2cf43cc8c15daa4404e3a1721d83a", null ],
-    [ "uint16_decode", "a00783.html#gaf30655fd762a9debe0b499db3a9451f7", null ],
-    [ "uint16_encode", "a00783.html#gab58c28346b89382397aa7a716bf9a178", null ],
-    [ "uint32_decode", "a00783.html#gaa8eaa6f05cd43462e58a24e54c0ddacd", null ],
-    [ "uint32_encode", "a00783.html#gad960286275534b81d75fbeba2d52aec9", null ]
+    [ "NRF_DRV_RTC_DEFAULT_CONFIG", "a00783.html#ga2b5fb5897b3f9c5e946e79deba90a5ca", null ],
+    [ "NRF_DRV_RTC_INSTANCE", "a00783.html#gad92837243e22f8949ad01555483424ed", null ],
+    [ "RTC_US_TO_TICKS", "a00783.html#ga9b1ac2883403b9c17d0625c8a5c89197", null ],
+    [ "nrf_drv_rtc_handler_t", "a00783.html#gaea0ef74ecf9f63d02beaef96e9934202", null ],
+    [ "nrf_drv_rtc_int_type_t", "a00783.html#ga6a8bf1d82ea3247cd268e0e3188a692a", [
+      [ "NRF_DRV_RTC_INT_COMPARE0", "a00783.html#gga6a8bf1d82ea3247cd268e0e3188a692aacf247d561f3c135a850d6ad9efcd20be", null ],
+      [ "NRF_DRV_RTC_INT_COMPARE1", "a00783.html#gga6a8bf1d82ea3247cd268e0e3188a692aa266e0dbe46b935240a250d4dbc831a56", null ],
+      [ "NRF_DRV_RTC_INT_COMPARE2", "a00783.html#gga6a8bf1d82ea3247cd268e0e3188a692aa2ddafda1ce0c6a284e771d98c9f4a3b9", null ],
+      [ "NRF_DRV_RTC_INT_COMPARE3", "a00783.html#gga6a8bf1d82ea3247cd268e0e3188a692aa62c54e31c61ff70380f6a2d712bacddc", null ],
+      [ "NRF_DRV_RTC_INT_TICK", "a00783.html#gga6a8bf1d82ea3247cd268e0e3188a692aa30deb2d31c8a3b14bb0f75e6c0a4e671", null ],
+      [ "NRF_DRV_RTC_INT_OVERFLOW", "a00783.html#gga6a8bf1d82ea3247cd268e0e3188a692aa3948adb725262e8f366696ecbddd0783", null ]
+    ] ],
+    [ "nrf_drv_rtc_cc_disable", "a00783.html#ga9f26b842fa8cc1a94411acb9138c003c", null ],
+    [ "nrf_drv_rtc_cc_set", "a00783.html#ga686b0a8a37017e73ddaf717541b4b932", null ],
+    [ "nrf_drv_rtc_counter_clear", "a00783.html#gaa53566eb68add4f278833f6a620bde41", null ],
+    [ "nrf_drv_rtc_counter_get", "a00783.html#ga11514b9c3003367ab718677d42112dc5", null ],
+    [ "nrf_drv_rtc_disable", "a00783.html#gaf89ea2e1440cbeb59d3b09ba44391c2a", null ],
+    [ "nrf_drv_rtc_enable", "a00783.html#ga4c73a60bfee3baf46ad7023c8b64a346", null ],
+    [ "nrf_drv_rtc_event_address_get", "a00783.html#gaf090934b73fde208dfefc84c713418bb", null ],
+    [ "nrf_drv_rtc_init", "a00783.html#gaa07935008bf5b51ca478d3f5d1efa771", null ],
+    [ "nrf_drv_rtc_int_disable", "a00783.html#gae89ba461f448ef0829b901766041cbc4", null ],
+    [ "nrf_drv_rtc_int_enable", "a00783.html#gaee57fd5fa1dd1ebf0e53ef375064beea", null ],
+    [ "nrf_drv_rtc_max_ticks_get", "a00783.html#gaeb7e35754bb2ce7f5273e441113be3d9", null ],
+    [ "nrf_drv_rtc_overflow_disable", "a00783.html#ga3b141536e502343855a2e93b2bb9826c", null ],
+    [ "nrf_drv_rtc_overflow_enable", "a00783.html#ga59526eed09d3bcf089f90101c90ef062", null ],
+    [ "nrf_drv_rtc_task_address_get", "a00783.html#gaaf510d254499218a8d36fe83f6251dce", null ],
+    [ "nrf_drv_rtc_tick_disable", "a00783.html#ga2a92dc49f640c17476e44fdb07e9e6d0", null ],
+    [ "nrf_drv_rtc_tick_enable", "a00783.html#ga82ee8934580dead58e372ef8fa6c0170", null ],
+    [ "nrf_drv_rtc_uninit", "a00783.html#gae755b59399ab32f8bb655cbaa3f49a89", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ant_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: Debug Logger</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,76 +96,56 @@ $(document).ready(function(){initNavTree('a00141.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ant_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00952.html">Types definitions for ANT support in SoftDevice handler.</a></div></div>  </div>
+<div class="title">Debug Logger </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>ANT stack event type.  
- <a href="a00141.html#details">More...</a></p>
-
-<p><code>#include &lt;ant_stack_handler_types.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a5e084957ed6c0f93b78203d74a268e36"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#a5e084957ed6c0f93b78203d74a268e36">channel</a></td></tr>
-<tr class="separator:a5e084957ed6c0f93b78203d74a268e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8449b66e97f4dfce737478dc751199e1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#a8449b66e97f4dfce737478dc751199e1">event</a></td></tr>
-<tr class="separator:a8449b66e97f4dfce737478dc751199e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0945895af053724b710662f5beea9ed5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#a0945895af053724b710662f5beea9ed5">evt_buffer</a> [32]</td></tr>
-<tr class="separator:a0945895af053724b710662f5beea9ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ANT stack event type. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a5e084957ed6c0f93b78203d74a268e36"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ant_evt_t::channel</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Channel number. </p>
-
-</div>
-</div>
-<a class="anchor" id="a8449b66e97f4dfce737478dc751199e1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ant_evt_t::event</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event code. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0945895af053724b710662f5beea9ed5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ant_evt_t::evt_buffer[32]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event message buffer. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>The logger module provides simple log messages over UART for debugging purposes. In case debug messages are to be enabled, ENABLE_DEBUG_LOG_SUPPORT should be defined in the project. Logging can be easily disabled by removing the define ENABLE_DEBUG_LOG_SUPPORT from the project.</p>
+<h1><a class="anchor" id="lib_trace_init"></a>
+Initialization</h1>
+<p>The module must be initialized before logging can be be done using the module API <a class="el" href="a00804.html#gae7a95b63891d69936ff23995fdd9fa53">app_trace_init</a>. Initialization routine takes care of initializing and configuring UART. UART configuration used by logger module in SDK uses a baud rate of 38400 bps, with no flow control or parity.</p>
+<div class="fragment"><div class="line">uint32_t retval;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Initialize module</span></div>
+<div class="line">retval = <a class="code" href="a00804.html#gae7a95b63891d69936ff23995fdd9fa53" title="Module Initialization.">app_trace_init</a>();</div>
+<div class="line"></div>
+<div class="line"><span class="keywordflow">if</span>(retval == <a class="code" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// Module successfully initialized.</span></div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">else</span></div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// Module initialization failed. Take corrective action.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="lib_logger_log"></a>
+Debug Logging</h1>
+<p>The application should use <a class="el" href="a00804.html#ga731dcef3cb5915b230fd9f55067f69bb">app_trace_log</a> API to print trace messages over UART. Please note that the string being printed should end with \r\n for neat formatting on the terminal.</p>
+<div class="fragment"><div class="line">.</div>
+<div class="line">.</div>
+<div class="line">.</div>
+<div class="line">uint32_t retval;</div>
+<div class="line"></div>
+<div class="line">retval =  some_api();</div>
+<div class="line"></div>
+<div class="line"><span class="keywordflow">if</span>(retval != <a class="code" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">{</div>
+<div class="line">    <a class="code" href="a00804.html#ga731dcef3cb5915b230fd9f55067f69bb" title="Log debug messages.">app_trace_log</a>(<span class="stringliteral">&quot;Some API failed, reason %X\r\n&quot;</span>, retval);</div>
+<div class="line">}</div>
+<div class="line">.</div>
+<div class="line">.</div>
+<div class="line">.</div>
+</div><!-- fragment --><h1><a class="anchor" id="lib_trace_usage"></a>
+Usage by SDK modules and recommendations</h1>
+<p>The logger module is used by the Connection Manager and application in SDK examples. It should be noted that these modules do not use the logger module directly through out the code. But a macro is used to enable logging. For example, connection manager defines a macro called the CONN_MNGR_LOG which is defined to app_trace_log. The advantage of this is to be able enable or disable selectively log messages from a certain module in case too many modules are logging messages and debugging gets convoluted.</p>
+<p>Further, practice of including a module signature is added in order to map each message with a particular module. For example, all messages from connection manager start with "[CM]:" followed by the message.</p>
+<dl class="section note"><dt>Note</dt><dd>For Keil, enabling use of microlib is needed to enable logging as currently, app_trace_log is mapped to printf. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00141.html">ant_evt_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

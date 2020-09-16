@@ -33,7 +33,7 @@
 #include "boards.h"
 
 /* BSP_UART_SUPPORT
- * This define enable uart support module.
+ * This define enables UART support module.
  */
 #ifdef BSP_UART_SUPPORT
 #include "app_uart.h"
@@ -49,14 +49,14 @@
 
 #if LEDS_NUMBER > 0
 /**@def BSP_APP_TIMERS_NUMBER
- * Number of @ref app_timer instances required by BSP with LED support
+ * Number of @ref app_timer instances required by BSP with LED support.
  */
 #define BSP_APP_TIMERS_NUMBER 2
 #endif // LEDS_NUMBER > 0
 
-/**@brief Types of BSP initialization
+/**@brief Types of BSP initialization.
  */
-#define BSP_INIT_NONE    0        /**< This define specifies the type of initialization without support for LEDs and buttons @ref bsp_init.*/
+#define BSP_INIT_NONE    0        /**< This define specifies the type of initialization without support for LEDs and buttons (@ref bsp_init).*/
 #define BSP_INIT_LED     (1 << 0) /**< This bit enables LEDs during initialization (@ref bsp_init).*/
 #define BSP_INIT_BUTTONS (1 << 1) /**< This bit enables buttons during initialization (@ref bsp_init).*/
 #define BSP_INIT_UART    (1 << 2) /**< This bit enables UART during initialization (@ref bsp_init).*/
@@ -162,7 +162,7 @@ typedef void (* bsp_event_callback_t)(bsp_event_t);
 
 /**@brief       Function for initializing BSP.
  *
- * @details     Initialize the board support package to allow state indication and button
+ * @details     The function initializes the board support package to allow state indication and button
  *              reaction. Default events are assigned to buttons.
  * @note        Before calling this function, you must initiate the following required modules:
  *              - @ref app_timer for LED support
@@ -173,11 +173,11 @@ typedef void (* bsp_event_callback_t)(bsp_event_t);
  * @param[in]   ticks_per_100ms    Number of RTC ticks for 100 ms.
  * @param[in]   callback           Function to be called when button press/event is detected.
  *
- * @retval      NRF_SUCCESS               BSP module was successfully initialized.
- * @retval      NRF_ERROR_INVALID_STATE   Application timer module has not been initialized.
- * @retval      NRF_ERROR_NO_MEM          Maximum number of timers has already been reached.
- * @retval      NRF_ERROR_INVALID_PARAM   GPIOTE has too many users.
- * @retval      NRF_ERROR_INVALID_STATE   Button or GPIOTE not initialized.
+ * @retval      NRF_SUCCESS               If the BSP module was successfully initialized.
+ * @retval      NRF_ERROR_INVALID_STATE   If the application timer module has not been initialized.
+ * @retval      NRF_ERROR_NO_MEM          If the maximum number of timers has already been reached.
+ * @retval      NRF_ERROR_INVALID_PARAM   If GPIOTE has too many users.
+ * @retval      NRF_ERROR_INVALID_STATE   If button or GPIOTE has not been initialized.
  */
 uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t callback);
 
@@ -188,19 +188,18 @@ uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t 
  * @param[in]   p_buttons_state          This variable will store buttons state. Button 0 state is
  *                                       represented by bit 0 (1=pressed), Button 1 state by bit 1, and so on.
  *
- * @retval      NRF_SUCCESS              Buttons state was successfully read.
+ * @retval      NRF_SUCCESS              If buttons state was successfully read.
  */
 uint32_t bsp_buttons_state_get(uint32_t * p_buttons_state);
 
 /**@brief       Function for checking buttons states.
  *
- * @details     This function for checking if the button is pressed.
+ * @details     This function checks if the button is pressed. If the button ID iss out of range, the function returns false.
  *
  * @param[in]   button                   Button ID to check.
- * @param[in]   p_state                  This variable will store the information whether the specified button is pressed(true) or not.
+ * @param[in]   p_state                  This variable will store the information whether the specified button is pressed (true) or not.
  *
- * @retval      NRF_SUCCESS              Button state was successfully read.
- * @retval      NRF_ERROR_INVALID_PARAM  Invalid button ID.
+ * @retval      NRF_SUCCESS              If the button state was successfully read.
  */
 uint32_t bsp_button_is_pressed(uint32_t button, bool * p_state);
 
@@ -212,8 +211,8 @@ uint32_t bsp_button_is_pressed(uint32_t button, bool * p_state);
  * @param[in]   button                   Button ID to be redefined.
  * @param[in]   event                    Event to be assigned to button.
  *
- * @retval      NRF_SUCCESS              Event was successfully assigned to button.
- * @retval      NRF_ERROR_INVALID_PARAM  Invalid button ID.
+ * @retval      NRF_SUCCESS              If the event was successfully assigned to button.
+ * @retval      NRF_ERROR_INVALID_PARAM  If the button ID was invalid.
  */
 uint32_t bsp_event_to_button_assign(uint32_t button, bsp_event_t event);
 
@@ -225,9 +224,9 @@ uint32_t bsp_event_to_button_assign(uint32_t button, bsp_event_t event);
  *
  * @param[in]   indicate   State to be indicated.
  *
- * @retval      NRF_SUCCESS               State was successfully indicated.
- * @retval      NRF_ERROR_NO_MEM          Internal timer operations queue was full.
- * @retval      NRF_ERROR_INVALID_STATE   Application timer module has not been initialized,
+ * @retval      NRF_SUCCESS               If the state was successfully indicated.
+ * @retval      NRF_ERROR_NO_MEM          If the internal timer operations queue was full.
+ * @retval      NRF_ERROR_INVALID_STATE   If the application timer module has not been initialized,
  *                                        or internal timer has not been created.
  */
 uint32_t bsp_indication_set(bsp_indication_t indicate);
@@ -242,9 +241,9 @@ uint32_t bsp_indication_set(bsp_indication_t indicate);
  * @param[in]   indicate   State to be indicated.
  * @param[in]   p_text     Text to be output on UART.
  *
- * @retval      NRF_SUCCESS               State was successfully indicated.
- * @retval      NRF_ERROR_NO_MEM          Internal timer operations queue was full.
- * @retval      NRF_ERROR_INVALID_STATE   Application timer module has not been initialized, or timer
+ * @retval      NRF_SUCCESS               If the state was successfully indicated.
+ * @retval      NRF_ERROR_NO_MEM          If the internal timer operations queue was full.
+ * @retval      NRF_ERROR_INVALID_STATE   If the application timer module has not been initialized, or timer
  *                                        has not been created.
  */
 uint32_t bsp_indication_text_set(bsp_indication_t indicate, const char * p_text);
@@ -257,7 +256,7 @@ uint32_t bsp_indication_text_set(bsp_indication_t indicate, const char * p_text)
  * @param[in]   buttons  Buttons to be enabled, encoded as bits
  *                       (bit 0 = button 0, bit 1 = button 1, etc).
  *
- * @retval      NRF_SUCCESS Successfully enabled.
+ * @retval      NRF_SUCCESS If the buttons were successfully enabled.
  */
 uint32_t bsp_buttons_enable(uint32_t buttons);
 

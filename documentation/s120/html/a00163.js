@@ -1,9 +1,9 @@
 var a00163 =
 [
-    [ "rd_auth", "a00163.html#a0d2f2743a556d382513a43607a08c057", null ],
-    [ "read_perm", "a00163.html#a61a4ef92eba3a3b2b3f616557f6b74aa", null ],
-    [ "vlen", "a00163.html#a921e414734cd784e0c3b7309d3a14f39", null ],
-    [ "vloc", "a00163.html#abbd6b9b2d75565fc6fd66074a47308c7", null ],
-    [ "wr_auth", "a00163.html#affcd971025cbaa9525c2ed9ff95d913c", null ],
-    [ "write_perm", "a00163.html#af04a8d72352f3c02dbef021b360f477f", null ]
+    [ "flags", "a00163.html#ae9bf42dc0e530824c93ec423e6539220", null ],
+    [ "handle", "a00163.html#a4b5cec7a8b33f482114d99026b2ee92d", null ],
+    [ "len", "a00163.html#a068c40f218ed3932901529ac05b69c21", null ],
+    [ "offset", "a00163.html#a85d01254a43068218061ab21acabe980", null ],
+    [ "p_value", "a00163.html#a361b91f9ee1961598bc9c94520f8004b", null ],
+    [ "write_op", "a00163.html#a2c42a23118699b0fab8f49f1d9b4b386", null ]
 ];

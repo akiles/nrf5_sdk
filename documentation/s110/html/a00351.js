@@ -1,5 +1,6 @@
 var a00351 =
 [
-    [ "len", "a00351.html#a584d9c286a840f2aa29cf3f6e76362d4", null ],
-    [ "p_data", "a00351.html#acbcb29305bde09573e35ed7f4c214641", null ]
+    [ "cccd_write_perm", "a00351.html#a320070d4ad9b4f4948a8bba65f3853c0", null ],
+    [ "read_perm", "a00351.html#ab3203f11dcbf8bea6cbe1dcffbf68661", null ],
+    [ "write_perm", "a00351.html#ac8a8cd605d17911a751bf74d72412568", null ]
 ];

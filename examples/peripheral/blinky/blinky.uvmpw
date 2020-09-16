@@ -8,16 +8,16 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
  
    <project>
-    <PathAndName>pca10028\blank\arm\blinky_blank_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10028\s110\arm4\blinky_s110_pca10028.uvproj</PathAndName>
   </project>
    <project>
-    <PathAndName>pca10028\s110\arm\blinky_s110_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10031\s110\arm4\blinky_s110_pca10031.uvproj</PathAndName>
   </project>
    <project>
-    <PathAndName>pca10031\blank\arm\blinky_blank_pca10031.uvproj</PathAndName>
+    <PathAndName>pca10031\blank\arm4\blinky_blank_pca10031.uvproj</PathAndName>
   </project>
    <project>
-    <PathAndName>pca10031\s110\arm\blinky_s110_pca10031.uvproj</PathAndName>
+    <PathAndName>pca10028\blank\arm4\blinky_blank_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

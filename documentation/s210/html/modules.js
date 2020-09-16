@@ -1,5 +1,5 @@
 var modules =
 [
-    [ "nRF51 SDK", "a00265.html", "a00265" ],
-    [ "S210 (ANT)", "a00279.html", "a00279" ]
+    [ "nRF51 SDK", "a00347.html", "a00347" ],
+    [ "S210 (ANT)", "a00361.html", "a00361" ]
 ];

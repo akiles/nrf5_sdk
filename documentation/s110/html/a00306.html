@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ias_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_hids_feature_rep_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,52 +106,78 @@ $(document).ready(function(){initNavTree('a00306.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ias_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00971.html">Immediate Alert Service</a></div></div>  </div>
+<div class="title">ble_hids_feature_rep_init_t Struct Reference<div class="ingroups"><a class="el" href="a00962.html">Human Interface Device Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Immediate Alert Service event.  
+<p>HID Service Feature Report characteristic init structure. This contains all options and data needed for initialization of one Feature Report characteristic.  
  <a href="a00306.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_ias.h&gt;</code></p>
+<p><code>#include &lt;ble_hids.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a730fff52efb38d8f5f61973ef47696b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00971.html#gaa55445ca6b845393a2dc353e0afa38ec">ble_ias_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html#a730fff52efb38d8f5f61973ef47696b4">evt_type</a></td></tr>
-<tr class="separator:a730fff52efb38d8f5f61973ef47696b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4db05b98065112dd546eab97608de983"><td class="memItemLeft" ><a class="anchor" id="a4db05b98065112dd546eab97608de983"></a>
-union {</td></tr>
-<tr class="memitem:adad41da585927bb71b5d5ed4b473b144"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00306.html#aadc350acbcf634cf778a5a253049ebe0">alert_level</a></td></tr>
-<tr class="separator:adad41da585927bb71b5d5ed4b473b144"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4db05b98065112dd546eab97608de983"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a4db05b98065112dd546eab97608de983"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a021ad724a66d2f8e54c1bdff8def4b4c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html#a021ad724a66d2f8e54c1bdff8def4b4c">max_len</a></td></tr>
+<tr class="separator:a021ad724a66d2f8e54c1bdff8def4b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af12bb312c4056f52bc2e83ff0ef66233"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00352.html">ble_srv_report_ref_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html#af12bb312c4056f52bc2e83ff0ef66233">rep_ref</a></td></tr>
+<tr class="separator:af12bb312c4056f52bc2e83ff0ef66233"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88082cfc1a5360f43e333ea838257ccb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html#a88082cfc1a5360f43e333ea838257ccb">security_mode</a></td></tr>
+<tr class="separator:a88082cfc1a5360f43e333ea838257ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ed64286300a70a9d26f1839f2396221"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html#a9ed64286300a70a9d26f1839f2396221">read_resp</a>: 1</td></tr>
+<tr class="separator:a9ed64286300a70a9d26f1839f2396221"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Immediate Alert Service event. </p>
+<div class="textblock"><p>HID Service Feature Report characteristic init structure. This contains all options and data needed for initialization of one Feature Report characteristic. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aadc350acbcf634cf778a5a253049ebe0"></a>
+<a class="anchor" id="a021ad724a66d2f8e54c1bdff8def4b4c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_ias_evt_t::alert_level</td>
+          <td class="memname">uint16_t ble_hids_feature_rep_init_t::max_len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>New Alert Level value. </p>
+<p>Maximum length of characteristic value. </p>
 
 </div>
 </div>
-<a class="anchor" id="a730fff52efb38d8f5f61973ef47696b4"></a>
+<a class="anchor" id="a9ed64286300a70a9d26f1839f2396221"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00971.html#gaa55445ca6b845393a2dc353e0afa38ec">ble_ias_evt_type_t</a> ble_ias_evt_t::evt_type</td>
+          <td class="memname">uint8_t ble_hids_feature_rep_init_t::read_resp</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of event. </p>
+<p>Should application generate a response to read requests. </p>
+
+</div>
+</div>
+<a class="anchor" id="af12bb312c4056f52bc2e83ff0ef66233"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00352.html">ble_srv_report_ref_t</a> ble_hids_feature_rep_init_t::rep_ref</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Value of the Report Reference descriptor. </p>
+
+</div>
+</div>
+<a class="anchor" id="a88082cfc1a5360f43e333ea838257ccb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a> ble_hids_feature_rep_init_t::security_mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Security mode for the HID Service Feature Report characteristic, including cccd. </p>
 
 </div>
 </div>
@@ -160,8 +186,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00306.html">ble_ias_evt_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00306.html">ble_hids_feature_rep_init_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

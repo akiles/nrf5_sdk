@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Experimental: Multi Activity Example</title>
+<title>nRF51 SDK - S110 SoftDevice: Experimental: Apple Notification Center Service (ANCS) Client Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,27 +97,75 @@ $(document).ready(function(){initNavTree('a00060.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Experimental: Multi Activity Example </div>  </div>
+<div class="title">Experimental: Apple Notification Center Service (ANCS) Client Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The two examples included here (<a class="el" href="a00060.html#ble_sdk_adv_beacon">Advertisement Beacon</a> and <a class="el" href="a00060.html#ble_sdk_scan_beacon">Scanner Beacon</a>) illustrate how to use the Radio Timeslot API of the S110.</p>
-<p>This folder contains an advertiser module that is shown in a heart rate sensor example and that advertises beacon data while in a connection. </p>
-<dl class="section note"><dt>Note</dt><dd>This application is not power optimized!</dd></dl>
-<h1><a class="anchor" id="ble_sdk_adv_beacon"></a>
-Advertisement Beacon</h1>
-<p>The advertiser beacon module illustrates using periodic timeslots on the radio when the SoftDevice is running. The example using the advertiser beacon is based on Heart Rate service example and starts advertising as a beacon when in a connection.</p>
-<p>The name of the example is <b>experimental_ble_app_hrs_advertiser_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\experimental_ble_app_multiactivity_beacon\hrs_advertiser</code> </p>
-<h1><a class="anchor" id="ble_sdk_scan_beacon"></a>
-Scanner Beacon</h1>
-<p>The scanner beacon module illustrates using as much as possible of available radio time when the SoftDevice is running. The example using the advertiser beacon is based on Heart Rate service example and scans for advertising beacon at all times. If a beacon is found, indicated by the call to beacon_evt_handler, and if the major, minor and rssi values matches the expected one, the LED 2 is lit (it is cleared on a disconnect event).</p>
-<p>The name of the example is <b>experimental_ble_app_hrs_scanner_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\experimental_ble_app_multiactivity_beacon\hrs_scanner</code> </p>
+<div class="textblock"><p>The ANCS Client Application is an example that implements the Apple Notification Center Service using the hardware delivered in the nRF51 Development Kit.</p>
+<p>For detailed information about the Apple Notification Center Service, visit <a href="https://developer.apple.com/library/ios/documentation/CoreBluetooth/Reference/AppleNotificationCenterServiceSpecification/Introduction/Introduction.html">Apple's Developer pages.</a></p>
+<p>The application will accept many kinds of iOS generated notifications and print them to the nRF6350 Display module. When the application receives a notification, it will send a Get Notification Attributes command to the iOS device, requesting the attributes of a specific iOS notification. For this application, the Get Notification Attribute command will always request the attributes:</p>
+<ul>
+<li>NotificationAttributeIDTitle</li>
+<li>NotificationAttributeIDMessage</li>
+</ul>
+<p>If a response, in form of a Title and Message, is returned from the iOS device to this Get Notification Attribute command, the response will be printed on the UART.</p>
+<dl class="section note"><dt>Note</dt><dd>This application is not power optimized! </dd>
+<dd>
+The application will stop advertising after 3 minutes and go to system-off mode. Push the button 1 restart advertising.</dd></dl>
+<h1><a class="anchor" id="project_ancs_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>experimental_ble_app_ancs_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\experimental_ble_app_ancs</code> </p>
+<p>Button assignments:</p>
+<ul>
+<li>Button 1: Wake up from system-off and restart advertising.</li>
+<li>Button 2: Wake up, erase all bonds, and restart advertising; send iOS notification message contents on UART.</li>
+</ul>
+<h1><a class="anchor" id="project_ancs_test"></a>
+Testing</h1>
+<p>Test the ANCS Client Application with the nRF Toolbox app, which is available on both iOS (Apple Store) and Android (Google Play).</p>
+<p>You can also test the application with the Master Control Panel by performing the following steps:</p>
+<ol type="1">
+<li>Start a COM listener like PUTTY and connect to the used COM port with the following UART settings:<ul>
+<li>
+Baud rate: 38.400</li>
+<li>
+8 data bits</li>
+<li>
+1 stop bit</li>
+<li>
+No parity</li>
+<li>
+HW flow control: RTS/CTS</li>
+</ul>
+</li>
+<li>Compile and program the application. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>In the Master Control Panel, create the Apple Notification Center Service (ANCS) server by doing the following steps:<ul>
+<li>Click File -&gt; Server Setup. In the window that opened up, click File -&gt; Load setup.</li>
+<li>In the resulting window, navigate to ble_app_ancs folder and load the file named ANCS_central.bin.</li>
+<li>It is important to keep the 'Server Setup' window opened.</li>
+</ul>
+</li>
+<li>Select the device from Master Control Panel (the device will be advertising as 'ANCC'), then connect, bond and perform service discovery.</li>
+<li>Observe that the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Observe that the server is started.</li>
+<li>Upon bonding, verify in the 'Server Setup', that the Client Characteristic Configuration descriptor (CCCD) for 0x120D and 0xC6E9 are set to 0001.</li>
+<li>Set the value of characteristic 0x120D to 00-01-06-02-01-02-03-04 in the 'Server Setup', and press 'update'.</li>
+<li>Verify that the UART has received "Email\\n Added 01020304".</li>
+<li>Verify in the 'Server Setup', that the Client Characteristic Configuration descriptor (CCCD) for 0xD8F3 is updated to 00-01-06-03-04-01-20-00-03-20-00.</li>
+<li>The response on 0xD8F3 is a Get Notification Attribute command, requesting the Title and Message for the Email notification.</li>
+<li>Respond in the 'Server Setup', by setting the Client Characteristic Configuration descriptor (CCCD) for 0xC6E9 to 00-01-02-03-04-01-03-00-6E-52-46-03-03-00-34-32-32.</li>
+<li>Press Button 2 and verify that the UART console connected to the device shows "nRF422".</li>
+<li>Disconnect from the Master Control Panel and observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Wait until the application goes to system-off (<a class="el" href="a00057.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a>).</li>
+<li>Press button 0 and connect to the Master Control Panel. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Disconnect from the Master Control Panel. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00043.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00058.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

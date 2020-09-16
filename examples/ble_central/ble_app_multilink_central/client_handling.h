@@ -68,9 +68,9 @@ void client_handling_ble_evt_handler(ble_evt_t * p_ble_evt);
  * @param[in] p_event        Event to be handled.
  * @param[in] event_result   Event result indicating whether a procedure was successful or not.
  */
-api_result_t client_handling_dm_event_handler(const dm_handle_t    * p_handle,
+ret_code_t client_handling_dm_event_handler(const dm_handle_t    * p_handle,
                                               const dm_event_t     * p_event,
-                                              const api_result_t     event_result);
+                                              const ret_code_t     event_result);
 
 #endif // CLIENT_HANDLING_H__
 

@@ -1,4 +1,5 @@
 var a00192 =
 [
-    [ "uuid128", "a00192.html#a13339a8ee220b2ad2f4b8e130e730407", null ]
+    [ "report_id", "a00192.html#a4db26fdff00f44138f9f684ff1dfd149", null ],
+    [ "report_type", "a00192.html#a765872684206db6d91ad6de596599434", null ]
 ];

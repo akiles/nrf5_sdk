@@ -1,6 +1,10 @@
 var a00338 =
 [
-    [ "company_id", "a00338.html#a39ff6a37dbb096bf608d850d0845d252", null ],
-    [ "subversion_number", "a00338.html#abd81a16510bfbcf3778af4daab021369", null ],
-    [ "version_number", "a00338.html#af18ca1a9b3d80b05042d9121e9d3c9ed", null ]
+    [ "conn_handle", "a00338.html#a5589730c5497c481f0f99ca6227c391e", null ],
+    [ "data_handler", "a00338.html#a3498c57b658b1b9f56f378fa6bb045de", null ],
+    [ "is_notification_enabled", "a00338.html#a726d493a3aac2e394939ea4337168d02", null ],
+    [ "rx_handles", "a00338.html#a5324863bc68492bd5e642a4919766e8b", null ],
+    [ "service_handle", "a00338.html#a4d129d53a387dcfb5ba89d5470134142", null ],
+    [ "tx_handles", "a00338.html#a1bac23a03714af564607eb0e07ffc964", null ],
+    [ "uuid_type", "a00338.html#aa8f53c69b9fe61ec89594c1cd0ba7832", null ]
 ];

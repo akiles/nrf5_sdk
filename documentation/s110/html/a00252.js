@@ -1,8 +1,6 @@
 var a00252 =
 [
-    [ "data", "a00252.html#a1691be986d4b730bbe2ccc3d40c5a088", null ],
-    [ "handle", "a00252.html#ae8e1aafaf1cbc9b6f7b5fcd163dd5cac", null ],
-    [ "len", "a00252.html#a323a6805f77fe47c890cde179ea2f674", null ],
-    [ "offset", "a00252.html#a09d38782fd5d200a45146ae303614733", null ],
-    [ "write_op", "a00252.html#a7cbd3dd7ab5f53b8f14e023b9c0c2db6", null ]
+    [ "enc", "a00252.html#aa84265de1334d3ddeed29a09209f02a9", null ],
+    [ "id", "a00252.html#a6319f6981dbbcff973574420e81090ce", null ],
+    [ "sign", "a00252.html#a91ecd2873c5ed1bd4902929bb9194c9e", null ]
 ];

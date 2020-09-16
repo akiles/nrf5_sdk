@@ -1,8 +1,8 @@
 var a00095 =
 [
-    [ "conn_handle", "a00095.html#ad7c997d8d0c6e0d3d24de3ecad426645", null ],
-    [ "params", "a00095.html#aa3bf138e5e86c00c38983ffc94fcc618", null ],
-    [ "tx_complete", "a00095.html#a0550e7a2c8b61ab27ea5a691b3f1fac4", null ],
-    [ "user_mem_release", "a00095.html#a21a25a889c763bceb2891d506331f484", null ],
-    [ "user_mem_request", "a00095.html#a4d36c1c20a1ff24a62abba8ea73c74c8", null ]
+    [ "err_code", "a00095.html#a7399b78d2931ca67335028b94e40fd05", null ],
+    [ "failure", "a00095.html#a0cf6e103864e7945f14c1505b813e6d0", null ],
+    [ "line_number", "a00095.html#a9d8a550dba94f817123c14d6ca401156", null ],
+    [ "message", "a00095.html#aaa3ce88fed3cd597fbd326d647c1b6f8", null ],
+    [ "stack_info", "a00095.html#a4355c5cefad7e512433098a13cbcb706", null ]
 ];

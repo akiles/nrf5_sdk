@@ -132,19 +132,27 @@ uint32_t spi_slave_buffers_set(uint8_t * p_tx_buf,
 
 /**@brief Function for changing defult pull-up configuration for CSN pin.
  *
- * In default configuration pull-up at CSN pin disabled.
- * If alternate configuration is required this function might be called before spi_slave_init()
- * to change default settings for CSN pin
+ * In the default configuration, pull-up on the CSN pin is disabled.
+ * If alternate configuration is required this function can be called before spi_slave_init()
+ * to change default settings for CSN pin.
+ *
+ * @param[in] alternate_config  Pull-up configuration for the CSN pin.
+ *
+ * @retval NRF_SUCCESS  Operation success.
 */
-void spi_slave_set_cs_pull_up_config(uint32_t alternate_config);
+uint32_t spi_slave_set_cs_pull_up_config(uint32_t alternate_config);
 
 /**@brief Function for changing defult drive for MISO pin.
  *
- * In default configuration pin drive is set to S0S1.
- * If alternate configuration is required this function might be called before spi_slave_init()
- * to change default settings for MISO pin
+ * In the default configuration, pin drive for the MISO pin is set to S0S1.
+ * If alternate configuration is required this function can be called before spi_slave_init()
+ * to change default settings for MISO pin.
+ *
+ * @param[in] alternate_config  Drive configuration for the MISO pin.
+ *
+ * @retval NRF_SUCCESS  Operation success.
 */
-void spi_slave_set_cs_pull_up_config(uint32_t alternate_config);
+uint32_t spi_slave_set_drive_config(uint32_t alternate_config);
 
 #endif // SPI_SLAVE_H__
 

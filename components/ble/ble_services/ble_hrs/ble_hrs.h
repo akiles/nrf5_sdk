@@ -91,7 +91,7 @@ typedef struct
 } ble_hrs_init_t;
 
 /**@brief Heart Rate Service structure. This contains various status information for the service. */
-typedef struct ble_hrs_s
+struct ble_hrs_s
 {
     ble_hrs_evt_handler_t        evt_handler;                                          /**< Event handler to be called for handling events in the Heart Rate Service. */
     bool                         is_expended_energy_supported;                         /**< TRUE if Expended Energy measurement is supported. */
@@ -104,7 +104,7 @@ typedef struct ble_hrs_s
     bool                         is_sensor_contact_detected;                           /**< TRUE if sensor contact has been detected. */
     uint16_t                     rr_interval[BLE_HRS_MAX_BUFFERED_RR_INTERVALS];       /**< Set of RR Interval measurements since the last Heart Rate Measurement transmission. */
     uint16_t                     rr_interval_count;                                    /**< Number of RR Interval measurements since the last Heart Rate Measurement transmission. */
-} ble_hrs_t;
+};
 
 /**@brief Function for initializing the Heart Rate Service.
  *

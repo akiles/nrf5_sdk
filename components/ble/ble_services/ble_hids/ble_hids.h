@@ -197,7 +197,7 @@ typedef struct
 } ble_hids_init_t;
 
 /**@brief HID Service structure. This contains various status information for the service. */
-typedef struct ble_hids_s
+struct ble_hids_s
 {
     ble_hids_evt_handler_t        evt_handler;                                  /**< Event handler to be called for handling events in the HID Service. */
     ble_srv_error_handler_t       error_handler;                                /**< Function to be called in case of an error. */
@@ -217,7 +217,7 @@ typedef struct ble_hids_s
     ble_gatts_char_handles_t      hid_information_handles;                      /**< Handles related to the Report Map characteristic. */
     ble_gatts_char_handles_t      hid_control_point_handles;                    /**< Handles related to the Report Map characteristic. */
     uint16_t                      conn_handle;                                  /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
-} ble_hids_t;
+};
 
 /**@brief Function for initializing the HID Service.
  *

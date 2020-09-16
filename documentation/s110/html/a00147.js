@@ -1,8 +1,7 @@
 var a00147 =
 [
-    [ "data", "a00147.html#a9241052870696d4d825c91c4a834a84f", null ],
-    [ "error_code", "a00147.html#ab2aeea864de0050ec22790a186a4e9b1", null ],
-    [ "error_communication", "a00147.html#ae2f48256edd4052e8273d098bb8249c4", null ],
-    [ "evt_type", "a00147.html#ae89e1d236d49d18fa5be6fa32ba3c0d8", null ],
-    [ "value", "a00147.html#a9e34eabccc01fe3eeff1c7392d737d84", null ]
+    [ "change_of_daylight_savings_time", "a00147.html#ac47badd1b38a18f2e81d38f7896b7b74", null ],
+    [ "change_of_time_zone", "a00147.html#ac0531a23749e261fb772fdb02e709604", null ],
+    [ "external_reference_time_update", "a00147.html#a126f627c419e90a8411f6ac226a61754", null ],
+    [ "manual_time_update", "a00147.html#a4c21a75f93fd632eab48571ae73207df", null ]
 ];

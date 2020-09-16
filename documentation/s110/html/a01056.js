@@ -1,12 +1,14 @@
 var a01056 =
 [
-    [ "sd_ble_gattc_char_value_by_uuid_read", "a01056.html#gafa77a2a57f188051ea8d7761d08843a6", null ],
-    [ "sd_ble_gattc_char_values_read", "a01056.html#gacbdf576af1acf60fc63b7002e0a98322", null ],
-    [ "sd_ble_gattc_characteristics_discover", "a01056.html#ga7052ca469495d7610e88530d2d088da1", null ],
-    [ "sd_ble_gattc_descriptors_discover", "a01056.html#ga6cfe7fcac0dc1601a0edd2f4e97f4012", null ],
-    [ "sd_ble_gattc_hv_confirm", "a01056.html#ga173e2d16c9bbd24dcf2c724ded6708a5", null ],
-    [ "sd_ble_gattc_primary_services_discover", "a01056.html#gaa76505638ff5a74edeaad521e37548c8", null ],
-    [ "sd_ble_gattc_read", "a01056.html#ga813daa5810a1d2ed31d2d6fe49d3ef11", null ],
-    [ "sd_ble_gattc_relationships_discover", "a01056.html#gaa505bba10fbaf84554ccad41ae914cf3", null ],
-    [ "sd_ble_gattc_write", "a01056.html#gaf608cc468ddeb3504e7d175efaf5c4e3", null ]
+    [ "sd_ble_gatts_characteristic_add", "a01056.html#ga9ee07ea4b96dcca1537b01ff9a7692ba", null ],
+    [ "sd_ble_gatts_descriptor_add", "a01056.html#ga0e1478bd565ad99f998671e3baf9847d", null ],
+    [ "sd_ble_gatts_hvx", "a01056.html#ga313fe43c2e93267da668572e885945db", null ],
+    [ "sd_ble_gatts_include_add", "a01056.html#ga591ba1e7e2b8ecb63541a1f2d5282b76", null ],
+    [ "sd_ble_gatts_rw_authorize_reply", "a01056.html#ga6de7aea3a870669e1d869b047de95545", null ],
+    [ "sd_ble_gatts_service_add", "a01056.html#ga39fea660228e4b2e788af7018a83927a", null ],
+    [ "sd_ble_gatts_service_changed", "a01056.html#ga2c8c90d73fa27ba6691ad82b4a960adc", null ],
+    [ "sd_ble_gatts_sys_attr_get", "a01056.html#ga4a44241bdcc7262603841f77d9eeb29f", null ],
+    [ "sd_ble_gatts_sys_attr_set", "a01056.html#ga577c788e199b1a2c0d19602b07ef2515", null ],
+    [ "sd_ble_gatts_value_get", "a01056.html#gad95321e157e632e7ac3a77f3388cbdf7", null ],
+    [ "sd_ble_gatts_value_set", "a01056.html#ga2760c51ea71853bd74e2e7e7117ef52a", null ]
 ];

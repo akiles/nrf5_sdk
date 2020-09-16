@@ -49,6 +49,7 @@ typedef struct
 {
     uint16_t                  service_handle;           /**< Handle of TX Power Service (as provided by the BLE stack). */
     ble_gatts_char_handles_t  tx_power_level_handles;   /**< Handles related to the TX Power Level characteristic. */
+    uint16_t                  conn_handle;              /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
 } ble_tps_t;
 
 /**@brief Function for initializing the TX Power Service.
@@ -61,6 +62,15 @@ typedef struct
  * @return      NRF_SUCCESS on successful initialization of service, otherwise an error code.
  */
 uint32_t ble_tps_init(ble_tps_t * p_hrs, const ble_tps_init_t * p_tps_init);
+
+/**@brief Function for handling the Application's BLE Stack events.
+ *
+ * @details Handles all events from the BLE stack of interest to the TX Power Service.
+ *
+ * @param[in]   p_tps      TX Power Service structure.
+ * @param[in]   p_ble_evt  Event received from the BLE stack.
+ */
+void ble_tps_on_ble_evt(ble_tps_t * p_tps, ble_evt_t * p_ble_evt);
 
 /**@brief Function for setting the state of the Sensor Contact Detected bit.
  *

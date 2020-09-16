@@ -1,6 +1,7 @@
 var a00067 =
 [
-    [ "len", "a00067.html#ae7fb48410ecb00dec1dca60d45cbc606", null ],
-    [ "ptr1", "a00067.html#a03e88994f8127e877c2fd08800e64768", null ],
-    [ "ptr2", "a00067.html#a3f670b76c31a7b6badf0bfadd1dc08b0", null ]
+    [ "active_state", "a00067.html#af55e02af042a4d038dac26a7658536f6", null ],
+    [ "button_handler", "a00067.html#ad06ea1e496c4b37802492b289b54a875", null ],
+    [ "pin_no", "a00067.html#af6a18934c420213be9eee710854e1ab9", null ],
+    [ "pull_cfg", "a00067.html#abf23ae362a2ecdfbc73c9f6736ce0ba8", null ]
 ];

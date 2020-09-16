@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ans_c_init_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ancs_c_evt_ios_notification_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,88 +106,35 @@ $(document).ready(function(){initNavTree('a00163.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ans_c_init_t Struct Reference<div class="ingroups"><a class="el" href="a00958.html">Alert Notification Service Client</a></div></div>  </div>
+<div class="title">ble_ancs_c_evt_ios_notification_t Struct Reference<div class="ingroups"><a class="el" href="a01028.html">Apple Notification Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Alert Notification init structure. This contains all options and data needed for initialization of the client.  
- <a href="a00163.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_ans_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aad8ea29f7f384965a82424a4ca3c8e50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00958.html#gaf4d6c41652f6accd6829112a74334c4e">ble_ans_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#aad8ea29f7f384965a82424a4ca3c8e50">evt_handler</a></td></tr>
-<tr class="separator:aad8ea29f7f384965a82424a4ca3c8e50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a595f52194b0dbb3300a9e7dc0f0f360f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00977.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#a595f52194b0dbb3300a9e7dc0f0f360f">error_handler</a></td></tr>
-<tr class="separator:a595f52194b0dbb3300a9e7dc0f0f360f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ac3fed59a0cbf329cc6611ab584ef69"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#a0ac3fed59a0cbf329cc6611ab584ef69">message_buffer_size</a></td></tr>
-<tr class="separator:a0ac3fed59a0cbf329cc6611ab584ef69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a146d527b7a4824fb4e4f585e455b14f0"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00163.html#a146d527b7a4824fb4e4f585e455b14f0">p_message_buffer</a></td></tr>
-<tr class="separator:a146d527b7a4824fb4e4f585e455b14f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90230cdca1fd3326d9e518cf30df6763"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90230cdca1fd3326d9e518cf30df6763"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>event_id</b></td></tr>
+<tr class="separator:a90230cdca1fd3326d9e518cf30df6763"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae86652b6297b0f664e3f4a655307867c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae86652b6297b0f664e3f4a655307867c"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>event_flags</b></td></tr>
+<tr class="separator:ae86652b6297b0f664e3f4a655307867c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f0bc8006e7125a2caf605bfe15fa975"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f0bc8006e7125a2caf605bfe15fa975"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>category_id</b></td></tr>
+<tr class="separator:a4f0bc8006e7125a2caf605bfe15fa975"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac740d5f60d9d28e844d7b208a4f142d5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac740d5f60d9d28e844d7b208a4f142d5"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>category_count</b></td></tr>
+<tr class="separator:ac740d5f60d9d28e844d7b208a4f142d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a242555b46f8d02b0c966462a6c853456"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a242555b46f8d02b0c966462a6c853456"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>notification_uid</b> [4]</td></tr>
+<tr class="separator:a242555b46f8d02b0c966462a6c853456"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Alert Notification init structure. This contains all options and data needed for initialization of the client. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a595f52194b0dbb3300a9e7dc0f0f360f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00977.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_ans_c_init_t::error_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Function to be called in case of an error. </p>
-
-</div>
-</div>
-<a class="anchor" id="aad8ea29f7f384965a82424a4ca3c8e50"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00958.html#gaf4d6c41652f6accd6829112a74334c4e">ble_ans_c_evt_handler_t</a> ble_ans_c_init_t::evt_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event handler to be called for handling events in the Battery Service. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0ac3fed59a0cbf329cc6611ab584ef69"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_ans_c_init_t::message_buffer_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of buffer to handle messages. </p>
-
-</div>
-</div>
-<a class="anchor" id="a146d527b7a4824fb4e4f585e455b14f0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* ble_ans_c_init_t::p_message_buffer</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to buffer for passing messages. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00163.html">ble_ans_c_init_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00163.html">ble_ancs_c_evt_ios_notification_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

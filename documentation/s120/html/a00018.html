@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Hardware Peripheral Examples</title>
+<title>nRF51 SDK - S120 SoftDevice: Button handling library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,38 +97,19 @@ $(document).ready(function(){initNavTree('a00018.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Hardware Peripheral Examples </div>  </div>
+<div class="title">Button handling library </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The following Hardware Peripheral device examples are available for the nRF51 chip:</p>
-<p><a class="el" href="a00019.html">Blinky Example</a></p>
-<p><a class="el" href="a00045.html">Blinky RTX Example</a></p>
-<p><a class="el" href="a00020.html">BSP Example</a></p>
-<p><a class="el" href="a00021.html">Flash Write Example</a></p>
-<p><a class="el" href="a00022.html">GPIOTE Example</a></p>
-<p><a class="el" href="a00026.html">Radio Receiver Example</a></p>
-<p><a class="el" href="a00028.html">Radio Transmitter Example</a></p>
-<p><a class="el" href="a00023.html">Pin Change Interrupt Example</a></p>
-<p><a class="el" href="a00024.html">PPI Example</a></p>
-<p><a class="el" href="a00025.html">PWM Example</a></p>
-<p><a class="el" href="a00027.html">Radio Test Example</a></p>
-<p><a class="el" href="a00029.html">RAM Retention Example</a></p>
-<p><a class="el" href="a00030.html">Random Number Generator Example</a></p>
-<p><a class="el" href="a00031.html">Real Time Counter Example</a></p>
-<p><a class="el" href="a00032.html">SPI Master Loopback Example</a></p>
-<p><a class="el" href="a00033.html">SPI Master Example to be used with SPI Slave Example</a></p>
-<p><a class="el" href="a00034.html">SPI Slave Example</a></p>
-<p><a class="el" href="a00035.html">Temperature Example</a></p>
-<p><a class="el" href="a00036.html">Timer Example</a></p>
-<p><a class="el" href="a00037.html">UART Example</a></p>
-<p><a class="el" href="a00038.html">UICR Config Example</a> </p>
+<div class="textblock"><p>The button handler uses the <a class="el" href="a00493.html">GPIOTE Handler</a> to detect that a button has been pushed. To handle debouncing, it will start a timer in the GPIOTE event handler. The button will only be reported as pushed if the corresponding pin is still active when the timer expires. If there is a new GPIOTE event while the timer is running, the timer is restarted. Use the USE_SCHEDULER parameter of the APP_BUTTON_INIT() macro to select if the <a class="el" href="a00498.html">Scheduler</a> is to be used or not.</p>
+<p>The app_button module uses the app_timer module. The user must ensure that the queue in app_timer is large enough to hold the <a class="el" href="a00500.html#gad40fbb2a6a9e5bf7d00f838763f5514c" title="Function for stopping the specified timer.">app_timer_stop()</a> / <a class="el" href="a00500.html#ga03fb5f5fa85d16289db0d3c15bb0f24d" title="Function for starting a timer.">app_timer_start()</a> operations which will be executed on each event from GPIOTE module (2 operations), as well as other app_timer operations queued simultaneously in the application.</p>
+<p>Even if the scheduler is not used, app_button.h will include app_scheduler.h, so when compiling, app_scheduler.h must be available in one of the compiler include paths. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,7 +1,11 @@
 var a00715 =
 [
-    [ "DM_PROTOCOL_CNTXT_ALL", "a00715.html#gabf3d92dc785166cb06763af1c6616b94", null ],
-    [ "DM_PROTOCOL_CNTXT_GATT_CLI_ID", "a00715.html#ga20cd764cccd94fd71cc07c9f5f2c681a", null ],
-    [ "DM_PROTOCOL_CNTXT_GATT_SRVR_ID", "a00715.html#ga40fd38aabb6b0c4ab56549d5189ff366", null ],
-    [ "DM_PROTOCOL_CNTXT_NONE", "a00715.html#gaf4cac13e3128b3131c16d52760393932", null ]
+    [ "BLE_L2CAP_EVTS", "a00715.html#ga200c8684032d8e5fe10d295b2f3a1555", [
+      [ "BLE_L2CAP_EVT_RX", "a00715.html#gga200c8684032d8e5fe10d295b2f3a1555af6d68dde17c172258858ea9d9c4488e3", null ]
+    ] ],
+    [ "BLE_L2CAP_SVCS", "a00715.html#ga08e7b23691ec76610bbd89735c642322", [
+      [ "SD_BLE_L2CAP_CID_REGISTER", "a00715.html#gga08e7b23691ec76610bbd89735c642322a6168d9f18ea5916224c6b76a118ae076", null ],
+      [ "SD_BLE_L2CAP_CID_UNREGISTER", "a00715.html#gga08e7b23691ec76610bbd89735c642322ace8a5ba33631ecf722fd5ce033a413e8", null ],
+      [ "SD_BLE_L2CAP_TX", "a00715.html#gga08e7b23691ec76610bbd89735c642322a073ec8ef84fe64e4d3cfdb9538c70438", null ]
+    ] ]
 ];

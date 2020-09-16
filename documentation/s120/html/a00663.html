@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: HCI Serialization PHY</title>
+<title>nRF51 SDK - S120 SoftDevice: Functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,277 +97,105 @@ $(document).ready(function(){initNavTree('a00663.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">HCI Serialization PHY<div class="ingroups"><a class="el" href="a00740.html">BLE Serialization</a></div></div>  </div>
+<div class="title">Functions<div class="ingroups"><a class="el" href="a00659.html">Battery Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>HCI PHY layer for serialization.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html">ser_phy_hci_pkt_params_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A struct representing a PHY HCI packet.  <a href="a00227.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html">ser_phy_hci_evt_hw_error_params_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A struct containing parameters of the event of type <a class="el" href="a00663.html#gga696fce5dc53c4c227b5fe54e832f09eca225618d1f1520ae3abb97334ea1c2c21">SER_PHY_HCI_SLIP_EVT_HW_ERROR</a>.  <a href="a00226.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html">ser_phy_hci_slip_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A struct containing events from a Serialization PHY module.  <a href="a00228.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga2028cda219bb2476f7c8987084530533"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#ga2028cda219bb2476f7c8987084530533">ser_phy_hci_slip_event_handler_t</a> )(<a class="el" href="a00228.html">ser_phy_hci_slip_evt_t</a> *p_event)</td></tr>
-<tr class="memdesc:ga2028cda219bb2476f7c8987084530533"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type of generic callback function handler to be used by all PHY HCI events.  <a href="#ga2028cda219bb2476f7c8987084530533">More...</a><br/></td></tr>
-<tr class="separator:ga2028cda219bb2476f7c8987084530533"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga696fce5dc53c4c227b5fe54e832f09ec"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#ga696fce5dc53c4c227b5fe54e832f09ec">ser_phy_hci_slip_evt_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00663.html#gga696fce5dc53c4c227b5fe54e832f09ecac2bad55aa2e033e9cf1d26d1551da3bd">SER_PHY_HCI_SLIP_EVT_PKT_SENT</a> = 0, 
-<br/>
-&#160;&#160;<a class="el" href="a00663.html#gga696fce5dc53c4c227b5fe54e832f09eca1e744b223073244f7e005771b3b0ab40">SER_PHY_HCI_SLIP_EVT_ACK_SENT</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00663.html#gga696fce5dc53c4c227b5fe54e832f09eca11d423088fbb10597df19b68296d9dbd">SER_PHY_HCI_SLIP_EVT_PKT_RECEIVED</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00663.html#gga696fce5dc53c4c227b5fe54e832f09eca225618d1f1520ae3abb97334ea1c2c21">SER_PHY_HCI_SLIP_EVT_HW_ERROR</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00663.html#gga696fce5dc53c4c227b5fe54e832f09ecafcc295f585e95c78d6a09aeb62e90521">SER_PHY_HCI_SLIP_EVT_TYPE_MAX</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga696fce5dc53c4c227b5fe54e832f09ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialization PHY HCI module events types.  <a href="a00663.html#ga696fce5dc53c4c227b5fe54e832f09ec">More...</a><br/></td></tr>
-<tr class="separator:ga696fce5dc53c4c227b5fe54e832f09ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gae4f3889382e2f79d8a5c8583eb60e0c0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#gae4f3889382e2f79d8a5c8583eb60e0c0">ser_phy_hci_slip_open</a> (<a class="el" href="a00663.html#ga2028cda219bb2476f7c8987084530533">ser_phy_hci_slip_event_handler_t</a> events_handler)</td></tr>
-<tr class="memdesc:gae4f3889382e2f79d8a5c8583eb60e0c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for opening and initializing a HCI SLIP PHY module.  <a href="#gae4f3889382e2f79d8a5c8583eb60e0c0">More...</a><br/></td></tr>
-<tr class="separator:gae4f3889382e2f79d8a5c8583eb60e0c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b7bc3ebe9fde93d37fdf9300c7a0b6f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#ga5b7bc3ebe9fde93d37fdf9300c7a0b6f">ser_phy_hci_slip_tx_pkt_send</a> (const <a class="el" href="a00227.html">ser_phy_hci_pkt_params_t</a> *p_header, const <a class="el" href="a00227.html">ser_phy_hci_pkt_params_t</a> *p_payload, const <a class="el" href="a00227.html">ser_phy_hci_pkt_params_t</a> *p_crc)</td></tr>
-<tr class="memdesc:ga5b7bc3ebe9fde93d37fdf9300c7a0b6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for transmitting a HCI SLIP packet.  <a href="#ga5b7bc3ebe9fde93d37fdf9300c7a0b6f">More...</a><br/></td></tr>
-<tr class="separator:ga5b7bc3ebe9fde93d37fdf9300c7a0b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga68d41aff8d01462a192a39fee78dc1e1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#ga68d41aff8d01462a192a39fee78dc1e1">ser_phy_hci_slip_rx_buf_free</a> (uint8_t *p_buffer)</td></tr>
-<tr class="memdesc:ga68d41aff8d01462a192a39fee78dc1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for freeing an RX buffer.  <a href="#ga68d41aff8d01462a192a39fee78dc1e1">More...</a><br/></td></tr>
-<tr class="separator:ga68d41aff8d01462a192a39fee78dc1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e9d9e1deef7f917721c2ba100900961"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#ga5e9d9e1deef7f917721c2ba100900961">ser_phy_hci_slip_close</a> (void)</td></tr>
-<tr class="memdesc:ga5e9d9e1deef7f917721c2ba100900961"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for closing a PHY HCI module.  <a href="#ga5e9d9e1deef7f917721c2ba100900961">More...</a><br/></td></tr>
-<tr class="separator:ga5e9d9e1deef7f917721c2ba100900961"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa121900a8514a2b7ef7fd67d777c349e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#gaa121900a8514a2b7ef7fd67d777c349e">ser_phy_hci_slip_interrupts_enable</a> (void)</td></tr>
-<tr class="memdesc:gaa121900a8514a2b7ef7fd67d777c349e"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for enabling a PHY HCI module interrupts.  <a href="#gaa121900a8514a2b7ef7fd67d777c349e">More...</a><br/></td></tr>
-<tr class="separator:gaa121900a8514a2b7ef7fd67d777c349e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43cf890f95e08d836af1ad0302a3eb70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#ga43cf890f95e08d836af1ad0302a3eb70">ser_phy_hci_slip_interrupts_disable</a> (void)</td></tr>
-<tr class="memdesc:ga43cf890f95e08d836af1ad0302a3eb70"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for disabling a PHY HCI module interrupts.  <a href="#ga43cf890f95e08d836af1ad0302a3eb70">More...</a><br/></td></tr>
-<tr class="separator:ga43cf890f95e08d836af1ad0302a3eb70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d0ae2cdd0fefec37afe05d139739f1d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#ga9d0ae2cdd0fefec37afe05d139739f1d">ble_bas_c_init</a> (<a class="el" href="a00085.html">ble_bas_c_t</a> *p_ble_bas_c, <a class="el" href="a00084.html">ble_bas_c_init_t</a> *p_ble_bas_c_init)</td></tr>
+<tr class="memdesc:ga9d0ae2cdd0fefec37afe05d139739f1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Battery Service Client module.  <a href="#ga9d0ae2cdd0fefec37afe05d139739f1d">More...</a><br/></td></tr>
+<tr class="separator:ga9d0ae2cdd0fefec37afe05d139739f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga987c35a5606a6b0ea23f4f4187fcd2b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#ga987c35a5606a6b0ea23f4f4187fcd2b0">ble_bas_c_on_ble_evt</a> (<a class="el" href="a00085.html">ble_bas_c_t</a> *p_ble_bas_c, const <a class="el" href="a00097.html">ble_evt_t</a> *p_ble_evt)</td></tr>
+<tr class="memdesc:ga987c35a5606a6b0ea23f4f4187fcd2b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling BLE events from the SoftDevice.  <a href="#ga987c35a5606a6b0ea23f4f4187fcd2b0">More...</a><br/></td></tr>
+<tr class="separator:ga987c35a5606a6b0ea23f4f4187fcd2b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16c5e2436be7c05afc7ea62868981c15"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#ga16c5e2436be7c05afc7ea62868981c15">ble_bas_c_bl_notif_enable</a> (<a class="el" href="a00085.html">ble_bas_c_t</a> *p_ble_bas_c)</td></tr>
+<tr class="memdesc:ga16c5e2436be7c05afc7ea62868981c15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for enabling notifications on the Battery Level characteristic.  <a href="#ga16c5e2436be7c05afc7ea62868981c15">More...</a><br/></td></tr>
+<tr class="separator:ga16c5e2436be7c05afc7ea62868981c15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaebe0b4cd8e0e09d54d18c1b8647d1dd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00663.html#gaaebe0b4cd8e0e09d54d18c1b8647d1dd">ble_bas_c_bl_read</a> (<a class="el" href="a00085.html">ble_bas_c_t</a> *p_ble_bas_c)</td></tr>
+<tr class="memdesc:gaaebe0b4cd8e0e09d54d18c1b8647d1dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading the Battery Level characteristic.  <a href="#gaaebe0b4cd8e0e09d54d18c1b8647d1dd">More...</a><br/></td></tr>
+<tr class="separator:gaaebe0b4cd8e0e09d54d18c1b8647d1dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>HCI PHY layer for serialization. </p>
-<p>This file contains declarations of functions and definitions of data structures and identifiers (typedef enum) used as API of the serialization HCI PHY layer. </p>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga2028cda219bb2476f7c8987084530533"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef void(* ser_phy_hci_slip_event_handler_t)(<a class="el" href="a00228.html">ser_phy_hci_slip_evt_t</a> *p_event)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A type of generic callback function handler to be used by all PHY HCI events. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Serialization PHY HCI module event. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga696fce5dc53c4c227b5fe54e832f09ec"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00663.html#ga696fce5dc53c4c227b5fe54e832f09ec">ser_phy_hci_slip_evt_type_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Serialization PHY HCI module events types. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga696fce5dc53c4c227b5fe54e832f09ecac2bad55aa2e033e9cf1d26d1551da3bd"></a>SER_PHY_HCI_SLIP_EVT_PKT_SENT</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating that packet has been transmitted. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga696fce5dc53c4c227b5fe54e832f09eca1e744b223073244f7e005771b3b0ab40"></a>SER_PHY_HCI_SLIP_EVT_ACK_SENT</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating that ack packet has been transmitted. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga696fce5dc53c4c227b5fe54e832f09eca11d423088fbb10597df19b68296d9dbd"></a>SER_PHY_HCI_SLIP_EVT_PKT_RECEIVED</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating that packet has been received. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga696fce5dc53c4c227b5fe54e832f09eca225618d1f1520ae3abb97334ea1c2c21"></a>SER_PHY_HCI_SLIP_EVT_HW_ERROR</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating a hardware error in PHY HCI module. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga696fce5dc53c4c227b5fe54e832f09ecafcc295f585e95c78d6a09aeb62e90521"></a>SER_PHY_HCI_SLIP_EVT_TYPE_MAX</em>&nbsp;</td><td class="fielddoc">
-<p>Enumeration upper bound. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga5e9d9e1deef7f917721c2ba100900961"></a>
+<a class="anchor" id="ga16c5e2436be7c05afc7ea62868981c15"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ser_phy_hci_slip_close </td>
+          <td class="memname">uint32_t ble_bas_c_bl_notif_enable </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00085.html">ble_bas_c_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_bas_c</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>A function for closing a PHY HCI module. </p>
-<dl class="section note"><dt>Note</dt><dd>The function disables hardware, resets internal module states and unregisters events callback function. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga43cf890f95e08d836af1ad0302a3eb70"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ser_phy_hci_slip_interrupts_disable </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function for disabling a PHY HCI module interrupts. </p>
-<dl class="section note"><dt>Note</dt><dd>The function disables all interrupts that are used by a PHY HCI module (and only those). </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa121900a8514a2b7ef7fd67d777c349e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ser_phy_hci_slip_interrupts_enable </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function for enabling a PHY HCI module interrupts. </p>
-<dl class="section note"><dt>Note</dt><dd>The function enables all interrupts that are used by a PHY HCI module (and only those). </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gae4f3889382e2f79d8a5c8583eb60e0c0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ser_phy_hci_slip_open </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00663.html#ga2028cda219bb2476f7c8987084530533">ser_phy_hci_slip_event_handler_t</a>&#160;</td>
-          <td class="paramname"><em>events_handler</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function for opening and initializing a HCI SLIP PHY module. </p>
-<dl class="section note"><dt>Note</dt><dd>The function initializes hardware and internal module states, and registers callback function to be used by all PHY HCI module events.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>If the function has been already called, the function <a class="el" href="a00663.html#ga5e9d9e1deef7f917721c2ba100900961">ser_phy_hci_slip_close</a> has to be called before ser_phy_hci_slip_open can be called again.</dd></dl>
+<p>Function for enabling notifications on the Battery Level characteristic. </p>
+<p>This function will enable to notification of the Battery Level characteristic at the peer by writing to the CCCD of the Battery Level Characteristic.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">events_handler</td><td>Generic callback function handler to be used by all PHY HCI module events.</td></tr>
+    <tr><td class="paramname">p_ble_bas_c</td><td>Pointer to the Battery Service client structure.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Operation failure. The function has been already called. To call it again the function <a class="el" href="a00663.html#ga5e9d9e1deef7f917721c2ba100900961">ser_phy_hci_slip_close</a> has to be called previously. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Operation failure. Hardware initialization parameters are not supported. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the SoftDevice has been requested to write to the CCCD of the peer. NRF_ERROR_NULL Parameter is NULL. Otherwise, an error code returned by the SoftDevice API <a class="el" href="a00710.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a>. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga68d41aff8d01462a192a39fee78dc1e1"></a>
+<a class="anchor" id="gaaebe0b4cd8e0e09d54d18c1b8647d1dd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ser_phy_hci_slip_rx_buf_free </td>
+          <td class="memname">uint32_t ble_bas_c_bl_read </td>
           <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_buffer</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00085.html">ble_bas_c_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_bas_c</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>A function for freeing an RX buffer. </p>
-<dl class="section note"><dt>Note</dt><dd>The function has to be called as a response for event <a class="el" href="a00663.html#gga696fce5dc53c4c227b5fe54e832f09eca11d423088fbb10597df19b68296d9dbd">SER_PHY_HCI_SLIP_EVT_PKT_RECEIVED</a> when RX packet has been processed. The function frees the RX buffer and therefore enables reception of next incoming data.</dd></dl>
+<p>Function for reading the Battery Level characteristic. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to an RX buffer which must be freed.</td></tr>
+    <tr><td class="paramname">p_ble_bas_c</td><td>Pointer to the Battery Service client structure.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Operation failure. A buffer was already free. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the read request was successfully queued to be sent to peer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga5b7bc3ebe9fde93d37fdf9300c7a0b6f"></a>
+<a class="anchor" id="ga9d0ae2cdd0fefec37afe05d139739f1d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ser_phy_hci_slip_tx_pkt_send </td>
+          <td class="memname">uint32_t ble_bas_c_init </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00227.html">ser_phy_hci_pkt_params_t</a> *&#160;</td>
-          <td class="paramname"><em>p_header</em>, </td>
+          <td class="paramtype"><a class="el" href="a00085.html">ble_bas_c_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_bas_c</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00227.html">ser_phy_hci_pkt_params_t</a> *&#160;</td>
-          <td class="paramname"><em>p_payload</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00227.html">ser_phy_hci_pkt_params_t</a> *&#160;</td>
-          <td class="paramname"><em>p_crc</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00084.html">ble_bas_c_init_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_bas_c_init</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -377,22 +205,56 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>A function for transmitting a HCI SLIP packet. </p>
-<dl class="section note"><dt>Note</dt><dd>The function adds a packet pointed by p_buffer parameter to a transmission queue and schedules generating an event of type <a class="el" href="a00663.html#gga696fce5dc53c4c227b5fe54e832f09ecac2bad55aa2e033e9cf1d26d1551da3bd">SER_PHY_HCI_SLIP_EVT_PKT_SENT</a> upon transmission completion.</dd></dl>
+<p>Function for initializing the Battery Service Client module. </p>
+<p>This function will initialize the module and set up Database Discovery to discover the Battery Service. After calling this function, call <a class="el" href="a00680.html#gad35f52c46e9942291e2d69e2743c4d45">ble_db_discovery_start</a> to start discovery.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_header</td><td>Pointer to <a class="el" href="a00227.html" title="A struct representing a PHY HCI packet.">ser_phy_hci_pkt_params_t</a> structure representing packet header. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_payload</td><td>Pointer to <a class="el" href="a00227.html" title="A struct representing a PHY HCI packet.">ser_phy_hci_pkt_params_t</a> structure representing packet payload. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_crc</td><td>Pointer to <a class="el" href="a00227.html" title="A struct representing a PHY HCI packet.">ser_phy_hci_pkt_params_t</a> structure representing packet crc.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_ble_bas_c</td><td>Pointer to the Battery Service client structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_bas_c_init</td><td>Pointer to the Battery Service initialization structure containing the initialization information.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. Packet was added to the transmission queue and event will be send upon transmission completion. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied in p_header parameter. NULL pointer is allowed for p_payload and p_crc parameters. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Operation failure. Number of bytes to be send equal to 0. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_BUSY</td><td>Operation failure. Transmitting of a packet in progress. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>A parameter is NULL. Otherwise, an error code returned by <a class="el" href="a00680.html#gad3a1e96c90efbe2cf4171d624bafd9cc">ble_db_discovery_evt_register</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga987c35a5606a6b0ea23f4f4187fcd2b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ble_bas_c_on_ble_evt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00085.html">ble_bas_c_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_bas_c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00097.html">ble_evt_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_evt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for handling BLE events from the SoftDevice. </p>
+<p>This function will handle the BLE events received from the SoftDevice. If the BLE event is relevant for the Battery Service Client module, then it is used to update interval variables and, if necessary, send events to the application.</p>
+<dl class="section note"><dt>Note</dt><dd>This function must be called by the application.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_bas_c</td><td>Pointer to the Battery Service client structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Pointer to the BLE event. </td></tr>
   </table>
   </dd>
 </dl>
@@ -404,7 +266,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:36 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

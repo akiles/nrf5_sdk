@@ -1,4 +1,4 @@
 var a00681 =
 [
-    [ "ser_conn_received_pkt_process", "a00681.html#gad559e91ce1be69927a87c644069154c0", null ]
+    [ "ble_debug_assert_handler", "a00681.html#ga516d223d23265c3c1095e1543d3691ae", null ]
 ];

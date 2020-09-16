@@ -1,17 +1,7 @@
 var a00078 =
 [
-    [ "Debug Assert Handler", "a00079.html", null ],
-    [ "BLE Device Manager", "a00083.html", [
-      [ "Initialization", "a00083.html#lib_device_manaegerit", [
-        [ "Associated Events", "a00083.html#lib_device_manager_init_evt", null ],
-        [ "Associated Configuration Parameters", "a00083.html#lib_device_manager_init_cnfg_param", null ]
-      ] ],
-      [ "Registration", "a00083.html#lib_device_manager_register", [
-        [ "Associated Events", "a00083.html#lib_cnxn_register_evt", null ],
-        [ "Associated Configuration Parameters", "a00083.html#lib_cnxn_register_cnfg_param", null ]
-      ] ]
-    ] ],
-    [ "DTM - Direct Test Mode", "a00080.html", null ],
-    [ "Error Log", "a00081.html", null ],
-    [ "Radio Notification Event Handler", "a00082.html", null ]
+    [ "buf_size_mask", "a00078.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
+    [ "p_buf", "a00078.html#a64eafd180a65260208be3b845f6acbf5", null ],
+    [ "read_pos", "a00078.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
+    [ "write_pos", "a00078.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
 ];

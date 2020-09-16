@@ -1,5 +1,6 @@
 var a00191 =
 [
-    [ "len", "a00191.html#a14ab9ae8747f2add25b332c15d20647e", null ],
-    [ "p_mem", "a00191.html#ab5fa5a7ab3575057522e07be1581c659", null ]
+    [ "cccd_write_perm", "a00191.html#a320070d4ad9b4f4948a8bba65f3853c0", null ],
+    [ "read_perm", "a00191.html#ab3203f11dcbf8bea6cbe1dcffbf68661", null ],
+    [ "write_perm", "a00191.html#ac8a8cd605d17911a751bf74d72412568", null ]
 ];

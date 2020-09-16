@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_conn_sec_mode_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_evt_adv_report_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,56 +106,108 @@ $(document).ready(function(){initNavTree('a00110.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_conn_sec_mode_t Struct Reference<div class="ingroups"><a class="el" href="a00748.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_evt_adv_report_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP link requirements.  
+<p>Event data for advertising report event.  
  <a href="a00110.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ab1014e45933756f4e790ef8181730f7f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00110.html#ab1014e45933756f4e790ef8181730f7f">sm</a>: 4</td></tr>
-<tr class="separator:ab1014e45933756f4e790ef8181730f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c0b55f3c9f8c589ca46e85d2c8f235c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00110.html#a3c0b55f3c9f8c589ca46e85d2c8f235c">lv</a>: 4</td></tr>
-<tr class="separator:a3c0b55f3c9f8c589ca46e85d2c8f235c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3b76d297c95df8244348e7352eca1da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00101.html">ble_gap_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00110.html#aa3b76d297c95df8244348e7352eca1da">peer_addr</a></td></tr>
+<tr class="separator:aa3b76d297c95df8244348e7352eca1da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9592fc581c5ed9fd84514c32603bb478"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00110.html#a9592fc581c5ed9fd84514c32603bb478">rssi</a></td></tr>
+<tr class="separator:a9592fc581c5ed9fd84514c32603bb478"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04da677a8c6811bb291c6e62b0bc34e1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00110.html#a04da677a8c6811bb291c6e62b0bc34e1">scan_rsp</a>: 1</td></tr>
+<tr class="separator:a04da677a8c6811bb291c6e62b0bc34e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1660789dcb5af05b84771251f2da68e4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00110.html#a1660789dcb5af05b84771251f2da68e4">type</a>: 2</td></tr>
+<tr class="separator:a1660789dcb5af05b84771251f2da68e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1cbdc1d8b21b88f2da188d6eda04f1d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00110.html#aa1cbdc1d8b21b88f2da188d6eda04f1d">dlen</a>: 5</td></tr>
+<tr class="separator:aa1cbdc1d8b21b88f2da188d6eda04f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a389279e4505e5f438e39b64cac8ab4c0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00110.html#a389279e4505e5f438e39b64cac8ab4c0">data</a> [31]</td></tr>
+<tr class="separator:a389279e4505e5f438e39b64cac8ab4c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GAP link requirements. </p>
-<p>See Bluetooth Core specification, Volume 3 Part C 10.2 for details.</p>
-<p>Security Mode 0 Level 0: No access permissions at all (this level is not defined by the Bluetooth Core specification).<br/>
- Security Mode 1 Level 1: No security is needed (aka open link).<br/>
- Security Mode 1 Level 2: Encrypted link required, MITM protection not necessary.<br/>
- Security Mode 1 Level 3: MITM protected encrypted link required.<br/>
- Security Mode 2 Level 1: Signing or encryption required, MITM protection not necessary.<br/>
- Security Mode 2 Level 2: MITM protected signing required, unless link is MITM protected encrypted.<br/>
- </p>
+<div class="textblock"><p>Event data for advertising report event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a3c0b55f3c9f8c589ca46e85d2c8f235c"></a>
+<a class="anchor" id="a389279e4505e5f438e39b64cac8ab4c0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_conn_sec_mode_t::lv</td>
+          <td class="memname">uint8_t ble_gap_evt_adv_report_t::data[31]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Level (1, 2 or 3), 0 for no permissions at all. </p>
+<p>Advertising or scan response data. </p>
 
 </div>
 </div>
-<a class="anchor" id="ab1014e45933756f4e790ef8181730f7f"></a>
+<a class="anchor" id="aa1cbdc1d8b21b88f2da188d6eda04f1d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_conn_sec_mode_t::sm</td>
+          <td class="memname">uint8_t ble_gap_evt_adv_report_t::dlen</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Security Mode (1 or 2), 0 for no permissions at all. </p>
+<p>Advertising or scan response data length. </p>
+
+</div>
+</div>
+<a class="anchor" id="aa3b76d297c95df8244348e7352eca1da"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00101.html">ble_gap_addr_t</a> ble_gap_evt_adv_report_t::peer_addr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Bluetooth address of the peer device. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9592fc581c5ed9fd84514c32603bb478"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int8_t ble_gap_evt_adv_report_t::rssi</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Received Signal Strength Indication in dBm. </p>
+
+</div>
+</div>
+<a class="anchor" id="a04da677a8c6811bb291c6e62b0bc34e1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gap_evt_adv_report_t::scan_rsp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If 1, the report corresponds to a scan response and the type field may be ignored. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1660789dcb5af05b84771251f2da68e4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gap_evt_adv_report_t::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>See <a class="el" href="a00527.html">GAP Advertising types</a>. Only valid if the scan_rsp field is 0. </p>
 
 </div>
 </div>
@@ -164,8 +216,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00110.html">ble_gap_conn_sec_mode_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00110.html">ble_gap_evt_adv_report_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

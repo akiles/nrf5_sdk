@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_bas_c_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ans_alert_notification_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,78 @@ $(document).ready(function(){initNavTree('a00168.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_bas_c_s Struct Reference<div class="ingroups"><a class="el" href="a01007.html">Structures</a></div></div>  </div>
+<div class="title">ble_ans_alert_notification_t Struct Reference<div class="ingroups"><a class="el" href="a00952.html">Alert Notification Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Battery Service Client structure.  
+<p>Alert Notification structure.  
  <a href="a00168.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_bas_c.h&gt;</code></p>
+<p><code>#include &lt;ble_ans_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a97ef9e28546757bc5c42fc566e331380"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a97ef9e28546757bc5c42fc566e331380">conn_handle</a></td></tr>
-<tr class="separator:a97ef9e28546757bc5c42fc566e331380"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ea89dfa950963404b32410a8e42a04f"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a2ea89dfa950963404b32410a8e42a04f">bl_cccd_handle</a></td></tr>
-<tr class="separator:a2ea89dfa950963404b32410a8e42a04f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58c7f1553ce38426e3656bd61bd21748"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a58c7f1553ce38426e3656bd61bd21748">bl_handle</a></td></tr>
-<tr class="separator:a58c7f1553ce38426e3656bd61bd21748"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13ed1988cc9320c7eaad37ec21272201"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01008.html#ga13d2aed8afc44d31865195d77b09c4ba">ble_bas_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a13ed1988cc9320c7eaad37ec21272201">evt_handler</a></td></tr>
-<tr class="separator:a13ed1988cc9320c7eaad37ec21272201"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa8fc29bec3beb7c27a5b8638273c811"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#afa8fc29bec3beb7c27a5b8638273c811">alert_category</a></td></tr>
+<tr class="separator:afa8fc29bec3beb7c27a5b8638273c811"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92d6452f642f4010d2a45eaa6e2de420"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a92d6452f642f4010d2a45eaa6e2de420">alert_category_count</a></td></tr>
+<tr class="separator:a92d6452f642f4010d2a45eaa6e2de420"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdc318698fc9128ebe8f068b6350c4ec"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#afdc318698fc9128ebe8f068b6350c4ec">alert_msg_length</a></td></tr>
+<tr class="separator:afdc318698fc9128ebe8f068b6350c4ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8b8813b3a0e089e79b4c48d05d46001"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#aa8b8813b3a0e089e79b4c48d05d46001">p_alert_msg_buf</a></td></tr>
+<tr class="separator:aa8b8813b3a0e089e79b4c48d05d46001"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Battery Service Client structure. </p>
+<div class="textblock"><p>Alert Notification structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a2ea89dfa950963404b32410a8e42a04f"></a>
+<a class="anchor" id="afa8fc29bec3beb7c27a5b8638273c811"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_bas_c_s::bl_cccd_handle</td>
+          <td class="memname">uint8_t ble_ans_alert_notification_t::alert_category</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the CCCD of the Battery Level characteristic. </p>
+<p>Alert category to which this alert belongs. </p>
 
 </div>
 </div>
-<a class="anchor" id="a58c7f1553ce38426e3656bd61bd21748"></a>
+<a class="anchor" id="a92d6452f642f4010d2a45eaa6e2de420"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_bas_c_s::bl_handle</td>
+          <td class="memname">uint8_t ble_ans_alert_notification_t::alert_category_count</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the Battery Level characteristic as provided by the SoftDevice. </p>
+<p>Number of alerts in the category. </p>
 
 </div>
 </div>
-<a class="anchor" id="a97ef9e28546757bc5c42fc566e331380"></a>
+<a class="anchor" id="afdc318698fc9128ebe8f068b6350c4ec"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_bas_c_s::conn_handle</td>
+          <td class="memname">uint32_t ble_ans_alert_notification_t::alert_msg_length</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Connection handle as provided by the SoftDevice. </p>
+<p>Length of optional text message send by the server. </p>
 
 </div>
 </div>
-<a class="anchor" id="a13ed1988cc9320c7eaad37ec21272201"></a>
+<a class="anchor" id="aa8b8813b3a0e089e79b4c48d05d46001"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01008.html#ga13d2aed8afc44d31865195d77b09c4ba">ble_bas_c_evt_handler_t</a> ble_bas_c_s::evt_handler</td>
+          <td class="memname">uint8_t* ble_ans_alert_notification_t::p_alert_msg_buf</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Application event handler to be called when there is an event related to the Battery service. </p>
+<p>Pointer to buffer containing the optional text message. </p>
 
 </div>
 </div>
@@ -186,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00168.html">ble_bas_c_s</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00168.html">ble_ans_alert_notification_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

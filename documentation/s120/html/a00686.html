@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Functions</title>
+<title>nRF51 SDK - S120 SoftDevice: Common service definitions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,105 +97,117 @@ $(document).ready(function(){initNavTree('a00686.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#groups">Modules</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Functions<div class="ingroups"><a class="el" href="a00682.html">Battery Service Client</a></div></div>  </div>
+<div class="title">Common service definitions<div class="ingroups"><a class="el" href="a00693.html">BLE Services</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Constants, type definitions and functions that are common to all services.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00687"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00687.html">Service UUID definitions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00688"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00688.html">Characteristic UUID definitions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00689"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00689.html">Definitions for the Alert Level characteristic values</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html">ble_srv_report_ref_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value of a Report Reference descriptor.  <a href="a00192.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00194.html">ble_srv_utf8_str_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">UTF-8 string data type.  <a href="a00194.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html">ble_srv_security_mode_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Security settings structure.  <a href="a00193.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html">ble_srv_cccd_security_mode_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Security settings structure.  <a href="a00191.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gafbfc0ef111ca725cc8bb500fd93301cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00686.html#gafbfc0ef111ca725cc8bb500fd93301cc">BLE_SRV_ENCODED_REPORT_REF_LEN</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:gafbfc0ef111ca725cc8bb500fd93301cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5c29b2eac30fc2688b11741f5895697"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00686.html#gaa5c29b2eac30fc2688b11741f5895697">BLE_CCCD_VALUE_LEN</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:gaa5c29b2eac30fc2688b11741f5895697"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gac10076d39c0ddcfe333252fe8810a1f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac10076d39c0ddcfe333252fe8810a1f1"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00686.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> )(uint32_t nrf_error)</td></tr>
+<tr class="memdesc:gac10076d39c0ddcfe333252fe8810a1f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definition for error handler function which will be called in case of an error in a service or a service library module. <br/></td></tr>
+<tr class="separator:gac10076d39c0ddcfe333252fe8810a1f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga9d0ae2cdd0fefec37afe05d139739f1d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00686.html#ga9d0ae2cdd0fefec37afe05d139739f1d">ble_bas_c_init</a> (<a class="el" href="a00685.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *p_ble_bas_c, <a class="el" href="a00093.html">ble_bas_c_init_t</a> *p_ble_bas_c_init)</td></tr>
-<tr class="memdesc:ga9d0ae2cdd0fefec37afe05d139739f1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Battery Service Client module.  <a href="#ga9d0ae2cdd0fefec37afe05d139739f1d">More...</a><br/></td></tr>
-<tr class="separator:ga9d0ae2cdd0fefec37afe05d139739f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga987c35a5606a6b0ea23f4f4187fcd2b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00686.html#ga987c35a5606a6b0ea23f4f4187fcd2b0">ble_bas_c_on_ble_evt</a> (<a class="el" href="a00685.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *p_ble_bas_c, const <a class="el" href="a00103.html">ble_evt_t</a> *p_ble_evt)</td></tr>
-<tr class="memdesc:ga987c35a5606a6b0ea23f4f4187fcd2b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling BLE events from the SoftDevice.  <a href="#ga987c35a5606a6b0ea23f4f4187fcd2b0">More...</a><br/></td></tr>
-<tr class="separator:ga987c35a5606a6b0ea23f4f4187fcd2b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16c5e2436be7c05afc7ea62868981c15"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00686.html#ga16c5e2436be7c05afc7ea62868981c15">ble_bas_c_bl_notif_enable</a> (<a class="el" href="a00685.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *p_ble_bas_c)</td></tr>
-<tr class="memdesc:ga16c5e2436be7c05afc7ea62868981c15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for enabling notifications on the Battery Level characteristic.  <a href="#ga16c5e2436be7c05afc7ea62868981c15">More...</a><br/></td></tr>
-<tr class="separator:ga16c5e2436be7c05afc7ea62868981c15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaebe0b4cd8e0e09d54d18c1b8647d1dd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00686.html#gaaebe0b4cd8e0e09d54d18c1b8647d1dd">ble_bas_c_bl_read</a> (<a class="el" href="a00685.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *p_ble_bas_c)</td></tr>
-<tr class="memdesc:gaaebe0b4cd8e0e09d54d18c1b8647d1dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading the Battery Level characteristic.  <a href="#gaaebe0b4cd8e0e09d54d18c1b8647d1dd">More...</a><br/></td></tr>
-<tr class="separator:gaaebe0b4cd8e0e09d54d18c1b8647d1dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga11fd3cc1b15d4bec4accc37618305ccb"><td class="memItemLeft" align="right" valign="top">static __INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00686.html#ga11fd3cc1b15d4bec4accc37618305ccb">ble_srv_is_notification_enabled</a> (uint8_t *p_encoded_data)</td></tr>
+<tr class="memdesc:ga11fd3cc1b15d4bec4accc37618305ccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for decoding a CCCD value, and then testing if notification is enabled.  <a href="#ga11fd3cc1b15d4bec4accc37618305ccb">More...</a><br/></td></tr>
+<tr class="separator:ga11fd3cc1b15d4bec4accc37618305ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf572afefe05bacfb4d5967d9c5a6c5e6"><td class="memItemLeft" align="right" valign="top">static __INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00686.html#gaf572afefe05bacfb4d5967d9c5a6c5e6">ble_srv_is_indication_enabled</a> (uint8_t *p_encoded_data)</td></tr>
+<tr class="memdesc:gaf572afefe05bacfb4d5967d9c5a6c5e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for decoding a CCCD value, and then testing if indication is enabled.  <a href="#gaf572afefe05bacfb4d5967d9c5a6c5e6">More...</a><br/></td></tr>
+<tr class="separator:gaf572afefe05bacfb4d5967d9c5a6c5e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaebc3fc5316f1a6a67e830516b8f9aed5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00686.html#gaebc3fc5316f1a6a67e830516b8f9aed5">ble_srv_report_ref_encode</a> (uint8_t *p_encoded_buffer, const <a class="el" href="a00192.html">ble_srv_report_ref_t</a> *p_report_ref)</td></tr>
+<tr class="memdesc:gaebc3fc5316f1a6a67e830516b8f9aed5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for encoding a Report Reference Descriptor.  <a href="#gaebc3fc5316f1a6a67e830516b8f9aed5">More...</a><br/></td></tr>
+<tr class="separator:gaebc3fc5316f1a6a67e830516b8f9aed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga611dfcf7209a57c2e45964e8bb4c5756"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00686.html#ga611dfcf7209a57c2e45964e8bb4c5756">ble_srv_ascii_to_utf8</a> (<a class="el" href="a00194.html">ble_srv_utf8_str_t</a> *p_utf8, char *p_ascii)</td></tr>
+<tr class="memdesc:ga611dfcf7209a57c2e45964e8bb4c5756"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for making UTF-8 structure refer to an ASCII string.  <a href="#ga611dfcf7209a57c2e45964e8bb4c5756">More...</a><br/></td></tr>
+<tr class="separator:ga611dfcf7209a57c2e45964e8bb4c5756"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Constants, type definitions and functions that are common to all services. </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gaa5c29b2eac30fc2688b11741f5895697"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_CCCD_VALUE_LEN&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The length of a CCCD value. </p>
+
+</div>
+</div>
+<a class="anchor" id="gafbfc0ef111ca725cc8bb500fd93301cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_SRV_ENCODED_REPORT_REF_LEN&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The length of an encoded Report Reference Descriptor. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga16c5e2436be7c05afc7ea62868981c15"></a>
+<a class="anchor" id="ga611dfcf7209a57c2e45964e8bb4c5756"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_bas_c_bl_notif_enable </td>
+          <td class="memname">void ble_srv_ascii_to_utf8 </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00685.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_bas_c</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for enabling notifications on the Battery Level characteristic. </p>
-<p>This function will enable to notification of the Battery Level characteristic at the peer by writing to the CCCD of the Battery Level Characteristic.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">p_ble_bas_c</td><td>Pointer to the Battery Service client structure.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If the SoftDevice has been requested to write to the CCCD of the peer. NRF_ERROR_NULL Parameter is NULL. Otherwise, an error code returned by the SoftDevice API <a class="el" href="a00756.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaaebe0b4cd8e0e09d54d18c1b8647d1dd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_bas_c_bl_read </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00685.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_bas_c</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for reading the Battery Level characteristic. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">p_ble_bas_c</td><td>Pointer to the Battery Service client structure.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If the read request was successfully queued to be sent to peer. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9d0ae2cdd0fefec37afe05d139739f1d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_bas_c_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00685.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_bas_c</em>, </td>
+          <td class="paramtype"><a class="el" href="a00194.html">ble_srv_utf8_str_t</a> *&#160;</td>
+          <td class="paramname"><em>p_utf8</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00093.html">ble_bas_c_init_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_bas_c_init</em>&#160;</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>p_ascii</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -205,40 +217,98 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for initializing the Battery Service Client module. </p>
-<p>This function will initialize the module and set up Database Discovery to discover the Battery Service. After calling this function, call <a class="el" href="a00697.html#gad35f52c46e9942291e2d69e2743c4d45">ble_db_discovery_start</a> to start discovery.</p>
+<p>Function for making UTF-8 structure refer to an ASCII string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_ble_bas_c</td><td>Pointer to the Battery Service client structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_bas_c_init</td><td>Pointer to the Battery Service initialization structure containing the initialization information.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>A parameter is NULL. Otherwise, an error code returned by <a class="el" href="a00697.html#gad3a1e96c90efbe2cf4171d624bafd9cc">ble_db_discovery_evt_register</a>. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_utf8</td><td>UTF-8 structure to be set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ascii</td><td>ASCII string to be referred to. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga987c35a5606a6b0ea23f4f4187fcd2b0"></a>
+<a class="anchor" id="gaf572afefe05bacfb4d5967d9c5a6c5e6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE bool ble_srv_is_indication_enabled </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_encoded_data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for decoding a CCCD value, and then testing if indication is enabled. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_encoded_data</td><td>Buffer where the encoded CCCD is stored.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>TRUE if indication is enabled, FALSE otherwise. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga11fd3cc1b15d4bec4accc37618305ccb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static __INLINE bool ble_srv_is_notification_enabled </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_encoded_data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function for decoding a CCCD value, and then testing if notification is enabled. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_encoded_data</td><td>Buffer where the encoded CCCD is stored.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>TRUE if notification is enabled, FALSE otherwise. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaebc3fc5316f1a6a67e830516b8f9aed5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ble_bas_c_on_ble_evt </td>
+          <td class="memname">uint8_t ble_srv_report_ref_encode </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00685.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_bas_c</em>, </td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_encoded_buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00103.html">ble_evt_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_evt</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00192.html">ble_srv_report_ref_t</a> *&#160;</td>
+          <td class="paramname"><em>p_report_ref</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -248,16 +318,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for handling BLE events from the SoftDevice. </p>
-<p>This function will handle the BLE events received from the SoftDevice. If the BLE event is relevant for the Battery Service Client module, then it is used to update interval variables and, if necessary, send events to the application.</p>
-<dl class="section note"><dt>Note</dt><dd>This function must be called by the application.</dd></dl>
+<p>Function for encoding a Report Reference Descriptor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_bas_c</td><td>Pointer to the Battery Service client structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Pointer to the BLE event. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_encoded_buffer</td><td>The buffer of the encoded data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_report_ref</td><td>Report Reference value to be encoded.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Length of the encoded data. </dd></dl>
 
 </div>
 </div>
@@ -266,7 +335,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:37 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

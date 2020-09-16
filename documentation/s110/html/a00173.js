@@ -1,7 +1,5 @@
 var a00173 =
 [
-    [ "bps_feature_attr_md", "a00173.html#aa811a90c7dd0b8bea4434fe2ef2c4ede", null ],
-    [ "bps_meas_attr_md", "a00173.html#a977afca322fd5a03271e0fa35300a164", null ],
-    [ "evt_handler", "a00173.html#a22943d0794c7a162398ddb54872d1751", null ],
-    [ "feature", "a00173.html#a811bba9e34ca00cad260b8d50aadbe5f", null ]
+    [ "category", "a00173.html#a4fdff51ec3bc842205991b1d94a6203d", null ],
+    [ "command", "a00173.html#a884740fe58c776baff9984a9aeb2364a", null ]
 ];

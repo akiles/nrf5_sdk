@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_sec_kdist_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_opt_t Union Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,108 @@ $(document).ready(function(){initNavTree('a00135.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_sec_kdist_t Struct Reference<div class="ingroups"><a class="el" href="a00748.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_opt_t Union Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Keys that can be exchanged.  
+<p>Option structure for GAP options.  
  <a href="a00135.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aa84265de1334d3ddeed29a09209f02a9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00135.html#aa84265de1334d3ddeed29a09209f02a9">enc</a>: 1</td></tr>
-<tr class="separator:aa84265de1334d3ddeed29a09209f02a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6319f6981dbbcff973574420e81090ce"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00135.html#a6319f6981dbbcff973574420e81090ce">id</a>: 1</td></tr>
-<tr class="separator:a6319f6981dbbcff973574420e81090ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91ecd2873c5ed1bd4902929bb9194c9e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00135.html#a91ecd2873c5ed1bd4902929bb9194c9e">sign</a>: 1</td></tr>
-<tr class="separator:a91ecd2873c5ed1bd4902929bb9194c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac467d9642d6caa41dd4fdf8a4a3909d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00129.html">ble_gap_opt_ch_map_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00135.html#ac467d9642d6caa41dd4fdf8a4a3909d5">ch_map</a></td></tr>
+<tr class="separator:ac467d9642d6caa41dd4fdf8a4a3909d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bb53c22c985681a03ee48b81498112c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00131.html">ble_gap_opt_local_conn_latency_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00135.html#a1bb53c22c985681a03ee48b81498112c">local_conn_latency</a></td></tr>
+<tr class="separator:a1bb53c22c985681a03ee48b81498112c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada41fdfa545113ec48371bc74ec7aa9a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00132.html">ble_gap_opt_passkey_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00135.html#ada41fdfa545113ec48371bc74ec7aa9a">passkey</a></td></tr>
+<tr class="separator:ada41fdfa545113ec48371bc74ec7aa9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19819de8fc2357584b987c5087f2c54a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00133.html">ble_gap_opt_privacy_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00135.html#a19819de8fc2357584b987c5087f2c54a">privacy</a></td></tr>
+<tr class="separator:a19819de8fc2357584b987c5087f2c54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67d4b73802048b55b9b9d65ad556ce8b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00134.html">ble_gap_opt_scan_req_report_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00135.html#a67d4b73802048b55b9b9d65ad556ce8b">scan_req_report</a></td></tr>
+<tr class="separator:a67d4b73802048b55b9b9d65ad556ce8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61c3c3ab3b03d8e4fe8e70b69e33c4e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00130.html">ble_gap_opt_compat_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00135.html#a61c3c3ab3b03d8e4fe8e70b69e33c4e8">compat_mode</a></td></tr>
+<tr class="separator:a61c3c3ab3b03d8e4fe8e70b69e33c4e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Keys that can be exchanged. </p>
+<div class="textblock"><p>Option structure for GAP options. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aa84265de1334d3ddeed29a09209f02a9"></a>
+<a class="anchor" id="ac467d9642d6caa41dd4fdf8a4a3909d5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_sec_kdist_t::enc</td>
+          <td class="memname"><a class="el" href="a00129.html">ble_gap_opt_ch_map_t</a> ble_gap_opt_t::ch_map</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Long Term Key and Master Identification. </p>
+<p>Parameters for the Channel Map option. </p>
 
 </div>
 </div>
-<a class="anchor" id="a6319f6981dbbcff973574420e81090ce"></a>
+<a class="anchor" id="a61c3c3ab3b03d8e4fe8e70b69e33c4e8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_sec_kdist_t::id</td>
+          <td class="memname"><a class="el" href="a00130.html">ble_gap_opt_compat_mode_t</a> ble_gap_opt_t::compat_mode</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Identity Resolving Key and Identity Address Information. </p>
+<p>Parameters for the compatibility mode option. </p>
 
 </div>
 </div>
-<a class="anchor" id="a91ecd2873c5ed1bd4902929bb9194c9e"></a>
+<a class="anchor" id="a1bb53c22c985681a03ee48b81498112c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_sec_kdist_t::sign</td>
+          <td class="memname"><a class="el" href="a00131.html">ble_gap_opt_local_conn_latency_t</a> ble_gap_opt_t::local_conn_latency</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Connection Signature Resolving Key. </p>
+<p>Parameters for the Local connection latency option </p>
+
+</div>
+</div>
+<a class="anchor" id="ada41fdfa545113ec48371bc74ec7aa9a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00132.html">ble_gap_opt_passkey_t</a> ble_gap_opt_t::passkey</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parameters for the Passkey option. </p>
+
+</div>
+</div>
+<a class="anchor" id="a19819de8fc2357584b987c5087f2c54a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00133.html">ble_gap_opt_privacy_t</a> ble_gap_opt_t::privacy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parameters for the Custom privacy option. </p>
+
+</div>
+</div>
+<a class="anchor" id="a67d4b73802048b55b9b9d65ad556ce8b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00134.html">ble_gap_opt_scan_req_report_t</a> ble_gap_opt_t::scan_req_report</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parameters for the scan request report option. </p>
 
 </div>
 </div>
@@ -171,8 +216,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00135.html">ble_gap_sec_kdist_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00135.html">ble_gap_opt_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

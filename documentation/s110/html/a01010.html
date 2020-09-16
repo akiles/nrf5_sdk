@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Heart Rate Service Client</title>
+<title>nRF51 SDK - S110 SoftDevice: Functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,37 +97,141 @@ $(document).ready(function(){initNavTree('a01010.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Heart Rate Service Client<div class="ingroups"><a class="el" href="a01036.html">BLE Services</a></div></div>  </div>
+<div class="title">Functions<div class="ingroups"><a class="el" href="a01006.html">Heart Rate Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Heart Rate Service Client module.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a01011"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01011.html">Enumerations</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01012"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01012.html">Structures</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01013"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01013.html">Types</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01014"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01014.html">Functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga9ec622429b01bc15e65fbcd3613a8b8b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01010.html#ga9ec622429b01bc15e65fbcd3613a8b8b">ble_hrs_c_init</a> (<a class="el" href="a00317.html">ble_hrs_c_t</a> *p_ble_hrs_c, <a class="el" href="a00316.html">ble_hrs_c_init_t</a> *p_ble_hrs_c_init)</td></tr>
+<tr class="memdesc:ga9ec622429b01bc15e65fbcd3613a8b8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the heart rate client module.  <a href="#ga9ec622429b01bc15e65fbcd3613a8b8b">More...</a><br/></td></tr>
+<tr class="separator:ga9ec622429b01bc15e65fbcd3613a8b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga062e0829a2ebd211d4e51a23c520ab1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01010.html#ga062e0829a2ebd211d4e51a23c520ab1f">ble_hrs_c_on_ble_evt</a> (<a class="el" href="a00317.html">ble_hrs_c_t</a> *p_ble_hrs_c, const <a class="el" href="a00213.html">ble_evt_t</a> *p_ble_evt)</td></tr>
+<tr class="memdesc:ga062e0829a2ebd211d4e51a23c520ab1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling BLE events from the SoftDevice.  <a href="#ga062e0829a2ebd211d4e51a23c520ab1f">More...</a><br/></td></tr>
+<tr class="separator:ga062e0829a2ebd211d4e51a23c520ab1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4bcaf5864ee2e17bc0abf2ae585a68b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01010.html#gab4bcaf5864ee2e17bc0abf2ae585a68b">ble_hrs_c_hrm_notif_enable</a> (<a class="el" href="a00317.html">ble_hrs_c_t</a> *p_ble_hrs_c)</td></tr>
+<tr class="memdesc:gab4bcaf5864ee2e17bc0abf2ae585a68b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for requesting the peer to start sending notification of Heart Rate Measurement.  <a href="#gab4bcaf5864ee2e17bc0abf2ae585a68b">More...</a><br/></td></tr>
+<tr class="separator:gab4bcaf5864ee2e17bc0abf2ae585a68b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Heart Rate Service Client module. </p>
-<p>This module contains the APIs and types exposed by the Heart Rate Service Client module. These APIs and types can be used by the application to perform discovery of Heart Rate Service at the peer and interact with it.</p>
-<dl class="section warning"><dt>Warning</dt><dd>Currently this module only has support for Heart Rate Measurement characteristic. This means that it will be able to enable notification of the characteristic at the peer and be able to receive Heart Rate Measurement notifications from the peer. It does not support the Body Sensor Location and the Heart Rate Control Point characteristics. When a Heart Rate Measurement is received, this module will decode only the Heart Rate Measurement Value (both 8 bit and 16 bit) field from it and provide it to the application.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to this module by calling <a class="el" href="a01014.html#ga062e0829a2ebd211d4e51a23c520ab1f" title="Function for handling BLE events from the SoftDevice.">ble_hrs_c_on_ble_evt()</a>. </dd></dl>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gab4bcaf5864ee2e17bc0abf2ae585a68b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_hrs_c_hrm_notif_enable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00317.html">ble_hrs_c_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_hrs_c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for requesting the peer to start sending notification of Heart Rate Measurement. </p>
+<p>This function will enable to notification of the Heart Rate Measurement at the peer by writing to the CCCD of the Heart Rate Measurement Characteristic.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_ble_hrs_c</td><td>Pointer to the heart rate client structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the SoftDevice has been requested to write to the CCCD of the peer. Otherwise, an error code. This function propagates the error code returned by the SoftDevice API <a class="el" href="a01052.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9ec622429b01bc15e65fbcd3613a8b8b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_hrs_c_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00317.html">ble_hrs_c_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_hrs_c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00316.html">ble_hrs_c_init_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_hrs_c_init</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for initializing the heart rate client module. </p>
+<p>This function will register with the DB Discovery module. There it registers for the Heart Rate Service. Doing so will make the DB Discovery module look for the presence of a Heart Rate Service instance at the peer when a discovery is started.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_hrs_c</td><td>Pointer to the heart rate client structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_hrs_c_init</td><td>Pointer to the heart rate initialization structure containing the initialization information.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>On successful initialization. Otherwise an error code. This function propagates the error code returned by the Database Discovery module API <a class="el" href="a00994.html#gad3a1e96c90efbe2cf4171d624bafd9cc">ble_db_discovery_evt_register</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga062e0829a2ebd211d4e51a23c520ab1f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ble_hrs_c_on_ble_evt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00317.html">ble_hrs_c_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_hrs_c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00213.html">ble_evt_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_evt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for handling BLE events from the SoftDevice. </p>
+<p>This function will handle the BLE events received from the SoftDevice. If a BLE event is relevant to the Heart Rate Client module, then it uses it to update interval variables and, if necessary, send events to the application.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_hrs_c</td><td>Pointer to the heart rate client structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Pointer to the BLE event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:23 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

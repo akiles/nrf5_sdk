@@ -1,7 +1,7 @@
 var a00168 =
 [
-    [ "bl_cccd_handle", "a00168.html#a2ea89dfa950963404b32410a8e42a04f", null ],
-    [ "bl_handle", "a00168.html#a58c7f1553ce38426e3656bd61bd21748", null ],
-    [ "conn_handle", "a00168.html#a97ef9e28546757bc5c42fc566e331380", null ],
-    [ "evt_handler", "a00168.html#a13ed1988cc9320c7eaad37ec21272201", null ]
+    [ "alert_category", "a00168.html#afa8fc29bec3beb7c27a5b8638273c811", null ],
+    [ "alert_category_count", "a00168.html#a92d6452f642f4010d2a45eaa6e2de420", null ],
+    [ "alert_msg_length", "a00168.html#afdc318698fc9128ebe8f068b6350c4ec", null ],
+    [ "p_alert_msg_buf", "a00168.html#aa8b8813b3a0e089e79b4c48d05d46001", null ]
 ];

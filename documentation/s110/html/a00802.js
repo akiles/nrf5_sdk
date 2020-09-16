@@ -1,10 +1,12 @@
 var a00802 =
 [
-    [ "BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED", "a00802.html#gacb3630594402e27c96515eb80080f2a3", null ],
-    [ "BLE_GAP_ADV_FLAG_LE_BR_EDR_CONTROLLER", "a00802.html#ga589a2a83eb353ad35fc9660c442514ce", null ],
-    [ "BLE_GAP_ADV_FLAG_LE_BR_EDR_HOST", "a00802.html#gaeb2468cf5bea6160d3b7fff9a1059116", null ],
-    [ "BLE_GAP_ADV_FLAG_LE_GENERAL_DISC_MODE", "a00802.html#ga3b7d4251306cd6644d9125da1994a931", null ],
-    [ "BLE_GAP_ADV_FLAG_LE_LIMITED_DISC_MODE", "a00802.html#ga7ed61557e00488daa5daf0b3d9f3d0fd", null ],
-    [ "BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE", "a00802.html#gaa57375a29c3f6acc5a22565528118cc6", null ],
-    [ "BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE", "a00802.html#gad19a5111127656b299dbdbe5d5e8d4e0", null ]
+    [ "app_simple_timer_timeout_handler_t", "a00802.html#ga483768f93042f5718cc9e194936a8918", null ],
+    [ "app_simple_timer_mode_t", "a00802.html#gad7076002d6f9bc89a678c94a49c061e4", [
+      [ "APP_SIMPLE_TIMER_MODE_SINGLE_SHOT", "a00802.html#ggad7076002d6f9bc89a678c94a49c061e4a189bddae8d6e0965ca9a12c83dc8a35a", null ],
+      [ "APP_SIMPLE_TIMER_MODE_REPEATED", "a00802.html#ggad7076002d6f9bc89a678c94a49c061e4a7ac2ba9bfb3b1b37c0eb0acb06a9a9f7", null ]
+    ] ],
+    [ "app_simple_timer_init", "a00802.html#ga7763826e316676eefab5416529f2da18", null ],
+    [ "app_simple_timer_start", "a00802.html#gadb5a3205c34aa67769059f8fa7f63b3f", null ],
+    [ "app_simple_timer_stop", "a00802.html#ga2de31d54126b0f7ee6ac7c6f8a1bec51", null ],
+    [ "app_simple_timer_uninit", "a00802.html#ga20e4f91287f50df937981e64f8f29e1a", null ]
 ];

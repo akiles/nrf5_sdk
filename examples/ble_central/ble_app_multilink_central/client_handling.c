@@ -230,9 +230,9 @@ static void on_evt_timeout(ble_evt_t * p_ble_evt, client_t * p_client)
 }
 
 
-api_result_t client_handling_dm_event_handler(const dm_handle_t    * p_handle,
+ret_code_t client_handling_dm_event_handler(const dm_handle_t    * p_handle,
                                               const dm_event_t     * p_event,
-                                              const api_result_t     event_result)
+                                              const ret_code_t     event_result)
 {
     client_t * p_client = &m_client[p_handle->connection_id];
 

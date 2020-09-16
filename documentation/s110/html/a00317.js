@@ -1,7 +1,7 @@
 var a00317 =
 [
-    [ "opcode", "a00317.html#ac9347eb17ef67e3f06df043008ffb2fc", null ],
-    [ "operand_len", "a00317.html#af49baa0004db22db129862b609928a62", null ],
-    [ "operator", "a00317.html#a3d079df679dec85ecc10fe70a2d349f1", null ],
-    [ "p_operand", "a00317.html#a2560ddd094bfd6960dd5cc3a6ee54c48", null ]
+    [ "conn_handle", "a00317.html#ab8700a2ae7c425ac15d6622e66967f74", null ],
+    [ "evt_handler", "a00317.html#ad1c46431c0465c0d35c17aef3e184a07", null ],
+    [ "hrm_cccd_handle", "a00317.html#aa39c35324a4a66fc088ca76085d2a932", null ],
+    [ "hrm_handle", "a00317.html#a77ef344286d863fa38ebd60dc06e5e62", null ]
 ];

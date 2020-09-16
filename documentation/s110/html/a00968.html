@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Human Interface Device Service</title>
+<title>nRF51 SDK - S110 SoftDevice: Running Speed and Cadence Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,204 +103,193 @@ $(document).ready(function(){initNavTree('a00968.html','');});
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Human Interface Device Service<div class="ingroups"><a class="el" href="a01036.html">BLE Services</a></div></div>  </div>
+<div class="title">Running Speed and Cadence Service<div class="ingroups"><a class="el" href="a01033.html">BLE Services</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Human Interface Device Service module.  
+<p>Running Speed and Cadence Service module.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html">ble_hids_char_id_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">HID Service characteristic id.  <a href="a00282.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html">ble_rscs_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Running Speed and Cadence Service event.  <a href="a00342.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00283.html">ble_hids_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">HID Service event.  <a href="a00283.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00343.html">ble_rscs_init_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Running Speed and Cadence Service init structure. This contains all options and data needed for initialization of the service.  <a href="a00343.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html">ble_hids_hid_information_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">HID Information characteristic value.  <a href="a00285.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html">ble_rscs_s</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Running Speed and Cadence Service structure. This contains various status information for the service.  <a href="a00345.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00287.html">ble_hids_inp_rep_init_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">HID Service Input Report characteristic init structure. This contains all options and data needed for initialization of one Input Report characteristic.  <a href="a00287.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00288.html">ble_hids_outp_rep_init_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">HID Service Output Report characteristic init structure. This contains all options and data needed for initialization of one Output Report characteristic.  <a href="a00288.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00284.html">ble_hids_feature_rep_init_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">HID Service Feature Report characteristic init structure. This contains all options and data needed for initialization of one Feature Report characteristic.  <a href="a00284.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00290.html">ble_hids_rep_map_init_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">HID Service Report Map characteristic init structure. This contains all options and data needed for initialization of the Report Map characteristic.  <a href="a00290.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html">ble_hids_rep_char_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">HID Report characteristic structure.  <a href="a00289.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00286.html">ble_hids_init_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">HID Service init structure. This contains all options and data needed for initialization of the service.  <a href="a00286.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00291.html">ble_hids_s</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">HID Service structure. This contains various status information for the service.  <a href="a00291.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00344.html">ble_rscs_meas_s</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Running Speed and Cadence Service measurement structure. This contains a Running Speed and Cadence measurement.  <a href="a00344.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga249543ec5d919e70aeecd8099c6cdb74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga249543ec5d919e70aeecd8099c6cdb74"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HIDS_MAX_INPUT_REP</b>&#160;&#160;&#160;10</td></tr>
-<tr class="separator:ga249543ec5d919e70aeecd8099c6cdb74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd77b82b5dbf2f16066ca128694ab336"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabd77b82b5dbf2f16066ca128694ab336"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HIDS_MAX_OUTPUT_REP</b>&#160;&#160;&#160;10</td></tr>
-<tr class="separator:gabd77b82b5dbf2f16066ca128694ab336"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d9fe2bb0fe4c0be6c149660c7df59cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6d9fe2bb0fe4c0be6c149660c7df59cb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HIDS_MAX_FEATURE_REP</b>&#160;&#160;&#160;10</td></tr>
-<tr class="separator:ga6d9fe2bb0fe4c0be6c149660c7df59cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6b781175a5e142d551120baa4b5da258"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6b781175a5e142d551120baa4b5da258"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>HID_INFO_FLAG_REMOTE_WAKE_MSK</b>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga6b781175a5e142d551120baa4b5da258"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56e4d378a3507942a55f61449b8ab5a6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga56e4d378a3507942a55f61449b8ab5a6"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>HID_INFO_FLAG_NORMALLY_CONNECTABLE_MSK</b>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:ga56e4d378a3507942a55f61449b8ab5a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7a0af47e661440ca6845c1f4a73ad87"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#gab7a0af47e661440ca6845c1f4a73ad87">BLE_RSCS_FEATURE_INSTANT_STRIDE_LEN_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 0)</td></tr>
+<tr class="memdesc:gab7a0af47e661440ca6845c1f4a73ad87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Running Speed and Cadence Service feature bits.  <a href="#gab7a0af47e661440ca6845c1f4a73ad87">More...</a><br/></td></tr>
+<tr class="separator:gab7a0af47e661440ca6845c1f4a73ad87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca7e41a2844d7508da269b933aba0edc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#gaca7e41a2844d7508da269b933aba0edc">BLE_RSCS_FEATURE_TOTAL_DISTANCE_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 1)</td></tr>
+<tr class="separator:gaca7e41a2844d7508da269b933aba0edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga032860d4209d0f07f27cd7fb1b6643c3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#ga032860d4209d0f07f27cd7fb1b6643c3">BLE_RSCS_FEATURE_WALKING_OR_RUNNING_STATUS_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 2)</td></tr>
+<tr class="separator:ga032860d4209d0f07f27cd7fb1b6643c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7699ff99de0293fa8183117ba09259c9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#ga7699ff99de0293fa8183117ba09259c9">BLE_RSCS_FEATURE_CALIBRATION_PROCEDURE_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 3)</td></tr>
+<tr class="separator:ga7699ff99de0293fa8183117ba09259c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga069fdb89d733f4bcffc62f9a42a19ffb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#ga069fdb89d733f4bcffc62f9a42a19ffb">BLE_RSCS_FEATURE_MULTIPLE_SENSORS_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 4)</td></tr>
+<tr class="separator:ga069fdb89d733f4bcffc62f9a42a19ffb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga7038aff3f095043b34e0a1403dd4ebcc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7038aff3f095043b34e0a1403dd4ebcc"></a>
-typedef struct <a class="el" href="a00291.html">ble_hids_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a></td></tr>
-<tr class="memdesc:ga7038aff3f095043b34e0a1403dd4ebcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">HID Service structure. This contains various status information for the service. <br/></td></tr>
-<tr class="separator:ga7038aff3f095043b34e0a1403dd4ebcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6311e0f98c60c31fd17b201162dc6427"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6311e0f98c60c31fd17b201162dc6427"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#ga6311e0f98c60c31fd17b201162dc6427">ble_hids_evt_handler_t</a> )(<a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a> *p_hids, <a class="el" href="a00283.html">ble_hids_evt_t</a> *p_evt)</td></tr>
-<tr class="memdesc:ga6311e0f98c60c31fd17b201162dc6427"><td class="mdescLeft">&#160;</td><td class="mdescRight">HID Service event handler type. <br/></td></tr>
-<tr class="separator:ga6311e0f98c60c31fd17b201162dc6427"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac2d10efa222688b53fbe59ad5a9dab85"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac2d10efa222688b53fbe59ad5a9dab85"></a>
+typedef struct <a class="el" href="a00345.html">ble_rscs_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ble_rscs_t</b></td></tr>
+<tr class="separator:gac2d10efa222688b53fbe59ad5a9dab85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04b6f149d88df65ebffd5b8297bd657f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga04b6f149d88df65ebffd5b8297bd657f"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#ga04b6f149d88df65ebffd5b8297bd657f">ble_rscs_evt_handler_t</a> )(<a class="el" href="a00345.html">ble_rscs_t</a> *p_rscs, <a class="el" href="a00342.html">ble_rscs_evt_t</a> *p_evt)</td></tr>
+<tr class="memdesc:ga04b6f149d88df65ebffd5b8297bd657f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Running Speed and Cadence Service event handler type. <br/></td></tr>
+<tr class="separator:ga04b6f149d88df65ebffd5b8297bd657f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b8b0a0d95abb5145cca3e5fb23a6352"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1b8b0a0d95abb5145cca3e5fb23a6352"></a>
+typedef struct <a class="el" href="a00344.html">ble_rscs_meas_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#ga1b8b0a0d95abb5145cca3e5fb23a6352">ble_rscs_meas_t</a></td></tr>
+<tr class="memdesc:ga1b8b0a0d95abb5145cca3e5fb23a6352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Running Speed and Cadence Service measurement structure. This contains a Running Speed and Cadence measurement. <br/></td></tr>
+<tr class="separator:ga1b8b0a0d95abb5145cca3e5fb23a6352"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga621d899fc96687c922a0c65010bfc063"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#ga621d899fc96687c922a0c65010bfc063">ble_hids_evt_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00968.html#gga621d899fc96687c922a0c65010bfc063a2c517f6d4a3a253bd99b52cc67f34a8b">BLE_HIDS_EVT_HOST_SUSP</a>, 
+<tr class="memitem:gaed8352fbaf5d37687a3aa5751f4d23bd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#gaed8352fbaf5d37687a3aa5751f4d23bd">ble_rscs_evt_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00968.html#ggaed8352fbaf5d37687a3aa5751f4d23bda4e8e3e5e00758024939ee56a4d2d2418">BLE_RSCS_EVT_NOTIFICATION_ENABLED</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00968.html#gga621d899fc96687c922a0c65010bfc063a6971e1a18ee6ee48d3aa2e046debba6b">BLE_HIDS_EVT_HOST_EXIT_SUSP</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00968.html#gga621d899fc96687c922a0c65010bfc063a65b1e55409e2bed5a0871ec15dff4875">BLE_HIDS_EVT_NOTIF_ENABLED</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00968.html#gga621d899fc96687c922a0c65010bfc063a71b3af5b42cc730e6ad0752b3ad5c581">BLE_HIDS_EVT_NOTIF_DISABLED</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00968.html#gga621d899fc96687c922a0c65010bfc063a0afaaafa6865acd5725096b6c2f6faa6">BLE_HIDS_EVT_REP_CHAR_WRITE</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00968.html#gga621d899fc96687c922a0c65010bfc063a4bc01306b5a8d12443926c1761d49a3a">BLE_HIDS_EVT_BOOT_MODE_ENTERED</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00968.html#gga621d899fc96687c922a0c65010bfc063a42845071ff0875e098bd16723d57d72f">BLE_HIDS_EVT_REPORT_MODE_ENTERED</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00968.html#gga621d899fc96687c922a0c65010bfc063afd062cf35ee7e413359bf8ce168006b3">BLE_HIDS_EVT_REPORT_READ</a>
+&#160;&#160;<a class="el" href="a00968.html#ggaed8352fbaf5d37687a3aa5751f4d23bda36486aa0ec7024c5b29d2b6c2cbb89cd">BLE_RSCS_EVT_NOTIFICATION_DISABLED</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga621d899fc96687c922a0c65010bfc063"><td class="mdescLeft">&#160;</td><td class="mdescRight">HID Service event type.  <a href="a00968.html#ga621d899fc96687c922a0c65010bfc063">More...</a><br/></td></tr>
-<tr class="separator:ga621d899fc96687c922a0c65010bfc063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaed8352fbaf5d37687a3aa5751f4d23bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Running Speed and Cadence Service event type.  <a href="a00968.html#gaed8352fbaf5d37687a3aa5751f4d23bd">More...</a><br/></td></tr>
+<tr class="separator:gaed8352fbaf5d37687a3aa5751f4d23bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf0b5ac4400c5c10be0a32554a6ffb68a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#gaf0b5ac4400c5c10be0a32554a6ffb68a">ble_hids_init</a> (<a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a> *p_hids, const <a class="el" href="a00286.html">ble_hids_init_t</a> *p_hids_init)</td></tr>
-<tr class="memdesc:gaf0b5ac4400c5c10be0a32554a6ffb68a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the HID Service.  <a href="#gaf0b5ac4400c5c10be0a32554a6ffb68a">More...</a><br/></td></tr>
-<tr class="separator:gaf0b5ac4400c5c10be0a32554a6ffb68a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga77b3d388f18004a1e730b4f2bbee5cac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#ga77b3d388f18004a1e730b4f2bbee5cac">ble_hids_on_ble_evt</a> (<a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a> *p_hids, <a class="el" href="a00203.html">ble_evt_t</a> *p_ble_evt)</td></tr>
-<tr class="memdesc:ga77b3d388f18004a1e730b4f2bbee5cac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Application's BLE Stack events.  <a href="#ga77b3d388f18004a1e730b4f2bbee5cac">More...</a><br/></td></tr>
-<tr class="separator:ga77b3d388f18004a1e730b4f2bbee5cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebf0c8621a14c15990aeac30750fb5bc"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#gaebf0c8621a14c15990aeac30750fb5bc">ble_hids_inp_rep_send</a> (<a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a> *p_hids, uint8_t rep_index, uint16_t len, uint8_t *p_data)</td></tr>
-<tr class="memdesc:gaebf0c8621a14c15990aeac30750fb5bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for sending Input Report.  <a href="#gaebf0c8621a14c15990aeac30750fb5bc">More...</a><br/></td></tr>
-<tr class="separator:gaebf0c8621a14c15990aeac30750fb5bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga30a528bd23ffe8ddea07d1960eb4c507"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#ga30a528bd23ffe8ddea07d1960eb4c507">ble_hids_boot_kb_inp_rep_send</a> (<a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a> *p_hids, uint16_t len, uint8_t *p_data)</td></tr>
-<tr class="memdesc:ga30a528bd23ffe8ddea07d1960eb4c507"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for sending Boot Keyboard Input Report.  <a href="#ga30a528bd23ffe8ddea07d1960eb4c507">More...</a><br/></td></tr>
-<tr class="separator:ga30a528bd23ffe8ddea07d1960eb4c507"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafc9114dc1527bfdd5a961c57c35357e3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#gafc9114dc1527bfdd5a961c57c35357e3">ble_hids_boot_mouse_inp_rep_send</a> (<a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a> *p_hids, uint8_t buttons, int8_t x_delta, int8_t y_delta, uint16_t optional_data_len, uint8_t *p_optional_data)</td></tr>
-<tr class="memdesc:gafc9114dc1527bfdd5a961c57c35357e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for sending Boot Mouse Input Report.  <a href="#gafc9114dc1527bfdd5a961c57c35357e3">More...</a><br/></td></tr>
-<tr class="separator:gafc9114dc1527bfdd5a961c57c35357e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga66e5fb9cefb62e76a88f2cc229c55f70"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#ga66e5fb9cefb62e76a88f2cc229c55f70">ble_hids_outp_rep_get</a> (<a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a> *p_hids, uint8_t rep_index, uint16_t len, uint8_t offset, uint8_t *p_outp_rep)</td></tr>
-<tr class="memdesc:ga66e5fb9cefb62e76a88f2cc229c55f70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the current value of Output Report from the stack.  <a href="#ga66e5fb9cefb62e76a88f2cc229c55f70">More...</a><br/></td></tr>
-<tr class="separator:ga66e5fb9cefb62e76a88f2cc229c55f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Report Type values</h2></td></tr>
-<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp58ed751dbe2e4fb277830e43d465de04"></a><a class="anchor" id="BLE_HIDS_REPORT_TYPE"></a></p>
-</td></tr>
-<tr class="memitem:ga5b7ffe773161f742ba6e29910981890d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5b7ffe773161f742ba6e29910981890d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HIDS_REP_TYPE_INPUT</b>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:ga5b7ffe773161f742ba6e29910981890d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadbd5e84eabc19013ac84e71e22f586e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadbd5e84eabc19013ac84e71e22f586e1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HIDS_REP_TYPE_OUTPUT</b>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:gadbd5e84eabc19013ac84e71e22f586e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga06b12fed4a77988cacf03a5127550760"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga06b12fed4a77988cacf03a5127550760"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HIDS_REP_TYPE_FEATURE</b>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:ga06b12fed4a77988cacf03a5127550760"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd5591aad290232ba97ac0bc7aec8f7b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#gafd5591aad290232ba97ac0bc7aec8f7b">ble_rscs_init</a> (<a class="el" href="a00345.html">ble_rscs_t</a> *p_rscs, const <a class="el" href="a00343.html">ble_rscs_init_t</a> *p_rscs_init)</td></tr>
+<tr class="memdesc:gafd5591aad290232ba97ac0bc7aec8f7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Running Speed and Cadence Service.  <a href="#gafd5591aad290232ba97ac0bc7aec8f7b">More...</a><br/></td></tr>
+<tr class="separator:gafd5591aad290232ba97ac0bc7aec8f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga23555a37f7903b50d65a818f32c362ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#ga23555a37f7903b50d65a818f32c362ec">ble_rscs_on_ble_evt</a> (<a class="el" href="a00345.html">ble_rscs_t</a> *p_rscs, <a class="el" href="a00213.html">ble_evt_t</a> *p_ble_evt)</td></tr>
+<tr class="memdesc:ga23555a37f7903b50d65a818f32c362ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Application's BLE Stack events.  <a href="#ga23555a37f7903b50d65a818f32c362ec">More...</a><br/></td></tr>
+<tr class="separator:ga23555a37f7903b50d65a818f32c362ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16080f0b2880066d0e1f88fbe960079b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00968.html#ga16080f0b2880066d0e1f88fbe960079b">ble_rscs_measurement_send</a> (<a class="el" href="a00345.html">ble_rscs_t</a> *p_rscs, <a class="el" href="a00968.html#ga1b8b0a0d95abb5145cca3e5fb23a6352">ble_rscs_meas_t</a> *p_measurement)</td></tr>
+<tr class="memdesc:ga16080f0b2880066d0e1f88fbe960079b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for sending running speed and cadence measurement if notification has been enabled.  <a href="#ga16080f0b2880066d0e1f88fbe960079b">More...</a><br/></td></tr>
+<tr class="separator:ga16080f0b2880066d0e1f88fbe960079b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Human Interface Device Service module. </p>
-<p>This module implements the Human Interface Device Service with the corresponding set of characteristics. During initialization it adds the Human Interface Device Service and a set of characteristics as per the Human Interface Device Service specification and the user requirements to the BLE stack database.</p>
-<p>If enabled, notification of Input Report characteristics is performed when the application calls the corresponding ble_hids_xx_input_report_send() function.</p>
-<p>If an event handler is supplied by the application, the Human Interface Device Service will generate Human Interface Device Service events to the application.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Human Interface Device Service module by calling <a class="el" href="a00968.html#ga77b3d388f18004a1e730b4f2bbee5cac" title="Function for handling the Application&#39;s BLE Stack events.">ble_hids_on_ble_evt()</a> from the <a class="el" href="a00954.html">SoftDevice Event Handler</a> callback.</dd>
+<p>Running Speed and Cadence Service module. </p>
+<p>This module implements the Running Speed and Cadence Service. If enabled, notification of the Running Speead and Candence Measurement is performed when the application calls <a class="el" href="a00968.html#ga16080f0b2880066d0e1f88fbe960079b" title="Function for sending running speed and cadence measurement if notification has been enabled...">ble_rscs_measurement_send()</a>.</p>
+<p>If an event handler is supplied by the application, the Running Speed and Cadence Service will generate Running Speed and Cadence Service events to the application.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Running Speead and Candence Service module by calling <a class="el" href="a00968.html#ga23555a37f7903b50d65a818f32c362ec" title="Function for handling the Application&#39;s BLE Stack events.">ble_rscs_on_ble_evt()</a> from the <a class="el" href="a00948.html">SoftDevice Event Handler</a> function.</dd>
 <dd>
 Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profile qualification listings, this section of source code must not be modified. </dd></dl>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga621d899fc96687c922a0c65010bfc063"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga7699ff99de0293fa8183117ba09259c9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00968.html#ga621d899fc96687c922a0c65010bfc063">ble_hids_evt_type_t</a></td>
+          <td class="memname">#define BLE_RSCS_FEATURE_CALIBRATION_PROCEDURE_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 3)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calibration Procedure Supported bit. </p>
+
+</div>
+</div>
+<a class="anchor" id="gab7a0af47e661440ca6845c1f4a73ad87"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_RSCS_FEATURE_INSTANT_STRIDE_LEN_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 0)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>HID Service event type. </p>
+<p>Running Speed and Cadence Service feature bits. </p>
+<p>Instantaneous Stride Length Measurement Supported bit. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga069fdb89d733f4bcffc62f9a42a19ffb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_RSCS_FEATURE_MULTIPLE_SENSORS_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 4)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Multiple Sensor Locations Supported bit. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaca7e41a2844d7508da269b933aba0edc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_RSCS_FEATURE_TOTAL_DISTANCE_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Total Distance Measurement Supported bit. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga032860d4209d0f07f27cd7fb1b6643c3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_RSCS_FEATURE_WALKING_OR_RUNNING_STATUS_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 2)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Walking or Running Status Supported bit. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaed8352fbaf5d37687a3aa5751f4d23bd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00968.html#gaed8352fbaf5d37687a3aa5751f4d23bd">ble_rscs_evt_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Running Speed and Cadence Service event type. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga621d899fc96687c922a0c65010bfc063a2c517f6d4a3a253bd99b52cc67f34a8b"></a>BLE_HIDS_EVT_HOST_SUSP</em>&nbsp;</td><td class="fielddoc">
-<p>Suspend command received. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaed8352fbaf5d37687a3aa5751f4d23bda4e8e3e5e00758024939ee56a4d2d2418"></a>BLE_RSCS_EVT_NOTIFICATION_ENABLED</em>&nbsp;</td><td class="fielddoc">
+<p>Running Speed and Cadence value notification enabled event. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga621d899fc96687c922a0c65010bfc063a6971e1a18ee6ee48d3aa2e046debba6b"></a>BLE_HIDS_EVT_HOST_EXIT_SUSP</em>&nbsp;</td><td class="fielddoc">
-<p>Exit suspend command received. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga621d899fc96687c922a0c65010bfc063a65b1e55409e2bed5a0871ec15dff4875"></a>BLE_HIDS_EVT_NOTIF_ENABLED</em>&nbsp;</td><td class="fielddoc">
-<p>Notification enabled event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga621d899fc96687c922a0c65010bfc063a71b3af5b42cc730e6ad0752b3ad5c581"></a>BLE_HIDS_EVT_NOTIF_DISABLED</em>&nbsp;</td><td class="fielddoc">
-<p>Notification disabled event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga621d899fc96687c922a0c65010bfc063a0afaaafa6865acd5725096b6c2f6faa6"></a>BLE_HIDS_EVT_REP_CHAR_WRITE</em>&nbsp;</td><td class="fielddoc">
-<p>A new value has been written to an Report characteristic. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga621d899fc96687c922a0c65010bfc063a4bc01306b5a8d12443926c1761d49a3a"></a>BLE_HIDS_EVT_BOOT_MODE_ENTERED</em>&nbsp;</td><td class="fielddoc">
-<p>Boot mode entered. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga621d899fc96687c922a0c65010bfc063a42845071ff0875e098bd16723d57d72f"></a>BLE_HIDS_EVT_REPORT_MODE_ENTERED</em>&nbsp;</td><td class="fielddoc">
-<p>Report mode entered. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga621d899fc96687c922a0c65010bfc063afd062cf35ee7e413359bf8ce168006b3"></a>BLE_HIDS_EVT_REPORT_READ</em>&nbsp;</td><td class="fielddoc">
-<p>Read with response </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaed8352fbaf5d37687a3aa5751f4d23bda36486aa0ec7024c5b29d2b6c2cbb89cd"></a>BLE_RSCS_EVT_NOTIFICATION_DISABLED</em>&nbsp;</td><td class="fielddoc">
+<p>Running Speed and Cadence value notification disabled event. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga30a528bd23ffe8ddea07d1960eb4c507"></a>
+<a class="anchor" id="gafd5591aad290232ba97ac0bc7aec8f7b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_hids_boot_kb_inp_rep_send </td>
+          <td class="memname">uint32_t ble_rscs_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hids</em>, </td>
+          <td class="paramtype"><a class="el" href="a00345.html">ble_rscs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_rscs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_data</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00343.html">ble_rscs_init_t</a> *&#160;</td>
+          <td class="paramname"><em>p_rscs_init</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -310,114 +299,11 @@ Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profil
       </table>
 </div><div class="memdoc">
 
-<p>Function for sending Boot Keyboard Input Report. </p>
-<p>Sends data on an Boot Keyboard Input Report characteristic.</p>
+<p>Function for initializing the Running Speed and Cadence Service. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hids</td><td>HID Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data to be sent. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Pointer to data to be sent.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful sending of the report, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gafc9114dc1527bfdd5a961c57c35357e3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_hids_boot_mouse_inp_rep_send </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hids</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>buttons</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>x_delta</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>y_delta</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>optional_data_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_optional_data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for sending Boot Mouse Input Report. </p>
-<p>Sends data on an Boot Mouse Input Report characteristic.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hids</td><td>HID Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buttons</td><td>State of mouse buttons. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">x_delta</td><td>Horizontal movement. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">y_delta</td><td>Vertical movement. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">optional_data_len</td><td>Length of optional part of Boot Mouse Input Report. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_optional_data</td><td>Optional part of Boot Mouse Input Report.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful sending of the report, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf0b5ac4400c5c10be0a32554a6ffb68a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_hids_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hids</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00286.html">ble_hids_init_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hids_init</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for initializing the HID Service. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_hids</td><td>HID Service structure. This structure will have to be supplied by the application. It will be initialized by this function, and will later be used to identify this particular service instance. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hids_init</td><td>Information needed to initialize the service.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_rscs</td><td>Running Speed and Cadence Service structure. This structure will have to be supplied by the application. It will be initialized by this function, and will later be used to identify this particular service instance. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rscs_init</td><td>Information needed to initialize the service.</td></tr>
   </table>
   </dd>
 </dl>
@@ -425,33 +311,21 @@ Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profil
 
 </div>
 </div>
-<a class="anchor" id="gaebf0c8621a14c15990aeac30750fb5bc"></a>
+<a class="anchor" id="ga16080f0b2880066d0e1f88fbe960079b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_hids_inp_rep_send </td>
+          <td class="memname">uint32_t ble_rscs_measurement_send </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hids</em>, </td>
+          <td class="paramtype"><a class="el" href="a00345.html">ble_rscs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_rscs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>rep_index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_data</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00968.html#ga1b8b0a0d95abb5145cca3e5fb23a6352">ble_rscs_meas_t</a> *&#160;</td>
+          <td class="paramname"><em>p_measurement</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -461,35 +335,33 @@ Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profil
       </table>
 </div><div class="memdoc">
 
-<p>Function for sending Input Report. </p>
-<p>Sends data on an Input Report characteristic.</p>
+<p>Function for sending running speed and cadence measurement if notification has been enabled. </p>
+<p>The application calls this function after having performed a Running Speed and Cadence measurement. If notification has been enabled, the measurement data is encoded and sent to the client.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hids</td><td>HID Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rep_index</td><td>Index of the characteristic (corresponding to the index in <a class="el" href="a00291.html#a0b2f9ea0ae58be58ff1b12bd72600ae9">ble_hids_t.inp_rep_array</a> as passed to <a class="el" href="a00968.html#gaf0b5ac4400c5c10be0a32554a6ffb68a" title="Function for initializing the HID Service.">ble_hids_init()</a>). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data to be sent. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Pointer to data to be sent.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rscs</td><td>Running Speed and Cadence Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_measurement</td><td>Pointer to new running speed and cadence measurement.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful sending of input report, otherwise an error code. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga77b3d388f18004a1e730b4f2bbee5cac"></a>
+<a class="anchor" id="ga23555a37f7903b50d65a818f32c362ec"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ble_hids_on_ble_evt </td>
+          <td class="memname">void ble_rscs_on_ble_evt </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hids</em>, </td>
+          <td class="paramtype"><a class="el" href="a00345.html">ble_rscs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_rscs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00213.html">ble_evt_t</a> *&#160;</td>
           <td class="paramname"><em>p_ble_evt</em>&#160;</td>
         </tr>
         <tr>
@@ -501,72 +373,14 @@ Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profil
 </div><div class="memdoc">
 
 <p>Function for handling the Application's BLE Stack events. </p>
-<p>Handles all events from the BLE stack of interest to the HID Service.</p>
+<p>Handles all events from the BLE stack of interest to the Running Speed and Cadence Service.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hids</td><td>HID Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rscs</td><td>Running Speed and Cadence Service structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Event received from the BLE stack. </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ga66e5fb9cefb62e76a88f2cc229c55f70"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_hids_outp_rep_get </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00968.html#ga7038aff3f095043b34e0a1403dd4ebcc">ble_hids_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hids</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>rep_index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>offset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_outp_rep</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for getting the current value of Output Report from the stack. </p>
-<p>Fetches the current value of the output report characteristic from the stack.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hids</td><td>HID Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rep_index</td><td>Index of the characteristic (corresponding to the index in <a class="el" href="a00291.html#a2b24228b1fd9372646dad4ef392a8fe7">ble_hids_t.outp_rep_array</a> as passed to <a class="el" href="a00968.html#gaf0b5ac4400c5c10be0a32554a6ffb68a" title="Function for initializing the HID Service.">ble_hids_init()</a>). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of output report needed. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset in bytes to read from. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_outp_rep</td><td>Pointer to the output report.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful read of the report, otherwise an error code. </dd></dl>
 
 </div>
 </div>
@@ -575,7 +389,7 @@ Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profil
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:23 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

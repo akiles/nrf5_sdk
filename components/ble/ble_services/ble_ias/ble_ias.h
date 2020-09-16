@@ -73,12 +73,13 @@ typedef struct
 
 /**@brief Immediate Alert Service structure. This contains various status information for the
  *        service. */
-typedef struct ble_ias_s
+struct ble_ias_s
 {
     ble_ias_evt_handler_t     evt_handler;              /**< Event handler to be called for handling events in the Immediate Alert Service. */
     uint16_t                  service_handle;           /**< Handle of Immediate Alert Service (as provided by the BLE stack). */
     ble_gatts_char_handles_t  alert_level_handles;      /**< Handles related to the Alert Level characteristic. */
-} ble_ias_t;
+    uint16_t                  conn_handle;              /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
+};
 
 /**@brief Function for initializing the Immediate Alert Service.
  *

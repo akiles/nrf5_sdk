@@ -1,5 +1,7 @@
 var a00664 =
 [
-    [ "ble_dtm_init_req_dec", "a00664.html#ga83c3902e3f26071b27f53d8394ea6fed", null ],
-    [ "ble_dtm_init_rsp_enc", "a00664.html#ga17ecedcb46b8807bb5af3f3ae3bef469", null ]
+    [ "DM_PROTOCOL_CNTXT_ALL", "a00664.html#gabf3d92dc785166cb06763af1c6616b94", null ],
+    [ "DM_PROTOCOL_CNTXT_GATT_CLI_ID", "a00664.html#ga20cd764cccd94fd71cc07c9f5f2c681a", null ],
+    [ "DM_PROTOCOL_CNTXT_GATT_SRVR_ID", "a00664.html#ga40fd38aabb6b0c4ab56549d5189ff366", null ],
+    [ "DM_PROTOCOL_CNTXT_NONE", "a00664.html#gaf4cac13e3128b3131c16d52760393932", null ]
 ];

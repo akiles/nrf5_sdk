@@ -85,13 +85,13 @@ typedef void (* ble_bas_c_evt_handler_t) (ble_bas_c_t * p_bas_bas_c, ble_bas_c_e
 /**@brief      Battery Service Client structure.
 
  */
-typedef struct ble_bas_c_s
+struct ble_bas_c_s
 {
     uint16_t                conn_handle;     /**< Connection handle as provided by the SoftDevice. */
     uint16_t                bl_cccd_handle;  /**< Handle of the CCCD of the Battery Level characteristic. */
     uint16_t                bl_handle;       /**< Handle of the Battery Level characteristic as provided by the SoftDevice. */
     ble_bas_c_evt_handler_t evt_handler;     /**< Application event handler to be called when there is an event related to the Battery service. */
-} ble_bas_c_t;
+};
 
 /**@brief   Battery Service Client initialization structure.
  */

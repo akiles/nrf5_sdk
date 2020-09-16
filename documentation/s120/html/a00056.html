@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: BLE Serialization</title>
+<title>nRF51 SDK - S120 SoftDevice: BLE Central</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,45 +97,60 @@ $(document).ready(function(){initNavTree('a00056.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BLE Serialization </div>  </div>
+<div class="title">BLE Central </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="nrf51_arch_serialization"></a>
-Architecture</h1>
-<p>The BLE Serialization makes it possible to place a <em>Bluetooth</em> application on an <b>Application chip</b> and connect it to a <b>Connectivity chip</b> running the BLE <a class="el" href="a00778.html">SoftDevice</a>.</p>
-<p>See <a class="el" href="a00041.html">Running a serialized application</a> for a general overview of how to start with serialization.</p>
-<p><b>Connectivity Chip</b>: <a class="el" href="a00057.html">Connectivity Chip</a><br/>
-</p>
-<p><b><em>Bluetooth</em> Application Chip:</b> The nRF51822 chip is used merely as a demonstration device running a serialized application, where the <b>BLE SoftDevice</b> is replaced by the Commands Encoder and Events Decoder (<a class="el" href="a00058.html">Serialization Codecs</a>). The <b>nRF51822</b> used as <b>Application chip does not use the BLE SoftDevice</b>. After porting hardware driver for selected <b>PHY</b> layer (<a class="el" href="a00059.html">Serialization PHY</a>), <b>nRF51822</b> at application side is supposed to be replaced by user's device . <br/>
-</p>
-<div class="image">
-<img src="architecture_overview_serialization.png" alt="architecture_overview_serialization.png"/>
-<div class="caption">
-Architectural overview of Serialized Bluetooth Application.</div></div>
-<p> In the <b><em>Bluetooth</em> Application chip</b>, the <b>BLE SoftDevice</b> is replaced by a codec implementing the <b> SoftDevice API</b>. <br/>
- All function calls to the codec will be serialized and transmitted to the <b>BLE Connectivity Chip</b> using the transport layer drivers. <br/>
- This design makes it possible to substitute an existing <b>PHY</b> layer, such as <b>UART</b> or <b>SPI</b>, without affecting the codecs. <br/>
-</p>
-<p>The <b>BLE Connectivity chip</b> will decode the serialized commands from the <b><em>Bluetooth</em> Application Board</b> and execute the corresponding function in the <b> SoftDevice </b>.<br/>
- Any event from the SoftDevice is encoded by the codec and transmitted to the <b><em>Bluetooth</em> Application chip </b> using the the transport layer. <br/>
- In the <b><em>Bluetooth</em> Application chip </b> the event is decoded and passed to the application. <br/>
-</p>
-<p><b>BLE Serialization</b> simplifies the serialization of an existing <em>Bluetooth</em> application, since limited modifications are needed in the application itself. <br/>
- Details on how to port the serialization application code to a different MCU can be found in the porting guide: <a class="el" href="a00060.html">Porting serialization libraries</a></p>
-<p>See <a class="el" href="a00041.html">Running a serialized application</a> for information about how to wire a <b><em>Bluetooth</em> Application Board</b> with a <b>BLE Connectivity Board</b>. <br/>
-</p>
-<p><a class="el" href="a00057.html">Connectivity Chip</a></p>
-<p><a class="el" href="a00058.html">Serialization Codecs</a></p>
-<p><a class="el" href="a00059.html">Serialization PHY</a></p>
-<p><a class="el" href="a00061.html">Serialization HAL Transport</a></p>
-<p><a class="el" href="a00060.html">Porting serialization libraries</a> </p>
+<div class="textblock"><p>Example applications implementing BLE profiles and demonstrating the use of BLE services.</p>
+<p>We have two types of example application designs:</p>
+<ul>
+<li><b>Using Scheduler</b>: Events are passed from interrupt level to the main loop (thread mode) using a <a class="el" href="a00498.html">Scheduler</a>.</li>
+</ul>
+<ul>
+<li><b>App Low only</b>: All service and application code executes in App Low interrupt level.</li>
+</ul>
+<p>In both designs, the example applications have many similarities:</p>
+<ul>
+<li><b>Main function</b>: The main function consists of a number of init function calls, followed by a small main loop. In an "App Low only" application, the main loop only handles power management. In Scheduler applications, the main loop contains a call to app_sched_schedule() in addition to the power management.</li>
+</ul>
+<ul>
+<li><b>Service initialization</b>: All applications contain a function named services_init. This function will initialize all services to be used by the application.</li>
+</ul>
+<ul>
+<li><b>BLE stack interrupt handler</b>: All applications include the <a class="el" href="a00639.html">SoftDevice Event Handler</a> module, which contains a BLE stack interrupt handler (SWI2_IRQHandler). This interrupt handler will be called each time the stack wants to pass an event to the application. The handler reads the stack event, and passes the event to the application through a callback function. In applications using the Scheduler, this callback function is always named ble_evt_schedule(), and in applications not using the Scheduler, it is always named ble_evt_dispatch(). The callback function dispatches the event to the BLE stack event handler of all its services and modules having such a handler (either directly, or through the Scheduler). Optionally, it may also dispatch the event to an application specific BLE stack event handler.</li>
+</ul>
+<ul>
+<li><b>Service BLE stack event handlers</b>: Services may implement their own BLE stack event handlers. These must be called when SWI2_IRQHandler (in <a class="el" href="a00639.html">SoftDevice Event Handler</a>) receives a BLE event (see previous point). The handlers will react to events that are relevant to the service, while ignoring all others.</li>
+</ul>
+<ul>
+<li><b>Application BLE stack event handler</b>: Optionally the application may implement its own BLE stack event handler. This must be called when SWI2_IRQHandler (in <a class="el" href="a00639.html">SoftDevice Event Handler</a>) receives a BLE event. The handler will react to events that are relevant to the application, while ignoring all others.</li>
+</ul>
+<ul>
+<li><b>Service event handlers</b>: The application may provide event handlers to services, letting the service inform the application about events inside the service. For some services this is optional, while for others it is mandatory.</li>
+</ul>
+<ul>
+<li><b>Service error handlers</b>: To some services, the application may provide an error handler, letting the service inform the application about errors.</li>
+</ul>
+<ul>
+<li><b>Assert handler</b>: BLE applications must implement an assert handler callback function named assert_nrf_callback. This assert handler function will be passed to the S120 SoftDevice during system initialization using <a class="el" href="a00728.html#ga26ecfde6eee7363f88bed8a8b711122a">sd_softdevice_enable</a>. In the BLE Central example applications the assert_nrf_callback is propagating all asserts to the <b>app_error_handler</b>. If different actions are required for application error and BLE S120 SoftDevice asserts a dedicated <b>assert_nrf_callback</b> should be implemented.</li>
+</ul>
+<ul>
+<li><b>Error handler</b>: Applications must implement an error handler callback function named app_error_handler. This is called directly from the application <a class="el" href="a00502.html#gace6d059863761677dae5a6b1456a34ba">APP_ERROR_HANDLER</a> macro (implemented in app_error.h). And indirectly from <a class="el" href="a00502.html#ga82d00a810dcea7dcc6af469461fb254c">APP_ERROR_CHECK</a> and <a class="el" href="a00502.html#ga9e67d9f4978caa34040b31f8fb9d4f58">APP_ERROR_CHECK_BOOL</a>.</li>
+</ul>
+<ul>
+<li><b>Behavior when maximum number of bonds is reached</b>: All applications that support bonding use the device manager module. <b>When the device manager notifies the application that it cannot store a newly bonded peripheral into the flash, the application will assert</b>. When this happens, allow the device to go into System Off mode and then press Button 1. This will wake up the application and clear all existing bonds. The bonds can also be cleared by power-cycling the board by keeping the Button 1 pressed.</li>
+</ul>
+<p>In an application using the Scheduler, instead of calling service/application event handlers directly from the <a class="el" href="a00639.html">SoftDevice Event Handler</a> callback function, the callback function passes "wrapper" events to the Scheduler, and the "wrapper" event handler will call the service/application event handlers, thus making all service/application event handlers execute in thread mode.</p>
+<p>When initializing the <a class="el" href="a00500.html">Application Timer</a> module, applications using the <a class="el" href="a00498.html">Scheduler</a> must supply a pointer to the app_sched_timer_event_schedule() function to <a class="el" href="a00500.html#ga96087520ca79dfa28fb6ba6bb562a88f" title="Function for initializing the timer module.">app_timer_init()</a>. This function will transfer execution of timer timeout handlers to the main loop by using the <a class="el" href="a00498.html">Scheduler</a>.</p>
+<p>Examples:</p>
+<p><a class="el" href="a00057.html">BLE Heart Rate Collector Example</a></p>
+<p><a class="el" href="a00058.html">BLE Multi-link Example</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:29 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

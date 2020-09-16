@@ -1,5 +1,6 @@
 var a00211 =
 [
-    [ "high_to_low", "a00211.html#ae5b08a4f0525b94727edf87267f57c0b", null ],
-    [ "low_to_high", "a00211.html#ab74530adb87a0c8728839d2bbdc0f8f0", null ]
+    [ "evt_type", "a00211.html#ac7e76a07c099aed4eb9d8180a15368d8", null ],
+    [ "packet", "a00211.html#a005a67172eb3d6a4645d536db7fbb98f", null ],
+    [ "packet_length", "a00211.html#ac31d16ccc1a5fc4bd8852c58d710f821", null ]
 ];

@@ -19,6 +19,7 @@
 #include "hci_transport.h"
 #include "app_timer.h"
 #include "app_gpiote.h"
+#include "app_scheduler.h"
 
 #define MAX_BUFFERS          4u                                                      /**< Maximum number of buffers that can be received queued without being consumed. */
 #define APP_GPIOTE_MAX_USERS 1                                                       /**< Number of GPIOTE users in total. Used by dfu_transport_serial module (flow control). */

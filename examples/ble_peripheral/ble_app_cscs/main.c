@@ -39,7 +39,7 @@
 #include "ble_cscs.h"
 #include "ble_dis.h"
 #include "ble_conn_params.h"
-#include "ble_sensorsim.h"
+#include "sensorsim.h"
 #include "softdevice_handler.h"
 #include "app_timer.h"
 #include "device_manager.h"
@@ -93,7 +93,6 @@
 #define NEXT_CONN_PARAMS_UPDATE_DELAY        APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER)/**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
 #define MAX_CONN_PARAMS_UPDATE_COUNT         3                                          /**< Number of attempts before giving up the connection parameter negotiation. */
 
-#define SEC_PARAM_TIMEOUT                    30                                         /**< Timeout for Pairing Request or Security Request (in seconds). */
 #define SEC_PARAM_BOND                       1                                          /**< Perform bonding. */
 #define SEC_PARAM_MITM                       0                                          /**< Man In The Middle protection not required. */
 #define SEC_PARAM_IO_CAPABILITIES            BLE_GAP_IO_CAPS_NONE                       /**< No I/O capabilities. */
@@ -103,19 +102,20 @@
 
 #define DEAD_BEEF                            0xDEADBEEF                                 /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
+#define APP_FEATURE_NOT_SUPPORTED            BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2       /**< Reply when unsupported features are requested. */
 
 static uint16_t                              m_conn_handle = BLE_CONN_HANDLE_INVALID;   /**< Handle of the current connection. */
 static ble_gap_adv_params_t                  m_adv_params;                              /**< Parameters to be passed to the stack when starting advertising. */
 static ble_bas_t                             m_bas;                                     /**< Structure used to identify the battery service. */
 static ble_cscs_t                            m_cscs;                                    /**< Structure used to identify the cycling speed and cadence service. */
 
-static ble_sensorsim_cfg_t                   m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
-static ble_sensorsim_state_t                 m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
+static sensorsim_cfg_t                       m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
+static sensorsim_state_t                     m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
 
-static ble_sensorsim_cfg_t                   m_speed_kph_sim_cfg;                       /**< Speed simulator configuration. */
-static ble_sensorsim_state_t                 m_speed_kph_sim_state;                     /**< Speed simulator state. */
-static ble_sensorsim_cfg_t                   m_crank_rpm_sim_cfg;                       /**< Crank simulator configuration. */
-static ble_sensorsim_state_t                 m_crank_rpm_sim_state;                     /**< Crank simulator state. */
+static sensorsim_cfg_t                       m_speed_kph_sim_cfg;                       /**< Speed simulator configuration. */
+static sensorsim_state_t                     m_speed_kph_sim_state;                     /**< Speed simulator state. */
+static sensorsim_cfg_t                       m_crank_rpm_sim_cfg;                       /**< Crank simulator configuration. */
+static sensorsim_state_t                     m_crank_rpm_sim_state;                     /**< Crank simulator state. */
 
 static app_timer_id_t                        m_battery_timer_id;                        /**< Battery timer. */
 static app_timer_id_t                        m_csc_meas_timer_id;                       /**< CSC measurement timer. */
@@ -164,7 +164,7 @@ static void battery_level_update(void)
     uint32_t err_code;
     uint8_t  battery_level;
 
-    battery_level = (uint8_t)ble_sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
+    battery_level = (uint8_t)sensorsim_measure(&m_battery_sim_state, &m_battery_sim_cfg);
 
     err_code = ble_bas_battery_level_update(&m_bas, battery_level);
     if ((err_code != NRF_SUCCESS) &&
@@ -211,7 +211,7 @@ static void csc_sim_measurement(ble_cscs_meas_t * p_measurement)
     // Calculate simulated wheel revolution values.
     p_measurement->is_wheel_rev_data_present = true;
 
-    mm_per_sec = KPH_TO_MM_PER_SEC * ble_sensorsim_measure(&m_speed_kph_sim_state,
+    mm_per_sec = KPH_TO_MM_PER_SEC * sensorsim_measure(&m_speed_kph_sim_state,
                                                            &m_speed_kph_sim_cfg);
 
     wheel_revolution_mm     += mm_per_sec * SPEED_AND_CADENCE_MEAS_INTERVAL / 1000;
@@ -225,7 +225,7 @@ static void csc_sim_measurement(ble_cscs_meas_t * p_measurement)
     // Calculate simulated cadence values.
     p_measurement->is_crank_rev_data_present = true;
 
-    degrees_per_sec = RPM_TO_DEGREES_PER_SEC * ble_sensorsim_measure(&m_crank_rpm_sim_state,
+    degrees_per_sec = RPM_TO_DEGREES_PER_SEC * sensorsim_measure(&m_crank_rpm_sim_state,
                                                                      &m_crank_rpm_sim_cfg);
 
     crank_rev_degrees     += degrees_per_sec * SPEED_AND_CADENCE_MEAS_INTERVAL / 1000;
@@ -365,8 +365,7 @@ static void advertising_init(void)
 
     advdata.name_type               = BLE_ADVDATA_FULL_NAME;
     advdata.include_appearance      = true;
-    advdata.flags.size              = sizeof(flags);
-    advdata.flags.p_data            = &flags;
+    advdata.flags                   = flags;
     advdata.uuids_complete.uuid_cnt = sizeof(adv_uuids) / sizeof(adv_uuids[0]);
     advdata.uuids_complete.p_uuids  = adv_uuids;
 
@@ -386,8 +385,9 @@ static void advertising_init(void)
 
 /**@brief Function for handling Speed and Cadence Control point events
  *
- * @details Function for handling Speed and Cadence Control point events
- * This function parses the event and in case the set cumulative value event is received, sets the wheel cumulative value to the received value.
+ * @details Function for handling Speed and Cadence Control point events.
+ *          This function parses the event and in case the "set cumulative value" event is received,
+ *          sets the wheel cumulative value to the received value.
  */
 ble_scpt_response_t sc_ctrlpt_event_handler(ble_sc_ctrlpt_t     * p_sc_ctrlpt,
                                             ble_sc_ctrlpt_evt_t * p_evt)
@@ -482,28 +482,28 @@ static void services_init(void)
 
 /**@brief Function for initializing the sensor simulators.
  */
-static void sensor_sim_init(void)
+static void sensor_simulator_init(void)
 {
     m_battery_sim_cfg.min          = MIN_BATTERY_LEVEL;
     m_battery_sim_cfg.max          = MAX_BATTERY_LEVEL;
     m_battery_sim_cfg.incr         = BATTERY_LEVEL_INCREMENT;
     m_battery_sim_cfg.start_at_max = true;
 
-    ble_sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
+    sensorsim_init(&m_battery_sim_state, &m_battery_sim_cfg);
 
     m_speed_kph_sim_cfg.min          = MIN_SPEED_KPH;
     m_speed_kph_sim_cfg.max          = MAX_SPEED_KPH;
     m_speed_kph_sim_cfg.incr         = SPEED_KPH_INCREMENT;
     m_speed_kph_sim_cfg.start_at_max = false;
 
-    ble_sensorsim_init(&m_speed_kph_sim_state, &m_speed_kph_sim_cfg);
+    sensorsim_init(&m_speed_kph_sim_state, &m_speed_kph_sim_cfg);
 
     m_crank_rpm_sim_cfg.min          = MIN_CRANK_RPM;
     m_crank_rpm_sim_cfg.max          = MAX_CRANK_RPM;
     m_crank_rpm_sim_cfg.incr         = CRANK_RPM_INCREMENT;
     m_crank_rpm_sim_cfg.start_at_max = false;
 
-    ble_sensorsim_init(&m_crank_rpm_sim_state, &m_crank_rpm_sim_cfg);
+    sensorsim_init(&m_crank_rpm_sim_state, &m_crank_rpm_sim_cfg);
 
     m_cumulative_wheel_revs        = 0;
     m_auto_calibration_in_progress = false;
@@ -615,6 +615,7 @@ static void conn_params_init(void)
 static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
     uint32_t err_code = NRF_SUCCESS;
+    ble_gatts_rw_authorize_reply_params_t auth_reply;
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -634,13 +635,14 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
         case BLE_GAP_EVT_TIMEOUT:
 
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT)
+            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
             {
                 err_code = bsp_indication_set(BSP_INDICATE_IDLE);
                 APP_ERROR_CHECK(err_code);
 
                 // activate buttons to wake-up from power off
-                err_code = bsp_buttons_enable( (1 << WAKEUP_BUTTON_ID) | (1 << BOND_DELETE_ALL_BUTTON_ID) );
+                err_code = bsp_buttons_enable((1 << WAKEUP_BUTTON_ID) |
+                                              (1 << BOND_DELETE_ALL_BUTTON_ID));
                 APP_ERROR_CHECK(err_code);
                 
                 // Go to system-off mode (this function will not return; wakeup will cause a reset).
@@ -649,6 +651,40 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             }
             break;
 
+        case BLE_EVT_USER_MEM_REQUEST:
+            err_code = sd_ble_user_mem_reply(m_conn_handle, NULL);
+            APP_ERROR_CHECK(err_code);
+            break;
+
+        case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
+            if(p_ble_evt->evt.gatts_evt.params.authorize_request.type
+               != BLE_GATTS_AUTHORIZE_TYPE_INVALID)
+            {
+                if ((p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
+                     == BLE_GATTS_OP_PREP_WRITE_REQ)
+                    || (p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
+                     == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW)
+                    || (p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
+                     == BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL))
+                {
+                    if (p_ble_evt->evt.gatts_evt.params.authorize_request.type
+                        == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
+                    {
+                    auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
+                    }
+                    else
+                    {
+                        auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_READ;
+                    }
+                    auth_reply.params.write.gatt_status = APP_FEATURE_NOT_SUPPORTED;
+                    err_code = sd_ble_gatts_rw_authorize_reply(m_conn_handle,&auth_reply);
+                    APP_ERROR_CHECK(err_code);
+                }
+            }
+            break;
+
+        case BLE_GATTS_OP_EXEC_WRITE_REQ_NOW:
+            break;
         default:
             // No implementation needed.
             break;
@@ -721,9 +757,9 @@ static void ble_stack_init(void)
     uint32_t err_code;
 
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
-    // Enable BLE stack 
+    // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
@@ -745,7 +781,7 @@ static void ble_stack_init(void)
  */
 static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
                                            dm_event_t const  * p_event,
-                                           api_result_t        event_result)
+                                           ret_code_t        event_result)
 {
     APP_ERROR_CHECK(event_result);
     return NRF_SUCCESS;
@@ -773,7 +809,6 @@ static void device_manager_init(void)
 
     memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
     
-    register_param.sec_param.timeout      = SEC_PARAM_TIMEOUT;
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
@@ -802,18 +837,23 @@ static void power_manage(void)
 int main(void)
 {
     uint32_t err_code;
+
     // Initialize.
     app_trace_init();
     ble_stack_init();
     device_manager_init();
     timers_init();
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
+
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
+                        NULL);
     APP_ERROR_CHECK(err_code);
+
     gap_params_init();
     advertising_init();
     services_init();
-    sensor_sim_init();
+    sensor_simulator_init();
     conn_params_init();
 
     // Start execution.

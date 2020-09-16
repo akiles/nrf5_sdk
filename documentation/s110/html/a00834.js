@@ -1,5 +1,8 @@
 var a00834 =
 [
-    [ "BLE_CONN_HANDLE_ALL", "a00834.html#ga75e3958065c393f536bd316877892997", null ],
-    [ "BLE_CONN_HANDLE_INVALID", "a00834.html#gacf227b9b101dbcf08eccbbaba54e48f5", null ]
+    [ "BLE_GAP_IO_CAPS_DISPLAY_ONLY", "a00834.html#ga4e2f9010ba35ab6488ec181f75786435", null ],
+    [ "BLE_GAP_IO_CAPS_DISPLAY_YESNO", "a00834.html#ga88681e29c52a54de028e2ee164d2403b", null ],
+    [ "BLE_GAP_IO_CAPS_KEYBOARD_DISPLAY", "a00834.html#gaacd3ccc6340303a1edcc7c718f3c1e6f", null ],
+    [ "BLE_GAP_IO_CAPS_KEYBOARD_ONLY", "a00834.html#ga65df849ce31a65393bd89ef65a7575b4", null ],
+    [ "BLE_GAP_IO_CAPS_NONE", "a00834.html#gad11df80d3ac9d375b320363694ec0a03", null ]
 ];

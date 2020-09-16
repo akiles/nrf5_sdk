@@ -1,10 +1,8 @@
 var a00116 =
 [
-    [ "auth_status", "a00116.html#a7abaaec9ee09953586fa7ab79c106a25", null ],
-    [ "bonded", "a00116.html#a54615bc38138687aef17d617c49c6f2a", null ],
-    [ "error_src", "a00116.html#aace68175dd43ad9be164097ef656e04e", null ],
-    [ "kdist_central", "a00116.html#a78ff491a0868d626e18245792325c4a3", null ],
-    [ "kdist_periph", "a00116.html#a8fc7c09f814b1d3d0537d0411b2b143e", null ],
-    [ "sm1_levels", "a00116.html#a6843023d29415f3ede4471a9fe359acf", null ],
-    [ "sm2_levels", "a00116.html#a29d62f41ca47daabc4098310ceffd4e1", null ]
+    [ "conn_params", "a00116.html#a0b48983984c9a6eca0b81380f8af8a05", null ],
+    [ "irk_match", "a00116.html#ade7ff1956c46e2832bf82c95711a408f", null ],
+    [ "irk_match_idx", "a00116.html#a40ac77b4be795c7085f8eece5adc9d73", null ],
+    [ "own_addr", "a00116.html#abe43eb1ef406537f10a3173f851852bf", null ],
+    [ "peer_addr", "a00116.html#a2107b9536488cbcb75ca3f059e5ab72e", null ]
 ];

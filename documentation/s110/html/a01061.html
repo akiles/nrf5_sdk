@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Enumerations</title>
+<title>nRF51 SDK - S110 SoftDevice: Defines</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,49 +97,136 @@ $(document).ready(function(){initNavTree('a01061.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#groups">Modules</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Enumerations<div class="ingroups"><a class="el" href="a00902.html">Logical Link Control and Adaptation Protocol (L2CAP)</a></div></div>  </div>
+<div class="title">Defines<div class="ingroups"><a class="el" href="a00861.html">Common types and macro definitions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga08e7b23691ec76610bbd89735c642322"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01061.html#ga08e7b23691ec76610bbd89735c642322">BLE_L2CAP_SVCS</a> { <br/>
-&#160;&#160;<a class="el" href="a01061.html#gga08e7b23691ec76610bbd89735c642322a6168d9f18ea5916224c6b76a118ae076">SD_BLE_L2CAP_CID_REGISTER</a> = 0xB0, 
-<br/>
-&#160;&#160;<a class="el" href="a01061.html#gga08e7b23691ec76610bbd89735c642322ace8a5ba33631ecf722fd5ce033a413e8">SD_BLE_L2CAP_CID_UNREGISTER</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a01061.html#gga08e7b23691ec76610bbd89735c642322a073ec8ef84fe64e4d3cfdb9538c70438">SD_BLE_L2CAP_TX</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga08e7b23691ec76610bbd89735c642322"><td class="mdescLeft">&#160;</td><td class="mdescRight">L2CAP API SVC numbers.  <a href="a01061.html#ga08e7b23691ec76610bbd89735c642322">More...</a><br/></td></tr>
-<tr class="separator:ga08e7b23691ec76610bbd89735c642322"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00862"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00862.html">BLE Connection Handles</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00863"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00863.html">Assigned Values for BLE UUIDs</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00864"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00864.html">Types of UUID</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00865"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00865.html">Bluetooth Appearance values</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gac4478362651889d2ade8030f53713588"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01061.html#gac4478362651889d2ade8030f53713588">BLE_UUID_BLE_ASSIGN</a>(instance, value)</td></tr>
+<tr class="memdesc:gac4478362651889d2ade8030f53713588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set .type and .uuid fields of ble_uuid_struct to specified uuid value.  <a href="#gac4478362651889d2ade8030f53713588">More...</a><br/></td></tr>
+<tr class="separator:gac4478362651889d2ade8030f53713588"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae760be8e12d22dc39e9dca99bdf33536"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01061.html#gae760be8e12d22dc39e9dca99bdf33536">BLE_UUID_COPY_PTR</a>(dst, src)</td></tr>
+<tr class="memdesc:gae760be8e12d22dc39e9dca99bdf33536"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy type and uuid members from src to dst <a class="el" href="a00359.html" title="Bluetooth Low Energy UUID type, encapsulates both 16-bit and 128-bit UUIDs.">ble_uuid_t</a> pointer. Both pointers must be valid/non-null.  <a href="#gae760be8e12d22dc39e9dca99bdf33536">More...</a><br/></td></tr>
+<tr class="separator:gae760be8e12d22dc39e9dca99bdf33536"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b7bc0d395b3436d101cbf183a16fd8f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01061.html#ga7b7bc0d395b3436d101cbf183a16fd8f">BLE_UUID_COPY_INST</a>(dst, src)</td></tr>
+<tr class="memdesc:ga7b7bc0d395b3436d101cbf183a16fd8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy type and uuid members from src to dst <a class="el" href="a00359.html" title="Bluetooth Low Energy UUID type, encapsulates both 16-bit and 128-bit UUIDs.">ble_uuid_t</a> struct.  <a href="#ga7b7bc0d395b3436d101cbf183a16fd8f">More...</a><br/></td></tr>
+<tr class="separator:ga7b7bc0d395b3436d101cbf183a16fd8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8d7439022acdbd47118aab389084298"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa8d7439022acdbd47118aab389084298"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01061.html#gaa8d7439022acdbd47118aab389084298">BLE_UUID_EQ</a>(p_uuid1, p_uuid2)&#160;&#160;&#160;(((p_uuid1)-&gt;type == (p_uuid2)-&gt;type) &amp;&amp; ((p_uuid1)-&gt;uuid == (p_uuid2)-&gt;uuid))</td></tr>
+<tr class="memdesc:gaa8d7439022acdbd47118aab389084298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare for equality both type and uuid members of two (valid, non-null) <a class="el" href="a00359.html" title="Bluetooth Low Energy UUID type, encapsulates both 16-bit and 128-bit UUIDs.">ble_uuid_t</a> pointers. <br/></td></tr>
+<tr class="separator:gaa8d7439022acdbd47118aab389084298"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga06eb7ac9c1db7d9a1ef2fb7d6fb4e5ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga06eb7ac9c1db7d9a1ef2fb7d6fb4e5ec"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01061.html#ga06eb7ac9c1db7d9a1ef2fb7d6fb4e5ec">BLE_UUID_NEQ</a>(p_uuid1, p_uuid2)&#160;&#160;&#160;(((p_uuid1)-&gt;type != (p_uuid2)-&gt;type) || ((p_uuid1)-&gt;uuid != (p_uuid2)-&gt;uuid))</td></tr>
+<tr class="memdesc:ga06eb7ac9c1db7d9a1ef2fb7d6fb4e5ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare for difference both type and uuid members of two (valid, non-null) <a class="el" href="a00359.html" title="Bluetooth Low Energy UUID type, encapsulates both 16-bit and 128-bit UUIDs.">ble_uuid_t</a> pointers. <br/></td></tr>
+<tr class="separator:ga06eb7ac9c1db7d9a1ef2fb7d6fb4e5ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga08e7b23691ec76610bbd89735c642322"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gac4478362651889d2ade8030f53713588"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a01061.html#ga08e7b23691ec76610bbd89735c642322">BLE_L2CAP_SVCS</a></td>
+          <td class="memname">#define BLE_UUID_BLE_ASSIGN</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">instance, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">value&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {\</div>
+<div class="line">            instance.type = <a class="code" href="a00864.html#gae549d14b15783ba52dae5fdd5f9ac959">BLE_UUID_TYPE_BLE</a>; \</div>
+<div class="line">            instance.uuid = value;} <span class="keywordflow">while</span>(0)</div>
+</div><!-- fragment -->
+<p>Set .type and .uuid fields of ble_uuid_struct to specified uuid value. </p>
 
-<p>L2CAP API SVC numbers. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga08e7b23691ec76610bbd89735c642322a6168d9f18ea5916224c6b76a118ae076"></a>SD_BLE_L2CAP_CID_REGISTER</em>&nbsp;</td><td class="fielddoc">
-<p>Register a CID. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga08e7b23691ec76610bbd89735c642322ace8a5ba33631ecf722fd5ce033a413e8"></a>SD_BLE_L2CAP_CID_UNREGISTER</em>&nbsp;</td><td class="fielddoc">
-<p>Unregister a CID. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga08e7b23691ec76610bbd89735c642322a073ec8ef84fe64e4d3cfdb9538c70438"></a>SD_BLE_L2CAP_TX</em>&nbsp;</td><td class="fielddoc">
-<p>Transmit a packet. </p>
-</td></tr>
-</table>
+</div>
+</div>
+<a class="anchor" id="ga7b7bc0d395b3436d101cbf183a16fd8f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_UUID_COPY_INST</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">dst, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">src&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {\</div>
+<div class="line">            (dst).type = (src).type; \</div>
+<div class="line">            (dst).uuid = (src).uuid;} <span class="keywordflow">while</span>(0)</div>
+</div><!-- fragment -->
+<p>Copy type and uuid members from src to dst <a class="el" href="a00359.html" title="Bluetooth Low Energy UUID type, encapsulates both 16-bit and 128-bit UUIDs.">ble_uuid_t</a> struct. </p>
+
+</div>
+</div>
+<a class="anchor" id="gae760be8e12d22dc39e9dca99bdf33536"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_UUID_COPY_PTR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">dst, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">src&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {\</div>
+<div class="line">            (dst)-&gt;type = (src)-&gt;type; \</div>
+<div class="line">            (dst)-&gt;uuid = (src)-&gt;uuid;} <span class="keywordflow">while</span>(0)</div>
+</div><!-- fragment -->
+<p>Copy type and uuid members from src to dst <a class="el" href="a00359.html" title="Bluetooth Low Energy UUID type, encapsulates both 16-bit and 128-bit UUIDs.">ble_uuid_t</a> pointer. Both pointers must be valid/non-null. </p>
 
 </div>
 </div>
@@ -148,7 +235,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

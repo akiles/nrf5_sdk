@@ -1,9 +1,7 @@
 var a00258 =
 [
-    [ "char_uuid", "a00258.html#adbbcf41424e48536f3c3e7f2665005fd", null ],
-    [ "desc_uuid", "a00258.html#a6d909918be5c3a58a93e3f345ad0ae5e", null ],
-    [ "srvc_handle", "a00258.html#a9ec74591a8b40af4354fed5c2ae33efd", null ],
-    [ "srvc_uuid", "a00258.html#a351c0654157494b748a0adcba003e42f", null ],
-    [ "type", "a00258.html#a59115313e869d01234cc2ed3ab2e25d9", null ],
-    [ "value_handle", "a00258.html#a770254b2ade294a3f24fa0db65a2d0fa", null ]
+    [ "addr_count", "a00258.html#a8f7d372587ed29005dbfd515103fa6fd", null ],
+    [ "irk_count", "a00258.html#a21922578ee2df66befd41e968f8d5af1", null ],
+    [ "pp_addrs", "a00258.html#a9316d95519c47512389b4696376556d0", null ],
+    [ "pp_irks", "a00258.html#ab78ecf15e25742a5ea56377cef1a8603", null ]
 ];

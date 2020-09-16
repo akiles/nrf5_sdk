@@ -1,16 +1,13 @@
 var a00393 =
 [
-    [ "SPI_CONFIG_CPHA", "a00393.html#a8d9ec5e520efd6528eac731dc6ec1d09", null ],
-    [ "SPI_CONFIG_CPOL", "a00393.html#afcfa3b91400e01c58ed4bcb01579957b", null ],
-    [ "SPI_CONFIG_ORDER", "a00393.html#a9ae7b60e2bf798c6c3c2a31e05d71436", null ],
-    [ "SPI_CPHA", "a00393.html#a19f2a3a33b059fe627b89a04bdcd69b6", null ],
-    [ "SPI_CPOL", "a00393.html#af4d3bd41e35948de16b495e1fe29d867", null ],
-    [ "SPI_DisableAllIRQ", "a00393.html#a8eb5716e03de5b39ef991a7fe237b77d", null ],
-    [ "SPI_Freq", "a00393.html#afd21a8a469598aaa408f4e13a9a3040f", null ],
-    [ "SPI_ORDER", "a00393.html#a38633561e69f0d3e8dbb8a14c34fa61f", null ],
-    [ "SPI_Pin_MISO", "a00393.html#aee3ebe39323764d06cef34ab601ed870", null ],
-    [ "SPI_Pin_MOSI", "a00393.html#a104ebda3a0069d2dc638022dd4e4d385", null ],
-    [ "SPI_Pin_SCK", "a00393.html#a0beff1248c5fd9d9f257fc2c3ea12a84", null ],
-    [ "SPI_Pin_SS", "a00393.html#a0203f17b181806c009086cce9c5c044c", null ],
-    [ "SPI_PriorityIRQ", "a00393.html#ae73b65ac984bdc5b1855cb026009ff0e", null ]
+    [ "dbfen", "a00393.html#afeb0929a5e3af939f1469bc9780c547c", null ],
+    [ "interrupt_priority", "a00393.html#a6f59490ee62c5446c35e995198b006a1", null ],
+    [ "ledpol", "a00393.html#a3bad75b2a096af7d2653bed27f8be304", null ],
+    [ "ledpre", "a00393.html#a8c1913ba1712626118f0e72c23c8a3ee", null ],
+    [ "psela", "a00393.html#aa797139ef4cce2cb9c020704ee5578e9", null ],
+    [ "pselb", "a00393.html#a775dc1c31fa885806fac5241a1c76654", null ],
+    [ "pselled", "a00393.html#a19e96779f15cb9518453ce212c5f350d", null ],
+    [ "reportper", "a00393.html#a42cf03b9ab27904d4b327cf13e87ef57", null ],
+    [ "sample_inten", "a00393.html#a1e2cc199ffae852461fdacf9505bbdd4", null ],
+    [ "sampleper", "a00393.html#a98cfd96298bb3f9660f50faaa973b637", null ]
 ];

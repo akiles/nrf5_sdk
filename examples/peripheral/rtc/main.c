@@ -20,15 +20,17 @@
  * 
  */
 
-#include <stdbool.h>
 #include "nrf.h"
 #include "nrf_gpio.h"
-#include "bsp.h"
+#include "nrf_drv_config.h"
+#include "nrf_drv_rtc.h"
+#include "nrf_drv_clock.h"
+#include "boards.h"
+#include "app_error.h"
+#include <stdint.h>
+#include <stdbool.h>
 
-#define LFCLK_FREQUENCY           (32768UL)                                 /**< LFCLK frequency in Hertz, constant. */
-#define RTC_FREQUENCY             (8UL)                                     /**< Required RTC working clock RTC_FREQUENCY Hertz. Changable. */
-#define COMPARE_COUNTERTIME       (3UL)                                     /**< Get Compare event COMPARE_TIME seconds after the counter starts from 0. */
-#define COUNTER_PRESCALER         ((LFCLK_FREQUENCY / RTC_FREQUENCY) - 1)   /* f = LFCLK/(prescaler + 1) */
+#define COMPARE_COUNTERTIME  (3UL)                                        /**< Get Compare event COMPARE_TIME seconds after the counter starts from 0. */
 
 #ifdef BSP_LED_0
     #define TICK_EVENT_OUTPUT     BSP_LED_0                                 /**< Pin number for indicating tick event. */
@@ -43,59 +45,60 @@
     #error "Please indicate output pin"
 #endif
 
+const nrf_drv_rtc_t rtc = NRF_DRV_RTC_INSTANCE(0); /**< Declaring an instance of nrf_drv_rtc for RTC0. */
+
+/** @brief: Function for handling the RTC0 interrupts.
+ * Triggered on TICK and COMPARE0 match.
+ */
+static void rtc_handler(nrf_drv_rtc_int_type_t int_type)
+{
+    if (int_type == NRF_DRV_RTC_INT_COMPARE0)
+    {
+        nrf_gpio_pin_toggle(COMPARE_EVENT_OUTPUT);
+    }
+    else if (int_type == NRF_DRV_RTC_INT_TICK)
+    {
+        nrf_gpio_pin_toggle(TICK_EVENT_OUTPUT);
+    }
+}
+
+/** @brief Function configuring gpio for pin toggling.
+ */
+static void leds_config(void)
+{
+    LEDS_CONFIGURE(((1<<COMPARE_EVENT_OUTPUT) | (1<<TICK_EVENT_OUTPUT)));
+    LEDS_OFF((1<<COMPARE_EVENT_OUTPUT) | (1<<TICK_EVENT_OUTPUT));
+}
 
 /** @brief Function starting the internal LFCLK XTAL oscillator.
  */
 static void lfclk_config(void)
 {
-    NRF_CLOCK->LFCLKSRC            = (CLOCK_LFCLKSRC_SRC_Xtal << CLOCK_LFCLKSRC_SRC_Pos);
-    NRF_CLOCK->EVENTS_LFCLKSTARTED = 0;
-    NRF_CLOCK->TASKS_LFCLKSTART    = 1;
+    ret_code_t err_code = nrf_drv_clock_init(NULL);
+    APP_ERROR_CHECK(err_code);
 
-    while (NRF_CLOCK->EVENTS_LFCLKSTARTED == 0)
-    {
-        // Do nothing.
-    }
-    NRF_CLOCK->EVENTS_LFCLKSTARTED = 0;
+    nrf_drv_clock_lfclk_request();
 }
 
-
-/** @brief Function for configuring the RTC with TICK to 100Hz and COMPARE0 to 10 sec.
+/** @brief Function initialization and configuration of RTC driver instance.
  */
 static void rtc_config(void)
 {
-    NVIC_EnableIRQ(RTC0_IRQn);                                  // Enable Interrupt for the RTC in the core.
-    NRF_RTC0->PRESCALER = COUNTER_PRESCALER;                    // Set prescaler to a TICK of RTC_FREQUENCY.
-    NRF_RTC0->CC[0]     = COMPARE_COUNTERTIME * RTC_FREQUENCY;  // Compare0 after approx COMPARE_COUNTERTIME seconds.
+    uint32_t err_code;
 
-    // Enable TICK event and TICK interrupt:
-    NRF_RTC0->EVTENSET = RTC_EVTENSET_TICK_Msk;
-    NRF_RTC0->INTENSET = RTC_INTENSET_TICK_Msk;
+    //Initialize RTC instance
+    err_code = nrf_drv_rtc_init(&rtc, NULL, rtc_handler);
+    APP_ERROR_CHECK(err_code);
 
-    // Enable COMPARE0 event and COMPARE0 interrupt:
-    NRF_RTC0->EVTENSET = RTC_EVTENSET_COMPARE0_Msk;
-    NRF_RTC0->INTENSET = RTC_INTENSET_COMPARE0_Msk;
-}
+    //Enable tick event & interrupt
+    nrf_drv_rtc_tick_enable(&rtc,true);
 
+    //Set compare channel to trigger interrupt after COMPARE_COUNTERTIME seconds
+    err_code = nrf_drv_rtc_cc_set(&rtc,0,COMPARE_COUNTERTIME*RTC0_CONFIG_FREQUENCY,true);
+    APP_ERROR_CHECK(err_code);
 
-/** @brief: Function for handling the RTC0 interrupts.
- * Triggered on TICK and COMPARE0 match.
- */
-void RTC0_IRQHandler()
-{
-    if ((NRF_RTC0->EVENTS_TICK != 0) &&
-        ((NRF_RTC0->INTENSET & RTC_INTENSET_TICK_Msk) != 0))
-    {
-        NRF_RTC0->EVENTS_TICK = 0;
-        nrf_gpio_pin_toggle(TICK_EVENT_OUTPUT);
-    }
-
-    if ((NRF_RTC0->EVENTS_COMPARE[0] != 0) &&
-        ((NRF_RTC0->INTENSET & RTC_INTENSET_COMPARE0_Msk) != 0))
-    {
-        NRF_RTC0->EVENTS_COMPARE[0] = 0;
-        nrf_gpio_pin_toggle(COMPARE_EVENT_OUTPUT);
-    }
+    //Power on RTC instance
+    nrf_drv_rtc_enable(&rtc);
 }
 
 
@@ -104,17 +107,17 @@ void RTC0_IRQHandler()
  */
 int main(void)
 {
-    LEDS_CONFIGURE(((1<<COMPARE_EVENT_OUTPUT) | (1<<TICK_EVENT_OUTPUT)));
-    LEDS_OFF((1<<COMPARE_EVENT_OUTPUT) | (1<<TICK_EVENT_OUTPUT));
+    leds_config();
 
     lfclk_config();
+
     rtc_config();
-
-    NRF_RTC0->TASKS_START = 1;
-
+	
     while (true)
     {
-        // Do nothing.
+        __SEV();
+        __WFE();
+        __WFE();
     }
 }
 

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Flash Write Example</title>
+<title>nRF51 SDK - S110 SoftDevice: Schedule handling library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,27 +97,68 @@ $(document).ready(function(){initNavTree('a00022.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Flash Write Example </div>  </div>
+<div class="title">Schedule handling library </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Flash Write Example reads characters from UART, writes them to flash, and echos them.</p>
-<p>The application first erases a page in flash. Next, it reads a character from the UART port. If a new character is detected, the character is written to flash and the flash address is incremented. The value is then read again from flash and output using UART. This output can be tracked in a COM listener (for example PUTTY).</p>
-<p>The name of the example is <b>flashwrite_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\flashwrite</code> </p>
-<h1><a class="anchor" id="flashwrite_example_testing"></a>
-Testing</h1>
-<p>Test the Flash Write Example application by performing the following steps:</p>
-<ol type="1">
-<li>Compile and program the application.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port at 38400 baud rate.</li>
-<li>Write a character and observe the echo. </li>
-</ol>
+<div class="textblock"><p>The scheduler is used for transferring execution from the interrupt context to the main context.</p>
+<h1><a class="anchor" id="app_scheduler_req"></a>
+Requirements:</h1>
+<h2><a class="anchor" id="main_context_logic"></a>
+Logic in main context:</h2>
+<ul>
+<li>Define an event handler for each type of event expected.</li>
+<li>Initialize the scheduler by calling the <a class="el" href="a00801.html#gaa9670ed0053a67304c3d2d0cb3eb1333" title="Macro for initializing the event scheduler.">APP_SCHED_INIT()</a> macro before entering the application main loop.</li>
+<li>Call <a class="el" href="a00801.html#gab725820c32a8d05379db4567cf30e862" title="Function for executing all scheduled events.">app_sched_execute()</a> from the main loop each time the application wakes up because of an event (typically when <a class="el" href="a01073.html#ga11d88d38ac99fb72cde74c9385d36433" title="Waits for an application event.">sd_app_evt_wait()</a> returns).</li>
+</ul>
+<h2><a class="anchor" id="int_context_logic"></a>
+Logic in interrupt context:</h2>
+<ul>
+<li>In the interrupt handler, call <a class="el" href="a00801.html#ga49ec0ad278ece44b5dc56b86ac44489c" title="Function for scheduling an event.">app_sched_event_put()</a> with the appropriate data and event handler. This will insert an event into the scheduler's queue. The <a class="el" href="a00801.html#gab725820c32a8d05379db4567cf30e862" title="Function for executing all scheduled events.">app_sched_execute()</a> function will pull this event and call its handler in the main context.</li>
+</ul>
+<p>For an example usage of the scheduler, please see the implementations of <a class="el" href="a00068.html">HID Mouse Application</a> and <a class="el" href="a00067.html">HID Keyboard Application</a>.</p>
+<div class="image">
+<img src="scheduler_working.jpg" alt="scheduler_working.jpg"/>
+<div class="caption">
+The high level design of the scheduler</div></div>
+<h1><a class="anchor" id="seq_diagrams_sched"></a>
+Applications using the Scheduler</h1>
+<p>Sequence diagrams illustrating the flow of events for various scenarios in the example applications when using the Scheduler. <br/>
+ <br/>
+</p>
+<div class="image">
+<img src="ble_event_with_scheduler.jpg" alt="ble_event_with_scheduler.jpg"/>
+<div class="caption">
+Figure 1: Receiving an event from the ble stack causing a service event</div></div>
+<p><br/>
+ </p>
+<div class="image">
+<img src="battery_timer_with_scheduler.jpg" alt="battery_timer_with_scheduler.jpg"/>
+<div class="caption">
+Figure 2: The battery timer expires</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="seq_diagrams_no_sched"></a>
+Applications not using the Scheduler</h1>
+<p>Sequence diagrams illustrating the flow of events for various scenarios in the example applications when not using the Scheduler. <br/>
+ <br/>
+</p>
+<div class="image">
+<img src="ble_event_without_scheduler.jpg" alt="ble_event_without_scheduler.jpg"/>
+<div class="caption">
+Figure 3: Receiving an event from the ble stack causing a service event</div></div>
+<p><br/>
+ </p>
+<div class="image">
+<img src="battery_timer_without_scheduler.jpg" alt="battery_timer_without_scheduler.jpg"/>
+<div class="caption">
+Figure 4: The battery timer expires</div></div>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00019.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

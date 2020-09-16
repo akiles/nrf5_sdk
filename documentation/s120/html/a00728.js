@@ -1,14 +1,7 @@
 var a00728 =
 [
-    [ "ble_error_log_data_t", "a00101.html", [
-      [ "err_code", "a00101.html#a7399b78d2931ca67335028b94e40fd05", null ],
-      [ "failure", "a00101.html#a0cf6e103864e7945f14c1505b813e6d0", null ],
-      [ "line_number", "a00101.html#a9d8a550dba94f817123c14d6ca401156", null ],
-      [ "message", "a00101.html#aaa3ce88fed3cd597fbd326d647c1b6f8", null ],
-      [ "stack_info", "a00101.html#a4355c5cefad7e512433098a13cbcb706", null ]
-    ] ],
-    [ "ERROR_MESSAGE_LENGTH", "a00728.html#gad86bea2e9fcd0774bb5f9a891aa2bdb5", null ],
-    [ "FLASH_PAGE_ERROR_LOG", "a00728.html#ga8f48afb84b718eda14c45489906fce49", null ],
-    [ "STACK_DUMP_LENGTH", "a00728.html#gad65ee5b47c0b932f924210605a8d635e", null ],
-    [ "ble_error_log_write", "a00728.html#ga17047bf17f360d32faa6b06ba587f444", null ]
+    [ "sd_softdevice_disable", "a00728.html#ga45900ecbe6d5ebf9ae78894fe6c75b23", null ],
+    [ "sd_softdevice_enable", "a00728.html#ga26ecfde6eee7363f88bed8a8b711122a", null ],
+    [ "sd_softdevice_is_enabled", "a00728.html#ga830210fec2b272bbd27af26e3b314d35", null ],
+    [ "sd_softdevice_vector_table_base_set", "a00728.html#ga46d2ce943076d65947ea8919198be106", null ]
 ];

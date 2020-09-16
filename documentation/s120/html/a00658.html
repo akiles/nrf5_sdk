@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: SOC Application command request encoders and command response decoders</title>
+<title>nRF51 SDK - S120 SoftDevice: Functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,43 +99,70 @@ $(document).ready(function(){initNavTree('a00658.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SOC Application command request encoders and command response decoders<div class="ingroups"><a class="el" href="a00782.html">Application s120 codecs</a></div></div>  </div>
+<div class="title">Functions<div class="ingroups"><a class="el" href="a00654.html">Heart Rate Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>SOC Application command request encoders and command response decoders.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga70416ff6e25fd59181a1ffaf24aeece8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00658.html#ga70416ff6e25fd59181a1ffaf24aeece8">power_system_off_req_enc</a> (uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga70416ff6e25fd59181a1ffaf24aeece8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a00777.html#ga774947ee0e200456ea3aec3fc7f8bd6b">sd_power_system_off</a> command request.  <a href="#ga70416ff6e25fd59181a1ffaf24aeece8">More...</a><br/></td></tr>
-<tr class="separator:ga70416ff6e25fd59181a1ffaf24aeece8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a321d0c704f19df22bf2a901c15c4c2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00658.html#ga7a321d0c704f19df22bf2a901c15c4c2">temp_get_req_enc</a> (int32_t const *const p_temp, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga7a321d0c704f19df22bf2a901c15c4c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a00777.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> command request.  <a href="#ga7a321d0c704f19df22bf2a901c15c4c2">More...</a><br/></td></tr>
-<tr class="separator:ga7a321d0c704f19df22bf2a901c15c4c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0ce4e52b270e62aa7c772f31776b5e6c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00658.html#ga0ce4e52b270e62aa7c772f31776b5e6c">temp_get_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code, int32_t *const p_temp)</td></tr>
-<tr class="memdesc:ga0ce4e52b270e62aa7c772f31776b5e6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a00777.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> command.  <a href="#ga0ce4e52b270e62aa7c772f31776b5e6c">More...</a><br/></td></tr>
-<tr class="separator:ga0ce4e52b270e62aa7c772f31776b5e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ec622429b01bc15e65fbcd3613a8b8b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00658.html#ga9ec622429b01bc15e65fbcd3613a8b8b">ble_hrs_c_init</a> (<a class="el" href="a00186.html">ble_hrs_c_t</a> *p_ble_hrs_c, <a class="el" href="a00185.html">ble_hrs_c_init_t</a> *p_ble_hrs_c_init)</td></tr>
+<tr class="memdesc:ga9ec622429b01bc15e65fbcd3613a8b8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the heart rate client module.  <a href="#ga9ec622429b01bc15e65fbcd3613a8b8b">More...</a><br/></td></tr>
+<tr class="separator:ga9ec622429b01bc15e65fbcd3613a8b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga062e0829a2ebd211d4e51a23c520ab1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00658.html#ga062e0829a2ebd211d4e51a23c520ab1f">ble_hrs_c_on_ble_evt</a> (<a class="el" href="a00186.html">ble_hrs_c_t</a> *p_ble_hrs_c, const <a class="el" href="a00097.html">ble_evt_t</a> *p_ble_evt)</td></tr>
+<tr class="memdesc:ga062e0829a2ebd211d4e51a23c520ab1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling BLE events from the SoftDevice.  <a href="#ga062e0829a2ebd211d4e51a23c520ab1f">More...</a><br/></td></tr>
+<tr class="separator:ga062e0829a2ebd211d4e51a23c520ab1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4bcaf5864ee2e17bc0abf2ae585a68b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00658.html#gab4bcaf5864ee2e17bc0abf2ae585a68b">ble_hrs_c_hrm_notif_enable</a> (<a class="el" href="a00186.html">ble_hrs_c_t</a> *p_ble_hrs_c)</td></tr>
+<tr class="memdesc:gab4bcaf5864ee2e17bc0abf2ae585a68b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for requesting the peer to start sending notification of Heart Rate Measurement.  <a href="#gab4bcaf5864ee2e17bc0abf2ae585a68b">More...</a><br/></td></tr>
+<tr class="separator:gab4bcaf5864ee2e17bc0abf2ae585a68b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>SOC Application command request encoders and command response decoders. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga70416ff6e25fd59181a1ffaf24aeece8"></a>
+<a class="anchor" id="gab4bcaf5864ee2e17bc0abf2ae585a68b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t power_system_off_req_enc </td>
+          <td class="memname">uint32_t ble_hrs_c_hrm_notif_enable </td>
           <td>(</td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
+          <td class="paramtype"><a class="el" href="a00186.html">ble_hrs_c_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_hrs_c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for requesting the peer to start sending notification of Heart Rate Measurement. </p>
+<p>This function will enable to notification of the Heart Rate Measurement at the peer by writing to the CCCD of the Heart Rate Measurement Characteristic.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_ble_hrs_c</td><td>Pointer to the heart rate client structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the SoftDevice has been requested to write to the CCCD of the peer. Otherwise, an error code. This function propagates the error code returned by the SoftDevice API <a class="el" href="a00710.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9ec622429b01bc15e65fbcd3613a8b8b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_hrs_c_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00186.html">ble_hrs_c_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_hrs_c</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00185.html">ble_hrs_c_init_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_hrs_c_init</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -145,47 +172,39 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes <a class="el" href="a00777.html#ga774947ee0e200456ea3aec3fc7f8bd6b">sd_power_system_off</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00068.html#nrf51_sd_power_off">0x34 - sd_power_system_off</a> for packet format.</dd></dl>
+<p>Function for initializing the heart rate client module. </p>
+<p>This function will register with the DB Discovery module. There it registers for the Heart Rate Service. Doing so will make the DB Discovery module look for the presence of a Heart Rate Service instance at the peer when a discovery is started.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of p_buf buffer. <code>out:</code> Length of encoded command packet.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_hrs_c</td><td>Pointer to the heart rate client structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_hrs_c_init</td><td>Pointer to the heart rate initialization structure containing the initialization information.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>On successful initialization. Otherwise an error code. This function propagates the error code returned by the Database Discovery module API <a class="el" href="a00680.html#gad3a1e96c90efbe2cf4171d624bafd9cc">ble_db_discovery_evt_register</a>. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7a321d0c704f19df22bf2a901c15c4c2"></a>
+<a class="anchor" id="ga062e0829a2ebd211d4e51a23c520ab1f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t temp_get_req_enc </td>
+          <td class="memname">void ble_hrs_c_on_ble_evt </td>
           <td>(</td>
-          <td class="paramtype">int32_t const *const&#160;</td>
-          <td class="paramname"><em>p_temp</em>, </td>
+          <td class="paramtype"><a class="el" href="a00186.html">ble_hrs_c_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_hrs_c</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00097.html">ble_evt_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_evt</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -195,79 +214,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes <a class="el" href="a00777.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00068.html#nrf51_sd_temp_get">0x52 - sd_temp_get</a> for packet format. <a class="el" href="a00658.html#ga0ce4e52b270e62aa7c772f31776b5e6c">temp_get_rsp_dec</a> for command response decoder.</dd></dl>
+<p>Function for handling BLE events from the SoftDevice. </p>
+<p>This function will handle the BLE events received from the SoftDevice. If a BLE event is relevant to the Heart Rate Client module, then it uses it to update interval variables and, if necessary, send events to the application.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_temp</td><td>Pointer to result of temperature measurement. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of p_buf buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0ce4e52b270e62aa7c772f31776b5e6c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t temp_get_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int32_t *const&#160;</td>
-          <td class="paramname"><em>p_temp</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a00777.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00068.html#nrf51_sd_temp_get">0x52 - sd_temp_get</a> for packet format, <a class="el" href="a00658.html#ga7a321d0c704f19df22bf2a901c15c4c2">temp_get_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command result code. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_temp</td><td>Pointer to result of temperature measurement.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS Version information stored successfully. </dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_DATA_SIZE</td><td>Decoding failure. Length of <code>p_event</code> is too small to hold decoded event. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_hrs_c</td><td>Pointer to the heart rate client structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Pointer to the BLE event. </td></tr>
   </table>
   </dd>
 </dl>
@@ -279,7 +231,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:36 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

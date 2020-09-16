@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Bootloader/DFU Keil project</title>
+<title>nRF51 SDK - S110 SoftDevice: HID Keyboard Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,94 +97,93 @@ $(document).ready(function(){initNavTree('a00067.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Bootloader/DFU Keil project </div>  </div>
+<div class="title">HID Keyboard Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Bootloader/DFU project can be built using Keil uVision.</p>
-<h1><a class="anchor" id="dfu_bootloader_keil_sec"></a>
-Bootloader/DFU compile targets</h1>
-<p>The project file contains three targets:</p>
-<table class="doxtable">
-<tr>
-<th>Target </th><th>Description</th></tr>
-<tr>
-<td>dfu_dual_bank_hci </td><td>Project target using dual bank solution and image is transferred using HCI Transport layer over UART. See <a class="el" href="a00070.html">Serial (HCI)</a> </td></tr>
-<tr>
-<td>dfu_single_bank_hci </td><td>Project target using single bank solution and image is transferred using HCI Transport layer over UART. See <a class="el" href="a00070.html">Serial (HCI)</a> </td></tr>
-<tr>
-<td>dfu_dual_bank_ble (s110) </td><td>Project target using dual bank solution and image is transferred using BLE with the S110 SoftDevice. See <a class="el" href="a00071.html">BLE</a> </td></tr>
-</table>
-<p>In the nRF51 series, a Master Boot Record (MBR) will be placed at address <code>0x00000000</code>. The SoftDevice will be placed at address 0x00001000.<br/>
- The s110 nRF51822 SoftDevice image includes both the MBR and the SoftDevice but on SoftDevice update only the SoftDevice will be updated. In the Bootloader/DFU example, the S110 SoftDevice v7.1.0 or later is used and thus it must be present at this address. See <a class="el" href="a00010.html">Running examples that use a SoftDevice</a> for instructions on how to flash the SoftDevice.</p>
-<p>The MBR will initiate the Bootloader present at the address defined in UICR.BOOTLOADERADDR. During initialization, the Bootloader will determine wether DFU mode should be entered or request the SoftDevice to start the application. UICR.BOOTLOADERADDR register is located at address <code>0x10001014</code> .<br/>
-</p>
-<p>The Bootloader/DFU with SoftDevice update is located at address <code>0x0003C000</code>, as seen in <b>Figure 1</b>.</p>
-<div class="image">
-<img src="dfu_bootloader_flash_view.png" alt="dfu_bootloader_flash_view.png"/>
-<div class="caption">
-Figure 1: Bootloader/DFU Flash layout overview.</div></div>
-<p>In the Bootloader/DFU project, the writing of the UICR.BOOTLOADERADDR is linked into the HEX file and will be written automatically when flashing the bootloader with <code>nrfjprog.exe</code>, see <a class="el" href="a00067.html#dfu_bootloader_keil_flashing_sec">Bootloader/DFU Flashing</a>.<br/>
-</p>
-<p>This is ensured by the following code in <code>bootloader_util_arm.c:</code> </p>
-<div class="fragment"><div class="line">uint32_t m_uicr_bootloader_start_address __attribute__((at(<a class="code" href="a00949.html#gae4ec3580aab0657ce2c1212adec2c0b8">NRF_UICR_BOOT_START_ADDRESS</a>))) = <a class="code" href="a00949.html#ga86b4872454e09cda5b4156b2f9f5f689">BOOTLOADER_REGION_START</a>;</div>
-</div><!-- fragment --><p>BOOTLOADER_REGION_START must point to the correct location of the bootloader in the flash. The location in this example is <code>0x0003C000</code>.</p>
-<h1><a class="anchor" id="dfu_bootloader_keil_flashing_sec"></a>
-Bootloader/DFU Flashing</h1>
-<p>The J-Link Target Driver used for flashing other example applications in the nRF51 SDK does not support writing of the UICR register.<br/>
-</p>
-<p>Therefore it is necessary to use the <code>nrfjprog.exe</code> tool for programming the nRF51 with the Bootloader/DFU project.<br/>
- The <code>nrfjprog.exe</code> is delivered as part of the nRF51 SDK installer, and should therefore already be present.<br/>
-</p>
-<p>The Bootloader/DFU project is configured to use <code>nrfjprog.exe</code> per default, and is expecting the tool to be present in windows' system path. <code>nrfjprog.exe</code> programs the compiled and linked HEX file to the nRF51 chip when flashing from Keil uVision.<br/>
-<br/>
-</p>
-<p><b>Figure 2</b> shows the settings for <code>nrfjprog.exec</code> in Keil.</p>
-<div class="image">
-<img src="keil_project_flash_tool.png" alt="keil_project_flash_tool.png"/>
-<div class="caption">
-Figure 2: Flash tool configuration in Keil uVision</div></div>
-<p> If more than one J-Link is present in the system, a pop-up windows will appear requiring the user to choose which to use. Choose the J-Link attached to the Development Kit containing the nRF51 Chip to be flashed with Bootloader/DFU. See <b>Figure 3</b>.</p>
-<div class="image">
-<img src="keil_project_popup.png" alt="keil_project_popup.png"/>
-<div class="caption">
-Figure 3: nrfjprog.exe Pop-up for J-Link selection</div></div>
- <h1><a class="anchor" id="dfu_bootloader_keil_image_conv_sec"></a>
-Bootloader/DFU Application Image Conversion</h1>
-<p>The DFU supports only binary images for data transfer as described in <a class="el" href="a00068.html">DFU Transport Layers</a>.</p>
-<p>When compiling an application, such as Heart Rate Measurement, two images are created:</p>
+<div class="textblock"><p>The HID Keyboard Application is an example that implements the HID over GATT profile for keyboard using the hardware delivered in the nRF51 Development Kit.</p>
+<p>The application includes the three mandatory services needed for the HID over GATT profile:</p>
 <ul>
-<li>A HEX file</li>
-<li>An AXF file</li>
+<li><a class="el" href="a00962.html">Human Interface Device Service</a></li>
+<li><a class="el" href="a00958.html">Device Information Service</a></li>
+<li><a class="el" href="a00953.html">Battery Service</a></li>
 </ul>
-<p>Keil uVision contains a command line tool, <code>fromelf.exe</code>, which can convert the AXF file into a binary image.<br/>
- The tool is located in the Keil installation folder as: </p>
-<pre class="fragment">&lt;Keil-folder&gt;\ARM\ARMCC\bin\fromelf.exe
-</pre><p>Converting an AXF image into BIN file can be done as: </p>
-<pre class="fragment">&lt;Keil-folder&gt;\ARM\ARMCC\bin\fromelf.exe --bin --output &lt;outfile.bin&gt; &lt;infile.axf&gt;
-</pre><h1><a class="anchor" id="dfu_bootloader_keil_bootloader_extend_sec"></a>
-Bootloader/DFU Flash relocation.</h1>
-<p>In case the Bootloader/DFU software is extended with additional functionality and a larger code size is needed, then it is possible to move the start address of the Bootloader/DFU. If moving the bootloader to a different location, as example <code>0x00038000</code>, then the <code>BOOTLOADER_REGION_START</code> defined in <code>dfu_types.h</code> must be updated accordingly. </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define BOOTLOADER_REGION_START         0x0003C000</span></div>
-</div><!-- fragment --><p>For the linker to work correctly, then changing <code>BOOTLOADER_REGION_START</code> also requires change to the Keil project. In Keil, go to <code> project-&gt;options for target</code>, and change the IROM1 Start address to the new value. Also remember to increase the Size field (default <code>0x4000</code> ).<br/>
-</p>
-<p>As example, moving from address <code>0x0003C000</code>, Size <code>0x3800</code> to new address <code>0x00038000</code> gives 0x4800 additional bytes (18 pages), thus the new size becomes <code>0x8200</code>. </p>
-<dl class="section note"><dt>Note</dt><dd>Changing the Bootloader/DFU Start address requires the UICR register to be erased. To ensure correct behaviour, the following procedure should be followed <br/>
- 1) Erase the whole chip with <code>nrfjprog.exe</code> <br/>
- 2) Flash the SoftDevice <br/>
- 3) Flash the Bootloader/DFU with the new address.</dd></dl>
-<p><b>Figure 4</b> shows the setting in Keil to modify, if the Bootloader/DFU start address must be changed.</p>
-<dl class="section note"><dt>Note</dt><dd>All Start addresses MUST be page aligned and the page size is 0x400 (1024d) bytes.</dd></dl>
-<div class="image">
-<img src="keil_project_bootloader_location.png" alt="keil_project_bootloader_location.png"/>
-<div class="caption">
-Figure 4: Bootloader/DFU Start address setting in Keil.</div></div>
+<dl class="section note"><dt>Note</dt><dd>This application is not power optimized! </dd>
+<dd>
+The application will stop advertising and go to system-off mode after 3 minutes and 30 seconds (if no advertising with whitelist was done) or after 4 minutes (if advertising with whitelist was done). Push the button 1 to restart advertising.</dd></dl>
+<h1><a class="anchor" id="project_hids_keyboard_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>ble_app_hids_keyboard_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_hids_keyboard</code> </p>
+<p>Button assignments when in system-off:</p>
+<ul>
+<li>Button 1: Wake up and start advertising.</li>
+<li>Button 2: Wake up, erase all bonds, and restart advertising.</li>
+</ul>
+<p>Button assignments when connected:</p>
+<ul>
+<li>Button 1: Send sample text to the computer</li>
+<li>Button 2: Simulates the Shift key</li>
+</ul>
+<h1><a class="anchor" id="project_hid_keyboard_test"></a>
+Testing</h1>
+<p>Test the HID Keyboard Application with a Microsoft Windows 8 computer with a <em>Bluetooth</em> radio:</p>
+<ol type="1">
+<li>Compile and program the application. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>On the Windows 8 computer, search for <em>Bluetooth</em> devices, and connect to the device named 'Nordic_Keyboard'. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Open a text editing application (for example Notepad).</li>
+<li>Press Button 1 on the board. This will send one character of the test message 'hello' (the test message includes a carriage return) to the computer, and this will be displayed in the text editor.</li>
+<li>Press Button 1 while keeping the Button 2 pressed. Observe that the same 'hello' text will appear in capital letters. This is because Button 2 simulates the Shift key.</li>
+<li>Turn Caps Lock on on the computer. Observe that:<ul>
+<li><a class="el" href="a00057.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a> is indicated.</li>
+<li>The text 'CAPSON' will be seen on the text editor window on the computer. This verifies that output report characteristic has been written successfully on the HID device.</li>
+</ul>
+</li>
+<li>Turn Caps Lock off on the computer. This should result in two events:<ul>
+<li><a class="el" href="a00057.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a> is indicated.</li>
+<li>The text 'capsof' will be seen on the editor window.</li>
+</ul>
+</li>
+<li>Disconnect the computer from the device by removing the device from the computer's devices list. Observe that for the first period, the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING_DIRECTED">BSP_INDICATE_ADVERTISING_DIRECTED</a> state is indicated, then it switches to <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING_WHITELIST">BSP_INDICATE_ADVERTISING_WHITELIST</a>, then to <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a>, then to <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING_SLOW">BSP_INDICATE_ADVERTISING_SLOW</a>, and then all off.</li>
+<li>Reset the device while pressing Button 2 to erase bond info. Repeat step 2, and check if the device can send messages to the computer.</li>
+<li>Disconnect the device from Windows 8, thereby removing the bond info from the computer. Start a search for <em>Bluetooth</em> devices and observe that while the device is advertising with Whitelist, Windows 8 is not able to discover the device.</li>
+<li>The device should be discoverable again after it switches to advertising mode.</li>
+</ol>
+<p>You can also test the application with the Master Control Panel by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the application. Observe that <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_Keyboard'), then bond and perform service discovery. Observe that <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Click the 'Enable services' button on Master Control Panel, and observe that Battery Level notifications are being received every two seconds.</li>
+<li>Push Button 1 on the board. Observe that 2 notifications on one of the HID Report characteristics are received; two notifications (press and release) each for one character of the test message. The first one has the value '00000B0000000000', the second has the value '0000000000000000'. This corresponds to press and release of character 'h'. Similarly, further press and release events will result in press and release notifications of subsequent characters of the test string. Therefore, pushing Button 1 again will result in notification of press and release reports for character 'e'.</li>
+<li>Simulate Shift key:<ul>
+<li>Keeping Button 2 pressed, push the Button 1 on the board.</li>
+<li>Observe that 2 notifications on one of the HID Report characteristics are received; two notifications (press and release) each for one character of the test message. The first one has the value '02000F0000000000', the second has the value '0200000000000000'. This corresponds to press and release of character 'l' with the Shift key pressed.</li>
+</ul>
+</li>
+<li>Simulate Caps Lock ON:<ul>
+<li>On the Master Control Panel, select the HID Report, which has the properties Read, WriteWithoutResponse, and Write (the Output Report) and UUID: 0x2A4D.</li>
+<li>Click the 'hex' radio button.</li>
+<li>Enter '02' in the text box.</li>
+<li>Click the 'Write' button.</li>
+<li>Observe that <a class="el" href="a00057.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a> is indicated and that 7 notifications on the other HID Report characteristic (the Input Report) are received. The first one has the value '0000060413161211', the second has the value '0000000413161211', third has the value '0000000013161211', and so on until release event for all characters is sent as the 7th one as '0000000000000000'.</li>
+</ul>
+</li>
+<li>Simulate Caps Lock OFF:<ul>
+<li>On the Master Control Panel, select the HID Report, which has the properties Read, WriteWithoutResponse, and Write (the Output Report).</li>
+<li>Click the 'hex' radio button.</li>
+<li>Enter '00' in the text box.</li>
+<li>Click the 'Write' button.</li>
+<li>Observe that <a class="el" href="a00057.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a> is indicated and that two notifications on the other HID Report characteristic are received. The first one has the value '0000060413161209', the second has the value '0000000413161209', third has the value '0000000013161209', and so on until release event for all characters is sent as the 7th one as '0000000000000000'.</li>
+</ul>
+</li>
+<li>Click on the Disconnect button in Master Control Panel. Observe that no new notifications are received and the device is advertising with Whitelist.</li>
+<li>As bond info is preserved by Master Control Panel, it should be possible to immediately reconnect to the device by clicking on the Connect button again. Observe that Battery Level notifications are being received every two seconds. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00062.html">BLE Bootloader/DFU</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00058.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

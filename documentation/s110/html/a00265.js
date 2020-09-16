@@ -1,4 +1,5 @@
 var a00265 =
 [
-    [ "handle", "a00265.html#ae09ecd90f134500a4297c4be1063985b", null ]
+    [ "len", "a00265.html#a6ece59636f724d7a7759d4bc11cec8d9", null ],
+    [ "values", "a00265.html#ac586dcb02b8f378127157ee8c45abea9", null ]
 ];

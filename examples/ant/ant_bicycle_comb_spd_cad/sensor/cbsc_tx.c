@@ -120,7 +120,7 @@ uint32_t cbsc_tx_initialize(void)
     
     // Initialize and start continuous mode timers which are used to update the speed and cadence 
     // event time on the main data page. 
-    APP_TIMER_INIT(RTC_PRESCALER, 2u, 2u, false);
+    APP_TIMER_INIT(RTC_PRESCALER, 2u, 2u, NULL);
     err_code = app_timer_create(&speed_timer_id, 
                                 APP_TIMER_MODE_REPEATED, 
                                 speed_pulse_event_simulate);

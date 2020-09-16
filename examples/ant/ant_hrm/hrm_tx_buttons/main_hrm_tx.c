@@ -145,7 +145,7 @@ void main_hrm_tx_run(void)
     ant_channel_tx_broadcast_setup();   
   
     // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
   
     // Initialize GPIOTE module.  
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);

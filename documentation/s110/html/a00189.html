@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_db_discovery_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_cs_ctrlpt_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,82 +106,138 @@ $(document).ready(function(){initNavTree('a00189.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_db_discovery_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00997.html">Structures</a></div></div>  </div>
+<div class="title">ble_cs_ctrlpt_init_t Struct Reference<div class="ingroups"><a class="el" href="a00969.html">Speed and Cadence Control Point</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure containing the event from the DB discovery module to the application.  
+<p>Speed and Cadence Control Point init structure. This contains all options and data needed for initialization of the Speed and Cadence Control Point module.  
  <a href="a00189.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_db_discovery.h&gt;</code></p>
+<p><code>#include &lt;ble_sc_ctrlpt.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:accba73434b8696cbafbe758022bb45ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00996.html#gaa16075c6c77a4f3f32fb567d5ce45462">ble_db_discovery_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#accba73434b8696cbafbe758022bb45ec">evt_type</a></td></tr>
-<tr class="separator:accba73434b8696cbafbe758022bb45ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38b408b3785dce063725d6fcc194b1c8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a38b408b3785dce063725d6fcc194b1c8">conn_handle</a></td></tr>
-<tr class="separator:a38b408b3785dce063725d6fcc194b1c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4acd4ae50b0d34689da113cb1ffa8b2b"><td class="memItemLeft" ><a class="anchor" id="a4acd4ae50b0d34689da113cb1ffa8b2b"></a>
-union {</td></tr>
-<tr class="memitem:a4ad9d00681b6414393685e099ceb84ed"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00190.html">ble_db_discovery_srv_t</a>&#160;&#160;&#160;<a class="el" href="a00189.html#a551f5595d71fa2887fa74dff31eb5f40">discovered_db</a></td></tr>
-<tr class="separator:a4ad9d00681b6414393685e099ceb84ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1979f0d75c5e16303ce987dcd0fda948"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00189.html#aade9f798ada6b7c0f601cb7dfac3d85f">err_code</a></td></tr>
-<tr class="separator:a1979f0d75c5e16303ce987dcd0fda948"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4acd4ae50b0d34689da113cb1ffa8b2b"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a4acd4ae50b0d34689da113cb1ffa8b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace531100dc9ba6f0ff3f62d27fd220f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#ace531100dc9ba6f0ff3f62d27fd220f8">sc_ctrlpt_attr_md</a></td></tr>
+<tr class="separator:ace531100dc9ba6f0ff3f62d27fd220f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64788d2708103f5bbc852e2e1835182c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a64788d2708103f5bbc852e2e1835182c">supported_functions</a></td></tr>
+<tr class="separator:a64788d2708103f5bbc852e2e1835182c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14e10c317dd498dc5ac6d17f162cb01e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a14e10c317dd498dc5ac6d17f162cb01e">service_handle</a></td></tr>
+<tr class="separator:a14e10c317dd498dc5ac6d17f162cb01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96de686937df25c7bdc23206170ae50a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00969.html#gad91610b2c3b5ca4bc187387d6bf61528">ble_sc_ctrlpt_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a96de686937df25c7bdc23206170ae50a">evt_handler</a></td></tr>
+<tr class="separator:a96de686937df25c7bdc23206170ae50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43e3dbaf04322020621f80634fb4ab11"><td class="memItemLeft" align="right" valign="top">ble_sensor_location_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a43e3dbaf04322020621f80634fb4ab11">list_supported_locations</a></td></tr>
+<tr class="separator:a43e3dbaf04322020621f80634fb4ab11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accef6d6a6a4d4a5365c2a6043850c22a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#accef6d6a6a4d4a5365c2a6043850c22a">size_list_supported_locations</a></td></tr>
+<tr class="separator:accef6d6a6a4d4a5365c2a6043850c22a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff182ef403314ac9e5fb3d6964d4e862"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#aff182ef403314ac9e5fb3d6964d4e862">sensor_location_handle</a></td></tr>
+<tr class="separator:aff182ef403314ac9e5fb3d6964d4e862"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5840a1605a5459c4e82ef773ac9d2e24"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00971.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a5840a1605a5459c4e82ef773ac9d2e24">error_handler</a></td></tr>
+<tr class="separator:a5840a1605a5459c4e82ef773ac9d2e24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure containing the event from the DB discovery module to the application. </p>
+<div class="textblock"><p>Speed and Cadence Control Point init structure. This contains all options and data needed for initialization of the Speed and Cadence Control Point module. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a38b408b3785dce063725d6fcc194b1c8"></a>
+<a class="anchor" id="a5840a1605a5459c4e82ef773ac9d2e24"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_db_discovery_evt_t::conn_handle</td>
+          <td class="memname"><a class="el" href="a00971.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_cs_ctrlpt_init_t::error_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the connection for which this event has occurred. </p>
+<p>Function to be called in case of an error. </p>
 
 </div>
 </div>
-<a class="anchor" id="a551f5595d71fa2887fa74dff31eb5f40"></a>
+<a class="anchor" id="a96de686937df25c7bdc23206170ae50a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00190.html">ble_db_discovery_srv_t</a> ble_db_discovery_evt_t::discovered_db</td>
+          <td class="memname"><a class="el" href="a00969.html#gad91610b2c3b5ca4bc187387d6bf61528">ble_sc_ctrlpt_evt_handler_t</a> ble_cs_ctrlpt_init_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Structure containing the information about the GATT Database at the server. This will be filled when the event type is <a class="el" href="a00996.html#ggaa16075c6c77a4f3f32fb567d5ce45462ad6925ee73dada1191de4934d7891dc1f">BLE_DB_DISCOVERY_COMPLETE</a>. </p>
+<p>event handler </p>
 
 </div>
 </div>
-<a class="anchor" id="aade9f798ada6b7c0f601cb7dfac3d85f"></a>
+<a class="anchor" id="a43e3dbaf04322020621f80634fb4ab11"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_db_discovery_evt_t::err_code</td>
+          <td class="memname">ble_sensor_location_t* ble_cs_ctrlpt_init_t::list_supported_locations</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>nRF Error code indicating the type of error which occurred in the DB Discovery module. This will be filled when the event type is <a class="el" href="a00996.html#ggaa16075c6c77a4f3f32fb567d5ce45462aca629cd78939015c22a44c9e3797043b">BLE_DB_DISCOVERY_ERROR</a>. </p>
+<p>list of supported sensor locations. </p>
 
 </div>
 </div>
-<a class="anchor" id="accba73434b8696cbafbe758022bb45ec"></a>
+<a class="anchor" id="ace531100dc9ba6f0ff3f62d27fd220f8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00996.html#gaa16075c6c77a4f3f32fb567d5ce45462">ble_db_discovery_evt_type_t</a> ble_db_discovery_evt_t::evt_type</td>
+          <td class="memname"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a> ble_cs_ctrlpt_init_t::sc_ctrlpt_attr_md</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of event. </p>
+<p>Initial security level for cycling speed and cadence control point attribute </p>
+
+</div>
+</div>
+<a class="anchor" id="aff182ef403314ac9e5fb3d6964d4e862"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_cs_ctrlpt_init_t::sensor_location_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>handle for the sensor location characteristic (if sensor_location related operation are supported). </p>
+
+</div>
+</div>
+<a class="anchor" id="a14e10c317dd498dc5ac6d17f162cb01e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_cs_ctrlpt_init_t::service_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of the parent service (as provided by the BLE stack). </p>
+
+</div>
+</div>
+<a class="anchor" id="accef6d6a6a4d4a5365c2a6043850c22a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_cs_ctrlpt_init_t::size_list_supported_locations</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>number of supported sensor locations in the list. </p>
+
+</div>
+</div>
+<a class="anchor" id="a64788d2708103f5bbc852e2e1835182c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_cs_ctrlpt_init_t::supported_functions</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>supported control point functionalities see <a class="el" href="a00970.html">Control point functionalities.</a>. </p>
 
 </div>
 </div>
@@ -190,8 +246,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00189.html">ble_db_discovery_evt_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00189.html">ble_cs_ctrlpt_init_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,5 +1,9 @@
 var a00539 =
 [
-    [ "BLE_GAP_ADV_TIMEOUT_GENERAL_UNLIMITED", "a00539.html#ga09100a0666512ed8cd2e600627197254", null ],
-    [ "BLE_GAP_ADV_TIMEOUT_LIMITED_MAX", "a00539.html#ga015a498d3d56d7642dc7456fb12e08b6", null ]
+    [ "BLE_GATT_OP_EXEC_WRITE_REQ", "a00539.html#ga7b4e1d78a5c63acda9f936be6293b513", null ],
+    [ "BLE_GATT_OP_INVALID", "a00539.html#ga608ba17cf0f6dd37f68bcca0f5bcc6c6", null ],
+    [ "BLE_GATT_OP_PREP_WRITE_REQ", "a00539.html#ga2a14ca8931148c5b97289f12acbb2a02", null ],
+    [ "BLE_GATT_OP_SIGN_WRITE_CMD", "a00539.html#ga9a87ace6849f8d15ba3117a5c50ec481", null ],
+    [ "BLE_GATT_OP_WRITE_CMD", "a00539.html#gac70b760454146bc15a51a3e2bbdccf9a", null ],
+    [ "BLE_GATT_OP_WRITE_REQ", "a00539.html#ga07b9cb136bbd9c0b85d0fff54dbe0103", null ]
 ];

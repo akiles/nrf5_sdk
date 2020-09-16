@@ -57,13 +57,13 @@ typedef struct
 typedef void (*ble_ias_c_evt_handler_t) (ble_ias_c_t * p_ias_c, ble_ias_c_evt_t * p_evt);
 
 /**@brief IAS Client structure. This contains various status information for the client. */
-typedef struct ble_ias_c_s
+struct ble_ias_c_s
 {
     ble_ias_c_evt_handler_t   evt_handler;              /**< Event handler to be called for handling events in the Immediate Alert Service client. */
     ble_srv_error_handler_t   error_handler;            /**< Function to be called in case of an error. */
     uint16_t                  alert_level_handle;       /**< Handle of Alert Level characteristic at peer (as provided by the BLE stack). */
     uint16_t                  conn_handle;              /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
-} ble_ias_c_t;
+};
 
 /**@brief IAS Client init structure. This contains all options and data needed for initialization of
  *        the client.*/

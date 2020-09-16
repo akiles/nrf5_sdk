@@ -1,5 +1,6 @@
 var a00227 =
 [
-    [ "num_of_bytes", "a00227.html#a52ba1214757a5bbc308333735cdbf0d2", null ],
-    [ "p_buffer", "a00227.html#ae2d1620a22cdf63f23e5f13965412cb8", null ]
+    [ "ciphertext", "a00227.html#a478942ae65d7433678164a95e4944115", null ],
+    [ "cleartext", "a00227.html#ad4c798195f0d6d399a7f75d09ef89793", null ],
+    [ "key", "a00227.html#aab4ea408dd38499ceff3935ecb5fa39f", null ]
 ];

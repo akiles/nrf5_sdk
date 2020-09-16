@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_conn_params_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_dis_sys_id_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,79 +106,48 @@ $(document).ready(function(){initNavTree('a00209.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_conn_params_t Struct Reference<div class="ingroups"><a class="el" href="a01048.html">Structures</a></div></div>  </div>
+<div class="title">ble_dis_sys_id_t Struct Reference<div class="ingroups"><a class="el" href="a00958.html">Device Information Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP connection parameters.  
+<p>System ID parameters.  
  <a href="a00209.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gap.h&gt;</code></p>
+<p><code>#include &lt;ble_dis.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a4d1975f7d25263004c405e0321fbae34"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00209.html#a4d1975f7d25263004c405e0321fbae34">min_conn_interval</a></td></tr>
-<tr class="separator:a4d1975f7d25263004c405e0321fbae34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd7a6e16a723de1d779afadae3f3113e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00209.html#abd7a6e16a723de1d779afadae3f3113e">max_conn_interval</a></td></tr>
-<tr class="separator:abd7a6e16a723de1d779afadae3f3113e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5caf55715aaac33f56cc996f91a92cc"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00209.html#aa5caf55715aaac33f56cc996f91a92cc">slave_latency</a></td></tr>
-<tr class="separator:aa5caf55715aaac33f56cc996f91a92cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab644e629af7eb4915b0f3a93f682f7ae"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00209.html#ab644e629af7eb4915b0f3a93f682f7ae">conn_sup_timeout</a></td></tr>
-<tr class="separator:ab644e629af7eb4915b0f3a93f682f7ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1f58152dab08532bc52edd976c2f51c"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00209.html#ae1f58152dab08532bc52edd976c2f51c">manufacturer_id</a></td></tr>
+<tr class="separator:ae1f58152dab08532bc52edd976c2f51c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a452099e99c407f16e24299e57e53af46"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00209.html#a452099e99c407f16e24299e57e53af46">organizationally_unique_id</a></td></tr>
+<tr class="separator:a452099e99c407f16e24299e57e53af46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GAP connection parameters. </p>
-<dl class="section note"><dt>Note</dt><dd>When ble_conn_params_t is received in an event, both min_conn_interval and max_conn_interval will be equal to the connection interval set by the central. </dd></dl>
+<div class="textblock"><p>System ID parameters. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ab644e629af7eb4915b0f3a93f682f7ae"></a>
+<a class="anchor" id="ae1f58152dab08532bc52edd976c2f51c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gap_conn_params_t::conn_sup_timeout</td>
+          <td class="memname">uint64_t ble_dis_sys_id_t::manufacturer_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Connection Supervision Timeout in 10 ms units, see <a class="el" href="a00812.html">GAP Connection Parameters Limits</a>. </p>
+<p>Manufacturer ID. Only 5 LSOs shall be used. </p>
 
 </div>
 </div>
-<a class="anchor" id="abd7a6e16a723de1d779afadae3f3113e"></a>
+<a class="anchor" id="a452099e99c407f16e24299e57e53af46"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gap_conn_params_t::max_conn_interval</td>
+          <td class="memname">uint32_t ble_dis_sys_id_t::organizationally_unique_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Maximum Connection Interval in 1.25 ms units, see <a class="el" href="a00812.html">GAP Connection Parameters Limits</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="a4d1975f7d25263004c405e0321fbae34"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gap_conn_params_t::min_conn_interval</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Minimum Connection Interval in 1.25 ms units, see <a class="el" href="a00812.html">GAP Connection Parameters Limits</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa5caf55715aaac33f56cc996f91a92cc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gap_conn_params_t::slave_latency</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Slave Latency in number of connection events, see <a class="el" href="a00812.html">GAP Connection Parameters Limits</a>. </p>
+<p>Organizationally unique ID. Only 3 LSOs shall be used. </p>
 
 </div>
 </div>
@@ -187,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00209.html">ble_gap_conn_params_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00209.html">ble_dis_sys_id_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

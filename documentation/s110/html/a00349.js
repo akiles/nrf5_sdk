@@ -1,9 +1,14 @@
 var a00349 =
 [
-    [ "app_crc", "a00349.html#ad23c5de3d64733cea90d62aece2cf641", null ],
-    [ "app_size", "a00349.html#a5a3071d6e7b79e59aae9aa9022b462c1", null ],
-    [ "bl_size", "a00349.html#af34c4a8d41f65c0d8c1c431809417254", null ],
-    [ "sd_image_start", "a00349.html#aa68f84c4e5bd2283886d3dce05001262", null ],
-    [ "sd_size", "a00349.html#a92316af9b2c88f35230d266ee6f632d5", null ],
-    [ "status_code", "a00349.html#ac8f74ba3fe25a5db401c156ad55360b1", null ]
+    [ "conn_handle", "a00349.html#a521616c53ae38b73795cca328521ef42", null ],
+    [ "error_handler", "a00349.html#aaec55bf5a1343f070d446923693e5f12", null ],
+    [ "evt_handler", "a00349.html#ac210b0c8592add4d7affa83d70b3df08", null ],
+    [ "list_supported_locations", "a00349.html#acf7bc6fb38b8b55060d9576810b59e83", null ],
+    [ "procedure_status", "a00349.html#a785beee8dcd8f49f18b408337791e397", null ],
+    [ "response", "a00349.html#a706cd93a550c24bee3c5adfb6c0c9c5e", null ],
+    [ "sc_ctrlpt_handles", "a00349.html#acac883600df15bd18d45f56c7d859b6a", null ],
+    [ "sensor_location_handle", "a00349.html#a911a8cc3010ade3dc33e90a4cf907e4d", null ],
+    [ "service_handle", "a00349.html#a638b4208c1e4a00d43b955a43553b4ed", null ],
+    [ "size_list_supported_locations", "a00349.html#adb0d88b6ef155271629eeed8db295422", null ],
+    [ "supported_functions", "a00349.html#a258978b06152814aa7fb2bad9c3e4691", null ]
 ];

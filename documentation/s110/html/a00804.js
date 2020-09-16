@@ -1,7 +1,6 @@
 var a00804 =
 [
-    [ "BLE_GAP_ADV_TYPE_ADV_DIRECT_IND", "a00804.html#gafefde83f6b598e7fb14868e0610bdf43", null ],
-    [ "BLE_GAP_ADV_TYPE_ADV_IND", "a00804.html#ga6cc0db53453977ee0a31e59f07de2b86", null ],
-    [ "BLE_GAP_ADV_TYPE_ADV_NONCONN_IND", "a00804.html#ga8c86ca45ebffc3938fd97f9556daa49c", null ],
-    [ "BLE_GAP_ADV_TYPE_ADV_SCAN_IND", "a00804.html#ga594ca8490efef1702e8ccb6a28d2a1de", null ]
+    [ "app_trace_log", "a00804.html#ga731dcef3cb5915b230fd9f55067f69bb", null ],
+    [ "app_trace_dump", "a00804.html#ga48cc2844a947c20ae7f00762dc69417e", null ],
+    [ "app_trace_init", "a00804.html#gae7a95b63891d69936ff23995fdd9fa53", null ]
 ];

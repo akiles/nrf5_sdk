@@ -1,6 +1,5 @@
 var a00809 =
 [
-    [ "BLE_GAP_AUTH_KEY_TYPE_NONE", "a00809.html#ga869af3b1376d25aec9ae236e5772d7f1", null ],
-    [ "BLE_GAP_AUTH_KEY_TYPE_OOB", "a00809.html#gaf9f173da3e04e3c8054cbbeaa488c3d1", null ],
-    [ "BLE_GAP_AUTH_KEY_TYPE_PASSKEY", "a00809.html#ga914a323fb165826d2995ef9d79b341e6", null ]
+    [ "SDK_COMMON_ERROR_BASE", "a00809.html#ga1fa2dae6c4a22d6592184236f7f8ed4e", null ],
+    [ "SDK_ERROR_BASE", "a00809.html#ga3756b7defda416b28928be1af33c4257", null ]
 ];

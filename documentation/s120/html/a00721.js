@@ -1,7 +1,5 @@
 var a00721 =
 [
-    [ "Device Module Set-up APIs", "a00722.html", "a00722" ],
-    [ "APIs to set up or read status of security on a link.", "a00723.html", "a00723" ],
-    [ "Context Management APIs", "a00724.html", "a00724" ],
-    [ "Utility APIs", "a00725.html", "a00725" ]
+    [ "MBR_SVC_BASE", "a00721.html#ga66eb811a4b26c25940778c3f0ca1dc77", null ],
+    [ "PAGE_SIZE_IN_WORDS", "a00721.html#gaffc6c2312bd26bb2c6f05613e7dfacf3", null ]
 ];

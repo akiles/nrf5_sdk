@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: BLE S110 Events</title>
+<title>nRF51 SDK - S110 SoftDevice: Example application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,50 +97,62 @@ $(document).ready(function(){initNavTree('a00080.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BLE S110 Events </div>  </div>
+<div class="title">Example application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#nrf51_evt_tx_complete_encoding">0x01 - BLE_EVT_TX_COMPLETE</a><ul><li class="level2"><a href="#nrf51_evt_tx_complete_encoding_sec">Event encoding</a></li>
-<li class="level2"><a href="#nrf51_evt_tx_complete_encoding_sub_a">Packet layout</a></li>
+<div class="textblock"><p>To show how to add BLE DFU Service support to an application, the SDK contains a version of the <a class="el" href="a00069.html">Heart Rate Application</a> that includes DFU support. This example illustrates how a standard application can be extended so that you can easily update the device firmware at any time, just by connecting to the application.</p>
+<p>The name of the example is <b>ble_app_hrs_s110_with_dfu_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\example\ble_peripheral\ble_app_hrs</code> </p>
+<p>When testing the example, you can choose to use bonding to share encryption keys between the application and the bootloader. If you use bonding, the link between the DFU target and the DFU controller will be re-established with encryption when the device restarts in bootloader mode. See <a class="el" href="a00079.html">Sharing bonding information</a> for more information.</p>
+<h1><a class="anchor" id="bledfu_appexample_bonding"></a>
+Testing the example with bonding</h1>
+<p>Test the Heart Rate Application with BLE DFU Service support using bonding with the Master Control Panel by performing the following steps:</p>
+<ol type="1">
+<li><a class="el" href="a00091.html#bledfu_example_running_program">Program the DFU bootloader</a>.</li>
+<li>Compile and program the application. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Connect to the device from Master Control Panel, then bond to it.</li>
+<li>Perform service discovery. The device is advertising as "Nordic_HRM". Observe that the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Write the value "0200" to the Service Changed characteristic to enable the Service Changed indication when the GATT Server Attribute Table changes.</li>
+<li>Write the value "0100" to the CCCD for the DFU Control Point characteristic or click Enable services to enable DFU notifications.</li>
+<li>Write the command to start a DFU procedure to the DFU Control Point:<ul>
+<li>"01-01" if you want to update the SoftDevice</li>
+<li>"01-02" if you want to update the bootloader</li>
+<li>"01-03" if you want to update the SoftDevice and bootloader</li>
+<li>"01-04" if you want to update the application</li>
 </ul>
 </li>
+<li>Observe that the connection to the device is lost. The message "SERVER: Received Link Loss" is displayed in the log window.</li>
+<li>The device is now performing directed advertising to the bonded peer. When the connection is established, a Service Changed indication is received and displayed in the Master Control Panel.</li>
+<li><a class="el" href="a00091.html#bledfu_example_running_test">Perform a Device Firmware Update</a>. You do not need to connect to the device again, because you are already connected.</li>
+</ol>
+<h1><a class="anchor" id="bledfu_appexample_nobonding"></a>
+Testing the example without bonding</h1>
+<p>Test the Heart Rate Application with BLE DFU Service support not using bonding with the Master Control Panel by performing the following steps:</p>
+<ol type="1">
+<li><a class="el" href="a00091.html#bledfu_example_running_program">Program the DFU bootloader</a>.</li>
+<li>Compile and program the application. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Connect to the device from Master Control Panel.</li>
+<li>Perform service discovery. The device is advertising as "Nordic_HRM". Observe that the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Write the value "0100" to the CCCD for the DFU Control Point characteristic or click Enable services to enable DFU notifications.</li>
+<li>Write the command to start a DFU procedure to the DFU Control Point:<ul>
+<li>"01-01" if you want to update the SoftDevice</li>
+<li>"01-02" if you want to update the bootloader</li>
+<li>"01-03" if you want to update the SoftDevice and bootloader</li>
+<li>"01-04" if you want to update the application</li>
 </ul>
-</div>
-<div class="textblock"><h1><a class="anchor" id="nrf51_evt_tx_complete_encoding"></a>
-0x01 - BLE_EVT_TX_COMPLETE</h1>
-<h2><a class="anchor" id="nrf51_evt_tx_complete_encoding_sec"></a>
-Event encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a01044.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> packet.</p>
-<p>Event ID = 0x01 for BLE_EVT_TX_COMPLETE</p>
-<p>All BLE Events, <a class="el" href="a00203.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00202.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
-<p>The event contains a connection handle, and for the BLE TX complete, the <a class="el" href="a00204.html">ble_evt_tx_complete_t</a> is encoded after connection handle as seen in Figure 1.</p>
-<p>The order of the encoding is:</p>
-<table class="doxtable">
-<tr>
-<th>Length </th><th>Parameter </th><th>Value</th></tr>
-<tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00177.html#ad7c997d8d0c6e0d3d24de3ecad426645">ble_common_evt_t::conn_handle</a> </td></tr>
-<tr>
-<td>1 byte </td><td>Count </td><td>see <a class="el" href="a00204.html">ble_evt_tx_complete_t</a> </td></tr>
-</table>
-<p><br/>
-</p>
-<h2><a class="anchor" id="nrf51_evt_tx_complete_encoding_sub_a"></a>
-Packet layout</h2>
-<div class="image">
-<img src="event_tx_complete.png" alt="event_tx_complete.png"/>
-<div class="caption">
-Figure 1: Encoding of BLE_EVT_TX_COMPLETE event.</div></div>
-<p> <br/>
- </p>
+</li>
+<li>Observe that the connection to the device is lost. The message "SERVER: Received Link Loss" is displayed in the log window.</li>
+<li>Click "Back" in the Master Control Panel to see an overview of the discovered devices.</li>
+<li>Clear the discovered devices and click "Start discovery".</li>
+<li>Verify that the device is now advertising as "DfuTarg".</li>
+<li><a class="el" href="a00091.html#bledfu_example_running_test">Perform a Device Firmware Update</a>. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00073.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00075.html">Serialization Codecs</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00078.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00082.html">Adding DFU Service support to an application</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

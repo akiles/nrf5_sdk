@@ -8,28 +8,13 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
  
    <project>
-    <PathAndName>pca10028\s110\arm\ble_app_hrs_s110_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10031\s110\arm4\ble_app_hrs_s110_pca10031.uvproj</PathAndName>
   </project>
    <project>
-    <PathAndName>pca10031\s110\arm\ble_app_hrs_s110_pca10031.uvproj</PathAndName>
+    <PathAndName>pca10028\s110\arm4\ble_app_hrs_s110_pca10028.uvproj</PathAndName>
   </project>
    <project>
-    <PathAndName>pca10028\experimental_s110_with_dfu\arm\ble_app_hrs_s110_with_dfu_experimental_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10028\ser_s110_uart\arm\ble_app_hrs_s110_uart_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10028\ser_s110_hci\arm\ble_app_hrs_s110_hci_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10028\ser_s110_spi\arm\ble_app_hrs_s110_spi_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10028\ser_s110_spi_5W\arm\ble_app_hrs_s110_spi_5W_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10028\ser_s110_uart_stm\arm\ble_app_hrs_s110_uart_stm_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10028\s110_with_dfu\arm4\ble_app_hrs_s110_with_dfu_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

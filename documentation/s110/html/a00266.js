@@ -1,6 +1,5 @@
 var a00266 =
 [
-    [ "context", "a00266.html#a66d632e13cd7d371036af6a90be224f4", null ],
-    [ "handle", "a00266.html#a79c55f70b9d10f1e11b35bb2cc13fdbd", null ],
-    [ "offset", "a00266.html#ac3c5c0c840625a5f28e90e9021eb2403", null ]
+    [ "count", "a00266.html#a50815a26acf0eaa4a6d7ef9bebf7f58d", null ],
+    [ "descs", "a00266.html#a3d41c7255fa19fa2b55acd6962be26ee", null ]
 ];

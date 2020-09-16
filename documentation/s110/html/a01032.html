@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Sensor Data Simulator</title>
+<title>nRF51 SDK - S110 SoftDevice: Peripheral Drivers</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,115 +97,90 @@ $(document).ready(function(){initNavTree('a01032.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Sensor Data Simulator<div class="ingroups"><a class="el" href="a01037.html">BLE Libraries</a></div></div>  </div>
+<div class="title">Peripheral Drivers<div class="ingroups"><a class="el" href="a01031.html">nRF51 SDK</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Functions for simulating sensor data.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00327.html">ble_sensorsim_cfg_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triangular waveform sensor simulator configuration.  <a href="a00327.html#details">More...</a><br/></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00749"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00749.html">ADNS2080 driver</a></td></tr>
+<tr class="memdesc:a00749"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADNS2080 mouse sensor driver. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html">ble_sensorsim_state_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triangular waveform sensor simulator state.  <a href="a00328.html#details">More...</a><br/></td></tr>
+<tr class="memitem:a00750"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00750.html">Cherry 8x16 keyboard matrix driver</a></td></tr>
+<tr class="memdesc:a00750"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cherry 8x16 keyboard matrix driver. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga87dbeaec725800b329897a89763da807"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01032.html#ga87dbeaec725800b329897a89763da807">ble_sensorsim_init</a> (<a class="el" href="a00328.html">ble_sensorsim_state_t</a> *p_state, const <a class="el" href="a00327.html">ble_sensorsim_cfg_t</a> *p_cfg)</td></tr>
-<tr class="memdesc:ga87dbeaec725800b329897a89763da807"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing a triangular waveform sensor simulator.  <a href="#ga87dbeaec725800b329897a89763da807">More...</a><br/></td></tr>
-<tr class="separator:ga87dbeaec725800b329897a89763da807"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae73b8f0f956e0708e16d160605318ba8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01032.html#gae73b8f0f956e0708e16d160605318ba8">ble_sensorsim_measure</a> (<a class="el" href="a00328.html">ble_sensorsim_state_t</a> *p_state, const <a class="el" href="a00327.html">ble_sensorsim_cfg_t</a> *p_cfg)</td></tr>
-<tr class="memdesc:gae73b8f0f956e0708e16d160605318ba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for generating a simulated sensor measurement using a triangular waveform generator.  <a href="#gae73b8f0f956e0708e16d160605318ba8">More...</a><br/></td></tr>
-<tr class="separator:gae73b8f0f956e0708e16d160605318ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00751"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html">DS1624 digital temperature sensor driver</a></td></tr>
+<tr class="memdesc:a00751"><td class="mdescLeft">&#160;</td><td class="mdescRight">DS1624 digital temperature sensor driver. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00752"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html">MPU6050 gyro/accelerometer driver</a></td></tr>
+<tr class="memdesc:a00752"><td class="mdescLeft">&#160;</td><td class="mdescRight">MPU6050 gyro/accelerometer driver. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00753"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00753.html">Synaptics Touchpad driver.</a></td></tr>
+<tr class="memdesc:a00753"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synaptics Touchpad driver. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00754"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00754.html">ADC HAL</a></td></tr>
+<tr class="memdesc:a00754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware abstraction layer for managing the analog-to-digital converter. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00756"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html">AES ECB encryption</a></td></tr>
+<tr class="memdesc:a00756"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver for the nRF51 AES Electronic Code Book (ECB) peripheral. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00757"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html">GPIO abstraction</a></td></tr>
+<tr class="memdesc:a00757"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO pin abstraction and port abstraction for reading and writing byte-wise to GPIO ports. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00758"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00758.html">GPIOTE abstraction</a></td></tr>
+<tr class="memdesc:a00758"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIOTE abstraction for configuration of channels. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00760"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00760.html">Non-volatile memory controller</a></td></tr>
+<tr class="memdesc:a00760"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver for the nRF51 NVMC peripheral. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00765"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00765.html">TEMP (temperature) abstraction</a></td></tr>
+<tr class="memdesc:a00765"><td class="mdescLeft">&#160;</td><td class="mdescRight">Temperature module init and read functions. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00768"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00768.html">Timer HAL and driver</a></td></tr>
+<tr class="memdesc:a00768"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer APIs. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00770"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00770.html">QDEC HAL and driver</a></td></tr>
+<tr class="memdesc:a00770"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quadrature decoder (QDEC) APIs. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00772"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00772.html">Clock HAL and driver</a></td></tr>
+<tr class="memdesc:a00772"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock APIs. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00774"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00774.html">LPCOMP HAL and driver</a></td></tr>
+<tr class="memdesc:a00774"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low Power Comparator (LPCOMP) APIs. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00776"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00776.html">WDT HAL and driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00782"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00782.html">RTC HAL and driver</a></td></tr>
+<tr class="memdesc:a00782"><td class="mdescLeft">&#160;</td><td class="mdescRight">Real timer counter (RTC) APIs. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00784"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00784.html">SDIO driver</a></td></tr>
+<tr class="memdesc:a00784"><td class="mdescLeft">&#160;</td><td class="mdescRight">2-wire serial interface driver. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00785"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00785.html">SPI Master driver</a></td></tr>
+<tr class="memdesc:a00785"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI master driver. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00786"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00786.html">Software controlled SPI Slave driver.</a></td></tr>
+<tr class="memdesc:a00786"><td class="mdescLeft">&#160;</td><td class="mdescRight">Software controlled SPI Slave driver. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00787"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00787.html">Software controlled TWI Master driver</a></td></tr>
+<tr class="memdesc:a00787"><td class="mdescLeft">&#160;</td><td class="mdescRight">Software controlled TWI Master driver. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00789"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00789.html">RNG HAL and driver</a></td></tr>
+<tr class="memdesc:a00789"><td class="mdescLeft">&#160;</td><td class="mdescRight">Random number generator (RNG) APIs. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00791"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00791.html">PPI HAL and driver</a></td></tr>
+<tr class="memdesc:a00791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Programmable Peripheral Interconnect (PPI) APIs. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Functions for simulating sensor data. </p>
-<p>Currently only a triangular waveform simulator is implemented. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga87dbeaec725800b329897a89763da807"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ble_sensorsim_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00328.html">ble_sensorsim_state_t</a> *&#160;</td>
-          <td class="paramname"><em>p_state</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00327.html">ble_sensorsim_cfg_t</a> *&#160;</td>
-          <td class="paramname"><em>p_cfg</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for initializing a triangular waveform sensor simulator. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_state</td><td>Current state of simulator. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Simulator configuration. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gae73b8f0f956e0708e16d160605318ba8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_sensorsim_measure </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00328.html">ble_sensorsim_state_t</a> *&#160;</td>
-          <td class="paramname"><em>p_state</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00327.html">ble_sensorsim_cfg_t</a> *&#160;</td>
-          <td class="paramname"><em>p_cfg</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for generating a simulated sensor measurement using a triangular waveform generator. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_state</td><td>Current state of simulator. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Simulator configuration.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Simulator output. </dd></dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

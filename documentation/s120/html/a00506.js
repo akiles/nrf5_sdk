@@ -1,6 +1,5 @@
 var a00506 =
 [
-    [ "RX_BUF_QUEUE_SIZE", "a00506.html#gae8e478dba1ce71687ba038123e8da2f4", null ],
-    [ "RX_BUF_SIZE", "a00506.html#ga690f985c933da2ce6fe62b6c61dfa662", null ],
-    [ "TX_BUF_SIZE", "a00506.html#ga5d3fb1970e1e98050006978a14b3d95e", null ]
+    [ "SDK_COMMON_ERROR_BASE", "a00506.html#ga1fa2dae6c4a22d6592184236f7f8ed4e", null ],
+    [ "SDK_ERROR_BASE", "a00506.html#ga3756b7defda416b28928be1af33c4257", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_hids_hid_information_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gatts_enable_params_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,48 @@ $(document).ready(function(){initNavTree('a00285.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hids_hid_information_t Struct Reference<div class="ingroups"><a class="el" href="a00968.html">Human Interface Device Service</a></div></div>  </div>
+<div class="title">ble_gatts_enable_params_t Struct Reference<div class="ingroups"><a class="el" href="a01055.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>HID Information characteristic value.  
+<p>BLE GATTS init options.  
  <a href="a00285.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hids.h&gt;</code></p>
+<p><code>#include &lt;ble_gatts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a077bfa68d00dff20a7497f8f7936ae79"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#a077bfa68d00dff20a7497f8f7936ae79">bcd_hid</a></td></tr>
-<tr class="separator:a077bfa68d00dff20a7497f8f7936ae79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadd0326cc45c31ea9e16b2f4cf0000fd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#aadd0326cc45c31ea9e16b2f4cf0000fd">b_country_code</a></td></tr>
-<tr class="separator:aadd0326cc45c31ea9e16b2f4cf0000fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acec5c1f0cd643c04bce7a9542e1b7444"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#acec5c1f0cd643c04bce7a9542e1b7444">flags</a></td></tr>
-<tr class="separator:acec5c1f0cd643c04bce7a9542e1b7444"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad011fc0114c033fc712bce4491101ac1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#ad011fc0114c033fc712bce4491101ac1">security_mode</a></td></tr>
-<tr class="separator:ad011fc0114c033fc712bce4491101ac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3916b537d3da7b08ca7f8bf8f31eb5c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#ac3916b537d3da7b08ca7f8bf8f31eb5c">service_changed</a>:1</td></tr>
+<tr class="separator:ac3916b537d3da7b08ca7f8bf8f31eb5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7683e0545cb08151ff5526f7dacdc53"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#ad7683e0545cb08151ff5526f7dacdc53">attr_tab_size</a></td></tr>
+<tr class="separator:ad7683e0545cb08151ff5526f7dacdc53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>HID Information characteristic value. </p>
+<div class="textblock"><p>BLE GATTS init options. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aadd0326cc45c31ea9e16b2f4cf0000fd"></a>
+<a class="anchor" id="ad7683e0545cb08151ff5526f7dacdc53"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_hids_hid_information_t::b_country_code</td>
+          <td class="memname">uint32_t ble_gatts_enable_params_t::attr_tab_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Identifies which country the hardware is localized for. Most hardware is not localized and thus this value would be zero (0). </p>
+<p>Attribute Table size in bytes. The size must be a multiple of 4. <a class="el" href="a00857.html#ga3b329810a73308879c5c755ead002655">BLE_GATTS_ATTR_TAB_SIZE_DEFAULT</a> is used to set the default size. </p>
 
 </div>
 </div>
-<a class="anchor" id="a077bfa68d00dff20a7497f8f7936ae79"></a>
+<a class="anchor" id="ac3916b537d3da7b08ca7f8bf8f31eb5c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_hids_hid_information_t::bcd_hid</td>
+          <td class="memname">uint8_t ble_gatts_enable_params_t::service_changed</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>16-bit unsigned integer representing version number of base USB HID Specification implemented by HID Device </p>
-
-</div>
-</div>
-<a class="anchor" id="acec5c1f0cd643c04bce7a9542e1b7444"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_hids_hid_information_t::flags</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>See <a href="http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.hid_information.xml">http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.hid_information.xml</a> </p>
-
-</div>
-</div>
-<a class="anchor" id="ad011fc0114c033fc712bce4491101ac1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00331.html">ble_srv_security_mode_t</a> ble_hids_hid_information_t::security_mode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Security mode for the HID Information characteristic. </p>
+<p>Include the Service Changed characteristic in the Attribute Table. </p>
 
 </div>
 </div>
@@ -186,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00285.html">ble_hids_hid_information_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:24 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00285.html">ble_gatts_enable_params_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

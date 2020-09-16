@@ -1,12 +1,9 @@
 var a00987 =
 [
-    [ "DM_EVT_APPL_CONTEXT_DELETED", "a00987.html#ga1a76738f1010b5aa7c2e46c709821a27", null ],
-    [ "DM_EVT_APPL_CONTEXT_LOADED", "a00987.html#ga4ce522c3a6565d1b96b94ae14bac67c5", null ],
-    [ "DM_EVT_APPL_CONTEXT_STORED", "a00987.html#gaad12d77f6d3eccb97277869480549ee5", null ],
-    [ "DM_EVT_DEVICE_CONTEXT_DELETED", "a00987.html#gac14de4b8aad6be951c60c421942eb7a7", null ],
-    [ "DM_EVT_DEVICE_CONTEXT_LOADED", "a00987.html#ga0031b878e929a75ec8271ad0c94eef50", null ],
-    [ "DM_EVT_DEVICE_CONTEXT_STORED", "a00987.html#ga914c5f8e7244019d80470eb488afe51c", null ],
-    [ "DM_EVT_SERVICE_CONTEXT_DELETED", "a00987.html#ga45acfe7588e09f49236071ca79f123f7", null ],
-    [ "DM_EVT_SERVICE_CONTEXT_LOADED", "a00987.html#ga5f701544ed21d80e9f5c6198bd0de3d1", null ],
-    [ "DM_EVT_SERVICE_CONTEXT_STORED", "a00987.html#ga4918299ce9ecf37463834a62e4cc28b0", null ]
+    [ "dm_application_instance_set", "a00987.html#ga416da7b3d6b3f2b84b6cedb605e44bfe", null ],
+    [ "dm_distributed_keys_get", "a00987.html#ga5c6619805bf83fc6ddc2b33a81695bb7", null ],
+    [ "dm_handle_get", "a00987.html#ga248327374b34372f7515fddd49e08c47", null ],
+    [ "dm_handle_initialize", "a00987.html#ga03114f97df351f3a2744fc3a73e1a50f", null ],
+    [ "dm_peer_addr_get", "a00987.html#gae6081bb278eb73552df98684c73c8e7a", null ],
+    [ "dm_peer_addr_set", "a00987.html#gad16f05e4144a68f021579a7bb4178198", null ]
 ];

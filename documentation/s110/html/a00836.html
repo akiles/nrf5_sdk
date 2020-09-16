@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Types of UUID</title>
+<title>nRF51 SDK - S110 SoftDevice: GAP Security status</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,57 +99,207 @@ $(document).ready(function(){initNavTree('a00836.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Types of UUID<div class="ingroups"><a class="el" href="a01043.html">Defines</a></div></div>  </div>
+<div class="title">GAP Security status<div class="ingroups"><a class="el" href="a01043.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga0dfc5e26324c8cd7226f3941acbf5b7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#ga0dfc5e26324c8cd7226f3941acbf5b7e">BLE_UUID_TYPE_UNKNOWN</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:ga0dfc5e26324c8cd7226f3941acbf5b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae549d14b15783ba52dae5fdd5f9ac959"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#gae549d14b15783ba52dae5fdd5f9ac959">BLE_UUID_TYPE_BLE</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:gae549d14b15783ba52dae5fdd5f9ac959"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7bdcaea9ea91ab20be755d78833da46d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#ga7bdcaea9ea91ab20be755d78833da46d">BLE_UUID_TYPE_VENDOR_BEGIN</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:ga7bdcaea9ea91ab20be755d78833da46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa0334dea24e449e5c28c88bbe8a1d00f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#gaa0334dea24e449e5c28c88bbe8a1d00f">BLE_GAP_SEC_STATUS_SUCCESS</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gaa0334dea24e449e5c28c88bbe8a1d00f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4bdb61f7294a378778fe478597b17e07"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#ga4bdb61f7294a378778fe478597b17e07">BLE_GAP_SEC_STATUS_TIMEOUT</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga4bdb61f7294a378778fe478597b17e07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ba7df46db25ac8f2f2b1170106dda25"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#ga6ba7df46db25ac8f2f2b1170106dda25">BLE_GAP_SEC_STATUS_PDU_INVALID</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga6ba7df46db25ac8f2f2b1170106dda25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab86b31f7e0c4a669cdffa4eb71bb0e89"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#gab86b31f7e0c4a669cdffa4eb71bb0e89">BLE_GAP_SEC_STATUS_PASSKEY_ENTRY_FAILED</a>&#160;&#160;&#160;0x81</td></tr>
+<tr class="separator:gab86b31f7e0c4a669cdffa4eb71bb0e89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac29bfa067dbceb9b98e23aefcf0cc155"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#gac29bfa067dbceb9b98e23aefcf0cc155">BLE_GAP_SEC_STATUS_OOB_NOT_AVAILABLE</a>&#160;&#160;&#160;0x82</td></tr>
+<tr class="separator:gac29bfa067dbceb9b98e23aefcf0cc155"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf389ac11506ee7d7a0c6823d7c7cb5c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#gadf389ac11506ee7d7a0c6823d7c7cb5c">BLE_GAP_SEC_STATUS_AUTH_REQ</a>&#160;&#160;&#160;0x83</td></tr>
+<tr class="separator:gadf389ac11506ee7d7a0c6823d7c7cb5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d1c29d319e7b1b77d8bbae74760cfe5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#ga9d1c29d319e7b1b77d8bbae74760cfe5">BLE_GAP_SEC_STATUS_CONFIRM_VALUE</a>&#160;&#160;&#160;0x84</td></tr>
+<tr class="separator:ga9d1c29d319e7b1b77d8bbae74760cfe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga87ed8db7604006675930bdf5fa79ae70"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#ga87ed8db7604006675930bdf5fa79ae70">BLE_GAP_SEC_STATUS_PAIRING_NOT_SUPP</a>&#160;&#160;&#160;0x85</td></tr>
+<tr class="separator:ga87ed8db7604006675930bdf5fa79ae70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3e8868907178ada2854635f2d7ca8ab0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#ga3e8868907178ada2854635f2d7ca8ab0">BLE_GAP_SEC_STATUS_ENC_KEY_SIZE</a>&#160;&#160;&#160;0x86</td></tr>
+<tr class="separator:ga3e8868907178ada2854635f2d7ca8ab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7eb7986157fca57470acee71e5940d77"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#ga7eb7986157fca57470acee71e5940d77">BLE_GAP_SEC_STATUS_SMP_CMD_UNSUPPORTED</a>&#160;&#160;&#160;0x87</td></tr>
+<tr class="separator:ga7eb7986157fca57470acee71e5940d77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e767feadf3f8ccef76faff23e12e4c9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#ga7e767feadf3f8ccef76faff23e12e4c9">BLE_GAP_SEC_STATUS_UNSPECIFIED</a>&#160;&#160;&#160;0x88</td></tr>
+<tr class="separator:ga7e767feadf3f8ccef76faff23e12e4c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga523c9c966eb5fa019fb265a9010775b0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#ga523c9c966eb5fa019fb265a9010775b0">BLE_GAP_SEC_STATUS_REPEATED_ATTEMPTS</a>&#160;&#160;&#160;0x89</td></tr>
+<tr class="separator:ga523c9c966eb5fa019fb265a9010775b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga609204cf12de8edbeaf29077a1c17ba7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00836.html#ga609204cf12de8edbeaf29077a1c17ba7">BLE_GAP_SEC_STATUS_INVALID_PARAMS</a>&#160;&#160;&#160;0x8A</td></tr>
+<tr class="separator:ga609204cf12de8edbeaf29077a1c17ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gae549d14b15783ba52dae5fdd5f9ac959"></a>
+<a class="anchor" id="gadf389ac11506ee7d7a0c6823d7c7cb5c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_UUID_TYPE_BLE&#160;&#160;&#160;0x01</td>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_AUTH_REQ&#160;&#160;&#160;0x83</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Bluetooth SIG UUID (16-bit). </p>
+<p>Authentication requirements not met. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga0dfc5e26324c8cd7226f3941acbf5b7e"></a>
+<a class="anchor" id="ga9d1c29d319e7b1b77d8bbae74760cfe5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_UUID_TYPE_UNKNOWN&#160;&#160;&#160;0x00</td>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_CONFIRM_VALUE&#160;&#160;&#160;0x84</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Invalid UUID type. </p>
+<p>Confirm value failed. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga7bdcaea9ea91ab20be755d78833da46d"></a>
+<a class="anchor" id="ga3e8868907178ada2854635f2d7ca8ab0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_UUID_TYPE_VENDOR_BEGIN&#160;&#160;&#160;0x02</td>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_ENC_KEY_SIZE&#160;&#160;&#160;0x86</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Vendor UUID types start at this index (128-bit). </p>
+<p>Encryption key size. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga609204cf12de8edbeaf29077a1c17ba7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_INVALID_PARAMS&#160;&#160;&#160;0x8A</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Invalid parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="gac29bfa067dbceb9b98e23aefcf0cc155"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_OOB_NOT_AVAILABLE&#160;&#160;&#160;0x82</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Out of Band Key not available. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga87ed8db7604006675930bdf5fa79ae70"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_PAIRING_NOT_SUPP&#160;&#160;&#160;0x85</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pairing not supported. </p>
+
+</div>
+</div>
+<a class="anchor" id="gab86b31f7e0c4a669cdffa4eb71bb0e89"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_PASSKEY_ENTRY_FAILED&#160;&#160;&#160;0x81</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Passkey entry failed (user cancelled or other). </p>
+
+</div>
+</div>
+<a class="anchor" id="ga6ba7df46db25ac8f2f2b1170106dda25"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_PDU_INVALID&#160;&#160;&#160;0x02</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Invalid PDU received. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga523c9c966eb5fa019fb265a9010775b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_REPEATED_ATTEMPTS&#160;&#160;&#160;0x89</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Too little time elapsed since last attempt. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7eb7986157fca57470acee71e5940d77"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_SMP_CMD_UNSUPPORTED&#160;&#160;&#160;0x87</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unsupported SMP command. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaa0334dea24e449e5c28c88bbe8a1d00f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_SUCCESS&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Procedure completed with success. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga4bdb61f7294a378778fe478597b17e07"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_TIMEOUT&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Procedure timed out. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7e767feadf3f8ccef76faff23e12e4c9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_UNSPECIFIED&#160;&#160;&#160;0x88</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unspecified reason. </p>
 
 </div>
 </div>
@@ -158,7 +308,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:17 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:42 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

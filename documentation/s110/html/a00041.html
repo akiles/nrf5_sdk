@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: BSP indication states</title>
+<title>nRF51 SDK - S110 SoftDevice: Radio Test Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,76 +97,57 @@ $(document).ready(function(){initNavTree('a00041.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BSP indication states </div>  </div>
+<div class="title">Radio Test Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>To abstract from the actual hardware that is used to run an example, some examples use BSP states instead of a fast assignment of LEDs to indicate states. In this way, examples can easily be tested on different boards, like the development board and the dongle. States are indicated in different ways depending on the hardware that is used.</p>
-<p>The following table lists how the BSP states are indicated on PCA10028 and PCA10031:</p>
-<table class="doxtable">
-<tr>
-<th>BSP state </th><th>PCA10028 </th><th>PCA10031</th></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_IDLE"></a>BSP_INDICATE_IDLE </td><td>All LEDs are off </td><td>All LEDs are off </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_SCANNING"></a>BSP_INDICATE_SCANNING </td><td>LED 1 is blinking (period 2 sec, duty cycle: 10%) </td><td>Red LED is blinking (period 2 sec, duty cycle: 10%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ADVERTISING"></a>BSP_INDICATE_ADVERTISING </td><td>LED 1 is blinking (period 2 sec, duty cycle: 10%) </td><td>Red LED is blinking (period 2 sec, duty cycle: 10%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ADVERTISING_WHITELIST"></a>BSP_INDICATE_ADVERTISING_WHITELIST </td><td>LED 1 is blinking fast (period 1 sec, duty cycle: 20%) </td><td>Red LED is blinking fast (period 1 sec, duty cycle: 20%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ADVERTISING_SLOW"></a>BSP_INDICATE_ADVERTISING_SLOW </td><td>LED 1 is blinking slowly (period 4.4 sec, duty cycle: 10%) </td><td>Red LED is is blinking slowly (period 4.4 sec, duty cycle: 10%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ADVERTISING_DIRECTED"></a>BSP_INDICATE_ADVERTISING_DIRECTED </td><td>LED 1 is blinking very fast (period 0.6 sec, duty cycle: 50%) </td><td>Red LED is blinking very fast (period 0.6 sec, duty cycle: 50%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_BONDING"></a>BSP_INDICATE_BONDING </td><td>LED 1 is blinking (period 200 msec, duty cycle: 50%) </td><td>Red LED is blinking (period 200 msec, duty cycle: 50%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_CONNECTED"></a>BSP_INDICATE_CONNECTED </td><td>LED 1 is on </td><td>Red LED is on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_SENT_OK"></a>BSP_INDICATE_SENT_OK </td><td>LED 2 is inverted for 100 msec </td><td>Green LED is inverted for 100 msec </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_SEND_ERROR"></a>BSP_INDICATE_SEND_ERROR </td><td>LED 2 is inverted for 500 msec </td><td>Green LED is inverted for 500 msec </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_RCV_OK"></a>BSP_INDICATE_RCV_OK </td><td>LED 2 is inverted for 100 msec </td><td>Green LED is inverted for 100 msec </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_RCV_ERROR"></a>BSP_INDICATE_RCV_ERROR </td><td>LED 2 is inverted for 500 msec </td><td>Green LED is inverted for 500 msec </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_FATAL_ERROR"></a>BSP_INDICATE_FATAL_ERROR </td><td>All LEDs are on </td><td>All LEDs are on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_OFF"></a>BSP_INDICATE_USER_STATE_OFF </td><td>All LEDs are off </td><td>All LEDs are off </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_0"></a>BSP_INDICATE_USER_STATE_0 </td><td>LEDs 2, 3, and 4 are off, LED 1 is on </td><td>Green and blue LEDs are off, red LED is on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_1"></a>BSP_INDICATE_USER_STATE_1 </td><td>LEDs 1, 3, and 4 are off, LED 2 is on </td><td>Red and blue LED are off, green LED is on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_2"></a>BSP_INDICATE_USER_STATE_2 </td><td>LEDs 3 and 4 are off, LEDs 1 and 2 are on </td><td>Blue LED is off, red and green LEDs are on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_3"></a>BSP_INDICATE_USER_STATE_3 </td><td>All LEDs are on </td><td>All LEDs are on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_ON"></a>BSP_INDICATE_USER_STATE_ON </td><td>All LEDs are on </td><td>All LEDs are on </td></tr>
-</table>
-<p>The following BSP alerts can be indicated on top of the states described in the previous table: </p>
-<table class="doxtable">
-<tr>
-<th>BSP alert </th><th>PCA10028 </th><th>PCA10031</th></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_0"></a>BSP_INDICATE_ALERT_0 </td><td>LED 3 is blinking (period 1200 msec, duty cycle: 50%) </td><td>Blue LED is blinking (period 1200 msec, duty cycle: 50%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_1"></a>BSP_INDICATE_ALERT_1 </td><td>LED 3 is blinking (period 800 msec, duty cycle: 50%) </td><td>Blue LED is blinking (period 800 msec, duty cycle: 50%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_2"></a>BSP_INDICATE_ALERT_2 </td><td>LED 3 is blinking (period 400 msec, duty cycle: 50%) </td><td>Blue LED is blinking (period 400 msec, duty cycle: 50%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_3"></a>BSP_INDICATE_ALERT_3 </td><td>LED 3 is on </td><td>Blue LED is on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_OFF"></a>BSP_INDICATE_ALERT_OFF </td><td>LED 3 is off </td><td>Blue LED is off </td></tr>
-</table>
-<p>The states are defined in <a class="el" href="a00790.html#ga1e44400c2a8fe4979010bb62a6ca8a55">bsp_indication_t</a>. </p>
+<div class="textblock"><p>The Radio Test Example shows how to configure the radio as a constant RX/TX carrier, modulated TX carrier, and RX/TX sweep. The tests are controlled with simple one-letter commands via the serial port at 38400 baud. At any time during the tests, you can set the radio parameters output power, bit rate, and channel. You can also set the time on each channel in sweep mode, in steps of 1 millisecond from 1 millisecond to 99 milliseconds.</p>
+<p>The application starts with enabling the 16 MHz crystal oscillator and configuring the UART and interrupts. The main loop waits until it receives a command through the UART. Then it initiates the requested command.</p>
+<p>The following one-letter commands are available:<br/>
+</p>
+<ul>
+<li>a: Enter start channel for sweep/channel for constant carrier.</li>
+<li>b: Enter end channel for sweep.</li>
+<li>c: Start TX carrier.</li>
+<li>d: Enter time on each channel (1 ms - 99 ms).</li>
+<li>e: Cancel sweep/carrier.</li>
+<li>m: Enter data rate.</li>
+<li>o: Start modulated TX carrier.</li>
+<li>p: Enter output power.</li>
+<li>s: Print current delay, channels and so on.</li>
+<li>r: Start RX sweep.</li>
+<li>t: Start TX sweep.</li>
+<li>x: Start RX carrier.</li>
+</ul>
+<p>The name of the example is <b>radio_test_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\radio_test</code> </p>
+<h1><a class="anchor" id="nrf_radio_test_example_testing"></a>
+Testing</h1>
+<p>Test the Radio Test Example application by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the application.</li>
+<li>Start a COM listener like PUTTY and connect to the used COM port with the following UART settings:<ul>
+<li>
+Baud rate: 38.400</li>
+<li>
+8 data bits</li>
+<li>
+1 stop bit</li>
+<li>
+No parity</li>
+<li>
+HW flow control: RTS/CTS</li>
+</ul>
+</li>
+<li>The text "RF Test" should appear at the top of the terminal.</li>
+<li>Type any of the letters described above. An output text should be displayed in the PUTTY window, or a sweep or signal should be started.</li>
+<li>Use a spectrum analyzer to confirm the behavior of the radio module. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00029.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

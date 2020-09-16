@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['central_5fkeys_5ft',['central_keys_t',['../a00340.html',1,'ble_gap_evt_auth_status_t']]]
+  ['current_5ftime_5fchar_5ft',['current_time_char_t',['../a00362.html',1,'']]]
 ];

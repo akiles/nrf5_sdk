@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: sd_mbr_command_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dm_init_param_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,90 +106,34 @@ $(document).ready(function(){initNavTree('a00379.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">sd_mbr_command_t Struct Reference<div class="ingroups"><a class="el" href="a01067.html">Types</a></div></div>  </div>
+<div class="title">dm_init_param_t Struct Reference<div class="ingroups"><a class="el" href="a00982.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Initialization Parameters.  
+ <a href="a00379.html#details">More...</a></p>
+
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ace7fb69d83a5ef3dc0a35dbdb58cb78a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00379.html#ace7fb69d83a5ef3dc0a35dbdb58cb78a">command</a></td></tr>
-<tr class="separator:ace7fb69d83a5ef3dc0a35dbdb58cb78a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac9708bfdfe02c89997f73cb1293f1a5"><td class="memItemLeft" ><a class="anchor" id="aac9708bfdfe02c89997f73cb1293f1a5"></a>
-union {</td></tr>
-<tr class="memitem:aad36f74beee45f9b01e67e93aefea82e"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00378.html">sd_mbr_command_copy_sd_t</a>&#160;&#160;&#160;<a class="el" href="a00379.html#a7efb4f5913fbaef52ae323305cf6e98c">copy_sd</a></td></tr>
-<tr class="separator:aad36f74beee45f9b01e67e93aefea82e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad24c3dc6f9f58536932de9fa380e2e7f"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00377.html">sd_mbr_command_copy_bl_t</a>&#160;&#160;&#160;<a class="el" href="a00379.html#a0ae5a869c2d4e2ac60daa53b66d2da38">copy_bl</a></td></tr>
-<tr class="separator:ad24c3dc6f9f58536932de9fa380e2e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a682a5399337462febab260d038a306"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00376.html">sd_mbr_command_compare_t</a>&#160;&#160;&#160;<a class="el" href="a00379.html#a45bdd29ee5d7bc0a20a3d5c06dca7de6">compare</a></td></tr>
-<tr class="separator:a0a682a5399337462febab260d038a306"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cd498f5d34ceac8a3734a205426fae4"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00380.html">sd_mbr_command_vector_table_base_set_t</a>&#160;&#160;&#160;<a class="el" href="a00379.html#aa16e258dae73733a2f1acc82d2aff10f">base_set</a></td></tr>
-<tr class="separator:a0cd498f5d34ceac8a3734a205426fae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac9708bfdfe02c89997f73cb1293f1a5"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:aac9708bfdfe02c89997f73cb1293f1a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5feebf730ecc50b0c78c0f4354d6fc3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00379.html#ab5feebf730ecc50b0c78c0f4354d6fc3">clear_persistent_data</a></td></tr>
+<tr class="separator:ab5feebf730ecc50b0c78c0f4354d6fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aa16e258dae73733a2f1acc82d2aff10f"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Initialization Parameters. </p>
+<p>Indicates the application parameters. Currently this only encompasses clearing all persistent data. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="ab5feebf730ecc50b0c78c0f4354d6fc3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00380.html">sd_mbr_command_vector_table_base_set_t</a> sd_mbr_command_t::base_set</td>
+          <td class="memname">bool dm_init_param_t::clear_persistent_data</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Parameters for vector table base set. </p>
-
-</div>
-</div>
-<a class="anchor" id="ace7fb69d83a5ef3dc0a35dbdb58cb78a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t sd_mbr_command_t::command</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>type of command to be issued see <a class="el" href="a01066.html#gad416fbc71855eb8e1533a812164b85a7">NRF_MBR_COMMANDS</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="a45bdd29ee5d7bc0a20a3d5c06dca7de6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00376.html">sd_mbr_command_compare_t</a> sd_mbr_command_t::compare</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters for verify </p>
-
-</div>
-</div>
-<a class="anchor" id="a0ae5a869c2d4e2ac60daa53b66d2da38"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00377.html">sd_mbr_command_copy_bl_t</a> sd_mbr_command_t::copy_bl</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters for copy SoftDevice and BootLoader </p>
-
-</div>
-</div>
-<a class="anchor" id="a7efb4f5913fbaef52ae323305cf6e98c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00378.html">sd_mbr_command_copy_sd_t</a> sd_mbr_command_t::copy_sd</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters for copy </p>
+<p>Set to true in case the module should clear all persistent data. </p>
 
 </div>
 </div>
@@ -198,8 +142,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00379.html">sd_mbr_command_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00379.html">dm_init_param_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

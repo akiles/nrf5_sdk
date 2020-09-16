@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: spi_slave_config_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: nrf_radio_request_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,138 +106,67 @@ $(document).ready(function(){initNavTree('a00231.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">spi_slave_config_t Struct Reference<div class="ingroups"><a class="el" href="a00499.html">Software controlled SPI Slave driver.</a></div></div>  </div>
+<div class="title">nrf_radio_request_t Struct Reference<div class="ingroups"><a class="el" href="a00730.html">Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>SPI peripheral device configuration data.  
+<p>Radio request parameters.  
  <a href="a00231.html#details">More...</a></p>
 
-<p><code>#include &lt;spi_slave.h&gt;</code></p>
+<p><code>#include &lt;nrf_soc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a65afb70f1cdb35519719efa4950294b7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a65afb70f1cdb35519719efa4950294b7">pin_miso</a></td></tr>
-<tr class="separator:a65afb70f1cdb35519719efa4950294b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af40a3044730330e7c560f2a9913b6d55"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#af40a3044730330e7c560f2a9913b6d55">pin_mosi</a></td></tr>
-<tr class="separator:af40a3044730330e7c560f2a9913b6d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae98dbbcc5e16aea69a2f0922e266f908"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#ae98dbbcc5e16aea69a2f0922e266f908">pin_sck</a></td></tr>
-<tr class="separator:ae98dbbcc5e16aea69a2f0922e266f908"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ff06608d64bb19ed48f49274231de9c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a1ff06608d64bb19ed48f49274231de9c">pin_csn</a></td></tr>
-<tr class="separator:a1ff06608d64bb19ed48f49274231de9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21dcdc253470ffeaf889d2b9ffa22472"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00499.html#ga1febfa1b05a4e0d259877752c6c53c33">spi_slave_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a21dcdc253470ffeaf889d2b9ffa22472">mode</a></td></tr>
-<tr class="separator:a21dcdc253470ffeaf889d2b9ffa22472"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27e8ba88d43c17e40e1c2cbf0f785648"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00499.html#ga348be3a931288103790b15b689696f25">spi_slave_endian_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a27e8ba88d43c17e40e1c2cbf0f785648">bit_order</a></td></tr>
-<tr class="separator:a27e8ba88d43c17e40e1c2cbf0f785648"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f274a8534602ab7cf7b3df09501e3e0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a4f274a8534602ab7cf7b3df09501e3e0">def_tx_character</a></td></tr>
-<tr class="separator:a4f274a8534602ab7cf7b3df09501e3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d9dd3521043484438ffa72545b6db28"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a7d9dd3521043484438ffa72545b6db28">orc_tx_character</a></td></tr>
-<tr class="separator:a7d9dd3521043484438ffa72545b6db28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6c3fb2f810242bef92760745327f718"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#af6c3fb2f810242bef92760745327f718">request_type</a></td></tr>
+<tr class="separator:af6c3fb2f810242bef92760745327f718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2578047d8488f7583ac55ffa58afc59a"><td class="memItemLeft" ><a class="anchor" id="a2578047d8488f7583ac55ffa58afc59a"></a>
+union {</td></tr>
+<tr class="memitem:a7a743c88f2f59adeb4389ea1a5748cbe"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00229.html">nrf_radio_request_earliest_t</a>&#160;&#160;&#160;<a class="el" href="a00231.html#a7ed176c3d465f35d68d00b70282bbb13">earliest</a></td></tr>
+<tr class="separator:a7a743c88f2f59adeb4389ea1a5748cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0921849d5967bad7a5a06fa280f8a07"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00230.html">nrf_radio_request_normal_t</a>&#160;&#160;&#160;<a class="el" href="a00231.html#a140d30391ab57e9fbd4e98536d687e09">normal</a></td></tr>
+<tr class="separator:ad0921849d5967bad7a5a06fa280f8a07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2578047d8488f7583ac55ffa58afc59a"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
+<tr class="separator:a2578047d8488f7583ac55ffa58afc59a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>SPI peripheral device configuration data. </p>
+<div class="textblock"><p>Radio request parameters. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a27e8ba88d43c17e40e1c2cbf0f785648"></a>
+<a class="anchor" id="a7ed176c3d465f35d68d00b70282bbb13"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00499.html#ga348be3a931288103790b15b689696f25">spi_slave_endian_t</a> spi_slave_config_t::bit_order</td>
+          <td class="memname"><a class="el" href="a00229.html">nrf_radio_request_earliest_t</a> nrf_radio_request_t::earliest</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>SPI transaction bit order. </p>
+<p>Parameters for a request for a timeslot as early as possible. </p>
 
 </div>
 </div>
-<a class="anchor" id="a4f274a8534602ab7cf7b3df09501e3e0"></a>
+<a class="anchor" id="a140d30391ab57e9fbd4e98536d687e09"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t spi_slave_config_t::def_tx_character</td>
+          <td class="memname"><a class="el" href="a00230.html">nrf_radio_request_normal_t</a> nrf_radio_request_t::normal</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Device configuration mode default character (DEF). Character clocked out in case of an ignored transaction. </p>
+<p>Parameters for a normal radio request. </p>
 
 </div>
 </div>
-<a class="anchor" id="a21dcdc253470ffeaf889d2b9ffa22472"></a>
+<a class="anchor" id="af6c3fb2f810242bef92760745327f718"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00499.html#ga1febfa1b05a4e0d259877752c6c53c33">spi_slave_mode_t</a> spi_slave_config_t::mode</td>
+          <td class="memname">uint8_t nrf_radio_request_t::request_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>SPI mode. </p>
-
-</div>
-</div>
-<a class="anchor" id="a7d9dd3521043484438ffa72545b6db28"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t spi_slave_config_t::orc_tx_character</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Device configuration mode over-read character. Character clocked out after an over-read of the transmit buffer. </p>
-
-</div>
-</div>
-<a class="anchor" id="a1ff06608d64bb19ed48f49274231de9c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t spi_slave_config_t::pin_csn</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>SPI CSN pin. </p>
-
-</div>
-</div>
-<a class="anchor" id="a65afb70f1cdb35519719efa4950294b7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t spi_slave_config_t::pin_miso</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>SPI MISO pin. </p>
-
-</div>
-</div>
-<a class="anchor" id="af40a3044730330e7c560f2a9913b6d55"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t spi_slave_config_t::pin_mosi</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>SPI MOSI pin. </p>
-
-</div>
-</div>
-<a class="anchor" id="ae98dbbcc5e16aea69a2f0922e266f908"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t spi_slave_config_t::pin_sck</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>SPI SCK pin. </p>
+<p>Type of request, see <a class="el" href="a00730.html#ga1d048df14a3eeef46aabec45e9643858">NRF_RADIO_REQUEST_TYPE</a>. </p>
 
 </div>
 </div>
@@ -246,8 +175,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00231.html">spi_slave_config_t</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00231.html">nrf_radio_request_t</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

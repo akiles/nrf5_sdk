@@ -1,9 +1,10 @@
 var a00260 =
 [
-    [ "init_len", "a00260.html#a7722e94b0c079f7571a0607a13d46bde", null ],
-    [ "init_offs", "a00260.html#aa24ec5661c2ba830f906201285ca941c", null ],
-    [ "max_len", "a00260.html#a5cc60017697406f2f2624e0b15dad294", null ],
-    [ "p_attr_md", "a00260.html#afc04d5311dcd31df52f7d9aac7c05ab1", null ],
-    [ "p_uuid", "a00260.html#a87b18c161a362b54bd349aebd2a45c85", null ],
-    [ "p_value", "a00260.html#abf26555ce0ad9b481c3f638f89dc329a", null ]
+    [ "auth_signed_wr", "a00260.html#ad021e4c1c66a2595cb430d1e0598bc0d", null ],
+    [ "broadcast", "a00260.html#a66788f87aed20bf98b81af57051e9795", null ],
+    [ "indicate", "a00260.html#a256d8d59b59f7f1a079e962196e026dd", null ],
+    [ "notify", "a00260.html#a9dd91c1e55995665ef09ec4c5bd5eaf7", null ],
+    [ "read", "a00260.html#a1da688e4cfacf724ee7636dbf534716f", null ],
+    [ "write", "a00260.html#ae0ef9c3f220f06e735b534d232cb9108", null ],
+    [ "write_wo_resp", "a00260.html#a61fdb334c11f2a62accb48f297fb46ef", null ]
 ];

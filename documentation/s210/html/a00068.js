@@ -1,5 +1,7 @@
 var a00068 =
 [
-    [ "bl_len", "a00068.html#a197755f22bcc92adc7c8288f48bd9ef8", null ],
-    [ "bl_src", "a00068.html#a504481143eb43e52488288d7de70a6f1", null ]
+    [ "buf_size_mask", "a00068.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
+    [ "p_buf", "a00068.html#a64eafd180a65260208be3b845f6acbf5", null ],
+    [ "read_pos", "a00068.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
+    [ "write_pos", "a00068.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
 ];

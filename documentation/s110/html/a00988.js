@@ -1,76 +1,44 @@
 var a00988 =
 [
-    [ "dm_enc_key", "a00352.html", [
-      [ "enc_info", "a00352.html#a86cd792e42804720a97e6f64884d0fd4", null ],
-      [ "master_id", "a00352.html#a6d0dc86cbbad08e963a13c3a4070454d", null ]
+    [ "ble_adv_modes_config_t", "a00156.html", [
+      [ "ble_adv_directed_enabled", "a00156.html#a022364c3a05eec09c1f477ae59eb6c8b", null ],
+      [ "ble_adv_directed_timeout", "a00156.html#a68a4f2038bb1b60cb81672a6b806db44", null ],
+      [ "ble_adv_fast_enabled", "a00156.html#a75f559dde193549661ef9d69b78e057d", null ],
+      [ "ble_adv_fast_interval", "a00156.html#a1113347e2fd0e86b7decd9485d14ba26", null ],
+      [ "ble_adv_fast_timeout", "a00156.html#a0f7025bcb28e3622313487edb0a2e966", null ],
+      [ "ble_adv_slow_enabled", "a00156.html#a6cc0a66107b75af49ffa817f251dd706", null ],
+      [ "ble_adv_slow_interval", "a00156.html#ad95cae5d7c26b6a4690c307cafee99c2", null ],
+      [ "ble_adv_slow_timeout", "a00156.html#a106c33de5cbcd870019071e287366fa9", null ],
+      [ "ble_adv_whitelist_enabled", "a00156.html#ad34bab35df0220c5e7fb3a21e11f9623", null ]
     ] ],
-    [ "dm_id_key", "a00355.html", [
-      [ "id_addr_info", "a00355.html#a5dace1f70260c67a952b35558abe1848", null ],
-      [ "id_info", "a00355.html#a7a76b44b4742836f0dffd4ce52418faf", null ]
+    [ "ble_adv_init_t", "a00155.html", [
+      [ "advdata", "a00155.html#a3baf6ced3f920c012bb905b970760e01", null ],
+      [ "evt_handler", "a00155.html#a26c9ccc41ab7de87f2b2be6b241848f3", null ],
+      [ "options", "a00155.html#ad4e914728e99bf1cba3e21d2d4753f77", null ]
     ] ],
-    [ "dm_sign_key", "a00360.html", [
-      [ "sign_key", "a00360.html#a97b57a8714a894c1fc32650103b16d3c", null ]
+    [ "ble_advertising_error_handler_t", "a00988.html#ga8dbd1c0d3a994a2905077b5a69a8e190", null ],
+    [ "ble_advertising_evt_handler_t", "a00988.html#gae5ac649acd48e432e1135e2989385680", null ],
+    [ "ble_adv_evt_t", "a00988.html#gab3aa9a7ef02ab319f71e2545d75f0300", [
+      [ "BLE_ADV_EVT_IDLE", "a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300ac5d98bfe62718bd79ef145c3b207dbcb", null ],
+      [ "BLE_ADV_EVT_DIRECTED", "a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300a7e5ced92a803f37daaddeccbe6cf52af", null ],
+      [ "BLE_ADV_EVT_FAST", "a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300ad3e5afd0e2cac78d96d809ceb36637aa", null ],
+      [ "BLE_ADV_EVT_SLOW", "a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300a96cf28b78e8183919438c1f4ee58ee7e", null ],
+      [ "BLE_ADV_EVT_FAST_WHITELIST", "a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300afd1680f47f4bba564b7d32c83a0866fe", null ],
+      [ "BLE_ADV_EVT_SLOW_WHITELIST", "a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300a15b812c93f6ba4399cbcd9093eaa9e6e", null ],
+      [ "BLE_ADV_EVT_WHITELIST_REQUEST", "a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300a41eb9db1c91e6da9396822400ab8eac2", null ],
+      [ "BLE_ADV_EVT_PEER_ADDR_REQUEST", "a00988.html#ggab3aa9a7ef02ab319f71e2545d75f0300aa0328b61b0edca80793f9ff857ced1c5", null ]
     ] ],
-    [ "dm_sec_keyset", "a00357.html", [
-      [ "enc_key", "a00357.html#a7ae2fa2f3abf177001b49d7ddbbf8872", null ],
-      [ "p_enc_info", "a00357.html#af39222f467f706d5ee133c8b77f2982f", null ],
-      [ "p_enc_key", "a00357.html#acb47eb790d404b15b97a680189d75061", null ],
-      [ "p_id_key", "a00357.html#aa48365f0a84031d3dbb1d22c2f8ac2b9", null ],
-      [ "p_sign_key", "a00357.html#a25fa7f5a74279f24f44607335f5138b7", null ]
+    [ "ble_adv_mode_t", "a00988.html#gae4fb26dd401f1fbdf501b935c9f73d2b", [
+      [ "BLE_ADV_MODE_IDLE", "a00988.html#ggae4fb26dd401f1fbdf501b935c9f73d2baf8aede79967f55367e5aa732202f0606", null ],
+      [ "BLE_ADV_MODE_DIRECTED", "a00988.html#ggae4fb26dd401f1fbdf501b935c9f73d2bad6f9b98468925959cc440f75df01a1e5", null ],
+      [ "BLE_ADV_MODE_FAST", "a00988.html#ggae4fb26dd401f1fbdf501b935c9f73d2ba1f176335ec5316d22eaa638d6ad4fa83", null ],
+      [ "BLE_ADV_MODE_SLOW", "a00988.html#ggae4fb26dd401f1fbdf501b935c9f73d2ba6e1f3523897bd5b2bc3ec87bb8364ce4", null ]
     ] ],
-    [ "dm_sec_keyset_t", "a00358.html", [
-      [ "keys_central", "a00358.html#a9ddb3932823918ebe433d5e53acdb4a6", null ],
-      [ "keys_periph", "a00358.html#a4488fee3125db8baa70ac98c3d2790bf", null ]
-    ] ],
-    [ "device_handle", "a00341.html", [
-      [ "appl_id", "a00341.html#a381fcabb6c06cd4b56c37f2f074debc7", null ],
-      [ "connection_id", "a00341.html#aada12513e0b4856726d23729171c4c0f", null ],
-      [ "device_id", "a00341.html#ac60c519ad6b47720e22b172283fbf2d3", null ],
-      [ "service_id", "a00341.html#a61539581cba803dbeb074913ba5d0988", null ]
-    ] ],
-    [ "dm_context_t", "a00351.html", [
-      [ "len", "a00351.html#a584d9c286a840f2aa29cf3f6e76362d4", null ],
-      [ "p_data", "a00351.html#acbcb29305bde09573e35ed7f4c214641", null ]
-    ] ],
-    [ "dm_service_context_t", "a00359.html", [
-      [ "context_data", "a00359.html#aa6692f2d4301c1ef4dc4d967dff35782", null ],
-      [ "service_type", "a00359.html#a9fa1bd3f934dbc782a82fcdffda7316e", null ]
-    ] ],
-    [ "dm_event_param_t", "a00353.html", [
-      [ "p_app_context", "a00353.html#ae9ad98969539dba415cfb4cd9e0f0564", null ],
-      [ "p_device_context", "a00353.html#abeb2585ead8af941c5619bbfad06b963", null ],
-      [ "p_gap_param", "a00353.html#af0e4a6616d2156de4d92277ea7f0df5f", null ],
-      [ "p_service_context", "a00353.html#a7a1372003da3dd695160653c24e3eaf8", null ]
-    ] ],
-    [ "dm_event_t", "a00354.html", [
-      [ "event_id", "a00354.html#a2a75f3476e816a31085bef063855687e", null ],
-      [ "event_param", "a00354.html#a2dbb0e734ebc009dcc98b7c5055d7112", null ],
-      [ "event_paramlen", "a00354.html#a44a56d892899cd9a146cc4aaddd0d772", null ]
-    ] ],
-    [ "dm_init_param_t", "a00356.html", [
-      [ "clear_persistent_data", "a00356.html#ab5feebf730ecc50b0c78c0f4354d6fc3", null ]
-    ] ],
-    [ "dm_application_param_t", "a00350.html", [
-      [ "evt_handler", "a00350.html#a46b0eb7fa4e86eaa2c5f793b2750da38", null ],
-      [ "sec_param", "a00350.html#a763895cc4380ab52a871637ad5156d94", null ],
-      [ "service_type", "a00350.html#a01e7f59d291d6e3962ab36b22a7d1683", null ]
-    ] ],
-    [ "dm_application_context_t", "a00988.html#gaca2973e52020d6f1078540f0b1a732fa", null ],
-    [ "dm_application_instance_t", "a00988.html#ga3c013385ac2ef5502370f598308d0339", null ],
-    [ "dm_connection_instance_t", "a00988.html#gae005241eac710952713e896d52646858", null ],
-    [ "dm_device_context_t", "a00988.html#ga7e116c1567d58a325c14a1b8a9a75d48", null ],
-    [ "dm_device_instance_t", "a00988.html#gaf1a000e90688eea8d02bd3854440ec6b", null ],
-    [ "dm_enc_key_t", "a00988.html#gadd6aca8bf4cd897655618df17c575e76", null ],
-    [ "dm_event_cb_t", "a00988.html#ga1d3589567c4e17c3d32ab53dcedf3fd2", null ],
-    [ "dm_handle_t", "a00988.html#gaf4616538d9102b901e86d92fc4e82c5c", null ],
-    [ "dm_id_key_t", "a00988.html#ga38566c0de9c9fb2ad4eda1b7cd415321", null ],
-    [ "dm_sec_keys_t", "a00988.html#gaf399152e3dbaa0ac2e9a3384e056a16b", null ],
-    [ "dm_service_instance_t", "a00988.html#ga7b2fb32d39e173997c5baa1e0383ace0", null ],
-    [ "dm_sign_key_t", "a00988.html#ga4ecd6e25cc653bbe21a293f34f3c9dd6", null ],
-    [ "service_type_t", "a00988.html#gaef588a149a4cc5b665658cfb032d6f6a", null ],
-    [ "dm_security_status_t", "a00988.html#ga7404a8275ca6d38f7400881deb1e6b0e", [
-      [ "NOT_ENCRYPTED", "a00988.html#gga7404a8275ca6d38f7400881deb1e6b0ea0421f2bed1189cc7a24264c7b3082932", null ],
-      [ "ENCRYPTION_IN_PROGRESS", "a00988.html#gga7404a8275ca6d38f7400881deb1e6b0eae759dd11c88380847924d25cac0997bb", null ],
-      [ "ENCRYPTED", "a00988.html#gga7404a8275ca6d38f7400881deb1e6b0eaaac875c4dc08055725dd966fd44e0839", null ]
-    ] ]
+    [ "ble_advertising_init", "a00988.html#gabf8d1664161ec7e58e2825e95dae12db", null ],
+    [ "ble_advertising_on_ble_evt", "a00988.html#gae71402e2ca093acdcdd89cad211cc464", null ],
+    [ "ble_advertising_on_sys_evt", "a00988.html#gabf558d6d5aa918ad3623b5bd69d1557e", null ],
+    [ "ble_advertising_peer_addr_reply", "a00988.html#gaebac038a287d71d9ddca0c161aa742ae", null ],
+    [ "ble_advertising_restart_without_whitelist", "a00988.html#gaa135f00a3a31985476674f4ec4dbbb8a", null ],
+    [ "ble_advertising_start", "a00988.html#ga944db395f3667276eb62a8bf3d0583ad", null ],
+    [ "ble_advertising_whitelist_reply", "a00988.html#gac4ec5feaffac84de3d7f00b28f14baf5", null ]
 ];

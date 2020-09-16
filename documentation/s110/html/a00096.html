@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: RTX Support</title>
+<title>nRF51 SDK - S110 SoftDevice: Running the serial bootloader example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,55 +97,50 @@ $(document).ready(function(){initNavTree('a00096.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">RTX Support </div>  </div>
+<div class="title">Running the serial bootloader example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The SDK provides an implementation of an extension to ARM Keil RTX that is referred to as tickless mode. It allows waking up the MCU only when it is needed.</p>
-<h1><a class="anchor" id="rtx_limitation"></a>
-Limitations</h1>
-<p>You should be aware of the following limitations when using RTX:</p>
-<ul>
-<li>nRF51 does not have a SysTick timer. Therefore, RTC1 is used instead.</li>
-<li>To provide the early wake-up mechanism, the rtos_suspend variable must be cleared in every interrupt handler that uses system services. See <a class="el" href="a00096.html#rtx_interrupt">Examples</a> for a code example.</li>
-<li><p class="startli">All interrupts are passed to the application through the SoftDevice, which generates additional interrupt latency. See the SoftDevice and RTX specification for more information.</p>
-<p class="startli">The following table lists the additional latency according to the specifications for RTX (V4.74) and S110 nRF51822 (v1.2): </p>
+<div class="textblock"><p>Instead of using BLE as transport protocol, you can also use serial transport. The SDK provides two example applications for serial (HCI) transport, one for a single-bank update and another for a dual-bank update. See <a class="el" href="a00088.html">Dual-bank and single-bank updates</a> for more information about these update types.</p>
+<p>The general setup and the process of programming the SoftDevice and bootloader are as described in <a class="el" href="a00091.html">Running the BLE bootloader example</a>. However, you cannot use the Master Control Panel to perform a Device Firmware Update. Instead, nRFgo Studio provides a tool that is similar to the <a class="el" href="a00091.html#bledfu_example_running_advanced">Advanced: IronPython script for DFU</a> for BLE.</p>
+<h1><a class="anchor" id="bledfu_serial_dfu"></a>
+Updating the device firmware</h1>
+<p>Program the SoftDevice and bootloader as described in <a class="el" href="a00091.html#bledfu_example_running_program">Programming the DFU bootloader</a>, but use one of the examples for serial transport. The examples for serial transport do not actually require any SoftDevice functions, but installing the SoftDevice provides the Master Boot Record, which is required for running the bootloader.</p>
+<p>The names for the examples are <b>dfu_single_bank_serial_s110_pca10028</b> and <b>dfu_dual_bank_serial_s110_pca10028</b>. If you are not using Keil to work with the SDK, you can find the source code and project file of the examples in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\dfu\bootloader</code> </p>
+<p>The tool that you use to update the device firmware is delivered with nRFgo Studio. To use it, ensure that you have installed nRFgo Studio v1.18 or later. By default, the script is located in the <code>C:\Program Files (x86)\Nordic Semiconductor\nRFgo Studio\</code> folder.</p>
+<p>As test images, you can use the firmware images that are provided in the folders <code>&lt;BaseFolder&gt;\dfu\hci_dfu_send_hex\test_images_single_bank_update</code> or <code>test_images_dual_bank_update</code>, respectively. If you are using Keil packs, the default <code>&lt;BaseFolder&gt;</code> is <code>C:\Keil\ARM\Pack\NordicSemiconductor\nRF_Examples\&lt;version&gt;</code>. If you are using the repository distribution variant of the SDK, <code>&lt;BaseFolder&gt;</code> is <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples</code>. Use the images for the example that you are running. You cannot update a single-bank bootloader to a dual-bank bootloader or vice versa.</p>
+<p>The script uses the following syntax: </p>
+<pre class="fragment">hci_dfu_send_hex.exe --file &lt;image_file.zip&gt; --port &lt;com_port&gt; [--flowcontrol] [--baudrate &lt;baud_rate&gt;]
+</pre><ul>
+<li><code>&lt;image_file.zip&gt;</code> contains the firmware image and the init packet.</li>
+<li><code>&lt;com_port&gt;</code> is the COM port to which the device is connected.</li>
+<li><code>--flowcontrol</code> must be specified to enable flow control. If it is not specified, flow control is disabled. The provided examples use flow control, so you must specify this parameter.</li>
+<li><code>&lt;baud_rate&gt;</code> is the desired baud rate. Valid values are 38400, 96000, 115200, 230400, 250000, 460800, 921600, and 1000000. Baud rates over 115200 are supported by nRF51822, but might not be supported by all RS232 devices on Windows. If no baud rate is specified, the default baud rate 38400 is used. The provided examples use the default baud rate.</li>
+</ul>
+<p>Use <code>hci_dfu_send_hex.exe --help</code> to display usage information.</p>
+<h1><a class="anchor" id="bledfu_example_running_verify"></a>
+Verifying the transferred firmware</h1>
+<p>If you used one of the provided example image files, you can verify that the Device Firmware Update completed as expected as follows: </p>
 <table class="doxtable">
 <tr>
-<th>Interrupt </th><th>S110 (CPU cycles)</th><th>RTX (CPU cycles)</th></tr>
+<th>Image </th><th>Verification</th></tr>
 <tr>
-<td>Open peripheral interrupt </td><td>50 </td><td>&lt; 20 </td></tr>
+<td>dfu_test_bootloader_b_hci.zip<br/>
+dfu_test_softdevice_w_bootloader_b_hci.zip </td><td>With the updated bootloader, LED 4 is lit instead of LED 3 when the device is in bootloader mode. </td></tr>
 <tr>
-<td>Blocked or restricted peripheral interrupt </td><td>63 </td><td>&lt; 20 </td></tr>
+<td>dfu_test_softdevice_b.zip<br/>
+dfu_test_softdevice_w_bootloader_b_hci.zip </td><td>Check the data at location 0x00003000 by issuing the following command:<br/>
+ <b>nrfjprog &ndash;memrd 0x3000 &ndash;w 32 &ndash;n 16</b><br/>
+The data has changed to <code>FFFFFF10 51B1E5DB 00018000 FFFF<b>FFFF</b></code>. Before the update, the last two bytes were 0064 (for SoftDevice S110 8.0.0; other SoftDevices might have a different value). </td></tr>
 <tr>
-<td>Application SVC interrupt </td><td>14 </td><td>≈ 35 </td></tr>
+<td>dfu_test_app_hrm.zip </td><td>Open the Master Control Panel. The device is advertising as "Dfu_HRM". </td></tr>
 </table>
-</li>
-</ul>
-<h1><a class="anchor" id="rtx_softdevice"></a>
-Cooperation with the SoftDevice</h1>
-<p>RTX shares the SVC interrupt with the SoftDevice. Therefore, it works on the same interrupt priority (UpperStack) as the SoftDevice API functions.</p>
-<h1><a class="anchor" id="rtx_interrupt"></a>
-Examples</h1>
-<p>This example shows how to use the system function in interrupt handlers. </p>
-<dl class="section warning"><dt>Warning</dt><dd>You must always clear the rtos_suspend variable in interrupt handlers that use RTX functions. Not clearing it might cause undefined behaviour.</dd></dl>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> ***_IRQHandler(<span class="keywordtype">void</span>);</div>
-<div class="line">{<span class="comment"></span></div>
-<div class="line"><span class="comment">    /**</span></div>
-<div class="line"><span class="comment">    *implementation of handler</span></div>
-<div class="line"><span class="comment">    */</span></div>
-<div class="line">    rtos_suspend = 0;</div>
-<div class="line">    osSignalSet (thread_id, SIGNAL); <span class="comment">//example of system function</span></div>
-<div class="line">}</div>
-</div><!-- fragment --><p>The following example applications demonstrate the use of RTX:</p>
-<p><a class="el" href="a00072.html">Blinky RTX Example</a></p>
-<p><a class="el" href="a00054.html">Heart Rate Application with RTX</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00095.html">RTOS support</a></li>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:16 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00078.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00089.html">Creating a DFU bootloader</a></li>
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

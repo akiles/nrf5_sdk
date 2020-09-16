@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: DFU BLE SVC</title>
+<title>nRF51 SDK - S110 SoftDevice: HCI Transport Layer Configuration</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,120 +97,138 @@ $(document).ready(function(){initNavTree('a00945.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">DFU BLE SVC<div class="ingroups"><a class="el" href="a01040.html">Bootloader/DFU API</a></div></div>  </div>
+<div class="title">HCI Transport Layer Configuration<div class="ingroups"><a class="el" href="a01036.html">Bootloader/DFU API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>DFU BLE SVC in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader.  
+<p>Definition of HCI Transport Layer configurable parameters.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00946"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00946.html">DFU BLE SVC internal</a></td></tr>
-<tr class="memdesc:a00946"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU BLE SVC internal functions in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader. This interface provides internal Bootloader DFU functions for retrieving data exchanged through SuperVisor Calls. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00343.html">dfu_ble_peer_data_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU Peer data structure.  <a href="a00343.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga40250c4367f60f8adf2f36ca02a620d2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00945.html#ga40250c4367f60f8adf2f36ca02a620d2">BOOTLOADER_SVC_BASE</a>&#160;&#160;&#160;0x0</td></tr>
-<tr class="separator:ga40250c4367f60f8adf2f36ca02a620d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gab61a9eaf497f22e66f7a0f76d8203133"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00945.html#gab61a9eaf497f22e66f7a0f76d8203133">BOOTLOADER_SVCS</a> { <br/>
-&#160;&#160;<a class="el" href="a00945.html#ggab61a9eaf497f22e66f7a0f76d8203133a343827596c1f6effeaf0ff0149cb5734">DFU_BLE_SVC_SET_PEER_DATA</a> = 0x0, 
-<br/>
-&#160;&#160;<b>BOOTLOADER_SVC_LAST</b>
-<br/>
- }</td></tr>
-<tr class="memdesc:gab61a9eaf497f22e66f7a0f76d8203133"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SVC numbers used by the SVC functions in the SoC library.  <a href="a00945.html#gab61a9eaf497f22e66f7a0f76d8203133">More...</a><br/></td></tr>
-<tr class="separator:gab61a9eaf497f22e66f7a0f76d8203133"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga8d962d1d241de6a5778d01eaebfa0460"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00945.html#ga8d962d1d241de6a5778d01eaebfa0460">dfu_ble_svc_set_peer_data</a> (<a class="el" href="a00343.html">dfu_ble_peer_data_t</a> *p_peer_data)</td></tr>
-<tr class="memdesc:ga8d962d1d241de6a5778d01eaebfa0460"><td class="mdescLeft">&#160;</td><td class="mdescRight">SVC Function for setting peer data containing address, IRK, and LTK to establish bonded connection in DFU mode.  <a href="#ga8d962d1d241de6a5778d01eaebfa0460">More...</a><br/></td></tr>
-<tr class="separator:ga8d962d1d241de6a5778d01eaebfa0460"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga563b2db0be6fc39f6bdc43275fce4a6c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00945.html#ga563b2db0be6fc39f6bdc43275fce4a6c">HCI_SLIP_UART_RX_PIN_NUMBER</a>&#160;&#160;&#160;RX_PIN_NUMBER</td></tr>
+<tr class="separator:ga563b2db0be6fc39f6bdc43275fce4a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37627f12f64e2d3a9ff5df63fd872003"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00945.html#ga37627f12f64e2d3a9ff5df63fd872003">HCI_SLIP_UART_TX_PIN_NUMBER</a>&#160;&#160;&#160;TX_PIN_NUMBER</td></tr>
+<tr class="separator:ga37627f12f64e2d3a9ff5df63fd872003"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabef88f732922a13c3dc4e3dd514c36fc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00945.html#gabef88f732922a13c3dc4e3dd514c36fc">HCI_SLIP_UART_RTS_PIN_NUMBER</a>&#160;&#160;&#160;RTS_PIN_NUMBER</td></tr>
+<tr class="separator:gabef88f732922a13c3dc4e3dd514c36fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b29fdaf1844f05115940fbf2401fd5f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00945.html#ga9b29fdaf1844f05115940fbf2401fd5f">HCI_SLIP_UART_CTS_PIN_NUMBER</a>&#160;&#160;&#160;CTS_PIN_NUMBER</td></tr>
+<tr class="separator:ga9b29fdaf1844f05115940fbf2401fd5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f2a196e8e6fd828a7408cbce3625a39"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00945.html#ga3f2a196e8e6fd828a7408cbce3625a39">HCI_SLIP_UART_MODE</a>&#160;&#160;&#160;<a class="el" href="a00788.html#ggad0b0f33b12902ce08681e06f304f0cbaa76123f43769a3f237d5a670844c6d235">APP_UART_FLOW_CONTROL_ENABLED</a></td></tr>
+<tr class="separator:ga3f2a196e8e6fd828a7408cbce3625a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga32bbc9330e57446dca60392c29857b89"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00945.html#ga32bbc9330e57446dca60392c29857b89">HCI_SLIP_UART_BAUDRATE</a>&#160;&#160;&#160;UART_BAUDRATE_BAUDRATE_Baud38400</td></tr>
+<tr class="separator:ga32bbc9330e57446dca60392c29857b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f50bc31550595e28cbf7a9eb3597b69"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00945.html#ga7f50bc31550595e28cbf7a9eb3597b69">MAX_PACKET_SIZE_IN_BITS</a>&#160;&#160;&#160;8000u</td></tr>
+<tr class="separator:ga7f50bc31550595e28cbf7a9eb3597b69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga191602a3878cbd9811815ba22f8fea51"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00945.html#ga191602a3878cbd9811815ba22f8fea51">USED_BAUD_RATE</a>&#160;&#160;&#160;38400u</td></tr>
+<tr class="separator:ga191602a3878cbd9811815ba22f8fea51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>DFU BLE SVC in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader. </p>
-<p>This module implements handling of SuperVisor Calls in the bootloader. SuperVisor Calls allow for an application to execute calls into the bootloader. Currently, it is possible to exchange bonding information (like keys) from the application to a bootloader supporting DFU OTA using BLE, so the update process can be done through an already existing bond.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must make sure that all SuperVisor Calls (SVC) are forwarded to the bootloader to ensure correct behavior. Forwarding of SVCs to the bootloader is done using the SoftDevice SVC <a class="el" href="a01072.html#ga46d2ce943076d65947ea8919198be106">sd_softdevice_vector_table_base_set</a> with the value present in <code>NRF_UICR-&gt;BOOTLOADERADDR</code>. </dd></dl>
+<p>Definition of HCI Transport Layer configurable parameters. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga40250c4367f60f8adf2f36ca02a620d2"></a>
+<a class="anchor" id="ga32bbc9330e57446dca60392c29857b89"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BOOTLOADER_SVC_BASE&#160;&#160;&#160;0x0</td>
+          <td class="memname">#define HCI_SLIP_UART_BAUDRATE&#160;&#160;&#160;UART_BAUDRATE_BAUDRATE_Baud38400</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The number of the lowest SVC number reserved for the bootloader. </p>
+<p>Defines the UART Baud rate. Default is 38400 baud. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gab61a9eaf497f22e66f7a0f76d8203133"></a>
+<a class="anchor" id="ga9b29fdaf1844f05115940fbf2401fd5f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00945.html#gab61a9eaf497f22e66f7a0f76d8203133">BOOTLOADER_SVCS</a></td>
+          <td class="memname">#define HCI_SLIP_UART_CTS_PIN_NUMBER&#160;&#160;&#160;CTS_PIN_NUMBER</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>The SVC numbers used by the SVC functions in the SoC library. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab61a9eaf497f22e66f7a0f76d8203133a343827596c1f6effeaf0ff0149cb5734"></a>DFU_BLE_SVC_SET_PEER_DATA</em>&nbsp;</td><td class="fielddoc">
-<p>The number of the lowest SVC number reserved for the bootloader. </p>
-</td></tr>
-</table>
+<p>Defines the UART CTS pin number. The default pin for the board is chosen, but can be overwritten. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga8d962d1d241de6a5778d01eaebfa0460"></a>
+<a class="anchor" id="ga3f2a196e8e6fd828a7408cbce3625a39"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t dfu_ble_svc_set_peer_data </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00343.html">dfu_ble_peer_data_t</a> *&#160;</td>
-          <td class="paramname"><em>p_peer_data</em></td><td>)</td>
-          <td></td>
+          <td class="memname">#define HCI_SLIP_UART_MODE&#160;&#160;&#160;<a class="el" href="a00788.html#ggad0b0f33b12902ce08681e06f304f0cbaa76123f43769a3f237d5a670844c6d235">APP_UART_FLOW_CONTROL_ENABLED</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines the UART mode to be used. Use UART Low Power with Flow Control - Valid values are defined in <a class="el" href="a00788.html#gad0b0f33b12902ce08681e06f304f0cba">app_uart_flow_control_t</a>. For further information on the UART Low Power mode, please refer to: <a class="el" href="a00788.html">UART module</a> . </p>
 
-<p>SVC Function for setting peer data containing address, IRK, and LTK to establish bonded connection in DFU mode. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_peer_data</td><td>Pointer to the peer data containing keys for the connection.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If a NULL pointer was provided as argument. </td></tr>
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If the function completed successfully. </td></tr>
-  </table>
-  </dd>
-</dl>
+</div>
+</div>
+<a class="anchor" id="gabef88f732922a13c3dc4e3dd514c36fc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HCI_SLIP_UART_RTS_PIN_NUMBER&#160;&#160;&#160;RTS_PIN_NUMBER</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Defines the UART RTS pin number. The default pin for the board is chosen, but can be overwritten. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga563b2db0be6fc39f6bdc43275fce4a6c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HCI_SLIP_UART_RX_PIN_NUMBER&#160;&#160;&#160;RX_PIN_NUMBER</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>&lt; Default include for boards.h which means that default pin numbers will be used for RX, TX, CTS, and RTS on the UART. Other pin number can be used if desired. This section covers configurable parameters for the HCI Transport SLIP layer. Defines the UART RX pin number. The default pin for the board is chosen, but can be overwritten. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga37627f12f64e2d3a9ff5df63fd872003"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HCI_SLIP_UART_TX_PIN_NUMBER&#160;&#160;&#160;TX_PIN_NUMBER</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Defines the UART TX pin number. The default pin for the board is chosen, but can be overwritten. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7f50bc31550595e28cbf7a9eb3597b69"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_PACKET_SIZE_IN_BITS&#160;&#160;&#160;8000u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This section covers configurable parameters for the HCI Transport layer that are used for calculating correct value for the retransmission timer timeout. Maximum size of a single application packet in bits. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga191602a3878cbd9811815ba22f8fea51"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USED_BAUD_RATE&#160;&#160;&#160;38400u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The used uart baudrate. </p>
 
 </div>
 </div>
@@ -219,7 +237,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jan 15 2015 09:02:23 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>
