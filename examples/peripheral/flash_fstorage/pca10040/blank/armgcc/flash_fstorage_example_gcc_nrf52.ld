@@ -35,7 +35,7 @@ SECTIONS
   .log_dynamic_data :
   {
     PROVIDE(__start_log_dynamic_data = .);
-    KEEP(*(.log_dynamic_data))
+    KEEP(*(SORT(.log_dynamic_data*)))
     PROVIDE(__stop_log_dynamic_data = .);
   } > RAM
 
@@ -52,10 +52,10 @@ SECTIONS
     KEEP(*(.cli_command))
     PROVIDE(__stop_cli_command = .);
   } > FLASH
-    .log_const_data :
+  .log_const_data :
   {
     PROVIDE(__start_log_const_data = .);
-    KEEP(*(.log_const_data))
+    KEEP(*(SORT(.log_const_data*)))
     PROVIDE(__stop_log_const_data = .);
   } > FLASH
   .pwr_mgmt_data :

@@ -908,7 +908,7 @@
 
 // </e>
 
-// <h> nrf_log - Logging
+// <h> nrf_log - Logger
 
 //==========================================================
 // <e> NRF_LOG_ENABLED - Logging module for nRF5 SDK
@@ -950,7 +950,7 @@
 // <8=> White 
 
 #ifndef NRF_LOG_ERROR_COLOR
-#define NRF_LOG_ERROR_COLOR 0
+#define NRF_LOG_ERROR_COLOR 2
 #endif
 
 // <o> NRF_LOG_WARNING_COLOR  - ANSI escape code prefix.
@@ -966,7 +966,7 @@
 // <8=> White 
 
 #ifndef NRF_LOG_WARNING_COLOR
-#define NRF_LOG_WARNING_COLOR 0
+#define NRF_LOG_WARNING_COLOR 4
 #endif
 
 // </e>

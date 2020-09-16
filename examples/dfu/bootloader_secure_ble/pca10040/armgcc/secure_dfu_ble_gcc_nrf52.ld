@@ -8,26 +8,26 @@ MEMORY
   FLASH (rx) : ORIGIN = 0x78000, LENGTH = 0x6000
   RAM (rwx) :  ORIGIN = 0x20002830, LENGTH = 0xd7d0
   
-  bootloader_settings_page (r) : ORIGIN = 0x0007F000, LENGTH = 0x1000
   uicr_bootloader_start_address (r) : ORIGIN = 0x10001014, LENGTH = 0x4
+  bootloader_settings_page (r) : ORIGIN = 0x0007F000, LENGTH = 0x1000
   mbr_params_page (r) : ORIGIN = 0x0007E000, LENGTH = 0x1000
   uicr_mbr_params_page (r) : ORIGIN = 0x10001018, LENGTH = 0x4
 }
 
 SECTIONS
 {
-  .bootloader_settings_page(NOLOAD) :
-  {
-    PROVIDE(__start_bootloader_settings_page = .);
-    KEEP(*(SORT(.bootloader_settings_page*)))
-    PROVIDE(__stop_bootloader_settings_page = .);
-  } > bootloader_settings_page
   .uicr_bootloader_start_address :
   {
     PROVIDE(__start_uicr_bootloader_start_address = .);
     KEEP(*(SORT(.uicr_bootloader_start_address*)))
     PROVIDE(__stop_uicr_bootloader_start_address = .);
   } > uicr_bootloader_start_address
+  .bootloader_settings_page(NOLOAD) :
+  {
+    PROVIDE(__start_bootloader_settings_page = .);
+    KEEP(*(SORT(.bootloader_settings_page*)))
+    PROVIDE(__stop_bootloader_settings_page = .);
+  } > bootloader_settings_page
   .mbr_params_page(NOLOAD) :
   {
     PROVIDE(__start_mbr_params_page = .);
@@ -51,7 +51,7 @@ SECTIONS
   .log_dynamic_data :
   {
     PROVIDE(__start_log_dynamic_data = .);
-    KEEP(*(.log_dynamic_data))
+    KEEP(*(SORT(.log_dynamic_data*)))
     PROVIDE(__stop_log_dynamic_data = .);
   } > RAM
   .fs_data :
@@ -68,10 +68,10 @@ SECTIONS
   .mem_section_dummy_rom :
   {
   }
-    .log_const_data :
+  .log_const_data :
   {
     PROVIDE(__start_log_const_data = .);
-    KEEP(*(.log_const_data))
+    KEEP(*(SORT(.log_const_data*)))
     PROVIDE(__stop_log_const_data = .);
   } > FLASH
   .dfu_trans :
@@ -92,6 +92,12 @@ SECTIONS
     KEEP(*(SORT(.sdh_ble_observers*)))
     PROVIDE(__stop_sdh_ble_observers = .);
   } > FLASH
+  .sdh_req_observers :
+  {
+    PROVIDE(__start_sdh_req_observers = .);
+    KEEP(*(SORT(.sdh_req_observers*)))
+    PROVIDE(__stop_sdh_req_observers = .);
+  } > FLASH
   .sdh_state_observers :
   {
     PROVIDE(__start_sdh_state_observers = .);
@@ -103,12 +109,6 @@ SECTIONS
     PROVIDE(__start_sdh_stack_observers = .);
     KEEP(*(SORT(.sdh_stack_observers*)))
     PROVIDE(__stop_sdh_stack_observers = .);
-  } > FLASH
-  .sdh_req_observers :
-  {
-    PROVIDE(__start_sdh_req_observers = .);
-    KEEP(*(SORT(.sdh_req_observers*)))
-    PROVIDE(__stop_sdh_req_observers = .);
   } > FLASH
   .sdh_soc_observers :
   {

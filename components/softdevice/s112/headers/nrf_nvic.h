@@ -57,7 +57,8 @@
 
 #include <stdint.h>
 #include "nrf.h"
-
+#include "nrf_svc.h"
+#include "nrf_error.h"
 #include "nrf_error_soc.h"
 
 #ifdef __cplusplus

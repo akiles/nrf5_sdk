@@ -180,6 +180,7 @@
           <state>BSP_DEFINES_ONLY</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>ESB_PRESENT</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_74</state>
@@ -493,6 +494,7 @@
           <state>BSP_DEFINES_ONLY</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>ESB_PRESENT</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_74</state>

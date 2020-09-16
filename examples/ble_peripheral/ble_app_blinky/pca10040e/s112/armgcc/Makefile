@@ -181,6 +181,7 @@ CFLAGS += $(OPT)
 CFLAGS += -DBOARD_PCA10040
 CFLAGS += -DCONFIG_GPIO_AS_PINRESET
 CFLAGS += -DDEVELOP_IN_NRF52832
+CFLAGS += -DFLOAT_ABI_SOFT
 CFLAGS += -DNRF52810_XXAA
 CFLAGS += -DNRF52_PAN_74
 CFLAGS += -DNRF_SD_BLE_API_VERSION=5
@@ -206,6 +207,7 @@ ASMFLAGS += -mfloat-abi=soft
 ASMFLAGS += -DBOARD_PCA10040
 ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
 ASMFLAGS += -DDEVELOP_IN_NRF52832
+ASMFLAGS += -DFLOAT_ABI_SOFT
 ASMFLAGS += -DNRF52810_XXAA
 ASMFLAGS += -DNRF52_PAN_74
 ASMFLAGS += -DNRF_SD_BLE_API_VERSION=5
@@ -258,8 +260,8 @@ flash: $(OUTPUT_DIRECTORY)/nrf52810_xxaa.hex
 
 # Flash softdevice
 flash_softdevice:
-	@echo Flashing: s112_nrf52810_5.1.0-2.alpha_softdevice.hex
-	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s112/hex/s112_nrf52810_5.1.0-2.alpha_softdevice.hex --sectorerase
+	@echo Flashing: s112_nrf52810_5.1.0_softdevice.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s112/hex/s112_nrf52810_5.1.0_softdevice.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

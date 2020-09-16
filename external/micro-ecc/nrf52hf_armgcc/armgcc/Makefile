@@ -1,4 +1,4 @@
-PROJECT_NAME     := ext_micro_ecc_nrf52_library_armgcc
+PROJECT_NAME     := ext_micro_ecc_nrf52hf_library_armgcc
 TARGETS          := micro_ecc_lib
 OUTPUT_DIRECTORY := _build
 
@@ -23,6 +23,7 @@ OPT = -Os -g2
 
 # C flags common to all targets
 CFLAGS += $(OPT)
+CFLAGS += -DFLOAT_ABI_HARD
 CFLAGS += -DuECC_ENABLE_VLI_API
 CFLAGS += -DuECC_OPTIMIZATION_LEVEL=3
 CFLAGS += -DuECC_SQUARE_FUNC=1
@@ -45,6 +46,7 @@ ASMFLAGS += -g2
 ASMFLAGS += -mcpu=cortex-m4
 ASMFLAGS += -mthumb -mabi=aapcs
 ASMFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
+ASMFLAGS += -DFLOAT_ABI_HARD
 ASMFLAGS += -DuECC_ENABLE_VLI_API
 ASMFLAGS += -DuECC_OPTIMIZATION_LEVEL=3
 ASMFLAGS += -DuECC_SQUARE_FUNC=1
@@ -74,7 +76,7 @@ TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
 
 include $(TEMPLATE_PATH)/Makefile.common
 
-$(call define_library, $(TARGETS), $(PROJ_DIR)/nrf52_armgcc/armgcc/micro_ecc_lib_nrf52.a)
+$(call define_library, $(TARGETS), $(PROJ_DIR)/nrf52hf_armgcc/armgcc/micro_ecc_lib_nrf52.a)
 
 define create_library
 @echo Creating library: $($@)

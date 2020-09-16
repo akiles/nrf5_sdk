@@ -60,11 +60,11 @@ NRF_LOG_MODULE_REGISTER();
 
 #if TASK_MANAGER_CONFIG_STACK_GUARD
 #define STACK_GUARD_SIZE    (1 << (TASK_MANAGER_CONFIG_STACK_GUARD + 1))
+STATIC_ASSERT((TASK_MANAGER_CONFIG_STACK_SIZE % STACK_GUARD_SIZE) == 0);
 #endif
 
 STATIC_ASSERT((TASK_MANAGER_CONFIG_MAX_TASKS) > 0);
 STATIC_ASSERT((TASK_MANAGER_CONFIG_STACK_SIZE % 8) == 0);
-STATIC_ASSERT((TASK_MANAGER_CONFIG_STACK_SIZE % STACK_GUARD_SIZE) == 0);
 
 // Support older CMSIS avaiable in Keil 4
 #if (__CORTEX_M == 4)
@@ -148,6 +148,8 @@ typedef struct
 
 /**@brief Stack space for tasks */
 #if TASK_MANAGER_CONFIG_STACK_GUARD
+/**@brief Handle to MPU region used as a guard */
+static nrf_mpu_region_t s_guard_region;
 __ALIGN(STACK_GUARD_SIZE)
 #else
 __ALIGN(8)
@@ -169,8 +171,6 @@ static task_id_t s_current_task_id;
 #define TASK_GUARD_ATTRIBUTES ((0x05 << MPU_RASR_TEX_Pos) | (1 << MPU_RASR_B_Pos) | \
                                (0x07 << MPU_RASR_AP_Pos)  | (1 << MPU_RASR_XN_Pos))
 
-/**@brief Handle to MPU region used as a guard */
-static nrf_mpu_region_t s_guard_region;
 
 /**@brief Macro for getting pointer to bottom of stack for given task id */
 #define BOTTOM_OF_TASK_STACK(_task_id)  ((void *)(&s_task_stacks[(_task_id)].stack[0]))

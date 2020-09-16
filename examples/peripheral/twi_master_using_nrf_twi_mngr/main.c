@@ -401,9 +401,9 @@ int main(void)
     read_init();
 
     // Initialize sensors.
-    APP_ERROR_CHECK(nrf_twi_mngr_perform(&m_nrf_twi_mngr, lm75b_init_transfers,
+    APP_ERROR_CHECK(nrf_twi_mngr_perform(&m_nrf_twi_mngr, NULL, lm75b_init_transfers,
         LM75B_INIT_TRANSFER_COUNT, NULL));
-    APP_ERROR_CHECK(nrf_twi_mngr_perform(&m_nrf_twi_mngr, mma7660_init_transfers,
+    APP_ERROR_CHECK(nrf_twi_mngr_perform(&m_nrf_twi_mngr, NULL, mma7660_init_transfers,
         MMA7660_INIT_TRANSFER_COUNT, NULL));
 
     while (true)

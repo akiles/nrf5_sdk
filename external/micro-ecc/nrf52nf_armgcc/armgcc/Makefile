@@ -1,4 +1,4 @@
-PROJECT_NAME     := ext_micro_ecc_nrf52_library_iar
+PROJECT_NAME     := ext_micro_ecc_nrf52nf_library_armgcc
 TARGETS          := micro_ecc_lib
 OUTPUT_DIRECTORY := _build
 
@@ -23,6 +23,7 @@ OPT = -Os -g2
 
 # C flags common to all targets
 CFLAGS += $(OPT)
+CFLAGS += -DFLOAT_ABI_SOFT
 CFLAGS += -DuECC_ENABLE_VLI_API
 CFLAGS += -DuECC_OPTIMIZATION_LEVEL=3
 CFLAGS += -DuECC_SQUARE_FUNC=1
@@ -32,10 +33,10 @@ CFLAGS += -DuECC_VLI_NATIVE_LITTLE_ENDIAN=1
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS +=  -Wall -Werror
-CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
+CFLAGS += -mfloat-abi=soft
 # keep every function in a separate section, this allows linker to discard unused ones
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -fno-builtin -fshort-enums -fshort-wchar
+CFLAGS += -fno-builtin -fshort-enums 
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
@@ -44,7 +45,8 @@ CXXFLAGS += $(OPT)
 ASMFLAGS += -g2
 ASMFLAGS += -mcpu=cortex-m4
 ASMFLAGS += -mthumb -mabi=aapcs
-ASMFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
+ASMFLAGS += -mfloat-abi=soft
+ASMFLAGS += -DFLOAT_ABI_SOFT
 ASMFLAGS += -DuECC_ENABLE_VLI_API
 ASMFLAGS += -DuECC_OPTIMIZATION_LEVEL=3
 ASMFLAGS += -DuECC_SQUARE_FUNC=1
@@ -74,7 +76,7 @@ TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
 
 include $(TEMPLATE_PATH)/Makefile.common
 
-$(call define_library, $(TARGETS), $(PROJ_DIR)/nrf52_iar/armgcc/micro_ecc_lib_nrf52.a)
+$(call define_library, $(TARGETS), $(PROJ_DIR)/nrf52nf_armgcc/armgcc/micro_ecc_lib_nrf52.a)
 
 define create_library
 @echo Creating library: $($@)

@@ -1,3 +1,181 @@
+nRF5 SDK v14.2.0
+------------------------
+Release Date: Week 46, 2017
+
+Highlights:
+
+- Support for the new S112 SoftDevice v5.1.0.
+  
+The following toolchains/devices have been used for testing and
+verification:
+- ARM: MDK-ARM version 5.18a
+- GCC: GCC ARM Embedded 4.9 2015q3
+- IAR: IAR Workbench 7.80.4
+- SES: SES 3.30
+- Linux: Ubuntu 17.04, Kernel 4.10.0.
+- Jlink: 6.20d
+    
+Supported SoftDevices:
+- S112 v5.1.x
+- S132 v5.0.x (for v5.1.x, see the note below)
+- S140 v5.0.0-2.alpha
+- S212 v5.0.x
+- S332 v5.0.x
+
+S132 compatibility:
+The newly released S132 SoftDevice v5.1.0 is drop-in compatible with 
+S132 v5.0.0, which is included in this SDK release. 
+However, there are some limitations that you must be aware of when 
+replacing the included SoftDevice with the new one:
+- In S132 v5.1.0, the SoftDevice RAM usage is reduced. Examples that are
+  optimized on RAM usage return a warning that the application RAM start
+  address can be lowered. The examples work as before but are not fully 
+  optimized on RAM usage.
+- The test images in examples\dfu\secure_dfu_test_images are tightly
+  connected with the precompiled HEX files located in 
+  examples\dfu\bootloader_secure_ble\hex. Therefore, they cannot be used
+  in combination with the new SoftDevice.
+     
+Supported boards:
+- PCA10040E (nRF52810 emulation on PCA10040)
+- PCA10040
+- PCA10056 (limited support; see the "Scope for the nRF52840 chip" section)
+- Dynastream's D52DK1 (only for ANT examples)
+     
+For other devices and boards, see the SDK documentation, section "Using
+the SDK with other boards".
+     
+     
+*** Scope for the nRF52840 chip
+********************************
+All examples and libraries for the new chip must be treated as
+experimental.
+Some examples have not been ported to run on nRF52840. Check the
+existing example projects to see which targets are supported.
+     
+The following SDK features are supported on the new nRF52840 chip:
+  - IEEE 802.15.4 stack library with an example
+  - Most BLE, hardware peripheral, and NFC examples (with some
+    exceptions; see the available example projects for details)
+  - Peripheral HAL and drivers (both for existing and new peripherals)
+  - Cryptography library including CryptoCell CC310 backend
+  - NFC Type 2 Tag and Type 4 Tag
+  - Secure DFU (only with micro-ecc backend)
+  - DTM including support for the new Bluetooth 5 features
+  - Gazell
+    
+The following SDK features are not supported on the new nRF52840 chip:
+   - ANT
+   - Eddystone
+   - ESB
+   - FreeRTOS
+   - IoT components
+   - Serialization of the S140 SoftDevice v5.0.0-2.alpha    
+        
+*** New features
+*****************
+ 
+** BLE **
+ - Added support for the S112 SoftDevice v5.1.0.
+ 
+** Crypto **
+ - Added a makefile for compiling the micro-ecc library with a "soft" 
+   FPU ABI (required for nRF52810, which does not have hardware FPU 
+   support).
+  
+** Drivers and libraries **
+ - Added support for a "soft" FPU ABI in the Task Manager library 
+  (required for nRF52810, which does not have hardware FPU support).
+   
+*** Changes
+************
+ 
+** Drivers and libraries **
+ - TWI Transaction Manager: Added support for passing the TWI 
+   configuration in function nrf_twi_mngr_perform(). Pass NULL if you do
+   not want to use this new feature.
+ - Command Line Interface: Added support for commands longer than 255 
+   characters.
+ 
+   
+*** Bugfixes
+****************
+  
+** Drivers and libraries **
+ - Fixed "echo" command behavior in nrf_cli.
+ - Fixed a bug in nrf_ringbuf where allocation protection failed on a 
+   second attempt to allocate a buffer in use.
+ - Fixed a compile error in the Task Manager library when stack guard is
+   off.
+ - Fixed invalid module names in logger output when LTO was used in the 
+   GCC compiler.
+ - Fixed a bug in the logger where output could get corrupted when 
+   logging was interrupted by NRF_LOG_PROCESS() (for example, flushing 
+   in error handler).
+ 
+** DTM **
+ - Fixed a bug preventing certain TX power values to be set.
+ - Set the PDU header payload type field of coded PHY 0xFF packets to 
+   0x04 instead of 0x03 to make the 0xFF packets valid.
+
+*** Known Issues
+****************
+
+** BLE **
+ - When working on the emulated nRF52810 target, if you change the 
+   optimization level and/or add the logging functionality, the project
+   might not compile or fail at runtime due to not enough flash 
+   available for FDS or Peer Manager.
+ - All Bluetooth applications not using the nrf_queued_write module will
+   assert when a peer sends a Write request with the opcode 'cancel all 
+   operations' (BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL), after the 
+   SoftDevice call to sd_ble_gatts_rw_authorize_reply. This SoftDevice 
+   call, for the opcode 'cancel all operations', returns 
+   NRF_INVALID_PARAMS if the gatt_status is not BLE_GATT_STATUS_SUCCESS.
+
+** BLE IOT **
+ - Neighbor discovery module for lwIP requires the on-link flag in the 
+   router advertisement to be set in order to create a SLAAC address 
+   from the prefix. However, RFC 7668 (https://tools.ietf.org/html/rfc7668) 
+   requires this bit to be zero. Therefore, the nd6.c from lwIP source 
+   has been modified to relax this check.
+ - There are some issues when using the IoT examples against Linux 
+   Kernel 4.12+ which causes the kernel to only work with one 6LoWPAN 
+   connection. If more than one kit is connected using 6LoWPAN, none of 
+   the nodes will be accessible.
+ - Scheduler has been included in most IoT examples to avoid race 
+   conditions found when using lwIP stack, more precisely the TCP 
+   examples.
+   The issue was that the TCP client stopped working after about 15 
+   hours. However, when using mbedTLS, the use of scheduler is not 
+   possible.
+   Therefore, the MQTT client examples might be affected by this issue.
+ - The use of security, both with TLS and DTLS, should be treated as 
+   experimental.
+ - MQTT examples cannot be used with commissioning. There is not enough
+   RAM to accommodate both TLS and the commissioning service.
+
+** NFC **
+ - NFC Type 2 and Type 4 Tag HAL modules require using TIMER 4 on 
+   nRF52832.
+ - Some mobile phone apps cannot write Type 4 Tag ("NFC Tools" and 
+   "TagWriter" v4.1 seem to be okay to use).
+
+** USB (experimental) **
+ - MSC implementation does not stall when the host requires more bytes 
+   than are available in the selected descriptor. It is not a problem 
+   for any tested driver on Windows and Linux, but still violates the
+   specification.
+ - During high USB traffic, in rare cases, communication might hang or 
+   the endpoint data might be transferred twice. See PAN 104.
+
+** Drivers and libraries **
+ - SAADC driver is not handling detection limits 'high' and 'low' 
+   correctly if SAADC resolution is greater than 10 bits.
+
+
+========================================================================
+
 nRF5 SDK v14.1.0
 ------------------------
 Release Date: Week 42, 2017

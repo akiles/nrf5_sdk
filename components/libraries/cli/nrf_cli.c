@@ -720,6 +720,18 @@ static void right_arrow_handle(nrf_cli_t const * p_cli)
     }
 }
 
+static inline void  char_insert_echo_off(nrf_cli_t const * p_cli, char data)
+{
+    if (p_cli->p_ctx->cmd_buff_len >= (NRF_CLI_CMD_BUFF_SIZE - 1))
+    {
+        return;
+    }
+
+    p_cli->p_ctx->cmd_buff[p_cli->p_ctx->cmd_buff_pos++] = data;
+    p_cli->p_ctx->cmd_buff[p_cli->p_ctx->cmd_buff_pos] = '\0';
+    ++p_cli->p_ctx->cmd_buff_len;
+}
+
 static void char_insert(nrf_cli_t const * p_cli, char data)
 {
     nrf_cli_cmd_len_t diff;
@@ -1727,7 +1739,14 @@ static void cli_state_collect(nrf_cli_t const * p_cli)
                     default:
                         if (isprint((int)data))
                         {
-                            char_insert(p_cli, data);
+                            if (NRF_CLI_ECHO_ON_MODE(p_cli))
+                            {
+                                char_insert(p_cli, data);
+                            }
+                            else
+                            {
+                                char_insert_echo_off(p_cli, data);
+                            }
                         }
                         break;
                 }
@@ -2890,7 +2909,6 @@ static void nrf_cli_cmd_echo_off(nrf_cli_t const * p_cli, size_t argc, char **ar
     }
 
     p_cli->p_ctx->echo = false;
-    p_cli->p_ctx->insert_mode = false;
 }
 
 static void nrf_cli_cmd_echo_on(nrf_cli_t const * p_cli, size_t argc, char **argv)

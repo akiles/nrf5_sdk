@@ -178,6 +178,7 @@
           <name>CCDefines</name>
           <state>BOARD_D52DK1</state>
           <state>DEBUG</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>S212</state>
@@ -502,6 +503,7 @@
       <name>ADefines</name>
           <state>BOARD_D52DK1</state>
           <state>DEBUG</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>S212</state>

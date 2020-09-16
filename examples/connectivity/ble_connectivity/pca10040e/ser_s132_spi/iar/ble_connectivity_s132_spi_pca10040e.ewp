@@ -181,6 +181,7 @@
           <state>BSP_DEFINES_ONLY</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>DEVELOP_IN_NRF52832</state>
+          <state>FLOAT_ABI_SOFT</state>
           <state>NRF52810_XXAA</state>
           <state>NRF52_PAN_74</state>
           <state>NRF_SD_BLE_API_VERSION=5</state>
@@ -518,6 +519,7 @@
           <state>BSP_DEFINES_ONLY</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>DEVELOP_IN_NRF52832</state>
+          <state>FLOAT_ABI_SOFT</state>
           <state>NRF52810_XXAA</state>
           <state>NRF52_PAN_74</state>
           <state>NRF_SD_BLE_API_VERSION=5</state>

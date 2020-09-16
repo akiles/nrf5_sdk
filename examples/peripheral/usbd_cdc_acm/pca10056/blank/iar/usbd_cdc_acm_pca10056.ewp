@@ -178,6 +178,7 @@
           <name>CCDefines</name>
           <state>BOARD_PCA10056</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>NRF52840_XXAA</state>
           <state>SWI_DISABLE0</state>
         </option>
@@ -510,6 +511,7 @@
       <name>ADefines</name>
           <state>BOARD_PCA10056</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>NRF52840_XXAA</state>
           <state>SWI_DISABLE0</state>
         </option>

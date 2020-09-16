@@ -178,6 +178,7 @@
           <name>CCDefines</name>
           <state>BOARD_PCA10040</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_74</state>
@@ -597,6 +598,7 @@
       <name>ADefines</name>
           <state>BOARD_PCA10040</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_74</state>
@@ -1257,7 +1259,7 @@
     <name>$PROJ_DIR$\..\..\..\pm_m.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\config\sdk_config.h</name>    </file>  </group>  <group>
   <name>nRF_micro-ecc</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\micro-ecc\nrf52_iar\armgcc\micro_ecc_lib_nrf52.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\micro-ecc\nrf52hf_iar\armgcc\micro_ecc_lib_nrf52.a</name>    </file>  </group>  <group>
   <name>nRF_Segger_RTT</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_Syscalls_IAR.c</name>    </file>    <file>

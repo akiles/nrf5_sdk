@@ -43,6 +43,13 @@
 #include "nrf_assert.h"
 #include "app_util_platform.h"
 
+typedef volatile struct
+{
+    bool    transaction_in_progress;
+    uint8_t transaction_result;
+} nrf_twi_mngr_cb_data_t;
+
+
 static ret_code_t start_transfer(nrf_twi_mngr_t const * p_nrf_twi_mngr)
 {
     ASSERT(p_nrf_twi_mngr != NULL);
@@ -269,7 +276,6 @@ ret_code_t nrf_twi_mngr_init(nrf_twi_mngr_t const *        p_nrf_twi_mngr,
 
     nrf_drv_twi_enable(&p_nrf_twi_mngr->twi);
 
-    p_nrf_twi_mngr->p_nrf_twi_mngr_cb->internal_transaction_in_progress = false;
     p_nrf_twi_mngr->p_nrf_twi_mngr_cb->p_current_transaction   = NULL;
     p_nrf_twi_mngr->p_nrf_twi_mngr_cb->default_configuration   = *p_default_twi_config;
     p_nrf_twi_mngr->p_nrf_twi_mngr_cb->p_current_configuration =
@@ -313,14 +319,15 @@ ret_code_t nrf_twi_mngr_schedule(nrf_twi_mngr_t const *             p_nrf_twi_mn
 
 static void internal_transaction_cb(ret_code_t result, void * p_user_data)
 {
-    nrf_twi_mngr_t * p_nrf_twi_mngr = (nrf_twi_mngr_t *)p_user_data;
+    nrf_twi_mngr_cb_data_t *p_cb_data = (nrf_twi_mngr_cb_data_t *)p_user_data;
 
-    p_nrf_twi_mngr->p_nrf_twi_mngr_cb->internal_transaction_result      = result;
-    p_nrf_twi_mngr->p_nrf_twi_mngr_cb->internal_transaction_in_progress = false;
+    p_cb_data->transaction_result      = result;
+    p_cb_data->transaction_in_progress = false;
 }
 
 
 ret_code_t nrf_twi_mngr_perform(nrf_twi_mngr_t const *          p_nrf_twi_mngr,
+                                nrf_drv_twi_config_t const *    p_config,
                                 nrf_twi_mngr_transfer_t const * p_transfers,
                                 uint8_t                         number_of_transfers,
                                 void                            (* user_function)(void))
@@ -329,44 +336,31 @@ ret_code_t nrf_twi_mngr_perform(nrf_twi_mngr_t const *          p_nrf_twi_mngr,
     ASSERT(p_transfers != NULL);
     ASSERT(number_of_transfers != 0);
 
-    bool busy = false;
+    nrf_twi_mngr_cb_data_t cb_data =
+    {
+        .transaction_in_progress = true
+    };
 
-    CRITICAL_REGION_ENTER();
-    if (p_nrf_twi_mngr->p_nrf_twi_mngr_cb->internal_transaction_in_progress)
+    nrf_twi_mngr_transaction_t internal_transaction =
     {
-        busy = true;
-    }
-    else
-    {
-        p_nrf_twi_mngr->p_nrf_twi_mngr_cb->internal_transaction_in_progress = true;
-    }
-    CRITICAL_REGION_EXIT();
+        .callback            = internal_transaction_cb,
+        .p_user_data         = (void *)&cb_data,
+        .p_transfers         = p_transfers,
+        .number_of_transfers = number_of_transfers,
+        .p_required_twi_cfg  = p_config
+    };
 
-    if (busy)
+    ret_code_t result = nrf_twi_mngr_schedule(p_nrf_twi_mngr, &internal_transaction);
+    VERIFY_SUCCESS(result);
+
+    while (cb_data.transaction_in_progress)
     {
-        return NRF_ERROR_BUSY;
-    }
-    else
-    {
-        nrf_twi_mngr_transaction_t internal_transaction =
+        if (user_function)
         {
-            .callback            = internal_transaction_cb,
-            .p_user_data         = (void *)p_nrf_twi_mngr,
-            .p_transfers         = p_transfers,
-            .number_of_transfers = number_of_transfers,
-        };
-        ret_code_t result = nrf_twi_mngr_schedule(p_nrf_twi_mngr, &internal_transaction);
-        VERIFY_SUCCESS(result);
-
-        while (p_nrf_twi_mngr->p_nrf_twi_mngr_cb->internal_transaction_in_progress)
-        {
-            if (user_function)
-            {
-                user_function();
-            }
+            user_function();
         }
-
-        return p_nrf_twi_mngr->p_nrf_twi_mngr_cb->internal_transaction_result;
     }
+
+    return cb_data.transaction_result;
 }
 #endif //NRF_MODULE_ENABLED(NRF_TWI_MNGR)

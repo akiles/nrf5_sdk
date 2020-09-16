@@ -343,30 +343,30 @@ static void log_skip(void)
 }
 
 
-static inline uint32_t std_header_set(uint32_t severity_mid,
+static inline void std_header_set(uint32_t severity_mid,
                                       char const * const p_str,
                                       uint32_t nargs,
                                       uint32_t wr_idx,
                                       uint32_t mask)
 {
 
-    nrf_log_header_t * p_header = (nrf_log_header_t *)&m_log_data.buffer[wr_idx++ & mask];
-    p_header->base.std.type = HEADER_TYPE_STD;
+
+    //Prepare header - in reverse order to ensure that packet type is validated (set to STD as last action)
+    uint16_t module_id = severity_mid >> NRF_LOG_MODULE_ID_POS;
+    ASSERT(module_id < nrf_log_module_cnt_get());
+    m_log_data.buffer[(wr_idx + 1) & mask] = module_id;
+
+    if (NRF_LOG_USES_TIMESTAMP)
+    {
+        m_log_data.buffer[(wr_idx + 2) & mask] = m_log_data.timestamp_func();
+    }
+
+    nrf_log_header_t * p_header = (nrf_log_header_t *)&m_log_data.buffer[wr_idx & mask];
     p_header->base.std.raw      = (severity_mid & NRF_LOG_RAW) ? 1 : 0;
     p_header->base.std.severity = severity_mid & NRF_LOG_LEVEL_MASK;
     p_header->base.std.nargs    = nargs;
     p_header->base.std.addr     = ((uint32_t)(p_str) & STD_ADDR_MASK);
-
-    uint16_t module_id = severity_mid >> NRF_LOG_MODULE_ID_POS;
-    ASSERT(module_id < nrf_log_module_cnt_get());
-    m_log_data.buffer[wr_idx++ & mask] = module_id;
-
-    if (NRF_LOG_USES_TIMESTAMP)
-    {
-        m_log_data.buffer[wr_idx++ & mask] = m_log_data.timestamp_func();
-    }
-
-    return wr_idx;
+    p_header->base.std.type     = HEADER_TYPE_STD;
 }
 
 /**
@@ -401,7 +401,7 @@ static inline bool buf_prealloc(uint32_t content_len, uint32_t * p_wr_idx)
             if (available_words >= HEADER_SIZE)
             {
                 // Overflow entry is injected
-                (void)std_header_set(NRF_LOG_LEVEL_WARNING, m_overflow_info, 0, m_log_data.wr_idx, m_log_data.mask);
+                std_header_set(NRF_LOG_LEVEL_WARNING, m_overflow_info, 0, m_log_data.wr_idx, m_log_data.mask);
                 req_len = HEADER_SIZE;
             }
             else
@@ -414,6 +414,10 @@ static inline bool buf_prealloc(uint32_t content_len, uint32_t * p_wr_idx)
         }
 
     }
+    /* Mark header as invalid.*/
+    nrf_log_generic_header_t * p_header = (nrf_log_generic_header_t *)&m_log_data.buffer[m_log_data.wr_idx & m_log_data.mask];
+    p_header->type = HEADER_TYPE_INVALID;
+
     m_log_data.wr_idx += req_len;
 
     CRITICAL_REGION_EXIT();
@@ -503,13 +507,14 @@ static inline void std_n(uint32_t severity_mid, char const * const p_str, uint32
     if (buf_prealloc(nargs, &wr_idx))
     {
         // Proceed only if buffer was successfully preallocated.
-        wr_idx = std_header_set(severity_mid, p_str, nargs, wr_idx, mask);
 
+        uint32_t data_idx = wr_idx + HEADER_SIZE;
         uint32_t i;
         for (i = 0; i < nargs; i++)
         {
-            m_log_data.buffer[wr_idx++ & mask] =args[i];
+            m_log_data.buffer[data_idx++ & mask] =args[i];
         }
+        std_header_set(severity_mid, p_str, nargs, wr_idx, mask);
     }
     if (m_log_data.autoflush)
     {
@@ -602,21 +607,8 @@ void nrf_log_frontend_hexdump(uint32_t           severity_mid,
     uint32_t wr_idx;
     if (buf_prealloc(CEIL_DIV(length, sizeof(uint32_t)), &wr_idx))
     {
-        //Header prepare
-        nrf_log_header_t * p_header = (nrf_log_header_t *)&m_log_data.buffer[wr_idx++ & mask];
-        p_header->base.hexdump.type     = HEADER_TYPE_HEXDUMP;
-        p_header->base.hexdump.raw      = (severity_mid & NRF_LOG_RAW) ? 1 : 0;
-        p_header->base.hexdump.severity = severity_mid & NRF_LOG_LEVEL_MASK;
-        p_header->base.hexdump.offset   = 0;
-        p_header->base.hexdump.len      = length;
-
-        m_log_data.buffer[wr_idx++ & mask] = severity_mid >> NRF_LOG_MODULE_ID_POS;
-
-
-        if (NRF_LOG_USES_TIMESTAMP)
-        {
-           m_log_data.buffer[wr_idx++ & mask] = m_log_data.timestamp_func();
-        }
+        uint32_t header_wr_idx = wr_idx;
+        wr_idx += HEADER_SIZE;
 
         uint32_t space0 = sizeof(uint32_t) * (m_log_data.mask + 1 - (wr_idx & mask));
         if (length <= space0)
@@ -629,6 +621,24 @@ void nrf_log_frontend_hexdump(uint32_t           severity_mid,
             length -= space0;
             memcpy(&m_log_data.buffer[0], &((uint8_t *)p_data)[space0], length);
         }
+
+        //Prepare header - in reverse order to ensure that packet type is validated (set to HEXDUMP as last action)
+        if (NRF_LOG_USES_TIMESTAMP)
+        {
+           m_log_data.buffer[(header_wr_idx + 2) & mask] = m_log_data.timestamp_func();
+        }
+
+        m_log_data.buffer[(header_wr_idx + 1) & mask] = severity_mid >> NRF_LOG_MODULE_ID_POS;
+        //Header prepare
+        nrf_log_header_t * p_header = (nrf_log_header_t *)&m_log_data.buffer[header_wr_idx & mask];
+        p_header->base.hexdump.raw      = (severity_mid & NRF_LOG_RAW) ? 1 : 0;
+        p_header->base.hexdump.severity = severity_mid & NRF_LOG_LEVEL_MASK;
+        p_header->base.hexdump.offset   = 0;
+        p_header->base.hexdump.len      = length;
+        p_header->base.hexdump.type     = HEADER_TYPE_HEXDUMP;
+
+
+
     }
 
     if (m_log_data.autoflush)
@@ -737,6 +747,13 @@ bool nrf_log_frontend_dequeue(void)
                 memobj_offset += sizeof(uint32_t);
             }
         }
+    }
+    else if (header.base.generic.type == HEADER_TYPE_INVALID && (m_log_data.log_skipped == 0))
+    {
+        //invalid type can only occur if log entry was interrupted by log_process. It is likly final flush
+        // and finding invalid type means that last entry in the buffer was reached (the one that was interrupted).
+        // Stop processing immediately.
+        return false;
     }
     else
     {

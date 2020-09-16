@@ -179,6 +179,7 @@
           <state>BOARD_PCA10040</state>
           <state>CODE_REGION_1_START=0x23000</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>MAIN_APPLICATION_START_ADDR=0x23000</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
@@ -512,6 +513,7 @@
           <state>BOARD_PCA10040</state>
           <state>CODE_REGION_1_START=0x23000</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>MAIN_APPLICATION_START_ADDR=0x23000</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>

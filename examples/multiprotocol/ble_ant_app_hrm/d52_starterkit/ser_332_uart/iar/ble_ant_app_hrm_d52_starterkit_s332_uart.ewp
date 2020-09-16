@@ -179,6 +179,7 @@
           <state>ANT_STACK_SUPPORT_REQD</state>
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>BOARD_D52DK1</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>NRF_SD_BLE_API_VERSION=5</state>
@@ -537,6 +538,7 @@
           <state>ANT_STACK_SUPPORT_REQD</state>
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>BOARD_D52DK1</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>NRF_SD_BLE_API_VERSION=5</state>

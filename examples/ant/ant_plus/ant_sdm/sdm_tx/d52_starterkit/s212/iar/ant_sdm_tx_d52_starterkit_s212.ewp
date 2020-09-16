@@ -178,6 +178,7 @@
           <name>CCDefines</name>
           <state>ANT_STACK_SUPPORT_REQD</state>
           <state>BOARD_D52DK1</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>S212</state>
@@ -514,6 +515,7 @@
       <name>ADefines</name>
           <state>ANT_STACK_SUPPORT_REQD</state>
           <state>BOARD_D52DK1</state>
+          <state>FLOAT_ABI_HARD</state>
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>S212</state>

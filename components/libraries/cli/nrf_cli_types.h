@@ -41,12 +41,19 @@
 #define NRF_CLI_TYPES_H__
 
 #include <inttypes.h>
+#include "sdk_config.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef uint8_t nrf_cli_cmd_len_t;
+#if (NRF_CLI_CMD_BUFF_SIZE > 65535)
+    typedef uint32_t nrf_cli_cmd_len_t;
+#elif (NRF_CLI_CMD_BUFF_SIZE > 255)
+    typedef uint16_t nrf_cli_cmd_len_t;
+#else
+    typedef uint8_t nrf_cli_cmd_len_t;
+#endif
 
 typedef enum
 {

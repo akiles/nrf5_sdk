@@ -149,7 +149,8 @@ extern "C" {
 /**
  * @brief Macro for forwarding the new implementation. See @ref nrf_twi_mngr_perform
  */
-#define app_twi_perform       nrf_twi_mngr_perform
+#define app_twi_perform(p_nrf_twi_mngr, p_transfers, number_of_transfers, user_function) \
+	nrf_twi_mngr_perform(p_nrf_twi_mngr, NULL, p_transfers, number_of_transfers, user_function)
 /**
  * @brief Macro for forwarding the new implementation. See @ref nrf_twi_mngr_is_idle
  */

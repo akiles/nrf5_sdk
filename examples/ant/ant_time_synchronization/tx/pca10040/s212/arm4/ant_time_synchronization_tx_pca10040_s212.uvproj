@@ -350,7 +350,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99 --reduce_paths</MiscControls>
-              <Define> BOARD_PCA10040 CONFIG_GPIO_AS_PINRESET NRF52 NRF52832_XXAA NRF52_PAN_74 S212 SOFTDEVICE_PRESENT</Define>
+              <Define> BOARD_PCA10040 CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD NRF52 NRF52832_XXAA NRF52_PAN_74 S212 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config;..\..\..\..\..\..\..\components;..\..\..\..\..\..\..\components\ant\ant_channel_config;..\..\..\..\..\..\..\components\boards;..\..\..\..\..\..\..\components\device;..\..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\..\components\drivers_nrf\rtc;..\..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\..\components\libraries\experimental_log;..\..\..\..\..\..\..\components\libraries\experimental_log\src;..\..\..\..\..\..\..\components\libraries\experimental_memobj;..\..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\..\components\softdevice\common;..\..\..\..\..\..\..\components\softdevice\s212\headers;..\..\..\..\..\..\..\components\softdevice\s212\headers\nrf52;..\..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\..\components\toolchain\cmsis\include;..\config</IncludePath>
             </VariousControls>
@@ -365,8 +365,8 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DBOARD_PCA10040,-DCONFIG_GPIO_AS_PINRESET,-DNRF52,-DNRF52832_XXAA,-DNRF52_PAN_74,-DS212,-DSOFTDEVICE_PRESENT</MiscControls>
-              <Define> BOARD_PCA10040 CONFIG_GPIO_AS_PINRESET NRF52 NRF52832_XXAA NRF52_PAN_74 S212 SOFTDEVICE_PRESENT</Define>
+              <MiscControls> --cpreproc_opts=-DBOARD_PCA10040,-DCONFIG_GPIO_AS_PINRESET,-DFLOAT_ABI_HARD,-DNRF52,-DNRF52832_XXAA,-DNRF52_PAN_74,-DS212,-DSOFTDEVICE_PRESENT</MiscControls>
+              <Define> BOARD_PCA10040 CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD NRF52 NRF52832_XXAA NRF52_PAN_74 S212 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config;..\..\..\..\..\..\..\components;..\..\..\..\..\..\..\components\ant\ant_channel_config;..\..\..\..\..\..\..\components\boards;..\..\..\..\..\..\..\components\device;..\..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\..\components\drivers_nrf\rtc;..\..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\..\components\libraries\experimental_log;..\..\..\..\..\..\..\components\libraries\experimental_log\src;..\..\..\..\..\..\..\components\libraries\experimental_memobj;..\..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\..\components\softdevice\common;..\..\..\..\..\..\..\components\softdevice\s212\headers;..\..\..\..\..\..\..\components\softdevice\s212\headers\nrf52;..\..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\..\components\toolchain\cmsis\include;..\config</IncludePath>
             </VariousControls>

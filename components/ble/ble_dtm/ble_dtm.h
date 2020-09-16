@@ -101,7 +101,14 @@ typedef uint32_t dtm_cmd_t;                                                 /**<
 #define DTM_PKT_0X0F                    0x01                                /**< Bit pattern 11110000 (LSB is the leftmost bit). */
 #define DTM_PKT_0X55                    0x02                                /**< Bit pattern 10101010 (LSB is the leftmost bit). */
 #define DTM_PKT_0XFF                    0x03                                /**< Bit pattern 11111111 (Used only for coded PHY). */
-#define DTM_PKT_VENDORSPECIFIC          0xFFFFFFFF                          /**< Vendor specific. Nordic: Continuous carrier test, or configuration. */
+#define DTM_PKT_VENDORSPECIFIC          0x03                                /**< Vendor specific PKT field value. Nordic: Continuous carrier test, or configuration. */
+#define DTM_PKT_TYPE_VENDORSPECIFIC     0xFF                                /**< Vendor specific packet type for internal use. */
+
+// The pdu payload type for each bit pattern. Identical to the PKT value except pattern 0xFF which is 0x04.
+#define DTM_PDU_TYPE_PRBS9              0x00                                /**< PDU payload type for bit pattern PRBS9. */
+#define DTM_PDU_TYPE_0X0F               0x01                                /**< PDU payload type for bit pattern 11110000 (LSB is the leftmost bit). */
+#define DTM_PDU_TYPE_0X55               0x02                                /**< PDU payload type for bit pattern 10101010 (LSB is the leftmost bit). */
+#define DTM_PDU_TYPE_0XFF               0x04                                /**< PDU payload type for bit pattern 11111111 (Used only for coded PHY). */
 
 /**@brief Return codes from dtm_cmd(). */
 #define DTM_SUCCESS                     0x00                                /**< Indicate that the DTM function completed with success. */

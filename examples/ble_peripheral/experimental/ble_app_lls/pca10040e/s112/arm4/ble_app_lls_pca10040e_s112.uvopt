@@ -27,7 +27,7 @@
       </TargetDriverDllRegistry>
     </TargetOption>
   </Target>  <Target>
-    <TargetName>flash_s112_nrf52810_5.1.0-2.alpha_softdevice</TargetName>
+    <TargetName>flash_s112_nrf52810_5.1.0_softdevice</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>      <DebugOpt>
