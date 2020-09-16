@@ -87,7 +87,6 @@
 #define APP_ADV_SLOW_INTERVAL            0x0C80                                         /**< Slow advertising interval (in units of 0.625 ms. This value corrsponds to 2 seconds). */
 #define APP_ADV_FAST_TIMEOUT             30                                             /**< The duration of the fast advertising period (in seconds). */
 #define APP_ADV_SLOW_TIMEOUT             180                                            /**< The duration of the slow advertising period (in seconds). */
-#define APP_ADV_DIRECTED_TIMEOUT         5                                              /**< Number of direct advertisement (each lasting 1.28seconds). */
 
 /*lint -emacro(524, MIN_CONN_INTERVAL) // Loss of precision */
 #define MIN_CONN_INTERVAL                MSEC_TO_UNITS(7.5, UNIT_1_25_MS)               /**< Minimum connection interval (7.5 ms) */
@@ -1366,7 +1365,8 @@ static void advertising_init(void)
     ble_adv_modes_config_t options =
     {
         BLE_ADV_WHITELIST_ENABLED,
-        BLE_ADV_DIRECTED_ENABLED, APP_ADV_DIRECTED_TIMEOUT,
+        BLE_ADV_DIRECTED_ENABLED,
+        BLE_ADV_DIRECTED_SLOW_DISABLED, 0,0,
         BLE_ADV_FAST_ENABLED, APP_ADV_FAST_INTERVAL, APP_ADV_FAST_TIMEOUT,
         BLE_ADV_SLOW_ENABLED, APP_ADV_SLOW_INTERVAL, APP_ADV_SLOW_TIMEOUT
     };

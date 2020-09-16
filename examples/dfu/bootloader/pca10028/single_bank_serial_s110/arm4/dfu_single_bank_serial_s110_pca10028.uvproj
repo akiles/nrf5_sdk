@@ -169,7 +169,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>Segger\JL2CM3.dll</Flash2>
-          <Flash3>"nrfjprog.exe" (--reset --program "#H")</Flash3>
+          <Flash3>"nrfjprog.exe" (--family NRF51 --program "#H")</Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>

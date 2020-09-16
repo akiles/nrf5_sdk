@@ -14,22 +14,7 @@
     <PathAndName>pca10028\s110\arm4\ble_app_rscs_s110_pca10028.uvproj</PathAndName>
   </project>
    <project>
-    <PathAndName>pca10028\ser_s110_spi\arm4\ble_app_rscs_s110_spi_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10028\ser_s130_hci\arm4\ble_app_rscs_s130_hci_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10028\ser_s110_hci\arm4\ble_app_rscs_s110_hci_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10028\ser_s130_spi\arm4\ble_app_rscs_s130_spi_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10028\ser_s110_uart\arm4\ble_app_rscs_s110_uart_pca10028.uvproj</PathAndName>
-  </project>
-   <project>
-    <PathAndName>pca10028\ser_s130_uart\arm4\ble_app_rscs_s130_uart_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10028\s310\arm4\ble_app_rscs_s310_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

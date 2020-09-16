@@ -374,7 +374,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>    </Define>
+              <Define> BOARD_PCA10031 BSP_UART_SUPPORT NRF51 SWI_DISABLE0</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

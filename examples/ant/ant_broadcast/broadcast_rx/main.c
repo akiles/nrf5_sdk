@@ -29,6 +29,7 @@
 #include "app_timer.h"
 #include "bsp.h"
 #include "nordic_common.h"
+#include "ant_stack_config.h"
 
 #define APP_TIMER_PRESCALER      0                     /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_MAX_TIMERS     BSP_APP_TIMERS_NUMBER /**< Maximum number of simultaneously created timers. */
@@ -74,6 +75,10 @@ static void ant_channel_rx_broadcast_setup(void)
 {
     uint32_t err_code;
 
+    // configure ant stack resources
+    err_code = ant_stack_static_config();
+    APP_ERROR_CHECK(err_code);
+    
     // Set Channel Number.
     err_code = sd_ant_channel_assign(CHANNEL_0, 
                                      CHANNEL_TYPE_SLAVE_RX_ONLY, 

@@ -1,3 +1,118 @@
+nRF51 SDK v9.0.0
+----------------
+Release Date: Week 28
+  
+Highlights:
+    - Support for S210 SoftDevice v5.0.0
+    - Support for S310 SoftDevice v3.0.0
+    - Documentation moved to Infocenter
+    - DFU Signing using Elliptic Curve Cryptography added as experimental
+        - Available in the zip file only
+    - Running Speed and Cadence relay example showing concurrent 
+      central/peripheral functionality of S130
+  
+The following toolchains/devices have been used for testing and verification:
+    - ARM: MDK-ARM version 5.14.0.0
+    - GCC: GCC ARM Embedded 4.9 2015q1
+    - IAR: IAR Workbench 7.20
+    - Windows XP SP3 32-bit
+    - Windows 7 SP1 64-bit
+    - Windows 8.1
+  
+Supported SoftDevices:
+    - S110 v8.0.0
+    - S120 v2.1.0
+    - S130 v1.0.0
+    - S210 v5.0.0
+    - S310 v3.0.0
+  
+Supported boards:
+    - PCA10028
+    - PCA10031
+  
+    For other devices and boards, see the SDK documentation, section 
+    "Using the SDK with other boards".
+  
+Changes:
+    
+    - Flash access module has been refactored (pstorage).
+
+    ANT:
+        - Both the S310 and the S210 SoftDevices now support an extended 
+          number of ANT channels (16).
+ 
+ 
+        Libraries:
+            - Heart Rate Monitor Profile
+            - ANT stack configuration
+            - ANT channel configuration
+            - ANT channel state indicator
+            - ANT pulse simulator
+         
+        Examples:
+            - The ANT HRM examples have been refactored.
+            - The Bicycle Power examples (ant_bicycle_pwr) support S310.
+  
+    ANT + BLE (S310):
+        The following examples were added:
+        - Bluetooth LE and ANT combined heart rate example (ble_ant_app_hrm).
+        - Experimental ANT Shared Channels (experimental_ant_shared_channel_master_to_master, 
+          experimental_ant_shared_channel_slave).
+ 
+    BLE:
+     - Advertising module has a new mode: Low Duty Cycle Directed Advertising.
+     - Running Speed and Cadence Client added as experimental.
+     - Bluetooth Developer Studio template added as experimental.
+     - Heart Rate Sensor example (ble_app_hrs) supports S310.
+     - Running Speed and Cadence example (ble_app_rscs) supports S310.
+     - Combined Peripheral and Central example added as experimental.
+     - DFU Signing using Elliptic Curve Cryptography added as experimental
+       (using the same elliptic curve and hashing algorithm as Bluetooth 
+       Low Energy 4.2 Secure Connections).
+ 
+Fixed issues:
+     - Pstorage now supports updates of bond split across two pages.
+     - Advertising module can be set to infinite time-out.
+     - Corrected clock source in BLE multiactivity beacon example.
+     - Serialization HCI transport layer: Receiving packet-buffer is not 
+       freed while sending ACK or NACK.
+  
+Known issues:
+    - Device Manager is not supported in multi-role S130 operation.
+        - Device Manager works in peripheral or central only operation on 
+          S130. This must be decided at compile time.
+    - The DFU over BLE example has been tested to work with a minimum 
+      connection interval of 11.25 ms. The application cannot handle 
+      connection intervals lower than 11.25 ms and may undergo a system 
+      reset in the middle of a firmware update.
+         Workaround: If you face unexpected disconnects during the firmware 
+         update process, consider increasing the connection interval used
+         by the master.
+    - App_pwm occasionally gives inverted signal.
+    - The old manual procedure for testing buttonless DFU, as specified in
+      the documentation, can lead to the DFU process hanging or returning 
+      an error when used with Master Control Panel 3.8 and newer.
+
+nRF51 SDK v. 8.1.1
+------------------
+This is a supplement to the nRF51 SDK v8.1.0 release notes.
+This release does not include any code changes compared to nRF51 SDK v8.1.0., except for a minor addition that is described in the "Changes" section.
+
+Fixed issues:
+
+    - Project does not compile if nrf_drv_ppi is used together with SoftDevice S110, S120 or S210. 
+      Issue exists only in CMSIS PACK release. 
+
+Changes:
+    - Released new SoftDevice packs: nRF_SoftDevice_S110.8.0.1, nRF_SoftDevice_S120.2.0.1 and 
+      nRF_SoftDevice_S210.4.0.1-5 with updated nrf_sd_def.h.
+
+Supported SoftDevices:
+    - S110 8.0.0
+    - S120 2.0.0
+    - S130 1.0.0
+    - S210 4.0.1
+
 nRF51 SDK v8.1.0
 ----------------
 

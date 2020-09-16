@@ -314,6 +314,7 @@
           <state>$PROJ_DIR$\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s210\headers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ant\ant_stack_config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
@@ -1003,6 +1004,12 @@
     </file>
   </group>
   <group>
+  <name>nRF_ANT</name>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\ant\ant_stack_config\ant_stack_config.c</name>
+    </file>
+  </group>
+  <group>
   <name>Board Support</name>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\bsp\bsp.c</name>
@@ -1026,7 +1033,7 @@
   <group>
   <name>nRF_SoftDevice</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s210\doc\s210_nrf51422_4.0.1_licence_agreement.txt</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s210\doc\s210_nrf51422_5.0.0_licence_agreement.txt</name>
     </file>
   </group>
 </project>

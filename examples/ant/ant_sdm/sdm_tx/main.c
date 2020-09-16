@@ -28,6 +28,7 @@
 #include "nrf_soc.h"
 #include "nrf_sdm.h"
 #include "app_error.h"
+#include "ant_stack_config.h"
 
 // Channel configuration.
 #define CHANNEL_0                    0x00                     /**< ANT Channel 0. */
@@ -251,6 +252,9 @@ int main(void)
 
     // Enable application IRQ (triggered from protocol).
     err_code = sd_nvic_EnableIRQ(SD_EVT_IRQn);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = ant_stack_static_config();
     APP_ERROR_CHECK(err_code);
 
     // Set up timer to update data.

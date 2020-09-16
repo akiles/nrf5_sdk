@@ -3385,624 +3385,6 @@
     </peripheral>
 
     <peripheral>
-      <name>PU</name>
-      <version>522</version>
-      <description>Patch unit.</description>
-      <groupName>PU</groupName>
-      <baseAddress>0x40000000</baseAddress>
-      <size>32</size>
-      <access>read-write</access>
-      <alternatePeripheral>POWER</alternatePeripheral>
-
-      <addressBlock>
-        <offset>0</offset>
-        <size>0x1000</size>
-        <usage>registers</usage>
-      </addressBlock>
-
-      <registers>
-        <register>
-          <dim>8</dim>
-          <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-7</dimIndex>
-          <name>REPLACEADDR[%s]</name>
-          <description>Address of first instruction to replace.</description>
-          <addressOffset>0x700</addressOffset>
-        </register>
-        <register>
-          <dim>8</dim>
-          <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-7</dimIndex>
-          <name>PATCHADDR[%s]</name>
-          <description>Relative address of patch instructions.</description>
-          <addressOffset>0x780</addressOffset>
-          <fields>
-            <field>
-              <name>PATCHADDR</name>
-              <description>Relative address of patch instructions.</description>
-              <lsb>0</lsb> <msb>24</msb>
-            </field>
-          </fields>
-        </register>
-      
-        <register>
-          <name>PATCHEN</name>
-          <description>Patch enable register.</description>
-          <addressOffset>0x800</addressOffset>
-          <fields>
-            <field>
-              <name>PATCH0</name>
-              <description>Patch 0 enabled.</description>
-              <lsb>0</lsb> <msb>0</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH1</name>
-              <description>Patch 1 enabled.</description>
-              <lsb>1</lsb> <msb>1</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH2</name>
-              <description>Patch 2 enabled.</description>
-              <lsb>2</lsb> <msb>2</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH3</name>
-              <description>Patch 3 enabled.</description>
-              <lsb>3</lsb> <msb>3</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH4</name>
-              <description>Patch 4 enabled.</description>
-              <lsb>4</lsb> <msb>4</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH5</name>
-              <description>Patch 5 enabled.</description>
-              <lsb>5</lsb> <msb>5</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH6</name>
-              <description>Patch 6 enabled.</description>
-              <lsb>6</lsb> <msb>6</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH7</name>
-              <description>Patch 7 enabled.</description>
-              <lsb>7</lsb> <msb>7</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>PATCHENSET</name>
-          <description>Patch enable register.</description>
-          <addressOffset>0x804</addressOffset>
-          <fields>
-            <field>
-              <name>PATCH0</name>
-              <description>Patch 0 enabled.</description>
-              <lsb>0</lsb> <msb>0</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Set</name>
-                  <description>Enable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH1</name>
-              <description>Patch 1 enabled.</description>
-              <lsb>1</lsb> <msb>1</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Set</name>
-                  <description>Enable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH2</name>
-              <description>Patch 2 enabled.</description>
-              <lsb>2</lsb> <msb>2</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Set</name>
-                  <description>Enable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH3</name>
-              <description>Patch 3 enabled.</description>
-              <lsb>3</lsb> <msb>3</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Set</name>
-                  <description>Enable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH4</name>
-              <description>Patch 4 enabled.</description>
-              <lsb>4</lsb> <msb>4</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Set</name>
-                  <description>Enable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH5</name>
-              <description>Patch 5 enabled.</description>
-              <lsb>5</lsb> <msb>5</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Set</name>
-                  <description>Enable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH6</name>
-              <description>Patch 6 enabled.</description>
-              <lsb>6</lsb> <msb>6</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Set</name>
-                  <description>Enable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH7</name>
-              <description>Patch 7 enabled.</description>
-              <lsb>7</lsb> <msb>7</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Set</name>
-                  <description>Enable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>PATCHENCLR</name>
-          <description>Patch disable register.</description>
-          <addressOffset>0x808</addressOffset>
-          <fields>
-            <field>
-              <name>PATCH0</name>
-              <description>Patch 0 enabled.</description>
-              <lsb>0</lsb> <msb>0</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Clear</name>
-                  <description>Disable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH1</name>
-              <description>Patch 1 enabled.</description>
-              <lsb>1</lsb> <msb>1</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Clear</name>
-                  <description>Disable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH2</name>
-              <description>Patch 2 enabled.</description>
-              <lsb>2</lsb> <msb>2</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Clear</name>
-                  <description>Disable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH3</name>
-              <description>Patch 3 enabled.</description>
-              <lsb>3</lsb> <msb>3</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Clear</name>
-                  <description>Disable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH4</name>
-              <description>Patch 4 enabled.</description>
-              <lsb>4</lsb> <msb>4</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Clear</name>
-                  <description>Disable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH5</name>
-              <description>Patch 5 enabled.</description>
-              <lsb>5</lsb> <msb>5</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Clear</name>
-                  <description>Disable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH6</name>
-              <description>Patch 6 enabled.</description>
-              <lsb>6</lsb> <msb>6</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Clear</name>
-                  <description>Disable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>PATCH7</name>
-              <description>Patch 7 enabled.</description>
-              <lsb>7</lsb> <msb>7</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Patch disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Patch enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Clear</name>
-                  <description>Disable patch on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-          </fields>
-        </register>
-      </registers>
-    </peripheral>
-
-
-    <peripheral>
       <name>AMLI</name>
       <version>539</version>
       <description>AHB Multi-Layer Interface.</description>
@@ -7104,20 +6486,6 @@
         </register>
         
         <register>
-          <name>CD</name>
-          <description>Carrier detect.</description>
-          <addressOffset>0x404</addressOffset>
-          <access>read-only</access>
-          <fields>
-            <field>
-              <name>CD</name>
-              <description>Carrier detect.</description>
-              <lsb>0</lsb> <msb>0</msb>
-            </field>
-          </fields>
-        </register>
-        
-        <register>
           <name>RXMATCH</name>
           <description>Received address.</description>
           <addressOffset>0x408</addressOffset>
@@ -8181,6 +7549,50 @@
           <name>EVENTS_RXTO</name>
           <description>Receiver timeout.</description>
           <addressOffset>0x144</addressOffset>
+        </register>
+        
+        <register>
+          <name>SHORTS</name>
+          <description>Shortcuts for UART.</description>
+          <addressOffset>0x200</addressOffset>
+          <fields>
+            <field>
+              <name>CTS_STARTRX</name>
+              <description>Shortcut between CTS event and STARTRX task.</description>
+              <lsb>3</lsb>
+              <msb>3</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Shortcut disabled.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Shortcut enabled.</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>NCTS_STOPRX</name>
+              <description>Shortcut between NCTS event and STOPRX task.</description>
+              <lsb>4</lsb>
+              <msb>4</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Shortcut disabled.</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Shortcut enabled.</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
         </register>
         
         <register>
@@ -10441,11 +9853,6 @@
           <addressOffset>0x110</addressOffset>
         </register>
         <register>
-          <name>EVENTS_END</name>
-          <description>End of RXD buffer and TXD buffer reached.</description>
-          <addressOffset>0x118</addressOffset>
-        </register>
-        <register>
           <name>EVENTS_ENDTX</name>
           <description>End of TXD buffer reached.</description>
           <addressOffset>0x120</addressOffset>
@@ -10454,31 +9861,6 @@
           <name>EVENTS_STARTED</name>
           <description>Transaction started.</description>
           <addressOffset>0x14C</addressOffset>
-        </register>
-
-        <register>
-          <name>SHORTS</name>
-          <description>Shortcuts for SPIM.</description>
-          <addressOffset>0x200</addressOffset>
-          <fields>
-            <field>
-              <name>END_START</name>
-              <description>Shortcut between END event and START task.</description>
-              <lsb>17</lsb> <msb>17</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Shortcut disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Shortcut enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-          </fields>
         </register>
 
         <register>
@@ -10516,32 +9898,6 @@
               <name>ENDRX</name>
               <description>Enable interrupt on ENDRX event.</description>
               <lsb>4</lsb> <msb>4</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Interrupt disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Interrupt enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Set</name>
-                  <description>Enable interrupt on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>END</name>
-              <description>Enable interrupt on END event.</description>
-              <lsb>6</lsb> <msb>6</msb>
               <enumeratedValues>
                 <usage>read</usage>
                 <enumeratedValue>
@@ -10653,32 +10009,6 @@
               <name>ENDRX</name>
               <description>Disable interrupt on ENDRX event.</description>
               <lsb>4</lsb> <msb>4</msb>
-              <enumeratedValues>
-                <usage>read</usage>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Interrupt disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Interrupt enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-              <enumeratedValues>
-                <usage>write</usage>
-                <enumeratedValue>
-                  <name>Clear</name>
-                  <description>Disable interrupt on write.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>END</name>
-              <description>Disable interrupt on END event.</description>
-              <lsb>6</lsb> <msb>6</msb>
               <enumeratedValues>
                 <usage>read</usage>
                 <enumeratedValue>

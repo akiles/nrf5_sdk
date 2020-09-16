@@ -8,6 +8,9 @@
     <path>$WS_DIR$\pca10028\s120\iar\direct_test_mode_s120_pca10028.ewp</path>
   </project>
   <project>
+    <path>$WS_DIR$\pca10028\s310\iar\direct_test_mode_s310_pca10028.ewp</path>
+  </project>
+  <project>
     <path>$WS_DIR$\pca10028\blank\iar\direct_test_mode_blank_pca10028.ewp</path>
   </project>
   <batchBuild/>

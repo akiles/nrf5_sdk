@@ -29,6 +29,7 @@ All rights reserved.
 #include "app_timer.h"
 #include "app_button.h"
 #include "app_util.h"
+#include "ant_stack_config.h"
 
 #if defined(TRACE_UART)
     #include "app_uart.h"
@@ -560,6 +561,9 @@ static __INLINE void softdevice_setup(void)
     err_code = sd_nvic_SetPriority(SD_EVT_IRQn, NRF_APP_PRIORITY_LOW); 
     APP_ERROR_CHECK(err_code);    
     err_code = sd_nvic_EnableIRQ(SD_EVT_IRQn);      
+    APP_ERROR_CHECK(err_code);
+
+    err_code = ant_stack_static_config();
     APP_ERROR_CHECK(err_code);
 }
 

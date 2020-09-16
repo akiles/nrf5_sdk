@@ -2,7 +2,10 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\pca10028\s210\iar\ant_hrm_tx_s210_pca10028.ewp</path>
+    <path>$WS_DIR$\auto\pca10028\s210\iar\ant_hrm_tx_auto_s210.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\button\pca10028\s210\iar\ant_hrm_tx_button_s210.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

@@ -120,7 +120,7 @@ uint32_t pstorage_init(void);
  *                            registration succeeds. Application is expected to use the block ids
  *                            for subsequent operations on requested persistent memory. Maximum
  *                            registrations permitted is determined by configuration parameter
- *                            PSTORAGE_MAX_APPLICATIONS.
+ *                            PSTORAGE_NUM_OF_PAGES.
  *             In case more than one memory blocks are requested, the identifier provided here is
  *             the base identifier for the first block and to identify subsequent block,
  *             application shall use \@ref pstorage_block_identifier_get with this base identifier

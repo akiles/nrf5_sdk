@@ -37,191 +37,191 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 
 #source common to all targets
 C_SOURCE_FILES += \
-../../../../../../components/serialization/application/codecs/s130/serializers/app_ble_gap_sec_keys.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/app_ble_user_mem.c \
-../../../../../../components/serialization/application/transport/app_mailbox.c \
-../../../../../../components/serialization/application/codecs/s130/middleware/app_mw_ble.c \
-../../../../../../components/serialization/application/codecs/s130/middleware/app_mw_ble_gap.c \
-../../../../../../components/serialization/application/codecs/s130/middleware/app_mw_ble_gattc.c \
-../../../../../../components/serialization/application/codecs/s130/middleware/app_mw_ble_gatts.c \
-../../../../../../components/serialization/application/codecs/s130/middleware/app_mw_ble_l2cap.c \
-../../../../../../components/serialization/application/codecs/s130/middleware/app_mw_nrf_soc.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_enable.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_event.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_evt_tx_complete.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_evt_user_mem_release.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_evt_user_mem_request.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_address_get.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_address_set.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_adv_data_set.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_adv_start.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_adv_stop.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_appearance_get.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_appearance_set.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_auth_key_reply.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_authenticate.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_conn_param_update.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_conn_sec_get.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_connect.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_connect_cancel.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_device_name_get.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_device_name_set.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_disconnect.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_encrypt.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_adv_report.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_auth_key_request.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_auth_status.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_conn_param_update.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_conn_param_update_request.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_conn_sec_update.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_connected.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_disconnected.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_passkey_display.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_rssi_changed.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_scan_req_report.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_sec_info_request.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_sec_params_request.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_sec_request.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_timeout.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_ppcp_get.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_ppcp_set.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_rssi_get.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_rssi_start.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_rssi_stop.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_scan_start.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_scan_stop.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_sec_info_reply.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_sec_params_reply.c \
-../../../../../../components/serialization/common/struct_ser/s130/ble_gap_struct_serialization.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_tx_power_set.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_char_value_by_uuid_read.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_char_values_read.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_characteristics_discover.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_descriptors_discover.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_char_disc_rsp.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_char_val_by_uuid_read_rsp.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_char_vals_read_rsp.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_desc_disc_rsp.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_hvx.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_prim_srvc_disc_rsp.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_read_rsp.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_rel_disc_rsp.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_timeout.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_write_rsp.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_hv_confirm.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_primary_services_discover.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_read.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_relationships_discover.c \
-../../../../../../components/serialization/common/struct_ser/s130/ble_gattc_struct_serialization.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_write.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_characteristic_add.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_descriptor_add.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_evt_hvc.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_evt_rw_authorize_request.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_evt_sc_confirm.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_evt_sys_attr_missing.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_evt_timeout.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_evt_write.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_hvx.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_include_add.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_rw_authorize_reply.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_service_add.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_service_changed.c \
-../../../../../../components/serialization/common/struct_ser/s130/ble_gatts_struct_serialization.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_sys_attr_get.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_sys_attr_set.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_value_get.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_value_set.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_l2cap_cid_register.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_l2cap_cid_unregister.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_l2cap_evt_rx.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_l2cap_tx.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_opt_get.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_opt_set.c \
-../../../../../../components/serialization/common/ble_serialization.c \
-../../../../../../components/serialization/common/struct_ser/s130/ble_struct_serialization.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_tx_buffer_count_get.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_user_mem_reply.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_uuid_decode.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_uuid_encode.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_uuid_vs_add.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/ble_version_get.c \
-../../../../../../components/serialization/common/cond_field_serialization.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/power_system_off.c \
-../../../../../../components/serialization/application/hal/ser_app_hal_nrf51.c \
-../../../../../../components/serialization/application/hal/ser_app_power_system_off.c \
-../../../../../../components/serialization/common/transport/ser_hal_transport.c \
-../../../../../../components/serialization/common/transport/ser_phy/ser_phy_nrf51_uart.c \
-../../../../../../components/serialization/application/transport/ser_sd_transport.c \
-../../../../../../components/serialization/application/transport/ser_softdevice_handler.c \
-../../../../../../components/serialization/application/codecs/s130/serializers/temp_get.c \
-../../../../../../components/libraries/button/app_button.c \
-../../../../../../components/libraries/util/app_error.c \
-../../../../../../components/libraries/scheduler/app_scheduler.c \
-../../../../../../components/libraries/timer/app_timer.c \
-../../../../../../components/libraries/util/app_util_platform.c \
-../../../../../../components/libraries/util/nrf_assert.c \
-../../../../../../components/libraries/sensorsim/sensorsim.c \
-../../../../../../components/drivers_nrf/uart/app_uart.c \
-../../../../../../components/drivers_nrf/ble_flash/ble_flash.c \
-../../../../../../components/drivers_nrf/hal/nrf_delay.c \
-../../../../../../components/drivers_nrf/common/nrf_drv_common.c \
-../../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
-../../../../../../components/drivers_nrf/nrf_soc_nosd/nrf_soc.c \
-../../../../../../components/drivers_nrf/pstorage/pstorage_nosd.c \
-../../../../../bsp/bsp.c \
-../../../../../bsp/bsp_btn_ble.c \
-../../../main.c \
-../../../../../../components/ble/common/ble_advdata.c \
-../../../../../../components/ble/ble_advertising/ble_advertising.c \
-../../../../../../components/ble/ble_services/ble_bas/ble_bas.c \
-../../../../../../components/ble/common/ble_conn_params.c \
-../../../../../../components/ble/ble_services/ble_cscs/ble_cscs.c \
-../../../../../../components/ble/ble_services/ble_dis/ble_dis.c \
-../../../../../../components/ble/ble_services/ble_cscs/ble_sc_ctrlpt.c \
-../../../../../../components/ble/common/ble_srv_common.c \
-../../../../../../components/ble/device_manager/device_manager_peripheral.c \
-../../../../../../components/toolchain/system_nrf51.c \
-../../../../../../components/softdevice/common/softdevice_handler/softdevice_handler.c \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/app_ble_gap_sec_keys.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/app_ble_user_mem.c) \
+$(abspath ../../../../../../components/serialization/application/transport/app_mailbox.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/middleware/app_mw_ble.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/middleware/app_mw_ble_gap.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/middleware/app_mw_ble_gattc.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/middleware/app_mw_ble_gatts.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/middleware/app_mw_ble_l2cap.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/middleware/app_mw_nrf_soc.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_enable.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_event.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_evt_tx_complete.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_evt_user_mem_release.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_evt_user_mem_request.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_address_get.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_address_set.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_adv_data_set.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_adv_start.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_adv_stop.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_appearance_get.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_appearance_set.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_auth_key_reply.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_authenticate.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_conn_param_update.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_conn_sec_get.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_connect.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_connect_cancel.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_device_name_get.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_device_name_set.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_disconnect.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_encrypt.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_adv_report.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_auth_key_request.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_auth_status.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_conn_param_update.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_conn_param_update_request.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_conn_sec_update.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_connected.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_disconnected.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_passkey_display.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_rssi_changed.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_scan_req_report.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_sec_info_request.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_sec_params_request.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_sec_request.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_evt_timeout.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_ppcp_get.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_ppcp_set.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_rssi_get.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_rssi_start.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_rssi_stop.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_scan_start.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_scan_stop.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_sec_info_reply.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_sec_params_reply.c) \
+$(abspath ../../../../../../components/serialization/common/struct_ser/s130/ble_gap_struct_serialization.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gap_tx_power_set.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_char_value_by_uuid_read.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_char_values_read.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_characteristics_discover.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_descriptors_discover.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_char_disc_rsp.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_char_val_by_uuid_read_rsp.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_char_vals_read_rsp.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_desc_disc_rsp.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_hvx.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_prim_srvc_disc_rsp.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_read_rsp.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_rel_disc_rsp.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_timeout.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_evt_write_rsp.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_hv_confirm.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_primary_services_discover.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_read.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_relationships_discover.c) \
+$(abspath ../../../../../../components/serialization/common/struct_ser/s130/ble_gattc_struct_serialization.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gattc_write.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_characteristic_add.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_descriptor_add.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_evt_hvc.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_evt_rw_authorize_request.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_evt_sc_confirm.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_evt_sys_attr_missing.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_evt_timeout.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_evt_write.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_hvx.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_include_add.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_rw_authorize_reply.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_service_add.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_service_changed.c) \
+$(abspath ../../../../../../components/serialization/common/struct_ser/s130/ble_gatts_struct_serialization.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_sys_attr_get.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_sys_attr_set.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_value_get.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_gatts_value_set.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_l2cap_cid_register.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_l2cap_cid_unregister.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_l2cap_evt_rx.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_l2cap_tx.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_opt_get.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_opt_set.c) \
+$(abspath ../../../../../../components/serialization/common/ble_serialization.c) \
+$(abspath ../../../../../../components/serialization/common/struct_ser/s130/ble_struct_serialization.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_tx_buffer_count_get.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_user_mem_reply.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_uuid_decode.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_uuid_encode.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_uuid_vs_add.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/ble_version_get.c) \
+$(abspath ../../../../../../components/serialization/common/cond_field_serialization.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/power_system_off.c) \
+$(abspath ../../../../../../components/serialization/application/hal/ser_app_hal_nrf51.c) \
+$(abspath ../../../../../../components/serialization/application/hal/ser_app_power_system_off.c) \
+$(abspath ../../../../../../components/serialization/common/transport/ser_hal_transport.c) \
+$(abspath ../../../../../../components/serialization/common/transport/ser_phy/ser_phy_nrf51_uart.c) \
+$(abspath ../../../../../../components/serialization/application/transport/ser_sd_transport.c) \
+$(abspath ../../../../../../components/serialization/application/transport/ser_softdevice_handler.c) \
+$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers/temp_get.c) \
+$(abspath ../../../../../../components/libraries/button/app_button.c) \
+$(abspath ../../../../../../components/libraries/util/app_error.c) \
+$(abspath ../../../../../../components/libraries/scheduler/app_scheduler.c) \
+$(abspath ../../../../../../components/libraries/timer/app_timer.c) \
+$(abspath ../../../../../../components/libraries/util/app_util_platform.c) \
+$(abspath ../../../../../../components/libraries/util/nrf_assert.c) \
+$(abspath ../../../../../../components/libraries/sensorsim/sensorsim.c) \
+$(abspath ../../../../../../components/drivers_nrf/uart/app_uart.c) \
+$(abspath ../../../../../../components/drivers_nrf/ble_flash/ble_flash.c) \
+$(abspath ../../../../../../components/drivers_nrf/hal/nrf_delay.c) \
+$(abspath ../../../../../../components/drivers_nrf/common/nrf_drv_common.c) \
+$(abspath ../../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c) \
+$(abspath ../../../../../../components/drivers_nrf/nrf_soc_nosd/nrf_soc.c) \
+$(abspath ../../../../../../components/drivers_nrf/pstorage/pstorage_nosd.c) \
+$(abspath ../../../../../bsp/bsp.c) \
+$(abspath ../../../../../bsp/bsp_btn_ble.c) \
+$(abspath ../../../main.c) \
+$(abspath ../../../../../../components/ble/common/ble_advdata.c) \
+$(abspath ../../../../../../components/ble/ble_advertising/ble_advertising.c) \
+$(abspath ../../../../../../components/ble/ble_services/ble_bas/ble_bas.c) \
+$(abspath ../../../../../../components/ble/common/ble_conn_params.c) \
+$(abspath ../../../../../../components/ble/ble_services/ble_cscs/ble_cscs.c) \
+$(abspath ../../../../../../components/ble/ble_services/ble_dis/ble_dis.c) \
+$(abspath ../../../../../../components/ble/ble_services/ble_cscs/ble_sc_ctrlpt.c) \
+$(abspath ../../../../../../components/ble/common/ble_srv_common.c) \
+$(abspath ../../../../../../components/ble/device_manager/device_manager_peripheral.c) \
+$(abspath ../../../../../../components/toolchain/system_nrf51.c) \
+$(abspath ../../../../../../components/softdevice/common/softdevice_handler/softdevice_handler.c) \
 
 #assembly files common to all targets
-ASM_SOURCE_FILES  = ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
+ASM_SOURCE_FILES  = $(abspath ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s)
 
 #includes common to all targets
-INC_PATHS  = -I../../../config
-INC_PATHS += -I../../../../../../components/serialization/common/transport/ser_phy/config
-INC_PATHS += -I../../../../../../components/drivers_nrf/config
-INC_PATHS += -I../../../../../bsp
-INC_PATHS += -I../../../../../../components/softdevice/s130/headers
-INC_PATHS += -I../../../../../../components/serialization/common
-INC_PATHS += -I../../../../../../components/libraries/util
-INC_PATHS += -I../../../../../../components/serialization/application/codecs/s130/serializers
-INC_PATHS += -I../../../../../../components/drivers_nrf/uart
-INC_PATHS += -I../../../../../../components/ble/common
-INC_PATHS += -I../../../../../../components/libraries/sensorsim
-INC_PATHS += -I../../../../../../components/ble/device_manager
-INC_PATHS += -I../../../../../../components/ble/ble_services/ble_cscs
-INC_PATHS += -I../../../../../../components/ble/ble_services/ble_dis
-INC_PATHS += -I../../../../../../components/device
-INC_PATHS += -I../../../../../../components/drivers_nrf/pstorage
-INC_PATHS += -I../../../../../../components/ble/ble_services/ble_bas
-INC_PATHS += -I../../../../../../components/drivers_nrf/ble_flash
-INC_PATHS += -I../../../../../../components/libraries/timer
-INC_PATHS += -I../../../../../../components/serialization/common/transport/ser_phy
-INC_PATHS += -I../../../../../../components/drivers_nrf/gpiote
-INC_PATHS += -I../../../../../../components/libraries/scheduler
-INC_PATHS += -I../../../../../../components/softdevice/common/softdevice_handler
-INC_PATHS += -I../../../../../../components/drivers_nrf/hal
-INC_PATHS += -I../../../../../../components/toolchain/gcc
-INC_PATHS += -I../../../../../../components/toolchain
-INC_PATHS += -I../../../../../../components/drivers_nrf/common
-INC_PATHS += -I../../../../../../components/ble/ble_advertising
-INC_PATHS += -I../../../../../../components/serialization/common/transport
-INC_PATHS += -I../../../../../../components/libraries/trace
-INC_PATHS += -I../../../../../../components/serialization/application/hal
-INC_PATHS += -I../../../../../../components/libraries/button
-INC_PATHS += -I../../../../../../components/serialization/application/transport
-INC_PATHS += -I../../../../../../components/serialization/common/struct_ser/s130
+INC_PATHS  = -I$(abspath ../../../config)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/transport/ser_phy/config)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/config)
+INC_PATHS += -I$(abspath ../../../../../bsp)
+INC_PATHS += -I$(abspath ../../../../../../components/softdevice/s130/headers)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/common)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/util)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/application/codecs/s130/serializers)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/uart)
+INC_PATHS += -I$(abspath ../../../../../../components/ble/common)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/sensorsim)
+INC_PATHS += -I$(abspath ../../../../../../components/ble/device_manager)
+INC_PATHS += -I$(abspath ../../../../../../components/ble/ble_services/ble_cscs)
+INC_PATHS += -I$(abspath ../../../../../../components/ble/ble_services/ble_dis)
+INC_PATHS += -I$(abspath ../../../../../../components/device)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/pstorage)
+INC_PATHS += -I$(abspath ../../../../../../components/ble/ble_services/ble_bas)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/ble_flash)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/timer)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/transport/ser_phy)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/gpiote)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/scheduler)
+INC_PATHS += -I$(abspath ../../../../../../components/softdevice/common/softdevice_handler)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/hal)
+INC_PATHS += -I$(abspath ../../../../../../components/toolchain/gcc)
+INC_PATHS += -I$(abspath ../../../../../../components/toolchain)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/common)
+INC_PATHS += -I$(abspath ../../../../../../components/ble/ble_advertising)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/transport)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/trace)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/application/hal)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/button)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/application/transport)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/struct_ser/s130)
 
 OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)
@@ -268,7 +268,7 @@ default: clean nrf51422_xxac_s130
 #building all targets
 all: clean
 	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e cleanobj
-	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf51422_xxac_s130 
+	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf51422_xxac_s130
 
 #target for printing all targets
 help:

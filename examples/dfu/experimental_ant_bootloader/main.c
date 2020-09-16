@@ -39,7 +39,7 @@
 #if !defined (S210_V3_STACK)
 #include "nrf_mbr.h"
 #endif // !S210_V3_STACK
-
+#include "ant_stack_config.h"
 #include "debug_pin.h"
 
 #define ENABLE_BUTTON // include button detection
@@ -218,6 +218,10 @@ static void ant_stack_init(void)
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, true);
 
     err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
+    APP_ERROR_CHECK(err_code);
+    
+    // Configure ant stack regards used channels.
+    err_code = ant_stack_static_config();
     APP_ERROR_CHECK(err_code);
 }
 

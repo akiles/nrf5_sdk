@@ -32,6 +32,7 @@ All rights reserved.
 #include "boards.h"
 #include "app_timer.h"
 #include "app_button.h"
+#include "ant_stack_config.h"
 
 // Global channel parameters
 #define SERIAL_NUMBER_ADDRESS           ((uint32_t) 0x10000060)     /**< FICR + 60 */
@@ -211,7 +212,7 @@ void ant_relay_main_message(uint8_t channel)
     APP_ERROR_CHECK(err_code);
     
     m_broadcast_data[0] = ANT_RELAY_MAIN_PAGE;
-    m_broadcast_data[1] = nrf_gpio_pin_read(BSP_LED_0);
+    m_broadcast_data[1] = ( LED_IS_ON(BSP_LED_0_MASK) )? 1 : 0;
     m_broadcast_data[2] = (uint8_t)(m_led_change_counter >> 0);
     m_broadcast_data[3] = (uint8_t)(m_led_change_counter >> 8);
     m_broadcast_data[4] = (uint8_t)(m_led_change_counter >> 16);
@@ -370,9 +371,9 @@ void ant_handle_main_page(uint8_t* p_payload)
     {
         uint8_t led_state = p_payload[1];
         if(led_state == 1)
-            nrf_gpio_pin_set(BSP_LED_0);
+            LEDS_ON(BSP_LED_0_MASK);
         else
-            nrf_gpio_pin_clear(BSP_LED_0);
+            LEDS_OFF(BSP_LED_0_MASK);
 
         m_led_change_counter = counter;
     }
@@ -434,7 +435,7 @@ void ant_process_relay_slave(ant_evt_t* p_ant_event)
                 }
             }
 
-            nrf_gpio_pin_set(BSP_LED_1);
+            LEDS_ON(BSP_LED_1_MASK);
 
             if(first_recieved)
                 break;
@@ -455,7 +456,7 @@ void ant_process_relay_slave(ant_evt_t* p_ant_event)
             // Re-initialize proximity search settings. 
             uint32_t err_code = sd_ant_prox_search_set(ANT_RELAY_SLAVE_CHANNEL, ANT_PROXIMITY_BIN, 0);
             APP_ERROR_CHECK(err_code);      
-            nrf_gpio_pin_clear(BSP_LED_1);
+            LEDS_OFF(BSP_LED_1_MASK);
             break;
         }
         default:
@@ -498,13 +499,13 @@ void ant_process_mobile(ant_evt_t* p_ant_event)
                     {
                         case ANT_COMMAND_ON:
                         {
-                            nrf_gpio_pin_set(BSP_LED_0);
+                            LEDS_ON(BSP_LED_0_MASK);
                             m_led_change_counter++;
                             break;
                         }
                         case ANT_COMMAND_OFF:
                         {
-                            nrf_gpio_pin_clear(BSP_LED_0);
+                            LEDS_OFF(BSP_LED_0_MASK);
                             m_led_change_counter++;
                             break;
                         }
@@ -540,7 +541,7 @@ void ant_process_mobile(ant_evt_t* p_ant_event)
             APP_ERROR_CHECK(err_code);
 
             m_broadcast_data[0] = ANT_MOBILE_MAIN_PAGE;
-            m_broadcast_data[1] = nrf_gpio_pin_read(BSP_LED_0);
+            m_broadcast_data[1] = ( LED_IS_ON(BSP_LED_0_MASK) )? 1 : 0;
             m_broadcast_data[2] = 0xFF;
             m_broadcast_data[3] = 0xFF;
             m_broadcast_data[4] = 0xFF;
@@ -570,8 +571,8 @@ int main(void)
     nrf_gpio_range_cfg_output(BSP_LED_0, BSP_LED_1);
 
     // Set LED_0 and LED_1 high to indicate that the application is running.
-    nrf_gpio_pin_set(BSP_LED_0);
-    nrf_gpio_pin_set(BSP_LED_1);
+    LEDS_ON(BSP_LED_0_MASK);
+    LEDS_ON(BSP_LED_1_MASK);
 
     // Enable SoftDevice.
     uint32_t err_code;
@@ -586,13 +587,16 @@ int main(void)
     err_code = sd_nvic_EnableIRQ(SD_EVT_IRQn);
     APP_ERROR_CHECK(err_code);
 
+    err_code = ant_stack_static_config();
+    APP_ERROR_CHECK(err_code);
+
     // Setup Channel_0 as a TX Master Only.
     ant_channel_setup();
 
     // Set LED_0 and LED_1 low to indicate that stack is enabled.
-    nrf_gpio_pin_clear(BSP_LED_0);
-    nrf_gpio_pin_clear(BSP_LED_1);
-
+    LEDS_OFF(BSP_LED_0_MASK);
+    LEDS_OFF(BSP_LED_1_MASK);
+    
     button_init();
 
     // Main loop.

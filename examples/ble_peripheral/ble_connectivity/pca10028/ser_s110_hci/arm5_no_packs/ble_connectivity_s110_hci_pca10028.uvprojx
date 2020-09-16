@@ -374,7 +374,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>          </Define>
+              <Define> HCI_TIMER2 BLE_STACK_SUPPORT_REQD BOARD_PCA10028 S110 SER_CONNECTIVITY APP_SCHEDULER_WITH_PAUSE BSP_DEFINES_ONLY NRF51 SOFTDEVICE_PRESENT SWI_DISABLE0</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

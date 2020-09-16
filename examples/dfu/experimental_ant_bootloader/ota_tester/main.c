@@ -28,6 +28,7 @@ All rights reserved.
 #include "ant_error.h"
 #include "ant_boot_settings_api.h"
 #include <string.h>
+#include "ant_stack_config.h"
 
 
 // Channel configuration.
@@ -239,6 +240,10 @@ int main(void)
     err_code = sd_nvic_EnableIRQ(SD_EVT_IRQn);
     APP_ERROR_CHECK(err_code);
 
+    // Configure ant stack regards used channels.
+    err_code = ant_stack_static_config();
+    APP_ERROR_CHECK(err_code);
+    
     // Setup channel
     ant_channel_tx_broadcast_setup();
 

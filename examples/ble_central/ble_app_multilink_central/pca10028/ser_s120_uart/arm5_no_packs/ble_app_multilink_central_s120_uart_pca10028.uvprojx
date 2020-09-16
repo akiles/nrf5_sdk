@@ -374,7 +374,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>      </Define>
+              <Define> BLE_STACK_SUPPORT_REQD SVCALL_AS_NORMAL_FUNCTION S120 BOARD_PCA10028 BSP_DEFINES_ONLY NRF51</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

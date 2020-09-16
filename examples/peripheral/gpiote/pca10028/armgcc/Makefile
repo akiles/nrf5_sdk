@@ -37,34 +37,34 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 
 #source common to all targets
 C_SOURCE_FILES += \
-../../../../../components/toolchain/system_nrf51.c \
-../../main.c \
-../../../../../components/libraries/util/app_error.c \
-../../../../../components/libraries/util/app_util_platform.c \
-../../../../../components/libraries/util/nrf_assert.c \
-../../../../../components/drivers_nrf/common/nrf_drv_common.c \
-../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
-../../../../../components/drivers_nrf/ppi/nrf_drv_ppi.c \
-../../../../../components/drivers_nrf/timer/nrf_drv_timer.c \
+$(abspath ../../../../../components/toolchain/system_nrf51.c) \
+$(abspath ../../main.c) \
+$(abspath ../../../../../components/libraries/util/app_error.c) \
+$(abspath ../../../../../components/libraries/util/app_util_platform.c) \
+$(abspath ../../../../../components/libraries/util/nrf_assert.c) \
+$(abspath ../../../../../components/drivers_nrf/common/nrf_drv_common.c) \
+$(abspath ../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c) \
+$(abspath ../../../../../components/drivers_nrf/ppi/nrf_drv_ppi.c) \
+$(abspath ../../../../../components/drivers_nrf/timer/nrf_drv_timer.c) \
 
 #assembly files common to all targets
-ASM_SOURCE_FILES  = ../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
+ASM_SOURCE_FILES  = $(abspath ../../../../../components/toolchain/gcc/gcc_startup_nrf51.s)
 
 #includes common to all targets
-INC_PATHS  = -I../../config
-INC_PATHS += -I../../../../bsp
-INC_PATHS += -I../../../../../components/drivers_nrf/ppi
-INC_PATHS += -I../../../../../components/drivers_nrf/nrf_soc_nosd
-INC_PATHS += -I../../../../../components/device
-INC_PATHS += -I../../../../../components/drivers_nrf/hal
-INC_PATHS += -I../../../../../components/drivers_nrf/timer
-INC_PATHS += -I../..
-INC_PATHS += -I../../../../../components/libraries/util
-INC_PATHS += -I../../../../../components/drivers_nrf/common
-INC_PATHS += -I../../../../../components/toolchain
-INC_PATHS += -I../../../../../components/drivers_nrf/config
-INC_PATHS += -I../../../../../components/drivers_nrf/gpiote
-INC_PATHS += -I../../../../../components/toolchain/gcc
+INC_PATHS  = -I$(abspath ../../config)
+INC_PATHS += -I$(abspath ../../../../bsp)
+INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/ppi)
+INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/nrf_soc_nosd)
+INC_PATHS += -I$(abspath ../../../../../components/device)
+INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/hal)
+INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/timer)
+INC_PATHS += -I$(abspath ../..)
+INC_PATHS += -I$(abspath ../../../../../components/libraries/util)
+INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/common)
+INC_PATHS += -I$(abspath ../../../../../components/toolchain)
+INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/config)
+INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/gpiote)
+INC_PATHS += -I$(abspath ../../../../../components/toolchain/gcc)
 
 OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)
@@ -105,7 +105,7 @@ default: clean nrf51422_xxac
 #building all targets
 all: clean
 	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e cleanobj
-	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf51422_xxac 
+	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf51422_xxac
 
 #target for printing all targets
 help:

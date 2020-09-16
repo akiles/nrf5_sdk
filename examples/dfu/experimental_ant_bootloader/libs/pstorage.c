@@ -23,7 +23,7 @@
 
 #define INVALID_OPCODE     0x00                            /**< Invalid op code identifier. */
 #define SOC_MAX_WRITE_SIZE 1024                            /**< Maximum write size allowed for a single call to \ref sd_flash_write as specified in the SoC API. */
-#define RAW_MODE_APP_ID    (PSTORAGE_MAX_APPLICATIONS + 1) /**< Application id for raw mode. */
+#define RAW_MODE_APP_ID    (PSTORAGE_NUM_OF_PAGES + 1)     /**< Application id for raw mode. */
 
 /**
  * @defgroup api_param_check API Parameters check macros.
@@ -48,7 +48,7 @@
  *        range.
  */
 #define MODULE_ID_RANGE_CHECK(ID)                                                                 \
-        if ((((ID)->module_id) >= PSTORAGE_MAX_APPLICATIONS) ||                                   \
+        if ((((ID)->module_id) >= PSTORAGE_NUM_OF_PAGES) ||                                       \
             (m_app_table[(ID)->module_id].cb == NULL))                                            \
         {                                                                                         \
             return NRF_ERROR_INVALID_PARAM;                                                       \
@@ -107,7 +107,7 @@
  * @brief Verifies the module identifier supplied by the application is registered for raw mode.
  */
 #define MODULE_RAW_ID_RANGE_CHECK(ID)                                                             \
-        if ((PSTORAGE_MAX_APPLICATIONS+1 != ((ID)->module_id)) ||                                 \
+        if ((PSTORAGE_NUM_OF_PAGES+1 != ((ID)->module_id)) ||                                     \
             (m_raw_app_table.cb == NULL))                                                         \
         {                                                                                         \
             return NRF_ERROR_INVALID_PARAM;                                                       \
@@ -223,7 +223,7 @@ static bool                m_module_initialized = false; /**< Flag for checking 
 static swap_backup_state_t m_swap_state;                 /**< Swap page state. */
 
 
-static pstorage_module_table_t m_app_table[PSTORAGE_MAX_APPLICATIONS]; /**< Registered application information table. */
+static pstorage_module_table_t m_app_table[PSTORAGE_NUM_OF_PAGES]; /**< Registered application information table. */
 
 #ifdef PSTORAGE_RAW_MODE_ENABLE
 static pstorage_raw_module_table_t m_raw_app_table;                    /**< Registered application information table for raw mode. */
@@ -267,7 +267,7 @@ static void cmd_queue_element_init(uint32_t index)
     // Internal function and checks on range of index can be avoided.
     m_cmd_queue.cmd[index].op_code                = INVALID_OPCODE;
     m_cmd_queue.cmd[index].size                   = 0;
-    m_cmd_queue.cmd[index].storage_addr.module_id = PSTORAGE_MAX_APPLICATIONS;
+    m_cmd_queue.cmd[index].storage_addr.module_id = PSTORAGE_NUM_OF_PAGES;
     m_cmd_queue.cmd[index].storage_addr.block_id  = 0;
     m_cmd_queue.cmd[index].p_data_addr            = NULL;
     m_cmd_queue.cmd[index].offset                 = 0;
@@ -825,7 +825,7 @@ uint32_t pstorage_init(void)
     m_next_page_addr    = PSTORAGE_DATA_START_ADDR;
     m_round_val         = 0;
 
-    for (uint32_t index = 0; index < PSTORAGE_MAX_APPLICATIONS; index++)
+    for (uint32_t index = 0; index < PSTORAGE_NUM_OF_PAGES; index++)
     {
         m_app_table[index].cb           = NULL;
         m_app_table[index].block_size   = 0;
@@ -875,7 +875,7 @@ uint32_t pstorage_register(pstorage_module_param_t * p_module_param,
         return NRF_ERROR_INVALID_PARAM;
     }
 
-    if (m_next_app_instance == PSTORAGE_MAX_APPLICATIONS)
+    if (m_next_app_instance == PSTORAGE_NUM_OF_PAGES)
     {
         return NRF_ERROR_NO_MEM;
     }

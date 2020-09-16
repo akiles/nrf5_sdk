@@ -29,6 +29,7 @@
 #include "app_timer.h"
 #include "nordic_common.h"
 #include "bsp.h"
+#include "ant_stack_config.h"
 
 #define APP_TIMER_PRESCALER      0                     /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_MAX_TIMERS     BSP_APP_TIMERS_NUMBER /**< Maximum number of simultaneously created timers. */
@@ -183,6 +184,9 @@ int main(void)
     err_code = sd_nvic_EnableIRQ(SD_EVT_IRQn);
     APP_ERROR_CHECK(err_code);
 
+    err_code = ant_stack_static_config();
+    APP_ERROR_CHECK(err_code);
+    
     // Setup Channel_0 as a TX Master Only. 
     ant_channel_tx_broadcast_setup();
     

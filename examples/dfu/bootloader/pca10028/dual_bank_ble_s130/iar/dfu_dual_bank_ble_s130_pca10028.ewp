@@ -313,6 +313,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$\..\..\..\config\dfu_dual_bank_ble_s130_pca10028</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bootloader_dfu</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bootloader_dfu\ble_transport</state>
@@ -1071,7 +1072,7 @@
   <group>
   <name>nRF_SoftDevice</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51822_1.0.0-3.alpha_licence_agreement.txt</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51822_1.0.0_licence_agreement.txt</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler\softdevice_handler.c</name>

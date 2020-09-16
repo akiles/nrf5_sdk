@@ -37,53 +37,54 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 
 #source common to all targets
 C_SOURCE_FILES += \
-../../../../../../components/libraries/util/app_error.c \
-../../../../../../components/libraries/scheduler/app_scheduler.c \
-../../../../../../components/libraries/timer/app_timer.c \
-../../../../../../components/libraries/timer/app_timer_appsh.c \
-../../../../../../components/libraries/bootloader_dfu/bootloader.c \
-../../../../../../components/libraries/bootloader_dfu/bootloader_settings.c \
-../../../../../../components/libraries/bootloader_dfu/bootloader_util.c \
-../../../../../../components/libraries/crc16/crc16.c \
-../../../../../../components/libraries/bootloader_dfu/dfu_dual_bank.c \
-../../../../../../components/libraries/bootloader_dfu/dfu_init_template.c \
-../../../../../../components/libraries/bootloader_dfu/dfu_transport_ble.c \
-../../../../../../components/libraries/hci/hci_mem_pool.c \
-../../../../../../components/libraries/util/nrf_assert.c \
-../../../../../../components/drivers_nrf/hal/nrf_delay.c \
-../../../../../../components/drivers_nrf/pstorage/pstorage_raw.c \
-../../../dfu_ble_svc.c \
-../../../main.c \
-../../../../../../components/ble/common/ble_advdata.c \
-../../../../../../components/ble/common/ble_conn_params.c \
-../../../../../../components/ble/ble_services/ble_dfu/ble_dfu.c \
-../../../../../../components/ble/common/ble_srv_common.c \
-../../../../../../components/toolchain/system_nrf51.c \
-../../../../../../components/softdevice/common/softdevice_handler/softdevice_handler.c \
-../../../../../../components/softdevice/common/softdevice_handler/softdevice_handler_appsh.c \
+$(abspath ../../../../../../components/libraries/util/app_error.c) \
+$(abspath ../../../../../../components/libraries/scheduler/app_scheduler.c) \
+$(abspath ../../../../../../components/libraries/timer/app_timer.c) \
+$(abspath ../../../../../../components/libraries/timer/app_timer_appsh.c) \
+$(abspath ../../../../../../components/libraries/bootloader_dfu/bootloader.c) \
+$(abspath ../../../../../../components/libraries/bootloader_dfu/bootloader_settings.c) \
+$(abspath ../../../../../../components/libraries/bootloader_dfu/bootloader_util.c) \
+$(abspath ../../../../../../components/libraries/crc16/crc16.c) \
+$(abspath ../../../../../../components/libraries/bootloader_dfu/dfu_dual_bank.c) \
+$(abspath ../../../../../../components/libraries/bootloader_dfu/dfu_init_template.c) \
+$(abspath ../../../../../../components/libraries/bootloader_dfu/dfu_transport_ble.c) \
+$(abspath ../../../../../../components/libraries/hci/hci_mem_pool.c) \
+$(abspath ../../../../../../components/libraries/util/nrf_assert.c) \
+$(abspath ../../../../../../components/drivers_nrf/hal/nrf_delay.c) \
+$(abspath ../../../../../../components/drivers_nrf/pstorage/pstorage_raw.c) \
+$(abspath ../../../dfu_ble_svc.c) \
+$(abspath ../../../main.c) \
+$(abspath ../../../../../../components/ble/common/ble_advdata.c) \
+$(abspath ../../../../../../components/ble/common/ble_conn_params.c) \
+$(abspath ../../../../../../components/ble/ble_services/ble_dfu/ble_dfu.c) \
+$(abspath ../../../../../../components/ble/common/ble_srv_common.c) \
+$(abspath ../../../../../../components/toolchain/system_nrf51.c) \
+$(abspath ../../../../../../components/softdevice/common/softdevice_handler/softdevice_handler.c) \
+$(abspath ../../../../../../components/softdevice/common/softdevice_handler/softdevice_handler_appsh.c) \
 
 #assembly files common to all targets
-ASM_SOURCE_FILES  = ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
+ASM_SOURCE_FILES  = $(abspath ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s)
 
 #includes common to all targets
-INC_PATHS  = -I../../../config
-INC_PATHS += -I../../../../../../components/libraries/util
-INC_PATHS += -I../../../../../../components/ble/common
-INC_PATHS += -I../../../../../../components/libraries/timer
-INC_PATHS += -I../../../../../../components/toolchain
-INC_PATHS += -I../../../../../../components/libraries/bootloader_dfu
-INC_PATHS += -I../../../../../../components/libraries/scheduler
-INC_PATHS += -I../../../../../bsp
-INC_PATHS += -I../../../../../../components/drivers_nrf/pstorage
-INC_PATHS += -I../../../../../../components/toolchain/gcc
-INC_PATHS += -I../../../../../../components/libraries/bootloader_dfu/ble_transport
-INC_PATHS += -I../../../../../../components/softdevice/s130/headers
-INC_PATHS += -I../../../../../../components/libraries/hci
-INC_PATHS += -I../../../../../../components/softdevice/common/softdevice_handler
-INC_PATHS += -I../../../../../../components/libraries/crc16
-INC_PATHS += -I../../../../../../components/ble/ble_services/ble_dfu
-INC_PATHS += -I../../../../../../components/drivers_nrf/hal
-INC_PATHS += -I../../../../../../components/device
+INC_PATHS  = -I$(abspath ../../../config/dfu_dual_bank_ble_s130_pca10028)
+INC_PATHS += -I$(abspath ../../../config)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/util)
+INC_PATHS += -I$(abspath ../../../../../../components/ble/common)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/timer)
+INC_PATHS += -I$(abspath ../../../../../../components/toolchain)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/bootloader_dfu)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/scheduler)
+INC_PATHS += -I$(abspath ../../../../../bsp)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/pstorage)
+INC_PATHS += -I$(abspath ../../../../../../components/toolchain/gcc)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/bootloader_dfu/ble_transport)
+INC_PATHS += -I$(abspath ../../../../../../components/softdevice/s130/headers)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/hci)
+INC_PATHS += -I$(abspath ../../../../../../components/softdevice/common/softdevice_handler)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/crc16)
+INC_PATHS += -I$(abspath ../../../../../../components/ble/ble_services/ble_dfu)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/hal)
+INC_PATHS += -I$(abspath ../../../../../../components/device)
 
 OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)
@@ -134,7 +135,7 @@ default: clean nrf51422_xxac
 #building all targets
 all: clean
 	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e cleanobj
-	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf51422_xxac 
+	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf51422_xxac
 
 #target for printing all targets
 help:

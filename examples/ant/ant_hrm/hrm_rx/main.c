@@ -1,7 +1,7 @@
 /*
 This software is subject to the license described in the license.txt file included with this software distribution. 
 You may not use this file except in compliance with this license. 
-Copyright © Dynastream Innovations Inc. 2012
+Copyright © Dynastream Innovations Inc. 2015
 All rights reserved.
 */
 
@@ -18,173 +18,121 @@ All rights reserved.
 #include <stdio.h>
 #include "app_error.h"
 #include "nrf.h"
-#include "ant_interface.h"
-#include "ant_parameters.h"
 #include "nrf_soc.h"
 #include "nrf_sdm.h"
-#include "hrm_rx.h"
-#include "app_uart.h"
 #include "bsp.h"
+#include "app_timer.h"
 #include "nordic_common.h"
+#include "ant_stack_config.h"
+#include "softdevice_handler.h"
+#include "ant_hrm.h"
+#include "app_trace.h"
+#include "ant_interface.h"
+#include "ant_state_indicator.h"
 
-#define ANT_EVENT_MSG_BUFFER_MIN_SIZE 32u  /**< Minimum size of an ANT event message buffer. */
+#define APP_TIMER_PRESCALER         0x00                        /**< Value of the RTC1 PRESCALER register. */
+#define APP_TIMER_MAX_TIMERS        BSP_APP_TIMERS_NUMBER       /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_OP_QUEUE_SIZE     0x04                        /**< Size of timer operation queues. */
 
-#define UART_TX_BUF_SIZE              256u /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE              1u   /**< UART RX buffer size. */
+#define HRM_RX_CHANNEL_NUMBER       0x00                        /**< Channel number assigned to HRM profile. */
 
+#define WILDCARD_TRANSMISSION_TYPE  0x00                        /**< Wildcard transmission type. */
+#define WILDCARD_DEVICE_NUMBER      0x00                        /**< Wildcard device number. */
 
-/**@brief Function for stack Interrupt handling. 
+#define ANTPLUS_NETWORK_NUMBER      0x00                        /**< Network number. */
+#define HRMRX_NETWORK_KEY           {0, 0, 0, 0, 0, 0, 0, 0}    /**< The default network key used. */
+
+static uint8_t m_network_key[] = HRMRX_NETWORK_KEY;             /**< ANT PLUS network key. */
+
+/** @snippet [ANT HRM RX Instance] */
+ant_hrm_profile_t           m_ant_hrm;
+const ant_channel_config_t  ant_rx_channel_config = HRM_RX_CHANNEL_CONFIG(HRM_RX_CHANNEL_NUMBER, WILDCARD_TRANSMISSION_TYPE,
+                                                    WILDCARD_DEVICE_NUMBER, ANTPLUS_NETWORK_NUMBER, HRM_MSG_PERIOD_4Hz);
+/** @snippet [ANT HRM RX Instance] */
+
+/**@brief Function for dispatching a ANT stack event to all modules with a ANT stack event handler.
+ *
+ * @details This function is called from the ANT Stack event interrupt handler after a ANT stack
+ *          event has been received.
+ *
+ * @param[in] p_ant_evt  ANT stack event.
  */
-void SD_EVT_IRQHandler(void)
+void ant_evt_dispatch(ant_evt_t * p_ant_evt)
 {
-
+    ant_hrm_rx_evt_handle(&m_ant_hrm, p_ant_evt);
+    ant_state_indicator_evt_handle(p_ant_evt);
 }
 
-
-/**@brief Function for handling SoftDevice asserts and does not return.
- * 
- * Traces out the user supplied parameters and busy loops. 
- *
- * @param[in] pc          Value of the program counter.
- * @param[in] line_num    Line number where the assert occurred.
- * @param[in] p_file_name Pointer to the file name.
+/**@brief Function for the Timer, Tracer and BSP initialization.
  */
-void softdevice_assert_callback(uint32_t pc, uint16_t line_num, const uint8_t * p_file_name)
+void utils_setup(void)
 {
-#if defined(TRACE_UART)
-    printf("ASSERT-softdevice_assert_callback\n");
-    printf("PC: %#x\n", (unsigned int)pc);
-    printf("File name: %s\n", (const char*)p_file_name);
-    printf("Line number: %u\n", line_num);
-#endif // TRACE_UART   
+    uint32_t err_code;
 
-    for (;;)
-    {
-        // No implementation needed.
-    }
+    app_trace_init();
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
+    APP_ERROR_CHECK(err_code);
 }
 
-
-/**@brief Function for handling an error. 
+/**@brief Function for ANT stack initialization.
  *
- * @param[in] error_code  Error code supplied to the handler.
- * @param[in] line_num    Line number where the error occurred.
- * @param[in] p_file_name Pointer to the file name. 
+ * @details Initializes the SoftDevice and the ANT event interrupt.
  */
-void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
+static void softdevice_setup(void)
 {
-#if defined(TRACE_UART)
-    printf("ASSERT-app_error_handler\n");
-    printf("Error code: %u\n", (unsigned int)error_code);
-    printf("File name: %s\n", (const char*)p_file_name);
-    printf("Line number: %u\n", (unsigned int)line_num);
-#endif // TRACE_UART   
-
-    for (;;)
-    {
-        // No implementation needed.
-    }
-}
-
-
-#if defined(TRACE_UART)
-/**@brief Function for handling an UART error.
- *
- * @param[in] p_event     Event supplied to the handler.
- */
-void uart_error_handle(app_uart_evt_t * p_event)
-{
-    if ((p_event->evt_type == APP_UART_FIFO_ERROR) || 
-        (p_event->evt_type == APP_UART_COMMUNICATION_ERROR))
-    {
-        // Copy parameters to static variables because parameters are not accessible in the 
-        // debugger.
-        static volatile app_uart_evt_t uart_event;
-
-        uart_event.evt_type = p_event->evt_type;
-        uart_event.data     = p_event->data;
-        UNUSED_VARIABLE(uart_event);  
+    uint32_t err_code;
     
-        for (;;)
-        {
-            // No implementation needed.
-        }
-    }
-}
-#endif // defined(TRACE_UART)         
+    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
+    APP_ERROR_CHECK(err_code);
 
+    err_code = softdevice_handler_init(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL, 0, NULL);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = ant_stack_static_config();
+    APP_ERROR_CHECK(err_code);
+
+    err_code = sd_ant_network_address_set(ANTPLUS_NETWORK_NUMBER, m_network_key);
+    APP_ERROR_CHECK(err_code);
+}
+
+/**@brief Function for HRM profile initialization.
+ *
+ * @details Initializes the HRM profile and open ANT channel.
+ */
+static void profile_setup(void)
+{
+/** @snippet [ANT HRM RX Profile Setup] */
+    uint32_t err_code;
+
+    err_code = ant_hrm_init(&m_ant_hrm, &ant_rx_channel_config, NULL);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = ant_hrm_open(&m_ant_hrm);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = ant_state_indicator_channel_opened();
+    APP_ERROR_CHECK(err_code);
+/** @snippet [ANT HRM RX Profile Setup] */
+}
 
 /**@brief Function for application main entry, does not return.
  */
 int main(void)
-{   
+{
     uint32_t err_code;
-    
-    // Setup UART. 
-#if defined(TRACE_UART)
-    const app_uart_comm_params_t comm_params =  
-    {
-        RX_PIN_NUMBER, 
-        TX_PIN_NUMBER, 
-        RTS_PIN_NUMBER, 
-        CTS_PIN_NUMBER, 
-        APP_UART_FLOW_CONTROL_DISABLED, 
-        false, 
-        UART_BAUDRATE_BAUDRATE_Baud38400
-    }; 
-        
-    APP_UART_FIFO_INIT(&comm_params, 
-                       UART_RX_BUF_SIZE, 
-                       UART_TX_BUF_SIZE, 
-                       uart_error_handle, 
-                       APP_IRQ_PRIORITY_LOW,
-                       err_code);
-    APP_ERROR_CHECK(err_code);
-#endif
-  
-    err_code = sd_softdevice_enable(NRF_CLOCK_LFCLKSRC_XTAL_50_PPM, softdevice_assert_callback);
-    APP_ERROR_CHECK(err_code);
-  
-    // Set application IRQ to lowest priority.
-    err_code = sd_nvic_SetPriority(SD_EVT_IRQn, NRF_APP_PRIORITY_LOW);
-    APP_ERROR_CHECK(err_code);  
-    
-    // Enable application IRQ (triggered from protocol). 
-    err_code = sd_nvic_EnableIRQ(SD_EVT_IRQn);
-    APP_ERROR_CHECK(err_code);    
-    
-    // Open HRM RX channel.
-    hrm_rx_open();
 
-    uint8_t event;
-    uint8_t ant_channel;  
-    uint8_t event_message_buffer[ANT_EVENT_MSG_BUFFER_MIN_SIZE]; 
-    
-    printf("Enter hrm rx main processing loop...\n");   
-    
-    // Main loop.   
+    utils_setup();
+    softdevice_setup();
+    ant_state_indicator_init(m_ant_hrm.channel_number, HRM_RX_CHANNEL_TYPE);
+    profile_setup();
+
     for (;;)
     {   
-        err_code = sd_app_evt_wait(); 
-        APP_ERROR_CHECK(err_code);    
-
-        // Extract and process all pending ANT events.      
-        do
-        {
-            err_code = sd_ant_event_get(&ant_channel, &event, event_message_buffer);
-            if (err_code == NRF_SUCCESS)
-            {
-                if (event == EVENT_RX)
-                {
-                    // We are only interested of RX events.
-                    hrm_rx_channel_event_handle(event_message_buffer);            
-                }
-            }            
-        } 
-        while (err_code == NRF_SUCCESS);
+        err_code = sd_app_evt_wait();
+        APP_ERROR_CHECK(err_code);
     }
-} 
-
+}
 /**
  *@}
  **/

@@ -64,7 +64,7 @@ enum mode_t
 nrf_radio_request_t * m_configure_next_event(void)
 {
     m_beacon.timeslot_request.request_type              = NRF_RADIO_REQ_TYPE_NORMAL;
-    m_beacon.timeslot_request.params.normal.hfclk       = NRF_RADIO_HFCLK_CFG_DEFAULT;
+    m_beacon.timeslot_request.params.normal.hfclk       = NRF_RADIO_HFCLK_CFG_FORCE_XTAL;
     m_beacon.timeslot_request.params.normal.priority    = NRF_RADIO_PRIORITY_HIGH;
     m_beacon.timeslot_request.params.normal.distance_us = m_beacon.adv_interval * 1000;
     m_beacon.timeslot_request.params.normal.length_us   = m_beacon.slot_length;
@@ -74,7 +74,7 @@ nrf_radio_request_t * m_configure_next_event(void)
 uint32_t m_request_earliest(enum NRF_RADIO_PRIORITY priority)
 {
     m_beacon.timeslot_request.request_type                = NRF_RADIO_REQ_TYPE_EARLIEST;
-    m_beacon.timeslot_request.params.earliest.hfclk       = NRF_RADIO_HFCLK_CFG_DEFAULT;
+    m_beacon.timeslot_request.params.earliest.hfclk       = NRF_RADIO_HFCLK_CFG_FORCE_XTAL;
     m_beacon.timeslot_request.params.earliest.priority    = priority;
     m_beacon.timeslot_request.params.earliest.length_us   = m_beacon.slot_length;
     m_beacon.timeslot_request.params.earliest.timeout_us  = 1000000;

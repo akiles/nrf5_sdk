@@ -30,6 +30,7 @@
 #include "boards.h"
 #include "main_bicycle_power_rx.h"
 #include "nordic_common.h"
+#include "ant_stack_config.h"
 
 #define UART_TX_BUF_SIZE 256u /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE 1u   /**< UART RX buffer size. */
@@ -120,6 +121,9 @@ static __INLINE void softdevice_setup(void)
     APP_ERROR_CHECK(err_code);
 
     err_code = sd_nvic_EnableIRQ(SD_EVT_IRQn);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = ant_stack_static_config();
     APP_ERROR_CHECK(err_code);
 }
 

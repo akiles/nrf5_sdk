@@ -150,9 +150,9 @@ static void upload_data_response_fail_reset(void);
 //    return_value &= ~PARAM_RETURN_BOOT_STATUS_Msk;
 //    return_value |= status & PARAM_RETURN_BOOT_STATUS_Msk;
 //
-//    if (m_storage_handle_ant.module_id != PSTORAGE_MAX_APPLICATIONS + 1)
+//    if (m_storage_handle_ant.module_id != PSTORAGE_NUM_OF_PAGES + 1)
 //    {
-//        m_storage_handle_ant.module_id  = PSTORAGE_MAX_APPLICATIONS + 1; //Steal the raw mode module ID.
+//        m_storage_handle_ant.module_id  = PSTORAGE_NUM_OF_PAGES + 1; //Steal the raw mode module ID.
 //        m_storage_handle_ant.block_id   = ANT_BOOT_PARAM_RETURN_BASE;
 //    }
 //    pstorage_raw_store(&m_storage_handle_ant, (uint8_t*)&return_value, sizeof(uint32_t), 0);

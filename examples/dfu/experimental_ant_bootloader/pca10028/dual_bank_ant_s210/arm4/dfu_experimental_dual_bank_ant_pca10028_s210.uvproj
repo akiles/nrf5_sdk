@@ -169,7 +169,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>Segger\JL2CM3.dll</Flash2>
-          <Flash3>"nrfjprog.exe" (--reset --program "#H")</Flash3>
+          <Flash3>"nrfjprog.exe" (--family NRF51 --program "#H")</Flash3>
           <Flash4></Flash4>
         </Utilities>
         <TargetArmAds>
@@ -353,7 +353,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> ANT_STACK_SUPPORT_REQD __HEAP_SIZE=0 BOARD_PCA10028 S210 NRF51 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..;..\..\..\include;..\..\..\libs\include;..\..\..\..\..\..\components\libraries\bootloader_dfu;..\..\..\..\..\bsp;..\..\..\..\..\..\components\softdevice\s210\headers;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\toolchain</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..;..\..\..\include;..\..\..\libs\include;..\..\..\..\..\..\components\ant\ant_stack_config;..\..\..\..\..\..\components\libraries\bootloader_dfu;..\..\..\..\..\bsp;..\..\..\..\..\..\components\softdevice\s210\headers;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\toolchain</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -501,12 +501,22 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>nRF_ANT</GroupName>
+          <Files>
+            <File>
+              <FileName>ant_stack_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\ant\ant_stack_config\ant_stack_config.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>nRF_SoftDevice</GroupName>
           <Files>
             <File>
-              <FileName>s210_nrf51422_4.0.1_licence_agreement.txt</FileName>
+              <FileName>s210_nrf51422_5.0.0_licence_agreement.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\..\..\..\..\components\softdevice\s210\doc\s210_nrf51422_4.0.1_licence_agreement.txt</FilePath>
+              <FilePath>..\..\..\..\..\..\components\softdevice\s210\doc\s210_nrf51422_5.0.0_licence_agreement.txt</FilePath>
             </File>
           </Files>
         </Group>

@@ -1169,9 +1169,9 @@
           <GroupName>nRF_SoftDevice</GroupName>
           <Files>
             <File>
-              <FileName>s130_nrf51822_1.0.0-3.alpha_licence_agreement.txt</FileName>
+              <FileName>s130_nrf51822_1.0.0_licence_agreement.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51822_1.0.0-3.alpha_licence_agreement.txt</FilePath>
+              <FilePath>..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51822_1.0.0_licence_agreement.txt</FilePath>
             </File>
             <File>
               <FileName>softdevice_handler.c</FileName>

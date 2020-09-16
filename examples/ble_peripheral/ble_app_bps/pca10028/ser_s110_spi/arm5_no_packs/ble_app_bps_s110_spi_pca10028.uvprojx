@@ -374,7 +374,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>        </Define>
+              <Define> SPI_MASTER_0_ENABLE BLE_STACK_SUPPORT_REQD SWI_DISABLE3 SVCALL_AS_NORMAL_FUNCTION S110 BOARD_PCA10028 NRF51 SWI_DISABLE0</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

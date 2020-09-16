@@ -37,20 +37,20 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 
 #source common to all targets
 C_SOURCE_FILES += \
-../../../../../../components/toolchain/system_nrf51.c \
-../../../main.c \
-../../../../../../components/drivers_nrf/hal/nrf_delay.c \
+$(abspath ../../../../../../components/toolchain/system_nrf51.c) \
+$(abspath ../../../main.c) \
+$(abspath ../../../../../../components/drivers_nrf/hal/nrf_delay.c) \
 
 #assembly files common to all targets
-ASM_SOURCE_FILES  = ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
+ASM_SOURCE_FILES  = $(abspath ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s)
 
 #includes common to all targets
-INC_PATHS  = -I../../../../../../components/toolchain/gcc
-INC_PATHS += -I../../../../../../components/toolchain
-INC_PATHS += -I../../..
-INC_PATHS += -I../../../../../bsp
-INC_PATHS += -I../../../../../../components/device
-INC_PATHS += -I../../../../../../components/drivers_nrf/hal
+INC_PATHS  = -I$(abspath ../../../../../../components/toolchain/gcc)
+INC_PATHS += -I$(abspath ../../../../../../components/toolchain)
+INC_PATHS += -I$(abspath ../../..)
+INC_PATHS += -I$(abspath ../../../../../bsp)
+INC_PATHS += -I$(abspath ../../../../../../components/device)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/hal)
 
 OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)
@@ -91,7 +91,7 @@ default: clean nrf51422_xxac
 #building all targets
 all: clean
 	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e cleanobj
-	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf51422_xxac 
+	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf51422_xxac
 
 #target for printing all targets
 help:

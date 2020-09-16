@@ -30,6 +30,7 @@
 #include "app_timer.h"
 #include "bsp.h"
 #include "nordic_common.h"
+#include "ant_stack_config.h"
 #if defined(TRACE_UART)
 #include "app_uart.h"
 #endif
@@ -280,6 +281,9 @@ int main(void)
 
     // Enable application IRQ (triggered from protocol).
     err_code = sd_nvic_EnableIRQ(SD_EVT_IRQn);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = ant_stack_static_config();
     APP_ERROR_CHECK(err_code);
 
     // Setup Channel_0 as a SDM RX.

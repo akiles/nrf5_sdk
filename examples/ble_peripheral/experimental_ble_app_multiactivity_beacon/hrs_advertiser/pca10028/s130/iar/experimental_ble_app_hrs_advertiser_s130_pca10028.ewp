@@ -1089,7 +1089,7 @@
   <group>
   <name>nRF_SoftDevice</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51822_1.0.0-3.alpha_licence_agreement.txt</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51822_1.0.0_licence_agreement.txt</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\common\softdevice_handler\softdevice_handler.c</name>

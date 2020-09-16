@@ -319,12 +319,15 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\trace</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ant\ant_stack_config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
           <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
@@ -977,10 +980,19 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\trace\app_trace.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart\retarget.c</name>
     </file>
   </group>
   <group>
@@ -995,7 +1007,7 @@
   <group>
   <name>nRF_Drivers</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart\app_uart.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart\app_uart_fifo.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</name>
@@ -1005,6 +1017,12 @@
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</name>
+    </file>
+  </group>
+  <group>
+  <name>nRF_ANT</name>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\ant\ant_stack_config\ant_stack_config.c</name>
     </file>
   </group>
   <group>
@@ -1031,7 +1049,7 @@
   <group>
   <name>nRF_SoftDevice</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s210\doc\s210_nrf51422_4.0.1_licence_agreement.txt</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s210\doc\s210_nrf51422_5.0.0_licence_agreement.txt</name>
     </file>
   </group>
 </project>

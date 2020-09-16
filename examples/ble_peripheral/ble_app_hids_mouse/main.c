@@ -132,9 +132,6 @@
 #define APP_ADV_FAST_TIMEOUT            30                                          /**< The duration of the fast advertising period (in seconds). */
 #define APP_ADV_SLOW_TIMEOUT            180                                         /**< The duration of the slow advertising period (in seconds). */
 
-#define APP_ADV_DIRECTED_TIMEOUT        5                                           /**< Number of direct advertisement (each lasting 1.28seconds). */
-
-
 static ble_hids_t                       m_hids;                                     /**< Structure used to identify the HID service. */
 static ble_bas_t                        m_bas;                                      /**< Structure used to identify the battery service. */
 static bool                             m_in_boot_mode = false;                     /**< Current protocol mode. */
@@ -914,7 +911,8 @@ static void advertising_init(void)
     ble_adv_modes_config_t options =
     {
         BLE_ADV_WHITELIST_ENABLED,
-        BLE_ADV_DIRECTED_ENABLED, APP_ADV_DIRECTED_TIMEOUT,
+        BLE_ADV_DIRECTED_ENABLED, 
+        BLE_ADV_DIRECTED_SLOW_DISABLED, 0,0,
         BLE_ADV_FAST_ENABLED, APP_ADV_FAST_INTERVAL, APP_ADV_FAST_TIMEOUT,
         BLE_ADV_SLOW_ENABLED, APP_ADV_SLOW_INTERVAL, APP_ADV_SLOW_TIMEOUT
     };

@@ -17,6 +17,9 @@
     <PathAndName>pca10028\s110\arm4\ble_app_hrs_s110_pca10028.uvproj</PathAndName>
   </project>
    <project>
+    <PathAndName>pca10028\s310\arm4\ble_app_hrs_s310_pca10028.uvproj</PathAndName>
+  </project>
+   <project>
     <PathAndName>pca10031\s110\arm4\ble_app_hrs_s110_pca10031.uvproj</PathAndName>
   </project>
    <project>
@@ -42,6 +45,9 @@
   </project>
    <project>
     <PathAndName>pca10028\ser_s130_spi_5W\arm4\ble_app_hrs_s130_spi_5W_pca10028.uvproj</PathAndName>
+  </project>
+   <project>
+    <PathAndName>pca10028\s310_with_dfu\arm4\ble_app_hrs_s310_with_dfu_pca10028.uvproj</PathAndName>
   </project>
    <project>
     <PathAndName>pca10028\ser_s110_spi_5W\arm4\ble_app_hrs_s110_spi_5W_pca10028.uvproj</PathAndName>

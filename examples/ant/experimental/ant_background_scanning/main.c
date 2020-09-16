@@ -33,6 +33,8 @@ All rights reserved.
 #include "nordic_common.h"
 #include "events.h"
 #include "ant_stack_handler_types.h"
+#include "ant_stack_config.h"
+#include "app_trace.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -150,6 +152,9 @@ static __INLINE void softdevice_setup(void)
     APP_ERROR_CHECK(err_code);
     err_code = sd_nvic_EnableIRQ(SD_EVT_IRQn);
     APP_ERROR_CHECK(err_code);
+
+    err_code = ant_stack_static_config();
+    APP_ERROR_CHECK(err_code);
 }
 
 /**@brief Softdevice Interrupt handler.
@@ -241,6 +246,7 @@ static void initialize()
 /* Main function */
 int main(void)
 {
+    app_trace_init();
     initialize();
 
     // Enter main loop

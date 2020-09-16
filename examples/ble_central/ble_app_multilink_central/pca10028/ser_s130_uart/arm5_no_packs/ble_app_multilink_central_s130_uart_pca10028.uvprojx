@@ -374,7 +374,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>       </Define>
+              <Define> BLE_STACK_SUPPORT_REQD SVCALL_AS_NORMAL_FUNCTION S130 BOARD_PCA10028 BSP_DEFINES_ONLY NRF51 SWI_DISABLE0</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -1126,9 +1126,9 @@
           <GroupName>nRF_SoftDevice</GroupName>
           <Files>
             <File>
-              <FileName>s130_nrf51822_1.0.0-3.alpha_licence_agreement.txt</FileName>
+              <FileName>s130_nrf51822_1.0.0_licence_agreement.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51822_1.0.0-3.alpha_licence_agreement.txt</FilePath>
+              <FilePath>..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51822_1.0.0_licence_agreement.txt</FilePath>
             </File>
             <File>
               <FileName>softdevice_handler.c</FileName>
