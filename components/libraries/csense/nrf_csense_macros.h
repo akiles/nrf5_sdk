@@ -37,13 +37,12 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef NRF_CSENSE_MACROS_H__
 #define NRF_CSENSE_MACROS_H__
 
 /** @file
  *
- * @defgroup nrf_csense_macros Capacitive Sensor
+ * @defgroup nrf_csense_macros Capacitive sensor macros
  * @{
  * @ingroup nrf_csense
  *

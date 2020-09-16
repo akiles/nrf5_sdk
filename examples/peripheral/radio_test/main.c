@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
 *
 * @defgroup nrf_radio_test_example_main main.c

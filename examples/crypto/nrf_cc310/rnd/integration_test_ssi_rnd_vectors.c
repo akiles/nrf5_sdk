@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "ssi_pal_types.h"
 #include "integration_test_ssi_data.h"
 

@@ -37,10 +37,9 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "app_error.h"
 
-#define NRF_LOG_MODULE_NAME "APP_ERROR"
+//#define NRF_LOG_MODULE_NAME "APP_ERROR"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 /*lint -save -e14 */
@@ -55,6 +54,7 @@ __WEAK void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
     NRF_LOG_FINAL_FLUSH();
     // On assert, the system can only recover with a reset.
 #ifndef DEBUG
+    NRF_LOG_INFO("Hit weak handler\r\n");
     NVIC_SystemReset();
 #else
     app_error_save_and_stop(id, pc, info);

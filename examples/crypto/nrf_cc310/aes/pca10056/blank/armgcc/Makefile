@@ -10,18 +10,9 @@ $(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: \
 
 # Source files common to all targets
 SRC_FILES += \
-  $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_serial.c \
-  $(SDK_ROOT)/components/libraries/log/src/nrf_log_frontend.c \
-  $(SDK_ROOT)/components/libraries/util/app_error.c \
-  $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
-  $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
-  $(SDK_ROOT)/components/libraries/hardfault/nrf52/handler/hardfault_handler_gcc.c \
-  $(SDK_ROOT)/components/libraries/hardfault/hardfault_implementation.c \
-  $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
-  $(SDK_ROOT)/components/libraries/util/sdk_errors.c \
   $(SDK_ROOT)/components/boards/boards.c \
-  $(SDK_ROOT)/components/drivers_nrf/common/nrf_drv_common.c \
-  $(SDK_ROOT)/components/drivers_nrf/uart/nrf_drv_uart.c \
+  $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
+  $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
   $(PROJ_DIR)/integration_test_ssi_aes_vectors.c \
   $(PROJ_DIR)/main.c \
   $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
@@ -35,42 +26,39 @@ SRC_FILES += \
 INC_FOLDERS += \
   $(SDK_ROOT)/components/device \
   $(SDK_ROOT)/external/segger_rtt \
-  $(SDK_ROOT)/components/libraries/hardfault \
+  ../config \
   $(SDK_ROOT)/components/libraries/bsp \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
-  $(SDK_ROOT)/components/toolchain/gcc \
-  $(SDK_ROOT)/components/drivers_nrf/common \
   $(PROJ_DIR) \
   $(SDK_ROOT)/components/boards \
   $(SDK_ROOT)/components/drivers_nrf/hal \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
-  $(SDK_ROOT)/components/libraries/log/src \
-  $(SDK_ROOT)/components/libraries/hardfault/nrf52 \
   $(SDK_ROOT)/components \
-  $(SDK_ROOT)/components/drivers_nrf/uart \
+  $(SDK_ROOT)/components/libraries/util \
   $(SDK_ROOT)/external/nrf_cc310/include \
   $(SDK_ROOT)/external/nrf_cc310/common \
-  $(SDK_ROOT)/components/libraries/log \
   $(SDK_ROOT)/components/toolchain \
-  ../config \
-  $(SDK_ROOT)/components/libraries/util \
+  $(SDK_ROOT)/components/toolchain/gcc \
 
 # Libraries common to all targets
 LIB_FILES += \
   $(SDK_ROOT)/external/nrf_cc310/lib/libcc310_gcc_0.9.0.a \
 
 # C flags common to all targets
-CFLAGS += -DNRF_LOG_USES_RTT=1
-CFLAGS += -DNRF_LOG_ENABLED=1
-CFLAGS += -DBSP_DEFINES_ONLY
-CFLAGS += -DNRF_SDK_PRESENT
-CFLAGS += -DDX_CC_TEE
 CFLAGS += -DAES_INTEGTEST
-CFLAGS += -DNRF52840_XXAA
-CFLAGS += -DDEBUG
-CFLAGS += -DCONFIG_GPIO_AS_PINRESET
 CFLAGS += -DBOARD_PCA10056
+CFLAGS += -DBSP_DEFINES_ONLY
+CFLAGS += -DCONFIG_GPIO_AS_PINRESET
+CFLAGS += -DDEBUG
 CFLAGS += -DDEBUG_NRF
+CFLAGS += -DDX_CC_TEE
+CFLAGS += -DNRF52840_XXAA
+CFLAGS += -DNRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE=2048
+CFLAGS += -DNRF_LOG_ENABLED=1
+CFLAGS += -DNRF_LOG_USES_RTT=1
+CFLAGS += -DNRF_SDK_PRESENT
+CFLAGS += -DSEGGER_RTT_BLOCKING
+CFLAGS += -D__STACK_SIZE=2048
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS +=  -Wall -Werror -O3 -g3
@@ -84,17 +72,20 @@ CXXFLAGS += \
 
 # Assembler flags common to all targets
 ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DNRF_LOG_USES_RTT=1
-ASMFLAGS += -DNRF_LOG_ENABLED=1
-ASMFLAGS += -DBSP_DEFINES_ONLY
-ASMFLAGS += -DNRF_SDK_PRESENT
-ASMFLAGS += -DDX_CC_TEE
 ASMFLAGS += -DAES_INTEGTEST
-ASMFLAGS += -DNRF52840_XXAA
-ASMFLAGS += -DDEBUG
-ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
 ASMFLAGS += -DBOARD_PCA10056
+ASMFLAGS += -DBSP_DEFINES_ONLY
+ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
+ASMFLAGS += -DDEBUG
 ASMFLAGS += -DDEBUG_NRF
+ASMFLAGS += -DDX_CC_TEE
+ASMFLAGS += -DNRF52840_XXAA
+ASMFLAGS += -DNRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE=2048
+ASMFLAGS += -DNRF_LOG_ENABLED=1
+ASMFLAGS += -DNRF_LOG_USES_RTT=1
+ASMFLAGS += -DNRF_SDK_PRESENT
+ASMFLAGS += -DSEGGER_RTT_BLOCKING
+ASMFLAGS += -D__STACK_SIZE=2048
 
 # Linker flags
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)

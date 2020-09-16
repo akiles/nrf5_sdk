@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "sdk_config.h"
 #if NFC_T4T_CC_FILE_PARSER_ENABLED
 
@@ -129,9 +128,9 @@ __STATIC_INLINE ret_code_t nfc_t4t_cc_file_validate(nfc_t4t_capability_container
 {
     uint16_t type = p_t4t_cc_file->p_tlv_block_array[0].type;
 
-    if ( (p_t4t_cc_file->major_version == NFC_T4T_EXTENDED_MAJOR_VER 
+    if ( (p_t4t_cc_file->major_version == NFC_T4T_EXTENDED_MAJOR_VER
           && type == EXTENDED_NDEF_FILE_CONTROL_TLV) ||
-         (p_t4t_cc_file->major_version == NFC_T4T_REGULAR_MAJOR_VER 
+         (p_t4t_cc_file->major_version == NFC_T4T_REGULAR_MAJOR_VER
           && type == NDEF_FILE_CONTROL_TLV) )
     {
         return NRF_SUCCESS;

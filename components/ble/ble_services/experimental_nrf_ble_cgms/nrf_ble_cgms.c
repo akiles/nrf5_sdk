@@ -37,8 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
-
 #include "ble_racp.h"
 #include "ble_srv_common.h"
 
@@ -422,7 +420,7 @@ void nrf_ble_cgms_on_ble_evt(nrf_ble_cgms_t * p_cgms, ble_evt_t * p_ble_evt)
             on_write(p_cgms, p_ble_evt);
             break;
 
-        case BLE_EVT_TX_COMPLETE:
+        case BLE_GATTS_EVT_HVN_TX_COMPLETE:
             on_tx_complete(p_cgms, p_ble_evt);
             break;
 

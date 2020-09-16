@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "ble_ln_db.h"
 #include "ble_ln_common.h"
 

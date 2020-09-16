@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "sdk_config.h"
 #if APP_USBD_CLASS_CDC_ACM_ENABLED
 #include "app_usbd_cdc_acm.h"
@@ -59,18 +58,19 @@
 #include "nrf_log.h"
 
 
-#define APP_USBD_CDC_ACM_COMM_IFACE_IDX 0    /**< CDC ACM class comm interface index */
-#define APP_USBD_CDC_ACM_DATA_IFACE_IDX 1    /**< CDC ACM class data interface index */
+#define APP_USBD_CDC_ACM_COMM_IFACE_IDX 0    /**< CDC ACM class comm interface index. */
+#define APP_USBD_CDC_ACM_DATA_IFACE_IDX 1    /**< CDC ACM class data interface index. */
 
-#define APP_USBD_CDC_ACM_COMM_EPIN_IDX  0    /**< CDC ACM comm class endpoint IN index */
-#define APP_USBD_CDC_ACM_DATA_EPIN_IDX  0    /**< CDC ACM data class endpoint IN index */
-#define APP_USBD_CDC_ACM_DATA_EPOUT_IDX 1    /**< CDC ACM data class endpoint OUT index */
+#define APP_USBD_CDC_ACM_COMM_EPIN_IDX  0    /**< CDC ACM comm class endpoint IN index. */
+#define APP_USBD_CDC_ACM_DATA_EPIN_IDX  0    /**< CDC ACM data class endpoint IN index. */
+#define APP_USBD_CDC_ACM_DATA_EPOUT_IDX 1    /**< CDC ACM data class endpoint OUT index. */
 
 /**
- * @brief Auxiliary function to access cdc_acm class instance data
+ * @brief Auxiliary function to access cdc_acm class instance data.
  *
- * @param[in] p_inst Class instance data
- * @return CDC ACM class instance data @ref app_usbd_cdc_acm_t
+ * @param[in] p_inst Class instance data.
+ *
+ * @return CDC ACM class instance.
  */
 static inline app_usbd_cdc_acm_t const * cdc_acm_get(app_usbd_class_inst_t const * p_inst)
 {
@@ -79,10 +79,11 @@ static inline app_usbd_cdc_acm_t const * cdc_acm_get(app_usbd_class_inst_t const
 }
 
 /**
- * @brief Auxiliary function to access cdc_acm class context data
+ * @brief Auxiliary function to access cdc_acm class context data.
  *
- * @param[in] p_cdc_acm    CDC ACM class instance data
- * @return CDC ACM class context data @ref app_usbd_cdc_acm_ctx_t
+ * @param[in] p_cdc_acm    CDC ACM class instance data.
+ *
+ * @return CDC ACM class instance context.
  */
 static inline app_usbd_cdc_acm_ctx_t * cdc_acm_ctx_get(app_usbd_cdc_acm_t const * p_cdc_acm)
 {
@@ -92,11 +93,11 @@ static inline app_usbd_cdc_acm_ctx_t * cdc_acm_ctx_get(app_usbd_cdc_acm_t const 
 }
 
 /**
- * @brief User event handler
+ * @brief User event handler.
  *
- * @param[in] p_inst        Class instance
- * @param[in] event user    Event type @ref app_usbd_cdc_acm_user_event_t
- * */
+ * @param[in] p_inst        Class instance.
+ * @param[in] event user    Event type.
+ */
 static inline void user_event_handler(app_usbd_class_inst_t const * p_inst,
                                       app_usbd_cdc_acm_user_event_t event)
 {
@@ -108,11 +109,11 @@ static inline void user_event_handler(app_usbd_class_inst_t const * p_inst,
 }
 
 /**
- * @brief Auxiliary function to access CDC ACM COMM IN endpoint address
+ * @brief Auxiliary function to access CDC ACM COMM IN endpoint address.
  *
- * @param[in] p_inst Class instance data
+ * @param[in] p_inst Class instance data.
  *
- * @return IN endpoint address
+ * @return IN endpoint address.
  */
 static inline nrf_drv_usbd_ep_t comm_ep_in_addr_get(app_usbd_class_inst_t const * p_inst)
 {
@@ -126,11 +127,11 @@ static inline nrf_drv_usbd_ep_t comm_ep_in_addr_get(app_usbd_class_inst_t const 
 }
 
 /**
- * @brief Auxiliary function to access CDC ACM DATA IN endpoint address
+ * @brief Auxiliary function to access CDC ACM DATA IN endpoint address.
  *
- * @param[in] p_inst Class instance data
+ * @param[in] p_inst Class instance data.
  *
- * @return IN endpoint address
+ * @return IN endpoint address.
  */
 static inline nrf_drv_usbd_ep_t data_ep_in_addr_get(app_usbd_class_inst_t const * p_inst)
 {
@@ -144,11 +145,11 @@ static inline nrf_drv_usbd_ep_t data_ep_in_addr_get(app_usbd_class_inst_t const 
 }
 
 /**
- * @brief Auxiliary function to access CDC ACM DATA OUT endpoint address
+ * @brief Auxiliary function to access CDC ACM DATA OUT endpoint address.
  *
- * @param[in] p_inst Class instance data
+ * @param[in] p_inst Class instance data.
  *
- * @return OUT endpoint address
+ * @return OUT endpoint address.
  */
 static inline nrf_drv_usbd_ep_t data_ep_out_addr_get(app_usbd_class_inst_t const * p_inst)
 {
@@ -162,14 +163,12 @@ static inline nrf_drv_usbd_ep_t data_ep_out_addr_get(app_usbd_class_inst_t const
 }
 
 /**
- * @brief Internal SETUP standard IN request handler
+ * @brief Internal SETUP standard IN request handler.
  *
- * @param[in] p_inst        Generic class instance
- * @param[in] p_setup_ev    Setup event
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_setup_ev    Setup event.
  *
- * @return Standard error code
- * @retval NRF_SUCCESS if request handled correctly
- * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
+ * @return Standard error code.
  */
 static ret_code_t setup_req_std_in(app_usbd_class_inst_t const * p_inst,
                                    app_usbd_setup_evt_t const *  p_setup_ev)
@@ -216,9 +215,7 @@ static ret_code_t setup_req_std_in(app_usbd_class_inst_t const * p_inst,
  * @param[in] p_inst        Generic class instance
  * @param[in] p_setup_ev    Setup event
  *
- * @return Standard error code
- * @retval NRF_SUCCESS if request handled correctly
- * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
+ * @return Standard error code.
  */
 static ret_code_t setup_req_std_out(app_usbd_class_inst_t const * p_inst,
                                     app_usbd_setup_evt_t const *  p_setup_ev)
@@ -234,14 +231,12 @@ static ret_code_t setup_req_std_out(app_usbd_class_inst_t const * p_inst,
 }
 
 /**
- * @brief Internal SETUP class IN request handler
+ * @brief Internal SETUP class IN request handler.
  *
- * @param[in] p_inst        Generic class instance
- * @param[in] p_setup_ev    Setup event
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_setup_ev    Setup event.
  *
- * @return Standard error code
- * @retval NRF_SUCCESS if request handled correctly
- * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
+ * @return Standard error code.
  */
 static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
                                      app_usbd_setup_evt_t const *  p_setup_ev)
@@ -269,6 +264,14 @@ static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
     return NRF_ERROR_NOT_SUPPORTED;
 }
 
+/**
+ * @brief Class specific OUT request data callback.
+ *
+ * @param status    Endpoint status.
+ * @param p_context Context of transfer (set by @ref app_usbd_core_setup_data_handler_set).
+ *
+ * @return Standard error code.
+ */
 static ret_code_t cdc_acm_req_out_data_cb(nrf_drv_usbd_ep_status_t status, void * p_context)
 {
     if (status != NRF_USBD_EP_OK)
@@ -302,6 +305,15 @@ static ret_code_t cdc_acm_req_out_data_cb(nrf_drv_usbd_ep_status_t status, void 
     return NRF_SUCCESS;
 }
 
+
+/**
+ * @brief Class specific request data stage setup.
+ *
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_setup_ev    Setup event.
+ *
+ * @return Standard error code.
+ */
 static ret_code_t cdc_acm_req_out_datastage(app_usbd_class_inst_t const * p_inst,
                                             app_usbd_setup_evt_t const *  p_setup_ev)
 {
@@ -317,7 +329,7 @@ static ret_code_t cdc_acm_req_out_datastage(app_usbd_class_inst_t const * p_inst
                               p_cdc_acm_ctx->request.len);
     ret_code_t ret;
     CRITICAL_REGION_ENTER();
-    ret = app_usbd_core_setup_data_transfer(NRF_DRV_USBD_EPOUT0, &transfer, NULL);
+    ret = app_usbd_core_setup_data_transfer(NRF_DRV_USBD_EPOUT0, &transfer);
     if (ret == NRF_SUCCESS)
     {
         const app_usbd_core_setup_data_handler_desc_t desc = {
@@ -333,14 +345,12 @@ static ret_code_t cdc_acm_req_out_datastage(app_usbd_class_inst_t const * p_inst
 }
 
 /**
- * @brief Internal SETUP class OUT request handler
+ * @brief Internal SETUP class OUT request handler.
  *
- * @param[in] p_inst        Generic class instance
- * @param[in] p_setup_ev    Setup event
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_setup_ev    Setup event.
  *
- * @return Standard error code
- * @retval NRF_SUCCESS if request handled correctly
- * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
+ * @return Standard error code.
  */
 static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
                                       app_usbd_setup_evt_t const *  p_setup_ev)
@@ -405,28 +415,18 @@ static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
 }
 
 /**
- * @brief Control endpoint handle
+ * @brief Control endpoint handler.
  *
- * @param[in] p_inst        Generic class instance
- * @param[in] p_setup_ev    Setup event
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_setup_ev    Setup event.
  *
- * @return Standard error code
- * @retval NRF_SUCCESS if request handled correctly
- * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
+ * @return Standard error code.
  */
 static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
                                       app_usbd_setup_evt_t const *  p_setup_ev)
 {
     ASSERT(p_inst != NULL);
     ASSERT(p_setup_ev != NULL);
-
-    app_usbd_setup_reqrec_t  req_rec = app_usbd_setup_req_rec(p_setup_ev->setup.bmRequestType);
-    app_usbd_setup_reqtype_t req_type = app_usbd_setup_req_typ(p_setup_ev->setup.bmRequestType);
-    if (req_rec == APP_USBD_SETUP_REQREC_ENDPOINT &&
-        req_type == APP_USBD_SETUP_REQTYPE_STD)
-    {
-        return app_usbd_endpoint_std_req_handle(p_inst, p_setup_ev);
-    }
 
     if (app_usbd_setup_req_dir(p_setup_ev->setup.bmRequestType) == APP_USBD_SETUP_REQDIR_IN)
     {
@@ -456,6 +456,14 @@ static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
     return NRF_ERROR_NOT_SUPPORTED;
 }
 
+/**
+ * @brief Class specific endpoint transfer handler.
+ *
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_setup_ev    Setup event.
+ *
+ * @return Standard error code.
+ */
 static ret_code_t cdc_acm_endpoint_ev(app_usbd_class_inst_t const *  p_inst,
                                       app_usbd_complex_evt_t const * p_event)
 {
@@ -523,10 +531,8 @@ static ret_code_t cdc_acm_event_handler(app_usbd_class_inst_t const *  p_inst,
             ret = cdc_acm_endpoint_ev(p_inst, p_event);
             break;
         case APP_USBD_EVT_DRV_SUSPEND:
-            user_event_handler(p_inst, APP_USBD_CDC_ACM_USER_EVT_SUSPEND);
             break;
         case APP_USBD_EVT_DRV_RESUME:
-            user_event_handler(p_inst, APP_USBD_CDC_ACM_USER_EVT_RESUME);
             break;
         case APP_USBD_EVT_INST_APPEND:
         {
@@ -539,10 +545,8 @@ static ret_code_t cdc_acm_event_handler(app_usbd_class_inst_t const *  p_inst,
             break;
         }
         case APP_USBD_EVT_START:
-            user_event_handler(p_inst, APP_USBD_CDC_ACM_USER_EVT_START);
             break;
         case APP_USBD_EVT_STOP:
-            user_event_handler(p_inst, APP_USBD_CDC_ACM_USER_EVT_STOP);
             break;
         default:
             ret = NRF_ERROR_NOT_SUPPORTED;
@@ -568,7 +572,7 @@ static const void * cdc_acm_get_descriptors(app_usbd_class_inst_t const * p_inst
 /**
  * @brief Public cdc_acm class interface
  *
- * */
+ */
 const app_usbd_class_methods_t app_usbd_cdc_acm_class_methods = {
         .event_handler = cdc_acm_event_handler,
         .get_descriptors = cdc_acm_get_descriptors,
@@ -592,7 +596,7 @@ ret_code_t app_usbd_cdc_acm_write(app_usbd_cdc_acm_t const * p_cdc_acm,
 
     nrf_drv_usbd_ep_t ep = data_ep_in_addr_get(p_inst);
     NRF_DRV_USBD_TRANSFER_IN(transfer, p_buf, length);
-    return app_usbd_core_ep_transfer(ep, &transfer, NULL);
+    return app_usbd_core_ep_transfer(ep, &transfer);
 }
 
 size_t app_usbd_cdc_acm_rx_size(app_usbd_cdc_acm_t const * p_cdc_acm)
@@ -600,14 +604,14 @@ size_t app_usbd_cdc_acm_rx_size(app_usbd_cdc_acm_t const * p_cdc_acm)
     app_usbd_class_inst_t const * p_inst = app_usbd_cdc_acm_class_inst_get(p_cdc_acm);
     nrf_drv_usbd_ep_t ep = data_ep_out_addr_get(p_inst);
 
-    nrf_drv_usbd_transfer_t transfer;
-    ret_code_t ret = nrf_drv_usbd_ep_status_get(ep, &transfer);
+    size_t size;
+    ret_code_t ret = nrf_drv_usbd_ep_status_get(ep, &size);
     if (ret != NRF_SUCCESS)
     {
         return 0;
     }
 
-    return transfer.size;
+    return size;
 }
 
 ret_code_t app_usbd_cdc_acm_read(app_usbd_cdc_acm_t const * p_cdc_acm,
@@ -628,7 +632,7 @@ ret_code_t app_usbd_cdc_acm_read(app_usbd_cdc_acm_t const * p_cdc_acm,
 
     nrf_drv_usbd_ep_t ep = data_ep_out_addr_get(p_inst);
     NRF_DRV_USBD_TRANSFER_OUT(transfer, p_buf, length);
-    return app_usbd_core_ep_transfer(ep, &transfer, NULL);
+    return app_usbd_core_ep_transfer(ep, &transfer);
 }
 
 static ret_code_t cdc_acm_serial_state_notify(app_usbd_cdc_acm_t const * p_cdc_acm)
@@ -641,7 +645,7 @@ static ret_code_t cdc_acm_serial_state_notify(app_usbd_cdc_acm_t const * p_cdc_a
     NRF_DRV_USBD_TRANSFER_OUT(transfer,
                               &p_cdc_acm_ctx->request.payload,
                               sizeof(app_usbd_cdc_acm_notify_t));
-    return app_usbd_core_ep_transfer(ep, &transfer, NULL);
+    return app_usbd_core_ep_transfer(ep, &transfer);
 }
 
 ret_code_t app_usbd_cdc_acm_serial_state_notify(app_usbd_cdc_acm_t const *      p_cdc_acm,

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
  * @file
  * @brief An example of use of Adafruit tag reader combined with Type 2 Tag parser.

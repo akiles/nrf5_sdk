@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "nrf_ble_qwrs.h"
 #include <string.h>
 #include "ble_srv_common.h"

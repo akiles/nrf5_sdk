@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "nrf_dfu_flash.h"
 #include "nrf_dfu_types.h"
 #include "softdevice_handler.h"

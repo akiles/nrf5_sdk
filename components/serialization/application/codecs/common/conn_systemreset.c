@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <stdint.h>
 #include "ble_serialization.h"
 #include "ser_hal_transport.h"

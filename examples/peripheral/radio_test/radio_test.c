@@ -198,7 +198,7 @@ void radio_modulated_tx_carrier(uint8_t txpower, uint8_t mode, uint8_t channel)
     radio_disable();
     generate_modulated_rf_packet();
     NRF_RADIO->SHORTS     = RADIO_SHORTS_END_DISABLE_Msk | RADIO_SHORTS_READY_START_Msk | \
-                            RADIO_SHORTS_DISABLED_TXEN_Msk;;
+                            RADIO_SHORTS_DISABLED_TXEN_Msk;
     NRF_RADIO->TXPOWER    = (txpower << RADIO_TXPOWER_TXPOWER_Pos);
     NRF_RADIO->MODE       = (mode << RADIO_MODE_MODE_Pos);
     NRF_RADIO->FREQUENCY  = channel;

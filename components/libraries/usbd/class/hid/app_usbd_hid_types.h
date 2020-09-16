@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef APP_USBD_HID_TYPES_H__
 #define APP_USBD_HID_TYPES_H__
 
@@ -53,41 +52,42 @@
  * @{
  */
 
-/** @brief HID class definition in interface descriptor
+/**
+ * @brief HID class definition in interface descriptor.
  *
- *  @ref app_usbd_descriptor_iface_t::bInterfaceClass
+ * @ref app_usbd_descriptor_iface_t::bInterfaceClass
  * */
 #define  APP_USBD_HID_CLASS 0x03
 
-/** @brief HID subclass definition
+/**
+ * @brief HID subclass definition.
  *
- *  @see  HID 1.11 specification: Chapter 4.2 Subclass
- *  @ref app_usbd_descriptor_iface_t::bInterfaceSubClass
+ * @see HID 1.11 specification: Chapter 4.2 Subclass.
+ * @ref app_usbd_descriptor_iface_t::bInterfaceSubClass
  * */
 typedef enum {
-    APP_USBD_HID_SUBCLASS_NONE = 0x00, /**< Undefined subclass*/
-    APP_USBD_HID_SUBCLASS_BOOT = 0x01, /**< Boot subclass */
+    APP_USBD_HID_SUBCLASS_NONE = 0x00, /**< Undefined subclass. */
+    APP_USBD_HID_SUBCLASS_BOOT = 0x01, /**< Boot subclass.      */
 } app_usbd_hid_subclass_t;
 
-/** @brief HID descriptor types
+/**
+ * @brief HID protocol types defined by specification.
  *
- *  Value need to be filled in interface descriptor.
- *  @ref app_usbd_descriptor_iface_t::bInterfaceProtocol
+ * Value need to be filled in interface descriptor.
+ * @ref app_usbd_descriptor_iface_t::bInterfaceProtocol
  */
 typedef enum {
-    APP_USBD_HID_PROTO_GENERIC    = 0x00, /**< GENERIC protocol    */
-    APP_USBD_HID_PROTO_KEYBOARD   = 0x01, /**< KEYBOARD protocol   */
-    APP_USBD_HID_PROTO_MOUSE      = 0x02, /**< MOUSE protocol      */
-    APP_USBD_HID_PROTO_MULTITOUCH = 0x03, /**< MULTITOUCH protocol */
+    APP_USBD_HID_PROTO_GENERIC    = 0x00, /**< GENERIC protocol.    */
+    APP_USBD_HID_PROTO_KEYBOARD   = 0x01, /**< KEYBOARD protocol.   */
+    APP_USBD_HID_PROTO_MOUSE      = 0x02, /**< MOUSE protocol.      */
+    APP_USBD_HID_PROTO_MULTITOUCH = 0x03, /**< MULTITOUCH protocol. */
 } app_usbd_hid_protocol_t;
 
-/** @brief HID protocol types defined by specification
- *
- */
 
-/** @brief HID country code ID
+/**
+ * @brief HID country code ID.
  *
- *  Look into @ref app_usbd_hid_descriptor_t::bCountryCode
+ * Look into @ref app_usbd_hid_descriptor_t::bCountryCode.
  */
 typedef enum {
     APP_USBD_HID_COUNTRY_NOT_SUPPORTED     = 0 , /**< NOT_SUPPORTED        */
@@ -128,49 +128,50 @@ typedef enum {
     APP_USBD_HID_COUNTRY_TURKISH_F         = 35, /**< TURKISH_F            */
 } app_usbd_hid_country_code_t;
 
-/** @brief HID descriptor types
+/**
+ * @brief HID descriptor types.
  *
- *  @ref app_usbd_hid_descriptor_t::bRDescriptorType
+ * @ref app_usbd_hid_descriptor_t::bRDescriptorType
  */
 typedef enum {
-    APP_USBD_HID_DESCRIPTOR_HID      = 0x21, /**< HID descriptor      */
-    APP_USBD_HID_DESCRIPTOR_REPORT   = 0x22, /**< REPORT descriptor   */
-    APP_USBD_HID_DESCRIPTOR_PHYSICAL = 0x23, /**< PHYSICAL descriptor */
+    APP_USBD_HID_DESCRIPTOR_HID      = 0x21, /**< HID descriptor.      */
+    APP_USBD_HID_DESCRIPTOR_REPORT   = 0x22, /**< REPORT descriptor.   */
+    APP_USBD_HID_DESCRIPTOR_PHYSICAL = 0x23, /**< PHYSICAL descriptor. */
 } app_usbd_hid_descriptor_type_t;
 
 #pragma pack(push, 1)
 
 /**
- *  @brief HID report descriptor entry at the end of HID descriptor
+ * @brief HID report descriptor entry at the end of HID descriptor.
  *
- *  @param size     Report descriptor size
+ * @param size     Report descriptor size.
  */
 #define APP_USBD_HID_REPORT_ITEM(size)      \
     APP_USBD_HID_DESCRIPTOR_REPORT, ((size) & 0xFF), ((size) / 256)
 
 
 /**
- *  @brief HID physical descriptor entry at the end of HID descriptor
+ * @brief HID physical descriptor entry at the end of HID descriptor.
  *
- *  @param size     Physical descriptor size
+ * @param size     Physical descriptor size.
  */
 #define APP_USBD_HID_PHYSICAL_ITEM(size)    \
     APP_USBD_HID_DESCRIPTOR_PHYSICAL, ((size) & 0xFF), ((size) / 256)
 
 
 /**
- * @brief HID descriptor, binary layout
+ * @brief HID descriptor, binary layout.
  */
 typedef union {
     struct  {
-        uint8_t  bLength;            //!< Length of descriptor
-        uint8_t  bDescriptorType;    //!< Descriptor type @ref APP_USBD_HID_DESCRIPTOR_HID
-        uint16_t bcdHID;             //!< HID release number (BCD format, little endian)
-        uint8_t  bCountryCode;       //!< Country code
-        uint8_t  bNumDescriptors;    //!< Number of class descriptors
+        uint8_t  bLength;            //!< Length of descriptor.
+        uint8_t  bDescriptorType;    //!< Descriptor type @ref APP_USBD_HID_DESCRIPTOR_HID.
+        uint16_t bcdHID;             //!< HID release number (BCD format, little endian).
+        uint8_t  bCountryCode;       //!< Country code.
+        uint8_t  bNumDescriptors;    //!< Number of class descriptors.
         struct {
-            uint8_t  bRDescriptorType;   //!< Class descriptor type
-            uint16_t wDescriptorLength;  //!< Class descriptor length (little endian)
+            uint8_t  bRDescriptorType;   //!< Class descriptor type.
+            uint16_t wDescriptorLength;  //!< Class descriptor length (little endian).
         } reports[];
     } raw;
 } app_usbd_hid_descriptor_t;
@@ -178,20 +179,20 @@ typedef union {
 #pragma pack(pop)
 
 
-/** @brief HID requests defined by specification
- *
+/**
+ * @brief HID requests defined by specification.
  */
 typedef enum {
-    APP_USBD_HID_REQ_GET_REPORT   = 0x01,  /**< REPORT: device -> host (required)                     */
-    APP_USBD_HID_REQ_GET_IDLE     = 0x02,  /**< IDLE: device -> host (not required)                   */
-    APP_USBD_HID_REQ_GET_PROTOCOL = 0x03,  /**< PROTOCOL: device -> host (required for boot protocol) */
-    APP_USBD_HID_REQ_SET_REPORT   = 0x09,  /**< REPORT: host -> device (not required)                 */
-    APP_USBD_HID_REQ_SET_IDLE     = 0x0A,  /**< IDLE: no data stage (required for boot protocol)      */
-    APP_USBD_HID_REQ_SET_PROTOCOL = 0x0B,  /**< PROTOCOL: no data stage(required for boot protocol)   */
+    APP_USBD_HID_REQ_GET_REPORT   = 0x01,  /**< REPORT: device -> host (required).                     */
+    APP_USBD_HID_REQ_GET_IDLE     = 0x02,  /**< IDLE: device -> host (not required).                   */
+    APP_USBD_HID_REQ_GET_PROTOCOL = 0x03,  /**< PROTOCOL: device -> host (required for boot protocol). */
+    APP_USBD_HID_REQ_SET_REPORT   = 0x09,  /**< REPORT: host -> device (not required).                 */
+    APP_USBD_HID_REQ_SET_IDLE     = 0x0A,  /**< IDLE: no data stage (required for boot protocol).      */
+    APP_USBD_HID_REQ_SET_PROTOCOL = 0x0B,  /**< PROTOCOL: no data stage(required for boot protocol).   */
 } app_usbd_hid_req_t;
 
-/** @brief HID report type
- *
+/**
+ *  @brief HID report type.
  */
 typedef enum {
     APP_USBD_HID_REPORT_TYPE_INPUT   = 0x01,/**< INPUT report type   */
@@ -201,30 +202,32 @@ typedef enum {
 
 
 
-/** @brief Helper macro for HID BCD release
+/**
+ * @brief Helper macro for HID BCD release.
  *
- *  @param major Hid release number major
- *  @param minor Hid release number minor
+ * @param major Hid release number major.
+ * @param minor Hid release number minor.
  *
- *  @ref app_usbd_hid_descriptor_t::bcdHID
- *  @ref APP_USBD_HID_BCD_V1_11
+ * @ref app_usbd_hid_descriptor_t::bcdHID
+ * @ref APP_USBD_HID_BCD_V1_11
  */
 #define APP_USBD_HID_BCD_MAKE(major, minor) 0x##minor, 0x##major
 
-/** @brief HID 1.11 BCD value definition
+/**
+ * @brief HID 1.11 BCD value definition.
  *
  *  @ref app_usbd_hid_descriptor_t::bcdHID
  */
 #define APP_USBD_HID_BCD_V1_11 APP_USBD_HID_BCD_MAKE(1, 11)
 
 /**
- * @brief Initializer of interface descriptor for HID classes
+ * @brief Initializer of interface descriptor for HID classes.
  *
- * @param interface_number  Interface number
- * @param endpoints_num     Number of endpoints
- * @param subclass          Subclass type @ref app_usbd_hid_subclass_t
- * @param protocol          Protocol type @ref app_usbd_hid_protocol_t
- * */
+ * @param interface_number  Interface number.
+ * @param endpoints_num     Number of endpoints.
+ * @param subclass          Subclass type @ref app_usbd_hid_subclass_t.
+ * @param protocol          Protocol type @ref app_usbd_hid_protocol_t.
+ */
 #define APP_USBD_HID_INTERFACE_DSC(interface_number, endpoints_num, subclass, protocol) \
     /*.bLength =            */ sizeof(app_usbd_descriptor_iface_t),                     \
     /*.bDescriptorType =    */ APP_USBD_DESCRIPTOR_INTERFACE,                           \
@@ -238,26 +241,26 @@ typedef enum {
 
 
 /**
- * @brief Initializer of HID descriptor for HID classes
+ * @brief Initializer of HID descriptor for HID classes.
  *
- * @param ...   Report/physical item list
- * */
-#define APP_USBD_HID_HID_DSC(...)                                                                       \
-    /*.bLength =           */ sizeof(app_usbd_hid_descriptor_t) + 3 * (NUM_VA_ARGS(__VA_ARGS__)),       \
-    /*.bDescriptorType =   */ APP_USBD_HID_DESCRIPTOR_HID,                                              \
-    /*.bcdHID =            */ APP_USBD_HID_BCD_V1_11,                                                   \
-    /*.bCountryCode =      */ APP_USBD_HID_COUNTRY_NOT_SUPPORTED,                                       \
-    /*.bNumDescriptors =   */ (NUM_VA_ARGS(__VA_ARGS__)),                                               \
-    /*.bRDescriptorType =  */ APP_USBD_HID_REPORT_ITEM(sizeof(GET_VA_ARG_1_(__VA_ARGS__))),             \
+ * @param ...   Report/physical item list.
+ */
+#define APP_USBD_HID_HID_DSC(...)                                                                  \
+    /*.bLength =           */ sizeof(app_usbd_hid_descriptor_t) + 3 * (NUM_VA_ARGS(__VA_ARGS__)),  \
+    /*.bDescriptorType =   */ APP_USBD_HID_DESCRIPTOR_HID,                                         \
+    /*.bcdHID =            */ APP_USBD_HID_BCD_V1_11,                                              \
+    /*.bCountryCode =      */ APP_USBD_HID_COUNTRY_NOT_SUPPORTED,                                  \
+    /*.bNumDescriptors =   */ (NUM_VA_ARGS(__VA_ARGS__)),                                          \
+    /*.bRDescriptorType =  */ APP_USBD_HID_REPORT_ITEM(sizeof(GET_VA_ARG_1_(__VA_ARGS__))),        \
     /*.wDescriptorLength = */
 
 /**
- * @brief Initializer of endpoint descriptor for HID classes
+ * @brief Initializer of endpoint descriptor for HID classes.
  *
- * @param endpoint      Endpoint number
- * @param ep_size       Endpoint size
- * @param ep_interval   Endpoint interval (milliseconds)
- * */
+ * @param endpoint      Endpoint number.
+ * @param ep_size       Endpoint size.
+ * @param ep_interval   Endpoint interval (milliseconds).
+ */
 #define APP_USBD_HID_EP_DSC(endpoint, ep_size, ep_interval)                \
     /*.bLength =          */ sizeof(app_usbd_descriptor_ep_t),             \
     /*.bDescriptorType =  */ APP_USBD_DESCRIPTOR_ENDPOINT,                 \

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -63,6 +62,7 @@
 #include "app_usbd_core.h"
 #include "app_usbd_string_desc.h"
 #include "app_usbd_msc.h"
+#include "app_error.h"
 
 #include "boards.h"
 
@@ -215,30 +215,47 @@ APP_USBD_MSC_GLOBAL_DEF(m_app_msc,
 
 /*lint -restore*/
 
-
+/**
+ * @brief Class specific event handler.
+ *
+ * @param p_inst    Class instance.
+ * @param event     Class specific event.
+ * */
 static void msc_user_ev_handler(app_usbd_class_inst_t const * p_inst,
                                 app_usbd_msc_user_event_t     event)
 {
-    app_usbd_msc_t const * p_msc = app_usbd_msc_class_get(p_inst);
-    UNUSED_VARIABLE(p_msc);
+}
+
+/**
+ * @brief USBD library specific event handler.
+ *
+ * @param event     USBD library event.
+ * */
+static void usbd_user_ev_handler(app_usbd_event_type_t event)
+{
     switch (event)
     {
-        case APP_USBD_MSC_USER_EVT_SUSPEND:
+        case APP_USBD_EVT_DRV_SUSPEND:
             bsp_board_led_off(LED_USB_RESUME);
             break;
-        case APP_USBD_MSC_USER_EVT_RESUME:
+        case APP_USBD_EVT_DRV_RESUME:
             bsp_board_led_on(LED_USB_RESUME);
             break;
-        case APP_USBD_MSC_USER_EVT_START:
-            bsp_board_led_invert(LED_USB_START);
+        case APP_USBD_EVT_START:
+            bsp_board_led_on(LED_USB_START);
             break;
-        case APP_USBD_MSC_USER_EVT_STOP:
+        case APP_USBD_EVT_STOP:
             bsp_board_leds_off();
             break;
         default:
             break;
     }
 }
+
+static const app_usbd_config_t m_usbd_config = {
+    .ev_handler = usbd_user_ev_handler
+};
+
 
 /**
  * @brief  USB connection status
@@ -276,7 +293,14 @@ static bool fatfs_init(void)
     ff_result = f_mount(&m_filesystem, "", 1);
     if (ff_result != FR_OK)
     {
-        NRF_LOG_ERROR("Mount failed: %u\r\n", ff_result);
+        if (ff_result == FR_NO_FILESYSTEM)
+        {
+            NRF_LOG_ERROR("Mount failed. Filesystem not found. Please format device.\r\n");
+        }
+        else
+        {
+            NRF_LOG_ERROR("Mount failed: %u\r\n", ff_result);
+        }
         return false;
     }
 
@@ -447,7 +471,9 @@ static void usb_start(void)
             .handler = power_usb_event_handler
         };
 
-        nrf_drv_power_usbevt_init(&config);
+        ret_code_t ret;
+        ret = nrf_drv_power_usbevt_init(&config);
+        APP_ERROR_CHECK(ret);
     }
     else
     {
@@ -501,7 +527,7 @@ int main(void)
     /* Configure LEDs and buttons */
     bsp_board_leds_init();
     bsp_board_buttons_init();
-    
+
     if (fatfs_init())
     {
         fatfs_ls();
@@ -509,7 +535,7 @@ int main(void)
     }
     fatfs_uninit();
 
-    ret = app_usbd_init();
+    ret = app_usbd_init(&m_usbd_config);
     APP_ERROR_CHECK(ret);
 
     app_usbd_class_inst_t const * class_inst_msc = app_usbd_msc_class_inst_get(&m_app_msc);

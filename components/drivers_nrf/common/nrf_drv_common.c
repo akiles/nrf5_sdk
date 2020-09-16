@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <stddef.h>
 #include "nrf_drv_common.h"
 #include "nrf_assert.h"
@@ -147,7 +146,7 @@ static ret_code_t acquire_shared_resource(shared_resource_t * p_resource,
                                           nrf_drv_irq_handler_t handler)
 {
     ret_code_t err_code;
-    
+
     bool busy = false;
 
     CRITICAL_REGION_ENTER();
@@ -164,13 +163,13 @@ static ret_code_t acquire_shared_resource(shared_resource_t * p_resource,
     if (busy)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
     p_resource->handler = handler;
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 #endif
@@ -206,9 +205,9 @@ ret_code_t nrf_drv_common_per_res_acquire(void const * p_per_base,
     }
 #endif
     ret_code_t err_code;
-    
+
     err_code = NRF_ERROR_INVALID_PARAM;
-    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 

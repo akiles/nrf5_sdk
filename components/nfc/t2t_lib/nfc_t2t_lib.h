@@ -58,6 +58,10 @@
 #include <string.h>
 #include <sdk_errors.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define NFC_T2T_SIZEOF_INTERNAL_BYTES 10    ///< T2T internal byte size.
 #define NFC_T2T_MAX_PAYLOAD_SIZE      988   ///< Maximum NDEF message size.
 #define NFC_T2T_MAX_PAYLOAD_SIZE_RAW  1008  ///< No NDEF-TLV and no implicit lock bytes at the end.
@@ -254,6 +258,10 @@ ret_code_t nfc_t2t_emulation_stop(void);
  * @retval NRF_SUCCESS This function always succeeds.
  */
 ret_code_t nfc_t2t_done(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 /** @} */
 #endif // NFC_T2T_LIB_H__

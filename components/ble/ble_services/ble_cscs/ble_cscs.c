@@ -37,22 +37,21 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /* Attention!
-*  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
+*  To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
 *  qualification listings, this section of source code must not be modified.
 */
 
 #include "ble_cscs.h"
 #include <string.h>
 #include "nordic_common.h"
-#include "ble_l2cap.h"
+#include "ble.h"
 #include "ble_srv_common.h"
 #include "app_util.h"
 
-#define OPCODE_LENGTH 1                                                    /**< Length of opcode inside Cycling Speed and Cadence Measurement packet. */
-#define HANDLE_LENGTH 2                                                    /**< Length of handle inside Cycling Speed and Cadence Measurement packet. */
-#define MAX_CSCM_LEN  (BLE_L2CAP_MTU_DEF - OPCODE_LENGTH - HANDLE_LENGTH)  /**< Maximum size of a transmitted Cycling Speed and Cadence Measurement. */
+#define OPCODE_LENGTH 1                                                             /**< Length of opcode inside Cycling Speed and Cadence Measurement packet. */
+#define HANDLE_LENGTH 2                                                             /**< Length of handle inside Cycling Speed and Cadence Measurement packet. */
+#define MAX_CSCM_LEN  (BLE_GATT_ATT_MTU_DEFAULT - OPCODE_LENGTH - HANDLE_LENGTH)    /**< Maximum size of a transmitted Cycling Speed and Cadence Measurement. */
 
 // Cycling Speed and Cadence Measurement flag bits
 #define CSC_MEAS_FLAG_MASK_WHEEL_REV_DATA_PRESENT (0x01 << 0)  /**< Wheel revolution data present flag bit. */

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef NFC_AC_REC_H__
 #define NFC_AC_REC_H__
 
@@ -61,7 +60,7 @@ extern "C" {
 #define AC_REC_CPS_BYTE_SIZE            1 ///< Size of the field with CPS data.
 #define AC_REC_DATA_REF_LEN_SIZE        1 ///< Size of the Data Reference Length field.
 #define AC_REC_AUX_DATA_REF_COUNT_SIZE  1 ///< Size of the Data Reference Length field.
-    
+
 /**
  * @brief Carrier Power State.
  *

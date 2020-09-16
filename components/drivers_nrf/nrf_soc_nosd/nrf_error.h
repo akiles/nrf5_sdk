@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /* Header guard */
 #ifndef NRF_ERROR_H__
 #define NRF_ERROR_H__

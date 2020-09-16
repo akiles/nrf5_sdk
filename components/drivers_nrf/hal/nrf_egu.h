@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef NRF_EGU_H__
 #define NRF_EGU_H__
 
@@ -54,6 +53,7 @@
 #include <stdint.h>
 #include "nrf_assert.h"
 #include "nrf.h"
+#include "nrf_peripherals.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -198,7 +198,7 @@ __STATIC_INLINE uint32_t * nrf_egu_task_address_get(NRF_EGU_Type * NRF_EGUx,
  * @param NRF_EGUx EGU instance.
  * @param channel  Channel number.
  */
-__STATIC_INLINE uint32_t * nrf_egu_task_trigger_addres_get(NRF_EGU_Type * NRF_EGUx,
+__STATIC_INLINE uint32_t * nrf_egu_task_trigger_address_get(NRF_EGU_Type * NRF_EGUx,
                                                            uint8_t channel)
 {
     ASSERT(channel < nrf_egu_channel_count(NRF_EGUx));
@@ -268,7 +268,7 @@ __STATIC_INLINE uint32_t * nrf_egu_event_address_get(NRF_EGU_Type * NRF_EGUx,
  * @param NRF_EGUx EGU instance.
  * @param channel  Channel number.
  */
-__STATIC_INLINE uint32_t * nrf_egu_event_triggered_addres_get(NRF_EGU_Type * NRF_EGUx,
+__STATIC_INLINE uint32_t * nrf_egu_event_triggered_address_get(NRF_EGU_Type * NRF_EGUx,
                                                               uint8_t channel)
 {
     ASSERT(channel < nrf_egu_channel_count(NRF_EGUx));

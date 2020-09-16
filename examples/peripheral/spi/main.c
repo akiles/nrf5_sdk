@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "nrf_drv_spi.h"
 #include "app_util_platform.h"
 #include "nrf_gpio.h"
@@ -62,7 +61,8 @@ static const uint8_t m_length = sizeof(m_tx_buf);        /**< Transfer length. *
  * @brief SPI user event handler.
  * @param event
  */
-void spi_event_handler(nrf_drv_spi_evt_t const * p_event)
+void spi_event_handler(nrf_drv_spi_evt_t const * p_event,
+                       void *                    p_context)
 {
     spi_xfer_done = true;
     NRF_LOG_INFO("Transfer completed.\r\n");
@@ -86,7 +86,7 @@ int main(void)
     spi_config.miso_pin = SPI_MISO_PIN;
     spi_config.mosi_pin = SPI_MOSI_PIN;
     spi_config.sck_pin  = SPI_SCK_PIN;
-    APP_ERROR_CHECK(nrf_drv_spi_init(&spi, &spi_config, spi_event_handler));
+    APP_ERROR_CHECK(nrf_drv_spi_init(&spi, &spi_config, spi_event_handler, NULL));
 
     while (1)
     {

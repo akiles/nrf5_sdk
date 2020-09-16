@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 #include "ant_io_rx.h"
 #include <stdint.h>
 #include "string.h"

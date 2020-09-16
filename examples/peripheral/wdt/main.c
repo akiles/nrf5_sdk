@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  * @defgroup nrf_dev_wdt_example_main main.c
  * @{
@@ -60,8 +59,6 @@
 #include "nrf_delay.h"
 #include "app_util_platform.h"
 
-#define APP_TIMER_PRESCALER     0                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE 2                           /**< Size of timer operation queues. */
 #define FEED_BUTTON_ID          0                           /**< Button for feeding the dog. */
 
 nrf_drv_wdt_channel_id m_channel_id;
@@ -120,8 +117,10 @@ int main(void)
     APP_ERROR_CHECK(err_code);
     nrf_drv_clock_lfclk_request(NULL);
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
-    err_code = bsp_init(BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), bsp_event_callback);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
+    err_code = bsp_init(BSP_INIT_BUTTONS, bsp_event_callback);
     APP_ERROR_CHECK(err_code);
 
     //Configure all LEDs on board.

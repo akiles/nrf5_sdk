@@ -37,8 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
-
 /**@file
  *
  * @defgroup ble_advertising Advertising Module
@@ -193,6 +191,15 @@ uint32_t ble_advertising_init(ble_advdata_t                   const * p_advdata,
                               ble_advertising_evt_handler_t   const   evt_handler,
                               ble_advertising_error_handler_t const   error_handler);
 
+
+ /**@brief Function for changing the connection settings tag that will be used for upcoming connections.
+ *
+ * @details See @ref sd_ble_cfg_set for more details about changing connection settings. If this
+ *          function is never called, @ref BLE_CONN_CFG_TAG_DEFAULT will be used.
+ *
+ * @param[in] ble_cfg_tag Configuration for the connection settings (see @ref sd_ble_cfg_set).
+ */
+void ble_advertising_conn_cfg_tag_set(uint8_t ble_cfg_tag);
 
 /**@brief Function for starting advertising.
  *

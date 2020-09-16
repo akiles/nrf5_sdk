@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  *
  * @defgroup sdk_nrf_dfu_utils DFU utilities
@@ -51,12 +50,18 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "nrf_dfu_types.h"
+#include "app_timer.h"
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
+// 3400ms is the smallest stable value with nrf connect for PC v1.1.1.
+// 7500ms is the smallest stable value with nrf connect for Android v1.1.1.
+// Smaller values may allow the device to reset before the next DFU transation is started.
+#define RESET_DELAY_LENGTH_MS   10000
+extern const app_timer_id_t nrf_dfu_utils_reset_delay_timer;
 
 /** @brief Function for continuing an ongoing DFU operation.
  *

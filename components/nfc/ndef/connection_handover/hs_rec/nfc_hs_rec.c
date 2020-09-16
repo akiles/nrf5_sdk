@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "nfc_hs_rec.h"
 #include "nfc_ac_rec.h"
 #include "nrf_error.h"

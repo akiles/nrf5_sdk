@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <stdint.h>
 #ifdef DX_LINUX_PLATFORM
 #include <stdio.h>//for printf

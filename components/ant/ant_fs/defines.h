@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /**@file
  * @brief Definitions.
  * This file is based on implementation originally made by Dynastream Innovations Inc. - August 2012
@@ -98,9 +97,6 @@ typedef union
         uint8_t byte3;                        /**< Byte 3 of the data content. */
     } bytes;
 } ulong_union_t;
-
-#define APP_TIMER_PRESCALER 0                 /**< Value of the RTC1 PRESCALER register. */
-
 
 #ifdef __cplusplus
 }

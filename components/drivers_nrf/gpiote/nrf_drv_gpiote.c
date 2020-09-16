@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(GPIOTE)
 #include "nrf_drv_gpiote.h"
@@ -231,7 +230,7 @@ ret_code_t nrf_drv_gpiote_init(void)
         err_code = NRF_ERROR_INVALID_STATE;
         NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
                         (uint32_t)__func__,
-                        (uint32_t)ERR_TO_STR(err_code));
+                        (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -254,7 +253,7 @@ ret_code_t nrf_drv_gpiote_init(void)
 
     err_code = NRF_SUCCESS;
     NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__,
-                 (uint32_t)ERR_TO_STR(err_code));
+                 (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -339,7 +338,7 @@ ret_code_t nrf_drv_gpiote_out_init(nrf_drv_gpiote_pin_t                pin,
     }
 
     NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__,
-                 (uint32_t)ERR_TO_STR(err_code));
+                 (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -540,7 +539,7 @@ ret_code_t nrf_drv_gpiote_in_init(nrf_drv_gpiote_pin_t               pin,
     }
 
     NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__,
-                 (uint32_t)ERR_TO_STR(err_code));
+                 (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 

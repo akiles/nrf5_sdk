@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
  * @addtogroup nrf_saadc SAADC HAL and driver
  * @ingroup    nrf_drivers

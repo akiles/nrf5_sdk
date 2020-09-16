@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  *
  * @defgroup sdk_bootloader_info Information
@@ -53,9 +52,12 @@ extern "C" {
 #endif
 
 #include "nrf.h"
+#include "nrf_mbr.h"
 
-#ifdef SOFTDEVICE_PRESENT
+#if defined(SOFTDEVICE_PRESENT)
 #include "nrf_sdm.h"
+#else
+#include "nrf_mbr.h"
 #endif
 
 /** @brief External definitions of symbols for the start of the application image.
@@ -108,7 +110,7 @@ extern "C" {
 #ifndef MAIN_APPLICATION_START_ADDR
 
 
-#ifdef SOFTDEVICE_PRESENT
+#if defined(SOFTDEVICE_PRESENT)
 
 /** @brief  Main application start address (if the project uses a SoftDevice).
  *
@@ -117,15 +119,8 @@ extern "C" {
 #define MAIN_APPLICATION_START_ADDR             (SD_SIZE_GET(MBR_SIZE))
 
 #else
-
-/** @brief  Main application start address if the project does not use a SoftDevice.
- *
- * @note   The MBR is required for the @ref sdk_bootloader to function.
- */
-#define MAIN_APPLICATION_START_ADDR             (MBR_SIZE)
-
-#endif
-
+#define MAIN_APPLICATION_START_ADDR             MBR_SIZE
+#endif // #ifdef SOFTDEVICE_PRESENT
 #endif // #ifndef MAIN_APPLICATION_START_ADDR
 
 

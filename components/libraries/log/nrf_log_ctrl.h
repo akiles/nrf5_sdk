@@ -55,6 +55,11 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "nrf_log_ctrl_internal.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Timestamp function prototype.
  *
@@ -221,6 +226,9 @@ void nrf_log_handlers_set(nrf_log_std_handler_t     std_handler,
  */
 bool nrf_log_frontend_dequeue(void);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NRF_LOG_CTRL_H
 

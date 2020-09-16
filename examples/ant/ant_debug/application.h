@@ -48,8 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
-
 #ifndef APPLICATION_H__
 #define APPLICATION_H__
 

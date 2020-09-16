@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef APP_USBD_HID_H__
 #define APP_USBD_HID_H__
 
@@ -61,23 +60,25 @@ extern "C" {
  * @{
  */
 
-#define APP_USBD_HID_IFACE_IDX 0    /**< HID instance interface index */
-#define APP_USBD_HID_EPIN_IDX  0    /**< HID instance endpoint IN index */
-#define APP_USBD_HID_EPOUT_IDX 1    /**< HID instance endpoint OUT index */
+#define APP_USBD_HID_IFACE_IDX 0    /**< HID instance interface index.   */
+#define APP_USBD_HID_EPIN_IDX  0    /**< HID instance endpoint IN index. */
+#define APP_USBD_HID_EPOUT_IDX 1    /**< HID instance endpoint OUT index.*/
 
 /**
- * @brief HID context state flags
+ * @brief HID context state flags.
+ *
+ * Bit numbers in @ref app_usbd_hid_ctx_t::state_flags.
  */
 typedef enum {
-    APP_USBD_HID_STATE_FLAG_APPENDED          = 0, /**< State flag APPENDED          */
-    APP_USBD_HID_STATE_FLAG_STARTED           = 1, /**< State flag STARTED           */
-    APP_USBD_HID_STATE_FLAG_SUSPENDED         = 2, /**< State flag SUSPENDED         */
-    APP_USBD_HID_STATE_FLAG_TRANS_IN_PROGRESS = 3, /**< State flag TRANS_IN_PROGRESS */
+    APP_USBD_HID_STATE_FLAG_APPENDED          = 0, /**< State flag APPENDED.          */
+    APP_USBD_HID_STATE_FLAG_STARTED           = 1, /**< State flag STARTED.           */
+    APP_USBD_HID_STATE_FLAG_SUSPENDED         = 2, /**< State flag SUSPENDED.         */
+    APP_USBD_HID_STATE_FLAG_TRANS_IN_PROGRESS = 3, /**< State flag TRANS_IN_PROGRESS. */
 } app_usbd_hid_state_flag_t;
 
 
 /**
- * @brief Events passed to user event handler
+ * @brief Events passed to user event handler.
  *
  * @note Example prototype of user event handler:
    @code
@@ -86,22 +87,18 @@ typedef enum {
    @endcode
  */
 typedef enum {
-    APP_USBD_HID_USER_EVT_SUSPEND = 0, /**< Event SUSPEND */
-    APP_USBD_HID_USER_EVT_RESUME,      /**< Event RESUME  */
-    APP_USBD_HID_USER_EVT_START,       /**< Event START   */
-    APP_USBD_HID_USER_EVT_STOP,        /**< Event STOP    */
-
-    APP_USBD_HID_USER_EVT_OUT_REPORT_READY,  /**< Event OUT_REPORT_READY */
-    APP_USBD_HID_USER_EVT_IN_REPORT_DONE,    /**< Event IN_REPORT_DONE  */
+    APP_USBD_HID_USER_EVT_SET_BOOT_PROTO,    /**< Event SET_BOOT_PROTOCOL.  */
+    APP_USBD_HID_USER_EVT_SET_REPORT_PROTO,  /**< Event SET_REPORT_PROTOCOL.*/
+    APP_USBD_HID_USER_EVT_OUT_REPORT_READY,  /**< Event OUT_REPORT_READY.   */
+    APP_USBD_HID_USER_EVT_IN_REPORT_DONE,    /**< Event IN_REPORT_DONE.     */
 } app_usbd_hid_user_event_t;
 
 /**
- * @brief User event handler
+ * @brief User event handler.
  *
- * @param[in] p_inst Class instance
- * @param[in] event  User event
- *
- * */
+ * @param[in] p_inst Class instance.
+ * @param[in] event  User event.
+ */
 typedef void (*app_usbd_hid_user_ev_handler_t)(app_usbd_class_inst_t const * p_inst,
                                                app_usbd_hid_user_event_t event);
 
@@ -109,54 +106,58 @@ typedef void (*app_usbd_hid_user_ev_handler_t)(app_usbd_class_inst_t const * p_i
 typedef struct {
 
     /**
-     * @brief Function called on HID specific, GetReport request
+     * @brief Function called on HID specific, GetReport request.
      *
-     * This function should trigger data write to control pipe
+     * This function should trigger data write to control pipe.
      *
-     * @param[in] p_inst        Class instance
-     * @param[in] p_setup_ev    Setup event
-     * @return                  Standard error code
-     * */
+     * @param[in] p_inst        Class instance.
+     * @param[in] p_setup_ev    Setup event.
+     *
+     * @return                  Standard error code.
+     */
     ret_code_t (*on_get_report)(app_usbd_class_inst_t const * p_inst,
                                 app_usbd_setup_evt_t const * p_setup_ev);
 
     /**
-     * @brief Function called on HID specific, SetReport request
+     * @brief Function called on HID specific, SetReport request.
      *
      * This function should trigger data read from control pipe. This function is not required and
      * NULL could be pinned to this handler when output report is not defined in report descriptor.
      *
-     * @param[in] p_inst        Class instance
-     * @param[in] p_setup_ev    Setup event
-     * @return                  Standard error code
-     * */
+     * @param[in] p_inst        Class instance.
+     * @param[in] p_setup_ev    Setup event.
+     *
+     * @return                  Standard error code.
+     */
     ret_code_t (*on_set_report)(app_usbd_class_inst_t const * p_inst,
                                 app_usbd_setup_evt_t const * p_setup_ev);
 
     /**
-     * @brief Function called on IN endpoint transfer
+     * @brief Function called on IN endpoint transfer.
      *
      * This function should trigger next endpoint IN transfer if required.
      *
-     * @param[in] p_inst        Class instance
-     * @return                  Standard error code
-     * */
+     * @param[in] p_inst        Class instance.
+     *
+     * @return                  Standard error code.
+     */
     ret_code_t (*ep_transfer_in)(app_usbd_class_inst_t const * p_inst);
 
     /**
-     * @brief Function called on OUT endpoint transfer
+     * @brief Function called on OUT endpoint transfer.
      *
      * This function should should read data from OUT endpoint. This function is not required and
      * NULL could be pinned to this handler when class doesn't have OUT endpoint.
      *
-     * @param[in] p_inst        Class instance
-     * @return                  Standard error code
-     * */
+     * @param[in] p_inst        Class instance.
+     *
+     * @return                  Standard error code.
+     */
     ret_code_t (*ep_transfer_out)(app_usbd_class_inst_t const * p_inst);
 } app_usbd_hid_methods_t;
 
 /**
- * @brief HID report buffers
+ * @brief HID report buffers.
  */
 typedef struct {
     uint8_t * p_buff;
@@ -165,10 +166,10 @@ typedef struct {
 
 
 
-/**@brief Define OUT report buffer structure @ref app_usbd_hid_report_buffer_t
+/**@brief Define OUT report buffer structure @ref app_usbd_hid_report_buffer_t.
  *
- * @param name        Instance name
- * @param rep_size    Output report size
+ * @param name        Instance name.
+ * @param rep_size    Output report size.
  */
 #define APP_USBD_HID_GENERIC_GLOBAL_OUT_REP_DEF(name, rep_size)  \
     static uint8_t CONCAT_2(name, _buf)[(rep_size)];             \
@@ -179,31 +180,30 @@ typedef struct {
 
 
 /**
- * @brief USB HID instance
- * */
+ * @brief USB HID instance.
+ */
 typedef struct {
-    uint8_t const * p_raw_desc;       //!< HID class descriptors, raw array
-    size_t          raw_desc_size;    //!< HID class descriptors size, raw array size
-    uint8_t const * p_report_dsc;     //!< Report descriptor, raw array
-    size_t          report_dsc_size;  //!< Report descriptor, raw array size
+    uint8_t const * p_raw_desc;       //!< HID class descriptors, raw array.
+    size_t          raw_desc_size;    //!< HID class descriptors size, raw array size.
+    uint8_t const * p_report_dsc;     //!< Report descriptor, raw array.
+    size_t          report_dsc_size;  //!< Report descriptor, raw array size.
 
-    app_usbd_hid_report_buffer_t *       p_rep_buffers_in;       //!< Report buffers IN
-    size_t                               rep_buffers_count_in;   //!< Report count IN
-    app_usbd_hid_report_buffer_t const * p_rep_buffer_out;       //!< Report buffer OUT (only one instance)
-    app_usbd_hid_methods_t const *       p_hid_methods;          //!< Hid interface methods
-    app_usbd_hid_user_ev_handler_t       user_event_handler;     //!< User event handler
+    app_usbd_hid_report_buffer_t *       p_rep_buffer_in;       //!< Report buffer IN.
+    app_usbd_hid_report_buffer_t const * p_rep_buffer_out;       //!< Report buffer OUT (only one instance).
+    app_usbd_hid_methods_t const *       p_hid_methods;          //!< Hid interface methods.
+    app_usbd_hid_user_ev_handler_t       user_event_handler;     //!< User event handler.
 } app_usbd_hid_inst_t;
 
 
 /**
- * @brief USB HID instance initializer @ref app_usbd_hid_inst_t
+ * @brief USB HID instance initializer @ref app_usbd_hid_inst_t.
  *
- * @param descriptors       Interface, hid, endpoint packed descriptor structure
- * @param report_dsc        Report descriptor (raw uint8_t array)
- * @param report_buff_in    Input report buffer list
- * @param report_buff_out   Output report buffer
- * @param user_ev_handler   @ref app_usbd_hid_user_ev_handler_t
-   @param hid_methods       @ref app_usbd_hid_methods_t
+ * @param descriptors       Interface, hid, endpoint packed descriptor structure.
+ * @param report_dsc        Report descriptor (raw uint8_t array).
+ * @param report_buff_in    Input report buffer list.
+ * @param report_buff_out   Output report buffer.
+ * @param user_ev_handler   @ref app_usbd_hid_user_ev_handler_t.
+   @param hid_methods       @ref app_usbd_hid_methods_t.
  * */
 #define APP_USBD_HID_INST_CONFIG(descriptors,                \
                                  report_dsc,                 \
@@ -216,31 +216,30 @@ typedef struct {
         .raw_desc_size = ARRAY_SIZE(descriptors),            \
         .p_report_dsc = report_dsc,                          \
         .report_dsc_size = ARRAY_SIZE(report_dsc),           \
-        .p_rep_buffers_in = report_buff_in,                  \
-        .rep_buffers_count_in = ARRAY_SIZE(report_buff_in),  \
+        .p_rep_buffer_in = report_buff_in,                   \
         .p_rep_buffer_out = report_buff_out,                 \
         .user_event_handler = user_ev_handler,               \
         .p_hid_methods = hid_methods,                        \
     }
 
 /**
- * @brief HID internal context
+ * @brief HID internal context.
  * */
 typedef struct {
-    nrf_atomic_u32_t  state_flags;  //!< HID state flags @ref app_usbd_hid_state_flag_t
-    nrf_atomic_flag_t access_lock;  //!< Lock flag to internal data
-    uint8_t           idle_rate;    //!< HID idle rate (4ms units)
-    uint8_t           protocol;     //!< HID protocol type
+    nrf_atomic_u32_t  state_flags;  //!< HID state flags @ref app_usbd_hid_state_flag_t.
+    nrf_atomic_flag_t access_lock;  //!< Lock flag to internal data.
+    uint8_t           idle_rate;    //!< HID idle rate (4ms units).
+    uint8_t           protocol;     //!< HID protocol type.
 } app_usbd_hid_ctx_t;
 
 
 /**
- * @brief Locks internal hid context
+ * @brief Locks internal hid context.
  *
  * Simple semaphore functionality to prevent concurrent access from application and
  * interrupt to internal mouse data.
  *
- * @param[in] p_hid_ctx internal hid context
+ * @param[in] p_hid_ctx Internal hid context
  */
 static inline void app_usbd_hid_access_lock(app_usbd_hid_ctx_t * p_hid_ctx)
 {
@@ -250,12 +249,12 @@ static inline void app_usbd_hid_access_lock(app_usbd_hid_ctx_t * p_hid_ctx)
 
 
 /**
- * @brief Unlocks internal hid context
+ * @brief Unlocks internal hid context.
  *
  * Simple semaphore functionality to prevent concurrent access from application and
  * interrupt to internal mouse data.
  *
- * @param[in] p_hid_ctx internal hid context
+ * @param[in] p_hid_ctx Internal hid context.
  */
 static inline void app_usbd_hid_access_unlock(app_usbd_hid_ctx_t * p_hid_ctx)
 {
@@ -264,12 +263,12 @@ static inline void app_usbd_hid_access_unlock(app_usbd_hid_ctx_t * p_hid_ctx)
 }
 
 /**
- * @brief Tests whether internal lock is acquired
+ * @brief Tests whether internal lock is acquired.
  *
- * @param[in] p_hid_ctx Internal HID context
+ * @param[in] p_hid_ctx Internal HID context.
  *
- * @retval true  Locked
- * @retval false Unlocked
+ * @retval true  Locked.
+ * @retval false Unlocked.
  */
 static inline bool app_usbd_hid_access_lock_test(app_usbd_hid_ctx_t * p_hid_ctx)
 {
@@ -277,10 +276,10 @@ static inline bool app_usbd_hid_access_lock_test(app_usbd_hid_ctx_t * p_hid_ctx)
 }
 
 /**
- * @brief Set one of the HID internal state flags
+ * @brief Set one of the HID internal state flags.
  *
- * @param[in] p_hid_ctx     Internal HID context
- * @param[in] flag          Flag to set
+ * @param[in] p_hid_ctx     Internal HID context.
+ * @param[in] flag          Flag to set.
  */
 static inline void app_usbd_hid_state_flag_set(app_usbd_hid_ctx_t * p_hid_ctx,
                                                app_usbd_hid_state_flag_t flag)
@@ -289,10 +288,10 @@ static inline void app_usbd_hid_state_flag_set(app_usbd_hid_ctx_t * p_hid_ctx,
 }
 
 /**
- * @brief Clear one of the HID internal state flags
+ * @brief Clear one of the HID internal state flags.
  *
- * @param[in] p_hid_ctx     Internal HID context
- * @param[in] flag          Flag to clear
+ * @param[in] p_hid_ctx     Internal HID context.
+ * @param[in] flag          Flag to clear.
  */
 static inline void app_usbd_hid_state_flag_clr(app_usbd_hid_ctx_t * p_hid_ctx,
                                                app_usbd_hid_state_flag_t flag)
@@ -302,10 +301,13 @@ static inline void app_usbd_hid_state_flag_clr(app_usbd_hid_ctx_t * p_hid_ctx,
 
 
 /**
- * @brief Test one of the HID internal state flags
+ * @brief Test one of the HID internal state flags.
  *
- * @param[in] p_hid_ctx     Internal HID context
- * @param[in] flag          Flag to test
+ * @param[in] p_hid_ctx     Internal HID context.
+ * @param[in] flag          Flag to test.
+ *
+ * @retval true  Flag is set.
+ * @retval false Flag is not set.
  */
 static inline bool app_usbd_hid_state_flag_test(app_usbd_hid_ctx_t * p_hid_ctx,
                                                 app_usbd_hid_state_flag_t flag)
@@ -314,12 +316,12 @@ static inline bool app_usbd_hid_state_flag_test(app_usbd_hid_ctx_t * p_hid_ctx,
 }
 
 /**
- * @brief Checks whether HID endpoint transfer required
+ * @brief Checks whether HID endpoint transfer required.
  *
- * @param[in] p_hid_ctx     Internal HID context
+ * @param[in] p_hid_ctx     Internal HID context.
  *
- * @retval true             Input endpoint transfer required
- * @retval false            Transfer in progress or not allowed
+ * @retval true  Input endpoint transfer required.
+ * @retval false Transfer in progress or not allowed.
  */
 static inline bool app_usbd_hid_trans_required(app_usbd_hid_ctx_t * p_hid_ctx)
 {
@@ -333,13 +335,14 @@ static inline bool app_usbd_hid_trans_required(app_usbd_hid_ctx_t * p_hid_ctx)
 }
 
 /**
- * @brief Validates internal hid state
+ * @brief Validates internal hid state.
  *
  * HID Mouse has to receive some USBD events before functions from this module could be used.
  *
- * @param[in] p_hid_ctx Internal hid context
- * @retval true         State is valid
- * @retval false        State is invalid
+ * @param[in] p_hid_ctx Internal hid context.
+ *
+ * @retval true  State is valid.
+ * @retval false State is invalid.
  */
 static inline bool app_usbd_hid_state_valid(app_usbd_hid_ctx_t * p_hid_ctx)
 {
@@ -354,18 +357,18 @@ static inline bool app_usbd_hid_state_valid(app_usbd_hid_ctx_t * p_hid_ctx)
 }
 
 /**
- * @brief HID generic event handler
+ * @brief HID generic event handler.
  *
  * This handler should process every class event after specific class handler.
  * This approach allow to handle some events in the same way in all HID sub-classes.
  *
- * @param[in] p_inst        Generic class instance
- * @param[in] p_hinst       HID class instance
- * @param[in] p_hid_ctx     HID context
- * @param[in] p_event       Complex event structure
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_hinst       HID class instance.
+ * @param[in] p_hid_ctx     HID context.
+ * @param[in] p_event       Complex event structure.
  *
- * @retval NRF_SUCCESS If operation was successful.
- * */
+ * @return Standard error code.
+ */
 ret_code_t app_usbd_hid_event_handler(app_usbd_class_inst_t const * p_inst,
                                       app_usbd_hid_inst_t const * p_hinst,
                                       app_usbd_hid_ctx_t * p_hid_ctx,
@@ -373,27 +376,25 @@ ret_code_t app_usbd_hid_event_handler(app_usbd_class_inst_t const * p_inst,
 
 
 /**
- * @brief Returns IN report buffer
+ * @brief Returns IN report buffer.
  *
- * @param[in] p_hinst       HID class instance
- * @param[in] report_id     Report ID
+ * @param[in] p_hinst       HID class instance.
  *
- * @return Report buffer or NULL if report doesn't exist
- * */
-app_usbd_hid_report_buffer_t * app_usbd_hid_rep_buff_in_get(app_usbd_hid_inst_t const * p_hinst,
-                                                            size_t report_id);
+ * @return Report buffer handle or NULL if report doesn't exist.
+ */
+app_usbd_hid_report_buffer_t * app_usbd_hid_rep_buff_in_get(app_usbd_hid_inst_t const * p_hinst);
 
 /**
- * @brief Returns OUT report buffer
+ * @brief Returns OUT report buffer.
  *
  * Output reports are handled in interrupt handler so only one buffer is required. Buffer returned by
  * this function has predefined size, which should be equal (maximum OUTPUT report size + 1). To receive
  * OUT report this function should be called on @ref APP_USBD_HID_USER_EVT_OUT_REPORT_READY event.
  *
- * @param[in] p_hinst       HID class instance
+ * @param[in] p_hinst       HID class instance.
  *
- * @return Report buffer or NULL if report doesn't exist
- * */
+ * @return Report buffer handle or NULL if report doesn't exist.
+ */
 static inline app_usbd_hid_report_buffer_t const *
 app_usbd_hid_rep_buff_out_get(app_usbd_hid_inst_t const * p_hinst)
 {
@@ -402,11 +403,11 @@ app_usbd_hid_rep_buff_out_get(app_usbd_hid_inst_t const * p_hinst)
 }
 
 /**
- * @brief Auxiliary function to access to HID IN endpoint address
+ * @brief Auxiliary function to access to HID IN endpoint address.
  *
- * @param[in] p_inst Class instance data
+ * @param[in] p_inst Class instance data.
  *
- * @return IN endpoint address
+ * @return IN endpoint address.
  */
 static inline nrf_drv_usbd_ep_t app_usbd_hid_epin_addr_get(app_usbd_class_inst_t const * p_inst)
 {
@@ -420,11 +421,11 @@ static inline nrf_drv_usbd_ep_t app_usbd_hid_epin_addr_get(app_usbd_class_inst_t
 }
 
 /**
- * @brief Auxiliary function to access to HID generic OUT endpoint address
+ * @brief Auxiliary function to access to HID generic OUT endpoint address.
  *
- * @param[in] p_inst Class instance data
+ * @param[in] p_inst Class instance data.
  *
- * @return OUT endpoint address
+ * @return OUT endpoint address.
  */
 static inline nrf_drv_usbd_ep_t  app_usbd_hid_epout_addr_get(app_usbd_class_inst_t const * p_inst)
 {

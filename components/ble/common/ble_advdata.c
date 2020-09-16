@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "ble_advdata.h"
 #include "ble_gap.h"
 #include "ble_srv_common.h"
@@ -63,7 +62,7 @@ static uint32_t ble_device_addr_encode(uint8_t  * p_encoded_data,
     }
 
     // Get BLE address.
-    #if (NRF_SD_BLE_API_VERSION == 3)
+    #if (NRF_SD_BLE_API_VERSION >= 3)
         err_code = sd_ble_gap_addr_get(&device_addr);
     #else
         err_code = sd_ble_gap_address_get(&device_addr);

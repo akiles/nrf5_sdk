@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 #ifndef ANT_SCALEABLE_RX_H__
 #define ANT_SCALEABLE_RX_H__
 

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
- 
 /* Disclaimer: This client implementation of the Apple Notification Center Service can and will be changed at any time by Nordic Semiconductor ASA.
  * Server implementations such as the ones found in iOS can be changed at any time by Apple and may cause this client implementation to stop working.
  */
@@ -45,8 +44,8 @@
  #include "nrf_ble_ancs_c.h"
  #include "ancs_attr_parser.h"
  #include "nrf_log.h"
- 
- 
+
+
 static bool all_req_attrs_parsed(ble_ancs_c_t * p_ancs)
 {
     if (p_ancs->parse_info.expected_number_of_attrs == 0)
@@ -59,7 +58,6 @@ static bool all_req_attrs_parsed(ble_ancs_c_t * p_ancs)
 static bool attr_is_requested(ble_ancs_c_t * p_ancs, ble_ancs_c_attr_t attr)
 {
     if(p_ancs->parse_info.p_attr_list[attr.attr_id].get == true)
- //      || p_ancs->ancs_app_attr_list[attr.attr_id].get == true)
     {
         return true;
     }
@@ -70,7 +68,7 @@ static bool attr_is_requested(ble_ancs_c_t * p_ancs, ble_ancs_c_attr_t attr)
 /**@brief Function for parsing command id and notification id.
  *        Used in the @ref parse_get_notif_attrs_response state machine.
  *
- * @details UID and command ID will be received only once at the beginning of the first 
+ * @details UID and command ID will be received only once at the beginning of the first
  *          GATTC notification of a new attribute request for a given iOS notification.
  *
  * @param[in] p_ancs     Pointer to an ANCS instance to which the event belongs.
@@ -105,7 +103,7 @@ static ble_ancs_c_parse_state_t command_id_parse(ble_ancs_c_t  * p_ancs,
 
         default:
             //no valid command_id, abort the rest of the parsing procedure.
-            NRF_LOG_DEBUG("[ANCS]: Invalid Command ID");
+            NRF_LOG_DEBUG("Invalid Command ID");
             parse_state = DONE;
             break;
     }
@@ -129,7 +127,7 @@ static ble_ancs_c_parse_state_t app_id_parse(ble_ancs_c_t  * p_ancs,
     p_ancs->evt.app_id[p_ancs->parse_info.current_app_id_index] = p_data_src[(*index)++];
 
     if(p_ancs->evt.app_id[p_ancs->parse_info.current_app_id_index] != '\0')
-    { 
+    {
         p_ancs->parse_info.current_app_id_index++;
         return APP_ID;
     }
@@ -156,16 +154,17 @@ static ble_ancs_c_parse_state_t attr_id_parse(ble_ancs_c_t  * p_ancs,
                                               uint32_t      * index)
 {
         p_ancs->evt.attr.attr_id     = p_data_src[(*index)++];
-        p_ancs->evt.attr.p_attr_data = p_ancs->parse_info.p_attr_list[p_ancs->evt.attr.attr_id].p_attr_data;
 
-        if(p_ancs->evt.attr.attr_id > p_ancs->parse_info.nb_of_attr)
+        if (p_ancs->evt.attr.attr_id >= p_ancs->parse_info.nb_of_attr)
         {
+            NRF_LOG_DEBUG("Attribute ID Invalid.\r\n");
             return DONE;
         }
-        
+        p_ancs->evt.attr.p_attr_data = p_ancs->parse_info.p_attr_list[p_ancs->evt.attr.attr_id].p_attr_data;
+
         if (all_req_attrs_parsed(p_ancs))
         {
-            NRF_LOG_DEBUG("[ANCS]: All requested attributes received\n\r");
+            NRF_LOG_DEBUG("All requested attributes received. \r\n");
             return DONE;
         }
         else
@@ -174,7 +173,7 @@ static ble_ancs_c_parse_state_t attr_id_parse(ble_ancs_c_t  * p_ancs,
             {
                 p_ancs->parse_info.expected_number_of_attrs--;
             }
-            NRF_LOG_DEBUG("[ANCS]: Attribute ID %i \n\r", p_ancs->evt.attr.attr_id);
+            NRF_LOG_DEBUG("Attribute ID %i \r\n", p_ancs->evt.attr.attr_id);
             return ATTR_LEN1;
         }
 }
@@ -218,12 +217,21 @@ static ble_ancs_c_parse_state_t attr_len2_parse(ble_ancs_c_t * p_ancs, const uin
 
     if (p_ancs->evt.attr.attr_len != 0)
     {
-        return ATTR_DATA;
+        //If the attribute has a length but there is no allocated space for this attribute
+        if((p_ancs->parse_info.p_attr_list[p_ancs->evt.attr.attr_id].attr_len == 0) ||
+           (p_ancs->parse_info.p_attr_list[p_ancs->evt.attr.attr_id].p_attr_data == NULL))
+        {
+            return ATTR_SKIP;
+        }
+        else
+        {
+            return ATTR_DATA;
+        }
     }
     else
     {
 
-        NRF_LOG_DEBUG("[ANCS]: Attribute LEN %i \n\r", p_ancs->evt.attr.attr_len);
+        NRF_LOG_DEBUG("Attribute LEN %i \r\n", p_ancs->evt.attr.attr_len);
         if(attr_is_requested(p_ancs, p_ancs->evt.attr))
         {
             p_ancs->evt_handler(&p_ancs->evt);
@@ -239,32 +247,6 @@ static ble_ancs_c_parse_state_t attr_len2_parse(ble_ancs_c_t * p_ancs, const uin
     }
 }
 
-/*
-static ble_ancs_c_parse_state_t skip_data
-    if (!attr_is_requested(p_ancs, p_ancs->evt.attr))
-    {
-        // Since this attribute is not in the list of requested attrtibutes,
-        // We can not risk writing to the attributes memory location.
-        if (p_ancs->current_attr_index < p_ancs->evt.attr.attr_len)
-        {
-            p_ancs->current_attr_index++;
-            (*index)++;
-        }
-    }
-*/
-
-static void attr_terminate(ble_ancs_c_t * p_ancs, const uint8_t * p_data_src, uint32_t * index)
-{
-    if (p_ancs->parse_info.current_attr_index == p_ancs->evt.attr.attr_len)
-    {
-        p_ancs->evt.attr.p_attr_data[p_ancs->parse_info.current_attr_index] = '\0';
-    }
-//    if (p_ancs->current_attr_index == p_ancs->p_attr_list[p_ancs->evt.attr.attr_id].attr_len)
-    else
-    {
-        p_ancs->evt.attr.p_attr_data[p_ancs->parse_info.current_attr_index - 1] = '\0';
-    }
-}
 
 /**@brief Function for parsing the data of an iOS attribute.
  *        Used in the @ref parse_get_notif_attrs_response state machine.
@@ -281,23 +263,23 @@ static ble_ancs_c_parse_state_t attr_data_parse(ble_ancs_c_t  * p_ancs,
                                                 const uint8_t * p_data_src,
                                                 uint32_t      * index)
 {
-
     // We have not reached the end of the attribute, nor our max allocated internal size.
     // Proceed with copying data over to our buffer.
     if (   (p_ancs->parse_info.current_attr_index < p_ancs->parse_info.p_attr_list[p_ancs->evt.attr.attr_id].attr_len)
         && (p_ancs->parse_info.current_attr_index < p_ancs->evt.attr.attr_len))
     {
+        //NRF_LOG_DEBUG("Byte copied to buffer: %c\r\n", p_data_src[(*index)]); // Un-comment this line to see every byte of an attribute as it is parsed. Commented out by default since it can overflow the uart buffer.
         p_ancs->evt.attr.p_attr_data[p_ancs->parse_info.current_attr_index++] = p_data_src[(*index)++];
     }
 
     // We have reached the end of the attribute, or our max allocated internal size.
     // Stop copying data over to our buffer. NUL-terminate at the current index.
     if ( (p_ancs->parse_info.current_attr_index == p_ancs->evt.attr.attr_len) ||
-         (p_ancs->parse_info.current_attr_index == p_ancs->parse_info.p_attr_list[p_ancs->evt.attr.attr_id].attr_len))
+         (p_ancs->parse_info.current_attr_index == p_ancs->parse_info.p_attr_list[p_ancs->evt.attr.attr_id].attr_len - 1))
     {
         if (attr_is_requested(p_ancs, p_ancs->evt.attr))
         {
-            attr_terminate(p_ancs, p_data_src, index);
+            p_ancs->evt.attr.p_attr_data[p_ancs->parse_info.current_attr_index] = '\0';
         }
 
         // If our max buffer size is smaller than the remaining attribute data, we must
@@ -306,7 +288,7 @@ static ble_ancs_c_parse_state_t attr_data_parse(ble_ancs_c_t  * p_ancs,
         {
             return ATTR_SKIP;
         }
-        NRF_LOG_DEBUG("[ANCS]: Attribute finished!\n\r");
+        NRF_LOG_DEBUG("Attribute finished!\r\n");
         if(attr_is_requested(p_ancs, p_ancs->evt.attr))
         {
             p_ancs->evt_handler(&p_ancs->evt);
@@ -397,7 +379,7 @@ void ancs_parse_get_attrs_response(ble_ancs_c_t  * p_ancs,
                 break;
 
             case DONE:
-                NRF_LOG_DEBUG("[ANCS]: Parse state: Done \n\r");
+                NRF_LOG_DEBUG("Parse state: Done \r\n");
                 index = hvx_data_len;
                 break;
 

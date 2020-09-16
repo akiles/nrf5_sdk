@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /*
  * Before compiling this example for NRF52, complete the following steps:
  * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
@@ -75,15 +74,12 @@
 #include "commands.h"
 
 
-#define APP_TIMER_PRESCALER           0                                             /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE       2u                                            /**< Size of timer operation queues. */
-
 #define ANT_SCAN_CHANNEL_NUMBER     ((uint8_t) 0)                                   /**< Scanning channel number. */
 #define ANT_RESPONSE_CHANNEL_NUMBER ((uint8_t) 1)                                   /**< Response channel number. */
 
 #define ANT_NETWORK_NUMBER          ((uint8_t) 0)                                   /**< Default public network number. */
 
-#define SCAN_TIMER_TICKS            APP_TIMER_TICKS(500u, APP_TIMER_PRESCALER)      /**< Scan timer ticks. */
+#define SCAN_TIMER_TICKS            APP_TIMER_TICKS(500u)                           /**< Scan timer ticks. */
 
 #define MAX_RETRIES                 ((uint8_t) 5)                                   /**< Max retries. */
 #define MAX_DEVICES                 ((uint8_t) 16)                                  /**< Maximum number of nodes supported in this network. */
@@ -264,9 +260,10 @@ static void utils_setup(void)
 {
     uint32_t err_code;
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 }

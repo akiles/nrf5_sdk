@@ -205,7 +205,7 @@ ret_code_t nrf_drv_clock_init(void)
     }
 
     NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
-        (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -425,11 +425,11 @@ ret_code_t nrf_drv_clock_calibration_start(uint8_t interval, nrf_drv_clock_event
     {
         err_code = NRF_ERROR_BUSY;
     }
-    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 #else
     err_code = NRF_ERROR_FORBIDDEN;
-    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 #endif // CALIBRATION_SUPPORT
 }
@@ -459,12 +459,12 @@ ret_code_t nrf_drv_clock_calibration_abort(void)
         break;
     }
     CRITICAL_REGION_EXIT();
-    
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 #else
     err_code = NRF_ERROR_FORBIDDEN;
-    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 #endif // CALIBRATION_SUPPORT
 }
@@ -475,11 +475,11 @@ ret_code_t nrf_drv_clock_is_calibrating(bool * p_is_calibrating)
 #if CALIBRATION_SUPPORT
     ASSERT(m_clock_cb.module_initialized);
     *p_is_calibrating = (m_clock_cb.cal_state != CAL_STATE_IDLE);
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 #else
     err_code = NRF_ERROR_FORBIDDEN;
-    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 #endif // CALIBRATION_SUPPORT
 }

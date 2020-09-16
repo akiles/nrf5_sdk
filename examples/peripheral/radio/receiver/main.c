@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
 *
 * @defgroup nrf_dev_radio_rx_example_main main.c
@@ -62,9 +61,6 @@
  #define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
-
-#define APP_TIMER_PRESCALER      0                     /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE  2                     /**< Size of timer operation queues. */
 
 static uint32_t                   packet;              /**< Packet to transmit. */
 
@@ -143,11 +139,13 @@ int main(void)
     uint32_t err_code = NRF_SUCCESS;
 
     clock_initialization();
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
+
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
-    err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
+    err_code = bsp_init(BSP_INIT_LED, NULL);
     APP_ERROR_CHECK(err_code);
 
     // Set radio configuration parameters
@@ -157,7 +155,7 @@ int main(void)
     err_code = bsp_indication_set(BSP_INDICATE_USER_STATE_OFF);
     NRF_LOG_INFO("Wait for first packet\r\n");
     APP_ERROR_CHECK(err_code);
-    NRF_LOG_FLUSH();    
+    NRF_LOG_FLUSH();
 
     while (true)
     {

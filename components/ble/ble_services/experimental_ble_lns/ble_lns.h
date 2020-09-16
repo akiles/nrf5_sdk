@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_lns Location and Navigation Service
@@ -95,7 +94,11 @@ typedef struct {
     bool     is_pending;
     uint16_t handle;
     uint16_t len;
+#if (NRF_SD_BLE_API_VERSION <= 3)
     uint8_t  data[GATT_MTU_SIZE_DEFAULT];
+#else
+    uint8_t  data[BLE_GATT_ATT_MTU_DEFAULT];
+#endif
 } notification_t;
 
 

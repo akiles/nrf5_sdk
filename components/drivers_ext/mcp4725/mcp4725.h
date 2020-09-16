@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef MCP4725_H
 #define MCP4725_H
 
@@ -61,12 +60,20 @@ extern "C" {
 * @brief MCP4725 digital DAC driver.
 */
 
+typedef struct
+{
+    uint8_t scl_pin;
+    uint8_t sda_pin;
+}mcp4725_pins_config_t;
+
 /**
  * @brief Function for setting up the driver.
  *
+ * @param[in] p_pins_config Pointer to structere holding pins numbers to be used by TWI.
+ *
  * @return Values returned by @ref nrf_drv_twi_init.
  */
-ret_code_t mcp4725_setup(void);
+ret_code_t mcp4725_setup(mcp4725_pins_config_t const * p_pins_config);
 
 
 /**

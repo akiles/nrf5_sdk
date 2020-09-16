@@ -88,8 +88,8 @@ static bool check_config(fs_config_t const * const config)
 {
 #ifndef DFU_SUPPORT_SIGNING
     if ((config != NULL) &&
-        (FS_SECTION_VARS_START_ADDR <= (uint32_t)config) &&
-        (FS_SECTION_VARS_END_ADDR   >  (uint32_t)config))
+        ((uint32_t)FS_SECTION_START_ADDR <= (uint32_t)config) &&
+        ((uint32_t)FS_SECTION_END_ADDR   >  (uint32_t)config))
     {
         return true;
     }
@@ -293,8 +293,8 @@ static bool queue_get_next_free(fs_op_t ** p_op)
 
 fs_ret_t fs_init(void)
 {
-    uint32_t const   total_users     = FS_SECTION_VARS_COUNT;
-    uint32_t         configs_to_init = FS_SECTION_VARS_COUNT;
+    uint32_t const   total_users     = FS_SECTION_ITEM_COUNT;
+    uint32_t         configs_to_init = FS_SECTION_ITEM_COUNT;
     uint32_t const * p_current_end   = FS_PAGE_END_ADDR;
 
     if (m_flags & FS_FLAG_INITIALIZED)
@@ -313,7 +313,7 @@ fs_ret_t fs_init(void)
 
     for (uint32_t i = 0; i < total_users; i++)
     {
-        fs_config_t const * const p_config = FS_SECTION_VARS_GET(i);
+        fs_config_t const * const p_config = FS_SECTION_ITEM_GET(i);
 
         if ((p_config->p_start_addr != NULL) &&
             (p_config->p_end_addr   != NULL))
@@ -327,13 +327,13 @@ fs_ret_t fs_init(void)
 
     for (uint32_t i = 0; i < configs_to_init; i++)
     {
-        fs_config_t * p_config_i   = FS_SECTION_VARS_GET(i);
+        fs_config_t * p_config_i   = FS_SECTION_ITEM_GET(i);
         uint8_t       max_priority = 0;
         uint8_t       max_index    = i;
 
         for (uint32_t j = 0; j < total_users; j++)
         {
-            fs_config_t const * const p_config_j = FS_SECTION_VARS_GET(j);
+            fs_config_t const * const p_config_j = FS_SECTION_ITEM_GET(j);
 
             #if 0
             if (p_config_j->priority == p_config_i->priority)
@@ -360,7 +360,7 @@ fs_ret_t fs_init(void)
             }
         }
 
-        p_config_i = FS_SECTION_VARS_GET(max_index);
+        p_config_i = FS_SECTION_ITEM_GET(max_index);
 
         p_config_i->p_end_addr   = p_current_end;
         p_config_i->p_start_addr = p_current_end - (p_config_i->num_pages * FS_PAGE_SIZE_WORDS);

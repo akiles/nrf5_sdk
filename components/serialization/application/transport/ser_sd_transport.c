@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <stdbool.h>
 #include <stdint.h>
 #include <stddef.h>
@@ -52,8 +51,15 @@
 #define NRF_LOG_MODULE_NAME "SER_XFER"
 #include "nrf_log.h"
 
+#ifdef BLE_STACK_SUPPORT_REQD
 /** SoftDevice event handler. */
-static ser_sd_transport_evt_handler_t m_evt_handler = NULL;
+static ser_sd_transport_evt_handler_t m_ble_evt_handler = NULL;
+#endif // BLE_STACK_SUPPORT_REQD
+
+#ifdef ANT_STACK_SUPPORT_REQD
+/** SoftDevice event handler for ANT events. */
+static ser_sd_transport_evt_handler_t m_ant_evt_handler = NULL;
+#endif // ANT_STACK_SUPPORT_REQD
 
 /** 'One time' handler called in task context while waiting for response to scheduled command. */
 static ser_sd_transport_rsp_wait_handler_t m_ot_rsp_wait_handler = NULL;
@@ -98,7 +104,9 @@ static void ser_sd_transport_rx_packet_handler(uint8_t * p_data, uint16_t length
         {
             case SER_PKT_TYPE_RESP:
             case SER_PKT_TYPE_DTM_RESP:
-
+#ifdef ANT_STACK_SUPPORT_REQD
+            case SER_PKT_TYPE_ANT_RESP:
+#endif // ANT_STACK_SUPPORT_REQD
                 if (m_rsp_wait)
                 {
                     m_return_value = m_rsp_dec_handler(p_data, length);
@@ -121,11 +129,21 @@ static void ser_sd_transport_rx_packet_handler(uint8_t * p_data, uint16_t length
                 }
                 break;
 
+#ifdef BLE_STACK_SUPPORT_REQD
             case SER_PKT_TYPE_EVT:
                 /* It is ensured during opening that handler is not NULL. No check needed. */
                 NRF_LOG_DEBUG("[EVT]: %s \r\n", (uint32_t)ser_dbg_sd_evt_str_get(uint16_decode(&p_data[SER_EVT_ID_POS]))); // p_data points to EVT_ID
-                m_evt_handler(p_data, length);
+                m_ble_evt_handler(p_data, length);
                 break;
+#endif // BLE_STACK_SUPPORT_REQD
+
+#ifdef ANT_STACK_SUPPORT_REQD
+            case SER_PKT_TYPE_ANT_EVT:
+                /* It is ensured during opening that handler is not NULL. No check needed. */
+                NRF_LOG_DEBUG("[ANT_EVT_ID]: %s \r\n", (uint32_t)ser_dbg_sd_evt_str_get(uint16_decode(&p_data[SER_EVT_ID_POS]))); // p_data points to EVT_ID
+                m_ant_evt_handler(p_data, length);
+                break;
+#endif // ANT_STACK_SUPPORT_REQD
 
             default:
                 (void)ser_sd_transport_rx_free(p_data);
@@ -180,28 +198,52 @@ static void ser_sd_transport_hal_handler(ser_hal_transport_evt_t event)
     }
 }
 
-uint32_t ser_sd_transport_open(ser_sd_transport_evt_handler_t             evt_handler,
+uint32_t ser_sd_transport_open(ser_sd_transport_evt_handler_t             ble_evt_handler,
+                               ser_sd_transport_evt_handler_t             ant_evt_handler,
                                ser_sd_transport_rsp_wait_handler_t        os_rsp_wait_handler,
                                ser_sd_transport_rsp_set_handler_t         os_rsp_set_handler,
-                               ser_sd_transport_rx_notification_handler_t rx_notify_handler)
+                               ser_sd_transport_rx_notification_handler_t rx_not_handler)
 {
     m_os_rsp_wait_handler = os_rsp_wait_handler;
     m_os_rsp_set_handler  = os_rsp_set_handler;
-    m_rx_notify_handler   = rx_notify_handler;
+    m_rx_notify_handler   = rx_not_handler;
     m_ot_rsp_wait_handler = NULL;
-    m_evt_handler         = evt_handler;
 
-    if (evt_handler == NULL)
+#ifdef ANT_STACK_SUPPORT_REQD
+    m_ant_evt_handler = ant_evt_handler;
+
+    if (m_ant_evt_handler == NULL)
     {
         return NRF_ERROR_INVALID_PARAM;
     }
+#else
+    UNUSED_PARAMETER(ant_evt_handler);
+#endif // ANT_STACK_SUPPORT_REQD
+
+#ifdef BLE_STACK_SUPPORT_REQD
+    m_ble_evt_handler = ble_evt_handler;
+
+    if (m_ble_evt_handler == NULL)
+    {
+        return NRF_ERROR_INVALID_PARAM;
+    }
+#else
+    UNUSED_PARAMETER(ble_evt_handler);
+#endif // BLE_STACK_SUPPORT_REQD
 
     return ser_hal_transport_open(ser_sd_transport_hal_handler);
 }
 
 uint32_t ser_sd_transport_close(void)
 {
-    m_evt_handler         = NULL;
+#ifdef ANT_STACK_SUPPORT_REQD
+    m_ant_evt_handler     = NULL;
+#endif // ANT_STACK_SUPPORT_REQD
+
+#ifdef BLE_STACK_SUPPORT_REQD
+    m_ble_evt_handler     = NULL;
+#endif // BLE_STACK_SUPPORT_REQD
+
     m_os_rsp_wait_handler = NULL;
     m_os_rsp_set_handler  = NULL;
     m_ot_rsp_wait_handler = NULL;
@@ -276,7 +318,7 @@ uint32_t ser_sd_transport_cmd_write(const uint8_t *                p_buffer,
     {
         m_rsp_wait = false;
     }
-    
+
     NRF_LOG_DEBUG("[SD_CALL]:%s, err_code= 0x%X\r\n", (uint32_t)ser_dbg_sd_call_str_get(p_buffer[1]), err_code);
     return err_code;
 }

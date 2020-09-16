@@ -40,6 +40,17 @@
 #ifndef _CONN_MW_H
 #define _CONN_MW_H
 
+/**
+ * @addtogroup ser_codecs_mw Connectivity middleware codecs
+ * @ingroup ser_codecs
+ */
+
+/**
+ * @addtogroup ser_mw_common_codecs Connectivity middleware common codecs
+ * @{
+ * @ingroup ser_codecs_mw
+ */
+
 #include <stdint.h>
 
 #ifdef __cplusplus
@@ -52,9 +63,9 @@ extern "C" {
  *          for registered handler. Handler is called once it is found.
  *
  * @param[in]     p_rx_buf            Pointer to input buffer.
- * @param[in]     rx_buf_len          Size of p_rx_buf.
+ * @param[in]     rx_buf_len          Size of @p p_rx_buf.
  * @param[out]    p_tx_buf            Pointer to output buffer.
- * @param[in,out] p_tx_buf_len        \c in: size of \p p_tx_buf buffer.
+ * @param[in,out] p_tx_buf_len        \c in: Size of \p p_tx_buf buffer.
  *                                    \c out: Length of valid data in \p p_tx_buf.
  *
  * @retval NRF_SUCCESS                Handler success.
@@ -71,5 +82,7 @@ uint32_t conn_mw_handler (uint8_t const * const p_rx_buf,
 #ifdef __cplusplus
 }
 #endif
+
+/** @} */
 
 #endif //_CONN_MW_H

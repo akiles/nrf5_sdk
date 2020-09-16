@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /**@file
  * @brief Device registry used in the scan and forward demo
  * This module is responsible for management of the device registry used to store information about peripheral devices that have registered wih the hub

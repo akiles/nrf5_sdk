@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2017, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2017, Telit Communications Cyprus Ltd
  * 
  * All rights reserved.
  * 
@@ -56,6 +56,9 @@
 #include <string.h>
 #include <sdk_errors.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /** @brief Events passed to the upper-layer callback function. */
 typedef enum {
@@ -184,6 +187,10 @@ ret_code_t hal_nfc_stop(void);
   * @retval NRF_SUCCESS This function always succeeds.
   */
 ret_code_t hal_nfc_done(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 /** @} */
 #endif /* HAL_NFC_H__ */

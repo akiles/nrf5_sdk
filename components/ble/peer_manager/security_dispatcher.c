@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(PEER_MANAGER)
 #include "security_dispatcher.h"
@@ -624,7 +623,10 @@ ret_code_t smd_params_reply(uint16_t                 conn_handle,
     }
     else
     {
-        // Pairing only, no action needed.
+        // Pairing, no bonding.
+
+        sec_keyset.keys_own.p_pk  = p_public_key;
+        sec_keyset.keys_peer.p_pk = &m_peer_pk;
     }
 
     if (err_code == NRF_SUCCESS)

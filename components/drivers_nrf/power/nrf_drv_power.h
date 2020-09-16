@@ -37,6 +37,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+
 #ifndef NRF_DRV_POWER_H__
 #define NRF_DRV_POWER_H__
 
@@ -240,6 +241,8 @@ bool nrf_drv_power_init_check(void);
  * @param[in] p_config Driver configuration. Can be NULL - the default configuration
  *                     from @em sdk_config.h file would be used then.
  *
+ * @retval NRF_ERROR_INVALID_STATE              Power driver has to be enabled
+ *                                              before SoftDevice.
  * @retval NRF_ERROR_MODULE_ALREADY_INITIALIZED Module is initialized already.
  * @retval NRF_SUCCESS                          Successfully initialized.
  */
@@ -261,8 +264,13 @@ void nrf_drv_power_uninit(void);
  *
  * @param[in] p_config Configuration with values and event handler.
  *                     If event handler is set to NULL, interrupt would be disabled.
+ *
+ * @retval NRF_ERROR_INVALID_STATE POF is initialized when SD is enabled and
+ *                                 the configuration differs from the old one and
+ *                                 is not possible to be set using SD interface.
+ * @retval NRF_SUCCESS             Successfully initialized and configured.
  */
-void nrf_drv_power_pof_init(nrf_drv_power_pofwarn_config_t const * p_config);
+ret_code_t nrf_drv_power_pof_init(nrf_drv_power_pofwarn_config_t const * p_config);
 
 /**
  * @brief Turn off the power failure comparator
@@ -280,8 +288,17 @@ void nrf_drv_power_pof_uninit(void);
  * @param[in] p_config Configuration with values and event handler.
  *
  * @sa nrf_drv_power_sleepevt_uninit
+ *
+ * @note Sleep events are not available when SoftDevice is enabled.
+ * @note If sleep event is enabled when SoftDevice is initialized, sleep events
+ *       would be automatically disabled - it is the limitation of the
+ *       SoftDevice itself.
+ *
+ * @retval NRF_ERROR_INVALID_STATE This event cannot be initialized
+ *                                 when SD is enabled.
+ * @retval NRF_SUCCESS             Successfully initialized and configured.
  */
-void nrf_drv_power_sleepevt_init(nrf_drv_power_sleepevt_config_t const * p_config);
+ret_code_t nrf_drv_power_sleepevt_init(nrf_drv_power_sleepevt_config_t const * p_config);
 
 /**
  * @brief Uninitialize sleep entering and exiting events processing
@@ -300,8 +317,13 @@ void nrf_drv_power_sleepevt_uninit(void);
  * @param[in] p_config Configuration with values and event handler.
  *
  * @sa nrf_drv_power_usbevt_uninit
+ *
+ * @retval NRF_ERROR_INVALID_STATE This event cannot be initialized
+ *                                 when SD is enabled and SD does not support
+ *                                 USB power events.
+ * @retval NRF_SUCCESS             Successfully initialized and configured.
  */
-void nrf_drv_power_usbevt_init(nrf_drv_power_usbevt_config_t const * p_config);
+ret_code_t nrf_drv_power_usbevt_init(nrf_drv_power_usbevt_config_t const * p_config);
 
 /**
  * @brief Uninitalize USB power event processing
@@ -318,6 +340,32 @@ void nrf_drv_power_usbevt_uninit(void);
 __STATIC_INLINE nrf_drv_power_usb_state_t nrf_drv_power_usbstatus_get(void);
 
 #endif /* NRF_POWER_HAS_USBREG */
+
+#ifdef SOFTDEVICE_PRESENT
+/**
+ * @brief Function called by the SoftDevice handler if an @ref nrf_soc event is received from the SoftDevice.
+ *
+ * @param[in] evt_id One of NRF_SOC_EVTS values.
+ */
+void nrf_drv_power_on_soc_event(uint32_t evt_id);
+
+/**
+ * @brief Function called by the SoftDevice handler when the SoftDevice has been enabled.
+ *
+ * This function is called just after the SoftDevice has been properly enabled.
+ * Its main purpose is to reenable required interrupts and connect them to SD events.
+ */
+void nrf_drv_power_on_sd_enable(void);
+
+/**
+ * @brief Function called by the SoftDevice handler when the SoftDevice has been disabled.
+ *
+ * This function is called just after the SoftDevice has been properly disabled.
+ * Its main purpose is to reenable required interrupts.
+ */
+void nrf_drv_power_on_sd_disable(void);
+
+#endif /* SOFTDEVICE_PRESENT */
 
 /** @} */
 

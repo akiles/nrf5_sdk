@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  *
  * @defgroup nrf_drv_swi SWI driver
@@ -53,6 +52,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "sdk_config.h"
 #include "app_util.h"
 #include "app_util_platform.h"
 #include "sdk_common.h"
@@ -112,6 +112,22 @@ typedef void (* nrf_swi_handler_t)(nrf_swi_t, nrf_swi_flags_t);
     #endif
 #endif
 
+#if NRF_MODULE_ENABLED(PWM_NRF52_ANOMALY_109_WORKAROUND)
+    #if   (PWM_NRF52_ANOMALY_109_EGU_INSTANCE == 0)
+        #define SWI_DISABLE0
+    #elif (PWM_NRF52_ANOMALY_109_EGU_INSTANCE == 1)
+        #define SWI_DISABLE1
+    #elif (PWM_NRF52_ANOMALY_109_EGU_INSTANCE == 2)
+        #define SWI_DISABLE2
+    #elif (PWM_NRF52_ANOMALY_109_EGU_INSTANCE == 3)
+        #define SWI_DISABLE3
+    #elif (PWM_NRF52_ANOMALY_109_EGU_INSTANCE == 4)
+        #define SWI_DISABLE4
+    #elif (PWM_NRF52_ANOMALY_109_EGU_INSTANCE == 5)
+        #define SWI_DISABLE5
+    #endif
+#endif
+
 /**@brief Default SWI priority. */
 #define SWI_DEFAULT_PRIORITY APP_IRQ_PRIORITY_LOWEST
 
@@ -134,12 +150,14 @@ void nrf_drv_swi_uninit(void);
 /**@brief Function for allocating a first unused SWI instance and setting a handler.
  * @details The event handler function returns void and takes one uint32_t argument (SWI number).
  *
- * @param[out] p_swi                   Pointer to the SWI that has been allocated.
- * @param[in]  event_handler           Event handler function (must not be NULL).
- * @param[in]  priority                Interrupt priority.
+ * @param[out] p_swi         Pointer to the SWI that has been allocated.
+ * @param[in]  event_handler Event handler function.
+ *                           If NULL, no interrupt will be enabled (can be NULL only if the EGU driver is enabled).
+ *                           For classic SWI, must be a valid handler pointer.
+ * @param[in]  priority      Interrupt priority.
  *
- * @retval     NRF_SUCCESS             If the SWI was successfully allocated.
- * @retval     NRF_ERROR_NO_MEM        If there is no available SWI to be used.
+ * @retval     NRF_SUCCESS      If the SWI was successfully allocated.
+ * @retval     NRF_ERROR_NO_MEM If there is no available SWI to be used.
  */
 ret_code_t nrf_drv_swi_alloc(nrf_swi_t * p_swi, nrf_swi_handler_t event_handler, uint32_t priority);
 

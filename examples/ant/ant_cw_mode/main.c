@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /**@file
  * @defgroup nrf_ant_background_scanning_demo ANT CW Mode Example
  * @{

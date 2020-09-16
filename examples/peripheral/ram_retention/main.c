@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  * @defgroup ram_retention_example_main main.c
  * @{
@@ -173,7 +172,7 @@ int main(void)
 
     // Switch on both RAM banks when in System OFF mode.
 
-#if defined(NRF52832) || defined(NRF51422) || defined(NRF51822)
+#if defined(NRF52832_XXAA) || defined(NRF51422) || defined(NRF51822)
     NRF_POWER->RAMON |= (POWER_RAMON_OFFRAM0_RAM0On << POWER_RAMON_OFFRAM0_Pos) |
                         (POWER_RAMON_OFFRAM1_RAM1On << POWER_RAMON_OFFRAM1_Pos);
 

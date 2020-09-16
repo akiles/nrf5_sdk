@@ -37,8 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
-
 /**
  * @addtogroup ser_conn Connectivity application code
  * @ingroup ble_sdk_lib_serialization
@@ -66,8 +64,11 @@
 #include "ble_stack_handler_types.h"
 #include "ant_stack_handler_types.h"
 #include "softdevice_handler.h"
-#include "ble.h"
 #include "ser_hal_transport.h"
+
+#ifdef BLE_STACK_SUPPORT_REQD
+#include "ble.h"
+#endif // BLE_STACK_SUPPORT_REQD
 
 #ifdef __cplusplus
 extern "C" {
@@ -103,7 +104,7 @@ void ser_conn_hal_transport_event_handle(ser_hal_transport_evt_t event);
  */
 uint32_t ser_conn_rx_process(void);
 
-
+#ifdef BLE_STACK_SUPPORT_REQD
 /**@brief A function for processing BLE SoftDevice events.
  *
  * @details BLE events are put into application scheduler queue to be processed at a later time.
@@ -111,7 +112,17 @@ uint32_t ser_conn_rx_process(void);
  * @param[in] p_ble_evt    A pointer to a BLE event.
  */
 void ser_conn_ble_event_handle(ble_evt_t * p_ble_evt);
+#endif // BLE_STACK_SUPPORT_REQD
 
+#ifdef ANT_STACK_SUPPORT_REQD
+/**@brief A function for processing ANT SoftDevice events.
+ *
+ * @details ANT events are put into application scheduler queue to be processed at a later time.
+ *
+ * @param[in] p_ant_evt    A pointer to a BLE event.
+ */
+void ser_conn_ant_event_handle(ant_evt_t * p_ant_evt);
+#endif // ANT_STACK_SUPPORT_REQD
 
 #ifdef __cplusplus
 }

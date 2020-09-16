@@ -37,12 +37,11 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef NRF_SVC_FUNCTION_H__
 #define NRF_SVC_FUNCTION_H__
 
 #include <stdint.h>
-#include "section_vars.h"
+#include "nrf_section.h"
 #include "app_util.h"
 #include "nrf_svci.h"
 
@@ -78,7 +77,7 @@ STATIC_ASSERT(sizeof(nrf_svc_func_reg_t) % 4 == 0);
  * @details     This macro places the variable in a section named "svc_data" that
                 the SVC handler uses during regular operation.
  */
-#define SVC_REGISTER_FUNCTION(svc_var) NRF_SECTION_VARS_ADD(svc_data, svc_var)
+#define SVC_REGISTER_FUNCTION(svc_var) NRF_SECTION_ITEM_REGISTER(svc_data, svc_var)
 
 
 #ifdef __cplusplus

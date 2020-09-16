@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef APP_USBD_HID_MOUSE_DESC_H__
 #define APP_USBD_HID_MOUSE_DESC_H__
 
@@ -50,10 +49,10 @@
  */
 
 /**
- * @brief Initializer of interface descriptor for HID mouse class
+ * @brief Initializer of interface descriptor for HID mouse class.
  *
- * @param interface_number Interface number
- * */
+ * @param interface_number Interface number.
+ */
 #define APP_USBD_HID_MOUSE_INTERFACE_DSC(interface_number)      \
         APP_USBD_HID_INTERFACE_DSC(interface_number,            \
                                    1,                           \
@@ -61,29 +60,28 @@
                                    APP_USBD_HID_PROTO_MOUSE)
 
 /**
- * @brief Initializer of HID descriptor for HID mouse class
+ * @brief Initializer of HID descriptor for HID mouse class.
  *
- * @param ... Descriptor list
- * */
+ * @param ... Descriptor list.
+ */
 #define APP_USBD_HID_MOUSE_HID_DSC(...)     \
         APP_USBD_HID_HID_DSC(__VA_ARGS__)
 
 /**
- * @brief Initializer of endpoint descriptor for HID mouse class
+ * @brief Initializer of endpoint descriptor for HID mouse class.
  *
- * @param endpoint_number Endpoint number
- * */
+ * @param endpoint_number Endpoint number.
+ */
 #define APP_USBD_HID_MOUSE_EP_DSC(endpoint_number)  \
         APP_USBD_HID_EP_DSC(endpoint_number, 8, 1)
 
 
 
 /**
- * @brief Example of USB HID mouse report descriptor for n button mouse
+ * @brief Example of USB HID mouse report descriptor for n button mouse.
  *
- * @param bcnt  Button count, allowed values from 1 to 8
- *
- * */
+ * @param bcnt  Button count. Allowed values from 1 to 8.
+ */
 #define APP_USBD_HID_MOUSE_REPORT_DSC_BUTTON(bcnt) {                \
     0x05, 0x01,       /* Usage Page (Generic Desktop),       */     \
     0x09, 0x02,       /* Usage (Mouse),                      */     \

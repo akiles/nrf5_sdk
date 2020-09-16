@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  * HKDF-SHA256 is a key derivation function based on HMAC-SHA256.
  * 

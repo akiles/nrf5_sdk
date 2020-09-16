@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 #include "ant_search_sharing.h"
 #include <stdint.h>
 #include "ant_interface.h"

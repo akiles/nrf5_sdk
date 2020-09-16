@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup app_util Utility Functions and Definitions
@@ -53,6 +52,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "compiler_abstraction.h"
+#include "nordic_common.h"
 #include "nrf.h"
 
 #ifdef __cplusplus
@@ -731,11 +731,73 @@ typedef struct
 #define MACRO_MAP_FOR_PARAM_15(n_list, param, macro, a, ...) macro(a, GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), param) MACRO_MAP_FOR_PARAM_14((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), param, macro, __VA_ARGS__, )
 
 
-/**@brief Adding curly brace to macro parameter
+/**
+ * @brief Repeating macro.
+ *
+ * @param count Count of repeats.
+ * @param macro Macro must have the following form: MACRO(arguments).
+ * @param ...   Arguments passed to the macro.
+ *
+ * @return All arguments processed by the given macro.
+ */
+#define MACRO_REPEAT(count, macro, ...)     MACRO_REPEAT_(count, macro, __VA_ARGS__)
+#define MACRO_REPEAT_(count, macro, ...)    CONCAT_2(MACRO_REPEAT_, count)(macro, __VA_ARGS__)
+
+#define MACRO_REPEAT_0(macro, ...)
+#define MACRO_REPEAT_1(macro, ...)  macro(__VA_ARGS__) MACRO_REPEAT_0(macro, __VA_ARGS__)
+#define MACRO_REPEAT_2(macro, ...)  macro(__VA_ARGS__) MACRO_REPEAT_1(macro, __VA_ARGS__)
+#define MACRO_REPEAT_3(macro, ...)  macro(__VA_ARGS__) MACRO_REPEAT_2(macro, __VA_ARGS__)
+#define MACRO_REPEAT_4(macro, ...)  macro(__VA_ARGS__) MACRO_REPEAT_3(macro, __VA_ARGS__)
+#define MACRO_REPEAT_5(macro, ...)  macro(__VA_ARGS__) MACRO_REPEAT_4(macro, __VA_ARGS__)
+#define MACRO_REPEAT_6(macro, ...)  macro(__VA_ARGS__) MACRO_REPEAT_5(macro, __VA_ARGS__)
+#define MACRO_REPEAT_7(macro, ...)  macro(__VA_ARGS__) MACRO_REPEAT_6(macro, __VA_ARGS__)
+#define MACRO_REPEAT_8(macro, ...)  macro(__VA_ARGS__) MACRO_REPEAT_7(macro, __VA_ARGS__)
+#define MACRO_REPEAT_9(macro, ...)  macro(__VA_ARGS__) MACRO_REPEAT_8(macro, __VA_ARGS__)
+#define MACRO_REPEAT_10(macro, ...) macro(__VA_ARGS__) MACRO_REPEAT_9(macro, __VA_ARGS__)
+#define MACRO_REPEAT_11(macro, ...) macro(__VA_ARGS__) MACRO_REPEAT_10(macro, __VA_ARGS__)
+#define MACRO_REPEAT_12(macro, ...) macro(__VA_ARGS__) MACRO_REPEAT_11(macro, __VA_ARGS__)
+#define MACRO_REPEAT_13(macro, ...) macro(__VA_ARGS__) MACRO_REPEAT_12(macro, __VA_ARGS__)
+#define MACRO_REPEAT_14(macro, ...) macro(__VA_ARGS__) MACRO_REPEAT_13(macro, __VA_ARGS__)
+#define MACRO_REPEAT_15(macro, ...) macro(__VA_ARGS__) MACRO_REPEAT_14(macro, __VA_ARGS__)
+
+
+/**
+ * @brief Repeating macro with current index.
+ *
+ * Macro similar to @ref MACRO_REPEAT but the processing function gets the arguments
+ * and the current argument index (beginning from 0).
+
+ * @param count Count of repeats.
+ * @param macro Macro must have the following form: MACRO(index, arguments).
+ * @param ...   Arguments passed to the macro.
+ *
+ * @return All arguments processed by the given macro.
+ */
+#define MACRO_REPEAT_FOR(count, macro, ...)     MACRO_REPEAT_FOR_(count, macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_(count, macro, ...)    CONCAT_2(MACRO_REPEAT_FOR_, count)((MACRO_MAP_FOR_N_LIST), macro, __VA_ARGS__)
+
+#define MACRO_REPEAT_FOR_0(n_list, macro, ...)
+#define MACRO_REPEAT_FOR_1(n_list, macro, ...)  macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_0((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_2(n_list, macro, ...)  macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_1((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_3(n_list, macro, ...)  macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_2((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_4(n_list, macro, ...)  macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_3((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_5(n_list, macro, ...)  macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_4((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_6(n_list, macro, ...)  macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_5((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_7(n_list, macro, ...)  macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_6((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_8(n_list, macro, ...)  macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_7((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_9(n_list, macro, ...)  macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_8((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_10(n_list, macro, ...) macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_9((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_11(n_list, macro, ...) macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_10((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_12(n_list, macro, ...) macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_11((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_13(n_list, macro, ...) macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_12((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_14(n_list, macro, ...) macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_13((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+#define MACRO_REPEAT_FOR_15(n_list, macro, ...) macro(GET_VA_ARG_1(BRACKET_EXTRACT(n_list)), __VA_ARGS__) MACRO_REPEAT_FOR_14((GET_ARGS_AFTER_1(BRACKET_EXTRACT(n_list))), macro, __VA_ARGS__)
+
+/**@brief Adding curly brace to the macro parameter.
  *
  * Useful in array of structures initialization.
  *
- * @param p parameter to put into the curly brace*/
+ * @param p Parameter to put into the curly brace. */
 #define PARAM_CBRACE(p) { p },
 
 

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <string.h>
 #include "app_error.h"
 #include "app_scheduler.h"
@@ -139,6 +138,7 @@ uint32_t ser_conn_rx_process(void)
     return err_code;
 }
 
+#ifdef BLE_STACK_SUPPORT_REQD
 void ser_conn_ble_event_handle(ble_evt_t * p_ble_evt)
 {
     uint32_t err_code = NRF_SUCCESS;
@@ -158,5 +158,28 @@ void ser_conn_ble_event_handle(ble_evt_t * p_ble_evt)
         softdevice_handler_suspend();
     }
 }
+#endif // BLE_STACK_SUPPORT_REQD
+
+#ifdef ANT_STACK_SUPPORT_REQD
+void ser_conn_ant_event_handle(ant_evt_t * p_ant_evt)
+{
+     uint32_t err_code = NRF_SUCCESS;
+
+    /* We can NOT encode and send ANT events here. SoftDevice handler implemented in
+     * softdevice_handler.c pull all available ANT events at once but we need to reschedule between
+     * encoding and sending every ANT event because sending a response on received packet has higher
+     * priority than sending an ANT event. Solution for that is to put ANT events into application
+     * scheduler queue to be processed at a later time. */
+    err_code = app_sched_event_put(p_ant_evt, sizeof (ant_evt_t),
+                                   ser_conn_ant_event_encoder);
+    APP_ERROR_CHECK(err_code);
+    uint16_t free_space = app_sched_queue_space_get();
+    if (!free_space)
+    {
+        // Queue is full. Do not pull new events.
+        softdevice_handler_suspend();
+    }
+}
+#endif // ANT_STACK_SUPPORT_REQD
 
 /** @} */

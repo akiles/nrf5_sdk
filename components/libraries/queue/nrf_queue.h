@@ -37,8 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
-
 /**
 * @defgroup nrf_queue Queue module
 * @{
@@ -55,6 +53,7 @@
 #include "nrf_assert.h"
 #include "sdk_errors.h"
 #include "app_util.h"
+#include "app_util_platform.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -63,16 +62,16 @@ extern "C" {
 /**@brief Queue control block. */
 typedef struct
 {
-    size_t front;                   //!< Queue front index.
-    size_t back;                    //!< Queue back index.
+    volatile size_t front;          //!< Queue front index.
+    volatile size_t back;           //!< Queue back index.
     size_t max_utilization;         //!< Maximum utilization of the queue.
 } nrf_queue_cb_t;
 
 /**@brief Supported queue modes. */
 typedef enum
 {
-    NRF_QUEUE_MODE_OVERFLOW,        //!< If the queue is full, new element will not be accepted.
-    NRF_QUEUE_MODE_NO_OVERFLOW,     //!< If the queue is full, new element will overwrite the oldest.
+    NRF_QUEUE_MODE_OVERFLOW,        //!< If the queue is full, new element will overwrite the oldest.
+    NRF_QUEUE_MODE_NO_OVERFLOW,     //!< If the queue is full, new element will not be accepted.
 } nrf_queue_mode_t;
 
 /**@brief Instance of the queue. */
@@ -121,7 +120,7 @@ typedef struct
                              size_t  element_count);        \
     size_t      _name##_out(_type * p_data,                 \
                             size_t  element_count);         \
-    size_t      _name##_in(_type * p_data,                  \
+    size_t      _name##_in(_type const * p_data,            \
                             size_t element_count);          \
     bool        _name##_is_full(void);                      \
     bool        _name##_is_empty(void);                     \
@@ -130,91 +129,6 @@ typedef struct
     size_t      _name##_max_utilization_get(void);          \
     void        _name##_reset(void)
 
-/**@brief Define a custom queue interface.
- *
- * @param[in]   _attr    Function attribute that will be added to the queue function definition.
- * @param[in]   _type    Type which is stored.
- * @param[in]   _name    Name of the queue.
- * @param[in]   _p_queue Queue instance.
- */
-#define NRF_QUEUE_INTERFACE_CUSTOM_DEF(_attr, _type, _name, _p_queue)   \
-    _attr ret_code_t _name##_push(_type const * p_element)              \
-    {                                                                   \
-        ASSERT((_p_queue) != NULL);                                     \
-        ASSERT((_p_queue)->element_size == sizeof(_type));              \
-        return nrf_queue_push((_p_queue), p_element);                   \
-    }                                                                   \
-    _attr ret_code_t _name##_pop(_type * p_element)                     \
-    {                                                                   \
-        ASSERT((_p_queue) != NULL);                                     \
-        ASSERT((_p_queue)->element_size == sizeof(_type));              \
-        return nrf_queue_pop((_p_queue), p_element);                    \
-    }                                                                   \
-    _attr ret_code_t _name##_peek(_type * p_element)                    \
-    {                                                                   \
-        ASSERT((_p_queue) != NULL);                                     \
-        ASSERT((_p_queue)->element_size == sizeof(_type));              \
-        return nrf_queue_peek((_p_queue), p_element);                   \
-    }                                                                   \
-    ret_code_t _name##_write(_type const * p_data,                      \
-                             size_t        element_count)               \
-    {                                                                   \
-        ASSERT((_p_queue) != NULL);                                     \
-        ASSERT((_p_queue)->element_size == sizeof(_type));              \
-        return nrf_queue_write((_p_queue), p_data, element_count);      \
-    }                                                                   \
-    ret_code_t _name##_read(_type * p_data,                             \
-                            size_t  element_count)                      \
-    {                                                                   \
-        ASSERT((_p_queue) != NULL);                                     \
-        ASSERT((_p_queue)->element_size == sizeof(_type));              \
-        return nrf_queue_read((_p_queue), p_data, element_count);       \
-    }                                                                   \
-    size_t _name##_in(_type * p_data,                                   \
-                      size_t  element_count)                            \
-    {                                                                   \
-        ASSERT((_p_queue) != NULL);                                     \
-        ASSERT((_p_queue)->element_size == sizeof(_type));              \
-        return nrf_queue_in((_p_queue), p_data, element_count);         \
-    }                                                                   \
-    size_t _name##_out(_type * p_data,                                  \
-                       size_t  element_count)                           \
-    {                                                                   \
-        ASSERT((_p_queue) != NULL);                                     \
-        ASSERT((_p_queue)->element_size == sizeof(_type));              \
-        return nrf_queue_out((_p_queue), p_data, element_count);        \
-    }                                                                   \
-    bool _name##_is_full(void)                                          \
-    {                                                                   \
-        ASSERT((_p_queue) != NULL);                                     \
-        return nrf_queue_is_full(_p_queue);                             \
-    }                                                                   \
-    bool _name##_is_empty(void)                                         \
-    {                                                                   \
-        ASSERT((_p_queue) != NULL);                                     \
-        return nrf_queue_is_empty(_p_queue);                            \
-    }                                                                   \
-    size_t _name##_utilization_get(void)                                \
-    {                                                                   \
-        ASSERT((_p_queue) != NULL);                                     \
-        return nrf_queue_utilization_get(_p_queue);                     \
-    }                                                                   \
-    size_t _name##_available_get(void)                                  \
-    {                                                                   \
-        ASSERT((_p_queue) != NULL);                                     \
-        return nrf_queue_available_get(_p_queue);                       \
-    }                                                                   \
-    size_t _name##_max_utilization_get(void)                            \
-    {                                                                   \
-        ASSERT((_p_queue) != NULL);                                     \
-        return nrf_queue_max_utilization_get(_p_queue);                 \
-    }                                                                   \
-    void _name##_reset(void)                                            \
-    {                                                                   \
-        ASSERT((_p_queue) != NULL);                                     \
-        nrf_queue_reset(_p_queue);                                      \
-    }
-
 /**@brief Define a queue interface.
  *
  * @param[in]   _type    Type which is stored.
@@ -222,16 +136,121 @@ typedef struct
  * @param[in]   _p_queue Queue instance.
  */
 #define NRF_QUEUE_INTERFACE_DEF(_type, _name, _p_queue)                 \
-        NRF_QUEUE_INTERFACE_CUSTOM_DEF(/* empty */, _type, _name, _p_queue)
-
-/**@brief Define a local queue interface.
- *
- * @param[in]   _type    Type which is stored.
- * @param[in]   _name    Name of the queue.
- * @param[in]   _p_queue Queue instance.
- */
-#define NRF_QUEUE_INTERFACE_LOCAL_DEF(_type, _name, _p_queue)           \
-        NRF_QUEUE_INTERFACE_CUSTOM_DEF(static, _type, _name, _p_queue)
+    ret_code_t _name##_push(_type const * p_element)                    \
+    {                                                                   \
+        GCC_PRAGMA("GCC diagnostic push")                               \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")              \
+        ASSERT((_p_queue) != NULL);                                     \
+        ASSERT((_p_queue)->element_size == sizeof(_type));              \
+        GCC_PRAGMA("GCC diagnostic pop")                                \
+        return nrf_queue_push((_p_queue), p_element);                   \
+    }                                                                   \
+    ret_code_t _name##_pop(_type * p_element)                           \
+    {                                                                   \
+        GCC_PRAGMA("GCC diagnostic push")                               \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")              \
+        ASSERT((_p_queue) != NULL);                                     \
+        ASSERT((_p_queue)->element_size == sizeof(_type));              \
+        GCC_PRAGMA("GCC diagnostic pop")                                \
+        return nrf_queue_pop((_p_queue), p_element);                    \
+    }                                                                   \
+    ret_code_t _name##_peek(_type * p_element)                          \
+    {                                                                   \
+        GCC_PRAGMA("GCC diagnostic push")                               \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")              \
+        ASSERT((_p_queue) != NULL);                                     \
+        ASSERT((_p_queue)->element_size == sizeof(_type));              \
+        GCC_PRAGMA("GCC diagnostic pop")                                \
+        return nrf_queue_peek((_p_queue), p_element);                   \
+    }                                                                   \
+    ret_code_t _name##_write(_type const * p_data,                      \
+                             size_t        element_count)               \
+    {                                                                   \
+        GCC_PRAGMA("GCC diagnostic push")                               \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")              \
+        ASSERT((_p_queue) != NULL);                                     \
+        ASSERT((_p_queue)->element_size == sizeof(_type));              \
+        GCC_PRAGMA("GCC diagnostic pop")                                \
+        return nrf_queue_write((_p_queue), p_data, element_count);      \
+    }                                                                   \
+    ret_code_t _name##_read(_type * p_data,                             \
+                            size_t  element_count)                      \
+    {                                                                   \
+        GCC_PRAGMA("GCC diagnostic push")                               \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")              \
+        ASSERT((_p_queue) != NULL);                                     \
+        ASSERT((_p_queue)->element_size == sizeof(_type));              \
+        GCC_PRAGMA("GCC diagnostic pop")                                \
+        return nrf_queue_read((_p_queue), p_data, element_count);       \
+    }                                                                   \
+    size_t _name##_in(_type const * p_data,                             \
+                      size_t  element_count)                            \
+    {                                                                   \
+        GCC_PRAGMA("GCC diagnostic push")                               \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")              \
+        ASSERT((_p_queue) != NULL);                                     \
+        ASSERT((_p_queue)->element_size == sizeof(_type));              \
+        GCC_PRAGMA("GCC diagnostic pop")                                \
+        return nrf_queue_in((_p_queue), p_data, element_count);         \
+    }                                                                   \
+    size_t _name##_out(_type * p_data,                                  \
+                       size_t  element_count)                           \
+    {                                                                   \
+        GCC_PRAGMA("GCC diagnostic push")                               \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")              \
+        ASSERT((_p_queue) != NULL);                                     \
+        ASSERT((_p_queue)->element_size == sizeof(_type));              \
+        GCC_PRAGMA("GCC diagnostic pop")                                \
+        return nrf_queue_out((_p_queue), p_data, element_count);        \
+    }                                                                   \
+    bool _name##_is_full(void)                                          \
+    {                                                                   \
+        GCC_PRAGMA("GCC diagnostic push")                               \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")              \
+        ASSERT((_p_queue) != NULL);                                     \
+        return nrf_queue_is_full(_p_queue);                             \
+        GCC_PRAGMA("GCC diagnostic pop")                                \
+    }                                                                   \
+    bool _name##_is_empty(void)                                         \
+    {                                                                   \
+        GCC_PRAGMA("GCC diagnostic push")                               \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")              \
+        ASSERT((_p_queue) != NULL);                                     \
+        GCC_PRAGMA("GCC diagnostic pop")                                \
+        return nrf_queue_is_empty(_p_queue);                            \
+    }                                                                   \
+    size_t _name##_utilization_get(void)                                \
+    {                                                                   \
+        GCC_PRAGMA("GCC diagnostic push")                               \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")              \
+        ASSERT((_p_queue) != NULL);                                     \
+        GCC_PRAGMA("GCC diagnostic pop")                                \
+        return nrf_queue_utilization_get(_p_queue);                     \
+    }                                                                   \
+    size_t _name##_available_get(void)                                  \
+    {                                                                   \
+        GCC_PRAGMA("GCC diagnostic push")                               \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")              \
+        ASSERT((_p_queue) != NULL);                                     \
+        GCC_PRAGMA("GCC diagnostic pop")                                \
+        return nrf_queue_available_get(_p_queue);                       \
+    }                                                                   \
+    size_t _name##_max_utilization_get(void)                            \
+    {                                                                   \
+        GCC_PRAGMA("GCC diagnostic push")                               \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")              \
+        ASSERT((_p_queue) != NULL);                                     \
+        GCC_PRAGMA("GCC diagnostic pop")                                \
+        return nrf_queue_max_utilization_get(_p_queue);                 \
+    }                                                                   \
+    void _name##_reset(void)                                            \
+    {                                                                   \
+        GCC_PRAGMA("GCC diagnostic push")                               \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")              \
+        ASSERT((_p_queue) != NULL);                                     \
+        GCC_PRAGMA("GCC diagnostic pop")                                \
+        nrf_queue_reset(_p_queue);                                      \
+    }
 
 /**@brief Function for pushing an element to the end of queue.
  *
@@ -298,7 +317,7 @@ ret_code_t nrf_queue_write(nrf_queue_t const * p_queue,
  * @return      The number of added elements.
  */
 size_t nrf_queue_in(nrf_queue_t const * p_queue,
-                    void              * p_data,
+                    void const        * p_data,
                     size_t              element_count);
 
 /**@brief Function for reading elements from the queue.
@@ -326,7 +345,7 @@ size_t nrf_queue_out(nrf_queue_t const * p_queue,
                     void               * p_data,
                     size_t               element_count);
 
-/**@brief Function for checking if the queue is full. 
+/**@brief Function for checking if the queue is full.
  *
  * @param[in]   p_queue     Pointer to the queue instance.
  *
@@ -334,15 +353,15 @@ size_t nrf_queue_out(nrf_queue_t const * p_queue,
  */
 bool nrf_queue_is_full(nrf_queue_t const * p_queue);
 
-/**@brief Function for checking if the queue is empty. 
+/**@brief Function for checking if the queue is empty.
  *
  * @param[in]   p_queue     Pointer to the queue instance.
  *
  * @return      True if the queue is empty.
  */
-__STATIC_INLINE bool nrf_queue_is_empty(nrf_queue_t const * p_queue);
+bool nrf_queue_is_empty(nrf_queue_t const * p_queue);
 
-/**@brief Function for getting the current queue utilization. 
+/**@brief Function for getting the current queue utilization.
  *
  * @param[in]   p_queue     Pointer to the queue instance.
  *
@@ -350,49 +369,27 @@ __STATIC_INLINE bool nrf_queue_is_empty(nrf_queue_t const * p_queue);
  */
 size_t nrf_queue_utilization_get(nrf_queue_t const * p_queue);
 
-/**@brief Function for getting the size of available space. 
+/**@brief Function for getting the size of available space.
  *
  * @param[in]   p_queue     Pointer to the queue instance.
  *
  * @return      Size of available space.
  */
-__STATIC_INLINE size_t nrf_queue_available_get(nrf_queue_t const * p_queue);
+size_t nrf_queue_available_get(nrf_queue_t const * p_queue);
 
-/**@brief Function for getting the maximal queue utilization. 
+/**@brief Function for getting the maximal queue utilization.
  *
  * @param[in]   p_queue     Pointer to the queue instance.
  *
  * @return      Maximal queue utilization.
  */
-__STATIC_INLINE size_t nrf_queue_max_utilization_get(nrf_queue_t const * p_queue);
+size_t nrf_queue_max_utilization_get(nrf_queue_t const * p_queue);
 
-/**@brief Function for resetting the queue state. 
+/**@brief Function for resetting the queue state.
  *
  * @param[in]   p_queue     Pointer to the queue instance.
  */
 void nrf_queue_reset(nrf_queue_t const * p_queue);
-
-#ifndef SUPPRESS_INLINE_IMPLEMENTATION
-
-__STATIC_INLINE bool nrf_queue_is_empty(nrf_queue_t const * p_queue)
-{
-    ASSERT(p_queue != NULL);
-    return (p_queue->p_cb->front == p_queue->p_cb->back);
-}
-
-__STATIC_INLINE size_t nrf_queue_available_get(nrf_queue_t const * p_queue)
-{
-    ASSERT(p_queue != NULL);
-    return p_queue->size - nrf_queue_utilization_get(p_queue);
-}
-
-__STATIC_INLINE size_t nrf_queue_max_utilization_get(nrf_queue_t const * p_queue)
-{
-    ASSERT(p_queue != NULL);
-    return p_queue->p_cb->max_utilization;
-}
-
-#endif // SUPPRESS_INLINE_IMPLEMENTATION
 
 #ifdef __cplusplus
 }

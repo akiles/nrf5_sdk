@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
  * @addtogroup ser_conn Connectivity application code
  * @ingroup ble_sdk_lib_serialization

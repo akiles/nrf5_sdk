@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /**@file
  * @defgroup nrf_ant_time_sync_tx_example ANT Time Sync TX Example
  * @{

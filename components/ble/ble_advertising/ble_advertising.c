@@ -58,6 +58,7 @@ static ble_adv_evt_t                   m_adv_evt;                               
 
 static ble_adv_mode_t                  m_adv_mode_current;                          /**< Variable to keep track of the current advertising mode. */
 static ble_adv_modes_config_t          m_adv_modes_config;                          /**< Struct to keep track of disabled and enabled advertising modes, as well as time-outs and intervals.*/
+static uint8_t                         m_conn_cfg_tag;                              /**< Variable to keep track of what connection settings will be used if the advertising results in a connection. */
 
 static ble_gap_addr_t                  m_peer_address;                              /**< Address of the most recently connected peer, used for direct advertising. */
 static bool                            m_peer_addr_reply_expected;                  /**< Flag to verify that peer address is only set when requested. */
@@ -76,7 +77,7 @@ static ble_advertising_error_handler_t m_error_handler;                         
 static bool                            m_whitelist_temporarily_disabled;            /**< Flag to keep track of temporary disabling of the whitelist. */
 static bool                            m_whitelist_reply_expected;
 
-#if (NRF_SD_BLE_API_VERSION == 2)
+#if (NRF_SD_BLE_API_VERSION <= 2)
 
     // For SoftDevices v 2.x, this module caches a whitelist which is retrieved from the
     // application using an event, and which is passed as a parameter when calling
@@ -104,7 +105,7 @@ static bool                            m_whitelist_reply_expected;
 #endif
 
 
-#if (NRF_SD_BLE_API_VERSION == 2)
+#if (NRF_SD_BLE_API_VERSION <= 2)
 
     static bool whitelist_has_entries()
     {
@@ -318,7 +319,7 @@ static ret_code_t set_adv_mode_fast(ble_gap_adv_params_t * p_adv_params)
         (!m_whitelist_temporarily_disabled) &&
         (whitelist_has_entries()))
     {
-        #if (NRF_SD_BLE_API_VERSION == 2)
+        #if (NRF_SD_BLE_API_VERSION <= 2)
             p_adv_params->p_whitelist = &m_whitelist;
         #endif
 
@@ -359,7 +360,7 @@ static ret_code_t set_adv_mode_slow(ble_gap_adv_params_t * p_adv_params)
         (!m_whitelist_temporarily_disabled) &&
         (whitelist_has_entries()))
     {
-        #if (NRF_SD_BLE_API_VERSION == 2)
+        #if (NRF_SD_BLE_API_VERSION <= 2)
         {
             p_adv_params->p_whitelist = &m_whitelist;
         }
@@ -385,6 +386,12 @@ static ret_code_t set_adv_mode_slow(ble_gap_adv_params_t * p_adv_params)
 }
 
 
+void ble_advertising_conn_cfg_tag_set(uint8_t ble_cfg_tag)
+{
+    m_conn_cfg_tag = ble_cfg_tag;
+}
+
+
 uint32_t ble_advertising_init(ble_advdata_t                   const * p_advdata,
                               ble_advdata_t                   const * p_srdata,
                               ble_adv_modes_config_t          const * p_config,
@@ -401,6 +408,7 @@ uint32_t ble_advertising_init(ble_advdata_t                   const * p_advdata,
     m_initialized                    = true;
     m_adv_mode_current               = BLE_ADV_MODE_IDLE;
     m_adv_modes_config               = *p_config;
+    m_conn_cfg_tag                   = BLE_CONN_CFG_TAG_DEFAULT;
     m_evt_handler                    = evt_handler;
     m_error_handler                  = error_handler;
     m_current_slave_link_conn_handle = BLE_CONN_HANDLE_INVALID;
@@ -460,7 +468,7 @@ uint32_t ble_advertising_init(ble_advdata_t                   const * p_advdata,
         m_advdata.p_tx_power_level = p_advdata->p_tx_power_level;
     }
 
-#if (NRF_SD_BLE_API_VERSION == 2)
+#if (NRF_SD_BLE_API_VERSION <= 2)
         for (int i = 0; i <BLE_GAP_WHITELIST_ADDR_MAX_COUNT ; i++)
         {
             m_whitelist.pp_addrs[i] = &m_whitelist_addrs[i];
@@ -522,7 +530,7 @@ uint32_t ble_advertising_start(ble_adv_mode_t advertising_mode)
         (m_adv_modes_config.ble_adv_whitelist_enabled) &&
         (!m_whitelist_temporarily_disabled))
     {
-        #if (NRF_SD_BLE_API_VERSION == 3)
+        #if (NRF_SD_BLE_API_VERSION >= 3)
             m_whitelist_in_use = false;
         #endif
         m_whitelist_reply_expected = true;
@@ -568,7 +576,7 @@ uint32_t ble_advertising_start(ble_adv_mode_t advertising_mode)
 
     if (m_adv_mode_current != BLE_ADV_MODE_IDLE)
     {
-        ret = sd_ble_gap_adv_start(&adv_params);
+        ret = sd_ble_gap_adv_start(&adv_params, m_conn_cfg_tag);
         if (ret != NRF_SUCCESS)
         {
             return ret;
@@ -662,7 +670,7 @@ uint32_t ble_advertising_whitelist_reply(ble_gap_addr_t const * p_gap_addrs,
 
     m_whitelist_reply_expected = false;
 
-    #if (NRF_SD_BLE_API_VERSION == 2)
+    #if (NRF_SD_BLE_API_VERSION <= 2)
 
         m_whitelist.addr_count = addr_cnt;
         m_whitelist.irk_count  = irk_cnt;
@@ -695,7 +703,7 @@ uint32_t ble_advertising_restart_without_whitelist(void)
 
     m_whitelist_temporarily_disabled = true;
 
-    #if (NRF_SD_BLE_API_VERSION == 3)
+    #if (NRF_SD_BLE_API_VERSION >= 3)
         m_whitelist_in_use = false;
     #endif
 

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_sdk_srv_lncp Location and Navigation Service Control Point
@@ -58,7 +57,7 @@
 extern "C" {
 #endif
 
-#define BLE_LNS_MAX_ROUTE_NAME_LEN                                  (BLE_L2CAP_MTU_DEF - 5)           /**< The maximum length of length of a route name. */
+#define BLE_LNS_MAX_ROUTE_NAME_LEN                                  BLE_GATT_ATT_MTU_DEFAULT - 5    /**< The maximum length of length of a route name. */
 #define MAX_CTRL_POINT_RESP_PARAM_LEN                               BLE_LNS_MAX_ROUTE_NAME_LEN + 3  /**< Maximum length of a control point response. */
 
 typedef struct ble_lncp_s ble_lncp_t;

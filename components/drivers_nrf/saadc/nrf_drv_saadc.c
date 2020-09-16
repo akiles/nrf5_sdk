@@ -228,14 +228,14 @@ ret_code_t nrf_drv_saadc_init(nrf_drv_saadc_config_t const * p_config,
     {
         err_code = NRF_ERROR_INVALID_STATE;
         NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
-                        (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+                        (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     if (event_handler == NULL)
     {
         err_code = NRF_ERROR_INVALID_PARAM;
         NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
-                        (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+                        (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -256,8 +256,10 @@ ret_code_t nrf_drv_saadc_init(nrf_drv_saadc_config_t const * p_config,
 
     nrf_saadc_int_disable(NRF_SAADC_INT_ALL);
     nrf_saadc_event_clear(NRF_SAADC_EVENT_END);
+    nrf_saadc_event_clear(NRF_SAADC_EVENT_STARTED);
     nrf_drv_common_irq_enable(SAADC_IRQn, p_config->interrupt_priority);
     nrf_saadc_int_enable(NRF_SAADC_INT_END);
+
     if (m_cb.low_power_mode)
     {
         nrf_saadc_int_enable(NRF_SAADC_INT_STARTED);
@@ -266,7 +268,8 @@ ret_code_t nrf_drv_saadc_init(nrf_drv_saadc_config_t const * p_config,
     nrf_saadc_enable();
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
+
     return err_code;
 }
 
@@ -291,7 +294,7 @@ void nrf_drv_saadc_uninit(void)
     nrf_saadc_disable();
     m_cb.adc_state = NRF_SAADC_STATE_IDLE;
 
-    for (uint8_t channel = 0; channel < NRF_SAADC_CHANNEL_COUNT; ++channel)
+    for (uint32_t channel = 0; channel < NRF_SAADC_CHANNEL_COUNT; ++channel)
     {
         if (m_cb.psel[channel].pselp != NRF_SAADC_INPUT_DISABLED)
         {
@@ -322,9 +325,16 @@ ret_code_t nrf_drv_saadc_channel_init(uint8_t                                  c
     {
         err_code = NRF_ERROR_BUSY;
         NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
-                        (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+                        (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
+
+#ifdef NRF52_PAN_74
+    if ((p_config->acq_time == NRF_SAADC_ACQTIME_3US) || (p_config->acq_time == NRF_SAADC_ACQTIME_5US))
+    {
+        nrf_saadc_disable();
+    }
+#endif //NRF52_PAN_74
 
     if (!m_cb.psel[channel].pselp)
     {
@@ -334,9 +344,17 @@ ret_code_t nrf_drv_saadc_channel_init(uint8_t                                  c
     m_cb.psel[channel].pseln = p_config->pin_n;
     nrf_saadc_channel_init(channel, p_config);
     nrf_saadc_channel_input_set(channel, p_config->pin_p, p_config->pin_n);
+
+#ifdef NRF52_PAN_74
+    if ((p_config->acq_time == NRF_SAADC_ACQTIME_3US) || (p_config->acq_time == NRF_SAADC_ACQTIME_5US))
+    {
+        nrf_saadc_enable();
+    }
+#endif //NRF52_PAN_74
+
     NRF_LOG_INFO("Channel initialized: %d.\r\n", channel);
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -353,7 +371,7 @@ ret_code_t nrf_drv_saadc_channel_uninit(uint8_t channel)
     {
         err_code = NRF_ERROR_BUSY;
         NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
-                        (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+                        (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -369,7 +387,7 @@ ret_code_t nrf_drv_saadc_channel_uninit(uint8_t channel)
 
     err_code = NRF_SUCCESS;
     NRF_LOG_INFO("Function: %s, error code: %s.\r\n",
-                    (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+                    (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -388,7 +406,7 @@ ret_code_t nrf_drv_saadc_sample_convert(uint8_t channel, nrf_saadc_value_t * p_v
     if (m_cb.adc_state != NRF_SAADC_STATE_IDLE)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     m_cb.adc_state = NRF_SAADC_STATE_BUSY;
@@ -396,7 +414,7 @@ ret_code_t nrf_drv_saadc_sample_convert(uint8_t channel, nrf_saadc_value_t * p_v
     nrf_saadc_buffer_init(p_value, 1);
     if (m_cb.active_channels > 1)
     {
-        for (uint8_t i = 0; i < NRF_SAADC_CHANNEL_COUNT; ++i)
+        for (uint32_t i = 0; i < NRF_SAADC_CHANNEL_COUNT; ++i)
         {
             nrf_saadc_channel_input_set(i, NRF_SAADC_INPUT_DISABLED, NRF_SAADC_INPUT_DISABLED);
         }
@@ -412,13 +430,14 @@ ret_code_t nrf_drv_saadc_sample_convert(uint8_t channel, nrf_saadc_value_t * p_v
     {
         timeout--;
     }
+    nrf_saadc_event_clear(NRF_SAADC_EVENT_STARTED);
     nrf_saadc_event_clear(NRF_SAADC_EVENT_END);
 
     NRF_LOG_INFO("Conversion value: %d, channel.\r\n", *p_value, channel);
 
     if (m_cb.active_channels > 1)
     {
-        for (uint8_t i = 0; i < NRF_SAADC_CHANNEL_COUNT; ++i)
+        for (uint32_t i = 0; i < NRF_SAADC_CHANNEL_COUNT; ++i)
         {
             nrf_saadc_channel_input_set(i, m_cb.psel[i].pselp, m_cb.psel[i].pseln);
         }
@@ -436,7 +455,7 @@ ret_code_t nrf_drv_saadc_sample_convert(uint8_t channel, nrf_saadc_value_t * p_v
     m_cb.adc_state = NRF_SAADC_STATE_IDLE;
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -453,7 +472,7 @@ ret_code_t nrf_drv_saadc_buffer_convert(nrf_saadc_value_t * p_buffer, uint16_t s
     {
         nrf_saadc_int_enable(NRF_SAADC_INT_END | NRF_SAADC_INT_CALIBRATEDONE);
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     if (m_cb.adc_state == NRF_SAADC_STATE_BUSY)
@@ -462,7 +481,7 @@ ret_code_t nrf_drv_saadc_buffer_convert(nrf_saadc_value_t * p_buffer, uint16_t s
         {
             nrf_saadc_int_enable(NRF_SAADC_INT_END);
             err_code = NRF_ERROR_BUSY;
-            NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+            NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
             return err_code;
         }
         else
@@ -477,7 +496,7 @@ ret_code_t nrf_drv_saadc_buffer_convert(nrf_saadc_value_t * p_buffer, uint16_t s
             }
             nrf_saadc_int_enable(NRF_SAADC_INT_END);
             err_code = NRF_SUCCESS;
-            NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+            NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
             return err_code;
         }
     }
@@ -504,7 +523,7 @@ ret_code_t nrf_drv_saadc_buffer_convert(nrf_saadc_value_t * p_buffer, uint16_t s
     }
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -527,7 +546,7 @@ ret_code_t nrf_drv_saadc_sample()
         nrf_saadc_task_trigger(NRF_SAADC_TASK_SAMPLE);
     }
 
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -541,7 +560,7 @@ ret_code_t nrf_drv_saadc_calibrate_offset()
     if (m_cb.adc_state != NRF_SAADC_STATE_IDLE)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -551,7 +570,7 @@ ret_code_t nrf_drv_saadc_calibrate_offset()
     nrf_saadc_int_enable(NRF_SAADC_INT_CALIBRATEDONE);
     nrf_saadc_task_trigger(NRF_SAADC_TASK_CALIBRATEOFFSET);
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 

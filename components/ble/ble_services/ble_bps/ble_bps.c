@@ -37,9 +37,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /* Attention!
-*  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
+*  To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
 *  qualification listings, this section of source code must not be modified.
 */
 #include "sdk_common.h"
@@ -51,9 +50,9 @@
 #include "ble_srv_common.h"
 
 
-#define OPCODE_LENGTH 1                                                   /**< Length of opcode inside Blood Pressure Measurement packet. */
-#define HANDLE_LENGTH 2                                                   /**< Length of handle inside Blood Pressure Measurement packet. */
-#define MAX_BPM_LEN   (BLE_L2CAP_MTU_DEF - OPCODE_LENGTH - HANDLE_LENGTH) /**< Maximum size of a transmitted Blood Pressure Measurement. */
+#define OPCODE_LENGTH 1     /**< Length of opcode inside Blood Pressure Measurement packet. */
+#define HANDLE_LENGTH 2     /**< Length of handle inside Blood Pressure Measurement packet. */
+#define MAX_BPM_LEN   (BLE_GATT_ATT_MTU_DEFAULT - OPCODE_LENGTH - HANDLE_LENGTH)    /**< Maximum size of a transmitted Blood Pressure Measurement. */
 
 // Blood Pressure Measurement Flags bits
 #define BPS_MEAS_BLOOD_PRESSURE_UNITS_FLAG_BIT (0x01 << 0)  /**< Blood Pressure Units Flag bit. */
@@ -300,12 +299,12 @@ static uint32_t bps_measurement_char_add(ble_bps_t * p_bps, const ble_bps_init_t
     memset(&attr_char_value, 0, sizeof(attr_char_value));
     memset(&initial_bpm, 0, sizeof(initial_bpm));
 
-    attr_char_value.p_uuid       = &ble_uuid;
-    attr_char_value.p_attr_md    = &attr_md;
-    attr_char_value.init_len     = bps_measurement_encode(p_bps, &initial_bpm, encoded_bpm);
-    attr_char_value.init_offs    = 0;
-    attr_char_value.max_len      = MAX_BPM_LEN;
-    attr_char_value.p_value      = encoded_bpm;
+    attr_char_value.p_uuid    = &ble_uuid;
+    attr_char_value.p_attr_md = &attr_md;
+    attr_char_value.init_len  = bps_measurement_encode(p_bps, &initial_bpm, encoded_bpm);
+    attr_char_value.init_offs = 0;
+    attr_char_value.max_len   = MAX_BPM_LEN;
+    attr_char_value.p_value   = encoded_bpm;
 
     return sd_ble_gatts_characteristic_add(p_bps->service_handle,
                                            &char_md,

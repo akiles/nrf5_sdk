@@ -111,7 +111,6 @@ __stackless void vPortStartFirstTask( void )
                     " svc 0                 \n" /* System call to start first task. */
                     "                       \n"
                     " nop                   \n" /* Manual alignment of the label below */
-                    "DATA                   \n"
                     "1:                     \n"
                     "   DC32  %c0           \n"
                     : /* Outputs */
@@ -140,7 +139,6 @@ __stackless void vPortSVCHandler( void )
                     "   bx r14                          \n"
                     "                                   \n"
                     "                                   \n" /* Manual alignment of the label below */
-                    "DATA                               \n"
                     "1:                                 \n"
                     "   DC32  %c0                       \n"
                     : /* Outputs */
@@ -197,7 +195,6 @@ __stackless void xPortPendSVHandler( void )
     "   bx r14                              \n"
     "                                       \n"
     "                                       \n" /* Manual alignment of the label below */
-    "DATA                                   \n"
     "1:                                     \n"
     "   DC32  %c1                           \n"
     : /* Outputs */

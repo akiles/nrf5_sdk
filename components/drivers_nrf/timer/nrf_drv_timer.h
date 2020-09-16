@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  * @addtogroup nrf_timer Timer HAL and driver
  * @ingroup    nrf_drivers
@@ -132,8 +131,7 @@ typedef void (* nrf_timer_event_handler_t)(nrf_timer_event_t event_type,
  * @brief Function for initializing the timer.
  *
  * @param[in] p_instance          Pointer to the driver instance structure.
- * @param[in] p_config            Initial configuration.
- *                                If NULL, the default configuration is used.
+ * @param[in] p_config            Initial configuration. Must not be NULL.
  * @param[in] timer_event_handler Event handler provided by the user.
  *                                Must not be NULL.
  *

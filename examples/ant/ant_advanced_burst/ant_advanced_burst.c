@@ -48,8 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
-
 #include "ant_advanced_burst.h"
 #include <stdint.h>
 #include "string.h"

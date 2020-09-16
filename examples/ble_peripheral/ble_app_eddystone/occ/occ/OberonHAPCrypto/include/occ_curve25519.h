@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  * Curve25519 is an elliptic curve offering 128 bits of security. It is designed
  * for use in the elliptic curve Diffie-Hellman (ECDH) key agreement scheme.

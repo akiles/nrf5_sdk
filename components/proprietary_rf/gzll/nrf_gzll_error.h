@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
  * @file
  * @brief Gazell error API.
@@ -49,6 +48,10 @@
 #include "sdk_errors.h"
 #include "nrf_gzll.h"
 #include "app_error.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define GAZELLE_ERROR_CODE_CHECK(GZLL_RESULT)                                       \
     do                                                                              \

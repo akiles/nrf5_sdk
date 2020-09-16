@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "nfc_ep_oob_rec.h"
 #include "sdk_errors.h"
 #include "ble_gap.h"
@@ -112,7 +111,7 @@ static ret_code_t nfc_ep_oob_bluetooth_device_address_encode(uint8_t  * const p_
     }
 
     /* Get BLE address */
-    #if (NRF_SD_BLE_API_VERSION == 2)
+    #if (NRF_SD_BLE_API_VERSION <= 2)
         err_code = sd_ble_gap_address_get(&device_address);
         if (err_code != NRF_SUCCESS)
         {
@@ -120,7 +119,7 @@ static ret_code_t nfc_ep_oob_bluetooth_device_address_encode(uint8_t  * const p_
         }
     #endif
 
-    #if (NRF_SD_BLE_API_VERSION == 3)
+    #if (NRF_SD_BLE_API_VERSION >= 3)
         err_code = sd_ble_gap_addr_get(&device_address);
         if (err_code != NRF_SUCCESS)
         {

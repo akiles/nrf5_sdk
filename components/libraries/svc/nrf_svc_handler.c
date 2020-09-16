@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <stdbool.h>
 #include <stdint.h>
 #include "nrf_svc_function.h"
@@ -45,14 +44,9 @@
 
 #include "nrf_log.h"
 
-
- //lint -save -e19 -e526
-NRF_SECTION_VARS_CREATE_SECTION(svc_data, const nrf_svc_func_t);
-//lint -restore
-
-
-#define SVC_DATA_SECTION_VARS_GET(i)        NRF_SECTION_VARS_GET((i), nrf_svc_func_reg_t, svc_data)
-#define SVC_DATA_SECTION_VARS_COUNT         NRF_SECTION_VARS_COUNT(nrf_svc_func_reg_t, svc_data)
+NRF_SECTION_DEF(svc_data, const nrf_svc_func_t);
+#define SVC_DATA_SECTION_ITEM_GET(i)        NRF_SECTION_ITEM_GET(svc_data, nrf_svc_func_reg_t, (i))
+#define SVC_DATA_SECTION_ITEM_COUNT         NRF_SECTION_ITEM_COUNT(svc_data, nrf_svc_func_reg_t)
 
 
 /**@brief   Function for handling second stage of SuperVisor Calls (SVC).
@@ -70,7 +64,7 @@ NRF_SECTION_VARS_CREATE_SECTION(svc_data, const nrf_svc_func_t);
 */
 void nrf_svc_handler_c(uint8_t svc_num, uint32_t * p_svc_args)
 {
-    uint32_t const  num_funcs = SVC_DATA_SECTION_VARS_COUNT;
+    uint32_t const  num_funcs = SVC_DATA_SECTION_ITEM_COUNT;
     bool            handled = false;
     uint32_t        svci_num = NRF_SVCI_SVC_NUM_INVALID;
 
@@ -82,7 +76,7 @@ void nrf_svc_handler_c(uint8_t svc_num, uint32_t * p_svc_args)
 
     for (int i = 0; i < num_funcs; i++)
     {
-        nrf_svc_func_reg_t const * func_reg = SVC_DATA_SECTION_VARS_GET(i);
+        nrf_svc_func_reg_t const * func_reg = SVC_DATA_SECTION_ITEM_GET(i);
         if (func_reg->svc_num != svc_num)
         {
             continue;

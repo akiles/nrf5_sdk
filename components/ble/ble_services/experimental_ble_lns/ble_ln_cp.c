@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "ble_ln_cp.h"
 #include "ble_ln_db.h"
 #include "ble_ln_common.h"
@@ -115,7 +114,7 @@ static void resp_send(ble_lncp_t * p_lncp)
             // Wait for HVC event
             break;
 
-        case BLE_ERROR_NO_TX_PACKETS:
+        case NRF_ERROR_RESOURCES:
             // Wait for TX_COMPLETE event to retry transmission
             p_lncp->procedure_status = LNCP_STATE_INDICATION_PENDING;
             break;
@@ -386,7 +385,7 @@ static void on_req_name_of_route(ble_lncp_t * p_lncp, ble_gatts_evt_write_t cons
     err_code = ble_ln_db_record_name_get(route_num, &p_name);
     if (err_code != NRF_SUCCESS)
     {
-        p_lncp->pending_rsp.rsp_code = LNCP_RSP_OPERATION_FAILED;;
+        p_lncp->pending_rsp.rsp_code = LNCP_RSP_OPERATION_FAILED;
         return;
     }
     memcpy(&p_lncp->pending_rsp.rsp_param[0], p_name, BLE_LNS_MAX_ROUTE_NAME_LEN);
@@ -717,7 +716,7 @@ void ble_lncp_on_ble_evt(ble_lncp_t * p_lncp, ble_evt_t const * p_ble_evt)
             }
             break;
 
-        case BLE_EVT_TX_COMPLETE:
+        case BLE_GATTS_EVT_HVN_TX_COMPLETE:
             on_tx_complete(p_lncp);
             break;
 
@@ -809,7 +808,7 @@ ret_code_t ble_lncp_init(ble_lncp_t * p_lncp, ble_lncp_init_t const * p_lncp_ini
     add_char_params.char_props.write     = true;
     add_char_params.is_defered_write     = true;
     add_char_params.is_var_len           = true;
-    add_char_params.max_len              = BLE_L2CAP_MTU_DEF;
+    add_char_params.max_len              = BLE_GATT_ATT_MTU_DEFAULT;
     add_char_params.write_access         = p_lncp_init->write_perm;
     add_char_params.cccd_write_access    = p_lncp_init->cccd_write_perm;
 

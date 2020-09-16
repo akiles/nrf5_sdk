@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef APP_USBD_HID_KBD_DESC_H__
 #define APP_USBD_HID_KBD_DESC_H__
 
@@ -55,10 +54,10 @@ extern "C" {
  */
 
 /**
- * @brief Initializer of interface descriptor for HID keyboard class
+ * @brief Initializer of interface descriptor for HID keyboard class.
  *
- * @param interface_number  Interface number
- * */
+ * @param interface_number  Interface number.
+ */
 #define APP_USBD_HID_KBD_INTERFACE_DSC(interface_number)            \
         APP_USBD_HID_INTERFACE_DSC(interface_number,                \
                                    1,                               \
@@ -66,25 +65,25 @@ extern "C" {
                                    APP_USBD_HID_PROTO_KEYBOARD)
 
 /**
- * @brief Initializer of HID descriptor for HID keyboard class
+ * @brief Initializer of HID descriptor for HID keyboard class.
  *
- * @param ...   Report descriptor item
- * */
+ * @param ...   Report descriptor item.
+ */
 #define APP_USBD_HID_KBD_HID_DSC(...)       \
         APP_USBD_HID_HID_DSC(__VA_ARGS__)
 /**
- * @brief Initializer of endpoint descriptor for HID keyboard class
+ * @brief Initializer of endpoint descriptor for HID keyboard class.
  *
- * @param endpoint  Endpoint number
- * */
+ * @param endpoint  Endpoint number.
+ */
 #define APP_USBD_HID_KBD_EP_DSC(endpoint)   \
         APP_USBD_HID_EP_DSC(endpoint, 8, 1)
 
 
 /**
- * @brief Example of USB HID keyboard report descriptor
+ * @brief Example of USB HID keyboard report descriptor.
  *
- * */
+ */
 #define APP_USBD_HID_KBD_REPORT_DSC() {                                                    \
         0x05, 0x01,                    /* USAGE_PAGE (Generic Desktop)                   */\
         0x09, 0x06,                    /* USAGE (Keyboard)                               */\

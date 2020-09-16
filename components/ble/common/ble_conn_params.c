@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "ble_conn_params.h"
 #include <stdlib.h>
 #include "nordic_common.h"
@@ -206,7 +205,7 @@ static void conn_params_negotiation(void)
     }
     else
     {
-        // Notify the application that the procedure has succeded
+        // Notify the application that the procedure has succeeded
         if (m_conn_params_config.evt_handler != NULL)
         {
             ble_conn_params_evt_t evt;

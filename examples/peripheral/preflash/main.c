@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup led_softblink_example_main main.c
@@ -62,13 +61,17 @@
 #include "nfc_uri_msg.h"
 #include "nrf_delay.h"
 
-/*Timer initalization parameters*/
-#define APP_TIMER_OP_QUEUE_SIZE     3
-#define APP_TIMER_PRESCALER         0
-
+#if defined(BOARD_PCA10040)
  //URL "nordicsemi.com/start52dk"
 static const uint8_t m_url[] = {'n', 'o', 'r', 'd', 'i', 'c', 's', 'e', 'm', 'i', '.',
                                 'c', 'o', 'm','/','s','t','a','r','t','5','2','d','k'};
+#elif defined (BOARD_PCA10056)
+//URL "nordicsemi.com/start52840dk"
+static const uint8_t m_url[] = {'n', 'o', 'r', 'd', 'i', 'c', 's', 'e', 'm', 'i', '.',
+                                'c', 'o', 'm','/','s','t','a','r','t','5','2','8','4','0','d','k'};
+#else
+#error "Board is not supported"
+#endif
 
 uint8_t             m_ndef_msg_buf[256];        ///< Buffer for the NFC NDEF message.
 volatile uint32_t   m_active_led_mask;          ///< LED mask.
@@ -211,13 +214,12 @@ int main(void)
     clock_init();
 
     // Start APP_TIMER to generate timeouts.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
     leds_init();
 
-    err_code = bsp_init(BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
-                        bsp_evt_handler);
+    err_code = bsp_init(BSP_INIT_BUTTONS, bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 
     nfc_init();

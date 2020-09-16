@@ -60,12 +60,12 @@ extern "C" {
  */
 
 /**
- * @brief Initializer of IAD descriptor for CDC class
+ * @brief Initializer of IAD descriptor for CDC class.
  *
- * @param interface_number Interface number
- * @param subclass         Subclass, @ref app_usbd_cdc_subclass_t
- * @param protocol         Protocol, @ref app_usbd_cdc_comm_protocol_t
- * */
+ * @param interface_number Interface number.
+ * @param subclass         Subclass, @ref app_usbd_cdc_subclass_t.
+ * @param protocol         Protocol, @ref app_usbd_cdc_comm_protocol_t.
+ */
 #define APP_USBD_CDC_IAD_DSC(interface_number, subclass, protocol)        \
     /*.bLength =           */ sizeof(app_usbd_descriptor_iad_t),          \
     /*.bDescriptorType =   */ APP_USBD_DESCRIPTOR_INTERFACE_ASSOCIATION,  \
@@ -77,12 +77,12 @@ extern "C" {
     /*.iFunction =         */ 0,                                          \
 
 /**
- * @brief Initializer of interface descriptor for CDC COMM class
+ * @brief Initializer of interface descriptor for CDC COMM class.
  *
- * @param interface_number Interface number
- * @param subclass         Subclass, @ref app_usbd_cdc_subclass_t
- * @param protocol         Protocol, @ref app_usbd_cdc_comm_protocol_t
- * */
+ * @param interface_number Interface number.
+ * @param subclass         Subclass, @ref app_usbd_cdc_subclass_t.
+ * @param protocol         Protocol, @ref app_usbd_cdc_comm_protocol_t.
+ */
 #define APP_USBD_CDC_COMM_INTERFACE_DSC(interface_number, subclass, protocol)  \
     /*.bLength =            */ sizeof(app_usbd_descriptor_iface_t),            \
     /*.bDescriptorType =    */ APP_USBD_DESCRIPTOR_INTERFACE,                  \
@@ -96,12 +96,12 @@ extern "C" {
 
 
 /**
- * @brief Initializer of interface descriptor for CDC DATA class
+ * @brief Initializer of interface descriptor for CDC DATA class.
  *
- * @param interface_number Interface number
- * @param subclass         Subclass, @ref app_usbd_cdc_subclass_t
- * @param protocol         Protocol, @ref app_usbd_cdc_data_protocol_t
- * */
+ * @param interface_number Interface number.
+ * @param subclass         Subclass, @ref app_usbd_cdc_subclass_t.
+ * @param protocol         Protocol, @ref app_usbd_cdc_data_protocol_t.
+ */
 #define APP_USBD_CDC_DATA_INTERFACE_DSC(interface_number, subclass, protocol) \
     /*.bLength =            */ sizeof(app_usbd_descriptor_iface_t),           \
     /*.bDescriptorType =    */ APP_USBD_DESCRIPTOR_INTERFACE,                 \
@@ -116,11 +116,11 @@ extern "C" {
 
 
 /**
- * @brief Initializer of endpoint descriptor for CDC COM class
+ * @brief Initializer of endpoint descriptor for CDC COM class.
  *
- * @param endpoint_in   IN endpoint
- * @param ep_size       Endpoint size
- * */
+ * @param endpoint_in   IN endpoint.
+ * @param ep_size       Endpoint size.
+ */
 #define APP_USBD_CDC_COM_EP_DSC(endpoint_in, ep_size)                     \
     /*.bLength =          */ sizeof(app_usbd_descriptor_ep_t),            \
     /*.bDescriptorType =  */ APP_USBD_DESCRIPTOR_ENDPOINT,                \
@@ -130,12 +130,12 @@ extern "C" {
     /*.bInterval =        */ 16,                                          \
 
 /**
- * @brief Initializer of endpoint descriptors for CDC DATA class
+ * @brief Initializer of endpoint descriptors for CDC DATA class.
  *
- * @param endpoint_in   IN endpoint
- * @param endpoint_out  OUT endpoint
- * @param ep_size       Endpoint size
- * */
+ * @param endpoint_in   IN endpoint.
+ * @param endpoint_out  OUT endpoint.
+ * @param ep_size       Endpoint size.
+ */
 #define APP_USBD_CDC_DATA_EP_DSC(endpoint_in, endpoint_out, ep_size) \
     /*.bLength =          */ sizeof(app_usbd_descriptor_ep_t),       \
     /*.bDescriptorType =  */ APP_USBD_DESCRIPTOR_ENDPOINT,           \
@@ -151,9 +151,9 @@ extern "C" {
     /*.bInterval =        */ 0,                                      \
 
 /**
- * @brief Initializer of endpoint descriptors for CDC header descriptor
+ * @brief Initializer of endpoint descriptors for CDC header descriptor.
  *
- * @param bcd_cdc   BCD CDC version
+ * @param bcd_cdc   BCD CDC version.
  */
 #define APP_USBD_CDC_HEADER_DSC(bcd_cdc)                           \
     /*.bLength =            */ sizeof(app_usbd_cdc_desc_header_t), \
@@ -162,10 +162,10 @@ extern "C" {
     /*.bcdCDC =             */ APP_USBD_U16_TO_RAW_DSC(bcd_cdc),   \
 
 /**
- * @brief Initializer of endpoint descriptors for CDC call management descriptor
+ * @brief Initializer of endpoint descriptors for CDC call management descriptor.
  *
- * @param capabilities   Capabilities
- * @param data_interface Data interface
+ * @param capabilities   Capabilities.
+ * @param data_interface Data interface.
  */
 #define APP_USBD_CDC_CALL_MGMT_DSC(capabilities, data_interface)      \
     /*.bLength =            */ sizeof(app_usbd_cdc_desc_call_mgmt_t), \
@@ -176,9 +176,9 @@ extern "C" {
 
 
 /**
- * @brief Initializer of endpoint descriptors for CDC DATA class
+ * @brief Initializer of endpoint descriptors for CDC DATA class.
  *
- * @param capabilities   Capabilities
+ * @param capabilities   Capabilities.
  */
 #define APP_USBD_CDC_ACM_DSC(capabilities)                      \
     /*.bLength =            */ sizeof(app_usbd_cdc_desc_acm_t), \
@@ -187,10 +187,10 @@ extern "C" {
     /*.bmCapabilities =     */ capabilities,                    \
 
 /**
- * @brief Initializer of endpoint descriptors for CDC DATA class
+ * @brief Initializer of endpoint descriptors for CDC DATA class.
  *
- * @param control_interface   Control interface
- * @param ...                 Subordinate interfaces list
+ * @param control_interface   Control interface.
+ * @param ...                 Subordinate interfaces list.
  */
 #define APP_USBD_CDC_UNION_DSC(control_interface, ...)                                            \
     /*.bLength =               */ sizeof(app_usbd_cdc_desc_union_t) + (NUM_VA_ARGS(__VA_ARGS__)), \

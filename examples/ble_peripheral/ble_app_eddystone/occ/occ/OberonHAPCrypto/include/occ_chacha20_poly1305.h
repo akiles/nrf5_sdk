@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /*!
  * @brief ChaCha20-Poly1305 is an authenticated encryption algorithm with
  *        optional additional authenticated data developed by Daniel J.

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup low_power_pwm_example_main main.c
@@ -60,10 +59,6 @@
 #include "app_util_platform.h"
 #include "low_power_pwm.h"
 #include "nordic_common.h"
-
-/*Timer initialization parameters*/
-#define OP_QUEUES_SIZE          3
-#define APP_TIMER_PRESCALER     0
 
 /*Ticks before change duty cycle of each LED*/
 #define TICKS_BEFORE_CHANGE_0   500
@@ -190,7 +185,8 @@ int main(void)
     lfclk_init();
 
     // Start APP_TIMER to generate timeouts.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, OP_QUEUES_SIZE, NULL);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
     /*Initialize low power PWM for all 3  channels of RGB or 3 channels of leds on pca10028*/
     pwm_init();

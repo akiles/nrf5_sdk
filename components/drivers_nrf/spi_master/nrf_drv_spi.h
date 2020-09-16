@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  * @addtogroup nrf_spi Serial peripheral interface (SPI/SPIM)
  * @ingroup    nrf_drivers
@@ -75,7 +74,6 @@ extern "C" {
 #define SPI0_IRQ_HANDLER    SPI0_TWI0_IRQHandler
 #define SPI1_IRQ            SPI1_TWI1_IRQn
 #define SPI1_IRQ_HANDLER    SPI1_TWI1_IRQHandler
-
 
 /**
  * @defgroup nrf_drv_spi SPI master driver
@@ -212,7 +210,6 @@ typedef struct
     uint8_t         rx_length;   ///< RX buffer length.
 }nrf_drv_spi_xfer_desc_t;
 
-
 /**
  * @brief Macro for setting up single transfer descriptor.
  *
@@ -265,8 +262,8 @@ typedef struct
 /**
  * @brief SPI master driver event handler type.
  */
-typedef void (*nrf_drv_spi_handler_t)(nrf_drv_spi_evt_t const * p_event);
-
+typedef void (* nrf_drv_spi_evt_handler_t)(nrf_drv_spi_evt_t const * p_event,
+                                           void *                    p_context);
 
 /**
  * @brief Function for initializing the SPI master driver instance.
@@ -278,6 +275,7 @@ typedef void (*nrf_drv_spi_handler_t)(nrf_drv_spi_evt_t const * p_event);
  *                       If NULL, the default configuration is used.
  * @param     handler    Event handler provided by the user. If NULL, transfers
  *                       will be performed in blocking mode.
+ * @param      p_context Context passed to event handler.
  *
  * @retval NRF_SUCCESS             If initialization was successful.
  * @retval NRF_ERROR_INVALID_STATE If the driver was already initialized.
@@ -288,7 +286,8 @@ typedef void (*nrf_drv_spi_handler_t)(nrf_drv_spi_evt_t const * p_event);
  */
 ret_code_t nrf_drv_spi_init(nrf_drv_spi_t const * const p_instance,
                             nrf_drv_spi_config_t const * p_config,
-                            nrf_drv_spi_handler_t handler);
+                            nrf_drv_spi_evt_handler_t handler,
+                            void *    p_context);
 
 /**
  * @brief Function for uninitializing the SPI master driver instance.
@@ -329,7 +328,6 @@ ret_code_t nrf_drv_spi_transfer(nrf_drv_spi_t const * const p_instance,
                                 uint8_t       * p_rx_buffer,
                                 uint8_t         rx_buffer_length);
 
-
 /**
  * @brief Function for starting the SPI data transfer with additional option flags.
  *
@@ -341,7 +339,7 @@ ret_code_t nrf_drv_spi_transfer(nrf_drv_spi_t const * const p_instance,
  *   Post-incrementation of buffer addresses. Supported only by SPIM.
  * - @ref NRF_DRV_SPI_FLAG_HOLD_XFER<span></span>: Driver is not starting the transfer. Use this
  *   flag if the transfer is triggered externally by PPI. Supported only by SPIM. Use
- *   @ref nrf_drv_twi_start_task_get to get the address of the start task.
+ *   @ref nrf_drv_spi_start_task_get to get the address of the start task.
  * - @ref NRF_DRV_SPI_FLAG_NO_XFER_EVT_HANDLER<span></span>: No user event handler after transfer
  *   completion. This also means no interrupt at the end of the transfer. Supported only by SPIM.
  *   If @ref NRF_DRV_SPI_FLAG_NO_XFER_EVT_HANDLER is used, the driver does not set the instance into
@@ -398,6 +396,13 @@ uint32_t nrf_drv_spi_start_task_get(nrf_drv_spi_t const * p_instance);
  * @return     END event address.
  */
 uint32_t nrf_drv_spi_end_event_get(nrf_drv_spi_t const * p_instance);
+
+/**
+ * @brief Function for aborting ongoing transfer.
+ *
+ * @param[in]  p_instance Pointer to the driver instance structure.
+ */
+void nrf_drv_spi_abort(nrf_drv_spi_t const * p_instance);
 
 #ifdef __cplusplus
 }

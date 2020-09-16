@@ -37,8 +37,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
- /** @cond To make doxygen skip this file */
+/** @cond To make doxygen skip this file */
 
 #ifndef BLE_QWRS_H__
 #define BLE_QWRS_H__

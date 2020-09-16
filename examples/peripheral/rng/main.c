@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  * @defgroup rng_example_main main.c
  * @{
@@ -49,9 +48,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#include "boards.h"
 #include "nrf_delay.h"
-#include "app_uart.h"
 #include "app_error.h"
 #include "nrf_drv_rng.h"
 #include "nrf_assert.h"

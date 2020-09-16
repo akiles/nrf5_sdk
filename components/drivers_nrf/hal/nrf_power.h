@@ -37,6 +37,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+
 #ifndef NRF_POWER_H__
 #define NRF_POWER_H__
 
@@ -883,11 +884,21 @@ __STATIC_INLINE void nrf_power_system_off(void)
 __STATIC_INLINE void nrf_power_pofcon_set(bool enabled, nrf_power_pof_thr_t thr)
 {
     ASSERT(thr == (thr & (POWER_POFCON_THRESHOLD_Msk >> POWER_POFCON_THRESHOLD_Pos)));
-    NRF_POWER->POFCON = (((uint32_t)thr) << POWER_POFCON_THRESHOLD_Pos) |
+#if NRF_POWER_HAS_VDDH
+    uint32_t pofcon = NRF_POWER->POFCON;
+    pofcon &= ~(POWER_POFCON_THRESHOLD_Msk | POWER_POFCON_POF_Msk);
+    pofcon |=
+#else /* NRF_POWER_HAS_VDDH */
+    NRF_POWER->POFCON =
+#endif
+        (((uint32_t)thr) << POWER_POFCON_THRESHOLD_Pos) |
         (enabled ?
         (POWER_POFCON_POF_Enabled << POWER_POFCON_POF_Pos)
         :
         (POWER_POFCON_POF_Disabled << POWER_POFCON_POF_Pos));
+#if NRF_POWER_HAS_VDDH
+    NRF_POWER->POFCON = pofcon;
+#endif
 }
 
 __STATIC_INLINE nrf_power_pof_thr_t nrf_power_pofcon_get(bool * p_enabled)

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "nrf_block_dev_sdc.h"
 
 /**@file
@@ -157,9 +156,9 @@ static ret_code_t block_dev_sdc_init(nrf_block_dev_t const * p_blk_dev,
     p_work->p_context  = p_context;
     p_work->ev_handler = ev_handler;
     m_active_sdc_dev   = p_sdc_dev;
-    
+
     ret_code_t err_code = NRF_SUCCESS;
-    
+
     err_code = app_sdc_init(&p_sdc_dev->sdc_bdev_config.sdc_config, sdc_handler);
     if (err_code == NRF_SUCCESS)
     {
@@ -244,7 +243,7 @@ static ret_code_t block_dev_sdc_read_req(nrf_block_dev_t const * p_blk_dev,
     nrf_block_dev_sdc_work_t *  p_work = p_sdc_dev->p_work;
 
     ret_code_t err_code = NRF_SUCCESS;
-    
+
     if (m_active_sdc_dev != p_sdc_dev)
     {
         /* SDC instance is busy. */
@@ -256,7 +255,7 @@ static ret_code_t block_dev_sdc_read_req(nrf_block_dev_t const * p_blk_dev,
         /* Previous asynchronous operation in progress. */
         return NRF_ERROR_BUSY;
     }
-    
+
     p_work->req = *p_blk;
     err_code = app_sdc_block_read(p_blk->p_buff, p_blk->blk_id, p_blk->blk_count);
     if (err_code == NRF_SUCCESS)
@@ -306,7 +305,7 @@ static ret_code_t block_dev_sdc_write_req(nrf_block_dev_t const * p_blk_dev,
         /* Previous asynchronous operation in progress. */
         return NRF_ERROR_BUSY;
     }
-    
+
     p_work->req = *p_blk;
     err_code = app_sdc_block_write(p_blk->p_buff, p_blk->blk_id, p_blk->blk_count);
     if (err_code == NRF_SUCCESS)

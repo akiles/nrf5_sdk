@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "es_adv.h"
 #include "app_error.h"
 #include "es_adv_frame.h"
@@ -72,7 +71,7 @@ static void adv_start(ble_gap_adv_params_t * p_adv_params)
 
     es_tlm_adv_cnt_inc();
 
-    err_code = sd_ble_gap_adv_start(p_adv_params);
+    err_code = sd_ble_gap_adv_start(p_adv_params, BLE_CONN_CFG_TAG_DEFAULT);
 
     if (err_code != NRF_ERROR_BUSY && err_code != NRF_SUCCESS)
     {

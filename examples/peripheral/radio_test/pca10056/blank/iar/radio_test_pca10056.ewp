@@ -176,10 +176,10 @@
         </option>
         <option>
           <name>CCDefines</name>
-          <state>NRF52840_XXAA</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>BOARD_PCA10056</state>
           <state>BSP_DEFINES_ONLY</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>NRF52840_XXAA</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -244,7 +244,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state></state>
+          <state>1</state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -322,6 +322,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
@@ -486,10 +487,10 @@
         </option>
         <option>
       <name>ADefines</name>
-          <state>NRF52840_XXAA</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>BOARD_PCA10056</state>
           <state>BSP_DEFINES_ONLY</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>NRF52840_XXAA</state>
         </option>
         <option>
           <name>AList</name>
@@ -599,6 +600,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
@@ -992,6 +994,8 @@
   <name>nRF_Log</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_backend_serial.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_frontend.c</name>    </file>  </group>  <group>
+  <name>Board Definition</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Libraries</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>    </file>    <file>
@@ -999,10 +1003,8 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart\retarget.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\sdk_errors.c</name>    </file>  </group>  <group>
-  <name>Board Definition</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart\retarget.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</name>    </file>  </group>  <group>

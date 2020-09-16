@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
  * @ingroup nrf_twis
  * @defgroup nrf_twis_hal TWIS HAL

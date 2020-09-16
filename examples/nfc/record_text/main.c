@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <stdint.h>
 #include "nfc_t2t_lib.h"
 #include "nfc_ndef_msg.h"

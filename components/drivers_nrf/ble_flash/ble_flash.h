@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_flash_module Flash Manager
@@ -151,8 +150,8 @@ uint32_t ble_flash_page_addr(uint8_t page_num, uint32_t ** pp_page_addr);
 
 /**@brief Function for calculating a 16 bit CRC using the CRC-16-CCITT scheme.
  *
- * @param[in]  p_data   Pointer to data on which the CRC is to be calulated.
- * @param[in]  size     Number of bytes on which the CRC is to be calulated.
+ * @param[in]  p_data   Pointer to data on which the CRC is to be calculated.
+ * @param[in]  size     Number of bytes on which the CRC is to be calculated.
  * @param[in]  p_crc    Initial CRC value (if NULL, a preset value is used as the initial value).
  *
  * @return     Calculated CRC.

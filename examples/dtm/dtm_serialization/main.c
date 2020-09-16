@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_sdk_app_dtm_main main.c
@@ -67,11 +66,6 @@
 #define DEVICE_NAME                "Nordic_DTM" /**< Name of device. Will be included in the advertising data. */
 #define APP_ADV_INTERVAL           64           /**< The advertising interval (in units of 0.625 ms. This value corresponds to 40 ms). */
 #define APP_ADV_TIMEOUT_IN_SECONDS 180          /**< The advertising timeout (in units of seconds). */
-
-#define APP_BUTTON_DETECTION_DELAY 100 /**< Delay of detecting button events. */
-
-#define APP_TIMER_PRESCALER     0                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE 4                           /**< Size of timer operation queues. */
 
 #define DEAD_BEEF 0xDEADBEEF /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
@@ -144,7 +138,7 @@ static void advertising_start(void)
 {
     uint32_t err_code;
 
-    err_code = sd_ble_gap_adv_start(&m_adv_params);
+    err_code = sd_ble_gap_adv_start(&m_adv_params, BLE_CONN_CFG_TAG_DEFAULT);
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
@@ -218,13 +212,7 @@ static void ble_stack_init(void)
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
 
-    // Enable BLE stack
-    ble_enable_params_t ble_enable_params;
-    memset(&ble_enable_params, 0, sizeof (ble_enable_params));
-    ble_enable_params.gap_enable_params.periph_conn_count = 1;
-    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
-
-    err_code = sd_ble_enable(&ble_enable_params, NULL);
+    err_code = sd_ble_enable(NULL);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -237,11 +225,11 @@ int main(void)
 
     // Initialize.
     ble_stack_init();
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(APP_BUTTON_DETECTION_DELAY, APP_TIMER_PRESCALER),
-                        bsp_event_handler);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 
     // Initialize advertising.

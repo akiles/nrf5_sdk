@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef APP_USBD_HID_KBD_INTERNAL_H__
 #define APP_USBD_HID_KBD_INTERNAL_H__
 
@@ -55,68 +54,68 @@ extern "C" {
  */
 
 /**
- * @brief Forward declaration of HID keyboard class type
+ * @brief Forward declaration of HID keyboard class type.
  *
  */
 APP_USBD_CLASS_FORWARD(app_usbd_hid_kbd);
 
 
 /**
- * @brief HID keyboard part of class instance data
+ * @brief HID keyboard part of class instance data.
  *
  */
 typedef struct {
-    app_usbd_hid_inst_t hid_inst;  //!< HID instance data
+    app_usbd_hid_inst_t hid_inst;  //!< HID instance data.
 } app_usbd_hid_kbd_inst_t;
 
 /**
  * @brief HID keyboard context
  *
- * */
+ */
 typedef struct {
-    app_usbd_hid_ctx_t hid_ctx; //!< HID class context
+    app_usbd_hid_ctx_t hid_ctx; //!< HID class context.
 
     struct app_usbd_hid_kbd_ctx_internal_s {
-        uint8_t modifier;       //!< Keyboard modifier state @ref app_usbd_hid_kbd_modifier_t
-        uint8_t reserved;       //!< Reserved value
-        uint8_t key_table[6];   //!< Keyboard keys table @ref app_usbd_hid_kbd_codes_t
+        uint8_t modifier;       //!< Keyboard modifier state @ref app_usbd_hid_kbd_modifier_t.
+        uint8_t reserved;       //!< Reserved value.
+        uint8_t key_table[6];   //!< Keyboard keys table @ref app_usbd_hid_kbd_codes_t.
     } rep;
 
-    uint8_t report_buff[8];     //!< Raw report buffer
-    uint8_t leds_state;         //!< Output report LEDs state
-    uint8_t set_report;         //!< Set report flag
+    uint8_t report_buff[8];     //!< Raw report buffer.
+    uint8_t leds_state;         //!< Output report LEDs state.
+    uint8_t set_report;         //!< Set report flag.
 } app_usbd_hid_kbd_ctx_t;
 
 /**
- * @brief HID keyboard configuration macro
+ * @brief HID keyboard configuration macro.
  *
- * Used by @ref APP_USBD_HID_KBD_GLOBAL_DEF
+ * Used by @ref APP_USBD_HID_KBD_GLOBAL_DEF.
  *
  *
- * */
+ */
 #define APP_USBD_HID_KBD_CONFIG(iface, ep) ((iface, ep))
 
 
 /**
- * @brief Specific class constant data for HID keyboard class
- * */
+ * @brief Specific class constant data for HID keyboard class.
+ */
 #define APP_USBD_HID_KBD_INSTANCE_SPECIFIC_DEC app_usbd_hid_kbd_inst_t inst;
 
 /**
- * @brief Specific class data for HID keyboard class
- * */
+ * @brief Specific class data for HID keyboard class.
+ */
 #define APP_USBD_HID_KBD_DATA_SPECIFIC_DEC app_usbd_hid_kbd_ctx_t ctx;
 
 
 /**
- * @brief HID keyboard descriptors config macro
+ * @brief HID keyboard descriptors config macro.
  *
  * @ref app_usbd_hid_kbd_inst_t
  *
- * @param interface_number  Interface number
- * @param endpoint          Endpoint number
- * @param rep_descriptor    Keyboard report descriptor
- * */
+ * @param interface_number  Interface number.
+ * @param endpoint          Endpoint number.
+ * @param rep_descriptor    Keyboard report descriptor.
+ */
 #define APP_USBD_HID_KBD_DSC_CONFIG(interface_number, endpoint, rep_descriptor) {   \
         APP_USBD_HID_KBD_INTERFACE_DSC(interface_number)                            \
         APP_USBD_HID_KBD_HID_DSC(rep_descriptor)                                    \
@@ -124,13 +123,13 @@ typedef struct {
 }
 
 /**
- * @brief Configure internal part of HID keyboard instance
+ * @brief Configure internal part of HID keyboard instance.
  *
- * @param descriptors       Raw descriptors buffer
- * @param report_desc       Report descriptor
- * @param report_buff_in    Input report buffers array
- * @param report_buff_out   Output report buffer
- * @param user_ev_handler   User event handler
+ * @param descriptors       Raw descriptors buffer.
+ * @param report_desc       Report descriptor.
+ * @param report_buff_in    Input report buffers array.
+ * @param report_buff_out   Output report buffer.
+ * @param user_ev_handler   User event handler.
  */
 #define APP_USBD_HID_KBD_INST_CONFIG(descriptors,                         \
                                      report_desc,                         \
@@ -148,17 +147,17 @@ typedef struct {
 
 
 /**
- * @brief Public HID keyboard interface
- * */
+ * @brief Public HID keyboard interface.
+ */
 extern const app_usbd_hid_methods_t app_usbd_hid_kbd_methods;
 
 /**
- * @brief Public HID keyboard class interface
- * */
+ * @brief Public HID keyboard class interface.
+ */
 extern const app_usbd_class_methods_t app_usbd_hid_kbd_class_methods;
 
 /**
- * @brief Global definition of @ref app_usbd_hid_kbd_t class
+ * @brief Global definition of @ref app_usbd_hid_kbd_t class.
  *
  * @ref  APP_USBD_HID_KBD_GLOBAL_DEF
  */

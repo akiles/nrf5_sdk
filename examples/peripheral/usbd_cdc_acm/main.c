@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -145,17 +144,6 @@ static void cdc_acm_user_ev_handler(app_usbd_class_inst_t const * p_inst,
 
     switch (event)
     {
-        case APP_USBD_CDC_ACM_USER_EVT_RESUME:
-            bsp_board_led_on(LED_USB_RESUME);
-            break;
-        case APP_USBD_CDC_ACM_USER_EVT_START:
-            break;
-        case APP_USBD_CDC_ACM_USER_EVT_SUSPEND:
-            bsp_board_led_off(LED_USB_RESUME);
-            break;
-        case APP_USBD_CDC_ACM_USER_EVT_STOP:
-            bsp_board_leds_off();
-            break;
         case APP_USBD_CDC_ACM_USER_EVT_PORT_OPEN:
         {
             bsp_board_led_on(LED_CDC_ACM_OPEN);
@@ -193,6 +181,31 @@ static void cdc_acm_user_ev_handler(app_usbd_class_inst_t const * p_inst,
             break;
     }
 }
+
+static void usbd_user_ev_handler(app_usbd_event_type_t event)
+{
+    switch (event)
+    {
+        case APP_USBD_EVT_DRV_SUSPEND:
+            bsp_board_led_off(LED_USB_RESUME);
+            break;
+        case APP_USBD_EVT_DRV_RESUME:
+            bsp_board_led_on(LED_USB_RESUME);
+            break;
+        case APP_USBD_EVT_START:
+            break;
+        case APP_USBD_EVT_STOP:
+            bsp_board_leds_off();
+            break;
+        default:
+            break;
+    }
+}
+
+static const app_usbd_config_t m_usbd_config = {
+    .ev_handler = usbd_user_ev_handler
+};
+
 
 #define SERIAL_NUMBER_STRING_SIZE (16)
 
@@ -256,7 +269,9 @@ static void usb_start(void)
             .handler = power_usb_event_handler
         };
 
-        nrf_drv_power_usbevt_init(&config);
+        ret_code_t ret;
+        ret = nrf_drv_power_usbevt_init(&config);
+        APP_ERROR_CHECK(ret);
     }
     else
     {
@@ -298,7 +313,7 @@ int main(void)
 
     serial_number_string_create();
 
-    ret = app_usbd_init();
+    ret = app_usbd_init(&m_usbd_config);
     APP_ERROR_CHECK(ret);
 
     app_usbd_class_inst_t const * class_cdc_acm = app_usbd_cdc_acm_class_inst_get(&m_app_cdc_acm);

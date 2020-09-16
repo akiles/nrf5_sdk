@@ -40,103 +40,111 @@
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(SLIP)
 #include "slip.h"
-#include "nrf_error.h"
 
-#define SLIP_END             0300    /* indicates end of packet */
-#define SLIP_ESC             0333    /* indicates byte stuffing */
-#define SLIP_ESC_END         0334    /* ESC ESC_END means END data byte */
-#define SLIP_ESC_ESC         0335    /* ESC ESC_ESC means ESC data byte */
+#include <string.h>
 
 
-uint32_t slip_encode(uint8_t * p_output,  uint8_t * p_input, uint32_t input_length, uint32_t output_buffer_length)
+#define SLIP_BYTE_END             0300    /* indicates end of packet */
+#define SLIP_BYTE_ESC             0333    /* indicates byte stuffing */
+#define SLIP_BYTE_ESC_END         0334    /* ESC ESC_END means END data byte */
+#define SLIP_BYTE_ESC_ESC         0335    /* ESC ESC_ESC means ESC data byte */
+
+
+ret_code_t slip_encode(uint8_t * p_output,  uint8_t * p_input, uint32_t input_length, uint32_t * p_output_buffer_length)
 {
-    uint32_t input_index;
-    uint32_t output_index;
+    if (p_output == NULL || p_input == NULL || p_output_buffer_length == NULL)
+    {
+        return NRF_ERROR_NULL;
+    }
 
-    for (input_index = 0, output_index = 0; input_index < input_length && output_index < output_buffer_length; input_index++)
+    *p_output_buffer_length = 0;
+    uint32_t input_index;
+
+    for (input_index = 0; input_index < input_length; input_index++)
     {
         switch (p_input[input_index])
         {
-            case SLIP_END:
-                p_output[output_index++] = SLIP_END;
-                p_output[output_index++] = SLIP_ESC_END;
+            case SLIP_BYTE_END:
+                p_output[(*p_output_buffer_length)++] = SLIP_BYTE_ESC;
+                p_output[(*p_output_buffer_length)++] = SLIP_BYTE_ESC_END;
                 break;
 
-            case SLIP_ESC:
-                p_output[output_index++] = SLIP_ESC;
-                p_output[output_index++] = SLIP_ESC_ESC;
+            case SLIP_BYTE_ESC:
+                p_output[(*p_output_buffer_length)++] = SLIP_BYTE_ESC;
+                p_output[(*p_output_buffer_length)++] = SLIP_BYTE_ESC_ESC;
                 break;
 
             default:
-                p_output[output_index++] = p_input[input_index];
+                p_output[(*p_output_buffer_length)++] = p_input[input_index];
         }
     }
-    p_output[output_index++] = (uint8_t)SLIP_END;
-    p_output[output_index++] = (uint8_t)SLIP_END; // clarify that the packet has ended.
+    p_output[(*p_output_buffer_length)++] = SLIP_BYTE_END;
 
-    return output_index;
+    return NRF_SUCCESS;
 }
 
-
-uint32_t slip_decoding_add_char(uint8_t c, buffer_t * p_buf, slip_state_t * current_state)
+ret_code_t slip_decode_add_byte(slip_t * p_slip, uint8_t c)
 {
-    switch (*current_state)
+    if (p_slip == NULL)
     {
-        case SLIP_DECODING:
-            if (c == SLIP_END)
+        return NRF_ERROR_NULL;
+    }
+
+    if (p_slip->current_index == p_slip->buffer_len)
+    {
+        return NRF_ERROR_NO_MEM;
+    }
+
+    switch (p_slip->state)
+    {
+        case SLIP_STATE_DECODING:
+            switch (c)
             {
-                *current_state = SLIP_END_RECEIVED;
-            }
-            else if (c == SLIP_ESC)
-            {
-                *current_state = SLIP_END_RECEIVED;
-            }
-            else
-            {
-                p_buf->p_buffer[p_buf->current_index++] = c;
-                p_buf->current_length++;
+                case SLIP_BYTE_END:
+                    // finished reading packet
+                    return NRF_SUCCESS;
+
+                case SLIP_BYTE_ESC:
+                    // wait for
+                    p_slip->state = SLIP_STATE_ESC_RECEIVED;
+                    break;
+
+                default:
+                    // add byte to buffer
+                    p_slip->p_buffer[p_slip->current_index++] = c;
+                    break;
             }
             break;
 
-        case SLIP_ESC_RECEIVED:
-            if (c == SLIP_ESC_ESC)
+        case SLIP_STATE_ESC_RECEIVED:
+            switch (c)
             {
-                p_buf->p_buffer[p_buf->current_index++] = SLIP_ESC;
-                p_buf->current_length++;
-                *current_state = SLIP_DECODING;
-            }
-            else
-            {
-                // violation of protocol
-                *current_state = SLIP_CLEARING_INVALID_PACKET;
-                return NRF_ERROR_INVALID_DATA;
+                case SLIP_BYTE_ESC_END:
+                    p_slip->p_buffer[p_slip->current_index++] = SLIP_BYTE_END;
+                    p_slip->state = SLIP_STATE_DECODING;
+                    break;
+
+                case SLIP_BYTE_ESC_ESC:
+                    p_slip->p_buffer[p_slip->current_index++] = SLIP_BYTE_ESC;
+                    p_slip->state = SLIP_STATE_DECODING;
+                    break;
+
+                default:
+                    // protocol violation
+                    p_slip->state = SLIP_STATE_CLEARING_INVALID_PACKET;
+                    return NRF_ERROR_INVALID_DATA;
             }
             break;
 
-        case SLIP_END_RECEIVED:
-            if (c == SLIP_ESC_END)
+        case SLIP_STATE_CLEARING_INVALID_PACKET:
+            if (c == SLIP_BYTE_END)
             {
-                p_buf->p_buffer[p_buf->current_index++] = SLIP_END;
-                p_buf->current_length++;
-                *current_state = SLIP_DECODING;
-            }
-            else
-            {
-                // packet is finished
-                *current_state = SLIP_DECODING;
-                return NRF_SUCCESS;
-            }
-            break;
-
-        case SLIP_CLEARING_INVALID_PACKET:
-            if (c == SLIP_END)
-            {
-                *current_state = SLIP_DECODING;
-                p_buf->current_index = 0;
-                p_buf->current_length = 0;
+                p_slip->state = SLIP_STATE_DECODING;
+                p_slip->current_index = 0;
             }
             break;
     }
+
     return NRF_ERROR_BUSY;
 }
 #endif //NRF_MODULE_ENABLED(SLIP)

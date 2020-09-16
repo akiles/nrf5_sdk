@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_sdk_srv_ln_common Location and Navigation common defines
@@ -58,9 +57,9 @@ extern "C" {
 #define BLE_LNS_INVALID_ROUTE                                       0xFFFF
 #define BLE_LNS_NO_FIX                                              0xFF
 
-#define BLE_LNS_MAX_NUM_ROUTES                                      10                      /**< The maximum number of routes. This affects memory usage only. */
-#define BLE_LNS_MAX_ROUTE_NAME_LEN                                  (BLE_L2CAP_MTU_DEF - 5)   /**< The maximum length of length of a route name. */
-#define MAX_CTRL_POINT_RESP_PARAM_LEN   BLE_LNS_MAX_ROUTE_NAME_LEN + 3                      /**< Maximum length of a control point response. */
+#define BLE_LNS_MAX_NUM_ROUTES                                      10                              /**< The maximum number of routes. This affects memory usage only. */
+#define BLE_LNS_MAX_ROUTE_NAME_LEN                                  BLE_GATT_ATT_MTU_DEFAULT - 5    /**< The maximum length of length of a route name. */
+#define MAX_CTRL_POINT_RESP_PARAM_LEN                               BLE_LNS_MAX_ROUTE_NAME_LEN + 3  /**< Maximum length of a control point response. */
 
 // Location and Navigation Service feature bits
 #define BLE_LNS_FEATURE_INSTANT_SPEED_SUPPORTED                     (0x01 << 0)             /**< Instaneous Speed Supported bit. */

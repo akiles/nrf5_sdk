@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /**@file
  * @defgroup ant_bpwr_sensor_main ANT Bicycle Power sensor example
  * @{
@@ -95,8 +94,6 @@
     #define SENSOR_TYPE (TORQUE_NONE)
 #endif
 
-#define APP_TIMER_PRESCALER         0x00 /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE     0x04 /**< Size of timer operation queues. */
 #define BPWR_CHANNEL_NUMBER         0x00 /**< Channel number assigned to Bicycle Power profile. */
 #define ANTPLUS_NETWORK_NUMBER      0       /**< Network number. */
 #define CALIBRATION_DATA            0x55AAu /**< General calibration data value. */
@@ -240,13 +237,13 @@ static void utils_setup(void)
 
     // Initialize and start a single continuous mode timer, which is used to update the event time
     // on the main data page.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 }

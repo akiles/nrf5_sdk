@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@cond To Make Doxygen skip documentation generation for this file.
  * @{
  */
@@ -115,14 +114,13 @@ static void tx_buffer_process(void)
         }
         if (err_code == NRF_SUCCESS)
         {
-            NRF_LOG_INFO("SD Read/Write API returns Success..\r\n");
             m_tx_index++;
             m_tx_index &= TX_BUFFER_MASK;
         }
         else
         {
-            NRF_LOG_INFO("SD Read/Write API returns error. This message sending will be "
-                "attempted again..\r\n");
+            NRF_LOG_DEBUG("SD Read/Write API returns error. This message sending will be "
+                          "attempted again..\r\n");
         }
     }
 }
@@ -160,13 +158,15 @@ static void on_hvx(ble_hrs_c_t * p_ble_hrs_c, const ble_evt_t * p_ble_evt)
     // Check if the event is on the link for this instance
     if (p_ble_hrs_c->conn_handle != p_ble_evt->evt.gattc_evt.conn_handle)
     {
-        NRF_LOG_DEBUG("received HVX on link 0x%x, not associated to this instance, ignore\r\n",
-            p_ble_evt->evt.gattc_evt.conn_handle);
+        NRF_LOG_DEBUG("Received HVX on link 0x%x, not associated to this instance, ignore\r\n",
+                      p_ble_evt->evt.gattc_evt.conn_handle);
         return;
     }
-    NRF_LOG_DEBUG("received HVX on handle 0x%x, hrm_handle 0x%x\r\n",
-        p_ble_evt->evt.gattc_evt.params.hvx.handle,
-        p_ble_hrs_c->peer_hrs_db.hrm_handle);
+
+    NRF_LOG_DEBUG("Received HVX on link 0x%x, hrm_handle 0x%x\r\n",
+    p_ble_evt->evt.gattc_evt.params.hvx.handle,
+    p_ble_hrs_c->peer_hrs_db.hrm_handle);
+
     // Check if this is a heart rate notification.
     if (p_ble_evt->evt.gattc_evt.params.hvx.handle == p_ble_hrs_c->peer_hrs_db.hrm_handle)
     {
@@ -189,6 +189,7 @@ static void on_hvx(ble_hrs_c_t * p_ble_hrs_c, const ble_evt_t * p_ble_evt)
                 uint16_decode(&(p_ble_evt->evt.gattc_evt.params.hvx.data[index]));
             index += sizeof(uint16_t);
         }
+
         if ((p_ble_evt->evt.gattc_evt.params.hvx.data[0] & HRM_FLAG_MASK_HR_RR_INT))
         {
             uint32_t i;
@@ -260,7 +261,7 @@ void ble_hrs_on_db_disc_evt(ble_hrs_c_t * p_ble_hrs_c, const ble_db_discovery_ev
             }
         }
 
-        NRF_LOG_INFO("Heart Rate Service discovered at peer.\r\n");
+        NRF_LOG_DEBUG("Heart Rate Service discovered at peer.\r\n");
         //If the instance has been assigned prior to db_discovery, assign the db_handles
         if (p_ble_hrs_c->conn_handle != BLE_CONN_HANDLE_INVALID)
         {
@@ -328,7 +329,7 @@ void ble_hrs_c_on_ble_evt(ble_hrs_c_t * p_ble_hrs_c, const ble_evt_t * p_ble_evt
  */
 static uint32_t cccd_configure(uint16_t conn_handle, uint16_t handle_cccd, bool enable)
 {
-    NRF_LOG_INFO("Configuring CCCD. CCCD Handle = %d, Connection Handle = %d\r\n",
+    NRF_LOG_DEBUG("Configuring CCCD. CCCD Handle = %d, Connection Handle = %d\r\n",
         handle_cccd,conn_handle);
 
     tx_message_t * p_msg;

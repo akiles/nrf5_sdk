@@ -37,16 +37,15 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /* Attention!
- * To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
+ * To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
  * qualification listings, this section of source code must not be modified.
  */
 
 #include "ble_sc_ctrlpt.h"
 #include <string.h>
 #include "nordic_common.h"
-#include "ble_l2cap.h"
+#include "ble.h"
 #include "ble_srv_common.h"
 #include "app_util.h"
 
@@ -300,13 +299,13 @@ static void sc_ctrlpt_resp_send(ble_sc_ctrlpt_t * p_sc_ctrlpt)
                 // Wait for HVC event
                 break;
 
-            case BLE_ERROR_NO_TX_PACKETS:
-                // Wait for TX_COMPLETE event to retry transmission
+            case NRF_ERROR_RESOURCES:
+                // Wait for TX_COMPLETE event to retry transmission.
                 p_sc_ctrlpt->procedure_status = BLE_SCPT_INDICATION_PENDING;
                 break;
 
             default:
-                // Report error to application
+                // Report error to application.
                 p_sc_ctrlpt->procedure_status = BLE_SCPT_NO_PROC_IN_PROGRESS;
                 if (p_sc_ctrlpt->error_handler != NULL)
                 {
@@ -621,7 +620,7 @@ void ble_sc_ctrlpt_on_ble_evt(ble_sc_ctrlpt_t * p_sc_ctrlpt, ble_evt_t * p_ble_e
             on_sc_hvc_confirm(p_sc_ctrlpt, p_ble_evt);
             break;
 
-        case BLE_EVT_TX_COMPLETE:
+        case BLE_GATTS_EVT_HVN_TX_COMPLETE:
             on_tx_complete(p_sc_ctrlpt);
             break;
 

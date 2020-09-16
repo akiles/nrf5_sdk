@@ -61,7 +61,7 @@ uint32_t es_stopwatch_check(es_stopwatch_id_t id)
         APP_ERROR_CHECK(NRF_ERROR_INVALID_STATE);
     }
 
-     (void) app_timer_cnt_diff_compute(ticks_current, m_ticks_last_returned[id], &ticks_diff);
+    ticks_diff = app_timer_cnt_diff_compute(ticks_current, m_ticks_last_returned[id]);
 
     if (ticks_diff >= m_ids_ticks_wrap[id])
     {

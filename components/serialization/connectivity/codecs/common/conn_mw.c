@@ -41,11 +41,14 @@
 
 #include "ble_serialization.h"
 #include "nrf_soc.h"
+
+#ifdef BLE_STACK_SUPPORT_REQD
 #include "ble.h"
 #include "ble_l2cap.h"
 #include "ble_gap.h"
 #include "ble_gattc.h"
 #include "ble_gatts.h"
+#endif // BLE_STAK_SUPPORT_REQD
 
 /**@brief Connectivity middleware handler type. */
 typedef uint32_t (*conn_mw_handler_t)(uint8_t const * const p_rx_buf,

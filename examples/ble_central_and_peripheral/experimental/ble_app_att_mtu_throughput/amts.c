@@ -37,24 +37,23 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@cond To Make Doxygen skip documentation generation for this file.
  * @{
  */
 
-#include "sdk_common.h"
+#include "amt.h"
 #include "nrf_error.h"
+#include "sdk_common.h"
+#include "app_error.h"
 #include "ble_err.h"
 #include "ble_srv_common.h"
-#include "app_error.h"
-#include "amt.h"
 
-#define NRF_LOG_MODULE_NAME "AMT_S"
+#define NRF_LOG_MODULE_NAME "AMTS"
 #include "nrf_log.h"
 
 
-#define OPCODE_LENGTH 1     /**< Length of opcode inside a notification. */
-#define HANDLE_LENGTH 2     /**< Length of handle inside a notification. */
+#define OPCODE_LENGTH 1 /**< Length of opcode inside a notification. */
+#define HANDLE_LENGTH 2 /**< Length of handle inside a notification. */
 
 
 static void char_notification_send(nrf_ble_amts_t * p_ctx);
@@ -73,8 +72,8 @@ static void on_connect(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt)
 
 /**@brief Function for handling the Disconnect event.
  *
- * @param     p_ctx       Pointer to the AMTS structure.
- * @param[in] p_ble_evt  Event received from the BLE stack.
+ * @param     p_ctx         Pointer to the AMTS structure.
+ * @param[in] p_ble_evt     Event received from the BLE stack.
  */
 static void on_disconnect(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt)
 {
@@ -84,7 +83,7 @@ static void on_disconnect(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt)
 
 /**@brief Function for handling the TX_COMPLETE event.
  *
- * @param     p_ctx       Pointer to the AMTS structure.
+ * @param   p_ctx   Pointer to the AMTS structure.
  */
 static void on_tx_complete(nrf_ble_amts_t * p_ctx)
 {
@@ -105,19 +104,18 @@ static void on_write(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt)
 {
     ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
 
-    if ((p_evt_write->handle == p_ctx->amts_char_handles.cccd_handle) &&
-        (p_evt_write->len == 2))
+    if ((p_evt_write->handle == p_ctx->amts_char_handles.cccd_handle) && (p_evt_write->len == 2))
     {
         // CCCD written, call the application event handler.
         nrf_ble_amts_evt_t evt;
 
         if (ble_srv_is_notification_enabled(p_evt_write->data))
         {
-            evt.evt_type = SERVICE_EVT_NOTIF_ENABLED;
+            evt.evt_type = NRF_BLE_AMTS_EVT_NOTIF_ENABLED;
         }
         else
         {
-            evt.evt_type = SERVICE_EVT_NOTIF_DISABLED;
+            evt.evt_type = NRF_BLE_AMTS_EVT_NOTIF_DISABLED;
         }
 
         p_ctx->evt_handler(evt);
@@ -141,7 +139,7 @@ void nrf_ble_amts_on_ble_evt(nrf_ble_amts_t * p_ctx, ble_evt_t * p_ble_evt)
             on_write(p_ctx, p_ble_evt);
             break;
 
-        case BLE_EVT_TX_COMPLETE:
+        case BLE_GATTS_EVT_HVN_TX_COMPLETE:
             on_tx_complete(p_ctx);
             break;
 
@@ -201,34 +199,39 @@ void nrf_ble_amts_init(nrf_ble_amts_t * p_ctx, amts_evt_handler_t evt_handler)
 
 void nrf_ble_amts_notif_spam(nrf_ble_amts_t * p_ctx)
 {
-    NRF_LOG_INFO("Spamming notifications.\r\n");
     p_ctx->kbytes_sent = 0;
     p_ctx->bytes_sent  = 0;
     char_notification_send(p_ctx);
 }
 
 
-void nrf_ble_amts_on_gatt_evt(nrf_ble_amts_t * p_ctx, nrf_ble_gatt_evt_t * p_gatt_evt)
+void nrf_ble_amts_on_gatt_evt(nrf_ble_amts_t * p_ctx, nrf_ble_gatt_evt_t const * p_gatt_evt)
 {
-    p_ctx->max_payload_len = p_gatt_evt->att_mtu_effective - OPCODE_LENGTH - HANDLE_LENGTH;
+    if (p_gatt_evt->evt_id == NRF_BLE_GATT_EVT_ATT_MTU_UPDATED)
+    {
+        p_ctx->max_payload_len =
+            p_gatt_evt->params.att_mtu_effective - OPCODE_LENGTH - HANDLE_LENGTH;
+    }
 }
 
 
 static void char_notification_send(nrf_ble_amts_t * p_ctx)
 {
     uint8_t            data[256];
-    uint16_t           len = p_ctx->max_payload_len;
+    uint16_t           payload_len = p_ctx->max_payload_len;
     nrf_ble_amts_evt_t evt;
 
     if (p_ctx->bytes_sent >= AMT_BYTE_TRANSFER_CNT)
     {
         evt.bytes_transfered_cnt = p_ctx->bytes_sent;
-        p_ctx->busy              = false;
-        p_ctx->bytes_sent        = 0;
-        p_ctx->kbytes_sent       = 0;
+        evt.evt_type             = NRF_BLE_AMTS_EVT_TRANSFER_FINISHED;
 
-        evt.evt_type = SERVICE_EVT_TRANSFER_FINISHED;
         p_ctx->evt_handler(evt);
+
+        p_ctx->busy        = false;
+        p_ctx->bytes_sent  = 0;
+        p_ctx->kbytes_sent = 0;
+
         return;
     }
 
@@ -237,19 +240,19 @@ static void char_notification_send(nrf_ble_amts_t * p_ctx)
         .type   = BLE_GATT_HVX_NOTIFICATION,
         .handle = p_ctx->amts_char_handles.value_handle,
         .p_data = data,
-        .p_len  = &len,
+        .p_len  = &payload_len,
     };
 
     uint32_t err_code = NRF_SUCCESS;
     while (err_code == NRF_SUCCESS)
     {
-        (void) uint32_encode(p_ctx->bytes_sent, data);
+        (void)uint32_encode(p_ctx->bytes_sent, data);
 
         err_code = sd_ble_gatts_hvx(p_ctx->conn_handle, &hvx_param);
 
-        if (err_code == BLE_ERROR_NO_TX_PACKETS)
+        if (err_code == NRF_ERROR_RESOURCES)
         {
-            // Wait for BLE_EVT_TX_COMPLETE.
+            // Wait for BLE_GATTS_EVT_HVN_TX_COMPLETE.
             p_ctx->busy = true;
             break;
         }
@@ -258,13 +261,13 @@ static void char_notification_send(nrf_ble_amts_t * p_ctx)
             NRF_LOG_ERROR("sd_ble_gatts_hvx() failed: 0x%x\r\n", err_code);
         }
 
-        p_ctx->bytes_sent += len;
+        p_ctx->bytes_sent += payload_len;
 
         if (p_ctx->kbytes_sent != (p_ctx->bytes_sent / 1024))
         {
             p_ctx->kbytes_sent = (p_ctx->bytes_sent / 1024);
 
-            evt.evt_type             = SERVICE_EVT_TRANSFER_1KB;
+            evt.evt_type             = NRF_BLE_AMTS_EVT_TRANSFER_1KB;
             evt.bytes_transfered_cnt = p_ctx->bytes_sent;
             p_ctx->evt_handler(evt);
         }
@@ -281,7 +284,7 @@ void nrf_ble_amts_rbc_set(nrf_ble_amts_t * p_ctx, uint32_t byte_cnt)
 
     memset(&value_param, 0x00, sizeof(value_param));
 
-    len = (uint16_t)uint32_encode(byte_cnt, data);
+    len                 = (uint16_t)uint32_encode(byte_cnt, data);
     value_param.len     = len;
     value_param.p_value = data;
 

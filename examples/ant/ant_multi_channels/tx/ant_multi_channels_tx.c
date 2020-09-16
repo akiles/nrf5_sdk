@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 #include <stdint.h>
 #include "ant_interface.h"
 #include "ant_parameters.h"

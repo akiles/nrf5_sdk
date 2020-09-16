@@ -37,14 +37,13 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  *
  * @defgroup ser_app_hal Serialization Application Hardware Abstraction Layer (HAL)
  * @{
  * @ingroup ble_sdk_lib_serialization
  *
- * @brief @tagAPI52832 Functions that set up hardware on Application Board and perform the reset of the Connectivity Board.
+ * @brief Functions that set up hardware on Application Board and perform the reset of the Connectivity Board.
  */
 
 #ifndef SER_APP_HAL_H_

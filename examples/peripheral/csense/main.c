@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  * @defgroup capacitive_sensor_example_main main.c
  * @{
@@ -61,12 +60,8 @@
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 
-/* Time in RTC ticks between RTC interrupts. */
-#define APP_TIMER_TICKS_TIMEOUT 2050
-
-/* Timer initalization parameters. */
-#define OP_QUEUES_SIZE          4
-#define APP_TIMER_PRESCALER     0
+/* Time between RTC interrupts. */
+#define APP_TIMER_TICKS_TIMEOUT APP_TIMER_TICKS(50)
 
 /* Scale range. */
 #define RANGE                   50
@@ -91,19 +86,19 @@
 #endif
 
 /* Threshold values for pads and button. */
-#define THRESHOLD_PAD_1         1000
-#define THRESHOLD_PAD_2         1000
-#define THRESHOLD_PAD_3         1000
-#define THRESHOLD_PAD_4         1000
-#define THRESHOLD_BUTTON        1200
+#define THRESHOLD_PAD_1         400
+#define THRESHOLD_PAD_2         400
+#define THRESHOLD_PAD_3         400
+#define THRESHOLD_PAD_4         400
+#define THRESHOLD_BUTTON        400
 
 /*lint -e19 -save */
 NRF_CSENSE_BUTTON_DEF(m_button, (BUTTON, THRESHOLD_BUTTON));
 NRF_CSENSE_SLIDER_4_DEF(m_slider,
-                        RANGE, 
-                        (PAD1, THRESHOLD_PAD_1), 
+                        RANGE,
+                        (PAD1, THRESHOLD_PAD_1),
                         (PAD2, THRESHOLD_PAD_2),
-                        (PAD3, THRESHOLD_PAD_3), 
+                        (PAD3, THRESHOLD_PAD_3),
                         (PAD4, THRESHOLD_PAD_4));
 /*lint -restore*/
 
@@ -217,7 +212,8 @@ int main(void)
 
     NRF_LOG_INFO("Capacitive sensing library example.\r\n");
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, OP_QUEUES_SIZE, NULL);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
     err_code = clock_config();
     APP_ERROR_CHECK(err_code);

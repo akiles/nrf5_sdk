@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef SDK_MAPPED_FLAGS_H__
 #define SDK_MAPPED_FLAGS_H__
 
@@ -69,11 +68,11 @@ extern "C" {
  *
  */
 
-#define SDK_MAPPED_FLAGS_N_KEYS          8       /**< The number of keys to keep flags for. This is also the number of flags in a flag collection. If changing this value, you might also need change the width of the sdk_mapped_flags_t type. */
+#define SDK_MAPPED_FLAGS_N_KEYS          32      /**< The number of keys to keep flags for. This is also the number of flags in a flag collection. If changing this value, you might also need change the width of the sdk_mapped_flags_t type. */
 #define SDK_MAPPED_FLAGS_N_KEYS_PER_BYTE 8       /**< The number of flags that fit in one byte. */
 #define SDK_MAPPED_FLAGS_INVALID_INDEX   0xFFFF  /**< A flag index guaranteed to be invalid. */
 
-typedef uint8_t sdk_mapped_flags_t; /**< The bitmap to hold flags. Each flag is one bit, and each bit represents the flag state associated with one key. */
+typedef uint32_t sdk_mapped_flags_t; /**< The bitmap to hold flags. Each flag is one bit, and each bit represents the flag state associated with one key. */
 
 
 // Test whether the flag collection type is large enough to hold all the flags. If this fails,

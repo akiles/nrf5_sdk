@@ -37,26 +37,22 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "nrf_dfu_flash.h"
 #include "nrf_dfu_types.h"
-#include "softdevice_handler.h"
 #include "nrf_nvmc.h"
 #include "nrf_log.h"
-
-#ifdef SOFTDEVICE_PRESENT
-// Only include fstorage if SD interaction is required
-#include "fstorage.h"
-#endif
 
 #define FLASH_FLAG_NONE                 (0)
 #define FLASH_FLAG_OPER                 (1<<0)
 #define FLASH_FLAG_FAILURE_SINCE_LAST   (1<<1)
 #define FLASH_FLAG_SD_ENABLED           (1<<2)
 
-static uint32_t m_flags;
+static uint32_t m_flags;  /*lint -e551*/
+
 
 #ifdef BLE_STACK_SUPPORT_REQD
+#include "softdevice_handler.h"
+#include "fstorage.h"
 
 // Function prototypes
 static void fs_evt_handler(fs_evt_t const * const evt, fs_ret_t result);
@@ -81,7 +77,7 @@ static void fs_evt_handler(fs_evt_t const * const evt, fs_ret_t result)
     }
     else
     {
-        NRF_LOG_INFO("Generating failure\r\n");
+        NRF_LOG_ERROR("Generating failure\r\n");
         m_flags |= FLASH_FLAG_FAILURE_SINCE_LAST;
     }
 
@@ -103,10 +99,10 @@ uint32_t nrf_dfu_flash_init(bool sd_enabled)
     // Only run this initialization if SD is enabled
     if(sd_enabled)
     {
-        NRF_LOG_INFO("------- nrf_dfu_flash_init-------\r\n");
+        NRF_LOG_DEBUG("------- nrf_dfu_flash_init-------\r\n");
         if (fs_fake_init() != FS_SUCCESS)
         {
-            NRF_LOG_INFO("Not initializing the thing\r\n");
+            NRF_LOG_ERROR("Not initializing the thing\r\n");
             return NRF_ERROR_INVALID_STATE;
         }
 
@@ -116,7 +112,7 @@ uint32_t nrf_dfu_flash_init(bool sd_enabled)
         err_code = softdevice_sys_evt_handler_set(fs_sys_event_handler);
         if (err_code != NRF_SUCCESS)
         {
-            NRF_LOG_INFO("Not initializing the thing 2\r\n");
+            NRF_LOG_ERROR("Not initializing the thing 2\r\n");
             return NRF_ERROR_INVALID_STATE;
         }
 
@@ -144,7 +140,7 @@ fs_ret_t nrf_dfu_flash_store(uint32_t const * p_dest, uint32_t const * const p_s
         // Check if there is a pending error
         if ((m_flags & FLASH_FLAG_FAILURE_SINCE_LAST) != 0)
         {
-            NRF_LOG_INFO("Flash: Failure since last\r\n");
+            NRF_LOG_ERROR("Flash: Failure since last\r\n");
             return FS_ERR_FAILURE_SINCE_LAST;
         }
 
@@ -155,7 +151,7 @@ fs_ret_t nrf_dfu_flash_store(uint32_t const * p_dest, uint32_t const * const p_s
 
         if (ret_val != FS_SUCCESS)
         {
-            NRF_LOG_INFO("Flash: failed %d\r\n", ret_val);
+            NRF_LOG_ERROR("Flash: failed %d\r\n", ret_val);
             return ret_val;
         }
 
@@ -181,7 +177,7 @@ fs_ret_t nrf_dfu_flash_store(uint32_t const * p_dest, uint32_t const * const p_s
 
         if (len_words == 0)
         {
-            NRF_LOG_INFO("Flash: Invallid length (NVMC)\r\n");
+            NRF_LOG_ERROR("Flash: Invalid length (NVMC)\r\n");
             return FS_ERR_INVALID_ARG;
         }
 #endif
@@ -215,7 +211,7 @@ fs_ret_t nrf_dfu_flash_store(uint32_t const * p_dest, uint32_t const * const p_s
 fs_ret_t nrf_dfu_flash_erase(uint32_t const * p_dest, uint32_t num_pages, dfu_flash_callback_t callback)
 {
     fs_ret_t ret_val = FS_SUCCESS;
-    NRF_LOG_INFO("Erasing: 0x%08x, num: %d\r\n", (uint32_t)p_dest, num_pages);
+    NRF_LOG_DEBUG("Erasing: 0x%08x, num: %d\r\n", (uint32_t)p_dest, num_pages);
 
 #ifdef BLE_STACK_SUPPORT_REQD
 
@@ -224,7 +220,7 @@ fs_ret_t nrf_dfu_flash_erase(uint32_t const * p_dest, uint32_t num_pages, dfu_fl
         // Check if there is a pending error
         if ((m_flags & FLASH_FLAG_FAILURE_SINCE_LAST) != 0)
         {
-            NRF_LOG_INFO("Erase: Failure since last\r\n");
+            NRF_LOG_ERROR("Erase: Failure since last\r\n");
             return FS_ERR_FAILURE_SINCE_LAST;
         }
 
@@ -233,7 +229,7 @@ fs_ret_t nrf_dfu_flash_erase(uint32_t const * p_dest, uint32_t num_pages, dfu_fl
 
         if (ret_val != FS_SUCCESS)
         {
-            NRF_LOG_INFO("Erase failed: %d\r\n", ret_val);
+            NRF_LOG_ERROR("Erase failed: %d\r\n", ret_val);
             m_flags &= ~FLASH_FLAG_OPER;
             return ret_val;
         }
@@ -248,7 +244,7 @@ fs_ret_t nrf_dfu_flash_erase(uint32_t const * p_dest, uint32_t num_pages, dfu_fl
         // Softdevice is not present or activated. Run the NVMC instead
         if (((uint32_t)p_dest & (CODE_PAGE_SIZE-1)) != 0)
         {
-            NRF_LOG_INFO("Invalid address\r\n");
+            NRF_LOG_ERROR("Invalid address\r\n");
             return FS_ERR_UNALIGNED_ADDR;
         }
 #endif
@@ -294,7 +290,7 @@ void nrf_dfu_flash_error_clear(void)
 
 fs_ret_t nrf_dfu_flash_wait(void)
 {
-    NRF_LOG_INFO("Waiting for finished...\r\n");
+    NRF_LOG_DEBUG("Waiting for finished...\r\n");
 
 #ifdef BLE_STACK_SUPPORT_REQD
     if ((m_flags & FLASH_FLAG_SD_ENABLED) != 0)
@@ -306,12 +302,12 @@ fs_ret_t nrf_dfu_flash_wait(void)
 
         if ((m_flags & FLASH_FLAG_FAILURE_SINCE_LAST) != 0)
         {
-            NRF_LOG_INFO("Failure since last\r\n");
+            NRF_LOG_ERROR("Failure since last\r\n");
             return FS_ERR_FAILURE_SINCE_LAST;
         }
     }
 #endif
 
-    NRF_LOG_INFO("After wait!\r\n");
+    NRF_LOG_DEBUG("After wait!\r\n");
     return FS_SUCCESS;
 }

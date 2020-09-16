@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup app_button Button Handler
@@ -132,7 +131,7 @@ uint32_t app_button_disable(void);
 /**@brief Function for checking if a button is currently being pushed.
  *
  * @param[in]  button_id     Button index (in the app_button_cfg_t array given to app_button_init) to be checked.
- * 
+ *
  * @return     Button state.
  */
 bool app_button_is_pushed(uint8_t button_id);

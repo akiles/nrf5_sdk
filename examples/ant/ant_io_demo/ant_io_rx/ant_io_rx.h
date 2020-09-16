@@ -48,8 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
-
 #ifndef ANT_IO_RX_H__
 #define ANT_IO_RX_H__
 

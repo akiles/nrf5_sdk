@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /**@file
  * @defgroup nrf_ant_relay_demo ANT Relay Example
  * @{
@@ -85,10 +84,6 @@
 #define ANT_MOBILE_CHANNEL              ((uint8_t) 0)               /**< Mobile phone interface channel - ANT Channel 0. */
 #define ANT_RELAY_MASTER_CHANNEL        ((uint8_t) 1)               /**< Device to device master channel - ANT Channel 1. */
 #define ANT_RELAY_SLAVE_CHANNEL         ((uint8_t) 2)               /**< Device to device slave channel - ANT Channel 2. */
-
-#define APP_TIMER_PRESCALER             0                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE         2u                          /**< Size of timer operation queues. */
-
 
 typedef enum{
     ANT_LED_STATE_OFF = 0,
@@ -407,10 +402,10 @@ static void utils_setup(void)
 {
     // Initialize and start a single continuous mode timer, which is used to update the event time
     // on the main data page.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    uint32_t err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
-    uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                                 APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                                  bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 }

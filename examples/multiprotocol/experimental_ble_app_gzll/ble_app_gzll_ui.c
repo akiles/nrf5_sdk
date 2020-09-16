@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "ble_app_gzll_ui.h"
 #include "app_error.h"
 #include "app_timer.h"
@@ -49,9 +48,7 @@ void bsp_init_app(void)
 {
     uint32_t err_code;
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
-                        NULL);
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, NULL);
     APP_ERROR_CHECK(err_code);
 }
 

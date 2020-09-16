@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 #ifndef D52STARTERKIT_H
 #define D52STARTERKIT_H
 
@@ -126,6 +125,21 @@ extern "C" {
 #define TX_PIN_NUMBER  UART_PIN_DISCONNECTED
 #define CTS_PIN_NUMBER UART_PIN_DISCONNECTED
 #define RTS_PIN_NUMBER UART_PIN_DISCONNECTED
+
+// serialization CONNECTIVITY board
+#define SER_CON_RX_PIN              22    // UART RX pin number.
+#define SER_CON_TX_PIN              23    // UART TX pin number.
+#define SER_CON_CTS_PIN             25    // UART Clear To Send pin number. Not used if HWFC is set to false.
+#define SER_CON_RTS_PIN             2     // UART Request To Send pin number. Not used if HWFC is set to false.
+
+// serialization APPLICATION board - temp. setup for running serialized MEMU tests
+#define SER_APP_RX_PIN              23    // UART RX pin number.
+#define SER_APP_TX_PIN              22    // UART TX pin number.
+#define SER_APP_CTS_PIN             2     // UART Clear To Send pin number.
+#define SER_APP_RTS_PIN             25    // UART Request To Send pin number.
+
+
+#define SER_CONN_CHIP_RESET_PIN     11    // Pin used to reset connectivity chip
 
 // Low frequency clock source to be used by the SoftDevice
 #define NRF_CLOCK_LFCLKSRC      {.source        = NRF_CLOCK_LF_SRC_XTAL,            \

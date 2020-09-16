@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_dis Device Information Service
@@ -47,7 +46,7 @@
  *
  * @details This module implements the Device Information Service.
  *          During initialization it adds the Device Information Service to the BLE stack database.
- *          It then encodes the supplied information, and adds the curresponding characteristics.
+ *          It then encodes the supplied information, and adds the corresponding characteristics.
  *
  * @note Attention!
  *  To maintain compliance with Nordic Semiconductor ASA Bluetooth profile

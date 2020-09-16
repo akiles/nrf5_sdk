@@ -37,8 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
-
 /**
  * @file
  * @brief Gazell Link Layer API.
@@ -57,7 +55,7 @@ extern "C" {
 
 
 /**
-* @defgroup gzll_02_api Application Programming Interface (API)
+* @defgroup gzll_02_api Gazell Link Layer
 * @{
 * @ingroup modules_01_gzll
 * @brief Gazell Link Layer Application Programming Interface (API).

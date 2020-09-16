@@ -17,12 +17,16 @@ SECTIONS
     KEEP(*(.fs_data))
     PROVIDE(__stop_fs_data = .);
   } > RAM
+} INSERT AFTER .data;
+
+SECTIONS
+{
   .pwr_mgmt_data :
   {
     PROVIDE(__start_pwr_mgmt_data = .);
-    KEEP(*(.pwr_mgmt_data))
+    KEEP(*(SORT(.pwr_mgmt_data*)))
     PROVIDE(__stop_pwr_mgmt_data = .);
-  } > RAM
-} INSERT AFTER .data;
+  } > FLASH
+} INSERT AFTER .text
 
 INCLUDE "nrf5x_common.ld"

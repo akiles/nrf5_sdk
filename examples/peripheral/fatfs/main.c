@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  * @defgroup fatfs_example_main main.c
  * @{
@@ -111,7 +110,7 @@ static void fatfs_example()
         NRF_LOG_INFO("Disk initialization failed.\r\n");
         return;
     }
-    
+
     uint32_t blocks_per_mb = (1024uL * 1024uL) / m_block_dev_sdc.block_dev.p_ops->geometry(&m_block_dev_sdc.block_dev)->blk_size;
     uint32_t capacity = m_block_dev_sdc.block_dev.p_ops->geometry(&m_block_dev_sdc.block_dev)->blk_count / blocks_per_mb;
     NRF_LOG_INFO("Capacity: %d MB\r\n", capacity);
@@ -131,7 +130,7 @@ static void fatfs_example()
         NRF_LOG_INFO("Directory listing failed!\r\n");
         return;
     }
-    
+
     do
     {
         ff_result = f_readdir(&dir, &fno);
@@ -140,7 +139,7 @@ static void fatfs_example()
             NRF_LOG_INFO("Directory read failed.");
             return;
         }
-        
+
         if (fno.fname[0])
         {
             if (fno.fattrib & AM_DIR)
@@ -155,7 +154,7 @@ static void fatfs_example()
     }
     while (fno.fname[0]);
     NRF_LOG_RAW_INFO("\r\n");
-    
+
     NRF_LOG_INFO("Writing to file " FILE_NAME "...\r\n");
     ff_result = f_open(&file, FILE_NAME, FA_READ | FA_WRITE | FA_OPEN_APPEND);
     if (ff_result != FR_OK)

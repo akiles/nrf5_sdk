@@ -37,6 +37,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+
 #ifndef APP_USBD_H__
 #define APP_USBD_H__
 
@@ -60,14 +61,29 @@ extern "C" {
  */
 
 /**
+ * @brief Configuration passed to @ref app_usbd_init.
+ */
+typedef struct {
+    /**
+     * @brief User defined event handler.
+     *
+     * @param event Event type.
+     */
+    void (*ev_handler)(app_usbd_event_type_t event);
+} app_usbd_config_t;
+
+/**
  * @brief USB library initialization.
  *
  * Call this function before any configuration or class attachment.
  * USBD peripheral would be ready to accept commands, and library would be ready,
  * but it would not be connected to the bus.
  * Call @ref app_usbd_enable to enable USBD communication with the host.
+ *
+ * @param p_config  Configuration. NULL pointer might be passed here and default
+ *                  configuration will be applied then.
  */
-ret_code_t app_usbd_init(void);
+ret_code_t app_usbd_init(app_usbd_config_t const * p_config);
 
 /**
  * @brief USB library un-initialization
@@ -233,24 +249,20 @@ const void * app_usbd_class_descriptor_find(app_usbd_class_inst_t const * const 
 /**
  * @brief Standard interface request handle
  *
- * @param[in] p_cinst    Instance of a class
  * @param[in] p_setup_ev Setup event
  *
  * @return Standard error code
  * */
-ret_code_t app_usbd_interface_std_req_handle(app_usbd_class_inst_t const * p_cinst,
-                                             app_usbd_setup_evt_t  const * p_setup_ev);
+ret_code_t app_usbd_interface_std_req_handle(app_usbd_setup_evt_t  const * p_setup_ev);
 
 /**
  * @brief Standard endpoint request handle
  *
- * @param[in] p_cinst    Instance of a class
  * @param[in] p_setup_ev Setup event
  *
  * @return Standard error code
  * */
-ret_code_t app_usbd_endpoint_std_req_handle(app_usbd_class_inst_t const * p_cinst,
-                                            app_usbd_setup_evt_t  const * p_setup_ev);
+ret_code_t app_usbd_endpoint_std_req_handle(app_usbd_setup_evt_t const * p_setup_ev);
 
 
 /**

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef CONN_SYSTEMRESET_H__
 #define CONN_SYSTEMRESET_H__
 
@@ -52,7 +51,7 @@ extern "C" {
 
 /**
  * @addtogroup ser_app_common_codecs Application common codecs
- * @ingroup ser_codecs
+ * @ingroup ser_codecs_app
  */
 
 /**@file

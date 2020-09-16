@@ -37,6 +37,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+
 #ifndef APP_USBD_CLASS_BASE_H__
 #define APP_USBD_CLASS_BASE_H__
 
@@ -57,7 +58,7 @@ extern "C" {
  * @ingroup app_usbd
  *
  * @brief @tagAPI52840 The base for any class instance is defined in this module.
- * 
+ *
  * @details Any class instance must start from base class instance structure.
  * This makes them compatible with USBD library independently of the
  * implementation details.

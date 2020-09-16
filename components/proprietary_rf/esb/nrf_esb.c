@@ -140,7 +140,7 @@ typedef struct
     uint8_t num_pipes;              /**< Number of pipes available. */
     uint8_t addr_length;            /**< Length of the address including the prefix. */
     uint8_t rx_pipes_enabled;       /**< Bitfield for enabled pipes. */
-    uint8_t rf_channel;             /**< Channel to use (must be between 0 and 125). */
+    uint8_t rf_channel;             /**< Channel to use (must be between 0 and 100). */
 } nrf_esb_address_t;
 
 
@@ -1267,7 +1267,7 @@ uint32_t nrf_esb_enable_pipes(uint8_t enable_mask)
 uint32_t nrf_esb_set_rf_channel(uint32_t channel)
 {
     VERIFY_TRUE(m_nrf_esb_mainstate == NRF_ESB_STATE_IDLE, NRF_ERROR_BUSY);
-    VERIFY_TRUE(channel <= 125, NRF_ERROR_INVALID_PARAM);
+    VERIFY_TRUE(channel <= 100, NRF_ERROR_INVALID_PARAM);
 
     m_esb_addr.rf_channel = channel;
 

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  * @addtogroup nrf_spis SPIS HAL and driver
  * @ingroup    nrf_drivers
@@ -187,6 +186,10 @@ typedef void (*nrf_drv_spis_event_handler_t)(nrf_drv_spis_event_t event);
 
 /** @brief Function for initializing the SPI slave driver instance.
  *
+ * @note When the nRF52 Anomaly 109 workaround for SPIS is enabled, this function
+ *       initializes the GPIOTE driver as well, and uses one of GPIOTE channels
+ *       to detect falling edges on CSN pin.
+ *
  * @param[in] p_instance    Pointer to the driver instance structure.
  * @param[in] p_config      Pointer to the structure with the initial configuration.
  *                          If NULL, the default configuration will be used.
@@ -198,6 +201,9 @@ typedef void (*nrf_drv_spis_event_handler_t)(nrf_drv_spis_event_t event);
  *                                 instance ID is already in use. This is
  *                                 possible only if PERIPHERAL_RESOURCE_SHARING_ENABLED
  *                                 is set to a value other than zero.
+ * @retval NRF_ERROR_INTERNAL      GPIOTE channel for detecting falling edges
+ *                                 on CSN pin cannot be initialized. Possible
+ *                                 only when using nRF52 Anomaly 109 workaround.
  */
 ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
                              nrf_drv_spis_config_t const * p_config,

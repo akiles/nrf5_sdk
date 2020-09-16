@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <stdint.h>
 #include <string.h>
 #include "ble.h"
@@ -154,7 +153,7 @@ ret_code_t cgms_socp_char_add(nrf_ble_cgms_t * p_cgms)
     memset(&add_char_params, 0, sizeof(add_char_params));
 
     add_char_params.uuid                = BLE_UUID_CGM_SPECIFIC_OPS_CTRLPT;
-    add_char_params.max_len             = BLE_L2CAP_MTU_DEF;
+    add_char_params.max_len             = BLE_GATT_ATT_MTU_DEFAULT;
     add_char_params.init_len            = 0;
     add_char_params.p_init_value        = 0;
     add_char_params.is_var_len          = true;
@@ -205,28 +204,28 @@ static void socp_send(nrf_ble_cgms_t * p_cgms)
     switch (err_code)
     {
         case NRF_SUCCESS:
-            // Wait for HVC event
+            // Wait for HVC event.
             p_cgms->cgms_com_state = STATE_SOCP_RESPONSE_IND_VERIF;
             break;
 
-        case BLE_ERROR_NO_TX_PACKETS:
-            // Wait for TX_COMPLETE event to retry transmission
+        case NRF_ERROR_RESOURCES:
+            // Wait for TX_COMPLETE event to retry transmission.
             p_cgms->cgms_com_state = STATE_SOCP_RESPONSE_PENDING;
             break;
 
         case NRF_ERROR_INVALID_STATE:
-            // Make sure state machine returns to the default state
+            // Make sure state machine returns to the default state.
             p_cgms->cgms_com_state = STATE_NO_COMM;
             break;
 
         default:
-            // Report error to application
+            // Report error to application.
             if (p_cgms->error_handler != NULL)
             {
                 p_cgms->error_handler(err_code);
             }
 
-            // Make sure state machine returns to the default state
+            // Make sure state machine returns to the default state.
             p_cgms->cgms_com_state = STATE_NO_COMM;
             break;
     }

@@ -37,8 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
-
 /**
  * @file peer_manager.h
  *
@@ -53,7 +51,7 @@
  *          device and functions for manipulating the stored data.
  *
  *          This module uses Flash Data Storage (FDS) to interface with persistent storage. The
- *          Peer Manager needs exclusive use of certain FDS file IDs and record keys. See 
+ *          Peer Manager needs exclusive use of certain FDS file IDs and record keys. See
  *          @ref lib_fds_functionality_keys for more information.
  */
 
@@ -454,8 +452,8 @@ ret_code_t pm_device_identities_list_set(pm_peer_id_t const * p_peers,
  * ability to reconnect using the old address will be lost.
  *
  *
- * @note The SoftDevice functions @ref sd_ble_gap_address_set (S13x v2.x), @ref sd_ble_gap_addr_set
- *       (S13x v3.x), and @ref sd_ble_gap_privacy_set (S13x v3.x) must not be called when using the Peer Manager.
+ * @note The SoftDevice functions @ref sd_ble_gap_addr_set
+ *       and @ref sd_ble_gap_privacy_set must not be called when using the Peer Manager.
  *       Use this function instead.
  *
  * @param[in] p_addr The GAP address to be set.
@@ -492,8 +490,8 @@ ret_code_t pm_id_addr_get(ble_gap_addr_t * p_addr);
  *
  * The privacy settings cannot be configured while advertising, scanning, or while in a connection.
  *
- * @note The SoftDevice functions @ref sd_ble_gap_address_set (S13x v2.x), @ref sd_ble_gap_addr_set
- *       (S13x v3.x), and @ref sd_ble_gap_privacy_set (S13x v3.x) must not be called when using the Peer Manager.
+ * @note The SoftDevice functions @ref sd_ble_gap_addr_set
+ *       and @ref sd_ble_gap_privacy_set must not be called when using the Peer Manager.
  *       Use this function instead.
  *
  * @param[in] p_privacy_params Privacy settings.
@@ -774,7 +772,7 @@ ret_code_t pm_peer_delete(pm_peer_id_t peer_id);
  *          PM_EVT_PEERS_DELETE_FAILED event. In addition, a @ref PM_EVT_PEER_DELETE_SUCCEEDED or
  *          @ref PM_EVT_PEER_DELETE_FAILED event is sent for each deleted peer.
  *
- * @note No event is sent when there is no peer data in flash.
+ * @note When there is no peer data in flash the @ref PM_EVT_PEER_DELETE_SUCCEEDED event is sent synchronously.
  *
  * @warning Use this function only when not connected or connectable. If a peer is or becomes
  *          connected or a @ref PM_PEER_DATA_FUNCTIONS function is used during this procedure (until

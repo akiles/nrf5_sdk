@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /**@file
  * @defgroup nrf_ant_background_scanning_demo ANT Background Scanning Example
  * @{
@@ -85,8 +84,6 @@
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 
-#define APP_TIMER_PRESCALER     0x00                /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE 0x04                /**< Size of timer operation queues. */
 #define ANT_MS_CHANNEL_NUMBER   ((uint8_t) 1)       /**< Master channel. */
 #define ANT_BS_CHANNEL_NUMBER   ((uint8_t) 0)       /**< Background scanning channel. */
 #define ANT_NETWORK_NUMBER      ((uint8_t) 0)       /**< Default public network number. */
@@ -219,9 +216,10 @@ static void utils_setup(void)
 {
     uint32_t err_code;
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
     err_code = bsp_init(BSP_INIT_LED,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         NULL);
     APP_ERROR_CHECK(err_code);
 

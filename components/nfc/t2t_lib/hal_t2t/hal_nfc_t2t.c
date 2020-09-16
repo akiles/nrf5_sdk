@@ -183,14 +183,14 @@ static void hal_nfc_field_check(void);
 static void field_timer_with_callback_config()
 {
     NRF_TIMER4->MODE      = TIMER_MODE_MODE_Timer << TIMER_MODE_MODE_Pos;
-    NRF_TIMER4->BITMODE   = TIMER_BITMODE_BITMODE_08Bit << TIMER_BITMODE_BITMODE_Pos;
+    NRF_TIMER4->BITMODE   = TIMER_BITMODE_BITMODE_16Bit << TIMER_BITMODE_BITMODE_Pos;
     NRF_TIMER4->PRESCALER = 4 << TIMER_PRESCALER_PRESCALER_Pos;
     NRF_TIMER4->CC[0]     = HAL_NFC_FIELD_TIMER_PERIOD << TIMER_CC_CC_Pos;
     NRF_TIMER4->SHORTS    = TIMER_SHORTS_COMPARE0_CLEAR_Enabled << TIMER_SHORTS_COMPARE0_CLEAR_Pos;
     NRF_TIMER4->INTENSET  = TIMER_INTENSET_COMPARE0_Set << TIMER_INTENSET_COMPARE0_Pos;
 
     NVIC_ClearPendingIRQ(TIMER4_IRQn);
-    NVIC_SetPriority(TIMER4_IRQn, APP_IRQ_PRIORITY_LOW);
+    NVIC_SetPriority(TIMER4_IRQn, NFCT_CONFIG_IRQ_PRIORITY);
     NVIC_EnableIRQ(TIMER4_IRQn);
 }
 
@@ -215,11 +215,17 @@ static inline void hal_nfc_common_hw_setup(uint8_t * const nfc_internal)
     uint32_t nfc_tag_header0 = NRF_FICR->NFC.TAGHEADER0;
     uint32_t nfc_tag_header1 = NRF_FICR->NFC.TAGHEADER1;
     
-/* Begin: Bugfix for FTPAN-98 */
 #ifdef HAL_NFC_NRF52840_ENGINEERING_A_WORKAROUND
-     *(volatile uint32_t *)0x4000568C = 0x00038148;
-#endif
+/* Begin: Bugfix for FTPAN-98 */
+    *(volatile uint32_t *) 0x4000568C = 0x00038148;
 /* End: Bugfix for FTPAN-98 */
+/* Begin: Bugfix for FTPAN-144 */
+    *(volatile uint32_t *) 0x4000561c = 0x01;
+    *(volatile uint32_t *) 0x4000562c = 0x3F;
+    *(volatile uint32_t *) 0x4000563c = 0x0;
+/* End: Bugfix for FTPAN-144 */
+#endif // HAL_NFC_NRF52840_ENGINEERING_A_WORKAROUND
+
     
 #ifdef HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND
     NRF_NFCT->INTENSET = (NFCT_INTENSET_FIELDDETECTED_Enabled << NFCT_INTENSET_FIELDDETECTED_Pos);
@@ -445,12 +451,11 @@ ret_code_t hal_nfc_parameter_get(hal_nfc_param_id_t id, void * p_data, size_t * 
 ret_code_t hal_nfc_start(void)
 {
     NRF_NFCT->ERRORSTATUS = NRF_NFCT_ERRORSTATUS_ALL;
+    NRF_NFCT->TASKS_SENSE = 1;
 
     NVIC_ClearPendingIRQ(NFCT_IRQn);
-    NVIC_SetPriority(NFCT_IRQn, APP_IRQ_PRIORITY_LOW);
+    NVIC_SetPriority(NFCT_IRQn, NFCT_CONFIG_IRQ_PRIORITY);
     NVIC_EnableIRQ(NFCT_IRQn);
-
-    NRF_NFCT->TASKS_SENSE = 1;
 
     NRF_LOG_INFO("Start\r\n");
     return NRF_SUCCESS;

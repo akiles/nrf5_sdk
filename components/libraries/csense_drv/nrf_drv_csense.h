@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef NRF_DRV_CSENSE_H__
 #define NRF_DRV_CSENSE_H__
 
@@ -48,11 +47,11 @@
 
 /** @file
  *
- * @defgroup nrf_drv_csense Capacitive sensor support
+ * @defgroup nrf_drv_csense Capacitive sensor low-level library
  * @{
  * @ingroup app_common
  *
- * @brief Module for using a capacitive sensor on low-energy level.
+ * @brief Module for using the capacitive sensor on low-energy level.
  */
 
 /** @brief Maximum number of analog inputs. */
@@ -63,7 +62,7 @@
  */
 typedef struct
 {
-    uint8_t output_pin;                         /**< Pin where to generate a voltage for charging capacitors. */
+    uint8_t output_pin;                         /**< Pin on which to generate voltage for charging the capacitors. */
 }nrf_drv_csense_config_t;
 
 /**
@@ -71,15 +70,14 @@ typedef struct
  */
 typedef struct
 {
-    uint16_t                    read_value;             /**< Value which was read on analog channel. It is voltage in millivolts for NRF51 or time in ticks of 10 periods of relaxation
-                                                        oscillator for NRF52. Voltage corresponds to capacitance of pad attached to analog channel and gets bigger once it
-                                                        is touched. Period of relaxation also corresponds to pad capacitance and increases its value when capacitance getting
-                                                        bigger. */
-    uint8_t                     analog_channel;         /**< Index of analog channel from which value was read. */
+    uint16_t                    read_value;             /**< Value which was read on the analog channel. For nRF51, this value is voltage in millivolts. For nRF52, it is time in 	ticks of 10 periods of the relaxation oscillator. Voltage corresponds to capacitance of the pad attached to analog channel and gets higher once it
+                                                        is touched. Period of relaxation also corresponds to the pad capacitance and increases its value when capacitance gets
+                                                        higher. */
+    uint8_t                     analog_channel;         /**< Index of the analog channel from which the value was read. */
 }nrf_drv_csense_evt_t;
 
 /**
- * @brief Csense events handler. Called from conversion handler.
+ * @brief Capacitive sensor event handler. Called from conversion handler.
  *
  * @param[in] event_struct                Structure holding event parameters.
  */
@@ -88,15 +86,15 @@ typedef void (* nrf_drv_csense_event_handler_t) (nrf_drv_csense_evt_t * p_event_
 /**
  * @brief Function for initializing the module.
  *
- * After calling function module is in initialized state and all channels are disabled, @ref nrf_drv_csense_channels_enable
- * function needs to be called. Initializes all modules needed by capacitive sensor library: ADC for NRF51 or TIMERs, PPIs and COMP for NRF52.
+ * @details After calling this function, the module is in initialized state and all channels are disabled. The @ref nrf_drv_csense_channels_enable
+ * function must be called. This function initializes all modules required by the capacitive sensor library: ADC for (nRF51) or TIMERs, PPIs, and COMP (for nRF52).
  *
- * @param[in] p_config                           Structure for initializing module.
- * @param[in] event_handler                      Event handler for capacitor sensor events.
+ * @param[in] p_config                           Structure for initializing the module.
+ * @param[in] event_handler                      Event handler for capacitive sensor events.
  *
  * @retval    NRF_ERROR_INVALID_PARAM            Invalid parameter.
  * @retval    NRF_ERROR_NO_MEM                   Timer operations queue was full.
- * @retval    NRF_ERROR_INTERNAL                 Error occurred during timers, PPI's or COMP initialization.
+ * @retval    NRF_ERROR_INTERNAL                 Error occurred during timers, PPI's, or COMP initialization.
  * @retval    NRF_SUCCESS                        Module was initialized successfully.
  *
  * @sa nrf_drv_csense_channels_enable
@@ -104,7 +102,7 @@ typedef void (* nrf_drv_csense_event_handler_t) (nrf_drv_csense_evt_t * p_event_
 ret_code_t nrf_drv_csense_init(nrf_drv_csense_config_t const * p_config, nrf_drv_csense_event_handler_t event_handler);
 
 /**
- * @brief Function for unintializing the capacitive sensor. Clears mask of enabled channels.
+ * @brief Function for unintializing the capacitive sensor. Clears the mask of enabled channels.
  *
  * @return Values returned by @ref nrf_drv_ppi_channel_free.
  */
@@ -120,29 +118,29 @@ void nrf_drv_csense_channels_enable(uint8_t channels_mask);
 /**
  * @brief Function for disabling analog channels of the capacitive sensor.
  *
- * @param[in] channels_mask                      Mask of analog channels to be enabled.
+ * @param[in] channels_mask                      Mask of analog channels to be disabled.
  */
 void nrf_drv_csense_channels_disable(uint8_t channels_mask);
 
 /**
- * @brief Function for getting last read value from an analog channel.
+ * @brief Function for getting the last read value from an analog channel.
  *
- * @param[in] csense_channel                    Number of the channel to get value from.
+ * @param[in] csense_channel                    Number of the channel to get the value from.
  *
  * @return Analog value measured on the channel.
  */
 uint16_t nrf_drv_csense_channel_read(uint8_t csense_channel);
 
 /**
- * @brief Function for triggering a measurement on all enabled analog channels. Handler will be called on every completed measurement.
+ * @brief Function for triggering a measurement on all enabled analog channels. The handler will be called on every completed measurement.
  *
- * @retval      NRF_ERROR_BUSY                  If module was busy or ADC module is in use and was busy.
- * @retval      NRF_SUCCESS                     If measurement was triggered successfully.
+ * @retval      NRF_ERROR_BUSY                  If the module was busy or SAADC module is in use and was busy.
+ * @retval      NRF_SUCCESS                     If the measurement was triggered successfully.
  */
 ret_code_t nrf_drv_csense_sample(void);
 
 /**
- * @brief Function for checking if module is busy.
+ * @brief Function for checking if the module is busy.
  *
  * @return True if busy or false if not busy.
  */

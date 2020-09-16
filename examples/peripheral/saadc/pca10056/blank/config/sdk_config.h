@@ -613,32 +613,6 @@
 // <h> nRF_Libraries 
 
 //==========================================================
-// <e> APP_TIMER_ENABLED - app_timer - Application timer functionality
-//==========================================================
-#ifndef APP_TIMER_ENABLED
-#define APP_TIMER_ENABLED 1
-#endif
-#if  APP_TIMER_ENABLED
-// <q> APP_TIMER_WITH_PROFILER  - Enable app_timer profiling
- 
-
-#ifndef APP_TIMER_WITH_PROFILER
-#define APP_TIMER_WITH_PROFILER 0
-#endif
-
-// <q> APP_TIMER_KEEPS_RTC_ACTIVE  - Enable RTC always on
- 
-
-// <i> If option is enabled RTC is kept running even if there is no active timers.
-// <i> This option can be used when app_timer is used for timestamping.
-
-#ifndef APP_TIMER_KEEPS_RTC_ACTIVE
-#define APP_TIMER_KEEPS_RTC_ACTIVE 0
-#endif
-
-#endif //APP_TIMER_ENABLED
-// </e>
-
 // <e> NRF_PWR_MGMT_ENABLED - nrf_pwr_mgmt - Power management module
 //==========================================================
 #ifndef NRF_PWR_MGMT_ENABLED
@@ -706,8 +680,57 @@
 #define NRF_PWR_MGMT_CONFIG_DEBUG_PIN_ENABLED 0
 #endif
 #if  NRF_PWR_MGMT_CONFIG_DEBUG_PIN_ENABLED
-// <o> NRF_PWR_MGMT_SLEEP_DEBUG_PIN - Pin number  <0-31> 
-
+// <o> NRF_PWR_MGMT_SLEEP_DEBUG_PIN  - Pin number
+ 
+// <0=> 0 (P0.0) 
+// <1=> 1 (P0.1) 
+// <2=> 2 (P0.2) 
+// <3=> 3 (P0.3) 
+// <4=> 4 (P0.4) 
+// <5=> 5 (P0.5) 
+// <6=> 6 (P0.6) 
+// <7=> 7 (P0.7) 
+// <8=> 8 (P0.8) 
+// <9=> 9 (P0.9) 
+// <10=> 10 (P0.10) 
+// <11=> 11 (P0.11) 
+// <12=> 12 (P0.12) 
+// <13=> 13 (P0.13) 
+// <14=> 14 (P0.14) 
+// <15=> 15 (P0.15) 
+// <16=> 16 (P0.16) 
+// <17=> 17 (P0.17) 
+// <18=> 18 (P0.18) 
+// <19=> 19 (P0.19) 
+// <20=> 20 (P0.20) 
+// <21=> 21 (P0.21) 
+// <22=> 22 (P0.22) 
+// <23=> 23 (P0.23) 
+// <24=> 24 (P0.24) 
+// <25=> 25 (P0.25) 
+// <26=> 26 (P0.26) 
+// <27=> 27 (P0.27) 
+// <28=> 28 (P0.28) 
+// <29=> 29 (P0.29) 
+// <30=> 30 (P0.30) 
+// <31=> 31 (P0.31) 
+// <32=> 32 (P1.0) 
+// <33=> 33 (P1.1) 
+// <34=> 34 (P1.2) 
+// <35=> 35 (P1.3) 
+// <36=> 36 (P1.4) 
+// <37=> 37 (P1.5) 
+// <38=> 38 (P1.6) 
+// <39=> 39 (P1.7) 
+// <40=> 40 (P1.8) 
+// <41=> 41 (P1.9) 
+// <42=> 42 (P1.10) 
+// <43=> 43 (P1.11) 
+// <44=> 44 (P1.12) 
+// <45=> 45 (P1.13) 
+// <46=> 46 (P1.14) 
+// <47=> 47 (P1.15) 
+// <4294967295=> Not connected 
 
 #ifndef NRF_PWR_MGMT_SLEEP_DEBUG_PIN
 #define NRF_PWR_MGMT_SLEEP_DEBUG_PIN 31
@@ -762,8 +785,29 @@
 #define NRF_PWR_MGMT_CONFIG_USE_SCHEDULER 0
 #endif
 
+// <o> NRF_PWR_MGMT_CONFIG_HANDLER_PRIORITY_COUNT - The number of priorities for module handlers. 
+// <i> The number of stages of the shutdown process.
+
+#ifndef NRF_PWR_MGMT_CONFIG_HANDLER_PRIORITY_COUNT
+#define NRF_PWR_MGMT_CONFIG_HANDLER_PRIORITY_COUNT 3
+#endif
+
 #endif //NRF_PWR_MGMT_ENABLED
 // </e>
+
+// <q> NRF_SECTION_ITER_ENABLED  - nrf_section_iter - Section iterator
+ 
+
+#ifndef NRF_SECTION_ITER_ENABLED
+#define NRF_SECTION_ITER_ENABLED 1
+#endif
+
+// <q> NRF_STRERROR_ENABLED  - nrf_strerror - Library for converting error code to string.
+ 
+
+#ifndef NRF_STRERROR_ENABLED
+#define NRF_STRERROR_ENABLED 1
+#endif
 
 // </h> 
 //==========================================================
@@ -993,6 +1037,9 @@
 
 //==========================================================
 // <o> SEGGER_RTT_CONFIG_BUFFER_SIZE_UP - Size of upstream buffer. 
+// <i> Note that either @ref NRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE
+// <i> or this value is actually used. It depends on which one is bigger.
+
 #ifndef SEGGER_RTT_CONFIG_BUFFER_SIZE_UP
 #define SEGGER_RTT_CONFIG_BUFFER_SIZE_UP 64
 #endif
@@ -1010,6 +1057,21 @@
 // <o> SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS - Size of upstream buffer. 
 #ifndef SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS
 #define SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS 2
+#endif
+
+// <o> SEGGER_RTT_CONFIG_DEFAULT_MODE  - RTT behavior if the buffer is full.
+ 
+
+// <i> The following modes are supported:
+// <i> - SKIP  - Do not block, output nothing.
+// <i> - TRIM  - Do not block, output as much as fits.
+// <i> - BLOCK - Wait until there is space in the buffer.
+// <0=> SKIP 
+// <1=> TRIM 
+// <2=> BLOCK_IF_FIFO_FULL 
+
+#ifndef SEGGER_RTT_CONFIG_DEFAULT_MODE
+#define SEGGER_RTT_CONFIG_DEFAULT_MODE 0
 #endif
 
 // </h> 

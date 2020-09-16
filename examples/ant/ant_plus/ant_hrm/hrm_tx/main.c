@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /**@file
  * @defgroup ant_hrm_tx_main ANT HRM TX example
  * @{
@@ -91,9 +90,7 @@
     #error Unsupported value of MODIFICATION_TYPE.
 #endif
 
-#define APP_TIMER_PRESCALER      0x00 /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE  0x04 /**< Size of timer operation queues. */
-#define APP_TICK_EVENT_INTERVAL  APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER) /**< 2 second's tick event interval in timer tick units. */
+#define APP_TICK_EVENT_INTERVAL  APP_TIMER_TICKS(2000) /**< 2 second's tick event interval in timer tick units. */
 #define HRM_CHANNEL_NUMBER       0x00 /**< Channel number assigned to HRM profile. */
 #define ANTPLUS_NETWORK_NUMBER   0 /**< Network number. */
 
@@ -184,16 +181,16 @@ static void utils_setup(void)
 
     // Initialize and start a single continuous mode timer, which is used to update the event time
     // on the main data page.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
     #if (MODIFICATION_TYPE == MODIFICATION_TYPE_BUTTON)
     /** @snippet [ANT Pulse simulator button init] */
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         bsp_evt_handler);
     /** @snippet [ANT Pulse simulator button init] */
     #else
-    err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
+    err_code = bsp_init(BSP_INIT_LED, NULL);
     #endif
     APP_ERROR_CHECK(err_code);
 

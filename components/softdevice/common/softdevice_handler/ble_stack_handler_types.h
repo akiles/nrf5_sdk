@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  *
  * @defgroup ble_stack_handler_types Types definitions for BLE support in SoftDevice handler.
@@ -50,6 +49,10 @@
 #ifndef BLE_STACK_HANDLER_TYPES_H__
 #define BLE_STACK_HANDLER_TYPES_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifdef BLE_STACK_SUPPORT_REQD
 
 #include <stdlib.h>
@@ -59,17 +62,16 @@
 #include "app_util.h"
 #include "sdk_config.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
 /** @brief  Default Maximum ATT MTU size.
  *
  * This define should be defined in the sdk_config.h file to override the default.
  */
 #ifndef NRF_BLE_GATT_MAX_MTU_SIZE
-    #define NRF_BLE_GATT_MAX_MTU_SIZE GATT_MTU_SIZE_DEFAULT
+    #if (NRF_SD_BLE_API_VERSION >= 3)
+        #define NRF_BLE_GATT_MAX_MTU_SIZE BLE_GATT_ATT_MTU_DEFAULT
+    #else
+        #define NRF_BLE_GATT_MAX_MTU_SIZE GATT_MTU_SIZE_DEFAULT
+    #endif
 #endif
 
 #define BLE_STACK_EVT_MSG_BUF_SIZE       (sizeof(ble_evt_t) + (NRF_BLE_GATT_MAX_MTU_SIZE))     /**< Size of BLE event message buffer. This will be provided to the SoftDevice while fetching an event. */

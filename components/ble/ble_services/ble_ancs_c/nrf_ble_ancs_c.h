@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_ancs_c Apple Notification Service client
@@ -52,15 +51,15 @@
  *          implementation to stop working.
  *
  * This module implements the Apple Notification Center Service (ANCS) client.
- * This client can be used as a Notification Consumer (NC) that receives data 
- * notifications from a Notification Provider (NP). The NP is typically an iOS 
- * device acting as a server. For terminology and up-to-date specs, see 
+ * This client can be used as a Notification Consumer (NC) that receives data
+ * notifications from a Notification Provider (NP). The NP is typically an iOS
+ * device acting as a server. For terminology and up-to-date specs, see
  * http://developer.apple.com.
  *
  * The term "notification" is used in two different meanings:
  * - An <i>iOS notification</i> is the data received from the Notification Provider.
  * - A <i>GATTC notification</i> is a way to transfer data with <i>Bluetooth</i> Smart.
- * In this module, we receive iOS notifications using GATTC notifications. 
+ * In this module, we receive iOS notifications using GATTC notifications.
  * We use the full term (iOS notification or GATTC notification) where required to avoid confusion.
  *
  * Upon initializing the module, you must add the different iOS notification attributes you
@@ -72,7 +71,7 @@
  * assigned to an ANCS_C instance using the @ref nrf_ble_ancs_c_handles_assign function. For more
  * information about service discovery, see the @ref lib_ble_db_discovery documentation.
  *
- * The application can now subscribe to iOS notifications using 
+ * The application can now subscribe to iOS notifications using
  * @ref ble_ancs_c_notif_source_notif_enable. They arrive in the @ref BLE_ANCS_C_EVT_NOTIF event.
  * @ref nrf_ble_ancs_c_request_attrs can be used to request attributes for the notifications. They
  * arrive in the @ref BLE_ANCS_C_EVT_NOTIF_ATTRIBUTE event.
@@ -129,7 +128,7 @@ extern "C" {
  * @details 8 bytes:
  * Event ID |Event flags |Category ID |Category count|Notification UID
  * ---------|------------|------------|--------------|----------------
- * 1 byte   | 1 byte     | 1 byte     | 1 byte       | 4 bytes        
+ * 1 byte   | 1 byte     | 1 byte     | 1 byte       | 4 bytes
  */
 #define BLE_ANCS_NOTIFICATION_DATA_LENGTH   8
 
@@ -204,8 +203,8 @@ typedef enum
     ACTION_ID_NEGATIVE       /**< Negative action. */
 } ble_ancs_c_action_id_values_t;
 
-/**@brief App attribute ID values. 
- * @details Currently, only one value is defined. However, the number of app 
+/**@brief App attribute ID values.
+ * @details Currently, only one value is defined. However, the number of app
  * attributes might increase. Therefore, they are stored in an enumeration.
  */
 typedef enum
@@ -321,7 +320,7 @@ typedef struct
     uint16_t               conn_handle;                    //!< Connection handle on which the ANCS service was discovered on the peer device. This field will be filled if the @p evt_type is @ref BLE_ANCS_C_EVT_DISCOVERY_COMPLETE.
     ble_ancs_c_evt_notif_t notif;                          //!< iOS notification. This field will be filled if @p evt_type is @ref BLE_ANCS_C_EVT_NOTIF.
     uint16_t               err_code_np;                    //!< An error coming from the Notification Provider. This field will be filled with @ref BLE_ANCS_NP_ERROR_CODES if @p evt_type is @ref BLE_ANCS_C_EVT_NP_ERROR.
-    ble_ancs_c_attr_t      attr;                           //!< iOS notification attribute or app attribute, depending on the event type. 
+    ble_ancs_c_attr_t      attr;                           //!< iOS notification attribute or app attribute, depending on the event type.
     uint32_t               notif_uid;                      //!< Notification UID.
     uint8_t                app_id[BLE_ANCS_ATTR_DATA_MAX]; //!< App identifier.
     ble_ancs_c_service_t   service;                        //!< Information on the discovered Alert Notification Service. This field will be filled if the @p evt_type is @ref BLE_ANCS_C_EVT_DISCOVERY_COMPLETE.
@@ -337,7 +336,7 @@ typedef struct
     ble_ancs_c_attr_list_t * p_attr_list;              //!< The current list of attributes being parsed. This field will point to either @ref ble_ancs_c_t::ancs_notif_attr_list or @ref  ble_ancs_c_t::ancs_app_attr_list.
     uint32_t                 nb_of_attr;               //!< Number of possible attributes. When parsing begins, it is set to either @ref BLE_ANCS_NB_OF_NOTIF_ATTR or @ref BLE_ANCS_NB_OF_APP_ATTR.
     uint32_t                 expected_number_of_attrs; //!< The number of attributes expected upon receiving attributes. Keeps track of when to stop reading incoming attributes.
-    ble_ancs_c_parse_state_t parse_state;              //!< ANCS notification attribute parsing state. 
+    ble_ancs_c_parse_state_t parse_state;              //!< ANCS notification attribute parsing state.
     ble_ancs_c_cmd_id_val_t  command_id;               //!< Variable to keep track of what command type we are currently parsing ( @ref BLE_ANCS_COMMAND_ID_GET_NOTIF_ATTRIBUTES or @ref BLE_ANCS_COMMAND_ID_GET_APP_ATTRIBUTES.
     uint8_t                * p_data_dest;              //!< Attribute that the parsed data will be copied into.
     uint16_t                 current_attr_index;       //!< Variable to keep track of how much (for a given attribute) we are done parsing.
@@ -460,7 +459,7 @@ ret_code_t ble_ancs_c_data_source_notif_disable(const ble_ancs_c_t * p_ancs);
  * @param[in] id     ID of the attribute that will be added.
  * @param[in] p_data Pointer to a buffer where the data of the attribute can be stored.
  * @param[in] len    Length of the buffer where the data of the attribute can be stored.
-  
+
  * @retval NRF_SUCCESS If all operations were successful. Otherwise, an error code is returned.
  */
 ret_code_t nrf_ble_ancs_c_attr_add(ble_ancs_c_t                       * p_ancs,
@@ -468,7 +467,7 @@ ret_code_t nrf_ble_ancs_c_attr_add(ble_ancs_c_t                       * p_ancs,
                                    uint8_t                            * p_data,
                                    const uint16_t                       len);
 
-                                   
+
 /**@brief Function for removing attributes so that they will no longer be requested when
  *        @ref nrf_ble_ancs_c_request_attrs is called.
  *
@@ -512,7 +511,7 @@ ret_code_t nrf_ble_ancs_c_app_attr_add(ble_ancs_c_t                     * p_ancs
  *
  * @param[in] p_ancs   iOS notification structure. This structure must be supplied by
  *                     the application. It identifies the particular client instance to use.
-**/                                 
+**/
 ret_code_t nrf_ble_ancs_c_attr_req_clear_all(ble_ancs_c_t * p_ancs);
 
 /**@brief Function for requesting attributes for a notification.
@@ -558,7 +557,7 @@ ret_code_t nrf_ancs_perform_notif_action(ble_ancs_c_t * p_ancs,
 /**@brief Function for assigning a handle to this instance of ancs_c.
  *
  * @details Call this function when a link has been established with a peer to
- *          associate this link to this instance of the module. This makes it 
+ *          associate this link to this instance of the module. This makes it
  *          possible to handle several link and associate each link to a particular
  *          instance of this module. The connection handle and attribute handles will be
  *          provided from the discovery event @ref BLE_ANCS_C_EVT_DISCOVERY_COMPLETE.

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  *
  * @defgroup app_util_platform Utility Functions and Definitions (Platform)
@@ -72,7 +71,7 @@ extern "C" {
 #define _PRIO_APP_LOW       3
 #define _PRIO_APP_LOWEST    3
 #define _PRIO_THREAD        4
-#elif __CORTEX_M == (0x04U)
+#elif __CORTEX_M == (0x04U) && !defined(S1XX)
 #define _PRIO_SD_HIGH       0
 #define _PRIO_SD_MID        1
 #define _PRIO_APP_HIGH      2
@@ -82,6 +81,14 @@ extern "C" {
 #define _PRIO_APP_LOW       6
 #define _PRIO_APP_LOWEST    7
 #define _PRIO_THREAD        15
+#elif defined(S1XX)
+#define _PRIO_SD_HIGH       0
+#define _PRIO_APP_HIGH      1
+#define _PRIO_APP_MID       1
+#define _PRIO_SD_LOW        2
+#define _PRIO_APP_LOW       3
+#define _PRIO_APP_LOWEST    3
+#define _PRIO_THREAD        4
 #else
     #error "No platform defined"
 #endif
@@ -222,6 +229,14 @@ void app_util_critical_region_exit (uint8_t nested);
     // For GCC anonymous unions are enabled by default.
 #endif
 
+/**@brief Macro for adding pragma directive only for GCC.
+ */
+#ifdef __GNUC__
+#define GCC_PRAGMA(v)            _Pragma(v)
+#else
+#define GCC_PRAGMA(v)
+#endif
+
 /* Workaround for Keil 4 */
 #ifndef CONTROL_nPRIV_Msk
 #define CONTROL_nPRIV_Msk                  (1UL /*<< CONTROL_nPRIV_Pos*/)                 /*!< CONTROL: nPRIV Mask */
@@ -234,19 +249,8 @@ void app_util_critical_region_exit (uint8_t nested);
  * @retval   APP_IRQ_PRIORITY_LOW     We are running in Application Low interrupt level.
  * @retval   APP_IRQ_PRIORITY_THREAD  We are running in Thread Mode.
  */
-static __INLINE uint8_t current_int_priority_get(void)
-{
-    uint32_t isr_vector_num = __get_IPSR() & IPSR_ISR_Msk ;
-    if (isr_vector_num > 0)
-    {
-        int32_t irq_type = ((int32_t)isr_vector_num - EXTERNAL_INT_VECTOR_OFFSET);
-        return (NVIC_GetPriority((IRQn_Type)irq_type) & 0xFF);
-    }
-    else
-    {
-        return APP_IRQ_PRIORITY_THREAD;
-    }
-}
+uint8_t current_int_priority_get(void);
+
 
 /**@brief Function for finding out the current privilege level.
  *
@@ -254,26 +258,7 @@ static __INLINE uint8_t current_int_priority_get(void)
  * @retval   APP_LEVEL_UNPRIVILEGED    We are running in unprivileged level.
  * @retval   APP_LEVEL_PRIVILEGED    We are running in privileged level.
  */
-static __INLINE uint8_t privilege_level_get(void)
-{
-#if __CORTEX_M == (0x00U) || defined(_WIN32) || defined(__unix) || defined(__APPLE__)
-    /* the Cortex-M0 has no concept of privilege */
-    return APP_LEVEL_PRIVILEGED;
-#elif __CORTEX_M == (0x04U)
-    uint32_t isr_vector_num = __get_IPSR() & IPSR_ISR_Msk ;
-    if (0 == isr_vector_num)
-    {
-        /* Thread Mode, check nPRIV */
-        int32_t control = __get_CONTROL();
-        return control & CONTROL_nPRIV_Msk ? APP_LEVEL_UNPRIVILEGED : APP_LEVEL_PRIVILEGED;
-    }
-    else
-    {
-        /* Handler Mode, always privileged */
-        return APP_LEVEL_PRIVILEGED;
-    }
-#endif
-}
+uint8_t privilege_level_get(void);
 
 
 #ifdef __cplusplus

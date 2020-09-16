@@ -193,6 +193,10 @@
 
 #define PN532_I2C_ADDRESS                (0x48 >> 1) ///< Address of the I2C peripheral of the Adafruit PN532 Shield.
 
+#ifndef PN532_PACKBUFF_SIZE
+    #define PN532_PACKBUFF_SIZE 64
+#endif
+
 /**
  * @brief Basic information about detected NFC-A tag.
  */

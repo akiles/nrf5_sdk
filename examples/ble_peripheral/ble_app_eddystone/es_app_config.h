@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef ES_APP_CONFIG_H__
 #define ES_APP_CONFIG_H__
 
@@ -63,9 +62,9 @@
                               0xFF, 0xFF, 0xFF, 0xFF, \
                               0xFF, 0xFF, 0xFF, 0xFF} //!< Beacon lock code. @warning This lock code must be changed before going to production.
 
-#if defined(NRF52)
+#ifdef NRF52
 #define APP_CONFIG_CALIBRATED_RANGING_DATA {-49, -39, -29, -24, -19, -14, -9, -7, -5}   //!< Calibrated TX power at 0 m. See the nRF52 Product Specification for corresponding TX values.
-#elif defined(NRF51)
+#elif NRF51
 #define APP_CONFIG_CALIBRATED_RANGING_DATA {-39, -26, -23, -18, -13, -12, -9, -2}       //!< Calibrated TX power at 0 m. See the nRF51 Product Specification for corresponding TX values.
 #else
 #error MISSING CALIBRATED DATA
@@ -77,10 +76,8 @@
 
 #define APP_CONFIG_ADV_INTERVAL_MS_MAX                      20000                       //!< Maximum allowed advertisement interval. Can be undefined without int
 #define APP_CONFIG_ADV_FRAME_SPACING_MS_MIN                 500                         //!< Minimum time between advertisement frames. Imposes limit on minumum accepted advertisement interval.
-#if defined(NRF52)
+#ifdef NRF52
 #define APP_CONFIG_ADV_FRAME_ETLM_SPACING_MS                300                         //!< The time that is reqired for preparing an eTLM slot. Imposes limit on minimum accepted advertisement interval.
-#elif defined(NRF51)
-#define APP_CONFIG_ADV_FRAME_ETLM_SPACING_MS                600                         //!< The time that is reqired for preparing an eTLM slot. Imposes limit on minimum accepted advertisement interval.
 #else
 #error MISSING ETLM DELAY TIMING
 #endif
@@ -120,8 +117,8 @@
 #define MAX_CONN_INTERVAL                   MSEC_TO_UNITS(90, UNIT_1_25_MS)             //!< Maximum acceptable connection interval (75 ms). The connection interval uses 1.25 ms units.
 #define SLAVE_LATENCY                       0                                           //!< Slave latency.
 #define CONN_SUP_TIMEOUT                    MSEC_TO_UNITS(4000, UNIT_10_MS)             //!< Connection supervision time-out (4 seconds). The supervision time-out uses 10 ms units.
-#define FIRST_CONN_PARAMS_UPDATE_DELAY      APP_TIMER_TICKS(5000,  APP_TIMER_PRESCALER) //!< Time from initiating an event (connection or start of notification) to the first time @ref sd_ble_gap_conn_param_update is called (5 seconds).
-#define NEXT_CONN_PARAMS_UPDATE_DELAY       APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER) //!< Time between each call to @ref sd_ble_gap_conn_param_update after the first call (30 seconds).
+#define FIRST_CONN_PARAMS_UPDATE_DELAY      APP_TIMER_TICKS(5000)                       //!< Time from initiating an event (connection or start of notification) to the first time @ref sd_ble_gap_conn_param_update is called (5 seconds).
+#define NEXT_CONN_PARAMS_UPDATE_DELAY       APP_TIMER_TICKS(30000)                      //!< Time between each call to @ref sd_ble_gap_conn_param_update after the first call (30 seconds).
 #define MAX_CONN_PARAMS_UPDATE_COUNT        3                                           //!< Number of attempts before giving up the connection parameter negotiation.
 
 
@@ -170,11 +167,8 @@
 #define DEFAULT_FRAME_DATA                  {DEFAULT_FRAME_TYPE, DEFAULT_FRAME_TX_POWER, APP_ES_URL_SCHEME, APP_ES_URL_URL}
 #define DEFAULT_FRAME_LENGTH                14                                          //!< 1 - Frame Type, 1 - TX - power 1 - URL Scheme, URL - 11 = 14
 
-#define APP_TIMER_PRESCALER                 0                                           //!< Value of the RTC1 PRESCALER register (4095 = 125 ms per tick).
-#define APP_TIMER_OP_QUEUE_SIZE             10                                          //!< Size of the timer operation queues.
-
 // SCHEDULER CONFIGS
-#define SCHED_MAX_EVENT_DATA_SIZE           sizeof(app_timer_event_t)                   //!< Maximum size of the scheduler event data.
+#define SCHED_MAX_EVENT_DATA_SIZE           APP_TIMER_SCHED_EVENT_DATA_SIZE             //!< Maximum size of the scheduler event data.
 #define SCHED_QUEUE_SIZE                    10                                          //!< Size of the scheduler queue.
 
 

@@ -49,6 +49,10 @@
 #include "nrf.h"
 #include "app_error.h"
 
+/**
+ * Note that this implementation is made only for enable SDK components which interacts with app_timer to work with FreeRTOS.
+ * It is more suitable to use native FreeRTOS timer for other purposes.
+ */
 /* Check if RTC FreeRTOS version is used */
 #if configTICK_SOURCE != FREERTOS_USE_RTC
 #error app_timer in FreeRTOS variant have to be used with RTC tick source configuration. Default configuration have to be used in other case.
@@ -78,15 +82,6 @@ typedef struct
     bool                        active;
 }app_timer_info_t;
 
-/**
- * @brief Prescaler that was set by the user
- *
- * In FreeRTOS version of app_timer the prescaler setting is constant and done by the operating system.
- * But the application expect the prescaler to be set according to value given in setup and then
- * calculate required ticks using this value.
- * For compatibility we remember the value set and use it for recalculation of required timer setting.
- */
-static uint32_t m_prescaler;
 
 /* Check if freeRTOS timers are activated */
 #if configUSE_TIMERS == 0
@@ -115,17 +110,8 @@ static void app_timer_callback(TimerHandle_t xTimer)
 }
 
 
-uint32_t app_timer_init(uint32_t                      prescaler,
-                        uint8_t                       op_queues_size,
-                        void                        * p_buffer,
-                        app_timer_evt_schedule_func_t evt_schedule_func)
+uint32_t app_timer_init(void)
 {
-    UNUSED_PARAMETER(op_queues_size);
-    UNUSED_PARAMETER(p_buffer);
-    UNUSED_PARAMETER(evt_schedule_func);
-
-    m_prescaler = prescaler + 1;
-
     return NRF_SUCCESS;
 }
 
@@ -177,9 +163,6 @@ uint32_t app_timer_start(app_timer_id_t timer_id, uint32_t timeout_ticks, void *
 {
     app_timer_info_t * pinfo = (app_timer_info_t*)(timer_id);
     TimerHandle_t hTimer = pinfo->osHandle;
-    uint32_t rtc_prescaler = portNRF_RTC_REG->PRESCALER  + 1;
-    /* Get back the microseconds to wait */
-    uint32_t timeout_corrected = ROUNDED_DIV(timeout_ticks * m_prescaler, rtc_prescaler);
 
     if (hTimer == NULL)
     {
@@ -196,7 +179,7 @@ uint32_t app_timer_start(app_timer_id_t timer_id, uint32_t timeout_ticks, void *
     if (__get_IPSR() != 0)
     {
         BaseType_t yieldReq = pdFALSE;
-        if (xTimerChangePeriodFromISR(hTimer, timeout_corrected, &yieldReq) != pdPASS)
+        if (xTimerChangePeriodFromISR(hTimer, timeout_ticks, &yieldReq) != pdPASS)
         {
             return NRF_ERROR_NO_MEM;
         }
@@ -210,7 +193,7 @@ uint32_t app_timer_start(app_timer_id_t timer_id, uint32_t timeout_ticks, void *
     }
     else
     {
-        if (xTimerChangePeriod(hTimer, timeout_corrected, APP_TIMER_WAIT_FOR_QUEUE) != pdPASS)
+        if (xTimerChangePeriod(hTimer, timeout_ticks, APP_TIMER_WAIT_FOR_QUEUE) != pdPASS)
         {
             return NRF_ERROR_NO_MEM;
         }
@@ -238,7 +221,7 @@ uint32_t app_timer_stop(app_timer_id_t timer_id)
     if (__get_IPSR() != 0)
     {
         BaseType_t yieldReq = pdFALSE;
-        if (xTimerStopFromISR(timer_id, &yieldReq) != pdPASS)
+        if (xTimerStopFromISR(hTimer, &yieldReq) != pdPASS)
         {
             return NRF_ERROR_NO_MEM;
         }
@@ -246,7 +229,7 @@ uint32_t app_timer_stop(app_timer_id_t timer_id)
     }
     else
     {
-        if (xTimerStop(timer_id, APP_TIMER_WAIT_FOR_QUEUE) != pdPASS)
+        if (xTimerStop(hTimer, APP_TIMER_WAIT_FOR_QUEUE) != pdPASS)
         {
             return NRF_ERROR_NO_MEM;
         }

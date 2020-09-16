@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
   @defgroup dtm_standalone main.c
   @{
@@ -50,7 +49,7 @@
 #include <stdbool.h>
 #include "nrf.h"
 #include "ble_dtm.h"
-#include "bsp.h"
+#include "boards.h"
 
 
 // @note: The BLE DTM 2-wire UART standard specifies 8 data bits, 1 stop bit, no flow control.

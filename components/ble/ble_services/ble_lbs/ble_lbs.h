@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_lbs LED Button Service Server
@@ -82,7 +81,7 @@ extern "C" {
 // Forward declaration of the ble_lbs_t type.
 typedef struct ble_lbs_s ble_lbs_t;
 
-typedef void (*ble_lbs_led_write_handler_t) (ble_lbs_t * p_lbs, uint8_t new_state);
+typedef void (*ble_lbs_led_write_handler_t) (uint16_t conn_handle, ble_lbs_t * p_lbs, uint8_t new_state);
 
 /** @brief LED Button Service init structure. This structure contains all options and data needed for
  *        initialization of the service.*/
@@ -98,7 +97,6 @@ struct ble_lbs_s
     ble_gatts_char_handles_t    led_char_handles;    /**< Handles related to the LED Characteristic. */
     ble_gatts_char_handles_t    button_char_handles; /**< Handles related to the Button Characteristic. */
     uint8_t                     uuid_type;           /**< UUID type for the LED Button Service. */
-    uint16_t                    conn_handle;         /**< Handle of the current connection (as provided by the BLE stack). BLE_CONN_HANDLE_INVALID if not in a connection. */
     ble_lbs_led_write_handler_t led_write_handler;   /**< Event handler to be called when the LED Characteristic is written. */
 };
 
@@ -124,12 +122,13 @@ void ble_lbs_on_ble_evt(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt);
 
 /**@brief Function for sending a button state notification.
  *
- * @param[in] p_lbs      LED Button Service structure.
+ ' @param[in] conn_handle   Handle of the peripheral connection to which the button state notification will be sent.
+ * @param[in] p_lbs         LED Button Service structure.
  * @param[in] button_state  New button state.
  *
  * @retval NRF_SUCCESS If the notification was sent successfully. Otherwise, an error code is returned.
  */
-uint32_t ble_lbs_on_button_change(ble_lbs_t * p_lbs, uint8_t button_state);
+uint32_t ble_lbs_on_button_change(uint16_t conn_handle, ble_lbs_t * p_lbs, uint8_t button_state);
 
 
 #ifdef __cplusplus

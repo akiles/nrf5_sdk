@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  *
  * @defgroup ser_phy_spi_phy_driver_master ser_phy_nrf51_spi_master.c
@@ -612,7 +611,8 @@ static void ser_phy_switch_state(ser_phy_event_source_t evt_src)
     }
 }
 
-static void ser_phy_spi_master_event_handler(nrf_drv_spi_evt_t const * p_event)
+static void ser_phy_spi_master_event_handler(nrf_drv_spi_evt_t const * p_event,
+                                             void *                    p_context)
 {
     switch (p_event->type)
     {
@@ -752,8 +752,10 @@ uint32_t ser_phy_open(ser_phy_events_handler_t events_handler)
         .mode         = NRF_DRV_SPI_MODE_0,
         .bit_order    = NRF_DRV_SPI_BIT_ORDER_LSB_FIRST,
     };
-    err_code = nrf_drv_spi_init(&m_spi_master, &spi_master_config,
-        ser_phy_spi_master_event_handler);
+    err_code = nrf_drv_spi_init(&m_spi_master,
+                                &spi_master_config,
+                                ser_phy_spi_master_event_handler,
+                                NULL);
     if (err_code != NRF_SUCCESS)
     {
         return err_code;

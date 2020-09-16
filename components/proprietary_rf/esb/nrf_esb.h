@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef __NRF_ESB_H
 #define __NRF_ESB_H
 
@@ -493,7 +492,7 @@ uint32_t nrf_esb_update_prefix(uint8_t pipe, uint8_t prefix);
  * @retval  NRF_SUCCESS                         If the operation completed successfully.
  * @retval  NRF_INVALID_STATE                   If the module is not initialized.
  * @retval  NRF_ERROR_BUSY                      If the module was not in idle state.
- * @retval  NRF_ERROR_INVALID_PARAM             If the channel is invalid (larger than 125).
+ * @retval  NRF_ERROR_INVALID_PARAM             If the channel is invalid (larger than 100).
  */
 uint32_t nrf_esb_set_rf_channel(uint32_t channel);
 
@@ -505,7 +504,7 @@ uint32_t nrf_esb_set_rf_channel(uint32_t channel);
  * @retval  NRF_SUCCESS                         If the operation completed successfully.
  * @retval  NRF_ERROR_NULL                      If the required parameter was NULL.
  */
-uint32_t nrf_esb_rf_channel_get(uint32_t * p_channel);
+uint32_t nrf_esb_get_rf_channel(uint32_t * p_channel);
 
 
 /**@brief Function for setting the radio output power.

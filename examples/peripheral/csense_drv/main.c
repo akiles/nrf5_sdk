@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  * @defgroup nrf_drv_csense_example_main main.c
  * @{
@@ -60,17 +59,17 @@
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 
-/* Time between RTC interrupts. */
-#define APP_TIMER_TICKS_TIMEOUT 2000
-
 /* Pin used to measure capacitor charging time. */
-#ifdef NRF51
+#if USE_COMP == 0
+#ifdef ADC_PRESENT
 #define OUTPUT_PIN 30
+#elif defined(SAADC_PRESENT)
+#define OUTPUT_PIN 26
+#endif
 #endif
 
-/* Timer initialization parameters. */
-#define OP_QUEUES_SIZE          4
-#define APP_TIMER_PRESCALER     0
+/* Time between RTC interrupts. */
+#define APP_TIMER_TICKS_TIMEOUT APP_TIMER_TICKS(50)
 
 /* Analog inputs. */
 #define AIN_1                   1
@@ -101,7 +100,7 @@ volatile uint32_t max_value[2];
 volatile uint32_t min_value[2];
 bool conf_mode;
 
-/** 
+/**
  * @brief Function for starting the internal LFCLK XTAL oscillator.
  *
  * Note that when using a SoftDevice, LFCLK is always on.
@@ -188,7 +187,7 @@ void csense_initialize(void)
 
     nrf_drv_csense_config_t csense_config = { 0 };
 
-#ifdef NRF51
+#if USE_COMP == 0
     csense_config.output_pin = OUTPUT_PIN;
 #endif
 
@@ -223,7 +222,7 @@ static void csense_timeout_handler(void * p_context)
 void start_app_timer(void)
 {
     ret_code_t err_code;
-        
+
     /* APP_TIMER definition for csense example. */
     APP_TIMER_DEF(timer_0);
 
@@ -242,13 +241,13 @@ void configure_thresholds(void)
     ret_code_t err_code;
     uint32_t new_th_pad_1;
     uint32_t new_th_pad_2;
-    
+
     for (int i = 0; i < 2; i++)
     {
         max_value[i] = 0;
         min_value[i] = UINT32_MAX;
     }
-    
+
     NRF_LOG_INFO("Touch both pads.\r\n");
     NRF_LOG_FLUSH();
     nrf_delay_ms(1000);
@@ -260,15 +259,15 @@ void configure_thresholds(void)
     nrf_delay_ms(1000);
     NRF_LOG_INFO("1...\r\n");
     NRF_LOG_FLUSH();
-    
-    err_code = nrf_drv_csense_sample();   
+
+    err_code = nrf_drv_csense_sample();
     if (err_code != NRF_SUCCESS)
     {
         NRF_LOG_INFO("Busy.\n");
         return;
     }
     while (nrf_drv_csense_is_busy());
-    
+
     NRF_LOG_INFO("Release both pads.\r\n");
     NRF_LOG_FLUSH();
     nrf_delay_ms(1000);
@@ -280,8 +279,8 @@ void configure_thresholds(void)
     nrf_delay_ms(1000);
     NRF_LOG_INFO("1...\r\n");
     NRF_LOG_FLUSH();
-    
-    err_code = nrf_drv_csense_sample();   
+
+    err_code = nrf_drv_csense_sample();
     if (err_code != NRF_SUCCESS)
     {
         NRF_LOG_INFO("Busy.\n");
@@ -289,7 +288,7 @@ void configure_thresholds(void)
     }
     while (nrf_drv_csense_is_busy());
 
-    nrf_delay_ms(100);    
+    nrf_delay_ms(100);
     new_th_pad_1 = max_value[PAD_ID_0];
     new_th_pad_1 += min_value[PAD_ID_0];
     new_th_pad_1 /= 2;
@@ -310,28 +309,28 @@ int main(void)
 {
     ret_code_t err_code;
     char config;
-    
+
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
-    
+
     bsp_board_leds_init();
 
     err_code = clock_config();
     APP_ERROR_CHECK(err_code);
-    
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, OP_QUEUES_SIZE, NULL);
 
-    
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
     NRF_LOG_INFO("Capacitive sensing driver example.\r\n");
-    
-    csense_initialize();    
+
+    csense_initialize();
 
     NRF_LOG_INFO("Do you want to enter configuration mode to set thresholds?(y/n)\r\n");
     NRF_LOG_FLUSH();
-    
+
     config = NRF_LOG_GETCHAR();
-    
+
     conf_mode = (config == 'y') ? true : false;
-    
+
     if (conf_mode)
     {
         configure_thresholds();
@@ -339,8 +338,8 @@ int main(void)
     }
 
     NRF_LOG_INFO("Module ready.\r\n");
-    
-    start_app_timer();    
+
+    start_app_timer();
 
     while (1)
     {

@@ -11,17 +11,12 @@ The following licenses are used in the nRF5 SDK:
  iii) SoftDevice license: The SoftDevice and its headers 
       (..\components\softdevice\sxxx\doc\<license file>)
 
-  iv) Nordic 3-clause BSD license: MDK files located in ..\components\device
+  iv) ARM 3-clause BSD license: CMSIS and system files (..\toolchain)
 
-   v) ARM 3-clause BSD license: CMSIS and system files (..\toolchain)
-
-  vi) FreeRTOS license: FreeRTOS configuration files (FreeRTOSConfig.h 
+   v) FreeRTOS license: FreeRTOS configuration files (FreeRTOSConfig.h 
       in the examples that show how to use FreeRTOS)
-      
- vii) RTX license: RTX config file (RTX_Conf_CM.c) located in the two examples 
-      showing how to use RTX
 
-viii) Third-party licenses: All third-party code contained in 
+  vi) Third-party licenses: All third-party code contained in 
       ..\external (respective licenses included in each of the imported
       projects)
  

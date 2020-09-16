@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 #include "ant_async_tx.h"
 #include <stdint.h>
 #include "ant_interface.h"
@@ -74,7 +73,6 @@
 #define MAX_RETRIES                    8                                  /**< Maximum number of retries for sending a command */
 #define MIN_BACKOFF_TIME               20                                 /**< Minimum number of ms to wait before next retry attempt. The maximum back off time is 255 + MIN_BACKOFF_TIME */
 
-static uint32_t m_timer_prescaler;                                        /**< App timer prescaler */
 static uint8_t  m_cmd_tx_buffer[ANT_STANDARD_DATA_PAYLOAD_SIZE];          /**< Command data transmit buffer */
 static uint8_t  m_retries;                                                /**< Number of remaining retries */
 static uint8_t  m_sequence_number;                                        /**< Sequence number */
@@ -161,7 +159,7 @@ static uint16_t rnd_backoff_generate(void)
 }
 
 
-void ant_async_tx_setup(uint32_t timer_prescaler)
+void ant_async_tx_setup(void)
 {
     uint32_t err_code;
 
@@ -183,7 +181,6 @@ void ant_async_tx_setup(uint32_t timer_prescaler)
 
     m_retries         = 0;
     m_sequence_number = 0;
-    m_timer_prescaler = timer_prescaler;
 
     err_code = app_timer_create(&m_backoff_timer,
                                 APP_TIMER_MODE_SINGLE_SHOT,
@@ -229,7 +226,7 @@ void ant_async_tx_event_handler(ant_evt_t * p_ant_evt)
 
                 uint32_t err_code =
                     app_timer_start(m_backoff_timer,
-                                    APP_TIMER_TICKS(backoff_time, (uint64_t) m_timer_prescaler),
+                                    APP_TIMER_TICKS(backoff_time),
                                     NULL);
                 APP_ERROR_CHECK(err_code);
             }

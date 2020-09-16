@@ -37,19 +37,18 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ser_hal_transport Serialization HAL Transport
  * @{
  * @ingroup ble_sdk_lib_serialization
  *
- * @brief   @tagAPI52832 HAL Transport layer for serialization.
+ * @brief HAL Transport layer for serialization.
  *
- * @details This section contains declarations of functions and typedefs used as API of the HAL
- *          Transport layer for serialization. This layer is fully hardware independent.
- *          Currently, the HAL Transport layer is responsible for controlling the PHY layer and
- *          memory management. In the future, it is possible to add more features to it, such as crc 
+ * @details The @ref ser_hal_transport declares functions and typedefs used as API of the HAL
+ *          transport layer for serialization. This layer is fully hardware-independent.
+ *          Currently, the HAL transport layer is responsible for controlling the PHY layer and
+ *          memory management. In the future, more features might be added to it, such as CRC
  *          or retransmission.
  *
  * \n \n

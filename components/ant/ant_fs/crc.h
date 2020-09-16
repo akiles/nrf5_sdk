@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /** @file
  * @brief The CRC-16 interface.
  * This file is based on implementation originally made by Dynastream Innovations Inc. - August 2012

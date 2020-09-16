@@ -93,8 +93,7 @@ static dfu_callback_t               m_data_pkt_cb;
 uint32_t m_uicr_nrffw_1 __attribute__((at(NRF_UICR_NRFFW_1))) = BOOTLOADER_MBR_RETAINING_PAGE_ADDRESS;
 #endif
 
-#define APP_TIMER_PRESCALER         0                                                       /**< Value of the RTC1 PRESCALER register. */
-#define DFU_TIMEOUT_INTERVAL        APP_TIMER_TICKS(120000, APP_TIMER_PRESCALER)            /**< DFU timeout interval in units of timer ticks. */
+#define DFU_TIMEOUT_INTERVAL        APP_TIMER_TICKS(120000)            /**< DFU timeout interval in units of timer ticks. */
 
 //lint !e655 suppress Lint Warning 655: Bit-wise operations.
 #define IS_UPDATING_SD()            (m_start_packet.dfu_update_mode & DFU_UPDATE_SD)        /**< Macro for determining if a SoftDevice update is ongoing. */

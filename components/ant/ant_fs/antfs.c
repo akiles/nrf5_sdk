@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(ANTFS)
 
@@ -1294,8 +1293,7 @@ static void timeout_start(uint32_t timeout_in_secs)
     APP_ERROR_CHECK(err_code);
 
     err_code = app_timer_start(m_timer_id,
-                               APP_TIMER_TICKS((uint32_t)(timeout_in_secs * 1000u),
-                               APP_TIMER_PRESCALER),
+                               APP_TIMER_TICKS((uint32_t)(timeout_in_secs * 1000u)),
                                NULL);
     APP_ERROR_CHECK(err_code);
 }

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@cond To Make Doxygen skip documentation generation for this file.
  * @{
  */
@@ -49,7 +48,7 @@
 #include "sdk_common.h"
 #include "amt.h"
 
-#define NRF_LOG_MODULE_NAME "AMT_C"
+#define NRF_LOG_MODULE_NAME "AMTC"
 #include "nrf_log.h"
 
 #define TX_BUFFER_MASK         0x07                  /**< TX Buffer mask, must be a mask of continuous zeroes, followed by continuous sequence of ones: 000...111. */
@@ -211,7 +210,7 @@ static void on_write_response(nrf_ble_amtc_t * p_ctx, const ble_evt_t * p_ble_ev
 
 void nrf_ble_amtc_on_db_disc_evt(nrf_ble_amtc_t * p_ctx, const ble_db_discovery_evt_t * p_evt)
 {
-    // Check if the AMT Service was discovered.
+    // Check if the AMT service was discovered.
     if (   (p_evt->evt_type != BLE_DB_DISCOVERY_COMPLETE)
         || (p_evt->params.discovered_db.srv_uuid.uuid != AMT_SERVICE_UUID)
         || (p_evt->params.discovered_db.srv_uuid.type != p_ctx->uuid_type))
@@ -232,19 +231,19 @@ void nrf_ble_amtc_on_db_disc_evt(nrf_ble_amtc_t * p_ctx, const ble_db_discovery_
             // Found AMT characteristic. Store handles.
             evt.params.peer_db.amt_cccd_handle =
                 p_evt->params.discovered_db.charateristics[i].cccd_handle;
-            evt.params.peer_db.amt_handle      =
+            evt.params.peer_db.amt_handle =
                 p_evt->params.discovered_db.charateristics[i].characteristic.handle_value;
         }
 
         if ((uuid.uuid == AMT_RCV_BYTES_CNT_CHAR_UUID) && (uuid.type == p_ctx->uuid_type))
         {
             // Found AMT Number of received bytes characteristic. Store handles.
-            evt.params.peer_db.amt_rbc_handle      =
+            evt.params.peer_db.amt_rbc_handle =
                 p_evt->params.discovered_db.charateristics[i].characteristic.handle_value;
         }
     }
 
-    NRF_LOG_DEBUG("AMT Service discovered at peer.\r\n");
+    NRF_LOG_DEBUG("AMT service discovered at peer.\r\n");
 
     //If the instance has been assigned prior to db_discovery, assign the db_handles.
     if (p_ctx->conn_handle != BLE_CONN_HANDLE_INVALID)

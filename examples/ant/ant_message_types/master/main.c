@@ -48,8 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
-
 #include <stdint.h>
 #include "nrf.h"
 #include "app_error.h"
@@ -61,19 +59,16 @@
 #include "ant_stack_config.h"
 #include "ant_message_types_master.h"
 
-#define APP_TIMER_PRESCALER             0                    /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE         2u                   /**< Size of timer operation queues. */
-
-
 /**@brief Function for the Timer and BSP initialization.
  */
 static void utils_setup(void)
 {
     uint32_t err_code;
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         ant_message_types_master_bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 }

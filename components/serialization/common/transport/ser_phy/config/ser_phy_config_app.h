@@ -37,9 +37,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
-#ifndef SER_CONFIG_APP_HAL_NRF51_H__
-#define SER_CONFIG_APP_HAL_NRF51_H__
+#ifndef SER_PHY_CONFIG_APP_H__
+#define SER_PHY_CONFIG_APP_H__
 
 #include "boards.h"
 #include "ser_config.h"
@@ -104,4 +103,4 @@ extern "C" {
 }
 #endif
 
-#endif //SER_CONFIG_APP_HAL_NRF51_H__
+#endif // SER_PHY_CONFIG_APP_H__

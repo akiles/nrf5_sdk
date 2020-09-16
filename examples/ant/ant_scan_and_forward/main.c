@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /**@file
  * @brief The main file for the ANT Scan and Forward demo.
  *
@@ -78,9 +77,6 @@
 #include "ant_parameters.h"
 #include "softdevice_handler.h"
 #include "ant_stack_config.h"
-
-#define APP_TIMER_PRESCALER           0x00      /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE       0x04      /**< Size of timer operation queues. */
 
 /**@brief Function for dispatching a ANT stack event to all modules with a ANT stack event handler.
  *
@@ -113,9 +109,10 @@ static void utils_setup(void)
 {
     uint32_t err_code;
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         sf_bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 }

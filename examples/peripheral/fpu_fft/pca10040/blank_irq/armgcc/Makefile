@@ -12,12 +12,12 @@ $(OUTPUT_DIRECTORY)/nrf52832_xxaa.out: \
 SRC_FILES += \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_serial.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_frontend.c \
+  $(SDK_ROOT)/components/boards/boards.c \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
   $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
   $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
-  $(SDK_ROOT)/components/libraries/util/sdk_errors.c \
-  $(SDK_ROOT)/components/boards/boards.c \
+  $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/components/drivers_nrf/common/nrf_drv_common.c \
   $(SDK_ROOT)/components/drivers_nrf/uart/nrf_drv_uart.c \
   $(PROJ_DIR)/main.c \
@@ -35,6 +35,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/uart \
   ../config \
   $(SDK_ROOT)/components/drivers_nrf/common \
+  $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/libraries/bsp \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
@@ -52,23 +53,24 @@ LIB_FILES += \
   $(SDK_ROOT)/components/toolchain/cmsis/dsp/GCC/libarm_cortexM4lf_math.a \
 
 # C flags common to all targets
+CFLAGS += -DARM_MATH_CM4
+CFLAGS += -DBOARD_PCA10040
+CFLAGS += -DBSP_DEFINES_ONLY
+CFLAGS += -DCONFIG_GPIO_AS_PINRESET
+CFLAGS += -DFPU_INTERRUPT_MODE
+CFLAGS += -DNRF52
+CFLAGS += -DNRF52832_XXAA
 CFLAGS += -DNRF52_PAN_12
 CFLAGS += -DNRF52_PAN_15
-CFLAGS += -DFPU_INTERRUPT_MODE
 CFLAGS += -DNRF52_PAN_20
-CFLAGS += -DNRF52_PAN_54
 CFLAGS += -DNRF52_PAN_31
-CFLAGS += -DNRF52_PAN_51
 CFLAGS += -DNRF52_PAN_36
-CFLAGS += -DCONFIG_GPIO_AS_PINRESET
-CFLAGS += -DNRF52_PAN_64
+CFLAGS += -DNRF52_PAN_51
+CFLAGS += -DNRF52_PAN_54
 CFLAGS += -DNRF52_PAN_55
-CFLAGS += -DNRF52
-CFLAGS += -DBSP_DEFINES_ONLY
-CFLAGS += -DBOARD_PCA10040
-CFLAGS += -DARM_MATH_CM4
-CFLAGS += -DNRF52832
 CFLAGS += -DNRF52_PAN_58
+CFLAGS += -DNRF52_PAN_64
+CFLAGS += -DNRF52_PAN_74
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS +=  -Wall -Werror -O3 -g3
@@ -82,23 +84,24 @@ CXXFLAGS += \
 
 # Assembler flags common to all targets
 ASMFLAGS += -x assembler-with-cpp
+ASMFLAGS += -DARM_MATH_CM4
+ASMFLAGS += -DBOARD_PCA10040
+ASMFLAGS += -DBSP_DEFINES_ONLY
+ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
+ASMFLAGS += -DFPU_INTERRUPT_MODE
+ASMFLAGS += -DNRF52
+ASMFLAGS += -DNRF52832_XXAA
 ASMFLAGS += -DNRF52_PAN_12
 ASMFLAGS += -DNRF52_PAN_15
-ASMFLAGS += -DFPU_INTERRUPT_MODE
 ASMFLAGS += -DNRF52_PAN_20
-ASMFLAGS += -DNRF52_PAN_54
 ASMFLAGS += -DNRF52_PAN_31
-ASMFLAGS += -DNRF52_PAN_51
 ASMFLAGS += -DNRF52_PAN_36
-ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
-ASMFLAGS += -DNRF52_PAN_64
+ASMFLAGS += -DNRF52_PAN_51
+ASMFLAGS += -DNRF52_PAN_54
 ASMFLAGS += -DNRF52_PAN_55
-ASMFLAGS += -DNRF52
-ASMFLAGS += -DBSP_DEFINES_ONLY
-ASMFLAGS += -DBOARD_PCA10040
-ASMFLAGS += -DARM_MATH_CM4
-ASMFLAGS += -DNRF52832
 ASMFLAGS += -DNRF52_PAN_58
+ASMFLAGS += -DNRF52_PAN_64
+ASMFLAGS += -DNRF52_PAN_74
 
 # Linker flags
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)

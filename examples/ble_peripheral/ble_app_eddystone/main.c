@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup nrf5_sdk_for_eddystone main.c
@@ -56,17 +55,22 @@
 #include "ble_conn_params.h"
 #include "ble_advertising.h"
 #include "softdevice_handler.h"
-#include "app_timer_appsh.h"
+#include "app_timer.h"
 #include "es_app_config.h"
 #include "app_scheduler.h"
 #include "nrf_ble_es.h"
 #include "fstorage.h"
+#include "nrf_ble_gatt.h"
+
 
 
 #define DEAD_BEEF                   0xDEADBEEF          //!< Value used as error code on stack dump, can be used to identify stack location on stack unwind.
 #define NON_CONNECTABLE_ADV_LED_PIN BSP_BOARD_LED_0     //!< Toggles when non-connectable advertisement is sent.
 #define CONNECTED_LED_PIN           BSP_BOARD_LED_1     //!< Is on when device has connected.
 #define CONNECTABLE_ADV_LED_PIN     BSP_BOARD_LED_2     //!< Is on when device is advertising connectable advertisements.
+
+
+static nrf_ble_gatt_t m_gatt;                           //!< GATT module instance.
 
 
 /**@brief Callback function for asserts in the SoftDevice.
@@ -120,14 +124,6 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             bsp_board_led_off(CONNECTED_LED_PIN);
             break;
 
-#if (NRF_SD_BLE_API_VERSION == 3)
-        case BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST:
-            err_code = sd_ble_gatts_exchange_mtu_reply(p_ble_evt->evt.gatts_evt.conn_handle,
-                                                       GATT_MTU_SIZE_DEFAULT);
-            APP_ERROR_CHECK(err_code);
-            break;
-#endif
-
         default:
             // No implementation needed.
             break;
@@ -149,6 +145,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
     on_ble_evt(p_ble_evt);
     nrf_ble_es_on_ble_evt(p_ble_evt);
     ble_advertising_on_ble_evt(p_ble_evt);
+    nrf_ble_gatt_on_ble_evt(&m_gatt, p_ble_evt);
 }
 
 
@@ -194,6 +191,15 @@ static void gap_params_init(void)
 }
 
 
+/**@brief Function for initializing the GATT module.
+ */
+static void gatt_init(void)
+{
+    ret_code_t err_code = nrf_ble_gatt_init(&m_gatt, NULL);
+    APP_ERROR_CHECK(err_code);
+}
+
+
 /**@brief Function for initializing the BLE stack.
  *
  * @details Initializes the SoftDevice and the BLE event interrupt.
@@ -211,14 +217,24 @@ static void ble_stack_init(void)
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(&lf_clock_config, NULL);
 
-    ble_enable_params_t ble_enable_params;
-    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
-                                                    PERIPHERAL_LINK_COUNT,
-                                                    &ble_enable_params);
+    // Fetch the start address of the application RAM.
+    uint32_t ram_start = 0;
+    err_code = softdevice_app_ram_start_get(&ram_start);
+    APP_ERROR_CHECK(err_code);
+
+    // Overwrite some of the default configurations for the BLE stack.
+    ble_cfg_t ble_cfg;
+
+    // Configure the maximum number of connections.
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = BLE_GAP_ROLE_COUNT_PERIPH_DEFAULT;
+    ble_cfg.gap_cfg.role_count_cfg.central_role_count = 0;
+    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = 0;
+    err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Enable BLE stack.
-    err_code = softdevice_enable(&ble_enable_params);
+    err_code = softdevice_enable(&ram_start);
     APP_ERROR_CHECK(err_code);
 
     // Subscribe for BLE events.
@@ -316,7 +332,7 @@ static void button_init(void)
         .button_handler = button_evt_handler
     };
 
-    err_code = app_button_init(&buttons_cfgs, buttons_cnt, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER));
+    err_code = app_button_init(&buttons_cfgs, buttons_cnt, APP_TIMER_TICKS(100));
     APP_ERROR_CHECK(err_code);
 
     err_code = app_button_enable();
@@ -326,13 +342,14 @@ static void button_init(void)
 
 static void timers_init(void)
 {
-    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, true);
+    ret_code_t err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 }
 
 
 static void leds_init(void)
 {
-    ret_code_t err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
+    ret_code_t err_code = bsp_init(BSP_INIT_LED, NULL);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -355,6 +372,7 @@ int main(void)
     scheduler_init();
     ble_stack_init();
     gap_params_init();
+    gatt_init();
     conn_params_init();
     nrf_ble_es_init(on_es_evt);
 

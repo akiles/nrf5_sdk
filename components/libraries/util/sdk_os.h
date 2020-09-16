@@ -37,8 +37,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
- /** @cond */
+/** @cond */
 /**@file
  *
  * @defgroup sdk_os SDK OS Abstraction

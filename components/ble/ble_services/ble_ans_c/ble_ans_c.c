@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /* Attention!
 *  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
 *  qualification listings, this section of source code must not be modified.
@@ -178,31 +177,31 @@ void ble_ans_c_on_db_disc_evt(ble_ans_c_t * p_ans, const ble_db_discovery_evt_t 
             switch (p_char->characteristic.uuid.uuid)
             {
                 case BLE_UUID_ALERT_NOTIFICATION_CONTROL_POINT_CHAR:
-                    NRF_LOG_INFO("Found Ctrlpt \r\n\r");
+                    NRF_LOG_DEBUG("Found Ctrlpt \r\n\r");
                     char_set(&evt.data.service.alert_notif_ctrl_point, &p_char->characteristic);
                     break;
 
                 case BLE_UUID_UNREAD_ALERT_CHAR:
-                    NRF_LOG_INFO("Found Unread Alert \r\n\r");
+                    NRF_LOG_DEBUG("Found Unread Alert \r\n\r");
                     char_set(&evt.data.service.unread_alert_status, &p_char->characteristic);
                     char_cccd_set(&evt.data.service.unread_alert_cccd,
                                   p_char->cccd_handle);
                     break;
 
                 case BLE_UUID_NEW_ALERT_CHAR:
-                    NRF_LOG_INFO("Found New Alert \r\n\r");
+                    NRF_LOG_DEBUG("Found New Alert \r\n\r");
                     char_set(&evt.data.service.new_alert, &p_char->characteristic);
                     char_cccd_set(&evt.data.service.new_alert_cccd,
                                   p_char->cccd_handle);
                     break;
 
                 case BLE_UUID_SUPPORTED_UNREAD_ALERT_CATEGORY_CHAR:
-                    NRF_LOG_INFO("Found supported unread alert category \r\n\r");
+                    NRF_LOG_DEBUG("Found supported unread alert category \r\n\r");
                     char_set(&evt.data.service.suported_unread_alert_cat, &p_char->characteristic);
                     break;
 
                 case BLE_UUID_SUPPORTED_NEW_ALERT_CATEGORY_CHAR:
-                    NRF_LOG_INFO("Found supported new alert category \r\n\r");
+                    NRF_LOG_DEBUG("Found supported new alert category \r\n\r");
                     char_set(&evt.data.service.suported_new_alert_cat, &p_char->characteristic);
                     break;
 

@@ -38,11 +38,19 @@
  * 
  */
 #include "ser_dbg_sd_str.h"
-#include "ble_ranges.h"
 #include "nrf_soc.h"
 #include "nrf_log.h"
 #include <string.h>
 #include "sdk_common.h"
+
+#ifdef BLE_STACK_SUPPORT_REQD
+#include "ble_ranges.h"
+#endif
+
+#ifdef ANT_STACK_SUPPORT_REQD
+#include "ant_interface.h"
+#include "ant_parameters.h"
+#endif
 
 #if NRF_MODULE_ENABLED(NRF_LOG)
 static const char * sd_events[] = {
@@ -215,12 +223,21 @@ static const char * sd_functions[] = {
     "SD_BLE_GATTS_ATTR_GET",                   /*0xAc*/
     "SD_BLE_GATTS_EXCHANGE_MTU_REPLY",         /*0xAd*/
 };
-#endif
+#endif // NRF_MODULE_ENABLED(NRF_LOG)
+
+#ifdef ANT_STACK_SUPPORT_REQD
+const char * string[] =
+{
+    "ANT SVC",
+    "ANT_EVT",
+};
+#endif // ANT_STACK_SUPPORT_REQD
 
 const char * ser_dbg_sd_call_str_get(uint8_t opcode)
 {
 #if NRF_MODULE_ENABLED(NRF_LOG)
     const char * p_str = "SD_CALL_UNKNOWN";
+#ifdef BLE_STACK_SUPPORT_REQD
     if (opcode >= BLE_SVC_BASE && opcode <= BLE_GATTS_SVC_LAST)
     {
         uint32_t idx = opcode-BLE_SVC_BASE;
@@ -229,6 +246,19 @@ const char * ser_dbg_sd_call_str_get(uint8_t opcode)
             p_str = sd_functions[idx];
         }
     }
+#endif // BLE_STACK_SUPPORT_REQD
+
+#ifdef ANT_STACK_SUPPORT_REQD
+    // Check if opcode is within the range of the ANT Stack API SVC numbers
+#ifdef BLE_STACK_SUPPORT_REQD
+    else if (opcode >= STK_SVC_BASE_2 && opcode <= SVC_ANT_EXTENDED2)
+#else
+    if (opcode >= STK_SVC_BASE_2 && opcode <= SVC_ANT_EXTENDED2)
+#endif // BLE_STACK_SUPPORT_REQD
+    {
+        p_str = string[0];
+    }
+#endif // ANT_STACK_SUPPORT_REQD
     else
     {
         switch (opcode)
@@ -253,6 +283,7 @@ const char * ser_dbg_sd_evt_str_get(uint16_t opcode)
 {
 #if NRF_MODULE_ENABLED(NRF_LOG)
     const char * p_str = "SD_EVT_UNKNOWN";
+#ifdef BLE_STACK_SUPPORT_REQD
     if (opcode >= BLE_EVT_BASE && opcode <= BLE_GATTS_EVT_LAST)
     {
         uint32_t idx = opcode - BLE_EVT_BASE;
@@ -261,8 +292,21 @@ const char * ser_dbg_sd_evt_str_get(uint16_t opcode)
             p_str = sd_events[idx];
         }
     }
+#endif // BLE_STACK_SUPPORT_REQD
+
+#ifdef ANT_STACK_SUPPORT_REQD
+    // Check if opcode is within the range of the ANT Stack API SVC numbers
+#ifdef BLE_STACK_SUPPORT_REQD
+    else if (opcode >= NO_EVENT && opcode <= EVENT_BLOCKED)
+#else
+    if (opcode >= NO_EVENT && opcode <= EVENT_BLOCKED)
+#endif // BLE_STACK_SUPPORT_REQD
+    {
+        p_str = string[1];
+    }
+#endif
     return p_str;
 #else
     return NULL;
-#endif
+#endif // NRF_MODULE_ENABLED(NRF_LOG)
 }

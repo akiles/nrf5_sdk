@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef APP_USBD_MSC_H__
 #define APP_USBD_MSC_H__
 
@@ -66,7 +65,7 @@ extern "C" {
  * @ingroup app_usbd
  *
  * @brief @tagAPI52840 Module with types, definitions, and API used by the USB MSC class.
- *   
+ *
  * @details References:
  * - "Universal Serial Bus Mass Storage Class, Specification Overview,"
  *   Revision 1.2,  USB Implementer's Forum, June 23, 2003.
@@ -106,10 +105,7 @@ APP_USBD_CLASS_TYPEDEF(app_usbd_msc,                                            
  *                          app_usbd_msc_user_event_t     event);
  */
 typedef enum app_usbd_msc_user_event_e {
-    APP_USBD_MSC_USER_EVT_SUSPEND = 0, /**< User event SUSPEND (bus state notification) */
-    APP_USBD_MSC_USER_EVT_RESUME,      /**< User event RESUME (bus state notification)  */
-    APP_USBD_MSC_USER_EVT_START,       /**< User event START (cable connect)            */
-    APP_USBD_MSC_USER_EVT_STOP,        /**< User event STOP (cable disconnect)          */
+    APP_USBD_MSC_USER_EVT_NONE,        /**< Dummy event to satisfy compilers. */
 } app_usbd_msc_user_event_t;
 
 /*lint -restore*/
@@ -177,6 +173,16 @@ static inline app_usbd_msc_t const * app_usbd_msc_class_get(app_usbd_class_inst_
 {
     return (app_usbd_msc_t const *)p_inst;
 }
+
+/**
+ * @brief Synchronization of all block devices pined to MSC
+ *
+ * @param[in] p_msc     MSC instance (declared by @ref APP_USBD_MSC_GLOBAL_DEF)
+ *
+ * @retval true  All block devices flushed data
+ * @retval false At least one block device has not flushed data
+ */
+bool app_usbd_msc_sync(app_usbd_msc_t const * p_msc);
 
 /** @} */
 

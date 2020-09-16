@@ -551,6 +551,13 @@
 #define HARDFAULT_HANDLER_ENABLED 1
 #endif
 
+// <q> NRF_STRERROR_ENABLED  - nrf_strerror - Library for converting error code to string.
+ 
+
+#ifndef NRF_STRERROR_ENABLED
+#define NRF_STRERROR_ENABLED 1
+#endif
+
 // </h> 
 //==========================================================
 
@@ -682,7 +689,7 @@
 // <e> NRF_LOG_BACKEND_SERIAL_USES_UART - If enabled data is printed over UART
 //==========================================================
 #ifndef NRF_LOG_BACKEND_SERIAL_USES_UART
-#define NRF_LOG_BACKEND_SERIAL_USES_UART 1
+#define NRF_LOG_BACKEND_SERIAL_USES_UART 0
 #endif
 #if  NRF_LOG_BACKEND_SERIAL_USES_UART
 // <o> NRF_LOG_BACKEND_SERIAL_UART_BAUDRATE  - Default Baudrate
@@ -751,7 +758,7 @@
 // <e> NRF_LOG_BACKEND_SERIAL_USES_RTT - If enabled data is printed using RTT
 //==========================================================
 #ifndef NRF_LOG_BACKEND_SERIAL_USES_RTT
-#define NRF_LOG_BACKEND_SERIAL_USES_RTT 0
+#define NRF_LOG_BACKEND_SERIAL_USES_RTT 1
 #endif
 #if  NRF_LOG_BACKEND_SERIAL_USES_RTT
 // <o> NRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE - RTT output buffer size. 
@@ -779,6 +786,9 @@
 
 //==========================================================
 // <o> SEGGER_RTT_CONFIG_BUFFER_SIZE_UP - Size of upstream buffer. 
+// <i> Note that either @ref NRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE
+// <i> or this value is actually used. It depends on which one is bigger.
+
 #ifndef SEGGER_RTT_CONFIG_BUFFER_SIZE_UP
 #define SEGGER_RTT_CONFIG_BUFFER_SIZE_UP 64
 #endif
@@ -796,6 +806,21 @@
 // <o> SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS - Size of upstream buffer. 
 #ifndef SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS
 #define SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS 2
+#endif
+
+// <o> SEGGER_RTT_CONFIG_DEFAULT_MODE  - RTT behavior if the buffer is full.
+ 
+
+// <i> The following modes are supported:
+// <i> - SKIP  - Do not block, output nothing.
+// <i> - TRIM  - Do not block, output as much as fits.
+// <i> - BLOCK - Wait until there is space in the buffer.
+// <0=> SKIP 
+// <1=> TRIM 
+// <2=> BLOCK_IF_FIFO_FULL 
+
+#ifndef SEGGER_RTT_CONFIG_DEFAULT_MODE
+#define SEGGER_RTT_CONFIG_DEFAULT_MODE 0
 #endif
 
 // </h> 

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(COMP)
 #include "nrf_drv_comp.h"
@@ -50,7 +49,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
- 
+
 #define NRF_LOG_MODULE_NAME "COMP"
 
 #if COMP_CONFIG_LOG_ENABLED
@@ -112,7 +111,7 @@ ret_code_t nrf_drv_comp_init(const nrf_drv_comp_config_t * p_config,
     if (m_state != NRF_DRV_STATE_UNINITIALIZED)
     { // COMP driver is already initialized
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -125,7 +124,7 @@ ret_code_t nrf_drv_comp_init(const nrf_drv_comp_config_t * p_config,
     if (nrf_drv_common_per_res_acquire(NRF_COMP, IRQ_HANDLER_NAME) != NRF_SUCCESS)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 #endif
@@ -164,7 +163,7 @@ ret_code_t nrf_drv_comp_init(const nrf_drv_comp_config_t * p_config,
     else
     {
         err_code = NRF_ERROR_INVALID_PARAM;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -175,7 +174,7 @@ ret_code_t nrf_drv_comp_init(const nrf_drv_comp_config_t * p_config,
     m_state = NRF_DRV_STATE_INITIALIZED;
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 

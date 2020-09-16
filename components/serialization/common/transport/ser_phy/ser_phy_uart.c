@@ -37,310 +37,202 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
-
 #include "ser_phy.h"
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include "nordic_common.h"
-#include "nrf.h"
-#include "nrf_error.h"
-#include "nrf_gpio.h"
-#include "app_util.h"
-#include "app_uart.h"
-#include "app_error.h"
-#include "nrf_drv_uart.h"
-
+#include "ser_config.h"
 #ifdef SER_CONNECTIVITY
-#include "ser_phy_config_conn.h"
+    #include "ser_phy_config_conn.h"
 #else
-#include "ser_phy_config_app.h"
-#endif /* SER_CONNECTIVITY */
+    #include "ser_phy_config_app.h"
+#endif
+#include "nrf_drv_uart.h"
+#include "app_error.h"
+#include "app_util.h"
+#include "app_util_platform.h"
 
-#include "boards.h"
+#define UART_TRANSFER_MAX 255
 
 #define SER_UART_IRQ UART0_IRQn
-
-static uint8_t * mp_tx_stream;                         /**< Pointer to Tx data */
-static uint16_t  m_tx_stream_length;                   /**< Length of Tx data including SER_PHY
-                                                        *   header */
-static uint16_t  m_tx_stream_index;                    /**< Byte index in Tx data */
-static uint8_t   m_tx_length_buf[SER_PHY_HEADER_SIZE]; /**< Buffer for header of Tx packet */
-
-static uint8_t * mp_rx_stream;                         /**< Pointer to Rx buffer */
-static uint16_t  m_rx_stream_length;                   /**< Length of Rx data including SER_PHY
-                                                        *   header*/
-static uint16_t  m_rx_stream_index;                    /**< Byte index in Rx data */
-static uint8_t   m_rx_length_buf[SER_PHY_HEADER_SIZE]; /**< Buffer for header of Rx packet */
-static uint8_t   m_rx_drop_buf[1];                     /**< 1-byte buffer used to trash incoming
-                                                        *   data */
-static uint8_t   m_rx_byte;                            /**< Rx byte passed from low-level driver */
-
-static ser_phy_events_handler_t m_ser_phy_event_handler; /**< Event handler for upper layer */
-static ser_phy_evt_t            m_ser_phy_rx_event;      /**< Rx event for upper layer
-                                                          *   notification */
-static ser_phy_evt_t            m_ser_phy_tx_event;      /**< Tx event for upper layer
-                                                          *   notification */
-
-static bool m_other_side_active = false; /* Flag indicating that the other side is running */
-
-/**
- *@breif UART configuration structure, values are defined in SER_PHY config files:
- *  ser_phy_config_conn_nrf51.h for connectivity and ser_phy_config_app_nrf51.h for application.
- */
-static const app_uart_comm_params_t comm_params =
-{
-    .rx_pin_no  = SER_PHY_UART_RX,
-    .tx_pin_no  = SER_PHY_UART_TX,
-    .rts_pin_no = SER_PHY_UART_RTS,
-    .cts_pin_no = SER_PHY_UART_CTS,
-    //Below values are defined in ser_config.h common for application and connectivity
-    .flow_control = SER_PHY_UART_FLOW_CTRL,
-    .use_parity   = SER_PHY_UART_PARITY,
-    .baud_rate    = SER_PHY_UART_BAUDRATE
+static const nrf_drv_uart_t m_uart = NRF_DRV_UART_INSTANCE(0);
+static const nrf_drv_uart_config_t m_uart_config = {
+    .pseltxd            = SER_PHY_UART_TX,
+    .pselrxd            = SER_PHY_UART_RX,
+    .pselrts            = SER_PHY_UART_RTS,
+    .pselcts            = SER_PHY_UART_CTS,
+    .p_context          = NULL,
+    .interrupt_priority = UART_IRQ_PRIORITY,
+#ifdef UARTE_PRESENT
+    .use_easy_dma       = true,
+#endif
+    // These values are common for application and connectivity, they are
+    // defined in "ser_config.h".
+    .hwfc      = SER_PHY_UART_FLOW_CTRL,
+    .parity    = SER_PHY_UART_PARITY,
+    .baudrate  = (nrf_uart_baudrate_t)SER_PHY_UART_BAUDRATE
 };
 
-/** FUNCTION DECLARATIONS */
+static bool volatile   m_tx_in_progress;
+static uint8_t         m_tx_header_buf[SER_PHY_HEADER_SIZE];
+static uint16_t        m_bytes_to_transmit;
+static uint8_t const * mp_tx_buffer;
 
-static __INLINE void callback_ser_phy_event(ser_phy_evt_t event);
-static __INLINE void callback_packet_received(void);
-static __INLINE void callback_packet_sent(void);
-static __INLINE void callback_mem_request(void);
-static __INLINE void callback_hw_error(uint32_t error_src);
+static uint8_t         m_rx_header_buf[SER_PHY_HEADER_SIZE];
+static uint16_t        m_bytes_to_receive;
+static uint8_t         m_rx_drop_buf[1];
 
-static void ser_phy_uart_tx(void);
-static void ser_phy_uart_rx(uint8_t rx_byte);
-static void ser_phy_uart_evt_callback(app_uart_evt_t * uart_evt);
+static ser_phy_events_handler_t m_ser_phy_event_handler;
+static ser_phy_evt_t m_ser_phy_rx_event;
 
 
-/** STATIC FUNCTION DEFINITIONS */
-
-/**
- *@brief Callback for calling ser phy event handler to notify higher layer with appropriate event.
- * Handler is called only wen it was previously registered.
- */
-static __INLINE void callback_ser_phy_event(ser_phy_evt_t event)
+static void packet_sent_callback(void)
 {
-    if (m_ser_phy_event_handler)
-    {
-        m_ser_phy_event_handler(event);
-    }
-    return;
+    static ser_phy_evt_t const event = {
+        .evt_type = SER_PHY_EVT_TX_PKT_SENT,
+    };
+    m_ser_phy_event_handler(event);
 }
 
-/**
- *@brief Callback for notifying upper layer that either a packet was succesfully received or it was
- * dropped.
- */
-static __INLINE void callback_packet_received(void)
+static void buffer_request_callback(uint16_t num_of_bytes)
 {
-    if (mp_rx_stream == m_rx_drop_buf)
-    {
-        m_ser_phy_rx_event.evt_type = SER_PHY_EVT_RX_PKT_DROPPED;
-    }
-    else
-    {
-        m_ser_phy_rx_event.evt_type = SER_PHY_EVT_RX_PKT_RECEIVED;
-        m_ser_phy_rx_event.evt_params.rx_pkt_received.num_of_bytes =
-            m_rx_stream_index - SER_PHY_HEADER_SIZE;
-        m_ser_phy_rx_event.evt_params.rx_pkt_received.p_buffer =
-            mp_rx_stream;
-    }
-
-    mp_rx_stream       = NULL;
-    m_rx_stream_length = 0;
-    m_rx_stream_index  = 0;
-
-    callback_ser_phy_event(m_ser_phy_rx_event);
-}
-
-/**
- *@brief Callback for notifying upper layer that a packet was succesfully transmitted
- */
-static __INLINE void callback_packet_sent(void)
-{
-    mp_tx_stream       = NULL;
-    m_tx_stream_length = 0;
-    m_tx_stream_index  = 0;
-
-    m_ser_phy_tx_event.evt_type = SER_PHY_EVT_TX_PKT_SENT;
-
-    callback_ser_phy_event(m_ser_phy_tx_event);
-}
-
-/**
- *@brief Callback for requesting from upper layer memory for an incomming packet.
- */
-static __INLINE void callback_mem_request(void)
-{
-    m_rx_stream_length          = uint16_decode(m_rx_length_buf) + SER_PHY_HEADER_SIZE;
     m_ser_phy_rx_event.evt_type = SER_PHY_EVT_RX_BUF_REQUEST;
-    m_ser_phy_rx_event.evt_params.rx_buf_request.num_of_bytes =
-        m_rx_stream_length - SER_PHY_HEADER_SIZE;
-
-    callback_ser_phy_event(m_ser_phy_rx_event);
+    m_ser_phy_rx_event.evt_params.rx_buf_request.num_of_bytes = num_of_bytes;
+    m_ser_phy_event_handler(m_ser_phy_rx_event);
 }
 
-/**
- *@brief Callback for notifying upper layer of a HW error that occured.
- */
-static __INLINE void callback_hw_error(uint32_t error_src)
+static void packet_received_callback(void)
 {
-    mp_rx_stream                = NULL;
-    m_rx_stream_length          = 0;
-    m_rx_stream_index           = 0;
-    m_ser_phy_rx_event.evt_type = SER_PHY_EVT_HW_ERROR;
-
-    //Pass error source to upper layer
-    m_ser_phy_rx_event.evt_params.hw_error.error_code = error_src;
-    callback_ser_phy_event(m_ser_phy_rx_event);
+    m_ser_phy_event_handler(m_ser_phy_rx_event);
 }
 
-/**
- *@brief Function for handling Tx procedure.
- */
-static void ser_phy_uart_tx(void)
+static void packet_dropped_callback(void)
 {
-    if (mp_tx_stream != NULL)
+    static ser_phy_evt_t const event = {
+        .evt_type = SER_PHY_EVT_RX_PKT_DROPPED,
+    };
+    m_ser_phy_event_handler(event);
+}
+
+static void hardware_error_callback(uint32_t hw_error)
+{
+    ser_phy_evt_t event = {
+        .evt_type = SER_PHY_EVT_HW_ERROR,
+        .evt_params.hw_error.error_code = hw_error,
+    };
+    m_ser_phy_event_handler(event);
+}
+
+static void packet_rx_start(void)
+{
+    APP_ERROR_CHECK(nrf_drv_uart_rx(&m_uart, m_rx_header_buf,
+        SER_PHY_HEADER_SIZE));
+}
+
+static void packet_byte_drop(void)
+{
+    APP_ERROR_CHECK(nrf_drv_uart_rx(&m_uart, m_rx_drop_buf, 1));
+}
+
+static void uart_event_handler(nrf_drv_uart_event_t * p_event,
+                               void * p_context)
+{
+    (void)p_context;
+
+    switch (p_event->type)
     {
-        bool     tx_done_flag = false;       /**< Local flag for indicating that TX is completed */
-        uint32_t err_code     = NRF_SUCCESS; /**< Error code for storing result of app_uart_put */
-
-        //Blocking TXRDY interrupt is done to avoid interrupting when this procedure is
-        //triggered from main context
-#ifdef UARTE_IN_USE
-        NRF_UARTE0->INTENCLR = (UARTE_INTENSET_ENDTX_Set << UARTE_INTENSET_ENDTX_Pos);
-#else
-        NRF_UART0->INTENCLR = (UART_INTENSET_TXDRDY_Set << UART_INTENSET_TXDRDY_Pos);
-#endif
-        //Notify upper layer if whole packet has been transmitted
-        if (m_tx_stream_index == m_tx_stream_length)
-        {
-            callback_packet_sent();
-            tx_done_flag = true;
-        }
-        //First transmit 2 bytes of packet length
-        else if (m_tx_stream_index < SER_PHY_HEADER_SIZE)
-        {
-            err_code = app_uart_put(m_tx_length_buf[m_tx_stream_index]);
-        }
-        //Then transmit payload
-        else if (m_tx_stream_index < m_tx_stream_length)
-        {
-            err_code = app_uart_put(mp_tx_stream[m_tx_stream_index - SER_PHY_HEADER_SIZE]);
-        }
-
-        //Increment index only if byte was sent without errors
-        if ((err_code == NRF_SUCCESS) && !tx_done_flag)
-        {
-            m_tx_stream_index++;
-        }
-
-        //Unblock TXRDY interrupts
-#ifdef UARTE_IN_USE
-        NRF_UARTE0->INTENSET = (UARTE_INTENSET_ENDTX_Set << UARTE_INTENSET_ENDTX_Pos);
-#else
-        NRF_UART0->INTENSET = (UART_INTENSET_TXDRDY_Set << UART_INTENSET_TXDRDY_Pos);
-#endif
-    }
-
-}
-
-/**
- *@brief Function for handling Rx procedure.
- */
-static void ser_phy_uart_rx(uint8_t rx_byte)
-{
-
-    if (mp_rx_stream == NULL )
-    {
-        //Receive length value and request rx buffer from higher layer
-        if (m_rx_stream_index < SER_PHY_HEADER_SIZE)
-        {
-            m_rx_length_buf[m_rx_stream_index++] = rx_byte;
-
-            if (m_rx_stream_index == SER_PHY_HEADER_SIZE)
+        case NRF_DRV_UART_EVT_ERROR:
+            // Process the error only if this is a parity or overrun error.
+            // Break and framing errors will always occur before the other
+            // side becomes active.
+            if (p_event->data.error.error_mask &
+                (NRF_UART_ERROR_PARITY_MASK | NRF_UART_ERROR_OVERRUN_MASK))
             {
-                //Block RXRDY interrupts at this point to not handle incoming bytes until upper
-                //layer provides memory for payload
-#ifdef UARTE_IN_USE
-                NRF_UARTE0->INTENCLR = (UARTE_INTENCLR_ENDRX_Clear << UARTE_INTENCLR_ENDRX_Pos);
-#else
-                NRF_UART0->INTENCLR = (UART_INTENCLR_RXDRDY_Clear << UART_INTENCLR_RXDRDY_Pos);
-#endif
-                //Request rx buffer from upper layer
-                callback_mem_request();
+                // Pass error source to upper layer.
+                hardware_error_callback(p_event->data.error.error_mask);
             }
-        }
-    }
-    else if (m_rx_stream_index < m_rx_stream_length)
-    {
-        //Receive or drop payload
-        if (mp_rx_stream == m_rx_drop_buf)
-        {
-            //Drop incoming data to the one-element drop buffer
-            *mp_rx_stream = rx_byte;
-            m_rx_stream_index++;
-        }
-        else
-        {
-            mp_rx_stream[m_rx_stream_index - SER_PHY_HEADER_SIZE] = rx_byte;
-            m_rx_stream_index++;
-        }
-    }
 
-    //Process RX packet, notify higher layer
-    if (m_rx_stream_index == m_rx_stream_length)
-    {
-        callback_packet_received();
-    }
-}
+            packet_rx_start();
+            break;
 
-/**
- *@brief Callback for processing events from low-level UART driver.
- */
-static void ser_phy_uart_evt_callback(app_uart_evt_t * uart_evt)
-{
-    if (uart_evt == NULL)
-    {
-        return;
-    }
-
-    switch (uart_evt->evt_type)
-    {
-        case APP_UART_COMMUNICATION_ERROR:
-
-            //Process error only if this is parity or overrun error.
-            //Break and framing error is always present when app side is not active
-            if (uart_evt->data.error_communication &
-                (UART_ERRORSRC_PARITY_Msk | UART_ERRORSRC_OVERRUN_Msk))
+        case NRF_DRV_UART_EVT_TX_DONE:
+            if (p_event->data.rxtx.p_data == m_tx_header_buf)
             {
-                callback_hw_error(uart_evt->data.error_communication);
+#if (SER_HAL_TRANSPORT_TX_MAX_PKT_SIZE > UART_TRANSFER_MAX)
+                if (m_bytes_to_transmit > UART_TRANSFER_MAX)
+                {
+                    APP_ERROR_CHECK(nrf_drv_uart_tx(&m_uart, mp_tx_buffer,
+                        UART_TRANSFER_MAX));
+                }
+                else
+#endif // (SER_HAL_TRANSPORT_TX_MAX_PKT_SIZE > UART_TRANSFER_MAX)
+                {
+                    APP_ERROR_CHECK(nrf_drv_uart_tx(&m_uart, mp_tx_buffer,
+                        m_bytes_to_transmit));
+                }
+            }
+            else
+            {
+#if (SER_HAL_TRANSPORT_TX_MAX_PKT_SIZE > UART_TRANSFER_MAX)
+                ASSERT(p_event->data.rxtx.bytes <= m_bytes_to_transmit);
+                m_bytes_to_transmit -= p_event->data.rxtx.bytes;
+                if (m_bytes_to_transmit != 0)
+                {
+                    APP_ERROR_CHECK(nrf_drv_uart_tx(&m_uart,
+                        p_event->data.rxtx.p_data + p_event->data.rxtx.bytes,
+                        m_bytes_to_transmit < UART_TRANSFER_MAX ?
+                            m_bytes_to_transmit : UART_TRANSFER_MAX));
+                }
+                else
+#endif // (SER_HAL_TRANSPORT_TX_MAX_PKT_SIZE > UART_TRANSFER_MAX)
+                {
+                    m_tx_in_progress = false;
+                    packet_sent_callback();
+                }
             }
             break;
 
-        case APP_UART_TX_EMPTY:
-            ser_phy_uart_tx();
-            break;
-
-        case APP_UART_DATA:
-
-            //After first reception disable pulldown - it was only needed before start
-            //of the other side
-            if (!m_other_side_active)
+        case NRF_DRV_UART_EVT_RX_DONE:
+            if (p_event->data.rxtx.p_data == m_rx_header_buf)
             {
-                nrf_gpio_cfg_input(comm_params.rx_pin_no, NRF_GPIO_PIN_NOPULL);
-                m_other_side_active = true;
+                m_bytes_to_receive = uint16_decode(m_rx_header_buf);
+                buffer_request_callback(m_bytes_to_receive);
             }
+            else if (p_event->data.rxtx.p_data == m_rx_drop_buf)
+            {
+                --m_bytes_to_receive;
+                if (m_bytes_to_receive != 0)
+                {
+                    packet_byte_drop();
+                }
+                else
+                {
+                    packet_dropped_callback();
 
-            m_rx_byte = uart_evt->data.value;
-            ser_phy_uart_rx(m_rx_byte);
+                    packet_rx_start();
+                }
+            }
+            else
+            {
+#if (SER_HAL_TRANSPORT_RX_MAX_PKT_SIZE > UART_TRANSFER_MAX)
+                ASSERT(p_event->data.rxtx.bytes <= m_bytes_to_receive);
+                m_bytes_to_receive -= p_event->data.rxtx.bytes;
+                if (m_bytes_to_receive != 0)
+                {
+                    APP_ERROR_CHECK(nrf_drv_uart_rx(&m_uart,
+                        p_event->data.rxtx.p_data + p_event->data.rxtx.bytes,
+                        m_bytes_to_receive < UART_TRANSFER_MAX ?
+                            m_bytes_to_receive : UART_TRANSFER_MAX));
+                }
+                else
+#endif // (SER_HAL_TRANSPORT_RX_MAX_PKT_SIZE > UART_TRANSFER_MAX)
+                {
+                    packet_received_callback();
+
+                    packet_rx_start();
+                }
+            }
             break;
 
         default:
             APP_ERROR_CHECK(NRF_ERROR_INTERNAL);
-            break;
     }
 }
 
@@ -348,39 +240,31 @@ static void ser_phy_uart_evt_callback(app_uart_evt_t * uart_evt)
 
 uint32_t ser_phy_open(ser_phy_events_handler_t events_handler)
 {
-    uint32_t err_code = NRF_SUCCESS;
+    uint32_t err_code;
 
     if (events_handler == NULL)
     {
         return NRF_ERROR_NULL;
     }
 
-    //Check if function was not called before
+    // Check if function was not called before.
     if (m_ser_phy_event_handler != NULL)
     {
         return NRF_ERROR_INVALID_STATE;
     }
 
-    //Configure UART and register handler
-    //uart_evt_handler is used to handle events produced by low-level uart driver
-    APP_UART_INIT(&comm_params, ser_phy_uart_evt_callback, UART_IRQ_PRIORITY, err_code);
-
-//    //Pull down Rx pin until another side gets up to avoid receiving false bytes due to glitches
-//    //on Rx line
-//    nrf_gpio_cfg_input(comm_params.rx_pin_no, NRF_GPIO_PIN_PULLDOWN);
-
-    m_ser_phy_event_handler = events_handler;
-
-    //If intialization did not go alright return error
+    err_code = nrf_drv_uart_init(&m_uart, &m_uart_config, uart_event_handler);
     if (err_code != NRF_SUCCESS)
     {
         return NRF_ERROR_INVALID_PARAM;
     }
 
+    m_ser_phy_event_handler = events_handler;
+
+    packet_rx_start();
+
     return err_code;
 }
-
-
 
 uint32_t ser_phy_tx_pkt_send(const uint8_t * p_buffer, uint16_t num_of_bytes)
 {
@@ -393,23 +277,27 @@ uint32_t ser_phy_tx_pkt_send(const uint8_t * p_buffer, uint16_t num_of_bytes)
         return NRF_ERROR_INVALID_PARAM;
     }
 
-    //Check if there is no ongoing transmission at the moment
-    if ((mp_tx_stream == NULL) && (m_tx_stream_length == 0) && (m_tx_stream_index == 0))
-    {
-        (void) uint16_encode(num_of_bytes, m_tx_length_buf);
-        mp_tx_stream       = (uint8_t *)p_buffer;
-        m_tx_stream_length = num_of_bytes + SER_PHY_HEADER_SIZE;
+    bool busy;
 
-        //Call tx procedure to start transmission of a packet
-        ser_phy_uart_tx();
-    }
-    else
+    CRITICAL_REGION_ENTER();
+    busy = m_tx_in_progress;
+    m_tx_in_progress = true;
+    CRITICAL_REGION_EXIT();
+
+    if (busy)
     {
         return NRF_ERROR_BUSY;
     }
 
+    (void)uint16_encode(num_of_bytes, m_tx_header_buf);
+    mp_tx_buffer = p_buffer;
+    m_bytes_to_transmit = num_of_bytes;
+    APP_ERROR_CHECK(nrf_drv_uart_tx(&m_uart, m_tx_header_buf,
+        SER_PHY_HEADER_SIZE));
+
     return NRF_SUCCESS;
 }
+
 
 uint32_t ser_phy_rx_buf_set(uint8_t * p_buffer)
 {
@@ -419,37 +307,46 @@ uint32_t ser_phy_rx_buf_set(uint8_t * p_buffer)
         return NRF_ERROR_INVALID_STATE;
     }
 
-    if (p_buffer != NULL)
+    m_ser_phy_rx_event.evt_type = SER_PHY_EVT_RX_PKT_RECEIVED;
+    m_ser_phy_rx_event.evt_params.rx_pkt_received.p_buffer = p_buffer;
+    m_ser_phy_rx_event.evt_params.rx_pkt_received.num_of_bytes =
+        m_bytes_to_receive;
+
+    // If there is not enough memory to receive the packet (no buffer was
+    // provided), drop its data byte by byte (using an internal 1-byte buffer).
+    if (p_buffer == NULL)
     {
-        mp_rx_stream = p_buffer;
+        packet_byte_drop();
     }
+#if (SER_HAL_TRANSPORT_RX_MAX_PKT_SIZE > UART_TRANSFER_MAX)
+    else if (m_bytes_to_receive > UART_TRANSFER_MAX)
+    {
+        APP_ERROR_CHECK(nrf_drv_uart_rx(&m_uart, p_buffer, UART_TRANSFER_MAX));
+    }
+#endif // (SER_HAL_TRANSPORT_RX_MAX_PKT_SIZE > UART_TRANSFER_MAX)
     else
     {
-        mp_rx_stream = m_rx_drop_buf;
+        APP_ERROR_CHECK(nrf_drv_uart_rx(&m_uart, p_buffer, m_bytes_to_receive));
     }
 
-    //Unblock RXRDY interrupts as higher layer has responded (with a valid or NULL pointer)
-#ifdef UARTE_IN_USE
-    NRF_UARTE0->INTENSET = (UARTE_INTENSET_ENDRX_Set << UARTE_INTENSET_ENDRX_Pos);
-#else
-    NRF_UART0->INTENSET = (UART_INTENSET_RXDRDY_Set << UART_INTENSET_RXDRDY_Pos);
-#endif
     return NRF_SUCCESS;
 }
 
+
 void ser_phy_close(void)
 {
+    nrf_drv_uart_uninit(&m_uart);
     m_ser_phy_event_handler = NULL;
-    (void)app_uart_close();
 }
+
 
 void ser_phy_interrupts_enable(void)
 {
     NVIC_EnableIRQ(SER_UART_IRQ);
 }
 
+
 void ser_phy_interrupts_disable(void)
 {
     NVIC_DisableIRQ(SER_UART_IRQ);
 }
-

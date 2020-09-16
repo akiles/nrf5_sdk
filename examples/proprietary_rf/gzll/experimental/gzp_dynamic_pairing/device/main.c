@@ -37,8 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
-
 /**
  * This project requires a running counterpart project, which is either of the following:
  *
@@ -112,7 +110,7 @@ static uint8_t input_get(void)
 static void ui_init(void)
 {
     // BSP initialization.
-    uint32_t err_code = bsp_init(BSP_INIT_BUTTONS, NULL, NULL);
+    uint32_t err_code = bsp_init(BSP_INIT_BUTTONS, NULL);
 
     APP_ERROR_CHECK(err_code);
 

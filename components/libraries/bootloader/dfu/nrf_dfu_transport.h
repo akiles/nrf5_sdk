@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  *
  * @defgroup sdk_nrf_dfu_transport DFU transport
@@ -53,7 +52,7 @@
 #define NRF_DFU_TRANSPORT_H__
 
 #include <stdint.h>
-#include "section_vars.h"
+#include "nrf_section.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -114,7 +113,7 @@ uint32_t nrf_dfu_transports_close(void);
  * @details     This macro places a variable in a section named "dfu_trans", which
  *              is initialized by @ref nrf_dfu_transports_init.
  */
-#define DFU_TRANSPORT_REGISTER(trans_var) NRF_SECTION_VARS_REGISTER_VAR(dfu_trans, trans_var)
+#define DFU_TRANSPORT_REGISTER(trans_var) NRF_SECTION_ITEM_REGISTER(dfu_trans, trans_var)
 
 
 #ifdef __cplusplus

@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 #include <stdint.h>
 #include <stdlib.h>
 #include "app_error.h"

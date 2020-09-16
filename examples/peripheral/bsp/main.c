@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup bsp_example_main main.c
@@ -58,9 +57,6 @@
 #define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
-
-#define APP_TIMER_PRESCALER      0                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE  2                           /**< Size of timer operation queues. */
 
 #define BUTTON_PREV_ID           0                           /**< Button used to switch the state. */
 #define BUTTON_NEXT_ID           1                           /**< Button used to switch the state. */
@@ -121,9 +117,7 @@ void bsp_configuration()
 {
     uint32_t err_code;
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
-                        bsp_evt_handler);
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -134,7 +128,10 @@ void bsp_configuration()
 int main(void)
 {
     clock_initialization();
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
+
+    uint32_t err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
     APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
 
     NRF_LOG_INFO("BSP example started.\r\n");

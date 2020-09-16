@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(RTC)
 #define ENABLED_RTC_COUNT (RTC0_ENABLED+RTC1_ENABLED+RTC2_ENABLED)
@@ -94,14 +93,14 @@ ret_code_t nrf_drv_rtc_init(nrf_drv_rtc_t const * const p_instance,
     else
     {
         err_code = NRF_ERROR_INVALID_PARAM;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
     if (m_cb[p_instance->instance_id].state != NRF_DRV_STATE_UNINITIALIZED)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -112,7 +111,7 @@ ret_code_t nrf_drv_rtc_init(nrf_drv_rtc_t const * const p_instance,
     m_cb[p_instance->instance_id].state        = NRF_DRV_STATE_INITIALIZED;
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -171,13 +170,13 @@ ret_code_t nrf_drv_rtc_cc_disable(nrf_drv_rtc_t const * const p_instance, uint32
         {
             nrf_rtc_event_clear(p_instance->p_reg,event);
             err_code = NRF_ERROR_TIMEOUT;
-            NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+            NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
             return err_code;
         }
     }
     NRF_LOG_INFO("RTC id: %d, channel disabled: %d.\r\n", p_instance->instance_id, channel);
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -209,7 +208,7 @@ ret_code_t nrf_drv_rtc_cc_set(nrf_drv_rtc_t const * const p_instance,
         if (diff < m_cb[p_instance->instance_id].tick_latency)
         {
             err_code = NRF_ERROR_TIMEOUT;
-            NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+            NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
             return err_code;
         }
     }
@@ -227,7 +226,7 @@ ret_code_t nrf_drv_rtc_cc_set(nrf_drv_rtc_t const * const p_instance,
 
     NRF_LOG_INFO("RTC id: %d, channel enabled: %d, compare value: %d.\r\n", p_instance->instance_id, channel, val);
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 

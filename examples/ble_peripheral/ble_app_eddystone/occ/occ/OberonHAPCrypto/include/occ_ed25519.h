@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  * Ed25519 is a specific implementation of EdDSA, a digital signature scheme.
  * EdDSA is based on Twisted Edwards curves and is designed to be faster than

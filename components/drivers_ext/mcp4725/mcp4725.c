@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "mcp4725.h"
 #include "nrf_drv_twi.h"
 #include "nrf_delay.h"
@@ -57,7 +56,7 @@ static const nrf_drv_twi_t m_twi = NRF_DRV_TWI_INSTANCE(TWI_INSTANCE_ID_USED);
 
 /* Twi transfer indicators. */
 volatile bool m_xfer_done = false;
-volatile bool m_read_done = false; 
+volatile bool m_read_done = false;
 
 /**
  * @brief TWI events handler.
@@ -83,14 +82,16 @@ static void twi_handler(nrf_drv_twi_evt_t const * p_event, void * p_context)
 
 /**
  * @brief TWI initialization.
+ *
+ * @param[in] p_pins_config Pointer to structere holding pins numbers to be used by TWI.
  */
-static ret_code_t twi_init (void)
+static ret_code_t twi_init(mcp4725_pins_config_t const * p_pins_config)
 {
     ret_code_t err_code;
 
     const nrf_drv_twi_config_t twi_mcp4725_config = {
-       .scl                = ARDUINO_SCL_PIN,
-       .sda                = ARDUINO_SDA_PIN,
+       .scl                = p_pins_config->scl_pin,
+       .sda                = p_pins_config->sda_pin,
        .frequency          = NRF_TWI_FREQ_100K,
        .interrupt_priority = APP_IRQ_PRIORITY_HIGH,
        .clear_bus_init     = false
@@ -106,9 +107,9 @@ static ret_code_t twi_init (void)
     return NRF_SUCCESS;
 }
 
-ret_code_t mcp4725_setup(void)
+ret_code_t mcp4725_setup(mcp4725_pins_config_t const * p_pins_config)
 {
-    ret_code_t err_code = twi_init();
+    ret_code_t err_code = twi_init(p_pins_config);
     if (err_code != NRF_SUCCESS)
     {
         return err_code;

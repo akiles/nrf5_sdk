@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef NRF_DRV_RNG_H__
 #define NRF_DRV_RNG_H__
 
@@ -69,7 +68,7 @@ extern "C" {
 /**@brief Struct for RNG configuration. */
 typedef struct
 {
-    bool     error_correction;      /**< Error correction flag. */
+    bool     error_correction : 1;  /**< Error correction flag. */
     uint8_t  interrupt_priority;    /**< interrupt priority */
 } nrf_drv_rng_config_t;
 

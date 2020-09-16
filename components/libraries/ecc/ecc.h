@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
  * @defgroup ecc Elliptic Curve Cryptography interface
  * @{
@@ -49,8 +48,10 @@
 #define ECC_H__
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "nordic_common.h"
 #include "nrf_error.h"
+#include "sdk_errors.h"
 
 #ifdef __cplusplus
 extern "C" {

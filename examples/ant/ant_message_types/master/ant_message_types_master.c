@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 #include "ant_message_types_master.h"
 #include <stdint.h>
 #include "string.h"

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
 * @brief Example template project.
 * @defgroup nrf_templates_example Example Template
@@ -48,21 +47,9 @@
 #include <stdint.h>
 
 #include "nrf.h"
-#include "nrf_gpio.h"
 #include "nordic_common.h"
-#include "nrf_delay.h"
-#include "app_error.h"
-#include "app_timer.h"
-#include "app_util_platform.h"
 #include "boards.h"
-#include "bsp.h"
-#if 0
-#include "nrf_drv_timer.h"
-const nrf_drv_timer_t MYTIMER = NRF_DRV_TIMER_INSTANCE(0);
-void timer_event_handler(nrf_timer_event_t event_type, void* p_context)
-{
-}
-#endif
+
 /**
  * @brief Function for application main entry.
  */

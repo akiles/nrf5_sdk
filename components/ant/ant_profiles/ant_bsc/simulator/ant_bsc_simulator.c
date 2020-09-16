@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "ant_bsc_simulator.h"
 #include "ant_bsc_utils.h"
 #include "app_util.h"

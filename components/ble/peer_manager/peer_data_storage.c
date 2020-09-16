@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(PEER_MANAGER)
 #include "peer_data_storage.h"
@@ -48,7 +47,6 @@
 #include "peer_manager_types.h"
 #include "peer_manager_internal.h"
 #include "peer_id.h"
-#include "peer_data.h"
 #include "fds.h"
 
 

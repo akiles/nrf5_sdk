@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  *
  * @defgroup ble_nus Nordic UART Service
@@ -60,17 +59,30 @@
 #ifndef BLE_NUS_H__
 #define BLE_NUS_H__
 
+#include "sdk_config.h"
+#include "ble_stack_handler_types.h"
+
 #include "ble.h"
 #include "ble_srv_common.h"
-#include <stdint.h>
-#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #define BLE_UUID_NUS_SERVICE 0x0001                      /**< The UUID of the Nordic UART Service. */
-#define BLE_NUS_MAX_DATA_LEN (GATT_MTU_SIZE_DEFAULT - 3) /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
+
+#define OPCODE_LENGTH 1
+#define HANDLE_LENGTH 2
+
+#if defined(NRF_BLE_GATT_MAX_MTU_SIZE) && (NRF_BLE_GATT_MAX_MTU_SIZE != 0)
+    #define BLE_NUS_MAX_DATA_LEN (NRF_BLE_GATT_MAX_MTU_SIZE - OPCODE_LENGTH - HANDLE_LENGTH) /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
+#else
+    #define BLE_NUS_MAX_DATA_LEN (BLE_GATT_MTU_SIZE_DEFAULT - OPCODE_LENGTH - HANDLE_LENGTH) /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Nordic UART service module. */
+    #warning NRF_BLE_GATT_MAX_MTU_SIZE is not defined.
+#endif
+
+
+
 
 /* Forward declaration of the ble_nus_t type. */
 typedef struct ble_nus_s ble_nus_t;

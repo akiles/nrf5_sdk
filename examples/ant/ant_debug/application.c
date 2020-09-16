@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /**
  * @defgroup application Test Application
  * @brief Example of an application being debugged using debug messages.

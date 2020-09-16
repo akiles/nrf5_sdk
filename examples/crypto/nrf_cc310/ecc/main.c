@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "ssi_pal_types.h"
 #include "ssi_pal_mem.h"
 #include "sns_silib.h"

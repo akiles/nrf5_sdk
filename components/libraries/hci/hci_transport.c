@@ -61,8 +61,7 @@
                    (ROUNDED_DIV((HCI_MAX_PACKET_SIZE_IN_BITS * 1000u),         \
                     HCI_UART_REG_VALUE_TO_BAUDRATE(HCI_UART_BAUDRATE)))                                    /**< Max transmission time of a single application packet over UART in units of mseconds. */
 #define RETRANSMISSION_TIMEOUT_IN_MS    (3u * MAX_TRANSMISSION_TIME)                                       /**< Retransmission timeout for application packet in units of mseconds. */
-#define APP_TIMER_PRESCALER             0                                                                  /**< Value of the RTC1 PRESCALER register. */
-#define RETRANSMISSION_TIMEOUT_IN_TICKS APP_TIMER_TICKS(RETRANSMISSION_TIMEOUT_IN_MS, APP_TIMER_PRESCALER) /**< Retransmission timeout for application packet in units of timer ticks. */
+#define RETRANSMISSION_TIMEOUT_IN_TICKS APP_TIMER_TICKS(RETRANSMISSION_TIMEOUT_IN_MS) /**< Retransmission timeout for application packet in units of timer ticks. */
 #define MAX_RETRY_COUNT                 5u                                                                 /**< Max retransmission retry count for application packets. */
 #define ACK_BUF_SIZE                    5u                                                                 /**< Length of module internal RX buffer which is big enough to hold an acknowledgement packet. */
 

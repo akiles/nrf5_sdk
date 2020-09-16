@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "ble_lns.h"
 #include "ble_ln_db.h"
 #include "ble_ln_common.h"
@@ -177,11 +176,11 @@ static void on_ctrl_pt_cccd_write(ble_lns_t * p_lns, ble_gatts_evt_write_t const
 
             if (ble_srv_is_indication_enabled(p_evt_write->data))
             {
-                evt.evt_type = BLE_LNS_CTRLPT_EVT_INDICATION_ENABLED;;
+                evt.evt_type = BLE_LNS_CTRLPT_EVT_INDICATION_ENABLED;
             }
             else
             {
-                evt.evt_type = BLE_LNS_CTRLPT_EVT_INDICATION_DISABLED;;
+                evt.evt_type = BLE_LNS_CTRLPT_EVT_INDICATION_DISABLED;
             }
 
             p_lns->evt_handler(p_lns, &evt);
@@ -597,7 +596,7 @@ static ret_code_t loc_and_nav_feature_char_add(ble_lns_t * p_lns, ble_lns_init_t
  */
 static ret_code_t loc_speed_char_add(ble_lns_t * p_lns, ble_lns_init_t const * p_lns_init)
 {
-    uint8_t               encoded_initial_loc_speed1[BLE_L2CAP_MTU_DEF ];
+    uint8_t               encoded_initial_loc_speed1[BLE_GATT_ATT_MTU_DEFAULT];
     uint8_t               len;
     ble_add_char_params_t add_char_params;
 
@@ -606,7 +605,7 @@ static ret_code_t loc_speed_char_add(ble_lns_t * p_lns, ble_lns_init_t const * p
     memset(&add_char_params, 0, sizeof(add_char_params));
 
     add_char_params.uuid              = BLE_UUID_LN_LOCATION_AND_SPEED_CHAR;
-    add_char_params.max_len           = BLE_L2CAP_MTU_DEF ;
+    add_char_params.max_len           = BLE_GATT_ATT_MTU_DEFAULT ;
     add_char_params.init_len          = len;
     add_char_params.p_init_value      = &encoded_initial_loc_speed1[0];
     add_char_params.is_var_len        = true;
@@ -629,7 +628,7 @@ static ret_code_t loc_speed_char_add(ble_lns_t * p_lns, ble_lns_init_t const * p
 static ret_code_t pos_quality_char_add(ble_lns_t * p_lns, ble_lns_init_t const * p_lns_init)
 {
     uint8_t               len;
-    uint8_t               init_value_encoded[BLE_L2CAP_MTU_DEF];
+    uint8_t               init_value_encoded[BLE_GATT_ATT_MTU_DEFAULT];
     ble_add_char_params_t add_char_params;
 
     len = pos_qual_encode(p_lns, p_lns_init->p_position_quality, init_value_encoded);
@@ -637,7 +636,7 @@ static ret_code_t pos_quality_char_add(ble_lns_t * p_lns, ble_lns_init_t const *
     memset(&add_char_params, 0, sizeof(add_char_params));
 
     add_char_params.uuid              = BLE_UUID_LN_POSITION_QUALITY_CHAR;
-    add_char_params.max_len           = BLE_L2CAP_MTU_DEF ;
+    add_char_params.max_len           = BLE_GATT_ATT_MTU_DEFAULT ;
     add_char_params.init_len          = len;
     add_char_params.p_init_value      = init_value_encoded;
     add_char_params.char_props.read   = true;
@@ -780,7 +779,7 @@ void ble_lns_on_ble_evt(ble_lns_t * p_lns, ble_evt_t const * p_ble_evt)
             on_write(p_lns, p_ble_evt);
             break;
 
-        case BLE_EVT_TX_COMPLETE:
+        case BLE_GATTS_EVT_HVN_TX_COMPLETE:
             on_tx_complete(p_lns);
             break;
 

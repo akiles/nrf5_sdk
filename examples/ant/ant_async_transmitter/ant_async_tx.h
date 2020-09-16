@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 #ifndef ANT_ASYNC_TX_H__
 #define ANT_ASYNC_TX_H__
 
@@ -63,9 +62,8 @@ extern "C" {
 
 /**@brief Function for configuring an asynchronous transmitter
  *
- * @param[in] timer_prescaler   Value of the app timer prescaler
  */
-void ant_async_tx_setup(uint32_t timer_prescaler);
+void ant_async_tx_setup(void);
 
 
 /**@brief Handles BSP events.

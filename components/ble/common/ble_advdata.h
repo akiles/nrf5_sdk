@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_sdk_lib_advdata Advertising and Scan Response Data Encoder
@@ -88,7 +87,7 @@ extern "C" {
 /**@brief Security Manager TK value. */
 typedef struct
 {
-  uint8_t tk[BLE_GAP_SEC_KEY_LEN];   /**< Array containing TK value. */
+  uint8_t tk[BLE_GAP_SEC_KEY_LEN];      /**< Array containing TK value in little-endian format. */
 } ble_advdata_tk_value_t;
 
 /**@brief Advertising data LE Role types. This enumeration contains the options available for the LE role inside
@@ -159,7 +158,9 @@ typedef struct
     ble_advdata_le_role_t        le_role;                             /**< LE Role field. Included when different from @ref BLE_ADVDATA_ROLE_NOT_PRESENT. @warning This field can be used only for NFC. For BLE advertising, set it to NULL. */
     ble_advdata_tk_value_t *     p_tk_value;                          /**< Security Manager TK value field. Included when different from NULL. @warning This field can be used only for NFC. For BLE advertising, set it to NULL.*/
     uint8_t *                    p_sec_mgr_oob_flags;                 /**< Security Manager Out Of Band Flags field. Included when different from NULL. @warning This field can be used only for NFC. For BLE advertising, set it to NULL.*/
+#if (NRF_SD_BLE_API_VERSION > 1)
     ble_gap_lesc_oob_data_t *    p_lesc_data;                         /**< LE Secure Connections OOB data. Included when different from NULL. @warning This field can be used only for NFC. For BLE advertising, set it to NULL.*/
+#endif
 } ble_advdata_t;
 
 /**@brief Function for encoding data in the Advertising and Scan Response data format

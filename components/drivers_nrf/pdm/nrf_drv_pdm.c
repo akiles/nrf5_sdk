@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(PDM)
 #include "nrf_drv_pdm.h"
@@ -139,14 +138,14 @@ ret_code_t nrf_drv_pdm_init(nrf_drv_pdm_config_t const * p_config,
     if (m_cb.drv_state != NRF_DRV_STATE_UNINITIALIZED)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     if ((p_config == NULL)
         || (event_handler == NULL))
     {
         err_code = NRF_ERROR_INVALID_PARAM;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     if (p_config->gain_l > NRF_PDM_GAIN_MAXIMUM
@@ -154,7 +153,7 @@ ret_code_t nrf_drv_pdm_init(nrf_drv_pdm_config_t const * p_config,
         || p_config->buffer_length > NRF_PDM_MAX_BUFFER_SIZE)
     {
         err_code = NRF_ERROR_INVALID_PARAM;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -179,7 +178,7 @@ ret_code_t nrf_drv_pdm_init(nrf_drv_pdm_config_t const * p_config,
     nrf_drv_common_irq_enable(PDM_IRQn, p_config->interrupt_priority);
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -197,17 +196,17 @@ ret_code_t nrf_drv_pdm_start(void)
 {
     ASSERT(m_cb.drv_state != NRF_DRV_STATE_UNINITIALIZED);
     ret_code_t err_code;
-        
+
     if (m_cb.status != NRF_PDM_STATE_IDLE)
     {
         if (m_cb.status == NRF_PDM_STATE_RUNNING)
         {
             err_code = NRF_SUCCESS;
-            NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+            NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
             return err_code;
         }
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     m_cb.status = NRF_PDM_STATE_TRANSITION;
@@ -216,7 +215,7 @@ ret_code_t nrf_drv_pdm_start(void)
     nrf_pdm_event_clear(NRF_PDM_EVENT_STARTED);
     nrf_pdm_task_trigger(NRF_PDM_TASK_START);
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -225,25 +224,25 @@ ret_code_t nrf_drv_pdm_stop(void)
 {
     ASSERT(m_cb.drv_state != NRF_DRV_STATE_UNINITIALIZED);
     ret_code_t err_code;
-    
+
     if (m_cb.status != NRF_PDM_STATE_RUNNING)
     {
         if (m_cb.status == NRF_PDM_STATE_IDLE)
         {
             nrf_pdm_disable();
             err_code = NRF_SUCCESS;
-            NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+            NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
             return err_code;
         }
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     m_cb.status = NRF_PDM_STATE_TRANSITION;
     m_cb.drv_state = NRF_DRV_STATE_INITIALIZED;
     nrf_pdm_task_trigger(NRF_PDM_TASK_STOP);
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 #endif //NRF_MODULE_ENABLED(PDM)

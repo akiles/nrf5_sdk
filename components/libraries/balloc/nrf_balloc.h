@@ -37,8 +37,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
- /**
+/**
   * @defgroup nrf_balloc Block memory allocator
   * @{
   * @ingroup app_common
@@ -117,12 +116,12 @@ typedef struct
 #endif // NRF_BALLOC_CONFIG_DEBUG_ENABLED
     uint16_t          block_size;       //!< Size of the allocated block (including debug overhead).
                                         /**<
-                                         * Single block contains user element with header and tail 
+                                         * Single block contains user element with header and tail
                                          * words.
                                          */
 } nrf_balloc_t;
 
-/**@brief Get total memory consumed by single block (element size with overhead caused by debug 
+/**@brief Get total memory consumed by single block (element size with overhead caused by debug
  *        flags).
  *
  * @param[in]   _element_size    Size of an element.
@@ -202,8 +201,7 @@ typedef struct
  */
 #define NRF_BALLOC_INTERFACE_DEC(_type, _name)    \
     _type * _name##_alloc(void);                  \
-    void    _name##_free(_type * p_element);      \
-    uint8_t _name##_max_utilization_get(void)
+    void    _name##_free(_type * p_element)
 
 /**@brief Define a custom block allocator interface.
  *
@@ -215,24 +213,24 @@ typedef struct
 #define NRF_BALLOC_INTERFACE_CUSTOM_DEF(_attr, _type, _name, _p_pool)           \
     _attr _type * _name##_alloc(void)                                           \
     {                                                                           \
+        GCC_PRAGMA("GCC diagnostic push")                                       \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")                      \
         ASSERT((_p_pool) != NULL);                                              \
         ASSERT((_p_pool)->block_size >=                                         \
                NRF_BALLOC_BLOCK_SIZE(sizeof(_type), (_p_pool)->debug_flags));   \
+        GCC_PRAGMA("GCC diagnostic pop")                                        \
         return (_type *)(nrf_balloc_alloc(_p_pool));                            \
     }                                                                           \
                                                                                 \
     _attr void _name##_free(_type * p_element)                                  \
     {                                                                           \
+        GCC_PRAGMA("GCC diagnostic push")                                       \
+        GCC_PRAGMA("GCC diagnostic ignored \"-Waddress\"")                      \
         ASSERT((_p_pool) != NULL);                                              \
         ASSERT((_p_pool)->block_size >=                                         \
                NRF_BALLOC_BLOCK_SIZE(sizeof(_type), (_p_pool)->debug_flags));   \
+        GCC_PRAGMA("GCC diagnostic pop")                                        \
         nrf_balloc_free((_p_pool), p_element);                                  \
-    }                                                                           \
-                                                                                \
-    _attr uint8_t _name##_max_utilization_get(void)                             \
-    {                                                                           \
-        ASSERT((_p_pool) != NULL);                                              \
-        return nrf_balloc_max_utilization_get((_p_pool));                       \
     }
 
 /**@brief Define block allocator interface.

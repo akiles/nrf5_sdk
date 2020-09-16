@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_rscs Running Speed and Cadence Service
@@ -65,7 +64,6 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "ble.h"
 #include "ble_srv_common.h"
 
 #ifdef __cplusplus

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(I2S)
 #include "nrf_drv_i2s.h"
@@ -152,7 +151,7 @@ ret_code_t nrf_drv_i2s_init(nrf_drv_i2s_config_t const * p_config,
     if (m_cb.state != NRF_DRV_STATE_UNINITIALIZED)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -170,7 +169,7 @@ ret_code_t nrf_drv_i2s_init(nrf_drv_i2s_config_t const * p_config,
                                     p_config->ratio))
     {
         err_code = NRF_ERROR_INVALID_PARAM;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
     configure_pins(p_config);
@@ -182,7 +181,7 @@ ret_code_t nrf_drv_i2s_init(nrf_drv_i2s_config_t const * p_config,
     m_cb.state = NRF_DRV_STATE_INITIALIZED;
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -217,14 +216,14 @@ ret_code_t nrf_drv_i2s_start(uint32_t * p_rx_buffer,
     if ((p_rx_buffer != NULL) && !nrf_drv_is_in_RAM(p_rx_buffer))
     {
         err_code = NRF_ERROR_INVALID_ADDR;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
     if ((p_tx_buffer != NULL) && !nrf_drv_is_in_RAM(p_tx_buffer))
     {
         err_code = NRF_ERROR_INVALID_ADDR;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -279,7 +278,7 @@ ret_code_t nrf_drv_i2s_start(uint32_t * p_rx_buffer,
     nrf_i2s_task_trigger(NRF_I2S, NRF_I2S_TASK_START);
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -389,7 +388,7 @@ void I2S_IRQHandler(void)
     {
         if ((p_data_received != NULL) || (p_data_to_send != NULL))
         {
-            if (p_data_received != NULL) 
+            if (p_data_received != NULL)
             {
                 NRF_LOG_DEBUG("Rx data:\r\n");
                 NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_data_received,
@@ -397,10 +396,10 @@ void I2S_IRQHandler(void)
             }
             m_cb.handler(p_data_received, p_data_to_send,
                 m_cb.buffer_half_size);
-            if (p_data_to_send != NULL) 
+            if (p_data_to_send != NULL)
             {
                 NRF_LOG_DEBUG("Tx data:\r\n");
-                NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_data_to_send, 
+                NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_data_to_send,
                                         m_cb.buffer_half_size * sizeof(p_data_to_send));
             }
         }
@@ -423,13 +422,13 @@ void I2S_IRQHandler(void)
             else
             {
                 NRF_LOG_DEBUG("Rx data:\r\n");
-                NRF_LOG_HEXDUMP_DEBUG((uint8_t *)nrf_i2s_rx_buffer_get(NRF_I2S), 
+                NRF_LOG_HEXDUMP_DEBUG((uint8_t *)nrf_i2s_rx_buffer_get(NRF_I2S),
                                         m_cb.buffer_half_size * sizeof(p_data_to_send));
                 m_cb.handler(nrf_i2s_rx_buffer_get(NRF_I2S),
                              nrf_i2s_tx_buffer_get(NRF_I2S),
                              m_cb.buffer_half_size);
                 NRF_LOG_DEBUG("Tx data:\r\n");
-                NRF_LOG_HEXDUMP_DEBUG((uint8_t *)nrf_i2s_tx_buffer_get(NRF_I2S), 
+                NRF_LOG_HEXDUMP_DEBUG((uint8_t *)nrf_i2s_tx_buffer_get(NRF_I2S),
                                         m_cb.buffer_half_size * sizeof(p_data_to_send));
             }
         }

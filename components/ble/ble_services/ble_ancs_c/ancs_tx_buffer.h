@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef ANCS_TX_BUFFER_H__
 #define ANCS_TX_BUFFER_H__
 
@@ -67,7 +66,7 @@ typedef enum
 typedef struct
 {
   uint8_t                  gattc_value[WRITE_MESSAGE_LENGTH]; //!< The message to write.
-  ble_gattc_write_params_t gattc_params;                      //!< GATTC parameters for this message. 
+  ble_gattc_write_params_t gattc_params;                      //!< GATTC parameters for this message.
 } write_params_t;
 
 
@@ -75,8 +74,8 @@ typedef struct
  */
 typedef struct
 {
-  uint16_t          conn_handle;  //!< Connection handle to be used when transmitting this message. 
-  tx_request_t type;         //!< Type of this message (read or write message). 
+  uint16_t          conn_handle;  //!< Connection handle to be used when transmitting this message.
+  tx_request_t type;         //!< Type of this message (read or write message).
     union
     {
       uint16_t       read_handle;    //!< Read request message.
@@ -84,7 +83,7 @@ typedef struct
     } req;
 } tx_message_t;
 
-/**@brief Function for clearing the TX buffer. 
+/**@brief Function for clearing the TX buffer.
  *
  * @details Always call this function before using the TX buffer.
 */

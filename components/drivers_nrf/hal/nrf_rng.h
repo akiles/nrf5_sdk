@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
  * @file
  * @brief RNG HAL API.
@@ -105,20 +104,14 @@ typedef enum
  *
  * @param[in]  rng_int_mask              Mask of interrupts.
  */
-__STATIC_INLINE void nrf_rng_int_enable(uint32_t rng_int_mask)
-{
-    NRF_RNG->INTENSET = rng_int_mask;
-}
+__STATIC_INLINE void nrf_rng_int_enable(uint32_t rng_int_mask);
 
 /**
  * @brief Function for disabling interrupts.
  *
  * @param[in]  rng_int_mask              Mask of interrupts.
  */
-__STATIC_INLINE void nrf_rng_int_disable(uint32_t rng_int_mask)
-{
-    NRF_RNG->INTENCLR = rng_int_mask;
-}
+__STATIC_INLINE void nrf_rng_int_disable(uint32_t rng_int_mask);
 
 /**
  * @brief Function for getting the state of a specific interrupt.
@@ -128,10 +121,7 @@ __STATIC_INLINE void nrf_rng_int_disable(uint32_t rng_int_mask)
  * @retval     true                   If the interrupt is not enabled.
  * @retval     false                  If the interrupt is enabled.
  */
-__STATIC_INLINE bool nrf_rng_int_get(nrf_rng_int_mask_t rng_int_mask)
-{
-    return (bool)(NRF_RNG->INTENCLR & rng_int_mask);
-}
+__STATIC_INLINE bool nrf_rng_int_get(nrf_rng_int_mask_t rng_int_mask);
 
 /**
  * @brief Function for getting the address of a specific task.
@@ -140,20 +130,14 @@ __STATIC_INLINE bool nrf_rng_int_get(nrf_rng_int_mask_t rng_int_mask)
  *
  * @param[in]  rng_task              Task.
  */
-__STATIC_INLINE uint32_t * nrf_rng_task_address_get(nrf_rng_task_t rng_task)
-{
-    return (uint32_t *)((uint8_t *)NRF_RNG + rng_task);
-}
+__STATIC_INLINE uint32_t * nrf_rng_task_address_get(nrf_rng_task_t rng_task);
 
 /**
  * @brief Function for setting a specific task.
  *
  * @param[in]  rng_task              Task.
  */
-__STATIC_INLINE void nrf_rng_task_trigger(nrf_rng_task_t rng_task)
-{
-    *((volatile uint32_t *)((uint8_t *)NRF_RNG + rng_task)) = NRF_RNG_TASK_SET;
-}
+__STATIC_INLINE void nrf_rng_task_trigger(nrf_rng_task_t rng_task);
 
 /**
  * @brief Function for getting address of a specific event.
@@ -162,24 +146,14 @@ __STATIC_INLINE void nrf_rng_task_trigger(nrf_rng_task_t rng_task)
  *
  * @param[in]  rng_event              Event.
  */
-__STATIC_INLINE uint32_t * nrf_rng_event_address_get(nrf_rng_event_t rng_event)
-{
-    return (uint32_t *)((uint8_t *)NRF_RNG + rng_event);
-}
+__STATIC_INLINE uint32_t * nrf_rng_event_address_get(nrf_rng_event_t rng_event);
 
 /**
  * @brief Function for clearing a specific event.
  *
  * @param[in]  rng_event              Event.
  */
-__STATIC_INLINE void nrf_rng_event_clear(nrf_rng_event_t rng_event)
-{
-    *((volatile uint32_t *)((uint8_t *)NRF_RNG + rng_event)) = NRF_RNG_EVENT_CLEAR;
-#if __CORTEX_M == 0x04
-    volatile uint32_t dummy = *((volatile uint32_t *)((uint8_t *)NRF_RNG + rng_event));
-    (void)dummy;
-#endif
-}
+__STATIC_INLINE void nrf_rng_event_clear(nrf_rng_event_t rng_event);
 
 /**
  * @brief Function for getting the state of a specific event.
@@ -189,10 +163,7 @@ __STATIC_INLINE void nrf_rng_event_clear(nrf_rng_event_t rng_event)
  * @retval     true               If the event is not set.
  * @retval     false              If the event is set.
  */
-__STATIC_INLINE bool nrf_rng_event_get(nrf_rng_event_t rng_event)
-{
-    return (bool) * ((volatile uint32_t *)((uint8_t *)NRF_RNG + rng_event));
-}
+__STATIC_INLINE bool nrf_rng_event_get(nrf_rng_event_t rng_event);
 
 /**
  * @brief Function for setting shortcuts.
@@ -200,10 +171,7 @@ __STATIC_INLINE bool nrf_rng_event_get(nrf_rng_event_t rng_event)
  * @param[in]  rng_short_mask              Mask of shortcuts.
  *
  */
-__STATIC_INLINE void nrf_rng_shorts_enable(uint32_t rng_short_mask)
-{
-     NRF_RNG->SHORTS |= rng_short_mask;
-}
+__STATIC_INLINE void nrf_rng_shorts_enable(uint32_t rng_short_mask);
 
 /**
  * @brief Function for clearing shortcuts.
@@ -211,39 +179,101 @@ __STATIC_INLINE void nrf_rng_shorts_enable(uint32_t rng_short_mask)
  * @param[in]  rng_short_mask              Mask of shortcuts.
  *
  */
-__STATIC_INLINE void nrf_rng_shorts_disable(uint32_t rng_short_mask)
-{
-     NRF_RNG->SHORTS &= ~rng_short_mask;
-}
+__STATIC_INLINE void nrf_rng_shorts_disable(uint32_t rng_short_mask);
 
 /**
  * @brief Function for getting the previously generated random value.
  *
  * @return     Previously generated random value.
  */
+__STATIC_INLINE uint8_t nrf_rng_random_value_get(void);
+
+/**
+ * @brief Function for enabling digital error correction.
+ */
+__STATIC_INLINE void nrf_rng_error_correction_enable(void);
+
+/**
+ * @brief Function for disabling digital error correction.
+ */
+__STATIC_INLINE void nrf_rng_error_correction_disable(void);
+
+/**
+ *@}
+ **/
+
+#ifndef SUPPRESS_INLINE_IMPLEMENTATION
+
+__STATIC_INLINE void nrf_rng_int_enable(uint32_t rng_int_mask)
+{
+    NRF_RNG->INTENSET = rng_int_mask;
+}
+
+__STATIC_INLINE void nrf_rng_int_disable(uint32_t rng_int_mask)
+{
+    NRF_RNG->INTENCLR = rng_int_mask;
+}
+
+__STATIC_INLINE bool nrf_rng_int_get(nrf_rng_int_mask_t rng_int_mask)
+{
+    return (bool)(NRF_RNG->INTENCLR & rng_int_mask);
+}
+
+__STATIC_INLINE uint32_t * nrf_rng_task_address_get(nrf_rng_task_t rng_task)
+{
+    return (uint32_t *)((uint8_t *)NRF_RNG + rng_task);
+}
+
+__STATIC_INLINE void nrf_rng_task_trigger(nrf_rng_task_t rng_task)
+{
+    *((volatile uint32_t *)((uint8_t *)NRF_RNG + rng_task)) = NRF_RNG_TASK_SET;
+}
+
+__STATIC_INLINE uint32_t * nrf_rng_event_address_get(nrf_rng_event_t rng_event)
+{
+    return (uint32_t *)((uint8_t *)NRF_RNG + rng_event);
+}
+
+__STATIC_INLINE void nrf_rng_event_clear(nrf_rng_event_t rng_event)
+{
+    *((volatile uint32_t *)((uint8_t *)NRF_RNG + rng_event)) = NRF_RNG_EVENT_CLEAR;
+#if __CORTEX_M == 0x04
+    volatile uint32_t dummy = *((volatile uint32_t *)((uint8_t *)NRF_RNG + rng_event));
+    (void)dummy;
+#endif
+}
+
+__STATIC_INLINE bool nrf_rng_event_get(nrf_rng_event_t rng_event)
+{
+    return (bool) * ((volatile uint32_t *)((uint8_t *)NRF_RNG + rng_event));
+}
+
+__STATIC_INLINE void nrf_rng_shorts_enable(uint32_t rng_short_mask)
+{
+     NRF_RNG->SHORTS |= rng_short_mask;
+}
+
+__STATIC_INLINE void nrf_rng_shorts_disable(uint32_t rng_short_mask)
+{
+     NRF_RNG->SHORTS &= ~rng_short_mask;
+}
+
 __STATIC_INLINE uint8_t nrf_rng_random_value_get(void)
 {
     return (uint8_t)(NRF_RNG->VALUE & RNG_VALUE_VALUE_Msk);
 }
 
-/**
- * @brief Function for enabling digital error correction.
- */
 __STATIC_INLINE void nrf_rng_error_correction_enable(void)
 {
     NRF_RNG->CONFIG |= RNG_CONFIG_DERCEN_Msk;
 }
 
-/**
- * @brief Function for disabling digital error correction.
- */
 __STATIC_INLINE void nrf_rng_error_correction_disable(void)
 {
     NRF_RNG->CONFIG &= ~RNG_CONFIG_DERCEN_Msk;
 }
-/**
- *@}
- **/
+
+#endif
 
 #ifdef __cplusplus
 }

@@ -37,6 +37,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+
 #ifndef APP_USBD_CORE_H__
 #define APP_USBD_CORE_H__
 
@@ -186,10 +187,6 @@ ret_code_t app_usbd_core_setup_data_handler_set(
  * @param p_transfer Description of the transfer to be performed.
  *                   The direction of the transfer is determined by the
  *                   endpoint number.
- * @param p_handler  The transfer handler - function that is called when
- *                   transfer is going to end or overload the buffer.
- *                   This function can prepare another buffer.
- *                   Can be NULL if no such functionality is expected.
  *
  * @retval NRF_ERROR_INVALID_STATE The state of the USB device does not allow
  *                                 data transfer on the endpoint.
@@ -203,8 +200,7 @@ ret_code_t app_usbd_core_setup_data_handler_set(
  */
 ret_code_t app_usbd_core_ep_transfer(
     nrf_drv_usbd_ep_t                                  ep,
-    nrf_drv_usbd_transfer_t              const * const p_transfer,
-    nrf_drv_usbd_transfer_handler_desc_t const * const p_handler);
+    nrf_drv_usbd_transfer_t              const * const p_transfer);
 
 /**
  * @brief Setup data transfer
@@ -215,17 +211,51 @@ ret_code_t app_usbd_core_ep_transfer(
  *
  * @param ep         See @ref app_usbd_core_ep_transfer.
  * @param p_transfer See @ref app_usbd_core_ep_transfer.
- * @param p_handler  See @ref app_usbd_core_ep_transfer.
  *
  * @return The same values like @ref app_usbd_core_ep_transfer
  */
 ret_code_t app_usbd_core_setup_data_transfer(
     nrf_drv_usbd_ep_t                                  ep,
-    nrf_drv_usbd_transfer_t              const * const p_transfer,
-    nrf_drv_usbd_transfer_handler_desc_t const * const p_handler);
+    nrf_drv_usbd_transfer_t              const * const p_transfer);
 
 /**
- * @brief Setup data transfer buffer
+ * @brief Set up an endpoint-handled transfer.
+ *
+ * Configures a transfer handled by the feedback function.
+ *
+ * @param ep        Endpoint number.
+ * @param p_handler Function called when the next chunk of data is requested.
+ *
+ * @retval NRF_ERROR_INVALID_STATE The state of the USB device does not allow
+ *                                 data transfer on the endpoint.
+ *
+ * @return Values returned by @ref nrf_drv_usbd_ep_handled_transfer.
+ */
+ret_code_t app_usbd_ep_handled_transfer(
+    nrf_drv_usbd_ep_t                         ep,
+    nrf_drv_usbd_handler_desc_t const * const p_handler);
+
+/**
+ * @brief Set up a data-handled transfer.
+ *
+ * Function similar to @ref app_usbd_ep_handled_transfer.
+ * The only technical diference is that it should be used with setup transfers
+ * that are performed before the device is configured.
+ *
+ * @param ep        Endpoint number
+ * @param p_handler Function called when the next chunk of data is requested.
+ *
+ * @retval NRF_ERROR_INVALID_STATE The state of the USB device does not allow
+ *                                 data transfer on the endpoint.
+ *
+ * @return Values returned by @ref nrf_drv_usbd_ep_handled_transfer.
+ */
+ret_code_t app_usbd_setup_data_handled_transfer(
+    nrf_drv_usbd_ep_t                         ep,
+    nrf_drv_usbd_handler_desc_t const * const p_handler);
+
+/**
+ * @brief Set up a data transfer buffer.
  *
  * Returns special internal buffer that can be used in setup transfer.
  * @return Internal buffer pointer

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup nfc_ble_oob_advdata Advertising and Scan Response Data Encoder for NFC OOB pairing
@@ -100,7 +99,7 @@ typedef enum
  *
  * @details This function encodes data into the Advertising and Scan Response data format (AD structures).
  *          Encoding is based on the selections in the supplied structures. This function uses
- *          @ref adv_data_encode to encode regular data and adds additional AD Structures which are specific 
+ *          @ref adv_data_encode to encode regular data and adds additional AD Structures which are specific
  *          for NFC OOB pairing: Security Manager TK Value, LESC OOB values, OOB Flags, and LE Role.
  *
  * @param[in]      p_advdata       Pointer to the structure for specifying the content of encoded data.
@@ -117,7 +116,7 @@ typedef enum
 ret_code_t nfc_ble_oob_adv_data_encode(ble_advdata_t const * const p_advdata,
                                        uint8_t             * const p_encoded_data,
                                        uint16_t            * const p_len);
-                                        
+
 /**@brief Function for encoding payload field of Security Manager TK Value AD Type.
  *
  * @param[in]     p_tk_value         Security Manager TK Value AD Type payload.

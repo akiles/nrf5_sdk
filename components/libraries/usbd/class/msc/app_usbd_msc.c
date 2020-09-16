@@ -184,7 +184,7 @@ static ret_code_t cbw_wait_start(app_usbd_class_inst_t const * p_inst)
     NRF_LOG_DEBUG("cbw_wait_start\r\n");
     memset(&p_msc_ctx->cbw, 0, sizeof(app_usbd_msc_cbw_t));
     NRF_DRV_USBD_TRANSFER_OUT(cbw, &p_msc_ctx->cbw, sizeof(app_usbd_msc_cbw_t));
-    ret_code_t ret = app_usbd_core_ep_transfer(ep_addr_out, &cbw, NULL);
+    ret_code_t ret = app_usbd_core_ep_transfer(ep_addr_out, &cbw);
     if (ret == NRF_SUCCESS)
     {
         p_msc_ctx->state = APP_USBD_MSC_STATE_CBW;
@@ -215,7 +215,7 @@ static ret_code_t csw_wait_start(app_usbd_class_inst_t const * p_inst, uint8_t s
     p_msc_ctx->csw.status = status;
 
     NRF_DRV_USBD_TRANSFER_IN(csw, &p_msc_ctx->csw, sizeof(app_usbd_msc_csw_t));
-    ret_code_t ret = app_usbd_core_ep_transfer(ep_addr_in, &csw, NULL);
+    ret_code_t ret = app_usbd_core_ep_transfer(ep_addr_in, &csw);
     if (ret == NRF_SUCCESS)
     {
         p_msc_ctx->state = APP_USBD_MSC_STATE_CSW;
@@ -247,7 +247,7 @@ static ret_code_t transfer_in_start(app_usbd_class_inst_t const * p_inst,
     nrf_drv_usbd_ep_t ep_addr_in = ep_in_addr_get(p_inst);
 
     NRF_DRV_USBD_TRANSFER_IN(resp, p_buff, size);
-    ret_code_t ret = app_usbd_core_ep_transfer(ep_addr_in, &resp, NULL);
+    ret_code_t ret = app_usbd_core_ep_transfer(ep_addr_in, &resp);
     if (ret == NRF_SUCCESS)
     {
         p_msc_ctx->state = state;
@@ -293,7 +293,7 @@ static ret_code_t transfer_out_start(app_usbd_class_inst_t const * p_inst,
     nrf_drv_usbd_ep_t ep_addr_out = ep_out_addr_get(p_inst);
 
     NRF_DRV_USBD_TRANSFER_OUT(resp, p_buff, size);
-    ret_code_t ret = app_usbd_core_ep_transfer(ep_addr_out, &resp, NULL);
+    ret_code_t ret = app_usbd_core_ep_transfer(ep_addr_out, &resp);
     if (ret == NRF_SUCCESS)
     {
         p_msc_ctx->state = state;
@@ -487,7 +487,6 @@ static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
 {
     ASSERT(p_inst != NULL);
     ASSERT(p_setup_ev != NULL);
-
     app_usbd_msc_t const * p_msc = msc_get(p_inst);
     app_usbd_msc_ctx_t *   p_msc_ctx = msc_ctx_get(p_msc);
 
@@ -497,25 +496,19 @@ static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
         req_type == APP_USBD_SETUP_REQTYPE_STD)
     {
 
-        ret_code_t ret = app_usbd_endpoint_std_req_handle(p_inst, p_setup_ev);
+        ret_code_t ret = app_usbd_endpoint_std_req_handle(p_setup_ev);
         if (ret != NRF_SUCCESS)
         {
             return ret;
         }
 
         if ((p_setup_ev->setup.bmRequest == APP_USBD_SETUP_STDREQ_CLEAR_FEATURE) &&
-            (p_msc_ctx->state == APP_USBD_MSC_STATE_UNSUPPORTED)) {
-
+            (p_msc_ctx->state == APP_USBD_MSC_STATE_UNSUPPORTED))
+        {
             /*Unsupported command handle: status stage*/
             ret = csw_wait_start(p_inst, APP_USBD_MSC_CSW_STATUS_FAIL);
         }
 
-        return ret;
-    }
-
-    ret_code_t ret = app_usbd_interface_std_req_handle(p_inst, p_setup_ev);
-    if (ret == NRF_SUCCESS || ret != NRF_ERROR_NOT_SUPPORTED)
-    {
         return ret;
     }
 
@@ -1514,7 +1507,7 @@ static ret_code_t state_data_out_handle(app_usbd_class_inst_t const * p_inst)
         nrf_block_dev_t const * p_blkd =
                                 p_msc->specific.inst.pp_block_devs[p_msc_ctx->current.lun];
 
-        size_t pos = p_msc_ctx->current.workbuff_pos;;
+        size_t pos = p_msc_ctx->current.workbuff_pos;
         if (p_msc_ctx->current.req_busy_mask != APP_USBD_MSC_REQ_BUSY_FULL_MASK)
         {
             pos ^= p_msc->specific.inst.block_buff_size;
@@ -1623,22 +1616,6 @@ static ret_code_t endpoint_out_event_handler(app_usbd_class_inst_t const *  p_in
     return ret;
 }
 
-/**
- * @brief User event handler
- *
- * @param[in] p_inst        Class instance
- * @param[in] p_hinst       MSC instance
- * @param[in] event user    Event type @ref app_usbd_msc_user_event_t
- * */
-static inline void user_event_handler(app_usbd_class_inst_t const * p_inst,
-                                      app_usbd_msc_inst_t const * p_msc,
-                                      app_usbd_msc_user_event_t event)
-{
-    if (p_msc->user_ev_handler != NULL)
-    {
-        p_msc->user_ev_handler(p_inst, event);
-    }
-}
 
 /**
  * @brief @ref app_usbd_class_methods_t::event_handler
@@ -1685,11 +1662,9 @@ static ret_code_t msc_event_handler(app_usbd_class_inst_t const * p_inst,
                 (void)nrf_blk_dev_ioctl(p_blkd, NRF_BLOCK_DEV_IOCTL_REQ_CACHE_FLUSH, NULL);
             }
 
-            user_event_handler(p_inst, &p_msc->specific.inst, APP_USBD_MSC_USER_EVT_SUSPEND);
             break;
         }
         case APP_USBD_EVT_DRV_RESUME:
-            user_event_handler(p_inst, &p_msc->specific.inst, APP_USBD_MSC_USER_EVT_RESUME);
             break;
         case APP_USBD_EVT_INST_APPEND:
         {
@@ -1745,7 +1720,6 @@ static ret_code_t msc_event_handler(app_usbd_class_inst_t const * p_inst,
                        p_msc->specific.inst.block_buff_size);
             }
 
-            user_event_handler(p_inst, &p_msc->specific.inst, APP_USBD_MSC_USER_EVT_START);
             break;
         }
         case APP_USBD_EVT_STOP:
@@ -1765,7 +1739,6 @@ static ret_code_t msc_event_handler(app_usbd_class_inst_t const * p_inst,
                 p_msc_ctx->blk_dev_init_mask &= ~(1u << i);
             }
 
-            user_event_handler(p_inst, &p_msc->specific.inst, APP_USBD_MSC_USER_EVT_STOP);
             break;
         }
         default:
@@ -1957,7 +1930,7 @@ static void msc_blockdev_write_done_handler(nrf_block_dev_t const * p_blk_dev,
 
     if (p_msc_ctx->current.blk_datasize <= p_msc_ctx->current.blk_count * blk_size)
     {
-        size_t pos = p_msc_ctx->current.workbuff_pos;;
+        size_t pos = p_msc_ctx->current.workbuff_pos;
         if (p_msc_ctx->current.req_busy_mask != APP_USBD_MSC_REQ_BUSY_FULL_MASK)
         {
             pos ^= p_msc->specific.inst.block_buff_size;
@@ -2052,6 +2025,30 @@ static void msc_blockdev_ev_handler(nrf_block_dev_t const * p_blk_dev,
         default:
             break;
     }
+}
+
+
+bool app_usbd_msc_sync(app_usbd_msc_t const * p_msc)
+{
+    bool rc = true;
+    ret_code_t ret = NRF_SUCCESS;
+
+    for (size_t i = 0; i < p_msc->specific.inst.block_devs_count; ++i)
+    {
+        nrf_block_dev_t const * p_blkd = p_msc->specific.inst.pp_block_devs[i];
+        bool flush_in_progress = true;
+
+        ret = nrf_blk_dev_ioctl(p_blkd,
+                                NRF_BLOCK_DEV_IOCTL_REQ_CACHE_FLUSH,
+                                &flush_in_progress);
+
+        if ((ret != NRF_SUCCESS) || flush_in_progress)
+        {
+            rc = false;
+        }
+    }
+
+    return rc;
 }
 
 /** @} */

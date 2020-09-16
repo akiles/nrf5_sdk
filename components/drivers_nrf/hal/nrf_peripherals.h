@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef NRF_PERIPHERALS_H
 #define NRF_PERIPHERALS_H
 
@@ -55,7 +54,7 @@
 #include "nrf51822_peripherals.h"
 #endif
 
-#ifdef NRF52832
+#ifdef NRF52832_XXAA
 #include "nrf52832_peripherals.h"
 #endif
 

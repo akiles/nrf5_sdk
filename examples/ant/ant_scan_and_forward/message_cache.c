@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 #include <string.h>
 #include "message_cache.h"
 #include "nordic_common.h"

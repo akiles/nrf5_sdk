@@ -203,6 +203,19 @@
 #endif //TWI_CONFIG_LOG_ENABLED
 // </e>
 
+// <q> TWIM_NRF52_ANOMALY_109_WORKAROUND_ENABLED  - Enables nRF52 anomaly 109 workaround for TWIM.
+ 
+
+// <i> The workaround uses interrupts to wake up the CPU by catching
+// <i> the start event of zero-frequency transmission, clear the 
+// <i> peripheral, set desired frequency, start the peripheral, and
+// <i> the proper transmission. See more in the Errata document or
+// <i> Anomaly 109 Addendum located at https://infocenter.nordicsemi.com/
+
+#ifndef TWIM_NRF52_ANOMALY_109_WORKAROUND_ENABLED
+#define TWIM_NRF52_ANOMALY_109_WORKAROUND_ENABLED 0
+#endif
+
 #endif //TWI_ENABLED
 // </e>
 
@@ -355,6 +368,19 @@
 
 #endif //UART_ENABLED
 // </e>
+
+// </h> 
+//==========================================================
+
+// <h> nRF_Libraries 
+
+//==========================================================
+// <q> NRF_STRERROR_ENABLED  - nrf_strerror - Library for converting error code to string.
+ 
+
+#ifndef NRF_STRERROR_ENABLED
+#define NRF_STRERROR_ENABLED 1
+#endif
 
 // </h> 
 //==========================================================
@@ -584,6 +610,9 @@
 
 //==========================================================
 // <o> SEGGER_RTT_CONFIG_BUFFER_SIZE_UP - Size of upstream buffer. 
+// <i> Note that either @ref NRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE
+// <i> or this value is actually used. It depends on which one is bigger.
+
 #ifndef SEGGER_RTT_CONFIG_BUFFER_SIZE_UP
 #define SEGGER_RTT_CONFIG_BUFFER_SIZE_UP 64
 #endif
@@ -601,6 +630,21 @@
 // <o> SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS - Size of upstream buffer. 
 #ifndef SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS
 #define SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS 2
+#endif
+
+// <o> SEGGER_RTT_CONFIG_DEFAULT_MODE  - RTT behavior if the buffer is full.
+ 
+
+// <i> The following modes are supported:
+// <i> - SKIP  - Do not block, output nothing.
+// <i> - TRIM  - Do not block, output as much as fits.
+// <i> - BLOCK - Wait until there is space in the buffer.
+// <0=> SKIP 
+// <1=> TRIM 
+// <2=> BLOCK_IF_FIFO_FULL 
+
+#ifndef SEGGER_RTT_CONFIG_DEFAULT_MODE
+#define SEGGER_RTT_CONFIG_DEFAULT_MODE 0
 #endif
 
 // </h> 

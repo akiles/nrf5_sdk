@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_cgms Continuous Glucose Monitoring Service
@@ -137,7 +136,7 @@ extern "C" {
  * @{ */
 #define NRF_BLE_CGMS_MEAS_OP_LEN            1                               //!< Length of the opcode inside the Glucose Measurement packet.
 #define NRF_BLE_CGMS_MEAS_HANDLE_LEN        2                               //!< Length of the handle inside the Glucose Measurement packet.
-#define NRF_BLE_CGMS_MEAS_LEN_MAX           (BLE_L2CAP_MTU_DEF -        \
+#define NRF_BLE_CGMS_MEAS_LEN_MAX           (BLE_GATT_ATT_MTU_DEFAULT - \
                                              NRF_BLE_CGMS_MEAS_OP_LEN - \
                                              NRF_BLE_CGMS_MEAS_HANDLE_LEN)  //!< Maximum size of a transmitted Glucose Measurement.
 

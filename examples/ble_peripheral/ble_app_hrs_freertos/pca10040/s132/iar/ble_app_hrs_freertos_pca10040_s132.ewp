@@ -177,26 +177,27 @@
         <option>
           <name>CCDefines</name>
           <state>BLE_STACK_SUPPORT_REQD</state>
-          <state>__STACK_SIZE=2048</state>
-          <state>__HEAP_SIZE=1024</state>
-          <state>NRF_SD_BLE_API_VERSION=3</state>
-          <state>S132</state>
           <state>BOARD_PCA10040</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>FREERTOS</state>
+          <state>NRF52</state>
+          <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_12</state>
           <state>NRF52_PAN_15</state>
           <state>NRF52_PAN_20</state>
           <state>NRF52_PAN_31</state>
           <state>NRF52_PAN_36</state>
           <state>NRF52_PAN_51</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_54</state>
           <state>NRF52_PAN_55</state>
           <state>NRF52_PAN_58</state>
           <state>NRF52_PAN_64</state>
+          <state>NRF52_PAN_74</state>
+          <state>NRF_SD_BLE_API_VERSION=4</state>
+          <state>S132</state>
           <state>SOFTDEVICE_PRESENT</state>
-          <state>NRF52832</state>
-          <state>NRF52</state>
-          <state>FREERTOS</state>
+          <state>__HEAP_SIZE=1024</state>
+          <state>__STACK_SIZE=2048</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -261,7 +262,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state></state>
+          <state>1</state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -325,7 +326,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\..\..\..\config\ble_app_hrs_freertos_pca10040_s132</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising</state>
@@ -360,7 +360,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\adc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\clock</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\comp</state>
@@ -392,12 +391,12 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crc32</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense_drv</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ecc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fds</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault\nrf52</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hci</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\led_softblink</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
@@ -409,6 +408,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\slip</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\twi</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
@@ -592,26 +592,27 @@
         <option>
       <name>ADefines</name>
           <state>BLE_STACK_SUPPORT_REQD</state>
-          <state>__STACK_SIZE=2048</state>
-          <state>__HEAP_SIZE=1024</state>
-          <state>NRF_SD_BLE_API_VERSION=3</state>
-          <state>S132</state>
           <state>BOARD_PCA10040</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>FREERTOS</state>
+          <state>NRF52</state>
+          <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_12</state>
           <state>NRF52_PAN_15</state>
           <state>NRF52_PAN_20</state>
           <state>NRF52_PAN_31</state>
           <state>NRF52_PAN_36</state>
           <state>NRF52_PAN_51</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_54</state>
           <state>NRF52_PAN_55</state>
           <state>NRF52_PAN_58</state>
           <state>NRF52_PAN_64</state>
+          <state>NRF52_PAN_74</state>
+          <state>NRF_SD_BLE_API_VERSION=4</state>
+          <state>S132</state>
           <state>SOFTDEVICE_PRESENT</state>
-          <state>NRF52832</state>
-          <state>NRF52</state>
-          <state>FREERTOS</state>
+          <state>__HEAP_SIZE=1024</state>
+          <state>__STACK_SIZE=2048</state>
         </option>
         <option>
           <name>AList</name>
@@ -707,7 +708,6 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$\..\..\..\config\ble_app_hrs_freertos_pca10040_s132</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising</state>
@@ -742,7 +742,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\adc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\clock</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\comp</state>
@@ -774,12 +773,12 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crc32</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense_drv</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ecc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fds</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault\nrf52</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hci</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\led_softblink</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
@@ -791,6 +790,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\slip</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\twi</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
@@ -1211,10 +1211,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crc16\crc16.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fds\fds.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage\fstorage.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault\nrf52\handler\hardfault_handler_iar.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault\hardfault_implementation.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\sdk_errors.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\sdk_mapped_flags.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim\sensorsim.c</name>    </file>  </group>  <group>
   <name>Third Parties</name>    <file>
@@ -1256,7 +1255,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\gatts_cache_manager.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\id_manager.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\nrf_ble_gatt\nrf_ble_gatt.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\peer_data.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\peer_data_storage.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\peer_database.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\peer_id.c</name>    </file>    <file>

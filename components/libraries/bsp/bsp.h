@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  *
  * @defgroup bsp Board Support Package
@@ -47,10 +46,8 @@
  * @brief BSP module.
  * @details This module provides a layer of abstraction from the board.
  *          It allows the user to indicate certain states on LEDs in a simple way.
- *          Module functionality can be modified by additional defines:
- *          - BSP_SIMPLE reduces functionality of this module to enable
- *            and read state of the buttons
- *          - BSP_UART_SUPPORT enables support for UART
+ *          Module functionality can be modified by defining BSP_SIMPLE to reduce
+ *          functionality of this module to enable and read state of the buttons.
  */
 
 #ifndef BSP_H__
@@ -201,10 +198,8 @@ typedef void (* bsp_event_callback_t)(bsp_event_t);
  * @note        Before calling this function, you must initiate the following required modules:
  *              - @ref app_timer for LED support
  *              - @ref app_gpiote for button support
- *              - @ref app_uart for UART support
  *
  * @param[in]   type               Type of peripherals used.
- * @param[in]   ticks_per_100ms    Number of RTC ticks for 100 ms.
  * @param[in]   callback           Function to be called when button press/event is detected.
  *
  * @retval      NRF_SUCCESS               If the BSP module was successfully initialized.
@@ -213,7 +208,7 @@ typedef void (* bsp_event_callback_t)(bsp_event_t);
  * @retval      NRF_ERROR_INVALID_PARAM   If GPIOTE has too many users.
  * @retval      NRF_ERROR_INVALID_STATE   If button or GPIOTE has not been initialized.
  */
-uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t callback);
+uint32_t bsp_init(uint32_t type, bsp_event_callback_t callback);
 
 
 /**@brief       Function for checking button states.

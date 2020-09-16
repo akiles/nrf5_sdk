@@ -37,11 +37,10 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
  * @addtogroup ser_app Application side code
  * @ingroup ble_sdk_lib_serialization
- * @brief @tagAPI52832 SoftDevice handler and transport on the application side.
+ * @brief SoftDevice handler and transport on the application side.
  */
 
 /** @file
@@ -81,15 +80,16 @@ typedef uint32_t (*ser_sd_transport_rsp_handler_t)(const uint8_t * p_buffer, uin
  *
  * @note 'Wait for response' and 'Response set' callbacks can be set in RTOS environment.
  *       It enables rescheduling while waiting for the Connectivity Chip response. In a nonOS environment,
- *       usually 'Wait for response' will only be used for handling incoming events or forcing the 
+ *       usually 'Wait for response' will only be used for handling incoming events or forcing the
  *       application to low power mode.
  *
- * @param[in] evt_handler               Handler to be called when event packet is received.
- * @param[in] os_rsp_wait_handler       Handler to be called after the request is send. It should 
+ * @param[in] ble_evt_handler         	Handler to be called when ble event packet is received.
+ * @param[in] ant_evt_handler         	Handler to be called when ant event packet is received.
+ * @param[in] os_rsp_wait_handler       Handler to be called after the request is send. It should
  *                                      implement a 'Wait for signal' functionality in an OS environment.
- * @param[in] os_rsp_set_handler        Handler to be called after response reception. It should 
+ * @param[in] os_rsp_set_handler        Handler to be called after response reception. It should
  *                                      implement a 'Signal Set' functionality in an OS environment.
- * @param[in] rx_not_handler            Handler to be called after the transport layer notifies that 
+ * @param[in] rx_not_handler            Handler to be called after the transport layer notifies that
  *                                      an incoming RX packet is detected.
  *
  * @retval NRF_SUCCESS              Operation success.
@@ -102,10 +102,12 @@ typedef uint32_t (*ser_sd_transport_rsp_handler_t)(const uint8_t * p_buffer, uin
  *                                  opening or timer creation.
  * @retval NRF_ERROR_NO_MEM         Operation failure.  Parameter propagated from timer creation.
  */
-uint32_t ser_sd_transport_open(ser_sd_transport_evt_handler_t             evt_handler,
+uint32_t ser_sd_transport_open(ser_sd_transport_evt_handler_t             ble_evt_handler,
+                               ser_sd_transport_evt_handler_t             ant_evt_handler,
                                ser_sd_transport_rsp_wait_handler_t        os_rsp_wait_handler,
                                ser_sd_transport_rsp_set_handler_t         os_rsp_set_handler,
                                ser_sd_transport_rx_notification_handler_t rx_not_handler);
+
 
 /**@brief Function setting a 'One Time' handler to be called between sending the next request packet and
  *        receiving the response packet.

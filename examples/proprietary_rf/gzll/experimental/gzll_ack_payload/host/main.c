@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
  * This project requires that a device that runs the
  * @ref gzll_device_m_ack_payload_example is used as a counterpart for
@@ -66,10 +65,6 @@
 #define PIPE_NUMBER             0  ///< Pipe 0 is used in this example.
 
 #define TX_PAYLOAD_LENGTH       1  ///< 1-byte payload length is used when transmitting.
-
-#define APP_TIMER_PRESCALER     0  ///< Value of the RTC PRESCALER register.
-#define APP_TIMER_OP_QUEUE_SIZE 8u ///< Size of timer operation queues.
-
 
 static uint8_t m_data_payload[NRF_GZLL_CONST_MAX_PAYLOAD_LENGTH]; ///< Placeholder for data payload received from host.
 static uint8_t m_ack_payload[TX_PAYLOAD_LENGTH];                  ///< Payload to attach to ACK sent to device.
@@ -125,13 +120,14 @@ static void output_present(uint8_t val)
  */
 static void ui_init(void)
 {
+    uint32_t err_code;
+
     // Initialize application timer.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
     // BSP initialization.
-    uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                                 APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
-                                 NULL);
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, NULL);
     APP_ERROR_CHECK(err_code);
 
     // Set up logger.

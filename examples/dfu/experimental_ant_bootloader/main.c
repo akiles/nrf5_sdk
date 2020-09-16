@@ -64,7 +64,7 @@
 #include "ant_error.h"
 #include "nrf.h"
 #include "app_scheduler.h"
-#include "app_timer_appsh.h"
+#include "app_timer.h"
 #include "nrf_error.h"
 #include "boards.h"
 #include "softdevice_handler.h"
@@ -76,7 +76,6 @@
 #endif // !S210_V3_STACK
 #include "ant_stack_config.h"
 #include "debug_pin.h"
-#include "app_timer_appsh.h"
 #include "softdevice_handler_appsh.h"
 
 #define ENABLE_BUTTON // include button detection
@@ -94,9 +93,6 @@
    #define BOOTLOADER_ERROR_LED         LED_C                                                   /**< N5DK Leds, set=led off, clr=led on  */
    #define BOOTLOADER_ACTIVE_LED        LED_D
 #endif // ENABLE_IO_LED
-
-#define APP_TIMER_PRESCALER             0                                                       /**< Maximum number of simultaneously created timers. */
-#define APP_TIMER_OP_QUEUE_SIZE         4                                                       /**< Size of timer operation queues. */
 
 #define SCHED_MAX_EVENT_DATA_SIZE       MAX(ANT_STACK_EVT_MSG_BUF_SIZE, 0)                      /**< Maximum size of scheduler events. */
 
@@ -200,8 +196,8 @@ static void leds_off(void)
  */
 static void timers_init(void)
 {
-    // Initialize timer module, making it use the scheduler.
-    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, true);
+    ret_code_t err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 }
 
 

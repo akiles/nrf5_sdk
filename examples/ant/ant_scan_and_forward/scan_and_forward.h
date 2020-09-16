@@ -48,8 +48,7 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
- /**@file
+/**@file
  * @brief Example of using a 'Scan and Forward' type ANT multi node solution.
  *
  * @defgroup ant_scan_and_forward_example ANT Scan and Forward Demo

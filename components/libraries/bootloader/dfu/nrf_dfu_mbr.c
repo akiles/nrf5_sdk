@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "nrf_dfu_mbr.h"
 #include "nrf_mbr.h"
 #include "nrf_dfu_types.h"
@@ -117,19 +116,22 @@ uint32_t nrf_dfu_mbr_compare(uint32_t * p_ptr1, uint32_t * p_ptr2, uint32_t len)
 }
 
 
-uint32_t nrf_dfu_mbr_vector_table_set(uint32_t address)
+uint32_t nrf_dfu_mbr_vector_table_set(uint32_t address, uint8_t is_temporary)
 {
     uint32_t ret_val;
 
-    NRF_LOG_INFO("running vector table set\r\n");
+    NRF_LOG_DEBUG("running vector table set\r\n");
     sd_mbr_command_t command =
     {
         .command = SD_MBR_COMMAND_VECTOR_TABLE_BASE_SET,
-        .params.base_set.address = address
+        .params.base_set.address = address,
+#ifndef SOFTDEVICE_PRESENT
+        .params.base_set.temporary = is_temporary,
+#endif
     };
 
     ret_val = sd_mbr_command(&command);
-    NRF_LOG_INFO("After running vector table set\r\n");
+    NRF_LOG_DEBUG("After running vector table set\r\n");
 
     return ret_val;
 }

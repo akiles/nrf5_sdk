@@ -37,12 +37,11 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
- /**@file
+/**@file
  *
  * @defgroup ble_sdk_lib_gatt_db GATT Database Service Structure
  * @{
- * @ingroup  app_common
+ * @ingroup  ble_sdk_lib
  */
 
 #ifndef BLE_GATT_DB_H__
@@ -66,7 +65,7 @@ typedef struct
     uint16_t         cccd_handle;       /**< CCCD Handle value for this characteristic. This will be set to BLE_GATT_HANDLE_INVALID if a CCCD is not present at the server. */
     uint16_t         ext_prop_handle;   /**< Extended Properties Handle value for this characteristic. This will be set to BLE_GATT_HANDLE_INVALID if an Extended Properties descriptor is not present at the server. */
     uint16_t         user_desc_handle;  /**< User Description Handle value for this characteristic. This will be set to BLE_GATT_HANDLE_INVALID if a User Description descriptor is not present at the server. */
-    uint16_t         report_ref_handle; /**< Report Refence Handle value for this characteristic. This will be set to BLE_GATT_HANDLE_INVALID if a Report Reference descriptor is not present at the server. */
+    uint16_t         report_ref_handle; /**< Report Reference Handle value for this characteristic. This will be set to BLE_GATT_HANDLE_INVALID if a Report Reference descriptor is not present at the server. */
 } ble_gatt_db_char_t;
 
 /**@brief Structure for holding information about the service and the characteristics present on a

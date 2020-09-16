@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef NFC_BLE_PAIR_MSG_H__
 #define NFC_BLE_PAIR_MSG_H__
 
@@ -219,7 +218,7 @@ ret_code_t nfc_ble_pair_msg_updatable_tk_encode(nfc_ble_pair_type_t             
                                                 ble_gap_lesc_oob_data_t * const p_lesc_data,
                                                 uint8_t                 *       p_buf,
                                                 uint32_t                *       p_len,
-                                                uint8_t                 **      pp_tk_group, 
+                                                uint8_t                 **      pp_tk_group,
                                                 uint8_t                         max_group_size);
 
 /**@brief Function for updating the Connection Handover NDEF message with new TK value.

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <string.h>
 #include "es_flash.h"
 #include "es_util.h"
@@ -80,17 +79,14 @@ static uint16_t          m_conn_handle = BLE_CONN_HANDLE_INVALID;   //!< Current
 #endif
 
 #define SLOT_DECL(i, _) __ALIGN(4) static uint8_t slot## i ##_buf[sizeof(es_slot_t)];
-
-//lint -save -e123
 EVAL(REPEAT(APP_MAX_ADV_SLOTS, SLOT_DECL, ~))
+
+__ALIGN(4) static uint8_t lock_key_buf[SIZE_OF_LOCK_KEY];   //!< Buffer for lock key flash access.
 
 #define SLOT(i, _) slot## i ##_buf,
 static uint8_t * slots_buf_p[APP_MAX_ADV_SLOTS] = {
     EVAL(REPEAT(APP_MAX_ADV_SLOTS, SLOT, ~))
 };
-//lint -restore
-
-__ALIGN(4) static uint8_t lock_key_buf[SIZE_OF_LOCK_KEY];   //!< Buffer for lock key flash access.
 
 __ALIGN(4) static uint8_t flash_flags_buf[sizeof(es_flash_flags_t)];            //!< Buffer for flash flags flash access.
 __ALIGN(4) static uint8_t beacon_config_buf[sizeof(es_flash_beacon_config_t)];  //!< Buffer for beacon config flash access.

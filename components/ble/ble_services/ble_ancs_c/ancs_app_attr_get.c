@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
- 
 /* Disclaimer: This client implementation of the Apple Notification Center Service can and will be changed at any time by Nordic Semiconductor ASA.
  * Server implementations such as the ones found in iOS can be changed at any time by Apple and may cause this client implementation to stop working.
  */
@@ -49,9 +48,11 @@
 #include "nrf_log.h"
 #include "string.h"
 
-#define GATTC_OPCODE_SIZE                1                                                                     /**< Size of the GATTC OPCODE. */
-#define GATTC_ATTR_HANDLE_SIZE           4                                                                     /**< Size of the Attribute handle Size. */
-#define ANCS_GATTC_WRITE_PAYLOAD_LEN_MAX (GATT_MTU_SIZE_DEFAULT - GATTC_OPCODE_SIZE - GATTC_ATTR_HANDLE_SIZE)  /**< Maximum Length of the data we can send in one write. */
+#define GATTC_OPCODE_SIZE                1      /**< Size of the GATTC OPCODE. */
+#define GATTC_ATTR_HANDLE_SIZE           4      /**< Size of the Attribute handle Size. */
+
+
+#define ANCS_GATTC_WRITE_PAYLOAD_LEN_MAX (BLE_GATT_ATT_MTU_DEFAULT - GATTC_OPCODE_SIZE - GATTC_ATTR_HANDLE_SIZE)  /**< Maximum Length of the data we can send in one write. */
 
 
 /**@brief Enum to keep track of the state based encoding while requesting App attributes. */
@@ -136,7 +137,7 @@ static void queued_write_tx_message(uint16_t       conn_handle,
 /**@brief Function for encoding the Command ID as part of assembling a "Get App Attributes" command.
  *
  * @param[in]     p_ancs     iOS notification structure. This structure must be supplied by
- *                           the application. It identifies the particular client instance to use. 
+ *                           the application. It identifies the particular client instance to use.
  * @param[in]     p_index    Pointer to the length encoded so far for the current write.
  * @param[in]     p_offset   Pointer to the accumulated offset for the next write.
  * @param[in,out] p_msg      Pointer to the tx message that will be filled out in this function.
@@ -263,7 +264,7 @@ static void app_attr_execute_write(uint16_t conn_handle, uint16_t handle_value, 
     p_msg->req.write_req.gattc_params.len       = 0;
     p_msg->conn_handle                          = conn_handle;
     p_msg->type                                 = WRITE_REQ;
-    
+
     tx_buffer_insert(p_msg);
 }
 
@@ -289,11 +290,12 @@ static uint32_t app_attr_get(ble_ancs_c_t  * p_ancs,
     uint32_t          app_id_bytes_encoded_count = 0;
     encode_app_attr_t state                      = APP_ATTR_COMMAND_ID;
     p_ancs->number_of_requested_attr             = 0;
-    uint32_t attr_get_total_nb                   = app_attr_nb_to_get(p_ancs);
-    tx_message_t      p_msg;
-    memset(&p_msg,0,sizeof(tx_message_t));
 
-    NRF_LOG_DEBUG("Attribute Get Started.\r\n");
+    uint32_t     attr_get_total_nb = app_attr_nb_to_get(p_ancs);
+    tx_message_t p_msg;
+
+    memset(&p_msg, 0, sizeof(tx_message_t));
+
     while(state != APP_ATTR_DONE)
     {
         switch(state)
@@ -335,9 +337,9 @@ static uint32_t app_attr_get(ble_ancs_c_t  * p_ancs,
     app_attr_execute_write(p_ancs->conn_handle,
                            p_ancs->service.control_point_char.handle_value,
                            &p_msg);
-    
+
     p_ancs->parse_info.expected_number_of_attrs = p_ancs->number_of_requested_attr;
-    
+
     tx_buffer_process();
     return NRF_SUCCESS;
 }

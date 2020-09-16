@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 #ifndef __MESSAGE_CACHE_H__
 #define __MESSAGE_CACHE_H__
 

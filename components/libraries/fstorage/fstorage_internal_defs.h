@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef FSTORAGE_INTERNAL_DEFS_H__
 #define FSTORAGE_INTERNAL_DEFS_H__
 
@@ -56,15 +55,14 @@ extern "C" {
 #define FS_ERASED_WORD              (0xFFFFFFFF)
 
 // Helper macros for section variables.
-#define FS_SECTION_VARS_GET(i)          NRF_SECTION_VARS_GET((i), fs_config_t, fs_data)
-#define FS_SECTION_VARS_COUNT           NRF_SECTION_VARS_COUNT(fs_config_t, fs_data)
-#define FS_SECTION_VARS_START_ADDR      NRF_SECTION_VARS_START_ADDR(fs_data)
-#define FS_SECTION_VARS_END_ADDR        NRF_SECTION_VARS_END_ADDR(fs_data)
-
+#define FS_SECTION_ITEM_GET(i)      NRF_SECTION_ITEM_GET(fs_data, fs_config_t, (i))
+#define FS_SECTION_ITEM_COUNT       NRF_SECTION_ITEM_COUNT(fs_data, fs_config_t)
+#define FS_SECTION_START_ADDR       NRF_SECTION_START_ADDR(fs_data)
+#define FS_SECTION_END_ADDR         NRF_SECTION_END_ADDR(fs_data)
 
 // Create section 'fs_data'.
-NRF_SECTION_VARS_CREATE_SECTION(fs_data, fs_config_t);
-
+//lint -esym(526, fs_dataBase) -esym(526, fs_dataLimit)
+NRF_SECTION_DEF(fs_data, fs_config_t);
 
 // fstorage op-codes.
 typedef enum

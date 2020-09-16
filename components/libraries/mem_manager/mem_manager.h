@@ -37,13 +37,12 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup mem_manager Memory Manager
  * @{
  * @ingroup app_common
- * @brief Memory Manager for the \nRFXX SDK
+ * @brief Memory Manager for the @nRFXX SDK
  *
  * @details This module allows for dynamic use of memory. Currently,
  * this module can be used only to allocate and free memory in the RAM.

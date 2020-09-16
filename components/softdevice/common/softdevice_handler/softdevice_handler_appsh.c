@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "softdevice_handler_appsh.h"
 #include "app_scheduler.h"
 #include <string.h>

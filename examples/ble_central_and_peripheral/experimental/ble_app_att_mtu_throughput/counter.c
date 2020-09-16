@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@cond To Make Doxygen skip documentation generation for this file.
  * @{
  */
@@ -46,8 +45,8 @@
 #include "nrf_drv_rtc.h"
 
 
-/* RTC driver instance using RTC2.
- * RTC0 is used by the SoftDevice, and RTC1 by the app_timer library. */
+// RTC driver instance using RTC2.
+// RTC0 is used by the SoftDevice, and RTC1 by the app_timer library.
 static const nrf_drv_rtc_t m_rtc = NRF_DRV_RTC_INSTANCE(2);
 
 
@@ -65,8 +64,8 @@ void counter_init(void)
     // Initialize the RTC instance.
     nrf_drv_rtc_config_t config = NRF_DRV_RTC_DEFAULT_CONFIG;
 
-    // 10 ms interval.
-    config.prescaler = 327;
+    // 1 ms interval.
+    config.prescaler = 32;
 
     err_code = nrf_drv_rtc_init(&m_rtc, &config, rtc_handler);
     APP_ERROR_CHECK(err_code);

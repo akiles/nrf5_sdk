@@ -37,8 +37,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
- /**@file
+/**@file
  *
  * @defgroup nrf_dfu_settings DFU settings
  * @{

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_hrs Heart Rate Service
@@ -159,7 +158,7 @@ uint32_t ble_hrs_init(ble_hrs_t * p_hrs, const ble_hrs_init_t * p_hrs_init);
  * @param[in]   p_hrs      Heart Rate Service structure.
  * @param[in]   p_gatt_evt  Event received from the GATT module.
  */
-void ble_hrs_on_gatt_evt(ble_hrs_t * p_hrs, nrf_ble_gatt_evt_t * p_gatt_evt);
+void ble_hrs_on_gatt_evt(ble_hrs_t * p_hrs, const nrf_ble_gatt_evt_t * p_gatt_evt);
 
 
 /**@brief Function for handling the Application's BLE Stack events.

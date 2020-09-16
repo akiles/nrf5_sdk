@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
 *
 * @defgroup nrf_dev_button_radio_tx_example_main main.c
@@ -63,9 +62,6 @@
 #define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
-
-#define APP_TIMER_PRESCALER      0                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE  2                           /**< Size of timer operation queues. */
 
 static uint32_t                   packet;                    /**< Packet to transmit. */
 
@@ -175,14 +171,14 @@ int main(void)
     uint32_t err_code = NRF_SUCCESS;
 
     clock_initialization();
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
+
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
-                        bsp_evt_handler);
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 
     // Set radio configuration parameters

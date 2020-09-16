@@ -37,19 +37,23 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef BLE_DTM_APP_H__
 #define BLE_DTM_APP_H__
 
 /**
  * @addtogroup ser_codecs Serialization codecs
  * @ingroup ble_sdk_lib_serialization
- * @brief @tagAPI52832 Application and Connectivity codecs.
+ * @brief Application and Connectivity codecs.
+ */
+
+/**
+ * @addtogroup ser_codecs_app Application codecs
+ * @ingroup ser_codecs
  */
 
 /**
  * @addtogroup ser_app_common_codecs Application common codecs
- * @ingroup ser_codecs
+ * @ingroup ser_codecs_app
  */
 
 /**@file

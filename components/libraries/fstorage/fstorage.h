@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef FSTORAGE_H__
 #define FSTORAGE_H__
 
@@ -51,7 +50,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "section_vars.h"
+#include "nrf_section.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -174,7 +173,7 @@ typedef struct
  *
  * @param[in]   cfg_var     A @e definition of a @ref fs_config_t variable.
  */
-#define FS_REGISTER_CFG(cfg_var) NRF_SECTION_VARS_REGISTER_VAR(fs_data, cfg_var)
+#define FS_REGISTER_CFG(cfg_var) NRF_SECTION_ITEM_REGISTER(fs_data, cfg_var)
 
 
 /**@brief   Function for initializing the module.
@@ -264,7 +263,7 @@ fs_ret_t fs_queued_op_count_get(uint32_t * const p_op_count);
 
 /**@brief Function for checking if the queue for flash operations is full.
  *
- * @retval  true    If the queue is full. 
+ * @retval  true    If the queue is full.
  * @retval  false   If there is space for more operations in the queue.
  */
 bool fs_queue_is_full(void);

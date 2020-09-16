@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /**@file
  * @defgroup ant_broadcast_rx_example ANT Broadcast RX Example
  * @{
@@ -78,9 +77,6 @@
 #include "ant_stack_config.h"
 #include "ant_channel_config.h"
 #include "softdevice_handler.h"
-
-#define APP_TIMER_PRESCALER             0x00    /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE         0x04    /**< Size of timer operation queues. */
 
 // Channel configuration.
 #define ANT_BROADCAST_CHANNEL_NUMBER    0x00    /**< ANT Channel 0. */
@@ -131,9 +127,10 @@ static void utils_setup(void)
 {
     uint32_t err_code;
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
     err_code = bsp_init(BSP_INIT_LED,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         NULL);
     APP_ERROR_CHECK(err_code);
 }

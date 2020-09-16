@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <stdint.h>
 #include <string.h>
 #include "nordic_common.h"
@@ -72,6 +71,10 @@ uint32_t ser_conn_received_pkt_process(
 
         switch (p_rx_pkt_params->p_buffer[SER_PKT_TYPE_POS])
         {
+        #if defined(ANT_STACK_SUPPORT_REQD)
+            case SER_PKT_TYPE_ANT_CMD:
+            //!! INTENTIONAL FALLTHROUGH
+        #endif
             case SER_PKT_TYPE_CMD:
             {
                 err_code = ser_conn_command_process(p_command, command_len);

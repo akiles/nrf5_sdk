@@ -38,25 +38,18 @@
  * 
  */
 
-#include <stdint.h>
 #include <string.h>
-#include <stdbool.h>
-
-#include "nrf_error.h"
-#include "nrf_gpio.h"
-#include "app_uart.h"
 #include "ser_phy_hci.h"
-#include "app_error.h"
-#include "app_util_platform.h"
-#include "nrf_soc.h"
-
+#include "ser_config.h"
 #ifdef SER_CONNECTIVITY
 #include "ser_phy_config_conn.h"
 #else
 #include "ser_phy_config_app.h"
-#endif /* SER_CONNECTIVITY */
+#endif
+#include "nrf_drv_uart.h"
+#include "app_error.h"
+#include "app_util_platform.h"
 
-#include "ser_config.h"
 #define APP_SLIP_END     0xC0 /**< SLIP code for identifying the beginning and end of a packet frame.. */
 #define APP_SLIP_ESC     0xDB /**< SLIP escape code. This code is used to specify that the following character is specially encoded. */
 #define APP_SLIP_ESC_END 0xDC /**< SLIP special code. When this code follows 0xDB, this character is interpreted as payload data 0xC0.. */
@@ -66,17 +59,57 @@
 #define CRC_SIZE 2
 #define PKT_SIZE (SER_HAL_TRANSPORT_MAX_PKT_SIZE + HDR_SIZE + CRC_SIZE)
 
-static const app_uart_comm_params_t comm_params =
-{
-    .rx_pin_no  = SER_PHY_UART_RX,
-    .tx_pin_no  = SER_PHY_UART_TX,
-    .rts_pin_no = SER_PHY_UART_RTS,
-    .cts_pin_no = SER_PHY_UART_CTS,
-    // Below values are defined in ser_config.h common for application and connectivity
-    .flow_control = SER_PHY_UART_FLOW_CTRL,
-    .use_parity   = SER_PHY_UART_PARITY,
-    .baud_rate    = SER_PHY_UART_BAUDRATE
+static const nrf_drv_uart_t m_uart = NRF_DRV_UART_INSTANCE(0);
+static const nrf_drv_uart_config_t m_uart_config = {
+    .pseltxd            = SER_PHY_UART_TX,
+    .pselrxd            = SER_PHY_UART_RX,
+    .pselrts            = SER_PHY_UART_RTS,
+    .pselcts            = SER_PHY_UART_CTS,
+    .p_context          = NULL,
+    .interrupt_priority = UART_IRQ_PRIORITY,
+#ifdef UARTE_PRESENT
+    .use_easy_dma       = true,
+#endif
+    // These values are common for application and connectivity, they are
+    // defined in "ser_config.h".
+    .hwfc      = SER_PHY_UART_FLOW_CTRL,
+    .parity    = SER_PHY_UART_PARITY,
+    .baudrate  = (nrf_uart_baudrate_t)SER_PHY_UART_BAUDRATE
 };
+
+typedef struct {
+    ser_phy_hci_pkt_params_t header;
+    ser_phy_hci_pkt_params_t payload;
+    ser_phy_hci_pkt_params_t crc;
+} ser_phy_hci_slip_pkt_t;
+static ser_phy_hci_slip_pkt_t m_tx_curr_packet;
+static ser_phy_hci_slip_pkt_t m_tx_next_packet;
+
+static ser_phy_hci_slip_evt_t           m_ser_phy_hci_slip_event;
+static ser_phy_hci_slip_event_handler_t m_ser_phy_hci_slip_event_handler; /**< Event handler for upper layer */
+
+static uint8_t   m_tx_buf0[SER_PHY_HCI_SLIP_TX_BUF_SIZE];
+static uint8_t   m_tx_buf1[SER_PHY_HCI_SLIP_TX_BUF_SIZE];
+static uint8_t * mp_tx_buf;
+static uint8_t   m_tx_bytes;
+static enum {
+    PHASE_BEGIN,
+    PHASE_HEADER,
+    PHASE_PAYLOAD,
+    PHASE_CRC,
+    PHASE_ACK_END,
+    // The following three elements have to have consecutive values,
+    // 'tx_buf_fill()' relies on this.
+    PHASE_PACKET_END,
+    PHASE_PRE_IDLE = PHASE_PACKET_END + 1,
+    PHASE_IDLE     = PHASE_PRE_IDLE + 1
+} volatile m_tx_phase;
+static bool volatile m_tx_in_progress;
+static bool volatile m_tx_pending;
+
+#define NO_EVENT  SER_PHY_HCI_SLIP_EVT_TYPE_MAX
+static ser_phy_hci_slip_evt_type_t m_tx_evt_type;
+static ser_phy_hci_slip_evt_type_t m_tx_pending_evt_type;
 
 static uint8_t m_small_buffer[HDR_SIZE];
 static uint8_t m_big_buffer[PKT_SIZE];
@@ -85,271 +118,244 @@ static uint8_t * mp_small_buffer = NULL;
 static uint8_t * mp_big_buffer   = NULL;
 static uint8_t * mp_buffer       = NULL;
 
-static ser_phy_hci_pkt_params_t m_header;
-static ser_phy_hci_pkt_params_t m_payload;
-static ser_phy_hci_pkt_params_t m_crc;
-static ser_phy_hci_pkt_params_t m_header_pending;
-static ser_phy_hci_pkt_params_t m_payload_pending;
-static ser_phy_hci_pkt_params_t m_crc_pending;
+static uint8_t m_rx_buf[1];
+static bool m_rx_escape;
 
-static ser_phy_hci_slip_evt_t           m_ser_phy_hci_slip_event;
-static ser_phy_hci_slip_event_handler_t m_ser_phy_hci_slip_event_handler; /**< Event handler for upper layer */
 
-static bool    m_other_side_active = false; /**< Flag indicating that the other side is running */
-static uint8_t m_rx_byte;                   /**< Rx byte passed from low-level driver */
-
-static bool m_rx_escape = false;
-static bool m_tx_escape = false;
-
-static bool m_tx_busy = false; /**< Flag indicating that currently some transmission is ongoing */
-
-static uint32_t                   m_tx_index;
-static uint32_t                   m_rx_index;
-static ser_phy_hci_pkt_params_t * mp_data = NULL;
-
-/* Function declarations */
-static uint32_t ser_phy_hci_tx_byte(void);
-static bool     slip_decode(uint8_t * p_received_byte);
-static void     ser_phi_hci_rx_byte(uint8_t rx_byte);
-// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-__STATIC_INLINE void callback_hw_error(uint32_t error_src)
+// The function returns false to signal that no more bytes can be passed to be
+// sent (put into the TX buffer) until UART transmission is done.
+static bool tx_buf_put(uint8_t data_byte)
 {
-    m_ser_phy_hci_slip_event.evt_type = SER_PHY_HCI_SLIP_EVT_HW_ERROR;
+    ASSERT(m_tx_bytes < SER_PHY_HCI_SLIP_TX_BUF_SIZE);
 
-    // Pass error source to upper layer
-    m_ser_phy_hci_slip_event.evt_params.hw_error.error_code = error_src;
-    m_ser_phy_hci_slip_event_handler(&m_ser_phy_hci_slip_event);
+    mp_tx_buf[m_tx_bytes] = data_byte;
+    ++m_tx_bytes;
+
+    bool flush = false;
+    ser_phy_hci_slip_evt_type_t slip_evt_type = NO_EVENT;
+    if (m_tx_phase == PHASE_ACK_END)
+    {
+        // Send buffer, then signal that an acknowledge packet has been sent.
+        flush = true;
+        slip_evt_type = SER_PHY_HCI_SLIP_EVT_ACK_SENT;
+    }
+    else if (m_tx_phase == PHASE_PACKET_END)
+    {
+        // Send buffer, then signal that a packet with payload has been sent.
+        flush = true;
+        slip_evt_type = SER_PHY_HCI_SLIP_EVT_PKT_SENT;
+    }
+    else if (m_tx_bytes >= SER_PHY_HCI_SLIP_TX_BUF_SIZE)
+    {
+        // Send buffer (because it is filled up), but don't signal anything,
+        // since the packet sending is not complete yet.
+        flush = true;
+    }
+
+    if (flush)
+    {
+        // If some TX transfer is being done at the moment, a new one cannot be
+        // started, it must be scheduled to be performed later.
+        if (m_tx_in_progress)
+        {
+            m_tx_pending_evt_type = slip_evt_type;
+            m_tx_pending = true;
+            // No more buffers available, can't continue filling.
+            return false;
+        }
+
+        m_tx_in_progress = true;
+        m_tx_evt_type = slip_evt_type;
+        APP_ERROR_CHECK(nrf_drv_uart_tx(&m_uart, mp_tx_buf, m_tx_bytes));
+
+        // Switch to the second buffer.
+        mp_tx_buf = (mp_tx_buf == m_tx_buf0) ? m_tx_buf1 : m_tx_buf0;
+        m_tx_bytes = 0;
+    }
+
+    return true;
 }
 
-
-__STATIC_INLINE void slip_encode(void)
+static void tx_buf_fill(void)
 {
-    switch (mp_data->p_buffer[m_tx_index])
-    {
-        case APP_SLIP_END:
-            m_tx_escape = true;
-            (void)app_uart_put(APP_SLIP_ESC);
+    static ser_phy_hci_pkt_params_t * mp_tx_data = NULL;
+    static uint32_t                   m_tx_index;
+    bool                              can_continue = true;
+
+    do {
+        static uint8_t tx_escaped_data = 0;
+
+        if (tx_escaped_data != 0)
+        {
+            can_continue = tx_buf_put(tx_escaped_data);
+            tx_escaped_data = 0;
+        }
+        else switch (m_tx_phase)
+        {
+        case PHASE_BEGIN:
+            can_continue = tx_buf_put(APP_SLIP_END);
+            mp_tx_data = &m_tx_curr_packet.header;
+            m_tx_index = 0;
+            m_tx_phase = PHASE_HEADER;
+            tx_escaped_data = 0;
             break;
 
-        case APP_SLIP_ESC:
-            m_tx_escape = true;
-            (void)app_uart_put(APP_SLIP_ESC);
-            break;
+        case PHASE_ACK_END:
+        case PHASE_PACKET_END:
+            can_continue = tx_buf_put(APP_SLIP_END);
+
+            // [this is needed for the '++m_tx_phase;' below]
+            m_tx_phase = PHASE_PACKET_END;
+            // no break, intentional fall-through
+
+        case PHASE_PRE_IDLE:
+            // In PHASE_PRE_IDLE the sending process is almost finished, only
+            // the NRF_DRV_UART_EVT_TX_DONE event is needed before it can switch
+            // to PHASE_IDLE. But during this waiting a new packet may appear
+            // (i.e. 'ser_phy_hci_slip_tx_pkt_send()' may be called), hence
+            // the following pointer must be checked before switching the phase,
+            // just like right after writing whole packet to buffer (i.e. in
+            // PHASE_PACKET_END). Therefore, the following code is common for
+            // these two cases.
+            if (m_tx_next_packet.header.p_buffer != NULL)
+            {
+                m_tx_curr_packet = m_tx_next_packet;
+                m_tx_next_packet.header.p_buffer = NULL;
+
+                m_tx_phase = PHASE_BEGIN;
+                break;
+            }
+            // Go to the next phase:
+            //   PHASE_PACKET_END -> PHASE_PRE_IDLE
+            //   PHASE_PRE_IDLE   -> PHASE_IDLE
+            ++m_tx_phase;
+            return;
 
         default:
-            (void)app_uart_put(mp_data->p_buffer[m_tx_index]);
-            m_tx_index++;
+            ASSERT(mp_tx_data->p_buffer != NULL);
+            uint8_t data = mp_tx_data->p_buffer[m_tx_index];
+            ++m_tx_index;
+
+            if (data == APP_SLIP_END)
+            {
+                data = APP_SLIP_ESC;
+                tx_escaped_data = APP_SLIP_ESC_END;
+            }
+            else if (data == APP_SLIP_ESC)
+            {
+                tx_escaped_data = APP_SLIP_ESC_ESC;
+            }
+            can_continue = tx_buf_put(data);
+
+            if (m_tx_index >= mp_tx_data->num_of_bytes)
+            {
+                mp_tx_data->p_buffer = NULL;
+
+                if (m_tx_phase == PHASE_HEADER)
+                {
+                    if (m_tx_curr_packet.payload.p_buffer == NULL)
+                    {
+                        // No payload -> ACK packet.
+                        m_tx_phase = PHASE_ACK_END;
+                    }
+                    else
+                    {
+                        mp_tx_data = &m_tx_curr_packet.payload;
+                        m_tx_index = 0;
+                        m_tx_phase = PHASE_PAYLOAD;
+                    }
+                }
+                else if (m_tx_phase == PHASE_PAYLOAD)
+                {
+                    if (m_tx_curr_packet.crc.p_buffer == NULL)
+                    {
+                        // Packet without CRC.
+                        m_tx_phase = PHASE_PACKET_END;
+                    }
+                    else
+                    {
+                        mp_tx_data = &m_tx_curr_packet.crc;
+                        m_tx_index = 0;
+                        m_tx_phase = PHASE_CRC;
+                    }
+                }
+                else
+                {
+                    ASSERT(m_tx_phase == PHASE_CRC);
+                    m_tx_phase = PHASE_PACKET_END;
+                }
+            }
             break;
-    }
+        }
+    } while (can_continue);
 }
-
-
-__STATIC_INLINE bool check_pending_tx()
-{
-    bool tx_continue = false;
-
-    if (m_header_pending.p_buffer != NULL)
-    {
-        m_header  = m_header_pending;
-        m_payload = m_payload_pending;
-        m_crc     = m_crc_pending;
-
-        m_header_pending.p_buffer      = NULL;
-        m_header_pending.num_of_bytes  = 0;
-        m_payload_pending.p_buffer     = NULL;
-        m_payload_pending.num_of_bytes = 0;
-        m_crc_pending.p_buffer         = NULL;
-        m_crc_pending.num_of_bytes     = 0;
-
-        m_tx_index  = 0; // may be also done in ser_phy_hci_tx_byte???
-        tx_continue = true;
-
-        /* Start sending pending packet */
-        (void)ser_phy_hci_tx_byte();
-    }
-
-    return tx_continue;
-}
-
-
-static uint32_t ser_phy_hci_tx_byte()
-{
-    /* Flags informing about actually transmited part of packet*/
-    static bool header  = false;
-    static bool payload = false;
-    static bool crc     = false;
-
-    static bool ack_end    = false;
-    static bool packet_end = false;
-
-    if (ack_end == true)
-    {
-        ack_end   = false;
-        m_tx_busy = check_pending_tx();
-        /* Report end of ACK transmission*/
-        m_ser_phy_hci_slip_event.evt_type = SER_PHY_HCI_SLIP_EVT_ACK_SENT;
-        m_ser_phy_hci_slip_event_handler(&m_ser_phy_hci_slip_event);
-
-    }
-    else if (packet_end == true)
-    {
-        packet_end = false;
-        m_tx_busy  = check_pending_tx();
-        /* Report end of packet transmission*/
-        m_ser_phy_hci_slip_event.evt_type = SER_PHY_HCI_SLIP_EVT_PKT_SENT;
-        m_ser_phy_hci_slip_event_handler(&m_ser_phy_hci_slip_event);
-
-    }
-    else if ((m_tx_index == 0) && !header && !payload && !crc)
-    {
-        /* Beginning of packet - sent 0xC0*/
-        header  = true;
-        mp_data = &m_header;
-        (void)app_uart_put(APP_SLIP_END);
-    }
-    else if ((m_tx_index == mp_data->num_of_bytes) && crc == true)
-    {
-        /* End of packet - sent 0xC0*/
-        (void)app_uart_put(APP_SLIP_END);
-
-        m_crc.p_buffer = NULL;
-        crc            = false;
-        m_tx_index     = 0;
-        packet_end     = true;
-    }
-    else if ((m_tx_index == mp_data->num_of_bytes) && header == true)
-    {
-        /* End of header transmission*/
-        m_tx_index = 0;
-
-        if (m_payload.p_buffer != NULL)
-        {
-            header  = false;
-            payload = true;
-            mp_data = &m_payload;
-
-            /* Handle every character in buffer accordingly to SLIP protocol*/
-            slip_encode();
-        }
-        else
-        {
-            /* End of ACK - sent 0xC0*/
-            (void)app_uart_put(APP_SLIP_END);
-
-            header  = false;
-            ack_end = true;
-        }
-    }
-    else if ((m_tx_index == mp_data->num_of_bytes) && payload == true)
-    {
-        /* End of payload transmission*/
-        m_tx_index = 0;
-
-        if (m_crc.p_buffer != NULL)
-        {
-            m_payload.p_buffer = NULL;
-            payload            = false;
-            crc                = true;
-            mp_data            = &m_crc;
-
-            /* Handle every character in buffer accordingly to SLIP protocol*/
-            slip_encode();
-        }
-        /* CRC is not used for this packet -> finish packet transmission */
-        else
-        {
-            /* End of packet - send 0xC0*/
-            (void)app_uart_put(APP_SLIP_END);
-
-            m_payload.p_buffer = NULL;
-            payload            = false;
-            packet_end         = true;
-        }
-    }
-    else if (m_tx_escape == false)
-    {
-        /* Handle every character in buffer accordingly to SLIP protocol*/
-        slip_encode();
-    }
-    else if (m_tx_escape == true)
-    {
-        /* Send SLIP special code*/
-        m_tx_escape = false;
-
-        if (mp_data->p_buffer[m_tx_index] == APP_SLIP_END)
-        {
-            (void)app_uart_put(APP_SLIP_ESC_END);
-            m_tx_index++;
-        }
-        else
-        {
-            (void)app_uart_put(APP_SLIP_ESC_ESC);
-            m_tx_index++;
-        }
-    }
-
-    return NRF_SUCCESS;
-}
-
 
 uint32_t ser_phy_hci_slip_tx_pkt_send(const ser_phy_hci_pkt_params_t * p_header,
                                       const ser_phy_hci_pkt_params_t * p_payload,
                                       const ser_phy_hci_pkt_params_t * p_crc)
 {
-    /* Block TXRDY interrupts at this point*/
-    // NRF_UART0->INTENCLR = (UART_INTENCLR_TXDRDY_Clear << UART_INTENCLR_TXDRDY_Pos);
-    CRITICAL_REGION_ENTER();
-
     if (p_header == NULL)
     {
         return NRF_ERROR_NULL;
     }
 
-    /* Check if no tx is ongoing */
-    if (!m_tx_busy)
-    {
-        m_header = *p_header;
+    CRITICAL_REGION_ENTER();
 
-        if (p_payload != NULL)
+    // If some packet is already transmitted, schedule this new one to be sent
+    // as next. A critical region is needed here to ensure that the transmission
+    // won't finish before the following assignments are done.
+    if (m_tx_phase != PHASE_IDLE)
+    {
+        m_tx_next_packet.header = *p_header;
+
+        if (p_payload == NULL)
         {
-            m_payload = *p_payload;
+            m_tx_next_packet.payload.p_buffer = NULL;
+        }
+        else
+        {
+            m_tx_next_packet.payload = *p_payload;
         }
 
-        if (p_crc != NULL)
+        if (p_crc == NULL)
         {
-            m_crc = *p_crc;
+            m_tx_next_packet.crc.p_buffer = NULL;
+        }
+        else
+        {
+            m_tx_next_packet.crc = *p_crc;
         }
     }
-    /* Tx is ongoing, schedule transmission as pending */
     else
     {
-        if (p_crc != NULL)
+        m_tx_curr_packet.header = *p_header;
+
+        if (p_payload == NULL)
         {
-            m_crc_pending = *p_crc;
+            m_tx_curr_packet.payload.p_buffer = NULL;
+        }
+        else
+        {
+            m_tx_curr_packet.payload = *p_payload;
         }
 
-        if (p_payload != NULL)
+        if (p_crc == NULL)
         {
-            m_payload_pending = *p_payload;
+            m_tx_curr_packet.crc.p_buffer = NULL;
+        }
+        else
+        {
+            m_tx_curr_packet.crc = *p_crc;
         }
 
-        m_header_pending = *p_header;
+        m_tx_phase = PHASE_BEGIN;
+        tx_buf_fill();
     }
 
-    /* Start packet transmission only if no other tx is ongoing */
-    if (!m_tx_busy)
-    {
-        m_tx_busy = true;
-        (void)ser_phy_hci_tx_byte();
-    }
-
-    /* Enable TXRDY interrupts at this point*/
-    // NRF_UART0->INTENSET = (UART_INTENSET_TXDRDY_Set << UART_INTENSET_TXDRDY_Pos);
     CRITICAL_REGION_EXIT();
+
     return NRF_SUCCESS;
 }
-
 
 /* Function returns false when last byte in packet is detected.*/
 static bool slip_decode(uint8_t * p_received_byte)
@@ -392,10 +398,10 @@ static bool slip_decode(uint8_t * p_received_byte)
 
 static void ser_phi_hci_rx_byte(uint8_t rx_byte)
 {
-    static bool rx_sync         = false;
-    uint8_t     received_byte   = rx_byte;
-    static bool big_buff_in_use = false;
-
+    static bool      rx_sync         = false;
+    uint8_t          received_byte   = rx_byte;
+    static bool      big_buff_in_use = false;
+    static uint32_t  m_rx_index;
     /* Test received byte for SLIP packet start: 0xC0*/
     if (!rx_sync)
     {
@@ -422,7 +428,7 @@ static void ser_phi_hci_rx_byte(uint8_t rx_byte)
         }
 
         /* Check if switch between small and big buffer is needed*/
-        if (m_rx_index == sizeof (m_small_buffer) /*NEW!!!*/ && received_byte != APP_SLIP_END)
+        if (m_rx_index == sizeof (m_small_buffer) && received_byte != APP_SLIP_END)
         {
             /* Check if big (PKT) buffer is available*/
             if (mp_big_buffer != NULL)
@@ -501,6 +507,11 @@ static void ser_phi_hci_rx_byte(uint8_t rx_byte)
         }
         else
         {
+            // Mark the big buffer as locked (it should be freed by the upper
+            // layer).
+            mp_big_buffer   = NULL;
+            big_buff_in_use = false;
+
             /* Report packet reception end*/
             m_ser_phy_hci_slip_event.evt_type =
                 SER_PHY_HCI_SLIP_EVT_PKT_RECEIVED;
@@ -508,9 +519,7 @@ static void ser_phi_hci_rx_byte(uint8_t rx_byte)
             m_ser_phy_hci_slip_event.evt_params.received_pkt.num_of_bytes = m_rx_index;
             m_ser_phy_hci_slip_event_handler(&m_ser_phy_hci_slip_event);
 
-            rx_sync         = false;
-            mp_big_buffer   = NULL;
-            big_buff_in_use = false;
+            rx_sync = false;
         }
     }
     else
@@ -559,46 +568,77 @@ uint32_t ser_phy_hci_slip_rx_buf_free(uint8_t * p_buffer)
 }
 
 
-static void ser_phy_uart_evt_callback(app_uart_evt_t * uart_evt)
+static void uart_event_handler(nrf_drv_uart_event_t * p_event,
+                               void * p_context)
 {
-    if (uart_evt == NULL)
-    {
-        return;
-    }
+    (void)p_context;
 
-    switch (uart_evt->evt_type)
+    switch (p_event->type)
     {
-        case APP_UART_COMMUNICATION_ERROR:
-
-            // Process error only if this is parity or overrun error.
-            // Break and framing error is always present when app side is not active
-            if (uart_evt->data.error_communication &
-                (UART_ERRORSRC_PARITY_Msk | UART_ERRORSRC_OVERRUN_Msk))
+        case NRF_DRV_UART_EVT_ERROR:
+            // Process the error only if this is a parity or overrun error.
+            // Break and framing errors will always occur before the other
+            // side becomes active.
+            if (p_event->data.error.error_mask &
+                (NRF_UART_ERROR_PARITY_MASK | NRF_UART_ERROR_OVERRUN_MASK))
             {
-                callback_hw_error(uart_evt->data.error_communication);
+                // Pass error source to upper layer
+                m_ser_phy_hci_slip_event.evt_type =
+                    SER_PHY_HCI_SLIP_EVT_HW_ERROR;
+                m_ser_phy_hci_slip_event.evt_params.hw_error.error_code =
+                    p_event->data.error.error_mask;
+                m_ser_phy_hci_slip_event_handler(&m_ser_phy_hci_slip_event);
+            }
+            APP_ERROR_CHECK(nrf_drv_uart_rx(&m_uart, m_rx_buf, 1));
+            break;
+
+        case NRF_DRV_UART_EVT_TX_DONE:
+            // If there is a pending transfer (the second buffer is ready to
+            // be sent), start it immediately.
+            if (m_tx_pending)
+            {
+                APP_ERROR_CHECK(nrf_drv_uart_tx(&m_uart, mp_tx_buf, m_tx_bytes));
+
+                // Switch to the buffer that has just been sent completely
+                // and now can be filled again.
+                mp_tx_buf = (mp_tx_buf == m_tx_buf0) ? m_tx_buf1 : m_tx_buf0;
+                m_tx_bytes = 0;
+
+                m_ser_phy_hci_slip_event.evt_type = m_tx_evt_type;
+                m_tx_evt_type = m_tx_pending_evt_type;
+
+                m_tx_pending = false;
+            }
+            else
+            {
+                m_tx_in_progress = false;
+                m_ser_phy_hci_slip_event.evt_type = m_tx_evt_type;
+            }
+            // If needed, notify the upper layer that the packet transfer is
+            // complete (note that this notification may result in another
+            // packet send request, so everything must be cleaned up above).
+            if (m_ser_phy_hci_slip_event.evt_type != NO_EVENT)
+            {
+                m_ser_phy_hci_slip_event_handler(&m_ser_phy_hci_slip_event);
+            }
+            // And if the sending process is not yet finished, look what is
+            // to be done next.
+            if (m_tx_phase != PHASE_IDLE)
+            {
+                tx_buf_fill();
             }
             break;
 
-        case APP_UART_TX_EMPTY:
-            (void)ser_phy_hci_tx_byte();
-            break;
-
-        case APP_UART_DATA:
-
-            // After first reception disable pulldown - it was only needed before start
-            // of the other side
-            if (!m_other_side_active)
+        case NRF_DRV_UART_EVT_RX_DONE:
             {
-                m_other_side_active = true;
+                uint8_t rx_byte = m_rx_buf[0];
+                APP_ERROR_CHECK(nrf_drv_uart_rx(&m_uart, m_rx_buf, 1));
+                ser_phi_hci_rx_byte(rx_byte);
             }
-
-            m_rx_byte = uart_evt->data.value;
-            ser_phi_hci_rx_byte(m_rx_byte);
             break;
 
         default:
             APP_ERROR_CHECK(NRF_ERROR_INTERNAL);
-            break;
     }
 }
 
@@ -612,28 +652,38 @@ uint32_t ser_phy_hci_slip_open(ser_phy_hci_slip_event_handler_t events_handler)
         return NRF_ERROR_NULL;
     }
 
-    // Check if function was not called before
+    // Check if function was not called before.
     if (m_ser_phy_hci_slip_event_handler != NULL)
     {
         return NRF_ERROR_INVALID_STATE;
     }
 
-    // Configure UART and register handler
-    // uart_evt_handler is used to handle events produced by low-level uart driver
-    APP_UART_INIT(&comm_params, ser_phy_uart_evt_callback, UART_IRQ_PRIORITY, err_code);
-
-    mp_small_buffer = m_small_buffer;
-    mp_big_buffer   = m_big_buffer;
-
     m_ser_phy_hci_slip_event_handler = events_handler;
 
-    return err_code;
+    err_code = nrf_drv_uart_init(&m_uart, &m_uart_config, uart_event_handler);
+    if (err_code != NRF_SUCCESS)
+    {
+        return NRF_ERROR_INVALID_PARAM;
+    }
+
+    mp_tx_buf        = m_tx_buf0;
+    m_tx_bytes       = 0;
+    m_tx_phase       = PHASE_IDLE;
+    m_tx_in_progress = false;
+    m_tx_pending     = false;
+
+    m_rx_escape      = false;
+    mp_small_buffer  = m_small_buffer;
+    mp_big_buffer    = m_big_buffer;
+
+    APP_ERROR_CHECK(nrf_drv_uart_rx(&m_uart, m_rx_buf, 1));
+
+    return NRF_SUCCESS;
 }
 
 
 void ser_phy_hci_slip_close(void)
 {
+    nrf_drv_uart_uninit(&m_uart);
     m_ser_phy_hci_slip_event_handler = NULL;
-    (void)app_uart_close();
 }
-

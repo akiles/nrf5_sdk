@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <stddef.h>
 #include <string.h>
 
@@ -92,12 +91,8 @@
 #define HCI_LINK_CONTROL_TIMEOUT     1u                                                /**< Default link control timeout. */
 #endif  /* HCI_LINK_CONTROL */
 
-#ifndef APP_TIMER_PRESCALER
-#define APP_TIMER_PRESCALER 0
-#endif
 
-#define RETRANSMISSION_TIMEOUT_IN_TICKS (APP_TIMER_TICKS(RETRANSMISSION_TIMEOUT_IN_ms, \
-                                                         APP_TIMER_PRESCALER)) /**< Retransmission timeout for application packet in units of timer ticks. */
+#define RETRANSMISSION_TIMEOUT_IN_TICKS (APP_TIMER_TICKS(RETRANSMISSION_TIMEOUT_IN_ms)) /**< Retransmission timeout for application packet in units of timer ticks. */
 #define MAX_RETRY_COUNT                 5                                      /**< Max retransmission retry count for application packets. */
 
 #if   (defined(HCI_TIMER0))

@@ -48,8 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
-
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>

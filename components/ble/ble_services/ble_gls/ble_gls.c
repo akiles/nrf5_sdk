@@ -37,18 +37,20 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /* Attention!
-*  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
+*  To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
 *  qualification listings, this section of source code must not be modified.
 */
+
 #include "sdk_common.h"
+
 #if NRF_MODULE_ENABLED(BLE_GLS)
+
 #include "ble_gls.h"
 #include <string.h>
-#include "ble_srv_common.h"
-#include "ble_racp.h"
 #include "ble_gls_db.h"
+#include "ble_racp.h"
+#include "ble_srv_common.h"
 
 
 #define OPERAND_FILTER_TYPE_SEQ_NUM     0x01                                     /**< Filter data using Sequence Number criteria. */
@@ -58,7 +60,7 @@
 
 #define OPCODE_LENGTH 1                                                          /**< Length of opcode inside Glucose Measurement packet. */
 #define HANDLE_LENGTH 2                                                          /**< Length of handle inside Glucose Measurement packet. */
-#define MAX_GLM_LEN   (BLE_L2CAP_MTU_DEF - OPCODE_LENGTH - HANDLE_LENGTH)        /**< Maximum size of a transmitted Glucose Measurement. */
+#define MAX_GLM_LEN   (BLE_GATT_ATT_MTU_DEFAULT - OPCODE_LENGTH - HANDLE_LENGTH) /**< Maximum size of a transmitted Glucose Measurement. */
 
 #define GLS_NACK_PROC_ALREADY_IN_PROGRESS   BLE_GATT_STATUS_ATTERR_APP_BEGIN + 0 /**< Reply when a requested procedure is already in progress. */
 #define GLS_NACK_CCCD_IMPROPERLY_CONFIGURED BLE_GATT_STATUS_ATTERR_APP_BEGIN + 1 /**< Reply when the a s CCCD is improperly configured. */
@@ -335,7 +337,7 @@ static uint32_t record_access_control_point_char_add(ble_gls_t * p_gls)
     attr_char_value.p_attr_md = &attr_md;
     attr_char_value.init_len  = 0;
     attr_char_value.init_offs = 0;
-    attr_char_value.max_len   = BLE_L2CAP_MTU_DEF;
+    attr_char_value.max_len   = BLE_GATT_ATT_MTU_DEFAULT;
     attr_char_value.p_value   = 0;
 
     return sd_ble_gatts_characteristic_add(p_gls->service_handle,
@@ -458,7 +460,7 @@ static void racp_send(ble_gls_t * p_gls, ble_racp_value_t * p_racp_val)
             state_set(STATE_RACP_RESPONSE_IND_VERIF);
             break;
 
-        case BLE_ERROR_NO_TX_PACKETS:
+        case NRF_ERROR_RESOURCES:
             // Wait for TX_COMPLETE event to retry transmission
             state_set(STATE_RACP_RESPONSE_PENDING);
             break;
@@ -745,7 +747,7 @@ static void racp_report_records_procedure(ble_gls_t * p_gls)
                 }
                 break;
 
-            case BLE_ERROR_NO_TX_PACKETS:
+            case NRF_ERROR_RESOURCES:
                 // Wait for TX_COMPLETE event to resume transmission
                 return;
 
@@ -1277,7 +1279,7 @@ void ble_gls_on_ble_evt(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
             on_write(p_gls, p_ble_evt);
             break;
 
-        case BLE_EVT_TX_COMPLETE:
+        case BLE_GATTS_EVT_HVN_TX_COMPLETE:
             on_tx_complete(p_gls, p_ble_evt);
             break;
 

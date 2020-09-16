@@ -6,6 +6,19 @@
 #ifdef USE_APP_CONFIG
 #include "app_config.h"
 #endif
+// <h> nRF_Libraries 
+
+//==========================================================
+// <q> NRF_STRERROR_ENABLED  - nrf_strerror - Library for converting error code to string.
+ 
+
+#ifndef NRF_STRERROR_ENABLED
+#define NRF_STRERROR_ENABLED 1
+#endif
+
+// </h> 
+//==========================================================
+
 // <h> nRF_Log 
 
 //==========================================================

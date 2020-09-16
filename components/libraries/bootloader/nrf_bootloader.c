@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "nrf_bootloader.h"
 
 #include "compiler_abstraction.h"
@@ -56,7 +55,7 @@
  #if (__LINT__ != 1)
 __WEAK uint32_t nrf_dfu_init(void)
 {
-    NRF_LOG_INFO("in weak nrf_dfu_init\r\n");
+    NRF_LOG_DEBUG("in weak nrf_dfu_init\r\n");
     return NRF_SUCCESS;
 }
 #endif
@@ -69,14 +68,14 @@ __WEAK uint32_t nrf_dfu_init(void)
  */
 __WEAK uint32_t nrf_dfu_init_user(void)
 {
-    NRF_LOG_INFO("in weak nrf_dfu_init_user\r\n");
+    NRF_LOG_DEBUG("in weak nrf_dfu_init_user\r\n");
     return NRF_SUCCESS;
 }
 
 
 uint32_t nrf_bootloader_init(void)
 {
-    NRF_LOG_INFO("In nrf_bootloader_init\r\n");
+    NRF_LOG_DEBUG("In nrf_bootloader_init\r\n");
 
     uint32_t ret_val = NRF_SUCCESS;
 
@@ -96,6 +95,6 @@ uint32_t nrf_bootloader_init(void)
         return ret_val;
     }
 
-    NRF_LOG_INFO("After nrf_bootloader_init\r\n");
+    NRF_LOG_DEBUG("After nrf_bootloader_init\r\n");
     return ret_val;
 }

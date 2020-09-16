@@ -1,34 +1,7 @@
-// Copyright (c) 2016-2017, ARM Limited or its affiliates. All rights reserved
-//
-// This file and the related binary are licensed under the ARM Object Code and
-// Headers License; you may not use these files except in compliance with this
-// license.
-//
-// You may obtain a copy of the License at <.../external/nrf_cc310/license.txt>
-//
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 #include <stdio.h>
 #include <stdarg.h>
 
-#if NRF_SDK_PRESENT
-
-    #include "sdk_config.h"
-    #include "nordic_common.h"
-    #if NRF_MODULE_ENABLED(NRF_LOG)
-
-        #include "nrf_log.h"
-        #include "nrf_log_ctrl.h"
-        
-    #endif // NRF_SDK_PRESENT
-
-#else
-
-    #include "SEGGER_RTT.h"
-    
-#endif // NRF_MODULE_ENABLED(NRF_LOG)
-
+#include "SEGGER_RTT.h"
 
 #if DX_LINUX_PLATFORM
 extern uint32_t g_free_mem_addr;
@@ -64,12 +37,4 @@ void integration_tests_clear(void);
 
 #define WORKSPACE_BASE_ADDR         (PTHREAD_STACK_BASE_ADR + PTHREAD_STACK_SIZE)
 
-#if NRF_SDK_PRESENT
-    #if NRF_MODULE_ENABLED(NRF_LOG)
-        #define INTEG_TEST_PRINT(...)       NRF_LOG_INFO(__VA_ARGS__)
-    #endif // NRF_MODULE_ENABLED(NRF_LOG)
-
-#else 
-    #define INTEG_TEST_PRINT(...)           SEGGER_RTT_printf(0, __VA_ARGS__)
-#endif // NRF_SDK_PRESENT
-
+#define INTEG_TEST_PRINT(...)           SEGGER_RTT_printf(0, __VA_ARGS__)

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
  * @file
  * @brief LPCOMP HAL API.
@@ -165,7 +164,7 @@ typedef enum
     NRF_LPCOMP_SHORT_READY_SAMPLE_MASK = LPCOMP_SHORTS_READY_SAMPLE_Msk /*!< Short between READY event and SAMPLE task. */
 } nrf_lpcomp_short_mask_t;
 
-#ifdef NRF52_SERIES
+#ifdef LPCOMP_FEATURE_HYST_PRESENT
 /**
  * @enum nrf_lpcomp_hysteresis_t
  * @brief LPCOMP hysteresis.
@@ -175,16 +174,16 @@ typedef enum
     NRF_LPCOMP_HYST_NOHYST              = LPCOMP_HYST_HYST_NoHyst,      /**< Comparator hysteresis disabled. */
     NRF_LPCOMP_HYST_50mV                = LPCOMP_HYST_HYST_Hyst50mV     /**< Comparator hysteresis enabled (typ. 50 mV). */
 }nrf_lpcomp_hysteresis_t;
-#endif // NRF52
+#endif // LPCOMP_FEATURE_HYST_PRESENT
 
 /** @brief LPCOMP configuration. */
 typedef struct
 {
     nrf_lpcomp_ref_t            reference; /**< LPCOMP reference. */
     nrf_lpcomp_detect_t         detection; /**< LPCOMP detection type. */
-#ifdef NRF52_SERIES
+#ifdef LPCOMP_FEATURE_HYST_PRESENT
     nrf_lpcomp_hysteresis_t     hyst;      /**< LPCOMP hysteresis. */
-#endif // NRF52
+#endif // LPCOMP_FEATURE_HYST_PRESENT
 } nrf_lpcomp_config_t;
 
 /** Default LPCOMP configuration. */
@@ -214,9 +213,9 @@ __STATIC_INLINE void nrf_lpcomp_configure(const nrf_lpcomp_config_t * p_config)
 
     NRF_LPCOMP->ANADETECT   =
         (p_config->detection << LPCOMP_ANADETECT_ANADETECT_Pos) & LPCOMP_ANADETECT_ANADETECT_Msk;
-#ifdef NRF52_SERIES
+#ifdef LPCOMP_FEATURE_HYST_PRESENT
     NRF_LPCOMP->HYST        = ((p_config->hyst) << LPCOMP_HYST_HYST_Pos) & LPCOMP_HYST_HYST_Msk;
-#endif
+#endif //LPCOMP_FEATURE_HYST_PRESENT
     NRF_LPCOMP->SHORTS      = 0;
     NRF_LPCOMP->INTENCLR    = LPCOMP_INTENCLR_CROSS_Msk | LPCOMP_INTENCLR_UP_Msk |
                                LPCOMP_INTENCLR_DOWN_Msk | LPCOMP_INTENCLR_READY_Msk;

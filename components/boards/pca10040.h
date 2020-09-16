@@ -55,7 +55,7 @@ extern "C" {
 #define LED_3          19
 #define LED_4          20
 #define LED_STOP       20
-   
+
 #define LEDS_ACTIVE_STATE 0
 
 #define LEDS_INV_MASK  LEDS_MASK

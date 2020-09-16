@@ -51,14 +51,16 @@
  */
 
 /**
- * @brief Test whether SOF HID transfer is required
+ * @brief Test whether SOF HID transfer is required.
  *
- * This function handles idle period IN transfer
+ * This function handles idle period IN transfer.
  *
- * @param[in/out] p_hid_ctx Internal HID context
- * @param framecnt          SOF event frame counter
- * @retval true if          Idle transfer is required, false otherwise
- * */
+ * @param[in,out] p_hid_ctx Internal HID context.
+ * @param framecnt          SOF event frame counter.
+ *
+ * @retval true  Idle transfer is required.
+ * @retval false Idle transfer is not required.
+ */
 static bool hid_sof_required(app_usbd_hid_ctx_t * p_hid_ctx, uint16_t framecnt)
 {
     if (p_hid_ctx->idle_rate == 0)
@@ -94,17 +96,16 @@ static bool hid_sof_required(app_usbd_hid_ctx_t * p_hid_ctx, uint16_t framecnt)
 }
 
 /**
- * @brief User event handler
+ * @brief User event handler.
  *
- * @param[in] p_inst        Class instance
- * @param[in] p_hinst       HID class instance
- * @param[in] event user    Event type @ref app_usbd_hid_user_event_t
- * */
+ * @param[in] p_inst        Class instance.
+ * @param[in] p_hinst       HID class instance.
+ * @param[in] event user    Event type.
+ */
 static inline void user_event_handler(app_usbd_class_inst_t const * p_inst,
                                       app_usbd_hid_inst_t const * p_hinst,
                                       app_usbd_hid_user_event_t event)
 {
-    ASSERT(p_hinst->user_event_handler != NULL);
     if (p_hinst->user_event_handler != NULL)
     {
         p_hinst->user_event_handler(p_inst, event);
@@ -112,16 +113,14 @@ static inline void user_event_handler(app_usbd_class_inst_t const * p_inst,
 }
 
 /**
- * @brief Internal SETUP standard IN request handler
+ * @brief Internal SETUP standard IN request handler.
  *
- * @param[in] p_inst        Generic class instance
- * @param[in] p_hinst       HID class instance
- * @param[in/out] p_hid_ctx HID context
- * @param[in] p_setup_ev    Setup event
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_hinst       HID class instance.
+ * @param[in,out] p_hid_ctx HID context.
+ * @param[in] p_setup_ev    Setup event.
  *
- * @return Standard error code
- * @retval NRF_SUCCESS if request handled correctly
- * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
+ * @return Standard error code.
  */
 static ret_code_t setup_req_std_in(app_usbd_class_inst_t const * p_inst,
                                    app_usbd_hid_inst_t const * p_hinst,
@@ -169,16 +168,14 @@ static ret_code_t setup_req_std_in(app_usbd_class_inst_t const * p_inst,
 }
 
 /**
- * @brief Internal SETUP standard OUT request handler
+ * @brief Internal SETUP standard OUT request handler.
  *
- * @param[in] p_inst        Generic class instance
- * @param[in] p_hinst       HID class instance
- * @param[in/out] p_hid_ctx HID context
- * @param[in] p_setup_ev    Setup event
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_hinst       HID class instance.
+ * @param[in,out] p_hid_ctx HID context.
+ * @param[in] p_setup_ev    Setup event.
  *
- * @return Standard error code
- * @retval NRF_SUCCESS if request handled correctly
- * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
+ * @return Standard error code.
  */
 static ret_code_t setup_req_std_out(app_usbd_class_inst_t const * p_inst,
                                     app_usbd_hid_inst_t const * p_hinst,
@@ -191,16 +188,14 @@ static ret_code_t setup_req_std_out(app_usbd_class_inst_t const * p_inst,
 }
 
 /**
- * @brief Internal SETUP class IN request handler
+ * @brief Internal SETUP class IN request handler.
  *
- * @param[in] p_inst        Generic class instance
- * @param[in] p_hinst       HID class instance
- * @param[in/out] p_hid_ctx HID context
- * @param[in] p_setup_ev    Setup event
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_hinst       HID class instance.
+ * @param[in,out] p_hid_ctx HID context.
+ * @param[in] p_setup_ev    Setup event.
  *
- * @return Standard error code
- * @retval NRF_SUCCESS if request handled correctly
- * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
+ * @return Standard error code.
  */
 static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
                                      app_usbd_hid_inst_t const * p_hinst,
@@ -240,16 +235,14 @@ static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
 }
 
 /**
- * @brief Internal SETUP class OUT request handler
+ * @brief Internal SETUP class OUT request handler.
  *
- * @param[in] p_inst        Generic class instance
- * @param[in] p_hinst       HID class instance
- * @param[in/out] p_hid_ctx HID context
- * @param[in] p_setup_ev    Setup event
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_hinst       HID class instance.
+ * @param[in,out] p_hid_ctx HID context.
+ * @param[in] p_setup_ev    Setup event.
  *
- * @return Standard error code
- * @retval NRF_SUCCESS if request handled correctly
- * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
+ * @return Standard error code.
  */
 static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
                                       app_usbd_hid_inst_t const * p_hinst,
@@ -275,6 +268,13 @@ static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
             return NRF_SUCCESS;
         case APP_USBD_HID_REQ_SET_PROTOCOL:
             p_hid_ctx->protocol = p_setup_ev->setup.wValue.w;
+            {
+                app_usbd_hid_user_event_t ev = (p_hid_ctx->protocol == 0) ?
+                    APP_USBD_HID_USER_EVT_SET_BOOT_PROTO :
+                    APP_USBD_HID_USER_EVT_SET_REPORT_PROTO;
+
+                user_event_handler(p_inst, p_hinst, ev);
+            }
             return NRF_SUCCESS;
         default:
             break;
@@ -284,16 +284,14 @@ static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
 }
 
 /**
- * @brief Internal SETUP event handler
+ * @brief Internal SETUP event handler.
  *
- * @param[in] p_inst        Generic class instance
- * @param[in] p_hinst       HID class instance
- * @param[in/out] p_hid_ctx HID context
- * @param[in] p_setup_ev    Setup event
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_hinst       HID class instance.
+ * @param[in,out] p_hid_ctx HID context.
+ * @param[in] p_setup_ev    Setup event.
  *
- * @return Standard error code
- * @retval NRF_SUCCESS if request handled correctly
- * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
+ * @return Standard error code.
  */
 static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
                                       app_usbd_hid_inst_t const * p_hinst,
@@ -303,17 +301,6 @@ static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
     ASSERT(p_hinst != NULL);
     ASSERT(p_hid_ctx != NULL);
     ASSERT(p_setup_ev != NULL);
-
-    if (app_usbd_setup_req_rec(p_setup_ev->setup.bmRequestType) == APP_USBD_SETUP_REQREC_ENDPOINT)
-    {
-        return app_usbd_endpoint_std_req_handle(p_inst, p_setup_ev);
-    }
-
-    ret_code_t ret = app_usbd_interface_std_req_handle(p_inst, p_setup_ev);
-    if (ret == NRF_SUCCESS || ret != NRF_ERROR_NOT_SUPPORTED)
-    {
-        return ret;
-    }
 
     if (app_usbd_setup_req_dir(p_setup_ev->setup.bmRequestType) == APP_USBD_SETUP_REQDIR_IN)
     {
@@ -344,16 +331,14 @@ static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
 }
 
 /**
- * @brief Endpoint IN event handler
+ * @brief Endpoint IN event handler.
  *
- * @param[in] p_inst        Generic class instance
- * @param[in] p_hinst       HID class instance
- * @param[in/out] p_hid_ctx HID context
- * @param[in] p_setup_ev    Setup event
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_hinst       HID class instance.
+ * @param[in,out] p_hid_ctx HID context.
+ * @param[in] p_setup_ev    Setup event.
  *
- * @return Standard error code
- * @retval NRF_SUCCESS if request handled correctly
- * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
+ * @return Standard error code.
  */
 static ret_code_t endpoint_in_event_handler(app_usbd_class_inst_t const * p_inst,
                                             app_usbd_hid_inst_t const * p_hinst,
@@ -380,16 +365,14 @@ static ret_code_t endpoint_in_event_handler(app_usbd_class_inst_t const * p_inst
 }
 
 /**
- * @brief Endpoint OUT event handler
+ * @brief Endpoint OUT event handler.
  *
- * @param[in] p_inst        Generic class instance
- * @param[in] p_hinst       HID class instance
- * @param[in/out] p_hid_ctx HID context
- * @param[in] p_setup_ev    Setup event
+ * @param[in] p_inst        Generic class instance.
+ * @param[in] p_hinst       HID class instance.
+ * @param[in,out] p_hid_ctx HID context.
+ * @param[in] p_setup_ev    Setup event.
  *
- * @return Standard error code
- * @retval NRF_SUCCESS if request handled correctly
- * @retval NRF_ERROR_NOT_SUPPORTED if request is not supported
+ * @return Standard error code.
  */
 static ret_code_t endpoint_out_event_handler(app_usbd_class_inst_t const * p_inst,
                                              app_usbd_hid_inst_t const * p_hinst,
@@ -446,11 +429,9 @@ ret_code_t app_usbd_hid_event_handler(app_usbd_class_inst_t const * p_inst,
             break;
         case APP_USBD_EVT_DRV_SUSPEND:
             app_usbd_hid_state_flag_set(p_hid_ctx, APP_USBD_HID_STATE_FLAG_SUSPENDED);
-            user_event_handler(p_inst, p_hinst, APP_USBD_HID_USER_EVT_SUSPEND);
             break;
         case APP_USBD_EVT_DRV_RESUME:
             app_usbd_hid_state_flag_clr(p_hid_ctx, APP_USBD_HID_STATE_FLAG_SUSPENDED);
-            user_event_handler(p_inst, p_hinst, APP_USBD_HID_USER_EVT_RESUME);
 
             /* Always try to trigger transfer on resume event*/
             ret = p_hinst->p_hid_methods->ep_transfer_in(p_inst);
@@ -478,11 +459,9 @@ ret_code_t app_usbd_hid_event_handler(app_usbd_class_inst_t const * p_inst,
             break;
         case APP_USBD_EVT_START:
             app_usbd_hid_state_flag_set(p_hid_ctx, APP_USBD_HID_STATE_FLAG_STARTED);
-            user_event_handler(p_inst, p_hinst, APP_USBD_HID_USER_EVT_START);
             break;
         case APP_USBD_EVT_STOP:
             app_usbd_hid_state_flag_clr(p_hid_ctx, APP_USBD_HID_STATE_FLAG_STARTED);
-            user_event_handler(p_inst, p_hinst, APP_USBD_HID_USER_EVT_STOP);
             break;
         default:
             ret = NRF_ERROR_NOT_SUPPORTED;
@@ -492,17 +471,10 @@ ret_code_t app_usbd_hid_event_handler(app_usbd_class_inst_t const * p_inst,
     return ret;
 }
 
-app_usbd_hid_report_buffer_t * app_usbd_hid_rep_buff_in_get(app_usbd_hid_inst_t const * p_hinst,
-                                                            size_t report_id)
+app_usbd_hid_report_buffer_t * app_usbd_hid_rep_buff_in_get(app_usbd_hid_inst_t const * p_hinst)
 {
     ASSERT(p_hinst);
-
-    if (report_id >= p_hinst->rep_buffers_count_in)
-    {
-        return NULL;
-    }
-
-    return &p_hinst->p_rep_buffers_in[report_id];
+    return p_hinst->p_rep_buffer_in;
 }
 
 

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_dfu Buttonless DFU Service
@@ -62,8 +61,14 @@
 extern "C" {
 #endif
 
-#define BLE_UUID_DFU_SERVICE 0x0001
-#define BLE_DFU_BASE_UUID   {{0x50, 0xEA, 0xDA, 0x30, 0x88, 0x83, 0xB8, 0x9F, 0x60, 0x4F, 0x15, 0xF3, 0x00, 0x00, 0x40, 0x8E}} /**< Used vendor specific UUID. */
+#define BLE_DFU_BUTTONLESS_CHAR_UUID        0x0003
+
+/**< Nordic vendor specific base UUID. */
+#define BLE_NORDIC_VENDOR_BASE_UUID                 \
+{{                                                  \
+    0x50, 0xEA, 0xDA, 0x30, 0x88, 0x83, 0xB8, 0x9F, \
+    0x60, 0x4F, 0x15, 0xF3, 0x00, 0x00, 0xC9, 0x8E  \
+}}
 
 #define BLE_DFU_ENTER_BOOTLOADER 0x01
 
@@ -76,10 +81,11 @@ typedef enum {
 typedef struct {
     ble_dfu_evt_type_t type;
 } ble_dfu_evt_t;
-/* Forward declaration of the ble_nus_t type. */
+
+/* Forward declaration of the ble_dfu_type type. */
 typedef struct ble_dfu_s ble_dfu_t;
 
-/**@brief Nordic UART Service event handler type. */
+/**@brief Nordic Buttonless DFU Service event handler type. */
 typedef void (*ble_dfu_evt_handler_t) (ble_dfu_t * p_dfu, ble_dfu_evt_t * p_evt);
 
 
@@ -109,11 +115,11 @@ struct ble_dfu_s {
     uint16_t                    service_handle;                 /**< Handle of DFU (as provided by the SoftDevice). */
     uint16_t                    conn_handle;
     ble_gatts_char_handles_t    control_point_char;             /**< Handles related to the DFU Control Point characteristic. */
-    bool                        is_ctrlpt_notification_enabled;
+    bool                        is_ctrlpt_indication_enabled;
 
     ble_dfu_evt_handler_t       evt_handler;                    /**< Event handler which is called right before. */
 
-    bool                        is_waiting_for_disconnection;
+    bool                        is_waiting_for_reset;           /**< Flag indicating that the device will enter bootloader. */
 };
 
 typedef struct {

@@ -45,8 +45,8 @@
  * These expect a zero = success, non-zero = error convention.
  */
 
-/** Error: return.
- *
+/** Error: return. 
+ *  
  *  If the expression fails, return the error from this function. */
 #define ER(expr) do { typeof (expr) err_ = (expr); if (err_) return err_; } while (0)
 

@@ -37,8 +37,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
- /** @file
+/** @file
  *
  * @defgroup low_power_pwm Low-power PWM
  * @{
@@ -130,7 +129,7 @@ typedef struct
     struct low_power_pwm_s
     {
         bool                        active_high;        /**< Activate negative polarity. */
-        bool                        led_is_on;          /**< Indicates the current state of the LED. */
+        bool                        pin_is_on;          /**< Indicates the current state of the pin. */
         uint8_t                     period;             /**< Width of the low_power_pwm period. */
         uint8_t                     duty_cycle;         /**< Width of high pulse. */
         nrf_drv_state_t             pwm_state;          /**< Indicates the current state of the PWM instance. */
@@ -171,12 +170,12 @@ ret_code_t low_power_pwm_init(low_power_pwm_t * p_pwm_instance,
  * @brief   Function for starting a low-power PWM instance.
  *
  * @param[in] p_pwm_instance            Pointer to the instance to be started.
- * @param[in] leds_pin_bit_mask         Bit mask of pins to be started.
+ * @param[in] pins_bit_mask             Bit mask of pins to be started.
  *
  * @return Values returned by @ref app_timer_start.
  */
 ret_code_t low_power_pwm_start(low_power_pwm_t * p_pwm_instance,
-                               uint32_t          leds_pin_bit_mask);
+                               uint32_t          pins_bit_mask);
 
 
 /**
@@ -195,7 +194,7 @@ ret_code_t low_power_pwm_stop(low_power_pwm_t * p_pwm_instance);
  * This function can be called from the timer handler.
  *
  * @param[in] p_pwm_instance            Pointer to the instance to be changed.
- * @param[in] duty_cycle                New high pulse width. 0 means that the LED is always off. 255 means that it is always on.
+ * @param[in] duty_cycle                New high pulse width. 0 means that the pin is always off. 255 means that it is always on.
  *
  * @retval NRF_SUCCESS                  If the function completed successfully.
  * @retval NRF_ERROR_INVALID_PARAM      If the function returned an error because of invalid parameters.

@@ -37,13 +37,16 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  * @brief Definition file for resource usage by SoftDevice, ESB and Gazell.
  */
 
 #ifndef APP_RESOURCES_H__
 #define APP_RESOURCES_H__
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifdef SOFTDEVICE_PRESENT
     #include "nrf_sd_def.h"
@@ -65,10 +68,6 @@
 
 #ifdef ESB_PRESENT
     #include "nrf_esb_resources.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 #else
     #define ESB_PPI_CHANNELS_USED    0uL /**< PPI channels utilized by ESB (not available to th spplication). */
     #define ESB_TIMERS_USED          0uL /**< Timers used by ESB. */
@@ -79,7 +78,6 @@ extern "C" {
 #define NRF_PPI_GROUPS_USED   (SD_PPI_GROUPS_USED)
 #define NRF_SWI_USED          (SD_SWI_USED | GZLL_SWI_USED | ESB_SWI_USED)
 #define NRF_TIMERS_USED       (SD_TIMERS_USED | GZLL_TIMERS_USED | ESB_TIMERS_USED)
-
 
 #ifdef __cplusplus
 }

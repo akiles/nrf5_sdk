@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup wake_on_nfc_example_main main.c
@@ -60,9 +59,7 @@
 
 #define BTN_ID_SLEEP                0 /**< ID of button used to put the application into sleep mode. */
 
-#define APP_TIMER_PRESCALER         0x00                                      /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE     0x04                                      /**< Size of timer operation queues. */
-#define APP_TICK_EVENT_INTERVAL     APP_TIMER_TICKS(500, APP_TIMER_PRESCALER) /**< 500 miliseconds tick event interval in timer tick units. */
+#define APP_TICK_EVENT_INTERVAL     APP_TIMER_TICKS(500) /**< 500 miliseconds tick event interval in timer tick units. */
 
 APP_TIMER_DEF(m_tick_timer);             /**< Timer used to toggle LED state. */
 
@@ -118,10 +115,10 @@ static void utils_setup(void)
     APP_ERROR_CHECK(err_code);
     nrf_drv_clock_lfclk_request(NULL);
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
-                        bsp_event_handler);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_nfc_btn_init(BTN_ID_SLEEP);

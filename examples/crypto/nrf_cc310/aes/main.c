@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifdef DX_LINUX_PLATFORM /*for linux platform only !!*/
 #include <pthread.h>
 #endif

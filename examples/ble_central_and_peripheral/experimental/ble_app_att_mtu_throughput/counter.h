@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@cond To Make Doxygen skip documentation generation for this file.
  * @{
  */
@@ -59,7 +58,9 @@ void counter_start(void);
 void counter_stop(void);
 
 
-/*@brief    Function for retrieving the counter value. */
+/**@brief   Function for retrieving the counter value.
+ * @details The counter is configured to tick once every 1 millisecond.
+ */
 uint32_t counter_get(void);
 
 #endif // COUNTER_H__

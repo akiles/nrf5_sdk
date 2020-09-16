@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup led_softblink_example_main main.c
@@ -59,10 +58,6 @@
 #include "nrf_drv_clock.h"
 #include "app_util_platform.h"
 
-/*Timer initalization parameters*/
-#define OP_QUEUES_SIZE          3
-#define APP_TIMER_PRESCALER     0
-
 /**
  * @brief Function for starting lfclk needed by APP_TIMER.
  */
@@ -81,11 +76,12 @@ static void lfclk_init(void)
 int main(void)
 {
     ret_code_t err_code;
-    
+
     lfclk_init();
 
     // Start APP_TIMER to generate timeouts.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, OP_QUEUES_SIZE, NULL);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
     const led_sb_init_params_t led_sb_init_param = LED_SB_INIT_DEFAULT_PARAMS(LEDS_MASK);
 

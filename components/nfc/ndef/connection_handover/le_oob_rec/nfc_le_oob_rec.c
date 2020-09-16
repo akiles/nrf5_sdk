@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "nfc_le_oob_rec.h"
 #include "sdk_errors.h"
 #include "ble_gap.h"

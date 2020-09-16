@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /*!
  * @brief Poly1305 is a message authentication code created by Daniel J.
  *        Bernstein. It can be used to verify the data integrity and the

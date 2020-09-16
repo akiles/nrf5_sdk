@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef SER_CONFIG_H__
 #define SER_CONFIG_H__
 
@@ -55,11 +54,11 @@ extern "C" {
 
 /** Value used as error code on SoftDevice stack dump. Can be used to identify stack location on
  *  stack unwind.*/
-#define SER_SD_ERROR_CODE    (uint32_t)(0xDEADBEEF)
+#define SER_SD_ERROR_CODE    (0xDEADBEEFUL)
 
 /** Value used as error code indicating warning - unusual situation but not critical so system
  *  should NOT be reset. */
-#define SER_WARNING_CODE     (uint32_t)(0xBADDCAFE)
+#define SER_WARNING_CODE     (0xBADDCAFEUL)
 
 /***********************************************************************************************//**
  * HAL Transport layer configuration.
@@ -67,8 +66,8 @@ extern "C" {
 
 /** Max packets size in serialization HAL Transport layer (packets before adding PHY header i.e.
  *  packet length). */
-#define SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE    (uint32_t)(384)
-#define SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE    (uint32_t)(384)
+#define SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE    (384UL)
+#define SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE    (384UL)
 
 #define SER_HAL_TRANSPORT_MAX_PKT_SIZE ((SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE) >= \
                                         (SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE)    \
@@ -91,14 +90,16 @@ extern "C" {
 
 #define SER_PHY_HEADER_SIZE             2
 
+#define SER_PHY_HCI_SLIP_TX_BUF_SIZE    30
+
 #define SER_PHY_SPI_FREQUENCY           NRF_DRV_SPI_FREQ_1M
 
 /** Max transfer unit for SPI MASTER and SPI SLAVE. */
 #define SER_PHY_SPI_MTU_SIZE            255
 
 /** UART transmission parameters */
-#define SER_PHY_UART_FLOW_CTRL          APP_UART_FLOW_CONTROL_ENABLED
-#define SER_PHY_UART_PARITY             true
+#define SER_PHY_UART_FLOW_CTRL          NRF_UART_HWFC_ENABLED
+#define SER_PHY_UART_PARITY             NRF_UART_PARITY_INCLUDED
 #define SER_PHY_UART_BAUDRATE           UART_BAUDRATE_BAUDRATE_Baud1M
 
 /** Find UART baud rate value based on the chosen register setting. */
@@ -134,6 +135,8 @@ extern "C" {
     #define SER_PHY_UART_BAUDRATE_VAL 921600uL
 #elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud1M)
     #define SER_PHY_UART_BAUDRATE_VAL 1000000uL
+#else
+    #error "Unsupported baudrate"
 #endif /* SER_PHY_UART_BAUDRATE */
 
 /** Configuration timeouts of connectivity MCU. */

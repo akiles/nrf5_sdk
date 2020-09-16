@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 #include "sdk_config.h"
 #if DEBUG_CHANNEL_INCLUDED
 

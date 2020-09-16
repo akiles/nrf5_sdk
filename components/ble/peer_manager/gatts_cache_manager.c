@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(PEER_MANAGER)
 #include "gatts_cache_manager.h"
@@ -148,7 +147,7 @@ void gscm_pdb_evt_handler(pdb_evt_t const * p_event)
                 gscm_evt_t gscm_evt;
                 gscm_evt.evt_id = GSCM_EVT_SC_STATE_STORED;
                 gscm_evt.peer_id = p_event->peer_id;
-                gscm_evt.params.sc_state_stored.state = *peer_data.p_service_changed_pending;
+                gscm_evt.params.sc_state_stored.state = &peer_data.p_service_changed_pending;
 
                 evt_send(&gscm_evt);
             }

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  *
  * @defgroup nrf_log Logger module
@@ -50,7 +49,18 @@
 #ifndef NRF_LOG_H_
 #define NRF_LOG_H_
 
-#include "sdk_config.h"
+#include "sdk_common.h"
+#if NRF_MODULE_ENABLED(NRF_LOG)
+#include "nrf_strerror.h"
+#define NRF_LOG_ERROR_STRING_GET(code) nrf_strerror_get(code)
+#else
+#define NRF_LOG_ERROR_STRING_GET(code) ""
+#endif
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /** @brief  Default module name prefix.
  *
@@ -191,14 +201,19 @@ uint32_t nrf_log_push(char * const p_str);
  * @ref NRF_LOG_FLOAT macro.
  * Example: NRF_LOG_INFO("My float number" NRF_LOG_FLOAT_MARKER "\r\n", NRF_LOG_FLOAT(f)))
  */
-#define NRF_LOG_FLOAT_MARKER "%d.%02d"
+#define NRF_LOG_FLOAT_MARKER "%s%d.%02d"
 
 /**
  * @brief Macro for dissecting a float number into two numbers (integer and residuum).
  */
-#define NRF_LOG_FLOAT(val) (int32_t)(val),                                     \
-                           (int32_t)(((val > 0) ? (val) - (int32_t)(val)       \
+#define NRF_LOG_FLOAT(val) (uint32_t)(((val) < 0 && (val) > -1.0) ? "-" : ""),   \
+                           (int32_t)(val),                                       \
+                           (int32_t)((((val) > 0) ? (val) - (int32_t)(val)       \
                                                 : (int32_t)(val) - (val))*100)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // NRF_LOG_H_
 

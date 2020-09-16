@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef EEPROM_SIMULATOR_H__
 #define EEPROM_SIMULATOR_H__
 
@@ -48,37 +47,46 @@ extern "C" {
 #endif
 
 /**
+ * @brief Structure for TWIS configuration.
+ */
+typedef struct
+{
+    uint8_t slave_addr;                //!< Slave address that this simulator will use to respond to master.
+    uint8_t scl_s;                     //!< Slave SCL.
+    uint8_t sda_s;                     //!< Slave SCL.
+    uint32_t flash_start_addr;         //!< Flash start address for the EEPROM simulation.
+} eeprom_sim_config_t;
+
+
+/**
  * @ingroup twi_master_with_twis_slave_example
  * @defgroup eeprom_simulator EEPROM simulator
  *
  * This module simulates the behavior of TWI EEPROM.
- * There are no functions to access internal memory array.
- * Use TWI interface to read or write any data.
+ * There are no functions to access the internal memory array.
+ * Use the TWI interface to read or write any data.
  *
- * @attention
- * During initialization EEPROM memory is filled by pattern that is
- * values from 127 downto 0.
  * @{
  */
 
 ret_code_t eeprom_simulator_init(void);
 
 /**
- * @brief Check if there was any error detected
+ * @brief Check if any error was detected.
  *
- * This function returns internal error flag.
+ * This function returns an internal error flag.
  * Internal error flag is set if any error was detected during transmission.
- * To clear this flag use @ref eeprom_simulator_error_get
- * @retval true There is error detected.
- * @retval false There is no error detected.
+ * To clear this flag, use @ref eeprom_simulator_error_get.
+ * @retval true  An error is detected.
+ * @retval false No error is detected.
  */
 bool eeprom_simulator_error_check(void);
 
 /**
- * @brief Get and clear transmission error
+ * @brief Get and clear a transmission error.
  *
- * Function returns transmission error data and clears internal error flag
- * @return Error that comes directly from @ref nrf_drv_twis_error_get
+ * Function returns transmission error data and clears an internal error flag
+ * @return Error that comes directly from @ref nrf_drv_twis_error_get.
  */
 uint32_t eeprom_simulator_error_get_and_clear(void);
 

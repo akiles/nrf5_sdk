@@ -109,7 +109,7 @@ ret_code_t nrf_drv_lpcomp_init(const nrf_drv_lpcomp_config_t * p_config,
     if (m_state != NRF_DRV_STATE_UNINITIALIZED)
     { // LPCOMP driver is already initialized
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -117,7 +117,7 @@ ret_code_t nrf_drv_lpcomp_init(const nrf_drv_lpcomp_config_t * p_config,
     if (nrf_drv_common_per_res_acquire(NRF_LPCOMP, IRQ_HANDLER_NAME) != NRF_SUCCESS)
     {
         err_code = NRF_ERROR_BUSY;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 #endif
@@ -131,7 +131,7 @@ ret_code_t nrf_drv_lpcomp_init(const nrf_drv_lpcomp_config_t * p_config,
     else
     {
         err_code = NRF_ERROR_INVALID_PARAM;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -161,7 +161,7 @@ ret_code_t nrf_drv_lpcomp_init(const nrf_drv_lpcomp_config_t * p_config,
     m_state = NRF_DRV_STATE_INITIALIZED;
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 
@@ -193,7 +193,7 @@ void nrf_drv_lpcomp_disable(void)
     ASSERT(m_state == NRF_DRV_STATE_POWERED_ON);
     nrf_lpcomp_disable();
     nrf_lpcomp_task_trigger(NRF_LPCOMP_TASK_STOP);
-    m_state = NRF_DRV_STATE_POWERED_ON;
+    m_state = NRF_DRV_STATE_INITIALIZED;
     NRF_LOG_INFO("Disabled.\r\n");
 }
 

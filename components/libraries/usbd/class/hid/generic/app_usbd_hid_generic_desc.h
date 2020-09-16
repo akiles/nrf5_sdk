@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef APP_USBD_HID_GENERIC_DESC_H__
 #define APP_USBD_HID_GENERIC_DESC_H__
 
@@ -55,27 +54,34 @@ extern "C" {
  */
 
 /**
- * @brief Initializer of interface descriptor for HID generic class
+ * @brief Initializer of interface descriptor for HID generic class.
  *
- * @param interface_number  Interface number
- * @param endpoints_num     Endpoint number
- * */
-#define APP_USBD_HID_GENERIC_INTERFACE_DSC(interface_number, endpoints_num)     \
-        APP_USBD_HID_INTERFACE_DSC(interface_number, endpoints_num,             \
-                                   APP_USBD_HID_SUBCLASS_NONE, APP_USBD_HID_PROTO_GENERIC)
+ * @param interface_number  Interface number.
+ * @param endpoints_num     Number of endpoints.
+ * @param subclass          Subclass type @ref app_usbd_hid_subclass_t.
+ * @param protocol          Protocol type @ref app_usbd_hid_protocol_t.
+ */
+#define APP_USBD_HID_GENERIC_INTERFACE_DSC(interface_number,        \
+                                           endpoints_num,           \
+                                           subclass,                \
+                                           protocol)                \
+        APP_USBD_HID_INTERFACE_DSC(interface_number,                \
+                                   endpoints_num,                   \
+                                   subclass,                        \
+                                   protocol)                        \
 
 /**
- * @brief Initializer of HID descriptor for HID generic class
+ * @brief Initializer of HID descriptor for HID generic class.
  *
- * @param ...   Report descriptor item
- * */
+ * @param ...   Report descriptor item.
+ */
 #define APP_USBD_HID_GENERIC_HID_DSC(...)   \
         APP_USBD_HID_HID_DSC(__VA_ARGS__)
 /**
- * @brief Initializer of endpoint descriptor for HID generic class
+ * @brief Initializer of endpoint descriptor for HID generic class.
  *
- * @param endpoint  Endpoint number
- * */
+ * @param endpoint  Endpoint number.
+ */
 #define APP_USBD_HID_GENERIC_EP_DSC(endpoint) \
         APP_USBD_HID_EP_DSC(endpoint, NRF_DRV_USBD_EPSIZE, 1)
 

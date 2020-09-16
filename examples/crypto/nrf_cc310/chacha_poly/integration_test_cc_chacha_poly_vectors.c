@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "ssi_pal_types.h"
 #include "integration_test_ssi_data.h"
 #include "crys_chacha_error.h"
@@ -46,7 +45,7 @@
 #define TEST_CHACHA_DATA_SIZE_TWO_BLOCKS    128
 #define TEST_CHACHA_DATA_SIZE_114           114
 
-CHACHA_DataStruct chachaTestTable[] =
+const CHACHA_DataStruct chachaTestTable[] =
 {
         /* The following test vectors were taken from: https://tools.ietf.org/html/draft-agl-tls-chacha20poly1305-00#page-9 */
         {
@@ -174,7 +173,7 @@ CHACHA_DataStruct chachaTestTable[] =
         },
 };
 
-CHACHA_POLY_DataStruct_t chachaPolyTestTable[] =
+const CHACHA_POLY_DataStruct_t chachaPolyTestTable[] =
 {
         /* The following test vectors were taken from:https://tools.ietf.org/html/rfc7539 */
         { // section 2.8.2 chacha-Poly Test Vector

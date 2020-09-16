@@ -177,23 +177,24 @@
         <option>
           <name>CCDefines</name>
           <state>BLE_STACK_SUPPORT_REQD</state>
-          <state>NRF_SD_BLE_API_VERSION=3</state>
-          <state>S132</state>
           <state>BOARD_PCA10040</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>NRF52</state>
+          <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_12</state>
           <state>NRF52_PAN_15</state>
           <state>NRF52_PAN_20</state>
           <state>NRF52_PAN_31</state>
           <state>NRF52_PAN_36</state>
           <state>NRF52_PAN_51</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_54</state>
           <state>NRF52_PAN_55</state>
           <state>NRF52_PAN_58</state>
           <state>NRF52_PAN_64</state>
+          <state>NRF52_PAN_74</state>
+          <state>NRF_SD_BLE_API_VERSION=4</state>
+          <state>S132</state>
           <state>SOFTDEVICE_PRESENT</state>
-          <state>NRF52832</state>
-          <state>NRF52</state>
           <state>SWI_DISABLE0</state>
         </option>
         <option>
@@ -259,7 +260,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state></state>
+          <state>1</state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -323,7 +324,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\..\..\..\config\ble_app_beacon_pca10040_s132</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising</state>
@@ -357,7 +357,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\adc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\clock</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\comp</state>
@@ -389,6 +388,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crc32</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense_drv</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ecc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fds</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage</state>
@@ -404,6 +404,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\queue</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\slip</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\twi</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
@@ -583,23 +584,24 @@
         <option>
       <name>ADefines</name>
           <state>BLE_STACK_SUPPORT_REQD</state>
-          <state>NRF_SD_BLE_API_VERSION=3</state>
-          <state>S132</state>
           <state>BOARD_PCA10040</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
+          <state>NRF52</state>
+          <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_12</state>
           <state>NRF52_PAN_15</state>
           <state>NRF52_PAN_20</state>
           <state>NRF52_PAN_31</state>
           <state>NRF52_PAN_36</state>
           <state>NRF52_PAN_51</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_54</state>
           <state>NRF52_PAN_55</state>
           <state>NRF52_PAN_58</state>
           <state>NRF52_PAN_64</state>
+          <state>NRF52_PAN_74</state>
+          <state>NRF_SD_BLE_API_VERSION=4</state>
+          <state>S132</state>
           <state>SOFTDEVICE_PRESENT</state>
-          <state>NRF52832</state>
-          <state>NRF52</state>
           <state>SWI_DISABLE0</state>
         </option>
         <option>
@@ -696,7 +698,6 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$\..\..\..\config\ble_app_beacon_pca10040_s132</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising</state>
@@ -730,7 +731,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\adc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\clock</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\comp</state>
@@ -762,6 +762,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crc32</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense_drv</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ecc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fds</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage</state>
@@ -777,6 +778,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\queue</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\slip</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\twi</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
@@ -1188,11 +1190,12 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button\app_button.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\hardfault\hardfault_implementation.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\sdk_errors.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>

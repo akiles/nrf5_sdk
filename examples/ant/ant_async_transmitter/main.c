@@ -48,7 +48,6 @@
  * ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
  * 
  */
-
 /*
  * Before compiling this example for NRF52, complete the following steps:
  * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
@@ -68,18 +67,16 @@
 #include "ant_stack_config.h"
 #include "ant_async_tx.h"
 
-#define APP_TIMER_PRESCALER           0x00      /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE       0x04      /**< Size of timer operation queues. */
-
 /**@brief Function for the Timer and BSP initialization.
  */
 static void utils_setup(void)
 {
     uint32_t err_code;
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         ant_async_tx_bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
 }
@@ -108,7 +105,7 @@ int main(void)
     APP_ERROR_CHECK(err_code);
 
     // Setup async tx channel
-    ant_async_tx_setup(APP_TIMER_PRESCALER);
+    ant_async_tx_setup();
 
     // Enter main loop
     for (;;)

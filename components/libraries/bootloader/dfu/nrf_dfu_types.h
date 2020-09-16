@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  *
  * @defgroup sdk_nrf_dfu_types DFU types
@@ -50,64 +49,81 @@
 
 #include <stdint.h>
 #include <stddef.h>
+
+#include "nrf.h"
 #include "nrf_mbr.h"
+#ifdef SOFTDEVICE_PRESENT
 #include "nrf_sdm.h"
+#endif
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define INIT_COMMAND_MAX_SIZE       256     /**< Maximum size of the init command stored in dfu_settings. */
+#if defined(SOFTDEVICE_PRESENT)
 
+#include "nrf_sdm.h"
+
+/** @brief Start address of the SoftDevice (excluding the area for the MBR).
+ */
+#define SOFTDEVICE_REGION_START             MBR_SIZE
+
+
+#ifndef CODE_REGION_1_START
+#define CODE_REGION_1_START                 SD_SIZE_GET(MBR_SIZE)
+#endif
+
+
+#else
+
+#ifndef CODE_REGION_1_START
+#define CODE_REGION_1_START                 MBR_SIZE
+#endif
+
+#endif
+
+
+#define INIT_COMMAND_MAX_SIZE       256     /**< Maximum size of the init command stored in dfu_settings. */
 
 /** @brief  Size of a flash codepage. This value is used for calculating the size of the reserved
  *          flash space in the bootloader region. It is checked against NRF_UICR->CODEPAGESIZE
  *          at run time to ensure that the region is correct.
  */
 #if defined(NRF51)
-    #define CODE_PAGE_SIZE            (PAGE_SIZE_IN_WORDS*sizeof(uint32_t))
-#elif defined(NRF52)
-    #define CODE_PAGE_SIZE            (MBR_PAGE_SIZE_IN_WORDS*sizeof(uint32_t))
+    #define CODE_PAGE_SIZE            (PAGE_SIZE_IN_WORDS * sizeof(uint32_t))
+#elif defined(NRF52) || defined(NRF52840_XXAA)
+    #define CODE_PAGE_SIZE            (MBR_PAGE_SIZE_IN_WORDS * sizeof(uint32_t))
 #else
     #error "Architecture not set."
 #endif
 
 
 /** @brief  Maximum size of a data object.*/
-#ifdef NRF51
-
+#if defined( NRF51 )
     #define DATA_OBJECT_MAX_SIZE           (CODE_PAGE_SIZE * 4)
-
-#elif NRF52
-
+#elif defined( NRF52_SERIES ) || defined ( __SDK_DOXYGEN__ )
     #define DATA_OBJECT_MAX_SIZE           (CODE_PAGE_SIZE)
-
 #else
-
     #error "Architecture not set."
-
 #endif
 
 /** @brief  Page location of the bootloader settings address.
  */
 
-#if defined (NRF51 )
-
+#if defined ( NRF51 )
     #define BOOTLOADER_SETTINGS_ADDRESS     (0x0003FC00UL)
-
-#elif defined ( NRF52 )
-
+#elif defined( NRF52832_XXAA )
     #define BOOTLOADER_SETTINGS_ADDRESS     (0x0007F000UL)
-
+#elif defined( NRF52840_XXAA )
+    #define BOOTLOADER_SETTINGS_ADDRESS     (0x000FF000UL)
 #else
-
     #error No valid target set for BOOTLOADER_SETTINGS_ADDRESS.
-
 #endif
 
 
 
-#if defined(NRF52)
+#if defined(NRF52832_XXAA)
 
 /**
  * @brief   MBR parameters page in UICR.
@@ -116,7 +132,7 @@ extern "C" {
  *
  * @note If the value at the given location is 0xFFFFFFFF, no MBR parameters page is set.
  */
-#define NRF_UICR_MBR_PARAMS_PAGE_ADDRESS        (NRF_UICR_BASE + 0x18)
+#define NRF_UICR_MBR_PARAMS_PAGE_ADDRESS    (NRF_UICR_BASE + 0x18)
 
 
 /** @brief Page location of the MBR parameters page address.
@@ -125,6 +141,26 @@ extern "C" {
 #define NRF_MBR_PARAMS_PAGE_ADDRESS         (0x0007E000UL)
 
 #endif
+
+#if defined(NRF52840_XXAA)
+
+/**
+ * @brief   MBR parameters page in UICR.
+ *
+ * Register location in UICR where the page address of the MBR parameters page is stored (only used by the nRF52 MBR).
+ *
+ * @note If the value at the given location is 0xFFFFFFFF, no MBR parameters page is set.
+ */
+#define NRF_UICR_MBR_PARAMS_PAGE_ADDRESS     (NRF_UICR_BASE + 0x18)
+
+
+/** @brief Page location of the MBR parameters page address.
+ *
+ */
+#define NRF_MBR_PARAMS_PAGE_ADDRESS         (0x000FE000UL)
+
+#endif
+
 
 /** @brief  Size of the flash space reserved for application data.
  */
@@ -137,7 +173,7 @@ extern "C" {
  */
 #define DFU_REGION_TOTAL_SIZE               ((* (uint32_t *)NRF_UICR_BOOTLOADER_START_ADDRESS) - CODE_REGION_1_START)
 
-
+#ifdef SOFTDEVICE_PRESENT
 /** @brief Start address of the SoftDevice (excluding the area for the MBR).
  */
 #define SOFTDEVICE_REGION_START             MBR_SIZE
@@ -152,6 +188,11 @@ extern "C" {
 
 #ifndef CODE_REGION_1_START
 #define CODE_REGION_1_START                 SD_SIZE_GET(MBR_SIZE)
+#endif
+#else
+#ifndef CODE_REGION_1_START
+#define CODE_REGION_1_START                 MBR_SIZE
+#endif
 #endif
 
 #define NRF_DFU_CURRENT_BANK_0 0x00

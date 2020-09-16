@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_sdk_app_gzll_common Common definitions for BLE and Gazell
@@ -54,10 +53,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#define APP_TIMER_PRESCALER     0                         /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS    6 + BSP_APP_TIMERS_NUMBER /**< Maximum number of simultaneously created timers. */
-#define APP_TIMER_OP_QUEUE_SIZE 4                         /**< Size of timer operation queues. */
 
 /**@brief Protocol mode type. */
 typedef enum

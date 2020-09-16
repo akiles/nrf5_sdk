@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  * @addtogroup nrf_twi Two Wire master interface (TWI/TWIM)
  * @ingroup    nrf_drivers
@@ -297,8 +296,8 @@ void nrf_drv_twi_disable(nrf_drv_twi_t const * p_instance);
  * @retval NRF_ERROR_BUSY               If the driver is not ready for a new transfer.
  * @retval NRF_ERROR_INTERNAL           If an error was detected by hardware.
  * @retval NRF_ERROR_INVALID_ADDR       If the EasyDMA is used and memory adress in not in RAM.
- * @retval NRF_ERROR_DRV_TWI_ERR_ANACK  If NACK received after sending the address.
- * @retval NRF_ERROR_DRV_TWI_ERR_DNACK  If NACK received after sending a data byte.
+ * @retval NRF_ERROR_DRV_TWI_ERR_ANACK  If NACK received after sending the address in polling mode.
+ * @retval NRF_ERROR_DRV_TWI_ERR_DNACK  If NACK received after sending a data byte in polling mode.
  */
 ret_code_t nrf_drv_twi_tx(nrf_drv_twi_t const * p_instance,
                           uint8_t               address,
@@ -321,8 +320,8 @@ ret_code_t nrf_drv_twi_tx(nrf_drv_twi_t const * p_instance,
  * @retval NRF_ERROR_BUSY                 If the driver is not ready for a new transfer.
  * @retval NRF_ERROR_INTERNAL             If an error was detected by hardware.
  * @retval NRF_ERROR_DRV_TWI_ERR_OVERRUN  If the unread data was replaced by new data
- * @retval NRF_ERROR_DRV_TWI_ERR_ANACK    If NACK received after sending the address.
- * @retval NRF_ERROR_DRV_TWI_ERR_DNACK    If NACK received after sending a data byte.
+ * @retval NRF_ERROR_DRV_TWI_ERR_ANACK    If NACK received after sending the address in polling mode.
+ * @retval NRF_ERROR_DRV_TWI_ERR_DNACK    If NACK received after sending a data byte in polling mode.
  */
 ret_code_t nrf_drv_twi_rx(nrf_drv_twi_t const * p_instance,
                           uint8_t               address,
@@ -381,6 +380,16 @@ ret_code_t nrf_drv_twi_rx(nrf_drv_twi_t const * p_instance,
 ret_code_t nrf_drv_twi_xfer(nrf_drv_twi_t           const * p_instance,
                             nrf_drv_twi_xfer_desc_t const * p_xfer_desc,
                             uint32_t                        flags);
+
+/**
+ * @brief Function for checking the TWI driver state.
+ *
+ * @param[in] p_instance TWI instance.
+ *
+ * @retval true  If the TWI driver is currently busy performing a transfer.
+ * @retval false If the TWI driver is ready for a new transfer.
+ */
+bool nrf_drv_twi_is_busy(nrf_drv_twi_t const * p_instance);
 
 /**
  * @brief Function for getting the transferred data count.

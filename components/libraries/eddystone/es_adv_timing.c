@@ -104,8 +104,7 @@ static void adv_slot_timeout(void * p_context)
         active_slot_index < (uint32_t)(m_adv_timing_result.len_timing_results - 1))
     {
         err_code = app_timer_start( m_es_slot_timer,
-                                    APP_TIMER_TICKS(m_adv_timing_result.timing_results[active_slot_index].delay_ms,
-                                                    APP_TIMER_PRESCALER),
+                                    APP_TIMER_TICKS(m_adv_timing_result.timing_results[active_slot_index].delay_ms),
                                     (void*)(active_slot_index + 1));
         APP_ERROR_CHECK(err_code);
     }
@@ -141,7 +140,7 @@ static void adv_interval_timeout(void * p_context)
     if(m_non_conn_adv_active)
     {
         uint32_t err_code = app_timer_start(m_es_adv_interval_timer,
-                                   APP_TIMER_TICKS(m_current_adv_interval, APP_TIMER_PRESCALER),
+                                   APP_TIMER_TICKS(m_current_adv_interval),
                                    NULL);
         APP_ERROR_CHECK(err_code);
     }
@@ -198,7 +197,7 @@ void es_adv_timing_start(uint16_t adv_interval)
         m_current_adv_interval = adv_interval;
 
         err_code = app_timer_start(m_es_adv_interval_timer,
-                                   APP_TIMER_TICKS(m_current_adv_interval, APP_TIMER_PRESCALER),
+                                   APP_TIMER_TICKS(m_current_adv_interval),
                                    NULL);
         APP_ERROR_CHECK(err_code);
 

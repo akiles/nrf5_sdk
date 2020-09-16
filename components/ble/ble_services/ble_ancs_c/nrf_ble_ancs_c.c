@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
- 
 /* Disclaimer: This client implementation of the Apple Notification Center Service can and will be changed at any time by Nordic Semiconductor ASA.
  * Server implementations such as the ones found in iOS can be changed at any time by Apple and may cause this client implementation to stop working.
  */
@@ -209,7 +208,7 @@ static uint32_t ble_ancs_verify_notification_format(const ble_ancs_c_evt_notif_t
 }
 
 /**@brief Function for receiving and validating notifications received from the Notification Provider.
- * 
+ *
  * @param[in] p_ancs     Pointer to an ANCS instance to which the event belongs.
  * @param[in] p_data_src Pointer to data that was received from the Notification Provider.
  * @param[in] hvx_len    Length of the data that was received by the Notification Provider.
@@ -275,7 +274,7 @@ ret_code_t nrf_ble_ancs_c_app_attr_request(ble_ancs_c_t  * p_ancs,
 
 
 /**@brief Function for receiving and validating notifications received from the Notification Provider.
- * 
+ *
  * @param[in] p_ancs    Pointer to an ANCS instance to which the event belongs.
  * @param[in] p_ble_evt Bluetooth stack event.
  */
@@ -434,7 +433,7 @@ static uint32_t cccd_configure(const uint16_t conn_handle, const uint16_t handle
     p_msg.type                                = WRITE_REQ;
 
     tx_buffer_insert(&p_msg);
-    
+
     tx_buffer_process();
     return NRF_SUCCESS;
 }
@@ -485,7 +484,7 @@ uint32_t ble_ancs_get_notif_attrs(ble_ancs_c_t * p_ancs,
 
     //Encode Command ID.
     p_msg.req.write_req.gattc_value[index++] = BLE_ANCS_COMMAND_ID_GET_NOTIF_ATTRIBUTES;
-    
+
     //Encode Notification UID.
     index += uint32_encode(p_uid, &(p_msg.req.write_req.gattc_value[index]));
 
@@ -612,7 +611,7 @@ static uint16_t encode_notif_action(uint8_t * p_encoded_data, uint32_t uid, ble_
 ret_code_t nrf_ancs_perform_notif_action(ble_ancs_c_t * p_ancs, uint32_t uid, ble_ancs_c_action_id_values_t action_id)
 {
     VERIFY_PARAM_NOT_NULL(p_ancs);
-    
+
     tx_message_t msg;
     memset(&msg, 0, sizeof(tx_message_t));
 
@@ -631,7 +630,7 @@ ret_code_t nrf_ancs_perform_notif_action(ble_ancs_c_t * p_ancs, uint32_t uid, bl
 
     tx_buffer_insert(&msg);
     tx_buffer_process();
-    
+
     return NRF_SUCCESS;
 }
 
@@ -642,7 +641,7 @@ ret_code_t nrf_ble_ancs_c_handles_assign(ble_ancs_c_t * p_ancs,
     VERIFY_PARAM_NOT_NULL(p_ancs);
 
     p_ancs->conn_handle = conn_handle;
-    
+
     if(p_peer_handles != NULL)
     {
         p_ancs->service.control_point_char.handle_value = p_peer_handles->control_point_char.handle_value;

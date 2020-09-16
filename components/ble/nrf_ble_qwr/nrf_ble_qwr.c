@@ -44,6 +44,7 @@
 #include "ble.h"
 #include "ble_srv_common.h"
 
+
 #define NRF_BLE_QWR_INITIALIZED 0xDE // Non-zero value used to make sure the given structure has been initialized by the module.
 #define MODULE_INITIALIZED      (p_qwr->initialized == NRF_BLE_QWR_INITIALIZED)
 #include "sdk_macros.h"
@@ -156,17 +157,15 @@ ret_code_t nrf_ble_qwr_conn_handle_assign(nrf_ble_qwr_t * p_qwr,
 }
 
 
-/**@brief Handle a user memory request event.
+/**@brief checks if a user_mem_reply is pending, if so attempts to send it.
  *
  * @param[in]   p_qwr        QWR structure.
- * @param[in]   p_common_evt User_mem_request event to be handled.
  */
-static void on_user_mem_request(nrf_ble_qwr_t          * p_qwr,
-                                ble_common_evt_t const * p_common_evt)
+static void user_mem_reply(nrf_ble_qwr_t * p_qwr)
 {
-    if (p_common_evt->conn_handle == p_qwr->conn_handle)
+    if (p_qwr->is_user_mem_reply_pending)
     {
-        uint32_t err_code = sd_ble_user_mem_reply(p_common_evt->conn_handle, &p_qwr->mem_buffer);
+        ret_code_t err_code = sd_ble_user_mem_reply(p_qwr->conn_handle, &p_qwr->mem_buffer);
         if (err_code == NRF_SUCCESS)
         {
             p_qwr->is_user_mem_reply_pending = false;
@@ -178,6 +177,44 @@ static void on_user_mem_request(nrf_ble_qwr_t          * p_qwr,
         else
         {
             p_qwr->error_handler(err_code);
+        }
+    }
+}
+
+
+/**@brief Handle a user memory request event.
+ *
+ * @param[in]   p_qwr        QWR structure.
+ * @param[in]   p_common_evt User_mem_request event to be handled.
+ */
+static void on_user_mem_request(nrf_ble_qwr_t          * p_qwr,
+                                ble_common_evt_t const * p_common_evt)
+{
+    if (p_common_evt->conn_handle == p_qwr->conn_handle)
+    {
+        if (p_common_evt->params.user_mem_request.type == BLE_USER_MEM_TYPE_GATTS_QUEUED_WRITES)
+        {
+            p_qwr->is_user_mem_reply_pending = true;
+            user_mem_reply(p_qwr);
+        }
+    }
+}
+
+
+/**@brief Handle a user memory release event.
+ *
+ * @param[in]   p_qwr        QWR structure.
+ * @param[in]   p_common_evt User_mem_release event to be handled.
+ */
+static void on_user_mem_release(nrf_ble_qwr_t          * p_qwr,
+                                ble_common_evt_t const * p_common_evt)
+{
+    if (p_common_evt->conn_handle == p_qwr->conn_handle)
+    {
+        if (p_common_evt->params.user_mem_release.type == BLE_USER_MEM_TYPE_GATTS_QUEUED_WRITES)
+        {
+            // Cancel the current operation.
+            p_qwr->nb_written_handles = 0;
         }
     }
 }
@@ -374,15 +411,18 @@ void nrf_ble_qwr_on_ble_evt(nrf_ble_qwr_t * p_qwr,
     VERIFY_PARAM_NOT_NULL_VOID(p_ble_evt);
     VERIFY_MODULE_INITIALIZED_VOID();
 
-    if (p_qwr->is_user_mem_reply_pending)
+    if (p_ble_evt->evt.common_evt.conn_handle == p_qwr->conn_handle)
     {
-        on_user_mem_request(p_qwr, &p_ble_evt->evt.common_evt);
+        user_mem_reply(p_qwr);
     }
-
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_EVT_USER_MEM_REQUEST:
             on_user_mem_request(p_qwr, &p_ble_evt->evt.common_evt);
+            break; // BLE_EVT_USER_MEM_REQUEST
+
+        case BLE_EVT_USER_MEM_RELEASE:
+            on_user_mem_release(p_qwr, &p_ble_evt->evt.common_evt);
             break; // BLE_EVT_USER_MEM_REQUEST
 
         case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:

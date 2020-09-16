@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <stdint.h>
 #ifdef DX_LINUX_PLATFORM
 #include <stdio.h>//for printf
@@ -50,7 +49,7 @@
 #include "integration_test_ssi_data.h"
 #include "crys_hash.h"
 
-hmacDataStuct hmacVectors[] = {
+const hmacDataStuct hmacVectors[] = {
 	{
 		/*Test parameters*/
 		{"HMAC-SHA1/Input_data_32/Key_32/"},

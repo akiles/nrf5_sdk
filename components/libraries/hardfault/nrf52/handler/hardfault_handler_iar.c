@@ -80,7 +80,6 @@ __stackless void HardFault_Handler(void)
     /* Data alignment if required */
     "   nop                                     \n"
 
-    "DATA                                       \n"
     "101:                                       \n"
     "   DC32 %c0                                \n"
     "102:                                       \n"

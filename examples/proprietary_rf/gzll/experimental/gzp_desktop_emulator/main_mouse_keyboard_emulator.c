@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
  * This project can be used as a starting point for developing a nRF5x series
  * mouse or keyboard using Gazell for communicating with a legacy nRF24LU1
@@ -145,7 +144,7 @@ int main()
 
 // lint -save -e514 Unusual use of a boolean expression (use of &= assignment).
 
-    UNUSED_VARIABLE(bsp_init(BSP_INIT_BUTTONS, 0, NULL));
+    UNUSED_VARIABLE(bsp_init(BSP_INIT_BUTTONS, NULL));
 
     err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);

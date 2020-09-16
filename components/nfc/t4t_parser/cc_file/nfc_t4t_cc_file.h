@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef NFC_T4T_CC_FILE_H__
 #define NFC_T4T_CC_FILE_H__
 
@@ -83,7 +82,7 @@ typedef struct
  * Use the macro @ref NFC_T4T_CC_DESC to access the Type 4 Tag descriptor instance.
  *
  * @param[in] NAME        Name of the created descriptor instance.
- * @param[in] MAX_BLOCKS  Maximum number of @ref nfc_t4t_tlv_block_t descriptors that can be 
+ * @param[in] MAX_BLOCKS  Maximum number of @ref nfc_t4t_tlv_block_t descriptors that can be
  *                        stored in the array.
  *
  */
@@ -118,7 +117,7 @@ typedef struct
  * @retval NRF_SUCCESS              If operation was successful.
  * @retval NRF_ERROR_NULL           If any of the provided pointer arguments is NULL.
  * @retval NRF_ERROR_INVALID_LENGTH If provided buffer exceeds a valid CC file length range.
- * @retval NRF_ERROR_INVALID_DATA   If mapping version of Type 4 Tag specification is not a 
+ * @retval NRF_ERROR_INVALID_DATA   If mapping version of Type 4 Tag specification is not a
  *                                  compatible CC file structure.
  * @retval Other                    Other error codes might be returned depending on
  *                                  @ref nfc_t4t_file_control_tlv_parse function.

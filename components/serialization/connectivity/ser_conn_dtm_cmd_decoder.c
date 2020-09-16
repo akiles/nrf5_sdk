@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "app_util.h"
 #include "ble_dtm_conn.h"
 #include "ble_serialization.h"

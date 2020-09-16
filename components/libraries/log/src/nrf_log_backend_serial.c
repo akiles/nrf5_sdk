@@ -67,7 +67,7 @@ static nrf_drv_uart_t m_uart = NRF_DRV_UART_INSTANCE(NRF_LOG_BACKEND_UART_INSTAN
 
 #define HEXDUMP_BYTES_PER_LINE               16
 #define HEXDUMP_HEXBYTE_AREA                 3 // Two bytes for hexbyte and space to separate
-#define TIMESTAMP_STR(val) "[%0" NUM_TO_STR(val) "d]"
+#define TIMESTAMP_STR(val) "[%0" STRINGIFY(val) "d]"
 
 #define RTT_RETRY_COUNTER 10 //Number of retries before skipping processing
 
@@ -107,7 +107,7 @@ ret_code_t nrf_log_backend_init(bool blocking)
 #if (NRF_LOG_BACKEND_SERIAL_USES_RTT)
     SEGGER_RTT_Init();
 #endif
-    
+
 #if (NRF_LOG_BACKEND_SERIAL_USES_UART)
     uint32_t              ret_code;
     nrf_drv_uart_config_t uart_config = NRF_DRV_UART_DEFAULT_CONFIG;

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef NRF_CSENSE_H__
 #define NRF_CSENSE_H__
 
@@ -51,7 +50,7 @@
 
 /** @file
  *
- * @defgroup nrf_csense Capacitive Sensor Library
+ * @defgroup nrf_csense Capacitive sensor library
  * @{
  * @ingroup app_common
  *
@@ -72,7 +71,7 @@
 #define NRF_CSENSE_BUTTON_DEF(name, p1) NRF_CSENSE_INTERNAL_BUTTON_DEF(name, p1)
 
 /**
- * @brief Macro for creating a 2-pads slider instance.
+ * @brief Macro for creating a 2-pad slider instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).
@@ -82,7 +81,7 @@
 #define NRF_CSENSE_SLIDER_2_DEF(name, steps_no, p1, p2) NRF_CSENSE_INTERNAL_SLIDER_2_DEF(name, steps_no, p1, p2)
 
 /**
- * @brief Macro for creating a 3-pads slider instance.
+ * @brief Macro for creating a 3-pad slider instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).
@@ -93,7 +92,7 @@
 #define NRF_CSENSE_SLIDER_3_DEF(name, steps_no, p1, p2, p3) NRF_CSENSE_INTERNAL_SLIDER_3_DEF(name, steps_no, p1, p2, p3)
 
 /**
- * @brief Macro for creating a 4-pads slider instance.
+ * @brief Macro for creating a 4-pad slider instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).
@@ -105,7 +104,7 @@
 #define NRF_CSENSE_SLIDER_4_DEF(name, steps_no, p1, p2, p3, p4) NRF_CSENSE_INTERNAL_SLIDER_4_DEF(name, steps_no, p1, p2, p3, p4)
 
 /**
- * @brief Macro for creating a 5-pads slider instance.
+ * @brief Macro for creating a 5-pad slider instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).
@@ -118,7 +117,7 @@
 #define NRF_CSENSE_SLIDER_5_DEF(name, steps_no, p1, p2, p3, p4, p5) NRF_CSENSE_INTERNAL_SLIDER_5_DEF(name, steps_no, p1, p2, p3, p4, p5)
 
 /**
- * @brief Macro for creating a 3-pads wheel instance.
+ * @brief Macro for creating a 3-pad wheel instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).
@@ -129,7 +128,7 @@
 #define NRF_CSENSE_WHEEL_3_DEF(name, steps_no, p1, p2, p3) NRF_CSENSE_INTERNAL_WHEEL_3_DEF(name, steps_no, p1, p2, p3)
 
 /**
- * @brief Macro for creating a 4-pads wheel instance.
+ * @brief Macro for creating a 4-pad wheel instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).
@@ -141,7 +140,7 @@
 #define NRF_CSENSE_WHEEL_4_DEF(name, steps_no, p1, p2, p3, p4) NRF_CSENSE_INTERNAL_WHEEL_4_DEF(name, steps_no, p1, p2, p3, p4)
 
 /**
- * @brief Macro for creating a 5-pads wheel instance.
+ * @brief Macro for creating a 5-pad wheel instance.
  *
  * @param[in,out] name          Name of the capacitive sensor instance that will be created.
  * @param[in] steps_no          Number of relative pads. It means that the slider in its handler will give values (1, steps_no).

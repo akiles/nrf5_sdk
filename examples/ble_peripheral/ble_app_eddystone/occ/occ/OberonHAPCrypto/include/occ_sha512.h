@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  * SHA-512 is part of the SHA-2 family that is a set of cryptographic hash
  * functions designed by the NSA. It is the successor of the SHA-1 algorithm.

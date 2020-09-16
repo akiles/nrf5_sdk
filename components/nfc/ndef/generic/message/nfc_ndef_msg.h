@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef NFC_NDEF_MSG_H__
 #define NFC_NDEF_MSG_H__
 
@@ -69,7 +68,7 @@ extern "C" {
   * @brief  Function for encoding an NDEF message.
   *
   * This function encodes an NDEF message according to the provided message descriptor.
-  * 
+  *
   * @note The way of encoding an NDEF message may vary depending on tag's platform, which
   *       can be chosen with @ref NFC_NDEF_MSG_TAG_TYPE in @c sdk_config.h.
   *

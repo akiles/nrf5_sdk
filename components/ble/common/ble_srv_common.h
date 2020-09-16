@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_sdk_srv_common Common service definitions
@@ -84,7 +83,7 @@ extern "C" {
 #define BLE_UUID_TX_POWER_SERVICE                                0x1804     /**< TX Power service UUID. */
 #define BLE_UUID_IPSP_SERVICE                                    0x1820     /**< Internet Protocol Support service UUID. */
 #define BLE_UUID_BMS_SERVICE                                     0x181E     /**< BOND MANAGEMENT service UUID*/
-#define BLE_UUID_CGM_SERVICE                                     0x181F     /**< Contiunous Glucose Monitoring service UUID*/
+#define BLE_UUID_CGM_SERVICE                                     0x181F     /**< Continuous Glucose Monitoring service UUID*/
 #define BLE_UUID_PLX_SERVICE                                     0x1822     /**< Pulse Oximeter Service UUID*/
 
 

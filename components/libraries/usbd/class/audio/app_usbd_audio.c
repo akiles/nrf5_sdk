@@ -300,7 +300,7 @@ static ret_code_t audio_req_out(app_usbd_class_inst_t const * p_inst,
     NRF_DRV_USBD_TRANSFER_OUT(transfer, p_audio_ctx->request.payload, p_audio_ctx->request.length);
     ret_code_t ret;
     CRITICAL_REGION_ENTER();
-    ret = app_usbd_core_setup_data_transfer(NRF_DRV_USBD_EPOUT0, &transfer, NULL);
+    ret = app_usbd_core_setup_data_transfer(NRF_DRV_USBD_EPOUT0, &transfer);
     if (ret == NRF_SUCCESS)
     {
         app_usbd_core_setup_data_handler_desc_t desc = {
@@ -358,20 +358,6 @@ static ret_code_t setup_event_handler(app_usbd_class_inst_t const * p_inst,
 {
     ASSERT(p_inst != NULL);
     ASSERT(p_setup_ev != NULL);
-
-    app_usbd_setup_reqrec_t  req_rec = app_usbd_setup_req_rec(p_setup_ev->setup.bmRequestType);
-    app_usbd_setup_reqtype_t req_type = app_usbd_setup_req_typ(p_setup_ev->setup.bmRequestType);
-    if (req_rec == APP_USBD_SETUP_REQREC_ENDPOINT &&
-        req_type == APP_USBD_SETUP_REQTYPE_STD)
-    {
-        return app_usbd_endpoint_std_req_handle(p_inst, p_setup_ev);
-    }
-
-    ret_code_t ret = app_usbd_interface_std_req_handle(p_inst, p_setup_ev);
-    if (ret == NRF_SUCCESS || ret != NRF_ERROR_NOT_SUPPORTED)
-    {
-        return ret;
-    }
 
     if (app_usbd_setup_req_dir(p_setup_ev->setup.bmRequestType) == APP_USBD_SETUP_REQDIR_IN)
     {
@@ -479,7 +465,7 @@ static ret_code_t sof_event_handler(app_usbd_class_inst_t const * p_inst)
         {
             ASSERT(isoout == p_audio_ctx->rx_size);
             NRF_DRV_USBD_TRANSFER_OUT(transfer, p_audio_ctx->p_rx_buff, p_audio_ctx->rx_size);
-            return app_usbd_core_ep_transfer(ep_addr, &transfer, NULL);
+            return app_usbd_core_ep_transfer(ep_addr, &transfer);
         }
     }
 
@@ -488,7 +474,7 @@ static ret_code_t sof_event_handler(app_usbd_class_inst_t const * p_inst)
     {
         ASSERT(NRF_USBD_EPISO_CHECK(ep_addr));
         NRF_DRV_USBD_TRANSFER_IN(transfer, p_audio_ctx->p_tx_buff, p_audio_ctx->tx_size);
-        return app_usbd_core_ep_transfer(ep_addr, &transfer, NULL);
+        return app_usbd_core_ep_transfer(ep_addr, &transfer);
     }
 
     return NRF_SUCCESS;
@@ -528,10 +514,8 @@ static ret_code_t audio_event_handler(app_usbd_class_inst_t const * p_inst,
             }
             break;
         case APP_USBD_EVT_DRV_SUSPEND:
-            user_event_handler(p_inst, APP_USBD_AUDIO_USER_EVT_SUSPEND);
             break;
         case APP_USBD_EVT_DRV_RESUME:
-            user_event_handler(p_inst, APP_USBD_AUDIO_USER_EVT_RESUME);
             break;
         case APP_USBD_EVT_INST_APPEND:
         {
@@ -544,10 +528,8 @@ static ret_code_t audio_event_handler(app_usbd_class_inst_t const * p_inst,
             break;
         }
         case APP_USBD_EVT_START:
-            user_event_handler(p_inst, APP_USBD_AUDIO_USER_EVT_START);
             break;
         case APP_USBD_EVT_STOP:
-            user_event_handler(p_inst, APP_USBD_AUDIO_USER_EVT_STOP);
             break;
         default:
             ret = NRF_ERROR_NOT_SUPPORTED;

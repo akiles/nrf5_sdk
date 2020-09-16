@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "app_util_platform.h"
 #include "ser_app_hal.h"
 #include "nrf.h"
@@ -48,6 +47,7 @@
 #include "boards.h"
 #include "ser_phy.h"
 #include "ser_phy_config_app.h"
+#include "nrf_drv_clock.h"
 
 #define SOFTDEVICE_EVT_IRQ      SD_EVT_IRQn         /**< SoftDevice Event IRQ number. Used for both protocol events and SoC events. */
 #define FLASH_WRITE_MAX_LENGTH  ((uint16_t)NRF_FICR->CODEPAGESIZE)
@@ -56,19 +56,20 @@
 static ser_app_hal_flash_op_done_handler_t m_flash_op_handler;
 uint32_t ser_app_hal_hw_init(ser_app_hal_flash_op_done_handler_t handler)
 {
+
     nrf_gpio_cfg_output(CONN_CHIP_RESET_PIN_NO);
 
-    NRF_CLOCK->LFCLKSRC            = (CLOCK_LFCLKSRC_SRC_Xtal << CLOCK_LFCLKSRC_SRC_Pos);
-    NRF_CLOCK->EVENTS_LFCLKSTARTED = 0;
-    NRF_CLOCK->TASKS_LFCLKSTART    = 1;
-
-    while (NRF_CLOCK->EVENTS_LFCLKSTARTED == 0)
+    if (NRF_SUCCESS != nrf_drv_clock_init())
     {
-        //No implementation needed.
+        return NRF_ERROR_INTERNAL;
     }
 
-    NRF_CLOCK->EVENTS_LFCLKSTARTED = 0;
-    m_flash_op_handler = handler;
+    nrf_drv_clock_lfclk_request(NULL);
+    nrf_drv_clock_hfclk_request(NULL);
+
+    while(false == nrf_drv_clock_hfclk_is_running());
+    while(false == nrf_drv_clock_lfclk_is_running());
+
     return NRF_SUCCESS;
 }
 

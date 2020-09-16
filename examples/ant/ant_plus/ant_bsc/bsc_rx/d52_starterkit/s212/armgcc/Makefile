@@ -12,16 +12,17 @@ $(OUTPUT_DIRECTORY)/nrf52832_xxaa.out: \
 SRC_FILES += \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_serial.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_frontend.c \
+  $(SDK_ROOT)/components/boards/boards.c \
   $(SDK_ROOT)/components/libraries/button/app_button.c \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
   $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
+  $(SDK_ROOT)/components/libraries/scheduler/app_scheduler.c \
   $(SDK_ROOT)/components/libraries/timer/app_timer.c \
   $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
   $(SDK_ROOT)/components/libraries/hardfault/nrf52/handler/hardfault_handler_gcc.c \
   $(SDK_ROOT)/components/libraries/hardfault/hardfault_implementation.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
-  $(SDK_ROOT)/components/libraries/util/sdk_errors.c \
-  $(SDK_ROOT)/components/boards/boards.c \
+  $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/components/drivers_nrf/clock/nrf_drv_clock.c \
   $(SDK_ROOT)/components/drivers_nrf/common/nrf_drv_common.c \
   $(SDK_ROOT)/components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
@@ -57,8 +58,10 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/toolchain/gcc \
   $(SDK_ROOT)/components/drivers_nrf/uart \
   $(SDK_ROOT)/components/device \
+  $(SDK_ROOT)/components/libraries/scheduler \
   $(SDK_ROOT)/components/ant/ant_profiles/ant_bsc/pages \
   $(SDK_ROOT)/components/drivers_nrf/hal \
+  $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/boards \
   $(SDK_ROOT)/components/drivers_nrf/gpiote \
   $(SDK_ROOT)/components/ant/ant_profiles/ant_bsc \
@@ -89,13 +92,13 @@ INC_FOLDERS += \
 LIB_FILES += \
 
 # C flags common to all targets
-CFLAGS += -DSWI_DISABLE0
-CFLAGS += -DS212
-CFLAGS += -DSOFTDEVICE_PRESENT
-CFLAGS += -DNRF52
 CFLAGS += -DANT_STACK_SUPPORT_REQD
 CFLAGS += -DBOARD_D52DK1
-CFLAGS += -DNRF52832
+CFLAGS += -DNRF52
+CFLAGS += -DNRF52832_XXAA
+CFLAGS += -DS212
+CFLAGS += -DSOFTDEVICE_PRESENT
+CFLAGS += -DSWI_DISABLE0
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS +=  -Wall -Werror -O3 -g3
@@ -109,13 +112,13 @@ CXXFLAGS += \
 
 # Assembler flags common to all targets
 ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DSWI_DISABLE0
-ASMFLAGS += -DS212
-ASMFLAGS += -DSOFTDEVICE_PRESENT
-ASMFLAGS += -DNRF52
 ASMFLAGS += -DANT_STACK_SUPPORT_REQD
 ASMFLAGS += -DBOARD_D52DK1
-ASMFLAGS += -DNRF52832
+ASMFLAGS += -DNRF52
+ASMFLAGS += -DNRF52832_XXAA
+ASMFLAGS += -DS212
+ASMFLAGS += -DSOFTDEVICE_PRESENT
+ASMFLAGS += -DSWI_DISABLE0
 
 # Linker flags
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)

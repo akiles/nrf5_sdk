@@ -49,20 +49,6 @@
  * 
  */
 
-/*
- * @brief Test application for OTA firmware updates.
- * Application sets up a master channel with a predefined payload, and waits
- * to receive a command to restart into bootloader.
- * Build configurations can be used to create two slightly different images,
- * identified by the transmitted payload and the LED that flashes on transmissions.
- *
- * Before compiling this example for NRF52, complete the following steps:
- * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
- * - Extract the downloaded zip file and copy the S212 SoftDevice headers to <tt>\<InstallFolder\>/components/softdevice/s212/headers</tt>.
- * If you are using Keil packs, copy the files into a @c headers folder in your example folder.
- * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
- */
-
 #include <stdbool.h>
 #include <stdint.h>
 #include "app_error.h"

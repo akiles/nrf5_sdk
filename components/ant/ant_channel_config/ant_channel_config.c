@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(ANT_CHANNEL_CONFIG)
 #include "nrf_error.h"
@@ -69,7 +68,7 @@ uint32_t ant_channel_init(ant_channel_config_t const * p_config)
     VERIFY_SUCCESS(err_code);
 
     // Set Channel period.
-    if (!(p_config->ext_assign & EXT_PARAM_ALWAYS_SEARCH))
+    if (!(p_config->ext_assign & EXT_PARAM_ALWAYS_SEARCH) && (p_config->channel_period != 0))
     {
         err_code = sd_ant_channel_period_set(p_config->channel_number, p_config->channel_period);
     }

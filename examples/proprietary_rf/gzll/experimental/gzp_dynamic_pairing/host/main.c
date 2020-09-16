@@ -37,8 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
-
 /**
  * This project requires a running counterpart project, which is either of the following:
  *
@@ -76,21 +74,18 @@
 #define UNENCRYPTED_DATA_PIPE     2   ///< Pipes 0 and 1 are reserved for GZP pairing and data. See nrf_gzp.h.
 #define NRF_GZLLDE_RXPERIOD_DIV_2 504 ///< RXPERIOD/2 on LU1 = timeslot period on nRF5x.
 
-#define APP_TIMER_PRESCALER       0   ///< Value of the RTC PRESCALER register.
-#define APP_TIMER_OP_QUEUE_SIZE   8u  ///< Size of timer operation queues.
-
-
 /**
  * @brief Initialize the BSP modules.
  */
 static void ui_init(void)
 {
-    // Initialize application timer.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    uint32_t err_code;
 
-    uint32_t err_code = bsp_init(BSP_INIT_LED,
-                                 APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
-                                 NULL);
+    // Initialize application timer.
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
+    err_code = bsp_init(BSP_INIT_LED, NULL);
     APP_ERROR_CHECK(err_code);
 
     // Set up logger

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(QDEC)
 #include <stdint.h>
@@ -79,7 +78,7 @@ void QDEC_IRQHandler(void)
     if ( nrf_qdec_event_check(NRF_QDEC_EVENT_SAMPLERDY) &&
          nrf_qdec_int_enable_check(NRF_QDEC_INT_SAMPLERDY_MASK) )
     {
-        nrf_qdec_event_clear(NRF_QDEC_EVENT_SAMPLERDY); 
+        nrf_qdec_event_clear(NRF_QDEC_EVENT_SAMPLERDY);
         NRF_LOG_DEBUG("Event: %s.\r\n", (uint32_t)EVT_TO_STR(NRF_QDEC_EVENT_SAMPLERDY));
 
         event.type = NRF_QDEC_EVENT_SAMPLERDY;
@@ -120,7 +119,7 @@ ret_code_t nrf_drv_qdec_init(const nrf_drv_qdec_config_t * p_config,
     if (m_state != NRF_DRV_STATE_UNINITIALIZED)
     {
         err_code = NRF_ERROR_INVALID_STATE;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -136,7 +135,7 @@ ret_code_t nrf_drv_qdec_init(const nrf_drv_qdec_config_t * p_config,
     else
     {
         err_code = NRF_ERROR_INVALID_PARAM;
-        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+        NRF_LOG_WARNING("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
         return err_code;
     }
 
@@ -177,7 +176,7 @@ ret_code_t nrf_drv_qdec_init(const nrf_drv_qdec_config_t * p_config,
     m_state = NRF_DRV_STATE_INITIALIZED;
 
     err_code = NRF_SUCCESS;
-    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)ERR_TO_STR(err_code));
+    NRF_LOG_INFO("Function: %s, error code: %s.\r\n", (uint32_t)__func__, (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
     return err_code;
 }
 

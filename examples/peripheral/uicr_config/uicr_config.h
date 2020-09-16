@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /* Template files (including this one) are application specific and therefore expected to
    be copied into the application project folder prior to its use! */
 

@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef APP_USBD_AUDIO_H__
 #define APP_USBD_AUDIO_H__
 
@@ -64,7 +63,7 @@ extern "C" {
  * @ingroup app_usbd
  *
  * @brief @tagAPI52840 Module with types, definitions, and API used by USB Audio class.
- * 
+ *
  * @details Reference specifications:
  * - "Universal Serial Bus Device Class Definition for Audio Devices"
  *   	Release 1.0,  March 18, 1998.
@@ -108,11 +107,6 @@ APP_USBD_CLASS_TYPEDEF(app_usbd_audio,            \
  * @endcode
  */
 typedef enum app_usbd_audio_user_event_e {
-    APP_USBD_AUDIO_USER_EVT_SUSPEND = 0, /**< User event SUSPEND */
-    APP_USBD_AUDIO_USER_EVT_RESUME,      /**< User event RESUME  */
-    APP_USBD_AUDIO_USER_EVT_START,       /**< User event START   */
-    APP_USBD_AUDIO_USER_EVT_STOP,        /**< User event STOP    */
-
     APP_USBD_AUDIO_USER_EVT_CLASS_REQ,   /**< User event CLASS_REQ */
     APP_USBD_AUDIO_USER_EVT_RX_DONE,     /**< User event RX_DONE   */
     APP_USBD_AUDIO_USER_EVT_TX_DONE,     /**< User event TX_DONE   */

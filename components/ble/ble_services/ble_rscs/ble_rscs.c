@@ -37,21 +37,23 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /* Attention!
-*  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile
+*  To maintain compliance with Nordic Semiconductor ASA's Bluetooth profile
 *  qualification listings, this section of source code must not be modified.
 */
+
 #include "sdk_common.h"
+
 #if NRF_MODULE_ENABLED(BLE_RSCS)
+
 #include "ble_rscs.h"
 #include <string.h>
-#include "ble_l2cap.h"
+#include "ble.h"
 #include "ble_srv_common.h"
 
-#define OPCODE_LENGTH 1                                                    /**< Length of opcode inside Running Speed and Cadence Measurement packet. */
-#define HANDLE_LENGTH 2                                                    /**< Length of handle inside Running Speed and Cadence Measurement packet. */
-#define MAX_RSCM_LEN  (BLE_L2CAP_MTU_DEF - OPCODE_LENGTH - HANDLE_LENGTH)  /**< Maximum size of a transmitted Running Speed and Cadence Measurement. */
+#define OPCODE_LENGTH 1                                                             /**< Length of opcode inside Running Speed and Cadence Measurement packet. */
+#define HANDLE_LENGTH 2                                                             /**< Length of handle inside Running Speed and Cadence Measurement packet. */
+#define MAX_RSCM_LEN  (BLE_GATT_ATT_MTU_DEFAULT - OPCODE_LENGTH - HANDLE_LENGTH)    /**< Maximum size of a transmitted Running Speed and Cadence Measurement. */
 
 // Running Speed and Cadence Measurement flag bits
 #define RSC_MEAS_FLAG_INSTANT_STRIDE_LEN_PRESENT (0x01 << 0)               /**< Instantaneous Stride Length Present flag bit. */

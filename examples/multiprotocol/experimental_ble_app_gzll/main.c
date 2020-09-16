@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
  * This file contains the source code for a sample application using both Nordic Gazell proprietary
  * radio protocol and Bluetooth Low Energy radio protocol. In Bluetooth mode, it behave as a Heart
@@ -110,7 +109,8 @@ int main(void)
     NRF_LOG_FLUSH();
 
     // Initialize timer module, making it use the scheduler.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
     bsp_init_app();
     ble_hrs_app_start();

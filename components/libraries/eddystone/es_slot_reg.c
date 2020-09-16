@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "es_slot_reg.h"
 
 #define ES_SLOT_NOT_CONFIGURED 0xab /** Value set in configured lists to indicate not configured slot. */

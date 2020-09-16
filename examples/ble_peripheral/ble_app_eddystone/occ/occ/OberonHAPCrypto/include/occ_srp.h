@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**@file
  * SRP is an augmented password-authenticated key agreement protocol,
  * specifically designed to work around existing patents. SRP allows the use of

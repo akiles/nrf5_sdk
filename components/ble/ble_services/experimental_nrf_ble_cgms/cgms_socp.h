@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_sdk_srv_cgms_socp Specific Operations Control Point
@@ -93,7 +92,7 @@ void cgms_socp_on_rw_auth_req(nrf_ble_cgms_t                       * p_cgms,
                               ble_gatts_evt_rw_authorize_request_t * p_auth_req);
 
 
-/**@brief Function for handling @ref BLE_EVT_TX_COMPLETE events.
+/**@brief Function for handling @ref BLE_GATTS_EVT_HVN_TX_COMPLETE events.
  *
  * @param[in] p_cgms Instance of the CGM Service.
  */

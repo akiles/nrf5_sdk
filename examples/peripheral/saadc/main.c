@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  * @defgroup nrf_adc_example main.c
  * @{
@@ -180,7 +179,7 @@ int main(void)
     err_code = nrf_drv_power_init(NULL);
     APP_ERROR_CHECK(err_code);
 
-    ret_code_t ret_code = nrf_pwr_mgmt_init(0);
+    ret_code_t ret_code = nrf_pwr_mgmt_init();
     APP_ERROR_CHECK(ret_code);
 
     NRF_LOG_INFO("SAADC HAL simple example.\r\n");

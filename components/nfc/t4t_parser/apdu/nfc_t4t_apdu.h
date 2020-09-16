@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #ifndef NFC_T4T_APDU_H__
 #define NFC_T4T_APDU_H__
 
@@ -170,7 +169,7 @@ __STATIC_INLINE void nfc_t4t_resp_apdu_clear(nfc_t4t_resp_apdu_t * const p_resp_
  * @retval NRF_ERROR_NULL           If any passed argument is NULL.
  */
 ret_code_t nfc_t4t_comm_apdu_encode(nfc_t4t_comm_apdu_t const * const p_cmd_apdu,
-                                    uint8_t                         * p_raw_data, 
+                                    uint8_t                         * p_raw_data,
                                     uint16_t                  * const p_len);
 
 /**

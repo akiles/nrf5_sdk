@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /** @file
  *
  * @defgroup ble_sdk_lib_conn_params Connection Parameters Negotiation
@@ -117,7 +116,7 @@ uint32_t ble_conn_params_stop(void);
  *
  *  @details Use this function to change the connection parameters to a new set of parameter
  *       (ie different from the ones given at init of the module).
- *       This function is usefull for scenario where most of the time the application
+ *       This function is useful for scenario where most of the time the application
  *       needs a relatively big connection interval, and just sometimes, for a temporary
  *       period requires shorter connection interval, for example to transfer a higher
  *       amount of data.

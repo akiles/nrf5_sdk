@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include <stdbool.h>
 #include <stdint.h>
 #include "es_security.h"
@@ -524,7 +523,7 @@ ret_code_t es_security_init(es_security_msg_cb_t security_callback)
     {
         m_security_slot[i].timing.time_counter = APP_CONFIG_TIMING_INIT_VALUE;
     }
-    err_code = es_stopwatch_create(&m_seconds_passed_sw_id, APP_TIMER_TICKS(1000, APP_TIMER_PRESCALER));
+    err_code = es_stopwatch_create(&m_seconds_passed_sw_id, APP_TIMER_TICKS(1000));
     APP_ERROR_CHECK(err_code);
 
     return NRF_SUCCESS;

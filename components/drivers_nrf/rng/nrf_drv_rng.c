@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(RNG)
 
@@ -228,11 +227,13 @@ ret_code_t nrf_drv_rng_rand(uint8_t * p_buff, uint8_t length)
 #endif // SOFTDEVICE_PRESENT
     ASSERT((err_code == NRF_SUCCESS) || (err_code == NRF_ERROR_NOT_FOUND));
 
+#if defined(RNG_CONFIG_RANDOM_NUMBER_LOG_ENABLED) && (RNG_CONFIG_RANDOM_NUMBER_LOG_ENABLED != 0)
     NRF_LOG_DEBUG("Rand buffer data:\r\n");
     NRF_LOG_HEXDUMP_DEBUG((uint8_t *)p_buff, length);
+#endif // RNG_CONFIG_RANDOM_NUMBER_LOG_ENABLED
     NRF_LOG_WARNING("Function: %s, error code: %s.\r\n",
                     (uint32_t)__func__,
-                    (uint32_t)ERR_TO_STR(err_code));
+                    (uint32_t)NRF_LOG_ERROR_STRING_GET(err_code));
 
     return err_code;
 }

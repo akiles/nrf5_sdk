@@ -37,7 +37,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /*!
  * @brief ChaCha20 is a stream cipher developed by Daniel J. Bernstein based on the 20-round cipher Salsa20/20.
  */
