@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -42,7 +42,10 @@
 
 #if NRFX_CHECK(NRFX_UARTE_ENABLED)
 
-#if !(NRFX_CHECK(NRFX_UARTE0_ENABLED) || NRFX_CHECK(NRFX_UARTE1_ENABLED))
+#if !(NRFX_CHECK(NRFX_UARTE0_ENABLED) || \
+      NRFX_CHECK(NRFX_UARTE1_ENABLED) || \
+      NRFX_CHECK(NRFX_UARTE2_ENABLED) || \
+      NRFX_CHECK(NRFX_UARTE3_ENABLED))
 #error "No enabled UARTE instances. Check <nrfx_config.h>."
 #endif
 
@@ -73,9 +76,23 @@
 #define UARTE1_LENGTH_VALIDATE(...)  0
 #endif
 
+#if NRFX_CHECK(NRFX_UARTE2_ENABLED)
+#define UARTE2_LENGTH_VALIDATE(...)  UARTEX_LENGTH_VALIDATE(UARTE2, __VA_ARGS__)
+#else
+#define UARTE2_LENGTH_VALIDATE(...)  0
+#endif
+
+#if NRFX_CHECK(NRFX_UARTE3_ENABLED)
+#define UARTE3_LENGTH_VALIDATE(...)  UARTEX_LENGTH_VALIDATE(UARTE3, __VA_ARGS__)
+#else
+#define UARTE3_LENGTH_VALIDATE(...)  0
+#endif
+
 #define UARTE_LENGTH_VALIDATE(drv_inst_idx, length)     \
     (UARTE0_LENGTH_VALIDATE(drv_inst_idx, length, 0) || \
-     UARTE1_LENGTH_VALIDATE(drv_inst_idx, length, 0))
+     UARTE1_LENGTH_VALIDATE(drv_inst_idx, length, 0) || \
+     UARTE2_LENGTH_VALIDATE(drv_inst_idx, length, 0) || \
+     UARTE3_LENGTH_VALIDATE(drv_inst_idx, length, 0))
 
 
 typedef struct
@@ -85,7 +102,7 @@ typedef struct
     uint8_t            const * p_tx_buffer;
     uint8_t                  * p_rx_buffer;
     uint8_t                  * p_rx_secondary_buffer;
-    size_t                     tx_buffer_length;
+    volatile size_t            tx_buffer_length;
     size_t                     rx_buffer_length;
     size_t                     rx_secondary_buffer_length;
     nrfx_drv_state_t           state;
@@ -205,6 +222,12 @@ nrfx_err_t nrfx_uarte_init(nrfx_uarte_t const *        p_instance,
         #endif
         #if NRFX_CHECK(NRFX_UARTE1_ENABLED)
         nrfx_uarte_1_irq_handler,
+        #endif
+        #if NRFX_CHECK(NRFX_UARTE2_ENABLED)
+        nrfx_uarte_2_irq_handler,
+        #endif
+        #if NRFX_CHECK(NRFX_UARTE3_ENABLED)
+        nrfx_uarte_3_irq_handler,
         #endif
     };
     if (nrfx_prs_acquire(p_instance->p_reg,
@@ -497,6 +520,14 @@ void nrfx_uarte_tx_abort(nrfx_uarte_t const * p_instance)
 
 void nrfx_uarte_rx_abort(nrfx_uarte_t const * p_instance)
 {
+    uarte_control_block_t * p_cb = &m_cb[p_instance->drv_inst_idx];
+
+    // Short between ENDRX event and STARTRX task must be disabled before
+    // aborting transmission.
+    if (p_cb->rx_secondary_buffer_length != 0)
+    {
+        nrf_uarte_shorts_disable(p_instance->p_reg, NRF_UARTE_SHORT_ENDRX_STARTRX);
+    }
     nrf_uarte_task_trigger(p_instance->p_reg, NRF_UARTE_TASK_STOPRX);
     NRFX_LOG_INFO("RX transaction aborted.");
 }
@@ -529,7 +560,7 @@ static void uarte_irq_handler(NRF_UARTE_Type *        p_uarte,
         // will not be equal to the buffer length. Interrupted transfer is ignored.
         if (amount == p_cb->rx_buffer_length)
         {
-            if (p_cb->rx_secondary_buffer_length)
+            if (p_cb->rx_secondary_buffer_length != 0)
             {
                 uint8_t * p_data = p_cb->p_rx_buffer;
                 nrf_uarte_shorts_disable(p_uarte, NRF_UARTE_SHORT_ENDRX_STARTRX);
@@ -549,9 +580,13 @@ static void uarte_irq_handler(NRF_UARTE_Type *        p_uarte,
     if (nrf_uarte_event_check(p_uarte, NRF_UARTE_EVENT_RXTO))
     {
         nrf_uarte_event_clear(p_uarte, NRF_UARTE_EVENT_RXTO);
-        if (p_cb->rx_buffer_length)
+
+        if (p_cb->rx_buffer_length != 0)
         {
             p_cb->rx_buffer_length = 0;
+            // In case of using double-buffered reception both variables storing buffer length
+            // have to be cleared to prevent incorrect behaviour of the driver.
+            p_cb->rx_secondary_buffer_length = 0;
             rx_done_event(p_cb, nrf_uarte_rx_amount_get(p_uarte), p_cb->p_rx_buffer);
         }
     }
@@ -559,7 +594,7 @@ static void uarte_irq_handler(NRF_UARTE_Type *        p_uarte,
     if (nrf_uarte_event_check(p_uarte, NRF_UARTE_EVENT_ENDTX))
     {
         nrf_uarte_event_clear(p_uarte, NRF_UARTE_EVENT_ENDTX);
-        if (p_cb->tx_buffer_length)
+        if (p_cb->tx_buffer_length != 0)
         {
             tx_done_event(p_cb, nrf_uarte_tx_amount_get(p_uarte));
         }
@@ -577,6 +612,20 @@ void nrfx_uarte_0_irq_handler(void)
 void nrfx_uarte_1_irq_handler(void)
 {
     uarte_irq_handler(NRF_UARTE1, &m_cb[NRFX_UARTE1_INST_IDX]);
+}
+#endif
+
+#if NRFX_CHECK(NRFX_UARTE2_ENABLED)
+void nrfx_uarte_2_irq_handler(void)
+{
+    uarte_irq_handler(NRF_UARTE2, &m_cb[NRFX_UARTE2_INST_IDX]);
+}
+#endif
+
+#if NRFX_CHECK(NRFX_UARTE3_ENABLED)
+void nrfx_uarte_3_irq_handler(void)
+{
+    uarte_irq_handler(NRF_UARTE3, &m_cb[NRFX_UARTE3_INST_IDX]);
 }
 #endif
 

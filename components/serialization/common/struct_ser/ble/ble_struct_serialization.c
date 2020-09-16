@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -46,10 +46,20 @@
 #include "ble_types.h"
 #include "ble.h"
 #include "cond_field_serialization.h"
-#ifdef SER_CONNECTIVITY
-#include "conn_ble_gap_sec_keys.h"
-#endif
+#include "ser_config.h"
 #include <string.h>
+
+#if NRF_SD_BLE_API_VERSION > 5
+#ifdef UNIT_TEST
+#include "conn_ble_gap_sec_keys.h"
+#include "app_ble_gap_sec_keys.h"
+bool serialization_connectivity_role = true;
+#elif defined(SER_CONNECTIVITY)
+#include "conn_ble_gap_sec_keys.h"
+#else
+#include "app_ble_gap_sec_keys.h"
+#endif /* UNIT_TEST */
+#endif /* NRF_SD_BLE_API_VERSION > 5 */
 
 
 uint32_t ble_uuid_t_enc(void const * const p_void_struct,
@@ -471,8 +481,26 @@ uint32_t ble_data_t_enc(void const * const p_void_struct,
 {
     SER_STRUCT_ENC_BEGIN(ble_data_t);
 
-    uint32_t buf_id = (uint32_t)p_struct->p_data;
-    SER_PUSH_uint32(&buf_id);
+    int buf_id = 0;
+#if NRF_SD_BLE_API_VERSION > 5
+#ifdef UNIT_TEST
+    if (serialization_connectivity_role)
+    {
+        buf_id = conn_ble_gap_ble_data_buf_free(p_struct->p_data);
+    }
+    else
+    {
+        buf_id = app_ble_gap_adv_buf_register(p_struct->p_data);
+        SER_ASSERT(buf_id >= 0, NRF_ERROR_NO_MEM);
+    }
+#elif defined(SER_CONNECTIVITY)
+    buf_id = conn_ble_gap_ble_data_buf_free(p_struct->p_data);
+#else
+    buf_id = app_ble_gap_adv_buf_register(p_struct->p_data);
+    SER_ASSERT(buf_id >= 0, NRF_ERROR_NO_MEM);
+#endif
+#endif /* NRF_SD_BLE_API_VERSION > 5 */
+    SER_PUSH_uint32((uint32_t *)&buf_id);
     SER_PUSH_len16data(p_struct->p_data, p_struct->len);
 
     SER_STRUCT_ENC_END;
@@ -487,12 +515,29 @@ uint32_t ble_data_t_dec(uint8_t const * const p_buf,
 
     uint32_t buf_id;
     SER_PULL_uint32(&buf_id);
-#if defined(SER_CONNECTIVITY) && NRF_SD_BLE_API_VERSION > 5
+	p_struct->len = SER_MAX_ADV_DATA;
+#if NRF_SD_BLE_API_VERSION > 5
+#ifdef UNIT_TEST
+    if (serialization_connectivity_role)
+    {
+        if (buf_id && (p_struct->p_data == NULL))
+        {
+            p_struct->p_data = conn_ble_gap_ble_data_buf_alloc(buf_id);
+        }
+    }
+    else
+    {
+        p_struct->p_data = app_ble_gap_adv_buf_unregister((int)buf_id, true);
+    }
+#elif defined(SER_CONNECTIVITY)
     if (buf_id && (p_struct->p_data == NULL))
     {
         p_struct->p_data = conn_ble_gap_ble_data_buf_alloc(buf_id);
     }
+#else
+    p_struct->p_data = app_ble_gap_adv_buf_unregister(buf_id, true);
 #endif
+#endif /* NRF_SD_BLE_API_VERSION > 5*/
     SER_PULL_len16data(&p_struct->p_data, &p_struct->len);
 
     SER_STRUCT_DEC_END;

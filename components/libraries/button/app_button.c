@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -82,7 +82,7 @@ static void detection_delay_timeout_handler(void * p_context)
             bool pin_is_set = nrf_drv_gpiote_in_is_set(p_btn->pin_no);
             if ((m_pin_state & (1ULL << p_btn->pin_no)) == (((uint64_t)pin_is_set) << p_btn->pin_no))
             {
-                uint32_t transition = !(pin_is_set ^ (p_btn->active_state == APP_BUTTON_ACTIVE_HIGH));
+                uint64_t transition = !(pin_is_set ^ (p_btn->active_state == APP_BUTTON_ACTIVE_HIGH));
 
                 if (p_btn->button_handler)
                 {

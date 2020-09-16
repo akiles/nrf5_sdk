@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -166,6 +166,77 @@ extern "C" {
 //------------------------------------------------------------------------------
 
 /**
+ * @brief Atomic 32-bit unsigned type.
+ */
+#define nrfx_atomic_t
+
+/**
+ * @brief Macro for storing a value to an atomic object and returning its previous value.
+ *
+ * @param[in] p_data  Atomic memory pointer.
+ * @param[in] value   Value to store.
+ *
+ * @return Previous value of the atomic object.
+ */
+#define NRFX_ATOMIC_FETCH_STORE(p_data, value)
+
+/**
+ * @brief Macro for running a bitwise OR operation on an atomic object and returning its previous value.
+ *
+ * @param[in] p_data  Atomic memory pointer.
+ * @param[in] value   Value of the second operand in the OR operation.
+ *
+ * @return Previous value of the atomic object.
+ */
+#define NRFX_ATOMIC_FETCH_OR(p_data, value)
+
+/**
+ * @brief Macro for running a bitwise AND operation on an atomic object
+ *        and returning its previous value.
+ *
+ * @param[in] p_data  Atomic memory pointer.
+ * @param[in] value   Value of the second operand in the AND operation.
+ *
+ * @return Previous value of the atomic object.
+ */
+#define NRFX_ATOMIC_FETCH_AND(p_data, value)
+
+/**
+ * @brief Macro for running a bitwise XOR operation on an atomic object
+ *        and returning its previous value.
+ *
+ * @param[in] p_data  Atomic memory pointer.
+ * @param[in] value   Value of the second operand in the XOR operation.
+ *
+ * @return Previous value of the atomic object.
+ */
+#define NRFX_ATOMIC_FETCH_XOR(p_data, value)
+
+/**
+ * @brief Macro for running an addition operation on an atomic object
+ *        and returning its previous value.
+ *
+ * @param[in] p_data  Atomic memory pointer.
+ * @param[in] value   Value of the second operand in the ADD operation.
+ *
+ * @return Previous value of the atomic object.
+ */
+#define NRFX_ATOMIC_FETCH_ADD(p_data, value)
+
+/**
+ * @brief Macro for running a subtraction operation on an atomic object
+ *        and returning its previous value.
+ *
+ * @param[in] p_data  Atomic memory pointer.
+ * @param[in] value   Value of the second operand in the SUB operation.
+ *
+ * @return Previous value of the atomic object.
+ */
+#define NRFX_ATOMIC_FETCH_SUB(p_data, value)
+
+//------------------------------------------------------------------------------
+
+/**
  * @brief When set to a non-zero value, this macro specifies that the
  *        @ref nrfx_error_codes and the @ref nrfx_err_t type itself are defined
  *        in a customized way and the default definitions from @c <nrfx_error.h>
@@ -174,6 +245,16 @@ extern "C" {
 #define NRFX_CUSTOM_ERROR_CODES 0
 
 //------------------------------------------------------------------------------
+
+/**
+ * @brief Bitmask defining DPPI channels reserved to be used outside of nrfx.
+ */
+#define NRFX_DPPI_CHANNELS_USED  0
+
+/**
+ * @brief Bitmask defining DPPI groups reserved to be used outside of nrfx.
+ */
+#define NRFX_DPPI_GROUPS_USED    0
 
 /**
  * @brief Bitmask defining PPI channels reserved to be used outside of nrfx.

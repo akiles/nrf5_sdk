@@ -46,9 +46,9 @@ SRC_FILES += \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_clock.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_uart.c \
   $(SDK_ROOT)/modules/nrfx/hal/nrf_nvmc.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_gpiote.c \
-  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/prs/nrfx_prs.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uart.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uarte.c \
@@ -83,7 +83,7 @@ SRC_FILES += \
 INC_FOLDERS += \
   $(SDK_ROOT)/components/nfc/ndef/connection_handover/ble_pair_msg \
   $(SDK_ROOT)/components/nfc/t4t_parser/tlv \
-  $(SDK_ROOT)/components/drivers_nrf/usbd \
+  $(SDK_ROOT)/components/libraries/experimental_task_manager \
   $(SDK_ROOT)/components/libraries/gpiote \
   $(SDK_ROOT)/components/ble/ble_services/ble_lbs_c \
   $(PROJ_DIR) \
@@ -101,6 +101,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/nfc/t4t_lib \
   $(SDK_ROOT)/components/libraries/scheduler \
   $(SDK_ROOT)/components/iot/iot_timer \
+  $(SDK_ROOT)/components/ble/ble_services/ble_tps \
   $(SDK_ROOT)/components/iot/medium/commissioning \
   $(SDK_ROOT)/components/ble/ble_services/ble_bas \
   $(SDK_ROOT)/components/nfc/t4t_parser/cc_file \
@@ -112,13 +113,11 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/softdevice/s140/headers/nrf52 \
   $(SDK_ROOT)/components/libraries/bsp \
   $(SDK_ROOT)/components/libraries/mpu \
-  $(SDK_ROOT)/components/libraries/spi_mngr \
   $(SDK_ROOT)/components/nfc/ndef/connection_handover/hs_rec \
   $(SDK_ROOT)/components/iot/common \
   $(SDK_ROOT)/components/libraries/timer \
   $(SDK_ROOT)/components/libraries/usbd/class/cdc/acm \
   $(SDK_ROOT)/components/iot/ble_6lowpan \
-  $(SDK_ROOT)/components/libraries/experimental_task_manager \
   $(SDK_ROOT)/components/ble/ble_services/ble_gls \
   $(SDK_ROOT)/components/nfc/ndef/launchapp \
   $(SDK_ROOT)/components/boards \
@@ -141,14 +140,12 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/pwm \
   $(SDK_ROOT)/components/libraries/hci \
   $(SDK_ROOT)/components/libraries/usbd/class/hid/mouse \
-  $(SDK_ROOT)/components/nfc/t2t_lib/hal_t2t \
   $(SDK_ROOT)/components/ble/ble_services/ble_hids \
   ../config \
   $(SDK_ROOT)/components/ble/ble_services/ble_ipsp \
   $(SDK_ROOT)/modules/nrfx/hal \
   $(SDK_ROOT)/components/libraries/bootloader/ble_dfu \
   $(SDK_ROOT)/components/libraries/pwr_mgmt \
-  $(SDK_ROOT)/components/nfc/t4t_lib/hal_t4t \
   $(SDK_ROOT)/components/nfc/ndef/connection_handover/ble_pair_lib \
   $(SDK_ROOT)/components/libraries/csense \
   $(SDK_ROOT)/components/libraries/csense_drv \
@@ -225,7 +222,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/fstorage \
   $(SDK_ROOT)/components/iot/ipv6_stack/udp \
   $(SDK_ROOT)/components/nfc/ndef/generic/record \
-  $(SDK_ROOT)/components/ble/ble_services/ble_tps \
+  $(SDK_ROOT)/components/libraries/spi_mngr \
   $(SDK_ROOT)/components/nfc/ndef/conn_hand_parser/ac_rec_parser \
 
 # Libraries common to all targets
@@ -323,8 +320,8 @@ flash: default
 
 # Flash softdevice
 flash_softdevice:
-	@echo Flashing: s140_nrf52_6.1.0_softdevice.hex
-	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s140/hex/s140_nrf52_6.1.0_softdevice.hex --sectorerase
+	@echo Flashing: s140_nrf52_6.1.1_softdevice.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s140/hex/s140_nrf52_6.1.1_softdevice.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

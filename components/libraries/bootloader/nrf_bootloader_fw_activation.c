@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -72,7 +72,7 @@ static uint32_t image_copy(uint32_t dst_addr,
 {
     if (src_addr == dst_addr)
     {
-        NRF_LOG_DEBUG("No copy needed src_addr: 0x%x, dst_addr: 0x%x", src_addr, dst_addr);
+        NRF_LOG_DEBUG("No copy needed");
         return NRF_SUCCESS;
     }
 
@@ -376,7 +376,6 @@ nrf_bootloader_fw_activation_result_t nrf_bootloader_fw_activate(void)
     nrf_dfu_bank_t                      * p_bank    = &s_dfu_settings.bank_1;
     bool                                  sd_update = false;
 
-
     NRF_LOG_DEBUG("Enter nrf_bootloader_fw_activate");
 
     switch (p_bank->bank_code)
@@ -421,7 +420,7 @@ nrf_bootloader_fw_activation_result_t nrf_bootloader_fw_activate(void)
     if (ret_val == NRF_SUCCESS)
     {
         result = ACTIVATION_SUCCESS;
-        if (sd_update && nrf_dfu_app_is_valid(true))
+        if (sd_update && (s_dfu_settings.bank_0.bank_code == NRF_DFU_BANK_VALID_APP))
         {
             //If SD was updated and application is valid we want to stay in DFU to receive application.
             NRF_LOG_DEBUG("A SoftDevice has just been activated. It's likely that an application will come immediately");

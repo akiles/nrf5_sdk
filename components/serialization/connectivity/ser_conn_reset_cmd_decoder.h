@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -58,7 +58,7 @@
 #define SER_CONN_RESET_CMD_DECODER_H__
 
 #include <stdint.h>
-
+#include <stdbool.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -68,8 +68,9 @@ extern "C" {
  * @details     The function decodes encoded system reset command and performs software reset.
  *              This command does not send back the Command Response packet to the Application Chip.
  */
-void ser_conn_reset_command_process(void);
+void ser_conn_generic_command_process(uint8_t * p_command, uint16_t command_len);
 
+bool soft_reset_trigger(void);
 
 #ifdef __cplusplus
 }

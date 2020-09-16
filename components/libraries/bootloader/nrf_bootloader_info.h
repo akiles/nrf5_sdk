@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -86,13 +86,11 @@ extern "C" {
 
 
 /**
- * @brief Bootloader start address in UICR.
+ * @brief Location of the pointer to the start of the bootloader.
  *
- * Register location in UICR where the bootloader start address is stored.
- *
- * @note If the value at the given location is 0xFFFFFFFF, the bootloader address is not set.
+ * See also @c BOOTLOADER_ADDRESS in @c app_util.h.
  */
-#define NRF_UICR_BOOTLOADER_START_ADDRESS       (NRF_UICR_BASE + 0x14)
+#define NRF_UICR_BOOTLOADER_START_ADDRESS       (MBR_BOOTLOADER_ADDR)
 
 
 // The following macros are for accessing the SoftDevice information structure,
@@ -110,7 +108,7 @@ extern "C" {
 #define SD_OFFSET_GET_UINT8(baseaddr, offset)  (*((uint8_t *)  SD_INFO_ABS_OFFSET_GET(baseaddr, offset)))
 
 
-#ifdef BLE_STACK_SUPPORT_REQD
+#if defined(BLE_STACK_SUPPORT_REQD) || defined(ANT_STACK_SUPPORT_REQD)
 #include "nrf_sdm.h"
 #else
 /** @brief The offset inside the SoftDevice at which the information struct is placed.
@@ -168,15 +166,17 @@ extern "C" {
 #define SD_MAJOR_VERSION_EXTRACT(raw_version) ((raw_version)/SD_MAJOR_VERSION_MULTIPLIER)
 
 
-#define BOOTLOADER_DFU_GPREGRET_MASK            (0xB0)      /**< Magic pattern written to GPREGRET register to signal between main app and DFU. The 3 lower bits are assumed to be used for signalling purposes.*/
+#define BOOTLOADER_DFU_GPREGRET_MASK            (0xF8)      /**< Mask for GPGPREGRET bits used for the magic pattern written to GPREGRET register to signal between main app and DFU. */
+#define BOOTLOADER_DFU_GPREGRET                 (0xB0)      /**< Magic pattern written to GPREGRET register to signal between main app and DFU. The 3 lower bits are assumed to be used for signalling purposes.*/
 #define BOOTLOADER_DFU_START_BIT_MASK           (0x01)      /**< Bit mask to signal from main application to enter DFU mode using a buttonless service. */
 
-#define BOOTLOADER_DFU_GPREGRET2_MASK           (0xA8)      /**< Magic pattern written to GPREGRET2 register to signal between main app and DFU. The 3 lower bits are assumed to be used for signalling purposes.*/
+#define BOOTLOADER_DFU_GPREGRET2_MASK           (0xF8)      /**< Mask for GPGPREGRET2 bits used for the magic pattern written to GPREGRET2 register to signal between main app and DFU. */
+#define BOOTLOADER_DFU_GPREGRET2                (0xA8)      /**< Magic pattern written to GPREGRET2 register to signal between main app and DFU. The 3 lower bits are assumed to be used for signalling purposes.*/
 #define BOOTLOADER_DFU_SKIP_CRC_BIT_MASK        (0x01)      /**< Bit mask to signal from main application that CRC-check is not needed for image verification. */
 
 
-#define BOOTLOADER_DFU_START    (BOOTLOADER_DFU_GPREGRET_MASK | BOOTLOADER_DFU_START_BIT_MASK)      /**< Magic number to signal that bootloader should enter DFU mode because of signal from Buttonless DFU in main app.*/
-#define BOOTLOADER_DFU_SKIP_CRC (BOOTLOADER_DFU_GPREGRET2_MASK | BOOTLOADER_DFU_SKIP_CRC_BIT_MASK)  /**< Magic number to signal that CRC can be skipped due to low power modes.*/
+#define BOOTLOADER_DFU_START    (BOOTLOADER_DFU_GPREGRET | BOOTLOADER_DFU_START_BIT_MASK)      /**< Magic number to signal that bootloader should enter DFU mode because of signal from Buttonless DFU in main app.*/
+#define BOOTLOADER_DFU_SKIP_CRC (BOOTLOADER_DFU_GPREGRET2 | BOOTLOADER_DFU_SKIP_CRC_BIT_MASK)  /**< Magic number to signal that CRC can be skipped due to low power modes.*/
 
 
 /** @brief Macro based on @c NRF_DFU_DEBUG_VERSION that can be checked for true/false instead of defined/not defined.

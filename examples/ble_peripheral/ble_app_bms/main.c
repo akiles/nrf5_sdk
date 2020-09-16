@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -316,7 +316,8 @@ static void bond_delete(uint16_t conn_handle, void * p_context)
     {
         NRF_LOG_DEBUG("Attempting to delete bond.");
         err_code = pm_peer_id_get(conn_handle, &peer_id);
-        if (err_code == NRF_SUCCESS)
+        APP_ERROR_CHECK(err_code);
+        if (peer_id != PM_PEER_ID_INVALID)
         {
             err_code = pm_peer_delete(peer_id);
             APP_ERROR_CHECK(err_code);

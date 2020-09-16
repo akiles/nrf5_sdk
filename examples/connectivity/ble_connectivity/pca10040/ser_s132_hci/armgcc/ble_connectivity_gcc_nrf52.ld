@@ -6,7 +6,7 @@ GROUP(-lgcc -lc -lnosys)
 MEMORY
 {
   FLASH (rx) : ORIGIN = 0x26000, LENGTH = 0x5a000
-  RAM (rwx) :  ORIGIN = 0x2000b8a8, LENGTH = 0x4758
+  RAM (rwx) :  ORIGIN = 0x2000a8a8, LENGTH = 0x5758
 }
 
 SECTIONS
@@ -69,12 +69,6 @@ SECTIONS
     KEEP(*(.nrf_balloc))
     PROVIDE(__stop_nrf_balloc = .);
   } > FLASH
-  .sdh_stack_observers :
-  {
-    PROVIDE(__start_sdh_stack_observers = .);
-    KEEP(*(SORT(.sdh_stack_observers*)))
-    PROVIDE(__stop_sdh_stack_observers = .);
-  } > FLASH
   .sdh_req_observers :
   {
     PROVIDE(__start_sdh_req_observers = .);
@@ -87,6 +81,12 @@ SECTIONS
     KEEP(*(SORT(.sdh_state_observers*)))
     PROVIDE(__stop_sdh_state_observers = .);
   } > FLASH
+  .sdh_stack_observers :
+  {
+    PROVIDE(__start_sdh_stack_observers = .);
+    KEEP(*(SORT(.sdh_stack_observers*)))
+    PROVIDE(__stop_sdh_stack_observers = .);
+  } > FLASH
   .log_backends :
   {
     PROVIDE(__start_log_backends = .);
@@ -95,5 +95,6 @@ SECTIONS
   } > FLASH
 
 } INSERT AFTER .text
+
 
 INCLUDE "nrf_common.ld"

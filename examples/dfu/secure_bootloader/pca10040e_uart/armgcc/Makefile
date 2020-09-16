@@ -40,7 +40,9 @@ SRC_FILES += \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_nvic.c \
   $(SDK_ROOT)/modules/nrfx/hal/nrf_nvmc.c \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_soc.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/prs/nrfx_prs.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uart.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uarte.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_ecc.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_ecdsa.c \
@@ -117,6 +119,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/external/fprintf \
   $(SDK_ROOT)/components/libraries/crypto \
   ../config \
+  $(SDK_ROOT)/components/libraries/crypto/backend/optiga \
   $(SDK_ROOT)/components/libraries/scheduler \
   $(SDK_ROOT)/components/libraries/slip \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
@@ -132,7 +135,7 @@ INC_FOLDERS += \
 
 # Libraries common to all targets
 LIB_FILES += \
-  $(SDK_ROOT)/external/nrf_oberon/lib/nrf52/liboberon_no_fp_2.0.5.a \
+  $(SDK_ROOT)/external/nrf_oberon/lib/cortex-m4/soft-float/liboberon_2.0.7.a \
   $(SDK_ROOT)/external/micro-ecc/nrf52nf_armgcc/armgcc/micro_ecc_lib_nrf52.a \
 
 # Optimization flags
@@ -146,9 +149,11 @@ CFLAGS += -DBOARD_PCA10040
 CFLAGS += -DCONFIG_GPIO_AS_PINRESET
 CFLAGS += -DDEVELOP_IN_NRF52832
 CFLAGS += -DFLOAT_ABI_SOFT
+CFLAGS += -DMBR_PRESENT
 CFLAGS += -DNRF52810_XXAA
 CFLAGS += -DNRF52_PAN_74
-CFLAGS += -DNRF_DFU_SETTINGS_VERSION=1
+CFLAGS += -DNRFX_COREDEP_DELAY_US_LOOP_CYCLES=3
+CFLAGS += -DNRF_DFU_SETTINGS_VERSION=2
 CFLAGS += -DSVC_INTERFACE_CALL_AS_NORMAL_FUNCTION
 CFLAGS += -DuECC_ENABLE_VLI_API=0
 CFLAGS += -DuECC_OPTIMIZATION_LEVEL=3
@@ -161,7 +166,7 @@ CFLAGS += -Wall -Werror
 CFLAGS += -mfloat-abi=soft
 # keep every function in a separate section, this allows linker to discard unused ones
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -fno-builtin -fshort-enums -flto
+CFLAGS += -fno-builtin -fshort-enums
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
@@ -175,9 +180,11 @@ ASMFLAGS += -DBOARD_PCA10040
 ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
 ASMFLAGS += -DDEVELOP_IN_NRF52832
 ASMFLAGS += -DFLOAT_ABI_SOFT
+ASMFLAGS += -DMBR_PRESENT
 ASMFLAGS += -DNRF52810_XXAA
 ASMFLAGS += -DNRF52_PAN_74
-ASMFLAGS += -DNRF_DFU_SETTINGS_VERSION=1
+ASMFLAGS += -DNRFX_COREDEP_DELAY_US_LOOP_CYCLES=3
+ASMFLAGS += -DNRF_DFU_SETTINGS_VERSION=2
 ASMFLAGS += -DSVC_INTERFACE_CALL_AS_NORMAL_FUNCTION
 ASMFLAGS += -DuECC_ENABLE_VLI_API=0
 ASMFLAGS += -DuECC_OPTIMIZATION_LEVEL=3
@@ -232,8 +239,8 @@ flash: default
 
 # Flash softdevice
 flash_mbr:
-	@echo Flashing: mbr_nrf52_2.2.2_mbr.hex
-	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/mbr/nrf52810/hex/mbr_nrf52_2.2.2_mbr.hex --sectorerase
+	@echo Flashing: mbr_nrf52_2.4.1_mbr.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/mbr/nrf52810/hex/mbr_nrf52_2.4.1_mbr.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

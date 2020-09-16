@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -91,19 +91,6 @@ uint32_t nrf_dfu_app_start_address(void);
  * @return  The start address of the SoftDevivce.
  */
 uint32_t nrf_dfu_softdevice_start_address(void);
-
-
-/** @brief Function for checking if the main application is valid.
- *
- * @details     This function checks if there is a valid application
- *              located at Bank 0.
- *
- * @param[in]   do_crc Perform CRC check on application.
- *
- * @retval  true  If a valid application has been detected.
- * @retval  false If there is no valid application.
- */
-bool nrf_dfu_app_is_valid(bool do_crc);
 
 
 /** @brief Function for finding and preparing a place in flash in which to store a DFU update.

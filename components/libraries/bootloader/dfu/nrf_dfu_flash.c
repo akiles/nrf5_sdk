@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -97,7 +97,7 @@ ret_code_t nrf_dfu_flash_init(bool sd_irq_initialized)
     nrf_fstorage_api_t * p_api_impl;
 
     /* Setup the desired API implementation. */
-#ifdef BLE_STACK_SUPPORT_REQD
+#if defined(BLE_STACK_SUPPORT_REQD) || defined(ANT_STACK_SUPPORT_REQD)
     if (sd_irq_initialized)
     {
         NRF_LOG_DEBUG("Initializing nrf_fstorage_sd backend.");

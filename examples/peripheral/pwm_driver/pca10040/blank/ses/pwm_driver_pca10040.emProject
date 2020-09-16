@@ -25,6 +25,7 @@
       gcc_debugging_level="Level 3"      linker_output_format="hex"
       linker_printf_width_precision_supported="Yes"
       linker_printf_fmt_level="long"
+      linker_scanf_fmt_level="long"
       linker_section_placement_file="flash_placement.xml"
       linker_section_placement_macros="FLASH_PH_START=0x0;FLASH_PH_SIZE=0x80000;RAM_PH_START=0x20000000;RAM_PH_SIZE=0x10000;FLASH_START=0x0;FLASH_SIZE=0x80000;RAM_START=0x20000000;RAM_SIZE=0x10000"
       linker_section_placements_segments="FLASH RX 0x0 0x80000;RAM RWX 0x20000000 0x10000"
@@ -66,9 +67,9 @@
       <file file_name="../../../../../../integration/nrfx/legacy/nrf_drv_uart.c" />
       <file file_name="../../../../../../components/drivers_nrf/nrf_soc_nosd/nrf_nvic.c" />
       <file file_name="../../../../../../components/drivers_nrf/nrf_soc_nosd/nrf_soc.c" />
+      <file file_name="../../../../../../modules/nrfx/soc/nrfx_atomic.c" />
       <file file_name="../../../../../../modules/nrfx/drivers/src/nrfx_clock.c" />
       <file file_name="../../../../../../modules/nrfx/drivers/src/nrfx_gpiote.c" />
-      <file file_name="../../../../../../modules/nrfx/drivers/src/nrfx_power_clock.c" />
       <file file_name="../../../../../../modules/nrfx/drivers/src/prs/nrfx_prs.c" />
       <file file_name="../../../../../../modules/nrfx/drivers/src/nrfx_pwm.c" />
       <file file_name="../../../../../../modules/nrfx/drivers/src/nrfx_uart.c" />

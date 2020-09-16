@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -42,6 +42,7 @@
 #include "ser_hal_transport.h"
 #include "ser_sd_transport.h"
 
+#define GENERIC_CMD_RESET_SIZE 1
 
 uint32_t conn_systemreset(void)
 {
@@ -56,8 +57,9 @@ uint32_t conn_systemreset(void)
     }
 
     SER_ASSERT_LENGTH_LEQ(SER_PKT_TYPE_SIZE, tx_buf_len);
-    p_tx_buf[SER_PKT_TYPE_POS] = SER_PKT_TYPE_RESET_CMD;
-    tx_buf_len = SER_PKT_TYPE_SIZE;
+    p_tx_buf[SER_PKT_TYPE_POS] = SER_PKT_TYPE_GENERIC_CMD;
+    p_tx_buf[SER_PKT_TYPE_POS + SER_PKT_TYPE_SIZE] = SER_GENERIC_CMD_RESET;
+    tx_buf_len = SER_PKT_TYPE_SIZE + GENERIC_CMD_RESET_SIZE;
 
     err_code = ser_sd_transport_cmd_write(p_tx_buf, tx_buf_len, NULL);
     if (err_code != NRF_SUCCESS)

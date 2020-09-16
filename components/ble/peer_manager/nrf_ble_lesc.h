@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -57,6 +57,8 @@
 extern "C" {
 #endif
 
+/**@brief Peer OOB Data handler prototype. */
+typedef ble_gap_lesc_oob_data_t * (* nrf_ble_lesc_peer_oob_data_handler)(uint16_t conn_handle);
 
 /**@brief   Function for initializing the LESC module.
  *
@@ -84,6 +86,19 @@ ret_code_t nrf_ble_lesc_init(void);
 ret_code_t nrf_ble_lesc_keypair_generate(void);
 
 
+/**@brief   Function for generating LESC OOB data.
+ *
+ * @details This function generates LESC OOB data, which can be transmitted Out-Of-Band to the peer
+ *          device and used during LESC procedure. It is required to generate ECC keypair with @ref
+ *          nrf_ble_lesc_keypair_generate before calling this function.
+ *
+ * @retval NRF_SUCCESS               If the operation was successful.
+ * @retval NRF_ERROR_INVALID_STATE   If the ECC keypair hasn't been generated or is currently
+ *                                   being generated.
+ */
+ret_code_t nrf_ble_lesc_own_oob_data_generate(void);
+
+
 /**@brief   Function for accessing the ECC public key used for LESC DH key generation.
  *
  * @details This function can be used to access the ECC public key, which is required to generate a LESC DH key
@@ -92,6 +107,25 @@ ret_code_t nrf_ble_lesc_keypair_generate(void);
  * @return Pointer to the generated public key or NULL if the key has not been generated yet.
  */
 ble_gap_lesc_p256_pk_t * nrf_ble_lesc_public_key_get(void);
+
+
+/**@brief   Function for accessing LESC OOB data.
+ *
+ * @details This function can be used to access LESC OOB data that is associated with this device.
+ *          It is required to regenerate LESC OOB data with @ref nrf_ble_lesc_own_oob_data_generate,
+ *          after each change of ECC keypair with @ref nrf_ble_lesc_keypair_generate.
+ *
+ * @return Pointer to the LESC OOB data or NULL if the data has not been generated yet or is no
+ *         no longer valid.
+ */
+ble_gap_lesc_oob_data_t * nrf_ble_lesc_own_oob_data_get(void);
+
+
+/**@brief   Function for setting the handler used to retrieve peer OOB data.
+ *
+ * @param[in]   handler   Function to retrieve peer OOB data.
+ */
+void nrf_ble_lesc_peer_oob_data_handler_set(nrf_ble_lesc_peer_oob_data_handler handler);
 
 
 /**@brief   Function for responding to a DH key requests.

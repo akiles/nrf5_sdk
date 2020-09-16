@@ -189,11 +189,6 @@
           <state>SOFTDEVICE_PRESENT</state>
           <state>SVC_INTERFACE_CALL_AS_NORMAL_FUNCTION</state>
           <state>SWI_DISABLE0</state>
-          <state>uECC_ENABLE_VLI_API=0</state>
-          <state>uECC_OPTIMIZATION_LEVEL=3</state>
-          <state>uECC_SQUARE_FUNC=0</state>
-          <state>uECC_SUPPORT_COMPRESSED_POINT=0</state>
-          <state>uECC_VLI_NATIVE_LITTLE_ENDIAN=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -350,6 +345,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fds</state>
@@ -373,7 +369,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\fprintf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\mbedtls\include</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\micro-ecc\micro-ecc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\nrf_cc310\include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\nrf_oberon</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\nrf_oberon\include</state>
@@ -556,11 +551,6 @@
           <state>SOFTDEVICE_PRESENT</state>
           <state>SVC_INTERFACE_CALL_AS_NORMAL_FUNCTION</state>
           <state>SWI_DISABLE0</state>
-          <state>uECC_ENABLE_VLI_API=0</state>
-          <state>uECC_OPTIMIZATION_LEVEL=3</state>
-          <state>uECC_SQUARE_FUNC=0</state>
-          <state>uECC_SUPPORT_COMPRESSED_POINT=0</state>
-          <state>uECC_VLI_NATIVE_LITTLE_ENDIAN=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -684,6 +674,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fds</state>
@@ -707,7 +698,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\fprintf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\mbedtls\include</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\micro-ecc\micro-ecc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\nrf_cc310\include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\nrf_oberon</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\nrf_oberon\include</state>
@@ -1104,7 +1094,7 @@
     </settings>
   </configuration>  <group>
   <name>nrf_cc310</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\nrf_cc310\lib\libnrf_cc310_short_wchar_0.9.10.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\nrf_cc310\lib\cortex-m4\hard-float\short-wchar\libnrf_cc310_0.9.12.a</name>    </file>  </group>  <group>
   <name>Board Support</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\bsp\bsp.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\bsp\bsp_btn_ble.c</name>    </file>  </group>  <group>
@@ -1141,15 +1131,12 @@
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_rng.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_gpiote.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_rng.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</name>    </file>  </group>  <group>
-  <name>nRF_Crypto backend uECC</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_backend_ecc.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_backend_ecdh.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_backend_ecdsa.c</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Log</name>    <file>
@@ -1163,7 +1150,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\mbedtls\library\aes.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\mbedtls\library\ctr_drbg.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\nrf_oberon\lib\nrf52\liboberon_short_wchar_2.0.5.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
   <name>nRF_Crypto</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_aead.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_aes.c</name>    </file>    <file>

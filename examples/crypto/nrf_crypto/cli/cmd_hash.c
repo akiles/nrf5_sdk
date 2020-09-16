@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -76,14 +76,14 @@ static nrf_crypto_hash_info_t const * hash_info_get(char const * p_name)
 
     nrf_cli_fprintf(cli_get(),
                     NRF_CLI_WARNING,
-                    "Invalid name '%s'. Available hash algorithms: \r\n",
+                    "Invalid name '%s'. Available hash algorithms: \n",
                     p_name);
 
 #if NRF_MODULE_ENABLED(NRF_CRYPTO_HASH_SHA256)
-    nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "  sha256\r\n");
+    nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "  sha256\n");
 #endif
 #if NRF_MODULE_ENABLED(NRF_CRYPTO_HASH_SHA512)
-    nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "  sha512\r\n");
+    nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "  sha512\n");
 #endif
 
     return NULL;
@@ -180,7 +180,7 @@ static void hash_context_print(var_t * p_var, bool short_info)
     {
         nrf_cli_fprintf(cli_get(),
                         NRF_CLI_NORMAL,
-                        context_is_finalized(p_var) ? "Finalized.\r\n" : "Ready.\r\n");
+                        context_is_finalized(p_var) ? "Finalized.\n" : "Ready.\n");
     }
 }
 
@@ -226,12 +226,12 @@ static bool cmd_hash_init(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(hash_init, &m_subcmd_hash, cmd_hash_init,
-    "Initialize hash context.\r\n"
-    "Usage:\r\n"
-    "  hash_init hash_type context\r\n"
-    "Arguments:\r\n"
-    "  IN  hash_type  Algorithm used to calculate hash (sha256 or sha512)\r\n"
-    "  OUT context    Newly initialized context\r\n"
+    "Initialize hash context.\n"
+    "Usage:\n"
+    "  hash_init hash_type context\n"
+    "Arguments:\n"
+    "  IN  hash_type  Algorithm used to calculate hash (sha256 or sha512)\n"
+    "  OUT context    Newly initialized context\n"
     );
 
 
@@ -262,12 +262,12 @@ static bool cmd_hash_update(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(hash_update, &m_subcmd_var_var, cmd_hash_update,
-    "Update hash function with new data.\r\n"
-    "Usage:\r\n"
-    "  hash_update context data\r\n"
-    "Arguments:\r\n"
-    "  IN  context  Hash context to update\r\n"
-    "  IN  data     Data input\r\n"
+    "Update hash function with new data.\n"
+    "Usage:\n"
+    "  hash_update context data\n"
+    "Arguments:\n"
+    "  IN  context  Hash context to update\n"
+    "  IN  data     Data input\n"
     );
 
 
@@ -304,12 +304,12 @@ static bool cmd_hash_finalize(nrf_cli_t const * p_cli, size_t argc, char ** argv
 
 
 CLI_CMD_REGISTER(hash_finalize, &m_subcmd_var, cmd_hash_finalize,
-    "Finalize hash calculation.\r\n"
-    "Usage:\r\n"
-    "  hash_finalize context digest\r\n"
-    "Arguments:\r\n"
-    "  IN  context  Hash context to finalize\r\n"
-    "  OUT digest   Calculated digest\r\n"
+    "Finalize hash calculation.\n"
+    "Usage:\n"
+    "  hash_finalize context digest\n"
+    "Arguments:\n"
+    "  IN  context  Hash context to finalize\n"
+    "  OUT digest   Calculated digest\n"
     );
 
 
@@ -353,13 +353,13 @@ static bool cmd_hash_calculate(nrf_cli_t const * p_cli, size_t argc, char ** arg
 
 
 CLI_CMD_REGISTER(hash_calculate, &m_subcmd_hash_var, cmd_hash_calculate,
-    "Calculate hash in one step.\r\n"
-    "Usage:\r\n"
-    "  hash_calculate hash_type data digest\r\n"
-    "Arguments:\r\n"
-    "  IN  hash_type  Algorithm used to calculate hash (sha256 or sha512)\r\n"
-    "  IN  data       Data input\r\n"
-    "  OUT digest     Calculated digest\r\n"
+    "Calculate hash in one step.\n"
+    "Usage:\n"
+    "  hash_calculate hash_type data digest\n"
+    "Arguments:\n"
+    "  IN  hash_type  Algorithm used to calculate hash (sha256 or sha512)\n"
+    "  IN  data       Data input\n"
+    "  OUT digest     Calculated digest\n"
     );
 
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -69,6 +69,9 @@ typedef struct
   ble_user_mem_block_t mem_block;          /**< User memory block structure, see @ref ble_user_mem_block_t. */
   uint8_t              mem_table[64];      /**< Memory table. */
 } sercon_ble_user_mem_t;
+
+/**@brief Initializes buffer pool. */
+void conn_ble_user_mem_init(void);
 
 /**@brief Allocates instance in m_user_mem_table[] for storage.
  *

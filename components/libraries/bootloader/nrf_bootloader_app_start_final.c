@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -44,6 +44,8 @@
 #include "nrf_peripherals.h"
 #include "nrf_bootloader_info.h"
 #include "nrf_dfu_types.h"
+#include "nrf_dfu_utils.h"
+#include "nrf_dfu_settings.h"
 #include "nrf_assert.h"
 #include "nrf_log.h"
 #include "sdk_config.h"
@@ -244,6 +246,15 @@ void nrf_bootloader_app_start_final(uint32_t vector_table_addr)
     if (!NRF_BOOTLOADER_READ_PROTECT && (ret_val != NRF_SUCCESS))
     {
         NRF_LOG_ERROR("Could not protect bootloader and settings pages, 0x%x.", ret_val);
+    }
+
+    ret_val = nrf_bootloader_flash_protect(0,
+                                           nrf_dfu_bank0_start_addr() + s_dfu_settings.bank_0.image_size,
+                                           false);
+
+    if (!NRF_BOOTLOADER_READ_PROTECT && (ret_val != NRF_SUCCESS))
+    {
+        NRF_LOG_ERROR("Could not protect SoftDevice and application, 0x%x.", ret_val);
     }
 
     // Run application

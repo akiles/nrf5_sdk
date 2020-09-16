@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -86,9 +86,9 @@ uint32_t ser_conn_received_pkt_process(
                 break;
             }
 
-            case SER_PKT_TYPE_RESET_CMD:
+            case SER_PKT_TYPE_GENERIC_CMD:
             {
-                ser_conn_reset_command_process();
+                ser_conn_generic_command_process(p_command, command_len);
                 break;
             }
 

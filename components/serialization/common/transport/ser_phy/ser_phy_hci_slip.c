@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -189,6 +189,7 @@ static void tx_buf_fill(void)
         {
             can_continue = tx_buf_put(tx_escaped_data);
             tx_escaped_data = 0;
+            ++m_tx_index;
         }
         else switch (m_tx_phase)
         {
@@ -232,22 +233,27 @@ static void tx_buf_fill(void)
             return;
 
         default:
-            ASSERT(mp_tx_data->p_buffer != NULL);
-            uint8_t data = mp_tx_data->p_buffer[m_tx_index];
-            ++m_tx_index;
-
-            if (data == APP_SLIP_END)
+            if (m_tx_index < mp_tx_data->num_of_bytes)
             {
-                data = APP_SLIP_ESC;
-                tx_escaped_data = APP_SLIP_ESC_END;
-            }
-            else if (data == APP_SLIP_ESC)
-            {
-                tx_escaped_data = APP_SLIP_ESC_ESC;
-            }
-            can_continue = tx_buf_put(data);
+                ASSERT(mp_tx_data->p_buffer != NULL);
+                uint8_t data = mp_tx_data->p_buffer[m_tx_index];
 
-            if (m_tx_index >= mp_tx_data->num_of_bytes)
+                if (data == APP_SLIP_END)
+                {
+                    data = APP_SLIP_ESC;
+                    tx_escaped_data = APP_SLIP_ESC_END;
+                }
+                else if (data == APP_SLIP_ESC)
+                {
+                    tx_escaped_data = APP_SLIP_ESC_ESC;
+                }
+                else
+                {
+                    ++m_tx_index;
+                }
+                can_continue = tx_buf_put(data);
+            }
+            else
             {
                 mp_tx_data->p_buffer = NULL;
 
@@ -642,6 +648,18 @@ static void uart_event_handler(nrf_drv_uart_event_t * p_event,
     }
 }
 
+void ser_phy_hci_slip_reset(void)
+{
+    mp_tx_buf        = m_tx_buf0;
+    m_tx_bytes       = 0;
+    m_tx_phase       = PHASE_IDLE;
+    m_tx_in_progress = false;
+    m_tx_pending     = false;
+
+    m_rx_escape      = false;
+    mp_small_buffer  = m_small_buffer;
+    mp_big_buffer    = m_big_buffer;
+}
 
 uint32_t ser_phy_hci_slip_open(ser_phy_hci_slip_event_handler_t events_handler)
 {
@@ -666,15 +684,7 @@ uint32_t ser_phy_hci_slip_open(ser_phy_hci_slip_event_handler_t events_handler)
         return NRF_ERROR_INVALID_PARAM;
     }
 
-    mp_tx_buf        = m_tx_buf0;
-    m_tx_bytes       = 0;
-    m_tx_phase       = PHASE_IDLE;
-    m_tx_in_progress = false;
-    m_tx_pending     = false;
-
-    m_rx_escape      = false;
-    mp_small_buffer  = m_small_buffer;
-    mp_big_buffer    = m_big_buffer;
+    ser_phy_hci_slip_reset();
 
     APP_ERROR_CHECK(nrf_drv_uart_rx(&m_uart, m_rx_buf, 1));
 

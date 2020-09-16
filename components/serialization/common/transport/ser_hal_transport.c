@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -44,7 +44,9 @@
 #include "ser_config.h"
 #include "ser_phy.h"
 #include "ser_hal_transport.h"
-
+#if defined(APP_SCHEDULER_WITH_PAUSE) && APP_SCHEDULER_WITH_PAUSE
+#include "app_scheduler.h"
+#endif
 #define NRF_LOG_MODULE_NAME ser_hal_transport
 #if SER_HAL_TRANSPORT_CONFIG_LOG_ENABLED
     #define NRF_LOG_LEVEL       SER_HAL_TRANSPORT_CONFIG_LOG_LEVEL
@@ -276,6 +278,9 @@ static void phy_events_handler(ser_phy_evt_t phy_event)
                 m_tx_state = HAL_TRANSP_TX_STATE_TRANSMITTED;
                 err_code   = ser_hal_transport_tx_pkt_free(phy_event.evt_params.hw_error.p_buffer);
                 APP_ERROR_CHECK(err_code);
+#if defined(APP_SCHEDULER_WITH_PAUSE) && APP_SCHEDULER_WITH_PAUSE
+                app_sched_resume();
+#endif
                 /* An event to an upper layer that a packet has been transmitted. */
             }
             else if (HAL_TRANSP_RX_STATE_RECEIVING == m_rx_state)
@@ -295,6 +300,12 @@ static void phy_events_handler(ser_phy_evt_t phy_event)
             break;
         }
     }
+}
+
+void ser_hal_transport_reset(void)
+{
+    m_rx_state = HAL_TRANSP_RX_STATE_IDLE;
+    m_tx_state = HAL_TRANSP_TX_STATE_IDLE;
 }
 
 uint32_t ser_hal_transport_open(ser_hal_transport_events_handler_t events_handler)

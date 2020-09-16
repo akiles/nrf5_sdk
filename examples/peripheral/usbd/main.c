@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -916,7 +916,7 @@ static void usbd_event_handler(nrf_drv_usbd_evt_t const * const p_event)
         {
             nrf_drv_usbd_setup_t setup;
             nrf_drv_usbd_setup_get(&setup);
-            switch (setup.bmRequest)
+            switch (setup.bRequest)
             {
             case 0x00: // GetStatus
                 usbd_setup_GetStatus(&setup);
@@ -959,7 +959,7 @@ static void usbd_event_handler(nrf_drv_usbd_evt_t const * const p_event)
                 }
                 break;
             default:
-                NRF_LOG_ERROR("Unknown request: 0x%2x", setup.bmRequest);
+                NRF_LOG_ERROR("Unknown request: 0x%2x", setup.bRequest);
                 nrf_drv_usbd_setup_stall();
                 return;
             }

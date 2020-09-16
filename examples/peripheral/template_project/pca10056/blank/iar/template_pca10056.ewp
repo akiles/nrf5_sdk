@@ -320,7 +320,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
@@ -340,6 +339,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense_drv</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\delay</state>
@@ -678,7 +678,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
@@ -698,6 +697,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\csense_drv</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\delay</state>
@@ -1152,7 +1152,7 @@
     </settings>
   </configuration>  <group>
   <name>nrf_cc310</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_cc310\lib\libnrf_cc310_short_wchar_0.9.10.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_cc310\lib\cortex-m4\hard-float\short-wchar\libnrf_cc310_0.9.12.a</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Crypto backend uECC</name>    <file>
@@ -1169,10 +1169,10 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_swi.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_twi.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\usbd\nrf_drv_usbd.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_nvic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\hal\nrf_nvmc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_comp.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_gpiote.c</name>    </file>    <file>
@@ -1180,7 +1180,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_lpcomp.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_pdm.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_ppi.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_pwm.c</name>    </file>    <file>
@@ -1193,12 +1192,14 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_spim.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_spis.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_swi.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_systick.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_timer.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_twi.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_twim.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_twis.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_usbd.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_wdt.c</name>    </file>  </group>  <group>
   <name>nRF_Crypto backend cifra</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\cifra\cifra_backend_aes_aead.c</name>    </file>  </group>  <group>
@@ -1250,7 +1251,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls\mbedtls_backend_hmac.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls\mbedtls_backend_init.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\lib\nrf52\liboberon_short_wchar_2.0.5.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
   <name>nRF_TLS</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\mbedtls\library\aes.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\mbedtls\library\aesni.c</name>    </file>    <file>
@@ -1322,7 +1323,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_frontend.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_str_formatter.c</name>    </file>  </group>  <group>
   <name>nRF_Core</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\mpu\nrf_mpu.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\mpu\nrf_mpu_lib.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\stack_guard\nrf_stack_guard.c</name>    </file>  </group>  <group>
   <name>nRF_Libraries</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button\app_button.c</name>    </file>    <file>

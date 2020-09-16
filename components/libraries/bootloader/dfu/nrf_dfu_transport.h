@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -69,7 +69,7 @@ typedef struct nrf_dfu_transport_s nrf_dfu_transport_t;
  *          until either the device is reset or the DFU operation is finalized.
  *          When the DFU transport receives requests, it should call @ref nrf_dfu_req_handler_on_req for handling the requests.
  *
- * @param observer          Function for receiving DFU transport notifications.
+ * @param observer          Callback function for receiving DFU transport notifications.
  *
  * @retval  NRF_SUCCESS     If initialization was successful for the transport. Any other return code indicates that the DFU transport could not be initialized.
  */

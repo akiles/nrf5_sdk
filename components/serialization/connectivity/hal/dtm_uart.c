@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -128,7 +128,7 @@ static uint32_t uart_init(app_uart_stream_comm_params_t * p_comm_params)
     config.baudrate = (nrf_uart_baudrate_t) m_baud_rates[p_comm_params->baud_rate];
     config.hwfc = NRF_UART_HWFC_DISABLED;
     config.parity = NRF_UART_PARITY_EXCLUDED;
-#ifdef UART_PRESENT
+#if defined(NRF_DRV_UART_WITH_UARTE) && defined(NRF_DRV_UART_WITH_UART)
     //Current implementation of DTM requires legacy UART features and 
     // it will not work on nrf52810.
     config.use_easy_dma = false;

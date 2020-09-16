@@ -874,8 +874,10 @@ typedef struct
                                                            the bitfield indicates the PHYs the scanner will use for scanning
                                                            on primary advertising channels. The scanner will accept
                                                            @ref BLE_GAP_PHYS_SUPPORTED as secondary advertising channel PHYs.
-                                                         - When used with @ref sd_ble_gap_connect, the
-                                                           bitfield indicates the PHYs on where a connection may be initiated.
+                                                         - When used with @ref sd_ble_gap_connect, the bitfield indicates
+                                                           the PHYs the initiator will use for scanning on primary advertising
+                                                           channels. The initiator will accept connections initiated on either
+                                                           of the @ref BLE_GAP_PHYS_SUPPORTED PHYs.
                                                            If scan_phys contains @ref BLE_GAP_PHY_1MBPS and/or @ref BLE_GAP_PHY_2MBPS,
                                                            the primary scan PHY is @ref BLE_GAP_PHY_1MBPS. */
   uint16_t              interval;                   /**< Scan interval in 625 us units. @sa BLE_GAP_SCAN_INTERVALS. */

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -587,7 +587,7 @@ static ret_code_t setup_req_std_in(app_usbd_class_inst_t const * p_inst,
     /* Only Get Descriptor standard IN request is supported by MSC class */
     if ((app_usbd_setup_req_rec(p_setup_ev->setup.bmRequestType) == APP_USBD_SETUP_REQREC_INTERFACE)
         &&
-        (p_setup_ev->setup.bmRequest == APP_USBD_SETUP_STDREQ_GET_DESCRIPTOR))
+        (p_setup_ev->setup.bRequest == APP_USBD_SETUP_STDREQ_GET_DESCRIPTOR))
     {
         size_t dsc_len = 0;
         size_t max_size;
@@ -632,7 +632,7 @@ static ret_code_t setup_req_std_out(app_usbd_class_inst_t const * p_inst,
     app_usbd_setup_reqrec_t req_rec = app_usbd_setup_req_rec(p_setup_ev->setup.bmRequestType);
 
     if ((req_rec == APP_USBD_SETUP_REQREC_ENDPOINT) &&
-        (p_setup_ev->setup.bmRequest == APP_USBD_SETUP_STDREQ_CLEAR_FEATURE) &&
+        (p_setup_ev->setup.bRequest == APP_USBD_SETUP_STDREQ_CLEAR_FEATURE) &&
         (p_setup_ev->setup.wValue.w == APP_USBD_SETUP_STDFEATURE_ENDPOINT_HALT))
     {
         if (p_msc_ctx->state == APP_USBD_MSC_STATE_CBW_INVALID)
@@ -697,7 +697,7 @@ static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
 {
     app_usbd_msc_t const * p_msc = msc_get(p_inst);
 
-    switch (p_setup_ev->setup.bmRequest)
+    switch (p_setup_ev->setup.bRequest)
     {
         case APP_USBD_MSC_REQ_GET_MAX_LUN:
         {
@@ -747,7 +747,7 @@ static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
     app_usbd_msc_t const * p_msc     = msc_get(p_inst);
     app_usbd_msc_ctx_t   * p_msc_ctx = msc_ctx_get(p_msc);
 
-    switch (p_setup_ev->setup.bmRequest)
+    switch (p_setup_ev->setup.bRequest)
     {
         case APP_USBD_MSC_REQ_BULK_RESET:
         {

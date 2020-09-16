@@ -70,12 +70,13 @@ SRC_FILES += \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_rng.c \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_nvic.c \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_soc.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_gpiote.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power.c \
-  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_ppi.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_rng.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_rtc.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_timer.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_aead.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_aes.c \
@@ -187,12 +188,13 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/experimental_libuarte \
   $(SDK_ROOT)/external/fprintf \
   $(PROJ_DIR) \
-  $(SDK_ROOT)/components/libraries/experimental_section_vars \
+  $(SDK_ROOT)/components \
   $(SDK_ROOT)/components/libraries/hardfault/nrf52 \
   $(SDK_ROOT)/external/nrf_cc310/include \
   $(SDK_ROOT)/components/libraries/atomic \
   ../config \
   $(SDK_ROOT)/components/libraries/delay \
+  $(SDK_ROOT)/components/libraries/experimental_section_vars \
   $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/libraries/hardfault \
   $(SDK_ROOT)/components/libraries/cli/rtt \
@@ -205,7 +207,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/external/nrf_oberon \
   $(SDK_ROOT)/components/libraries/memobj \
   $(SDK_ROOT)/components/libraries/stack_info \
-  $(SDK_ROOT)/components \
+  $(SDK_ROOT)/components/libraries/crypto/backend/optiga \
   $(SDK_ROOT)/components/libraries/crypto/backend/nrf_sw \
   $(SDK_ROOT)/components/libraries/scheduler \
   $(SDK_ROOT)/components/libraries/strerror \
@@ -241,9 +243,9 @@ INC_FOLDERS += \
 
 # Libraries common to all targets
 LIB_FILES += \
-  $(SDK_ROOT)/external/nrf_cc310/lib/libnrf_cc310_0.9.10.a \
+  $(SDK_ROOT)/external/nrf_cc310/lib/cortex-m4/hard-float/libnrf_cc310_0.9.12.a \
   $(SDK_ROOT)/external/micro-ecc/nrf52hf_armgcc/armgcc/micro_ecc_lib_nrf52.a \
-  $(SDK_ROOT)/external/nrf_oberon/lib/nrf52/liboberon_2.0.5.a \
+  $(SDK_ROOT)/external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_2.0.7.a \
 
 # Optimization flags
 OPT = -O3 -g3

@@ -39,6 +39,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecdsa.c \
   $(SDK_ROOT)/components/boards/boards.c \
   $(SDK_ROOT)/modules/nrfx/hal/nrf_nvmc.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_ecc.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_ecdsa.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_hash.c \
@@ -70,6 +71,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_utils.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_validation.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_ver_validation.c \
+  $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_svci.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_svci_handler.c \
   $(SDK_ROOT)/components/libraries/svc/nrf_svc_handler.c \
   $(SDK_ROOT)/components/softdevice/common/nrf_sdh.c \
@@ -119,6 +121,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/external/fprintf \
   $(SDK_ROOT)/components/libraries/crypto \
   ../config \
+  $(SDK_ROOT)/components/libraries/crypto/backend/optiga \
   $(SDK_ROOT)/components/libraries/scheduler \
   $(SDK_ROOT)/modules/nrfx/hal \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
@@ -136,7 +139,7 @@ INC_FOLDERS += \
 
 # Libraries common to all targets
 LIB_FILES += \
-  $(SDK_ROOT)/external/nrf_oberon/lib/nrf52/liboberon_2.0.5.a \
+  $(SDK_ROOT)/external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_2.0.7.a \
   $(SDK_ROOT)/external/micro-ecc/nrf52hf_armgcc/armgcc/micro_ecc_lib_nrf52.a \
 
 # Optimization flags
@@ -153,7 +156,7 @@ CFLAGS += -DFLOAT_ABI_HARD
 CFLAGS += -DNRF52
 CFLAGS += -DNRF52832_XXAA
 CFLAGS += -DNRF52_PAN_74
-CFLAGS += -DNRF_DFU_SETTINGS_VERSION=1
+CFLAGS += -DNRF_DFU_SETTINGS_VERSION=2
 CFLAGS += -DNRF_DFU_SVCI_ENABLED
 CFLAGS += -DNRF_SD_BLE_API_VERSION=6
 CFLAGS += -DS132
@@ -170,7 +173,7 @@ CFLAGS += -Wall -Werror
 CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 # keep every function in a separate section, this allows linker to discard unused ones
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -fno-builtin -fshort-enums -flto
+CFLAGS += -fno-builtin -fshort-enums
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
@@ -187,7 +190,7 @@ ASMFLAGS += -DFLOAT_ABI_HARD
 ASMFLAGS += -DNRF52
 ASMFLAGS += -DNRF52832_XXAA
 ASMFLAGS += -DNRF52_PAN_74
-ASMFLAGS += -DNRF_DFU_SETTINGS_VERSION=1
+ASMFLAGS += -DNRF_DFU_SETTINGS_VERSION=2
 ASMFLAGS += -DNRF_DFU_SVCI_ENABLED
 ASMFLAGS += -DNRF_SD_BLE_API_VERSION=6
 ASMFLAGS += -DS132
@@ -247,8 +250,8 @@ flash: default
 
 # Flash softdevice
 flash_softdevice:
-	@echo Flashing: s132_nrf52_6.1.0_softdevice.hex
-	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_6.1.0_softdevice.hex --sectorerase
+	@echo Flashing: s132_nrf52_6.1.1_softdevice.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_6.1.1_softdevice.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

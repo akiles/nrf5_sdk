@@ -1044,6 +1044,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\hal\nrf_ecb.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\hal\nrf_nvmc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_gpiote.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>    </file>    <file>

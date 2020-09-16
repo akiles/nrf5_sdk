@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2018, Telit Communications Cyprus Ltd
+ * Copyright (c) 2015 - 2019, Telit Communications Cyprus Ltd
  *
  * All rights reserved.
  *

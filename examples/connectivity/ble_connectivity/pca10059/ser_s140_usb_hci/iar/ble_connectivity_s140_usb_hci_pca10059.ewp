@@ -176,6 +176,8 @@
         </option>
         <option>
           <name>CCDefines</name>
+          <state>APP_TIMER_V2</state>
+          <state>APP_TIMER_V2_RTC1_ENABLED</state>
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>BOARD_PCA10059</state>
           <state>BSP_DEFINES_ONLY</state>
@@ -186,8 +188,9 @@
           <state>NRF_SD_BLE_API_VERSION=6</state>
           <state>S140</state>
           <state>SER_CONNECTIVITY</state>
+          <state>SER_PHY_HCI</state>
+          <state>SER_PHY_HCI_USB_CDC</state>
           <state>SOFTDEVICE_PRESENT</state>
-          <state>SWI_DISABLE0</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -320,7 +323,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_dtm</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
@@ -336,8 +338,10 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\queue</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ringbuf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sortlist</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\experimental</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm</state>
@@ -524,6 +528,8 @@
         </option>
         <option>
       <name>ADefines</name>
+          <state>APP_TIMER_V2</state>
+          <state>APP_TIMER_V2_RTC1_ENABLED</state>
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>BOARD_PCA10059</state>
           <state>BSP_DEFINES_ONLY</state>
@@ -534,8 +540,9 @@
           <state>NRF_SD_BLE_API_VERSION=6</state>
           <state>S140</state>
           <state>SER_CONNECTIVITY</state>
+          <state>SER_PHY_HCI</state>
+          <state>SER_PHY_HCI_USB_CDC</state>
           <state>SOFTDEVICE_PRESENT</state>
-          <state>SWI_DISABLE0</state>
         </option>
         <option>
           <name>AList</name>
@@ -635,7 +642,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_dtm</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\boards</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
@@ -651,8 +657,10 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\queue</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ringbuf</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sortlist</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\experimental</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm</state>
@@ -1077,7 +1085,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_handler_iar.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\experimental\app_timer2.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\app_usbd.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm\app_usbd_cdc_acm.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\app_usbd_core.c</name>    </file>    <file>
@@ -1086,6 +1094,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\usbd\app_usbd_string_desc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crc16\crc16.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\experimental\drv_rtc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic_fifo\nrf_atfifo.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic\nrf_atomic.c</name>    </file>    <file>
@@ -1096,6 +1105,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\queue\nrf_queue.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ringbuf\nrf_ringbuf.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sortlist\nrf_sortlist.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>  </group>  <group>
   <name>None</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk\iar_startup_nrf52840.s</name>    </file>    <file>
@@ -1152,13 +1162,14 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_power.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\usbd\nrf_drv_usbd.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_systick.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_usbd.c</name>    </file>  </group>  <group>
   <name>Application</name>    <file>
     <name>$PROJ_DIR$\..\..\..\main.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\config\sdk_config.h</name>    </file>  </group>  <group>

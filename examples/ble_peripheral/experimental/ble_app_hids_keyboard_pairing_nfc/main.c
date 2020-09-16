@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -79,7 +79,6 @@
 #include "peer_manager.h"
 #include "peer_manager_handler.h"
 #include "ble_conn_state.h"
-#include "hal_nfc_t2t.h"
 #include "nfc_ble_pair_lib.h"
 #include "nrf_ble_gatt.h"
 #include "nrf_ble_qwr.h"

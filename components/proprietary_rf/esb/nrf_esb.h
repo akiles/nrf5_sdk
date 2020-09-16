@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -226,9 +226,9 @@ typedef enum {
 typedef enum {
     NRF_ESB_BITRATE_2MBPS     = RADIO_MODE_MODE_Nrf_2Mbit,      /**< 2 Mb radio mode.                                                */
     NRF_ESB_BITRATE_1MBPS     = RADIO_MODE_MODE_Nrf_1Mbit,      /**< 1 Mb radio mode.                                                */
-#if !(defined(NRF52840_XXAA) || defined(NRF52810_XXAA))
+#if !( defined(NRF52840_XXAA) || defined(NRF52810_XXAA) || defined(NRF52811_XXAA) )
     NRF_ESB_BITRATE_250KBPS   = RADIO_MODE_MODE_Nrf_250Kbit,    /**< 250 Kb radio mode.                                              */
-#endif //NRF52840_XXAA
+#endif //!( defined(NRF52840_XXAA) || defined(NRF52810_XXAA) || defined(NRF52811_XXAA) )
     NRF_ESB_BITRATE_1MBPS_BLE = RADIO_MODE_MODE_Ble_1Mbit,      /**< 1 Mb radio mode using @e Bluetooth low energy radio parameters. */
 #if defined(NRF52_SERIES)
     NRF_ESB_BITRATE_2MBPS_BLE = 4                               /**< 2 Mb radio mode using @e Bluetooth low energy radio parameters. */
@@ -247,7 +247,7 @@ typedef enum {
 /**@brief Enhanced ShockBurst radio transmission power modes. */
 typedef enum {
     NRF_ESB_TX_POWER_4DBM     = RADIO_TXPOWER_TXPOWER_Pos4dBm,  /**< 4 dBm radio transmit power.   */
-#if defined(NRF52)
+#if defined(NRF52_SERIES)
     NRF_ESB_TX_POWER_3DBM     = RADIO_TXPOWER_TXPOWER_Pos3dBm,  /**< 3 dBm radio transmit power.   */
 #endif
     NRF_ESB_TX_POWER_0DBM     = RADIO_TXPOWER_TXPOWER_0dBm,     /**< 0 dBm radio transmit power.   */

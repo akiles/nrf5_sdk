@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -83,9 +83,7 @@ uint32_t nrf_dfu_mbr_irq_forward_address_set(void)
     uint32_t ret_val = NRF_ERROR_INVALID_PARAM;
     uint32_t address = MBR_SIZE;
 
-    NRF_LOG_DEBUG("running irq table set");
-
-#ifndef BLE_STACK_SUPPORT_REQD
+#if !defined(BLE_STACK_SUPPORT_REQD) && !defined(ANT_STACK_SUPPORT_REQD)
     sd_mbr_command_t command =
     {
         .command = SD_MBR_COMMAND_IRQ_FORWARD_ADDRESS_SET,
@@ -102,8 +100,6 @@ uint32_t nrf_dfu_mbr_irq_forward_address_set(void)
 
         ret_val = NRF_SUCCESS;
     }
-
-    NRF_LOG_DEBUG("After running irq table set");
 
     return ret_val;
 }

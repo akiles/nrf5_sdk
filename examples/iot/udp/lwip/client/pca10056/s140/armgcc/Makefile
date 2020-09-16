@@ -74,9 +74,9 @@ SRC_FILES += \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_clock.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_uart.c \
   $(SDK_ROOT)/modules/nrfx/hal/nrf_nvmc.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_gpiote.c \
-  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/prs/nrfx_prs.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uart.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uarte.c \
@@ -108,8 +108,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/nfc/ndef/generic/message \
   $(SDK_ROOT)/components/ble/ble_services/ble_tps \
   $(PROJ_DIR) \
-  $(SDK_ROOT)/components/nfc/t4t_lib/hal_t4t \
-  $(SDK_ROOT)/components/drivers_nrf/usbd \
   $(SDK_ROOT)/components/ble/ble_services/ble_dis \
   $(SDK_ROOT)/components/nfc/ndef/conn_hand_parser/le_oob_rec_parser \
   $(SDK_ROOT)/components/libraries/fds \
@@ -170,7 +168,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/mutex \
   $(SDK_ROOT)/components/ble/ble_services/ble_hids \
   $(SDK_ROOT)/components/iot/iot_timer \
-  $(SDK_ROOT)/components/libraries/timer \
+  $(SDK_ROOT)/components/libraries/usbd \
   $(SDK_ROOT)/external/utf_converter \
   $(SDK_ROOT)/components/libraries/sdcard \
   $(SDK_ROOT)/components/libraries/svc \
@@ -198,7 +196,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/integration/nrfx/legacy \
   $(SDK_ROOT)/components/libraries/usbd/class/audio \
   $(SDK_ROOT)/components/libraries/ecc \
-  $(SDK_ROOT)/components/nfc/t2t_lib/hal_t2t \
   $(SDK_ROOT)/components/ble/ble_services/ble_dfu \
   $(SDK_ROOT)/external/fprintf \
   $(SDK_ROOT)/components/libraries/crypto \
@@ -238,7 +235,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/ble/ble_services/ble_hts \
   $(SDK_ROOT)/components/ble/ble_services/ble_lbs \
   $(SDK_ROOT)/components/libraries/bootloader/ble_dfu \
-  $(SDK_ROOT)/components/libraries/usbd \
+  $(SDK_ROOT)/components/libraries/timer \
   $(SDK_ROOT)/components/libraries/atomic \
   $(SDK_ROOT)/components/nfc/ndef/connection_handover/hs_rec \
   $(SDK_ROOT)/components/nfc/t2t_lib \
@@ -342,8 +339,8 @@ flash: default
 
 # Flash softdevice
 flash_softdevice:
-	@echo Flashing: s140_nrf52_6.1.0_softdevice.hex
-	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s140/hex/s140_nrf52_6.1.0_softdevice.hex --sectorerase
+	@echo Flashing: s140_nrf52_6.1.1_softdevice.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s140/hex/s140_nrf52_6.1.1_softdevice.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

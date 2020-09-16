@@ -181,8 +181,9 @@
           <state>BOARD_PCA10056</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>FLOAT_ABI_HARD</state>
+          <state>MBR_PRESENT</state>
           <state>NRF52840_XXAA</state>
-          <state>NRF_DFU_SETTINGS_VERSION=1</state>
+          <state>NRF_DFU_SETTINGS_VERSION=2</state>
           <state>SVC_INTERFACE_CALL_AS_NORMAL_FUNCTION</state>
         </option>
         <option>
@@ -315,7 +316,6 @@
           <state>$PROJ_DIR$\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\balloc</state>
@@ -332,6 +332,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\fstorage</state>
@@ -534,8 +535,9 @@
           <state>BOARD_PCA10056</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>FLOAT_ABI_HARD</state>
+          <state>MBR_PRESENT</state>
           <state>NRF52840_XXAA</state>
-          <state>NRF_DFU_SETTINGS_VERSION=1</state>
+          <state>NRF_DFU_SETTINGS_VERSION=2</state>
           <state>SVC_INTERFACE_CALL_AS_NORMAL_FUNCTION</state>
         </option>
         <option>
@@ -635,7 +637,6 @@
           <state>$PROJ_DIR$\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\boards</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\balloc</state>
@@ -652,6 +653,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\fstorage</state>
@@ -1123,15 +1125,16 @@
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_power.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\usbd\nrf_drv_usbd.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_nvic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\hal\nrf_nvmc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_systick.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_usbd.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\nrf52\liboberon_short_wchar_2.0.5.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
   <name>nRF_Crypto</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecdsa.c</name>    </file>    <file>
@@ -1170,7 +1173,7 @@
   <name>UTF8/UTF16 converter</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\external\utf_converter\utf.c</name>    </file>  </group>  <group>
   <name>nrf_cc310_bl</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_cc310_bl\lib\libnrf_cc310_bl_short_wchar_0.9.10.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_cc310_bl\lib\cortex-m4\hard-float\short-wchar\libnrf_cc310_bl_0.9.12.a</name>    </file>  </group>  <group>
   <name>nRF_Crypto backend Oberon</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_chacha_poly_aead.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_ecc.c</name>    </file>    <file>

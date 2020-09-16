@@ -350,7 +350,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99 --reduce_paths</MiscControls>
-              <Define> BOARD_PCA10059 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
+              <Define> BOARD_PCA10059 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD MBR_PRESENT NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers;..\..\..;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
@@ -365,8 +365,8 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DBOARD_PCA10059,-DBSP_DEFINES_ONLY,-DCONFIG_GPIO_AS_PINRESET,-DFLOAT_ABI_HARD,-DNRF52840_XXAA,-D__HEAP_SIZE=8192,-D__STACK_SIZE=8192</MiscControls>
-              <Define> BOARD_PCA10059 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
+              <MiscControls> --cpreproc_opts=-DBOARD_PCA10059,-DBSP_DEFINES_ONLY,-DCONFIG_GPIO_AS_PINRESET,-DFLOAT_ABI_HARD,-DMBR_PRESENT,-DNRF52840_XXAA,-D__HEAP_SIZE=8192,-D__STACK_SIZE=8192</MiscControls>
+              <Define> BOARD_PCA10059 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD MBR_PRESENT NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers;..\..\..;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
@@ -413,6 +413,12 @@
               <FileName>boards.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\boards\boards.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_Drivers</GroupName>
+          <Files>            <File>
+              <FileName>nrfx_atomic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Libraries</GroupName>
           <Files>            <File>
@@ -501,7 +507,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>..\..\..\..\..\..\components\softdevice\mbr\nrf52840\hex\</OutputDirectory>
-          <OutputName>mbr_nrf52_2.3.0_mbr.hex</OutputName>
+          <OutputName>mbr_nrf52_2.4.1_mbr.hex</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -756,7 +762,7 @@
               <OCR_RVCT4>
                 <Type>1</Type>
                 <StartAddress>0x1000</StartAddress>
-                <Size>0xff000</Size>
+                <Size>0xdf000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -807,7 +813,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99 --reduce_paths</MiscControls>
-              <Define> BOARD_PCA10059 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
+              <Define> BOARD_PCA10059 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD MBR_PRESENT NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers;..\..\..;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
@@ -822,8 +828,8 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DBOARD_PCA10059,-DBSP_DEFINES_ONLY,-DCONFIG_GPIO_AS_PINRESET,-DFLOAT_ABI_HARD,-DNRF52840_XXAA,-D__HEAP_SIZE=8192,-D__STACK_SIZE=8192</MiscControls>
-              <Define> BOARD_PCA10059 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
+              <MiscControls> --cpreproc_opts=-DBOARD_PCA10059,-DBSP_DEFINES_ONLY,-DCONFIG_GPIO_AS_PINRESET,-DFLOAT_ABI_HARD,-DMBR_PRESENT,-DNRF52840_XXAA,-D__HEAP_SIZE=8192,-D__STACK_SIZE=8192</MiscControls>
+              <Define> BOARD_PCA10059 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD MBR_PRESENT NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers;..\..\..;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
@@ -870,6 +876,12 @@
               <FileName>boards.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\boards\boards.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
+          <GroupName>nRF_Drivers</GroupName>
+          <Files>            <File>
+              <FileName>nrfx_atomic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Libraries</GroupName>
           <Files>            <File>

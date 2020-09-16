@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -131,12 +131,12 @@ static nrf_crypto_ecc_curve_info_t const * curve_info_get(char const * p_name)
     }
     nrf_cli_fprintf(cli_get(),
                     NRF_CLI_WARNING,
-                    "Invalid curve name '%s'. Available curves:\r\n",
+                    "Invalid curve name '%s'. Available curves:\n",
                     p_name);
     item = &m_curve_info_name_table[0];
     while (item->p_info)
     {
-        nrf_cli_fprintf(cli_get(), NRF_CLI_INFO, "  %s\r\n", item->p_name);
+        nrf_cli_fprintf(cli_get(), NRF_CLI_INFO, "  %s\n", item->p_name);
         item++;
     }
     return NULL;
@@ -231,7 +231,7 @@ static void ecc_private_key_print(var_t * p_var, bool short_info)
 
         if (ret == NRF_SUCCESS)
         {
-            nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "Raw form:\r\n");
+            nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "Raw form:\n");
             raw_print_hex(raw, size);
         }
         else if (ret != NRF_ERROR_CRYPTO_FEATURE_UNAVAILABLE)
@@ -278,7 +278,7 @@ static void ecc_public_key_print(var_t * p_var, bool short_info)
 
         if (ret == NRF_SUCCESS)
         {
-            nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "Raw form:\r\n");
+            nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "Raw form:\n");
             raw_print_hex(raw, size);
         }
         else if (ret != NRF_ERROR_CRYPTO_FEATURE_UNAVAILABLE)
@@ -337,13 +337,13 @@ static bool cmd_ecc_key_pair_generate(nrf_cli_t const * p_cli, size_t argc, char
 
 
 CLI_CMD_REGISTER(ecc_key_pair_generate, &m_subcmd_curve, cmd_ecc_key_pair_generate,
-    "Generate ECC key pair.\r\n"
-    "Usage:\r\n"
-    "  ecc_key_pair_generate curve private_key public_key\r\n"
-    "Arguments:\r\n"
-    "  IN  curve        Curve to use.\r\n"
-    "  IN  private_key  Source private key.\r\n"
-    "  OUT public_key   Generated public key.\r\n"
+    "Generate ECC key pair.\n"
+    "Usage:\n"
+    "  ecc_key_pair_generate curve private_key public_key\n"
+    "Arguments:\n"
+    "  IN  curve        Curve to use.\n"
+    "  IN  private_key  Source private key.\n"
+    "  OUT public_key   Generated public key.\n"
     );
 
 
@@ -384,12 +384,12 @@ static bool cmd_ecc_public_key_calculate(nrf_cli_t const * p_cli, size_t argc, c
 
 
 CLI_CMD_REGISTER(ecc_public_key_calculate, &m_subcmd_var, cmd_ecc_public_key_calculate,
-    "Generate ECC public key from private key.\r\n"
-    "Usage:\r\n"
-    "  ecc_public_key_calculate private_key public_key\r\n"
-    "Arguments:\r\n"
-    "  IN  private_key  Source private key.\r\n"
-    "  OUT public_key   Generated public key\r\n"
+    "Generate ECC public key from private key.\n"
+    "Usage:\n"
+    "  ecc_public_key_calculate private_key public_key\n"
+    "Arguments:\n"
+    "  IN  private_key  Source private key.\n"
+    "  OUT public_key   Generated public key\n"
     );
 
 
@@ -406,7 +406,7 @@ static bool cmd_ecc_curves(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
     while (item->p_info)
     {
-        nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "%s\r\n", item->p_name);
+        nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "%s\n", item->p_name);
         item++;
     }
 
@@ -415,9 +415,9 @@ static bool cmd_ecc_curves(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(ecc_curves, NULL, cmd_ecc_curves,
-    "Show all available ECC curve types.\r\n"
-    "Usage:\r\n"
-    "  ecc_curves\r\n"
+    "Show all available ECC curve types.\n"
+    "Usage:\n"
+    "  ecc_curves\n"
     );
 
 
@@ -458,13 +458,13 @@ static bool cmd_ecc_public_key_from_raw(nrf_cli_t const * p_cli, size_t argc, ch
 
 
 CLI_CMD_REGISTER(ecc_public_key_from_raw, &m_subcmd_curve_var, cmd_ecc_public_key_from_raw,
-    "Create ECC public key from raw data.\r\n"
-    "Usage:\r\n"
-    "  ecc_public_key_from_raw curve raw_data public_key\r\n"
-    "Arguments:\r\n"
-    "  IN  curve        Curve name. Command 'ecc_curves' lists all supported curves.\r\n"
-    "  IN  raw_data     Raw representation of the key\r\n"
-    "  OUT public_key   Converted key\r\n"
+    "Create ECC public key from raw data.\n"
+    "Usage:\n"
+    "  ecc_public_key_from_raw curve raw_data public_key\n"
+    "Arguments:\n"
+    "  IN  curve        Curve name. Command 'ecc_curves' lists all supported curves.\n"
+    "  IN  raw_data     Raw representation of the key\n"
+    "  OUT public_key   Converted key\n"
     );
 
 
@@ -499,13 +499,13 @@ static bool cmd_ecc_private_key_from_raw(nrf_cli_t const * p_cli, size_t argc, c
 
 
 CLI_CMD_REGISTER(ecc_private_key_from_raw, &m_subcmd_curve_var, cmd_ecc_private_key_from_raw,
-    "Create ECC private key from raw data.\r\n"
-    "Usage:\r\n"
-    "  ecc_private_key_from_raw curve raw_data private_key\r\n"
-    "Arguments:\r\n"
-    "  IN  curve        Curve name. Command 'ecc_curves' lists all supported curves.\r\n"
-    "  IN  raw_data     Raw representation of the key\r\n"
-    "  OUT private_key  Converted key\r\n"
+    "Create ECC private key from raw data.\n"
+    "Usage:\n"
+    "  ecc_private_key_from_raw curve raw_data private_key\n"
+    "Arguments:\n"
+    "  IN  curve        Curve name. Command 'ecc_curves' lists all supported curves.\n"
+    "  IN  raw_data     Raw representation of the key\n"
+    "  OUT private_key  Converted key\n"
     );
 
 
@@ -543,12 +543,12 @@ static bool cmd_ecc_public_key_to_raw(nrf_cli_t const * p_cli, size_t argc, char
 
 
 CLI_CMD_REGISTER(ecc_public_key_to_raw, &m_subcmd_var, cmd_ecc_public_key_to_raw,
-    "Get raw data from ECC public key.\r\n"
-    "Usage:\r\n"
-    "  ecc_public_key_to_raw public_key raw_data\r\n"
-    "Arguments:\r\n"
-    "  IN  public_key   Key to convert\r\n"
-    "  OUT raw_data     Raw representation of the key\r\n"
+    "Get raw data from ECC public key.\n"
+    "Usage:\n"
+    "  ecc_public_key_to_raw public_key raw_data\n"
+    "Arguments:\n"
+    "  IN  public_key   Key to convert\n"
+    "  OUT raw_data     Raw representation of the key\n"
     );
 
 
@@ -586,12 +586,12 @@ static bool cmd_ecc_private_key_to_raw(nrf_cli_t const * p_cli, size_t argc, cha
 
 
 CLI_CMD_REGISTER(ecc_private_key_to_raw, &m_subcmd_var, cmd_ecc_private_key_to_raw,
-    "Get raw data from ECC private key.\r\n"
-    "Usage:\r\n"
-    "  ecc_private_key_to_raw private_key raw_data\r\n"
-    "Arguments:\r\n"
-    "  IN  private_key  Key to convert\r\n"
-    "  OUT raw_data     Raw representation of the key\r\n"
+    "Get raw data from ECC private key.\n"
+    "Usage:\n"
+    "  ecc_private_key_to_raw private_key raw_data\n"
+    "Arguments:\n"
+    "  IN  private_key  Key to convert\n"
+    "  OUT raw_data     Raw representation of the key\n"
     );
 
 
@@ -640,13 +640,13 @@ static bool cmd_ecdh_compute(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(ecdh_compute, &m_subcmd_var_var, cmd_ecdh_compute,
-    "Compute Elliptic-curve Diffie-Hellman shared secret.\r\n"
-    "Usage:\r\n"
-    "  ecdh_compute private_key public_key shared_secret\r\n"
-    "Arguments:\r\n"
-    "  IN  private_key   Local private key\r\n"
-    "  IN  public_key    Remote public key\r\n"
-    "  OUT shared_secret Created shared secret\r\n"
+    "Compute Elliptic-curve Diffie-Hellman shared secret.\n"
+    "Usage:\n"
+    "  ecdh_compute private_key public_key shared_secret\n"
+    "Arguments:\n"
+    "  IN  private_key   Local private key\n"
+    "  IN  public_key    Remote public key\n"
+    "  OUT shared_secret Created shared secret\n"
     );
 
 
@@ -698,13 +698,13 @@ static bool cmd_ecdsa_sign(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(ecdsa_sign, &m_subcmd_var_var, cmd_ecdsa_sign,
-    "Sign a message with ECC private key.\r\n"
-    "Usage:\r\n"
-    "  ecdsa_sign private_key hash signature\r\n"
-    "Arguments:\r\n"
-    "  IN  private_key  Private key\r\n"
-    "  IN  hash         Hash of the message to sign\r\n"
-    "  OUT signature    Signature to create\r\n"
+    "Sign a message with ECC private key.\n"
+    "Usage:\n"
+    "  ecdsa_sign private_key hash signature\n"
+    "Arguments:\n"
+    "  IN  private_key  Private key\n"
+    "  IN  hash         Hash of the message to sign\n"
+    "  OUT signature    Signature to create\n"
     );
 
 
@@ -743,13 +743,13 @@ static bool cmd_ecdsa_verify(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(ecdsa_verify, &m_subcmd_var_var_var, cmd_ecdsa_verify,
-    "Verify a hash with ECC public key.\r\n"
-    "Usage:\r\n"
-    "  ecdsa_verify public_key hash signature\r\n"
-    "Arguments:\r\n"
-    "  IN  public_key   Public key\r\n"
-    "  IN  hash         Hash of the message to verify\r\n"
-    "  IN  signature    Signature to check\r\n"
+    "Verify a hash with ECC public key.\n"
+    "Usage:\n"
+    "  ecdsa_verify public_key hash signature\n"
+    "Arguments:\n"
+    "  IN  public_key   Public key\n"
+    "  IN  hash         Hash of the message to verify\n"
+    "  IN  signature    Signature to check\n"
     );
 
 
@@ -801,13 +801,13 @@ static bool cmd_eddsa_sign(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(eddsa_sign, &m_subcmd_var_var, cmd_eddsa_sign,
-    "Sign a message with ECC private key using EdDSA.\r\n"
-    "Usage:\r\n"
-    "  ecdsa_sign private_key message signature\r\n"
-    "Arguments:\r\n"
-    "  IN  private_key  Private key\r\n"
-    "  IN  message      Message to sign\r\n"
-    "  OUT signature    Signature to create\r\n"
+    "Sign a message with ECC private key using EdDSA.\n"
+    "Usage:\n"
+    "  ecdsa_sign private_key message signature\n"
+    "Arguments:\n"
+    "  IN  private_key  Private key\n"
+    "  IN  message      Message to sign\n"
+    "  OUT signature    Signature to create\n"
     );
 
 
@@ -846,13 +846,13 @@ static bool cmd_eddsa_verify(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(eddsa_verify, &m_subcmd_var_var_var, cmd_eddsa_verify,
-    "Verify a hash with ECC public key using EdDSA.\r\n"
-    "Usage:\r\n"
-    "  ecdsa_verify public_key message signature\r\n"
-    "Arguments:\r\n"
-    "  IN  public_key   Public key\r\n"
-    "  IN  message      Message to verify\r\n"
-    "  IN  signature    Signature to check\r\n"
+    "Verify a hash with ECC public key using EdDSA.\n"
+    "Usage:\n"
+    "  ecdsa_verify public_key message signature\n"
+    "Arguments:\n"
+    "  IN  public_key   Public key\n"
+    "  IN  message      Message to verify\n"
+    "  IN  signature    Signature to check\n"
     );
 
 
@@ -904,14 +904,14 @@ static bool cmd_ecc_byte_order_invert(nrf_cli_t const * p_cli, size_t argc, char
 
 
 CLI_CMD_REGISTER(ecc_byte_order_invert, &m_subcmd_curve_var_var, cmd_ecc_byte_order_invert,
-    "Invert byte order of a raw ECC data.\r\n"
-    "Usage:\r\n"
-    "  ecc_byte_order_invert [curve] input output\r\n"
-    "Arguments:\r\n"
-    "  IN  curve   Optional curve that defines how to invert fields.\r\n"
-    "              If it is skipped all bytes are inverted.\r\n"
-    "  IN  input   Source raw data.\r\n"
-    "  OUT output  Raw data containing inverted byte order.\r\n"
+    "Invert byte order of a raw ECC data.\n"
+    "Usage:\n"
+    "  ecc_byte_order_invert [curve] input output\n"
+    "Arguments:\n"
+    "  IN  curve   Optional curve that defines how to invert fields.\n"
+    "              If it is skipped all bytes are inverted.\n"
+    "  IN  input   Source raw data.\n"
+    "  OUT output  Raw data containing inverted byte order.\n"
     );
 
 

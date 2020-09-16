@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -61,7 +61,7 @@
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
-
+#include "app_timer.h"
 #include "ser_phy_debug_comm.h"
 
 #if defined(APP_USBD_ENABLED) && APP_USBD_ENABLED
@@ -140,14 +140,28 @@ static void usbd_enable(void)
 
 static void on_idle(void)
 {
+
     if (!NRF_LOG_PROCESS())
     {
-        /* Sleep waiting for an application event. */
-        uint32_t err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+      // Wait for an event.
+      if (nrf_sdh_is_enabled())
+      {
+          ret_code_t ret_code = sd_app_evt_wait();
+          ASSERT((ret_code == NRF_SUCCESS) || (ret_code == NRF_ERROR_SOFTDEVICE_NOT_ENABLED));
+          UNUSED_VARIABLE(ret_code);
+      }
+      else
+      {
+          // Wait for an event.
+          __WFE();
+          // Clear the internal event register.
+          __SEV();
+          __WFE();
+      }
     }
 
 #if defined(APP_USBD_ENABLED) && APP_USBD_ENABLED
+
     while (app_usbd_event_queue_process())
     {
         /* Nothing to do */
@@ -210,12 +224,14 @@ int main(void)
     err_code = nrf_sdh_enable_request();
     APP_ERROR_CHECK(err_code);
 
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
     ser_conn_on_no_mem_handler_set(on_idle);
 
     /* Enter main loop. */
     for (;;)
     {
-
         /* Process SoftDevice events. */
         app_sched_execute();
         if (nrf_sdh_is_suspended())

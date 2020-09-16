@@ -51,6 +51,7 @@ SRC_FILES += \
   $(PROJ_DIR)/test_cases/test_vectors_aes_ecb.c \
   $(PROJ_DIR)/test_cases/test_vectors_chacha_poly.c \
   $(PROJ_DIR)/test_cases/test_vectors_ecdh.c \
+  $(PROJ_DIR)/test_cases/test_vectors_ecdsa_random.c \
   $(PROJ_DIR)/test_cases/test_vectors_ecdsa_sign.c \
   $(PROJ_DIR)/test_cases/test_vectors_ecdsa_verify.c \
   $(PROJ_DIR)/test_cases/test_vectors_eddsa.c \
@@ -88,6 +89,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/crypto/backend/mbedtls/mbedtls_backend_hmac.c \
   $(SDK_ROOT)/components/libraries/crypto/backend/mbedtls/mbedtls_backend_init.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_rng.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_rng.c \
   $(SDK_ROOT)/components/libraries/crypto/backend/cifra/cifra_backend_aes_aead.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_rtt.c \
@@ -181,6 +183,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/modules/nrfx/mdk \
   $(SDK_ROOT)/external/nrf_cc310/include \
   $(SDK_ROOT)/components/libraries/scheduler \
+  $(SDK_ROOT)/modules/nrfx \
   $(SDK_ROOT)/components/libraries/crypto/backend/oberon \
   $(SDK_ROOT)/components/libraries/queue \
   $(SDK_ROOT)/components/libraries/stack_info \
@@ -189,7 +192,7 @@ INC_FOLDERS += \
   $(PROJ_DIR)/common_test \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/mem_manager \
-  $(SDK_ROOT)/components/libraries/util \
+  $(SDK_ROOT)/components/libraries/crypto/backend/optiga \
   $(SDK_ROOT)/components/libraries/bsp \
   ../config \
   $(SDK_ROOT)/external/nrf_tls/mbedtls/nrf_crypto/config \
@@ -205,7 +208,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/timer \
   $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/libraries/log \
-  $(SDK_ROOT)/modules/nrfx \
+  $(SDK_ROOT)/components/libraries/util \
   $(SDK_ROOT)/components/libraries/experimental_section_vars \
   $(SDK_ROOT)/integration/nrfx/legacy \
   $(PROJ_DIR)/test_cases \
@@ -229,9 +232,9 @@ INC_FOLDERS += \
 
 # Libraries common to all targets
 LIB_FILES += \
-  $(SDK_ROOT)/external/nrf_cc310/lib/libnrf_cc310_0.9.10.a \
+  $(SDK_ROOT)/external/nrf_cc310/lib/cortex-m4/hard-float/libnrf_cc310_0.9.12.a \
   $(SDK_ROOT)/external/micro-ecc/nrf52hf_armgcc/armgcc/micro_ecc_lib_nrf52.a \
-  $(SDK_ROOT)/external/nrf_oberon/lib/nrf52/liboberon_2.0.5.a \
+  $(SDK_ROOT)/external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_2.0.7.a \
 
 # Optimization flags
 OPT = -O3 -g3

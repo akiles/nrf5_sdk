@@ -17,6 +17,10 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_default_backends.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_frontend.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_str_formatter.c \
+  $(SDK_ROOT)/components/boards/boards.c \
+  $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecc.c \
+  $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecdh.c \
+  $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecdsa.c \
   $(SDK_ROOT)/components/libraries/button/app_button.c \
   $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
   $(SDK_ROOT)/components/libraries/scheduler/app_scheduler.c \
@@ -39,15 +43,12 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/experimental_section_vars/nrf_section_iter.c \
   $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/components/libraries/sha256/sha256.c \
-  $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecc.c \
-  $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecdh.c \
-  $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecdsa.c \
-  $(SDK_ROOT)/components/boards/boards.c \
+  $(SDK_ROOT)/modules/nrfx/mdk/system_nrf52.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_clock.c \
   $(SDK_ROOT)/modules/nrfx/hal/nrf_nvmc.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_gpiote.c \
-  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power_clock.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_ecc.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_ecdsa.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_hash.c \
@@ -65,12 +66,16 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/bootloader/nrf_bootloader_fw_activation.c \
   $(SDK_ROOT)/components/libraries/bootloader/nrf_bootloader_info.c \
   $(SDK_ROOT)/components/libraries/bootloader/nrf_bootloader_wdt.c \
-  $(SDK_ROOT)/modules/nrfx/mdk/system_nrf52.c \
+  $(SDK_ROOT)/external/nano-pb/pb_common.c \
+  $(SDK_ROOT)/external/nano-pb/pb_decode.c \
   $(SDK_ROOT)/components/libraries/crypto/backend/nrf_sw/nrf_sw_backend_hash.c \
+  $(SDK_ROOT)/components/libraries/bootloader/dfu/dfu-cc.pb.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_flash.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_mbr.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_settings.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_utils.c \
+  $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_validation.c \
+  $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_ver_validation.c \
   $(SDK_ROOT)/components/softdevice/common/nrf_sdh.c \
   $(SDK_ROOT)/components/softdevice/common/nrf_sdh_soc.c \
   $(SDK_ROOT)/components/libraries/crypto/backend/oberon/oberon_backend_chacha_poly_aead.c \
@@ -96,7 +101,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/softdevice/s132/headers/nrf52 \
   $(SDK_ROOT)/components/libraries/bootloader/dfu \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
-  $(SDK_ROOT)/components/libraries/util \
+  $(SDK_ROOT)/components/libraries/crypto/backend/optiga \
   $(SDK_ROOT)/components/libraries/bsp \
   ../config \
   $(SDK_ROOT)/components/libraries/crypto \
@@ -127,17 +132,19 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/sha256 \
   $(SDK_ROOT)/components/libraries/memobj \
   $(SDK_ROOT)/components/libraries/crypto/backend/cc310_bl \
+  $(SDK_ROOT)/components/libraries/util \
   $(SDK_ROOT)/integration/nrfx \
   $(SDK_ROOT)/components/libraries/balloc \
   $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc \
   $(SDK_ROOT)/components/libraries/crypto/backend/cifra \
   $(SDK_ROOT)/modules/nrfx/drivers/include \
   $(SDK_ROOT)/external/fprintf \
+  $(SDK_ROOT)/external/nano-pb \
   $(SDK_ROOT)/components/libraries/log/src \
 
 # Libraries common to all targets
 LIB_FILES += \
-  $(SDK_ROOT)/external/nrf_oberon/lib/nrf52/liboberon_2.0.5.a \
+  $(SDK_ROOT)/external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_2.0.7.a \
   $(SDK_ROOT)/external/micro-ecc/nrf52hf_armgcc/armgcc/micro_ecc_lib_nrf52.a \
 
 # Optimization flags
@@ -153,7 +160,7 @@ CFLAGS += -DFLOAT_ABI_HARD
 CFLAGS += -DNRF52
 CFLAGS += -DNRF52832_XXAA
 CFLAGS += -DNRF52_PAN_74
-CFLAGS += -DNRF_DFU_SETTINGS_VERSION=1
+CFLAGS += -DNRF_DFU_SETTINGS_VERSION=2
 CFLAGS += -DNRF_SD_BLE_API_VERSION=6
 CFLAGS += -DS132
 CFLAGS += -DSOFTDEVICE_PRESENT
@@ -169,7 +176,7 @@ CFLAGS += -Wall -Werror
 CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 # keep every function in a separate section, this allows linker to discard unused ones
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -fno-builtin -fshort-enums -flto
+CFLAGS += -fno-builtin -fshort-enums
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
@@ -185,7 +192,7 @@ ASMFLAGS += -DFLOAT_ABI_HARD
 ASMFLAGS += -DNRF52
 ASMFLAGS += -DNRF52832_XXAA
 ASMFLAGS += -DNRF52_PAN_74
-ASMFLAGS += -DNRF_DFU_SETTINGS_VERSION=1
+ASMFLAGS += -DNRF_DFU_SETTINGS_VERSION=2
 ASMFLAGS += -DNRF_SD_BLE_API_VERSION=6
 ASMFLAGS += -DS132
 ASMFLAGS += -DSOFTDEVICE_PRESENT
@@ -223,6 +230,7 @@ default: nrf52832_xxaa
 help:
 	@echo following targets are available:
 	@echo		nrf52832_xxaa
+	@echo		flash_mbr
 	@echo		sdk_config - starting external tool for editing sdk_config.h
 	@echo		flash      - flashing binary
 
@@ -233,12 +241,18 @@ include $(TEMPLATE_PATH)/Makefile.common
 
 $(foreach target, $(TARGETS), $(call define_target, $(target)))
 
-.PHONY: flash erase
+.PHONY: flash flash_mbr erase
 
 # Flash the program
 flash: default
 	@echo Flashing: $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex
 	nrfjprog -f nrf52 --program $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex --sectorerase
+	nrfjprog -f nrf52 --reset
+
+# Flash softdevice
+flash_mbr:
+	@echo Flashing: mbr_nrf52_2.4.1_mbr.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/mbr/nrf52832/hex/mbr_nrf52_2.4.1_mbr.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

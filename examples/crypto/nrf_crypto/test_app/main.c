@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -41,7 +41,7 @@
 /**
  * @defgroup nrf_crypto_test_example
  * @{
- * @ingroup nrf_crypto_test
+ * @addtogroup nrf_crypto_test
  * @brief Cryptographic Test Example Application main file.
  *
  * This file contains the source code for a sample application that demonstrates how to test
@@ -62,6 +62,9 @@
 #include "nrf_section.h"
 #include "nrf_crypto_rng.h"
 #include "nrf_crypto_init.h"
+#if NRF_MODULE_ENABLED(NRF_CRYPTO_BACKEND_OPTIGA)
+#include "nrf_drv_clock.h"
+#endif // NRF_MODULE_ENABLED(NRF_CRYPTO_BACKEND_OPTIGA)
 #include "nrf_log_default_backends.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log.h"
@@ -92,6 +95,14 @@ int main(void)
     uint32_t   j;
     uint32_t   test_case_count = TEST_CASE_COUNT;
     ret_code_t ret_val;
+
+
+#if NRF_CRYPTO_BACKEND_OPTIGA_ENABLED
+    // Start internal LFCLK XTAL oscillator
+    ret_val = nrf_drv_clock_init();
+    APP_ERROR_CHECK(ret_val);
+    nrf_drv_clock_lfclk_request(NULL);
+#endif
 
     log_init();
     ret_val = nrf_crypto_init();

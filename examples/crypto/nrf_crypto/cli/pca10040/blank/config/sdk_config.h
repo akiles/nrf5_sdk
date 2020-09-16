@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -123,6 +123,15 @@
 
 #ifndef NRF_CRYPTO_BACKEND_CC310_BL_HASH_AUTOMATIC_RAM_BUFFER_SIZE
 #define NRF_CRYPTO_BACKEND_CC310_BL_HASH_AUTOMATIC_RAM_BUFFER_SIZE 4096
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_BL_INTERRUPTS_ENABLED  - Enable Interrupts while support using CC310 bl.
+ 
+
+// <i> Select a library version compatible with the configuration. When interrupts are disable, a version named _noint must be used
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_BL_INTERRUPTS_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_BL_INTERRUPTS_ENABLED 1
 #endif
 
 // </e>
@@ -322,6 +331,15 @@
 
 #ifndef NRF_CRYPTO_BACKEND_CC310_RNG_ENABLED
 #define NRF_CRYPTO_BACKEND_CC310_RNG_ENABLED 1
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_CC310_INTERRUPTS_ENABLED  - Enable Interrupts while support using CC310.
+ 
+
+// <i> Select a library version compatible with the configuration. When interrupts are disable, a version named _noint must be used
+
+#ifndef NRF_CRYPTO_BACKEND_CC310_INTERRUPTS_ENABLED
+#define NRF_CRYPTO_BACKEND_CC310_INTERRUPTS_ENABLED 1
 #endif
 
 // </e>
@@ -701,6 +719,33 @@
 
 #ifndef NRF_CRYPTO_BACKEND_OBERON_HMAC_SHA512_ENABLED
 #define NRF_CRYPTO_BACKEND_OBERON_HMAC_SHA512_ENABLED 1
+#endif
+
+// </e>
+
+// <e> NRF_CRYPTO_BACKEND_OPTIGA_ENABLED - Enable the nrf_crypto Optiga Trust X backend.
+
+// <i> Enables the nrf_crypto backend for Optiga Trust X devices.
+//==========================================================
+#ifndef NRF_CRYPTO_BACKEND_OPTIGA_ENABLED
+#define NRF_CRYPTO_BACKEND_OPTIGA_ENABLED 0
+#endif
+// <q> NRF_CRYPTO_BACKEND_OPTIGA_RNG_ENABLED  - Optiga backend support for RNG
+ 
+
+// <i> The Optiga backend provide external chip RNG.
+
+#ifndef NRF_CRYPTO_BACKEND_OPTIGA_RNG_ENABLED
+#define NRF_CRYPTO_BACKEND_OPTIGA_RNG_ENABLED 0
+#endif
+
+// <q> NRF_CRYPTO_BACKEND_OPTIGA_ECC_SECP256R1_ENABLED  - Optiga backend support for ECC secp256r1
+ 
+
+// <i> The Optiga backend provide external chip ECC using secp256r1.
+
+#ifndef NRF_CRYPTO_BACKEND_OPTIGA_ECC_SECP256R1_ENABLED
+#define NRF_CRYPTO_BACKEND_OPTIGA_ECC_SECP256R1_ENABLED 1
 #endif
 
 // </e>
@@ -1116,6 +1161,119 @@
 
 // </e>
 
+// <e> NRFX_RTC_ENABLED - nrfx_rtc - RTC peripheral driver
+//==========================================================
+#ifndef NRFX_RTC_ENABLED
+#define NRFX_RTC_ENABLED 1
+#endif
+// <q> NRFX_RTC0_ENABLED  - Enable RTC0 instance
+ 
+
+#ifndef NRFX_RTC0_ENABLED
+#define NRFX_RTC0_ENABLED 0
+#endif
+
+// <q> NRFX_RTC1_ENABLED  - Enable RTC1 instance
+ 
+
+#ifndef NRFX_RTC1_ENABLED
+#define NRFX_RTC1_ENABLED 0
+#endif
+
+// <q> NRFX_RTC2_ENABLED  - Enable RTC2 instance
+ 
+
+#ifndef NRFX_RTC2_ENABLED
+#define NRFX_RTC2_ENABLED 1
+#endif
+
+// <o> NRFX_RTC_MAXIMUM_LATENCY_US - Maximum possible time[us] in highest priority interrupt 
+#ifndef NRFX_RTC_MAXIMUM_LATENCY_US
+#define NRFX_RTC_MAXIMUM_LATENCY_US 2000
+#endif
+
+// <o> NRFX_RTC_DEFAULT_CONFIG_FREQUENCY - Frequency  <16-32768> 
+
+
+#ifndef NRFX_RTC_DEFAULT_CONFIG_FREQUENCY
+#define NRFX_RTC_DEFAULT_CONFIG_FREQUENCY 32768
+#endif
+
+// <q> NRFX_RTC_DEFAULT_CONFIG_RELIABLE  - Ensures safe compare event triggering
+ 
+
+#ifndef NRFX_RTC_DEFAULT_CONFIG_RELIABLE
+#define NRFX_RTC_DEFAULT_CONFIG_RELIABLE 0
+#endif
+
+// <o> NRFX_RTC_DEFAULT_CONFIG_IRQ_PRIORITY  - Interrupt priority
+ 
+// <0=> 0 (highest) 
+// <1=> 1 
+// <2=> 2 
+// <3=> 3 
+// <4=> 4 
+// <5=> 5 
+// <6=> 6 
+// <7=> 7 
+
+#ifndef NRFX_RTC_DEFAULT_CONFIG_IRQ_PRIORITY
+#define NRFX_RTC_DEFAULT_CONFIG_IRQ_PRIORITY 6
+#endif
+
+// <e> NRFX_RTC_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRFX_RTC_CONFIG_LOG_ENABLED
+#define NRFX_RTC_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRFX_RTC_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRFX_RTC_CONFIG_LOG_LEVEL
+#define NRFX_RTC_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRFX_RTC_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_RTC_CONFIG_INFO_COLOR
+#define NRFX_RTC_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRFX_RTC_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_RTC_CONFIG_DEBUG_COLOR
+#define NRFX_RTC_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// </e>
+
 // <e> NRFX_TIMER_ENABLED - nrfx_timer - TIMER periperal driver
 //==========================================================
 #ifndef NRFX_TIMER_ENABLED
@@ -1139,7 +1297,7 @@
  
 
 #ifndef NRFX_TIMER2_ENABLED
-#define NRFX_TIMER2_ENABLED 0
+#define NRFX_TIMER2_ENABLED 1
 #endif
 
 // <q> NRFX_TIMER3_ENABLED  - Enable TIMER3 instance
@@ -1276,6 +1434,13 @@
 
 #ifndef CLOCK_CONFIG_LF_SRC
 #define CLOCK_CONFIG_LF_SRC 1
+#endif
+
+// <q> CLOCK_CONFIG_LF_CAL_ENABLED  - Calibration enable for LF Clock Source
+ 
+
+#ifndef CLOCK_CONFIG_LF_CAL_ENABLED
+#define CLOCK_CONFIG_LF_CAL_ENABLED 0
 #endif
 
 // <o> CLOCK_CONFIG_IRQ_PRIORITY  - Interrupt priority
@@ -1723,13 +1888,6 @@
 
 // </e>
 
-// <q> NRF_CLI_LIBUARTE_ENABLED  - nrf_cli_libuarte - libUARTE command line interface transport
- 
-
-#ifndef NRF_CLI_LIBUARTE_ENABLED
-#define NRF_CLI_LIBUARTE_ENABLED 1
-#endif
-
 // <e> NRF_CLI_RTT_ENABLED - nrf_cli_rtt - RTT command line interface transport
 //==========================================================
 #ifndef NRF_CLI_RTT_ENABLED
@@ -1757,13 +1915,6 @@
 #endif
 
 // </e>
-
-// <q> NRF_FPRINTF_ENABLED  - nrf_fprintf - fprintf function.
- 
-
-#ifndef NRF_FPRINTF_ENABLED
-#define NRF_FPRINTF_ENABLED 1
-#endif
 
 // <q> NRF_MEMOBJ_ENABLED  - nrf_memobj - Linked memory allocator module
  
@@ -2028,38 +2179,98 @@
 // </h> 
 //==========================================================
 
+// <h> nrf_cli_libuarte - libUARTE command line interface transport
+
+//==========================================================
+// <q> NRF_CLI_LIBUARTE_ENABLED  - Enable/disable the CLI libUARTE module.
+ 
+
+#ifndef NRF_CLI_LIBUARTE_ENABLED
+#define NRF_CLI_LIBUARTE_ENABLED 1
+#endif
+
+// <o> NRF_CLI_LIBUARTE_UARTE_INSTANCE  - UARTE instance
+ 
+// <0=> UARTE0 
+
+#ifndef NRF_CLI_LIBUARTE_UARTE_INSTANCE
+#define NRF_CLI_LIBUARTE_UARTE_INSTANCE 0
+#endif
+
+// <o> NRF_CLI_LIBUARTE_TIMER_INSTANCE  - UARTE TIMER instance
+ 
+// <0=> TIMER0 
+// <1=> TIMER1 
+// <2=> TIMER2 
+// <3=> TIMER3 
+// <4=> TIMER4 
+
+#ifndef NRF_CLI_LIBUARTE_TIMER_INSTANCE
+#define NRF_CLI_LIBUARTE_TIMER_INSTANCE 2
+#endif
+
+// <o> NRF_CLI_LIBUARTE_TIMEOUT_TIMER_INSTANCE  - UARTE timeout TIMER instance
+ 
+// <0=> TIMER0 
+// <1=> TIMER1 
+// <2=> TIMER2 
+// <3=> TIMER3 
+// <4=> TIMER4 
+// <255=> RTC used 
+
+#ifndef NRF_CLI_LIBUARTE_TIMEOUT_TIMER_INSTANCE
+#define NRF_CLI_LIBUARTE_TIMEOUT_TIMER_INSTANCE 255
+#endif
+
+// <o> NRF_CLI_LIBUARTE_TIMEOUT_RTC_INSTANCE  - UARTE timeout RTC instance
+ 
+// <0=> RTC0 
+// <1=> RTC1 
+// <2=> RTC2 
+// <255=> TIMER used 
+
+#ifndef NRF_CLI_LIBUARTE_TIMEOUT_RTC_INSTANCE
+#define NRF_CLI_LIBUARTE_TIMEOUT_RTC_INSTANCE 2
+#endif
+
+// </h> 
+//==========================================================
+
+// <h> nrf_fprintf - fprintf function.
+
+//==========================================================
+// <q> NRF_FPRINTF_ENABLED  - Enable/disable fprintf module.
+ 
+
+#ifndef NRF_FPRINTF_ENABLED
+#define NRF_FPRINTF_ENABLED 1
+#endif
+
+// <q> NRF_FPRINTF_FLAG_AUTOMATIC_CR_ON_LF_ENABLED  - For each printed LF, function will add CR.
+ 
+
+#ifndef NRF_FPRINTF_FLAG_AUTOMATIC_CR_ON_LF_ENABLED
+#define NRF_FPRINTF_FLAG_AUTOMATIC_CR_ON_LF_ENABLED 1
+#endif
+
+// </h> 
+//==========================================================
+
 // <h> nrf_libuarte - libUARTE library
 
 //==========================================================
-// <o> NRF_LIBUARTE_CONFIG_TIMER_USED  - Timer instance
+// <q> NRF_LIBUARTE_UARTE0  - UARTE0 instance
  
-// <0=> 0 
-// <1=> 1 
-// <2=> 2 
-// <3=> 3 
-// <4=> 4 
 
-#ifndef NRF_LIBUARTE_CONFIG_TIMER_USED
-#define NRF_LIBUARTE_CONFIG_TIMER_USED 3
+#ifndef NRF_LIBUARTE_UARTE0
+#define NRF_LIBUARTE_UARTE0 1
 #endif
 
-// <o> NRF_LIBUARTE_ASYNC_CONFIG_TIMER_USED  - Timer instance
- 
-// <0=> 0 
-// <1=> 1 
-// <2=> 2 
-// <3=> 3 
-// <4=> 4 
-
-#ifndef NRF_LIBUARTE_ASYNC_CONFIG_TIMER_USED
-#define NRF_LIBUARTE_ASYNC_CONFIG_TIMER_USED 4
-#endif
-
-// <q> NRF_LIBUARTE_CONFIG_UARTE_USED  - UARTE instance
+// <q> NRF_LIBUARTE_UARTE1  - UARTE1 instance
  
 
-#ifndef NRF_LIBUARTE_CONFIG_UARTE_USED
-#define NRF_LIBUARTE_CONFIG_UARTE_USED 0
+#ifndef NRF_LIBUARTE_UARTE1
+#define NRF_LIBUARTE_UARTE1 0
 #endif
 
 // </h> 
@@ -2301,12 +2512,12 @@
 // <h> nrf_log in nRF_Core 
 
 //==========================================================
-// <e> NRF_MPU_CONFIG_LOG_ENABLED - Enables logging in the module.
+// <e> NRF_MPU_LIB_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
-#ifndef NRF_MPU_CONFIG_LOG_ENABLED
-#define NRF_MPU_CONFIG_LOG_ENABLED 0
+#ifndef NRF_MPU_LIB_CONFIG_LOG_ENABLED
+#define NRF_MPU_LIB_CONFIG_LOG_ENABLED 0
 #endif
-// <o> NRF_MPU_CONFIG_LOG_LEVEL  - Default Severity level
+// <o> NRF_MPU_LIB_CONFIG_LOG_LEVEL  - Default Severity level
  
 // <0=> Off 
 // <1=> Error 
@@ -2314,11 +2525,11 @@
 // <3=> Info 
 // <4=> Debug 
 
-#ifndef NRF_MPU_CONFIG_LOG_LEVEL
-#define NRF_MPU_CONFIG_LOG_LEVEL 3
+#ifndef NRF_MPU_LIB_CONFIG_LOG_LEVEL
+#define NRF_MPU_LIB_CONFIG_LOG_LEVEL 3
 #endif
 
-// <o> NRF_MPU_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+// <o> NRF_MPU_LIB_CONFIG_INFO_COLOR  - ANSI escape code prefix.
  
 // <0=> Default 
 // <1=> Black 
@@ -2330,11 +2541,11 @@
 // <7=> Cyan 
 // <8=> White 
 
-#ifndef NRF_MPU_CONFIG_INFO_COLOR
-#define NRF_MPU_CONFIG_INFO_COLOR 0
+#ifndef NRF_MPU_LIB_CONFIG_INFO_COLOR
+#define NRF_MPU_LIB_CONFIG_INFO_COLOR 0
 #endif
 
-// <o> NRF_MPU_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+// <o> NRF_MPU_LIB_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
  
 // <0=> Default 
 // <1=> Black 
@@ -2346,8 +2557,8 @@
 // <7=> Cyan 
 // <8=> White 
 
-#ifndef NRF_MPU_CONFIG_DEBUG_COLOR
-#define NRF_MPU_CONFIG_DEBUG_COLOR 0
+#ifndef NRF_MPU_LIB_CONFIG_DEBUG_COLOR
+#define NRF_MPU_LIB_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -2711,6 +2922,57 @@
 
 #ifndef MAX3421E_HOST_CONFIG_DEBUG_COLOR
 #define MAX3421E_HOST_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRFX_USBD_CONFIG_LOG_ENABLED - Enable logging in the module
+//==========================================================
+#ifndef NRFX_USBD_CONFIG_LOG_ENABLED
+#define NRFX_USBD_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRFX_USBD_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRFX_USBD_CONFIG_LOG_LEVEL
+#define NRFX_USBD_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRFX_USBD_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_USBD_CONFIG_INFO_COLOR
+#define NRFX_USBD_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRFX_USBD_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_USBD_CONFIG_DEBUG_COLOR
+#define NRFX_USBD_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -4949,17 +5211,17 @@
 #define SEGGER_RTT_CONFIG_BUFFER_SIZE_UP 512
 #endif
 
-// <o> SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS - Size of upstream buffer. 
+// <o> SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS - Maximum number of upstream buffers. 
 #ifndef SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS
 #define SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS 2
 #endif
 
-// <o> SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN - Size of upstream buffer. 
+// <o> SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN - Size of downstream buffer. 
 #ifndef SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN
 #define SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN 16
 #endif
 
-// <o> SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS - Size of upstream buffer. 
+// <o> SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS - Maximum number of downstream buffers. 
 #ifndef SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS
 #define SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS 2
 #endif

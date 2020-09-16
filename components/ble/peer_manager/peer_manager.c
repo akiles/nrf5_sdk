@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -265,6 +265,18 @@ void pm_gcm_evt_handler(pm_evt_t * p_gcm_evt)
 {
     // Forward the event to all registered Peer Manager event handlers.
     evt_send(p_gcm_evt);
+}
+
+
+/**@brief Event handler for events from the GATTS Cache Manager module.
+ *        This handler is extern in GATTS Cache Manager.
+ *
+ * @param[in]  p_gscm_evt  The incoming GATTS Cache Manager event.
+ */
+void pm_gscm_evt_handler(pm_evt_t * p_gscm_evt)
+{
+    // Forward the event to all registered Peer Manager event handlers.
+    evt_send(p_gscm_evt);
 }
 
 

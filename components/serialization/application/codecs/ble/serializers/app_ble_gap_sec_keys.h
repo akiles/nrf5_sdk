@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -53,6 +53,7 @@
 #include "ble_types.h"
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -68,6 +69,8 @@ typedef struct
   uint8_t                conn_active;    /**< Indication that keys for this connection are used by the SoftDevice. 0: keys used; 1: keys not used. */
   ble_gap_sec_keyset_t   keyset;         /**< Keyset structure, see @ref ble_gap_sec_keyset_t.*/
 } ser_ble_gap_app_keyset_t;
+
+void app_ble_gap_sec_keys_init(void);
 
 /**@brief Allocates the instance in m_app_keys_table[] for storage of encryption keys.
  *
@@ -101,48 +104,14 @@ uint32_t app_ble_gap_sec_context_find(uint16_t conn_handle, uint32_t *p_index);
 /** @} */
 
 #if NRF_SD_BLE_API_VERSION >= 6
-/**
- * @brief Stores buffer for adv report data.
- *
- * @param p_data Pointer to the buffer.
- *
- * @return NRF_SUCCESS or error in case pointer is already set.
- */
-uint32_t app_ble_gap_scan_data_set(ble_data_t const * p_data);
 
-/**
- * @brief Returns pointer to the buffer for storing report data. Returns error if not paired with
- *        @ref app_ble_gap_scan_data_set call.
- *
- * @param[out] p_data Stored data.
- * @return NRF_SUCCESS or error in case pointer is already cleared.
- */
-uint32_t app_ble_gap_scan_data_fetch_clear(ble_data_t * p_data);
+int app_ble_gap_adv_buf_register(void * p_buf);
+void *app_ble_gap_adv_buf_unregister(int id, bool event_context);
+void app_ble_gap_adv_buf_addr_unregister(void * p_buf, bool event_context);
 
-/**
- * @brief Function for registering data pointers related with given adv_handle.
- *
- * @param adv_handle      Handle.
- * @param p_adv_data      Adv_data buffer.
- * @param p_scan_rsp_data Scan_rsp_data buffer.
- *
- * @return NRF_SUCCESS or error.
- *
- */
-uint32_t app_ble_gap_adv_set_register(uint8_t adv_handle, uint8_t * p_adv_data, uint8_t * p_scan_rsp_data);
+void app_ble_gap_scan_data_set(uint8_t * p_scan_data);
+void app_ble_gap_scan_data_unset(bool free);
 
-
-/**
- * @brief Function for unregistering given .
- *
- * @param[in]  adv_handle       Handle.
- * @param[out] pp_adv_data      Pointer to adv_data buffer associated with given adv_handle.
- * @param[out] pp_scan_rsp_data Pointer to adv_data buffer associated with given adv_handle.
- *
- * @return NRF_SUCCESS or error.
- *
- */
-uint32_t app_ble_gap_adv_set_unregister(uint8_t adv_handle, uint8_t * * pp_adv_data, uint8_t **pp_scan_rsp_data);
 #endif
 #ifdef __cplusplus
 }

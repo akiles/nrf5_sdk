@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -44,6 +44,7 @@
 #include "ser_sd_transport.h"
 #include "app_error.h"
 #include "app_ble_user_mem.h"
+#include "app_ble_gap_sec_keys.h"
 
 extern ser_ble_user_mem_t m_app_user_mem_table[];
 
@@ -467,6 +468,8 @@ uint32_t _sd_ble_enable(ble_enable_params_t * p_params, uint32_t * p_app_ram_bas
     //Ignore ram_base parameter
     (void)p_app_ram_base;
 
+    app_ble_gap_sec_keys_init();
+
     tx_buf_alloc(&p_buffer, &buffer_length);
     mp_out_params[0] = p_params;
 
@@ -489,6 +492,8 @@ uint32_t _sd_ble_enable(uint32_t * p_app_ram_base)
 
     //Ignore ram_base parameter
     (void)p_app_ram_base;
+
+    app_ble_gap_sec_keys_init();
 
     tx_buf_alloc(&p_buffer, &buffer_length);
 

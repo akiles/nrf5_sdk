@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2012 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2012 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -139,7 +139,7 @@ typedef struct
     uint16_t             conn_handle;
     uint16_t             max_data_len;
     uint8_t            * p_data;
-    uint8_t              data_len;
+    uint16_t             data_len;
     ble_nus_c_handles_t  handles;     /**< Handles on which the Nordic Uart service characteristics was discovered on the peer device. This will be filled if the evt_type is @ref BLE_NUS_C_EVT_DISCOVERY_COMPLETE.*/
 } ble_nus_c_evt_t;
 

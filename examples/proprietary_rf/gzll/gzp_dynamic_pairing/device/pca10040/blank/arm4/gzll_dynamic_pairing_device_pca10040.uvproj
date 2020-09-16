@@ -431,6 +431,9 @@
               <FileName>nrf_nvmc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\..\..\modules\nrfx\hal\nrf_nvmc.c</FilePath>            </File>            <File>
+              <FileName>nrfx_atomic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</FilePath>            </File>            <File>
               <FileName>nrfx_gpiote.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_gpiote.c</FilePath>            </File>            <File>

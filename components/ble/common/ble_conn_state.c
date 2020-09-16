@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -284,12 +284,12 @@ uint8_t ble_conn_state_role(uint16_t conn_handle)
 
     if (ble_conn_state_valid(conn_handle))
     {
-#if !defined (S112)
+#if !defined (S112) && !defined(S312)
         bool central = nrf_atflags_get(&m_bcs.flags.central_flags, conn_handle);
         role = central ? BLE_GAP_ROLE_CENTRAL : BLE_GAP_ROLE_PERIPH;
 #else
         role = BLE_GAP_ROLE_PERIPH;
-#endif // !defined (S112)
+#endif // !defined (S112) && !defined(S312)
     }
 
     return role;

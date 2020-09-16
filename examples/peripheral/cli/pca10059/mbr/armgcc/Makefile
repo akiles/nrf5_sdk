@@ -19,7 +19,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_frontend.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_str_formatter.c \
   $(SDK_ROOT)/components/boards/boards.c \
-  $(SDK_ROOT)/components/libraries/mpu/nrf_mpu.c \
+  $(SDK_ROOT)/components/libraries/mpu/nrf_mpu_lib.c \
   $(SDK_ROOT)/components/libraries/stack_guard/nrf_stack_guard.c \
   $(SDK_ROOT)/components/libraries/button/app_button.c \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
@@ -60,17 +60,18 @@ SRC_FILES += \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_clock.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_power.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_uart.c \
-  $(SDK_ROOT)/components/drivers_nrf/usbd/nrf_drv_usbd.c \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_nvic.c \
   $(SDK_ROOT)/modules/nrfx/hal/nrf_nvmc.c \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_soc.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_gpiote.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power.c \
-  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/prs/nrfx_prs.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_systick.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uart.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uarte.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_usbd.c \
   $(SDK_ROOT)/components/libraries/bsp/bsp.c \
   $(PROJ_DIR)/demo_cli_cmds.c \
   $(PROJ_DIR)/main.c \
@@ -96,15 +97,14 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/timer \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/util \
-  $(SDK_ROOT)/components/libraries/bsp \
+  $(SDK_ROOT)/components/libraries/hardfault \
   ../config \
   $(SDK_ROOT)/components/libraries/usbd/class/cdc \
   $(SDK_ROOT)/components/libraries/balloc \
-  $(SDK_ROOT)/components/drivers_nrf/usbd \
   $(SDK_ROOT)/components/libraries/ringbuf \
   $(SDK_ROOT)/components/libraries/hardfault/nrf52 \
   $(SDK_ROOT)/components/libraries/cli/uart \
-  $(SDK_ROOT)/components/libraries/hardfault \
+  $(SDK_ROOT)/components/libraries/bsp \
   $(SDK_ROOT)/components/libraries/log \
   $(SDK_ROOT)/components/libraries/button \
   $(SDK_ROOT)/components/libraries/mpu \
@@ -151,6 +151,7 @@ CFLAGS += -DCONFIG_GPIO_AS_PINRESET
 CFLAGS += -DDEBUG
 CFLAGS += -DDEBUG_NRF
 CFLAGS += -DFLOAT_ABI_HARD
+CFLAGS += -DMBR_PRESENT
 CFLAGS += -DNRF52840_XXAA
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
@@ -175,6 +176,7 @@ ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
 ASMFLAGS += -DDEBUG
 ASMFLAGS += -DDEBUG_NRF
 ASMFLAGS += -DFLOAT_ABI_HARD
+ASMFLAGS += -DMBR_PRESENT
 ASMFLAGS += -DNRF52840_XXAA
 
 # Linker flags
@@ -227,8 +229,8 @@ flash: default
 
 # Flash softdevice
 flash_mbr:
-	@echo Flashing: mbr_nrf52_2.3.0_mbr.hex
-	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/mbr/nrf52840/hex/mbr_nrf52_2.3.0_mbr.hex --sectorerase
+	@echo Flashing: mbr_nrf52_2.4.1_mbr.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/mbr/nrf52840/hex/mbr_nrf52_2.4.1_mbr.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

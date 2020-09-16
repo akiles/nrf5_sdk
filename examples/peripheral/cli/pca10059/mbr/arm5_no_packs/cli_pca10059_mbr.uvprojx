@@ -12,7 +12,7 @@
       <TargetOption>
         <TargetCommonOption>          <Device>nRF52840_xxAA</Device>
           <Vendor>Nordic Semiconductor</Vendor>
-          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.17.0</PackID>
+          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.24.1</PackID>
           <PackURL>http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/</PackURL>          <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x10000) CPUTYPE("Cortex-M4") FPU2 CLOCK(64000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -362,9 +362,9 @@
             <vShortWch>0</vShortWch>
             <VariousControls>
               <MiscControls>--reduce_paths</MiscControls>
-              <Define> APP_TIMER_V2 APP_TIMER_V2_RTC1_ENABLED BOARD_PCA10059 CONFIG_GPIO_AS_PINRESET DEBUG DEBUG_NRF FLOAT_ABI_HARD NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
+              <Define> APP_TIMER_V2 APP_TIMER_V2_RTC1_ENABLED BOARD_PCA10059 CONFIG_GPIO_AS_PINRESET DEBUG DEBUG_NRF FLOAT_ABI_HARD MBR_PRESENT NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\usbd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\cdc_acm;..\..\..\..\..\..\components\libraries\cli\rtt;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\crc16;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\fds;..\..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\mpu;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\stack_guard;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\timer\experimental;..\..\..\..\..\..\components\libraries\usbd;..\..\..\..\..\..\components\libraries\usbd\class\cdc;..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers;..\..\..;..\..\..\..\..\..\external\fnmatch;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\external\utf_converter;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\cdc_acm;..\..\..\..\..\..\components\libraries\cli\rtt;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\crc16;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\fds;..\..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\mpu;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\stack_guard;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\timer\experimental;..\..\..\..\..\..\components\libraries\usbd;..\..\..\..\..\..\components\libraries\usbd\class\cdc;..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers;..\..\..;..\..\..\..\..\..\external\fnmatch;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\external\utf_converter;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -378,10 +378,10 @@
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DAPP_TIMER_V2,-DAPP_TIMER_V2_RTC1_ENABLED,-DBOARD_PCA10059,-DCONFIG_GPIO_AS_PINRESET,-DDEBUG,-DDEBUG_NRF,-DFLOAT_ABI_HARD,-DNRF52840_XXAA,-D__HEAP_SIZE=8192,-D__STACK_SIZE=8192</MiscControls>
-              <Define> APP_TIMER_V2 APP_TIMER_V2_RTC1_ENABLED BOARD_PCA10059 CONFIG_GPIO_AS_PINRESET DEBUG DEBUG_NRF FLOAT_ABI_HARD NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
+              <MiscControls> --cpreproc_opts=-DAPP_TIMER_V2,-DAPP_TIMER_V2_RTC1_ENABLED,-DBOARD_PCA10059,-DCONFIG_GPIO_AS_PINRESET,-DDEBUG,-DDEBUG_NRF,-DFLOAT_ABI_HARD,-DMBR_PRESENT,-DNRF52840_XXAA,-D__HEAP_SIZE=8192,-D__STACK_SIZE=8192</MiscControls>
+              <Define> APP_TIMER_V2 APP_TIMER_V2_RTC1_ENABLED BOARD_PCA10059 CONFIG_GPIO_AS_PINRESET DEBUG DEBUG_NRF FLOAT_ABI_HARD MBR_PRESENT NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\usbd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\cdc_acm;..\..\..\..\..\..\components\libraries\cli\rtt;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\crc16;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\fds;..\..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\mpu;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\stack_guard;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\timer\experimental;..\..\..\..\..\..\components\libraries\usbd;..\..\..\..\..\..\components\libraries\usbd\class\cdc;..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers;..\..\..;..\..\..\..\..\..\external\fnmatch;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\external\utf_converter;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\cdc_acm;..\..\..\..\..\..\components\libraries\cli\rtt;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\crc16;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\fds;..\..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\mpu;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\stack_guard;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\timer\experimental;..\..\..\..\..\..\components\libraries\usbd;..\..\..\..\..\..\components\libraries\usbd\class\cdc;..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers;..\..\..;..\..\..\..\..\..\external\fnmatch;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\external\utf_converter;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -436,9 +436,9 @@
         </Group>        <Group>
           <GroupName>nRF_Core</GroupName>
           <Files>            <File>
-              <FileName>nrf_mpu.c</FileName>
+              <FileName>nrf_mpu_lib.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\mpu\nrf_mpu.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\libraries\mpu\nrf_mpu_lib.c</FilePath>            </File>            <File>
               <FileName>nrf_stack_guard.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\stack_guard\nrf_stack_guard.c</FilePath>            </File>          </Files>
@@ -454,9 +454,6 @@
               <FileName>nrf_drv_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_usbd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\usbd\nrf_drv_usbd.c</FilePath>            </File>            <File>
               <FileName>nrf_nvic.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_nvic.c</FilePath>            </File>            <File>
@@ -466,6 +463,9 @@
               <FileName>nrf_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</FilePath>            </File>            <File>
+              <FileName>nrfx_atomic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</FilePath>            </File>            <File>
               <FileName>nrfx_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</FilePath>            </File>            <File>
@@ -475,18 +475,21 @@
               <FileName>nrfx_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power.c</FilePath>            </File>            <File>
-              <FileName>nrfx_power_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</FilePath>            </File>            <File>
               <FileName>nrfx_prs.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</FilePath>            </File>            <File>
+              <FileName>nrfx_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_systick.c</FilePath>            </File>            <File>
               <FileName>nrfx_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</FilePath>            </File>            <File>
               <FileName>nrfx_uarte.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</FilePath>            </File>            <File>
+              <FileName>nrfx_usbd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_usbd.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Libraries</GroupName>
           <Files>            <File>
@@ -642,7 +645,7 @@
       <TargetOption>
         <TargetCommonOption>          <Device>nRF52840_xxAA</Device>
           <Vendor>Nordic Semiconductor</Vendor>
-          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.17.0</PackID>
+          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.24.1</PackID>
           <PackURL>http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/</PackURL>          <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x10000) CPUTYPE("Cortex-M4") FPU2 CLOCK(64000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -674,7 +677,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>..\..\..\..\..\..\components\softdevice\mbr\nrf52840\hex\</OutputDirectory>
-          <OutputName>mbr_nrf52_2.3.0_mbr.hex</OutputName>
+          <OutputName>mbr_nrf52_2.4.1_mbr.hex</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -935,7 +938,7 @@
               <OCR_RVCT4>
                 <Type>1</Type>
                 <StartAddress>0x1000</StartAddress>
-                <Size>0xff000</Size>
+                <Size>0xdf000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -992,9 +995,9 @@
             <vShortWch>0</vShortWch>
             <VariousControls>
               <MiscControls>--reduce_paths</MiscControls>
-              <Define> APP_TIMER_V2 APP_TIMER_V2_RTC1_ENABLED BOARD_PCA10059 CONFIG_GPIO_AS_PINRESET DEBUG DEBUG_NRF FLOAT_ABI_HARD NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
+              <Define> APP_TIMER_V2 APP_TIMER_V2_RTC1_ENABLED BOARD_PCA10059 CONFIG_GPIO_AS_PINRESET DEBUG DEBUG_NRF FLOAT_ABI_HARD MBR_PRESENT NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\usbd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\cdc_acm;..\..\..\..\..\..\components\libraries\cli\rtt;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\crc16;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\fds;..\..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\mpu;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\stack_guard;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\timer\experimental;..\..\..\..\..\..\components\libraries\usbd;..\..\..\..\..\..\components\libraries\usbd\class\cdc;..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers;..\..\..;..\..\..\..\..\..\external\fnmatch;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\external\utf_converter;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\cdc_acm;..\..\..\..\..\..\components\libraries\cli\rtt;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\crc16;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\fds;..\..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\mpu;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\stack_guard;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\timer\experimental;..\..\..\..\..\..\components\libraries\usbd;..\..\..\..\..\..\components\libraries\usbd\class\cdc;..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers;..\..\..;..\..\..\..\..\..\external\fnmatch;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\external\utf_converter;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1008,10 +1011,10 @@
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DAPP_TIMER_V2,-DAPP_TIMER_V2_RTC1_ENABLED,-DBOARD_PCA10059,-DCONFIG_GPIO_AS_PINRESET,-DDEBUG,-DDEBUG_NRF,-DFLOAT_ABI_HARD,-DNRF52840_XXAA,-D__HEAP_SIZE=8192,-D__STACK_SIZE=8192</MiscControls>
-              <Define> APP_TIMER_V2 APP_TIMER_V2_RTC1_ENABLED BOARD_PCA10059 CONFIG_GPIO_AS_PINRESET DEBUG DEBUG_NRF FLOAT_ABI_HARD NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
+              <MiscControls> --cpreproc_opts=-DAPP_TIMER_V2,-DAPP_TIMER_V2_RTC1_ENABLED,-DBOARD_PCA10059,-DCONFIG_GPIO_AS_PINRESET,-DDEBUG,-DDEBUG_NRF,-DFLOAT_ABI_HARD,-DMBR_PRESENT,-DNRF52840_XXAA,-D__HEAP_SIZE=8192,-D__STACK_SIZE=8192</MiscControls>
+              <Define> APP_TIMER_V2 APP_TIMER_V2_RTC1_ENABLED BOARD_PCA10059 CONFIG_GPIO_AS_PINRESET DEBUG DEBUG_NRF FLOAT_ABI_HARD MBR_PRESENT NRF52840_XXAA __HEAP_SIZE=8192 __STACK_SIZE=8192</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\drivers_nrf\usbd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\cdc_acm;..\..\..\..\..\..\components\libraries\cli\rtt;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\crc16;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\fds;..\..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\mpu;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\stack_guard;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\timer\experimental;..\..\..\..\..\..\components\libraries\usbd;..\..\..\..\..\..\components\libraries\usbd\class\cdc;..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers;..\..\..;..\..\..\..\..\..\external\fnmatch;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\external\utf_converter;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\cli;..\..\..\..\..\..\components\libraries\cli\cdc_acm;..\..\..\..\..\..\components\libraries\cli\rtt;..\..\..\..\..\..\components\libraries\cli\uart;..\..\..\..\..\..\components\libraries\crc16;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\fds;..\..\..\..\..\..\components\libraries\fstorage;..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\mpu;..\..\..\..\..\..\components\libraries\mutex;..\..\..\..\..\..\components\libraries\pwr_mgmt;..\..\..\..\..\..\components\libraries\queue;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\stack_guard;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\timer\experimental;..\..\..\..\..\..\components\libraries\usbd;..\..\..\..\..\..\components\libraries\usbd\class\cdc;..\..\..\..\..\..\components\libraries\usbd\class\cdc\acm;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\mbr\nrf52840\headers;..\..\..;..\..\..\..\..\..\external\fnmatch;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\external\utf_converter;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1066,9 +1069,9 @@
         </Group>        <Group>
           <GroupName>nRF_Core</GroupName>
           <Files>            <File>
-              <FileName>nrf_mpu.c</FileName>
+              <FileName>nrf_mpu_lib.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\mpu\nrf_mpu.c</FilePath>            </File>            <File>
+              <FilePath>..\..\..\..\..\..\components\libraries\mpu\nrf_mpu_lib.c</FilePath>            </File>            <File>
               <FileName>nrf_stack_guard.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\stack_guard\nrf_stack_guard.c</FilePath>            </File>          </Files>
@@ -1084,9 +1087,6 @@
               <FileName>nrf_drv_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</FilePath>            </File>            <File>
-              <FileName>nrf_drv_usbd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\usbd\nrf_drv_usbd.c</FilePath>            </File>            <File>
               <FileName>nrf_nvic.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_nvic.c</FilePath>            </File>            <File>
@@ -1096,6 +1096,9 @@
               <FileName>nrf_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</FilePath>            </File>            <File>
+              <FileName>nrfx_atomic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</FilePath>            </File>            <File>
               <FileName>nrfx_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</FilePath>            </File>            <File>
@@ -1105,18 +1108,21 @@
               <FileName>nrfx_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power.c</FilePath>            </File>            <File>
-              <FileName>nrfx_power_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</FilePath>            </File>            <File>
               <FileName>nrfx_prs.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</FilePath>            </File>            <File>
+              <FileName>nrfx_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_systick.c</FilePath>            </File>            <File>
               <FileName>nrfx_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</FilePath>            </File>            <File>
               <FileName>nrfx_uarte.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</FilePath>            </File>          </Files>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</FilePath>            </File>            <File>
+              <FileName>nrfx_usbd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_usbd.c</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Libraries</GroupName>
           <Files>            <File>
@@ -1272,7 +1278,7 @@
     </filter>    <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0">
       <targetInfos>        <targetInfo name="nrf52840_xxaa" versionMatchMode="fixed"/>        <targetInfo excluded="1" name="flash_mbr"/>      </targetInfos>
     </package>
-    <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.17.0">
+    <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.24.1">
       <targetInfos>        <targetInfo name="nrf52840_xxaa" versionMatchMode="fixed"/>        <targetInfo excluded="1" name="flash_mbr"/>      </targetInfos>
     </package>  </packages>
   <apis/>
@@ -1280,8 +1286,8 @@
       <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
       <targetInfos>        <targetInfo name="nrf52840_xxaa" versionMatchMode="fixed"/>        <targetInfo excluded="1" name="flash_mbr"/>      </targetInfos>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="8.17.0" condition="nRF5x Series CMSIS Device">
-      <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.17.0"/>
+    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="8.24.1" condition="nRF5x Series CMSIS Device">
+      <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.24.1"/>
       <targetInfos>        <targetInfo name="nrf52840_xxaa" versionMatchMode="fixed"/>        <targetInfo excluded="1" name="flash_mbr"/>      </targetInfos>
     </component>  </components>
   <files>  </files>

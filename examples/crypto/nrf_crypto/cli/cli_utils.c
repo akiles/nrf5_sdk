@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -96,7 +96,7 @@ void cli_begin_command(nrf_cli_t const * p_cli, size_t argc, char ** argv)
     if (mp_cli != NULL)
     {
         cli_end_command(false);
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "Unexpected termination of previous command\r\n");
+        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "Unexpected termination of previous command\n");
     }
     mp_cli = p_cli;
     m_argc = argc;
@@ -109,7 +109,7 @@ void cli_end_command(bool ok)
     size_t i;
     if (ok)
     {
-        nrf_cli_fprintf(mp_cli, NRF_CLI_INFO, "OK\r\n");
+        nrf_cli_fprintf(mp_cli, NRF_CLI_INFO, "OK\n");
         for (i = 0; i < m_output_info_size; i++)
         {
             if (strcmp(m_output_info[i].p_name, "$") != 0)
@@ -126,7 +126,7 @@ void cli_end_command(bool ok)
     }
     else
     {
-        nrf_cli_fprintf(mp_cli, NRF_CLI_ERROR, "ERROR\r\n");
+        nrf_cli_fprintf(mp_cli, NRF_CLI_ERROR, "ERROR\n");
     }
     var_all_temp_delete();
     mp_cli = NULL;
@@ -152,7 +152,7 @@ void cli_error_print(ret_code_t ret)
     if (ret != NRF_SUCCESS)
     {
         char const * message = nrf_crypto_error_string_get(ret);
-        nrf_cli_fprintf(cli_get(), NRF_CLI_ERROR, "Error: (0x%0X) %s\r\n", ret, message);
+        nrf_cli_fprintf(cli_get(), NRF_CLI_ERROR, "Error: (0x%0X) %s\n", ret, message);
     }
 }
 
@@ -214,7 +214,7 @@ static int convert_hex(const char * p_str, uint8_t * p_output, size_t arg_number
         {
             nrf_cli_fprintf(mp_cli,
                             NRF_CLI_ERROR,
-                            "Invalid character '%c' in hex argument %d.\r\n",
+                            "Invalid character '%c' in hex argument %d.\n",
                             c,
                             arg_number);
             return -1;
@@ -241,7 +241,7 @@ static int convert_hex(const char * p_str, uint8_t * p_output, size_t arg_number
     {
         nrf_cli_fprintf(mp_cli,
                         NRF_CLI_ERROR,
-                        "Number of hex characters is not even in argument %d.\r\n",
+                        "Number of hex characters is not even in argument %d.\n",
                         arg_number);
         return -1;
     }
@@ -347,7 +347,7 @@ static var_t * input_arg_with_converter(char * p_str, size_t arg_number)
     {
         nrf_cli_fprintf(mp_cli,
                         NRF_CLI_ERROR,
-                        "Invalid converter name in argument %d.\r\n",
+                        "Invalid converter name in argument %d.\n",
                         arg_number);
         return NULL;
     }
@@ -376,7 +376,7 @@ static var_t * input_arg_with_converter(char * p_str, size_t arg_number)
     {
         nrf_cli_fprintf(mp_cli,
                         NRF_CLI_ERROR,
-                        "Cannot find matching converter for argument %d.\r\n",
+                        "Cannot find matching converter for argument %d.\n",
                         arg_number);
         return NULL;
     }
@@ -456,7 +456,7 @@ static void print_converter(cli_converter_t * p_converter)
 {
     nrf_cli_fprintf(mp_cli,
         NRF_CLI_NORMAL,
-        "  (%s)\r\n    From: %s\r\n    To: %s\r\n",
+        "  (%s)\n    From: %s\n    To: %s\n",
         p_converter->p_name,
         p_converter->p_from_type ? p_converter->p_from_type->p_description : "ANY",
         p_converter->p_to_type ? p_converter->p_to_type->p_description : "ANY");
@@ -489,7 +489,7 @@ var_t * cli_input_arg_multi_get(size_t arg_number, var_type_t const * const * p_
 
     if (arg_number >= m_argc)
     {
-        nrf_cli_fprintf(mp_cli, NRF_CLI_ERROR, "Invalid number of arguments\r\n");
+        nrf_cli_fprintf(mp_cli, NRF_CLI_ERROR, "Invalid number of arguments\n");
         return NULL;
     }
 
@@ -518,15 +518,15 @@ var_t * cli_input_arg_multi_get(size_t arg_number, var_type_t const * const * p_
 
         if (matching_converters != 1)
         {
-            nrf_cli_fprintf(mp_cli, NRF_CLI_ERROR, "Invalid type of argument %d.\r\n", arg_number);
-            nrf_cli_fprintf(mp_cli, NRF_CLI_INFO, "Provided type:\r\n");
-            nrf_cli_fprintf(mp_cli, NRF_CLI_INFO, "  %s\r\n", p_var->header.p_type->p_description);
-            nrf_cli_fprintf(mp_cli, NRF_CLI_INFO, "Following types are acceptable:\r\n");
+            nrf_cli_fprintf(mp_cli, NRF_CLI_ERROR, "Invalid type of argument %d.\n", arg_number);
+            nrf_cli_fprintf(mp_cli, NRF_CLI_INFO, "Provided type:\n");
+            nrf_cli_fprintf(mp_cli, NRF_CLI_INFO, "  %s\n", p_var->header.p_type->p_description);
+            nrf_cli_fprintf(mp_cli, NRF_CLI_INFO, "Following types are acceptable:\n");
             var_type_t const * const * p_item;
             p_item = p_types;
             while (*p_item)
             {
-                nrf_cli_fprintf(mp_cli, NRF_CLI_INFO, "  %s\r\n", (*p_item)->p_description);
+                nrf_cli_fprintf(mp_cli, NRF_CLI_INFO, "  %s\n", (*p_item)->p_description);
                 p_item++;
             }
         }
@@ -535,19 +535,19 @@ var_t * cli_input_arg_multi_get(size_t arg_number, var_type_t const * const * p_
         {
             nrf_cli_fprintf(mp_cli,
                             NRF_CLI_INFO,
-                            "No converter found to do the conversion of argument %d.\r\n",
+                            "No converter found to do the conversion of argument %d.\n",
                             arg_number);
             return NULL;
         }
         else if (matching_converters > 1)
         {
-            nrf_cli_fprintf(mp_cli, NRF_CLI_INFO, "Following converters can be used:\r\n");
+            nrf_cli_fprintf(mp_cli, NRF_CLI_INFO, "Following converters can be used:\n");
             list_flagged_converters();
             return NULL;
         }
         nrf_cli_fprintf(mp_cli,
                         NRF_CLI_WARNING,
-                        "Implicit conversion of argument %d:\r\n",
+                        "Implicit conversion of argument %d:\n",
                         arg_number);
         print_converter(p_selected);
 
@@ -626,7 +626,7 @@ static var_t * output_arg_internal_get(char * p_str,
                     m_output_info_size = 0;
                     nrf_cli_fprintf(mp_cli,
                                     NRF_CLI_ERROR,
-                                    "Out of memory. Output may be invalid.\r\n");
+                                    "Out of memory. Output may be invalid.\n");
                 }
             }
             return p_var;
@@ -646,7 +646,7 @@ static var_t * output_arg_internal_get(char * p_str,
         default:
             nrf_cli_fprintf(mp_cli,
                             NRF_CLI_ERROR,
-                            "Output argument %d is invalid.\r\n",
+                            "Output argument %d is invalid.\n",
                             arg_number);
             return NULL;
     }
@@ -684,8 +684,8 @@ static bool cmd_converters(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(converters, NULL, cmd_converters,
-        "List all defined converters.\r\n"
-        "Usage:\r\n"
-        "  converters\r\n"
+        "List all defined converters.\n"
+        "Usage:\n"
+        "  converters\n"
         );
 

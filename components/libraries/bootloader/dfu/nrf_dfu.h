@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -69,7 +69,7 @@ extern "C" {
  * This function initializes a DFU operation and any transports that are registered
  * in the system.
  *
- * @param[in] observer  Function for receiving DFU notifications.
+ * @param[in] observer  Callback function for receiving DFU notifications.
  *
  * @retval  NRF_SUCCESS     If the DFU operation was successfully initialized.
  */

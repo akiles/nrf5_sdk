@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -295,10 +295,10 @@ int main(void)
 
     /* Welcome message */
     NRF_LOG_RAW_INFO(
-            "TWIS and TWI usage example started.\r\n"
-            "You can access simulated EEPROM memory using <eeprom> command.\r\n"
+            "TWIS and TWI usage example started.\n"
+            "You can access simulated EEPROM memory using <eeprom> command.\n"
             "Execute: <eeprom -h> for more information or press the Tab button "
-            "to see all available commands.\r\n"
+            "to see all available commands.\n"
     );
 
     /* Main loop */
@@ -313,8 +313,8 @@ int main(void)
             if (epprom_error != 0)
             {
                 NRF_LOG_RAW_INFO(
-                        "WARNING: EEPROM transmission error detected.\r\n"
-                        "Use 'x' command to read error word.\r\n"
+                        "WARNING: EEPROM transmission error detected.\n"
+                        "Use 'x' command to read error word.\n"
                 );
             }
         }
@@ -341,11 +341,11 @@ static void eeprom_cmd_clear(nrf_cli_t const * p_cli, size_t argc, char **argv)
         err_code = eeprom_write(addr, &clear_val, 1);
         if (NRF_SUCCESS != err_code)
         {
-            nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "communication error\r\n");
+            nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "communication error\n");
             return;
         }
     }
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "memory erased\r\n");
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "memory erased\n");
 }
 
 /**
@@ -358,7 +358,7 @@ static void eeprom_cmd_error(nrf_cli_t const * p_cli, size_t argc, char **argv)
     ASSERT(p_cli->p_ctx && p_cli->p_iface && p_cli->p_name);
 
     uint32_t error = eeprom_simulator_error_get_and_clear();
-    nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "error word: %x\r\n", error);
+    nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "error word: %x\n", error);
 }
 
 /**
@@ -381,7 +381,7 @@ static void eeprom_cmd_read(nrf_cli_t const * p_cli, size_t argc, char **argv)
         buff[IN_LINE_PRINT_CNT] = '\0';
         if (NRF_SUCCESS != err_code)
         {
-            nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "EEPROM transmission error detected.\r\n");
+            nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "EEPROM transmission error detected.\n");
             return;
         }
 
@@ -394,7 +394,7 @@ static void eeprom_cmd_read(nrf_cli_t const * p_cli, size_t argc, char **argv)
                 buff[i] = '.';
             }
         }
-        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%s\r\n", buff);
+        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%s\n", buff);
     }
 }
 
@@ -410,7 +410,7 @@ static void eeprom_cmd_write(nrf_cli_t const * p_cli, size_t argc, char **argv)
 
     if (argc < 2)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s:%s", argv[0], " bad parameter count\r\n");
+        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s:%s", argv[0], " bad parameter count\n");
         return;
     }
     if (argc > 2)
@@ -419,7 +419,7 @@ static void eeprom_cmd_write(nrf_cli_t const * p_cli, size_t argc, char **argv)
                         NRF_CLI_WARNING,
                         "%s:%s",
                         argv[0],
-                        " bad parameter count - please use quotes\r\n");
+                        " bad parameter count - please use quotes\n");
         return;
     }
 
@@ -427,7 +427,7 @@ static void eeprom_cmd_write(nrf_cli_t const * p_cli, size_t argc, char **argv)
     {
         nrf_cli_fprintf(p_cli,
                         NRF_CLI_ERROR,
-                        "too long string: maximum allowed character count = %d\r\n",
+                        "too long string: maximum allowed character count = %d\n",
                         argv[0],
                         EEPROM_SIM_SIZE);
         return;
@@ -441,12 +441,12 @@ static void eeprom_cmd_write(nrf_cli_t const * p_cli, size_t argc, char **argv)
         err_code = eeprom_write(addr, (uint8_t const *)argv[1] + addr, to_write);
         if (NRF_SUCCESS != err_code)
         {
-             nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "communication error\r\n");
+             nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "communication error\n");
             return;
         }
         addr += to_write;
     }
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "OK\r\n");
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "OK\n");
 }
 
 /**
@@ -464,7 +464,7 @@ static void eeprom_cmd(nrf_cli_t const * p_cli, size_t argc, char **argv)
         return;
     }
 
-    nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s:%s%s\r\n", argv[0], " unknown parameter: ", argv[1]);
+    nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s:%s%s\n", argv[0], " unknown parameter: ", argv[1]);
 }
 
 NRF_CLI_CREATE_STATIC_SUBCMD_SET(m_sub_eeprom)

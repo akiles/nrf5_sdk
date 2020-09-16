@@ -182,6 +182,7 @@
           <state>FLOAT_ABI_SOFT</state>
           <state>NRF52810_XXAA</state>
           <state>NRF52_PAN_74</state>
+          <state>NRFX_COREDEP_DELAY_US_LOOP_CYCLES=3</state>
           <state>NRF_SD_BLE_API_VERSION=6</state>
           <state>S112</state>
           <state>SOFTDEVICE_PRESENT</state>
@@ -348,7 +349,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_qwr</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\boards</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic_flags</state>
@@ -583,6 +583,7 @@
           <state>FLOAT_ABI_SOFT</state>
           <state>NRF52810_XXAA</state>
           <state>NRF52_PAN_74</state>
+          <state>NRFX_COREDEP_DELAY_US_LOOP_CYCLES=3</state>
           <state>NRF_SD_BLE_API_VERSION=6</state>
           <state>S112</state>
           <state>SOFTDEVICE_PRESENT</state>
@@ -716,7 +717,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_qwr</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\boards</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic_flags</state>
@@ -1212,10 +1212,11 @@
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_gpiote.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</name>    </file>  </group>  <group>
   <name>Board Support</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\bsp\bsp.c</name>    </file>    <file>

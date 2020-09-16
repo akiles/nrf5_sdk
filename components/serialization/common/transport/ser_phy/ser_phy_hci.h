@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -129,6 +129,8 @@ typedef void (*ser_phy_hci_slip_event_handler_t)(ser_phy_hci_slip_evt_t *p_event
  */
 uint32_t ser_phy_hci_slip_open(ser_phy_hci_slip_event_handler_t events_handler);
 
+/**@brief Function for resetting the module.*/
+void ser_phy_hci_slip_reset(void);
 
 /**@brief A function for transmitting a HCI SLIP packet.
  *

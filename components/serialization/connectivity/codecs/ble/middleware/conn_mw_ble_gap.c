@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -136,14 +136,26 @@ uint32_t conn_mw_ble_gap_scan_start(uint8_t const * const p_rx_buf,
     err_code = ble_gap_scan_start_req_dec(p_rx_buf, rx_buf_len, &p_scan_params, &p_adv_report_buffer);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
+    if (p_adv_report_buffer)
+    {
+        conn_ble_gap_scan_data_set(p_adv_report_buffer->p_data);
+    }
+
     sd_err_code = sd_ble_gap_scan_start(p_scan_params, p_adv_report_buffer);
+
+    if (sd_err_code != NRF_SUCCESS)
+    {
+        conn_ble_gap_scan_data_unset(true);
+    }
+
+    err_code = ble_gap_scan_start_rsp_enc(sd_err_code, p_adv_report_buffer, p_tx_buf, p_tx_buf_len);
 #else
     err_code = ble_gap_scan_start_req_dec(p_rx_buf, rx_buf_len, &p_scan_params);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
     sd_err_code = sd_ble_gap_scan_start(p_scan_params);
-#endif
     err_code = ble_gap_scan_start_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
+#endif
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
     return err_code;
@@ -163,7 +175,7 @@ uint32_t conn_mw_ble_gap_scan_stop(uint8_t const * const p_rx_buf,
    uint32_t sd_err_code;
    
 #if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION > 5
-      conn_ble_gap_ble_data_buf_free(mp_scan_data);
+   conn_ble_gap_scan_data_unset(true);
 #endif
 
    sd_err_code = sd_ble_gap_scan_stop();
@@ -1232,7 +1244,13 @@ uint32_t conn_mw_ble_gap_adv_set_configure(uint8_t const * const p_rx_buf,
 
    sd_err_code = sd_ble_gap_adv_set_configure(p_adv_handle, p_adv_data, p_adv_params);
 
-   err_code = ble_gap_adv_set_configure_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len, p_adv_handle);
+   if ((sd_err_code != NRF_SUCCESS) && p_adv_data)
+   {
+       (void)conn_ble_gap_ble_data_buf_free(p_adv_data->adv_data.p_data);
+       (void)conn_ble_gap_ble_data_buf_free(p_adv_data->scan_rsp_data.p_data);
+   }
+
+   err_code = ble_gap_adv_set_configure_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len, p_adv_data, p_adv_handle);
    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
    return err_code;

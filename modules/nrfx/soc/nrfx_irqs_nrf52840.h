@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -84,6 +84,7 @@ extern "C" {
 #endif
 
 // NFCT_IRQn
+#define nrfx_nfct_irq_handler       NFCT_IRQHandler
 
 // GPIOTE_IRQn
 #define nrfx_gpiote_irq_handler     GPIOTE_IRQHandler
@@ -185,6 +186,7 @@ extern "C" {
 // FPU_IRQn
 
 // USBD_IRQn
+#define nrfx_usbd_irq_handler       USBD_IRQHandler
 
 // UARTE1_IRQn
 #define nrfx_uarte_1_irq_handler    UARTE1_IRQHandler

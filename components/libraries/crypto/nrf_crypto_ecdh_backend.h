@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -56,6 +56,7 @@
 #include "mbedtls_backend_ecdh.h"
 #include "oberon_backend_ecdh.h"
 #include "micro_ecc_backend_ecdh.h"
+#include "optiga_backend_ecdh.h"
 
 
 #ifdef __cplusplus

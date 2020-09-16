@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -44,6 +44,7 @@
 #include <stdint.h>
 #include "sdk_errors.h"
 #include "nrf_dfu_req_handler.h"
+#include "nrf_dfu_transport.h"
 
 
 #ifdef __cplusplus
@@ -94,6 +95,7 @@ typedef struct
     nrf_serial_rx_buf_free_func_t payload_free_func;
     uint32_t                      mtu;
     uint8_t *                     p_rsp_buf;
+    nrf_dfu_transport_t const *   p_low_level_transport;
 } nrf_dfu_serial_t;
 
 void nrf_dfu_serial_on_packet_received(nrf_dfu_serial_t       * p_transport,

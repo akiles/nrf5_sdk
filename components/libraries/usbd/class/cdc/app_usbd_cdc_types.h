@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -313,7 +313,7 @@ typedef enum {
  * */
 typedef struct {
     uint8_t  bmRequestType; //!< Request type.
-    uint8_t  bmRequest;     //!< Request ID @ref app_usbd_cdc_req_id_t.
+    uint8_t  bRequest;      //!< Request ID @ref app_usbd_cdc_req_id_t.
     uint16_t wValue;        //!< Value field.
     uint16_t wIndex;        //!< Index field.
     uint16_t wLength;       //!< Length of payload following.

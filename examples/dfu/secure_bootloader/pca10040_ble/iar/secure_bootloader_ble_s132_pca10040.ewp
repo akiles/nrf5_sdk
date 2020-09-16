@@ -183,7 +183,7 @@
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_74</state>
-          <state>NRF_DFU_SETTINGS_VERSION=1</state>
+          <state>NRF_DFU_SETTINGS_VERSION=2</state>
           <state>NRF_DFU_SVCI_ENABLED</state>
           <state>NRF_SD_BLE_API_VERSION=6</state>
           <state>S132</state>
@@ -341,6 +341,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\fstorage</state>
@@ -535,7 +536,7 @@
           <state>NRF52</state>
           <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_74</state>
-          <state>NRF_DFU_SETTINGS_VERSION=1</state>
+          <state>NRF_DFU_SETTINGS_VERSION=2</state>
           <state>NRF_DFU_SVCI_ENABLED</state>
           <state>NRF_SD_BLE_API_VERSION=6</state>
           <state>S132</state>
@@ -660,6 +661,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\fstorage</state>
@@ -1107,9 +1109,10 @@
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\hal\nrf_nvmc.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\hal\nrf_nvmc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\nrf52\liboberon_short_wchar_2.0.5.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
   <name>nRF_Crypto</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecdsa.c</name>    </file>    <file>
@@ -1152,6 +1155,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_validation.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_ver_validation.c</name>    </file>  </group>  <group>
   <name>nRF_SVC</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_svci.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_svci_handler.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\svc\nrf_svc_handler.c</name>    </file>  </group>  <group>
   <name>nRF_SoftDevice</name>    <file>

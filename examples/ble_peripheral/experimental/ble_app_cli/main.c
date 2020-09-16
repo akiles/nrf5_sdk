@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -670,13 +670,13 @@ NRF_PWR_MGMT_HANDLER_REGISTER(shutdown_handler, 0);
 static void led_on_cmd(nrf_cli_t const *p_cli, size_t argc, char **argv)
 {
     bsp_board_led_on(3);
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "LED turned on.\r\n");
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "LED turned on.\n");
 }
 
 static void led_off_cmd(nrf_cli_t const *p_cli, size_t argc, char **argv)
 {
     bsp_board_led_off(3);
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "LED turned off.\r\n");
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "LED turned off.\n");
 }
 
 static void default_cmd(nrf_cli_t const *p_cli, size_t argc, char **argv)
@@ -687,7 +687,7 @@ static void default_cmd(nrf_cli_t const *p_cli, size_t argc, char **argv)
         return;
     }
 
-    nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s:%s%s\r\n", argv[0], " unknown parameter: ", argv[1]);
+    nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s:%s%s\n", argv[0], " unknown parameter: ", argv[1]);
 }
 
 

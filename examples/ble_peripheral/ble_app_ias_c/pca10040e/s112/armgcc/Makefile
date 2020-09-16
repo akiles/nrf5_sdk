@@ -45,10 +45,11 @@ SRC_FILES += \
   $(SDK_ROOT)/components/boards/boards.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_clock.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_uart.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_gpiote.c \
-  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/prs/nrfx_prs.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uart.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uarte.c \
   $(SDK_ROOT)/components/libraries/bsp/bsp.c \
   $(SDK_ROOT)/components/libraries/bsp/bsp_btn_ble.c \
@@ -121,7 +122,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/ble/ble_services/ble_ans_c \
   $(SDK_ROOT)/components/libraries/slip \
   $(SDK_ROOT)/components/libraries/delay \
-  $(SDK_ROOT)/components/libraries/mem_manager \
   $(SDK_ROOT)/components/libraries/csense_drv \
   $(SDK_ROOT)/components/libraries/memobj \
   $(SDK_ROOT)/components/ble/ble_services/ble_nus_c \
@@ -148,7 +148,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/hardfault \
   $(SDK_ROOT)/components/ble/ble_services/ble_cscs \
   $(SDK_ROOT)/components/libraries/hci \
-  $(SDK_ROOT)/components/libraries/usbd/class/hid/kbd \
   $(SDK_ROOT)/components/libraries/timer \
   $(SDK_ROOT)/integration/nrfx \
   $(SDK_ROOT)/components/libraries/sortlist \
@@ -165,7 +164,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/crc32 \
   $(SDK_ROOT)/components/libraries/usbd/class/audio \
   $(SDK_ROOT)/components/ble/peer_manager \
-  $(SDK_ROOT)/components/drivers_nrf/usbd \
+  $(SDK_ROOT)/components/libraries/mem_manager \
   $(SDK_ROOT)/components/libraries/ringbuf \
   $(SDK_ROOT)/components/ble/ble_services/ble_tps \
   $(SDK_ROOT)/components/ble/ble_services/ble_dis \
@@ -176,7 +175,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/modules/nrfx \
   $(SDK_ROOT)/components/libraries/twi_sensor \
   $(SDK_ROOT)/integration/nrfx/legacy \
-  $(SDK_ROOT)/components/libraries/usbd \
+  $(SDK_ROOT)/components/libraries/usbd/class/hid/kbd \
   $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/libraries/atomic_fifo \
   $(SDK_ROOT)/components/ble/ble_services/ble_lbs_c \
@@ -186,6 +185,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/atomic_flags \
   $(SDK_ROOT)/components/ble/ble_services/ble_hrs \
   $(SDK_ROOT)/components/ble/ble_services/ble_rscs \
+  $(SDK_ROOT)/components/libraries/usbd \
   $(SDK_ROOT)/components/libraries/stack_guard \
   $(SDK_ROOT)/components/libraries/log/src \
 
@@ -205,6 +205,7 @@ CFLAGS += -DDEVELOP_IN_NRF52832
 CFLAGS += -DFLOAT_ABI_SOFT
 CFLAGS += -DNRF52810_XXAA
 CFLAGS += -DNRF52_PAN_74
+CFLAGS += -DNRFX_COREDEP_DELAY_US_LOOP_CYCLES=3
 CFLAGS += -DNRF_SD_BLE_API_VERSION=6
 CFLAGS += -DS112
 CFLAGS += -DSOFTDEVICE_PRESENT
@@ -231,6 +232,7 @@ ASMFLAGS += -DDEVELOP_IN_NRF52832
 ASMFLAGS += -DFLOAT_ABI_SOFT
 ASMFLAGS += -DNRF52810_XXAA
 ASMFLAGS += -DNRF52_PAN_74
+ASMFLAGS += -DNRFX_COREDEP_DELAY_US_LOOP_CYCLES=3
 ASMFLAGS += -DNRF_SD_BLE_API_VERSION=6
 ASMFLAGS += -DS112
 ASMFLAGS += -DSOFTDEVICE_PRESENT
@@ -285,8 +287,8 @@ flash: default
 
 # Flash softdevice
 flash_softdevice:
-	@echo Flashing: s112_nrf52_6.1.0_softdevice.hex
-	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s112/hex/s112_nrf52_6.1.0_softdevice.hex --sectorerase
+	@echo Flashing: s112_nrf52_6.1.1_softdevice.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s112/hex/s112_nrf52_6.1.1_softdevice.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

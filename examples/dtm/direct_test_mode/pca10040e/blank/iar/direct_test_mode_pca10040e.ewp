@@ -183,6 +183,7 @@
           <state>FLOAT_ABI_SOFT</state>
           <state>NRF52810_XXAA</state>
           <state>NRF52_PAN_74</state>
+          <state>NRFX_COREDEP_DELAY_US_LOOP_CYCLES=3</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -502,6 +503,7 @@
           <state>FLOAT_ABI_SOFT</state>
           <state>NRF52810_XXAA</state>
           <state>NRF52_PAN_74</state>
+          <state>NRFX_COREDEP_DELAY_US_LOOP_CYCLES=3</state>
         </option>
         <option>
           <name>AList</name>
@@ -1029,7 +1031,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</name>    </file>  </group>  <group>
   <name>Application</name>    <file>
     <name>$PROJ_DIR$\..\..\..\main.c</name>    </file>    <file>

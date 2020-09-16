@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -63,7 +63,7 @@
 #include "nrf_log_backend_flash.h"
 #include "nrf_fstorage_nvmc.h"
 
-#include "nrf_mpu.h"
+#include "nrf_mpu_lib.h"
 #include "nrf_stack_guard.h"
 
 #if defined(APP_USBD_ENABLED) && APP_USBD_ENABLED
@@ -191,7 +191,7 @@ static void timer_handle(void * p_context)
     if (m_counter_active)
     {
         m_counter++;
-        NRF_LOG_RAW_INFO("counter = %d\r\n", m_counter);
+        NRF_LOG_RAW_INFO("counter = %d\n", m_counter);
     }
 }
 
@@ -259,7 +259,7 @@ static void usbd_init(void)
     }
     else
     {
-        NRF_LOG_INFO("No USB power detection enabled\r\nStarting USB now");
+        NRF_LOG_INFO("No USB power detection enabled\nStarting USB now");
 
         app_usbd_enable();
         app_usbd_start();
@@ -289,7 +289,7 @@ static void flashlog_init(void)
 {
     ret_code_t ret;
     int32_t backend_id;
-    
+
     ret = nrf_log_backend_flash_init(&nrf_fstorage_nvmc);
     APP_ERROR_CHECK(ret);
 #if NRF_LOG_BACKEND_FLASHLOG_ENABLED
@@ -298,18 +298,18 @@ static void flashlog_init(void)
 
     nrf_log_backend_enable(&m_flash_log_backend);
 #endif
-    
+
 #if NRF_LOG_BACKEND_CRASHLOG_ENABLED
     backend_id = nrf_log_backend_add(&m_crash_log_backend, NRF_LOG_SEVERITY_INFO);
     APP_ERROR_CHECK_BOOL(backend_id >= 0);
-    
+
     nrf_log_backend_enable(&m_crash_log_backend);
 #endif
 }
 
 static inline void stack_guard_init(void)
 {
-    APP_ERROR_CHECK(nrf_mpu_init());
+    APP_ERROR_CHECK(nrf_mpu_lib_init());
     APP_ERROR_CHECK(nrf_stack_guard_init());
 }
 
@@ -364,8 +364,8 @@ int main(void)
 
     stack_guard_init();
 
-    NRF_LOG_RAW_INFO("Command Line Interface example started.\r\n");
-    NRF_LOG_RAW_INFO("Please press the Tab key to see all available commands.\r\n");
+    NRF_LOG_RAW_INFO("Command Line Interface example started.\n");
+    NRF_LOG_RAW_INFO("Please press the Tab key to see all available commands.\n");
 
     while (true)
     {

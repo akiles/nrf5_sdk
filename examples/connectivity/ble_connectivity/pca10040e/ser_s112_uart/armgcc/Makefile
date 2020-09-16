@@ -21,8 +21,11 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/util/app_error_handler_gcc.c \
   $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
   $(SDK_ROOT)/components/libraries/scheduler/app_scheduler.c \
+  $(SDK_ROOT)/components/libraries/timer/experimental/app_timer2.c \
   $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
+  $(SDK_ROOT)/components/libraries/timer/experimental/drv_rtc.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
+  $(SDK_ROOT)/components/libraries/atomic_fifo/nrf_atfifo.c \
   $(SDK_ROOT)/components/libraries/atomic/nrf_atomic.c \
   $(SDK_ROOT)/components/libraries/balloc/nrf_balloc.c \
   $(SDK_ROOT)/external/fprintf/nrf_fprintf.c \
@@ -30,6 +33,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/memobj/nrf_memobj.c \
   $(SDK_ROOT)/components/libraries/ringbuf/nrf_ringbuf.c \
   $(SDK_ROOT)/components/libraries/experimental_section_vars/nrf_section_iter.c \
+  $(SDK_ROOT)/components/libraries/sortlist/nrf_sortlist.c \
   $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/modules/nrfx/mdk/system_nrf52810.c \
   $(SDK_ROOT)/components/boards/boards.c \
@@ -73,9 +77,10 @@ SRC_FILES += \
   $(SDK_ROOT)/components/serialization/common/transport/ser_phy/ser_phy_uart.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_clock.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_uart.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_clock.c \
-  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/prs/nrfx_prs.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uart.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uarte.c \
   $(PROJ_DIR)/main.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
@@ -95,7 +100,8 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/scheduler \
   $(SDK_ROOT)/modules/nrfx \
   $(SDK_ROOT)/components/serialization/connectivity/codecs/ble/serializers \
-  $(SDK_ROOT)/components/serialization/connectivity/codecs/common \
+  $(SDK_ROOT)/components/libraries/timer \
+  $(SDK_ROOT)/components/boards \
   $(SDK_ROOT)/components/serialization/connectivity \
   $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/serialization/connectivity/codecs/ble/middleware \
@@ -114,14 +120,17 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/experimental_section_vars \
   $(SDK_ROOT)/integration/nrfx/legacy \
   $(SDK_ROOT)/components/serialization/common/transport/ser_phy \
+  $(SDK_ROOT)/components/serialization/connectivity/codecs/common \
   $(SDK_ROOT)/components/libraries/delay \
   $(SDK_ROOT)/external/segger_rtt \
+  $(SDK_ROOT)/components/libraries/atomic_fifo \
   $(SDK_ROOT)/components/libraries/atomic \
-  $(SDK_ROOT)/components/boards \
+  $(SDK_ROOT)/components/libraries/sortlist \
   $(SDK_ROOT)/components/libraries/memobj \
   $(SDK_ROOT)/components/serialization/common/struct_ser/ble \
   $(SDK_ROOT)/integration/nrfx \
   $(SDK_ROOT)/components/serialization/common/transport \
+  $(SDK_ROOT)/components/libraries/timer/experimental \
   $(SDK_ROOT)/components/softdevice/common \
   $(SDK_ROOT)/modules/nrfx/drivers/include \
   $(SDK_ROOT)/external/fprintf \
@@ -138,6 +147,8 @@ OPT = -Os -g3
 
 # C flags common to all targets
 CFLAGS += $(OPT)
+CFLAGS += -DAPP_TIMER_V2
+CFLAGS += -DAPP_TIMER_V2_RTC1_ENABLED
 CFLAGS += -DBLE_STACK_SUPPORT_REQD
 CFLAGS += -DBOARD_PCA10040
 CFLAGS += -DBSP_DEFINES_ONLY
@@ -146,6 +157,7 @@ CFLAGS += -DDEVELOP_IN_NRF52832
 CFLAGS += -DFLOAT_ABI_SOFT
 CFLAGS += -DNRF52810_XXAA
 CFLAGS += -DNRF52_PAN_74
+CFLAGS += -DNRFX_COREDEP_DELAY_US_LOOP_CYCLES=3
 CFLAGS += -DNRF_SD_BLE_API_VERSION=6
 CFLAGS += -DS112
 CFLAGS += -DSER_CONNECTIVITY
@@ -166,6 +178,8 @@ ASMFLAGS += -g3
 ASMFLAGS += -mcpu=cortex-m4
 ASMFLAGS += -mthumb -mabi=aapcs
 ASMFLAGS += -mfloat-abi=soft
+ASMFLAGS += -DAPP_TIMER_V2
+ASMFLAGS += -DAPP_TIMER_V2_RTC1_ENABLED
 ASMFLAGS += -DBLE_STACK_SUPPORT_REQD
 ASMFLAGS += -DBOARD_PCA10040
 ASMFLAGS += -DBSP_DEFINES_ONLY
@@ -174,6 +188,7 @@ ASMFLAGS += -DDEVELOP_IN_NRF52832
 ASMFLAGS += -DFLOAT_ABI_SOFT
 ASMFLAGS += -DNRF52810_XXAA
 ASMFLAGS += -DNRF52_PAN_74
+ASMFLAGS += -DNRFX_COREDEP_DELAY_US_LOOP_CYCLES=3
 ASMFLAGS += -DNRF_SD_BLE_API_VERSION=6
 ASMFLAGS += -DS112
 ASMFLAGS += -DSER_CONNECTIVITY
@@ -228,8 +243,8 @@ flash: default
 
 # Flash softdevice
 flash_softdevice:
-	@echo Flashing: s112_nrf52_6.1.0_softdevice.hex
-	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s112/hex/s112_nrf52_6.1.0_softdevice.hex --sectorerase
+	@echo Flashing: s112_nrf52_6.1.1_softdevice.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s112/hex/s112_nrf52_6.1.1_softdevice.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

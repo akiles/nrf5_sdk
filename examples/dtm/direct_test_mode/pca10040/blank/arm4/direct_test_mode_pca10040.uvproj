@@ -428,6 +428,9 @@
               <FileName>nrf_drv_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</FilePath>            </File>            <File>
+              <FileName>nrfx_atomic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</FilePath>            </File>            <File>
               <FileName>nrfx_prs.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</FilePath>            </File>            <File>

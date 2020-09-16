@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -1198,7 +1198,8 @@ uint32_t nrf_esb_start_rx(void)
 
 uint32_t nrf_esb_stop_rx(void)
 {
-    if (m_nrf_esb_mainstate == NRF_ESB_STATE_PRX)
+    if (m_nrf_esb_mainstate == NRF_ESB_STATE_PRX ||
+        m_nrf_esb_mainstate == NRF_ESB_STATE_PRX_SEND_ACK)
     {
         NRF_RADIO->SHORTS = 0;
         NRF_RADIO->INTENCLR = 0xFFFFFFFF;

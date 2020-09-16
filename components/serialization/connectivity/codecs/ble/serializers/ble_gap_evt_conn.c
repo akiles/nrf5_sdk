@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -43,6 +43,7 @@
 #include "ble_serialization.h"
 #include "cond_field_serialization.h"
 #include "ble_gap_struct_serialization.h"
+#include "ble_struct_serialization.h"
 #include "conn_ble_gap_sec_keys.h"
 #include "app_util.h"
 
@@ -58,6 +59,10 @@ uint32_t ble_gap_evt_adv_report_enc(ble_evt_t const * const p_event,
 
     SER_PUSH_uint16(&p_event->evt.gap_evt.conn_handle);
     SER_PUSH_FIELD(&p_event->evt.gap_evt.params.adv_report, ble_gap_evt_adv_report_t_enc);
+
+#if NRF_SD_BLE_API_VERSION > 5
+    conn_ble_gap_scan_data_unset(false);
+#endif
 
     SER_EVT_ENC_END;
 }
@@ -313,7 +318,7 @@ uint32_t ble_gap_evt_timeout_enc(ble_evt_t const * const p_event,
 #if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION > 5 && !defined(S112)
     if (p_event->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_SCAN)
     {
-        SER_PUSH_uint16(&p_event->evt.gap_evt.params.timeout.params.adv_report_buffer.len);
+        SER_PUSH_FIELD(&p_event->evt.gap_evt.params.timeout.params.adv_report_buffer, ble_data_t_enc);
     }
 #endif
     SER_EVT_ENC_END;
@@ -384,17 +389,8 @@ uint32_t ble_gap_evt_adv_set_terminated_enc(ble_evt_t const * const p_event,
     SER_EVT_ENC_BEGIN(BLE_GAP_EVT_ADV_SET_TERMINATED);
 
     SER_PUSH_uint16(&p_event->evt.gap_evt.conn_handle);
+
     SER_PUSH_FIELD(&p_event->evt.gap_evt.params.adv_set_terminated, ble_gap_evt_adv_set_terminated_t_enc);
-
-    if (p_event->evt.gap_evt.params.adv_set_terminated.adv_data.adv_data.p_data)
-    {
-        conn_ble_gap_ble_data_buf_free(p_event->evt.gap_evt.params.adv_set_terminated.adv_data.adv_data.p_data);
-    }
-
-    if (p_event->evt.gap_evt.params.adv_set_terminated.adv_data.scan_rsp_data.p_data)
-    {
-        conn_ble_gap_ble_data_buf_free(p_event->evt.gap_evt.params.adv_set_terminated.adv_data.scan_rsp_data.p_data);
-    }
 
     SER_EVT_ENC_END;
 }

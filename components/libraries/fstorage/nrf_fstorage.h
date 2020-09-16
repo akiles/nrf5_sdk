@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -87,7 +87,7 @@ extern "C" {
 /**@brief   Event IDs. */
 typedef enum
 {
-    NRF_FSTORAGE_EVT_READ_RESULT,
+    NRF_FSTORAGE_EVT_READ_RESULT,   //!< Unused event reserved for a possible future feature.
     NRF_FSTORAGE_EVT_WRITE_RESULT,  //!< Event for @ref nrf_fstorage_write.
     NRF_FSTORAGE_EVT_ERASE_RESULT   //!< Event for @ref nrf_fstorage_erase.
 } nrf_fstorage_evt_id_t;

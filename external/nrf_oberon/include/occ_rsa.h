@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -51,11 +51,6 @@
 #include <stdint.h>
 #include "occ_rsa_key.h"
 
-
-#include "nrf.h"
-#if defined(NRF51)
-#error "Oberon library currently doesn't support RSA for NRF51"
-#endif
 
 /**@name 1024 Bit RSA Functions.
  * 
@@ -165,6 +160,24 @@ int occ_rsa1024_pkcs1_v15_sha256_crt_sign(uint8_t s[128], const uint8_t *m, int 
  * @remark The key @p pk should be initialized with @c occ_rsa1024_init_pub_key.
  */
 int occ_rsa1024_pkcs1_v15_sha256_verify(const uint8_t s[128], const uint8_t *m, int mlen, const occ_rsa1024_pub_key *pk);
+
+
+/**
+ * 1024 bit RSA PKCS1 V1.5 SHA-256 signature verify.
+ *
+ * The signature @p s is verified for a correct signature of message @p m.
+ *
+ * @param s      The 128 byte signature.
+ * @param m,mlen The signed message.
+ * @param pk     A valid 1024 bit RSA public key.
+ *
+ * @returns 0  If the signature is successfully verified.
+ * @returns -1 If verification failed.
+ *
+ * @remark The key @p pk should be initialized with @c occ_rsa1024_init_pub_key.
+ */
+int occ_rsa1024_pkcs1_v15_sha256_verify_hash(const uint8_t s[128], const uint8_t digest[32], const occ_rsa1024_pub_key *pk);
+
 /**@}*/
 
 
@@ -276,6 +289,23 @@ int occ_rsa2048_pkcs1_v15_sha256_crt_sign(uint8_t s[256], const uint8_t *m, int 
  * @remark The key @p pk should be initialized with @c occ_rsa2048_init_pub_key.
  */
 int occ_rsa2048_pkcs1_v15_sha256_verify(const uint8_t s[256], const uint8_t *m, int mlen, const occ_rsa2048_pub_key *pk);
+
+/**
+ * 2048 bit RSA PKCS1 V1.5 SHA-256 signature verify.
+ *
+ * The signature @p s is verified for a correct signature of message @p m.
+ *
+ * @param s      The 256 byte signature.
+ * @param m,mlen The signed message.
+ * @param pk     A valid 2048 bit RSA public key.
+ *
+ * @returns 0  If the signature is successfully verified.
+ * @returns -1 If verification failed.
+ *
+ * @remark The key @p pk should be initialized with @c occ_rsa2048_init_pub_key.
+ */
+int occ_rsa2048_pkcs1_v15_sha256_verify_hash(const uint8_t s[256], const uint8_t digest[32], const occ_rsa2048_pub_key *pk);
+
 /**@}*/
 
 

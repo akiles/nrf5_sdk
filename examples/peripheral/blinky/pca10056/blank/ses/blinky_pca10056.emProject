@@ -25,6 +25,7 @@
       gcc_debugging_level="Level 3"      linker_output_format="hex"
       linker_printf_width_precision_supported="Yes"
       linker_printf_fmt_level="long"
+      linker_scanf_fmt_level="long"
       linker_section_placement_file="flash_placement.xml"
       linker_section_placement_macros="FLASH_PH_START=0x0;FLASH_PH_SIZE=0x100000;RAM_PH_START=0x20000000;RAM_PH_SIZE=0x40000;FLASH_START=0x0;FLASH_SIZE=0x100000;RAM_START=0x20000000;RAM_SIZE=0x40000"
       linker_section_placements_segments="FLASH RX 0x0 0x100000;RAM RWX 0x20000000 0x40000"
@@ -33,10 +34,6 @@
       <folder Name="Segger Startup Files">
         <file file_name="$(StudioDir)/source/thumb_crt0.s" />
       </folder>
-    <folder Name="Application">
-      <file file_name="../../../main.c" />
-      <file file_name="../config/sdk_config.h" />
-    </folder>
     <folder Name="nRF_Log">
       <file file_name="../../../../../../components/libraries/log/src/nrf_log_frontend.c" />
       <file file_name="../../../../../../components/libraries/log/src/nrf_log_str_formatter.c" />
@@ -57,6 +54,13 @@
       <file file_name="../../../../../../components/libraries/memobj/nrf_memobj.c" />
       <file file_name="../../../../../../components/libraries/ringbuf/nrf_ringbuf.c" />
       <file file_name="../../../../../../components/libraries/strerror/nrf_strerror.c" />
+    </folder>
+    <folder Name="nRF_Drivers">
+      <file file_name="../../../../../../modules/nrfx/soc/nrfx_atomic.c" />
+    </folder>
+    <folder Name="Application">
+      <file file_name="../../../main.c" />
+      <file file_name="../config/sdk_config.h" />
     </folder>
     <folder Name="None">
       <file file_name="../../../../../../modules/nrfx/mdk/ses_startup_nrf52840.s" />

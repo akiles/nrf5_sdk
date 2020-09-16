@@ -183,7 +183,7 @@
           <state>FLOAT_ABI_HARD</state>
           <state>NRF52840_XXAA</state>
           <state>NRF_DFU_DEBUG_VERSION</state>
-          <state>NRF_DFU_SETTINGS_VERSION=1</state>
+          <state>NRF_DFU_SETTINGS_VERSION=2</state>
           <state>NRF_DFU_SVCI_ENABLED</state>
           <state>NRF_SD_BLE_API_VERSION=6</state>
           <state>S140</state>
@@ -336,6 +336,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\fstorage</state>
@@ -532,7 +533,7 @@
           <state>FLOAT_ABI_HARD</state>
           <state>NRF52840_XXAA</state>
           <state>NRF_DFU_DEBUG_VERSION</state>
-          <state>NRF_DFU_SETTINGS_VERSION=1</state>
+          <state>NRF_DFU_SETTINGS_VERSION=2</state>
           <state>NRF_DFU_SVCI_ENABLED</state>
           <state>NRF_SD_BLE_API_VERSION=6</state>
           <state>S140</state>
@@ -652,6 +653,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\fstorage</state>
@@ -1105,13 +1107,14 @@
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\nrf52\liboberon_short_wchar_2.0.5.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
   <name>nRF_SoftDevice</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\softdevice\common\nrf_sdh.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\softdevice\common\nrf_sdh_ble.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\softdevice\common\nrf_sdh_soc.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\hal\nrf_nvmc.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\hal\nrf_nvmc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>  </group>  <group>
   <name>nRF_Crypto</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecdsa.c</name>    </file>    <file>
@@ -1123,6 +1126,7 @@
     <name>$PROJ_DIR$\..\..\main.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\config\sdk_config.h</name>    </file>  </group>  <group>
   <name>nRF_SVC</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_svci.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_svci_handler.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\svc\nrf_svc_handler.c</name>    </file>  </group>  <group>
   <name>nRF_Segger_RTT</name>    <file>
@@ -1157,7 +1161,7 @@
   <name>nRF_BLE</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\ble\common\ble_srv_common.c</name>    </file>  </group>  <group>
   <name>nrf_cc310_bl</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_cc310_bl\lib\libnrf_cc310_bl_short_wchar_0.9.10.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_cc310_bl\lib\cortex-m4\hard-float\short-wchar\libnrf_cc310_bl_0.9.12.a</name>    </file>  </group>  <group>
   <name>nRF_Crypto backend Oberon</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_chacha_poly_aead.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_ecc.c</name>    </file>    <file>

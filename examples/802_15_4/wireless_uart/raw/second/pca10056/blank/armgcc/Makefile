@@ -33,8 +33,8 @@ SRC_FILES += \
   $(SDK_ROOT)/modules/nrfx/hal/nrf_ecb.c \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_nvic.c \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_soc.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_clock.c \
-  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power_clock.c \
   $(PROJ_DIR)/../../assert.c \
   $(PROJ_DIR)/../../fsm.c \
   $(PROJ_DIR)/../../main.c \

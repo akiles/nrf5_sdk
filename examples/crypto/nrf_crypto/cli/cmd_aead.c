@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -191,7 +191,7 @@ static nrf_crypto_aead_info_t const * aead_info_get(char const * p_mode_name, si
     {
         nrf_cli_fprintf(cli_get(),
                         NRF_CLI_ERROR,
-                        "%d bit key size is not supported.\r\n",
+                        "%d bit key size is not supported.\n",
                         8 * key_size);
         return NULL;
     }
@@ -206,7 +206,7 @@ static nrf_crypto_aead_info_t const * aead_info_get(char const * p_mode_name, si
             {
                 nrf_cli_fprintf(cli_get(),
                                 NRF_CLI_ERROR,
-                                "Selected key size is not supported by this mode.\r\n");
+                                "Selected key size is not supported by this mode.\n");
             }
             return p_result;
         }
@@ -214,7 +214,7 @@ static nrf_crypto_aead_info_t const * aead_info_get(char const * p_mode_name, si
 
     nrf_cli_fprintf(cli_get(),
                     NRF_CLI_ERROR,
-                    "Mode %s is not supported.\r\n",
+                    "Mode %s is not supported.\n",
                     p_mode_name);
 
     return NULL;
@@ -350,18 +350,18 @@ static bool cmd_aead_encrypt(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(aead_encrypt, &m_subcmd_mode_var_var_var_var_size, cmd_aead_encrypt,
-    "Calculate AEAD in one step.\r\n"
-    "Usage:\r\n"
-    "  aead_encrypt mode key nonce adata data_in mac_size mac data_out\r\n"
-    "Arguments:\r\n"
-    "  IN  mode      AES block cipher mode (ccm, ccm*, eax, gcm, chacha-poly)\r\n"
-    "  IN  key       AES key (must be 128, 192 or 256 bit long)\r\n"
-    "  IN  nonce     Nonce\r\n"
-    "  IN  adata     Additional authenticated data\r\n"
-    "  IN  data_in   Data to process\r\n"
-    "  IN  mac_size  Expected size of the MAC\r\n"
-    "  OUT mac       Resulting MAC\r\n"
-    "  OUT data_out  Resulting data\r\n"
+    "Calculate AEAD in one step.\n"
+    "Usage:\n"
+    "  aead_encrypt mode key nonce adata data_in mac_size mac data_out\n"
+    "Arguments:\n"
+    "  IN  mode      AES block cipher mode (ccm, ccm*, eax, gcm, chacha-poly)\n"
+    "  IN  key       AES key (must be 128, 192 or 256 bit long)\n"
+    "  IN  nonce     Nonce\n"
+    "  IN  adata     Additional authenticated data\n"
+    "  IN  data_in   Data to process\n"
+    "  IN  mac_size  Expected size of the MAC\n"
+    "  OUT mac       Resulting MAC\n"
+    "  OUT data_out  Resulting data\n"
     );
 
 
@@ -425,15 +425,15 @@ static bool cmd_aead_decrypt(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(aead_decrypt, &m_subcmd_mode_var_var_var_var_var, cmd_aead_decrypt,
-    "Calculate AEAD in one step.\r\n"
-    "Usage:\r\n"
-    "  aead_decrypt mode key nonce adata data_in mac_size mac data_out\r\n"
-    "Arguments:\r\n"
-    "  IN  mode      AES block cipher mode (ccm, ccm*, eax, gcm, chacha-poly)\r\n"
-    "  IN  key       AES key (must be 128, 192 or 256 bit long)\r\n"
-    "  IN  nonce     Nonce\r\n"
-    "  IN  adata     Additional authenticated data\r\n"
-    "  IN  data_in   Data to process\r\n"
-    "  IN  mac       MAC to check\r\n"
-    "  OUT data_out  Resulting data\r\n"
+    "Calculate AEAD in one step.\n"
+    "Usage:\n"
+    "  aead_decrypt mode key nonce adata data_in mac_size mac data_out\n"
+    "Arguments:\n"
+    "  IN  mode      AES block cipher mode (ccm, ccm*, eax, gcm, chacha-poly)\n"
+    "  IN  key       AES key (must be 128, 192 or 256 bit long)\n"
+    "  IN  nonce     Nonce\n"
+    "  IN  adata     Additional authenticated data\n"
+    "  IN  data_in   Data to process\n"
+    "  IN  mac       MAC to check\n"
+    "  OUT data_out  Resulting data\n"
     );

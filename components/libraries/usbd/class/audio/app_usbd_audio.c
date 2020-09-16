@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -209,7 +209,7 @@ static ret_code_t setup_req_std_in(app_usbd_class_inst_t const * p_inst,
     /* Only Get Descriptor standard IN request is supported by Audio class */
     if ((app_usbd_setup_req_rec(p_setup_ev->setup.bmRequestType) == APP_USBD_SETUP_REQREC_INTERFACE)
         &&
-        (p_setup_ev->setup.bmRequest == APP_USBD_SETUP_STDREQ_GET_DESCRIPTOR))
+        (p_setup_ev->setup.bRequest == APP_USBD_SETUP_STDREQ_GET_DESCRIPTOR))
     {
         size_t dsc_len = 0;
         size_t max_size;
@@ -249,7 +249,7 @@ static ret_code_t setup_req_class_in(
     app_usbd_class_inst_t const * p_inst,
     app_usbd_setup_evt_t const  * p_setup_ev)
 {
-    switch (p_setup_ev->setup.bmRequest)
+    switch (p_setup_ev->setup.bRequest)
     {
         case APP_USBD_AUDIO_REQ_GET_CUR:
         case APP_USBD_AUDIO_REQ_GET_MIN:
@@ -261,7 +261,7 @@ static ret_code_t setup_req_class_in(
             app_usbd_audio_ctx_t   * p_audio_ctx = audio_ctx_get(p_audio);
 
 
-            p_audio_ctx->request.req_type  = (app_usbd_audio_req_type_t)p_setup_ev->setup.bmRequest;
+            p_audio_ctx->request.req_type  = (app_usbd_audio_req_type_t)p_setup_ev->setup.bRequest;
             p_audio_ctx->request.control   = p_setup_ev->setup.wValue.hb;
             p_audio_ctx->request.channel   = p_setup_ev->setup.wValue.lb;
             p_audio_ctx->request.interface = p_setup_ev->setup.wIndex.hb;
@@ -315,7 +315,7 @@ static ret_code_t audio_req_out(
     app_usbd_audio_ctx_t   * p_audio_ctx = audio_ctx_get(p_audio);
 
 
-    p_audio_ctx->request.req_type  = (app_usbd_audio_req_type_t)p_setup_ev->setup.bmRequest;
+    p_audio_ctx->request.req_type  = (app_usbd_audio_req_type_t)p_setup_ev->setup.bRequest;
     p_audio_ctx->request.control   = p_setup_ev->setup.wValue.hb;
     p_audio_ctx->request.channel   = p_setup_ev->setup.wValue.lb;
     p_audio_ctx->request.interface = p_setup_ev->setup.wIndex.hb;
@@ -363,7 +363,7 @@ static ret_code_t setup_req_class_out(
     app_usbd_class_inst_t const * p_inst,
     app_usbd_setup_evt_t const  * p_setup_ev)
 {
-    switch (p_setup_ev->setup.bmRequest)
+    switch (p_setup_ev->setup.bRequest)
     {
         case APP_USBD_AUDIO_REQ_SET_CUR:
         case APP_USBD_AUDIO_REQ_SET_MIN:

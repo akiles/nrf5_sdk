@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -51,12 +51,6 @@
 
 #define UART_TRANSFER_MAX 255
 
-#if defined(UARTE_PRESENT) && !defined(UART_PRESENT)
-#define SER_UART_IRQ UARTE0_IRQn
-#else
-#define SER_UART_IRQ UART0_IRQn
-#endif
-
 static const nrf_drv_uart_t m_uart = NRF_DRV_UART_INSTANCE(0);
 static const nrf_drv_uart_config_t m_uart_config = {
     .pseltxd            = SER_PHY_UART_TX,
@@ -65,7 +59,7 @@ static const nrf_drv_uart_config_t m_uart_config = {
     .pselcts            = SER_PHY_UART_CTS,
     .p_context          = NULL,
     .interrupt_priority = UART_IRQ_PRIORITY,
-#if defined(UARTE_PRESENT) && defined(UART_PRESENT)
+#if defined(NRF_DRV_UART_WITH_UARTE) && defined(NRF_DRV_UART_WITH_UART)
     .use_easy_dma       = true,
 #endif
     // These values are common for application and connectivity, they are
@@ -347,11 +341,23 @@ void ser_phy_close(void)
 
 void ser_phy_interrupts_enable(void)
 {
-    NVIC_EnableIRQ(SER_UART_IRQ);
+    IRQn_Type irqn;
+#if defined(NRF_DRV_UART_WITH_UARTE)
+    irqn = nrfx_get_irq_number(m_uart.uarte.p_reg);
+#else
+    irqn = nrfx_get_irq_number(m_uart.uart.p_reg);
+#endif
+    NVIC_EnableIRQ(irqn);
 }
 
 
 void ser_phy_interrupts_disable(void)
 {
-    NVIC_DisableIRQ(SER_UART_IRQ);
+    IRQn_Type irqn;
+#if defined(NRF_DRV_UART_WITH_UARTE)
+    irqn = nrfx_get_irq_number(m_uart.uarte.p_reg);
+#else
+    irqn = nrfx_get_irq_number(m_uart.uart.p_reg);
+#endif
+    NVIC_DisableIRQ(irqn);
 }

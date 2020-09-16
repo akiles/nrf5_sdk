@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -162,6 +162,8 @@ typedef void (*ser_hal_transport_events_handler_t)(ser_hal_transport_evt_t event
  */
 uint32_t ser_hal_transport_open(ser_hal_transport_events_handler_t events_handler);
 
+/**@brief Function for reseting ser_hal_transport. */
+void ser_hal_transport_reset(void);
 
 /**@brief Function for closing a transport channel.
  *

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -54,6 +54,8 @@
 #define NRF_LOG_COLOR_CODE_MAGENTA "\x1B[1;35m"
 #define NRF_LOG_COLOR_CODE_CYAN    "\x1B[1;36m"
 #define NRF_LOG_COLOR_CODE_WHITE   "\x1B[1;37m"
+
+#define NRF_LOG_CHAR_CODE_MAX      0x7E
 
 static const char * severity_names[] = {
         NULL,
@@ -227,7 +229,7 @@ void nrf_log_hexdump_entry_process(uint8_t * p_data,
         if (i < data_len)
         {
             char c = (char)p_data[i];
-            nrf_fprintf(p_ctx, "%c", isprint((int)c) ? c :'.');
+            nrf_fprintf(p_ctx, "%c", ((c <= NRF_LOG_CHAR_CODE_MAX) && isprint((int)c)) ? c :'.');
         }
         else
         {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -135,8 +135,8 @@ int main(void)
 
     var_init();
 
-    NRF_LOG_RAW_INFO("Command Line Interface for nrf_crypto started.\r\n");
-    NRF_LOG_RAW_INFO("Press Tab to see all available commands.\r\n");
+    NRF_LOG_RAW_INFO("Command Line Interface for nrf_crypto started.\n");
+    NRF_LOG_RAW_INFO("Press Tab to see all available commands.\n");
 
     cli_start();
 

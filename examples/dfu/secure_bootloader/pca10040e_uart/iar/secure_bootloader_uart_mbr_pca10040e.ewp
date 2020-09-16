@@ -180,9 +180,11 @@
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>DEVELOP_IN_NRF52832</state>
           <state>FLOAT_ABI_SOFT</state>
+          <state>MBR_PRESENT</state>
           <state>NRF52810_XXAA</state>
           <state>NRF52_PAN_74</state>
-          <state>NRF_DFU_SETTINGS_VERSION=1</state>
+          <state>NRFX_COREDEP_DELAY_US_LOOP_CYCLES=3</state>
+          <state>NRF_DFU_SETTINGS_VERSION=2</state>
           <state>SVC_INTERFACE_CALL_AS_NORMAL_FUNCTION</state>
           <state>uECC_ENABLE_VLI_API=0</state>
           <state>uECC_OPTIMIZATION_LEVEL=3</state>
@@ -335,6 +337,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\fstorage</state>
@@ -526,9 +529,11 @@
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>DEVELOP_IN_NRF52832</state>
           <state>FLOAT_ABI_SOFT</state>
+          <state>MBR_PRESENT</state>
           <state>NRF52810_XXAA</state>
           <state>NRF52_PAN_74</state>
-          <state>NRF_DFU_SETTINGS_VERSION=1</state>
+          <state>NRFX_COREDEP_DELAY_US_LOOP_CYCLES=3</state>
+          <state>NRF_DFU_SETTINGS_VERSION=2</state>
           <state>SVC_INTERFACE_CALL_AS_NORMAL_FUNCTION</state>
           <state>uECC_ENABLE_VLI_API=0</state>
           <state>uECC_OPTIMIZATION_LEVEL=3</state>
@@ -648,6 +653,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\fstorage</state>
@@ -1097,10 +1103,12 @@
     <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_nvic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\hal\nrf_nvmc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\nrf52\liboberon_no_fp_short_wchar_2.0.5.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\soft-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
   <name>nRF_Crypto</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecdsa.c</name>    </file>    <file>

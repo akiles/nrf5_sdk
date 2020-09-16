@@ -48,11 +48,9 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/ringbuf/nrf_ringbuf.c \
   $(SDK_ROOT)/components/libraries/experimental_section_vars/nrf_section_iter.c \
   $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
-  $(SDK_ROOT)/components/libraries/mpu/nrf_mpu.c \
+  $(SDK_ROOT)/components/libraries/mpu/nrf_mpu_lib.c \
   $(SDK_ROOT)/components/libraries/stack_guard/nrf_stack_guard.c \
-  $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecc.c \
-  $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecdh.c \
-  $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecdsa.c \
+  $(SDK_ROOT)/modules/nrfx/mdk/system_nrf52.c \
   $(SDK_ROOT)/external/nfc_adafruit_library/adafruit_pn532.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_rtt.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_serial.c \
@@ -62,16 +60,17 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_str_formatter.c \
   $(SDK_ROOT)/components/ble/ble_services/ble_bas/ble_bas.c \
   $(SDK_ROOT)/components/boards/boards.c \
-  $(SDK_ROOT)/modules/nrfx/mdk/system_nrf52.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_clock.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_rng.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_twi.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_uart.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_gpiote.c \
-  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power_clock.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_nfct.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/prs/nrfx_prs.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_rng.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_timer.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_twi.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_twim.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uart.c \
@@ -122,7 +121,6 @@ SRC_FILES += \
   $(SDK_ROOT)/components/ble/peer_manager/pm_buffer.c \
   $(SDK_ROOT)/components/ble/peer_manager/security_dispatcher.c \
   $(SDK_ROOT)/components/ble/peer_manager/security_manager.c \
-  $(SDK_ROOT)/components/nfc/t2t_lib/hal_t2t/hal_nfc_t2t.c \
   $(SDK_ROOT)/components/nfc/ndef/connection_handover/ac_rec/nfc_ac_rec.c \
   $(SDK_ROOT)/components/nfc/ndef/connection_handover/ble_oob_advdata/nfc_ble_oob_advdata.c \
   $(SDK_ROOT)/components/nfc/ndef/conn_hand_parser/ble_oob_advdata_parser/nfc_ble_oob_advdata_parser.c \
@@ -137,6 +135,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/nfc/ndef/parser/message/nfc_ndef_msg_parser_local.c \
   $(SDK_ROOT)/components/nfc/ndef/generic/record/nfc_ndef_record.c \
   $(SDK_ROOT)/components/nfc/ndef/parser/record/nfc_ndef_record_parser.c \
+  $(SDK_ROOT)/components/nfc/platform/nfc_platform.c \
   $(SDK_ROOT)/components/nfc/t2t_parser/nfc_t2t_parser.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_Syscalls_GCC.c \
@@ -163,9 +162,9 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/crypto/backend/nrf_sw \
   $(SDK_ROOT)/components/libraries/scheduler \
   $(SDK_ROOT)/components/ble/ble_services/ble_bas \
+  $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/nfc/t2t_lib \
-  $(SDK_ROOT)/external/micro-ecc/micro-ecc \
   $(SDK_ROOT)/components/libraries/bsp \
   $(SDK_ROOT)/components/libraries/mpu \
   $(SDK_ROOT)/components/nfc/ndef/connection_handover/hs_rec \
@@ -184,10 +183,9 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/balloc \
   $(SDK_ROOT)/external/nrf_oberon \
   $(SDK_ROOT)/components/libraries/stack_info \
-  $(SDK_ROOT)/components/libraries/strerror \
+  $(SDK_ROOT)/components/nfc/platform \
   $(SDK_ROOT)/modules/nrfx/drivers/include \
   $(SDK_ROOT)/components/ble/nrf_ble_scan \
-  $(SDK_ROOT)/components/nfc/t2t_lib/hal_t2t \
   $(SDK_ROOT)/components/libraries/cli/uart \
   $(SDK_ROOT)/components/ble/nrf_ble_gatt \
   $(SDK_ROOT)/modules/nrfx/hal \
@@ -204,6 +202,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/ble/common \
   ../config \
   $(SDK_ROOT)/components/libraries/log \
+  $(SDK_ROOT)/components/libraries/crypto/backend/optiga \
   $(SDK_ROOT)/components/nfc/ndef/generic/message \
   $(SDK_ROOT)/external/mbedtls/include \
   $(SDK_ROOT)/components/libraries/crypto/backend/cc310_bl \
@@ -240,8 +239,8 @@ INC_FOLDERS += \
 
 # Libraries common to all targets
 LIB_FILES += \
-  $(SDK_ROOT)/external/nrf_cc310/lib/libnrf_cc310_0.9.10.a \
-  $(SDK_ROOT)/external/nrf_oberon/lib/nrf52/liboberon_2.0.5.a \
+  $(SDK_ROOT)/external/nrf_cc310/lib/cortex-m4/hard-float/libnrf_cc310_0.9.12.a \
+  $(SDK_ROOT)/external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_2.0.7.a \
   $(SDK_ROOT)/components/nfc/t2t_lib/nfc_t2t_lib_gcc.a \
 
 # Optimization flags
@@ -264,11 +263,6 @@ CFLAGS += -DS132
 CFLAGS += -DSOFTDEVICE_PRESENT
 CFLAGS += -DSVC_INTERFACE_CALL_AS_NORMAL_FUNCTION
 CFLAGS += -DSWI_DISABLE0
-CFLAGS += -DuECC_ENABLE_VLI_API=0
-CFLAGS += -DuECC_OPTIMIZATION_LEVEL=3
-CFLAGS += -DuECC_SQUARE_FUNC=0
-CFLAGS += -DuECC_SUPPORT_COMPRESSED_POINT=0
-CFLAGS += -DuECC_VLI_NATIVE_LITTLE_ENDIAN=1
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS += -Wall -Werror
@@ -297,11 +291,6 @@ ASMFLAGS += -DS132
 ASMFLAGS += -DSOFTDEVICE_PRESENT
 ASMFLAGS += -DSVC_INTERFACE_CALL_AS_NORMAL_FUNCTION
 ASMFLAGS += -DSWI_DISABLE0
-ASMFLAGS += -DuECC_ENABLE_VLI_API=0
-ASMFLAGS += -DuECC_OPTIMIZATION_LEVEL=3
-ASMFLAGS += -DuECC_SQUARE_FUNC=0
-ASMFLAGS += -DuECC_SUPPORT_COMPRESSED_POINT=0
-ASMFLAGS += -DuECC_VLI_NATIVE_LITTLE_ENDIAN=1
 
 # Linker flags
 LDFLAGS += $(OPT)
@@ -353,8 +342,8 @@ flash: default
 
 # Flash softdevice
 flash_softdevice:
-	@echo Flashing: s132_nrf52_6.1.0_softdevice.hex
-	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_6.1.0_softdevice.hex --sectorerase
+	@echo Flashing: s132_nrf52_6.1.1_softdevice.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_6.1.1_softdevice.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

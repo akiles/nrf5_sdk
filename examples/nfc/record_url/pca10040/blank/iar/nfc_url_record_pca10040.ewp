@@ -333,8 +333,8 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\generic\message</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\generic\record</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\uri</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\platform</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_lib</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_lib\hal_t2t</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
@@ -627,8 +627,8 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\generic\message</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\generic\record</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\uri</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\platform</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_lib</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_lib\hal_t2t</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\cmsis\include</state>
           <state>$PROJ_DIR$\..\..\..</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\external\fprintf</state>
@@ -1054,9 +1054,11 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_nvic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_nfct.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_timer.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</name>    </file>  </group>  <group>
   <name>Application</name>    <file>
@@ -1070,9 +1072,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk\iar_startup_nrf52.s</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk\system_nrf52.c</name>    </file>  </group>  <group>
   <name>nRF_NFC</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_lib\hal_t2t\hal_nfc_t2t.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\generic\message\nfc_ndef_msg.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\generic\record\nfc_ndef_record.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\platform\nfc_platform.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\t2t_lib\nfc_t2t_lib_iar.a</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\uri\nfc_uri_msg.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\nfc\ndef\uri\nfc_uri_rec.c</name>    </file>  </group></project>

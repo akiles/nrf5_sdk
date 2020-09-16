@@ -31,7 +31,9 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/ringbuf/nrf_ringbuf.c \
   $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_uart.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/prs/nrfx_prs.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uart.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uarte.c \
   $(PROJ_DIR)/main.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
@@ -87,6 +89,7 @@ CFLAGS += -DESB_PRESENT
 CFLAGS += -DFLOAT_ABI_SOFT
 CFLAGS += -DNRF52810_XXAA
 CFLAGS += -DNRF52_PAN_74
+CFLAGS += -DNRFX_COREDEP_DELAY_US_LOOP_CYCLES=3
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS += -Wall -Werror
@@ -111,6 +114,7 @@ ASMFLAGS += -DESB_PRESENT
 ASMFLAGS += -DFLOAT_ABI_SOFT
 ASMFLAGS += -DNRF52810_XXAA
 ASMFLAGS += -DNRF52_PAN_74
+ASMFLAGS += -DNRFX_COREDEP_DELAY_US_LOOP_CYCLES=3
 
 # Linker flags
 LDFLAGS += $(OPT)

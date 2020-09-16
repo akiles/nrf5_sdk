@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -46,6 +46,7 @@
 #include "ser_hal_transport.h"
 #include "ser_conn_event_encoder.h"
 #include "ser_conn_handlers.h"
+#include "nrf_log.h"
 #ifdef BLE_STACK_SUPPORT_REQD
 #include "ble_conn.h"
 #endif // BLE_STACK_SUPPORT_REQD
@@ -55,8 +56,15 @@
 #endif // ANT_STACK_SUPPORT_REQD
 
 #ifdef BLE_STACK_SUPPORT_REQD
+extern bool m_reset_ongoing;
 void ser_conn_ble_event_encoder(void * p_event_data, uint16_t event_size)
 {
+    if (m_reset_ongoing)
+    {
+        NRF_LOG_INFO("Dropping BLE event (during reset).");
+        return;
+    }
+
     if (NULL == p_event_data)
     {
         APP_ERROR_CHECK(NRF_ERROR_NULL);
@@ -100,7 +108,10 @@ void ser_conn_ble_event_encoder(void * p_event_data, uint16_t event_size)
          * scheduler queue. In result the next event reserves the TX buffer before the current
          * packet is sent. If in meantime a command arrives a command response cannot be sent in
          * result. Pausing the scheduler temporary prevents processing a next event. */
-        app_sched_pause();
+        if (!m_reset_ongoing) 
+        {
+            app_sched_pause();
+        }
     }
     else
     {

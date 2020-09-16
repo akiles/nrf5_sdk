@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -87,7 +87,7 @@ static uint32_t var_memory[(APP_VAR_MEMORY_SIZE + 3) / 4];             ///< @bri
  */
 static bool alloc_user_free_prevent(var_t * p_var)
 {
-    nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "Cannot delete dynamically allocated memory.\r\n");
+    nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "Cannot delete dynamically allocated memory.\n");
     return false;
 }
 
@@ -207,7 +207,7 @@ static var_header_t * block_allocate(size_t size, bool verbose)
 
     if (verbose)
     {
-        nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "No more space in variable memory\r\n");
+        nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "No more space in variable memory\n");
     }
 
     return NULL;
@@ -268,7 +268,7 @@ var_t * var_get(const char * p_name, bool verbose)
 
     if (verbose)
     {
-        nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "Variable '%s' not found\r\n", p_name);
+        nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "Variable '%s' not found\n", p_name);
     }
 
     return NULL;
@@ -288,7 +288,7 @@ static bool var_name_validate(const char * p_name, bool verbose)
     {
         if (verbose)
         {
-            nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "Variable name must start with '$' sign\r\n");
+            nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "Variable name must start with '$' sign\n");
         }
         return false;
     }
@@ -296,7 +296,7 @@ static bool var_name_validate(const char * p_name, bool verbose)
     {
         if (verbose)
         {
-            nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "Variable name empty\r\n");
+            nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "Variable name empty\n");
         }
         return false;
     }
@@ -306,7 +306,7 @@ static bool var_name_validate(const char * p_name, bool verbose)
         {
             nrf_cli_fprintf(cli_get(),
                             NRF_CLI_WARNING,
-                            "Variable name too long, maximum %d, actual %d\r\n",
+                            "Variable name too long, maximum %d, actual %d\n",
                             VAR_NAME_LENGTH_MAX,
                             len);
         }
@@ -320,7 +320,7 @@ static bool var_name_validate(const char * p_name, bool verbose)
             {
                 nrf_cli_fprintf(cli_get(),
                                 NRF_CLI_WARNING,
-                                "Invalid character in variable name\r\n");
+                                "Invalid character in variable name\n");
             }
             return false;
         }
@@ -345,7 +345,7 @@ var_t * var_create(const char * p_name, var_type_t const * p_type, size_t size, 
         {
             nrf_cli_fprintf(cli_get(),
                             NRF_CLI_INFO,
-                            "Variable '%s' already exists, overriding.\r\n",
+                            "Variable '%s' already exists, overriding.\n",
                             p_name);
         }
         if (!var_delete(p_var->name, verbose))
@@ -395,7 +395,7 @@ bool var_delete(const char * p_name, bool verbose)
         {
             if (verbose)
             {
-                nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "Cannot delete '%s'\r\n", p_name);
+                nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "Cannot delete '%s'\n", p_name);
             }
             return false;
         }
@@ -424,7 +424,7 @@ bool var_rename(const char * p_name, const char * p_new_name, bool verbose)
         {
             nrf_cli_fprintf(cli_get(),
                             NRF_CLI_WARNING,
-                            "Variable '%s' already exists, overriding.\r\n",
+                            "Variable '%s' already exists, overriding.\n",
                             p_new_name);
         }
         if (!var_delete(p_dest_var->name, verbose))
@@ -439,16 +439,16 @@ bool var_rename(const char * p_name, const char * p_new_name, bool verbose)
 
 void var_show(var_t * p_var)
 {
-    nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "Name:            %s\r\n", p_var->name);
+    nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "Name:            %s\n", p_var->name);
     nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "Description:     %s", p_var->header.p_type->p_description);
     if (p_var->header.p_type->print_fn)
     {
         nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, ". ");
         p_var->header.p_type->print_fn(p_var, true);
     }
-    nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "\r\n");
-    nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "Allocated bytes: %d\r\n", p_var->header.total_size);
-    nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "Used bytes:      %d\r\n", p_var->data_size);
+    nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "\n");
+    nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "Allocated bytes: %d\n", p_var->header.total_size);
+    nrf_cli_fprintf(cli_get(), NRF_CLI_NORMAL, "Used bytes:      %d\n", p_var->data_size);
 
     if (p_var->header.p_type->print_fn != NULL)
     {
@@ -617,8 +617,8 @@ static bool cmd_ls(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
     CLI_ARGS_CHECK(argc == 1);
 
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%-16s %6s   %s\r\n", "Name", "Size", "Description");
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%-16s %6s   %s\r\n", "----", "----", "-----------");
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%-16s %6s   %s\n", "Name", "Size", "Description");
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%-16s %6s   %s\n", "----", "----", "-----------");
 
     // Iterate over all variables
     for (p_var = var_begin(); p_var != NULL; p_var = var_next(p_var))
@@ -629,7 +629,7 @@ static bool cmd_ls(nrf_cli_t const * p_cli, size_t argc, char ** argv)
         {
             p_var->header.p_type->print_fn(p_var, true);
         }
-        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\r\n");
+        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\n");
     }
 
     return true;
@@ -637,9 +637,9 @@ static bool cmd_ls(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(ls, NULL, cmd_ls,
-    "List all defined variables.\r\n"
-    "Usage:\r\n"
-    "  ls\r\n"
+    "List all defined variables.\n"
+    "Usage:\n"
+    "  ls\n"
     );
 
 
@@ -674,11 +674,11 @@ static bool cmd_rm(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(rm, &m_subcmd_var, cmd_rm,
-    "Remove a variable.\r\n"
-    "Usage:\r\n"
-    "  rm variable_name\r\n"
-    "Arguments:\r\n"
-    "  IN  variable_name   Name of the variable to remove or \"*\" to delete all.\r\n"
+    "Remove a variable.\n"
+    "Usage:\n"
+    "  rm variable_name\n"
+    "Arguments:\n"
+    "  IN  variable_name   Name of the variable to remove or \"*\" to delete all.\n"
     );
 
 
@@ -700,12 +700,12 @@ static bool cmd_mv(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(mv, &m_subcmd_var, cmd_mv,
-    "Rename a variable.\r\n"
-    "Usage:\r\n"
-    "  mv old_name new_name\r\n"
-    "Arguments:\r\n"
-    "  IN  old_name   Name of the variable to rename.\r\n"
-    "  IN  new_name   New name of the variable.\r\n"
+    "Rename a variable.\n"
+    "Usage:\n"
+    "  mv old_name new_name\n"
+    "Arguments:\n"
+    "  IN  old_name   Name of the variable to rename.\n"
+    "  IN  new_name   New name of the variable.\n"
     );
 
 
@@ -730,11 +730,11 @@ static bool cmd_show(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(show, &m_subcmd_var, cmd_show,
-    "Show a content of a variable.\r\n"
-    "Usage:\r\n"
-    "  show variable_name\r\n"
-    "Arguments:\r\n"
-    "  IN  variable_name   Name of the variable to show.\r\n"
+    "Show a content of a variable.\n"
+    "Usage:\n"
+    "  show variable_name\n"
+    "Arguments:\n"
+    "  IN  variable_name   Name of the variable to show.\n"
     );
 
 
@@ -750,9 +750,9 @@ static bool cmd_varmap(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
     UNUSED_RETURN_VALUE(block_allocate(APP_VAR_MEMORY_SIZE + 1, false)); // Force free block consolidation
 
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%6s %6s %-16s %s\r\n", "Size", "Used", "Name",
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%6s %6s %-16s %s\n", "Size", "Used", "Name",
         "Description");
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%6s %6s %-16s %s\r\n", "----", "----", "----",
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%6s %6s %-16s %s\n", "----", "----", "----",
         "-----------");
 
     // Iterate over all blocks
@@ -778,11 +778,11 @@ static bool cmd_varmap(nrf_cli_t const * p_cli, size_t argc, char ** argv)
             {
                 p_block->p_type->print_fn((var_t *)p_block, true);
             }
-            nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\r\n");
+            nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\n");
         }
         else
         {
-            nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%6d %6s %-16s %s\r\n", p_block->total_size,
+            nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%6d %6s %-16s %s\n", p_block->total_size,
                 "", "[FREE]", "Unused memory block");
         }
     }
@@ -792,8 +792,8 @@ static bool cmd_varmap(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(varmap, NULL, cmd_varmap,
-    "Print full content of the variable memory.\r\n"
-    "Usage:\r\n"
-    "  varmap\r\n"
+    "Print full content of the variable memory.\n"
+    "Usage:\n"
+    "  varmap\n"
     );
 

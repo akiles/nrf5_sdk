@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -42,7 +42,7 @@
 #include "nrf.h"
 #include "nrf_assert.h"
 #include "nrf_strerror.h"
-#include "nrf_mpu.h"
+#include "nrf_mpu_lib.h"
 #include "nrf_stack_guard.h"
 
 #define NRF_LOG_MODULE_NAME stack_guard
@@ -60,7 +60,7 @@ STATIC_ASSERT(STACK_GUARD_SIZE >= 32);
 
 ret_code_t nrf_stack_guard_init(void)
 {
-    nrf_mpu_region_t region;
+    nrf_mpu_lib_region_t region;
     uint32_t attributes;
     ret_code_t status;
 
@@ -69,10 +69,10 @@ ret_code_t nrf_stack_guard_init(void)
     attributes = (0x05 << MPU_RASR_TEX_Pos) | (1 << MPU_RASR_B_Pos) |   /* Normal memory, WBWA/WBWA */
                  (0x07 << MPU_RASR_AP_Pos) | (1 << MPU_RASR_XN_Pos);    /* Access: RO/RO, XN */
 
-    status = nrf_mpu_region_create(&region,
-                                   (void *)(STACK_GUARD_BASE),
-                                   STACK_GUARD_SIZE,
-                                   attributes);
+    status = nrf_mpu_lib_region_create(&region,
+                                       (void *)(STACK_GUARD_BASE),
+                                       STACK_GUARD_SIZE,
+                                       attributes);
 
     if (status == NRF_SUCCESS)
     {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -45,6 +45,16 @@
 
 
 sercon_ble_user_mem_t m_conn_user_mem_table[SER_MAX_CONNECTIONS];
+
+void conn_ble_user_mem_init(void)
+{
+    uint32_t i;
+
+    for (i=0; i<SER_MAX_CONNECTIONS; i++ )
+    {
+        m_conn_user_mem_table[i].conn_active = 0;
+    }
+}
 
 uint32_t conn_ble_user_mem_context_create(uint32_t *p_index)
 {

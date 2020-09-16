@@ -184,8 +184,9 @@
           <state>FLOAT_ABI_SOFT</state>
           <state>NRF52810_XXAA</state>
           <state>NRF52_PAN_74</state>
+          <state>NRFX_COREDEP_DELAY_US_LOOP_CYCLES=3</state>
           <state>NRF_DFU_DEBUG_VERSION</state>
-          <state>NRF_DFU_SETTINGS_VERSION=1</state>
+          <state>NRF_DFU_SETTINGS_VERSION=2</state>
           <state>NRF_DFU_SVCI_ENABLED</state>
           <state>NRF_SD_BLE_API_VERSION=6</state>
           <state>S112</state>
@@ -343,6 +344,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\fstorage</state>
@@ -539,8 +541,9 @@
           <state>FLOAT_ABI_SOFT</state>
           <state>NRF52810_XXAA</state>
           <state>NRF52_PAN_74</state>
+          <state>NRFX_COREDEP_DELAY_US_LOOP_CYCLES=3</state>
           <state>NRF_DFU_DEBUG_VERSION</state>
-          <state>NRF_DFU_SETTINGS_VERSION=1</state>
+          <state>NRF_DFU_SETTINGS_VERSION=2</state>
           <state>NRF_DFU_SVCI_ENABLED</state>
           <state>NRF_SD_BLE_API_VERSION=6</state>
           <state>S112</state>
@@ -665,6 +668,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\fstorage</state>
@@ -1107,7 +1111,8 @@
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\sha256\sha256.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\hal\nrf_nvmc.c</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\hal\nrf_nvmc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>  </group>  <group>
   <name>nRF_Crypto backend uECC</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_backend_ecc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\backend\micro_ecc\micro_ecc_backend_ecdh.c</name>    </file>    <file>
@@ -1118,10 +1123,11 @@
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_SVC</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_svci.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_svci_handler.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\svc\nrf_svc_handler.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\nrf52\liboberon_no_fp_short_wchar_2.0.5.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\soft-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
   <name>nRF_Crypto</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\crypto\nrf_crypto_ecdsa.c</name>    </file>    <file>

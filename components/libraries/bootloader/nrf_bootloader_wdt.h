@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -56,11 +56,11 @@ extern "C" {
 /**
  * @brief Function for checking whether the WDT peripheral is started and for getting its configuration.
  *
- * The module uses app_timer to start regular feeding of the watchdog. Timer interval
+ * The module uses a timer to start regular feeding of the watchdog. Timer interval
  * is chosen based on watchdog settings. When @ref nrf_bootloader_wdt_feed is called, internal
  * feeding is stopped assuming that the application takes responsibity of watchdog feeding.
  * However, if @ref NRF_BL_WDT_MAX_SCHEDULER_LATENCY_MS or the watchdog is configured to
- * run during sleep, then internal feeding (from app_timer handler context) is kept active.
+ * run during sleep, then internal feeding (from timeout handler context) is kept active.
  */
 void nrf_bootloader_wdt_init(void);
 

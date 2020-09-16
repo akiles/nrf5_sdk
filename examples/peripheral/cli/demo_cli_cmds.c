@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -60,7 +60,7 @@ static void cmd_print_param(nrf_cli_t const * p_cli, size_t argc, char **argv)
 {
     for (size_t i = 1; i < argc; i++)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "argv[%d] = %s\r\n", i, argv[i]);
+        nrf_cli_print(p_cli, "argv[%d] = %s", i, argv[i]);
     }
 }
 
@@ -70,7 +70,7 @@ static void cmd_print_all(nrf_cli_t const * p_cli, size_t argc, char **argv)
     {
         nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%s ", argv[i]);
     }
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\r\n");
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\n");
 }
 
 static void cmd_print(nrf_cli_t const * p_cli, size_t argc, char **argv)
@@ -86,11 +86,11 @@ static void cmd_print(nrf_cli_t const * p_cli, size_t argc, char **argv)
 
     if (argc != 2)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: bad parameter count\r\n", argv[0]);
+        nrf_cli_error(p_cli, "%s: bad parameter count", argv[0]);
         return;
     }
 
-    nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: unknown parameter: %s\r\n", argv[0], argv[1]);
+    nrf_cli_error(p_cli, "%s: unknown parameter: %s", argv[0], argv[1]);
 }
 
 static void cmd_python(nrf_cli_t const * p_cli, size_t argc, char **argv)
@@ -98,7 +98,7 @@ static void cmd_python(nrf_cli_t const * p_cli, size_t argc, char **argv)
     UNUSED_PARAMETER(argc);
     UNUSED_PARAMETER(argv);
 
-    nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "Nice joke ;)\r\n");
+    nrf_cli_error(p_cli, "Nice joke ;)");
 }
 
 static void cmd_dynamic(nrf_cli_t const * p_cli, size_t argc, char **argv)
@@ -111,11 +111,11 @@ static void cmd_dynamic(nrf_cli_t const * p_cli, size_t argc, char **argv)
 
     if (argc > 2)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: bad parameter count\r\n", argv[0]);
+        nrf_cli_error(p_cli, "%s: bad parameter count", argv[0]);
     }
     else
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: please specify subcommand\r\n", argv[0]);
+        nrf_cli_error(p_cli, "%s: please specify subcommand", argv[0]);
     }
 }
 
@@ -137,13 +137,13 @@ static void cmd_dynamic_add(nrf_cli_t const * p_cli, size_t argc, char **argv)
 
     if (argc != 2)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: bad parameter count\r\n", argv[0]);
+        nrf_cli_error(p_cli, "%s: bad parameter count", argv[0]);
         return;
     }
 
     if (m_dynamic_cmd_cnt >= CLI_EXAMPLE_MAX_CMD_CNT)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "command limit reached\r\n");
+        nrf_cli_error(p_cli, "command limit reached");
         return;
     }
 
@@ -152,7 +152,7 @@ static void cmd_dynamic_add(nrf_cli_t const * p_cli, size_t argc, char **argv)
 
     if (cmd_len >= CLI_EXAMPLE_MAX_CMD_LEN)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "too long command\r\n");
+        nrf_cli_error(p_cli, "too long command");
         return;
     }
 
@@ -160,9 +160,7 @@ static void cmd_dynamic_add(nrf_cli_t const * p_cli, size_t argc, char **argv)
     {
         if (!isalnum((int)(argv[1][idx])))
         {
-            nrf_cli_fprintf(p_cli,
-                            NRF_CLI_ERROR,
-                            "bad command name - please use only alphanumerical characters\r\n");
+            nrf_cli_error(p_cli, "bad command name - please use only alphanumerical characters");
             return;
         }
     }
@@ -171,7 +169,7 @@ static void cmd_dynamic_add(nrf_cli_t const * p_cli, size_t argc, char **argv)
     {
         if (!strcmp(m_dynamic_cmd_buffer[idx], argv[1]))
         {
-            nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "duplicated command\r\n");
+            nrf_cli_error(p_cli, "duplicated command");
             return;
         }
     }
@@ -183,7 +181,7 @@ static void cmd_dynamic_add(nrf_cli_t const * p_cli, size_t argc, char **argv)
           sizeof (m_dynamic_cmd_buffer[0]),
           string_cmp);
 
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "command added successfully\r\n");
+    nrf_cli_print(p_cli, "command added successfully");
 }
 
 static void cmd_dynamic_show(nrf_cli_t const * p_cli, size_t argc, char **argv)
@@ -196,19 +194,19 @@ static void cmd_dynamic_show(nrf_cli_t const * p_cli, size_t argc, char **argv)
 
     if (argc != 1)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: bad parameter count\r\n", argv[0]);
+        nrf_cli_error(p_cli, "%s: bad parameter count", argv[0]);
         return;
     }
 
     if (m_dynamic_cmd_cnt == 0)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "Please add some commands first.\r\n");
+        nrf_cli_warn(p_cli, "Please add some commands first.");
         return;
     }
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "Dynamic command list:\r\n");
+    nrf_cli_print(p_cli, "Dynamic command list:");
     for (uint8_t i = 0; i < m_dynamic_cmd_cnt; i++)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "[%3d] %s\r\n", i, m_dynamic_cmd_buffer[i]);
+        nrf_cli_print(p_cli, "[%3d] %s", i, m_dynamic_cmd_buffer[i]);
     }
 }
 
@@ -222,7 +220,7 @@ static void cmd_dynamic_execute(nrf_cli_t const * p_cli, size_t argc, char **arg
 
     if (argc != 2)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: bad parameter count\r\n", argv[0]);
+        nrf_cli_error(p_cli, "%s: bad parameter count", argv[0]);
         return;
     }
 
@@ -230,11 +228,11 @@ static void cmd_dynamic_execute(nrf_cli_t const * p_cli, size_t argc, char **arg
     {
         if (!strcmp(m_dynamic_cmd_buffer[idx], argv[1]))
         {
-            nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "dynamic command: %s\r\n", argv[1]);
+            nrf_cli_print(p_cli, "dynamic command: %s", argv[1]);
             return;
         }
     }
-    nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: uknown parameter: %s\r\n", argv[0], argv[1]);
+    nrf_cli_error(p_cli, "%s: uknown parameter: %s", argv[0], argv[1]);
 }
 
 static void cmd_dynamic_remove(nrf_cli_t const * p_cli, size_t argc, char **argv)
@@ -247,7 +245,7 @@ static void cmd_dynamic_remove(nrf_cli_t const * p_cli, size_t argc, char **argv
 
     if (argc != 2)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: bad parameter count\r\n", argv[0]);
+        nrf_cli_error(p_cli, "%s: bad parameter count", argv[0]);
         return;
     }
 
@@ -266,18 +264,18 @@ static void cmd_dynamic_remove(nrf_cli_t const * p_cli, size_t argc, char **argv
                         sizeof(m_dynamic_cmd_buffer[idx]) * (m_dynamic_cmd_cnt - idx));
             }
             --m_dynamic_cmd_cnt;
-            nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "command removed successfully\r\n");
+            nrf_cli_print(p_cli, "command removed successfully");
             return;
         }
     }
-    nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "did not find command: %s\r\n", argv[1]);
+    nrf_cli_error(p_cli, "did not find command: %s", argv[1]);
 }
 
 static void cmd_counter_start(nrf_cli_t const * p_cli, size_t argc, char **argv)
 {
     if (argc != 1)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: bad parameter count\r\n", argv[0]);
+        nrf_cli_error(p_cli, "%s: bad parameter count", argv[0]);
         return;
     }
 
@@ -288,7 +286,7 @@ static void cmd_counter_stop(nrf_cli_t const * p_cli, size_t argc, char **argv)
 {
     if (argc != 1)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: bad parameter count\r\n", argv[0]);
+        nrf_cli_error(p_cli, "%s: bad parameter count", argv[0]);
         return;
     }
 
@@ -299,7 +297,7 @@ static void cmd_counter_reset(nrf_cli_t const * p_cli, size_t argc, char **argv)
 {
     if (argc != 1)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: bad parameter count\r\n", argv[0]);
+        nrf_cli_error(p_cli, "%s: bad parameter count", argv[0]);
         return;
     }
 
@@ -328,18 +326,18 @@ static void cmd_counter(nrf_cli_t const * p_cli, size_t argc, char **argv)
 
     if (argc != 2)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: bad parameter count\r\n", argv[0]);
+        nrf_cli_error(p_cli, "%s: bad parameter count", argv[0]);
         return;
     }
 
     if (!strcmp(argv[1], "-t") || !strcmp(argv[1], "--test"))
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "Dummy test option.\r\n");
+        nrf_cli_print(p_cli, "Dummy test option.");
         return;
     }
 
     /* subcommands have their own handlers and they are not processed here */
-    nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "%s: unknown parameter: %s\r\n", argv[0], argv[1]);
+    nrf_cli_error(p_cli, "%s: unknown parameter: %s", argv[0], argv[1]);
 }
 
 static void cmd_nordic(nrf_cli_t const * p_cli, size_t argc, char **argv)
@@ -354,31 +352,30 @@ static void cmd_nordic(nrf_cli_t const * p_cli, size_t argc, char **argv)
     }
 
     nrf_cli_fprintf(p_cli, NRF_CLI_OPTION,
-                    "\r\n"
-                    "            .co:.                   'xo,          \r\n"
-                    "         .,collllc,.             'ckOOo::,..      \r\n"
-                    "      .:ooooollllllll:'.     .;dOOOOOOo:::;;;'.   \r\n"
-                    "   'okxddoooollllllllllll;'ckOOOOOOOOOo:::;;;,,,' \r\n"
-                    "   OOOkxdoooolllllllllllllllldxOOOOOOOo:::;;;,,,'.\r\n"
-                    "   OOOOOOkdoolllllllllllllllllllldxOOOo:::;;;,,,'.\r\n"
-                    "   OOOOOOOOOkxollllllllllllllllllcccldl:::;;;,,,'.\r\n"
-                    "   OOOOOOOOOOOOOxdollllllllllllllccccc::::;;;,,,'.\r\n"
-                    "   OOOOOOOOOOOOOOOOkxdlllllllllllccccc::::;;;,,,'.\r\n"
-                    "   kOOOOOOOOOOOOOOOOOOOkdolllllllccccc::::;;;,,,'.\r\n"
-                    "   kOOOOOOOOOOOOOOOOOOOOOOOxdllllccccc::::;;;,,,'.\r\n"
-                    "   kOOOOOOOOOOOOOOOOOOOOOOOOOOkxolcccc::::;;;,,,'.\r\n"
-                    "   kOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOkdlc::::;;;,,,'.\r\n"
-                    "   xOOOOOOOOOOOxdkOOOOOOOOOOOOOOOOOOOOxoc:;;;,,,'.\r\n"
-                    "   xOOOOOOOOOOOdc::ldkOOOOOOOOOOOOOOOOOOOkdc;,,,''\r\n"
-                    "   xOOOOOOOOOOOdc::;;,;cdkOOOOOOOOOOOOOOOOOOOxl;''\r\n"
-                    "   .lkOOOOOOOOOdc::;;,,''..;oOOOOOOOOOOOOOOOOOOOx'\r\n"
-                    "      .;oOOOOOOdc::;;,.       .:xOOOOOOOOOOOOd;.  \r\n"
-                    "          .:xOOdc:,.              'ckOOOOkl'      \r\n"
-                    "             .od'                    'xk,         \r\n"
-                    "\r\n");
+                    "\n"
+                    "            .co:.                   'xo,          \n"
+                    "         .,collllc,.             'ckOOo::,..      \n"
+                    "      .:ooooollllllll:'.     .;dOOOOOOo:::;;;'.   \n"
+                    "   'okxddoooollllllllllll;'ckOOOOOOOOOo:::;;;,,,' \n"
+                    "   OOOkxdoooolllllllllllllllldxOOOOOOOo:::;;;,,,'.\n"
+                    "   OOOOOOkdoolllllllllllllllllllldxOOOo:::;;;,,,'.\n"
+                    "   OOOOOOOOOkxollllllllllllllllllcccldl:::;;;,,,'.\n"
+                    "   OOOOOOOOOOOOOxdollllllllllllllccccc::::;;;,,,'.\n"
+                    "   OOOOOOOOOOOOOOOOkxdlllllllllllccccc::::;;;,,,'.\n"
+                    "   kOOOOOOOOOOOOOOOOOOOkdolllllllccccc::::;;;,,,'.\n"
+                    "   kOOOOOOOOOOOOOOOOOOOOOOOxdllllccccc::::;;;,,,'.\n"
+                    "   kOOOOOOOOOOOOOOOOOOOOOOOOOOkxolcccc::::;;;,,,'.\n"
+                    "   kOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOkdlc::::;;;,,,'.\n"
+                    "   xOOOOOOOOOOOxdkOOOOOOOOOOOOOOOOOOOOxoc:;;;,,,'.\n"
+                    "   xOOOOOOOOOOOdc::ldkOOOOOOOOOOOOOOOOOOOkdc;,,,''\n"
+                    "   xOOOOOOOOOOOdc::;;,;cdkOOOOOOOOOOOOOOOOOOOxl;''\n"
+                    "   .lkOOOOOOOOOdc::;;,,''..;oOOOOOOOOOOOOOOOOOOOx'\n"
+                    "      .;oOOOOOOdc::;;,.       .:xOOOOOOOOOOOOd;.  \n"
+                    "          .:xOOdc:,.              'ckOOOOkl'      \n"
+                    "             .od'                    'xk,         \n"
+                    "\n");
 
-    nrf_cli_fprintf(p_cli,NRF_CLI_NORMAL,
-                    "                Nordic Semiconductor              \r\n\r\n");
+    nrf_cli_print(p_cli, "                Nordic Semiconductor              \n");
 }
 
 /* This function cannot be static otherwise it can be inlined. As a result, variable:

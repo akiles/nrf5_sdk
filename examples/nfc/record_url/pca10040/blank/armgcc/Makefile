@@ -38,9 +38,11 @@ SRC_FILES += \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_uart.c \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_nvic.c \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_soc.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_clock.c \
-  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power_clock.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_nfct.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/prs/nrfx_prs.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_timer.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uart.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uarte.c \
   $(PROJ_DIR)/main.c \
@@ -48,9 +50,9 @@ SRC_FILES += \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
   $(SDK_ROOT)/modules/nrfx/mdk/system_nrf52.c \
-  $(SDK_ROOT)/components/nfc/t2t_lib/hal_t2t/hal_nfc_t2t.c \
   $(SDK_ROOT)/components/nfc/ndef/generic/message/nfc_ndef_msg.c \
   $(SDK_ROOT)/components/nfc/ndef/generic/record/nfc_ndef_record.c \
+  $(SDK_ROOT)/components/nfc/platform/nfc_platform.c \
   $(SDK_ROOT)/components/nfc/ndef/uri/nfc_uri_msg.c \
   $(SDK_ROOT)/components/nfc/ndef/uri/nfc_uri_rec.c \
 
@@ -62,6 +64,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/nfc/t2t_lib \
   $(PROJ_DIR) \
   $(SDK_ROOT)/components/libraries/fifo \
+  $(SDK_ROOT)/components/nfc/platform \
   $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/util \
@@ -87,7 +90,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/nfc/ndef/generic/record \
   $(SDK_ROOT)/integration/nrfx \
   $(SDK_ROOT)/modules/nrfx/drivers/include \
-  $(SDK_ROOT)/components/nfc/t2t_lib/hal_t2t \
   $(SDK_ROOT)/external/fprintf \
   $(SDK_ROOT)/components/libraries/log/src \
 

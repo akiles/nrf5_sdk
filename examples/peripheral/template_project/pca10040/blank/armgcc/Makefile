@@ -17,7 +17,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/crypto/backend/nrf_hw/nrf_hw_backend_rng.c \
   $(SDK_ROOT)/components/libraries/crypto/backend/nrf_hw/nrf_hw_backend_rng_mbedtls.c \
   $(SDK_ROOT)/components/boards/boards.c \
-  $(SDK_ROOT)/components/libraries/mpu/nrf_mpu.c \
+  $(SDK_ROOT)/components/libraries/mpu/nrf_mpu_lib.c \
   $(SDK_ROOT)/components/libraries/stack_guard/nrf_stack_guard.c \
   $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecc.c \
   $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecdh.c \
@@ -100,6 +100,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_nvic.c \
   $(SDK_ROOT)/modules/nrfx/hal/nrf_nvmc.c \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_soc.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_comp.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_gpiote.c \
@@ -107,7 +108,6 @@ SRC_FILES += \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_lpcomp.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_pdm.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power.c \
-  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_ppi.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/prs/nrfx_prs.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_pwm.c \
@@ -119,6 +119,7 @@ SRC_FILES += \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_spim.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_spis.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_swi.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_systick.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_timer.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_twi.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_twim.c \
@@ -235,10 +236,11 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/libraries/pwm \
   $(SDK_ROOT)/components/libraries/crc32 \
+  $(SDK_ROOT)/integration/nrfx/legacy \
   $(SDK_ROOT)/components/libraries/crc16 \
   $(SDK_ROOT)/components/libraries/mem_manager \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
-  $(SDK_ROOT)/components/libraries/util \
+  $(SDK_ROOT)/components/libraries/crypto/backend/optiga \
   $(SDK_ROOT)/components/libraries/crypto/backend/mbedtls \
   ../config \
   $(SDK_ROOT)/components/libraries/csense_drv \
@@ -263,7 +265,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/fstorage \
   $(SDK_ROOT)/components/libraries/experimental_section_vars \
   $(SDK_ROOT)/components/libraries/twi_sensor \
-  $(SDK_ROOT)/integration/nrfx/legacy \
+  $(SDK_ROOT)/components/libraries/util \
   $(SDK_ROOT)/external/cifra_AES128-EAX \
   $(SDK_ROOT)/external/mbedtls/include \
   $(SDK_ROOT)/external/protothreads/pt-1.4 \
@@ -304,9 +306,9 @@ INC_FOLDERS += \
 
 # Libraries common to all targets
 LIB_FILES += \
-  $(SDK_ROOT)/external/nrf_cc310/lib/libnrf_cc310_0.9.10.a \
+  $(SDK_ROOT)/external/nrf_cc310/lib/cortex-m4/hard-float/libnrf_cc310_0.9.12.a \
   $(SDK_ROOT)/external/micro-ecc/nrf52hf_armgcc/armgcc/micro_ecc_lib_nrf52.a \
-  $(SDK_ROOT)/external/nrf_oberon/lib/nrf52/liboberon_2.0.5.a \
+  $(SDK_ROOT)/external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_2.0.7.a \
 
 # Optimization flags
 OPT = -O3 -g3

@@ -75,12 +75,6 @@ SECTIONS
     KEEP(*(SORT(.pwr_mgmt_data*)))
     PROVIDE(__stop_pwr_mgmt_data = .);
   } > FLASH
-  .sdh_stack_observers :
-  {
-    PROVIDE(__start_sdh_stack_observers = .);
-    KEEP(*(SORT(.sdh_stack_observers*)))
-    PROVIDE(__stop_sdh_stack_observers = .);
-  } > FLASH
   .sdh_req_observers :
   {
     PROVIDE(__start_sdh_req_observers = .);
@@ -92,6 +86,12 @@ SECTIONS
     PROVIDE(__start_sdh_state_observers = .);
     KEEP(*(SORT(.sdh_state_observers*)))
     PROVIDE(__stop_sdh_state_observers = .);
+  } > FLASH
+  .sdh_stack_observers :
+  {
+    PROVIDE(__start_sdh_stack_observers = .);
+    KEEP(*(SORT(.sdh_stack_observers*)))
+    PROVIDE(__stop_sdh_stack_observers = .);
   } > FLASH
     .nrf_balloc :
   {
@@ -125,5 +125,6 @@ SECTIONS
   } > FLASH
 
 } INSERT AFTER .text
+
 
 INCLUDE "nrf_common.ld"

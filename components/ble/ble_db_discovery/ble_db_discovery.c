@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -558,7 +558,6 @@ static void on_primary_srv_discovery_rsp(ble_db_discovery_t       * p_db_discove
 
         p_prim_srvc_disc_rsp_evt = &(p_ble_gattc_evt->params.prim_srvc_disc_rsp);
 
-        p_srv_being_discovered->srv_uuid     = p_prim_srvc_disc_rsp_evt->services[0].uuid;
         p_srv_being_discovered->handle_range = p_prim_srvc_disc_rsp_evt->services[0].handle_range;
 
         err_code = characteristics_discover(p_db_discovery, p_ble_gattc_evt->conn_handle);

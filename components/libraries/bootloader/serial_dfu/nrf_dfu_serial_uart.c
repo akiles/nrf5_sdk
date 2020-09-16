@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -112,9 +112,6 @@ static __INLINE void on_rx_complete(nrf_dfu_serial_t * p_transport, uint8_t * p_
 
     if (ret_code == NRF_SUCCESS)
     {
-        // Activity detected on current transport, close all except active one.
-        UNUSED_RETURN_VALUE(nrf_dfu_transports_close(&uart_dfu_transport));
-
         nrf_dfu_serial_on_packet_received(p_transport,
                                          (uint8_t const *)m_slip.p_buffer,
                                          m_slip.current_index);
@@ -185,6 +182,7 @@ static uint32_t uart_dfu_transport_init(nrf_dfu_observer_t observer)
     m_serial.mtu                = UART_SLIP_MTU;
     m_serial.p_rsp_buf          = &m_rsp_buf[NRF_UART_MAX_RESPONSE_SIZE_SLIP -
                                             NRF_SERIAL_MAX_RESPONSE_SIZE];
+    m_serial.p_low_level_transport = &uart_dfu_transport;
 
     nrf_drv_uart_config_t uart_config = NRF_DRV_UART_DEFAULT_CONFIG;
 

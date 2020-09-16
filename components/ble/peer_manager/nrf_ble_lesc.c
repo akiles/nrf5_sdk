@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -51,8 +51,9 @@ NRF_LOG_MODULE_REGISTER();
 /**@brief Descriptor of the peer public key. */
 typedef struct
 {
-    nrf_crypto_ecc_public_key_t value;    /**< Peer public key. */
-    volatile bool               is_valid; /**< Flag indicating that the public key is valid. */
+    nrf_crypto_ecc_public_key_t value;        /**< Peer public key. */
+    bool                        is_requested; /**< Flag indicating that the public key has been requested to compute DH key. */
+    bool                        is_valid;     /**< Flag indicating that the public key is valid. */
 } nrf_ble_lesc_peer_pub_key_t;
 
 /**@brief   The maximum number of peripheral and central connections combined.
@@ -72,6 +73,9 @@ static nrf_crypto_ecc_private_key_t               m_private_key;                
 static nrf_crypto_ecc_public_key_t                m_public_key;                         /**< Allocated public key type to use for LESC DH generation. */
 static nrf_ble_lesc_peer_pub_key_t                m_peer_keys[NRF_BLE_LESC_LINK_COUNT]; /**< Array of pointers to peer public keys, used for LESC DH generation. */
 
+static bool                                       m_lesc_oobd_own_generated;
+static ble_gap_lesc_oob_data_t                    m_ble_lesc_oobd_own;                  /**< LESC OOB data used in LESC OOB pairing mode. */
+static nrf_ble_lesc_peer_oob_data_handler         m_lesc_oobd_peer_handler;
 
 ret_code_t nrf_ble_lesc_init(void)
 {
@@ -100,7 +104,7 @@ ret_code_t nrf_ble_lesc_init(void)
 
 #if defined(NRF_CRYPTO_RNG_AUTO_INIT_ENABLED) && (NRF_CRYPTO_RNG_AUTO_INIT_ENABLED == 1)
     // Do nothing. RNG is initialized with nrf_crypto_init call.
-#elif defined((NRF_CRYPTO_RNG_AUTO_INIT_ENABLED) && (NRF_CRYPTO_RNG_AUTO_INIT_ENABLED == 0)
+#elif defined(NRF_CRYPTO_RNG_AUTO_INIT_ENABLED) && (NRF_CRYPTO_RNG_AUTO_INIT_ENABLED == 0)
     // Initialize the RNG.
     err_code = nrf_crypto_rng_init(NULL, NULL);
     if (err_code != NRF_SUCCESS)
@@ -138,7 +142,8 @@ ret_code_t nrf_ble_lesc_keypair_generate(void)
     }
 
     // Update flag to indicate that there is no valid private key.
-    m_keypair_generated = false;
+    m_keypair_generated       = false;
+    m_lesc_oobd_own_generated = false;
 
     NRF_LOG_DEBUG("Generating ECC key pair");
     err_code = nrf_crypto_ecc_key_pair_generate(&m_keygen_context,
@@ -180,6 +185,27 @@ ret_code_t nrf_ble_lesc_keypair_generate(void)
 }
 
 
+ret_code_t nrf_ble_lesc_own_oob_data_generate(void)
+{
+    ret_code_t err_code = NRF_ERROR_INVALID_STATE;
+
+    m_lesc_oobd_own_generated = false;
+
+    if (m_keypair_generated)
+    {
+        err_code = sd_ble_gap_lesc_oob_data_get(BLE_CONN_HANDLE_INVALID,
+                                                &m_lesc_public_key,
+                                                &m_ble_lesc_oobd_own);
+        if (err_code == NRF_SUCCESS)
+        {
+            m_lesc_oobd_own_generated = true;
+        }
+    }
+
+    return err_code;
+}
+
+
 ble_gap_lesc_p256_pk_t * nrf_ble_lesc_public_key_get(void)
 {
     ble_gap_lesc_p256_pk_t * p_lesc_pk = NULL;
@@ -194,6 +220,29 @@ ble_gap_lesc_p256_pk_t * nrf_ble_lesc_public_key_get(void)
     }
 
     return p_lesc_pk;
+}
+
+
+ble_gap_lesc_oob_data_t * nrf_ble_lesc_own_oob_data_get(void)
+{
+    ble_gap_lesc_oob_data_t * p_lesc_oobd_own = NULL;
+
+    if (m_lesc_oobd_own_generated)
+    {
+        p_lesc_oobd_own = &m_ble_lesc_oobd_own;
+    }
+    else
+    {
+        NRF_LOG_ERROR("Trying to access LESC OOB data that have not been generated yet.");
+    }
+
+    return p_lesc_oobd_own;
+}
+
+
+void nrf_ble_lesc_peer_oob_data_handler_set(nrf_ble_lesc_peer_oob_data_handler handler)
+{
+    m_lesc_oobd_peer_handler = handler;
 }
 
 
@@ -265,11 +314,13 @@ ret_code_t nrf_ble_lesc_request_handler(void)
 
     for (uint16_t i = 0; i < NRF_BLE_LESC_LINK_COUNT; i++)
     {
-        if (m_peer_keys[i].is_valid)
+        if (m_peer_keys[i].is_requested)
         {
-            err_code                = compute_and_give_dhkey(&m_peer_keys[i], i);
-            m_peer_keys[i].is_valid = false;
+            err_code                    = compute_and_give_dhkey(&m_peer_keys[i], i);
+            m_peer_keys[i].is_requested = false;
+            m_peer_keys[i].is_valid     = false;
             VERIFY_SUCCESS(err_code);
+
         }
     }
 
@@ -322,8 +373,33 @@ static ret_code_t on_dhkey_request(uint16_t                                 conn
     {
         m_peer_keys[conn_handle].is_valid = true;
     }
+    m_peer_keys[conn_handle].is_requested = true;
 
     return NRF_SUCCESS;
+}
+
+
+/**@brief Function for setting LESC OOB data.
+ *
+ * @param[in]  conn_handle      Connection handle.
+ *
+ * @retval NRF_SUCCESS      If the operation was successful.
+ * @retval Other            Other error codes might be returned by the @ref sd_ble_gap_lesc_oob_data_set.
+ */
+static ret_code_t lesc_oob_data_set(uint16_t conn_handle)
+{
+    ret_code_t                err_code;
+    ble_gap_lesc_oob_data_t * p_lesc_oobd_own;
+    ble_gap_lesc_oob_data_t * p_lesc_oobd_peer;
+
+    p_lesc_oobd_own  = (m_lesc_oobd_own_generated) ? &m_ble_lesc_oobd_own : NULL;
+    p_lesc_oobd_peer = (m_lesc_oobd_peer_handler != NULL) ?
+                        m_lesc_oobd_peer_handler(conn_handle) : NULL;
+
+    err_code = sd_ble_gap_lesc_oob_data_set(conn_handle,
+                                            p_lesc_oobd_own,
+                                            p_lesc_oobd_peer);
+    return err_code;
 }
 
 
@@ -335,11 +411,22 @@ void nrf_ble_lesc_on_ble_evt(ble_evt_t const * p_ble_evt)
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_DISCONNECTED:
-            m_peer_keys[conn_handle].is_valid = false;
+            m_peer_keys[conn_handle].is_valid     = false;
+            m_peer_keys[conn_handle].is_requested = false;
             break;
 
         case BLE_GAP_EVT_LESC_DHKEY_REQUEST:
             NRF_LOG_DEBUG("BLE_GAP_EVT_LESC_DHKEY_REQUEST");
+
+            if (p_ble_evt->evt.gap_evt.params.lesc_dhkey_request.oobd_req)
+            {
+                err_code = lesc_oob_data_set(conn_handle);
+                if (err_code != NRF_SUCCESS)
+                {
+                    NRF_LOG_ERROR("sd_ble_gap_lesc_oob_data_set() returned error 0x%x.", err_code);
+                    m_ble_lesc_internal_error = true;
+                }
+            }
 
             err_code = on_dhkey_request(conn_handle,
                                         &p_ble_evt->evt.gap_evt.params.lesc_dhkey_request);

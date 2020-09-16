@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -67,6 +67,9 @@ NRF_LOG_MODULE_REGISTER();
 
 #define NRF_DFU_PROTOCOL_VERSION    (0x01)
 
+#ifndef NRF_DFU_PROTOCOL_REDUCED
+#define NRF_DFU_PROTOCOL_REDUCED 0
+#endif
 
 STATIC_ASSERT(DFU_SIGNED_COMMAND_SIZE <= INIT_COMMAND_MAX_SIZE);
 
@@ -101,6 +104,7 @@ static nrf_dfu_result_t ext_err_code_handle(nrf_dfu_result_t ret_val)
 }
 
 
+#if !NRF_DFU_PROTOCOL_REDUCED
 static void on_protocol_version_request(nrf_dfu_request_t const * p_req, nrf_dfu_response_t * p_res)
 {
     UNUSED_PARAMETER(p_req);
@@ -209,6 +213,7 @@ static void on_mtu_get_request(nrf_dfu_request_t * p_req, nrf_dfu_response_t * p
     NRF_LOG_DEBUG("Handle NRF_DFU_OP_MTU_GET");
     p_res->mtu.size = p_req->mtu.size;
 }
+#endif // !NRF_DFU_PROTOCOL_REDUCED
 
 
 static void on_prn_set_request(nrf_dfu_request_t * p_req, nrf_dfu_response_t * p_res)
@@ -482,6 +487,11 @@ static void on_data_obj_write_request(nrf_dfu_request_t * p_req, nrf_dfu_respons
     }
 
     uint32_t const write_addr = m_firmware_start_addr + s_dfu_settings.write_offset;
+    /* CRC must be calculated before handing off the data to fstorage because the data is
+     * freed on write completion.
+     */
+    uint32_t const next_crc =
+        crc32_compute(p_req->write.p_data, p_req->write.len, &s_dfu_settings.progress.firmware_image_crc);
 
     ASSERT(p_req->callback.write);
 
@@ -501,8 +511,7 @@ static void on_data_obj_write_request(nrf_dfu_request_t * p_req, nrf_dfu_respons
     /* Update the CRC of the firmware image. */
     s_dfu_settings.write_offset                   += p_req->write.len;
     s_dfu_settings.progress.firmware_image_offset += p_req->write.len;
-    s_dfu_settings.progress.firmware_image_crc     =
-        crc32_compute(p_req->write.p_data, p_req->write.len, &s_dfu_settings.progress.firmware_image_crc);
+    s_dfu_settings.progress.firmware_image_crc     = next_crc;
 
     /* This is only used when the PRN is triggered and the 'write' message
      * is answered with a CRC message and these field are copied into the response.
@@ -551,7 +560,12 @@ static void on_data_obj_execute_request_sched(void * p_evt, uint16_t event_lengt
     {
         NRF_LOG_DEBUG("Whole firmware image received. Postvalidating.");
 
+        #if NRF_DFU_IN_APP
         res.result = nrf_dfu_validation_post_data_execute(m_firmware_start_addr, m_firmware_size_req);
+        #else
+        res.result = nrf_dfu_validation_activation_prepare(m_firmware_start_addr, m_firmware_size_req);
+        #endif
+
         res.result = ext_err_code_handle(res.result);
 
         /* Provide response to transport */
@@ -716,6 +730,7 @@ static void nrf_dfu_req_handler_req_process(nrf_dfu_request_t * p_req)
 
     switch (p_req->request)
     {
+#if !NRF_DFU_PROTOCOL_REDUCED
         case NRF_DFU_OP_PROTOCOL_VERSION:
         {
             on_protocol_version_request(p_req, &response);
@@ -736,14 +751,14 @@ static void nrf_dfu_req_handler_req_process(nrf_dfu_request_t * p_req)
             on_ping_request(p_req, &response);
         } break;
 
-        case NRF_DFU_OP_RECEIPT_NOTIF_SET:
-        {
-            on_prn_set_request(p_req, &response);
-        } break;
-
         case NRF_DFU_OP_MTU_GET:
         {
             on_mtu_get_request(p_req, &response);
+        } break;
+#endif
+        case NRF_DFU_OP_RECEIPT_NOTIF_SET:
+        {
+            on_prn_set_request(p_req, &response);
         } break;
 
         case NRF_DFU_OP_ABORT:
@@ -818,7 +833,7 @@ ret_code_t nrf_dfu_req_handler_init(nrf_dfu_observer_t observer)
         return NRF_ERROR_INVALID_PARAM;
     }
 
-#ifdef BLE_STACK_SUPPORT_REQD
+#if defined(BLE_STACK_SUPPORT_REQD) || defined(ANT_STACK_SUPPORT_REQD)
     ret_val  = nrf_dfu_flash_init(true);
 #else
     ret_val = nrf_dfu_flash_init(false);

@@ -335,6 +335,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
@@ -652,6 +653,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log</state>
@@ -1070,7 +1072,7 @@
     </settings>
   </configuration>  <group>
   <name>nrf_cc310</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_cc310\lib\libnrf_cc310_short_wchar_0.9.10.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_cc310\lib\cortex-m4\hard-float\short-wchar\libnrf_cc310_0.9.12.a</name>    </file>  </group>  <group>
   <name>nRF_Crypto</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_aead.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_aes.c</name>    </file>    <file>
@@ -1116,6 +1118,7 @@
     <name>$PROJ_DIR$\..\..\test_cases\test_vectors_aes_ecb.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\test_cases\test_vectors_chacha_poly.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\test_cases\test_vectors_ecdh.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\test_cases\test_vectors_ecdsa_random.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\test_cases\test_vectors_ecdsa_sign.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\test_cases\test_vectors_ecdsa_verify.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\test_cases\test_vectors_eddsa.c</name>    </file>    <file>
@@ -1156,6 +1159,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\mbedtls\mbedtls_backend_init.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_rng.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_rng.c</name>    </file>  </group>  <group>
   <name>nRF_Crypto backend cifra</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\crypto\backend\cifra\cifra_backend_aes_aead.c</name>    </file>  </group>  <group>
@@ -1239,7 +1243,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\mbedtls\library\x509_csr.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\mbedtls\library\xtea.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\lib\nrf52\liboberon_short_wchar_2.0.5.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
   <name>None</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk\iar_startup_nrf52.s</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk\system_nrf52.c</name>    </file>  </group>  <group>

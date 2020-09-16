@@ -12,7 +12,7 @@
       <TargetOption>
         <TargetCommonOption>          <Device>nRF52832_xxAA</Device>
           <Vendor>Nordic Semiconductor</Vendor>
-          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.17.0</PackID>
+          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.24.1</PackID>
           <PackURL>http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/</PackURL>          <Cpu>IROM(0x00000000,0x80000) IRAM(0x20000000,0x10000) CPUTYPE("Cortex-M4") FPU2 CLOCK(64000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -329,8 +329,8 @@
               </OCR_RVCT8>
               <OCR_RVCT9>
                 <Type>0</Type>
-                <StartAddress>0x2000b8a8</StartAddress>
-                <Size>0x4758</Size>
+                <StartAddress>0x2000a8a8</StartAddress>
+                <Size>0x5758</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -362,9 +362,9 @@
             <vShortWch>0</vShortWch>
             <VariousControls>
               <MiscControls>--reduce_paths</MiscControls>
-              <Define> BLE_STACK_SUPPORT_REQD BOARD_PCA10040 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD NRF52 NRF52832_XXAA NRF52_PAN_74 NRF_SD_BLE_API_VERSION=6 S132 SER_CONNECTIVITY SOFTDEVICE_PRESENT __HEAP_SIZE=512 __STACK_SIZE=2048</Define>
+              <Define> APP_TIMER_V2 APP_TIMER_V2_RTC1_ENABLED BLE_STACK_SUPPORT_REQD BOARD_PCA10040 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD NRF52 NRF52832_XXAA NRF52_PAN_74 NRF_SD_BLE_API_VERSION=6 S132 SER_CONNECTIVITY SOFTDEVICE_PRESENT __HEAP_SIZE=512 __STACK_SIZE=2048</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ble\ble_dtm;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\serialization\common;..\..\..\..\..\..\components\serialization\common\struct_ser\ble;..\..\..\..\..\..\components\serialization\common\transport;..\..\..\..\..\..\components\serialization\common\transport\ser_phy;..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config;..\..\..\..\..\..\components\serialization\connectivity;..\..\..\..\..\..\components\serialization\connectivity\codecs\ble\middleware;..\..\..\..\..\..\components\serialization\connectivity\codecs\ble\serializers;..\..\..\..\..\..\components\serialization\connectivity\codecs\common;..\..\..\..\..\..\components\serialization\connectivity\hal;..\..\..\..\..\..\components\softdevice\common;..\..\..\..\..\..\components\softdevice\s132\headers;..\..\..\..\..\..\components\softdevice\s132\headers\nrf52;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ble\ble_dtm;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\timer\experimental;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\serialization\common;..\..\..\..\..\..\components\serialization\common\struct_ser\ble;..\..\..\..\..\..\components\serialization\common\transport;..\..\..\..\..\..\components\serialization\common\transport\ser_phy;..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config;..\..\..\..\..\..\components\serialization\connectivity;..\..\..\..\..\..\components\serialization\connectivity\codecs\ble\middleware;..\..\..\..\..\..\components\serialization\connectivity\codecs\ble\serializers;..\..\..\..\..\..\components\serialization\connectivity\codecs\common;..\..\..\..\..\..\components\serialization\connectivity\hal;..\..\..\..\..\..\components\softdevice\common;..\..\..\..\..\..\components\softdevice\s132\headers;..\..\..\..\..\..\components\softdevice\s132\headers\nrf52;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -378,10 +378,10 @@
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DBLE_STACK_SUPPORT_REQD,-DBOARD_PCA10040,-DBSP_DEFINES_ONLY,-DCONFIG_GPIO_AS_PINRESET,-DFLOAT_ABI_HARD,-DNRF52,-DNRF52832_XXAA,-DNRF52_PAN_74,-DNRF_SD_BLE_API_VERSION=6,-DS132,-DSER_CONNECTIVITY,-DSOFTDEVICE_PRESENT,-D__HEAP_SIZE=512,-D__STACK_SIZE=2048</MiscControls>
-              <Define> BLE_STACK_SUPPORT_REQD BOARD_PCA10040 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD NRF52 NRF52832_XXAA NRF52_PAN_74 NRF_SD_BLE_API_VERSION=6 S132 SER_CONNECTIVITY SOFTDEVICE_PRESENT __HEAP_SIZE=512 __STACK_SIZE=2048</Define>
+              <MiscControls> --cpreproc_opts=-DAPP_TIMER_V2,-DAPP_TIMER_V2_RTC1_ENABLED,-DBLE_STACK_SUPPORT_REQD,-DBOARD_PCA10040,-DBSP_DEFINES_ONLY,-DCONFIG_GPIO_AS_PINRESET,-DFLOAT_ABI_HARD,-DNRF52,-DNRF52832_XXAA,-DNRF52_PAN_74,-DNRF_SD_BLE_API_VERSION=6,-DS132,-DSER_CONNECTIVITY,-DSOFTDEVICE_PRESENT,-D__HEAP_SIZE=512,-D__STACK_SIZE=2048</MiscControls>
+              <Define> APP_TIMER_V2 APP_TIMER_V2_RTC1_ENABLED BLE_STACK_SUPPORT_REQD BOARD_PCA10040 BSP_DEFINES_ONLY CONFIG_GPIO_AS_PINRESET FLOAT_ABI_HARD NRF52 NRF52832_XXAA NRF52_PAN_74 NRF_SD_BLE_API_VERSION=6 S132 SER_CONNECTIVITY SOFTDEVICE_PRESENT __HEAP_SIZE=512 __STACK_SIZE=2048</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ble\ble_dtm;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\serialization\common;..\..\..\..\..\..\components\serialization\common\struct_ser\ble;..\..\..\..\..\..\components\serialization\common\transport;..\..\..\..\..\..\components\serialization\common\transport\ser_phy;..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config;..\..\..\..\..\..\components\serialization\connectivity;..\..\..\..\..\..\components\serialization\connectivity\codecs\ble\middleware;..\..\..\..\..\..\components\serialization\connectivity\codecs\ble\serializers;..\..\..\..\..\..\components\serialization\connectivity\codecs\common;..\..\..\..\..\..\components\serialization\connectivity\hal;..\..\..\..\..\..\components\softdevice\common;..\..\..\..\..\..\components\softdevice\s132\headers;..\..\..\..\..\..\components\softdevice\s132\headers\nrf52;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ble\ble_dtm;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\libraries\atomic;..\..\..\..\..\..\components\libraries\atomic_fifo;..\..\..\..\..\..\components\libraries\balloc;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\delay;..\..\..\..\..\..\components\libraries\experimental_section_vars;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\memobj;..\..\..\..\..\..\components\libraries\ringbuf;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\sortlist;..\..\..\..\..\..\components\libraries\strerror;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\timer\experimental;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\serialization\common;..\..\..\..\..\..\components\serialization\common\struct_ser\ble;..\..\..\..\..\..\components\serialization\common\transport;..\..\..\..\..\..\components\serialization\common\transport\ser_phy;..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config;..\..\..\..\..\..\components\serialization\connectivity;..\..\..\..\..\..\components\serialization\connectivity\codecs\ble\middleware;..\..\..\..\..\..\components\serialization\connectivity\codecs\ble\serializers;..\..\..\..\..\..\components\serialization\connectivity\codecs\common;..\..\..\..\..\..\components\serialization\connectivity\hal;..\..\..\..\..\..\components\softdevice\common;..\..\..\..\..\..\components\softdevice\s132\headers;..\..\..\..\..\..\components\softdevice\s132\headers\nrf52;..\..\..\..\..\..\external\fprintf;..\..\..\..\..\..\external\segger_rtt;..\..\..\..\..\..\integration\nrfx;..\..\..\..\..\..\integration\nrfx\legacy;..\..\..\..\..\..\modules\nrfx;..\..\..\..\..\..\modules\nrfx\drivers\include;..\..\..\..\..\..\modules\nrfx\hal;..\..\..\..\..\..\modules\nrfx\mdk;..\config</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -679,6 +679,49 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>            </File>            <File>
+              <FileName>nrfx_atomic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</FilePath>              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>1</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>            </File>            <File>
               <FileName>nrfx_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</FilePath>              <FileOption>
@@ -725,49 +768,6 @@
               <FileName>nrfx_gpiote.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_gpiote.c</FilePath>              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>0</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>1</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>            </File>            <File>
-              <FileName>nrfx_power_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</FilePath>              <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
                   <RVCTCodeConst>0</RVCTCodeConst>
@@ -1155,6 +1155,49 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>            </File>            <File>
+              <FileName>app_timer2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\timer\experimental\app_timer2.c</FilePath>              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>1</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>            </File>            <File>
               <FileName>app_util_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\app_util_platform.c</FilePath>              <FileOption>
@@ -1198,9 +1241,95 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>            </File>            <File>
+              <FileName>drv_rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\timer\experimental\drv_rtc.c</FilePath>              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>1</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>            </File>            <File>
               <FileName>nrf_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\nrf_assert.c</FilePath>              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>1</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>            </File>            <File>
+              <FileName>nrf_atfifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\atomic_fifo\nrf_atfifo.c</FilePath>              <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
                   <RVCTCodeConst>0</RVCTCodeConst>
@@ -1502,6 +1631,49 @@
               <FileName>nrf_section_iter.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</FilePath>              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>1</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>            </File>            <File>
+              <FileName>nrf_sortlist.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\sortlist\nrf_sortlist.c</FilePath>              <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
                   <RVCTCodeConst>0</RVCTCodeConst>
@@ -3964,7 +4136,7 @@
               </FileOption>            </File>          </Files>
         </Group>      </Groups>
     </Target>    <Target>
-      <TargetName>flash_s132_nrf52_6.1.0_softdevice</TargetName>
+      <TargetName>flash_s132_nrf52_6.1.1_softdevice</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -4002,7 +4174,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>..\..\..\..\..\..\components\softdevice\s132\hex\</OutputDirectory>
-          <OutputName>s132_nrf52_6.1.0_softdevice.hex</OutputName>
+          <OutputName>s132_nrf52_6.1.1_softdevice.hex</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -4287,8 +4459,8 @@
               </OCR_RVCT8>
               <OCR_RVCT9>
                 <Type>0</Type>
-                <StartAddress>0x2000b8a8</StartAddress>
-                <Size>0x4758</Size>
+                <StartAddress>0x2000a8a8</StartAddress>
+                <Size>0x5758</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -4637,6 +4809,49 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>            </File>            <File>
+              <FileName>nrfx_atomic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</FilePath>              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>            </File>            <File>
               <FileName>nrfx_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</FilePath>              <FileOption>
@@ -4683,49 +4898,6 @@
               <FileName>nrfx_gpiote.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_gpiote.c</FilePath>              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>0</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>            </File>            <File>
-              <FileName>nrfx_power_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</FilePath>              <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
                   <RVCTCodeConst>0</RVCTCodeConst>
@@ -5113,6 +5285,49 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>            </File>            <File>
+              <FileName>app_timer2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\timer\experimental\app_timer2.c</FilePath>              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>            </File>            <File>
               <FileName>app_util_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\app_util_platform.c</FilePath>              <FileOption>
@@ -5156,9 +5371,95 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>            </File>            <File>
+              <FileName>drv_rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\timer\experimental\drv_rtc.c</FilePath>              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>            </File>            <File>
               <FileName>nrf_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\nrf_assert.c</FilePath>              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>            </File>            <File>
+              <FileName>nrf_atfifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\atomic_fifo\nrf_atfifo.c</FilePath>              <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
                   <RVCTCodeConst>0</RVCTCodeConst>
@@ -5460,6 +5761,49 @@
               <FileName>nrf_section_iter.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</FilePath>              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>            </File>            <File>
+              <FileName>nrf_sortlist.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\sortlist\nrf_sortlist.c</FilePath>              <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
                   <RVCTCodeConst>0</RVCTCodeConst>
@@ -7926,19 +8270,19 @@
     <filter>
       <targetInfos/>
     </filter>    <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0">
-      <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>        <targetInfo excluded="1" name="flash_s132_nrf52_6.1.0_softdevice"/>      </targetInfos>
+      <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>        <targetInfo excluded="1" name="flash_s132_nrf52_6.1.1_softdevice"/>      </targetInfos>
     </package>
-    <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.17.0">
-      <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>        <targetInfo excluded="1" name="flash_s132_nrf52_6.1.0_softdevice"/>      </targetInfos>
+    <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.24.1">
+      <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>        <targetInfo excluded="1" name="flash_s132_nrf52_6.1.1_softdevice"/>      </targetInfos>
     </package>  </packages>
   <apis/>
   <components>    <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="4.3.0" condition="CMSIS Core">
       <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
-      <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>        <targetInfo excluded="1" name="flash_s132_nrf52_6.1.0_softdevice"/>      </targetInfos>
+      <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>        <targetInfo excluded="1" name="flash_s132_nrf52_6.1.1_softdevice"/>      </targetInfos>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="8.17.0" condition="nRF5x Series CMSIS Device">
-      <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.17.0"/>
-      <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>        <targetInfo excluded="1" name="flash_s132_nrf52_6.1.0_softdevice"/>      </targetInfos>
+    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="8.24.1" condition="nRF5x Series CMSIS Device">
+      <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.24.1"/>
+      <targetInfos>        <targetInfo name="nrf52832_xxaa" versionMatchMode="fixed"/>        <targetInfo excluded="1" name="flash_s132_nrf52_6.1.1_softdevice"/>      </targetInfos>
     </component>  </components>
   <files>  </files>
 </RTE>

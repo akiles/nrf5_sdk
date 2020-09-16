@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -57,6 +57,7 @@
 #include "nrf_bootloader_fw_activation.h"
 #include "nrf_bootloader_dfu_timers.h"
 #include "app_scheduler.h"
+#include "nrf_dfu_validation.h"
 
 static nrf_dfu_observer_t m_user_observer; //<! Observer callback set by the user.
 static volatile bool m_flash_write_done;
@@ -75,7 +76,7 @@ STATIC_ASSERT((NRF_BL_DFU_INACTIVITY_TIMEOUT_MS >= 100) || (NRF_BL_DFU_INACTIVIT
              "NRF_BL_DFU_INACTIVITY_TIMEOUT_MS must be 100 ms or more, or 0 to indicate that it is disabled.");
 
 #if defined(NRF_LOG_BACKEND_FLASH_START_PAGE)
-STATIC_ASSERT(NRF_LOG_BACKEND_FLASH_START_PAGE != 0, 
+STATIC_ASSERT(NRF_LOG_BACKEND_FLASH_START_PAGE != 0,
     "If nrf_log flash backend is used it cannot use space after code because it would collide with settings page.");
 #endif
 
@@ -112,7 +113,7 @@ static void flash_write_callback(void * p_context)
 }
 
 
-static void reset_after_flash_write(void * p_context)
+static void do_reset(void * p_context)
 {
     UNUSED_PARAMETER(p_context);
 
@@ -127,19 +128,26 @@ static void reset_after_flash_write(void * p_context)
 }
 
 
-static void bootloader_reset(void)
+static void bootloader_reset(bool do_backup)
 {
     NRF_LOG_DEBUG("Resetting bootloader.");
 
-    m_flash_write_done = false;
-    nrf_dfu_settings_backup(reset_after_flash_write);
+    if (do_backup)
+    {
+        m_flash_write_done = false;
+        nrf_dfu_settings_backup(do_reset);
+    }
+    else
+    {
+        do_reset(NULL);
+    }
 }
 
 
 static void inactivity_timeout(void)
 {
     NRF_LOG_INFO("Inactivity timeout.");
-    bootloader_reset();
+    bootloader_reset(true);
 }
 
 
@@ -157,7 +165,7 @@ static void dfu_observer(nrf_dfu_evt_type_t evt_type)
             break;
         case NRF_DFU_EVT_DFU_COMPLETED:
         case NRF_DFU_EVT_DFU_ABORTED:
-            bootloader_reset();
+            bootloader_reset(true);
             break;
         default:
             break;
@@ -182,7 +190,7 @@ static void scheduler_init(void)
  */
 static void wait_for_event(void)
 {
-#ifdef BLE_STACK_SUPPORT_REQD
+#if defined(BLE_STACK_SUPPORT_REQD) || defined(ANT_STACK_SUPPORT_REQD)
     (void)sd_app_evt_wait();
 #else
     // Wait for an event.
@@ -232,7 +240,8 @@ static bool crc_on_valid_app_required(void)
         ret = false;
     }
     else if (NRF_BL_APP_CRC_CHECK_SKIPPED_ON_GPREGRET2 &&
-            (nrf_power_gpregret2_get() & BOOTLOADER_DFU_SKIP_CRC))
+            ((nrf_power_gpregret2_get() & BOOTLOADER_DFU_GPREGRET2_MASK) == BOOTLOADER_DFU_GPREGRET2)
+            && (nrf_power_gpregret2_get() & BOOTLOADER_DFU_SKIP_CRC_BIT_MASK))
     {
         nrf_power_gpregret2_set(nrf_power_gpregret2_get() & ~BOOTLOADER_DFU_SKIP_CRC);
         ret = false;
@@ -243,6 +252,61 @@ static bool crc_on_valid_app_required(void)
 
     return ret;
 }
+
+
+
+static bool boot_validate(boot_validation_t const * p_validation, uint32_t data_addr, uint32_t data_len, bool do_crc)
+{
+    if (!do_crc && (p_validation->type == VALIDATE_CRC))
+    {
+        return true;
+    }
+    return nrf_dfu_validation_boot_validate(p_validation, data_addr, data_len);
+}
+
+
+/** @brief Function for checking if the main application is valid.
+ *
+ * @details     This function checks if there is a valid application
+ *              located at Bank 0.
+ *
+ * @param[in]   do_crc Perform CRC check on application. Only CRC checks
+                       can be skipped. For other boot validation types,
+                       this parameter is ignored.
+ *
+ * @retval  true  If a valid application has been detected.
+ * @retval  false If there is no valid application.
+ */
+static bool app_is_valid(bool do_crc)
+{
+    if (s_dfu_settings.bank_0.bank_code != NRF_DFU_BANK_VALID_APP)
+    {
+        NRF_LOG_INFO("Boot validation failed. No valid app to boot.");
+        return false;
+    }
+    else if (NRF_BL_APP_SIGNATURE_CHECK_REQUIRED &&
+        (s_dfu_settings.boot_validation_app.type != VALIDATE_ECDSA_P256_SHA256))
+    {
+        NRF_LOG_WARNING("Boot validation failed. The boot validation of the app must be a signature check.");
+        return false;
+    }
+    else if (SD_PRESENT && !boot_validate(&s_dfu_settings.boot_validation_softdevice, MBR_SIZE, s_dfu_settings.sd_size, do_crc))
+    {
+        NRF_LOG_WARNING("Boot validation failed. SoftDevice is present but invalid.");
+        return false;
+    }
+    else if (!boot_validate(&s_dfu_settings.boot_validation_app, nrf_dfu_bank0_start_addr(), s_dfu_settings.bank_0.image_size, do_crc))
+    {
+        NRF_LOG_WARNING("Boot validation failed. App is invalid.");
+        return false;
+    }
+    // The bootloader itself is not checked, since a self-check of this kind gives little to no benefit
+    // compared to the cost incurred on each bootup.
+
+    NRF_LOG_DEBUG("App is valid");
+    return true;
+}
+
 
 
 /**@brief Function for clearing all DFU enter flags that
@@ -261,7 +325,8 @@ static void dfu_enter_flags_clear(void)
     }
 
     if (NRF_BL_DFU_ENTER_METHOD_GPREGRET &&
-       (nrf_power_gpregret_get() & BOOTLOADER_DFU_START))
+       ((nrf_power_gpregret_get() & BOOTLOADER_DFU_GPREGRET_MASK) == BOOTLOADER_DFU_GPREGRET)
+            && (nrf_power_gpregret_get() & BOOTLOADER_DFU_START_BIT_MASK))
     {
         // Clear DFU mark in GPREGRET register.
         nrf_power_gpregret_set(nrf_power_gpregret_get() & ~BOOTLOADER_DFU_START);
@@ -281,7 +346,7 @@ static void dfu_enter_flags_clear(void)
  */
 static bool dfu_enter_check(void)
 {
-    if (!nrf_dfu_app_is_valid(crc_on_valid_app_required()))
+    if (!app_is_valid(crc_on_valid_app_required()))
     {
         NRF_LOG_DEBUG("DFU mode because app is not valid.");
         return true;
@@ -319,6 +384,36 @@ static bool dfu_enter_check(void)
 }
 
 
+#if NRF_BL_DFU_ALLOW_UPDATE_FROM_APP
+static void postvalidate(void)
+{
+    NRF_LOG_INFO("Postvalidating update after reset.");
+    nrf_dfu_validation_init();
+
+    if (nrf_dfu_validation_init_cmd_present())
+    {
+        uint32_t firmware_start_addr;
+        uint32_t firmware_size;
+
+        // Execute a previously received init packed. Subsequent executes will have no effect.
+        if (nrf_dfu_validation_init_cmd_execute(&firmware_start_addr, &firmware_size) == NRF_DFU_RES_CODE_SUCCESS)
+        {
+            if (nrf_dfu_validation_prevalidate() == NRF_DFU_RES_CODE_SUCCESS)
+            {
+                if (nrf_dfu_validation_activation_prepare(firmware_start_addr, firmware_size) == NRF_DFU_RES_CODE_SUCCESS)
+                {
+                    NRF_LOG_INFO("Postvalidation successful.");
+                }
+            }
+        }
+    }
+
+    s_dfu_settings.bank_current = NRF_DFU_CURRENT_BANK_0;
+    UNUSED_RETURN_VALUE(nrf_dfu_settings_write_and_backup(flash_write_callback));
+}
+#endif
+
+
 ret_code_t nrf_bootloader_init(nrf_dfu_observer_t observer)
 {
     NRF_LOG_DEBUG("In nrf_bootloader_init");
@@ -341,6 +436,14 @@ ret_code_t nrf_bootloader_init(nrf_dfu_observer_t observer)
         return NRF_ERROR_INTERNAL;
     }
 
+    #if NRF_BL_DFU_ALLOW_UPDATE_FROM_APP
+    // Postvalidate if DFU has signaled that update is ready.
+    if (s_dfu_settings.bank_current == NRF_DFU_CURRENT_BANK_1)
+    {
+        postvalidate();
+    }
+    #endif
+
     // Check if an update needs to be activated and activate it.
     activation_result = nrf_bootloader_fw_activate();
 
@@ -357,8 +460,8 @@ ret_code_t nrf_bootloader_init(nrf_dfu_observer_t observer)
             break;
 
         case ACTIVATION_SUCCESS:
-            bootloader_reset();
-            NRF_LOG_ERROR("Should never come here: After bootloader_reset()");
+            bootloader_reset(true);
+            NRF_LOG_ERROR("Unreachable");
             return NRF_ERROR_INTERNAL; // Should not reach this.
 
         case ACTIVATION_ERROR:
@@ -369,10 +472,7 @@ ret_code_t nrf_bootloader_init(nrf_dfu_observer_t observer)
     if (dfu_enter)
     {
         nrf_bootloader_wdt_init();
-
         scheduler_init();
-
-        // Clear all DFU stop flags.
         dfu_enter_flags_clear();
 
         // Call user-defined init function if implemented
@@ -392,7 +492,7 @@ ret_code_t nrf_bootloader_init(nrf_dfu_observer_t observer)
 
         NRF_LOG_DEBUG("Enter main loop");
         loop_forever(); // This function will never return.
-        NRF_LOG_ERROR("Should never come here: After looping forever.");
+        NRF_LOG_ERROR("Unreachable");
     }
     else
     {
@@ -408,7 +508,7 @@ ret_code_t nrf_bootloader_init(nrf_dfu_observer_t observer)
         ASSERT(m_flash_write_done);
 
         nrf_bootloader_app_start();
-        NRF_LOG_ERROR("Should never come here: After nrf_bootloader_app_start()");
+        NRF_LOG_ERROR("Unreachable");
     }
 
     // Should not be reached.

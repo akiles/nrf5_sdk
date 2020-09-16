@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -78,14 +78,14 @@ static nrf_crypto_hmac_info_t const * hmac_info_get(char const * p_name)
 
     nrf_cli_fprintf(cli_get(),
                     NRF_CLI_WARNING,
-                    "Invalid name '%s'. Available hash algorithms for HMAC: \r\n",
+                    "Invalid name '%s'. Available hash algorithms for HMAC: \n",
                     p_name);
 
 #if NRF_MODULE_ENABLED(NRF_CRYPTO_HMAC_SHA256)
-    nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "  sha256\r\n");
+    nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "  sha256\n");
 #endif
 #if NRF_MODULE_ENABLED(NRF_CRYPTO_HMAC_SHA512)
-    nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "  sha512\r\n");
+    nrf_cli_fprintf(cli_get(), NRF_CLI_WARNING, "  sha512\n");
 #endif
 
     return NULL;
@@ -227,7 +227,7 @@ static void hmac_context_print(var_t * p_var, bool short_info)
     {
         nrf_cli_fprintf(cli_get(),
                         NRF_CLI_NORMAL,
-                        context_is_finalized(p_var) ? "Finalized.\r\n" : "Ready.\r\n");
+                        context_is_finalized(p_var) ? "Finalized.\n" : "Ready.\n");
     }
 }
 
@@ -278,13 +278,13 @@ static bool cmd_hmac_init(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(hmac_init, &m_subcmd_hmac, cmd_hmac_init,
-    "Initialize HMAC context.\r\n"
-    "Usage:\r\n"
-    "  hmac_init hash_type key context\r\n"
-    "Arguments:\r\n"
-    "  IN  hmac_type  Algorithm used to calculate HMAC (sha256 or sha512)\r\n"
-    "  IN  key        Key data\r\n"
-    "  OUT context    Newly initialized context\r\n"
+    "Initialize HMAC context.\n"
+    "Usage:\n"
+    "  hmac_init hash_type key context\n"
+    "Arguments:\n"
+    "  IN  hmac_type  Algorithm used to calculate HMAC (sha256 or sha512)\n"
+    "  IN  key        Key data\n"
+    "  OUT context    Newly initialized context\n"
     );
 
 
@@ -315,12 +315,12 @@ static bool cmd_hmac_update(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(hmac_update, &m_subcmd_var_var, cmd_hmac_update,
-    "Update HMAC calculation with a new data.\r\n"
-    "Usage:\r\n"
-    "  hmac_update context data\r\n"
-    "Arguments:\r\n"
-    "  IN  context  HMAC context to update\r\n"
-    "  IN  data     Data input\r\n"
+    "Update HMAC calculation with a new data.\n"
+    "Usage:\n"
+    "  hmac_update context data\n"
+    "Arguments:\n"
+    "  IN  context  HMAC context to update\n"
+    "  IN  data     Data input\n"
     );
 
 
@@ -357,12 +357,12 @@ static bool cmd_hmac_finalize(nrf_cli_t const * p_cli, size_t argc, char ** argv
 
 
 CLI_CMD_REGISTER(hmac_finalize, &m_subcmd_var, cmd_hmac_finalize,
-    "Finalize HAMC calculation.\r\n"
-    "Usage:\r\n"
-    "  hmac_finalize context digest\r\n"
-    "Arguments:\r\n"
-    "  IN  context  HMAC context to finalize\r\n"
-    "  OUT digest   Calculated digest\r\n"
+    "Finalize HAMC calculation.\n"
+    "Usage:\n"
+    "  hmac_finalize context digest\n"
+    "Arguments:\n"
+    "  IN  context  HMAC context to finalize\n"
+    "  OUT digest   Calculated digest\n"
     );
 
 
@@ -406,14 +406,14 @@ static bool cmd_hmac_calculate(nrf_cli_t const * p_cli, size_t argc, char ** arg
 
 
 CLI_CMD_REGISTER(hmac_calculate, &m_subcmd_hmac_var, cmd_hmac_calculate,
-    "Calculate HMAC in one step.\r\n"
-    "Usage:\r\n"
-    "  hmac_calculate hash_type key data digest\r\n"
-    "Arguments:\r\n"
-    "  IN  hmac_type  Algorithm used to calculate hmac (sha256 or sha512)\r\n"
-    "  IN  key        Key data\r\n"
-    "  IN  data       Data input\r\n"
-    "  OUT digest     Calculated digest\r\n"
+    "Calculate HMAC in one step.\n"
+    "Usage:\n"
+    "  hmac_calculate hash_type key data digest\n"
+    "Arguments:\n"
+    "  IN  hmac_type  Algorithm used to calculate hmac (sha256 or sha512)\n"
+    "  IN  key        Key data\n"
+    "  IN  data       Data input\n"
+    "  OUT digest     Calculated digest\n"
     );
 
 
@@ -492,7 +492,7 @@ static bool cmd_hkdf_calculate(nrf_cli_t const * p_cli, size_t argc, char ** arg
     {
         if ((output_key_size % 8) != 0)
         {
-            nrf_cli_fprintf(cli_get(), NRF_CLI_ERROR, "Number of bits must be multiple of 8.\r\n");
+            nrf_cli_fprintf(cli_get(), NRF_CLI_ERROR, "Number of bits must be multiple of 8.\n");
             return false;
         }
         output_key_size = output_key_size / 8;
@@ -525,16 +525,16 @@ static bool cmd_hkdf_calculate(nrf_cli_t const * p_cli, size_t argc, char ** arg
 
 
 CLI_CMD_REGISTER(hkdf_calculate, &m_subcmd_hmac_mode_var_var_var_key_size, cmd_hkdf_calculate,
-    "Calculate HKDF.\r\n"
-    "Usage:\r\n"
-    "  hkdf_calculate hash_type mode input_key salt ainfo output_key_size output_key\r\n"
-    "Arguments:\r\n"
-    "  IN  hmac_type  Algorithm used to calculate HKDF (sha256 or sha512)\r\n"
-    "  IN  mode       HKDF mode (normal or expand_only)\r\n"
-    "  IN  input_key  Key\r\n"
-    "  IN  salt       Salt data or \"-\"\r\n"
-    "  IN  ainfo      Application specific information or \"-\"\r\n"
-    "  IN  key_size   Output key size in bytes or bits if \"bit\" postfix is added\r\n"
-    "  OUT key        Calculated key\r\n"
+    "Calculate HKDF.\n"
+    "Usage:\n"
+    "  hkdf_calculate hash_type mode input_key salt ainfo output_key_size output_key\n"
+    "Arguments:\n"
+    "  IN  hmac_type  Algorithm used to calculate HKDF (sha256 or sha512)\n"
+    "  IN  mode       HKDF mode (normal or expand_only)\n"
+    "  IN  input_key  Key\n"
+    "  IN  salt       Salt data or \"-\"\n"
+    "  IN  ainfo      Application specific information or \"-\"\n"
+    "  IN  key_size   Output key size in bytes or bits if \"bit\" postfix is added\n"
+    "  OUT key        Calculated key\n"
     );
 

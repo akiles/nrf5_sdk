@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -83,6 +83,34 @@ typedef struct
     ble_gatts_char_handles_t     dfu_ctrl_pt_handles;                   /**< Handles related to the DFU Control Point Characteristic. */
 } ble_dfu_t;
 
+
+/**@brief Function for initializing the BLE transport.
+ *
+ * @param[in] observer  Callback function for receiving notifications from the BLE transport.
+ *
+ * @retval NRF_SUCCESS  If successful.
+ * @return Error code from sub-call on error.
+ */
+uint32_t ble_dfu_transport_init(nrf_dfu_observer_t observer);
+
+/**@brief Function for closing the BLE transport.
+ *
+ * This function disconnects and disables the SoftDevice.
+ *
+ * @param[in] p_exception  Optional exception. If the exception refers to this transport,
+ *                         this function will do nothing. Can be NULL to signify no exception.
+ *
+ * @retval NRF_SUCCESS  If successful.
+ * @return Error code from sub-call on error.
+ */
+uint32_t ble_dfu_transport_close(nrf_dfu_transport_t const * p_exception);
+
+/**@brief Function for disconnecting from the BLE peer and starting advertising.
+ *
+ * @retval NRF_SUCCESS  If successful.
+ * @return Error code from sub-call on error.
+ */
+uint32_t ble_dfu_transport_disconnect(void);
 
 #ifdef __cplusplus
 }

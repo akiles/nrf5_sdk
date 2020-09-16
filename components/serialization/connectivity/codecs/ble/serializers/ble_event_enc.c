@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -46,6 +46,7 @@
 #include "ble_serialization.h"
 #include "app_util.h"
 #include "nrf_log.h"
+#include "ser_dbg_sd_str.h"
 
 uint32_t ble_event_enc(ble_evt_t const * const p_event,
                        uint32_t                event_len,
@@ -57,6 +58,8 @@ uint32_t ble_event_enc(ble_evt_t const * const p_event,
     SER_ASSERT_NOT_NULL(p_buf);
     SER_ASSERT_NOT_NULL(p_buf_len);
     SER_ASSERT_NOT_NULL(p_event);
+
+    NRF_LOG_DEBUG("event:%s", ser_dbg_sd_evt_str_get(p_event->header.evt_id));
 
     switch (p_event->header.evt_id)
     {

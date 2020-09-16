@@ -346,7 +346,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_qwr</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\boards</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic_flags</state>
@@ -428,10 +427,8 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\ndef\text</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\ndef\uri</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t2t_lib</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t2t_lib\hal_t2t</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t2t_parser</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t4t_lib</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t4t_lib\hal_t4t</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t4t_parser\apdu</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t4t_parser\cc_file</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t4t_parser\hl_detection_procedure</state>
@@ -745,7 +742,6 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\nrf_ble_qwr</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\boards</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\usbd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\atomic_flags</state>
@@ -827,10 +823,8 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\ndef\text</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\ndef\uri</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t2t_lib</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t2t_lib\hal_t2t</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t2t_parser</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t4t_lib</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t4t_lib\hal_t4t</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t4t_parser\apdu</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t4t_parser\cc_file</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\nfc\t4t_parser\hl_detection_procedure</state>
@@ -1279,7 +1273,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_task_manager\task_manager.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_task_manager\task_manager_core_iar.s</name>    </file>  </group>  <group>
   <name>nRF_Core</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\mpu\nrf_mpu.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\mpu\nrf_mpu_lib.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\stack_guard\nrf_stack_guard.c</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
@@ -1287,9 +1281,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\hal\nrf_nvmc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_gpiote.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</name>    </file>  </group>  <group>

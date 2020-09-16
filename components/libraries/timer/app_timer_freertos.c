@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -80,6 +80,7 @@ typedef struct
      * FreeRTOS may have timer running even after stop function is called,
      * because it processes commands in Timer task and stopping function only puts command into the queue. */
     bool                        active;
+    bool                        single_shot;
 }app_timer_info_t;
 
 
@@ -106,7 +107,10 @@ static void app_timer_callback(TimerHandle_t xTimer)
     ASSERT(pinfo->func != NULL);
 
     if (pinfo->active)
+    {
+        pinfo->active = (pinfo->single_shot) ? false : true;
         pinfo->func(pinfo->argument);
+    }
 }
 
 
@@ -138,11 +142,8 @@ uint32_t app_timer_create(app_timer_id_t const *      p_timer_id,
         /* New timer is created */
         memset(pinfo, 0, sizeof(app_timer_info_t));
 
-        if (mode == APP_TIMER_MODE_SINGLE_SHOT)
-            timer_mode = pdFALSE;
-        else
-            timer_mode = pdTRUE;
-
+        timer_mode = (mode == APP_TIMER_MODE_SINGLE_SHOT) ? pdFALSE : pdTRUE;
+        pinfo->single_shot = (mode == APP_TIMER_MODE_SINGLE_SHOT);
         pinfo->func = timeout_handler;
         pinfo->osHandle = xTimerCreate(" ", 1000, timer_mode, pinfo, app_timer_callback);
 
@@ -168,7 +169,7 @@ uint32_t app_timer_start(app_timer_id_t timer_id, uint32_t timeout_ticks, void *
     {
         return NRF_ERROR_INVALID_STATE;
     }
-    if (pinfo->active && (xTimerIsTimerActive(hTimer) != pdFALSE))
+    if (pinfo->active)
     {
         // Timer already running - exit silently
         return NRF_SUCCESS;
@@ -179,6 +180,7 @@ uint32_t app_timer_start(app_timer_id_t timer_id, uint32_t timeout_ticks, void *
     if (__get_IPSR() != 0)
     {
         BaseType_t yieldReq = pdFALSE;
+
         if (xTimerChangePeriodFromISR(hTimer, timeout_ticks, &yieldReq) != pdPASS)
         {
             return NRF_ERROR_NO_MEM;
@@ -193,6 +195,12 @@ uint32_t app_timer_start(app_timer_id_t timer_id, uint32_t timeout_ticks, void *
     }
     else
     {
+        if (xTimerIsTimerActive(hTimer) != pdFALSE)
+        {
+            // Timer already running - exit silently
+            return NRF_SUCCESS;
+        }
+
         if (xTimerChangePeriod(hTimer, timeout_ticks, APP_TIMER_WAIT_FOR_QUEUE) != pdPASS)
         {
             return NRF_ERROR_NO_MEM;

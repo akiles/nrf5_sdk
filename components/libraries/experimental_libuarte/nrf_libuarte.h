@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -42,6 +42,8 @@
 
 #include "sdk_errors.h"
 #include "nrf_uarte.h"
+#include "nrfx_ppi.h"
+#include "nrfx_timer.h"
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -61,6 +63,38 @@ typedef enum
     NRF_LIBUARTE_EVT_TX_DONE,    ///< Requested TX transfer completed.
     NRF_LIBUARTE_EVT_ERROR       ///< Error reported by the UARTE peripheral.
 } nrf_libuarte_evt_type_t;
+
+/**
+ * @brief PPI channels used by libuarte
+ */
+typedef enum
+{
+    NRF_LIBUARTE_PPI_CH_EXT_TRIGGER_STARTRX_EN_ENDRX_STARTX,
+    NRF_LIBUARTE_PPI_CH_RXSTARTED_EXT_TSK,
+    NRF_LIBUARTE_PPI_CH_EXT_STOP_STOPRX,
+    NRF_LIBUARTE_PPI_CH_EXT_STOP_GROUPS_EN,
+    NRF_LIBUARTE_PPI_CH_RXRDY_TIMER_COUNT,
+
+    NRF_LIBUARTE_PPI_CH_RX_MAX,
+    NRF_LIBUARTE_PPI_CH_ENDRX_STARTRX = NRF_LIBUARTE_PPI_CH_RX_MAX,
+    NRF_LIBUARTE_PPI_CH_ENDRX_EXT_TSK,
+
+    NRF_LIBUARTE_PPI_CH_RX_GROUP_MAX,
+
+    NRF_LIBUARTE_PPI_CH_ENDTX_STARTTX = NRF_LIBUARTE_PPI_CH_RX_GROUP_MAX,
+
+    NRF_LIBUARTE_PPI_CH_MAX
+} nrf_libuarte_ppi_channel_t;
+
+/**
+ * @brief PPI groups used by libuarte
+ */
+typedef enum
+{
+    NRF_LIBUARTE_PPI_GROUP_ENDRX_STARTRX, ///< Group used for controlling PPI connection between ENDRX and STARTRX
+    NRF_LIBUARTE_PPI_GROUP_ENDRX_EXT_RXDONE_TSK, ///< Group used for controlling PPI connection between ENDRX and RXDONE
+    NRF_LIBUARTE_PPI_GROUP_MAX
+} nrf_libuarte_ppi_group_t;
 
 typedef struct
 {
@@ -91,37 +125,87 @@ typedef struct {
     uint8_t              irq_priority;  ///< Interrupt priority.
 } nrf_libuarte_config_t;
 
-typedef void (*nrf_libuarte_evt_handler_t)(nrf_libuarte_evt_t * p_evt);
+typedef void (*nrf_libuarte_evt_handler_t)(void * context,
+                                           nrf_libuarte_evt_t * p_evt);
+
+extern const IRQn_Type libuarte_irqn[];
+
+typedef struct {
+    nrf_ppi_channel_t ppi_channels[NRF_LIBUARTE_PPI_CH_MAX];
+    nrf_ppi_channel_group_t ppi_groups[NRF_LIBUARTE_PPI_GROUP_MAX];
+
+    uint8_t * p_tx;
+    size_t tx_len;
+    size_t tx_cur_idx;
+
+    uint8_t * p_cur_rx;
+    uint8_t * p_next_rx;
+    uint8_t * p_next_next_rx;
+    nrf_libuarte_evt_handler_t evt_handler;
+    uint32_t last_rx_byte_cnt;
+    uint32_t last_pin_rx_byte_cnt;
+    uint32_t chunk_size;
+    void * context;
+    uint16_t tx_chunk8;
+
+} nrf_libuarte_ctrl_blk_t;
+
+typedef struct {
+    nrf_libuarte_ctrl_blk_t * ctrl_blk;
+    nrfx_timer_t timer;
+    NRF_UARTE_Type * uarte;
+} nrf_libuarte_t;
+
+#define NRF_LIBUARTE_DEFINE(_name, _uarte_idx, _timer_idx) \
+    STATIC_ASSERT(_uarte_idx < UARTE_COUNT, "UARTE instance not present");\
+    STATIC_ASSERT(CONCAT_2(NRF_LIBUARTE_UARTE,_uarte_idx) == 1, "UARTE instance not enabled");\
+    STATIC_ASSERT(CONCAT_3(NRFX_TIMER,_timer_idx, _ENABLED) == 1, "Timer instance not enabled");\
+    static nrf_libuarte_ctrl_blk_t CONCAT_2(_name, ctrl_blk); \
+    static const nrf_libuarte_t _name = { \
+        .ctrl_blk = &CONCAT_2(_name, ctrl_blk), \
+        .timer = NRFX_TIMER_INSTANCE(_timer_idx), \
+        .uarte = CONCAT_2(NRF_UARTE, _uarte_idx),\
+    }
 
 /**
  * @brief Function for initializing the libUARTE library.
  *
+ * @param[in] p_libuarte   Pointer to libuarte instance.
  * @param[in] p_config     Pointer to the structure with initial configuration.
  * @param[in] evt_handler  Event handler provided by the user. Must not be NULL.
+ * @param[in] context      User context passed in the callback.
  *
  * @return NRF_SUCCESS when properly initialized. NRF_ERROR_INTERNAL otherwise.
  */
-ret_code_t nrf_libuarte_init(nrf_libuarte_config_t * p_config, nrf_libuarte_evt_handler_t evt_handler);
+ret_code_t nrf_libuarte_init(const nrf_libuarte_t * const p_libuarte,
+                             nrf_libuarte_config_t * p_config,
+                             nrf_libuarte_evt_handler_t evt_handler, void * context);
 
-/** @brief Function for uninitializing the libUARTE library. */
-void nrf_libuarte_uninit(void);
+/**
+ * @brief Function for uninitializing the libUARTE library.
+ *
+ * @param[in] p_libuarte     Pointer to libuarte instance.
+ */
+void nrf_libuarte_uninit(const nrf_libuarte_t * const p_libuarte);
 
 /**
  * @brief Function for sending data over UARTE using EasyDMA.
  *
- * @param[in] p_data  Pointer to data.
- * @param[in] len     Number of bytes to send.
+ * @param[in] p_libuarte Pointer to libuarte instance.
+ * @param[in] p_data     Pointer to data.
+ * @param[in] len        Number of bytes to send.
  *
  * @retval NRF_ERROR_BUSY      Data is transferring.
  * @retval NRF_ERROR_INTERNAL  Error during PPI channel configuration.
  * @retval NRF_SUCCESS         Buffer set for sending.
  */
-ret_code_t nrf_libuarte_tx(uint8_t * p_data, size_t len);
+ret_code_t nrf_libuarte_tx(const nrf_libuarte_t * const p_libuarte, uint8_t * p_data, size_t len);
 
 /**
  * @brief Function for starting receiving data with additional configuration of external
  *        trigger to start receiving.
  *
+ * @param p_libuarte      Pointer to libuarte instance.
  * @param p_data          Pointer to data.
  * @param len             Number of bytes to receive. Maximum possible length is
  *                        dependent on the used SoC (see the MAXCNT register
@@ -132,21 +216,28 @@ ret_code_t nrf_libuarte_tx(uint8_t * p_data, size_t len);
  * @retval NRF_ERROR_INTERNAL  Error during PPI channel configuration.
  * @retval NRF_SUCCESS         Buffer set for receiving.
  */
-ret_code_t nrf_libuarte_rx_start(uint8_t * p_data, size_t len, bool ext_trigger_en);
+ret_code_t nrf_libuarte_rx_start(const nrf_libuarte_t * const p_libuarte,
+                                 uint8_t * p_data, size_t len, bool ext_trigger_en);
 
 /**
  * @brief Function for setting a buffer for data that will be later received in UARTE.
  *
- * @param p_data  Pointer to data.
- * @param len     Number of bytes to receive. Maximum possible length is
- *                dependent on the used SoC (see the MAXCNT register
- *                description in the Product Specification). The library
- *                checks it with an assertion.
+ * @param p_libuarte  Pointer to libuarte instance.
+ * @param p_data      Pointer to data.
+ * @param len         Number of bytes to receive. Maximum possible length is
+ *                    dependent on the used SoC (see the MAXCNT register
+ *                    description in the Product Specification). The library
+ *                    checks it with an assertion.
  */
-void nrf_libuarte_rx_buf_rsp(uint8_t * p_data, size_t len);
+void nrf_libuarte_rx_buf_rsp(const nrf_libuarte_t * const p_libuarte,
+                             uint8_t * p_data, size_t len);
 
-/** @brief Function for stopping receiving data over UARTE. */
-void nrf_libuarte_rx_stop(void);
+/**
+ * @brief Function for stopping receiving data over UARTE.
+ *
+ * @param p_libuarte       Pointer to libuarte instance.
+ */
+void nrf_libuarte_rx_stop(const nrf_libuarte_t * const p_libuarte);
 
 /** @} */
 

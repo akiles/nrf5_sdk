@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -77,7 +77,11 @@ extern "C" {
 #endif
 
 /** Maximum number of events in the application scheduler queue. */
-#define SER_CONN_SCHED_QUEUE_SIZE             4u
+#ifdef S112
+#define SER_CONN_SCHED_QUEUE_SIZE             8u
+#else
+#define SER_CONN_SCHED_QUEUE_SIZE             16u
+#endif
 
 /** Maximum size of events data in the application scheduler queue aligned to 32 bits - this is
  *  size of the buffers of the SoftDevice handler, which stores events pulled from the SoftDevice.
@@ -133,6 +137,9 @@ uint32_t ser_conn_rx_process(void);
 
 
 #ifdef BLE_STACK_SUPPORT_REQD
+/**@brief Reset serialization state */
+void ser_conn_reset(void);
+
 /**@brief A function for processing BLE SoftDevice events.
  *
  * @details BLE events are put into application scheduler queue to be processed at a later time.

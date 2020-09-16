@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2013 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -850,6 +850,9 @@ uint32_t ble_gap_scan_start_req_dec(uint8_t const * const     p_buf,
  * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
  */
 uint32_t ble_gap_scan_start_rsp_enc(uint32_t         return_code,
+#if defined(NRF_SD_BLE_API_VERSION) && NRF_SD_BLE_API_VERSION > 5
+                                    ble_data_t *p_ble_data,
+#endif
                                     uint8_t * const  p_buf,
                                     uint32_t * const p_buf_len);
 
@@ -1446,6 +1449,7 @@ uint32_t ble_gap_adv_set_configure_req_dec(uint8_t const * const        p_buf,
 uint32_t ble_gap_adv_set_configure_rsp_enc(uint32_t               return_code,
                                            uint8_t * const        p_buf,
                                            uint32_t * const       p_buf_len,
+                                           ble_gap_adv_data_t *   p_ble_adv_data,
                                            uint8_t const * const p_adv_handle);
 
 #ifndef S112

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -346,6 +346,7 @@ typedef struct
     uint32_t echo           : 1; //!< Enables or disables CLI echo.
     uint32_t processing     : 1; //!< CLI is executing process function.
     uint32_t tx_rdy         : 1;
+    uint32_t last_nl        : 8; //!< The last received newline character.
 } nrf_cli_flag_t;
 STATIC_ASSERT(sizeof(nrf_cli_flag_t) == sizeof(uint32_t));
 
@@ -366,7 +367,7 @@ typedef struct
     nrf_cli_state_t   state;            //!< Internal module state.
     nrf_cli_receive_t receive_state;    //!< Escape sequence indicator.
 
-    nrf_cli_static_entry_t const * p_current_stcmd; //!< Currently executed command.
+    nrf_cli_static_entry_t active_cmd;      //!< Currently executed command
 
     nrf_cli_vt100_ctx_t vt100_ctx;          //!< VT100 color and cursor position, terminal width.
 
@@ -451,7 +452,6 @@ struct nrf_cli
     nrf_log_backend_t const *   p_log_backend;  //!< Logger backend.
     nrf_fprintf_ctx_t *         p_fprintf_ctx;  //!< fprintf context.
     nrf_memobj_pool_t const *   p_cmd_hist_mempool; //!< Memory reserved for commands history.
-    char const newline_char;   //!< New line character, only allowed values: \\n and \\r.
 };
 
 /**
@@ -460,7 +460,7 @@ struct nrf_cli
  * @param[in] name              Instance name.
  * @param[in] cli_prefix        CLI prefix string.
  * @param[in] p_transport_iface Pointer to the transport interface.
- * @param[in] newline_ch        New line character - only allowed values are '\\n' or '\\r'.
+ * @param[in] newline_ch        Deprecated parameter, not used any more. Any uint8_t value can be used.
  * @param[in] log_queue_size    Logger processing queue size.
  */
 #define NRF_CLI_DEF(name, cli_prefix, p_transport_iface, newline_ch, log_queue_size)    \
@@ -482,7 +482,6 @@ struct nrf_cli
             .p_log_backend = NRF_CLI_BACKEND_PTR(name),                         \
             .p_fprintf_ctx = &CONCAT_2(name, _fprintf_ctx),                     \
             .p_cmd_hist_mempool = NRF_CLI_MEMOBJ_PTR(name),                     \
-            .newline_char = newline_ch                                          \
         } /*lint -restore*/
 
 /**
@@ -556,6 +555,54 @@ void nrf_cli_fprintf(nrf_cli_t const *      p_cli,
                      nrf_cli_vt100_color_t  color,
                      char const *           p_fmt,
                                             ...);
+
+/**
+ * @brief Print an info message to the CLI.
+ *
+ * See @ref nrf_cli_fprintf.
+ *
+ * @param[in] _p_cli    Pointer to the CLI instance.
+ * @param[in] _ft       Format string.
+ * @param[in] ...       List of parameters to print.
+ */
+#define nrf_cli_info(_p_cli, _ft, ...) \
+        nrf_cli_fprintf(_p_cli, NRF_CLI_INFO, _ft "\n", ##__VA_ARGS__)
+
+/**
+ * @brief Print a normal message to the CLI.
+ *
+ * See @ref nrf_cli_fprintf.
+ *
+ * @param[in] _p_cli    Pointer to the CLI instance.
+ * @param[in] _ft       Format string.
+ * @param[in] ...       List of parameters to print.
+ */
+#define nrf_cli_print(_p_cli, _ft, ...) \
+        nrf_cli_fprintf(_p_cli, NRF_CLI_DEFAULT, _ft "\n", ##__VA_ARGS__)
+
+/**
+ * @brief Print a warning message to the CLI.
+ *
+ * See @ref nrf_cli_fprintf.
+ *
+ * @param[in] _p_cli    Pointer to the CLI instance.
+ * @param[in] _ft       Format string.
+ * @param[in] ...       List of parameters to print.
+ */
+#define nrf_cli_warn(_p_cli, _ft, ...) \
+        nrf_cli_fprintf(_p_cli, NRF_CLI_WARNING, _ft "\n", ##__VA_ARGS__)
+
+/**
+ * @brief Print an error message to the CLI.
+ *
+ * See @ref nrf_cli_fprintf.
+ *
+ * @param[in] _p_cli    Pointer to the CLI instance.
+ * @param[in] _ft       Format string.
+ * @param[in] ...       List of parameters to print.
+ */
+#define nrf_cli_error(_p_cli, _ft, ...) \
+        nrf_cli_fprintf(_p_cli, NRF_CLI_ERROR, _ft "\n", ##__VA_ARGS__)
 
 /**
  * @brief Process function, which should be executed when data is ready in the transport interface.

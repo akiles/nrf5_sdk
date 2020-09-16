@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -353,9 +353,10 @@ static void sec_info_request_process(ble_gap_evt_t const * p_gap_evt)
             // There is stored bonding data for this peer.
             ble_gap_enc_key_t const * p_existing_key = &peer_data.p_bonding_data->own_ltk;
 
-            if (   p_existing_key->enc_info.lesc
-                || (im_master_ids_compare(&p_existing_key->master_id,
-                                          &p_gap_evt->params.sec_info_request.master_id)))
+            if (p_gap_evt->params.sec_info_request.enc_info
+                && (p_existing_key->enc_info.lesc
+                    || im_master_ids_compare(&p_existing_key->master_id,
+                                             &p_gap_evt->params.sec_info_request.master_id)))
             {
                 p_enc_info = &p_existing_key->enc_info;
             }
@@ -364,7 +365,16 @@ static void sec_info_request_process(ble_gap_evt_t const * p_gap_evt)
 
     err_code = sd_ble_gap_sec_info_reply(p_gap_evt->conn_handle, p_enc_info, NULL, NULL);
 
-    if (err_code != NRF_SUCCESS)
+    if (err_code == NRF_ERROR_INVALID_STATE)
+    {
+        // Do nothing. If disconnecting, it will be caught later by the handling of the DISCONNECTED
+        // event. If there is no SEC_INFO_REQ pending, there is either a logic error, or the user
+        // is also calling sd_ble_gap_sec_info_reply(), but there is no way for the present code to
+        // detect which one is the case.
+        NRF_LOG_WARNING("sd_ble_gap_sec_info_reply() returned NRF_EROR_INVALID_STATE, which is an"\
+                        "error unless the link is disconnecting.");
+    }
+    else if (err_code != NRF_SUCCESS)
     {
         NRF_LOG_ERROR("Could not complete encryption procedure. sd_ble_gap_sec_info_reply() "\
                       "returned %s. conn_handle: %d, peer_id: %d.",
@@ -373,7 +383,7 @@ static void sec_info_request_process(ble_gap_evt_t const * p_gap_evt)
                       peer_id);
         send_unexpected_error(p_gap_evt->conn_handle, err_code);
     }
-    else if (p_enc_info == NULL)
+    else if (p_gap_evt->params.sec_info_request.enc_info && (p_enc_info == NULL))
     {
         encryption_failure(p_gap_evt->conn_handle,
                            PM_CONN_SEC_ERROR_PIN_OR_KEY_MISSING,
@@ -982,6 +992,12 @@ static ret_code_t link_secure_central(uint16_t               conn_handle,
  */
 static void sec_request_process(ble_gap_evt_t const * p_gap_evt)
 {
+    if (sec_procedure(p_gap_evt->conn_handle))
+    {
+        // Ignore request as per spec.
+        return;
+    }
+
     pm_evt_t evt =
     {
         .evt_id = PM_EVT_SLAVE_SECURITY_REQ,

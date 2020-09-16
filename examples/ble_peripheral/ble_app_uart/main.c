@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -676,8 +676,10 @@ static void power_management_init(void)
  */
 static void idle_state_handle(void)
 {
-    UNUSED_RETURN_VALUE(NRF_LOG_PROCESS());
-    nrf_pwr_mgmt_run();
+    if (NRF_LOG_PROCESS() == false)
+    {
+        nrf_pwr_mgmt_run();
+    }
 }
 
 

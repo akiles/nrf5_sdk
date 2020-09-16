@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -63,6 +63,22 @@
 NRF_LOG_MODULE_REGISTER();
 #include "nrf_strerror.h"
 
+
+#if !defined(PM_SERVICE_CHANGED_ENABLED) || (PM_SERVICE_CHANGED_ENABLED == 1)
+// The number of registered event handlers.
+#define GSCM_EVENT_HANDLERS_CNT      (sizeof(m_evt_handlers) / sizeof(m_evt_handlers[0]))
+
+// GATTS Cache Manager event handler in Peer Manager.
+extern void pm_gscm_evt_handler(pm_evt_t * p_gcm_evt);
+
+// GATTS Cache Manager events' handlers.
+// The number of elements in this array is GSCM_EVENT_HANDLERS_CNT.
+static pm_evt_handler_internal_t m_evt_handlers[] =
+{
+    pm_gscm_evt_handler
+};
+#endif
+
 // Syntactic sugar, two spoons.
 #define SYS_ATTR_SYS                    (BLE_GATTS_SYS_ATTR_FLAG_SYS_SRVCS)
 #define SYS_ATTR_USR                    (BLE_GATTS_SYS_ATTR_FLAG_USR_SRVCS)
@@ -85,6 +101,17 @@ static void internal_state_reset()
 
 
 #if !defined(PM_SERVICE_CHANGED_ENABLED) || (PM_SERVICE_CHANGED_ENABLED == 1)
+static void evt_send(pm_evt_t * p_gscm_evt)
+{
+    p_gscm_evt->conn_handle = im_conn_handle_get(p_gscm_evt->peer_id);
+
+    for (uint32_t i = 0; i < GSCM_EVENT_HANDLERS_CNT; i++)
+    {
+        m_evt_handlers[i](p_gscm_evt);
+    }
+}
+
+
 //lint -save -e550
 /**@brief Function for storing service_changed_pending = true to flash for all peers, in sequence.
  *
@@ -108,11 +135,35 @@ static void service_changed_pending_set(void)
     };
     //lint -restore
 
-    err_code = pds_peer_data_store(m_current_sc_store_peer_id, &peer_data, NULL);
-    while ((m_current_sc_store_peer_id != PM_PEER_ID_INVALID) && (err_code != NRF_ERROR_BUSY))
+    while (m_current_sc_store_peer_id != PM_PEER_ID_INVALID)
     {
-        m_current_sc_store_peer_id = pds_next_peer_id_get(m_current_sc_store_peer_id);
         err_code = pds_peer_data_store(m_current_sc_store_peer_id, &peer_data, NULL);
+        if (err_code != NRF_SUCCESS)
+        {
+            pm_evt_t evt = {.peer_id = m_current_sc_store_peer_id};
+            if (err_code == NRF_ERROR_BUSY)
+            {
+                // Do nothing.
+            }
+            else if (err_code == NRF_ERROR_STORAGE_FULL)
+            {
+                evt.evt_id = PM_EVT_STORAGE_FULL;
+                evt_send(&evt);
+            }
+            else
+            {
+                NRF_LOG_ERROR("pds_peer_data_store() returned %s while storing service changed"\
+                              "state for peer id %d.",
+                              nrf_strerror_get(err_code),
+                              m_current_sc_store_peer_id);
+                evt.evt_id = PM_EVT_ERROR_UNEXPECTED;
+                evt.params.error_unexpected.error = err_code;
+                evt_send(&evt);
+            }
+            break;
+        }
+
+        m_current_sc_store_peer_id = pds_next_peer_id_get(m_current_sc_store_peer_id);
     }
 }
 //lint -restore
@@ -122,7 +173,7 @@ static void service_changed_pending_set(void)
 /**@brief Event handler for events from the Peer Database module.
  *        This function is extern in Peer Database.
  *
- * @param[in]  p_event The event that has happend with peer id and flags.
+ * @param[in]  p_event The event that has happened with peer id and flags.
  */
 void gscm_pdb_evt_handler(pm_evt_t * p_event)
 {

@@ -19,6 +19,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/boards/boards.c \
   $(PROJ_DIR)/test_cases/test_ecdsa.c \
   $(PROJ_DIR)/test_cases/test_sha.c \
+  $(PROJ_DIR)/test_cases/test_vectors_ecdsa_random.c \
   $(PROJ_DIR)/test_cases/test_vectors_ecdsa_sign.c \
   $(PROJ_DIR)/test_cases/test_vectors_ecdsa_verify.c \
   $(PROJ_DIR)/test_cases/test_vectors_sha.c \
@@ -44,6 +45,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/ringbuf/nrf_ringbuf.c \
   $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_rng.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_rng.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_ecc.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_ecdsa.c \
@@ -63,6 +65,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/modules/nrfx/mdk \
   $(SDK_ROOT)/external/nrf_cc310/include \
   $(SDK_ROOT)/components/libraries/scheduler \
+  $(SDK_ROOT)/modules/nrfx \
   $(SDK_ROOT)/components/libraries/crypto/backend/oberon \
   $(SDK_ROOT)/external/nrf_cc310_bl/include \
   $(SDK_ROOT)/components/libraries/queue \
@@ -72,7 +75,7 @@ INC_FOLDERS += \
   $(PROJ_DIR)/common_test \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/mem_manager \
-  $(SDK_ROOT)/components/libraries/util \
+  $(SDK_ROOT)/components/libraries/crypto/backend/optiga \
   $(SDK_ROOT)/components/libraries/bsp \
   ../config \
   $(SDK_ROOT)/components/libraries/crypto \
@@ -84,7 +87,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/crypto/backend/nrf_hw \
   $(SDK_ROOT)/components/libraries/timer \
   $(SDK_ROOT)/components/libraries/log \
-  $(SDK_ROOT)/modules/nrfx \
+  $(SDK_ROOT)/components/libraries/util \
   $(SDK_ROOT)/components/libraries/experimental_section_vars \
   $(SDK_ROOT)/integration/nrfx/legacy \
   $(PROJ_DIR)/test_cases \
@@ -106,7 +109,7 @@ INC_FOLDERS += \
 
 # Libraries common to all targets
 LIB_FILES += \
-  $(SDK_ROOT)/external/nrf_cc310_bl/lib/libnrf_cc310_bl_0.9.10.a \
+  $(SDK_ROOT)/external/nrf_cc310_bl/lib/cortex-m4/hard-float/libnrf_cc310_bl_0.9.12.a \
 
 # Optimization flags
 OPT = -O3 -g3

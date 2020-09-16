@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -129,6 +129,12 @@ ret_code_t exec_test_case_ecdh_random(test_info_t * p_test_info)
         // Reset buffers.
         memset(m_ecdh_initiater_ss_buf, 0x00, sizeof(m_ecdh_initiater_ss_buf));
         memset(m_ecdh_responder_ss_buf, 0x00, sizeof(m_ecdh_responder_ss_buf));
+
+#if NRF_MODULE_ENABLED(NRF_CRYPTO_BACKEND_OPTIGA)
+        // select different storage locations for private key in OPTIGA
+        m_initiater_private_key.key_secp256r1.oid = 0xE101;
+        m_responder_private_key.key_secp256r1.oid = 0xE102;
+#endif
 
         // Fetch and unhexify test vectors.
         initiater_ss_len = p_test_vector->p_curve_info->raw_private_key_size;

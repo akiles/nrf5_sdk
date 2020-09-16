@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -318,7 +318,8 @@ ret_code_t fds_init(void);
  *
  * @param[out]  p_desc      The descriptor of the record that was written. Pass NULL if you do not
  *                          need the descriptor.
- * @param[in]   p_record    The record to be written to flash.
+ * @param[in]   p_record    The record to be written to flash. The record is required to be word
+ *                          aligned.
  *
  * @retval  FDS_SUCCESS                 If the operation was queued successfully.
  * @retval  FDS_ERR_NOT_INITIALIZED     If the module is not initialized.
@@ -393,7 +394,8 @@ ret_code_t fds_reserve_cancel(fds_reserve_token_t * p_token);
  *
  * @param[out]  p_desc      The descriptor of the record that was written. Pass NULL if you do not
  *                          need the descriptor.
- * @param[in]   p_record    The record to be written to flash.
+ * @param[in]   p_record    The record to be written to flash. The record is required
+ *                          to be word aligned.
  * @param[in]   p_token     The token that identifies the space reserved in flash.
  *
  * @retval  FDS_SUCCESS                 If the operation was queued successfully.
@@ -477,7 +479,8 @@ ret_code_t fds_file_delete(uint16_t file_id);
  * @param[in, out]  p_desc      The descriptor of the record to update. When the function
  *                              returns with FDS_SUCCESS, this parameter contains the
  *                              descriptor of the newly written record.
- * @param[in]       p_record    The updated record to be written to flash.
+ * @param[in]       p_record    The updated record to be written to flash. The record is required
+ *                              to be word aligned.
  *
  * @retval  FDS_SUCCESS                 If the operation was queued successfully.
  * @retval  FDS_ERR_NOT_INITIALIZED     If the module is not initialized.

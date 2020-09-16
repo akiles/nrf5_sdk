@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -51,14 +51,11 @@
 
 #include "ble_gap.h"
 #include <stdint.h>
-
+#include <stdbool.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef SER_MAX_CONNECTIONS
-#define SER_MAX_CONNECTIONS 8
-#endif
 
 /**@brief GAP connection - keyset mapping structure.
  *
@@ -78,6 +75,9 @@ typedef struct
   ble_gap_sign_info_t     sign_key_peer;   /**< Peer Signing Information, see @ref ble_gap_sign_info_t. */
   ble_gap_lesc_p256_pk_t  pk_peer;         /**< Peer Public key, see @ref ble_gap_lesc_p256_pk_t. */
 } ser_ble_gap_conn_keyset_t;
+
+/**@brief Initializes buffer pool. */
+void conn_ble_gap_sec_keys_init(void);
 
 /**@brief Allocates instance in m_conn_keys_table[] for storage of encryption keys.
  *
@@ -119,7 +119,10 @@ uint8_t * conn_ble_gap_ble_data_buf_alloc(uint32_t id);
 /** @brief Function for freeing the buffer.
  * @param p_data Buffer to be freed.
  */
-void conn_ble_gap_ble_data_buf_free(uint8_t * p_data);
+uint32_t conn_ble_gap_ble_data_buf_free(uint8_t * p_data);
+
+void conn_ble_gap_scan_data_set(uint8_t * p_scan_data);
+void conn_ble_gap_scan_data_unset(bool free);
 
 #ifdef __cplusplus
 }

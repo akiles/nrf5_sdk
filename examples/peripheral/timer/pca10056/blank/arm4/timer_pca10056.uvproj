@@ -416,6 +416,9 @@
         </Group>        <Group>
           <GroupName>nRF_Drivers</GroupName>
           <Files>            <File>
+              <FileName>nrfx_atomic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</FilePath>            </File>            <File>
               <FileName>nrfx_timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_timer.c</FilePath>            </File>          </Files>

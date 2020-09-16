@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -488,7 +488,7 @@ static nrf_crypto_aes_info_t const * aes_info_get(char    const * p_mode_name,
     {
         nrf_cli_fprintf(cli_get(),
                         NRF_CLI_ERROR,
-                        "%d bit key size is not supported.\r\n",
+                        "%d bit key size is not supported.\n",
                         8 * key_size);
         return NULL;
     }
@@ -506,7 +506,7 @@ static nrf_crypto_aes_info_t const * aes_info_get(char    const * p_mode_name,
             {
                 nrf_cli_fprintf(cli_get(),
                                 NRF_CLI_ERROR,
-                                "Selected key size or padding is not supported by this mode.\r\n");
+                                "Selected key size or padding is not supported by this mode.\n");
             }
             return p_result;
         }
@@ -514,7 +514,7 @@ static nrf_crypto_aes_info_t const * aes_info_get(char    const * p_mode_name,
 
     nrf_cli_fprintf(cli_get(),
                     NRF_CLI_ERROR,
-                    "Mode %s is not supported.\r\n",
+                    "Mode %s is not supported.\n",
                     p_mode_name);
 
     return NULL;
@@ -615,16 +615,16 @@ static bool cmd_aes_init(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(aes_init, &m_subcmd_mode_op_pad_var_var, cmd_aes_init,
-    "Initialize AES context.\r\n"
-    "Usage:\r\n"
-    "  aes_init mode operation [padding] key [iv] context\r\n"
-    "Arguments:\r\n"
-    "  IN  mode      AES block cipher mode (cbc, cbc-mac, cfb, cmac, ctr, ecb)\r\n"
-    "  IN  operation Operation to perform (encrypt, decrypt, mac)\r\n"
-    "  IN  padding   Optional padding algorithm (pkcs7 or none)\r\n"
-    "  IN  key       AES key (must be 128, 192, 256 bit long)\r\n"
-    "  IN  iv        Optional initialization vector\r\n"
-    "  OUT context   Newly initialized context\r\n"
+    "Initialize AES context.\n"
+    "Usage:\n"
+    "  aes_init mode operation [padding] key [iv] context\n"
+    "Arguments:\n"
+    "  IN  mode      AES block cipher mode (cbc, cbc-mac, cfb, cmac, ctr, ecb)\n"
+    "  IN  operation Operation to perform (encrypt, decrypt, mac)\n"
+    "  IN  padding   Optional padding algorithm (pkcs7 or none)\n"
+    "  IN  key       AES key (must be 128, 192, 256 bit long)\n"
+    "  IN  iv        Optional initialization vector\n"
+    "  OUT context   Newly initialized context\n"
     );
 
 
@@ -663,7 +663,7 @@ static bool cmd_aes_update(nrf_cli_t const * p_cli, size_t argc, char ** argv)
         {
             nrf_cli_fprintf(p_cli,
                 NRF_CLI_WARNING,
-                "Variable does not exists or has different type. Creating new one.\r\n");
+                "Variable does not exists or has different type. Creating new one.\n");
         }
         else
         {
@@ -698,17 +698,17 @@ static bool cmd_aes_update(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(aes_update, &m_subcmd_var_var_var, cmd_aes_update,
-    "Update AES with a new data.\r\n"
-    "Usage:\r\n"
-    "  aes_update context data_in [data_out]\r\n"
-    "Arguments:\r\n"
-    "  IN     context  AES context\r\n"
-    "  IN     data_in  Input data\r\n"
-    "                  For all modes except CFB it must be multiple of 16 bytes\r\n"
-    "  IN/OUT data_out Optional result of the update\r\n"
-    "                  If it is not present then data will be discarded\r\n"
-    "                  If it is an existing raw variable then data will be appended\r\n"
-    "                  If is is non-existing variable then it will be created\r\n"
+    "Update AES with a new data.\n"
+    "Usage:\n"
+    "  aes_update context data_in [data_out]\n"
+    "Arguments:\n"
+    "  IN     context  AES context\n"
+    "  IN     data_in  Input data\n"
+    "                  For all modes except CFB it must be multiple of 16 bytes\n"
+    "  IN/OUT data_out Optional result of the update\n"
+    "                  If it is not present then data will be discarded\n"
+    "                  If it is an existing raw variable then data will be appended\n"
+    "                  If is is non-existing variable then it will be created\n"
     );
 
 
@@ -748,7 +748,7 @@ static bool cmd_aes_finalize(nrf_cli_t const * p_cli, size_t argc, char ** argv)
         {
             nrf_cli_fprintf(p_cli,
                 NRF_CLI_WARNING,
-                "Variable does not exists or has different type. Creating new one.\r\n");
+                "Variable does not exists or has different type. Creating new one.\n");
         }
         else
         {
@@ -795,16 +795,16 @@ static bool cmd_aes_finalize(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(aes_finalize, &m_subcmd_var_var_var, cmd_aes_finalize,
-    "Finalize AES.\r\n"
-    "Usage:\r\n"
-    "  aes_finalize context data_in [data_out]\r\n"
-    "Arguments:\r\n"
-    "  IN     context  AES context\r\n"
-    "  IN     data_in  Last part of input data\r\n"
-    "  IN/OUT data_out Optional result data of the finalization\r\n"
-    "                  If it is not present then data will be discarded\r\n"
-    "                  If it is an existing raw variable then data will be appended\r\n"
-    "                  If is is non-existing variable then it will be created\r\n"
+    "Finalize AES.\n"
+    "Usage:\n"
+    "  aes_finalize context data_in [data_out]\n"
+    "Arguments:\n"
+    "  IN     context  AES context\n"
+    "  IN     data_in  Last part of input data\n"
+    "  IN/OUT data_out Optional result data of the finalization\n"
+    "                  If it is not present then data will be discarded\n"
+    "                  If it is an existing raw variable then data will be appended\n"
+    "                  If is is non-existing variable then it will be created\n"
     );
 
 
@@ -893,15 +893,15 @@ static bool cmd_aes_crypt(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(aes_crypt, &m_subcmd_mode_op_pad_var_var_var, cmd_aes_crypt,
-    "Calculate AES in one step.\r\n"
-    "Usage:\r\n"
-    "  aes_crypt mode operation [padding] key [iv] data_in data_out\r\n"
-    "Arguments:\r\n"
-    "  IN  mode      AES block cipher mode (cbc, cbc-mac, cfb, cmac, ctr, ecb)\r\n"
-    "  IN  operation Operation to perform (encrypt, decrypt, mac)\r\n"
-    "  IN  padding   Optional padding algorithm (pkcs7 or none)\r\n"
-    "  IN  key       AES key (must be 128, 192, 256 bit long)\r\n"
-    "  IN  iv        Optional initialization vector\r\n"
-    "  IN  data_in   Data to process\r\n"
-    "  OUT data_out  Resulting data\r\n"
+    "Calculate AES in one step.\n"
+    "Usage:\n"
+    "  aes_crypt mode operation [padding] key [iv] data_in data_out\n"
+    "Arguments:\n"
+    "  IN  mode      AES block cipher mode (cbc, cbc-mac, cfb, cmac, ctr, ecb)\n"
+    "  IN  operation Operation to perform (encrypt, decrypt, mac)\n"
+    "  IN  padding   Optional padding algorithm (pkcs7 or none)\n"
+    "  IN  key       AES key (must be 128, 192, 256 bit long)\n"
+    "  IN  iv        Optional initialization vector\n"
+    "  IN  data_in   Data to process\n"
+    "  OUT data_out  Resulting data\n"
     );

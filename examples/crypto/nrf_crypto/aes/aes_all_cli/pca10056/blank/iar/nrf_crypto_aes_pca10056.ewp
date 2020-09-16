@@ -337,6 +337,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\hardfault</state>
@@ -658,6 +659,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_hw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\crypto\backend\oberon</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\crypto\backend\optiga</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\hardfault</state>
@@ -1078,7 +1080,7 @@
     </settings>
   </configuration>  <group>
   <name>nrf_cc310</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\external\nrf_cc310\lib\libnrf_cc310_short_wchar_0.9.10.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\external\nrf_cc310\lib\cortex-m4\hard-float\short-wchar\libnrf_cc310_0.9.12.a</name>    </file>  </group>  <group>
   <name>Board Support</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\bsp\bsp.c</name>    </file>  </group>  <group>
   <name>nRF_Crypto backend nRF HW</name>    <file>
@@ -1145,10 +1147,10 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_nvic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_gpiote.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_rng.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>    </file>    <file>
@@ -1241,7 +1243,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\external\mbedtls\library\x509_csr.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\external\mbedtls\library\xtea.c</name>    </file>  </group>  <group>
   <name>nRF_Oberon_Crypto</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\external\nrf_oberon\lib\nrf52\liboberon_short_wchar_2.0.5.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\external\nrf_oberon\lib\cortex-m4\hard-float\short-wchar\liboberon_2.0.7.a</name>    </file>  </group>  <group>
   <name>None</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\mdk\iar_startup_nrf52840.s</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\modules\nrfx\mdk\system_nrf52840.c</name>    </file>  </group>  <group>

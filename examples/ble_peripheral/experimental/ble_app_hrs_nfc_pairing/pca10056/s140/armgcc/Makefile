@@ -44,9 +44,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/experimental_section_vars/nrf_section_iter.c \
   $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/components/libraries/sensorsim/sensorsim.c \
-  $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecc.c \
-  $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecdh.c \
-  $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc/micro_ecc_backend_ecdsa.c \
+  $(SDK_ROOT)/modules/nrfx/mdk/system_nrf52840.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_rtt.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_serial.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_backend_uart.c \
@@ -57,15 +55,16 @@ SRC_FILES += \
   $(SDK_ROOT)/components/ble/ble_services/ble_dis/ble_dis.c \
   $(SDK_ROOT)/components/ble/ble_services/ble_hrs/ble_hrs.c \
   $(SDK_ROOT)/components/boards/boards.c \
-  $(SDK_ROOT)/modules/nrfx/mdk/system_nrf52840.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_clock.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_rng.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_uart.c \
+  $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_clock.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_gpiote.c \
-  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_power_clock.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_nfct.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/prs/nrfx_prs.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_rng.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_timer.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uart.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uarte.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_aead.c \
@@ -122,7 +121,6 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/crypto/backend/cc310/cc310_backend_rng.c \
   $(SDK_ROOT)/components/libraries/crypto/backend/cc310/cc310_backend_shared.c \
   $(SDK_ROOT)/external/utf_converter/utf.c \
-  $(SDK_ROOT)/components/nfc/t2t_lib/hal_t2t/hal_nfc_t2t.c \
   $(SDK_ROOT)/components/nfc/ndef/connection_handover/ac_rec/nfc_ac_rec.c \
   $(SDK_ROOT)/components/nfc/ndef/connection_handover/ble_oob_advdata/nfc_ble_oob_advdata.c \
   $(SDK_ROOT)/components/nfc/ndef/connection_handover/common/nfc_ble_pair_common.c \
@@ -133,6 +131,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/nfc/ndef/connection_handover/le_oob_rec/nfc_le_oob_rec.c \
   $(SDK_ROOT)/components/nfc/ndef/generic/message/nfc_ndef_msg.c \
   $(SDK_ROOT)/components/nfc/ndef/generic/record/nfc_ndef_record.c \
+  $(SDK_ROOT)/components/nfc/platform/nfc_platform.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
@@ -148,7 +147,7 @@ SRC_FILES += \
 INC_FOLDERS += \
   $(SDK_ROOT)/components/nfc/ndef/connection_handover/ble_pair_msg \
   $(SDK_ROOT)/components/nfc/t4t_parser/tlv \
-  $(SDK_ROOT)/components/drivers_nrf/usbd \
+  $(SDK_ROOT)/components/libraries/crypto/backend/cc310 \
   $(SDK_ROOT)/components/libraries/gpiote \
   $(SDK_ROOT)/components/ble/ble_services/ble_lbs_c \
   $(SDK_ROOT)/integration/nrfx/legacy \
@@ -160,7 +159,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/ble/ble_services/ble_hrs \
   $(SDK_ROOT)/external/nrf_oberon/include \
   $(SDK_ROOT)/components/libraries/crypto \
-  $(SDK_ROOT)/external/micro-ecc/micro-ecc \
   $(SDK_ROOT)/components/libraries/mem_manager \
   $(SDK_ROOT)/components/libraries/memobj \
   $(SDK_ROOT)/components/ble/ble_services/ble_nus \
@@ -170,6 +168,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/external/utf_converter \
   $(SDK_ROOT)/components/ble/ble_services/ble_bas \
   $(SDK_ROOT)/components/nfc/t4t_parser/cc_file \
+  $(SDK_ROOT)/components/nfc/platform \
   $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/nfc/t2t_lib \
   $(SDK_ROOT)/components/ble/ble_services/ble_hrs_c \
@@ -204,19 +203,18 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/stack_info \
   $(SDK_ROOT)/components/libraries/twi_sensor \
   $(SDK_ROOT)/components/libraries/strerror \
+  $(SDK_ROOT)/components/libraries/crypto/backend/optiga \
   $(SDK_ROOT)/modules/nrfx/drivers/include \
   $(SDK_ROOT)/components/ble/ble_services/ble_ans_c \
   $(SDK_ROOT)/components/libraries/pwm \
   $(SDK_ROOT)/components/libraries/hci \
   $(SDK_ROOT)/components/libraries/usbd/class/hid/mouse \
-  $(SDK_ROOT)/components/nfc/t2t_lib/hal_t2t \
   $(SDK_ROOT)/components/ble/ble_services/ble_hids \
   $(SDK_ROOT)/components/ble/nrf_ble_gatt \
   $(SDK_ROOT)/modules/nrfx/hal \
   $(SDK_ROOT)/components/libraries/bootloader/ble_dfu \
   $(SDK_ROOT)/components/libraries/crypto/backend/micro_ecc \
   $(SDK_ROOT)/components/libraries/pwr_mgmt \
-  $(SDK_ROOT)/components/nfc/t4t_lib/hal_t4t \
   $(SDK_ROOT)/components/nfc/ndef/connection_handover/ble_pair_lib \
   $(SDK_ROOT)/components/libraries/csense \
   $(SDK_ROOT)/components/libraries/fds \
@@ -266,7 +264,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/util \
   $(SDK_ROOT)/components/libraries/atomic \
   $(SDK_ROOT)/components/libraries/gfx \
-  $(SDK_ROOT)/components/libraries/crypto/backend/cc310 \
   $(SDK_ROOT)/components/libraries/hardfault \
   $(SDK_ROOT)/components/libraries/csense_drv \
   $(SDK_ROOT)/components/libraries/svc \
@@ -296,8 +293,8 @@ INC_FOLDERS += \
 
 # Libraries common to all targets
 LIB_FILES += \
-  $(SDK_ROOT)/external/nrf_cc310/lib/libnrf_cc310_0.9.10.a \
-  $(SDK_ROOT)/external/nrf_oberon/lib/nrf52/liboberon_2.0.5.a \
+  $(SDK_ROOT)/external/nrf_cc310/lib/cortex-m4/hard-float/libnrf_cc310_0.9.12.a \
+  $(SDK_ROOT)/external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_2.0.7.a \
   $(SDK_ROOT)/components/nfc/t2t_lib/nfc_t2t_lib_gcc.a \
 
 # Optimization flags
@@ -317,11 +314,6 @@ CFLAGS += -DNRF_SD_BLE_API_VERSION=6
 CFLAGS += -DS140
 CFLAGS += -DSOFTDEVICE_PRESENT
 CFLAGS += -DSWI_DISABLE0
-CFLAGS += -DuECC_ENABLE_VLI_API=0
-CFLAGS += -DuECC_OPTIMIZATION_LEVEL=3
-CFLAGS += -DuECC_SQUARE_FUNC=0
-CFLAGS += -DuECC_SUPPORT_COMPRESSED_POINT=0
-CFLAGS += -DuECC_VLI_NATIVE_LITTLE_ENDIAN=1
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
 CFLAGS += -Wall -Werror
@@ -347,11 +339,6 @@ ASMFLAGS += -DNRF_SD_BLE_API_VERSION=6
 ASMFLAGS += -DS140
 ASMFLAGS += -DSOFTDEVICE_PRESENT
 ASMFLAGS += -DSWI_DISABLE0
-ASMFLAGS += -DuECC_ENABLE_VLI_API=0
-ASMFLAGS += -DuECC_OPTIMIZATION_LEVEL=3
-ASMFLAGS += -DuECC_SQUARE_FUNC=0
-ASMFLAGS += -DuECC_SUPPORT_COMPRESSED_POINT=0
-ASMFLAGS += -DuECC_VLI_NATIVE_LITTLE_ENDIAN=1
 
 # Linker flags
 LDFLAGS += $(OPT)
@@ -403,8 +390,8 @@ flash: default
 
 # Flash softdevice
 flash_softdevice:
-	@echo Flashing: s140_nrf52_6.1.0_softdevice.hex
-	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s140/hex/s140_nrf52_6.1.0_softdevice.hex --sectorerase
+	@echo Flashing: s140_nrf52_6.1.1_softdevice.hex
+	nrfjprog -f nrf52 --program $(SDK_ROOT)/components/softdevice/s140/hex/s140_nrf52_6.1.1_softdevice.hex --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:

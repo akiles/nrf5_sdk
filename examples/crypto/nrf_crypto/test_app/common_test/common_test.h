@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -177,6 +177,16 @@ typedef const struct
     const char                        * p_qy;                       /**< Pointer to ECDSA public key Y component in hex string format. */
     const char                        * p_x;                        /**< Pointer to ECDSA private key component in hex string format. */
 }test_vector_ecdsa_sign_t;
+
+/**@brief ECDSA Random test vector information.
+ */
+typedef const struct
+{
+    const nrf_crypto_ecc_curve_info_t * p_curve_info;               /**< Pointer to ECDSA curve info type. */
+    const char                        * p_test_vector_name;         /**< Pointer to ECDSA test vector name. */
+    const char                        * p_input;                    /**< Pointer to ECDSA hash input in hex string format. */
+    const size_t                        sig_len;                    /**< Length of the signature. */
+}test_vector_ecdsa_random_t;
 
 
 /**@brief ECDH test vector information.

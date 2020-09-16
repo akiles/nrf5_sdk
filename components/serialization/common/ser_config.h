@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2014 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -66,8 +66,13 @@ extern "C" {
 
 /** Max packets size in serialization HAL Transport layer (packets before adding PHY header i.e.
  *  packet length). */
+#ifdef S112
+#define SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE    (128UL)
+#define SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE    (128UL)
+#else
 #define SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE    (512UL)
 #define SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE    (512UL)
+#endif
 
 #define SER_HAL_TRANSPORT_MAX_PKT_SIZE ((SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE) >= \
                                         (SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE)    \
@@ -108,7 +113,11 @@ extern "C" {
 #define CONN_CHIP_RESET_TIME            50      /**< Time to keep the reset line to the connectivity chip low (in milliseconds). */
 #define CONN_CHIP_WAKEUP_TIME           500     /**< Time for the connectivity chip to reset and become ready to receive serialized commands (in milliseconds). */
 
+#ifdef S112
+#define SER_MAX_CONNECTIONS 2
+#else
 #define SER_MAX_CONNECTIONS 8
+#endif
 
 #ifndef SER_MAX_ADV_DATA
 #define SER_MAX_ADV_DATA 256

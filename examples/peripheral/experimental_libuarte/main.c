@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -38,12 +38,12 @@
  *
  */
 /** @file
- * @defgroup uart_example_main main.c
+ * @defgroup libuarte_example_main main.c
  * @{
- * @ingroup uart_example
- * @brief UART Example Application main file.
+ * @ingroup libuarte_example
+ * @brief Libuarte Example Application main file.
  *
- * This file contains the source code for a sample application using UART.
+ * This file contains the source code for a sample application using libuarte.
  *
  */
 
@@ -53,13 +53,17 @@
 #include "nrf_libuarte_async.h"
 #include <bsp.h>
 
+NRF_LIBUARTE_ASYNC_DEFINE(libuarte, 0, 0, 0, NRF_LIBUARTE_PERIPHERAL_NOT_USED, 255, 3);
+
 static uint8_t text[] = "UART example started.\r\n Loopback:\r\n";
 static uint8_t text_size = sizeof(text);
 
-void uart_event_handler(nrf_libuarte_async_evt_t * p_evt)
+void uart_event_handler(void * context, nrf_libuarte_async_evt_t * p_evt)
 {
+    nrf_libuarte_async_t * p_libuarte = (nrf_libuarte_async_t *)context;
     static uint8_t ch = 0;
     ret_code_t ret;
+
     switch (p_evt->type)
     {
         case NRF_LIBUARTE_ASYNC_EVT_ERROR:
@@ -67,8 +71,8 @@ void uart_event_handler(nrf_libuarte_async_evt_t * p_evt)
             break;
         case NRF_LIBUARTE_ASYNC_EVT_RX_DATA:
             ch = p_evt->data.rxtx.p_data[0];
-            nrf_libuarte_async_rx_free(p_evt->data.rxtx.p_data, p_evt->data.rxtx.length);
-            ret = nrf_libuarte_async_tx(&ch, 1);
+            nrf_libuarte_async_rx_free(p_libuarte, p_evt->data.rxtx.p_data, p_evt->data.rxtx.length);
+            ret = nrf_libuarte_async_tx(p_libuarte, &ch, 1);
             APP_ERROR_CHECK(ret);
             bsp_board_led_invert(1);
             break;
@@ -96,13 +100,13 @@ int main(void)
             .timeout_us = 100,
     };
 
-    ret_code_t err_code = nrf_libuarte_async_init(&nrf_libuarte_async_config, uart_event_handler);
+    ret_code_t err_code = nrf_libuarte_async_init(&libuarte, &nrf_libuarte_async_config, uart_event_handler, &libuarte);
 
     APP_ERROR_CHECK(err_code);
 
-    nrf_libuarte_async_enable(1);
+    nrf_libuarte_async_enable(&libuarte);
 
-    err_code = nrf_libuarte_async_tx(text, text_size);
+    err_code = nrf_libuarte_async_tx(&libuarte, text, text_size);
     APP_ERROR_CHECK(err_code);
     while (true)
     {

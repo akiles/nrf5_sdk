@@ -414,6 +414,12 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\boards\boards.c</FilePath>            </File>          </Files>
         </Group>        <Group>
+          <GroupName>nRF_Drivers</GroupName>
+          <Files>            <File>
+              <FileName>nrfx_atomic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</FilePath>            </File>          </Files>
+        </Group>        <Group>
           <GroupName>nRF_Libraries</GroupName>
           <Files>            <File>
               <FileName>app_error.c</FileName>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -51,12 +51,12 @@
  *           @ref nrf_ble_qwr_on_ble_evt().
  */
 
+#ifndef NRF_BLE_QUEUED_WRITES_H__
+#define NRF_BLE_QUEUED_WRITES_H__
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#ifndef NRF_BLE_QUEUED_WRITES_H__
-#define NRF_BLE_QUEUED_WRITES_H__
 
 #include <stdint.h>
 #include "nordic_common.h"

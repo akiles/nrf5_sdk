@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -56,7 +56,6 @@
 #include "nrf_drv_clock.h"
 #include "app_util_platform.h"
 #include "bsp.h"
-#include "nfc_fixes.h"
 #include "nfc_t2t_lib.h"
 #include "nfc_uri_msg.h"
 #include "nrf_delay.h"

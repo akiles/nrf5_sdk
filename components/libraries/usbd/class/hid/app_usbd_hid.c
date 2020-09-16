@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -152,7 +152,7 @@ static ret_code_t setup_req_std_in(app_usbd_class_inst_t const * p_inst,
     /* Only Get Descriptor standard IN request is supported by HID class */
     if ((app_usbd_setup_req_rec(p_setup_ev->setup.bmRequestType) == APP_USBD_SETUP_REQREC_INTERFACE)
         &&
-        (p_setup_ev->setup.bmRequest == APP_USBD_SETUP_STDREQ_GET_DESCRIPTOR))
+        (p_setup_ev->setup.bRequest == APP_USBD_SETUP_STDREQ_GET_DESCRIPTOR))
     {
         size_t dsc_len = 0;
         size_t max_size;
@@ -223,7 +223,7 @@ static ret_code_t setup_req_class_in(app_usbd_class_inst_t const * p_inst,
                                      app_usbd_hid_ctx_t * p_hid_ctx,
                                      app_usbd_setup_evt_t const * p_setup_ev)
 {
-    switch (p_setup_ev->setup.bmRequest)
+    switch (p_setup_ev->setup.bRequest)
     {
         case APP_USBD_HID_REQ_GET_REPORT:
         {
@@ -272,7 +272,7 @@ static ret_code_t setup_req_class_out(app_usbd_class_inst_t const * p_inst,
                                       app_usbd_hid_ctx_t * p_hid_ctx,
                                       app_usbd_setup_evt_t const * p_setup_ev)
 {
-    switch (p_setup_ev->setup.bmRequest)
+    switch (p_setup_ev->setup.bRequest)
     {
         case APP_USBD_HID_REQ_SET_REPORT:
             if (p_setup_ev->setup.wValue.hb != APP_USBD_HID_REPORT_TYPE_OUTPUT)

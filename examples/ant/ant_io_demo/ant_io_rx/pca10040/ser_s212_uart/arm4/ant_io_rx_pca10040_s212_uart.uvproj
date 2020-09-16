@@ -446,15 +446,15 @@
               <FileName>nrf_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</FilePath>            </File>            <File>
+              <FileName>nrfx_atomic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</FilePath>            </File>            <File>
               <FileName>nrfx_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</FilePath>            </File>            <File>
               <FileName>nrfx_gpiote.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_gpiote.c</FilePath>            </File>            <File>
-              <FileName>nrfx_power_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_power_clock.c</FilePath>            </File>            <File>
               <FileName>nrfx_prs.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</FilePath>            </File>            <File>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -821,6 +821,7 @@ void background_dfu_transport_state_update(background_dfu_context_t * p_dfu_ctx)
             break;
 
         case BACKGROUND_DFU_WAIT_FOR_RESET:
+        case BACKGROUND_DFU_IDLE:
             // Do nothing.
             break;
 

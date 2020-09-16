@@ -42,16 +42,16 @@
     <ProgramSection alignment="8" size="__STACKSIZE__" load="No" place_from_segment_end="Yes" name=".stack"  address_symbol="__StackLimit" end_symbol="__StackTop"/>
     <ProgramSection alignment="8" size="__STACKSIZE_PROCESS__" load="No" name=".stack_process" />
   </MemorySegment>
-  <MemorySegment name="mbr_params_page" start="0x000FE000" size="0x1000">
-    <ProgramSection alignment="4" keep="Yes" load="No" name=".mbr_params_page" address_symbol="__start_mbr_params_page" end_symbol="__stop_mbr_params_page" start = "0x000FE000" size="0x1000" />
-  </MemorySegment>
   <MemorySegment name="bootloader_settings_page" start="0x000FF000" size="0x1000">
     <ProgramSection alignment="4" keep="Yes" load="No" name=".bootloader_settings_page" address_symbol="__start_bootloader_settings_page" end_symbol="__stop_bootloader_settings_page" start = "0x000FF000" size="0x1000" />
   </MemorySegment>
-  <MemorySegment name="uicr_bootloader_start_address" start="0x10001014" size="0x4">
-    <ProgramSection alignment="4" keep="Yes" load="Yes" name=".uicr_bootloader_start_address" address_symbol="__start_uicr_bootloader_start_address" end_symbol="__stop_uicr_bootloader_start_address" start = "0x10001014" size="0x4" />
+  <MemorySegment name="mbr_params_page" start="0x000FE000" size="0x1000">
+    <ProgramSection alignment="4" keep="Yes" load="No" name=".mbr_params_page" address_symbol="__start_mbr_params_page" end_symbol="__stop_mbr_params_page" start = "0x000FE000" size="0x1000" />
   </MemorySegment>
-  <MemorySegment name="uicr_mbr_params_page" start="0x10001018" size="0x4">
-    <ProgramSection alignment="4" keep="Yes" load="Yes" name=".uicr_mbr_params_page" address_symbol="__start_uicr_mbr_params_page" end_symbol="__stop_uicr_mbr_params_page" start = "0x10001018" size="0x4" />
+  <MemorySegment name="uicr_bootloader_start_address" start="0x00000FF8" size="0x4">
+    <ProgramSection alignment="4" keep="Yes" load="Yes" name=".uicr_bootloader_start_address" address_symbol="__start_uicr_bootloader_start_address" end_symbol="__stop_uicr_bootloader_start_address" start = "0x00000FF8" size="0x4" />
+  </MemorySegment>
+  <MemorySegment name="uicr_mbr_params_page" start="0x00000FFC" size="0x4">
+    <ProgramSection alignment="4" keep="Yes" load="Yes" name=".uicr_mbr_params_page" address_symbol="__start_uicr_mbr_params_page" end_symbol="__stop_uicr_mbr_params_page" start = "0x00000FFC" size="0x4" />
   </MemorySegment>
 </Root>

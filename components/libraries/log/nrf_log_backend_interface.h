@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -145,7 +145,7 @@ NRF_SECTION_DEF(NRF_LOG_BACKEND_SECTION_NAME, nrf_log_backend_t);
             .p_api = &_api,                                                \
             .p_ctx = _p_ctx,                                               \
             .p_cb = &CONCAT_2(log_backend_cb_, _name),                     \
-            .p_name = STRINGIFY(_name)                                     \
+            .p_name = (char *)STRINGIFY(_name)                             \
    }
 
 

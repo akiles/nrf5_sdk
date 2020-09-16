@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -56,6 +56,7 @@
 #include "nrf_balloc.h"
 #include "nrf_delay.h"
 #include "nrf_dfu_settings.h"
+#include "nrf_dfu_ble.h"
 
 #define NRF_LOG_MODULE_NAME nrf_dfu_ble
 #include "nrf_log.h"
@@ -100,9 +101,6 @@ NRF_LOG_MODULE_REGISTER();
        Payload length is set to NRF_SDH_BLE_GATT_MAX_MTU_SIZE - 3.
 #endif
 
-
-static uint32_t ble_dfu_transport_init(nrf_dfu_observer_t observer);
-static uint32_t ble_dfu_transport_close(nrf_dfu_transport_t const * p_exception);
 
 DFU_TRANSPORT_REGISTER(nrf_dfu_transport_t const ble_dfu_transport) =
 {
@@ -208,14 +206,8 @@ static uint32_t advertising_start(void)
 #if (NRF_DFU_BLE_REQUIRES_BONDS)
     ble_gap_irk_t empty_irk = {{0}};
 
-    if (memcmp(m_peer_data.ble_id.id_info.irk, empty_irk.irk, sizeof(ble_gap_irk_t)) == 0)
+    if (memcmp(m_peer_data.ble_id.id_info.irk, empty_irk.irk, sizeof(ble_gap_irk_t)) != 0)
     {
-        NRF_LOG_DEBUG("No IRK found, general discovery");
-    }
-    else
-    {
-        NRF_LOG_DEBUG("IRK Found, setting up whitelist");
-
         adv_flag                 = BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED;
         adv_params.filter_policy = BLE_GAP_ADV_FP_FILTER_CONNREQ;
 
@@ -492,14 +484,17 @@ static uint32_t on_ctrl_pt_write(ble_dfu_t * p_dfu, ble_gatts_evt_write_t const 
 
         case NRF_DFU_OP_OBJECT_CREATE:
         {
-            /* Activity on the current transport. Close all except the current one. */
-            (void) nrf_dfu_transports_close(&ble_dfu_transport);
-
             /* Reset the packet receipt notification on create object */
             m_pkt_notif_target_cnt = m_pkt_notif_target;
 
             request.create.object_type = p_ble_write_evt->data[1];
             request.create.object_size = uint32_decode(&(p_ble_write_evt->data[2]));
+
+            if (request.create.object_type == NRF_DFU_OBJ_TYPE_COMMAND)
+            {
+                /* Activity on the current transport. Close all except the current one. */
+                (void) nrf_dfu_transports_close(&ble_dfu_transport);
+            }
         } break;
 
         case NRF_DFU_OP_RECEIPT_NOTIF_SET:
@@ -968,12 +963,14 @@ static uint32_t ble_stack_init()
     /* Register as a BLE event observer to receive BLE events. */
     NRF_SDH_BLE_OBSERVER(m_ble_evt_observer, BLE_OBSERVER_PRIO, ble_evt_handler, NULL);
 
+#if (!defined(NRF_DFU_BLE_SKIP_SD_INIT)) || (NRF_DFU_BLE_SKIP_SD_INIT == 0)
     err_code = nrf_dfu_mbr_init_sd();
     VERIFY_SUCCESS(err_code);
 
     NRF_LOG_DEBUG("Setting up vector table: 0x%08x", BOOTLOADER_START_ADDR);
     err_code = sd_softdevice_vector_table_base_set(BOOTLOADER_START_ADDR);
     VERIFY_SUCCESS(err_code);
+#endif
 
     NRF_LOG_DEBUG("Enabling SoftDevice.");
     err_code = nrf_sdh_enable_request();
@@ -1138,7 +1135,7 @@ uint32_t ble_dfu_init(ble_dfu_t * p_dfu)
 }
 
 
-static uint32_t ble_dfu_transport_init(nrf_dfu_observer_t observer)
+uint32_t ble_dfu_transport_init(nrf_dfu_observer_t observer)
 {
     uint32_t err_code = NRF_SUCCESS;
 
@@ -1204,7 +1201,7 @@ static uint32_t ble_dfu_transport_init(nrf_dfu_observer_t observer)
 }
 
 
-static uint32_t ble_dfu_transport_close(nrf_dfu_transport_t const * p_exception)
+uint32_t ble_dfu_transport_close(nrf_dfu_transport_t const * p_exception)
 {
     uint32_t err_code = NRF_SUCCESS;
 
@@ -1236,6 +1233,27 @@ static uint32_t ble_dfu_transport_close(nrf_dfu_transport_t const * p_exception)
         if (err_code == NRF_SUCCESS)
         {
             NRF_LOG_DEBUG("BLE transport shut down.");
+        }
+    }
+
+    return err_code;
+}
+
+uint32_t ble_dfu_transport_disconnect(void)
+{
+    uint32_t err_code = NRF_SUCCESS;
+
+    if (m_flags & DFU_BLE_FLAG_INITIALIZED)
+    {
+        NRF_LOG_DEBUG("Disconnect from BLE peer.");
+
+        if (m_conn_handle != BLE_CONN_HANDLE_INVALID)
+        {
+            NRF_LOG_DEBUG("Disconnecting.");
+
+            /* Disconnect from the peer. */
+            err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+            VERIFY_SUCCESS(err_code);
         }
     }
 

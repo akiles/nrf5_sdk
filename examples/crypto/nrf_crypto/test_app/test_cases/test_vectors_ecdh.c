@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -56,7 +56,7 @@
  * https://csrc.nist.gov/Projects/Cryptographic-Algorithm-Validation-Program/Component-Testing
  */
 
-#if NRF_CRYPTO_ECC_ENABLED
+#if NRF_CRYPTO_ECC_ENABLED && !NRF_MODULE_ENABLED(NRF_CRYPTO_BACKEND_OPTIGA)
 
 /*lint -save -e91 */
 

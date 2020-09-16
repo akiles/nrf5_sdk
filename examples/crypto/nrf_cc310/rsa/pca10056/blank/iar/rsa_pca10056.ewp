@@ -1016,7 +1016,7 @@
     </settings>
   </configuration>  <group>
   <name>nrf_cc310</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\nrf_cc310\lib\libnrf_cc310_short_wchar_0.9.10.a</name>    </file>  </group>  <group>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\nrf_cc310\lib\cortex-m4\hard-float\short-wchar\libnrf_cc310_0.9.12.a</name>    </file>  </group>  <group>
   <name>nRF_Log</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\log\src\nrf_log_backend_rtt.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\log\src\nrf_log_backend_serial.c</name>    </file>    <file>
@@ -1041,6 +1041,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\integration\nrfx\legacy\nrf_drv_uart.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\prs\nrfx_prs.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</name>    </file>  </group>  <group>

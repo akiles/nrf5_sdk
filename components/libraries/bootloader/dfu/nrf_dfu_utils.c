@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -43,6 +43,7 @@
 #include "nrf_bootloader_info.h"
 #include "crc32.h"
 #include "nrf_log.h"
+#include "nrf_dfu_validation.h"
 
 void nrf_dfu_bank_invalidate(nrf_dfu_bank_t * const p_bank)
 {
@@ -54,12 +55,12 @@ void nrf_dfu_bank_invalidate(nrf_dfu_bank_t * const p_bank)
 }
 
 
-#ifndef BLE_STACK_SUPPORT_REQD
+#if !defined(BLE_STACK_SUPPORT_REQD) && !defined(ANT_STACK_SUPPORT_REQD)
 void nrf_dfu_softdevice_invalidate(void)
 {
     static const uint32_t all_zero = 0UL;
 
-    if (SD_PRESENT)
+    if (SD_PRESENT && !NRF_DFU_IN_APP)
     {
         ret_code_t err_code = nrf_dfu_flash_store(SD_MAGIC_NUMBER_ABS_OFFSET_GET(MBR_SIZE), &all_zero, 4, NULL);
         if (err_code != NRF_SUCCESS)
@@ -113,37 +114,6 @@ uint32_t nrf_dfu_softdevice_start_address(void)
 {
     return MBR_SIZE;
 }
-
-
-bool nrf_dfu_app_is_valid(bool do_crc)
-{
-    NRF_LOG_DEBUG("Enter nrf_dfu_app_is_valid");
-    if (s_dfu_settings.bank_0.bank_code != NRF_DFU_BANK_VALID_APP)
-    {
-       // Bank 0 has no valid app. Nothing to boot
-       NRF_LOG_DEBUG("No valid app to boot.");
-       return false;
-    }
-
-    // If CRC == 0, the CRC check is skipped.
-    if (do_crc && (s_dfu_settings.bank_0.image_crc != 0))
-    {
-        uint32_t crc = crc32_compute((uint8_t*) nrf_dfu_app_start_address(),
-                                     s_dfu_settings.bank_0.image_size,
-                                     NULL);
-
-        if (crc != s_dfu_settings.bank_0.image_crc)
-        {
-            // CRC does not match with what is stored.
-            NRF_LOG_DEBUG("CRC check of app failed. Return %d", NRF_DFU_DEBUG);
-            return NRF_DFU_DEBUG;
-        }
-    }
-
-    NRF_LOG_DEBUG("Return true. App was valid");
-    return true;
-}
-
 
 
 uint32_t nrf_dfu_cache_prepare(const uint32_t required_size, bool single_bank, bool keep_app, bool keep_softdevice)
@@ -230,7 +200,7 @@ uint32_t nrf_dfu_cache_prepare(const uint32_t required_size, bool single_bank, b
     {
         // Room was found. Make the necessary preparations for receiving update.
 
-#ifndef BLE_STACK_SUPPORT_REQD
+#if !defined(BLE_STACK_SUPPORT_REQD) && !defined(ANT_STACK_SUPPORT_REQD)
         if (pass >= SOFTDEVICE_DELETED)
         {
             NRF_LOG_DEBUG("Invalidating SoftDevice.");
@@ -242,15 +212,6 @@ uint32_t nrf_dfu_cache_prepare(const uint32_t required_size, bool single_bank, b
             NRF_LOG_DEBUG("Invalidating app.");
             nrf_dfu_bank_invalidate(&s_dfu_settings.bank_0);
         }
-
-        s_dfu_settings.bank_layout  = NRF_DFU_BANK_LAYOUT_DUAL;
-        s_dfu_settings.bank_current = NRF_DFU_CURRENT_BANK_1;
-
-        // Prepare bank for new image.
-        nrf_dfu_bank_invalidate(&s_dfu_settings.bank_1);
-
-        // Store the Firmware size in the bank for continuations
-        s_dfu_settings.bank_1.image_size = required_size;
 
         err_code = NRF_SUCCESS;
     }

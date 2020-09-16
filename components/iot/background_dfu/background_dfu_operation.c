@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -96,7 +96,8 @@ ret_code_t background_dfu_op_create(uint32_t                    object_type,
 
 ret_code_t background_dfu_op_write(const uint8_t             * p_payload,
                                    uint16_t                    payload_length,
-                                   nrf_dfu_response_callback_t callback,
+                                   nrf_dfu_response_callback_t response_callback,
+                                   nrf_dfu_flash_callback_t    write_callback,
                                    void                      * p_context)
 {
     nrf_dfu_request_t  dfu_req;
@@ -107,7 +108,8 @@ ret_code_t background_dfu_op_write(const uint8_t             * p_payload,
     dfu_req.write.p_data      = (uint8_t *)p_payload;
     dfu_req.write.len         = payload_length;
     dfu_req.p_context         = p_context;
-    dfu_req.callback.response = callback;
+    dfu_req.callback.response = response_callback;
+    dfu_req.callback.write    = write_callback;
 
     return nrf_dfu_req_handler_on_req(&dfu_req);
 }

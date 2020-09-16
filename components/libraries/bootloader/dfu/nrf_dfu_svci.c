@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -50,11 +50,12 @@
 uint32_t nrf_dfu_svci_vector_table_set(void)
 {
     uint32_t err_code;
+    uint32_t bootloader_addr = BOOTLOADER_ADDRESS;
 
-    if (NRF_UICR->NRFFW[0] != 0xFFFFFFFF)
+    if (bootloader_addr != 0xFFFFFFFF)
     {
-        NRF_LOG_INFO("Setting vector table to bootloader: 0x%08x", NRF_UICR->NRFFW[0]);
-        err_code = sd_softdevice_vector_table_base_set(NRF_UICR->NRFFW[0]);
+        NRF_LOG_INFO("Setting vector table to bootloader: 0x%08x", bootloader_addr);
+        err_code = sd_softdevice_vector_table_base_set(bootloader_addr);
         if (err_code != NRF_SUCCESS)
         {
             NRF_LOG_ERROR("Failed running sd_softdevice_vector_table_base_set");

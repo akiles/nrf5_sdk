@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -54,10 +54,10 @@
 
 #if NRF_MODULE_ENABLED(NRF_LOG) && defined(BLE_STACK_SUPPORT_REQD)
 static const char * sd_events[] = {
-    "BLE_EVT_TX_COMPLETE",                     /*0x01*/
-    "BLE_EVT_USER_MEM_REQUEST",                /*0x02*/
-    "BLE_EVT_USER_MEM_RELEASE",                /*0x03*/
-    "BLE_EVT_DATA_LENGTH_CHANGED",             /*0x04*/
+    "BLE_EVT_USER_MEM_REQUEST",                /*0x01*/
+    "BLE_EVT_USER_MEM_RELEASE",                /*0x02*/
+    "SD_EVT_UNKNOWN",                          /*0x03*/
+    "SD_EVT_UNKNOWN",                          /*0x04*/
     "SD_EVT_UNKNOWN",                          /*0x05*/
     "SD_EVT_UNKNOWN",                          /*0x06*/
     "SD_EVT_UNKNOWN",                          /*0x07*/
@@ -75,7 +75,7 @@ static const char * sd_events[] = {
     "BLE_GAP_EVT_SEC_PARAMS_REQUEST",          /*0x13*/
     "BLE_GAP_EVT_SEC_INFO_REQUEST",            /*0x14*/
     "BLE_GAP_EVT_PASSKEY_DISPLAY",             /*0x15*/
-    "BLE_GAP_EVT_KEY_PRESxSED",                /*0x16*/
+    "BLE_GAP_EVT_KEY_PRESSED",                 /*0x16*/
     "BLE_GAP_EVT_AUTH_KEY_REQUEST",            /*0x17*/
     "BLE_GAP_EVT_LESC_DHKEY_REQUEST",          /*0x18*/
     "BLE_GAP_EVT_AUTH_STATUS",                 /*0x19*/
@@ -86,12 +86,12 @@ static const char * sd_events[] = {
     "BLE_GAP_EVT_SEC_REQUEST",                 /*0x1e*/
     "BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST",   /*0x1f*/
     "BLE_GAP_EVT_SCAN_REQ_REPORT",             /*0x20*/
-    "SD_EVT_UNKNOWN",                          /*0x21*/
-    "SD_EVT_UNKNOWN",                          /*0x22*/
-    "SD_EVT_UNKNOWN",                          /*0x23*/
-    "SD_EVT_UNKNOWN",                          /*0x24*/
-    "SD_EVT_UNKNOWN",                          /*0x25*/
-    "SD_EVT_UNKNOWN",                          /*0x26*/
+    "BLE_GAP_EVT_PHY_UPDATE_REQUEST",          /*0x21*/
+    "BLE_GAP_EVT_PHY_UPDATE",                  /*0x22*/
+    "BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST",  /*0x23*/
+    "BLE_GAP_EVT_DATA_LENGTH_UPDATE",          /*0x24*/
+    "BLE_GAP_EVT_QOS_CHANNEL_SURVEY_REPORT",   /*0x25*/
+    "BLE_GAP_EVT_ADV_SET_TERMINATED",          /*0x26*/
     "SD_EVT_UNKNOWN",                          /*0x27*/
     "SD_EVT_UNKNOWN",                          /*0x28*/
     "SD_EVT_UNKNOWN",                          /*0x29*/

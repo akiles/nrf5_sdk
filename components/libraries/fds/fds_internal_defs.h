@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2015 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -89,6 +89,9 @@ extern "C" {
 // The number of physical pages to be used. This value is configured indirectly.
 #define FDS_PHY_PAGES               ((FDS_VIRTUAL_PAGES * FDS_VIRTUAL_PAGE_SIZE) / FDS_PHY_PAGE_SIZE)
 
+// The number of physical pages at the end of the flash that are reserved by other modules.
+#define FDS_PHY_PAGES_RESERVED      ((FDS_VIRTUAL_PAGES_RESERVED * FDS_VIRTUAL_PAGE_SIZE) / FDS_PHY_PAGE_SIZE)
+
 // The size of a virtual page, in number of physical pages.
 #define FDS_PHY_PAGES_IN_VPAGE      (FDS_VIRTUAL_PAGE_SIZE / FDS_PHY_PAGE_SIZE)
 
@@ -97,7 +100,6 @@ extern "C" {
 
  // Just a shorter name for the size, in words, of a virtual page.
 #define FDS_PAGE_SIZE               (FDS_VIRTUAL_PAGE_SIZE)
-
 
 #if (FDS_VIRTUAL_PAGE_SIZE % FDS_PHY_PAGE_SIZE != 0)
     #error "FDS_VIRTUAL_PAGE_SIZE must be a multiple of the size of a physical page."

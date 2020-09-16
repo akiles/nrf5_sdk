@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -68,7 +68,7 @@ static bool cmd_rng_vector_generate(nrf_cli_t const * p_cli, size_t argc, char *
     {
         if ((output_size % 8) != 0)
         {
-            nrf_cli_fprintf(cli_get(), NRF_CLI_ERROR, "Number of bits must be multiple of 8.\r\n");
+            nrf_cli_fprintf(cli_get(), NRF_CLI_ERROR, "Number of bits must be multiple of 8.\n");
             return false;
         }
         output_size = output_size / 8;
@@ -90,12 +90,12 @@ static bool cmd_rng_vector_generate(nrf_cli_t const * p_cli, size_t argc, char *
 
 
 CLI_CMD_REGISTER(rng_vector_generate, NULL, cmd_rng_vector_generate,
-    "Generate a random vector.\r\n"
-    "Usage:\r\n"
-    "  rng_vector_generate size vector\r\n"
-    "Arguments:\r\n"
-    "  IN  size    Requested size of the vector in bytes\r\n"
-    "  OUT vector  Resulting data\r\n"
+    "Generate a random vector.\n"
+    "Usage:\n"
+    "  rng_vector_generate size vector\n"
+    "Arguments:\n"
+    "  IN  size    Requested size of the vector in bytes\n"
+    "  OUT vector  Resulting data\n"
     );
 
 
@@ -146,13 +146,13 @@ static bool cmd_rng_vector_generate_in_range(nrf_cli_t const * p_cli, size_t arg
 
 
 CLI_CMD_REGISTER(rng_vector_generate_in_range, NULL, cmd_rng_vector_generate_in_range,
-    "Generate a random vector in specific range.\r\n"
-    "Usage:\r\n"
-    "  rng_vector_generate_in_range min max vector\r\n"
-    "Arguments:\r\n"
-    "  IN  min     Minimum value\r\n"
-    "  IN  max     Maximum value\r\n"
-    "  OUT vector  Resulting data\r\n"
+    "Generate a random vector in specific range.\n"
+    "Usage:\n"
+    "  rng_vector_generate_in_range min max vector\n"
+    "Arguments:\n"
+    "  IN  min     Minimum value\n"
+    "  IN  max     Maximum value\n"
+    "  OUT vector  Resulting data\n"
     );
 
 
@@ -191,10 +191,10 @@ static bool cmd_rng_reseed(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(rng_reseed, NULL, cmd_rng_reseed,
-    "Reseed the generator.\r\n"
-    "Usage:\r\n"
-    "  rng_reseed [data]\r\n"
-    "Arguments:\r\n"
-    "  IN  data    Seed data used to reseed\r\n"
+    "Reseed the generator.\n"
+    "Usage:\n"
+    "  rng_reseed [data]\n"
+    "Arguments:\n"
+    "  IN  data    Seed data used to reseed\n"
     );
 

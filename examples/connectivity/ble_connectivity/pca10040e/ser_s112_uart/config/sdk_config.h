@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -170,7 +170,7 @@
  
 
 #ifndef NRFX_PRS_BOX_2_ENABLED
-#define NRFX_PRS_BOX_2_ENABLED 0
+#define NRFX_PRS_BOX_2_ENABLED 1
 #endif
 
 // <q> NRFX_PRS_BOX_3_ENABLED  - Enables box 3 in the module.
@@ -361,6 +361,127 @@
 
 // </e>
 
+// <e> NRFX_UART_ENABLED - nrfx_uart - UART peripheral driver
+//==========================================================
+#ifndef NRFX_UART_ENABLED
+#define NRFX_UART_ENABLED 1
+#endif
+// <o> NRFX_UART0_ENABLED - Enable UART0 instance 
+#ifndef NRFX_UART0_ENABLED
+#define NRFX_UART0_ENABLED 0
+#endif
+
+// <o> NRFX_UART_DEFAULT_CONFIG_HWFC  - Hardware Flow Control
+ 
+// <0=> Disabled 
+// <1=> Enabled 
+
+#ifndef NRFX_UART_DEFAULT_CONFIG_HWFC
+#define NRFX_UART_DEFAULT_CONFIG_HWFC 0
+#endif
+
+// <o> NRFX_UART_DEFAULT_CONFIG_PARITY  - Parity
+ 
+// <0=> Excluded 
+// <14=> Included 
+
+#ifndef NRFX_UART_DEFAULT_CONFIG_PARITY
+#define NRFX_UART_DEFAULT_CONFIG_PARITY 0
+#endif
+
+// <o> NRFX_UART_DEFAULT_CONFIG_BAUDRATE  - Default Baudrate
+ 
+// <323584=> 1200 baud 
+// <643072=> 2400 baud 
+// <1290240=> 4800 baud 
+// <2576384=> 9600 baud 
+// <3866624=> 14400 baud 
+// <5152768=> 19200 baud 
+// <7729152=> 28800 baud 
+// <8388608=> 31250 baud 
+// <10309632=> 38400 baud 
+// <15007744=> 56000 baud 
+// <15462400=> 57600 baud 
+// <20615168=> 76800 baud 
+// <30924800=> 115200 baud 
+// <61845504=> 230400 baud 
+// <67108864=> 250000 baud 
+// <123695104=> 460800 baud 
+// <247386112=> 921600 baud 
+// <268435456=> 1000000 baud 
+
+#ifndef NRFX_UART_DEFAULT_CONFIG_BAUDRATE
+#define NRFX_UART_DEFAULT_CONFIG_BAUDRATE 30924800
+#endif
+
+// <o> NRFX_UART_DEFAULT_CONFIG_IRQ_PRIORITY  - Interrupt priority
+ 
+// <0=> 0 (highest) 
+// <1=> 1 
+// <2=> 2 
+// <3=> 3 
+// <4=> 4 
+// <5=> 5 
+// <6=> 6 
+// <7=> 7 
+
+#ifndef NRFX_UART_DEFAULT_CONFIG_IRQ_PRIORITY
+#define NRFX_UART_DEFAULT_CONFIG_IRQ_PRIORITY 6
+#endif
+
+// <e> NRFX_UART_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRFX_UART_CONFIG_LOG_ENABLED
+#define NRFX_UART_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRFX_UART_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRFX_UART_CONFIG_LOG_LEVEL
+#define NRFX_UART_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRFX_UART_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_UART_CONFIG_INFO_COLOR
+#define NRFX_UART_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRFX_UART_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_UART_CONFIG_DEBUG_COLOR
+#define NRFX_UART_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// </e>
+
 // <e> NRF_CLOCK_ENABLED - nrf_drv_clock - CLOCK peripheral driver - legacy layer
 //==========================================================
 #ifndef NRF_CLOCK_ENABLED
@@ -376,6 +497,13 @@
 
 #ifndef CLOCK_CONFIG_LF_SRC
 #define CLOCK_CONFIG_LF_SRC 1
+#endif
+
+// <q> CLOCK_CONFIG_LF_CAL_ENABLED  - Calibration enable for LF Clock Source
+ 
+
+#ifndef CLOCK_CONFIG_LF_CAL_ENABLED
+#define CLOCK_CONFIG_LF_CAL_ENABLED 0
 #endif
 
 // <o> CLOCK_CONFIG_IRQ_PRIORITY  - Interrupt priority
@@ -467,11 +595,25 @@
 #define UART_EASY_DMA_SUPPORT 1
 #endif
 
+// <q> UART_LEGACY_SUPPORT  - Driver supporting Legacy mode
+ 
+
+#ifndef UART_LEGACY_SUPPORT
+#define UART_LEGACY_SUPPORT 1
+#endif
+
 // <e> UART0_ENABLED - Enable UART0 instance
 //==========================================================
 #ifndef UART0_ENABLED
 #define UART0_ENABLED 1
 #endif
+// <q> UART0_CONFIG_USE_EASY_DMA  - Default setting for using EasyDMA
+ 
+
+#ifndef UART0_CONFIG_USE_EASY_DMA
+#define UART0_CONFIG_USE_EASY_DMA 1
+#endif
+
 // </e>
 
 // </e>
@@ -500,6 +642,101 @@
 #ifndef APP_SCHEDULER_WITH_PROFILER
 #define APP_SCHEDULER_WITH_PROFILER 1
 #endif
+
+// </e>
+
+// <e> APP_TIMER_ENABLED - app_timer - Application timer functionality
+//==========================================================
+#ifndef APP_TIMER_ENABLED
+#define APP_TIMER_ENABLED 1
+#endif
+// <o> APP_TIMER_CONFIG_RTC_FREQUENCY  - Configure RTC prescaler.
+ 
+// <0=> 32768 Hz 
+// <1=> 16384 Hz 
+// <3=> 8192 Hz 
+// <7=> 4096 Hz 
+// <15=> 2048 Hz 
+// <31=> 1024 Hz 
+
+#ifndef APP_TIMER_CONFIG_RTC_FREQUENCY
+#define APP_TIMER_CONFIG_RTC_FREQUENCY 1
+#endif
+
+// <o> APP_TIMER_CONFIG_IRQ_PRIORITY  - Interrupt priority
+ 
+
+// <i> Priorities 0,2 (nRF51) and 0,1,4,5 (nRF52) are reserved for SoftDevice
+// <0=> 0 (highest) 
+// <1=> 1 
+// <2=> 2 
+// <3=> 3 
+// <4=> 4 
+// <5=> 5 
+// <6=> 6 
+// <7=> 7 
+
+#ifndef APP_TIMER_CONFIG_IRQ_PRIORITY
+#define APP_TIMER_CONFIG_IRQ_PRIORITY 6
+#endif
+
+// <o> APP_TIMER_CONFIG_OP_QUEUE_SIZE - Capacity of timer requests queue. 
+// <i> Size of the queue depends on how many timers are used
+// <i> in the system, how often timers are started and overall
+// <i> system latency. If queue size is too small app_timer calls
+// <i> will fail.
+
+#ifndef APP_TIMER_CONFIG_OP_QUEUE_SIZE
+#define APP_TIMER_CONFIG_OP_QUEUE_SIZE 10
+#endif
+
+// <q> APP_TIMER_CONFIG_USE_SCHEDULER  - Enable scheduling app_timer events to app_scheduler
+ 
+
+#ifndef APP_TIMER_CONFIG_USE_SCHEDULER
+#define APP_TIMER_CONFIG_USE_SCHEDULER 0
+#endif
+
+// <q> APP_TIMER_KEEPS_RTC_ACTIVE  - Enable RTC always on
+ 
+
+// <i> If option is enabled RTC is kept running even if there is no active timers.
+// <i> This option can be used when app_timer is used for timestamping.
+
+#ifndef APP_TIMER_KEEPS_RTC_ACTIVE
+#define APP_TIMER_KEEPS_RTC_ACTIVE 0
+#endif
+
+// <o> APP_TIMER_SAFE_WINDOW_MS - Maximum possible latency (in milliseconds) of handling app_timer event. 
+// <i> Maximum possible timeout that can be set is reduced by safe window.
+// <i> Example: RTC frequency 16384 Hz, maximum possible timeout 1024 seconds - APP_TIMER_SAFE_WINDOW_MS.
+// <i> Since RTC is not stopped when processor is halted in debugging session, this value
+// <i> must cover it if debugging is needed. It is possible to halt processor for APP_TIMER_SAFE_WINDOW_MS
+// <i> without corrupting app_timer behavior.
+
+#ifndef APP_TIMER_SAFE_WINDOW_MS
+#define APP_TIMER_SAFE_WINDOW_MS 300000
+#endif
+
+// <h> App Timer Legacy configuration - Legacy configuration.
+
+//==========================================================
+// <q> APP_TIMER_WITH_PROFILER  - Enable app_timer profiling
+ 
+
+#ifndef APP_TIMER_WITH_PROFILER
+#define APP_TIMER_WITH_PROFILER 0
+#endif
+
+// <q> APP_TIMER_CONFIG_SWI_NUMBER  - Configure SWI instance used.
+ 
+
+#ifndef APP_TIMER_CONFIG_SWI_NUMBER
+#define APP_TIMER_CONFIG_SWI_NUMBER 0
+#endif
+
+// </h> 
+//==========================================================
 
 // </e>
 
@@ -559,13 +796,6 @@
 
 // </e>
 
-// <q> NRF_FPRINTF_ENABLED  - nrf_fprintf - fprintf function.
- 
-
-#ifndef NRF_FPRINTF_ENABLED
-#define NRF_FPRINTF_ENABLED 1
-#endif
-
 // <q> NRF_MEMOBJ_ENABLED  - nrf_memobj - Linked memory allocator module
  
 
@@ -580,12 +810,39 @@
 #define NRF_SECTION_ITER_ENABLED 1
 #endif
 
+// <q> NRF_SORTLIST_ENABLED  - nrf_sortlist - Sorted list
+ 
+
+#ifndef NRF_SORTLIST_ENABLED
+#define NRF_SORTLIST_ENABLED 1
+#endif
+
 // <q> NRF_STRERROR_ENABLED  - nrf_strerror - Library for converting error code to string.
  
 
 #ifndef NRF_STRERROR_ENABLED
 #define NRF_STRERROR_ENABLED 1
 #endif
+
+// <h> nrf_fprintf - fprintf function.
+
+//==========================================================
+// <q> NRF_FPRINTF_ENABLED  - Enable/disable fprintf module.
+ 
+
+#ifndef NRF_FPRINTF_ENABLED
+#define NRF_FPRINTF_ENABLED 1
+#endif
+
+// <q> NRF_FPRINTF_FLAG_AUTOMATIC_CR_ON_LF_ENABLED  - For each printed LF, function will add CR.
+ 
+
+#ifndef NRF_FPRINTF_FLAG_AUTOMATIC_CR_ON_LF_ENABLED
+#define NRF_FPRINTF_FLAG_AUTOMATIC_CR_ON_LF_ENABLED 1
+#endif
+
+// </h> 
+//==========================================================
 
 // </h> 
 //==========================================================
@@ -868,12 +1125,12 @@
 // <h> nrf_log in nRF_Core 
 
 //==========================================================
-// <e> NRF_MPU_CONFIG_LOG_ENABLED - Enables logging in the module.
+// <e> NRF_MPU_LIB_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
-#ifndef NRF_MPU_CONFIG_LOG_ENABLED
-#define NRF_MPU_CONFIG_LOG_ENABLED 0
+#ifndef NRF_MPU_LIB_CONFIG_LOG_ENABLED
+#define NRF_MPU_LIB_CONFIG_LOG_ENABLED 0
 #endif
-// <o> NRF_MPU_CONFIG_LOG_LEVEL  - Default Severity level
+// <o> NRF_MPU_LIB_CONFIG_LOG_LEVEL  - Default Severity level
  
 // <0=> Off 
 // <1=> Error 
@@ -881,11 +1138,11 @@
 // <3=> Info 
 // <4=> Debug 
 
-#ifndef NRF_MPU_CONFIG_LOG_LEVEL
-#define NRF_MPU_CONFIG_LOG_LEVEL 3
+#ifndef NRF_MPU_LIB_CONFIG_LOG_LEVEL
+#define NRF_MPU_LIB_CONFIG_LOG_LEVEL 3
 #endif
 
-// <o> NRF_MPU_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+// <o> NRF_MPU_LIB_CONFIG_INFO_COLOR  - ANSI escape code prefix.
  
 // <0=> Default 
 // <1=> Black 
@@ -897,11 +1154,11 @@
 // <7=> Cyan 
 // <8=> White 
 
-#ifndef NRF_MPU_CONFIG_INFO_COLOR
-#define NRF_MPU_CONFIG_INFO_COLOR 0
+#ifndef NRF_MPU_LIB_CONFIG_INFO_COLOR
+#define NRF_MPU_LIB_CONFIG_INFO_COLOR 0
 #endif
 
-// <o> NRF_MPU_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+// <o> NRF_MPU_LIB_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
  
 // <0=> Default 
 // <1=> Black 
@@ -913,8 +1170,8 @@
 // <7=> Cyan 
 // <8=> White 
 
-#ifndef NRF_MPU_CONFIG_DEBUG_COLOR
-#define NRF_MPU_CONFIG_DEBUG_COLOR 0
+#ifndef NRF_MPU_LIB_CONFIG_DEBUG_COLOR
+#define NRF_MPU_LIB_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -1278,6 +1535,57 @@
 
 #ifndef MAX3421E_HOST_CONFIG_DEBUG_COLOR
 #define MAX3421E_HOST_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRFX_USBD_CONFIG_LOG_ENABLED - Enable logging in the module
+//==========================================================
+#ifndef NRFX_USBD_CONFIG_LOG_ENABLED
+#define NRFX_USBD_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRFX_USBD_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRFX_USBD_CONFIG_LOG_LEVEL
+#define NRFX_USBD_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRFX_USBD_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_USBD_CONFIG_INFO_COLOR
+#define NRFX_USBD_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRFX_USBD_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_USBD_CONFIG_DEBUG_COLOR
+#define NRFX_USBD_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>
@@ -3516,17 +3824,17 @@
 #define SEGGER_RTT_CONFIG_BUFFER_SIZE_UP 512
 #endif
 
-// <o> SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS - Size of upstream buffer. 
+// <o> SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS - Maximum number of upstream buffers. 
 #ifndef SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS
 #define SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS 2
 #endif
 
-// <o> SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN - Size of upstream buffer. 
+// <o> SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN - Size of downstream buffer. 
 #ifndef SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN
 #define SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN 16
 #endif
 
-// <o> SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS - Size of upstream buffer. 
+// <o> SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS - Maximum number of downstream buffers. 
 #ifndef SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS
 #define SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS 2
 #endif

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -312,7 +312,7 @@ typedef struct
 
 /**@brief  Function for initializing the request handling module.
  *
- * @param observer  Function for receiving notifications.
+ * @param observer  Callback function for receiving notifications.
  *
  * @retval NRF_SUCCESS             If the operation was successful.
  * @retval NRF_ERROR_INTERNAL      If the init packet in flash is not valid.

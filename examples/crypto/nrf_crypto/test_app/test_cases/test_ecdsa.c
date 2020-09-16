@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -59,7 +59,19 @@
 NRF_SECTION_DEF(test_vector_ecdsa_verify_data, test_vector_ecdsa_verify_t);
 NRF_SECTION_DEF(test_vector_ecdsa_sign_data, test_vector_ecdsa_sign_t);
 
+#if NRF_CRYPTO_BACKEND_OPTIGA_ENABLED
+NRF_SECTION_DEF(test_vector_ecdsa_random_data, test_vector_ecdsa_random_t);
+#endif 
+
 #define ECDSA_MAX_INPUT_SIZE             (64)                                                 /**< ECDSA max input size is equal to the SHA512 digest size. */
+
+/**< Get number of the ECDSA verify test vectors. */
+#define TEST_VECTOR_ECDSA_RANDOM_GET(i)  \
+    NRF_SECTION_ITEM_GET(test_vector_ecdsa_random_data, test_vector_ecdsa_random_t, (i))
+
+/**< Get the test vector reference from the array of test vectors. */
+#define TEST_VECTOR_ECDSA_RANDOM_COUNT   \
+    NRF_SECTION_ITEM_COUNT(test_vector_ecdsa_random_data, test_vector_ecdsa_random_t)
 
 /**< Get number of the ECDSA verify test vectors. */
 #define TEST_VECTOR_ECDSA_VERIFY_GET(i)  \
@@ -86,6 +98,9 @@ static nrf_crypto_ecc_public_key_t       m_ecdsa_public_key;                    
 static nrf_crypto_ecc_private_key_t      m_ecdsa_private_key;                                 /**< Private key structure. */
 static nrf_crypto_ecdsa_verify_context_t m_ecdsa_verify_context;                              /**< ECDSA verify context. */
 static nrf_crypto_ecdsa_sign_context_t   m_ecdsa_sign_context;                                /**< ECDSA sign context. */
+#if NRF_CRYPTO_BACKEND_OPTIGA_ENABLED
+static nrf_crypto_ecc_key_pair_generate_context_t m_ecdsa_key_pair_generate_context;          /**< Key pair generate context. */
+#endif
 
 static uint8_t const                   * p_ecdsa_input = m_ecdsa_input_buf;                   /**< Pointer to the ECDSA input buffer. */
 static uint8_t const                   * p_ecdsa_signature = m_ecdsa_signature_buf;           /**< Pointer to the ECDSA signature buffer. */
@@ -263,6 +278,101 @@ exit_test_vector:
     return NRF_SUCCESS;
 }
 
+#if NRF_MODULE_ENABLED(NRF_CRYPTO_BACKEND_OPTIGA)
+
+/**@brief Function for the ECDSA random test execution.
+ */
+ret_code_t exec_test_case_ecdsa_random_sha(test_info_t * p_test_info)
+{
+    uint32_t i;
+    ret_code_t err_code;
+    uint32_t hash_len;
+    size_t sign_len;
+    uint32_t ecdsa_test_vector_count = TEST_VECTOR_ECDSA_RANDOM_COUNT;
+
+    p_ecdsa_input = m_ecdsa_input_buf;
+    p_ecdsa_signature = m_ecdsa_signature_buf;
+
+    for (i = 0; i < ecdsa_test_vector_count; i++)
+    {
+        test_vector_ecdsa_random_t * p_test_vector = TEST_VECTOR_ECDSA_RANDOM_GET(i);
+        p_test_info->current_id++;
+
+        // Reset buffers.
+        memset(m_ecdsa_input_buf, 0x00, sizeof(m_ecdsa_input_buf));
+        memset(m_ecdsa_signature_buf, 0x00, sizeof(m_ecdsa_signature_buf));
+        memset(m_ecdsa_public_key_buf, 0x00, sizeof(m_ecdsa_public_key_buf));
+
+        // Fetch test vectors.
+        hash_len = unhexify(m_ecdsa_input_buf, p_test_vector->p_input);
+        sign_len = p_test_vector->sig_len;
+
+        start_time_measurement();
+        // Generate random ECDSA key pair
+        err_code = nrf_crypto_ecc_key_pair_generate(&m_ecdsa_key_pair_generate_context,
+                                                    p_test_vector->p_curve_info,
+                                                    &m_ecdsa_private_key,
+                                                    &m_ecdsa_public_key);
+        TEST_VECTOR_ASSERT_ERR_CODE((err_code == NRF_SUCCESS),
+                                    "nrf_crypto_ecc_key_pair_generate");
+        
+        // sign the test hash
+        err_code = nrf_crypto_ecdsa_sign(&m_ecdsa_sign_context, &m_ecdsa_private_key, p_ecdsa_input, hash_len, m_ecdsa_signature_buf,
+                                         &sign_len);
+        TEST_VECTOR_ASSERT_ERR_CODE((err_code == NRF_SUCCESS),
+                                    "nrf_crypto_ecdsa_sign");
+                                   
+
+        // Verify the ECDSA signature by running the ECDSA verify.
+        err_code = nrf_crypto_ecdsa_verify(&m_ecdsa_verify_context,
+                                           &m_ecdsa_public_key,
+                                           p_ecdsa_input,
+                                           hash_len,
+                                           p_ecdsa_signature,
+                                           sign_len);
+
+        // Verify the nrf_crypto_ecdsa_verify err_code.
+        TEST_VECTOR_ASSERT_ERR_CODE((err_code == NRF_SUCCESS),
+                                    "nrf_crypto_ecdsa_verify");
+
+        // Modify the signature value to induce a verification failure
+        m_ecdsa_signature_buf[0] ^= 1;
+
+
+         // Verify the ECDSA signature by running the ECDSA verify, it should fail now
+        err_code = nrf_crypto_ecdsa_verify(&m_ecdsa_verify_context,
+                                           &m_ecdsa_public_key,
+                                           p_ecdsa_input,
+                                           hash_len,
+                                           p_ecdsa_signature,
+                                           sign_len);
+
+        // Verify the nrf_crypto_ecdsa_verify err_code. Must not be success
+        TEST_VECTOR_ASSERT_ERR_CODE((err_code != NRF_SUCCESS),
+                                    "nrf_crypto_ecdsa_verify");
+
+
+        stop_time_measurement();
+
+        NRF_LOG_INFO("#%04d Test vector passed: %s %s",
+                     p_test_info->current_id,
+                     p_test_info->p_test_case_name,
+                     p_test_vector->p_test_vector_name);
+
+        p_test_info->tests_passed++;
+
+exit_test_vector:
+
+        // Free the generated key.
+        (void)nrf_crypto_ecc_public_key_free(&m_ecdsa_public_key);
+
+        while (NRF_LOG_PROCESS());
+    }
+    return NRF_SUCCESS;
+}
+
+#endif // #if NRF_MODULE_ENABLED(NRF_CRYPTO_BACKEND_OPTIGA)
+
 
 
 /**@brief Function for running the test teardown.
@@ -301,5 +411,22 @@ NRF_SECTION_ITEM_REGISTER(test_case_data, test_case_t test_ecdsa_verify) =
     .exec = exec_test_case_ecdsa_verify_sha,
     .teardown = teardown_test_case_ecdsa
 };
+
+#if NRF_MODULE_ENABLED(NRF_CRYPTO_BACKEND_OPTIGA)
+
+/** @brief  Macro for registering the the ECDSA random test case by using section variables.
+ *
+ * @details     This macro places a variable in a section named "test_case_data",
+ *              which is initialized by main.
+ */
+NRF_SECTION_ITEM_REGISTER(test_case_data, test_case_t test_ecdsa_random) =
+{
+    .p_test_case_name = "ECDSA Random",
+    .setup = setup_test_case_ecdsa,
+    .exec = exec_test_case_ecdsa_random_sha,
+    .teardown = teardown_test_case_ecdsa
+};
+
+#endif // #if NRF_MODULE_ENABLED(NRF_CRYPTO_BACKEND_OPTIGA)
 
 #endif // NRF_CRYPTO_ECC_ENABLED

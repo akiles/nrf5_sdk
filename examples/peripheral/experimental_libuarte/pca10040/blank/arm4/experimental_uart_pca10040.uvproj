@@ -416,9 +416,18 @@
         </Group>        <Group>
           <GroupName>nRF_Drivers</GroupName>
           <Files>            <File>
+              <FileName>nrfx_atomic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</FilePath>            </File>            <File>
+              <FileName>nrfx_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_clock.c</FilePath>            </File>            <File>
               <FileName>nrfx_ppi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_ppi.c</FilePath>            </File>            <File>
+              <FileName>nrfx_rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_rtc.c</FilePath>            </File>            <File>
               <FileName>nrfx_timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_timer.c</FilePath>            </File>          </Files>

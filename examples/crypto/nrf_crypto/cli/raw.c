@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2018 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -86,12 +86,12 @@ static void print_hex(uint8_t * p_data, size_t size)
                         (col < 0xF ? " " : ""));
         if (col == 0xF)
         {
-            nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\r\n");
+            nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\n");
         }
     }
     if (col != 0xF)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\r\n");
+        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\n");
     }
 }
 
@@ -103,7 +103,7 @@ static void print_c(uint8_t * p_data, size_t size)
     nrf_cli_t const * p_cli = cli_get();
     size_t            i;
     size_t            col = 0;
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "{\r\n");
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "{\n");
     for (i = 0; i < size; i++)
     {
         col = i & 0xF;
@@ -118,14 +118,14 @@ static void print_c(uint8_t * p_data, size_t size)
                         (col < 0xF ? " " : ""));
         if (col == 0xF)
         {
-            nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\r\n");
+            nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\n");
         }
     }
     if (col != 0xF)
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\r\n");
+        nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\n");
     }
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "}\r\n");
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "}\n");
 }
 
 
@@ -144,7 +144,7 @@ static void print_cli(uint8_t * p_data, size_t size)
                         p_data[i],
                         (i < (size - 1) ? " " : ""));
     }
-    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\"\r\n");
+    nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\"\n");
 }
 
 
@@ -205,7 +205,7 @@ static void raw_print(var_t * p_var, bool short_info)
             {
                 nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "%c", VAR_DATA(p_var)[i]);
             }
-            nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\"\r\n");
+            nrf_cli_fprintf(p_cli, NRF_CLI_NORMAL, "\"\n");
         }
     }
 }
@@ -288,12 +288,12 @@ static bool cmd_raw(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(raw, &m_subcmd_var_all, cmd_raw,
-    "Create variable with raw data.\r\n"
-    "Usage:\r\n"
-    "  raw [data1 [data2 ...]] output\r\n"
-    "Arguments:\r\n"
-    "  IN  dataN   Multiple raw data arguments that will be concatenated.\r\n"
-    "  OUT output  Newly created raw data.\r\n"
+    "Create variable with raw data.\n"
+    "Usage:\n"
+    "  raw [data1 [data2 ...]] output\n"
+    "Arguments:\n"
+    "  IN  dataN   Multiple raw data arguments that will be concatenated.\n"
+    "  OUT output  Newly created raw data.\n"
     );
 
 
@@ -326,7 +326,7 @@ static bool cmd_data_add(nrf_cli_t const * p_cli, size_t argc, char ** argv, boo
     {
         nrf_cli_fprintf(p_cli,
             NRF_CLI_WARNING,
-            "Variable does not exists or has different type. Creating new one.\r\n");
+            "Variable does not exists or has different type. Creating new one.\n");
     }
     else
     {
@@ -373,12 +373,12 @@ static bool cmd_prepend(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(prepend, &m_subcmd_var_all, cmd_prepend,
-    "Prepend raw data to a raw variable.\r\n"
-    "Usage:\r\n"
-    "  prepend [data1 [data2 ...]] variable\r\n"
-    "Arguments:\r\n"
-    "  IN     dataN     Multiple raw data arguments that are to be concatenated.\r\n"
-    "  IN/OUT variable  Variable where data is to be prepended.\r\n"
+    "Prepend raw data to a raw variable.\n"
+    "Usage:\n"
+    "  prepend [data1 [data2 ...]] variable\n"
+    "Arguments:\n"
+    "  IN     dataN     Multiple raw data arguments that are to be concatenated.\n"
+    "  IN/OUT variable  Variable where data is to be prepended.\n"
     );
 
 
@@ -391,12 +391,12 @@ static bool cmd_append(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(append, &m_subcmd_var_all, cmd_append,
-    "Append raw data to a raw variable.\r\n"
-    "Usage:\r\n"
-    "  append [data1 [data2 ...]] variable\r\n"
-    "Arguments:\r\n"
-    "  IN     dataN     Multiple raw data arguments that are to be concatenated.\r\n"
-    "  IN/OUT variable  Variable where data is to be appended.\r\n"
+    "Append raw data to a raw variable.\n"
+    "Usage:\n"
+    "  append [data1 [data2 ...]] variable\n"
+    "Arguments:\n"
+    "  IN     dataN     Multiple raw data arguments that are to be concatenated.\n"
+    "  IN/OUT variable  Variable where data is to be appended.\n"
     );
 
 
@@ -416,7 +416,7 @@ static bool cmd_sub(nrf_cli_t const * p_cli, size_t argc, char ** argv)
     int count;
     if (p_arg_end[0] != '\0')
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "Number at argument 2 is invalid.\r\n");
+        nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "Number at argument 2 is invalid.\n");
         return false;
     }
 
@@ -427,7 +427,7 @@ static bool cmd_sub(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
     if ((from < 0) || (from > (int)p_src->data_size))
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "Starting point outside the data.\r\n");
+        nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "Starting point outside the data.\n");
         return false;
     }
 
@@ -440,7 +440,7 @@ static bool cmd_sub(nrf_cli_t const * p_cli, size_t argc, char ** argv)
         count = (int)strtol(argv[3], &p_arg_end, 0);
         if (p_arg_end[0] != '\0')
         {
-            nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "Number at argument 3 is invalid.\r\n");
+            nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "Number at argument 3 is invalid.\n");
             return false;
         }
     }
@@ -452,7 +452,7 @@ static bool cmd_sub(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
     if ((count < 0) || (from + count > (int)p_src->data_size))
     {
-        nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "Endpoint outside the data.\r\n");
+        nrf_cli_fprintf(p_cli, NRF_CLI_WARNING, "Endpoint outside the data.\n");
         return false;
     }
 
@@ -466,16 +466,16 @@ static bool cmd_sub(nrf_cli_t const * p_cli, size_t argc, char ** argv)
 
 
 CLI_CMD_REGISTER(sub, &m_subcmd_var, cmd_sub,
-    "Create variable from part of a raw data.\r\n"
-    "Usage:\r\n"
-    "  sub source start_index bytes_count output\r\n"
-    "Arguments:\r\n"
-    "  IN  source       Source raw data to cut.\r\n"
-    "  IN  start_index  Index of byte in the source where cut starts.\r\n"
-    "                   May be negative to count from the end of data.\r\n"
-    "  IN  bytes_count  Number of bytes to cut. Negative value indicate where cut\r\n"
-    "                   is to end, counting from the end. Value \"-\" cuts to the end.\r\n"
-    "  OUT output       Variable where portion of the source is to be placed.\r\n"
+    "Create variable from part of a raw data.\n"
+    "Usage:\n"
+    "  sub source start_index bytes_count output\n"
+    "Arguments:\n"
+    "  IN  source       Source raw data to cut.\n"
+    "  IN  start_index  Index of byte in the source where cut starts.\n"
+    "                   May be negative to count from the end of data.\n"
+    "  IN  bytes_count  Number of bytes to cut. Negative value indicate where cut\n"
+    "                   is to end, counting from the end. Value \"-\" cuts to the end.\n"
+    "  OUT output       Variable where portion of the source is to be placed.\n"
     );
 
 
@@ -518,13 +518,13 @@ NRF_CLI_CREATE_STATIC_SUBCMD_SET(m_sub_format)
 
 
 CLI_CMD_REGISTER(format, &m_sub_format, cmd_format,
-    "Change printing format of the raw data.\r\n"
-    "Usage:\r\n"
-    "  format type\r\n"
-    "Arguments:\r\n"
-    "  IN  type   Source raw data to cut. Following values are allowed:\r\n"
-    "             hex - raw hex format (default),\r\n"
-    "             c   - C source code,\r\n"
-    "             cli - string that can be copy-pasted back to CLI.\r\n"
+    "Change printing format of the raw data.\n"
+    "Usage:\n"
+    "  format type\n"
+    "Arguments:\n"
+    "  IN  type   Source raw data to cut. Following values are allowed:\n"
+    "             hex - raw hex format (default),\n"
+    "             c   - C source code,\n"
+    "             cli - string that can be copy-pasted back to CLI.\n"
     );
 

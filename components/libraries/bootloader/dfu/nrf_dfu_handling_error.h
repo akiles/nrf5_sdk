@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -78,8 +78,8 @@ typedef enum
     NRF_DFU_EXT_ERROR_INIT_COMMAND_INVALID      = 0x04, /**< The init command is invalid. The init packet either has
                                                              an invalid update type or it is missing required fields for the update type
                                                              (for example, the init packet for a SoftDevice update is missing the SoftDevice size field). */
-    NRF_DFU_EXT_ERROR_FW_VERSION_FAILURE        = 0x05, /**< The firmware version is too low. For an application, the version must be greater than
-                                                             the current application. For a bootloader, it must be greater than or equal
+    NRF_DFU_EXT_ERROR_FW_VERSION_FAILURE        = 0x05, /**< The firmware version is too low. For an application or SoftDevice, the version must be greater than
+                                                             or equal to the current version. For a bootloader, it must be greater than the current version.
                                                              to the current version. This requirement prevents downgrade attacks.*/
     NRF_DFU_EXT_ERROR_HW_VERSION_FAILURE        = 0x06, /**< The hardware version of the device does not match the required
                                                              hardware version for the update. */

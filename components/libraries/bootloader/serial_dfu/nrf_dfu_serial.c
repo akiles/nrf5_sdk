@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -226,6 +226,12 @@ void nrf_dfu_serial_on_packet_received(nrf_dfu_serial_t       * p_transport,
 
             request.create.object_type = p_payload[0];
             request.create.object_size = uint32_decode(&p_payload[1]);
+
+            if (request.create.object_type == NRF_DFU_OBJ_TYPE_COMMAND)
+            {
+                /* Activity on the current transport. Close all except the current one. */
+                (void) nrf_dfu_transports_close(p_transport->p_low_level_transport);
+            }
         } break;
 
         case NRF_DFU_OP_OBJECT_WRITE:

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -79,7 +79,7 @@
 #else // NRF_MODULE_ENABLED(NRF_LOG)
 #define NRF_LOG_INTERNAL_PROCESS()            false
 #define NRF_LOG_INTERNAL_FLUSH()
-#define NRF_LOG_INTERNAL_INIT(timestamp_func) NRF_SUCCESS
+#define NRF_LOG_INTERNAL_INIT(...) NRF_SUCCESS
 #define NRF_LOG_INTERNAL_HANDLERS_SET(default_handler, bytes_handler) \
     UNUSED_PARAMETER(default_handler); UNUSED_PARAMETER(bytes_handler)
 #define NRF_LOG_INTERNAL_FINAL_FLUSH()

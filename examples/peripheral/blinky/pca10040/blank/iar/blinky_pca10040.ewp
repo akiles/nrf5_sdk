@@ -999,9 +999,6 @@
       <data/>
     </settings>
   </configuration>  <group>
-  <name>Application</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\main.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\config\sdk_config.h</name>    </file>  </group>  <group>
   <name>nRF_Log</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_frontend.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\log\src\nrf_log_str_formatter.c</name>    </file>  </group>  <group>
@@ -1020,6 +1017,11 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\memobj\nrf_memobj.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ringbuf\nrf_ringbuf.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>  </group>  <group>
+  <name>nRF_Drivers</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>  </group>  <group>
+  <name>Application</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\main.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\config\sdk_config.h</name>    </file>  </group>  <group>
   <name>None</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk\iar_startup_nrf52.s</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\mdk\system_nrf52.c</name>    </file>  </group></project>

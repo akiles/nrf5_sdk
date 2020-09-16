@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -47,6 +47,12 @@
 
 /** @brief SD_REQ field value which indicates that Softdevice can be overwritten by the application. */
 #define SD_REQ_APP_OVERWRITES_SD 0
+
+/** @brief SD_REQ_ANY_VERSION field value which indicates that any SoftDevice version is valid. 
+ *
+ * @note This is used by external application in case SoftDevice version compatibility isn't needed.
+ */
+#define SD_REQ_ANY_VERSION (0xFFFE)
 
 /**
  * @brief Function for validating version of new firmware.

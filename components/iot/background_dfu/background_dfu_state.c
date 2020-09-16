@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -635,6 +635,7 @@ uint32_t background_dfu_handle_event(background_dfu_context_t * p_dfu_ctx,
                 {
                     NRF_LOG_INFO("Image is already installed");
                     background_dfu_reset_state(p_dfu_ctx);
+                    background_dfu_transport_state_update(p_dfu_ctx);
                     break;
                 }
 

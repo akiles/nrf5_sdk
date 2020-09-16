@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2017 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -39,7 +39,7 @@
  */
 #include "sdk_common.h"
 #if NRF_MODULE_ENABLED(TASK_MANAGER)
-#include "nrf_mpu.h"
+#include "nrf_mpu_lib.h"
 #include "nrf_atomic.h"
 #include "app_util_platform.h"
 #include "task_manager.h"
@@ -149,7 +149,7 @@ typedef struct
 /**@brief Stack space for tasks */
 #if TASK_MANAGER_CONFIG_STACK_GUARD
 /**@brief Handle to MPU region used as a guard */
-static nrf_mpu_region_t s_guard_region;
+static nrf_mpu_lib_region_t s_guard_region;
 __ALIGN(STACK_GUARD_SIZE)
 #else
 __ALIGN(8)
@@ -207,10 +207,10 @@ static void task_stack_poison(task_id_t task_id)
 static void task_stack_protect(task_id_t task_id)
 {
 #if TASK_MANAGER_CONFIG_STACK_GUARD
-    APP_ERROR_CHECK(nrf_mpu_region_create(&s_guard_region,
-                                          TASK_STACK_GUARD_BASE(task_id),
-                                          STACK_GUARD_SIZE,
-                                          TASK_GUARD_ATTRIBUTES));
+    APP_ERROR_CHECK(nrf_mpu_lib_region_create(&s_guard_region,
+                                              TASK_STACK_GUARD_BASE(task_id),
+                                              STACK_GUARD_SIZE,
+                                              TASK_GUARD_ATTRIBUTES));
 #endif
 }
 
@@ -335,7 +335,7 @@ void *task_schedule(void *p_stack)
 
 #if TASK_MANAGER_CONFIG_STACK_GUARD
     // Destroy stack guard allocated for current task.
-    APP_ERROR_CHECK(nrf_mpu_region_destroy(s_guard_region));
+    APP_ERROR_CHECK(nrf_mpu_lib_region_destroy(s_guard_region));
 #endif
 
     // Save current task state if task if switching from valid task.

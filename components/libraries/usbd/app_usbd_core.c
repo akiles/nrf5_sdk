@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -508,7 +508,7 @@ static ret_code_t setup_endpoint_req_std(app_usbd_setup_evt_t const * p_setup_ev
     nrf_drv_usbd_ep_t ep_addr = (nrf_drv_usbd_ep_t)(p_setup_ev->setup.wIndex.lb);
     app_usbd_state_t usb_state = usbd_core_state_get();
 
-    switch (p_setup_ev->setup.bmRequest)
+    switch (p_setup_ev->setup.bRequest)
     {
         case APP_USBD_SETUP_STDREQ_GET_STATUS:
         {
@@ -589,7 +589,7 @@ static ret_code_t setup_interface_req_std_handle(
 
     if (app_usbd_setup_req_dir(p_setup_ev->setup.bmRequestType) == APP_USBD_SETUP_REQDIR_IN)
     {
-        switch (p_setup_ev->setup.bmRequest)
+        switch (p_setup_ev->setup.bRequest)
         {
             case APP_USBD_SETUP_STDREQ_GET_STATUS:
             {
@@ -617,7 +617,7 @@ static ret_code_t setup_interface_req_std_handle(
     }
     else /* APP_USBD_SETUP_REQDIR_OUT */
     {
-        switch (p_setup_ev->setup.bmRequest)
+        switch (p_setup_ev->setup.bRequest)
         {
             case APP_USBD_SETUP_STDREQ_SET_INTERFACE:
             {
@@ -868,7 +868,7 @@ static ret_code_t setup_device_req_std_handler(app_usbd_class_inst_t const * con
 
     if (app_usbd_setup_req_dir(p_setup_ev->setup.bmRequestType) == APP_USBD_SETUP_REQDIR_IN)
     {
-        switch (p_setup_ev->setup.bmRequest)
+        switch (p_setup_ev->setup.bRequest)
         {
             case APP_USBD_SETUP_STDREQ_GET_STATUS:
             {
@@ -890,7 +890,7 @@ static ret_code_t setup_device_req_std_handler(app_usbd_class_inst_t const * con
     }
     else /* APP_USBD_SETUP_REQDIR_OUT */
     {
-        switch (p_setup_ev->setup.bmRequest)
+        switch (p_setup_ev->setup.bRequest)
         {
             case APP_USBD_SETUP_STDREQ_SET_ADDRESS:
             {
@@ -955,7 +955,7 @@ static inline ret_code_t app_usbd_core_setup_req_handler(app_usbd_class_inst_t c
 
     NRF_LOG_DEBUG("SETUP: t: 0x%.2x r: 0x%.2x",
                   setup_ev.setup.bmRequestType,
-                  setup_ev.setup.bmRequest);
+                  setup_ev.setup.bRequest);
     if (usb_core_ep0_handler_check())
     {
         NRF_LOG_WARNING("Previous setup not finished!");

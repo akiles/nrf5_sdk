@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -168,9 +168,6 @@ static void on_rx_complete(nrf_dfu_serial_t * p_transport, uint8_t * p_data, uin
             continue;
         }
 
-        // Activity detected on current transport, close all except active one.
-        (void) nrf_dfu_transports_close(&usb_dfu_transport);
-
         nrf_dfu_serial_on_packet_received(p_transport,
                                           (uint8_t const *)(m_slip.p_buffer),
                                           m_slip.current_index);
@@ -321,6 +318,7 @@ static uint32_t usb_dfu_transport_init(nrf_dfu_observer_t observer)
     m_serial.mtu               = SLIP_MTU;
     m_serial.p_rsp_buf         = &m_rsp_buf[NRF_USB_MAX_RESPONSE_SIZE_SLIP -
                                             NRF_SERIAL_MAX_RESPONSE_SIZE];
+    m_serial.p_low_level_transport = &usb_dfu_transport;
 
 
     NRF_LOG_DEBUG("Initializing drivers.");

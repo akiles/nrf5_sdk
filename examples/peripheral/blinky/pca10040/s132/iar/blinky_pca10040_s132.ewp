@@ -1028,6 +1028,8 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\ringbuf\nrf_ringbuf.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>  </group>  <group>
+  <name>nRF_Drivers</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\modules\nrfx\soc\nrfx_atomic.c</name>    </file>  </group>  <group>
   <name>Application</name>    <file>
     <name>$PROJ_DIR$\..\..\..\main.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\config\sdk_config.h</name>    </file>  </group>  <group>

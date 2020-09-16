@@ -63,12 +63,6 @@ SECTIONS
     KEEP(*(.nrf_queue))
     PROVIDE(__stop_nrf_queue = .);
   } > FLASH
-  .sdh_stack_observers :
-  {
-    PROVIDE(__start_sdh_stack_observers = .);
-    KEEP(*(SORT(.sdh_stack_observers*)))
-    PROVIDE(__stop_sdh_stack_observers = .);
-  } > FLASH
   .sdh_req_observers :
   {
     PROVIDE(__start_sdh_req_observers = .);
@@ -80,6 +74,12 @@ SECTIONS
     PROVIDE(__start_sdh_state_observers = .);
     KEEP(*(SORT(.sdh_state_observers*)))
     PROVIDE(__stop_sdh_state_observers = .);
+  } > FLASH
+  .sdh_stack_observers :
+  {
+    PROVIDE(__start_sdh_stack_observers = .);
+    KEEP(*(SORT(.sdh_stack_observers*)))
+    PROVIDE(__stop_sdh_stack_observers = .);
   } > FLASH
     .nrf_balloc :
   {
@@ -125,5 +125,6 @@ SECTIONS
   } > FLASH
 
 } INSERT AFTER .text
+
 
 INCLUDE "nrf_common.ld"

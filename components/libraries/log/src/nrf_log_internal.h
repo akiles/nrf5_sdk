@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - 2018, Nordic Semiconductor ASA
+ * Copyright (c) 2016 - 2019, Nordic Semiconductor ASA
  *
  * All rights reserved.
  *
@@ -253,7 +253,7 @@
         NRF_LOG_INTERNAL_HEXDUMP_INST(NRF_LOG_SEVERITY_WARNING, NRF_LOG_SEVERITY_WARNING, p_inst, p_data, len)
 
 #define NRF_LOG_INTERNAL_HEXDUMP_WARNING(p_data, len) \
-        NRF_LOG_INTERNAL_HEXDUMP_(NRF_LOG_SEVERITY_WARNING, NRF_LOG_SEVERITY_WARNING, p_data, len)
+        NRF_LOG_INTERNAL_HEXDUMP_MODULE(NRF_LOG_SEVERITY_WARNING, NRF_LOG_SEVERITY_WARNING, p_data, len)
 
 #define NRF_LOG_INTERNAL_INST_INFO(p_inst, ...) \
         NRF_LOG_INTERNAL_INST(NRF_LOG_SEVERITY_INFO, NRF_LOG_SEVERITY_INFO, p_inst, __VA_ARGS__)
