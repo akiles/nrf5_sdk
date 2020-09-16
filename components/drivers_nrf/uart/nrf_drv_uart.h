@@ -14,7 +14,7 @@
  * @addtogroup nrf_uart UART driver and HAL
  * @ingroup nrf_drivers
  * @brief UART API.
- * @details The UART driver provides APIs for utilizing UART peripheral.
+ * @details The UART driver provides APIs for utilizing the UART peripheral.
  *
  * @defgroup nrf_drv_uart UART driver
  * @{
@@ -63,6 +63,13 @@ typedef struct
 
 /**@brief UART default configuration. */
 #ifdef NRF52
+#if !UART_LEGACY_SUPPORT
+#define DEFAULT_CONFIG_USE_EASY_DMA true
+#elif !UART_EASY_DMA_SUPPORT
+#define DEFAULT_CONFIG_USE_EASY_DMA false
+#else
+#define DEFAULT_CONFIG_USE_EASY_DMA UART0_CONFIG_USE_EASY_DMA
+#endif
 #define NRF_DRV_UART_DEFAULT_CONFIG                                                   \
     {                                                                                 \
         .pseltxd            = UART0_CONFIG_PSEL_TXD,                                  \
@@ -74,7 +81,7 @@ typedef struct
         .parity             = UART0_CONFIG_PARITY,                                    \
         .baudrate           = UART0_CONFIG_BAUDRATE,                                  \
         .interrupt_priority = UART0_CONFIG_IRQ_PRIORITY,                              \
-        .use_easy_dma       = UART0_CONFIG_USE_EASY_DMA                               \
+        .use_easy_dma       = DEFAULT_CONFIG_USE_EASY_DMA                             \
     }
 #else
 #define NRF_DRV_UART_DEFAULT_CONFIG                                                   \
@@ -148,18 +155,18 @@ void nrf_drv_uart_uninit(void);
 /**
  * @brief Function for getting the address of a specific UART task.
  *
- * @param[in]  task Task.
+ * @param[in] task Task.
  *
- * @retval     Task address.
+ * @return    Task address.
  */
 __STATIC_INLINE uint32_t nrf_drv_uart_task_address_get(nrf_uart_task_t task);
 
 /**
  * @brief Function for getting the address of a specific UART event.
  *
- * @param[in]  event Event.
+ * @param[in] event Event.
  *
- * @retval     Event address.
+ * @return    Event address.
  */
 __STATIC_INLINE uint32_t nrf_drv_uart_event_address_get(nrf_uart_event_t event);
 
@@ -181,10 +188,19 @@ __STATIC_INLINE uint32_t nrf_drv_uart_event_address_get(nrf_uart_event_t event);
  *
  * @retval    NRF_SUCCESS            If initialization was successful.
  * @retval    NRF_ERROR_BUSY         If driver is already transferring.
+ * @retval    NRF_ERROR_FORBIDDEN    If the transfer was aborted from a different context
+ *                                   (blocking mode only, also see @ref nrf_drv_uart_rx_disable).
  * @retval    NRF_ERROR_INVALID_ADDR If p_data does not point to RAM buffer (UARTE only).
- * @retval    NRF_ERROR_FORBIDDEN    If transfer was aborted (blocking mode only).
  */
 ret_code_t nrf_drv_uart_tx(uint8_t const * const p_data, uint8_t length);
+
+/**
+ * @brief Function for checking if UART is currently transmitting.
+ *
+ * @retval true  If UART is transmitting.
+ * @retval false If UART is not transmitting.
+ */
+bool nrf_drv_uart_tx_in_progress(void);
 
 /**
  * @brief Function for aborting any ongoing transmission.
@@ -198,11 +214,15 @@ void nrf_drv_uart_tx_abort(void);
 /**
  * @brief Function for receiving data over UART.
  *
- * If an event handler was provided in nrf_drv_uart_init() call, this function
+ * If an event handler was provided in the nrf_drv_uart_init() call, this function
  * returns immediately and the handler is called when the transfer is done.
  * Otherwise, the transfer is performed in blocking mode, i.e. this function
  * returns when the transfer is finished. Blocking mode is not using interrupt so
  * there is no context switching inside the function.
+ * The receive buffer pointer is double buffered in non-blocking mode. The secondary
+ * buffer can be set immediately after starting the transfer and will be filled
+ * when the primary buffer is full. The double buffering feature allows 
+ * receiving data continuously.
  *
  * @note Peripherals using EasyDMA (i.e. UARTE) require that the transfer buffers
  *       are placed in the Data RAM region. If they are not and UARTE instance is
@@ -210,10 +230,14 @@ void nrf_drv_uart_tx_abort(void);
  * @param[in] p_data Pointer to data.
  * @param[in] length Number of bytes to receive.
  *
- * @retval    NRF_SUCCESS            If initialization was successful.
- * @retval    NRF_ERROR_BUSY         If driver is already receiving.
+ * @retval    NRF_SUCCESS If initialization was successful.
+ * @retval    NRF_ERROR_BUSY If the driver is already receiving
+ *                           (and the secondary buffer has already been set
+ *                           in non-blocking mode).
+ * @retval    NRF_ERROR_FORBIDDEN If the transfer was aborted from a different context
+ *                               (blocking mode only, also see @ref nrf_drv_uart_rx_disable).
+ * @retval    NRF_ERROR_INTERNAL If UART peripheral reported an error.
  * @retval    NRF_ERROR_INVALID_ADDR If p_data does not point to RAM buffer (UARTE only).
- * @retval    NRF_ERROR_FORBIDDEN    If transfer was aborted (blocking mode only).
  */
 ret_code_t nrf_drv_uart_rx(uint8_t * p_data, uint8_t length);
 

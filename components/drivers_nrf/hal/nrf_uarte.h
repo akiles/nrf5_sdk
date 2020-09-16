@@ -175,6 +175,22 @@ __STATIC_INLINE uint32_t nrf_uarte_event_address_get(NRF_UARTE_Type  * p_reg,
                                                     nrf_uarte_event_t  event);
 
 /**
+ * @brief Function for enabling UARTE shortcuts.
+ *
+ * @param p_reg       UARTE instance.
+ * @param shorts_mask Shortcuts to enable.
+ */
+__STATIC_INLINE void nrf_uarte_shorts_enable(NRF_UARTE_Type * p_reg, uint32_t shorts_mask);
+
+/**
+ * @brief Function for disabling UARTE shortcuts.
+ *
+ * @param p_reg       UARTE instance.
+ * @param shorts_mask Shortcuts to disable.
+ */
+__STATIC_INLINE void nrf_uarte_shorts_disable(NRF_UARTE_Type * p_reg, uint32_t shorts_mask);
+
+/**
  * @brief Function for enabling UARTE interrupts.
  *
  * @param p_reg     Instance.
@@ -380,6 +396,16 @@ __STATIC_INLINE uint32_t nrf_uarte_event_address_get(NRF_UARTE_Type  * p_reg,
                                                     nrf_uarte_event_t  event)
 {
     return (uint32_t)((uint8_t *)p_reg + (uint32_t)event);
+}
+
+__STATIC_INLINE void nrf_uarte_shorts_enable(NRF_UARTE_Type * p_reg, uint32_t shorts_mask)
+{
+    p_reg->SHORTS |= shorts_mask;
+}
+
+__STATIC_INLINE void nrf_uarte_shorts_disable(NRF_UARTE_Type * p_reg, uint32_t shorts_mask)
+{
+    p_reg->SHORTS &= ~(shorts_mask);
 }
 
 __STATIC_INLINE void nrf_uarte_int_enable(NRF_UARTE_Type * p_reg, uint32_t int_mask)

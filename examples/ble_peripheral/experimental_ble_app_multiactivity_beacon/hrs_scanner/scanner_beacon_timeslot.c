@@ -120,7 +120,7 @@ static uint32_t decode_advertising(uint8_t *buffer, adv_packet_t *adv_packet)
 static nrf_radio_request_t * m_request_earliest(enum NRF_RADIO_PRIORITY priority)
 {
     m_beacon_scanner.timeslot_request.request_type                = NRF_RADIO_REQ_TYPE_EARLIEST;
-    m_beacon_scanner.timeslot_request.params.earliest.hfclk       = NRF_RADIO_HFCLK_CFG_DEFAULT;
+    m_beacon_scanner.timeslot_request.params.earliest.hfclk       = NRF_RADIO_HFCLK_CFG_XTAL_GUARANTEED;
     m_beacon_scanner.timeslot_request.params.earliest.priority    = priority;
     m_beacon_scanner.timeslot_request.params.earliest.length_us   = TIMESLOT_LEN_US;
     m_beacon_scanner.timeslot_request.params.earliest.timeout_us  = 1000000;

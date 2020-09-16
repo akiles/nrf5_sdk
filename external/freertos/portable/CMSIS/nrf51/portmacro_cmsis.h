@@ -135,8 +135,8 @@ typedef unsigned long UBaseType_t;
 #define portNRF_RTC_MAXTICKS   ((1U<<24)-1U)
 /*-----------------------------------------------------------*/
 
-/* Scheduler utilities. */
-#define portYIELD() do                                                          \
+/* Internal auxiliary macro */
+#define portPendSVSchedule() do                                                 \
 {                                                                               \
     /* Set a PendSV to request a context switch. */                             \
     SCB->ICSR = SCB_ICSR_PENDSVSET_Msk;                                         \
@@ -147,13 +147,17 @@ typedef unsigned long UBaseType_t;
     __ISB();                                                                    \
 }while(0)
 
-#define portEND_SWITCHING_ISR( xSwitchRequired ) if( (xSwitchRequired) != pdFALSE ) portYIELD()
+/* Scheduler utilities. */
+#define portYIELD() vPortTaskYield()
+
+#define portEND_SWITCHING_ISR( xSwitchRequired ) if( (xSwitchRequired) != pdFALSE ) { portPendSVSchedule(); }
 #define portYIELD_FROM_ISR( x ) portEND_SWITCHING_ISR( x )
 /*-----------------------------------------------------------*/
 
 /* Critical section management. */
 extern void vPortEnterCritical( void );
 extern void vPortExitCritical( void );
+extern void vPortTaskYield( void );
 #define portSET_INTERRUPT_MASK_FROM_ISR()		ulPortDisableISR()
 #define portCLEAR_INTERRUPT_MASK_FROM_ISR(x)	vPortRestoreISR(x)
 #define portDISABLE_INTERRUPTS()				vPortDisableISR()

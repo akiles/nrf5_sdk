@@ -29,7 +29,7 @@ uint32_t ble_user_mem_reply_req_dec(uint8_t const * const          p_buf,
     SER_ASSERT_NOT_NULL(p_conn_handle);
     SER_ASSERT_NOT_NULL(pp_mem_block);
     SER_ASSERT_NOT_NULL(*pp_mem_block);
-    SER_ASSERT_LENGTH_LEQ(SER_CMD_HEADER_SIZE + 2 + 4, packet_len);
+    SER_ASSERT_LENGTH_LEQ(SER_CMD_HEADER_SIZE + 2 + 1, packet_len);
 
     SER_ASSERT(p_buf[index] == SD_BLE_USER_MEM_REPLY, NRF_ERROR_INVALID_PARAM);
     index++;
@@ -62,5 +62,5 @@ uint32_t ble_user_mem_reply_rsp_enc(uint32_t         return_code,
                                     uint8_t * const  p_buf,
                                     uint32_t * const p_buf_len)
 {
-    return ser_ble_cmd_rsp_dec(p_buf, *p_buf_len, SD_BLE_USER_MEM_REPLY, &return_code);
+    return ser_ble_cmd_rsp_status_code_enc(SD_BLE_USER_MEM_REPLY, return_code, p_buf, p_buf_len);
 }

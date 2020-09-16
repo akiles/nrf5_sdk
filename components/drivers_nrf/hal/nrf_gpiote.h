@@ -25,7 +25,7 @@
 */
 #ifdef NRF51
 #define NUMBER_OF_GPIO_TE 4
-#elif defined NRF52
+#elif defined(NRF52)
 #define NUMBER_OF_GPIO_TE 8
 #else
 #error "Chip family not specified"
@@ -62,6 +62,30 @@ typedef enum /*lint -save -e30 -esym(628,__INTADDR__) */
     NRF_GPIOTE_TASKS_OUT_1     = offsetof(NRF_GPIOTE_Type, TASKS_OUT[1]), /**< Out task 1.*/
     NRF_GPIOTE_TASKS_OUT_2     = offsetof(NRF_GPIOTE_Type, TASKS_OUT[2]), /**< Out task 2.*/
     NRF_GPIOTE_TASKS_OUT_3     = offsetof(NRF_GPIOTE_Type, TASKS_OUT[3]), /**< Out task 3.*/
+#if (NUMBER_OF_GPIO_TE == 8)
+    NRF_GPIOTE_TASKS_OUT_4     = offsetof(NRF_GPIOTE_Type, TASKS_OUT[4]), /**< Out task 4.*/
+    NRF_GPIOTE_TASKS_OUT_5     = offsetof(NRF_GPIOTE_Type, TASKS_OUT[5]), /**< Out task 5.*/
+    NRF_GPIOTE_TASKS_OUT_6     = offsetof(NRF_GPIOTE_Type, TASKS_OUT[6]), /**< Out task 6.*/
+    NRF_GPIOTE_TASKS_OUT_7     = offsetof(NRF_GPIOTE_Type, TASKS_OUT[7]), /**< Out task 7.*/
+#endif
+#ifdef NRF52
+    NRF_GPIOTE_TASKS_SET_0     = offsetof(NRF_GPIOTE_Type, TASKS_SET[0]), /**< Set task 0.*/
+    NRF_GPIOTE_TASKS_SET_1     = offsetof(NRF_GPIOTE_Type, TASKS_SET[1]), /**< Set task 1.*/
+    NRF_GPIOTE_TASKS_SET_2     = offsetof(NRF_GPIOTE_Type, TASKS_SET[2]), /**< Set task 2.*/
+    NRF_GPIOTE_TASKS_SET_3     = offsetof(NRF_GPIOTE_Type, TASKS_SET[3]), /**< Set task 3.*/
+    NRF_GPIOTE_TASKS_SET_4     = offsetof(NRF_GPIOTE_Type, TASKS_SET[4]), /**< Set task 4.*/
+    NRF_GPIOTE_TASKS_SET_5     = offsetof(NRF_GPIOTE_Type, TASKS_SET[5]), /**< Set task 5.*/
+    NRF_GPIOTE_TASKS_SET_6     = offsetof(NRF_GPIOTE_Type, TASKS_SET[6]), /**< Set task 6.*/
+    NRF_GPIOTE_TASKS_SET_7     = offsetof(NRF_GPIOTE_Type, TASKS_SET[7]), /**< Set task 7.*/
+    NRF_GPIOTE_TASKS_CLR_0     = offsetof(NRF_GPIOTE_Type, TASKS_CLR[0]), /**< Clear task 0.*/
+    NRF_GPIOTE_TASKS_CLR_1     = offsetof(NRF_GPIOTE_Type, TASKS_CLR[1]), /**< Clear task 1.*/
+    NRF_GPIOTE_TASKS_CLR_2     = offsetof(NRF_GPIOTE_Type, TASKS_CLR[2]), /**< Clear task 2.*/
+    NRF_GPIOTE_TASKS_CLR_3     = offsetof(NRF_GPIOTE_Type, TASKS_CLR[3]), /**< Clear task 3.*/
+    NRF_GPIOTE_TASKS_CLR_4     = offsetof(NRF_GPIOTE_Type, TASKS_CLR[4]), /**< Clear task 4.*/
+    NRF_GPIOTE_TASKS_CLR_5     = offsetof(NRF_GPIOTE_Type, TASKS_CLR[5]), /**< Clear task 5.*/
+    NRF_GPIOTE_TASKS_CLR_6     = offsetof(NRF_GPIOTE_Type, TASKS_CLR[6]), /**< Clear task 6.*/
+    NRF_GPIOTE_TASKS_CLR_7     = offsetof(NRF_GPIOTE_Type, TASKS_CLR[7]), /**< Clear task 7.*/
+#endif
     /*lint -restore*/
 } nrf_gpiote_tasks_t;
 
@@ -74,6 +98,12 @@ typedef enum /*lint -save -e30 -esym(628,__INTADDR__) */
     NRF_GPIOTE_EVENTS_IN_1     = offsetof(NRF_GPIOTE_Type, EVENTS_IN[1]), /**< In event 1.*/
     NRF_GPIOTE_EVENTS_IN_2     = offsetof(NRF_GPIOTE_Type, EVENTS_IN[2]), /**< In event 2.*/
     NRF_GPIOTE_EVENTS_IN_3     = offsetof(NRF_GPIOTE_Type, EVENTS_IN[3]), /**< In event 3.*/
+#if (NUMBER_OF_GPIO_TE == 8)
+    NRF_GPIOTE_EVENTS_IN_4     = offsetof(NRF_GPIOTE_Type, EVENTS_IN[4]), /**< In event 4.*/
+    NRF_GPIOTE_EVENTS_IN_5     = offsetof(NRF_GPIOTE_Type, EVENTS_IN[5]), /**< In event 5.*/
+    NRF_GPIOTE_EVENTS_IN_6     = offsetof(NRF_GPIOTE_Type, EVENTS_IN[6]), /**< In event 6.*/
+    NRF_GPIOTE_EVENTS_IN_7     = offsetof(NRF_GPIOTE_Type, EVENTS_IN[7]), /**< In event 7.*/
+#endif
     NRF_GPIOTE_EVENTS_PORT     = offsetof(NRF_GPIOTE_Type, EVENTS_PORT), /**<  Port event.*/
     /*lint -restore*/
 } nrf_gpiote_events_t;
@@ -88,11 +118,26 @@ typedef enum
     NRF_GPIOTE_INT_IN1_MASK  = GPIOTE_INTENSET_IN1_Msk,  /**< GPIOTE interrupt from IN1. */
     NRF_GPIOTE_INT_IN2_MASK  = GPIOTE_INTENSET_IN2_Msk,  /**< GPIOTE interrupt from IN2. */
     NRF_GPIOTE_INT_IN3_MASK  = GPIOTE_INTENSET_IN3_Msk,  /**< GPIOTE interrupt from IN3. */
+#if (NUMBER_OF_GPIO_TE == 8)
+    NRF_GPIOTE_INT_IN4_MASK  = GPIOTE_INTENSET_IN4_Msk,  /**< GPIOTE interrupt from IN4. */
+    NRF_GPIOTE_INT_IN5_MASK  = GPIOTE_INTENSET_IN5_Msk,  /**< GPIOTE interrupt from IN5. */
+    NRF_GPIOTE_INT_IN6_MASK  = GPIOTE_INTENSET_IN6_Msk,  /**< GPIOTE interrupt from IN6. */
+    NRF_GPIOTE_INT_IN7_MASK  = GPIOTE_INTENSET_IN7_Msk,  /**< GPIOTE interrupt from IN7. */
+#endif
     NRF_GPIOTE_INT_PORT_MASK = (int)GPIOTE_INTENSET_PORT_Msk, /**< GPIOTE interrupt from PORT event. */
 } nrf_gpiote_int_t;
 
+#if (NUMBER_OF_GPIO_TE == 4)
 #define NRF_GPIOTE_INT_IN_MASK (NRF_GPIOTE_INT_IN0_MASK | NRF_GPIOTE_INT_IN1_MASK |\
                                 NRF_GPIOTE_INT_IN2_MASK | NRF_GPIOTE_INT_IN3_MASK)
+#elif (NUMBER_OF_GPIO_TE == 8)
+#define NRF_GPIOTE_INT_IN_MASK (NRF_GPIOTE_INT_IN0_MASK | NRF_GPIOTE_INT_IN1_MASK |\
+                                NRF_GPIOTE_INT_IN2_MASK | NRF_GPIOTE_INT_IN3_MASK |\
+                                NRF_GPIOTE_INT_IN4_MASK | NRF_GPIOTE_INT_IN5_MASK |\
+                                NRF_GPIOTE_INT_IN6_MASK | NRF_GPIOTE_INT_IN7_MASK)
+#else
+#error "Unexpected number of GPIO Tasks and Events"
+#endif
 /**
  * @brief Function for activating a specific GPIOTE task.
  *

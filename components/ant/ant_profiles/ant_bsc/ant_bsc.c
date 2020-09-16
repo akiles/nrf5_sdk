@@ -10,6 +10,7 @@
  *
  */
 #include "nrf_assert.h"
+#include "nrf_error.h"
 #include "app_error.h"
 #include "ant_interface.h"
 #include "app_util.h"
@@ -363,7 +364,7 @@ void ant_bsc_disp_evt_handler(ant_bsc_profile_t * p_profile,
 {
     if (p_ant_event->channel == p_profile->channel_number)
     {
-        ANT_MESSAGE * p_message = (ANT_MESSAGE *)p_ant_event->evt_buffer;
+        ANT_MESSAGE * p_message = (ANT_MESSAGE *)p_ant_event->msg.evt_buffer;
         switch (p_ant_event->event)
         {
             case EVENT_RX:

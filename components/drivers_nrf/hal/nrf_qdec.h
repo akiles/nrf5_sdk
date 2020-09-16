@@ -12,7 +12,7 @@
 #ifndef NRF_QDEC_H__
 #define NRF_QDEC_H__
 
-#include "stddef.h"
+#include <stddef.h>
 #include "nrf_error.h"
 #include "nrf.h"
 

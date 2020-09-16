@@ -2,7 +2,6 @@
 This software is subject to the license described in the License.txt file
 included with this software distribution. You may not use this file except in compliance
 with this license.
-
 Copyright (c) Dynastream Innovations Inc. 2015
 All rights reserved.
 */
@@ -22,8 +21,8 @@ All rights reserved.
 #include "ant_stack_handler_types.h"
 #include "bsp.h"
 
-#define SF_ANT_BS_CHANNEL_NUMBER ((uint8_t) 0) /**< Background scanning channel */
-#define SF_ANT_MS_CHANNEL_NUMBER ((uint8_t) 1) /**< Master channel */
+#define SF_ANT_BS_CHANNEL_NUMBER    ((uint8_t) 0) /**< Background scanning channel */
+#define SF_ANT_MS_CHANNEL_NUMBER    ((uint8_t) 1) /**< Master channel */
 
 /**@brief Processes ANT message on ANT background scanning channel
  *
@@ -67,13 +66,34 @@ void sf_bsp_evt_handler(bsp_event_t evt);
  */
 void sf_init(void);
 
-/**@brief Formats command for transmission
+/**@brief Formats a command for potential re-transmission
 *
 * @param[in]   dst                Command destination
 * @param[in]   cmd                Command
+* @param[in]   payload0           Command payload byte 0
+* @param[in]   payload1           Command payload byte 1
 * @param[in]   seq                Command sequence number
 */
-void set_cmd_buffer(uint8_t dst, uint8_t cmd, uint8_t seq);
+void set_cmd_buffer_seq(uint8_t dst, uint8_t cmd, uint8_t data0, uint8_t data1, uint8_t seq);
+
+/**@brief Formats a new command for transmission
+*
+* @param[in]   dst                Command destination
+* @param[in]   cmd                Command
+* @param[in]   payload0           Command payload byte 0
+* @param[in]   payload1           Command payload byte 1
+*/
+void set_cmd_buffer_new(uint8_t dst, uint8_t cmd, uint8_t payload0, uint8_t payload1);
+
+/**@brief Dispatches external control commands to the network
+*
+* @param[in]   page             Page number
+* @param[in]   dst              Destination node
+* @param[in]   data0            Command data byte 0 - typically the command to be executed
+* @param[in]   data1            Command data byte 1
+* @param[in]   data2            Command data byte 2
+*/
+void sf_external_received_message_process(uint8_t page, uint8_t dst, uint8_t data0, uint8_t data1, uint8_t data2);
 
 /**
  *@}

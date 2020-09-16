@@ -12,7 +12,7 @@
 #ifndef ANT_KEY_MANAGER_H__
 #define ANT_KEY_MANAGER_H__
 
-#include "stdint.h"
+#include <stdint.h>
 
 /**
  * @file

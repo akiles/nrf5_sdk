@@ -12,7 +12,7 @@ All rights reserved.
 #ifndef N5SK_LED_H_
 #define N5SK_LED_H_
 
-#include "stdint.h"
+#include <stdint.h>
 
 
 ////////////////////////////////////////////////////////////////////////////////

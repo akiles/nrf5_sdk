@@ -30,61 +30,40 @@
 #include "app_timer.h"
 #include "nrf_drv_clock.h"
 #include "app_util_platform.h"
-#ifdef SOFTDEVICE_PRESENT
-#include "softdevice_handler.h"
-#endif
 
 /*Timer initalization parameters*/   
 #define OP_QUEUES_SIZE          3
 #define APP_TIMER_PRESCALER     0 
 
 /**
- * @brief Function for LEDs initialization.
+ * @brief Function for starting lfclk needed by APP_TIMER.
  */
-static void leds_init(void)
-{
-    ret_code_t           err_code;
-    
-    led_sb_init_params_t led_sb_init_params = LED_SB_INIT_DEFAULT_PARAMS(LEDS_MASK);
-    
-    err_code = led_softblink_init(&led_sb_init_params);
-
-    APP_ERROR_CHECK(err_code);
-}
-
-#ifndef SOFTDEVICE_PRESENT
 static void lfclk_init(void)
 {
     uint32_t err_code;
-    nrf_drv_clock_config_t nrf_drv_clock_config = NRF_DRV_CLOCK_DEAFULT_CONFIG;
-
-    err_code = nrf_drv_clock_init(&nrf_drv_clock_config);
+    err_code = nrf_drv_clock_init();
     APP_ERROR_CHECK(err_code);
 
-    nrf_drv_clock_lfclk_request();
+    nrf_drv_clock_lfclk_request(NULL);
 }
-#endif
 
 /**
  * @brief Function for application main entry.
  */
 int main(void)
 {
-    uint32_t err_code;
+    ret_code_t err_code;
 
-    // We need the LFCK running for APP_TIMER. In case SoftDevice is in use
-    // it will start the LFCK during initialization, otherwise we have to
-    // start it manually.
-#ifdef SOFTDEVICE_PRESENT
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
-#else
     lfclk_init();
-#endif
 
     // Start APP_TIMER to generate timeouts.
     APP_TIMER_INIT(APP_TIMER_PRESCALER, OP_QUEUES_SIZE, NULL);
 
-    leds_init();
+    led_sb_init_params_t led_sb_init_param = LED_SB_INIT_DEFAULT_PARAMS(LEDS_MASK);
+    
+    err_code = led_softblink_init(&led_sb_init_param);
+    APP_ERROR_CHECK(err_code);
+    
     err_code = led_softblink_start(LEDS_MASK);
     APP_ERROR_CHECK(err_code);     
 

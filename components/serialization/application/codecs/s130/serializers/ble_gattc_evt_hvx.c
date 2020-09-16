@@ -15,7 +15,6 @@
 #include "ble_serialization.h"
 #include "app_util.h"
 
-
 uint32_t ble_gattc_evt_hvx_dec(uint8_t const * const p_buf,
                                uint32_t              packet_len,
                                ble_evt_t * const     p_event,
@@ -31,8 +30,8 @@ uint32_t ble_gattc_evt_hvx_dec(uint8_t const * const p_buf,
 
     tmp_attr_len = uint16_decode(&(p_buf[9]));
 
-    uint32_t event_len = offsetof(ble_evt_t, evt.gattc_evt.params.hvx) +
-                         sizeof (ble_gattc_evt_hvx_t) - 1 + tmp_attr_len;
+    uint32_t event_len = offsetof(ble_gattc_evt_t, params.hvx) +
+                         offsetof (ble_gattc_evt_hvx_t, data) + tmp_attr_len;
 
     if (p_event == NULL)
     {

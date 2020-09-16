@@ -13,6 +13,8 @@
 #include "app_uart.h"
 #include "nrf_drv_uart.h"
 #include "nrf_assert.h"
+#include "sdk_common.h"
+
 static uint8_t tx_buffer[1];
 static uint8_t rx_buffer[1];
 static volatile bool rx_done;
@@ -73,12 +75,14 @@ uint32_t app_uart_init(const app_uart_comm_params_t * p_comm_params,
     }
 
     uint32_t err_code = nrf_drv_uart_init(&config, uart_event_handler);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
-    nrf_drv_uart_rx_enable();
+#ifdef NRF52
+    if (!config.use_easy_dma)
+#endif
+    {
+        nrf_drv_uart_rx_enable();
+    }
     return nrf_drv_uart_rx(rx_buffer,1);
 }
 

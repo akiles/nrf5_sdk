@@ -16,13 +16,10 @@
 #include "crc16.h"
 #include "hci_mem_pool.h"
 #include "hci_mem_pool_internal.h"
-#include "nordic_common.h"
-#include "compiler_abstraction.h"
-#include "app_util.h"
 #include "app_timer.h"
 #include "app_error.h"
 #include <stdio.h>
-#include <stdbool.h>
+#include "sdk_common.h"
 
 #define PKT_HDR_SIZE                    4u                                                                 /**< Packet header size in number of bytes. */
 #define PKT_CRC_SIZE                    2u                                                                 /**< Packet CRC size in number of bytes. */
@@ -601,16 +598,10 @@ uint32_t hci_transport_open(void)
     }
     
     err_code = hci_mem_pool_open();
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }    
+    VERIFY_SUCCESS(err_code);
     
     err_code = hci_slip_open();
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }     
+    VERIFY_SUCCESS(err_code);
     
     err_code = hci_mem_pool_rx_produce(RX_BUF_SIZE, (void **)&mp_slip_used_rx_buffer);
     if (err_code != NRF_SUCCESS)

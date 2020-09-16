@@ -68,6 +68,8 @@ $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/se
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_evt_conn_sec_update.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_evt_connected.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_evt_disconnected.c) \
+$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_evt_key_pressed.c) \
+$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_evt_lesc_dhkey_request.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_evt_passkey_display.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_evt_rssi_changed.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_evt_scan_req_report.c) \
@@ -75,6 +77,10 @@ $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/se
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_evt_sec_params_request.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_evt_sec_request.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_evt_timeout.c) \
+$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_keypress_notify.c) \
+$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_lesc_dhkey_reply.c) \
+$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_lesc_oob_data_get.c) \
+$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_lesc_oob_data_set.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_ppcp_get.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_ppcp_set.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_rssi_get.c) \
@@ -86,10 +92,12 @@ $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/se
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_sec_params_reply.c) \
 $(abspath ../../../../../../components/serialization/common/struct_ser/s130/ble_gap_struct_serialization.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gap_tx_power_set.c) \
+$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gattc_attr_info_discover.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gattc_char_value_by_uuid_read.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gattc_char_values_read.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gattc_characteristics_discover.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gattc_descriptors_discover.c) \
+$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gattc_evt_attr_info_disc_rsp.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gattc_evt_char_disc_rsp.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gattc_evt_char_val_by_uuid_read_rsp.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gattc_evt_char_vals_read_rsp.c) \
@@ -106,6 +114,7 @@ $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/se
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gattc_relationships_discover.c) \
 $(abspath ../../../../../../components/serialization/common/struct_ser/s130/ble_gattc_struct_serialization.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gattc_write.c) \
+$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gatts_attr_get.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gatts_characteristic_add.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gatts_descriptor_add.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gatts_evt_hvc.c) \
@@ -116,6 +125,7 @@ $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/se
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gatts_evt_write.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gatts_hvx.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gatts_include_add.c) \
+$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gatts_initial_user_handle_get.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gatts_rw_authorize_reply.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gatts_service_add.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_gatts_service_changed.c) \
@@ -133,7 +143,7 @@ $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/se
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_opt_set.c) \
 $(abspath ../../../../../../components/serialization/common/ble_serialization.c) \
 $(abspath ../../../../../../components/serialization/common/struct_ser/s130/ble_struct_serialization.c) \
-$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_tx_buffer_count_get.c) \
+$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_tx_packet_count_get.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_user_mem_reply.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_uuid_decode.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ble_uuid_encode.c) \
@@ -150,6 +160,8 @@ $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/mi
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/middleware/conn_mw_ble_l2cap.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/middleware/conn_mw_nrf_soc.c) \
 $(abspath ../../../../../../components/serialization/connectivity/hal/dtm_uart.c) \
+$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/ecb_block_encrypt.c) \
+$(abspath ../../../../../../components/serialization/common/struct_ser/s130/nrf_soc_struct_serialization.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/power_system_off.c) \
 $(abspath ../../../../../../components/serialization/connectivity/ser_conn_cmd_decoder.c) \
 $(abspath ../../../../../../components/serialization/connectivity/ser_conn_dtm_cmd_decoder.c) \
@@ -162,8 +174,10 @@ $(abspath ../../../../../../components/serialization/common/transport/ser_hal_tr
 $(abspath ../../../../../../components/serialization/common/transport/ser_phy/ser_phy_nrf51_spi_slave.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers/temp_get.c) \
 $(abspath ../../../../../../components/libraries/util/app_error.c) \
+$(abspath ../../../../../../components/libraries/util/app_error_weak.c) \
 $(abspath ../../../../../../components/libraries/scheduler/app_scheduler_serconn.c) \
 $(abspath ../../../../../../components/libraries/timer/app_timer.c) \
+$(abspath ../../../../../../components/libraries/util/app_util_platform.c) \
 $(abspath ../../../../../../components/libraries/util/nrf_assert.c) \
 $(abspath ../../../../../../components/drivers_nrf/delay/nrf_delay.c) \
 $(abspath ../../../../../../components/drivers_nrf/common/nrf_drv_common.c) \
@@ -193,23 +207,25 @@ INC_PATHS += -I$(abspath ../../../../../../components/softdevice/s130/headers)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/delay)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/common)
 INC_PATHS += -I$(abspath ../../../../../../components/ble/ble_dtm)
-INC_PATHS += -I$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/middleware)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers)
 INC_PATHS += -I$(abspath ../../../../../../components/libraries/util)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/uart)
 INC_PATHS += -I$(abspath ../../../../../../components/ble/common)
 INC_PATHS += -I$(abspath ../../../../../../components/device)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/spi_slave)
-INC_PATHS += -I$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/serializers)
 INC_PATHS += -I$(abspath ../../../../../../components/libraries/timer)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/transport/ser_phy)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/gpiote)
 INC_PATHS += -I$(abspath ../../../../../../components/libraries/scheduler)
+INC_PATHS += -I$(abspath ../../../../../../components/toolchain)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/connectivity/codecs/common)
+INC_PATHS += -I$(abspath ../../../../../../components/toolchain/CMSIS/Include)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/hal)
 INC_PATHS += -I$(abspath ../../../../../../components/toolchain/gcc)
-INC_PATHS += -I$(abspath ../../../../../../components/toolchain)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/connectivity/codecs/s130/middleware)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/common)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/transport)
+INC_PATHS += -I$(abspath ../../../../../../components/softdevice/s130/headers/nrf51)
 INC_PATHS += -I$(abspath ../../../../../../components/softdevice/common/softdevice_handler)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/struct_ser/s130)
 
@@ -221,23 +237,24 @@ OUTPUT_BINARY_DIRECTORY = $(OBJECT_DIRECTORY)
 BUILD_DIRECTORIES := $(sort $(OBJECT_DIRECTORY) $(OUTPUT_BINARY_DIRECTORY) $(LISTING_DIRECTORY) )
 
 #flags common to all targets
-CFLAGS  = -DSER_CONNECTIVITY
-CFLAGS += -DSWI_DISABLE0
-CFLAGS += -DBOARD_PCA10028
-CFLAGS += -DSOFTDEVICE_PRESENT
+CFLAGS  = -D__STACK_SIZE=2048
 CFLAGS += -DNRF51
+CFLAGS += -D__HEAP_SIZE=1024
+CFLAGS += -DBOARD_PCA10028
 CFLAGS += -DAPP_SCHEDULER_WITH_PAUSE
-CFLAGS += -DS130
 CFLAGS += -DBLE_STACK_SUPPORT_REQD
+CFLAGS += -DSER_CONNECTIVITY
 CFLAGS += -DBSP_DEFINES_ONLY
+CFLAGS += -DSWI_DISABLE0
+CFLAGS += -DSOFTDEVICE_PRESENT
+CFLAGS += -DS130
 CFLAGS += -mcpu=cortex-m0
 CFLAGS += -mthumb -mabi=aapcs --std=gnu99
-CFLAGS += -Wall -Werror -O3
+CFLAGS += -Wall -Werror -O3 -g3
 CFLAGS += -mfloat-abi=soft
 # keep every function in separate section. This will allow linker to dump unused functions
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -fno-builtin --short-enums
-
+CFLAGS += -fno-builtin --short-enums 
 # keep every function in separate section. This will allow linker to dump unused functions
 LDFLAGS += -Xlinker -Map=$(LISTING_DIRECTORY)/$(OUTPUT_FILENAME).map
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)
@@ -249,15 +266,18 @@ LDFLAGS += --specs=nano.specs -lc -lnosys
 
 # Assembler flags
 ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DSER_CONNECTIVITY
-ASMFLAGS += -DSWI_DISABLE0
-ASMFLAGS += -DBOARD_PCA10028
-ASMFLAGS += -DSOFTDEVICE_PRESENT
+ASMFLAGS += -D__STACK_SIZE=2048
 ASMFLAGS += -DNRF51
+ASMFLAGS += -D__HEAP_SIZE=1024
+ASMFLAGS += -DBOARD_PCA10028
 ASMFLAGS += -DAPP_SCHEDULER_WITH_PAUSE
-ASMFLAGS += -DS130
 ASMFLAGS += -DBLE_STACK_SUPPORT_REQD
+ASMFLAGS += -DSER_CONNECTIVITY
 ASMFLAGS += -DBSP_DEFINES_ONLY
+ASMFLAGS += -DSWI_DISABLE0
+ASMFLAGS += -DSOFTDEVICE_PRESENT
+ASMFLAGS += -DS130
+
 #default target - first one defined
 default: clean nrf51422_xxac_s130
 
@@ -270,7 +290,7 @@ all: clean
 help:
 	@echo following targets are available:
 	@echo 	nrf51422_xxac_s130
-
+	@echo 	flash_softdevice
 
 C_SOURCE_FILE_NAMES = $(notdir $(C_SOURCE_FILES))
 C_PATHS = $(call remduplicates, $(dir $(C_SOURCE_FILES) ) )
@@ -287,9 +307,10 @@ OBJECTS = $(C_OBJECTS) $(ASM_OBJECTS)
 
 nrf51422_xxac_s130: OUTPUT_FILENAME := nrf51422_xxac_s130
 nrf51422_xxac_s130: LINKER_SCRIPT=ble_connectivity_gcc_nrf51.ld
+
 nrf51422_xxac_s130: $(BUILD_DIRECTORIES) $(OBJECTS)
 	@echo Linking target: $(OUTPUT_FILENAME).out
-	$(NO_ECHO)$(CC) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
+	$(NO_ECHO)$(CC) $(LDFLAGS) $(OBJECTS) $(LIBS) -lm -o $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
 	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e finalize
 
 ## Create build directories
@@ -304,16 +325,12 @@ $(OBJECT_DIRECTORY)/%.o: %.c
 
 # Assemble files
 $(OBJECT_DIRECTORY)/%.o: %.s
-	@echo Compiling file: $(notdir $<)
+	@echo Assembly file: $(notdir $<)
 	$(NO_ECHO)$(CC) $(ASMFLAGS) $(INC_PATHS) -c -o $@ $<
-
-
 # Link
 $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out: $(BUILD_DIRECTORIES) $(OBJECTS)
 	@echo Linking target: $(OUTPUT_FILENAME).out
-	$(NO_ECHO)$(CC) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
-
-
+	$(NO_ECHO)$(CC) $(LDFLAGS) $(OBJECTS) $(LIBS) -lm -o $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
 ## Create binary .bin file from the .out file
 $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).bin: $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
 	@echo Preparing: $(OUTPUT_FILENAME).bin
@@ -334,7 +351,6 @@ genbin:
 genhex: 
 	@echo Preparing: $(OUTPUT_FILENAME).hex
 	$(NO_ECHO)$(OBJCOPY) -O ihex $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).hex
-
 echosize:
 	-@echo ''
 	$(NO_ECHO)$(SIZE) $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
@@ -345,10 +361,13 @@ clean:
 
 cleanobj:
 	$(RM) $(BUILD_DIRECTORIES)/*.o
-
-flash: $(MAKECMDGOALS)
+flash: nrf51422_xxac_s130
 	@echo Flashing: $(OUTPUT_BINARY_DIRECTORY)/$<.hex
-	nrfjprog --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex -f nrf51  --chiperase
-	nrfjprog --reset
+	nrfjprog --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex -f nrf51  --sectorerase
+	nrfjprog --reset -f nrf51
 
 ## Flash softdevice
+flash_softdevice:
+	@echo Flashing: s130_nrf51_2.0.0_softdevice.hex
+	nrfjprog --program ../../../../../../components/softdevice/s130/hex/s130_nrf51_2.0.0_softdevice.hex -f nrf51 --chiperase
+	nrfjprog --reset -f nrf51

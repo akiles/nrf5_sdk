@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -178,9 +178,11 @@
         <option>
           <name>CCDefines</name>
           <state>BLE_STACK_SUPPORT_REQD</state>
+          <state>__STACK_SIZE=2048</state>
+          <state>__HEAP_SIZE=1024</state>
           <state>BOARD_PCA10028</state>
-          <state>SER_CONNECTIVITY</state>
           <state>S130</state>
+          <state>SER_CONNECTIVITY</state>
           <state>APP_SCHEDULER_WITH_PAUSE</state>
           <state>BSP_DEFINES_ONLY</state>
           <state>NRF51</state>
@@ -250,7 +252,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -316,15 +318,13 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\..\config\ble_connectivity_s130_spi_pca10028</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_dtm</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_slave</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
@@ -343,7 +343,10 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\headers</state>
-          <state>$TOOLKIT_DIR$\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\headers\nrf51</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -493,7 +496,7 @@
         </option>
         <option>
           <name>ADebug</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>AltRegisterNames</name>
@@ -502,9 +505,11 @@
         <option>
       <name>ADefines</name>
           <state>BLE_STACK_SUPPORT_REQD</state>
+          <state>__STACK_SIZE=2048</state>
+          <state>__HEAP_SIZE=1024</state>
           <state>BOARD_PCA10028</state>
-          <state>SER_CONNECTIVITY</state>
           <state>S130</state>
+          <state>SER_CONNECTIVITY</state>
           <state>APP_SCHEDULER_WITH_PAUSE</state>
           <state>BSP_DEFINES_ONLY</state>
           <state>NRF51</state>
@@ -607,15 +612,13 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$\..\..\..\config\ble_connectivity_s130_spi_pca10028</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_dtm</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_slave</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
@@ -634,6 +637,10 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\headers</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\headers\nrf51</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1113,6 +1120,12 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gap_evt_disconnected.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gap_evt_key_pressed.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gap_evt_lesc_dhkey_request.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gap_evt_passkey_display.c</name>
     </file>
     <file>
@@ -1132,6 +1145,18 @@
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gap_evt_timeout.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gap_keypress_notify.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gap_lesc_dhkey_reply.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gap_lesc_oob_data_get.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gap_lesc_oob_data_set.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gap_ppcp_get.c</name>
@@ -1167,6 +1192,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gap_tx_power_set.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gattc_attr_info_discover.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gattc_char_value_by_uuid_read.c</name>
     </file>
     <file>
@@ -1177,6 +1205,9 @@
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gattc_descriptors_discover.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gattc_evt_attr_info_disc_rsp.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gattc_evt_char_disc_rsp.c</name>
@@ -1227,6 +1258,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gattc_write.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gatts_attr_get.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gatts_characteristic_add.c</name>
     </file>
     <file>
@@ -1255,6 +1289,9 @@
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gatts_include_add.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gatts_initial_user_handle_get.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_gatts_rw_authorize_reply.c</name>
@@ -1308,7 +1345,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\struct_ser\s130\ble_struct_serialization.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_tx_buffer_count_get.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_tx_packet_count_get.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ble_user_mem_reply.c</name>
@@ -1359,6 +1396,12 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\hal\dtm_uart.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\ecb_block_encrypt.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\struct_ser\s130\nrf_soc_struct_serialization.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers\power_system_off.c</name>
     </file>
     <file>
@@ -1398,10 +1441,16 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler\app_scheduler_serconn.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>
@@ -1467,7 +1516,7 @@
   <group>
   <name>nRF_SoftDevice</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51822_1.0.0_licence_agreement.txt</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51_2.0.0_licence_agreement.txt</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler\softdevice_handler.c</name>

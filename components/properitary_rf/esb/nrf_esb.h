@@ -1,4 +1,4 @@
-/* Copyright (c) 2011 Nordic Semiconductor. All Rights Reserved.
+/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
  *
  * The information contained herein is property of Nordic Semiconductor ASA.
  * Terms and conditions of usage are described in detail in NORDIC
@@ -8,707 +8,523 @@
  * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
  * the file.
  *
- * $LastChangedRevision: 39629 $
  */
 
-/**
- * @file
- * @brief Enhanced ShockBurst API.
- *
-*/
-
-#ifndef NRF_ESB_H__
-#define NRF_ESB_H__
+#ifndef __MICRO_ESB_H
+#define __MICRO_ESB_H
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "nrf_esb_constants.h"
+#include "nrf.h"
+#include "app_util.h"
 
-
-/**
- * @defgroup esb_02_api Application Programming Interface (API)
+/** @defgroup nrf_esb Enhanced ShockBurst
  * @{
- * @ingroup modules_02_esb
- * @brief Enhanced ShockBurst Application Programming Interface (API).
-*/
-
-
-/**
- * @enum nrf_esb_mode_t
- * @brief Enumerator used for selecting the ESB mode.
+ * @ingroup proprietary_api
+ *
+ * @brief Enhanced ShockBurst (ESB) is a basic protocol supporting two-way data
+ *        packet communication including packet buffering, packet acknowledgment
+ *        and automatic retransmission of lost packets.
  */
-typedef enum
-{
-  NRF_ESB_MODE_PTX,         ///< Primary Transmitter mode
-  NRF_ESB_MODE_PRX,         ///< Primary Receiver mode
+
+#define DEBUGPIN1   12
+#define DEBUGPIN2   13
+#define DEBUGPIN3   14
+#define DEBUGPIN4   15
+
+
+#ifdef  NRF_ESB_DEBUG
+#define DEBUG_PIN_SET(a)    (NRF_GPIO->OUTSET = (1 << (a)))
+#define DEBUG_PIN_CLR(a)    (NRF_GPIO->OUTCLR = (1 << (a)))
+#else
+#define DEBUG_PIN_SET(a)
+#define DEBUG_PIN_CLR(a)
+#endif
+
+
+// Hard coded parameters - change if necessary
+#ifndef NRF_ESB_MAX_PAYLOAD_LENGTH
+#define     NRF_ESB_MAX_PAYLOAD_LENGTH          32                  /**< The max size of the payload. Valid values are 1 to 252 */
+#endif
+
+#define     NRF_ESB_TX_FIFO_SIZE                8                   /**< The size of the transmission first in first out buffer. */
+#define     NRF_ESB_RX_FIFO_SIZE                8                   /**< The size of the reception first in first out buffer. */
+
+// 252 is the largest possible payload size according to the nRF5x architecture.
+STATIC_ASSERT(NRF_ESB_MAX_PAYLOAD_LENGTH <= 252);
+
+#define     NRF_ESB_SYS_TIMER                   NRF_TIMER2          /**< The timer which will be used by the module. */
+#define     NRF_ESB_SYS_TIMER_IRQ_Handler       TIMER2_IRQHandler   /**< The handler which will be used by NRF_ESB_SYS_TIMER. */
+
+#define     NRF_ESB_PPI_TIMER_START             10                  /**< The PPI channel used for timer start. */
+#define     NRF_ESB_PPI_TIMER_STOP              11                  /**< The PPI channel used for timer stop. */
+#define     NRF_ESB_PPI_RX_TIMEOUT              12                  /**< The PPI channel used for RX timeout. */
+#define     NRF_ESB_PPI_TX_START                13                  /**< The PPI channel used for starting TX. */
+
+// Interrupt flags
+#define     NRF_ESB_INT_TX_SUCCESS_MSK          0x01                /**< The flag used to indicate a success since last event. */
+#define     NRF_ESB_INT_TX_FAILED_MSK           0x02                /**< The flag used to indicate a failiure since last event. */
+#define     NRF_ESB_INT_RX_DR_MSK               0x04                /**< The flag used to indicate a received packet since last event. */
+
+#define     NRF_ESB_PID_RESET_VALUE             0xFF                /**< Invalid PID value which is guaranteed to not colide with any valid PID value. */
+#define     NRF_ESB_PID_MAX                     3                   /**< Maximum value for PID. */
+#define     NRF_ESB_CRC_RESET_VALUE             0xFFFF              /**< CRC reset value*/
+
+#ifdef NRF51
+#define ESB_EVT_IRQ        SWI0_IRQn                                /**< ESB Event IRQ number when running on a nRF51 device. */
+#define ESB_EVT_IRQHandler SWI0_IRQHandler                          /**< The handler for ESB_EVT_IRQ when running on a nRF51 device. */
+#elif defined (NRF52)
+#define ESB_EVT_IRQ        SWI0_EGU0_IRQn                           /**< ESB Event IRQ number when running on a nRF52 device. */
+#define ESB_EVT_IRQHandler SWI0_EGU0_IRQHandler                     /**< The handler for ESB_EVT_IRQ when running on a nRF52 device. */
+#endif /* NRF51 */
+
+#define     NRF_ESB_SYS_TIMER                   NRF_TIMER2          /**< System timer used by nrf_esb */
+#define     NRF_ESB_SYS_TIMER_IRQ_Handler       TIMER2_IRQHandler   /**< Timer IRQ handler used by nrf_esb */
+
+#define     NRF_ESB_PPI_TIMER_START             10                  /**< PPI channel for timer start. */
+#define     NRF_ESB_PPI_TIMER_STOP              11                  /**< PPI Channel for timer stop. */
+#define     NRF_ESB_PPI_RX_TIMEOUT              12                  /**< PPI channel for RX timeout. */
+#define     NRF_ESB_PPI_TX_START                13                  /**< PPI channel for TX start. */
+
+
+/** Default address configuration for ESB. Roughly equal to nRF24Lxx default (except pipe number which is only possible . */
+#define NRF_ESB_ADDR_DEFAULT                                                    \
+{                                                                               \
+    .base_addr_p0       = { 0xE7, 0xE7, 0xE7, 0xE7 },                           \
+    .base_addr_p1       = { 0xC2, 0xC2, 0xC2, 0xC2 },                           \
+    .pipe_prefixes      = { 0xE7, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xC8 },   \
+    .addr_length        = 5,                                                    \
+    .num_pipes          = 8,                                                    \
+    .rf_channel         = 2,                                                    \
+    .rx_pipes_enabled   = 0xFF                                                  \
+}
+
+
+/** Default radio parameters. Roughly equal to nRF24Lxx default parameters (except CRC which is set to 16-bit, and protocol set to DPL). */
+#define NRF_ESB_DEFAULT_CONFIG {.protocol               = NRF_ESB_PROTOCOL_ESB_DPL,         \
+                                .mode                   = NRF_ESB_MODE_PTX,                 \
+                                .event_handler          = 0,                                \
+                                .bitrate                = NRF_ESB_BITRATE_2MBPS,            \
+                                .crc                    = NRF_ESB_CRC_16BIT,                \
+                                .tx_output_power        = NRF_ESB_TX_POWER_0DBM,            \
+                                .retransmit_delay       = 250,                              \
+                                .retransmit_count       = 3,                                \
+                                .tx_mode                = NRF_ESB_TXMODE_AUTO,              \
+                                .radio_irq_priority     = 1,                                \
+                                .event_irq_priority     = 2,                                \
+                                .payload_length         = 32,                               \
+                                .selective_auto_ack     = false                             \
+}
+
+
+/** Default legacy radio parameters, identical to nRF24L defaults. */
+#define NRF_ESB_LEGACY_CONFIG  {.protocol               = NRF_ESB_PROTOCOL_ESB,             \
+                                .mode                   = NRF_ESB_MODE_PTX,                 \
+                                .event_handler          = 0,                                \
+                                .bitrate                = NRF_ESB_BITRATE_2MBPS,            \
+                                .crc                    = NRF_ESB_CRC_8BIT,                 \
+                                .tx_output_power        = NRF_ESB_TX_POWER_0DBM,            \
+                                .retransmit_delay       = 600,                              \
+                                .retransmit_count       = 3,                                \
+                                .tx_mode                = NRF_ESB_TXMODE_AUTO,              \
+                                .radio_irq_priority     = 1,                                \
+                                .event_irq_priority     = 2,                                \
+                                .payload_length         = 32,                               \
+                                .selective_auto_ack     = false                             \
+}
+
+
+/**Macro to create initializer for a TX data packet.
+ *
+ * @details This macro generates an initializer. It is more efficient
+ *          than setting the individual parameters dynamically.
+ *
+ * @param[in]   _pipe   The pipe to use for the data packet.
+ * @param[in]   ...     Comma separated list of character data to put in the TX buffer.
+ *                      Supported values are from 1 to 63 characters.
+ *
+ * @return  Initializer that sets up pipe, length and the byte array for content of the TX data.
+ */
+#define NRF_ESB_CREATE_PAYLOAD(_pipe, ...)                                                  \
+        {.pipe = _pipe, .length = NUM_VA_ARGS(__VA_ARGS__), .data = {__VA_ARGS__}};         \
+        STATIC_ASSERT(NUM_VA_ARGS(__VA_ARGS__) > 0 && NUM_VA_ARGS(__VA_ARGS__) <= 63)
+
+
+/**@brief Enhanced ShockBurst protocol. */
+typedef enum {
+    NRF_ESB_PROTOCOL_ESB,      /*< Enhanced ShockBurst with fixed payload length.                                            */
+    NRF_ESB_PROTOCOL_ESB_DPL   /*< Enhanced ShockBurst with dynamic payload length.                                          */
+} nrf_esb_protocol_t;
+
+
+/**@brief Enhanced ShockBurst mode. */
+typedef enum {
+    NRF_ESB_MODE_PTX,          /*< Primary transmitter mode. */
+    NRF_ESB_MODE_PRX           /*< Primary receiver mode.    */
 } nrf_esb_mode_t;
 
-/**
- * @enum nrf_esb_packet_t 
- * @brief Enumerator used for selecting TX packet type used in
- * PTX mode.
- */
+
+/**@brief Enhanced ShockBurst bitrate mode. */
+typedef enum {
+    NRF_ESB_BITRATE_2MBPS     = RADIO_MODE_MODE_Nrf_2Mbit,      /**< 2Mbit radio mode.                                             */
+    NRF_ESB_BITRATE_1MBPS     = RADIO_MODE_MODE_Nrf_1Mbit,      /**< 1Mbit radio mode.                                             */
+    NRF_ESB_BITRATE_250KBPS   = RADIO_MODE_MODE_Nrf_250Kbit,    /**< 250Kbit radio mode.                                           */
+    NRF_ESB_BITRATE_1MBPS_BLE = RADIO_MODE_MODE_Ble_1Mbit       /**< 1Mbit radio mode using Bluetooth Low Energy radio parameters. */
+} nrf_esb_bitrate_t;
+
+
+/**@brief Enhanced ShockBurst CRC modes. */
+typedef enum {
+    NRF_ESB_CRC_16BIT = RADIO_CRCCNF_LEN_Two,                   /**< Use two byte CRC. */
+    NRF_ESB_CRC_8BIT  = RADIO_CRCCNF_LEN_One,                   /**< Use one byte CRC. */
+    NRF_ESB_CRC_OFF   = RADIO_CRCCNF_LEN_Disabled               /**< Disable CRC.      */
+} nrf_esb_crc_t;
+
+
+/**@brief Enhanced ShockBurst radio transmission power modes. */
+typedef enum {
+    NRF_ESB_TX_POWER_4DBM     = RADIO_TXPOWER_TXPOWER_Pos4dBm,  /**< 4 dBm radio transmit power.   */
+    NRF_ESB_TX_POWER_0DBM     = RADIO_TXPOWER_TXPOWER_0dBm,     /**< 0 dBm radio transmit power.   */
+    NRF_ESB_TX_POWER_NEG4DBM  = RADIO_TXPOWER_TXPOWER_Neg4dBm,  /**< -4 dBm radio transmit power.  */
+    NRF_ESB_TX_POWER_NEG8DBM  = RADIO_TXPOWER_TXPOWER_Neg8dBm,  /**< -8 dBm radio transmit power.  */
+    NRF_ESB_TX_POWER_NEG12DBM = RADIO_TXPOWER_TXPOWER_Neg12dBm, /**< -12 dBm radio transmit power. */
+    NRF_ESB_TX_POWER_NEG16DBM = RADIO_TXPOWER_TXPOWER_Neg16dBm, /**< -16 dBm radio transmit power. */
+    NRF_ESB_TX_POWER_NEG20DBM = RADIO_TXPOWER_TXPOWER_Neg20dBm, /**< -20 dBm radio transmit power. */
+    NRF_ESB_TX_POWER_NEG30DBM = RADIO_TXPOWER_TXPOWER_Neg30dBm  /**< -30 dBm radio transmit power. */
+} nrf_esb_tx_power_t;
+
+
+/**@brief Enhanced ShockBurst transmission modes. */
+typedef enum {
+    NRF_ESB_TXMODE_AUTO,        /*< Automatic TX mode - When the TX fifo is non-empty and the radio is idle packets will be sent automatically. */
+    NRF_ESB_TXMODE_MANUAL,      /*< Manual TX mode - Packets will not be sent until nrf_esb_start_tx() is called. Can be used to ensure consistent packet timing. */
+    NRF_ESB_TXMODE_MANUAL_START /*< Manual start TX mode - Packets will not be sent until nrf_esb_start_tx() is called, but transmission will continue automatically until the TX fifo is empty. */
+} nrf_esb_tx_mode_t;
+
+
+/**@brief Enhanced ShockBurst event id used to indicate the type of the event. */
 typedef enum
 {
-  NRF_ESB_PACKET_USE_ACK,         ///< PTX packet requires ACK.
-  NRF_ESB_PACKET_NO_ACK,          ///< PTX packet does not require ACK.
-} nrf_esb_packet_t ;
-   
-
-/**
- * @enum nrf_esb_base_address_length_t
- * @brief Enumerator used for selecting the base address length.
- */
-typedef enum 
-{
-    NRF_ESB_BASE_ADDRESS_LENGTH_2B,   ///< 2 byte address length
-    NRF_ESB_BASE_ADDRESS_LENGTH_3B,   ///< 3 byte address length
-    NRF_ESB_BASE_ADDRESS_LENGTH_4B    ///< 4 byte address length
-} nrf_esb_base_address_length_t;
+    NRF_ESB_EVENT_TX_SUCCESS,   /**< Event triggered on TX success.     */
+    NRF_ESB_EVENT_TX_FAILED,    /**< Event triggered on TX failed.      */
+    NRF_ESB_EVENT_RX_RECEIVED   /**< Event triggered on RX Received.    */
+} nrf_esb_evt_id_t;
 
 
-/**
- * @enum nrf_esb_output_power_t
- * @brief Enumerator used for selecting the TX output power.
- */
-typedef enum 
-{
-    NRF_ESB_OUTPUT_POWER_4_DBM,          ///<  4 dBm output power.
-    NRF_ESB_OUTPUT_POWER_0_DBM,          ///<  0 dBm output power.
-    NRF_ESB_OUTPUT_POWER_N4_DBM,         ///< -4 dBm output power.
-    NRF_ESB_OUTPUT_POWER_N8_DBM,         ///< -8 dBm output power.
-    NRF_ESB_OUTPUT_POWER_N12_DBM,        ///< -12 dBm output power.
-    NRF_ESB_OUTPUT_POWER_N16_DBM,        ///< -16 dBm output power.
-    NRF_ESB_OUTPUT_POWER_N20_DBM         ///< -20 dBm output power.
-} nrf_esb_output_power_t;
-
-
-/**
- * @enum nrf_esb_datarate_t
- * @brief Enumerator used for selecting the radio data rate.
- */
-typedef enum 
-{
-    NRF_ESB_DATARATE_250_KBPS,            ///< 250 Kbps datarate
-    NRF_ESB_DATARATE_1_MBPS,              ///< 1 Mbps datarate
-    NRF_ESB_DATARATE_2_MBPS,              ///< 1 Mbps datarate
-} nrf_esb_datarate_t;
-
-
-/**
- * @enum nrf_esb_crc_length_t
- * @brief Enumerator used for selecting the CRC length.
- */
-typedef enum 
-{
-    NRF_ESB_CRC_OFF,            ///< CRC check disabled
-    NRF_ESB_CRC_LENGTH_1_BYTE,  ///< CRC check set to 8-bit
-    NRF_ESB_CRC_LENGTH_2_BYTE   ///< CRC check set to 16-bit    
-} nrf_esb_crc_length_t;
-
-/**
- * @enum nrf_esb_xosc_ctl_t
- * @brief Enumerator used for specifying whether switching the
- * external 16 MHz oscillator on/off shall be handled automatically
- * inside ESB or manually by the application.
- */
-typedef enum
-{
-    NRF_ESB_XOSC_CTL_AUTO,      ///< Switch XOSC on/off automatically
-    NRF_ESB_XOSC_CTL_MANUAL     ///< Switch XOSC on/off manually
-} nrf_esb_xosc_ctl_t;
-
-/******************************************************************************/
-/** @name General API functions
-  * @{ */
-/******************************************************************************/
-
-/**
- * @brief Initialize ESB.
+/**@brief Enhanced ShockBurst addresses.
  *
- * @param mode The mode to initialize ESB in. 
- * 
- * @retval true  If ESB initialized.
- * @retval false If ESB failed to initialize.
- */
-bool nrf_esb_init(nrf_esb_mode_t mode);
-
-
-/**
- * @brief Enable ESB.
- *
- * Equivalent to setting CE high in legacy ESB.
- *
- * When enabled the behaviour described for the current ESB mode will apply. 
- */
-void nrf_esb_enable(void);
-
-/**
- * @brief Disable ESB.
- *
- * Equivalent to setting CE low in legacy ESB.
- *
- * When calling this function ESB will begin disabling,
- * and will be fully disabled when ESB calls nrf_esb_disabled().
- * If there are any pending notifications (callbacks) , or if any new notifications 
- * are being added to the internal notification queue while ESB is disabling,
- * these will be sent to the application before ESB is fully disabled.
- *
- * After ESB has been fully disabled, no more notifications will be 
- * sent to the application.
- */
-void nrf_esb_disable(void);
-
-/** Check whether ESB is enabled or disabled.
- *
- * @retval true  If ESB is enabled.
- * @retval false If ESB is disabled.
- */
-bool nrf_esb_is_enabled(void);
-
-/** @} */
-
-
-/******************************************************************************/
-/** @name  functions
-  * @{ */
-/******************************************************************************/
-
-/** 
- * @brief TX success callback.
- *
- * In PTX mode this function is called after the PTX has sent a packet
- * and received the corresponding ACK packet from a PRX.
- *
- * In PRX mode this function is called after a payload in ACK is assumed
- * successfully transmitted, that is when the PRX received a new packet
- * (new PID or CRC) and the previous ACK sent to a PTX contained a
- * payload.
- *
- * @param tx_pipe The pipe on which the ACK packet was received.
- *
- * @param rssi Received signal strength indicator in dBm of measured ACK.
- * 
- * As the RSSI measurement requires a minimum on-air duration of the received 
- * packet, the measured RSSI value will not be reliable when ALL of the following 
- * criteria are met:
- *
- * - Datarate = 2 Mbps
- * - Payload length = 0
- * - CRC is off
- *
- */
-void nrf_esb_tx_success(uint32_t tx_pipe, int32_t rssi);
-
-
-/** 
- * @brief TX failed callback (PTX mode only).
- * 
- * This is called after the maximum number of TX attempts 
- * were reached for a packet. The packet is deleted from the TX FIFO.
- * 
- * Note that when NRF_ESB_PACKET_NO_ACK is used this callback is 
- * always made after sending a packet. 
- * @sa nrf_esb_set_max_number_of_tx_attempts().
- *
- * @param tx_pipe The pipe that failed to send a packet.
- */
-void nrf_esb_tx_failed(uint32_t tx_pipe);
-
-
-/** 
- * @brief RX data ready callback.
- *
- * PTX mode: This is called after an ACK is received from a PRX containing a 
- * payload.
- * 
- * PRX mode: This is called after a packet is received from a PTX ACK is 
- * received from a PRX containing a payload. 
- *
- * @param rx_pipe is the pipe on which a packet was received.
- * This value must be < NRF_ESB_CONST_PIPE_COUNT.
- *
- * @param rssi Received signal strength indicator in dBm of packet.
- *
- * As the RSSI measurement requires a minimum on-air duration of the received 
- * packet, the measured RSSI value will not be reliable when ALL of the following 
- * criteria are met:
- *
- * - Datarate = 2 Mbps
- * - Payload length = 0
- * - CRC is off
- * 
- */
-void nrf_esb_rx_data_ready(uint32_t rx_pipe, int32_t rssi);
-
-
-/** 
- * @brief Disabled callback.
- *
- * This is called after ESB enters the disabled state. 
- * There is no further CPU use by ESB, the radio is disabled and the timer is 
- * powered down.
- */
-void nrf_esb_disabled(void);
-
-/** @} */
-
-
-/******************************************************************************/
-/** @name Packet transmission and receiving functions
-  * @{ */
-/******************************************************************************/
-
-/**
- * @brief Add a packet to the tail of the TX FIFO. 
- *
- * In PTX mode, the packet will be transmitted at the next occation when ESB is enabled. 
- * In PRX mode, the payload will be piggybacked to onto an ACK. 
- *
- * @param payload        Pointer to the payload. 
- * @param payload_length The number of bytes of the payload to transmit. 
- * @param pipe           The pipe for which to add the payload. This value must be < NRF_ESB_CONST_PIPE_COUNT.
- * @param packet_type    Specifies whether an ACK is required (ignored when in 
- *                       PRX mode, or when the dynamic ack feature is disabled).
- *                       @sa nrf_esb_enable_dyn_ack()
- * 
- * @retval true  If the packet was successfully added to the TX FIFO.
- * @retval false If pipe was invalid, payload pointer was NULL, payload length
-                 was invalid, insufficient space in FIFO memory pool or 
-                 insufficient packets in TX queue.
- */
-bool nrf_esb_add_packet_to_tx_fifo(uint32_t pipe, uint8_t * payload, uint32_t payload_length, nrf_esb_packet_t packet_type);
-
-
-/**
- * @brief Fetch a packet from the head of the RX FIFO. 
- *
- * @param payload        Pointer to copy the payload to. 
- * @param payload_length Pointer to copy the payload length to. The 
- * payload length is given in bytes (0 to NRF_ESB_CONST_MAX_PAYLOAD_LENGTH).
- * @param pipe           Pipe for which to add the payload. This value must be < NRF_ESB_CONST_PIPE_COUNT.
- *
- * @retval true  If the fetch was successful.
- * @retval false If there was no packet in the FIFO or the payload pointer
- *               was NULL.
- */
-bool nrf_esb_fetch_packet_from_rx_fifo(uint32_t pipe, uint8_t * payload, uint32_t* payload_length);
-
-
-/**
- * @brief Get the number of packets residing in the TX FIFO on a specific 
- * pipe.
- *
- * @param pipe The pipe for which to check. This value must be < NRF_ESB_CONST_PIPE_COUNT.
- * 
- * @retval The number of packets in the TX FIFO for the pipe.
- */
-uint32_t nrf_esb_get_tx_fifo_packet_count(uint32_t pipe);
-
-
-/**
- * @brief Get the number of packets residing in the RX FIFO on a specific 
- * pipe.
- *
- * @param pipe The pipe for which to check. This value must be < NRF_ESB_CONST_PIPE_COUNT.
- *
- * @retval The number of packets in the RX FIFO for the pipe.
- */
-uint32_t nrf_esb_get_rx_fifo_packet_count(uint32_t pipe);
-
-
-/**
- * @brief Flush the RX FIFO for a specific pipe.
- *
- * Delete all the packets and free the memory of the TX FIFO for a 
- * specific pipe.
- *
- * Note that it is not allowed to flush a TX FIFO when 
- * ESB is enabled.
- *
- * @param pipe The pipe for which to flush. This value must be < NRF_ESB_CONST_PIPE_COUNT.
- */
-void nrf_esb_flush_tx_fifo(uint32_t pipe);
-
-
-/**
- * @brief Flush the RX FIFO for a specific pipe.
- *
- * Delete all the packets and free the memory of the RX FIFO for a 
- * specific pipe.
- *
- * @param pipe The pipe for which to flush. This value must be < NRF_ESB_CONST_PIPE_COUNT.
- */
-void nrf_esb_flush_rx_fifo(uint32_t pipe);
-
-
-/**
- * @brief Get the total number of transmission attempts
- * used for sending the previous successful packet.
- *
- * The value applies to the packet for which the latest 
- * nrf_esb_tx_data_sent callback was made.
- *
- * @return The number of transmission attempts for the
- * previous transmitted packet. 
- */
-uint16_t nrf_esb_get_tx_attempts(void);
-
-
-/**
-* @brief Specify that the previous used 2 bit packet ID (PID) shall be reused for
-* a given pipe.
-*
-* This function can be used for continue retransmitting a packet that previously failed 
-* to be transmitted.
-
-* Example:
-* 1. Upload initial packet:
-*    nrf_esb_add_packet_to_tx_fifo(PIPE_NUMBER, my_tx_payload, TX_PAYLOAD_LENGTH, NRF_ESB_PACKET_USE_ACK);
-* 2. If the initial packet fails to be transmitted, specify the PID to be reused:
-*    nrf_esb_reuse_pid(PIPE_NUMBER);
-* 3. Continue re-transmission of the packet by re-uploading it to the TX FIFO:
-*    nrf_esb_add_packet_to_tx_fifo(PIPE_NUMBER, my_tx_payload, TX_PAYLOAD_LENGTH, NRF_ESB_PACKET_USE_ACK);
-*
-* @param pipe is the pipe for which to reuse the PID.
+ * @details The module is able to transmit packets with the TX address stored in tx_address.
+            The module can also receive packets from peers with up to eight different tx_addresses
+            stored in esb_addr_p0 - esb_addr_p7. esb_addr_p0 can have 5 arbitrary bytes
+            independent of the other addresses. esb_addr_p1 - esb_addr_p7 will share the
+            same four byte base address found in the last four bytes of esb_addr_p1.
+            They have an independent prefix byte found in esb_addr_p1[0] and esb_addr_p2 -
+            esb_addr_p7.
 */
-void nrf_esb_reuse_pid(uint32_t pipe);
-
-/** @} */
-
-
-/******************************************************************************/
-/** @name Configuration functions
-  * 
-  * Configuration 'set' functions may only be called while ESB is disabled. The 
-  * new parameter comes into effect when ESB is enabled again.
-  * 
-  * Configuration 'get' functions may be called at any time.
-  *
-  * @{ */
-/******************************************************************************/
+typedef struct
+{
+    uint8_t base_addr_p0[4];        /**< Base address for pipe 0 encoded in big endian. */
+    uint8_t base_addr_p1[4];        /**< Base address for pipe 1-7 encoded in big endian. */
+    uint8_t pipe_prefixes[8];       /**< Address prefix for pipe P0 to P7. */
+    uint8_t num_pipes;              /**< Number of pipes available. */
+    uint8_t addr_length;            /**< Length of address including prefix */
+    uint8_t rx_pipes_enabled;       /**< Bitfield for enabled pipes. */
+    uint8_t rf_channel;             /**< Which channel is to be used. Must be in range 0 and 125 to be valid. */
+} nrf_esb_address_t;
 
 
-/**
- * @brief Set the mode.
+/**@brief Enhanced ShockBurst payload.
  *
- * @param mode The mode to be used. 
- *             See nrf_esb_mode_t for a list of valid modes. 
+ * @note The payload is used both for transmission ions and receive with ack and payload.
+*/
+typedef struct
+{
+    uint8_t length;                                 /**< Length of the packet. Should be equal or less than NRF_ESB_MAX_PAYLOAD_LENGTH. */
+    uint8_t pipe;                                   /**< Pipe used for this payload. */
+    int8_t  rssi;                                   /**< RSSI for received packet. */
+    uint8_t noack;                                  /**< Flag indicating that this packet will not be acknowledged. */
+    uint8_t pid;                                    /**< PID assigned during communication. */
+    uint8_t data[NRF_ESB_MAX_PAYLOAD_LENGTH];  /**< The payload data. */
+} nrf_esb_payload_t;
+
+
+/**@brief Enhanced ShockBurst event. */
+typedef struct
+{
+    nrf_esb_evt_id_t    evt_id;                             /**< Enhanced ShockBurst event id. */
+    uint32_t            tx_attempts; /**< Number of attempts of TX retransmits. */
+} nrf_esb_evt_t;
+
+
+/**@brief Definition of the event handler for the module. */
+typedef void (* nrf_esb_event_handler_t)(nrf_esb_evt_t const * p_event);
+
+
+/**@brief Main nrf_esb configuration struct. */
+typedef struct
+{
+    nrf_esb_protocol_t      protocol;               /**< Enhanced ShockBurst protocol. */
+    nrf_esb_mode_t          mode;                   /**< Enhanced ShockBurst mode. */
+    nrf_esb_event_handler_t event_handler;          /**< Enhanced ShockBurst event handler. */
+
+    // General RF parameters
+    nrf_esb_bitrate_t       bitrate;                /**< Enhanced ShockBurst bitrate mode. */
+    nrf_esb_crc_t           crc;                    /**< Enhanced ShockBurst CRC modes. */
+
+    nrf_esb_tx_power_t      tx_output_power;        /**< Enhanced ShockBurst radio transmission power mode.*/
+
+    uint16_t                retransmit_delay;       /**< The delay between each retransmission of unacked packets. */
+    uint16_t                retransmit_count;       /**< The number of retransmissions attempts before transmission fail. */
+
+    // Control settings
+    nrf_esb_tx_mode_t       tx_mode;                /**< Enhanced ShockBurst transmit mode. */
+
+    uint8_t                 radio_irq_priority;     /**< nRF radio interrupt priority. */
+    uint8_t                 event_irq_priority;     /**< ESB event interrupt priority. */
+    uint8_t                 payload_length;         /**< Length of payload. Maximum length depend on the platform used in each end. */
+
+    bool                    selective_auto_ack;     /**< Enable or disable selective auto acknowledgement. */
+} nrf_esb_config_t;
+
+
+/**@brief Function for initializing the Enhanced ShockBurst module.
  *
- * @retval true  if the mode was set properly. 
- * @retval false if the mode is invalid.
+ * @param  p_config     Parameters for initializing the module.
+ *
+ * @retval  NRF_SUCCESS             Initialization successful.
+ * @retval  NRF_ERROR_NULL          The argument parameters was NULL.
+ * @retval  NRF_ERROR_BUSY          Function failed because radio is busy.
  */
-bool nrf_esb_set_mode(nrf_esb_mode_t mode);
+uint32_t nrf_esb_init(nrf_esb_config_t const * p_config);
 
 
-/**
- * @brief Get function counterpart to nrf_esb_set_mode().
+/**@brief Function for suspending Enhanced ShockBurst
  *
- * @return The current ESB mode. 
+ * @note Will stop ongoing communications without changing the queues
+ *
+ * @retval  NRF_SUCCESS             Enhanced ShockBurst was disabled.
+ * @retval  NRF_ERROR_BUSY          Function failed because radio is busy.
  */
-nrf_esb_mode_t nrf_esb_get_mode(void);
+uint32_t nrf_esb_suspend(void);
 
 
-/**
- * @brief Set the base address length.
+/**@brief Function for disabling Enhanced ShockBurst
  *
- * @param length The base address length.
+ *  Disable the Enhanced ShockBurst module immediately. This may stop ongoing communication.
  *
- * @retval true  If the address length was set.
- * @retval false If the length was invalid.
+ * @note All queues are flushed by this function.
+ *
+ * @retval  NRF_SUCCESS             Enhanced ShockBurst was disabled.
  */
-bool nrf_esb_set_base_address_length(nrf_esb_base_address_length_t length);
+uint32_t nrf_esb_disable(void);
 
 
-/**
- * @brief Get function counterpart to nrf_esb_set_base_address_length().
+/**@brief Function to check if nrf_esb is idle
  *
- * @return The current base_address length. 
+ * @retval idle state   True if nrf_esb is idle, otherwise false.
  */
-nrf_esb_base_address_length_t nrf_esb_get_base_address_length(void);
+bool nrf_esb_is_idle(void);
 
 
-/**
- * @brief Set the base address for pipe 0.
+/**@brief Function to write TX or ack payload.
  *
- * The full on-air address for each pipe is composed of a multi-byte base address
- * and a prefix address byte. 
+ * Function for writing a payload to be added to the queue. When the module is in PTX mode, the
+ * payload will be queued for for a regular transmission. When the module is in PRX mode, the payload
+ * will be queued for when a packet is received with ack with payload.
  *
- * For packets to be received correctly, the most significant byte of 
- * the base address should not be an alternating sequence of 0s and 1s i.e. 
- * it should not be 0x55 or 0xAA. 
+ * @param[in]   p_payload     Pointer to structure containing information and state of payload.
  *
- * @param base_address is the 4 byte base address. The parameter is
- * 4 bytes, however only the least L significant bytes are used, where L is
- * set by nrf_esb_set_base_address_length().
- *
- * @retval true if base_address_0 was set.
- * @retval false if ESB was enabled.
+ * @retval  NRF_SUCCESS                     Payload was successfully queued up for writing.
+ * @retval  NRF_ERROR_NULL                  Required parameter was NULL.
+ * @retval  NRF_INVALID_STATE               Module is not initialized.
+ * @retval  NRF_ERROR_NOT_SUPPORTED         p_payload->noack was false while selective ack was not enabled.
+ * @retval  NRF_ERROR_INVALID_LENGTH        Payload length was invalid (zero or larger than max allowed).
  */
-bool nrf_esb_set_base_address_0(uint32_t base_address);
+uint32_t nrf_esb_write_payload(nrf_esb_payload_t const * p_payload);
 
 
-/**
- * @brief Get function counterpart to nrf_esb_set_base_address_0().
+/**@brief Function to read RX payload.
  *
- * @return Base address 0.
+ * @param[in,out]   p_payload   Pointer to structure containing information and state of payload.
+ *
+ * @retval  NRF_SUCCESS                     Data read successfully.
+ * @retval  NRF_ERROR_NULL                  Required parameter was NULL.
+ * @retval  NRF_INVALID_STATE               Module is not initialized.
  */
-uint32_t nrf_esb_get_base_address_0(void);
+uint32_t nrf_esb_read_rx_payload(nrf_esb_payload_t * p_payload);
 
 
-/**
- * @brief Set the base address for pipes 1-7.
+/**@brief Function to start transmitting.
  *
- * Pipes 1 through 7 share base_address_1. @sa nrf_esb_set_base_address_0.
- *
- * @param base_address is the 4 byte base address. The parameter is
- * 4 bytes, however only the least L significant bytes are used, where L is
- * set by nrf_esb_set_base_address_length().
- *
- * @retval true If base_address_1 was set.
- * @retval false If ESB was enabled.
+ * @retval  NRF_SUCCESS                     TX started successfully.
+ * @retval  NRF_ESB_ERROR_TX_FIFO_EMPTY     TX won't start because FIFO buffer is empty.
+ * @retval  NRF_ERROR_BUSY                  Function failed because radio is busy.
  */
-bool nrf_esb_set_base_address_1(uint32_t base_address);
+uint32_t nrf_esb_start_tx(void);
 
 
-/**
- * @brief Get function counterpart to nrf_esb_set_base_address_1().
+/**@brief Function to start transmitting data in FIFO buffer.
  *
- * @return Base address 1.
+ * @retval  NRF_SUCCESS                     RX started successfully.
+ * @retval  NRF_ERROR_BUSY                  Function failed because radio is busy.
  */
-uint32_t nrf_esb_get_base_address_1(void);
+uint32_t nrf_esb_start_rx(void);
 
 
-/**
- * @brief Set the address prefix byte for a specific pipe.
+/** @brief Function to stop receiving data
  *
- * Each pipe should have its own unique prefix byte. 
- *
- * @param pipe The pipe that the address should apply to. This value must be < NRF_ESB_CONST_PIPE_COUNT.
- * @param address The address prefix byte.
- *
- * @retval true If the address prefix byte was set.
- * @retval false If ESB was enabled or if the pipe was invalid.
+ * @retval  NRF_SUCCESS                     Rx started successfully.
+ * @retval  NRF_ERROR_BUSY                  Function failed because radio is busy.
  */
-bool nrf_esb_set_address_prefix_byte(uint32_t pipe, uint8_t address);
+uint32_t nrf_esb_stop_rx(void);
 
 
-/**
- * @brief Get function counterpart to nrf_esb_set_address_prefix_byte().
+/**@brief Function to remove remaining items from the TX buffer.
  *
- * @param pipe the pipe for which to get the address. This value must be < NRF_ESB_CONST_PIPE_COUNT.
- * @param out_address is the pointer in which to return the address byte.
- * 
- * @retval true If the value was set.
- * @retval false If ESB was enabled, or the pipe was invalid,
- *               or the out_address pointer was NULL.
+ * @details     When this function is run, the TX fifo buffer will be cleared.
+ *
+ * @retval  NRF_SUCCESS                     Call was successful.
+ * @retval  NRF_ERROR_NULL                  Required parameter was NULL.
+ * @retval  NRF_INVALID_STATE               Module is not initialized.
  */
-bool nrf_esb_get_address_prefix_byte(uint32_t pipe, uint8_t* out_address);
+uint32_t nrf_esb_flush_tx(void);
 
 
-/**
- * @brief Set which pipes the node shall listen on in PRX mode.
+/**@brief Function to remove the first items from the TX buffer.
  *
- * This value is a bitmap, and each bit corresponds to a given pipe number.
- * Bit 0 set to "1" enables pipes 0, bit 1 set to "1" enables pipe 1 
- * and so forth.
- * The maximum number of pipes is defined by NRF_CONST_ESB_PIPE_COUNT.
- *
- * @param pipes A bitmap specifying which pipes to monitor.
- *
- * @retval true  If the bitmap was set.
- * @retval false If ESB was enabled.
+ * @retval  NRF_SUCCESS                     Call was successful.
+ * @retval  NRF_INVALID_STATE               Module is not initialized.
+ * @retval  NRF_ERROR_BUFFER_EMPTY          No items in queue to remove.
  */
-bool nrf_esb_set_enabled_prx_pipes(uint32_t pipes);
+uint32_t nrf_esb_pop_tx(void);
 
 
-/**
- * @brief Get function counterpart to nrf_esb_set_enabled_prx_pipes().
+/**@brief Function to remove remaining items from the RX buffer.
  *
- * @return Bitmap holding the current enabled pipes. 
+ * @retval  NRF_SUCCESS                     Pending items in the RX buffer was successfully cleared.
+ * @retval  NRF_INVALID_STATE               Module is not initialized.
  */
-uint32_t nrf_esb_get_enabled_prx_pipes(void);
+uint32_t nrf_esb_flush_rx(void);
 
 
-/**
- * @brief Set the retransmission delay.
- * 
- * The retransmission delay is the delay from the start of a packet 
- * that failed to receive the ACK until the start of the retransmission 
- * attempt.
+/**@brief Function to clear pending interrupts
  *
- * The minimum value of the retransmission delay is dependent of the 
- * radio data rate and the payload size(s).(@sa nrf_esb_set_datarate()). 
- * As a rule of thumb, when using 32 byte payloads in each direction (forward and ACK):
- *     
- * - For NRF_ESB_DATARATE_2_MBPS the retransmission delay must be >= 600 us.
- * - For NRF_ESB_DATARATE_1_MBPS the retransmission delay must >= 900 us.
- * - For NRF_ESB_DATARATE_250_KBPS the retransmission delay must be >= 2700 us.
+ * @param[in,out]   p_interrupts        Pointer to value holding current interrupts.
  *
- * @param delay_us The delay in microseconds between each 
- *                 retransmission attempt.
- *
- * @retval true  If the retransmit delay was set.
- * @retval false If ESB was enabled.
+ * @retval  NRF_SUCCESS                     Call was successful.
+ * @retval  NRF_ERROR_NULL                  Required parameter was NULL.
+ * @retval  NRF_INVALID_STATE               Module is not initialized.
  */
-bool nrf_esb_set_retransmit_delay(uint32_t delay_us);
+uint32_t nrf_esb_get_clear_interrupts(uint32_t * p_interrupts);
 
 
-/**
- * @brief Get function counterpart to nrf_esb_set_retransmit_delay().
+/**@brief Function to set address length
  *
- * @return The current retransmission delay.
+ * @param[in]       length              Length in bytes for esb address
+ *
+ * @retval  NRF_SUCCESS                      Call was successful.
+ * @retval  NRF_ERROR_INVALID_PARAM          Invalid address length
+ * @retval  NRF_ERROR_BUSY                   Function failed because radio is busy.
  */
-uint32_t nrf_esb_get_retransmit_delay(void);
+uint32_t nrf_esb_set_address_length(uint8_t length);
 
 
-/**
- * @brief Set the maximum number of TX attempts
- * that can be used for a single packet.
+/**@brief Function to set the base address 0
  *
- * @param attempts The maximum number of TX attempts.
- * 0 indicates that a packet can use a infinite number of attempts.
- * 
- * @retval false If ESB was enabled.
+ * @note This base address is used by pipe 0.
+ *
+ * @param[in]       p_addr      Pointer to the address data.
+ *
+ * @retval  NRF_SUCCESS                     Call was successful.
+ * @retval  NRF_ERROR_BUSY                  Function failed because radio is busy.
+ * @retval  NRF_ERROR_NULL                  Required parameter was NULL.
  */
-bool nrf_esb_set_max_number_of_tx_attempts(uint16_t attempts);
+uint32_t nrf_esb_set_base_address_0(uint8_t const * p_addr);
 
 
-/**
- * @brief Get function counterpart to nrf_esb_set_max_number_of_retransmits().
+/**@brief Function to set the base address 1.
  *
- * @return The current number of maximum retransmission attempts. 
+ * @note This base address is used by pipe 1 - 7.
+ *
+ * @param[in]       p_addr      Pointer to the address data.
+ *
+ * @retval  NRF_SUCCESS                     Call was successful.
+ * @retval  NRF_ERROR_BUSY                  Function failed because radio is busy.
+ * @retval  NRF_ERROR_NULL                  Required parameter was NULL.
  */
-uint16_t nrf_esb_get_max_number_of_tx_attempts(void);
+uint32_t nrf_esb_set_base_address_1(uint8_t const * p_addr);
 
 
-/**
- * @brief Set the Radio Frequency (RF) channel.
+/**@brief Function to set pipe prefix addresses.
  *
- * The valid channels are in the range 0 <= channel <= 125, where the 
- * actual centre frequency is (2400 + channel) MHz.
+ * @param[in]   p_prefixes      Pointer to char array containing prefixes for pipe 0 to 7.
+ * @param       num_pipes       Number of pipes to set.
  *
- * @param channel The RF Channel to use.
- *
- * @return false If ESB was enabled.
+ * @retval  NRF_SUCCESS                     Call was successful.
+ * @retval  NRF_ERROR_BUSY                  Function failed because radio is busy.
+ * @retval  NRF_ERROR_NULL                  Required parameter was NULL.
+ * @retval  NRF_ERROR_INVALID_PARAM         Invalid pipe number given.
  */
-bool nrf_esb_set_channel(uint32_t channel);
+uint32_t nrf_esb_set_prefixes(uint8_t const * p_prefixes, uint8_t num_pipes);
 
 
-/**
- * @brief Get function counterpart to nrf_esb_set_channel().
+/**@brief Function to control what pipes are enabled.
  *
- * @return The current RF channel.
+ * @note    The enable_mask must correspond to the number of pipes that has been enabled with nrf_esb_set_prefixes.
+ *          nrf_esb_set_pre
+ *
+ * @param   enable_mask         Bitfield mask to control enabling or disabling pipes. Setting bit to
+ *                              0 disables the pipe. Setting bit to 1 enables the pipe.
  */
-uint32_t nrf_esb_get_channel(void);
+uint32_t nrf_esb_enable_pipes(uint8_t enable_mask);
 
 
-/**
- * @brief Set the radio TX output power.
- * 
- * @param power The output power.
- * 
- * @return false If the output_power was invalid.
+/**@brief Function to update prefix per pipe
+ *
+ * @param   pipe    Pipe to set the prefix.
+ * @param   prefix  Prefix to set for pipe.
+ *
+ * @retval  NRF_SUCCESS                         Call was successful.
+ * @retval  NRF_ERROR_BUSY                      Function failed because radio is busy.
+ * @retval  NRF_ERROR_INVALID_PARAM             Invalid pipe number given.
  */
-bool nrf_esb_set_output_power(nrf_esb_output_power_t power);
+uint32_t nrf_esb_update_prefix(uint8_t pipe, uint8_t prefix);
 
 
-/**
- * @brief Get function counterpart to nrf_esb_set_output_power().
+/** @brief Function to set the channel to use for the radio.
  *
- * @return The output power.
+ * @note The module has to be in an idle state to call this function. As a PTX the
+ *       application has to wait for an idle state and as an PRX the application must stop RX
+ *       before changing the channel. After changing the channel operation can be resumed.
+ *
+ * @param[in]   channel                         Channel to use for radio.
+ *
+ * @retval  NRF_SUCCESS                         Call was successful.
+ * @retval  NRF_INVALID_STATE                   Module is not initialized.
+ * @retval  NRF_ERROR_BUSY                      Module was not in idle state.
+ * @retval  NRF_ERROR_INVALID_PARAM             Channel is invalid (larger than 125).
  */
-nrf_esb_output_power_t nrf_esb_get_output_power(void);
+uint32_t nrf_esb_set_rf_channel(uint32_t channel);
 
 
-/**
- * @brief Set the radio datarate.
+/**@brief Function to get the current rf_channel.
  *
- * @param datarate Datarate.
- * 
- * @retval false If the datarate was invalid.
+ * @param[in, out] p_channel    Pointer to data channel data.
+ *
+ * @retval  NRF_SUCCESS                         Call was successful.
+ * @retval  NRF_ERROR_NULL                      Required parameter was NULL.
  */
-bool nrf_esb_set_datarate(nrf_esb_datarate_t datarate);
+uint32_t nrf_esb_rf_channel_get(uint32_t * p_channel);
 
 
-/**
- * @brief Get function counterpart to nrf_esb_set_datarate().
+/**@brief Function to set the radio output power.
  *
- * @return The current datarate. 
+ * @param[in]   tx_output_power    Output power.
+ *
+ * @retval  NRF_SUCCESS                         Call was successful.
+ * @retval  NRF_ERROR_BUSY                      Function failed because radio is busy.
  */
-nrf_esb_datarate_t nrf_esb_get_datarate(void);
+uint32_t nrf_esb_set_tx_power(nrf_esb_tx_power_t tx_output_power);
 
-
-/**
- * @brief Set the CRC length. 
- *
- * The CRC length should be the same on both PTX and PRX in order
- * to ensure correct operation.
- *
- * @param length The CRC length.
- *
- * @retval false If ESB was enabled or the length was invalid.
- */
-bool nrf_esb_set_crc_length(nrf_esb_crc_length_t length);
-
-
-/**
- * @brief Get function counterpart to nrf_esb_set_crc_length().
- *
- * @return The current CRC length. 
- */
-nrf_esb_crc_length_t nrf_esb_get_crc_length(void);
-
-
-/**
- * @brief Set whether start/stop of external oscillator (XOSC) shall be handled
- * automatically inside ESB or manually by the application.
- *
- * When controlling the XOSC manually from the application it is
- * required that the XOSC is started before ESB is enabled.
- *
- * When start/stop of the XOSC is handled automatically by ESB,
- * the XOSC will only be running when needed, that is when the radio
- * is being used or when ESB needs to maintain synchronization.
- *
- * It is required that the XOSC is started in order for the radio to be
- * able to send or receive any packets.
- *
- * @param xosc_ctl setting for XOSC control.
- *
- * @retval true  if the parameter was set.
- * @retval false if Gazell was enabled or the xosc_ctl value was invalid.
- */
-bool nrf_esb_set_xosc_ctl(nrf_esb_xosc_ctl_t xosc_ctl);
-
-
-/**
- * @brief Enable dynamic ACK feature. After initialization this feature is disabled.
- *
- * The dynamic ACK feature must be enabled in order for the @b packet_type
- * parameter in the nrf_esb_add_packet_to_tx_fifo() function to have any effect,
- * or for the ACK bit of received packets to be evaluated.
- *
- * When the dynamic ACK feature is disabled, all packets will be ACK'ed.
- */
-void nrf_esb_enable_dyn_ack(void);
-
-/**
- * @brief Disable dynamic ACK feature.
- *
- * @sa nrf_esb_enable_dyn_ack()
- */
-void nrf_esb_disable_dyn_ack(void);
-
-
-/**
- * Get function counterpart for nrf_esb_set_xosc_ctl();
- *
- * @return The XOSC control setting.
- */
-nrf_esb_xosc_ctl_t nrf_esb_get_xosc_ctl(void);
-
-
-/** @} */
 /** @} */
 #endif

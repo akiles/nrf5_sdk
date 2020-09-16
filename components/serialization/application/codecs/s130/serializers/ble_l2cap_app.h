@@ -112,7 +112,7 @@ uint32_t ble_l2cap_cid_unregister_rsp_dec(uint8_t const * const p_buf,
  *
  * @note    It is important to note that a call to this function will <b>consume an application buffer</b>, and will therefore
  *          generate a @ref BLE_EVT_TX_COMPLETE event when the packet has been transmitted.
- *          Please see the documentation of @ref sd_ble_tx_buffer_count_get for more details.
+ *          Please see the documentation of @ref sd_ble_tx_packet_count_get for more details.
  *
  * @param[in]     conn_handle Connection Handle.
  * @param[in]     p_l2cap_header    Pointer to a packet header containing length and CID.
@@ -126,7 +126,6 @@ uint32_t ble_l2cap_cid_unregister_rsp_dec(uint8_t const * const p_buf,
  * @return @ref NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied, CIDs must be registered beforehand with @ref sd_ble_l2cap_cid_register.
  * @return @ref NRF_ERROR_NOT_FOUND CID not found.
  * @return @ref NRF_ERROR_NO_MEM Not enough memory to complete operation.
- * @return @ref BLE_ERROR_NO_TX_BUFFERS Not enough application buffers available.
  * @return @ref NRF_ERROR_DATA_SIZE Invalid data size(s) supplied, see @ref BLE_L2CAP_MTU_DEF.
  */
 uint32_t ble_l2cap_tx_req_enc(uint16_t                         conn_handle,

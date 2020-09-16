@@ -17,7 +17,7 @@
  * @brief RAM Retention Example Application main file.
  *
  * This file contains the source code for a sample application using RAM retention.
- * 
+ *
  */
 
 #include <stdbool.h>
@@ -95,7 +95,7 @@ int main(void)
 
     // This pin is used for waking up from System OFF and is active low, enabling sense capabilities.
     nrf_gpio_cfg_sense_input(PIN_GPIO_WAKEUP, BUTTON_PULL, NRF_GPIO_PIN_SENSE_LOW);
-	
+
     // Workaround for PAN_028 rev1.1 anomaly 22 - System: Issues with disable System OFF mechanism
     nrf_delay_ms(1);
 
@@ -153,8 +153,12 @@ int main(void)
     LEDS_OFF(LEDS_MASK);
     // Enter System OFF and wait for wake up from GPIO detect signal.
     NRF_POWER->SYSTEMOFF = 0x1;
+    // Use data synchronization barrier and a delay to ensure that no failure
+    // indication occurs before System OFF is actually entered.
+    __DSB();
+    __NOP();
 
-    // This code will only be reached if System OFF did not work and will trigger a hard-fault which will 
+    // This code will only be reached if System OFF did not work and will trigger a hard-fault which will
     // be handled in HardFault_Handler(). If wake the up condition is already active while System OFF is triggered,
     // then the system will go to System OFF and wake up immediately with a System RESET.
     display_failure();

@@ -80,7 +80,10 @@ All rights reserved.
 #define ASCMM_RETRIES                   0x02                        /**< Number of messages retries that will be sent when relaying messages. */
 
 
-#define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                            /**< Whether or not to include the service_changed characteristic. If not enabled, the server's database cannot be changed for the lifetime of the device */
+#define IS_SRVC_CHANGED_CHARACT_PRESENT 0                           /**< Whether or not to include the service_changed characteristic. If not enabled, the server's database cannot be changed for the lifetime of the device */
+
+#define CENTRAL_LINK_COUNT              0                           /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
+#define PERIPHERAL_LINK_COUNT           1                           /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 
 // Static variables and buffers.
 static uint16_t         m_neighbor_id = INVALID_NEIGHBOUR_ID;
@@ -444,14 +447,24 @@ static void ble_stack_init(void)
 {
     uint32_t err_code;
 
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+
     // Initialize SoftDevice
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC, false);
+    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, false);
 
     // Initialize BLE stack
     ble_enable_params_t ble_enable_params;
-    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
+                                                    PERIPHERAL_LINK_COUNT,
+                                                    &ble_enable_params);
+    APP_ERROR_CHECK(err_code);
+
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
-    err_code = sd_ble_enable(&ble_enable_params);
+
+    //Check the ram settings against the used number of links
+    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
+
+    err_code = softdevice_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
     
     // Subscribe for BLE events.

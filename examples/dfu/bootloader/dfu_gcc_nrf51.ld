@@ -30,6 +30,12 @@ MEMORY
 
 SECTIONS
 {
+  .fs_data_out ALIGN(4):
+  {
+    PROVIDE( __start_fs_data = .);
+    KEEP(*(fs_data))
+    PROVIDE( __stop_fs_data = .);
+  } = 0
   /* Ensures the bootloader settings are placed at the last flash page. */
   .bootloaderSettings(NOLOAD) :
   {

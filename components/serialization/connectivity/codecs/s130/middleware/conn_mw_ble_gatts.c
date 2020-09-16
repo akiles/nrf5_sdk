@@ -405,3 +405,59 @@ uint32_t conn_mw_ble_gatts_sys_attr_get(uint8_t const * const p_rx_buf,
 
     return err_code;
 }
+
+uint32_t conn_mw_ble_gatts_attr_get(uint8_t const * const p_rx_buf,
+                                     uint32_t              rx_buf_len,
+                                     uint8_t * const       p_tx_buf,
+                                     uint32_t * const      p_tx_buf_len)
+{
+    SER_ASSERT_NOT_NULL(p_rx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf_len);
+
+    uint16_t   handle;
+
+    ble_gatts_attr_md_t md;
+    ble_gatts_attr_md_t * p_md = &md;
+    ble_uuid_t uuid;
+    ble_uuid_t * p_uuid = &uuid;
+
+    uint32_t err_code = NRF_SUCCESS;
+    uint32_t sd_err_code;
+
+    err_code = ble_gatts_attr_get_req_dec(p_rx_buf, rx_buf_len, &handle, &p_uuid, &p_md);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    sd_err_code = sd_ble_gatts_attr_get(handle, p_uuid, p_md);
+
+    err_code = ble_gatts_attr_get_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len, p_md);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    return err_code;
+}
+
+uint32_t conn_mw_ble_gatts_initial_user_handle_get(uint8_t const * const p_rx_buf,
+                                                   uint32_t              rx_buf_len,
+                                                   uint8_t * const       p_tx_buf,
+                                                   uint32_t * const      p_tx_buf_len)
+{
+    SER_ASSERT_NOT_NULL(p_rx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf_len);
+
+    uint16_t   handle;
+    uint16_t * p_handle = &handle;
+
+    uint32_t err_code = NRF_SUCCESS;
+    uint32_t sd_err_code;
+
+    err_code = ble_gatts_initial_user_handle_get_req_dec(p_rx_buf, rx_buf_len, &p_handle);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    sd_err_code = sd_ble_gatts_initial_user_handle_get(p_handle);
+
+    err_code = ble_gatts_initial_user_handle_get_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len, p_handle);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    return err_code;
+}

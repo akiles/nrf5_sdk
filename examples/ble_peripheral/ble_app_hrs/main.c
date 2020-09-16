@@ -49,6 +49,9 @@
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT  1                                          /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
+#define CENTRAL_LINK_COUNT               0                                          /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
+#define PERIPHERAL_LINK_COUNT            1                                          /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
+
 #define DEVICE_NAME                      "Nordic_HRM"                               /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                "NordicSemiconductor"                      /**< Manufacturer. Will be passed to Device Information Service. */
 #define APP_ADV_INTERVAL                 300                                        /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
@@ -85,6 +88,8 @@
 
 #define SEC_PARAM_BOND                   1                                          /**< Perform bonding. */
 #define SEC_PARAM_MITM                   0                                          /**< Man In The Middle protection not required. */
+#define SEC_PARAM_LESC                   0                                          /**< LE Secure Connections not enabled. */
+#define SEC_PARAM_KEYPRESS               0                                          /**< Keypress notifications not enabled. */
 #define SEC_PARAM_IO_CAPABILITIES        BLE_GAP_IO_CAPS_NONE                       /**< No I/O capabilities. */
 #define SEC_PARAM_OOB                    0                                          /**< Out Of Band data not available. */
 #define SEC_PARAM_MIN_KEY_SIZE           7                                          /**< Minimum encryption key size. */
@@ -124,9 +129,9 @@ static dm_application_instance_t         m_app_handle;                          
 static ble_uuid_t m_adv_uuids[] = {{BLE_UUID_HEART_RATE_SERVICE,         BLE_UUID_TYPE_BLE},
                                    {BLE_UUID_BATTERY_SERVICE,            BLE_UUID_TYPE_BLE},
                                    {BLE_UUID_DEVICE_INFORMATION_SERVICE, BLE_UUID_TYPE_BLE}}; /**< Universally unique service identifiers. */
-#ifdef BLE_DFU_APP_SUPPORT    
+#ifdef BLE_DFU_APP_SUPPORT
 static ble_dfu_t                         m_dfus;                                    /**< Structure used to identify the DFU service. */
-#endif // BLE_DFU_APP_SUPPORT    
+#endif // BLE_DFU_APP_SUPPORT
 
 
 /**@brief Callback function for asserts in the SoftDevice.
@@ -159,7 +164,7 @@ static void battery_level_update(void)
     err_code = ble_bas_battery_level_update(&m_bas, battery_level);
     if ((err_code != NRF_SUCCESS) &&
         (err_code != NRF_ERROR_INVALID_STATE) &&
-        (err_code != BLE_ERROR_NO_TX_BUFFERS) &&
+        (err_code != BLE_ERROR_NO_TX_PACKETS) &&
         (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
         )
     {
@@ -204,7 +209,7 @@ static void heart_rate_meas_timeout_handler(void * p_context)
     err_code = ble_hrs_heart_rate_measurement_send(&m_hrs, heart_rate);
     if ((err_code != NRF_SUCCESS) &&
         (err_code != NRF_ERROR_INVALID_STATE) &&
-        (err_code != BLE_ERROR_NO_TX_BUFFERS) &&
+        (err_code != BLE_ERROR_NO_TX_PACKETS) &&
         (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
         )
     {
@@ -342,11 +347,11 @@ static void advertising_stop(void)
 
 /**@brief Function for loading application-specific context after establishing a secure connection.
  *
- * @details This function will load the application context and check if the ATT table is marked as 
+ * @details This function will load the application context and check if the ATT table is marked as
  *          changed. If the ATT table is marked as changed, a Service Changed Indication
  *          is sent to the peer if the Service Changed CCCD is set to indicate.
  *
- * @param[in] p_handle The Device Manager handle that identifies the connection for which the context 
+ * @param[in] p_handle The Device Manager handle that identifies the connection for which the context
  *                     should be loaded.
  */
 static void app_context_load(dm_handle_t const * p_handle)
@@ -368,7 +373,7 @@ static void app_context_load(dm_handle_t const * p_handle)
             if ((err_code != NRF_SUCCESS) &&
                 (err_code != BLE_ERROR_INVALID_CONN_HANDLE) &&
                 (err_code != NRF_ERROR_INVALID_STATE) &&
-                (err_code != BLE_ERROR_NO_TX_BUFFERS) &&
+                (err_code != BLE_ERROR_NO_TX_PACKETS) &&
                 (err_code != NRF_ERROR_BUSY) &&
                 (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING))
             {
@@ -393,7 +398,7 @@ static void app_context_load(dm_handle_t const * p_handle)
 /** @snippet [DFU BLE Reset prepare] */
 /**@brief Function for preparing for system reset.
  *
- * @details This function implements @ref dfu_app_reset_prepare_t. It will be called by 
+ * @details This function implements @ref dfu_app_reset_prepare_t. It will be called by
  *          @ref dfu_app_handler.c before entering the bootloader/DFU.
  *          This allows the current running application to shut down gracefully.
  */
@@ -726,21 +731,27 @@ static void sys_evt_dispatch(uint32_t sys_evt)
 static void ble_stack_init(void)
 {
     uint32_t err_code;
+    
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    
+    // Initialize the SoftDevice handler module.	
+    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
 
-    // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
-
-#if defined(S110) || defined(S130) || defined(S310)  || defined(S132)
-    // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
-    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#if defined(S130) || defined(S310) || defined(S132)
-    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
-#endif
-    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
-    err_code = sd_ble_enable(&ble_enable_params);
+    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
+                                                    PERIPHERAL_LINK_COUNT,
+                                                    &ble_enable_params);
     APP_ERROR_CHECK(err_code);
-#endif
+
+#ifdef BLE_DFU_APP_SUPPORT
+    ble_enable_params.gatts_enable_params.service_changed = 1;
+#endif // BLE_DFU_APP_SUPPORT
+    //Check the ram settings against the used number of links
+    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
+
+    // Enable BLE stack.
+    err_code = softdevice_enable(&ble_enable_params);
+    APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
     err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
@@ -830,6 +841,8 @@ static void device_manager_init(bool erase_bonds)
 
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
+    register_param.sec_param.lesc         = SEC_PARAM_LESC;
+    register_param.sec_param.keypress     = SEC_PARAM_KEYPRESS;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
     register_param.sec_param.oob          = SEC_PARAM_OOB;
     register_param.sec_param.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
@@ -877,7 +890,7 @@ static void buttons_leds_init(bool * p_erase_bonds)
     bsp_event_t startup_event;
 
     uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                                 APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), 
+                                 APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                                  bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 

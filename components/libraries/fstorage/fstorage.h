@@ -10,147 +10,226 @@
  *
  */
 
+#ifndef FSTORAGE_H__
+#define FSTORAGE_H__
 
-#ifndef FS_H__
-#define FS_H__
-
- /** @file
- *
- * @defgroup fstorage FStorage
- * @{
+/**
+ * @defgroup fstorage fstorage
  * @ingroup app_common
- * @brief Module which provides low level functionality to store data to flash.
+ * @{
  *
+ * @brief   Module which provides functionality to store data to flash and erase flash pages.
  */
-
 
 #include <stdint.h>
 #include "section_vars.h"
-#include "fstorage_config.h"
-#include "sdk_errors.h"
 
 
-typedef uint16_t fs_length_t;
-
-
+/**@brief   fstorage return values. */
 typedef enum
 {
-    FS_OP_NONE          = 0,
-    FS_OP_STORE         = 1,
-    FS_OP_ERASE         = 2
-} fs_oper_t;
+    FS_SUCCESS,
+    FS_ERR_NOT_INITIALIZED,     //!< Error. The module is not initialized.
+    FS_ERR_INVALID_CFG,         //!< Error. Invalid fstorage configuration.
+    FS_ERR_NULL_ARG,            //!< Error. Argument is NULL.
+    FS_ERR_INVALID_ARG,         //!< Error. Argument contains invalid data.
+    FS_ERR_INVALID_ADDR,        //!< Error. Address out of bounds.
+    FS_ERR_UNALIGNED_ADDR,      //!< Error. Unaligned address.
+    FS_ERR_QUEUE_FULL,          //!< Error. Queue is full.
+    FS_ERR_OPERATION_TIMEOUT,   //!< Error. The operation has timed out.
+    FS_ERR_INTERNAL,            //!< Error. Internal error.
+} fs_ret_t;
 
 
-/**@brief Callback for flash operations.
+/**@brief   fstorage event IDs. */
+typedef enum
+{
+    FS_EVT_STORE,   //!< Event for @ref fs_store.
+    FS_EVT_ERASE    //!< Event for @ref fs_erase.
+} fs_evt_id_t;
+
+
+#if defined(__CC_ARM)
+  #pragma push
+  #pragma anon_unions
+#elif defined(__ICCARM__)
+  #pragma language=extended
+#elif defined(__GNUC__)
+  /* anonymous unions are enabled by default */
+#endif
+
+/**@brief   An fstorage event. */
+typedef struct
+{
+    fs_evt_id_t id;                         //!< The event ID.
+    union
+    {
+        struct
+        {
+            uint32_t const * p_data;        //!< Pointer to the data stored in flash.
+            uint16_t         length_words;  //!< Length of the data, in 4-byte words.
+        } store;
+        struct
+        {
+            uint16_t first_page;            //!< First page erased.
+            uint16_t last_page;             //!< Last page erased.
+        } erase;
+    };
+} fs_evt_t;
+
+#if defined(__CC_ARM)
+  #pragma pop
+#elif defined(__ICCARM__)
+  /* leave anonymous unions enabled */
+#elif defined(__GNUC__)
+  /* anonymous unions are enabled by default */
+#endif
+
+
+/**@brief   fstorage event handler function prototype.
  *
- * @param[in]   op_code         Flash access operation code.
- * @param[in]   result          Result of the operation.
- * @param[in]   data            Pointer to resulting data (or NULL if not in use).
- * @param[in]   length_words    Length of data in words.
+ * @param[in]   evt     The event.
+ * @param[in]   result  The result of the operation.
  */
-typedef void (*fs_cb_t)(uint8_t             op_code,
-                        uint32_t            result,
-                        uint32_t    const * p_data,
-                        fs_length_t         length_words);
+typedef void (*fs_cb_t)(fs_evt_t const * const evt, fs_ret_t result);
 
 
-/**@brief Function prototype for a callback handler.
+/**@brief   fstorage application-specific configuration.
  *
- * @details This function is expected to be implemented by the module that 
- *          registers for fstorage usage. Its usage is described
- *          in the function pointer type fs_cb_t.
+ * @details Specifies the callback to invoke when an operation completes, the number of flash pages
+ *          requested by the application and the priority with which these are to be assigned, with
+ *          respect to other applications. Additionally, the configuration specifies the boundaries
+ *          of the flash space assigned to an application. The configuration must be provided as an
+ *          argument when invoking @ref fs_store and @ref fs_erase.
  *
- * @param[in]   op_code         Flash operation code.
- * @param[in]   result          Result of the flash operation.
- * @param[in]   p_data          Pointer to the resulting data (or NULL if not in use).
- * @param[in]   length_words    Length of data in words.
- */
-static void fs_callback(uint8_t             op_code,
-                        uint32_t            result,
-                        uint32_t    const * p_data,
-                        fs_length_t         length_words);
-
-
-/**@brief Flash storage config variable.
- *
- * @details     The fstorage module will update the start_addr and end_address according to 
- *              ordering rules and the number of pages requested by the fstorage module user.
+ * @note    The fields @p p_start_addr and @p p_end_address are set by @ref fs_init, based on the
+ *          value of the field @p priority.
  */
 typedef struct
 {
-    const fs_cb_t   cb;               /**< Callback to run when flash operation has completed. */
-    const uint8_t   num_pages;        /**< The number of pages to reserve for flash storage. */
-    const uint8_t   page_order;       /**< The order used to allocate pages. */
-    uint32_t      * p_start_addr;     /**< Pointer to the start address of the allocated flash storage. Set by running @ref fs_init. */
-    uint32_t *      p_end_addr;       /**< Pointer to the end address of the allcoated flash storage. Set by running @ref fs_init. */
+    /**@brief   The beginning of the flash space assigned to the application which registered this
+     *          configuration. This field is set by @ref fs_init.
+     */
+    uint32_t const * p_start_addr;
+
+    /**@brief   The end of the flash space assigned to the application which registered this
+     *          configuration. This field is set by @ref fs_init.
+     */
+    uint32_t const * p_end_addr;
+
+    fs_cb_t  const   callback;    //!< Callback to run when a flash operation has completed.
+    uint8_t  const   num_pages;   //!< The number of flash pages requested.
+
+    /**@brief   The priority with which fstorage should assign flash pages to this application,
+     *          with respect to other applications. Applications with higher priority will be
+     *          assigned flash pages with a higher memory address. The highest priority is
+     *          reserved. Must be unique among configurations.
+     */
+    uint8_t  const   priority;
 } fs_config_t;
 
 
-/**@brief Macro for registering of flash storage configuration variable.
+/**@brief   Macro for registering with an fstorage configuration.
+ *          Applications which use fstorage must register with the module using this macro.
+ *          Registering involves defining a variable which holds the configuration of fstorage
+ *          specific to the application which invokes the macro.
  *
- * @details This macro is expected to be invoked in the code unit that that require
- *          flash storage. Invoking this places the registered configuration variable
- *          in a section named "fs_data" that the fstorage module uses during initialization
- *          and regular operation.
- */
-#define FS_SECTION_VARS_ADD(type_def) NRF_SECTION_VARS_ADD(fs_data, type_def)
-
-
-/**@brief Function to initialize FStorage.
+ * @details This macro places the configuration variable in a section named "fs_data" that
+ *          fstorage uses during initialization and regular operation.
  *
- * @details     This function allocates flash data pages according to the
- *              number requested in the config variable. The data used to initialize.
- *              the fstorage is section placed variables in the data section "fs_data".
+ * @param[in]   cfg_var     A @e definition of a @ref fs_config_t variable.
  */
-ret_code_t fs_init(void);
+#define FS_REGISTER_CFG(cfg_var) NRF_SECTION_VARS_ADD(fs_data, cfg_var)
 
 
-/**@brief Function to store data in flash.
+/**@brief   Function for initializing the module.
+ *
+ * @details This functions assigns pages in flash according to all registered configurations.
+ *
+ * @retval  FS_SUCCESS    If the module was successfully initialized.
+ */
+fs_ret_t fs_init(void);
+
+
+/**@brief   Function for storing data in flash.
+ *
+ * @details Copies @p length_words words from @p p_src to the location pointed by @p p_dest.
+ *          If the length of the data exceeds @ref FS_MAX_WRITE_SIZE_WORDS, the data will be
+ *          written down in several chunks, as necessary. Only one event will be sent to the
+ *          application upon completion. Both the source and the destination of the data must be
+ *          word aligned. This function is asynchronous, completion is reported via an event sent
+ *          the the callback function specified in the supplied configuration.
  *
  * @warning The data to be written to flash has to be kept in memory until the operation has
- *          terminated, i.e., a callback is received.
+ *          terminated, i.e., an event is received.
  *
- * @param[in]   p_config        Const pointer to configiguration of module user that requests a store operation.
- * @param[in]   p_addr          Write address of store operation.
- * @param[in]   p_data          Pointer to the data to store.
- * @param[in]   length_words    Length of the data to store.
+ * @param[in]   p_config        fstorage configuration registered by the application.
+ * @param[in]   p_dest          The address in flash memory where to store the data.
+ * @param[in]   p_src           Pointer to the data to store in flash.
+ * @param[in]   length_words    Length of the data to store, in words.
  *
- * @retval NRF_SUCCESS                  Success. Command queued.
- * @retval NRF_ERROR_INVALID_STATE      Error. The module is not initialized.
- * @retval NRF_ERROR_INVALID_ADDR       Error. Data is unaligned or invalid configuration.
- * @retval Any error returned by the SoftDevice flash API.
+ * @retval  FS_SUCCESS              If the operation was queued successfully.
+ * @retval  FS_ERR_NOT_INITIALIZED  If the module is not initialized.
+ * @retval  FS_ERR_INVALID_CFG      If @p p_config is NULL or contains invalid data.
+ * @retval  FS_ERR_NULL_ARG         If @p p_dest or @p p_src are NULL.
+ * @retval  FS_ERR_INVALID_ARG      If @p length_words is zero.
+ * @retval  FS_ERR_INVALID_ADDR     If @p p_dest or @p p_src are outside of the flash memory
+ *                                  boundaries specified in @p p_config.
+ * @retval  FS_ERR_UNALIGNED_ADDR   If @p p_dest or @p p_src are not aligned to a word boundary.
+ * @retval  FS_ERR_QUEUE_FULL       If the internal operation queue is full.
  */
-ret_code_t fs_store(fs_config_t const *       p_config,
-                    uint32_t    const *       p_addr,
-                    uint32_t    const * const p_data,
-                    fs_length_t               length_words);
+fs_ret_t fs_store(fs_config_t const * const p_config,
+                  uint32_t    const * const p_dest,
+                  uint32_t    const * const p_src,
+                  uint16_t                  length_words);
 
 
-/** Function to erase a page in flash.
+/**@brief   Function for erasing flash pages.
  *
- * @note        The erase address must be aligned on a page boundary. The length in words must be 
- *              equivalent to the page size.
+ * @details Starting from the page at @p p_page_addr, erases @p num_pages flash pages.
+ *          @p p_page_addr must be aligned to a page boundary. All pages to be erased must be
+ *          within the bounds specified in the supplied fstorage configuration.
+ *          This function is asynchronous. Completion is reported via an event.
  *
- * @param[in]   p_config        Pointer to the configuration of the user that requests the operation.
- * @param[in]   p_addr          Address of page to erase (the same as first word in the page).
- * @param[in]   length_words    Length (in 4 byte words) of the area to erase.
+ * @param[in]   p_config        fstorage configuration registered by the application.
+ * @param[in]   p_page_addr     Address of the page to erase. Must be aligned to a page boundary.
+ * @param[in]   num_pages       Number of pages to erase. May not be zero.
  *
- * @retval NRF_SUCCESS                  Success. Command queued.
- * @retval NRF_ERROR_INVALID_STATE      Error. The module is not initialized.
- * @retval NRF_ERROR_INVALID_ADDR       Error. Data is unaligned or invalid configuration.
- * @retval Any error returned by the SoftDevice flash API.
+ * @retval  FS_SUCCESS              If the operation was queued successfully.
+ * @retval  FS_ERR_NOT_INITIALIZED  If the module is not initialized.
+ * @retval  FS_ERR_INVALID_CFG      If @p p_config is NULL or contains invalid data.
+ * @retval  FS_ERR_NULL_ARG         If @p p_page_addr is NULL.
+ * @retval  FS_ERR_INVALID_ARG      If @p num_pages is zero.
+ * @retval  FS_ERR_INVALID_ADDR     If the operation would go beyond the flash memory boundaries
+ *                                  specified in @p p_config.
+ * @retval  FS_ERR_UNALIGNED_ADDR   If @p p_page_addr is not aligned to a page boundary.
+ * @retval  FS_ERR_QUEUE_FULL       If the internal operation queue is full.
  */
-ret_code_t fs_erase(fs_config_t const *       p_config,
-                    uint32_t          * const p_addr,
-                    fs_length_t               length_words);
+fs_ret_t fs_erase(fs_config_t const * const p_config,
+                  uint32_t    const * const p_page_addr,
+                  uint16_t                  num_pages);
 
 
-/**@brief Function to call to handle events from the SoftDevice
+/**@brief Function for retrieving the number of queued flash operations.
  *
- * @param   sys_evt     System event from the SoftDevice
+ * @param[out]  p_op_count    The number of queued flash operations.
+ *
+ * @retval  FS_SUCCESS          If the number of queued operations was retrieved successfully.
+ * @retval  FS_ERR_NULL_ARG     If @p p_op_count is NULL.
+ */
+fs_ret_t fs_queued_op_count_get(uint32_t * const p_op_count);
+
+
+/**@brief   Function for handling system events from the SoftDevice.
+ *
+ * @details If any of the modules used by the application rely on fstorage, the application should
+ *          dispatch system events to fstorage using this function.
+ *
+ * @param[in]   sys_evt     System event from the SoftDevice.
  */
 void fs_sys_event_handler(uint32_t sys_evt);
 
+
 /** @} */
 
-#endif // FS_H__
+#endif // FSTORAGE_H__

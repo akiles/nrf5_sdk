@@ -36,10 +36,41 @@ typedef enum
     SPIS_XFER_COMPLETED                              /**< State where SPI transaction has been completed. */
 } nrf_drv_spis_state_t;
 
-#define SPIS_IRQHANDLER_TEMPLATE(NUM)  void SPIS##NUM##_IRQ_HANDLER(void)                        \
-                        {                                                                       \
-                            spis_irq_handler(NRF_SPIS##NUM, &m_cb[SPIS##NUM##_INSTANCE_INDEX]); \
-                        }
+
+#if PERIPHERAL_RESOURCE_SHARING_ENABLED
+    #define IRQ_HANDLER_NAME(n) irq_handler_for_instance_##n
+    #define IRQ_HANDLER(n)      static void IRQ_HANDLER_NAME(n)(void)
+
+    #if SPIS0_ENABLED
+        IRQ_HANDLER(0);
+    #endif
+    #if SPIS1_ENABLED
+        IRQ_HANDLER(1);
+    #endif
+    #if SPIS2_ENABLED
+        IRQ_HANDLER(2);
+    #endif
+    static nrf_drv_irq_handler_t const m_irq_handlers[SPIS_COUNT] = {
+    #if SPIS0_ENABLED
+        IRQ_HANDLER_NAME(0),
+    #endif
+    #if SPIS1_ENABLED
+        IRQ_HANDLER_NAME(1),
+    #endif
+    #if SPIS2_ENABLED
+        IRQ_HANDLER_NAME(2),
+    #endif
+    };
+#else
+    #define IRQ_HANDLER(n) void SPIS##n##_IRQ_HANDLER(void)
+#endif // PERIPHERAL_RESOURCE_SHARING_ENABLED
+
+#define SPIS_IRQHANDLER_TEMPLATE(NUM) \
+    IRQ_HANDLER(NUM)                                                        \
+    {                                                                       \
+        spis_irq_handler(NRF_SPIS##NUM, &m_cb[SPIS##NUM##_INSTANCE_INDEX]); \
+    }
+
 
 /**@brief SPIS control block - driver instance local data. */
 typedef struct
@@ -56,13 +87,13 @@ typedef struct
 static spis_cb_t m_cb[SPIS_COUNT];
 
 static nrf_drv_spis_config_t const m_default_config[SPIS_COUNT] = {
-#if (SPIS0_ENABLED == 1)
+#if SPIS0_ENABLED
     NRF_DRV_SPIS_DEFAULT_CONFIG(0),
 #endif
-#if (SPIS1_ENABLED == 1)
+#if SPIS1_ENABLED
     NRF_DRV_SPIS_DEFAULT_CONFIG(1),
 #endif
-#if (SPIS2_ENABLED == 1)
+#if SPIS2_ENABLED
     NRF_DRV_SPIS_DEFAULT_CONFIG(2),
 #endif
 };
@@ -74,6 +105,8 @@ ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
 {
     spis_cb_t * p_cb = &m_cb[p_instance->instance_id];
     
+    NRF_SPIS_Type * p_spis = p_instance->p_reg;
+
     if (p_cb->state != NRF_DRV_STATE_UNINITIALIZED)
     {
         return NRF_ERROR_INVALID_STATE;
@@ -90,8 +123,13 @@ ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
     {
         return NRF_ERROR_NULL;
     }
-    
-    NRF_SPIS_Type * p_spis = p_instance->p_reg;
+#if PERIPHERAL_RESOURCE_SHARING_ENABLED
+    if (nrf_drv_common_per_res_acquire(p_spis,
+            m_irq_handlers[p_instance->instance_id]) != NRF_SUCCESS)
+    {
+        return NRF_ERROR_BUSY;
+    }
+#endif
 
     // Configure the SPI pins for input.
     uint32_t mosi_pin;
@@ -183,12 +221,18 @@ void nrf_drv_spis_uninit(nrf_drv_spis_t const * const  p_instance)
     spis_cb_t * p_cb = &m_cb[p_instance->instance_id];
     ASSERT(p_cb->state != NRF_DRV_STATE_UNINITIALIZED);
     
+    NRF_SPIS_Type * p_spis = p_instance->p_reg;
+
     #define DISABLE_ALL 0xFFFFFFFF
-    nrf_spis_disable(p_instance->p_reg);
+    nrf_spis_disable(p_spis);
     nrf_drv_common_irq_disable(p_instance->irq);
-    nrf_spis_int_disable(p_instance->p_reg, DISABLE_ALL);
+    nrf_spis_int_disable(p_spis, DISABLE_ALL);
     #undef  DISABLE_ALL
-    
+
+#if PERIPHERAL_RESOURCE_SHARING_ENABLED
+    nrf_drv_common_per_res_release(p_spis);
+#endif
+
     p_cb->state = NRF_DRV_STATE_UNINITIALIZED;
 }
 
@@ -252,11 +296,9 @@ ret_code_t nrf_drv_spis_buffers_set(nrf_drv_spis_t const * const  p_instance,
     spis_cb_t * p_cb = &m_cb[p_instance->instance_id];
     uint32_t err_code;
 
-    if ((p_tx_buffer == NULL) || (p_rx_buffer == NULL))
-    {
-        return NRF_ERROR_NULL;
-    }
-    
+    VERIFY_PARAM_NOT_NULL(p_rx_buffer);
+    VERIFY_PARAM_NOT_NULL(p_tx_buffer);
+
     // EasyDMA requires that transfer buffers are placed in Data RAM region;
     // signal error if they are not.
     if ((p_tx_buffer != NULL && !nrf_drv_is_in_RAM(p_tx_buffer)) ||
@@ -339,15 +381,15 @@ static void spis_irq_handler(NRF_SPIS_Type * p_spis, spis_cb_t * p_cb)
     }
 }
 
-#if (SPIS0_ENABLED == 1)
+#if SPIS0_ENABLED
     SPIS_IRQHANDLER_TEMPLATE(0)
 #endif
 
-#if (SPIS1_ENABLED == 1)
+#if SPIS1_ENABLED
     SPIS_IRQHANDLER_TEMPLATE(1)
 #endif
 
-#if (SPIS2_ENABLED == 1)
+#if SPIS2_ENABLED
     SPIS_IRQHANDLER_TEMPLATE(2)
 #endif
 

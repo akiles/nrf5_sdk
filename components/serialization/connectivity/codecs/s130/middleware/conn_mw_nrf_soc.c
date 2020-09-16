@@ -58,3 +58,29 @@ uint32_t conn_mw_temp_get(uint8_t const * const p_rx_buf,
 
     return err_code;
 }
+
+uint32_t conn_mw_ecb_block_encrypt(uint8_t const * const p_rx_buf,
+                                   uint32_t              rx_buf_len,
+                                   uint8_t * const       p_tx_buf,
+                                   uint32_t * const      p_tx_buf_len)
+{
+    SER_ASSERT_NOT_NULL(p_rx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf_len);
+
+    nrf_ecb_hal_data_t ecb_data;
+    nrf_ecb_hal_data_t * p_ecb_data = &ecb_data;
+
+    uint32_t err_code = NRF_SUCCESS;
+    uint32_t sd_err_code;
+
+    err_code = ecb_block_encrypt_req_dec(p_rx_buf, rx_buf_len, &p_ecb_data);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    sd_err_code = sd_ecb_block_encrypt(p_ecb_data);
+
+    err_code = ecb_block_encrypt_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len, p_ecb_data);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    return err_code;
+}

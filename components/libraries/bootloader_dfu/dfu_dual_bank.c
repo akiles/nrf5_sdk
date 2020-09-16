@@ -10,26 +10,20 @@
  *
  */
 
-#include <stdint.h>
 #include <stddef.h>
-#include <string.h>
 #include "dfu.h"
 #include <dfu_types.h>
 #include "dfu_bank_internal.h"
 #include "nrf.h"
-#include "nrf.h"
-#include "app_util.h"
 #include "nrf_sdm.h"
 #include "app_error.h"
-#include "nrf_error.h"
 #include "app_timer.h"
-#include "app_error.h"
-#include "nordic_common.h"
 #include "bootloader.h"
 #include "bootloader_types.h"
 #include "pstorage.h"
 #include "nrf_mbr.h"
 #include "dfu_init.h"
+#include "sdk_common.h"
 
 static dfu_state_t                  m_dfu_state;                /**< Current DFU state. */
 static uint32_t                     m_image_size;               /**< Size of the image that will be transmitted. */
@@ -409,10 +403,7 @@ uint32_t dfu_start_pkt_handle(dfu_update_packet_t * p_packet)
         case DFU_STATE_IDLE:
             // Valid peer activity detected. Hence restart the DFU timer.
             err_code = dfu_timer_restart();
-            if (err_code != NRF_SUCCESS)
-            {
-                return err_code;
-            }
+            VERIFY_SUCCESS(err_code);
             m_functions.prepare(m_image_size);
 
             break;
@@ -432,10 +423,7 @@ uint32_t dfu_data_pkt_handle(dfu_update_packet_t * p_packet)
     uint32_t   err_code;
     uint32_t * p_data;
 
-    if (p_packet == NULL)
-    {
-        return NRF_ERROR_NULL;
-    }
+    VERIFY_PARAM_NOT_NULL(p_packet);
 
     // Check pointer alignment.
     if (!is_word_aligned(p_packet->params.data_packet.p_data_packet))
@@ -467,10 +455,7 @@ uint32_t dfu_data_pkt_handle(dfu_update_packet_t * p_packet)
 
             // Valid peer activity detected. Hence restart the DFU timer.
             err_code = dfu_timer_restart();
-            if (err_code != NRF_SUCCESS)
-            {
-                return err_code;
-            }
+            VERIFY_SUCCESS(err_code);
 
             p_data = (uint32_t *)p_packet->params.data_packet.p_data_packet;
 
@@ -478,10 +463,7 @@ uint32_t dfu_data_pkt_handle(dfu_update_packet_t * p_packet)
                                           (uint8_t *)p_data,
                                           data_length,
                                           m_data_received);
-            if (err_code != NRF_SUCCESS)
-            {
-                return err_code;
-            }
+            VERIFY_SUCCESS(err_code);
 
             m_data_received += data_length;
 
@@ -554,10 +536,7 @@ uint32_t dfu_init_pkt_handle(dfu_update_packet_t * p_packet)
 
             // Valid peer activity detected. Hence restart the DFU timer.
             err_code = dfu_timer_restart();
-            if (err_code != NRF_SUCCESS)
-            {
-                return err_code;
-            }
+            VERIFY_SUCCESS(err_code);
 
             length = p_packet->params.data_packet.packet_length * sizeof(uint32_t);
             if ((m_init_packet_length + length) > sizeof(m_init_packet))
@@ -605,10 +584,7 @@ uint32_t dfu_image_validate()
                 {
                     err_code = dfu_init_postvalidate((uint8_t *)mp_storage_handle_active->block_id,
                                                      m_image_size);
-                    if (err_code != NRF_SUCCESS)
-                    {
-                        return err_code;
-                    }
+                    VERIFY_SUCCESS(err_code);
 
                     m_dfu_state = DFU_STATE_WAIT_4_ACTIVATE;
                 }
@@ -705,17 +681,12 @@ static uint32_t dfu_sd_img_block_swap(uint32_t * src,
                                          (uint32_t *)((uint32_t)dst - block_size), 
                                          block_size, 
                                          block_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     err_code = dfu_copy_sd(src, dst, len);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
+
     return dfu_compare_block(src, dst, len);
 }
 
@@ -747,16 +718,10 @@ uint32_t dfu_sd_image_swap(void)
             err_code = dfu_copy_sd((uint32_t *)(sd_start + block_size), 
                                    (uint32_t *)(sd_start + block_size), 
                                    sizeof(uint32_t));
-            if (err_code != NRF_SUCCESS)
-            {
-                return err_code;
-            }
+            VERIFY_SUCCESS(err_code);
 
             err_code = dfu_copy_sd((uint32_t *)sd_start, (uint32_t *)sd_start, sizeof(uint32_t));
-            if (err_code != NRF_SUCCESS)
-            {
-                return err_code;
-            }
+            VERIFY_SUCCESS(err_code);
         }
         
         return dfu_sd_img_block_swap((uint32_t *)img_block_start, 

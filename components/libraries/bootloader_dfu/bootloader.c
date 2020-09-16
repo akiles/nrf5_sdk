@@ -11,7 +11,6 @@
  */
 
 #include "bootloader.h"
-#include <string.h>
 #include "bootloader_types.h"
 #include "bootloader_util.h"
 #include "bootloader_settings.h"
@@ -20,11 +19,13 @@
 #include "nrf.h"
 #include "app_error.h"
 #include "nrf_sdm.h"
+#include "nrf_mbr.h"
 #include "nordic_common.h"
 #include "crc16.h"
 #include "pstorage.h"
 #include "app_scheduler.h"
 #include "nrf_delay.h"
+#include "sdk_common.h"
 
 #define IRQ_ENABLED             0x01                    /**< Field identifying if an interrupt is enabled. */
 #define MAX_NUMBER_INTERRUPTS   32                      /**< Maximum number of interrupts available. */
@@ -246,10 +247,7 @@ uint32_t bootloader_init(void)
     pstorage_module_param_t storage_params = {.cb = pstorage_callback_handler};
 
     err_code = pstorage_init();
-    if (err_code != NRF_SUCCESS)    
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     m_bootsettings_handle.block_id = BOOTLOADER_SETTINGS_ADDRESS;
     err_code = pstorage_register(&storage_params, &m_bootsettings_handle);
@@ -264,10 +262,7 @@ uint32_t bootloader_dfu_start(void)
 
     // Clear swap if banked update is used.
     err_code = dfu_init(); 
-    if (err_code != NRF_SUCCESS)    
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     err_code = dfu_transport_update_start();
 

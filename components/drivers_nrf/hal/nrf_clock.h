@@ -34,19 +34,19 @@
  */
 typedef enum
 {
-    NRF_CLOCK_LF_SRC_RC    = CLOCK_LFCLKSRC_SRC_RC,   /**< Internal 32 kHz RC oscillator. */
-    NRF_CLOCK_LF_SRC_Xtal  = CLOCK_LFCLKSRC_SRC_Xtal, /**< External 32 kHz crystal. */
-    NRF_CLOCK_LF_SRC_Synth = CLOCK_LFCLKSRC_SRC_Synth /**< Internal 32 kHz synthesizer from HFCLK system clock. */
-} nrf_clock_lf_src_t;
+    NRF_CLOCK_LFCLK_RC    = CLOCK_LFCLKSRC_SRC_RC,   /**< Internal 32 kHz RC oscillator. */
+    NRF_CLOCK_LFCLK_Xtal  = CLOCK_LFCLKSRC_SRC_Xtal, /**< External 32 kHz crystal. */
+    NRF_CLOCK_LFCLK_Synth = CLOCK_LFCLKSRC_SRC_Synth /**< Internal 32 kHz synthesizer from HFCLK system clock. */
+} nrf_clock_lfclk_t;
 
 /**
  * @brief High-frequency clock sources.
  */
 typedef enum
 {
-    NRF_CLOCK_HF_SRC_LOW_ACCURACY   = CLOCK_HFCLKSTAT_SRC_RC,  /**< Internal 16 MHz RC oscillator. */
-    NRF_CLOCK_HF_SRC_HIGH_ACCURACY  = CLOCK_HFCLKSTAT_SRC_Xtal /**< External 16 MHz/32 MHz crystal oscillator. */
-} nrf_clock_hf_src_t;
+    NRF_CLOCK_HFCLK_LOW_ACCURACY  = CLOCK_HFCLKSTAT_SRC_RC,  /**< Internal 16 MHz RC oscillator. */
+    NRF_CLOCK_HFCLK_HIGH_ACCURACY = CLOCK_HFCLKSTAT_SRC_Xtal /**< External 16 MHz/32 MHz crystal oscillator. */
+} nrf_clock_hfclk_t;
 
 /**
  * @brief Trigger status of task LFCLKSTART/HFCLKSTART.
@@ -64,7 +64,7 @@ typedef enum
 typedef enum
 {
 #ifdef NRF51
-    NRF_CLOCK_XTALFREQ_Default = CLOCK_XTALFREQ_XTALFREQ_16MHz, /**< Default. 32MHz. */
+    NRF_CLOCK_XTALFREQ_Default = CLOCK_XTALFREQ_XTALFREQ_16MHz, /**< Default. 32 MHz. */
     NRF_CLOCK_XTALFREQ_16MHz   = CLOCK_XTALFREQ_XTALFREQ_16MHz, /**< 16 MHz crystal. */
     NRF_CLOCK_XTALFREQ_32MHz   = CLOCK_XTALFREQ_XTALFREQ_32MHz  /**< 32 MHz crystal. */
 #elif defined NRF52
@@ -116,33 +116,24 @@ typedef enum /*lint -save -e30 -esym(628,__INTADDR__) */
  *
  * @param[in]  int_mask         Interrupt.
  */
-__STATIC_INLINE void nrf_clock_int_enable(uint32_t int_mask)
-{
-    NRF_CLOCK->INTENSET = int_mask;
-}
+__STATIC_INLINE void nrf_clock_int_enable(uint32_t int_mask);
 
 /**
  * @brief Function for disabling a specific interrupt.
  *
  * @param[in]  int_mask         Interrupt.
  */
-__STATIC_INLINE void nrf_clock_int_disable(uint32_t int_mask)
-{
-    NRF_CLOCK->INTENCLR = int_mask;
-}
+__STATIC_INLINE void nrf_clock_int_disable(uint32_t int_mask);
 
 /**
  * @brief Function for retrieving the state of a specific interrupt.
  *
  * @param[in]  int_mask         Interrupt.
  *
- * @retval     true                   Interrupt is enabled.
- * @retval     false                  Interrupt is not enabled.
+ * @retval     true                   If the interrupt is enabled.
+ * @retval     false                  If the interrupt is not enabled.
  */
-__STATIC_INLINE bool nrf_clock_int_enable_check(nrf_clock_int_mask_t int_mask)
-{
-    return (bool)(NRF_CLOCK->INTENCLR & int_mask);
-}
+__STATIC_INLINE bool nrf_clock_int_enable_check(nrf_clock_int_mask_t int_mask);
 
 /**
  * @brief Function for retrieving the address of a specific task. 
@@ -150,22 +141,16 @@ __STATIC_INLINE bool nrf_clock_int_enable_check(nrf_clock_int_mask_t int_mask)
  *
  * @param[in]  task             Task.
  *
- * @retval     address of requested task register
+ * @return     Address of the requested task register.
  */
-__STATIC_INLINE uint32_t nrf_clock_task_address_get(nrf_clock_task_t task)
-{
-    return ((uint32_t )NRF_CLOCK + task);
-}
+__STATIC_INLINE uint32_t nrf_clock_task_address_get(nrf_clock_task_t task);
 
 /**
  * @brief Function for setting a specific task.
  *
  * @param[in]  task             Task.
  */
-__STATIC_INLINE void nrf_clock_task_trigger(nrf_clock_task_t task)
-{
-    *((volatile uint32_t *)((uint8_t *)NRF_CLOCK + task)) = NRF_CLOCK_TASK_TRIGGER;
-}
+__STATIC_INLINE void nrf_clock_task_trigger(nrf_clock_task_t task);
 
 /**
  * @brief Function for retrieving the address of a specific event. 
@@ -173,26 +158,16 @@ __STATIC_INLINE void nrf_clock_task_trigger(nrf_clock_task_t task)
  *
  * @param[in]  event       Event.
  *
- * @retval     address of requested event register
+ * @return     Address of the requested event register.
  */
-__STATIC_INLINE uint32_t nrf_clock_event_address_get(nrf_clock_event_t event)
-{
-    return ((uint32_t)NRF_CLOCK + event);
-}
+__STATIC_INLINE uint32_t nrf_clock_event_address_get(nrf_clock_event_t event);
 
 /**
  * @brief Function for clearing a specific event.
  *
  * @param[in]  event       Event.
  */
-__STATIC_INLINE void nrf_clock_event_clear(nrf_clock_event_t event)
-{
-    *((volatile uint32_t *)((uint8_t *)NRF_CLOCK + event)) = NRF_CLOCK_EVENT_CLEAR;
-#if __CORTEX_M == 0x04
-    volatile uint32_t dummy = *((volatile uint32_t *)((uint8_t *)NRF_CLOCK + event));
-    (void)dummy;
-#endif
-}
+__STATIC_INLINE void nrf_clock_event_clear(nrf_clock_event_t event);
 
 /**
  * @brief Function for retrieving the state of a specific event.
@@ -202,10 +177,7 @@ __STATIC_INLINE void nrf_clock_event_clear(nrf_clock_event_t event)
  * @retval     true              If the event is set.
  * @retval     false             If the event is not set.
  */
-__STATIC_INLINE bool nrf_clock_event_check(nrf_clock_event_t event)
-{
-    return (bool)*((volatile uint32_t *)((uint8_t *)NRF_CLOCK + event));
-}
+__STATIC_INLINE bool nrf_clock_event_check(nrf_clock_event_t event);
 
 /**
  * @brief Function for changing the low-frequency clock source.
@@ -214,50 +186,34 @@ __STATIC_INLINE bool nrf_clock_event_check(nrf_clock_event_t event)
  * @param[in]  source            New low-frequency clock source.
  *
  */
-__STATIC_INLINE void nrf_clock_lf_src_set(nrf_clock_lf_src_t source)
-{
-    NRF_CLOCK->LFCLKSRC =
-        (uint32_t)((source << CLOCK_LFCLKSRC_SRC_Pos) & CLOCK_LFCLKSRC_SRC_Msk);
-}
+__STATIC_INLINE void nrf_clock_lf_src_set(nrf_clock_lfclk_t source);
 
 /**
  * @brief Function for retrieving the selected source for the low-frequency clock.
  *
- * @retval     NRF_CLOCK_LF_SRC_RC     If the internal 32 kHz RC oscillator is the selected source for the low-frequency clock.
- * @retval     NRF_CLOCK_LF_SRC_Xtal   If an external 32 kHz crystal oscillator is the selected source for the low-frequency clock.
- * @retval     NRF_CLOCK_LF_SRC_Synth  If the internal 32 kHz synthesizer from the HFCLK is the selected source for the low-frequency clock.
+ * @retval     NRF_CLOCK_LFCLK_RC     If the internal 32 kHz RC oscillator is the selected source for the low-frequency clock.
+ * @retval     NRF_CLOCK_LFCLK_Xtal   If an external 32 kHz crystal oscillator is the selected source for the low-frequency clock.
+ * @retval     NRF_CLOCK_LFCLK_Synth  If the internal 32 kHz synthesizer from the HFCLK is the selected source for the low-frequency clock.
  */
-__STATIC_INLINE nrf_clock_lf_src_t nrf_clock_lf_src_get(void)
-{
-    return (nrf_clock_lf_src_t)((NRF_CLOCK->LFCLKSRC &
-                                 CLOCK_LFCLKSRC_SRC_Msk) >> CLOCK_LFCLKSRC_SRC_Pos);
-}
+__STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_src_get(void);
 
 /**
  * @brief Function for retrieving the active source of the low-frequency clock.
  *
- * @retval     NRF_CLOCK_LF_SRC_RC     If the internal 32 kHz RC oscillator is the active source of the low-frequency clock.
- * @retval     NRF_CLOCK_LF_SRC_Xtal   If an external 32 kHz crystal oscillator is the active source of the low-frequency clock.
- * @retval     NRF_CLOCK_LF_SRC_Synth  If the internal 32 kHz synthesizer from the HFCLK is the active source of the low-frequency clock.
+ * @retval     NRF_CLOCK_LFCLK_RC     If the internal 32 kHz RC oscillator is the active source of the low-frequency clock.
+ * @retval     NRF_CLOCK_LFCLK_Xtal   If an external 32 kHz crystal oscillator is the active source of the low-frequency clock.
+ * @retval     NRF_CLOCK_LFCLK_Synth  If the internal 32 kHz synthesizer from the HFCLK is the active source of the low-frequency clock.
  */
-__STATIC_INLINE nrf_clock_lf_src_t nrf_clock_lf_actv_src_get(void)
-{
-    return (nrf_clock_lf_src_t)((NRF_CLOCK->LFCLKSTAT &
-                                 CLOCK_LFCLKSTAT_SRC_Msk) >> CLOCK_LFCLKSTAT_SRC_Pos);
-}
+__STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_actv_src_get(void);
 
 /**
  * @brief Function for retrieving the clock source for the LFCLK clock when the task LKCLKSTART is triggered.
  *
- * @retval     NRF_CLOCK_LF_SRC_RC     If the internal 32 kHz RC oscillator is running and generating the LFCLK clock.
- * @retval     NRF_CLOCK_LF_SRC_Xtal   If an external 32 kHz crystal oscillator is running and generating the LFCLK clock.
- * @retval     NRF_CLOCK_LF_SRC_Synth  If the internal 32 kHz synthesizer from the HFCLK is running and generating the LFCLK clock.
+ * @retval     NRF_CLOCK_LFCLK_RC     If the internal 32 kHz RC oscillator is running and generating the LFCLK clock.
+ * @retval     NRF_CLOCK_LFCLK_Xtal   If an external 32 kHz crystal oscillator is running and generating the LFCLK clock.
+ * @retval     NRF_CLOCK_LFCLK_Synth  If the internal 32 kHz synthesizer from the HFCLK is running and generating the LFCLK clock.
  */
-__STATIC_INLINE nrf_clock_lf_src_t nrf_clock_lf_srccopy_get(void)
-{
-    return (nrf_clock_lf_src_t)((NRF_CLOCK->LFCLKSRCCOPY &
-                                 CLOCK_LFCLKSRCCOPY_SRC_Msk) >> CLOCK_LFCLKSRCCOPY_SRC_Pos);
-}
+__STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_srccopy_get(void);
 
 /**
  * @brief Function for retrieving the state of the LFCLK clock.
@@ -265,11 +221,7 @@ __STATIC_INLINE nrf_clock_lf_src_t nrf_clock_lf_srccopy_get(void)
  * @retval     false                     If the LFCLK clock is not running.
  * @retval     true                      If the LFCLK clock is running.
  */
-__STATIC_INLINE bool nrf_clock_lf_is_running(void)
-{
-    return ((NRF_CLOCK->LFCLKSTAT &
-                                CLOCK_LFCLKSTAT_STATE_Msk) >> CLOCK_LFCLKSTAT_STATE_Pos);
-}
+__STATIC_INLINE bool nrf_clock_lf_is_running(void);
 
 /**
  * @brief Function for retrieving the trigger status of the task LFCLKSTART.
@@ -277,36 +229,25 @@ __STATIC_INLINE bool nrf_clock_lf_is_running(void)
  * @retval     NRF_CLOCK_START_TASK_NOT_TRIGGERED     If the task LFCLKSTART has not been triggered.
  * @retval     NRF_CLOCK_START_TASK_TRIGGERED         If the task LFCLKSTART has been triggered.
  */
-__STATIC_INLINE nrf_clock_start_task_status_t nrf_clock_lf_start_task_status_get(void)
-{
-    return (nrf_clock_start_task_status_t)((NRF_CLOCK->LFCLKRUN &
-                                            CLOCK_LFCLKRUN_STATUS_Msk) >>
-                                           CLOCK_LFCLKRUN_STATUS_Pos);
-}
+__STATIC_INLINE nrf_clock_start_task_status_t nrf_clock_lf_start_task_status_get(void);
 
 /**
  * @brief Function for retrieving the active source of the high-frequency clock.
  *
- * @retval     NRF_CLOCK_HF_SRC_RC     If the internal 16 MHz RC oscillator is the active source of the high-frequency clock.
- * @retval     NRF_CLOCK_HF_SRC_Xtal   If an external 16 MHz/32 MHz crystal oscillator is the active source of the high-frequency clock.
+ * @retval     NRF_CLOCK_HFCLK_LOW_ACCURACY   If the internal 16 MHz RC oscillator is the active source of the high-frequency clock.
+ * @retval     NRF_CLOCK_HFCLK_HIGH_ACCURACY  If an external 16 MHz/32 MHz crystal oscillator is the active source of the high-frequency clock.
  */
-__STATIC_INLINE nrf_clock_hf_src_t nrf_clock_hf_src_get(void)
-{
-    return (nrf_clock_hf_src_t)((NRF_CLOCK->HFCLKSTAT &
-                                 CLOCK_HFCLKSTAT_SRC_Msk) >> CLOCK_HFCLKSTAT_SRC_Pos);
-}
+__STATIC_INLINE nrf_clock_hfclk_t nrf_clock_hf_src_get(void);
 
 /**
  * @brief Function for retrieving the state of the HFCLK clock.
  *
+ * @param[in]  clk_src                   Clock source to be checked.
+ *
  * @retval     false                     If the HFCLK clock is not running.
  * @retval     true                      If the HFCLK clock is running.
  */
-__STATIC_INLINE bool nrf_clock_hf_is_running(void)
-{
-    return ((NRF_CLOCK->HFCLKSTAT &
-                                CLOCK_HFCLKSTAT_STATE_Msk) >> CLOCK_HFCLKSTAT_STATE_Pos);
-}
+__STATIC_INLINE bool nrf_clock_hf_is_running(nrf_clock_hfclk_t clk_src);
 
 /**
  * @brief Function for retrieving the trigger status of the task HFCLKSTART.
@@ -314,12 +255,7 @@ __STATIC_INLINE bool nrf_clock_hf_is_running(void)
  * @retval     NRF_CLOCK_START_TASK_NOT_TRIGGERED     If the task HFCLKSTART has not been triggered.
  * @retval     NRF_CLOCK_START_TASK_TRIGGERED         If the task HFCLKSTART has been triggered.
  */
-__STATIC_INLINE nrf_clock_start_task_status_t nrf_clock_hf_start_task_status_get(void)
-{
-    return (nrf_clock_start_task_status_t)((NRF_CLOCK->HFCLKRUN &
-                                            CLOCK_HFCLKRUN_STATUS_Msk) >>
-                                           CLOCK_HFCLKRUN_STATUS_Pos);
-}
+__STATIC_INLINE nrf_clock_start_task_status_t nrf_clock_hf_start_task_status_get(void);
 
 /**
  * @brief Function for retrieving the frequency selection of the external crystal.
@@ -327,6 +263,124 @@ __STATIC_INLINE nrf_clock_start_task_status_t nrf_clock_hf_start_task_status_get
  * @retval     NRF_CLOCK_XTALFREQ_16MHz     If a 16 MHz crystal is used as source for the HFCLK oscillator.
  * @retval     NRF_CLOCK_XTALFREQ_32MHz     If a 32 MHz crystal is used as source for the HFCLK oscillator.
  */
+__STATIC_INLINE nrf_clock_xtalfreq_t nrf_clock_xtalfreq_get(void);
+
+/**
+ * @brief Function for changing the frequency selection of the external crystal.
+ *
+ * @param[in]  xtalfreq             New frequency selection for the external crystal.
+ */
+__STATIC_INLINE void nrf_clock_xtalfreq_set(nrf_clock_xtalfreq_t xtalfreq);
+
+/**
+ * @brief Function for changing the calibration timer interval.
+ *
+ * @param[in]  interval             New calibration timer interval in 0.25 s resolution (range: 0.25 seconds to 31.75 seconds).
+ */
+__STATIC_INLINE void nrf_clock_cal_timer_timeout_set(uint32_t interval);
+
+#ifndef SUPPRESS_INLINE_IMPLEMENTATION
+
+__STATIC_INLINE void nrf_clock_int_enable(uint32_t int_mask)
+{
+    NRF_CLOCK->INTENSET = int_mask;
+}
+
+__STATIC_INLINE void nrf_clock_int_disable(uint32_t int_mask)
+{
+    NRF_CLOCK->INTENCLR = int_mask;
+}
+
+__STATIC_INLINE bool nrf_clock_int_enable_check(nrf_clock_int_mask_t int_mask)
+{
+    return (bool)(NRF_CLOCK->INTENCLR & int_mask);
+}
+
+__STATIC_INLINE uint32_t nrf_clock_task_address_get(nrf_clock_task_t task)
+{
+    return ((uint32_t )NRF_CLOCK + task);
+}
+
+__STATIC_INLINE void nrf_clock_task_trigger(nrf_clock_task_t task)
+{
+    *((volatile uint32_t *)((uint8_t *)NRF_CLOCK + task)) = NRF_CLOCK_TASK_TRIGGER;
+}
+
+__STATIC_INLINE uint32_t nrf_clock_event_address_get(nrf_clock_event_t event)
+{
+    return ((uint32_t)NRF_CLOCK + event);
+}
+
+__STATIC_INLINE void nrf_clock_event_clear(nrf_clock_event_t event)
+{
+    *((volatile uint32_t *)((uint8_t *)NRF_CLOCK + event)) = NRF_CLOCK_EVENT_CLEAR;
+#if __CORTEX_M == 0x04
+    volatile uint32_t dummy = *((volatile uint32_t *)((uint8_t *)NRF_CLOCK + event));
+    (void)dummy;
+#endif
+}
+
+__STATIC_INLINE bool nrf_clock_event_check(nrf_clock_event_t event)
+{
+    return (bool)*((volatile uint32_t *)((uint8_t *)NRF_CLOCK + event));
+}
+
+__STATIC_INLINE void nrf_clock_lf_src_set(nrf_clock_lfclk_t source)
+{
+    NRF_CLOCK->LFCLKSRC =
+        (uint32_t)((source << CLOCK_LFCLKSRC_SRC_Pos) & CLOCK_LFCLKSRC_SRC_Msk);
+}
+
+__STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_src_get(void)
+{
+    return (nrf_clock_lfclk_t)((NRF_CLOCK->LFCLKSRC &
+                                CLOCK_LFCLKSRC_SRC_Msk) >> CLOCK_LFCLKSRC_SRC_Pos);
+}
+
+__STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_actv_src_get(void)
+{
+    return (nrf_clock_lfclk_t)((NRF_CLOCK->LFCLKSTAT &
+                                CLOCK_LFCLKSTAT_SRC_Msk) >> CLOCK_LFCLKSTAT_SRC_Pos);
+}
+
+__STATIC_INLINE nrf_clock_lfclk_t nrf_clock_lf_srccopy_get(void)
+{
+    return (nrf_clock_lfclk_t)((NRF_CLOCK->LFCLKSRCCOPY &
+                                CLOCK_LFCLKSRCCOPY_SRC_Msk) >> CLOCK_LFCLKSRCCOPY_SRC_Pos);
+}
+
+__STATIC_INLINE bool nrf_clock_lf_is_running(void)
+{
+    return ((NRF_CLOCK->LFCLKSTAT &
+             CLOCK_LFCLKSTAT_STATE_Msk) >> CLOCK_LFCLKSTAT_STATE_Pos);
+}
+
+__STATIC_INLINE nrf_clock_start_task_status_t nrf_clock_lf_start_task_status_get(void)
+{
+    return (nrf_clock_start_task_status_t)((NRF_CLOCK->LFCLKRUN &
+                                            CLOCK_LFCLKRUN_STATUS_Msk) >>
+                                           CLOCK_LFCLKRUN_STATUS_Pos);
+}
+
+__STATIC_INLINE nrf_clock_hfclk_t nrf_clock_hf_src_get(void)
+{
+    return (nrf_clock_hfclk_t)((NRF_CLOCK->HFCLKSTAT &
+                                CLOCK_HFCLKSTAT_SRC_Msk) >> CLOCK_HFCLKSTAT_SRC_Pos);
+}
+
+__STATIC_INLINE bool nrf_clock_hf_is_running(nrf_clock_hfclk_t clk_src)
+{
+    return (NRF_CLOCK->HFCLKSTAT & (CLOCK_HFCLKSTAT_STATE_Msk | CLOCK_HFCLKSTAT_SRC_Msk)) ==
+            (CLOCK_HFCLKSTAT_STATE_Msk | (clk_src << CLOCK_HFCLKSTAT_SRC_Pos));
+}
+
+__STATIC_INLINE nrf_clock_start_task_status_t nrf_clock_hf_start_task_status_get(void)
+{
+    return (nrf_clock_start_task_status_t)((NRF_CLOCK->HFCLKRUN &
+                                            CLOCK_HFCLKRUN_STATUS_Msk) >>
+                                           CLOCK_HFCLKRUN_STATUS_Pos);
+}
+
 __STATIC_INLINE nrf_clock_xtalfreq_t nrf_clock_xtalfreq_get(void)
 {
 #ifdef NRF51
@@ -337,11 +391,6 @@ __STATIC_INLINE nrf_clock_xtalfreq_t nrf_clock_xtalfreq_get(void)
 #endif
 }
 
-/**
- * @brief Function for changing the frequency selection of the external crystal.
- *
- * @param[in]  xtalfreq             New frequency selection for the external crystal.
- */
 __STATIC_INLINE void nrf_clock_xtalfreq_set(nrf_clock_xtalfreq_t xtalfreq)
 {
 #ifdef NRF51
@@ -352,15 +401,13 @@ __STATIC_INLINE void nrf_clock_xtalfreq_set(nrf_clock_xtalfreq_t xtalfreq)
 #endif
 }
 
-/**
- * @brief Function for changing the calibration timer interval.
- *
- * @param[in]  interval             New calibration timer interval in 0.25 s resolution (range: 0.25 seconds to 31.75 seconds).
- */
 __STATIC_INLINE void nrf_clock_cal_timer_timeout_set(uint32_t interval)
 {
     NRF_CLOCK->CTIV = ((interval << CLOCK_CTIV_CTIV_Pos) & CLOCK_CTIV_CTIV_Msk);
 }
+
+#endif // SUPPRESS_INLINE_IMPLEMENTATION
+
 /**
  *@}
  **/

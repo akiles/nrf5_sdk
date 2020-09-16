@@ -36,6 +36,8 @@ typedef struct
  */
 APP_MAILBOX_DEF(sd_ble_evt_mailbox, SD_BLE_EVT_MAILBOX_QUEUE_SIZE, sizeof(ser_sd_handler_evt_data_t));
 
+APP_MAILBOX_DEF(sd_soc_evt_mailbox, SD_BLE_EVT_MAILBOX_QUEUE_SIZE, sizeof(uint32_t));
+
 /**
  * @brief Function to be replaced by user implementation if needed.
  *
@@ -82,6 +84,17 @@ static void ser_softdevice_evt_handler(uint8_t * p_data, uint16_t length)
     ser_app_hal_nrf_evt_pending();
 }
 
+void ser_softdevice_flash_operation_success_evt(bool success)
+{
+	uint32_t evt_type = success ? NRF_EVT_FLASH_OPERATION_SUCCESS :
+			NRF_EVT_FLASH_OPERATION_ERROR;
+
+	uint32_t err_code = app_mailbox_put(&sd_soc_evt_mailbox, &evt_type);
+	APP_ERROR_CHECK(err_code);
+
+	ser_app_hal_nrf_evt_pending();
+}
+
 /**
  * @brief Function called while waiting for connectivity chip response. It handles incoming events.
  */
@@ -98,9 +111,15 @@ static void ser_sd_rsp_wait(void)
 
 uint32_t sd_evt_get(uint32_t * p_evt_id)
 {
-    (void)p_evt_id;
-    //current serialization doesn't support any events other than ble events
-    return NRF_ERROR_NOT_FOUND;
+    uint32_t err_code;
+
+    err_code = app_mailbox_get(&sd_soc_evt_mailbox, p_evt_id);
+    if (err_code != NRF_SUCCESS) //if anything in the mailbox
+    {
+    	err_code = NRF_ERROR_NOT_FOUND;
+    }
+
+    return err_code;
 }
 
 uint32_t sd_ble_evt_get(uint8_t * p_data, uint16_t * p_len)
@@ -137,19 +156,24 @@ uint32_t sd_ble_evt_mailbox_length_get(uint32_t * p_mailbox_length)
     return err_code;
 }
 
-uint32_t sd_softdevice_enable(nrf_clock_lfclksrc_t           clock_source,
-                              softdevice_assertion_handler_t assertion_handler)
+uint32_t sd_softdevice_enable(nrf_clock_lf_cfg_t const * p_clock_lf_cfg,
+                              nrf_fault_handler_t assertion_handler)
 {
     uint32_t err_code;
 
-    err_code = ser_app_hal_hw_init();
+    err_code = ser_app_hal_hw_init(ser_softdevice_flash_operation_success_evt);
 
     if (err_code == NRF_SUCCESS)
     {
         connectivity_reset_low();
 
-        err_code = app_mailbox_create(&sd_ble_evt_mailbox);
+        err_code = app_mailbox_create(&sd_soc_evt_mailbox);
+        if (err_code != NRF_SUCCESS)
+        {
+        	return err_code;
+        }
 
+        err_code = app_mailbox_create(&sd_ble_evt_mailbox);
         if (err_code == NRF_SUCCESS)
         {
             err_code = ser_sd_transport_open(ser_softdevice_evt_handler,

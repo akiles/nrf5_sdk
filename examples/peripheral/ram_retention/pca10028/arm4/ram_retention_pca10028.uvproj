@@ -353,7 +353,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> BSP_DEFINES_ONLY BOARD_PCA10028 NRF51</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\config\ram_retention_pca10028;..\..\config;..\..\..\..\..\components\device;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\components\libraries\util;..\..\..\..\bsp;..\..</IncludePath>
+              <IncludePath>..\..\config\ram_retention_pca10028;..\..\config;..\..\..\..\..\components\device;..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\toolchain;..\..\..\..\bsp;..\..</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -448,6 +448,11 @@
               <FileName>app_error.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\libraries\util\app_error.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_error_weak.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\util\app_error_weak.c</FilePath>
             </File>
           </Files>
         </Group>

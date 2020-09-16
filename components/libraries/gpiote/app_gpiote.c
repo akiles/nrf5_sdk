@@ -12,9 +12,9 @@
 
 #include "app_gpiote.h"
 #include "nrf_drv_gpiote.h"
-#include <stdbool.h>
-#include <stdint.h>
-#include <string.h>
+#include "sdk_common.h"
+
+
 /**@brief GPIOTE user type. */
 typedef struct
 {
@@ -34,6 +34,9 @@ static uint8_t         m_user_count;                  /**< Number of registered 
 static gpiote_user_t * mp_users = NULL;               /**< Array of GPIOTE users. */
 static uint32_t        m_pins;                        /**< Mask of initialized pins. */
 static uint32_t        m_last_pins_state;             /**< Most recent state of pins. */
+
+#define MODULE_INITIALIZED (mp_users != NULL)
+#include "sdk_macros.h"
 
 void gpiote_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
 {
@@ -96,11 +99,10 @@ uint32_t app_gpiote_user_register(app_gpiote_user_id_t     * p_user_id,
 {
     uint32_t user_pin_mask;
     uint32_t ret_val = NRF_SUCCESS;
+
     // Check state and parameters.
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
+
     if (event_handler == NULL)
     {
         return NRF_ERROR_INVALID_PARAM;
@@ -128,10 +130,7 @@ uint32_t app_gpiote_user_register(app_gpiote_user_id_t     * p_user_id,
         if ((mask & user_pin_mask) & ~m_pins)
         {
             ret_val = nrf_drv_gpiote_in_init(i, &config, gpiote_handler);
-            if (ret_val != NRF_SUCCESS)
-            {
-                return ret_val;
-            }
+            VERIFY_SUCCESS(ret_val);
             m_pins |= mask;
         }
         mask <<= 1;
@@ -142,10 +141,8 @@ uint32_t app_gpiote_user_register(app_gpiote_user_id_t     * p_user_id,
 __STATIC_INLINE uint32_t error_check(app_gpiote_user_id_t user_id)
 {
     // Check state and parameters.
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
+
     if (user_id >= m_user_count)
     {
         return NRF_ERROR_INVALID_PARAM;
@@ -223,15 +220,10 @@ uint32_t app_gpiote_user_enable(app_gpiote_user_id_t user_id)
     if (mp_users[user_id].enabled == false)
     {
         ret_code = user_enable(user_id, true);
-        if (ret_code != NRF_SUCCESS)
-        {
-            return ret_code;
-        }
-        else
-        {
-            mp_users[user_id].enabled = true;
-            return ret_code;
-        }
+        VERIFY_SUCCESS(ret_code);
+
+        mp_users[user_id].enabled = true;
+        return ret_code;
     }
     else
     {

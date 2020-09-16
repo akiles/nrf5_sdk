@@ -5,6 +5,9 @@
 #include "app_error.h"
 #include "app_util.h"
 #include "cmsis_os.h"
+#include "app_util_platform.h"
+
+#define RTC1_IRQ_PRI        APP_IRQ_PRIORITY_LOW    /**< Priority of the RTC1 interrupt. */
 
 #define MAX_RTC_COUNTER_VAL 0x00FFFFFF /**< Maximum value of the RTC counter. */
 
@@ -77,6 +80,7 @@ uint32_t app_timer_init(uint32_t                      prescaler,
 
     app_timer_control.prescaler  = prescaler;
     app_timer_control.app_timers = p_buffer;
+    NVIC_SetPriority(RTC1_IRQn, RTC1_IRQ_PRI);
 
     return NRF_SUCCESS;
 }

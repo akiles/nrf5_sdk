@@ -154,7 +154,7 @@ int main(void)
          CTS_PIN_NUMBER,
          APP_UART_FLOW_CONTROL_ENABLED,
          false,
-         UART_BAUDRATE_BAUDRATE_Baud38400
+         UART_BAUDRATE_BAUDRATE_Baud115200
      };
 
     APP_UART_FIFO_INIT(&comm_params,
@@ -184,7 +184,7 @@ int main(void)
     while (true)
     {
 
-        printf("Current cout: %d\n\r", (int)nrf_drv_timer_capture(&timer0,NRF_TIMER_CC_CHANNEL0));
+        printf("Current count: %d\n\r", (int)nrf_drv_timer_capture(&timer0,NRF_TIMER_CC_CHANNEL0));
 
         /* increment the counter */
         nrf_drv_timer_increment(&timer0);

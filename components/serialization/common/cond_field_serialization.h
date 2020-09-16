@@ -9,7 +9,7 @@
  * the file.
  *
  */
-#include "stdint.h"
+#include <stdint.h>
 
 typedef uint32_t (*field_encoder_handler_t)(void const * const p_field,
                                             uint8_t * const    p_buf,

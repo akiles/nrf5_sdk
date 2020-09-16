@@ -84,6 +84,44 @@ uint32_t temp_get_rsp_enc(uint32_t         return_code,
                           uint32_t * const p_buf_len,
                           int32_t * const  p_temp);
 
+/**@brief Decodes @ref sd_ecb_block_encrypt command request.
+ *
+ * @sa @ref nrf51_sd_ecb_block_encrypt for packet format.
+ *     @ref ecb_block_encrypt_rsp_enc for response encoding.
+ *
+ * @param[in] p_buf          Pointer to buffer where encoded data command will be returned.
+ * @param[in] buf_len        Length (in bytes) of request packet.
+ * @param[out] pp_ecb_data   Pointer to pointer to ECB data.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied
+ * @retval NRF_ERROR_INVALID_PARAM    Encoding failure. Incorrect parameter.
+ */
+uint32_t ecb_block_encrypt_req_dec(uint8_t const * const            p_buf,
+                                   uint32_t                         buf_len,
+                                   nrf_ecb_hal_data_t * * const     pp_ecb_data);
+
+/**@brief Encodes @ref sd_ecb_block_encrypt command response.
+ *
+ * @sa @ref nrf51_sd_ecb_block_encrypt for packet format.
+ *     @ref ecb_block_encrypt_req_dec for request decoding.
+ *
+ * @param[in] return_code         Return code indicating if command was successful or not.
+ * @param[out] p_buf              Pointer to buffer where encoded data command response will be
+ *                                returned.
+ * @param[in,out] p_buf_len       \c in: size of \p p_buf buffer.
+ *                                \c out: Length of encoded command response packet.
+ * @param[in] p_ecb_data          Pointer to ECB data.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
+ */
+uint32_t ecb_block_encrypt_rsp_enc(uint32_t         return_code,
+                                   uint8_t * const  p_buf,
+                                   uint32_t * const p_buf_len,
+                                   nrf_ecb_hal_data_t * const  p_ecb_data);
+
 /** @} */
 #endif
 

@@ -11,19 +11,12 @@
  */
  
 /**@file
- *
  * @defgroup nrf_spis SPI slave HAL and driver
  * @ingroup nrf_spi
  * @brief SPI slave API.
  * @details The SPIS HAL provides basic APIs for accessing the registers 
  * of the SPIS. The SPIS driver provides APIs on a higher level.
- *
- * @defgroup lib_driver_spi_slave Software controlled SPI slave driver
- * @{
- * @ingroup  nrf_spis
- *
- * @brief    Driver for the software controlled SPI slave.
- */
+ **/
 
 #ifndef SPI_SLAVE_H__
 #define SPI_SLAVE_H__
@@ -36,18 +29,6 @@
 #include "nrf_gpio.h"
 #include "sdk_common.h"
 #include "app_util_platform.h"
-
-/**
- * @brief This value can be provided instead of a pin number for the signals MOSI
- *        and MISO to specify that the given signal is not used and therefore
- *        does not need to be connected to a pin.
- */
-#define NRF_DRV_SPIS_PIN_NOT_USED       0xFF
-
-#define NRF_DRV_SPIS_DEFAULT_CSN_PULLUP NRF_GPIO_PIN_NOPULL /**< Default pull-up configuration of the SPI CS. */
-#define NRF_DRV_SPIS_DEFAULT_MISO_DRIVE NRF_GPIO_PIN_S0S1   /**< Default drive configuration of the SPI MISO. */
-#define NRF_DRV_SPIS_DEFAULT_DEF        0xFF                /**< Default DEF character. */
-#define NRF_DRV_SPIS_DEFAULT_ORC        0xFF                /**< Default ORC character. */
 
 #if defined(NRF52)
     #define SPIS2_IRQ            SPIM2_SPIS2_SPI2_IRQn
@@ -63,6 +44,25 @@
     #define SPIS1_IRQ_HANDLER    SPI1_TWI1_IRQHandler
 #endif
 
+/**
+ * @defgroup nrf_drv_spi_slave SPI slave driver
+ * @{
+ * @ingroup  nrf_spis
+ *
+ * @brief    Multi-instance SPI slave driver.
+ */
+ 
+#define NRF_DRV_SPIS_DEFAULT_CSN_PULLUP NRF_GPIO_PIN_NOPULL /**< Default pull-up configuration of the SPI CS. */
+#define NRF_DRV_SPIS_DEFAULT_MISO_DRIVE NRF_GPIO_PIN_S0S1   /**< Default drive configuration of the SPI MISO. */
+#define NRF_DRV_SPIS_DEFAULT_DEF        0xFF                /**< Default DEF character. */
+#define NRF_DRV_SPIS_DEFAULT_ORC        0xFF                /**< Default ORC character. */
+ 
+/**
+* @brief This value can be provided instead of a pin number for the signals MOSI
+*        and MISO to specify that the given signal is not used and therefore
+*        does not need to be connected to a pin.
+*/
+#define NRF_DRV_SPIS_PIN_NOT_USED       0xFF
 
 /** @brief SPIS transaction bit order definitions. */
 typedef enum
@@ -157,13 +157,17 @@ typedef void (*nrf_drv_spis_event_handler_t)(nrf_drv_spis_event_t event);
 
 /** @brief Function for initializing the SPI slave driver instance.
  *
- * @param[in] p_instance            Pointer to the instance structure.
- * @param[in] p_config              Pointer to the structure with the initial configuration.
- *                                  If NULL, the default configuration will be used.
- * @param[in] event_handler         Function to be called by the SPI slave driver upon event.
+ * @param[in] p_instance    Pointer to the instance structure.
+ * @param[in] p_config      Pointer to the structure with the initial configuration.
+ *                          If NULL, the default configuration will be used.
+ * @param[in] event_handler Function to be called by the SPI slave driver upon event.
  *
- * @retval NRF_SUCCESS              If the initialization was successful.
- * @retval NRF_ERROR_INVALID_PARAM  If an invalid parameter is supplied.
+ * @retval NRF_SUCCESS             If the initialization was successful.
+ * @retval NRF_ERROR_INVALID_PARAM If an invalid parameter is supplied.
+ * @retval NRF_ERROR_BUSY          If some other peripheral with the same
+ *                                 instance ID is already in use. This is 
+ *                                 possible only if PERIPHERAL_RESOURCE_SHARING_ENABLED 
+ *                                 is set to a value other than zero.
  */
 ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
                              nrf_drv_spis_config_t const * p_config,
@@ -175,7 +179,7 @@ ret_code_t nrf_drv_spis_init(nrf_drv_spis_t const * const  p_instance,
  * @param[in] p_instance Pointer to the instance structure.
  */
 void nrf_drv_spis_uninit(nrf_drv_spis_t const * const p_instance);
-                             
+
 /** @brief Function for preparing the SPI slave instance for a single SPI transaction.
  * 
  * This function prepares the SPI slave device to be ready for a single SPI transaction. It configures 
@@ -192,7 +196,7 @@ void nrf_drv_spis_uninit(nrf_drv_spis_t const * const p_instance);
  * the SPI slave driver should be prepared for a possible new SPI transaction. 
  *
  * @note Peripherals that are using EasyDMA (for example, SPIS) require the transfer buffers
- * to be placed in the data RAM region. Otherwise, this function will fail
+ * to be placed in the Data RAM region. Otherwise, this function will fail
  * with the error code NRF_ERROR_INVALID_ADDR.
  *
  * @param[in] p_instance            SPIS instance.
@@ -204,7 +208,7 @@ void nrf_drv_spis_uninit(nrf_drv_spis_t const * const p_instance);
  * @retval NRF_SUCCESS              If the operation was successful.
  * @retval NRF_ERROR_NULL           If the operation failed because a NULL pointer was supplied.   
  * @retval NRF_ERROR_INVALID_STATE  If the operation failed because the SPI slave device is in an incorrect state.
- * @retval NRF_ERROR_INVALID_ADDR   If the provided buffers are not placed in the data
+ * @retval NRF_ERROR_INVALID_ADDR   If the provided buffers are not placed in the Data
  *                                  RAM region.
  * @retval NRF_ERROR_INTERNAL       If the operation failed because of an internal error.
  */

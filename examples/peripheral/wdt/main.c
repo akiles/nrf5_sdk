@@ -50,8 +50,14 @@ void wdt_event_handler(void)
 
 /**
  * @brief Assert callback.
+ *
+ * @param[in] id    Fault identifier. See @ref NRF_FAULT_IDS.
+ * @param[in] pc    The program counter of the instruction that triggered the fault, or 0 if
+ *                  unavailable.
+ * @param[in] info  Optional additional information regarding the fault. Refer to each fault
+ *                  identifier for details.
  */
-void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
+void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
     LEDS_OFF(LEDS_MASK);
     while(1);
@@ -82,9 +88,9 @@ int main(void)
     uint32_t err_code = NRF_SUCCESS;
     
     //BSP configuration for button support: button pushing will feed the dog.
-    err_code = nrf_drv_clock_init(NULL);
+    err_code = nrf_drv_clock_init();
     APP_ERROR_CHECK(err_code);
-    nrf_drv_clock_lfclk_request();
+    nrf_drv_clock_lfclk_request(NULL);
 
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
     err_code = bsp_init(BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), bsp_event_callback);

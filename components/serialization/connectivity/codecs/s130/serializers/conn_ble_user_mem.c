@@ -17,7 +17,7 @@
 
 
 
-ser_ble_user_mem_t m_conn_user_mem_table[SER_MAX_CONNECTIONS];
+sercon_ble_user_mem_t m_conn_user_mem_table[SER_MAX_CONNECTIONS];
 
 uint32_t conn_ble_user_mem_context_create(uint32_t *p_index)
 {

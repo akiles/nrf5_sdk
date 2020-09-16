@@ -589,9 +589,9 @@ static void ser_phy_switch_state(ser_phy_event_source_t evt_src)
     }
 }
 
-static void ser_phy_spi_master_event_handler(nrf_drv_spi_event_t event)
+static void ser_phy_spi_master_event_handler(nrf_drv_spi_evt_t const * p_event)
 {
-    switch (event)
+    switch (p_event->type)
     {
         case NRF_DRV_SPI_EVENT_DONE:
 
@@ -618,7 +618,7 @@ static __INLINE void ser_phy_init_gpio()
     nrf_gpio_cfg_input(SER_PHY_SPI_MASTER_PIN_SLAVE_READY, NRF_GPIO_PIN_PULLUP);
 }
 
-static __INLINE void ser_phy_init_gpiote()
+static __INLINE ret_code_t ser_phy_init_gpiote()
 {
     if (!nrf_drv_gpiote_is_init())
     {
@@ -630,13 +630,23 @@ static __INLINE void ser_phy_init_gpiote()
     nrf_drv_gpiote_in_config_t config = GPIOTE_CONFIG_IN_SENSE_TOGGLE(true);
     /* Enable pullup to ensure high state while connectivity device is reset */
     config.pull = NRF_GPIO_PIN_PULLUP;
-    (void)nrf_drv_gpiote_in_init(SER_PHY_SPI_MASTER_PIN_SLAVE_REQUEST, &config, ser_phy_spi_master_request);
+    ret_code_t err_code = nrf_drv_gpiote_in_init(SER_PHY_SPI_MASTER_PIN_SLAVE_REQUEST, &config, ser_phy_spi_master_request);
+    if (err_code != NRF_SUCCESS)
+    {
+        return err_code;
+    }
     nrf_drv_gpiote_in_event_enable(SER_PHY_SPI_MASTER_PIN_SLAVE_REQUEST,true);
 
-    (void)nrf_drv_gpiote_in_init(SER_PHY_SPI_MASTER_PIN_SLAVE_READY, &config, ser_phy_spi_master_ready);
+    err_code = nrf_drv_gpiote_in_init(SER_PHY_SPI_MASTER_PIN_SLAVE_READY, &config, ser_phy_spi_master_ready);
+    if (err_code != NRF_SUCCESS)
+    {
+        return err_code;
+    }
     nrf_drv_gpiote_in_event_enable(SER_PHY_SPI_MASTER_PIN_SLAVE_READY,true);
 
     NVIC_ClearPendingIRQ(SW_IRQn);
+
+    return NRF_SUCCESS;
 }
 
 static __INLINE void ser_phy_deinit_gpiote()
@@ -731,7 +741,7 @@ uint32_t ser_phy_open(ser_phy_events_handler_t events_handler)
     }
 
     ser_phy_init_gpio();
-    ser_phy_init_gpiote();
+    err_code = ser_phy_init_gpiote();
     ser_phy_init_PendSV();
     return err_code;
 }

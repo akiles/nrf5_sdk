@@ -7,13 +7,19 @@ Copyright © Dynastream Innovations Inc. 2015
 All rights reserved.
 */
 
-#include <stdint.h>
+/*
+ * Before compiling this example for NRF52, complete the following steps:
+ * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
+ * - Extract the downloaded zip file and copy the S212 SoftDevice headers to <tt>\<InstallFolder\>/components/softdevice/s212/headers</tt>.
+ * If you are using Keil packs, copy the files into a @c headers folder in your example folder.
+ * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
+ */
 
+#include <stdint.h>
 #include "app_error.h"
 #include "boards.h"
 #include "softdevice_handler.h"
 #include "ant_stack_config.h"
-
 #include "ant_scalable_encrypted_tx.h"
 
 
@@ -25,10 +31,12 @@ static void softdevice_setup(void)
 {
     uint32_t err_code;
 
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+
     err_code = softdevice_ant_evt_handler_set(ant_scalable_encrypted_event_handler);
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(NRF_CLOCK_LFCLKSRC, NULL, 0, NULL);
+    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
     APP_ERROR_CHECK(err_code);
 
     err_code = ant_stack_static_config();

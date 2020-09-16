@@ -27,12 +27,6 @@ typedef struct
     uint8_t * p_uuid_le;     /**< @ref sd_ble_uuid_encode appearance p_uuid_le output parameter. */
 } ble_uuid_encode_out_params_t;
 
-/**@brief Structure containing @ref sd_ble_tx_buffer_count_get output parameters. */
-typedef struct
-{
-    uint8_t * p_count; /**< @ref sd_ble_tx_buffer_count_get p_count output parameter. */
-} ble_tx_buffer_count__get_out_params_t;
-
 /**@brief Structure containing @ref sd_ble_user_mem_reply output parameters. */
 typedef struct
 {
@@ -44,7 +38,6 @@ typedef struct
 typedef union
 {
     ble_uuid_encode_out_params_t          ble_uuid_encode_out_params;         /**< @ref sd_ble_uuid_encode output parameters. */
-    ble_tx_buffer_count__get_out_params_t ble_tx_buffer_count_get_out_params; /**< @ref sd_ble_uuid_encode output parameters. */
     ble_user_mem_reply_out_params_t       ble_user_mem_reply_out_params;      /**< @ref sd_ble_user_mem_reply output parameters. */
 } ble_command_output_params_t;
 
@@ -121,7 +114,7 @@ uint32_t sd_ble_uuid_encode(ble_uuid_t const * const p_uuid,
 
 }
 
-/**@brief Command response callback function for @ref sd_ble_tx_buffer_count_get BLE command.
+/**@brief Command response callback function for @ref sd_ble_tx_packet_count_get BLE command.
  *
  * Callback for decoding the output parameters and the command response return code.
  *
@@ -130,11 +123,11 @@ uint32_t sd_ble_uuid_encode(ble_uuid_t const * const p_uuid,
  *
  * @return Decoded command response return code.
  */
-static uint32_t tx_buffer_count_get_rsp_dec(const uint8_t * p_buffer, uint16_t length)
+static uint32_t tx_packet_count_get_rsp_dec(const uint8_t * p_buffer, uint16_t length)
 {
     uint32_t result_code;
 
-    const uint32_t err_code = ble_tx_buffer_count_get_rsp_dec(p_buffer,
+    const uint32_t err_code = ble_tx_packet_count_get_rsp_dec(p_buffer,
                                                               length,
                                                               (uint8_t * *)&mp_out_params[0],
                                                               &result_code);
@@ -145,7 +138,7 @@ static uint32_t tx_buffer_count_get_rsp_dec(const uint8_t * p_buffer, uint16_t l
     return result_code;
 }
 
-uint32_t sd_ble_tx_buffer_count_get(uint8_t * p_count)
+uint32_t sd_ble_tx_packet_count_get(uint16_t conn_handle, uint8_t * p_count)
 {
     uint8_t * p_buffer;
     uint32_t  buffer_length;
@@ -153,7 +146,8 @@ uint32_t sd_ble_tx_buffer_count_get(uint8_t * p_count)
     tx_buf_alloc(&p_buffer, &buffer_length);
     mp_out_params[0] = p_count;
 
-    const uint32_t err_code = ble_tx_buffer_count_get_req_enc(p_count,
+    const uint32_t err_code = ble_tx_packet_count_get_req_enc(conn_handle,
+                                                              p_count,
                                                               &(p_buffer[1]),
                                                               &buffer_length);
     APP_ERROR_CHECK(err_code);
@@ -161,7 +155,7 @@ uint32_t sd_ble_tx_buffer_count_get(uint8_t * p_count)
     //@note: Increment buffer length as internally managed packet type field must be included.
     return ser_sd_transport_cmd_write(p_buffer,
                                       (++buffer_length),
-                                      tx_buffer_count_get_rsp_dec);
+                                      tx_packet_count_get_rsp_dec);
 
 }
 
@@ -414,10 +408,13 @@ static uint32_t enable_rsp_dec(const uint8_t * p_buffer, uint16_t length)
     return result_code;
 }
 
-uint32_t sd_ble_enable(ble_enable_params_t * p_params)
+uint32_t sd_ble_enable(ble_enable_params_t * p_params, uint32_t * p_app_ram_base)
 {
     uint8_t * p_buffer;
     uint32_t  buffer_length;
+
+    //Ignore ram_base parameter
+    (void)p_app_ram_base;
 
     tx_buf_alloc(&p_buffer, &buffer_length);
     mp_out_params[0] = p_params;

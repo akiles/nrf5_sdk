@@ -49,7 +49,7 @@
  *          Maximum value : Maximum links supported by SoftDevice.
  *          Dependencies  : None.
  */
-#define DEVICE_MANAGER_MAX_CONNECTIONS   8
+#define DEVICE_MANAGER_MAX_CONNECTIONS   3
 
 
 /**
@@ -64,7 +64,7 @@
  *       be stored. In such cases, application will be notified with DM_DEVICE_CONTEXT_FULL 
  *       as event result at the completion of the security procedure.
  */
-#define DEVICE_MANAGER_MAX_BONDS         8
+#define DEVICE_MANAGER_MAX_BONDS         7
 
 
 /**
@@ -73,7 +73,7 @@
  * @details Maximum Characteristic Client Descriptors used for GATT Server.
  *          Minimum value : 1
  *          Maximum value : 254.
- *          Dependencies  : None. 
+ *          Dependencies  : None.
  */
 #define DM_GATT_CCCD_COUNT               1
 
@@ -84,15 +84,15 @@
  * @details Size of application context that Device Manager should manage for each bonded device.
  *          Size had to be a multiple of word size.
  *          Minimum value : 4.
- *          Maximum value : 254. 
+ *          Maximum value : 256. 
  *          Dependencies  : Needed only if Application Context saving is used by the application.
  * @note If set to zero, its an indication that application context is not required to be managed
  *       by the module.
  */
-#define DEVICE_MANAGER_APP_CONTEXT_SIZE    0
+#define DEVICE_MANAGER_APP_CONTEXT_SIZE    20
 
-/* @} */
-/* @} */
+/** @} */
+/** @} */
 /** @endcond */
 #endif // DEVICE_MANAGER_CNFG_H__
 

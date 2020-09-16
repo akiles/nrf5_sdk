@@ -17,6 +17,17 @@
 */
 
 #include <stdbool.h>
+#include <stdint.h>
+
+#include "nrf.h"
+#include "nrf_gpio.h"
+#include "nordic_common.h"
+#include "nrf_delay.h"
+#include "app_error.h"
+#include "app_timer.h"
+#include "app_util_platform.h"
+#include "boards.h"
+#include "bsp.h"
 
 /**
  * @brief Function for application main entry.

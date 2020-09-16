@@ -2,7 +2,6 @@
 This software is subject to the license described in the License.txt file
 included with this software distribution. You may not use this file except in compliance
 with this license.
-
 Copyright (c) Dynastream Innovations Inc. 2015
 All rights reserved.
 */
@@ -18,9 +17,11 @@ typedef struct
     uint8_t dst;
     uint8_t page;
     uint8_t data;
+    uint8_t pay0;
+    uint8_t pay1;
     uint8_t seq;
     uint8_t ticks;
-} mesh_message_t;
+} sf_message_t;
 
 typedef struct
 {
@@ -28,7 +29,7 @@ typedef struct
     uint8_t          back;
     uint8_t          count;
     uint8_t          size;
-    mesh_message_t * buffer;
+    sf_message_t * buffer;
 } message_cache_t;
 
 

@@ -48,10 +48,6 @@
 #define UART_TX_BUF_SIZE   256 /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE   1   /**< UART RX buffer size. */
 
-#ifndef NRF_APP_PRIORITY_HIGH
-#define NRF_APP_PRIORITY_HIGH 1
-#endif
-
 static volatile uint32_t voltage_falls_detected = 0;
 static volatile uint32_t voltage_falls_total    = 0;
 
@@ -87,7 +83,7 @@ void uart_config(void)
         CTS_PIN_NUMBER,
         APP_UART_FLOW_CONTROL_DISABLED,
         false,
-        UART_BAUDRATE_BAUDRATE_Baud38400
+        UART_BAUDRATE_BAUDRATE_Baud115200
     };
 
     APP_UART_FIFO_INIT(&comm_params,
@@ -107,7 +103,7 @@ void uart_config(void)
  * This function is called from interrupt context so it is very important
  * to return quickly. Don't put busy loops or any other CPU intensive actions here.
  * It is also not allowed to call soft device functions from it (if LPCOMP IRQ
- * priority is set to NRF_APP_PRIORITY_HIGH).
+ * priority is set to APP_IRQ_PRIORITY_HIGH).
  */
 static void lpcomp_event_handler(nrf_lpcomp_event_t event)
 {

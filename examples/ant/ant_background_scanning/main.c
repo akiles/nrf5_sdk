@@ -13,6 +13,12 @@ All rights reserved.
  * @ingroup nrf_ant_background_scanning_demo
  *
  * @brief Example of ANT Background Scanning implementation.
+ *
+ * Before compiling this example for NRF52, complete the following steps:
+ * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
+ * - Extract the downloaded zip file and copy the S212 SoftDevice headers to <tt>\<InstallFolder\>/components/softdevice/s212/headers</tt>.
+ * If you are using Keil packs, copy the files into a @c headers folder in your example folder.
+ * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
  */
 
 #include <stdio.h>
@@ -44,7 +50,6 @@ All rights reserved.
 #define ANT_MS_CHANNEL_TYPE         CHANNEL_TYPE_MASTER                 /**< Bi-directional master. */
 #define ANT_BS_CHANNEL_TYPE         CHANNEL_TYPE_SLAVE                  /**< Bi-directional slave. */
 
-#define ANT_MS_DEVICE_NUMBER        ((uint16_t) (NRF_FICR->DEVICEID[0]))/**< Derive from device serial number. */
 #define ANT_BS_DEVICE_NUMBER        ((uint16_t) 0)                      /**< Wild-card. */
 
 #define ANT_DEVICE_TYPE             ((uint8_t) 1)                       /**< Device type. */
@@ -63,6 +68,12 @@ void master_beacon_process(ant_evt_t * p_ant_evt);
 static uint8_t m_last_rssi       = 0;
 static uint16_t m_last_device_id = 0;
 static uint8_t m_recieved        = 0;
+
+/**< Derive from device serial number. */
+static uint16_t ant_ms_dev_num_get(void)
+{
+    return ((uint16_t) (NRF_FICR->DEVICEID[0]));
+}
 
 
 /**@brief Function for dispatching an ANT stack event to all modules with an ANT stack event handler.
@@ -99,6 +110,8 @@ static void application_initialize()
                                             | ANT_LIB_CONFIG_MESG_OUT_INC_DEVICE_ID);
     APP_ERROR_CHECK(err_code);
 
+    const uint16_t dev_num = ant_ms_dev_num_get();
+
     const ant_channel_config_t ms_channel_config =
     {
         .channel_number    = ANT_MS_CHANNEL_NUMBER,
@@ -107,7 +120,7 @@ static void application_initialize()
         .rf_freq           = ANT_FREQUENCY,
         .transmission_type = ANT_TRANSMISSION_TYPE,
         .device_type       = ANT_DEVICE_TYPE,
-        .device_number     = ANT_MS_DEVICE_NUMBER,
+        .device_number     = dev_num,
         .channel_period    = ANT_CHANNEL_PERIOD,
         .network_number    = ANT_NETWORK_NUMBER,
     };
@@ -179,10 +192,12 @@ static void softdevice_setup(void)
 {
     uint32_t err_code;
 
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+
     err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(NRF_CLOCK_LFCLKSRC, NULL, 0, NULL);
+    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
     APP_ERROR_CHECK(err_code);
 
     err_code = ant_stack_static_config();
@@ -197,7 +212,7 @@ static void softdevice_setup(void)
 void background_scanner_process(ant_evt_t * p_ant_evt)
 {
     uint32_t      err_code;
-    ANT_MESSAGE * p_ant_message = (ANT_MESSAGE*)p_ant_evt->evt_buffer;
+    ANT_MESSAGE * p_ant_message = (ANT_MESSAGE*)p_ant_evt->msg.evt_buffer;
 
     switch(p_ant_evt->event)
     {
@@ -208,8 +223,7 @@ void background_scanner_process(ant_evt_t * p_ant_evt)
 
             if(p_ant_message->ANT_MESSAGE_stExtMesgBF.bANTDeviceID)
             {
-                m_last_device_id = (uint16_t)(p_ant_message->ANT_MESSAGE_aucExtData[0]
-                                 | ((uint16_t)p_ant_message->ANT_MESSAGE_aucExtData[1] << 8));
+                m_last_device_id = uint16_decode(p_ant_message->ANT_MESSAGE_aucExtData);
             }
 
             if(p_ant_message->ANT_MESSAGE_stExtMesgBF.bANTRssi)

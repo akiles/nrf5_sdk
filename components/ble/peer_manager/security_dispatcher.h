@@ -1,19 +1,20 @@
 /* Copyright (c) 2015 Nordic Semiconductor. All Rights Reserved.
-*
-* The information contained herein is property of Nordic Semiconductor ASA.
-* Terms and conditions of usage are described in detail in NORDIC
-* SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
-*
-* Licensees are granted free, non-transferable use of the information. NO
-* WARRANTY of ANY KIND is provided. This heading must NOT be removed from
-* the file.
-*
-*/
+ *
+ * The information contained herein is property of Nordic Semiconductor ASA.
+ * Terms and conditions of usage are described in detail in NORDIC
+ * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
+ *
+ * Licensees are granted free, non-transferable use of the information. NO
+ * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
+ * the file.
+ *
+ */
+
 
 #ifndef SECURITY_DISPATCHER_H__
 #define SECURITY_DISPATCHER_H__
 
-#include "stdint.h"
+#include <stdint.h>
 #include "sdk_errors.h"
 #include "ble.h"
 #include "ble_gap.h"
@@ -21,6 +22,7 @@
 
 
 /**
+ * @cond NO_DOXYGEN
  * @defgroup security_dispatcher Security Dispatcher
  * @ingroup peer_manager
  * @{
@@ -61,7 +63,7 @@ typedef struct
  */
 typedef struct
 {
-    pm_sec_procedure_t procedure; /**< The procedure that has started. */
+    pm_conn_sec_procedure_t procedure; /**< The procedure that has started. */
 } smd_evt_sec_procedure_start_t;
 
 
@@ -80,8 +82,8 @@ typedef struct
  */
 typedef struct
 {
-    uint8_t auth_status; /**< The error code describing the error. See @ref BLE_GAP_SEC_STATUS. */
-    uint8_t error_src;   /**< The origin of the error. See @ref BLE_GAP_SEC_STATUS_SOURCES. */
+    pm_sec_error_code_t error;     /**< What went wrong. */
+    uint8_t             error_src; /**< The party that raised the error, see @ref BLE_GAP_SEC_STATUS_SOURCES. */
 } smd_evt_pairing_failed_t;
 
 
@@ -98,7 +100,7 @@ typedef struct
 typedef struct
 {
     pm_sec_error_code_t error;     /**< What went wrong. */
-    uint8_t             error_src; /**< The party which raised the error, see @ref BLE_GAP_SEC_STATUS_SOURCES. */
+    uint8_t             error_src; /**< The party that raised the error, see @ref BLE_GAP_SEC_STATUS_SOURCES. */
 } smd_evt_link_encryption_failed_t;
 
 
@@ -115,7 +117,7 @@ typedef struct
 typedef struct
 {
     pm_peer_id_t peer_id; /**< The peer this event pertains to, if previously bonded. @ref PM_PEER_ID_INVALID if no successful bonding has happened with the peer before. */
-    ret_code_t error;     /**< The unexpected error that occurred. */
+    ret_code_t   error;   /**< The unexpected error that occurred. */
 } smd_evt_error_bonding_info_t;
 
 
@@ -196,6 +198,7 @@ void smd_ble_evt_handler(ble_evt_t * ble_evt);
  *
  * @param[in]  conn_handle   The connection handle of the connection the pairing is happening on.
  * @param[in]  p_sec_params  The security parameters to use for this link.
+ * @param[in]  p_public_key  A pointer to the public key to use if using LESC, or NULL.
  *
  * @retval NRF_SUCCESS                    Success.
  * @retval NRF_ERROR_INVALID_STATE        Module is not initialized, or no parameters have been
@@ -208,7 +211,9 @@ void smd_ble_evt_handler(ble_evt_t * ble_evt);
  * @retval NRF_ERROR_NO_MEM               No more room in flash. Fix and reattempt later.
  * @retval NRF_ERROR_BUSY                 No write buffer. Reattempt later.
  */
-ret_code_t smd_params_reply(uint16_t conn_handle, ble_gap_sec_params_t * p_sec_params);
+ret_code_t smd_params_reply(uint16_t                 conn_handle,
+                            ble_gap_sec_params_t   * p_sec_params,
+                            ble_gap_lesc_p256_pk_t * p_public_key);
 
 
 /**@brief Function for initiating security on the link, with the specified parameters.
@@ -235,14 +240,15 @@ ret_code_t smd_params_reply(uint16_t conn_handle, ble_gap_sec_params_t * p_sec_p
  * @retval NRF_ERROR_TIMEOUT              There has been an SMP timeout, so no more SMP operations
  *                                        can be performed on this link.
  * @retval BLE_ERROR_INVALID_CONN_HANDLE  Invalid connection handle.
- * @retval NRF_ERROR_NO_MEM               No more room in flash, or no space in RAM for
- *                                        peer_database to use.
+ * @retval NRF_ERROR_NO_MEM               No more room in flash.
  * @retval NRF_ERROR_INTERNAL             No more available peer IDs.
  */
 ret_code_t smd_link_secure(uint16_t               conn_handle,
                            ble_gap_sec_params_t * p_sec_params,
                            bool                   force_repairing);
 
-/** @} */
+/** @} 
+ * @endcond
+ */
 
 #endif /* SECURITY_DISPATCHER_H__ */

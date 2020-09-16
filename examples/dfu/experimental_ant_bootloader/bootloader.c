@@ -19,7 +19,7 @@
 #include "nrf.h"
 #include "app_error.h"
 #include "nrf_sdm.h"
-#include "nrf_nvmc.h"
+#include "nrf_soc.h"
 #include "nordic_common.h"
 #include "pstorage.h"
 #include "app_scheduler.h"
@@ -51,9 +51,27 @@ static bootloader_status_t      m_update_status;        /**< Current update stat
 static uint8_t                  m_delay_applied = false;/**< Delay has been applied before the initial access to flash > */
 
 /* NOTE: Temporary use of this page until the bootloader_settings slotting is implemented */
-#define BOOT_SETTINGS_PEND_ADDRESS      (BOOTLOADER_SETTINGS_ADDRESS - CODE_PAGE_SIZE)
+#define BOOT_SETTINGS_PEND_ADDRESS      (BOOTLOADER_MBR_RETAINING_PAGE_ADDRESS)
 #define BOOT_SETTINGS_PEND_VALUE        0xFFFFFFFE
-uint8_t  m_boot_settings_pend[CODE_PAGE_SIZE] __attribute__((at(BOOTLOADER_SETTINGS_ADDRESS - CODE_PAGE_SIZE))) __attribute__((used));
+uint8_t  m_boot_settings_pend[CODE_PAGE_SIZE] __attribute__((at(BOOT_SETTINGS_PEND_ADDRESS))) __attribute__((used));
+
+uint32_t blocking_flash_page_erase(uint32_t page_number)
+{
+    uint32_t err_code;
+    do{
+        err_code = sd_flash_page_erase(page_number);
+    } while(err_code == NRF_ERROR_BUSY);
+    return err_code;
+}
+
+uint32_t blocking_flash_word_write(uint32_t * const p_dst, uint32_t data)
+{
+    uint32_t err_code;
+    do{
+        err_code = sd_flash_write(p_dst, &data, 1);
+    } while(err_code == NRF_ERROR_BUSY);
+    return err_code;
+}
 
 static void pstorage_callback_handler(pstorage_handle_t * handle, uint8_t op_code, uint32_t result, uint8_t * p_data, uint32_t data_len)
 {
@@ -66,7 +84,8 @@ static void pstorage_callback_handler(pstorage_handle_t * handle, uint8_t op_cod
         /*Clears bootloader_settings critical flag*/
         if (*((uint32_t *)BOOT_SETTINGS_PEND_ADDRESS) == BOOT_SETTINGS_PEND_VALUE)
         {
-            nrf_nvmc_page_erase(BOOT_SETTINGS_PEND_ADDRESS);
+            uint32_t err_code = blocking_flash_page_erase(BOOT_SETTINGS_PEND_ADDRESS/CODE_PAGE_SIZE);
+            APP_ERROR_CHECK(err_code);
         }
     }
     APP_ERROR_CHECK(result);
@@ -164,8 +183,9 @@ static void bootloader_settings_save(bootloader_settings_t * p_settings)
 
 void bootloader_dfu_update_process(dfu_update_status_t update_status)
 {
-    static bootloader_settings_t settings;
-    const bootloader_settings_t * p_bootloader_settings;
+    static bootloader_settings_t    settings;
+    const bootloader_settings_t *   p_bootloader_settings;
+    uint32_t                        err_code;
 
     bootloader_util_settings_get(&p_bootloader_settings);                                   /* Extract current values of the bootloader_settings*/
     memcpy(&settings, p_bootloader_settings, sizeof(bootloader_settings_t));                /* Copy over to local bootloader_settings*/
@@ -205,8 +225,17 @@ void bootloader_dfu_update_process(dfu_update_status_t update_status)
         settings.src_image_address = update_status.src_image_address;
         m_update_status             = BOOTLOADER_SETTINGS_SAVING;
 
+        /*Clears bootloader_settings critical flag - in case it was used by MBR*/
+        if (*((uint32_t *)BOOT_SETTINGS_PEND_ADDRESS) != 0xFFFFFFFF)
+        {
+            err_code = blocking_flash_page_erase(BOOT_SETTINGS_PEND_ADDRESS/CODE_PAGE_SIZE);
+            APP_ERROR_CHECK(err_code);
+        }
+
         // TEMPORARY: This serves as a critical flag for the bootloader_settings updating.
-        nrf_nvmc_write_word(BOOT_SETTINGS_PEND_ADDRESS, BOOT_SETTINGS_PEND_VALUE);
+        err_code = blocking_flash_word_write((uint32_t *)BOOT_SETTINGS_PEND_ADDRESS,
+                                             BOOT_SETTINGS_PEND_VALUE);
+        APP_ERROR_CHECK(err_code);
 
         bootloader_settings_save(&settings);
     }
@@ -217,8 +246,17 @@ void bootloader_dfu_update_process(dfu_update_status_t update_status)
         settings.valid_app          = BOOTLOADER_SETTINGS_VALID_APPLICATION;
         m_update_status             = BOOTLOADER_SETTINGS_SAVING;
 
+        /*Clears bootloader_settings critical flag - in case it was used by MBR*/
+        if (*((uint32_t *)BOOT_SETTINGS_PEND_ADDRESS) != 0xFFFFFFFF)
+        {
+            err_code = blocking_flash_page_erase(BOOT_SETTINGS_PEND_ADDRESS/CODE_PAGE_SIZE);
+            APP_ERROR_CHECK(err_code);
+        }
+
         // TEMPORARY: This serves as a critical flag for the bootloader_settings updating.
-        nrf_nvmc_write_word(BOOT_SETTINGS_PEND_ADDRESS, BOOT_SETTINGS_PEND_VALUE);
+        err_code = blocking_flash_word_write((uint32_t *)BOOT_SETTINGS_PEND_ADDRESS,
+                                             BOOT_SETTINGS_PEND_VALUE);
+        APP_ERROR_CHECK(err_code);
 
         bootloader_settings_save(&settings);
     }
@@ -373,8 +411,8 @@ uint32_t bootloader_dfu_sd_update_continue()
         {
             /* This is a manual write to flash, non-softdevice managed */
             uint32_t address    = (uint32_t)p_bootloader_settings + BOOTLOADER_SETTINGS_SD_IMAGE_SIZE_ADR_OFFSET;
-            temp_value      = p_bootloader_settings->sd_image.all & 0x3FFFFFFF; // clears image bank bits.
-            nrf_nvmc_write_word( address, temp_value);
+            temp_value          = p_bootloader_settings->sd_image.all & 0x3FFFFFFF; // clears image bank bits.
+            err_code            = blocking_flash_word_write((uint32_t *)address, temp_value);
             //TODO need to catch verification error
         }
     }
@@ -409,7 +447,7 @@ uint32_t bootloader_dfu_bl_update_continue(void)
             /* This is a manual write to flash, non-softdevice managed */
             uint32_t address    = (uint32_t)p_bootloader_settings + BOOTLOADER_SETTINGS_BL_IMAGE_SIZE_ADR_OFFSET;
             uint32_t value      = p_bootloader_settings->bl_image.all & 0x3FFFFFFF; // clears image bank bits.
-            nrf_nvmc_write_word( address, value);
+            err_code            = blocking_flash_word_write((uint32_t *)address, value);
             //TODO need to catch verification error
         }
     }

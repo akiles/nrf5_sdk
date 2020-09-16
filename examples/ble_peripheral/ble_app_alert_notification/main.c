@@ -37,14 +37,21 @@
 #include "ble_srv_common.h"
 #include "ble_conn_params.h"
 #include "boards.h"
-#include "device_manager.h"
+#include "ble_db_discovery.h"
 #include "app_timer.h"
 #include "pstorage.h"
-#include "app_trace.h"
 #include "bsp.h"
 #include "bsp_btn_ble.h"
+#include "peer_manager.h"
+#include "fds.h"
+#include "fstorage.h"
+#include "nrf_log.h"
+#include "ble_conn_state.h"
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                                   /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
+
+#define CENTRAL_LINK_COUNT              0                                                   /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
+#define PERIPHERAL_LINK_COUNT           1                                                   /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 
 #define DEVICE_NAME                     "Nordic_Alert_Notif."                               /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME               "NordicSemiconductor"                               /**< Manufacturer. Will be passed to Device Information Service. */
@@ -63,12 +70,16 @@
 
 #define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)          /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
 #define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER)         /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
+#define SECURITY_REQUEST_DELAY          APP_TIMER_TICKS(1500, APP_TIMER_PRESCALER)          /**< Delay after connection until security request is sent (1.5 seconds). */
+
 #define MAX_CONN_PARAMS_UPDATE_COUNT    3                                                   /**< Number of attempts before giving up the connection parameter negotiation. */
 
 #define MESSAGE_BUFFER_SIZE             18                                                  /**< Size of buffer holding optional messages in notifications. */
 
 #define SEC_PARAM_BOND                  1                                                   /**< Perform bonding. */
 #define SEC_PARAM_MITM                  0                                                   /**< Man In The Middle protection not required. */
+#define SEC_PARAM_LESC                  0                                                   /**< LE Secure Connections not enabled. */
+#define SEC_PARAM_KEYPRESS              0                                                   /**< Keypress notifications not enabled. */
 #define SEC_PARAM_IO_CAPABILITIES       BLE_GAP_IO_CAPS_NONE                                /**< No I/O capabilities. */
 #define SEC_PARAM_OOB                   0                                                   /**< Out Of Band data not available. */
 #define SEC_PARAM_MIN_KEY_SIZE          7                                                   /**< Minimum encryption key size. */
@@ -76,12 +87,7 @@
 
 #define DEAD_BEEF                       0xDEADBEEF                                          /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
-typedef enum
-{
-    BLE_NO_ADVERTISING,                                                                     /**< No advertising running. */
-    BLE_SLOW_ADVERTISING,                                                                   /**< Slow advertising running. */
-    BLE_FAST_ADVERTISING                                                                    /**< Fast advertising running. */
-} ble_advertising_mode_t;
+#define APP_FEATURE_NOT_SUPPORTED      BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2                 /**< Reply when unsupported features are requested. */
 
 typedef enum
 {
@@ -92,12 +98,13 @@ typedef enum
 
 static ble_ans_c_t                      m_ans_c;                                            /**< Structure used to identify the Alert Notification Service Client. */
 static uint8_t                          m_alert_message_buffer[MESSAGE_BUFFER_SIZE];        /**< Message buffer for optional notify messages. */
-
-static uint16_t                         m_conn_handle        = BLE_CONN_HANDLE_INVALID;     /**< Handle of the current connection. */
+static ble_db_discovery_t               m_ble_db_discovery;                                 /**< Structure used to identify the DB Discovery module. */
 
 static ble_ans_c_alert_state_t          m_new_alert_state    = ALERT_NOTIFICATION_DISABLED; /**< State that holds the current state of New Alert Notifications, i.e. Enabled, Alert On, Disabled. */
 static ble_ans_c_alert_state_t          m_unread_alert_state = ALERT_NOTIFICATION_DISABLED; /**< State that holds the current state of Unread Alert Notifications, i.e. Enabled, Alert On, Disabled. */
-static dm_application_instance_t        m_app_handle;                                       /**< Application identifier allocated by device manager. */
+APP_TIMER_DEF(m_sec_req_timer_id);                                                          /**< Security request timer. The timer lets us start pairing request if one does not arrive from the Central. */
+
+static void advertising_start(void);
 
 /**@brief Callback function for asserts in the SoftDevice.
  *
@@ -113,6 +120,160 @@ static dm_application_instance_t        m_app_handle;                           
 void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 {
     app_error_handler(DEAD_BEEF, line_num, p_file_name);
+}
+
+
+/**@brief Function for handling Peer Manager events.
+ *
+ * @param[in] p_evt  Peer Manager event.
+ */
+static void pm_evt_handler(pm_evt_t const * p_evt)
+{
+    ret_code_t err_code;
+
+    switch(p_evt->evt_id)
+    {
+        case PM_EVT_BONDED_PEER_CONNECTED:
+            err_code = pm_peer_rank_highest(p_evt->peer_id);
+            if(err_code != NRF_ERROR_BUSY)
+            {
+                APP_ERROR_CHECK(err_code);
+            }
+            break;//PM_EVT_BONDED_PEER_CONNECTED
+
+        case PM_EVT_CONN_SEC_START:
+            break;//PM_EVT_CONN_SEC_START
+
+        case PM_EVT_CONN_SEC_SUCCEEDED:
+        {
+            NRF_LOG_PRINTF_DEBUG("Link secured. Role: %d. conn_handle: %d, Procedure: %d\r\n",
+                           ble_conn_state_role(p_evt->conn_handle),
+                           p_evt->conn_handle,
+                           p_evt->params.conn_sec_succeeded.procedure);
+            err_code = pm_peer_rank_highest(p_evt->peer_id);
+            if(err_code != NRF_ERROR_BUSY)
+            {
+                APP_ERROR_CHECK(err_code);
+            }
+        }break;//PM_EVT_CONN_SEC_SUCCEEDED
+
+        case PM_EVT_CONN_SEC_FAILED:
+        {
+            /** In some cases, when securing fails, it can be restarted directly. Sometimes it can
+             *  be restarted, but only after changing some Security Parameters. Sometimes, it cannot
+             *  be restarted until the link is disconnected and reconnected. Sometimes it is
+             *  impossible, to secure the link, or the peer device does not support it. How to
+             *  handle this error is highly application dependent. */
+            switch (p_evt->params.conn_sec_failed.error)
+            {
+                case PM_CONN_SEC_ERROR_PIN_OR_KEY_MISSING:
+                    // Rebond if one party has lost its keys.
+                    err_code = pm_conn_secure(p_evt->conn_handle, true);
+                    if (err_code != NRF_ERROR_INVALID_STATE)
+                    {
+                        APP_ERROR_CHECK(err_code);
+                    }
+                    break;//PM_CONN_SEC_ERROR_PIN_OR_KEY_MISSING
+
+                default:
+                    break;
+            }
+        }break;//PM_EVT_CONN_SEC_FAILED
+
+        case PM_EVT_CONN_SEC_CONFIG_REQ:
+        {
+            // Reject pairing request from an already bonded peer.
+            pm_conn_sec_config_t conn_sec_config = {.allow_repairing = false};
+            pm_conn_sec_config_reply(p_evt->conn_handle, &conn_sec_config);
+        }break;//PM_EVT_CONN_SEC_CONFIG_REQ
+
+        case PM_EVT_STORAGE_FULL:
+        {
+            // Run garbage collection on the flash.
+            err_code = fds_gc();
+            if (err_code == FDS_ERR_BUSY || err_code == FDS_ERR_NO_SPACE_IN_QUEUES)
+            {
+                // Retry.
+            }
+            else
+            {
+                APP_ERROR_CHECK(err_code);
+            }
+        }break;//PM_EVT_STORAGE_FULL
+
+        case PM_EVT_ERROR_UNEXPECTED:
+            // Assert.
+            APP_ERROR_CHECK(p_evt->params.error_unexpected.error);
+            break;//PM_EVT_ERROR_UNEXPECTED
+
+        case PM_EVT_PEER_DATA_UPDATE_SUCCEEDED:
+            break;//PM_EVT_PEER_DATA_UPDATE_SUCCEEDED
+
+        case PM_EVT_PEER_DATA_UPDATE_FAILED:
+            // Assert.
+            APP_ERROR_CHECK_BOOL(false);
+            break;//PM_EVT_PEER_DATA_UPDATE_FAILED
+
+        case PM_EVT_PEER_DELETE_SUCCEEDED:
+            break;//PM_EVT_PEER_DELETE_SUCCEEDED
+
+        case PM_EVT_PEER_DELETE_FAILED:
+            // Assert.
+            APP_ERROR_CHECK(p_evt->params.peer_delete_failed.error);
+            break;//PM_EVT_PEER_DELETE_FAILED
+
+        case PM_EVT_PEERS_DELETE_SUCCEEDED:
+            advertising_start();
+            break;//PM_EVT_PEERS_DELETE_SUCCEEDED
+
+        case PM_EVT_PEERS_DELETE_FAILED:
+            // Assert.
+            APP_ERROR_CHECK(p_evt->params.peers_delete_failed_evt.error);
+            break;//PM_EVT_PEERS_DELETE_FAILED
+
+        case PM_EVT_LOCAL_DB_CACHE_APPLIED:
+            break;//PM_EVT_LOCAL_DB_CACHE_APPLIED
+
+        case PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED:
+            // The local database has likely changed, send service changed indications.
+            pm_local_database_has_changed();
+            break;//PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED
+
+        case PM_EVT_SERVICE_CHANGED_IND_SENT:
+            break;//PM_EVT_SERVICE_CHANGED_IND_SENT
+
+        case PM_EVT_SERVICE_CHANGED_IND_CONFIRMED:
+            break;//PM_EVT_SERVICE_CHANGED_IND_CONFIRMED
+
+        default:
+            // No implementation needed.
+            break;
+    }
+}
+
+
+/**@brief Function for handling the security request timer time-out.
+ *
+ * @details This function is called each time the security request timer expires.
+ *
+ * @param[in] p_context  Pointer used for passing context information from the
+ *                       app_start_timer() call to the time-out handler.
+ */
+static void sec_req_timeout_handler(void * p_context)
+{
+    uint32_t             err_code;
+
+    if (m_ans_c.conn_handle != BLE_CONN_HANDLE_INVALID)
+    {
+        // Initiate bonding.
+        NRF_LOG_DEBUG("Start encryption\n\r");
+        err_code = pm_conn_secure(m_ans_c.conn_handle, false);
+        if (err_code != NRF_ERROR_INVALID_STATE)
+        {
+            APP_ERROR_CHECK(err_code);
+        }
+    }
+
 }
 
 
@@ -141,7 +302,7 @@ static void alert_notification_setup(void)
  * @details This function will be called when supported alert notification and
  *          supported unread alert notifications has been fetched.
  *
- * @param[in]   p_evt   Event containing the response with supported alert types.
+ * @param[in] p_evt  Event containing the response with supported alert types.
  */
 static void control_point_setup(ble_ans_c_evt_t * p_evt)
 {
@@ -207,6 +368,7 @@ static void supported_alert_notification_read(void)
 
     err_code = ble_ans_c_unread_alert_read(&m_ans_c);
     APP_ERROR_CHECK(err_code);
+
 }
 
 
@@ -289,7 +451,7 @@ static void all_alert_notify_request(void)
 
     if (m_unread_alert_state == ALERT_NOTIFICATION_ON ||
         m_unread_alert_state == ALERT_NOTIFICATION_ENABLED
-        )
+       )
     {
         err_code = ble_ans_c_unread_alert_notify(&m_ans_c, ANS_TYPE_ALL_ALERTS);
 
@@ -301,7 +463,7 @@ static void all_alert_notify_request(void)
 
     if (m_new_alert_state == ALERT_NOTIFICATION_ON ||
         m_new_alert_state == ALERT_NOTIFICATION_ENABLED
-        )
+       )
     {
         err_code = ble_ans_c_new_alert_notify(&m_ans_c, ANS_TYPE_ALL_ALERTS);
 
@@ -320,6 +482,7 @@ static void all_alert_notify_request(void)
 static void handle_alert_notification(ble_ans_c_evt_t * p_evt)
 {
     uint32_t err_code;
+
     if (p_evt->uuid.uuid == BLE_UUID_UNREAD_ALERT_CHAR)
     {
         if (m_unread_alert_state == ALERT_NOTIFICATION_ENABLED)
@@ -345,6 +508,23 @@ static void handle_alert_notification(ble_ans_c_evt_t * p_evt)
 }
 
 
+/**@brief Function for initializing the timer module.
+ */
+static void timers_init(void)
+{
+    uint32_t err_code;
+
+    // Initialize timer module, making it use the scheduler.
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
+
+    // Create security request timer.
+    err_code = app_timer_create(&m_sec_req_timer_id,
+                                APP_TIMER_MODE_SINGLE_SHOT,
+                                sec_req_timeout_handler);
+    APP_ERROR_CHECK(err_code);
+}
+
+
 /**@brief Function for handling the Alert Notification Service Client.
  *
  * @details This function will be called for all events in the Alert Notification Client which
@@ -355,25 +535,25 @@ static void handle_alert_notification(ble_ans_c_evt_t * p_evt)
 static void on_ans_c_evt(ble_ans_c_evt_t * p_evt)
 {
     uint32_t err_code;
+
     switch (p_evt->evt_type)
     {
         case BLE_ANS_C_EVT_NOTIFICATION:
             handle_alert_notification(p_evt);
-            break;
+            break;//BLE_ANS_C_EVT_NOTIFICATION
 
-        case BLE_ANS_C_EVT_DISCOVER_COMPLETE:
+        case BLE_ANS_C_EVT_DISCOVERY_COMPLETE:
+            err_code = ble_ans_c_handles_assign(&m_ans_c,
+                                                p_evt->conn_handle,
+                                                &p_evt->data.service);
+            APP_ERROR_CHECK(err_code);
             supported_alert_notification_read();
             alert_notification_setup();
-            break;
-
-        case BLE_ANS_C_EVT_RECONNECT:
-            supported_alert_notification_read();
-            alert_notification_setup();
-            break;
+            break;//BLE_ANS_C_EVT_DISCOVERY_COMPLETE
 
         case BLE_ANS_C_EVT_READ_RESP:
             control_point_setup(p_evt);
-            break;
+            break;//BLE_ANS_C_EVT_READ_RESP
 
         case BLE_ANS_C_EVT_DISCONN_COMPLETE:
             m_new_alert_state    = ALERT_NOTIFICATION_DISABLED;
@@ -381,7 +561,7 @@ static void on_ans_c_evt(ble_ans_c_evt_t * p_evt)
 
             err_code = bsp_indication_set(BSP_INDICATE_IDLE);
             APP_ERROR_CHECK(err_code);
-            break;
+            break;//BLE_ANS_C_EVT_DISCONN_COMPLETE
 
         default:
             // No implementation needed.
@@ -420,7 +600,6 @@ static void gap_params_init(void)
 }
 
 
-
 /**@brief Function for handling the Alert Notification Service Client errors.
  *
  * @param[in]   nrf_error   Error code containing information about what went wrong.
@@ -433,7 +612,7 @@ static void alert_notification_error_handler(uint32_t nrf_error)
 
 /**@brief Function for initialization of the Alert Notification Service Client.
  */
-static void alert_notification_init(bool services_delete)
+static void alert_notification_init()
 {
     uint32_t         err_code;
     ble_ans_c_init_t ans_init_obj;
@@ -448,21 +627,36 @@ static void alert_notification_init(bool services_delete)
 
     err_code = ble_ans_c_init(&m_ans_c, &ans_init_obj);
     APP_ERROR_CHECK(err_code);
+}
 
-    if (services_delete)
-    {
-        err_code = ble_ans_c_service_delete();
-        APP_ERROR_CHECK(err_code);
-    }
 
-    err_code = ble_ans_c_service_load(&m_ans_c);
+/**@brief Function for handling database discovery events.
+ *
+ * @details This function is callback function to handle events from the database discovery module.
+ *          Depending on the UUIDs that are discovered, this function should forward the events
+ *          to their respective services.
+ *
+ * @param[in] p_event  Pointer to the database discovery event.
+ */
+static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
+{
+    ble_ans_c_on_db_disc_evt(&m_ans_c, p_evt);
+}
+
+
+/** @brief Database discovery module initialization.
+ */
+static void db_discovery_init(void)
+{
+    uint32_t err_code = ble_db_discovery_init(db_disc_handler);
+
     APP_ERROR_CHECK(err_code);
 }
 
 
 /**@brief Function for handling a Connection Parameters error.
  *
- * @param[in]   nrf_error   Error code containing information about what went wrong.
+ * @param[in] nrf_error Error code containing information about what went wrong.
  */
 static void conn_params_error_handler(uint32_t nrf_error)
 {
@@ -492,55 +686,6 @@ static void conn_params_init(void)
     APP_ERROR_CHECK(err_code);
 }
 
-
-/**@brief Function for handling the Device Manager events.
- *
- * @param[in]   p_evt   Data associated to the device manager event.
- */
-static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
-                                           dm_event_t const  * p_event,
-                                           ret_code_t        event_result)
-{
-    APP_ERROR_CHECK(event_result);
-    ble_ans_c_on_device_manager_evt(&m_ans_c, p_handle, p_event);
-    return NRF_SUCCESS;
-}
-
-
-/**@brief Function for the Device Manager initialization.
- *
- * @param[in] erase_bonds  Indicates whether bonding information should be cleared from
- *                         persistent storage during initialization of the Device Manager.
- */
-static void device_manager_init(bool erase_bonds)
-{
-    uint32_t               err_code;
-    dm_init_param_t        init_param = {.clear_persistent_data = erase_bonds};
-    dm_application_param_t register_param;
-
-    // Initialize persistent storage module.
-    err_code = pstorage_init();
-    APP_ERROR_CHECK(err_code);
-
-    err_code = dm_init(&init_param);
-    APP_ERROR_CHECK(err_code);
-
-    memset(&register_param.sec_param, 0, sizeof (ble_gap_sec_params_t));
-
-    register_param.sec_param.bond         = SEC_PARAM_BOND;
-    register_param.sec_param.mitm         = SEC_PARAM_MITM;
-    register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
-    register_param.sec_param.oob          = SEC_PARAM_OOB;
-    register_param.sec_param.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
-    register_param.sec_param.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
-    register_param.evt_handler            = device_manager_evt_handler;
-    register_param.service_type           = DM_PROTOCOL_CNTXT_GATT_SRVR_ID;
-
-    err_code = dm_register(&m_app_handle, &register_param);
-    APP_ERROR_CHECK(err_code);
-}
-
-
 /**@brief Function for putting the chip into sleep mode.
  *
  * @note This function will not return.
@@ -548,6 +693,7 @@ static void device_manager_init(bool erase_bonds)
 static void sleep_mode_enter(void)
 {
     uint32_t err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+
     APP_ERROR_CHECK(err_code);
 
     // Prepare wakeup buttons.
@@ -575,21 +721,21 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
         case BLE_ADV_EVT_DIRECTED:
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_DIRECTED);
             APP_ERROR_CHECK(err_code);
-            break;
+            break;//BLE_ADV_EVT_DIRECTED
 
         case BLE_ADV_EVT_FAST:
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
             APP_ERROR_CHECK(err_code);
-            break;
+            break;//BLE_ADV_EVT_FAST
 
         case BLE_ADV_EVT_SLOW:
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_SLOW);
             APP_ERROR_CHECK(err_code);
-            break;
+            break;//BLE_ADV_EVT_SLOW
 
         case BLE_ADV_EVT_IDLE:
             sleep_mode_enter();
-            break;
+            break;//BLE_ADV_EVT_IDLE
 
         default:
             break;
@@ -599,38 +745,69 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
 
 /**@brief Function for handling the Application's BLE Stack events.
  *
- * @param[in]   p_ble_evt   Bluetooth stack event.
+ * @param[in] p_ble_evt  Bluetooth stack event.
  */
 static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
-    uint32_t        err_code = NRF_SUCCESS;
-
+    uint32_t err_code = NRF_SUCCESS;
     switch (p_ble_evt->header.evt_id)
     {
-        case BLE_GAP_EVT_CONNECTED:
-            err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
-            APP_ERROR_CHECK(err_code);
-
-            m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
-            break;
-
         case BLE_GAP_EVT_DISCONNECTED:
             err_code = bsp_indication_set(BSP_INDICATE_IDLE);
             APP_ERROR_CHECK(err_code);
-            m_conn_handle = BLE_CONN_HANDLE_INVALID;
+            break;//BLE_GAP_EVT_DISCONNECTED
 
-            err_code = ble_ans_c_service_store();
+        case BLE_GAP_EVT_CONNECTED:
+            err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
-
-            break;
+            err_code = ble_db_discovery_start(&m_ble_db_discovery,
+                                              p_ble_evt->evt.gap_evt.conn_handle);
+            APP_ERROR_CHECK(err_code);
+            break;//BLE_GAP_EVT_CONNECTED
 
         case BLE_GATTC_EVT_TIMEOUT:
+        /* fall through */
         case BLE_GATTS_EVT_TIMEOUT:
             // Disconnect on GATT Server and Client timeout events.
-            err_code = sd_ble_gap_disconnect(m_conn_handle,
+            err_code = sd_ble_gap_disconnect(m_ans_c.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
-            break;
+            break;//BLE_GATTC_EVT_TIMEOUT and BLE_GATTS_EVT_TIMEOUT
+            
+        case BLE_EVT_USER_MEM_REQUEST:
+            err_code = sd_ble_user_mem_reply(m_ans_c.conn_handle, NULL);
+            APP_ERROR_CHECK(err_code);
+            break;//BLE_EVT_USER_MEM_REQUEST
+
+        case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
+        {
+            ble_gatts_rw_authorize_reply_params_t auth_reply;
+
+            if(p_ble_evt->evt.gatts_evt.params.authorize_request.type
+               != BLE_GATTS_AUTHORIZE_TYPE_INVALID)
+            {
+                if ((p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
+                     == BLE_GATTS_OP_PREP_WRITE_REQ)
+                    || (p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
+                     == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW)
+                    || (p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
+                     == BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL))
+                {
+                    if (p_ble_evt->evt.gatts_evt.params.authorize_request.type
+                        == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
+                    {
+                        auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
+                    }
+                    else
+                    {
+                        auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_READ;
+                    }
+                    auth_reply.params.write.gatt_status = APP_FEATURE_NOT_SUPPORTED;
+                    err_code = sd_ble_gatts_rw_authorize_reply(m_ans_c.conn_handle,&auth_reply);
+                    APP_ERROR_CHECK(err_code);
+                }
+            }
+        }break;//BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST
 
         default:
             // No implementation needed.
@@ -641,24 +818,26 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
 /**@brief Function for handling events from the BSP module.
  *
- * @param[in]   event   Event generated by button press.
+ * @param[in] event  Event generated by button press.
  */
 static void bsp_event_handler(bsp_event_t event)
 {
     uint32_t err_code;
+
     switch (event)
     {
         case BSP_EVENT_SLEEP:
             sleep_mode_enter();
-            break;
+            break;//BSP_EVENT_SLEEP
 
         case BSP_EVENT_DISCONNECT:
-            err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+            err_code = sd_ble_gap_disconnect(m_ans_c.conn_handle,
+                                             BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             if (err_code != NRF_ERROR_INVALID_STATE)
             {
                 APP_ERROR_CHECK(err_code);
             }
-            break;
+            break;//BSP_EVENT_DISCONNECT
 
         case BSP_EVENT_WHITELIST_OFF:
             err_code = ble_advertising_restart_without_whitelist();
@@ -666,30 +845,31 @@ static void bsp_event_handler(bsp_event_t event)
             {
                 APP_ERROR_CHECK(err_code);
             }
-            break;
+            break;//BSP_EVENT_WHITELIST_OFF
 
         case BSP_EVENT_KEY_0:
-            if (m_conn_handle != BLE_CONN_HANDLE_INVALID)
+            if (m_ans_c.conn_handle != BLE_CONN_HANDLE_INVALID)
             {
                 new_alert_state_toggle();
             }
-            break;
+            break;//BSP_EVENT_KEY_0
 
         case BSP_EVENT_KEY_1:
-            if (m_conn_handle != BLE_CONN_HANDLE_INVALID)
+            if (m_ans_c.conn_handle != BLE_CONN_HANDLE_INVALID)
             {
                 unread_alert_state_toggle();
             }
-            break;
+            break;//BSP_EVENT_KEY_1
 
         case BSP_EVENT_KEY_2:
-            if (m_conn_handle != BLE_CONN_HANDLE_INVALID)
+            if (m_ans_c.conn_handle != BLE_CONN_HANDLE_INVALID)
             {
                 all_alert_notify_request();
             }
-            break;
+            break;//BSP_EVENT_KEY_2
 
         default:
+            // No implementation needed.
             break;
     }
 }
@@ -700,11 +880,13 @@ static void bsp_event_handler(bsp_event_t event)
  * @details This function is called from the BLE Stack event interrupt handler after a BLE stack
  *          event has been received.
  *
- * @param[in]   p_ble_evt   Bluetooth stack event.
+ * @param[in] p_ble_evt  Bluetooth stack event.
  */
 static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
-    dm_ble_evt_handler(p_ble_evt);
+    ble_conn_state_on_ble_evt(p_ble_evt);
+    pm_on_ble_evt(p_ble_evt);
+    ble_db_discovery_on_ble_evt(&m_ble_db_discovery, p_ble_evt);
     ble_conn_params_on_ble_evt(p_ble_evt);
     ble_ans_c_on_ble_evt(&m_ans_c, p_ble_evt);
     bsp_btn_ble_on_ble_evt(p_ble_evt);
@@ -718,11 +900,11 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
  * @details This function is called from the System event interrupt handler after a system
  *          event has been received.
  *
- * @param[in]   sys_evt   System stack event.
+ * @param[in] sys_evt  System stack event.
  */
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
-    pstorage_sys_event_handler(sys_evt);
+    fs_sys_event_handler(sys_evt);
     ble_advertising_on_sys_evt(sys_evt);
 }
 
@@ -734,18 +916,23 @@ static void sys_evt_dispatch(uint32_t sys_evt)
 static void ble_stack_init(void)
 {
     uint32_t err_code;
-
+    
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
+    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
 
-    // Enable BLE stack
     ble_enable_params_t ble_enable_params;
-    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#if (defined(S130) || defined(S132))
-    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
-#endif
-    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
-    err_code = sd_ble_enable(&ble_enable_params);
+    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
+                                                    PERIPHERAL_LINK_COUNT,
+                                                    &ble_enable_params);
+    APP_ERROR_CHECK(err_code);
+
+    // Check the ram settings against the used number of links
+    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT, PERIPHERAL_LINK_COUNT);
+
+    // Enable BLE stack.
+    err_code = softdevice_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
@@ -754,6 +941,49 @@ static void ble_stack_init(void)
 
     // Register with the SoftDevice handler module for System events.
     err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for the Peer Manager initialization.
+ *
+ * @param[in] erase_bonds  Indicates whether bonding information should be cleared from
+ *                         persistent storage during initialization of the Peer Manager.
+ */
+static void peer_manager_init(bool erase_bonds)
+{
+    ble_gap_sec_params_t sec_param;
+    ret_code_t err_code;
+
+    err_code = pm_init();
+    APP_ERROR_CHECK(err_code);
+
+    if (erase_bonds)
+    {
+        err_code = pm_peers_delete();
+        APP_ERROR_CHECK(err_code);
+    }
+
+    memset(&sec_param, 0, sizeof(ble_gap_sec_params_t));
+
+    // Security parameters to be used for all security procedures.
+    sec_param.bond              = SEC_PARAM_BOND;
+    sec_param.mitm              = SEC_PARAM_MITM;
+    sec_param.lesc              = SEC_PARAM_LESC;
+    sec_param.keypress          = SEC_PARAM_KEYPRESS;
+    sec_param.io_caps           = SEC_PARAM_IO_CAPABILITIES;
+    sec_param.oob               = SEC_PARAM_OOB;
+    sec_param.min_key_size      = SEC_PARAM_MIN_KEY_SIZE;
+    sec_param.max_key_size      = SEC_PARAM_MAX_KEY_SIZE;
+    sec_param.kdist_own.enc     = 1;
+    sec_param.kdist_own.id      = 1;
+    sec_param.kdist_peer.enc    = 1;
+    sec_param.kdist_peer.id     = 1;
+
+    err_code = pm_sec_params_set(&sec_param);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = pm_register(pm_evt_handler);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -789,7 +1019,8 @@ static void advertising_init(void)
 
 /**@brief Function for initializing buttons and leds.
  *
- * @param[out] p_erase_bonds  Will be true if the clear bonding button was pressed to wake the application up.
+ * @param[out] p_erase_bonds  Will be true if the clear bonding button was pressed to wake the
+ *                            application up.
  */
 static void buttons_leds_init(bool * p_erase_bonds)
 {
@@ -798,6 +1029,7 @@ static void buttons_leds_init(bool * p_erase_bonds)
     uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                                  APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                                  bsp_event_handler);
+
     APP_ERROR_CHECK(err_code);
 
     err_code = bsp_btn_ble_init(NULL, &startup_event);
@@ -816,39 +1048,50 @@ static void power_manage(void)
 }
 
 
+/**@brief Function for starting advertising.
+ */
+static void advertising_start(void)
+{
+    uint32_t err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
+    APP_ERROR_CHECK(err_code);
+}
+
+
 /**@brief Function for application main entry.
  */
 int main(void)
 {
     uint32_t err_code;
-    bool     erase_bonds;
+    bool erase_bonds;
 
     // Initialize.
-    app_trace_init();
-    // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
+    err_code = NRF_LOG_INIT();
+    APP_ERROR_CHECK(err_code);
+
+    timers_init();
     buttons_leds_init(&erase_bonds);
     ble_stack_init();
-    device_manager_init(erase_bonds);
+    peer_manager_init(erase_bonds);
+    if (erase_bonds == true)
+    {
+        NRF_LOG_DEBUG("Bonds erased!\r\n");
+    }
     gap_params_init();
     advertising_init();
-    alert_notification_init(erase_bonds);
+    db_discovery_init();
+    alert_notification_init();
     conn_params_init();
 
     // Start execution.
-    err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
-    APP_ERROR_CHECK(err_code);
+    advertising_start();
 
     // Enter main loop.
     for (;;)
     {
         power_manage();
     }
-
 }
-
 
 /**
  * @}
  */
-

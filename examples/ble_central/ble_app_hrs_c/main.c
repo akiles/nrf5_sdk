@@ -28,16 +28,16 @@
 #include "nrf_gpio.h"
 #include "pstorage.h"
 #include "device_manager.h"
-#include "app_trace.h"
 #include "ble_hrs_c.h"
 #include "ble_bas_c.h"
 #include "app_util.h"
 #include "app_timer.h"
 #include "bsp.h"
 #include "bsp_btn_ble.h"
+#include "nrf_log.h"
 
-#define UART_TX_BUF_SIZE           256                                /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE           1                                  /**< UART RX buffer size. */
+#define CENTRAL_LINK_COUNT         1                                  /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
+#define PERIPHERAL_LINK_COUNT      0                                  /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 
 #define STRING_BUFFER_LEN          50
 #define BOND_DELETE_ALL_BUTTON_ID  0                                  /**< Button used for deleting all bonded centrals during startup. */
@@ -45,10 +45,13 @@
 #define APP_TIMER_PRESCALER        0                                  /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE    2                                  /**< Size of timer operation queues. */
 
-#define APPL_LOG                   app_trace_log                      /**< Debug logger macro that will be used in this file to do logging of debug information over UART. */
+#define APPL_LOG                   NRF_LOG_PRINTF                     /**< Logger macro that will be used in this file to do logging over UART or RTT based on nrf_log configuration. */
+#define APPL_LOG_DEBUG             NRF_LOG_PRINTF_DEBUG               /**< Debug logger macro that will be used in this file to do logging of debug information over UART or RTT based on nrf_log configuration. This will only work if DEBUG is defined*/
 
 #define SEC_PARAM_BOND             1                                  /**< Perform bonding. */
 #define SEC_PARAM_MITM             1                                  /**< Man In The Middle protection not required. */
+#define SEC_PARAM_LESC             0                                  /**< LE Secure Connections not enabled. */
+#define SEC_PARAM_KEYPRESS         0                                  /**< Keypress notifications not enabled. */
 #define SEC_PARAM_IO_CAPABILITIES  BLE_GAP_IO_CAPS_NONE               /**< No I/O capabilities. */
 #define SEC_PARAM_OOB              0                                  /**< Out Of Band data not available. */
 #define SEC_PARAM_MIN_KEY_SIZE     7                                  /**< Minimum encryption key size. */
@@ -63,7 +66,6 @@
 #define SUPERVISION_TIMEOUT        MSEC_TO_UNITS(4000, UNIT_10_MS)    /**< Determines supervision time-out in units of 10 millisecond. */
 
 #define TARGET_UUID                0x180D                             /**< Target device name that application is looking for. */
-#define MAX_PEER_COUNT             DEVICE_MANAGER_MAX_CONNECTIONS     /**< Maximum number of peer's application intends to manage. */
 #define UUID16_SIZE                2                                  /**< Size of 16 bit UUID */
 
 /**@breif Macro to unpack 16bit unsigned UUID from octet stream. */
@@ -115,8 +117,6 @@ static const ble_gap_conn_params_t m_connection_param =
 
 static void scan_start(void);
 
-#define APPL_LOG                        app_trace_log             /**< Debug logger macro that will be used in this file to do logging of debug information over UART. */
-
 
 /**@brief Function for asserts in the SoftDevice.
  *
@@ -146,6 +146,22 @@ void uart_error_handle(app_uart_evt_t * p_event)
     }
 }
 
+
+/**@brief Function for handling database discovery events.
+ *
+ * @details This function is callback function to handle events from the database discovery module.
+ *          Depending on the UUIDs that are discovered, this function should forward the events
+ *          to their respective services.
+ *
+ * @param[in] p_event  Pointer to the database discovery event.
+ */
+static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
+{
+    ble_hrs_on_db_disc_evt(&m_ble_hrs_c, p_evt);
+    ble_bas_on_db_disc_evt(&m_ble_bas_c, p_evt);
+}
+
+
 /**@brief Callback handling device manager events.
  *
  * @details This function is called to notify the application of device manager events.
@@ -165,14 +181,14 @@ static ret_code_t device_manager_event_handler(const dm_handle_t    * p_handle,
     {
         case DM_EVT_CONNECTION:
         {
-            APPL_LOG("[APPL]: >> DM_EVT_CONNECTION\r\n");
+            APPL_LOG_DEBUG("[APPL]: >> DM_EVT_CONNECTION\r\n");
 #ifdef ENABLE_DEBUG_LOG_SUPPORT
             ble_gap_addr_t * peer_addr;
             peer_addr = &p_event->event_param.p_gap_param->params.connected.peer_addr;
-#endif // ENABLE_DEBUG_LOG_SUPPORT
-            APPL_LOG("[APPL]:[%02X %02X %02X %02X %02X %02X]: Connection Established\r\n",
+            APPL_LOG_DEBUG("[APPL]:[%02X %02X %02X %02X %02X %02X]: Connection Established\r\n",
                                 peer_addr->addr[0], peer_addr->addr[1], peer_addr->addr[2],
                                 peer_addr->addr[3], peer_addr->addr[4], peer_addr->addr[5]);
+#endif // ENABLE_DEBUG_LOG_SUPPORT
             
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
@@ -187,74 +203,74 @@ static ret_code_t device_manager_event_handler(const dm_handle_t    * p_handle,
 
             m_peer_count++;
 
-            if (m_peer_count < MAX_PEER_COUNT)
+            if (m_peer_count < CENTRAL_LINK_COUNT)
             {
                 scan_start();
             }
-            APPL_LOG("[APPL]: << DM_EVT_CONNECTION\r\n");
+            APPL_LOG_DEBUG("[APPL]: << DM_EVT_CONNECTION\r\n");
             break;
         }
 
         case DM_EVT_DISCONNECTION:
         {
-            APPL_LOG("[APPL]: >> DM_EVT_DISCONNECTION\r\n");
+            APPL_LOG_DEBUG("[APPL]: >> DM_EVT_DISCONNECTION\r\n");
             memset(&m_ble_db_discovery, 0 , sizeof (m_ble_db_discovery));
 
             err_code = bsp_indication_set(BSP_INDICATE_IDLE);
             APP_ERROR_CHECK(err_code);
 
-            if (m_peer_count == MAX_PEER_COUNT)
+            if (m_peer_count == CENTRAL_LINK_COUNT)
             {
                 scan_start();
             }
             m_peer_count--;
-            APPL_LOG("[APPL]: << DM_EVT_DISCONNECTION\r\n");
+            APPL_LOG_DEBUG("[APPL]: << DM_EVT_DISCONNECTION\r\n");
             break;
         }
 
         case DM_EVT_SECURITY_SETUP:
         {
-            APPL_LOG("[APPL]:[0x%02X] >> DM_EVT_SECURITY_SETUP\r\n", p_handle->connection_id);
+            APPL_LOG_DEBUG("[APPL]:[0x%02X] >> DM_EVT_SECURITY_SETUP\r\n", p_handle->connection_id);
             // Slave securtiy request received from peer, if from a non bonded device, 
             // initiate security setup, else, wait for encryption to complete.
             err_code = dm_security_setup_req(&m_dm_device_handle);
             APP_ERROR_CHECK(err_code);
-            APPL_LOG("[APPL]:[0x%02X] << DM_EVT_SECURITY_SETUP\r\n", p_handle->connection_id);
+            APPL_LOG_DEBUG("[APPL]:[0x%02X] << DM_EVT_SECURITY_SETUP\r\n", p_handle->connection_id);
             break;
         }
 
         case DM_EVT_SECURITY_SETUP_COMPLETE:
         {
-            APPL_LOG("[APPL]: >> DM_EVT_SECURITY_SETUP_COMPLETE\r\n");
-            APPL_LOG("[APPL]: << DM_EVT_SECURITY_SETUP_COMPLETE\r\n");
+            APPL_LOG_DEBUG("[APPL]: >> DM_EVT_SECURITY_SETUP_COMPLETE\r\n");
+            APPL_LOG_DEBUG("[APPL]: << DM_EVT_SECURITY_SETUP_COMPLETE\r\n");
             break;
         }
 
         case DM_EVT_LINK_SECURED:
-            APPL_LOG("[APPL]: >> DM_LINK_SECURED_IND\r\n");
+            APPL_LOG_DEBUG("[APPL]: >> DM_LINK_SECURED_IND\r\n");
             // Discover peer's services. 
             err_code = ble_db_discovery_start(&m_ble_db_discovery,
                                               p_event->event_param.p_gap_param->conn_handle);
             APP_ERROR_CHECK(err_code);
-            APPL_LOG("[APPL]: << DM_LINK_SECURED_IND\r\n");
+            APPL_LOG_DEBUG("[APPL]: << DM_LINK_SECURED_IND\r\n");
             break;
 
         case DM_EVT_DEVICE_CONTEXT_LOADED:
-            APPL_LOG("[APPL]: >> DM_EVT_LINK_SECURED\r\n");
+            APPL_LOG_DEBUG("[APPL]: >> DM_EVT_LINK_SECURED\r\n");
             APP_ERROR_CHECK(event_result);
-            APPL_LOG("[APPL]: << DM_EVT_DEVICE_CONTEXT_LOADED\r\n");
+            APPL_LOG_DEBUG("[APPL]: << DM_EVT_DEVICE_CONTEXT_LOADED\r\n");
             break;
 
         case DM_EVT_DEVICE_CONTEXT_STORED:
-            APPL_LOG("[APPL]: >> DM_EVT_DEVICE_CONTEXT_STORED\r\n");
+            APPL_LOG_DEBUG("[APPL]: >> DM_EVT_DEVICE_CONTEXT_STORED\r\n");
             APP_ERROR_CHECK(event_result);
-            APPL_LOG("[APPL]: << DM_EVT_DEVICE_CONTEXT_STORED\r\n");
+            APPL_LOG_DEBUG("[APPL]: << DM_EVT_DEVICE_CONTEXT_STORED\r\n");
             break;
 
         case DM_EVT_DEVICE_CONTEXT_DELETED:
-            APPL_LOG("[APPL]: >> DM_EVT_DEVICE_CONTEXT_DELETED\r\n");
+            APPL_LOG_DEBUG("[APPL]: >> DM_EVT_DEVICE_CONTEXT_DELETED\r\n");
             APP_ERROR_CHECK(event_result);
-            APPL_LOG("[APPL]: << DM_EVT_DEVICE_CONTEXT_DELETED\r\n");
+            APPL_LOG_DEBUG("[APPL]: << DM_EVT_DEVICE_CONTEXT_DELETED\r\n");
             break;
 
         default:
@@ -362,7 +378,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                 {
                     UUID16_EXTRACT(&extracted_uuid,&type_data.p_data[u_index * UUID16_SIZE]);
 
-                    APPL_LOG("\t[APPL]: %x\r\n",extracted_uuid);
+                    APPL_LOG_DEBUG("\t[APPL]: %x\r\n",extracted_uuid);
 
                     if(extracted_uuid == TARGET_UUID)
                     {
@@ -371,7 +387,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
                         if (err_code != NRF_SUCCESS)
                         {
-                            APPL_LOG("[APPL]: Scan stop failed, reason %d\r\n", err_code);
+                            APPL_LOG_DEBUG("[APPL]: Scan stop failed, reason %d\r\n", err_code);
                         }
                         err_code = bsp_indication_set(BSP_INDICATE_IDLE);
                         APP_ERROR_CHECK(err_code);
@@ -388,7 +404,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
                         if (err_code != NRF_SUCCESS)
                         {
-                            APPL_LOG("[APPL]: Connection Request Failed, reason %d\r\n", err_code);
+                            APPL_LOG_DEBUG("[APPL]: Connection Request Failed, reason %d\r\n", err_code);
                         }
                         break;
                     }
@@ -400,15 +416,22 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
         case BLE_GAP_EVT_TIMEOUT:
             if (p_gap_evt->params.timeout.src == BLE_GAP_TIMEOUT_SRC_SCAN)
             {
-                APPL_LOG("[APPL]: Scan timed out.\r\n");
+                APPL_LOG_DEBUG("[APPL]: Scan timed out.\r\n");
                 scan_start();
             }
             else if (p_gap_evt->params.timeout.src == BLE_GAP_TIMEOUT_SRC_CONN)
             {
-                APPL_LOG("[APPL]: Connection Request timed out.\r\n");
+                APPL_LOG_DEBUG("[APPL]: Connection Request timed out.\r\n");
             }
             break;
-
+        case BLE_GAP_EVT_CONNECTED:
+        {
+            err_code = ble_hrs_c_handles_assign(&m_ble_hrs_c, p_gap_evt->conn_handle, NULL);
+            APP_ERROR_CHECK(err_code);
+            err_code = ble_bas_c_handles_assign(&m_ble_bas_c, p_gap_evt->conn_handle, NULL);
+            APP_ERROR_CHECK(err_code);
+            break;
+        }
         case BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST:
             // Accepting parameters requested by peer.
             err_code = sd_ble_gap_conn_param_update(p_gap_evt->conn_handle,
@@ -487,22 +510,23 @@ static void sys_evt_dispatch(uint32_t sys_evt)
 static void ble_stack_init(void)
 {
     uint32_t err_code;
-
+		
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+		
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
-
-    // Enable BLE stack.
+    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
+    
     ble_enable_params_t ble_enable_params;
-    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#if (defined(S130) || defined(s132))
-    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
-#endif
-    ble_enable_params.gatts_enable_params.service_changed = false;
-#ifdef S120
-    ble_enable_params.gap_enable_params.role              = BLE_GAP_ROLE_CENTRAL;
-#endif
-
-    err_code = sd_ble_enable(&ble_enable_params);
+    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
+                                                    PERIPHERAL_LINK_COUNT,
+                                                    &ble_enable_params);
+    APP_ERROR_CHECK(err_code);
+    
+    //Check the ram settings against the used number of links
+    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
+    
+    // Enable BLE stack.
+    err_code = softdevice_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
@@ -544,12 +568,14 @@ static void device_manager_init(bool erase_bonds)
     // Secuirty parameters to be used for security procedures.
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
+    register_param.sec_param.lesc         = SEC_PARAM_LESC;
+    register_param.sec_param.keypress     = SEC_PARAM_KEYPRESS;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
     register_param.sec_param.oob          = SEC_PARAM_OOB;
     register_param.sec_param.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
     register_param.sec_param.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
-    register_param.sec_param.kdist_periph.enc = 1;
-    register_param.sec_param.kdist_periph.id  = 1;
+    register_param.sec_param.kdist_peer.enc = 1;
+    register_param.sec_param.kdist_peer.id  = 1;
 
     err_code = dm_register(&m_dm_app_id, &register_param);
     APP_ERROR_CHECK(err_code);
@@ -625,14 +651,14 @@ static void hrs_c_evt_handler(ble_hrs_c_t * p_hrs_c, ble_hrs_c_evt_t * p_hrs_c_e
             err_code = ble_hrs_c_hrm_notif_enable(p_hrs_c);
             APP_ERROR_CHECK(err_code);
 
-            printf("Heart rate service discovered \r\n");
+            APPL_LOG_DEBUG("Heart rate service discovered \r\n");
             break;
 
         case BLE_HRS_C_EVT_HRM_NOTIFICATION:
         {
-            APPL_LOG("[APPL]: HR Measurement received %d \r\n", p_hrs_c_evt->params.hrm.hr_value);
+            APPL_LOG_DEBUG("[APPL]: HR Measurement received %d \r\n", p_hrs_c_evt->params.hrm.hr_value);
 
-            printf("Heart Rate = %d\r\n", p_hrs_c_evt->params.hrm.hr_value);
+            APPL_LOG("Heart Rate = %d\r\n", p_hrs_c_evt->params.hrm.hr_value);
             break;
         }
 
@@ -652,15 +678,15 @@ static void bas_c_evt_handler(ble_bas_c_t * p_bas_c, ble_bas_c_evt_t * p_bas_c_e
     {
         case BLE_BAS_C_EVT_DISCOVERY_COMPLETE:
             // Batttery service discovered. Enable notification of Battery Level.
-            APPL_LOG("[APPL]: Battery Service discovered. \r\n");
+            APPL_LOG_DEBUG("[APPL]: Battery Service discovered. \r\n");
 
-            APPL_LOG("[APPL]: Reading battery level. \r\n");
+            APPL_LOG_DEBUG("[APPL]: Reading battery level. \r\n");
 
             err_code = ble_bas_c_bl_read(p_bas_c);
             APP_ERROR_CHECK(err_code);
 
 
-            APPL_LOG("[APPL]: Enabling Battery Level Notification. \r\n");
+            APPL_LOG_DEBUG("[APPL]: Enabling Battery Level Notification. \r\n");
             err_code = ble_bas_c_bl_notif_enable(p_bas_c);
             APP_ERROR_CHECK(err_code);
 
@@ -668,17 +694,17 @@ static void bas_c_evt_handler(ble_bas_c_t * p_bas_c, ble_bas_c_evt_t * p_bas_c_e
 
         case BLE_BAS_C_EVT_BATT_NOTIFICATION:
         {
-            APPL_LOG("[APPL]: Battery Level received %d %%\r\n", p_bas_c_evt->params.battery_level);
+            APPL_LOG_DEBUG("[APPL]: Battery Level received %d %%\r\n", p_bas_c_evt->params.battery_level);
 
-            printf("Battery = %d %%\r\n", p_bas_c_evt->params.battery_level);
+            APPL_LOG_DEBUG("Battery = %d %%\r\n", p_bas_c_evt->params.battery_level);
             break;
         }
 
         case BLE_BAS_C_EVT_BATT_READ_RESP:
         {
-            APPL_LOG("[APPL]: Battery Level Read as %d %%\r\n", p_bas_c_evt->params.battery_level);
+            APPL_LOG_DEBUG("[APPL]: Battery Level Read as %d %%\r\n", p_bas_c_evt->params.battery_level);
 
-            printf("Battery = %d %%\r\n", p_bas_c_evt->params.battery_level);
+            APPL_LOG_DEBUG("Battery = %d %%\r\n", p_bas_c_evt->params.battery_level);
             break;
         }
 
@@ -721,7 +747,7 @@ static void bas_c_init(void)
  */
 static void db_discovery_init(void)
 {
-    uint32_t err_code = ble_db_discovery_init();
+    uint32_t err_code = ble_db_discovery_init(db_disc_handler);
 
     APP_ERROR_CHECK(err_code);
 }
@@ -789,36 +815,6 @@ static void scan_start(void)
 }
 
 
-/**@brief Function for initializing the UART.
- */
-static void uart_init(void)
-{
-    uint32_t err_code;
-
-    const app_uart_comm_params_t comm_params =
-       {
-           RX_PIN_NUMBER,
-           TX_PIN_NUMBER,
-           RTS_PIN_NUMBER,
-           CTS_PIN_NUMBER,
-           APP_UART_FLOW_CONTROL_ENABLED,
-           false,
-           UART_BAUDRATE_BAUDRATE_Baud38400
-       };
-
-    APP_UART_FIFO_INIT(&comm_params,
-                          UART_RX_BUF_SIZE,
-                          UART_TX_BUF_SIZE,
-                          uart_error_handle,
-                          APP_IRQ_PRIORITY_LOW,
-                          err_code);
-
-    APP_ERROR_CHECK(err_code);
-
-    app_trace_init();
-}
-
-
 /**@brief Function for initializing buttons and leds.
  *
  * @param[out] p_erase_bonds  Will be true if the clear bonding button was pressed to wake the application up.
@@ -839,12 +835,20 @@ static void buttons_leds_init(bool * p_erase_bonds)
 }
 
 
+/**@brief Function for initializing the nrf log module.
+ */
+static void nrf_log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT();
+    APP_ERROR_CHECK(err_code);
+}
+
+
 /** @brief Function for the Power manager.
  */
 static void power_manage(void)
 {
     uint32_t err_code = sd_app_evt_wait();
-
     APP_ERROR_CHECK(err_code);
 }
 
@@ -856,8 +860,8 @@ int main(void)
     // Initialize.
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
     buttons_leds_init(&erase_bonds);
-    uart_init();
-    printf("Heart rate collector example\r\n");
+    nrf_log_init();
+    APPL_LOG("Heart rate collector example\r\n");
     ble_stack_init();
     device_manager_init(erase_bonds);
     db_discovery_init();

@@ -90,12 +90,12 @@ typedef uint8_t bsp_button_action_t; /**< The different actions that can be perf
         "BSP_INDICATE_USER_STATE_2\n\r",          \
         "BSP_INDICATE_USER_STATE_3\n\r",          \
         "BSP_INDICATE_USER_STATE_ON\n\r"          \
-} /**< See @ref examples_bsp_states for a list of how these states are indicated for the PCA10028 board and the PCA10031 dongle.*/
+} /**< See @ref examples_bsp_states for a list of how these states are indicated for the PCA10028/PCA10040 board and the PCA10031 dongle.*/
 
 
 /**@brief BSP indication states.
  *
- * @details See @ref examples_bsp_states for a list of how these states are indicated for the PCA10028 board and the PCA10031 dongle.
+ * @details See @ref examples_bsp_states for a list of how these states are indicated for the PCA10028/PCA10040 board and the PCA10031 dongle.
  */
 typedef enum
 {

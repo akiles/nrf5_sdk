@@ -30,12 +30,16 @@ uint32_t ble_gap_evt_passkey_display_enc(ble_evt_t const * const p_event,
     SER_ASSERT_NOT_NULL(p_buf);
     SER_ASSERT_NOT_NULL(p_buf_len);
 
-    SER_ASSERT_LENGTH_LEQ(index + SER_EVT_HEADER_SIZE + 2 + PASSKEY_LEN, *p_buf_len);
+    SER_ASSERT_LENGTH_LEQ(index + SER_EVT_HEADER_SIZE + 2 + PASSKEY_LEN+1, *p_buf_len);
     index += uint16_encode(BLE_GAP_EVT_PASSKEY_DISPLAY, &(p_buf[index]));
     index += uint16_encode(p_event->evt.gap_evt.conn_handle, &(p_buf[index]));
 
     memcpy(&p_buf[index], p_event->evt.gap_evt.params.passkey_display.passkey, PASSKEY_LEN);
     index += PASSKEY_LEN;
+
+    uint8_t match_request = p_event->evt.gap_evt.params.passkey_display.match_request & 0x01;
+    uint32_t err_code = uint8_t_enc(&match_request, p_buf, *p_buf_len, &index);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
     *p_buf_len = index;
 

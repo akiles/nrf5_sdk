@@ -13,6 +13,12 @@ All rights reserved.
  * @ingroup ant_shared_channel
  *
  * @brief Example of ANT Auto Shared Channel (ASC) Slave.
+ *
+ * Before compiling this example for NRF52, complete the following steps:
+ * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
+ * - Extract the downloaded zip file and copy the S212 SoftDevice headers to <tt>\<InstallFolder\>/components/softdevice/s212/headers</tt>.
+ * If you are using Keil packs, copy the files into a @c headers folder in your example folder.
+ * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
  */
 
 /* Version 0.0.2 */
@@ -21,6 +27,7 @@ All rights reserved.
 #include "ant_interface.h"
 #include "app_error.h"
 #include "app_timer.h"
+#include "app_util_platform.h"
 #include "ant_parameters.h"
 #include "asc_events.h"
 #include "asc_parameters.h"
@@ -59,6 +66,7 @@ All rights reserved.
 
 // Static variables and buffers.us
 static uint16_t                 m_device_number = 0x00;
+nrf_nvic_state_t                nrf_nvic_state;
 static const asc_ant_params_t   m_asc_parameters = {
 
     ASCS_CHANNEL,
@@ -73,24 +81,6 @@ static const asc_ant_params_t   m_asc_parameters = {
 }; /**< Structure containing setup parameters for an auto shared slave. */
 APP_TIMER_DEF(m_timer_id);
 
-/**@brief Function for handling an error.
- *
- * @param[in] error_code  Error code supplied to the handler.
- * @param[in] line_num    Line number where the error occurred.
- * @param[in] p_file_name Pointer to the file name.
- */
-void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
-{
-    for (;;)
-    {
-        // No implementation needed.
-        #ifdef DEBUG_LED
-            led_toggle(LED_ERROR_0);
-            nrf_delay_ms(200);
-        #endif
-    }
-}
-
 
 /**@brief Function for stack interrupt handling.
  *
@@ -101,14 +91,10 @@ void SD_EVT_IRQHandler(void)
 {
 }
 
-
 /**@brief Function for handling SoftDevice asserts.
  *
- * @param[in] pc          Value of the program counter.
- * @param[in] line_num    Line number where the assert occurred.
- * @param[in] p_file_name Pointer to the file name.
  */
-void softdevice_assert_callback(uint32_t pc, uint16_t line_num, const uint8_t * p_file_name)
+void softdevice_assert_callback(uint32_t id, uint32_t pc, uint32_t info)
 {
     for (;;)
     {
@@ -120,7 +106,6 @@ void softdevice_assert_callback(uint32_t pc, uint16_t line_num, const uint8_t * 
         #endif
     }
 }
-
 
 /**@brief Function for handling HardFault.
  */
@@ -312,11 +297,16 @@ int main(void)
     led_init();
 
     // Enable SoftDevice.
-    err_code = sd_softdevice_enable(NRF_CLOCK_LFCLKSRC, softdevice_assert_callback);
+
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+
+    err_code = sd_softdevice_enable(&clock_lf_cfg, 
+                                    softdevice_assert_callback,
+                                    ANT_LICENSE_KEY);
     APP_ERROR_CHECK(err_code);
 
     // Set application IRQ to lowest priority.
-    err_code = sd_nvic_SetPriority(SD_EVT_IRQn, NRF_APP_PRIORITY_LOW);
+    err_code = sd_nvic_SetPriority(SD_EVT_IRQn, APP_IRQ_PRIORITY_LOW);
     APP_ERROR_CHECK(err_code);
 
     // Enable application IRQ (triggered from protocol).

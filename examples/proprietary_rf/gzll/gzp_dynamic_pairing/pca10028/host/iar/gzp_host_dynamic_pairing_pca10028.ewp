@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -245,7 +245,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -311,15 +311,16 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\..\config\gzp_host_dynamic_pairing_pca10028</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\properitary_rf\gzll</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..</state>
-          <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -469,7 +470,7 @@
         </option>
         <option>
           <name>ADebug</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>AltRegisterNames</name>
@@ -578,13 +579,15 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$\..\..\..\config\gzp_host_dynamic_pairing_pca10028</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\properitary_rf\gzll</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..</state>
         </option>
         <option>
@@ -971,6 +974,12 @@
   </configuration>
   <group>
   <name>nRF_Libraries</name>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\app_error.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>
+    </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>
     </file>

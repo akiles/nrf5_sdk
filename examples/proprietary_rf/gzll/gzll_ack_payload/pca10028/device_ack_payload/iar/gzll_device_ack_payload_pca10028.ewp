@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -245,7 +245,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -310,13 +310,13 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\properitary_rf\gzll</state>
-          <state>$TOOLKIT_DIR$\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\bsp</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -466,7 +466,7 @@
         </option>
         <option>
           <name>ADebug</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>AltRegisterNames</name>
@@ -574,12 +574,13 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\properitary_rf\gzll</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\bsp</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>

@@ -10,7 +10,7 @@
  *
  */
 
-#include "nrf_soc.h"
+#include "nrf_nvic.h"
 #include "ser_conn_reset_cmd_decoder.h"
 
 void ser_conn_reset_command_process()

@@ -11,6 +11,7 @@
  */
 
 #include "nrf_soc.h"
+#include "nrf_soc_conn.h"
 #include "nrf_error.h"
 #include "ble_serialization.h"
 #include "cond_field_serialization.h"

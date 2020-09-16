@@ -14,9 +14,9 @@
 #include "ble_serialization.h"
 #include "conn_ble_user_mem.h"
 
-extern ser_ble_user_mem_t m_conn_user_mem_table[];
+extern sercon_ble_user_mem_t m_conn_user_mem_table[];
 
-uint32_t conn_mw_ble_tx_buffer_count_get(uint8_t const * const p_rx_buf,
+uint32_t conn_mw_ble_tx_packet_count_get(uint8_t const * const p_rx_buf,
                                          uint32_t              rx_buf_len,
                                          uint8_t * const       p_tx_buf,
                                          uint32_t * const      p_tx_buf_len)
@@ -26,17 +26,18 @@ uint32_t conn_mw_ble_tx_buffer_count_get(uint8_t const * const p_rx_buf,
     SER_ASSERT_NOT_NULL(p_tx_buf_len);
 
     uint8_t   count;
+    uint16_t  conn_handle;
     uint8_t * p_count = &count;
 
     uint32_t err_code = NRF_SUCCESS;
     uint32_t sd_err_code;
 
-    err_code = ble_tx_buffer_count_get_req_dec(p_rx_buf, rx_buf_len, &p_count);
+    err_code = ble_tx_packet_count_get_req_dec(p_rx_buf, rx_buf_len, &conn_handle, &p_count);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
-    sd_err_code = sd_ble_tx_buffer_count_get(p_count);
+    sd_err_code = sd_ble_tx_packet_count_get(conn_handle, p_count);
 
-    err_code = ble_tx_buffer_count_get_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len, p_count);
+    err_code = ble_tx_packet_count_get_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len, p_count);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
     return err_code;
@@ -236,6 +237,23 @@ uint32_t conn_mw_ble_enable(uint8_t const * const p_rx_buf,
     SER_ASSERT_NOT_NULL(p_tx_buf);
     SER_ASSERT_NOT_NULL(p_tx_buf_len);
 
+    uint32_t app_ram_base;
+
+/*lint --e{10} --e{19} --e{27} --e{40} --e{529} -save suppress Error 27: Illegal character */
+#if defined(_WIN32) ||  defined(__unix) || defined(__APPLE__)
+    uint32_t ram_start = 0;
+#elif defined ( __CC_ARM )
+    extern uint32_t Image$$RW_IRAM1$$Base;
+    volatile uint32_t ram_start = (uint32_t) &Image$$RW_IRAM1$$Base;
+#elif defined ( __ICCARM__ )
+    extern uint32_t __ICFEDIT_region_RAM_start__;
+    volatile uint32_t ram_start = (uint32_t) &__ICFEDIT_region_RAM_start__;
+#elif defined   ( __GNUC__ )
+    extern uint32_t __start_fs_data;
+    volatile uint32_t ram_start = (uint32_t) &__start_fs_data;
+#endif
+    app_ram_base = ram_start;
+
     ble_enable_params_t   params;
     ble_enable_params_t * p_params = &params;
 
@@ -245,7 +263,8 @@ uint32_t conn_mw_ble_enable(uint8_t const * const p_rx_buf,
     err_code = ble_enable_req_dec(p_rx_buf, rx_buf_len, &p_params);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
-    sd_err_code = sd_ble_enable(p_params);
+    //disabled till codec is adopted.
+    sd_err_code = sd_ble_enable(p_params, &app_ram_base);
 
     err_code = ble_enable_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
@@ -262,23 +281,29 @@ uint32_t conn_mw_ble_user_mem_reply(uint8_t const * const p_rx_buf,
     SER_ASSERT_NOT_NULL(p_tx_buf);
     SER_ASSERT_NOT_NULL(p_tx_buf_len);
 
-    uint16_t *             p_conn_handle;
-    ble_user_mem_block_t * p_mem_block;
+    ble_user_mem_block_t   mem_block;
+    ble_user_mem_block_t * p_mem_block = &mem_block;
     uint32_t               err_code = NRF_SUCCESS;
     uint32_t               user_mem_tab_index;
-
+    uint16_t               conn_handle;
     /* Allocate user memory context for SoftDevice */
-    err_code = conn_ble_user_mem_context_create(&user_mem_tab_index);
-    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
-    p_conn_handle = &(m_conn_user_mem_table[user_mem_tab_index].conn_handle);
-    p_mem_block = &(m_conn_user_mem_table[user_mem_tab_index].mem_block);
 
     uint32_t   sd_err_code;
 
-    err_code = ble_user_mem_reply_req_dec(p_rx_buf, rx_buf_len, p_conn_handle, &p_mem_block);
+    err_code = ble_user_mem_reply_req_dec(p_rx_buf, rx_buf_len, &conn_handle, &p_mem_block);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
-    sd_err_code = sd_ble_user_mem_reply(*p_conn_handle, p_mem_block);
+    if (p_mem_block != NULL)
+    {
+    	//Use the context if p_mem_block was not null
+		err_code = conn_ble_user_mem_context_create(&user_mem_tab_index);
+		SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+		m_conn_user_mem_table[user_mem_tab_index].conn_handle = conn_handle;
+		m_conn_user_mem_table[user_mem_tab_index].mem_block.len = p_mem_block->len;
+		p_mem_block = &(m_conn_user_mem_table[user_mem_tab_index].mem_block);
+    }
+
+    sd_err_code = sd_ble_user_mem_reply(conn_handle, p_mem_block);
 
     err_code = ble_user_mem_reply_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);

@@ -166,7 +166,7 @@ void ant_scaleable_event_handler(ant_evt_t * p_ant_evt)
             break;
 
         case EVENT_RX:
-            message_received_handler(p_ant_evt->channel, p_ant_evt->evt_buffer);
+            message_received_handler(p_ant_evt->channel, p_ant_evt->msg.evt_buffer);
             break;
 
         default:

@@ -334,7 +334,7 @@ void ant_sdm_disp_evt_handler(ant_sdm_profile_t * p_profile, ant_evt_t * p_ant_e
 
     if (p_ant_event->channel == p_profile->channel_number)
     {
-        ANT_MESSAGE       * p_message = (ANT_MESSAGE *)p_ant_event->evt_buffer;
+        ANT_MESSAGE       * p_message = (ANT_MESSAGE *)p_ant_event->msg.evt_buffer;
         ant_sdm_disp_cb_t * p_sdm_cb  = p_profile->_cb.p_disp_cb;
 
         switch (ant_request_controller_disp_evt_handler(&(p_sdm_cb->req_controller), p_ant_event))

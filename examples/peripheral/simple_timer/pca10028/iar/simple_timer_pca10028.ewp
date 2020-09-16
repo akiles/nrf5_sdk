@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -244,7 +244,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -310,13 +310,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\config\simple_timer_pca10028</state>
           <state>$PROJ_DIR$\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\gpiote</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\timer</state>
@@ -324,8 +322,10 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\simple_timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..</state>
-          <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -475,7 +475,7 @@
         </option>
         <option>
           <name>ADebug</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>AltRegisterNames</name>
@@ -583,13 +583,11 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$\..\..\config\simple_timer_pca10028</state>
           <state>$PROJ_DIR$\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\gpiote</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\timer</state>
@@ -597,6 +595,9 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\simple_timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..</state>
         </option>
         <option>
@@ -990,6 +991,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\util\app_error.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\simple_timer\app_simple_timer.c</name>
     </file>
     <file>
@@ -1024,6 +1028,9 @@
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\timer\nrf_drv_timer.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_nvic.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>

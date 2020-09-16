@@ -23,7 +23,7 @@
 #endif //ANT_PLUS_NETWORK_KEY
 
 #ifndef ANT_FS_NETWORK_KEY
-    #define ANT_FS_NETWORK_KEY      {0, 0, 0, 0, 0, 0, 0, 0}            /**< The ANT-FS network key. */
+    #define ANT_FS_NETWORK_KEY      {0, 0, 0, 0, 0, 0, 0, 0}           /**< The ANT-FS network key. */
 #endif // ANT_FS_NETWORK_KEY
 
 /**

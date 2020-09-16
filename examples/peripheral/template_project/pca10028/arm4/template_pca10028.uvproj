@@ -351,9 +351,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> BSP_DEFINES_ONLY BOARD_PCA10028 NRF51</Define>
+              <Define> BOARD_PCA10028 SWI_DISABLE0 NRF51</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\config\template_pca10028;..\..\config;..\..\..\..\..\components\device;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\components\libraries\util;..\..\..\..\bsp;..\..</IncludePath>
+              <IncludePath>..\..\config\template_pca10028;..\..\config;..\..\..\..\..\components\device;..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\components\libraries\button;..\..\..\..\..\components\libraries\timer;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\toolchain;..\..\..\..\bsp;..\..</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -367,7 +367,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define> BSP_DEFINES_ONLY BOARD_PCA10028 NRF51</Define>
+              <Define> BOARD_PCA10028 SWI_DISABLE0 NRF51</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -402,6 +402,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>Board Support</GroupName>
+          <Files>
+            <File>
+              <FileName>bsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\bsp\bsp.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>Device</GroupName>
           <Files>
             <File>
@@ -432,12 +442,57 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>nRF_Drivers</GroupName>
+          <Files>
+            <File>
+              <FileName>nrf_delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_drv_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_drv_gpiote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>nRF_Libraries</GroupName>
           <Files>
+            <File>
+              <FileName>app_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\button\app_button.c</FilePath>
+            </File>
             <File>
               <FileName>app_error.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\libraries\util\app_error.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_error_weak.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\util\app_error_weak.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\timer\app_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_util_platform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\util\app_util_platform.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\util\nrf_assert.c</FilePath>
             </File>
           </Files>
         </Group>

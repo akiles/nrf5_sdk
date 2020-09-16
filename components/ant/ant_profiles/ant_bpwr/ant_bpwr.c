@@ -412,7 +412,7 @@ void ant_bpwr_sens_evt_handler(ant_bpwr_profile_t * p_profile, ant_evt_t * p_ant
                 break;
 
             case EVENT_RX:
-                p_message = (ANT_MESSAGE *)p_ant_event->evt_buffer;
+                p_message = (ANT_MESSAGE *)p_ant_event->msg.evt_buffer;
 
                 if (p_message->ANT_MESSAGE_ucMesgID == MESG_ACKNOWLEDGED_DATA_ID)
                 {
@@ -432,7 +432,7 @@ void ant_bpwr_disp_evt_handler(ant_bpwr_profile_t * p_profile, ant_evt_t * p_ant
 {
     if (p_ant_event->channel == p_profile->channel_number)
     {
-        ANT_MESSAGE * p_message = (ANT_MESSAGE *)p_ant_event->evt_buffer;
+        ANT_MESSAGE * p_message = (ANT_MESSAGE *)p_ant_event->msg.evt_buffer;
 
         switch (p_ant_event->event)
         {

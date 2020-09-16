@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -181,6 +181,7 @@
           <state>BSP_UART_SUPPORT</state>
           <state>NRF51</state>
           <state>SWI_DISABLE0</state>
+          <state>NRF_LOG_USES_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -245,7 +246,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -311,24 +312,25 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\config\receiver_pca10028</state>
           <state>$PROJ_DIR$\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\radio_config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..</state>
-          <state>$TOOLKIT_DIR$\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -478,7 +480,7 @@
         </option>
         <option>
           <name>ADebug</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>AltRegisterNames</name>
@@ -490,6 +492,7 @@
           <state>BSP_UART_SUPPORT</state>
           <state>NRF51</state>
           <state>SWI_DISABLE0</state>
+          <state>NRF_LOG_USES_UART=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -587,23 +590,25 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$\..\..\config\receiver_pca10028</state>
           <state>$PROJ_DIR$\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\radio_config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -996,6 +1001,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</name>
     </file>
     <file>
@@ -1006,6 +1014,9 @@
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_log.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart\retarget.c</name>
@@ -1051,6 +1062,18 @@
   <name>Application</name>
     <file>
     <name>$PROJ_DIR$\..\..\main.c</name>
+    </file>
+  </group>
+  <group>
+  <name>nRF_Segger_RTT</name>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\RTT_Syscalls_IAR.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_printf.c</name>
     </file>
   </group>
   <group>

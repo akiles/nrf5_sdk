@@ -143,8 +143,8 @@ __STATIC_INLINE void nrf_spim_task_trigger(NRF_SPIM_Type * p_spim,
  *
  * @return Address of the specified task register.
  */
-__STATIC_INLINE uint32_t * nrf_spim_task_address_get(NRF_SPIM_Type * p_spim,
-                                                     nrf_spim_task_t spim_task);
+__STATIC_INLINE uint32_t nrf_spim_task_address_get(NRF_SPIM_Type * p_spim,
+                                                   nrf_spim_task_t spim_task);
 
 /**
  * @brief Function for clearing a specific SPIM event.
@@ -175,8 +175,8 @@ __STATIC_INLINE bool nrf_spim_event_check(NRF_SPIM_Type * p_spim,
  *
  * @return Address of the specified event register.
  */
-__STATIC_INLINE uint32_t * nrf_spim_event_address_get(NRF_SPIM_Type  * p_spim,
-                                                      nrf_spim_event_t spim_event);
+__STATIC_INLINE uint32_t nrf_spim_event_address_get(NRF_SPIM_Type  * p_spim,
+                                                    nrf_spim_event_t spim_event);
 #ifdef NRF52
 /**
  * @brief Function for enabling specified shortcuts.
@@ -195,6 +195,13 @@ __STATIC_INLINE void nrf_spim_shorts_enable(NRF_SPIM_Type * p_spim,
  */
 __STATIC_INLINE void nrf_spim_shorts_disable(NRF_SPIM_Type * p_spim,
                                              uint32_t spim_shorts_mask);
+
+/**
+ * @brief Function for getting shorts setting.
+ *
+ * @param[in] p_spim           SPIM instance.
+ */
+__STATIC_INLINE uint32_t nrf_spim_shorts_get(NRF_SPIM_Type * p_spim);
 #endif
 /**
  * @brief Function for enabling specified interrupts.
@@ -308,7 +315,35 @@ __STATIC_INLINE void nrf_spim_configure(NRF_SPIM_Type * p_spim,
 __STATIC_INLINE void nrf_spim_orc_set(NRF_SPIM_Type * p_spim,
                                       uint8_t orc);
 
+#ifdef NRF52
+/**
+ * @brief Function for enabling the TX list feature.
+ *
+ * @param[in] p_spim SPIM instance.
+ */
+__STATIC_INLINE void nrf_spim_tx_list_enable(NRF_SPIM_Type * p_spim);
 
+/**
+ * @brief Function for disabling the TX list feature.
+ *
+ * @param[in] p_spim SPIM instance.
+ */
+__STATIC_INLINE void nrf_spim_tx_list_disable(NRF_SPIM_Type * p_spim);
+
+/**
+ * @brief Function for enabling the RX list feature.
+ *
+ * @param[in] p_spim SPIM instance.
+ */
+__STATIC_INLINE void nrf_spim_rx_list_enable(NRF_SPIM_Type * p_spim);
+
+/**
+ * @brief Function for disabling the RX list feature.
+ *
+ * @param[in] p_spim SPIM instance.
+ */
+__STATIC_INLINE void nrf_spim_rx_list_disable(NRF_SPIM_Type * p_spim);
+#endif
 #ifndef SUPPRESS_INLINE_IMPLEMENTATION
 
 __STATIC_INLINE void nrf_spim_task_trigger(NRF_SPIM_Type * p_spim,
@@ -317,10 +352,10 @@ __STATIC_INLINE void nrf_spim_task_trigger(NRF_SPIM_Type * p_spim,
     *((volatile uint32_t *)((uint8_t *)p_spim + (uint32_t)spim_task)) = 0x1UL;
 }
 
-__STATIC_INLINE uint32_t * nrf_spim_task_address_get(NRF_SPIM_Type * p_spim,
-                                                     nrf_spim_task_t spim_task)
+__STATIC_INLINE uint32_t nrf_spim_task_address_get(NRF_SPIM_Type * p_spim,
+                                                   nrf_spim_task_t spim_task)
 {
-    return (uint32_t *)((uint8_t *)p_spim + (uint32_t)spim_task);
+    return (uint32_t)((uint8_t *)p_spim + (uint32_t)spim_task);
 }
 
 __STATIC_INLINE void nrf_spim_event_clear(NRF_SPIM_Type * p_spim,
@@ -335,10 +370,10 @@ __STATIC_INLINE bool nrf_spim_event_check(NRF_SPIM_Type * p_spim,
     return (bool)*(volatile uint32_t *)((uint8_t *)p_spim + (uint32_t)spim_event);
 }
 
-__STATIC_INLINE uint32_t * nrf_spim_event_address_get(NRF_SPIM_Type * p_spim,
-                                                      nrf_spim_event_t spim_event)
+__STATIC_INLINE uint32_t nrf_spim_event_address_get(NRF_SPIM_Type * p_spim,
+                                                    nrf_spim_event_t spim_event)
 {
-    return (uint32_t *)((uint8_t *)p_spim + (uint32_t)spim_event);
+    return (uint32_t)((uint8_t *)p_spim + (uint32_t)spim_event);
 }
 
 #ifdef NRF52
@@ -352,6 +387,11 @@ __STATIC_INLINE void nrf_spim_shorts_disable(NRF_SPIM_Type * p_spim,
                                              uint32_t spim_shorts_mask)
 {
     p_spim->SHORTS &= ~(spim_shorts_mask);
+}
+
+__STATIC_INLINE uint32_t nrf_spim_shorts_get(NRF_SPIM_Type * p_spim)
+{
+    return p_spim->SHORTS;
 }
 #endif
 __STATIC_INLINE void nrf_spim_int_enable(NRF_SPIM_Type * p_spim,
@@ -452,6 +492,27 @@ __STATIC_INLINE void nrf_spim_orc_set(NRF_SPIM_Type * p_spim,
     p_spim->ORC = orc;
 }
 
+#ifdef NRF52
+__STATIC_INLINE void nrf_spim_tx_list_enable(NRF_SPIM_Type * p_spim)
+{
+    p_spim->TXD.LIST = 1;
+}
+
+__STATIC_INLINE void nrf_spim_tx_list_disable(NRF_SPIM_Type * p_spim)
+{
+    p_spim->TXD.LIST = 0;
+}
+
+__STATIC_INLINE void nrf_spim_rx_list_enable(NRF_SPIM_Type * p_spim)
+{
+    p_spim->RXD.LIST = 1;
+}
+
+__STATIC_INLINE void nrf_spim_rx_list_disable(NRF_SPIM_Type * p_spim)
+{
+    p_spim->RXD.LIST = 0;
+}
+#endif
 #endif // SUPPRESS_INLINE_IMPLEMENTATION
 
 #endif // NRF_SPIM_H__

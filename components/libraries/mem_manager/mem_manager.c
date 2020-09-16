@@ -61,6 +61,13 @@
 #define MM_MUTEX_UNLOCK() SDK_MUTEX_UNLOCK(m_mm_mutex)                                              /**< Unlock module using mutex. */
 /** @} */
 
+#undef NULL_PARAM_CHECK
+#undef NULL_PARAM_CHECK_VOID
+#undef VERIFY_MODULE_INITIALIZED
+#undef VERIFY_MODULE_INITIALIZED_VOID
+#undef VERIFY_REQUESTED_SIZE
+#undef VERIFY_REQUESTED_SIZE_VOID
+
 #if (MEM_MANAGER_DISABLE_API_PARAM_CHECK == 0)
 
 /**

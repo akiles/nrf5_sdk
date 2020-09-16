@@ -23,9 +23,9 @@
  
 #include "nrf_gzp.h"
 #include "nrf_gzll.h"
-#include "string.h"
-#include "stdint.h"
-#include "stdbool.h"
+#include <string.h>
+#include <stdint.h>
+#include <stdbool.h>
 #include "nrf_assert.h"
 #include "nrf_ecb.h"
 #include "nrf_nvmc.h"

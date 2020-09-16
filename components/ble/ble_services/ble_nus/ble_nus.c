@@ -11,9 +11,8 @@
  */
 
 #include "ble_nus.h"
-#include <string.h>
-#include "nordic_common.h"
 #include "ble_srv_common.h"
+#include "sdk_common.h"
 
 #define BLE_UUID_NUS_TX_CHARACTERISTIC 0x0002                      /**< The UUID of the TX Characteristic. */
 #define BLE_UUID_NUS_RX_CHARACTERISTIC 0x0003                      /**< The UUID of the RX Characteristic. */
@@ -232,10 +231,8 @@ uint32_t ble_nus_init(ble_nus_t * p_nus, const ble_nus_init_t * p_nus_init)
     ble_uuid_t    ble_uuid;
     ble_uuid128_t nus_base_uuid = NUS_BASE_UUID;
 
-    if ((p_nus == NULL) || (p_nus_init == NULL))
-    {
-        return NRF_ERROR_NULL;
-    }
+    VERIFY_PARAM_NOT_NULL(p_nus);
+    VERIFY_PARAM_NOT_NULL(p_nus_init);
 
     // Initialize the service structure.
     p_nus->conn_handle             = BLE_CONN_HANDLE_INVALID;
@@ -245,10 +242,7 @@ uint32_t ble_nus_init(ble_nus_t * p_nus, const ble_nus_init_t * p_nus_init)
     /**@snippet [Adding proprietary Service to S110 SoftDevice] */
     // Add a custom base UUID.
     err_code = sd_ble_uuid_vs_add(&nus_base_uuid, &p_nus->uuid_type);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     ble_uuid.type = p_nus->uuid_type;
     ble_uuid.uuid = BLE_UUID_NUS_SERVICE;
@@ -258,24 +252,15 @@ uint32_t ble_nus_init(ble_nus_t * p_nus, const ble_nus_init_t * p_nus_init)
                                         &ble_uuid,
                                         &p_nus->service_handle);
     /**@snippet [Adding proprietary Service to S110 SoftDevice] */
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     // Add the RX Characteristic.
     err_code = rx_char_add(p_nus, p_nus_init);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     // Add the TX Characteristic.
     err_code = tx_char_add(p_nus, p_nus_init);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     return NRF_SUCCESS;
 }
@@ -285,10 +270,7 @@ uint32_t ble_nus_string_send(ble_nus_t * p_nus, uint8_t * p_string, uint16_t len
 {
     ble_gatts_hvx_params_t hvx_params;
 
-    if (p_nus == NULL)
-    {
-        return NRF_ERROR_NULL;
-    }
+    VERIFY_PARAM_NOT_NULL(p_nus);
 
     if ((p_nus->conn_handle == BLE_CONN_HANDLE_INVALID) || (!p_nus->is_notification_enabled))
     {

@@ -76,6 +76,14 @@ uint32_t bootloader_dfu_ap_update_continue(void);
  */
 uint32_t bootloader_dfu_sd_update_finalize(void);
 
+/**@brief Function for writing word into flash.
+ *
+ * @param[in]  p_dst        Address to write.
+ * @param[in]  data         Data to write.
+ * @retval     NRF_SUCCESS  If the write operation was successful.
+ */
+uint32_t blocking_flash_word_write(uint32_t * const p_dst, uint32_t data);
+
 
 #endif // BOOTLOADER_H__
 

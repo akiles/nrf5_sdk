@@ -10,18 +10,29 @@
  *
  */
 
+/** @file
+ *
+ * @defgroup nrf_ic_info IC information
+ * @{
+ * @ingroup app_common
+ *
+ * @brief Library for checking IC information (IC revision, RAM size, FLASH size).
+ *
+ */
+
 #ifndef NRF51_IC_INFO_H__
 #define NRF51_IC_INFO_H__
 
 #include <stdint.h>
 
-/**@brief Enum identifying the IC revision as described in the nRF51 Series Compatibility Matrix. */
+/**@brief Enum identifying the IC revision as described in the Compatibility Matrix. */
 typedef enum
 {
-    IC_REVISION_NRF51_REV1,    /**< IC Revision 1. */
-    IC_REVISION_NRF51_REV2,    /**< IC Revision 2. */
-    IC_REVISION_NRF51_REV3,    /**< IC Revision 3. */
-    IC_REVISION_NRF51_UNKNOWN  /**< IC Revision unknown. */
+    IC_PART_UNKNOWN = 0,        /**< IC Revision unknown. */
+    IC_REVISION_NRF51_REV1,     /**< IC Revision 1. */
+    IC_REVISION_NRF51_REV2,     /**< IC Revision 2. */
+    IC_REVISION_NRF51_REV3,     /**< IC Revision 3. */
+    IC_REVISION_NRF51_UNKNOWN   /**< IC Revision unknown. */
 } nrf_ic_revision_t;
 
  /**@brief IC information struct containing the IC revision, RAM size, and FLASH size. */
@@ -42,3 +53,5 @@ void nrf_ic_info_get(nrf_ic_info_t*  p_ic_info);
 
 
 #endif // NRF51_IC_INFO_H__
+
+/** @} */

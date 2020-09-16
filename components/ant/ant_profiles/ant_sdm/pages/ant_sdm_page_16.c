@@ -30,9 +30,9 @@ STATIC_ASSERT(ANT_SDM_DISTANCE_DISP_PRECISION == 10); ///< Display format need t
  */
 static void page_16_data_log(ant_sdm_common_data_t const * p_common_data)
 {
-#ifdef TRACE_SDM_PAGE_16_ENABLE
+#if (defined TRACE_SDM_PAGE_16_ENABLE) && (defined ENABLE_DEBUG_LOG_SUPPORT)
     uint64_t distance = ANT_SDM_DISTANCE_RESCALE(p_common_data->distance);
-#endif // TRACE_SDM_PAGE_16_ENABLE
+#endif // (defined TRACE_SDM_PAGE_16_ENABLE) && (defined ENABLE_DEBUG_LOG_SUPPORT)
 
     LOG_PAGE16("Distance                         %u.%01u m\n\r",
                (unsigned int)(distance / ANT_SDM_DISTANCE_DISP_PRECISION),

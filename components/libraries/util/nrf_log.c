@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#if NRF_LOG_USES_RTT == 1
+#if defined(NRF_LOG_USES_RTT) && NRF_LOG_USES_RTT == 1
 
 #include <SEGGER_RTT_Conf.h>
 #include <SEGGER_RTT.h>
@@ -15,15 +15,35 @@ static char buf_down[BUFFER_SIZE_DOWN];
 
 uint32_t log_rtt_init(void)
 {
-    if(SEGGER_RTT_ConfigUpBuffer(LOG_TERMINAL_NORMAL, "Normal", buf_normal_up, BUFFER_SIZE_UP, SEGGER_RTT_MODE_NO_BLOCK_SKIP) != 0)
+    static bool initialized = false;
+    if (initialized)
+    {
+        return NRF_SUCCESS;
+    }
+
+    if (SEGGER_RTT_ConfigUpBuffer(LOG_TERMINAL_NORMAL,
+                                  "Normal",
+                                  buf_normal_up,
+                                  BUFFER_SIZE_UP,
+                                  SEGGER_RTT_MODE_NO_BLOCK_TRIM
+                                 )
+        != 0)
     {
         return NRF_ERROR_INVALID_STATE;
     }
 
-    if(SEGGER_RTT_ConfigDownBuffer(LOG_TERMINAL_INPUT, "Input", buf_down, BUFFER_SIZE_DOWN, SEGGER_RTT_MODE_BLOCK_IF_FIFO_FULL) != 0)
+    if (SEGGER_RTT_ConfigDownBuffer(LOG_TERMINAL_INPUT,
+                                   "Input",
+                                   buf_down,
+                                   BUFFER_SIZE_DOWN,
+                                   SEGGER_RTT_MODE_NO_BLOCK_SKIP
+                                  )
+        != 0)
     {
         return NRF_ERROR_INVALID_STATE;
     }
+
+    initialized = true;
 
     return NRF_SUCCESS;
 }
@@ -33,8 +53,8 @@ int SEGGER_RTT_vprintf(unsigned BufferIndex, const char * sFormat, va_list * pPa
 
 void log_rtt_printf(int terminal_index, char * format_msg, ...)
 {
-    va_list p_args = {0};
-    //lint -save -e526 -e628
+    //lint -save -e526 -e628 -e530
+    va_list p_args;
     va_start(p_args, format_msg);
     (void)SEGGER_RTT_vprintf(terminal_index, format_msg, &p_args);
     va_end(p_args);
@@ -44,14 +64,14 @@ void log_rtt_printf(int terminal_index, char * format_msg, ...)
 __INLINE void log_rtt_write_string(int terminal_index, int num_args, ...)
 {
     const char* msg;
-    va_list p_args = {0};
-    //lint -save -e516
+    //lint -save -e516 -e530
+    va_list p_args;
     va_start(p_args, num_args);
     //lint -restore
 
-    for(int i = 0; i < num_args; i++)
+    for (int i = 0; i < num_args; i++)
     {
-        //lint -save -e26 -e10 -e64 -e526 -e628
+        //lint -save -e26 -e10 -e64 -e526 -e628 -e530
         msg = va_arg(p_args, const char*);
         //lint -restore
         (void)SEGGER_RTT_WriteString(terminal_index, msg);
@@ -103,15 +123,13 @@ uint32_t log_rtt_read_input(char * c)
     int r;
 
     r = SEGGER_RTT_Read(LOG_TERMINAL_INPUT, c, 1);
-    if(r == 1)
+    if (r == 1)
         return NRF_SUCCESS;
     else
         return NRF_ERROR_NULL;
 }
 
-#endif // LOG_USES_RTT == 1
-
-#if NRF_LOG_USES_UART == 1
+#elif defined(NRF_LOG_USES_UART) && NRF_LOG_USES_UART == 1
 
 #include "app_uart.h"
 #include "app_error.h"
@@ -121,10 +139,13 @@ uint32_t log_rtt_read_input(char * c)
 #include "bsp.h"
 
 #define MAX_TEST_DATA_BYTES     (15U)                /**< max number of test bytes to be used for tx and rx. */
-#define UART_TX_BUF_SIZE 256                         /**< UART TX buffer size. */
+#define UART_TX_BUF_SIZE 512                         /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE 1                           /**< UART RX buffer size. */
 
-void uart_error_handle(app_uart_evt_t * p_event)
+static uint8_t m_uart_data;
+static bool m_uart_has_input;
+
+void uart_error_cb(app_uart_evt_t * p_event)
 {
     if (p_event->evt_type == APP_UART_COMMUNICATION_ERROR)
     {
@@ -138,6 +159,12 @@ void uart_error_handle(app_uart_evt_t * p_event)
 
 uint32_t log_uart_init()
 {
+    static bool initialized = false;
+    if (initialized)
+    {
+        return NRF_SUCCESS;
+    }
+
     uint32_t err_code;
     const app_uart_comm_params_t comm_params =
     {
@@ -147,24 +174,27 @@ uint32_t log_uart_init()
         CTS_PIN_NUMBER,
         APP_UART_FLOW_CONTROL_ENABLED,
         false,
-        UART_BAUDRATE_BAUDRATE_Baud38400
+        UART_BAUDRATE_BAUDRATE_Baud115200
     };
 
     APP_UART_FIFO_INIT(&comm_params,
                          UART_RX_BUF_SIZE,
                          UART_TX_BUF_SIZE,
-                         uart_error_handle,
+                         uart_error_cb,
                          APP_IRQ_PRIORITY_LOW,
                          err_code);
+
+    initialized = true;
 
     return err_code;
 }
 
+//lint -save -e530 -e64
 void log_uart_printf(const char * format_msg, ...)
 {
     va_list p_args;
     va_start(p_args, format_msg);
-    vprintf(format_msg, p_args);
+    (void)vprintf(format_msg, p_args);
     va_end(p_args);
 }
 
@@ -174,7 +204,7 @@ __INLINE void log_uart_write_string_many(int num_args, ...)
     va_list p_args;
     va_start(p_args, num_args);
 
-    for(int i = 0; i < num_args; i++)
+    for (int i = 0; i < num_args; i++)
     {
         msg = va_arg(p_args, const char*);
         log_uart_write_string(msg);
@@ -186,21 +216,22 @@ __INLINE void log_uart_write_string(const char* msg)
 {
     while( *msg )
     {
-        app_uart_put(*msg++);
+        (void)app_uart_put(*msg++);
     }
 }
+//lint -restore
 
 void log_uart_write_hex(uint32_t value)
 {
     uint8_t nibble;
     uint8_t i = 8;
 
-    app_uart_put('0');
-    app_uart_put('x');
+    (void)app_uart_put('0');
+    (void)app_uart_put('x');
     while( i-- != 0 )
     {
         nibble = (value >> (4 * i)) & 0x0F;
-        app_uart_put( (nibble > 9) ? ('A' + nibble - 10) : ('0' + nibble) );
+        (void)app_uart_put( (nibble > 9) ? ('A' + nibble - 10) : ('0' + nibble) );
     }
 }
 
@@ -212,23 +243,37 @@ void log_uart_write_hex_char(uint8_t c)
     while( i-- != 0 )
     {
         nibble = (c >> (4 * i)) & 0x0F;
-        app_uart_put( (nibble > 9) ? ('A' + nibble - 10) : ('0' + nibble) );
+        (void)app_uart_put( (nibble > 9) ? ('A' + nibble - 10) : ('0' + nibble) );
     }
 }
 
 __INLINE int log_uart_has_input()
 {
+    if (m_uart_has_input) return 1;
+    if (app_uart_get(&m_uart_data) == NRF_SUCCESS)
+    {
+        m_uart_has_input = true;
+        return 1;
+    }
     return 0;
 }
 
 uint32_t log_uart_read_input(char * c)
 {
+    if (m_uart_has_input)
+    {
+        *c = (char)m_uart_data;
+        m_uart_has_input = false;
+        return NRF_SUCCESS;
+    }
+    if (app_uart_get((uint8_t *)c) == NRF_SUCCESS)
+    {
+        return NRF_SUCCESS;
+    }
     return NRF_ERROR_NULL;
 }
 
-#endif // NRF_LOG_USES_UART == 1
-
-#if NRF_LOG_USES_RAW_UART == 1
+#elif defined(NRF_LOG_USES_RAW_UART) && NRF_LOG_USES_RAW_UART == 1
 
 #include "app_uart.h"
 #include <stdio.h>
@@ -244,9 +289,9 @@ uint32_t log_raw_uart_init()
     nrf_gpio_cfg_output( TX_PIN_NUMBER );
     nrf_gpio_cfg_input(RX_PIN_NUMBER, NRF_GPIO_PIN_NOPULL);
 
-    // Set a default baud rate of 38400
+    // Set a default baud rate of UART0_CONFIG_BAUDRATE
     NRF_UART0->PSELTXD  = TX_PIN_NUMBER;
-    NRF_UART0->BAUDRATE = UART_BAUDRATE_BAUDRATE_Baud38400;
+    NRF_UART0->BAUDRATE = UART0_CONFIG_BAUDRATE;
 
     NRF_UART0->PSELRTS  = 0xFFFFFFFF;
     NRF_UART0->PSELCTS  = 0xFFFFFFFF;
@@ -290,7 +335,7 @@ __INLINE void log_raw_uart_write_string_many(int num_args, ...)
     va_list p_args;
     va_start(p_args, num_args);
 
-    for(int i = 0; i < num_args; i++)
+    for (int i = 0; i < num_args; i++)
     {
         msg = va_arg(p_args, const char*);
         log_raw_uart_write_string(msg);

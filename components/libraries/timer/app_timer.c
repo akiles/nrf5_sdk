@@ -16,8 +16,8 @@
 #include "nrf_soc.h"
 #include "app_error.h"
 #include "nrf_delay.h"
-#include "app_util.h"
 #include "app_util_platform.h"
+#include "sdk_common.h"
 
 #define RTC1_IRQ_PRI            APP_IRQ_PRIORITY_LOW                        /**< Priority of the RTC1 interrupt (used for checking for timeouts and executing timeout handlers). */
 #define SWI_IRQ_PRI             APP_IRQ_PRIORITY_LOW                        /**< Priority of the SWI  interrupt (used for updating the timer list). */
@@ -133,7 +133,13 @@ static uint8_t                       m_ticks_elapsed_q_write_ind;               
 static app_timer_evt_schedule_func_t m_evt_schedule_func;                       /**< Pointer to function for propagating timeout events to the scheduler. */
 static bool                          m_rtc1_running;                            /**< Boolean indicating if RTC1 is running. */
 static bool                          m_rtc1_reset;                              /**< Boolean indicating if RTC1 counter has been reset due to last timer removed from timer list during the timer list handling. */
- 
+
+#ifdef APP_TIMER_WITH_PROFILER
+static uint8_t                      m_max_user_op_queue_utilization;                  /**< Maximum observed timer user operations queue utilization. */
+#endif
+
+#define MODULE_INITIALIZED (mp_users != NULL)
+#include "sdk_macros.h"
 
 /**@brief Function for initializing the RTC1 counter.
  *
@@ -727,6 +733,26 @@ static void timer_list_handler(void)
     bool           compare_update;
     timer_node_t * p_timer_id_head_old;
     
+#ifdef APP_TIMER_WITH_PROFILER
+    {
+        unsigned int i;
+
+        for (i = 0; i < APP_TIMER_INT_LEVELS; i++)
+        {
+            timer_user_t *p_user = &mp_users[i];
+            uint8_t size = p_user->user_op_queue_size;
+            uint8_t first = p_user->first;
+            uint8_t last = p_user->last;
+            uint8_t utilization = (first <= last) ? (last - first) : (size + 1 - first + last);
+
+            if (utilization > m_max_user_op_queue_utilization)
+            {
+                m_max_user_op_queue_utilization = utilization;
+            }
+        }
+    }
+#endif
+
     // Back up the previous known tick and previous list head
     ticks_previous    = m_ticks_latest;
     p_timer_id_head_old = mp_timer_id_head;
@@ -972,6 +998,10 @@ uint32_t app_timer_init(uint32_t                      prescaler,
     m_ticks_elapsed_q_read_ind  = 0;
     m_ticks_elapsed_q_write_ind = 0;
 
+#ifdef APP_TIMER_WITH_PROFILER
+    m_max_user_op_queue_utilization   = 0;
+#endif
+
     NVIC_ClearPendingIRQ(SWI_IRQn);
     NVIC_SetPriority(SWI_IRQn, SWI_IRQ_PRI);
     NVIC_EnableIRQ(SWI_IRQn);
@@ -989,10 +1019,8 @@ uint32_t app_timer_create(app_timer_id_t const *      p_timer_id,
                           app_timer_timeout_handler_t timeout_handler)
 {
     // Check state and parameters
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
+
     if (timeout_handler == NULL)
     {
         return NRF_ERROR_INVALID_PARAM;
@@ -1049,10 +1077,8 @@ uint32_t app_timer_start(app_timer_id_t timer_id, uint32_t timeout_ticks, void *
     timer_node_t * p_node = (timer_node_t*)timer_id;
     
     // Check state and parameters
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
+
     if (timer_id == 0)
     {
         return NRF_ERROR_INVALID_STATE;
@@ -1081,10 +1107,8 @@ uint32_t app_timer_stop(app_timer_id_t timer_id)
 {
     timer_node_t * p_node = (timer_node_t*)timer_id;
     // Check state and parameters
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
+
     if ((timer_id == NULL) || (p_node->p_timeout_handler == NULL))
     {
         return NRF_ERROR_INVALID_STATE;
@@ -1099,10 +1123,8 @@ uint32_t app_timer_stop(app_timer_id_t timer_id)
 uint32_t app_timer_stop_all(void)
 {
     // Check state
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
+
     return timer_stop_all_op_schedule(user_id_get());
 }
 
@@ -1122,3 +1144,9 @@ uint32_t app_timer_cnt_diff_compute(uint32_t   ticks_to,
     return NRF_SUCCESS;
 }
 
+#ifdef APP_TIMER_WITH_PROFILER
+uint8_t app_timer_op_queue_utilization_get(void)
+{
+    return m_max_user_op_queue_utilization;
+}
+#endif

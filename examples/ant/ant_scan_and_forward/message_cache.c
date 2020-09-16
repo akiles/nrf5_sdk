@@ -2,7 +2,6 @@
 This software is subject to the license described in the license.txt file
 included with this software distribution. You may not use this file except in compliance
 with this license.
-
 Copyright (c) Dynastream Innovations Inc. 2015
 All rights reserved.
 */
@@ -12,7 +11,7 @@ All rights reserved.
 #include "nordic_common.h"
 
 static bool mc_pop(message_cache_t * p_mc);
-static bool mc_compare(uint8_t * p_msg, mesh_message_t * p_opt_msg);
+static bool mc_compare(uint8_t * p_msg, sf_message_t * p_opt_msg);
 
 void mc_clear(message_cache_t * p_mc)
 {
@@ -40,6 +39,8 @@ void mc_add(message_cache_t * p_mc, uint8_t * p_message)
     p_mc->buffer[p_mc->back].dst   = p_message[1];
     p_mc->buffer[p_mc->back].seq   = p_message[6];
     p_mc->buffer[p_mc->back].data  = p_message[7];
+    p_mc->buffer[p_mc->back].pay0  = p_message[5];
+    p_mc->buffer[p_mc->back].pay1  = p_message[4];
     p_mc->buffer[p_mc->back].ticks = 0;
 
     p_mc->back = (p_mc->back == (p_mc->size - 1)) ? 0 : p_mc->back + 1;
@@ -124,7 +125,7 @@ static bool mc_pop(message_cache_t * p_mc)
  * @param p_opt_msg     Pointer to optimized message struct
  * @return true if the values match, false otherwise
  */
-static bool mc_compare(uint8_t * p_msg, mesh_message_t * p_opt_msg)
+static bool mc_compare(uint8_t * p_msg, sf_message_t * p_opt_msg)
 {
     bool result = true;
 
@@ -148,7 +149,16 @@ static bool mc_compare(uint8_t * p_msg, mesh_message_t * p_opt_msg)
         result = false;
     }
 
+    if (p_opt_msg->pay0 != p_msg[5])
+    {
+        result = false;
+    }
+
+    if (p_opt_msg->pay1 != p_msg[4])
+    {
+        result = false;
+    }
+
     return result;
 }
-
 

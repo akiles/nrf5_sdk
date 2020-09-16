@@ -10,13 +10,19 @@
  *
  */
 #include "nrf_assert.h"
+#include "app_error.h"
+#include "nordic_common.h"
 
 #if defined(DEBUG_NRF)
 void assert_nrf_callback(uint16_t line_num, const uint8_t * file_name)
 {
-    (void) file_name; /* Unused parameter */
-    (void) line_num;  /* Unused parameter */
- 
-    while (1) ;
+    assert_info_t assert_info =
+    {
+        .line_num    = line_num,
+        .p_file_name = file_name,
+    };
+    app_error_fault_handler(NRF_FAULT_ID_SDK_ASSERT, 0, (uint32_t)(&assert_info));
+
+    UNUSED_VARIABLE(assert_info);
 }
 #endif /* DEBUG_NRF */

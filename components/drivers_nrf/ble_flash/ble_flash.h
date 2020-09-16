@@ -46,8 +46,8 @@
  *             bootloader region. Otherwise, the end will be the size of the flash. 
  */
 #define BLE_FLASH_PAGE_END \
-    ((NRF_UICR->BOOTLOADERADDR != BLE_FLASH_EMPTY_MASK) \
-        ? (NRF_UICR->BOOTLOADERADDR / BLE_FLASH_PAGE_SIZE) \
+    ((NRF_UICR->NRFFW[0] != BLE_FLASH_EMPTY_MASK) \
+        ? (NRF_UICR->NRFFW[0] / BLE_FLASH_PAGE_SIZE) \
         : NRF_FICR->CODESIZE)
 
 /**@brief Function for erasing the specified flash page, and then writes the given data to this page.

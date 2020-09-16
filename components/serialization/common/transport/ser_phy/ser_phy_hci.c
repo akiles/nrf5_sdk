@@ -59,6 +59,7 @@
 #define HCI_PKT_SYNC_SIZE   6u                                                         /**< Size of SYNC and SYNC_RSP packet */
 #define HCI_PKT_CONFIG_SIZE 7u                                                         /**< Size of CONFIG and CONFIG_RSP packet */
 #define HCI_LINK_CONTROL_PKT_INVALID 0xFFFFu                                           /**< Size of CONFIG and CONFIG_RSP packet */
+#define HCI_LINK_CONTROL_TIMEOUT     1u                                                /**< Default link control timeout. */
 #endif  /* HCI_LINK_CONTROL */
 
 #ifndef APP_TIMER_PRESCALER
@@ -1367,7 +1368,7 @@ static void hci_link_control_event_handler(hci_evt_t * p_event)
                         m_hci_other_side_active = false;
                     }
                     hci_link_control_pkt_send();
-                    hci_timeout_setup(7u); // Need to trigger transmitting SYNC messages
+                    hci_timeout_setup(HCI_LINK_CONTROL_TIMEOUT); // Need to trigger transmitting SYNC messages
                     break;
                 case HCI_PKT_SYNC_RSP:
                     if (m_hci_mode == HCI_MODE_UNINITIALIZED)
@@ -1413,12 +1414,12 @@ static void hci_link_control_event_handler(hci_evt_t * p_event)
                     //send packet
                     m_hci_link_control_next_pkt = HCI_PKT_SYNC;
                     hci_link_control_pkt_send();
-                    hci_timeout_setup(7u);
+                    hci_timeout_setup(HCI_LINK_CONTROL_TIMEOUT);
                     break;
                 case HCI_MODE_INITIALIZED:
                     m_hci_link_control_next_pkt = HCI_PKT_CONFIG;
                     hci_link_control_pkt_send();
-                    hci_timeout_setup(7u);
+                    hci_timeout_setup(HCI_LINK_CONTROL_TIMEOUT);
                     break;
                 case HCI_MODE_ACTIVE:
                 case HCI_MODE_DISABLE:
@@ -1551,7 +1552,7 @@ static uint32_t  hci_timer_init(void)
     // Configure TIMER for compare[1] event
     HCI_TIMER->PRESCALER = 9;
     HCI_TIMER->MODE      = TIMER_MODE_MODE_Timer;
-    HCI_TIMER->BITMODE   = TIMER_BITMODE_BITMODE_32Bit;
+    HCI_TIMER->BITMODE   = TIMER_BITMODE_BITMODE_16Bit;
 
     // Clear TIMER
     HCI_TIMER->TASKS_CLEAR = 1;
@@ -1624,7 +1625,7 @@ uint32_t ser_phy_open(ser_phy_events_handler_t events_handler)
         m_hci_tx_fsm_state  = HCI_TX_STATE_SEND;
         m_hci_rx_fsm_state  = HCI_RX_STATE_RECEIVE;
 #else
-        hci_timeout_setup(7u);// Trigger sending SYNC messages
+        hci_timeout_setup(HCI_LINK_CONTROL_TIMEOUT);// Trigger sending SYNC messages
         m_hci_mode              = HCI_MODE_UNINITIALIZED;
         m_hci_other_side_active = false;
 #endif /*HCI_LINK_CONTROL*/

@@ -569,3 +569,97 @@ uint32_t sd_ble_gatts_sys_attr_get(uint16_t         conn_handle,
                                       (++buffer_length),
                                       gatts_sys_attr_get_rsp_dec);
 }
+
+/**@brief Command response callback function for @ref sd_ble_gatts_attr_get BLE command.
+ *
+ * Callback for decoding the output parameters and the command response return code.
+ *
+ * @param[in] p_buffer  Pointer to begin of command response buffer.
+ * @param[in] length    Length of data in bytes.
+ *
+ * @return Decoded command response return code.
+ */
+static uint32_t gatts_attr_get_rsp_dec(const uint8_t * p_buffer, uint16_t length)
+{
+    uint32_t result_code;
+
+    const uint32_t err_code = ble_gatts_attr_get_rsp_dec(
+        p_buffer,
+        length,
+        (ble_gatts_attr_md_t **)&mp_out_params[0],
+        &result_code);
+
+    APP_ERROR_CHECK(err_code);
+
+    return result_code;
+}
+
+
+uint32_t sd_ble_gatts_attr_get(uint16_t              handle,
+                               ble_uuid_t          * p_uuid,
+                               ble_gatts_attr_md_t * p_md)
+{
+    uint8_t * p_buffer;
+    uint32_t  buffer_length = 0;
+
+    tx_buf_alloc(&p_buffer, (uint16_t *)&buffer_length);
+    mp_out_params[0] = p_md;
+
+    const uint32_t err_code = ble_gatts_attr_get_req_enc(handle,
+                                                         p_uuid,
+                                                         p_md,
+                                                        &(p_buffer[1]),
+                                                        &buffer_length);
+    //@note: Should never fail.
+    APP_ERROR_CHECK(err_code);
+
+    //@note: Increment buffer length as internally managed packet type field must be included.
+    return ser_sd_transport_cmd_write(p_buffer,
+                                      (++buffer_length),
+                                      gatts_attr_get_rsp_dec);
+}
+
+/**@brief Command response callback function for @ref sd_ble_gatts_initial_user_handle_get BLE command.
+ *
+ * Callback for decoding the output parameters and the command response return code.
+ *
+ * @param[in] p_buffer  Pointer to begin of command response buffer.
+ * @param[in] length    Length of data in bytes.
+ *
+ * @return Decoded command response return code.
+ */
+static uint32_t gatts_initial_user_handle_get_rsp_dec(const uint8_t * p_buffer, uint16_t length)
+{
+    uint32_t result_code;
+
+    const uint32_t err_code = ble_gatts_initial_user_handle_get_rsp_dec(
+        p_buffer,
+        length,
+        (uint16_t **)&mp_out_params[0],
+        &result_code);
+
+    APP_ERROR_CHECK(err_code);
+
+    return result_code;
+}
+
+
+uint32_t sd_ble_gatts_initial_user_handle_get(uint16_t * p_handle)
+{
+    uint8_t * p_buffer;
+    uint32_t  buffer_length = 0;
+
+    tx_buf_alloc(&p_buffer, (uint16_t *)&buffer_length);
+    mp_out_params[0] = p_handle;
+
+    const uint32_t err_code = ble_gatts_initial_user_handle_get_req_enc(p_handle,
+                                                             &(p_buffer[1]),
+                                                             &buffer_length);
+    //@note: Should never fail.
+    APP_ERROR_CHECK(err_code);
+
+    //@note: Increment buffer length as internally managed packet type field must be included.
+    return ser_sd_transport_cmd_write(p_buffer,
+                                      (++buffer_length),
+                                      gatts_initial_user_handle_get_rsp_dec);
+}

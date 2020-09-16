@@ -13,11 +13,14 @@
 /**@file
  * @addtogroup nrf_wdt WDT HAL and driver
  * @ingroup nrf_drivers
+ * @brief Watchdog timer (WDT) APIs.
+ * @details The WDT HAL provides basic APIs for accessing the registers of the watchdog timer. 
+ * The WDT driver provides APIs on a higher level.
  * @defgroup lib_driver_wdt WDT driver
  * @{
  * @ingroup  nrf_wdt
  *
- * @brief    WDT driver.
+ * @brief    Driver for managing the watchdog timer (WDT).
  */
 
 #ifndef NRF_DRV_WDT_H__

@@ -126,6 +126,20 @@ uint32_t ble_event_dec(uint8_t const * const p_buf,
                                                    p_event_len);
             break;
 
+        case BLE_GAP_EVT_KEY_PRESSED:
+            err_code = ble_gap_evt_key_pressed_dec(p_sub_buffer,
+                                                   sub_packet_len,
+                                                   p_event,
+                                                   p_event_len);
+            break;
+
+        case BLE_GAP_EVT_LESC_DHKEY_REQUEST:
+            err_code = ble_gap_evt_lesc_dhkey_request_dec(p_sub_buffer,
+                                                   sub_packet_len,
+                                                   p_event,
+                                                   p_event_len);
+            break;
+
         case BLE_GATTC_EVT_CHAR_DISC_RSP:
             err_code = ble_gattc_evt_char_disc_rsp_dec(p_sub_buffer, sub_packet_len, p_event,
                                                        p_event_len);
@@ -184,6 +198,13 @@ uint32_t ble_event_dec(uint8_t const * const p_buf,
                                                       p_event_len);
             break;
 
+        case BLE_GATTC_EVT_ATTR_INFO_DISC_RSP:
+                    err_code = ble_gattc_evt_attr_info_disc_rsp_dec(p_sub_buffer,
+                                                                    sub_packet_len,
+                                                                    p_event,
+                                                                    p_event_len);
+                    break;
+
         case BLE_GATTS_EVT_WRITE:
             err_code = ble_gatts_evt_write_dec(p_sub_buffer, sub_packet_len, p_event, p_event_len);
             break;
@@ -224,7 +245,6 @@ uint32_t ble_event_dec(uint8_t const * const p_buf,
         case BLE_GAP_EVT_SCAN_REQ_REPORT:
             err_code = ble_gap_evt_scan_req_report_dec(p_sub_buffer, sub_packet_len, p_event, p_event_len);
             break;
-
         default:
             err_code = NRF_ERROR_NOT_FOUND;
             break;
@@ -236,6 +256,7 @@ uint32_t ble_event_dec(uint8_t const * const p_buf,
         p_event->header.evt_len = (err_code == NRF_SUCCESS) ?
                                   (uint16_t)*p_event_len : 0;
     }
+
     *p_event_len += sizeof(ble_evt_hdr_t);
     return err_code;
 }

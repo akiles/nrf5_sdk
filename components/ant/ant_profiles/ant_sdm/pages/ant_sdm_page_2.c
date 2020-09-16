@@ -32,14 +32,14 @@ typedef struct
  */
 static void page_2_data_log(ant_sdm_page2_data_t const * p_page_data)
 {
-#ifdef TRACE_SDM_PAGE_2_ENABLE
+#if (defined TRACE_SDM_PAGE_2_ENABLE) && (defined ENABLE_DEBUG_LOG_SUPPORT)
     static const char * p_location[4] = {"Laces", "Midsole", "Other", "Ankle"};
     static const char * p_battery[4]  = {"New", "Good", "OK", "Low"};
     static const char * p_health[4]   = {"OK", "Error", "Warning", ""};
     static const char * p_state[4]    = {"Inactive", "Active", "", ""};
 
     uint16_t cadence = ANT_SDM_CADENCE_RESCALE(p_page_data->cadence);
-#endif // TRACE_SDM_PAGE_2_ENABLE
+#endif // (defined TRACE_SDM_PAGE_2_ENABLE) && (defined ENABLE_DEBUG_LOG_SUPPORT)
 
     LOG_PAGE2("Status:                           state:    %s\n\r",
                 p_state[p_page_data->status.items.state]);

@@ -13,6 +13,12 @@ All rights reserved.
  * @ingroup ant_shared_channel
  *
  * @brief Example of ANT Auto Shared Channel (ASC) Master.
+ *
+ * Before compiling this example for NRF52, complete the following steps:
+ * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
+ * - Extract the downloaded zip file and copy the S212 SoftDevice headers to <tt>\<InstallFolder\>/components/softdevice/s212/headers</tt>.
+ * If you are using Keil packs, copy the files into a @c headers folder in your example folder.
+ * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
  */
 
 // Version 0.0.2
@@ -33,33 +39,6 @@ All rights reserved.
     #define LED_ERROR_AUX   BSP_LED_0
 
     #define LED_START_UP    BSP_LED_0
-
-
-/**@brief Function for handling an error.
- *
- * @param[in] error_code  Error code supplied to the handler.
- * @param[in] line_num    Line number where the error occurred.
- * @param[in] p_file_name Pointer to the file name.
- */
-void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
-{
-    switch(error_code)
-    {
-        case NRF_ANT_ERROR_TRANSFER_IN_PROGRESS:
-        {
-            led_on(LED_ERROR_AUX);
-            break;
-        }
-        default:
-        {
-            for(;;)
-            {
-                led_toggle(LED_ERROR_1);
-                nrf_delay_ms(200);
-            }
-        }
-    }
-}
 
 
 #ifndef BLE_STACK_SUPPORT_REQD

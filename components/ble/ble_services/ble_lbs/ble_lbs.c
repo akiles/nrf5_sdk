@@ -4,11 +4,9 @@
  * found in the license.txt file.
  */
 
-#include <string.h>
 #include "ble_lbs.h"
-#include "nordic_common.h"
 #include "ble_srv_common.h"
-#include "app_util.h"
+#include "sdk_common.h"
 
 
 /**@brief Function for handling the Connect event.
@@ -197,32 +195,20 @@ uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
     // Add service.
     ble_uuid128_t base_uuid = {LBS_UUID_BASE};
     err_code = sd_ble_uuid_vs_add(&base_uuid, &p_lbs->uuid_type);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     ble_uuid.type = p_lbs->uuid_type;
     ble_uuid.uuid = LBS_UUID_SERVICE;
 
     err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY, &ble_uuid, &p_lbs->service_handle);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     // Add characteristics.
     err_code = button_char_add(p_lbs, p_lbs_init);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     err_code = led_char_add(p_lbs, p_lbs_init);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     return NRF_SUCCESS;
 }

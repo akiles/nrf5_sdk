@@ -39,12 +39,12 @@ STATIC_ASSERT(ANT_SDM_DISTANCE_DISP_PRECISION == 10);         ///< Display forma
 static void page_1_data_log(ant_sdm_page1_data_t const  * p_page_data,
                             ant_sdm_common_data_t const * p_common_data)
 {
-#ifdef TRACE_SDM_PAGE_1_ENABLE
+#if (defined TRACE_SDM_PAGE_1_ENABLE) && (defined ENABLE_DEBUG_LOG_SUPPORT)
     uint32_t strides        = p_common_data->strides;
     uint64_t distance       = ANT_SDM_DISTANCE_RESCALE(p_common_data->distance);
     uint16_t update_latency = ANT_SDM_UPDATE_LATENCY_RESCALE(p_page_data->update_latency);
     uint32_t time           = ANT_SDM_TIME_RESCALE(p_page_data->time);
-#endif // TRACE_SDM_PAGE_1_ENABLE
+#endif // (defined TRACE_SDM_PAGE_1_ENABLE) && (defined ENABLE_DEBUG_LOG_SUPPORT)
 
     LOG_PAGE1("Update latency                    %u.%03u s\n\r",
               update_latency / ANT_SDM_UPDATE_LATENCY_DISP_PRECISION,

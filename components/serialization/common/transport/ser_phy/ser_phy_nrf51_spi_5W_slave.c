@@ -577,16 +577,16 @@ uint32_t ser_phy_open(ser_phy_events_handler_t events_handler)
     spi_slave_ppi_init();
 #endif
 
-    spi_slave_config.miso_pin         = SPIS_MISO_PIN;
-    spi_slave_config.mosi_pin         = SPIS_MOSI_PIN;
-    spi_slave_config.sck_pin          = SPIS_SCK_PIN;
-    spi_slave_config.csn_pin          = SPIS_CSN_PIN;
+    spi_slave_config.miso_pin         = SER_CON_SPIS_MISO_PIN;
+    spi_slave_config.mosi_pin         = SER_CON_SPIS_MOSI_PIN;
+    spi_slave_config.sck_pin          = SER_CON_SPIS_SCK_PIN;
+    spi_slave_config.csn_pin          = SER_CON_SPIS_CSN_PIN;
     spi_slave_config.mode             = NRF_DRV_SPIS_MODE_0;
     spi_slave_config.bit_order        = NRF_DRV_SPIS_BIT_ORDER_LSB_FIRST;
     spi_slave_config.def              = SER_PHY_SPI_DEF_CHARACTER;
     spi_slave_config.orc              = SER_PHY_SPI_ORC_CHARACTER;
     spi_slave_config.csn_pullup       = NRF_GPIO_PIN_PULLUP;
-    spi_slave_config.irq_priority     = NRF_APP_PRIORITY_LOW;
+    spi_slave_config.irq_priority     = APP_IRQ_PRIORITY_LOW;
 
     //keep /CS high when init
     nrf_gpio_cfg_input(spi_slave_config.csn_pin, NRF_GPIO_PIN_PULLUP);

@@ -1283,3 +1283,171 @@ uint32_t sd_ble_gap_rssi_get(uint16_t  conn_handle,
                                       (++buffer_length),
                                       gap_rssi_get_rsp_dec);
 }
+
+/**@brief Command response callback function for @ref sd_ble_gap_keypress_notify BLE command.
+ *
+ * Callback for decoding the output parameters and the command response return code.
+ *
+ * @param[in] p_buffer  Pointer to begin of command response buffer.
+ * @param[in] length    Length of data in bytes.
+ *
+ * @return Decoded command response return code.
+ */
+static uint32_t gap_keypress_notify_rsp_dec(const uint8_t * p_buffer, uint16_t length)
+{
+    uint32_t result_code = 0;
+
+    const uint32_t err_code = ble_gap_keypress_notify_rsp_dec(p_buffer,
+                                                      length,
+                                                      &result_code);
+
+    //@note: Should never fail.
+    APP_ERROR_CHECK(err_code);
+
+    return result_code;
+}
+
+
+uint32_t sd_ble_gap_keypress_notify( uint16_t conn_handle, uint8_t kp_not)
+{
+    uint8_t * p_buffer;
+    uint32_t  buffer_length = 0;
+
+    tx_buf_alloc(&p_buffer, (uint16_t *)&buffer_length);
+    const uint32_t err_code = ble_gap_keypress_notify_req_enc( conn_handle, kp_not, &p_buffer[1], &buffer_length );
+    //@note: Should never fail.
+    APP_ERROR_CHECK(err_code);
+
+    //@note: Increment buffer length as internally managed packet type field must be included.
+    return ser_sd_transport_cmd_write(p_buffer,
+                                      (++buffer_length),
+                                      gap_keypress_notify_rsp_dec);
+}
+
+/**@brief Command response callback function for @ref sd_ble_gap_lesc_dhkey_reply BLE command.
+ *
+ * Callback for decoding the output parameters and the command response return code.
+ *
+ * @param[in] p_buffer  Pointer to begin of command response buffer.
+ * @param[in] length    Length of data in bytes.
+ *
+ * @return Decoded command response return code.
+ */
+static uint32_t gap_lesc_dhkey_reply_rsp_dec(const uint8_t * p_buffer, uint16_t length)
+{
+    uint32_t result_code = 0;
+
+    const uint32_t err_code = ble_gap_lesc_dhkey_reply_rsp_dec(p_buffer,
+                                                      length,
+                                                      &result_code);
+
+    //@note: Should never fail.
+    APP_ERROR_CHECK(err_code);
+
+    return result_code;
+}
+
+
+uint32_t sd_ble_gap_lesc_dhkey_reply( uint16_t conn_handle, ble_gap_lesc_dhkey_t const *p_dhkey)
+{
+    uint8_t * p_buffer;
+    uint32_t  buffer_length = 0;
+
+    tx_buf_alloc(&p_buffer, (uint16_t *)&buffer_length);
+    const uint32_t err_code = ble_gap_lesc_dhkey_reply_req_enc( conn_handle, p_dhkey, &(p_buffer[1]), &buffer_length );
+    //@note: Should never fail.
+    APP_ERROR_CHECK(err_code);
+
+    //@note: Increment buffer length as internally managed packet type field must be included.
+    return ser_sd_transport_cmd_write(p_buffer,
+                                      (++buffer_length),
+                                      gap_lesc_dhkey_reply_rsp_dec);
+}
+
+/**@brief Command response callback function for @ref sd_ble_gap_lesc_oob_data_set BLE command.
+ *
+ * Callback for decoding the output parameters and the command response return code.
+ *
+ * @param[in] p_buffer  Pointer to begin of command response buffer.
+ * @param[in] length    Length of data in bytes.
+ *
+ * @return Decoded command response return code.
+ */
+static uint32_t gap_lesc_oob_data_set_rsp_dec(const uint8_t * p_buffer, uint16_t length)
+{
+    uint32_t result_code = 0;
+
+    const uint32_t err_code = ble_gap_lesc_oob_data_set_rsp_dec(p_buffer,
+                                                      length,
+                                                      &result_code);
+
+    //@note: Should never fail.
+    APP_ERROR_CHECK(err_code);
+
+    return result_code;
+}
+
+
+uint32_t sd_ble_gap_lesc_oob_data_set(uint16_t conn_handle,
+                                      ble_gap_lesc_oob_data_t const *p_oobd_own,
+                                      ble_gap_lesc_oob_data_t const *p_oobd_peer)
+{
+    uint8_t * p_buffer;
+    uint32_t  buffer_length = 0;
+
+    tx_buf_alloc(&p_buffer, (uint16_t *)&buffer_length);
+    const uint32_t err_code = ble_gap_lesc_oob_data_set_req_enc(conn_handle, p_oobd_own, p_oobd_peer,
+                                                                &(p_buffer[1]), &buffer_length );
+    //@note: Should never fail.
+    APP_ERROR_CHECK(err_code);
+
+    //@note: Increment buffer length as internally managed packet type field must be included.
+    return ser_sd_transport_cmd_write(p_buffer,
+                                      (++buffer_length),
+                                      gap_lesc_oob_data_set_rsp_dec);
+}
+
+/**@brief Command response callback function for @ref sd_ble_gap_lesc_oob_data_get BLE command.
+ *
+ * Callback for decoding the output parameters and the command response return code.
+ *
+ * @param[in] p_buffer  Pointer to begin of command response buffer.
+ * @param[in] length    Length of data in bytes.
+ *
+ * @return Decoded command response return code.
+ */
+static uint32_t gap_lesc_oob_data_get_rsp_dec(const uint8_t * p_buffer, uint16_t length)
+{
+    uint32_t result_code = 0;
+
+    const uint32_t err_code = ble_gap_lesc_oob_data_get_rsp_dec(p_buffer,
+                                                      length,
+                                                      (ble_gap_lesc_oob_data_t **) &mp_out_params[0],
+                                                      &result_code);
+
+    //@note: Should never fail.
+    APP_ERROR_CHECK(err_code);
+
+    return result_code;
+}
+
+
+uint32_t sd_ble_gap_lesc_oob_data_get(uint16_t                      conn_handle,
+                                      ble_gap_lesc_p256_pk_t const *p_pk_own,
+                                      ble_gap_lesc_oob_data_t      *p_oobd_own)
+{
+    uint8_t * p_buffer;
+    uint32_t  buffer_length = 0;
+
+    tx_buf_alloc(&p_buffer, (uint16_t *)&buffer_length);
+    mp_out_params[0] = p_oobd_own;
+    const uint32_t err_code = ble_gap_lesc_oob_data_get_req_enc(conn_handle, p_pk_own, p_oobd_own,
+                                                                &(p_buffer[1]), &buffer_length );
+    //@note: Should never fail.
+    APP_ERROR_CHECK(err_code);
+
+    //@note: Increment buffer length as internally managed packet type field must be included.
+    return ser_sd_transport_cmd_write(p_buffer,
+                                      (++buffer_length),
+                                      gap_lesc_oob_data_get_rsp_dec);
+}

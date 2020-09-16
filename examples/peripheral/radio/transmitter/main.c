@@ -106,8 +106,6 @@ void bsp_evt_handler(bsp_event_t evt)
             // get actual button state
             err_code = bsp_buttons_state_get(&packet);
             APP_ERROR_CHECK(err_code);
-            send_packet();
-            printf("The contents of the package was %u\n\r", (unsigned int)packet);
             break;
         default:
             // no implementation needed
@@ -161,7 +159,7 @@ int main(void)
         CTS_PIN_NUMBER, 
         APP_UART_FLOW_CONTROL_ENABLED, 
         false, 
-        UART_BAUDRATE_BAUDRATE_Baud38400
+        UART_BAUDRATE_BAUDRATE_Baud115200
     };   
     
     APP_UART_FIFO_INIT(&comm_params, 
@@ -187,7 +185,13 @@ int main(void)
 
     while (true)
     {
-        // no implementation needed
+        if(packet != 0)
+        {
+            send_packet();
+            printf("The contents of the package was %u\n\r", (unsigned int)packet);
+            packet = 0;
+        }
+        __WFE();
     }
 }
 

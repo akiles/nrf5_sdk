@@ -1,11 +1,11 @@
 #ifndef NRF_LOG_H_
 #define NRF_LOG_H_
 
+#ifndef DOXYGEN
+
 #include <stdint.h>
 #include <stdarg.h>
 #include <app_util.h>
-
-#define NUM_VA_ARGS(...) (sizeof((const char*[]){ 0, ##__VA_ARGS__ })/sizeof(const char*)-1)
 
 #ifndef NRF_LOG_USES_RTT
 #define NRF_LOG_USES_RTT 0
@@ -19,132 +19,166 @@
 #define NRF_LOG_USES_RAW_UART 0
 #endif
 
-#if NRF_LOG_USES_RTT == 1
+#ifndef NRF_LOG_USES_COLORS
+    #define NRF_LOG_USES_COLORS 1
+#endif
+
+#if NRF_LOG_USES_COLORS == 1
+    #define NRF_LOG_COLOR_DEFAULT  "\x1B[0m"
+    #define NRF_LOG_COLOR_BLACK    "\x1B[1;30m"
+    #define NRF_LOG_COLOR_RED      "\x1B[1;31m"
+    #define NRF_LOG_COLOR_GREEN    "\x1B[1;32m"
+    #define NRF_LOG_COLOR_YELLOW   "\x1B[1;33m"
+    #define NRF_LOG_COLOR_BLUE     "\x1B[1;34m"
+    #define NRF_LOG_COLOR_MAGENTA  "\x1B[1;35m"
+    #define NRF_LOG_COLOR_CYAN     "\x1B[1;36m"
+    #define NRF_LOG_COLOR_WHITE    "\x1B[1;37m"
+#else
+    #define NRF_LOG_COLOR_DEFAULT
+    #define NRF_LOG_COLOR_BLACK
+    #define NRF_LOG_COLOR_RED
+    #define NRF_LOG_COLOR_GREEN
+    #define NRF_LOG_COLOR_YELLOW
+    #define NRF_LOG_COLOR_BLUE
+    #define NRF_LOG_COLOR_MAGENTA
+    #define NRF_LOG_COLOR_CYAN
+    #define NRF_LOG_COLOR_WHITE
+#endif
+
+#if defined(NRF_LOG_USES_RTT) && NRF_LOG_USES_RTT == 1
 
 #define LOG_TERMINAL_NORMAL         (0)
 #define LOG_TERMINAL_ERROR          (1)
 #define LOG_TERMINAL_INPUT          (0)
 
-/**@brief Function to initialize Segger Real-Time Terminal logger
+/**@brief Function for initializing the SEGGER RTT logger.
  *
- * @details The Segger Real-Time Terminal stores I/O data in a ring buffer
- *          consumable by the onboard JLink debugging probe.
- *          To learn more about the Segger RTT, please visit the following web-page: 
- *          <a href="https://www.segger.com/jlink-real-time-terminal.html">Segger RTT website</a>
+ * @details See <a href="https://www.segger.com/jlink-rtt.html" target="_blank">segger.com</a>
+ *          for information about SEGGER Real Time Transfer (RTT).
  *
- * @warning This function is only available when LOG_USES_RTT is defined as 1 
+ * This function is available only when NRF_LOG_USES_RTT is defined as 1.
  *
- * @warning Do not call this function directly. Use the macro NRF_LOG_INIT
+ * @note Do not call this function directly. Use the macro @ref NRF_LOG_INIT instead.
  *
- * @returns     NRF_SUCCESS     If initialization was successful
- * @returns     NRF_ERROR
+ * @retval     NRF_SUCCESS     If initialization was successful.
+ * @retval     NRF_ERROR       Otherwise.
  */
 uint32_t log_rtt_init(void);
 
-/**@brief Function to write printf string using Segger Real-Time Terminal logger
+/**@brief Function for writing a printf string using RTT.
  *
- * @details The printf implementation is more efficient than the standard implementation
- *          To learn more about the Segger RTT, please visit the following web-page: 
- *          <a href="https://www.segger.com/jlink-real-time-terminal.html">Segger RTT website</a>
+ * @details The printf implementation in SEGGER's RTT is more efficient than
+ * the standard implementation. However, printf requires more processor time
+ * than other logging functions. Therefore, applications that require logging
+ * but need it to interfere as little as possible with the execution, should
+ * avoid using printf.
  *
- * @warning This function is only available when LOG_USES_RTT is defined as 1
+ * This function is available only when NRF_LOG_USES_RTT is defined as 1.
  *
- * @warning Do not call this function directly. Use one of the following macros:
- *          NRF_LOG/NRF_LOG_DEBUG/NRF_LOG_ERROR
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG_PRINTF
+ * - @ref NRF_LOG_PRINTF_DEBUG
+ * - @ref NRF_LOG_PRINTF_ERROR
  *
- * @param   terminal_index  Segger RTT terminal index to use as output
- *          format_msg      Printf format string
- *          ...             Variable length arguments
+ * @param   terminal_index  Segger RTT terminal index to use as output.
+ * @param   format_msg      Printf format string.
  */
 void log_rtt_printf(int terminal_index, char * format_msg, ...);
 
-/**@brief Function to write string using Segger Real-Time Terminal logger
+/**@brief Function for writing a string using RTT.
  *
- * @details The string sent in must be null-terminated but the null-termination will not be stored
- *          in the ring-buffer.
- *          The impact of running this application should be very low compared to writing to UART
- *          To learn more about the Segger RTT, please visit the following web-page: 
- *          <a href="https://www.segger.com/jlink-real-time-terminal.html">Segger RTT website</a>
+ * @details The string to write must be null-terminated, but the null termination will not be stored
+ *          in the ring buffer.
+ *          The impact of running this function should be very low compared to writing to UART.
  *
- * @warning This function is only available when LOG_USES_RTT is defined as 1
+ * This function is available only when NRF_LOG_USES_RTT is defined as 1.
  *
- * @warning Do not call this function directly. Use one of the following macros:
- *          NRF_LOG_STR/NRF_LOG_DEBUG_STR/NRF_LOG_ERROR_STR    
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG
+ * - @ref NRF_LOG_DEBUG
+ * - @ref NRF_LOG_ERROR
  *
- * @param   terminal_index  Segger RTT terminal index to use as output
- * @param   num_args        Number of arguments
- * @param   msg             Null-terminated character array to use be printed
+ * @param   terminal_index  Segger RTT terminal index to use as output.
+ * @param   num_args        Number of arguments.
  */
 void log_rtt_write_string(int terminal_index, int num_args, ...);
 
-/**@brief Function to write integer as hex using Segger Real-Time Terminal logger
+/**@brief Function for writing an integer as HEX using RTT.
  *
- * @details Insert
- *          To learn more about the Segger RTT, please visit the following web-page: 
- *          <a href="https://www.segger.com/jlink-real-time-terminal.html">Segger RTT website</a>
+ * The output data is formatted as, for example, 0x89ABCDEF.
  *
- * @warning This function is only available when LOG_USES_RTT is defined as 1
+ * This function is available only when NRF_LOG_USES_RTT is defined as 1.
  *
- * @warning Do not call this function directly. Use one of the following macros:
- *          NRF_LOG_HEX/NRF_LOG_DEBUG_HEX/NRF_LOG_ERROR_HEX    
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG_HEX
+ * - @ref NRF_LOG_HEX_DEBUG
+ * - @ref NRF_LOG_HEX_ERROR
  *
- * @param   terminal_index  Segger RTT terminal index to use as output
- * @param   value           Integer value to be printed has hex
+ * @param   terminal_index  Segger RTT terminal index to use as output.
+ * @param   value           Integer value to be printed as HEX.
  */
 void log_rtt_write_hex(int terminal_index, uint32_t value);
 
-/**@brief Function to write character as hex using Segger Real-Time Terminal logger
+/**@brief Function for writing a single character as HEX using RTT.
  *
- * @details Insert
- *          To learn more about the Segger RTT, please visit the following web-page: 
- *          <a href="https://www.segger.com/jlink-real-time-terminal.html">Segger RTT website</a>
+ * The output string is formatted as, for example, AA.
  *
- * @warning This function is only available when LOG_USES_RTT is defined as 1
+ * This function is available only when NRF_LOG_USES_RTT is defined as 1.
  *
- * @warning Do not call this function directly. Use one of the following macros:
- *          NRF_LOG_HEX_CHAR/NRF_LOG_HEX_CHAR_DEBUG/NRF_LOG_HEX_CHAR_ERROR
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG_HEX_CHAR
+ * - @ref NRF_LOG_HEX_CHAR_DEBUG
+ * - @ref NRF_LOG_HEX_CHAR_ERROR
  *
- * @param   terminal_index  Segger RTT terminal index to use as output
- * @param   value           Character to print as hex
+ * @param   terminal_index  Segger RTT terminal index to use as output.
+ * @param   value           Character to print as HEX.
  */
 void log_rtt_write_hex_char(int terminal_index, uint8_t value);
 
-/**@brief Function to check if there is available data in the input-buffer
+/**@brief Function for checking if data is available in the input buffer.
  *
- * @retval      1 if character(s) available to read
- * @retval      0 if no character(s) available to read
+ * This function is available only when NRF_LOG_USES_RTT is defined as 1.
+ *
+ * @note Do not call this function directly. Use @ref NRF_LOG_HAS_INPUT instead.
+ *
+ * @retval      1 If characters are available to read.
+ * @retval      0 If no characters are available.
  */
 int log_rtt_has_input(void);
 
-/**@brief Function to read one character from the input-buffer
+/**@brief Function for reading one character from the input buffer.
  *
- * @param[out]  pointer to put the character to store     
+ * @param[out] p_char  Pointer where to store the character.
  *
- * @retval      NRF_SUCCESS if character was read out
- * @retval      NRF_ERROR_INVALID_DATA if a character could not be read
+ * This function is available only when NRF_LOG_USES_RTT is defined as 1.
+ *
+ * @note Do not call this function directly. Use @ref NRF_LOG_READ_INPUT instead.
+ *
+ * @retval      NRF_SUCCESS If the character was read out.
+ * @retval      NRF_ERROR_INVALID_DATA If no character could be read.
  */
 uint32_t log_rtt_read_input(char* p_char);
 
-#define NRF_LOG_INIT()                  log_rtt_init()                                                                          /*!< Initialize the nrf_log submodule*/
+#define NRF_LOG_INIT()                  log_rtt_init()                                                                          /*!< Initialize the module. */
 
-#define NRF_LOG_PRINTF(...)             log_rtt_printf(LOG_TERMINAL_NORMAL, ##__VA_ARGS__)                                      /*!< nrf log utilizing printf*/
-#define NRF_LOG_PRINTF_DEBUG(...)       log_rtt_printf(LOG_TERMINAL_NORMAL, ##__VA_ARGS__)                                      /*!< nrf log utilzinging printf. Will only log if DEBUG is set*/
-#define NRF_LOG_PRINTF_ERROR(...)       log_rtt_printf(LOG_TERMINAL_ERROR, ##__VA_ARGS__)                                       /*!< nrf log utilizing printf */
-                                                                                    
-#define NRF_LOG(...)                    log_rtt_write_string(LOG_TERMINAL_NORMAL, NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)      /*!< nrf log for null-terminated strings */
-#define NRF_LOG_DEBUG(...)              log_rtt_write_string(LOG_TERMINAL_NORMAL, NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)      /*!< nrf log for null-terminated strings. Will only log if DEBUG is set*/
-#define NRF_LOG_ERROR(...)              log_rtt_write_string(LOG_TERMINAL_ERROR, NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)       /*!< nrf log for null-terminated strings.*/
+#define NRF_LOG_PRINTF(...)             log_rtt_printf(LOG_TERMINAL_NORMAL, ##__VA_ARGS__)                                      /*!< Print a log message using printf. */
+#define NRF_LOG_PRINTF_DEBUG(...)       log_rtt_printf(LOG_TERMINAL_NORMAL, ##__VA_ARGS__)                                      /*!< If DEBUG is set, print a log message using printf. */
+#define NRF_LOG_PRINTF_ERROR(...)       log_rtt_printf(LOG_TERMINAL_ERROR, ##__VA_ARGS__)                                       /*!< Print a log message using printf to the error stream. */
 
-#define NRF_LOG_HEX(val)                log_rtt_write_hex(LOG_TERMINAL_NORMAL, val)                                             /*!< nrf log for integers logged as hex. Formats as 0x89ABCDEF (ex)*/
-#define NRF_LOG_HEX_DEBUG(val)          log_rtt_write_hex(LOG_TERMINAL_NORMAL, val)                                             /*!< nrf log for integers logged as hex. Formats as 0x89ABCDEF (ex). Will only log if DEBUG is set*/
-#define NRF_LOG_HEX_ERROR(val)          log_rtt_write_hex(LOG_TERMINAL_ERROR, val)                                              /*!< nrf log for integers logged as hex. Formats as 0x89ABCDEF (ex).*/
+#define NRF_LOG(...)                    log_rtt_write_string(LOG_TERMINAL_NORMAL, NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)      /*!< Print a log message. The input string must be null-terminated. */
+#define NRF_LOG_DEBUG(...)              log_rtt_write_string(LOG_TERMINAL_NORMAL, NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)      /*!< If DEBUG is set, print a log message. The input string must be null-terminated. */
+#define NRF_LOG_ERROR(...)              log_rtt_write_string(LOG_TERMINAL_ERROR, NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)       /*!< Print a log message to the error stream. The input string must be null-terminated. */
 
-#define NRF_LOG_HEX_CHAR(val)           log_rtt_write_hex_char(LOG_TERMINAL_NORMAL, val)                                        /*!< nrf log characters logged as hex. Formats as AA (ex).*/
-#define NRF_LOG_HEX_CHAR_DEBUG(val)     log_rtt_write_hex_char(LOG_TERMINAL_NORMAL, val)                                        /*!< nrf log characters logged as hex. Formats as AA (ex).Will only log if DEBUG is set*/
-#define NRF_LOG_HEX_CHAR_ERROR(val)     log_rtt_write_hex_char(LOG_TERMINAL_ERROR, val)                                         /*!< nrf log characters logged as hex. Formats as AA (ex).*/
+#define NRF_LOG_HEX(val)                log_rtt_write_hex(LOG_TERMINAL_NORMAL, val)                                             /*!< Log an integer as HEX value (example output: 0x89ABCDEF). */
+#define NRF_LOG_HEX_DEBUG(val)          log_rtt_write_hex(LOG_TERMINAL_NORMAL, val)                                             /*!< If DEBUG is set, log an integer as HEX value (example output: 0x89ABCDEF). */
+#define NRF_LOG_HEX_ERROR(val)          log_rtt_write_hex(LOG_TERMINAL_ERROR, val)                                              /*!< Log an integer as HEX value to the error stream (example output: 0x89ABCDEF). */
 
-#define NRF_LOG_HAS_INPUT()             log_rtt_has_input()                                                                     /*!< Check if input buffer has unconsumed characters */
-#define NRF_LOG_READ_INPUT(p_char)      log_rtt_read_input(p_char)                                                              /*!< Consume character from input-buffer */
+#define NRF_LOG_HEX_CHAR(val)           log_rtt_write_hex_char(LOG_TERMINAL_NORMAL, val)                                        /*!< Log a character as HEX value (example output: AA). */
+#define NRF_LOG_HEX_CHAR_DEBUG(val)     log_rtt_write_hex_char(LOG_TERMINAL_NORMAL, val)                                        /*!< If DEBUG is set, log a character as HEX value (example output: AA). */
+#define NRF_LOG_HEX_CHAR_ERROR(val)     log_rtt_write_hex_char(LOG_TERMINAL_ERROR, val)                                         /*!< Log a character as HEX value to the error stream (example output: AA). */
+
+#define NRF_LOG_HAS_INPUT()             log_rtt_has_input()                                                                     /*!< Check if the input buffer has unconsumed characters. */
+#define NRF_LOG_READ_INPUT(p_char)      log_rtt_read_input(p_char)                                                              /*!< Consume a character from the input buffer. */
 
 #if !defined(DEBUG) && !defined(DOXYGEN)
 
@@ -162,156 +196,172 @@ uint32_t log_rtt_read_input(char* p_char);
 
 #endif // !defined(DEBUG) && !defined(DOXYGEN)
 
-#elif NRF_LOG_USES_UART == 1 
+#elif defined(NRF_LOG_USES_UART) && NRF_LOG_USES_UART == 1
 
-/**@brief Function to initialize UART logger
+/**@brief Function for initializing the UART logger.
  *
- * @warning This function is only available when LOG_USES_UART is defined as 1 
+ * This function is available only when NRF_LOG_USES_UART is defined as 1.
  *
- * @warning Do not call this function directly. Use the macro NRF_LOG_INIT
+ * @note Do not call this function directly. Use the macro @ref NRF_LOG_INIT instead.
  *
- * @returns     NRF_SUCCESS     If initialization was successful
- * @returns     NRF_ERROR
+ * @retval     NRF_SUCCESS     If initialization was successful.
+ * @retval     NRF_ERROR       Otherwise.
  */
 uint32_t log_uart_init(void);
 
-/**@brief Function to log to uart using printf
+/**@brief Function for logging a printf string to UART.
  *
- * @details The Segger RTT has its own implementation of printf
- *          that is more efficient than the standard
+ * @details  Printf requires more processor time
+ * than other logging functions. Therefore, applications that require logging
+ * but need it to interfere as little as possible with the execution, should
+ * avoid using printf.
  *
- * @warning This function is only available when LOG_USES_UART is defined as 1
+ * This function is available only when NRF_LOG_USES_UART is defined as 1.
  *
- * @warning This function is non-blocking. If too much data is sent to the UART,
- *          some characters may be skipped
+ * @note This function is non-blocking. If too much data is sent to the UART,
+ *          some characters might be skipped.
  *
- * @warning Do not call this function directly. Use one of the following macros:
- *          NRF_LOG/NRF_LOG_DEBUG/NRF_LOG_ERROR
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG_PRINTF
+ * - @ref NRF_LOG_PRINTF_DEBUG
+ * - @ref NRF_LOG_PRINTF_ERROR
  *
- * @params  format_msg      printf format string
- * @params  ...             variable length arguments    
+ * @param  format_msg      Printf format string.
  */
 void log_uart_printf(const char * format_msg, ...);
 
-/**@brief Function to log single character
+/**@brief Function for logging a single character to UART.
  *
- * @warning This function is only available when LOG_USES_UART is defined as 1
+ * This function is available only when NRF_LOG_USES_UART is defined as 1.
  *
- * @params  c     character
+ * @param  c     Character.
  */
 void log_uart_write_char(const char c);
 
-/**@brief Function to log null-terminated strings
+/**@brief Function for logging null-terminated strings to UART.
  *
- * @defails This function is more efficient than using printf
- *          The null-termination will not be logged
+ * @details This function is more efficient than using printf.
+ *          The null termination will not be logged.
  *
- * @warning This function is only available when LOG_USES_UART is defined as 1
+ * This function is available only when NRF_LOG_USES_UART is defined as 1.
  *
- * @warning Do not call this function directly. Use one of the following macros:
- *          NRF_LOG/NRF_LOG_DEBUG/NRF_LOG_ERROR
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG
+ * - @ref NRF_LOG_DEBUG
+ * - @ref NRF_LOG_ERROR
  *
- * @params  str     Null-terminated string
+ * @param  num_args     Number of arguments.
  */
 void log_uart_write_string_many(int num_args, ...);
 
 
-/**@brief Function to log null-terminated string
+/**@brief Function for logging a null-terminated string to UART.
  *
- * @defails This function is more efficient than using printf
- *          The null-termination will not be logged
+ * @details This function is more efficient than using printf.
+ *          The null termination will not be logged.
  *
- * @warning This function is only available when LOG_USES_UART is defined as 1
+ * This function is available only when NRF_LOG_USES_UART is defined as 1.
  *
- * @warning Do not call this function directly. Use one of the following macros:
- *          NRF_LOG/NRF_LOG_DEBUG/NRF_LOG_ERROR
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG
+ * - @ref NRF_LOG_DEBUG
+ * - @ref NRF_LOG_ERROR
  *
- * @params  str     Null-terminated string
+ * @param  msg     Null-terminated string.
  */
 void log_uart_write_string(const char* msg);
 
 
-/**@brief Function to log integer value as string
+/**@brief Function for logging an integer value as HEX to UART.
  *
- * @details The formatted data sent on the UART will be formatted as 0x89ABCDEF (example)
- * This function is more efficient than printf
+ * @details The output data is formatted as, for example, 0x89ABCDEF.
+ * This function is more efficient than printf.
  *
- * @warning This function is only available when LOG_USES_UART is defined as 1
+ * This function is available only when NRF_LOG_USES_UART is defined as 1.
  *
- * @warning This function is non-blocking. If too much data is sent to the UART,
- *          some characters may be skipped
+ * @note This function is non-blocking. If too much data is sent to the UART,
+ *          some characters might be skipped.
  *
- * @warning Do not call this function directly. Use one of the following macros:
- *          NRF_LOG_HEX/NRF_LOG_DEBUG_HEX/NRF_LOG_ERROR_HEX
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG_HEX
+ * - @ref NRF_LOG_HEX_DEBUG
+ * - @ref NRF_LOG_HEX_ERROR
  *
- * @param   value   Integer value to be printed as hex
+ * @param   value   Integer value to be printed as HEX.
  */
 void log_uart_write_hex(uint32_t value);
 
-/**@brief Function to log single character using hex formatting
+/**@brief Function for logging a single character as HEX to UART.
  *
- * @details The formatted string sent on the UART will be formatted as AA (ex.)
+ * @details The output string is formatted as, for example, AA.
  *
- * @warning This function is only available when LOG_USES_UART is defined as 1
+ * This function is available only when NRF_LOG_USES_UART is defined as 1.
  *
- * @warning This function is non-blocking. If too much data is sent to the UART,
- *          some characters may be skipped
+ * @note This function is non-blocking. If too much data is sent to the UART,
+ *          some characters might be skipped.
  *
- * @warning Do not call this function directly. Use one of the following macros:
- *          NRF_LOG_HEX_CHAR/NRF_LOG_DEBUG_HEX_CHAR/NRF_LOG_ERROR_HEX_CHAR
- */
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG_HEX_CHAR
+ * - @ref NRF_LOG_HEX_CHAR_DEBUG
+ * - @ref NRF_LOG_HEX_CHAR_ERROR
+ *
+ * @param c Character.
+  */
 void log_uart_write_hex_char(uint8_t c);
 
-/**@brief Function to check if there is available data in the input-buffer
+/**@brief Function for checking if data is available in the input buffer.
  *
- * @warning This function is only available when LOG_USES_UART is defined as 1
+ * This function is available only when NRF_LOG_USES_UART is defined as 1.
  *
- * @warning Do not call this function directly. Use NRF_LOG_HAS_INPUT
+ * @note Do not call this function directly. Use @ref NRF_LOG_HAS_INPUT instead.
  *
- * @retval      1 if character(s) available to read
- * @retval      0 if no character(s) available to read
+ * @retval      1 If characters are available to read.
+ * @retval      0 If no characters are available.
  */
 int log_uart_has_input(void);
 
-/**@brief Function to read one character from the input-buffer
+/**@brief Function for reading one character from the input buffer.
  *
- * @param[out]  pointer to put the character to store     
+ * @param[out]   p_char  Pointer where to store the character.
  *
- * @warning This function is only available when LOG_USES_UART is defined as 1
+ * This function is available only when NRF_LOG_USES_UART is defined as 1.
  *
- * @warning Do not call this function directly. Use NRF_LOG_HAS_INPUT
+ * @note Do not call this function directly. Use NRF_LOG_READ_INPUT instead.
  *
- * @retval      NRF_SUCCESS if character was read out
- * @retval      NRF_ERROR_INVALID_DATA if a character could not be read
+ * @retval      NRF_SUCCESS If the character was read out.
+ * @retval      NRF_ERROR_INVALID_DATA If no character could be read.
  */
 uint32_t log_uart_read_input(char* p_char);
 
 
-#define NRF_LOG_INIT()                  log_uart_init()                                                         /*!< Initialize the nrf_log submodule*/
+#define NRF_LOG_INIT()                  log_uart_init()                                                         /*!< Initialize the module. */
 
-#define NRF_LOG_PRINTF(...)             log_uart_printf(__VA_ARGS__)                                            /*!< nrf log utilizing printf*/
-#define NRF_LOG_PRINTF_DEBUG(...)       log_uart_printf(__VA_ARGS__)                                            /*!< nrf log utilzinging printf. Will only log if DEBUG is set*/
-#define NRF_LOG_PRINTF_ERROR(...)       log_uart_printf(__VA_ARGS__)                                            /*!< nrf log utilizing printf */
-                                                                                    
-#define NRF_LOG(...)                    log_uart_write_string_many(NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)     /*!< nrf log for null-terminated strings */
-#define NRF_LOG_DEBUG(...)              log_uart_write_string_many(NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)     /*!< nrf log for null-terminated strings. Will only log if DEBUG is set*/
-#define NRF_LOG_ERROR(...)              log_uart_write_string_many(NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)     /*!< nrf log for null-terminated strings.*/
-                                                                                    
-#define NRF_LOG_HEX(val)                log_uart_write_hex(val)                                                 /*!< nrf log for integers logged as hex. Formats as 0x89ABCDEF (ex)*/
-#define NRF_LOG_HEX_DEBUG(val)          log_uart_write_hex(val)                                                 /*!< nrf log for integers logged as hex. Formats as 0x89ABCDEF (ex). Will only log if DEBUG is set*/
-#define NRF_LOG_HEX_ERROR(val)          log_uart_write_hex(val)                                                 /*!< nrf log for integers logged as hex. Formats as 0x89ABCDEF (ex).*/
+#define NRF_LOG_PRINTF(...)             log_uart_printf(__VA_ARGS__)                                            /*!< Print a log message using printf. */
+#define NRF_LOG_PRINTF_DEBUG(...)       log_uart_printf(__VA_ARGS__)                                            /*!< If DEBUG is set, print a log message using printf. */
+#define NRF_LOG_PRINTF_ERROR(...)       log_uart_printf(__VA_ARGS__)                                            /*!< Print a log message using printf to the error stream. */
 
-#define NRF_LOG_HEX_CHAR(val)           log_uart_write_hex_char(val)                                            /*!< nrf log characters logged as hex. Formats as AA (ex).*/
-#define NRF_LOG_HEX_CHAR_DEBUG(val)     log_uart_write_hex_char(val)                                            /*!< nrf log characters logged as hex. Formats as AA (ex).Will only log if DEBUG is set*/
-#define NRF_LOG_HEX_CHAR_ERROR(val)     log_uart_write_hex_char(val)                                            /*!< nrf log characters logged as hex. Formats as AA (ex).*/
+#define NRF_LOG(...)                    log_uart_write_string_many(NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)     /*!< Print a log message. The input string must be null-terminated. */
+#define NRF_LOG_DEBUG(...)              log_uart_write_string_many(NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)     /*!< If DEBUG is set, print a log message. The input string must be null-terminated. */
+#define NRF_LOG_ERROR(...)              log_uart_write_string_many(NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)     /*!< Print a log message to the error stream. The input string must be null-terminated. */
 
-#define NRF_LOG_HAS_INPUT()             log_uart_has_input()                                                    /*!< Check if input buffer has unconsumed characters */
-#define NRF_LOG_READ_INPUT(p_char)      log_uart_read_input(p_char)                                             /*!< Consume character from input-buffer */
+#define NRF_LOG_HEX(val)                log_uart_write_hex(val)                                                 /*!< Log an integer as HEX value (example output: 0x89ABCDEF). */
+#define NRF_LOG_HEX_DEBUG(val)          log_uart_write_hex(val)                                                 /*!< If DEBUG is set, log an integer as HEX value (example output: 0x89ABCDEF). */
+#define NRF_LOG_HEX_ERROR(val)          log_uart_write_hex(val)                                                 /*!< Log an integer as HEX value to the error stream (example output: 0x89ABCDEF). */
+
+#define NRF_LOG_HEX_CHAR(val)           log_uart_write_hex_char(val)                                            /*!< Log a character as HEX value (example output: AA). */
+#define NRF_LOG_HEX_CHAR_DEBUG(val)     log_uart_write_hex_char(val)                                            /*!< If DEBUG is set, log a character as HEX value (example output: AA). */
+#define NRF_LOG_HEX_CHAR_ERROR(val)     log_uart_write_hex_char(val)                                            /*!< Log a character as HEX value to the error stream (example output: AA). */
+
+#define NRF_LOG_HAS_INPUT()             log_uart_has_input()                                                    /*!< Check if the input buffer has unconsumed characters. */
+#define NRF_LOG_READ_INPUT(p_char)      log_uart_read_input(p_char)                                             /*!< Consume a character from the input buffer. */
 
 #if !defined(DEBUG) && !defined(DOXYGEN)
 
 #undef NRF_LOG_DEBUG
 #define NRF_LOG_DEBUG(...)
+
+#undef NRF_LOG_PRINTF_DEBUG
+#define NRF_LOG_PRINTF_DEBUG(...)
 
 #undef NRF_LOG_STR_DEBUG
 #define NRF_LOG_STR_DEBUG(...)
@@ -324,132 +374,171 @@ uint32_t log_uart_read_input(char* p_char);
 
 #endif // !defined(DEBUG) && !defined(DOXYGEN)
 
-#elif NRF_LOG_USES_RAW_UART
+#elif defined(NRF_LOG_USES_RAW_UART) && NRF_LOG_USES_RAW_UART == 1
 
-/**@brief Function to initialize raw UART logger
+/**@brief Function for initializing the raw UART logger.
  *
- * @warning Do not call this function directly. Use the macro NRF_LOG_INIT
+ * This function is available only when NRF_LOG_USES_RAW_UART is defined as 1.
  *
- * @returns     NRF_SUCCESS     If initialization was successful
- * @returns     NRF_ERROR
+ * @note Do not call this function directly. Use the macro @ref NRF_LOG_INIT instead.
+ *
+ * @retval     NRF_SUCCESS     If initialization was successful.
+ * @retval     NRF_ERROR       Otherwise.
  */
 uint32_t log_raw_uart_init(void);
 
-/**@brief Function to log to raw uart using printf
+/**@brief Function for logging a printf string to raw UART.
  *
- * @details The Segger RTT has its own implementation of printf
- *          that is more efficient than the standard
+ * @details  Printf requires more processor time
+ * than other logging functions. Therefore, applications that require logging
+ * but need it to interfere as little as possible with the execution, should
+ * avoid using printf.
  *
- * @warning This function is only available when LOG_USES_UART is defined as 1
+ * This function is available only when NRF_LOG_USES_RAW_UART is defined as 1.
  *
- * @warning This function is non-blocking. If too much data is sent to the UART,
- *          some characters may be skipped
+ * @note This function is non-blocking. If too much data is sent to the UART,
+ *          some characters might be skipped.
  *
- * @warning Do not call this function directly. Use one of the following macros:
- *          NRF_LOG/NRF_LOG_DEBUG/NRF_LOG_ERROR
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG_PRINTF
+ * - @ref NRF_LOG_PRINTF_DEBUG
+ * - @ref NRF_LOG_PRINTF_ERROR
  *
- * @params  format_msg      printf format string
- * @params  ...             variable length arguments    
+ * @param  format_msg      Printf format string.
  */
 void log_raw_uart_printf(const char * format_msg, ...);
 
-/**@brief Function to log single character
+/**@brief Function for logging a single character to raw UART.
  *
- * @params  c     character
+ * This function is available only when NRF_LOG_USES_RAW_UART is defined as 1.
+ *
+ * @param  c     Character.
  */
 void log_raw_uart_write_char(const char c);
 
-/**@brief Function to log null-terminated strings
+/**@brief Function for logging null-terminated strings to raw UART.
  *
- * @defails This function is more efficient than using printf
- *          The null-termination will not be logged
+ * @details This function is more efficient than using printf.
+ *          The null termination will not be logged.
  *
- * @params  str     Null-terminated string
+ * This function is available only when NRF_LOG_USES_RAW_UART is defined as 1.
+ *
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG
+ * - @ref NRF_LOG_DEBUG
+ * - @ref NRF_LOG_ERROR
+ *
+ * @param  num_args     Number of arguments.
  */
 void log_raw_uart_write_string_many(int num_args, ...);
 
 
-/**@brief Function to log null-terminated string
+/**@brief Function for logging a null-terminated string to raw UART.
  *
- * @defails This function is more efficient than using printf
- *          The null-termination will not be logged
+ * @details This function is more efficient than using printf.
+ *          The null termination will not be logged.
  *
- * @params  str     Null-terminated string
+ * This function is available only when NRF_LOG_USES_RAW_UART is defined as 1.
+ *
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG
+ * - @ref NRF_LOG_DEBUG
+ * - @ref NRF_LOG_ERROR
+ *
+ * @param  str     Null-terminated string.
  */
 void log_raw_uart_write_string(const char * str);
 
-/**@brief Function to log integer value as string
+/**@brief Function for logging an integer value as HEX to raw UART.
  *
- * @details The formatted data sent on the UART will be formatted as 0x89ABCDEF (example)
- * This function is more efficient than printf
+ * @details The output data is formatted as, for example, 0x89ABCDEF.
+ * This function is more efficient than printf.
  *
- * @warning This function is only available when LOG_USES_UART is defined as 1
+ * This function is available only when NRF_LOG_USES_RAW_UART is defined as 1.
  *
- * @warning This function is non-blocking. If too much data is sent to the UART,
- *          some characters may be skipped
+ * @note This function is non-blocking. If too much data is sent to the UART,
+ *          some characters might be skipped.
  *
- * @warning Do not call this function directly. Use one of the following macros:
- *          NRF_LOG_HEX/NRF_LOG_DEBUG_HEX/NRF_LOG_ERROR_HEX
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG_HEX
+ * - @ref NRF_LOG_HEX_DEBUG
+ * - @ref NRF_LOG_HEX_ERROR
  *
- * @param   value   Integer value to be printed as hex
+ * @param   value   Integer value to be printed as HEX.
  */
 void log_raw_uart_write_hex(uint32_t value);
 
-/**@brief Function to log single character using hex formatting
+/**@brief Function for logging a single character as HEX to raw UART.
  *
- * @details The formatted string sent on the UART will be formatted as AA (ex.)
+ * @details The output string is formatted as, for example, AA.
  *
- * @warning This function is only available when LOG_USES_UART is defined as 1
+ * This function is available only when NRF_LOG_USES_RAW_UART is defined as 1.
  *
- * @warning This function is non-blocking. If too much data is sent to the UART,
- *          some characters may be skipped
+ * @note This function is non-blocking. If too much data is sent to the UART,
+ *          some characters might be skipped.
  *
- * @warning Do not call this function directly. Use one of the following macros:
- *          NRF_LOG_HEX_CHAR/NRF_LOG_DEBUG_HEX_CHAR/NRF_LOG_ERROR_HEX_CHAR
- */
+ * @note Do not call this function directly. Use one of the following macros instead:
+ * - @ref NRF_LOG_HEX_CHAR
+ * - @ref NRF_LOG_HEX_CHAR_DEBUG
+ * - @ref NRF_LOG_HEX_CHAR_ERROR
+ *
+ * @param c Character.
+  */
 void log_raw_uart_write_hex_char(uint8_t c);
 
-/**@brief Function to check if there is available data in the input-buffer
+/**@brief Function for checking if data is available in the input buffer.
  *
- * @retval      1 if character(s) available to read
- * @retval      0 if no character(s) available to read
+ * This function is available only when NRF_LOG_USES_RAW_UART is defined as 1.
+ *
+ * @note Do not call this function directly. Use @ref NRF_LOG_HAS_INPUT instead.
+ *
+ * @retval      1 If characters are available to read.
+ * @retval      0 If no characters are available.
  */
 int log_raw_uart_has_input(void);
 
-/**@brief Function to read one character from the input-buffer
+/**@brief Function for reading one character from the input buffer.
  *
- * @param[out]  pointer to put the character to store     
+ * @param[out]   p_char  Pointer where to store the character.
  *
- * @retval      NRF_SUCCESS if character was read out
- * @retval      NRF_ERROR_INVALID_DATA if a character could not be read
+ * This function is available only when NRF_LOG_USES_RAW_UART is defined as 1.
+ *
+ * @note Do not call this function directly. Use NRF_LOG_READ_INPUT instead.
+ *
+ * @retval      NRF_SUCCESS If the character was read out.
+ * @retval      NRF_ERROR_INVALID_DATA If no character could be read.
  */
+
 uint32_t log_raw_uart_read_input(char* p_char);
 
-#define NRF_LOG_INIT()                  log_raw_uart_init()                                                         /*!< Initialize the nrf_log submodule*/
+#define NRF_LOG_INIT()                  log_raw_uart_init()                                                         /*!< nitialize the module. */
 
-#define NRF_LOG_PRINTF(...)             log_raw_uart_printf(__VA_ARGS__)                                            /*!< nrf log utilizing printf*/
-#define NRF_LOG_PRINTF_DEBUG(...)       log_raw_uart_printf(__VA_ARGS__)                                            /*!< nrf log utilzinging printf. Will only log if DEBUG is set*/
-#define NRF_LOG_PRINTF_ERROR(...)       log_raw_uart_printf(__VA_ARGS__)                                            /*!< nrf log utilizing printf */
-                                                                                    
-#define NRF_LOG(...)                    log_raw_uart_write_string_many(NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)     /*!< nrf log for null-terminated strings */
-#define NRF_LOG_DEBUG(...)              log_raw_uart_write_string_many(NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)     /*!< nrf log for null-terminated strings. Will only log if DEBUG is set*/
-#define NRF_LOG_ERROR(...)              log_raw_uart_write_string_many(NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)     /*!< nrf log for null-terminated strings.*/
-                                                                                    
-#define NRF_LOG_HEX(val)                log_raw_uart_write_hex(val)                                                 /*!< nrf log for integers logged as hex. Formats as 0x89ABCDEF (ex)*/
-#define NRF_LOG_HEX_DEBUG(val)          log_raw_uart_write_hex(val)                                                 /*!< nrf log for integers logged as hex. Formats as 0x89ABCDEF (ex). Will only log if DEBUG is set*/
-#define NRF_LOG_HEX_ERROR(val)          log_raw_uart_write_hex(val)                                                 /*!< nrf log for integers logged as hex. Formats as 0x89ABCDEF (ex).*/
+#define NRF_LOG_PRINTF(...)             log_raw_uart_printf(__VA_ARGS__)                                            /*!< Print a log message using printf. */
+#define NRF_LOG_PRINTF_DEBUG(...)       log_raw_uart_printf(__VA_ARGS__)                                            /*!< If DEBUG is set, print a log message using printf. */
+#define NRF_LOG_PRINTF_ERROR(...)       log_raw_uart_printf(__VA_ARGS__)                                            /*!< Print a log message using printf to the error stream. */
 
-#define NRF_LOG_HEX_CHAR(val)           log_raw_uart_write_hex_char(val)                                            /*!< nrf log characters logged as hex. Formats as AB (ex).*/
-#define NRF_LOG_HEX_CHAR_DEBUG(val)     log_raw_uart_write_hex_char(val)                                            /*!< nrf log characters logged as hex. Formats as AB (ex).Will only log if DEBUG is set*/
-#define NRF_LOG_HEX_CHAR_ERROR(val)     log_raw_uart_write_hex_char(val)                                            /*!< nrf log characters logged as hex. Formats as AB (ex).*/
+#define NRF_LOG(...)                    log_raw_uart_write_string_many(NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)     /*!< Print a log message. The input string must be null-terminated. */
+#define NRF_LOG_DEBUG(...)              log_raw_uart_write_string_many(NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)     /*!< If DEBUG is set, print a log message. The input string must be null-terminated. */
+#define NRF_LOG_ERROR(...)              log_raw_uart_write_string_many(NUM_VA_ARGS(__VA_ARGS__), ##__VA_ARGS__)     /*!< Print a log message to the error stream. The input string must be null-terminated. */
 
-#define NRF_LOG_HAS_INPUT()             log_raw_uart_has_input()                                                    /*!< Check if input buffer has unconsumed characters */
-#define NRF_LOG_READ_INPUT(p_char)      log_raw_uart_read_input(p_char)                                             /*!< Consume character from input-buffer */
+#define NRF_LOG_HEX(val)                log_raw_uart_write_hex(val)                                                 /*!< Log an integer as HEX value (example output: 0x89ABCDEF). */
+#define NRF_LOG_HEX_DEBUG(val)          log_raw_uart_write_hex(val)                                                 /*!< If DEBUG is set, log an integer as HEX value (example output: 0x89ABCDEF). */
+#define NRF_LOG_HEX_ERROR(val)          log_raw_uart_write_hex(val)                                                 /*!< Log an integer as HEX value to the error stream (example output: 0x89ABCDEF). */
+
+#define NRF_LOG_HEX_CHAR(val)           log_raw_uart_write_hex_char(val)                                            /*!< Log a character as HEX value (example output: AA). */
+#define NRF_LOG_HEX_CHAR_DEBUG(val)     log_raw_uart_write_hex_char(val)                                            /*!< If DEBUG is set, log a character as HEX value (example output: AA). */
+#define NRF_LOG_HEX_CHAR_ERROR(val)     log_raw_uart_write_hex_char(val)                                            /*!< Log a character as HEX value to the error stream (example output: AA). */
+
+#define NRF_LOG_HAS_INPUT()             log_raw_uart_has_input()                                                    /*!< Check if the input buffer has unconsumed characters. */
+#define NRF_LOG_READ_INPUT(p_char)      log_raw_uart_read_input(p_char)                                             /*!< Consume a character from the input buffer. */
 
 #if !defined(DEBUG) && !defined(DOXYGEN)
 
 #undef NRF_LOG_DEBUG
 #define NRF_LOG_DEBUG(...)
+
+#undef NRF_LOG_PRINTF_DEBUG
+#define NRF_LOG_PRINTF_DEBUG(...)
 
 #undef NRF_LOG_STR_DEBUG
 #define NRF_LOG_STR_DEBUG(...)
@@ -469,18 +558,12 @@ uint32_t log_raw_uart_read_input(char* p_char);
 
 // Empty definitions
 
-__INLINE int dummy_func(void* ignore)
-{
-    UNUSED_PARAMETER(ignore);
-    return NRF_SUCCESS;
-}
-
-#define NRF_LOG_INIT()                 dummy_func(0)
+#define NRF_LOG_INIT()                 NRF_SUCCESS
 #define NRF_LOG(...)
 #define NRF_LOG_DEBUG(...)
 #define NRF_LOG_ERROR(...)
 
-#define NRF_LOG_PRINTF(...)      
+#define NRF_LOG_PRINTF(...)
 #define NRF_LOG_PRINTF_DEBUG(...)
 #define NRF_LOG_PRINTF_ERROR(...)
 
@@ -493,26 +576,124 @@ __INLINE int dummy_func(void* ignore)
 #define NRF_LOG_HEX_CHAR_ERROR(val)
 
 #define NRF_LOG_HAS_INPUT()              0
-#define NRF_LOG_READ_INPUT(ignore)       dummy_func(ignore) 
+#define NRF_LOG_READ_INPUT(ignore)       NRF_SUCCESS
 
 #endif
 
-/**@brief Function to write hex-values
+/**@brief Function for writing HEX values.
  *
- * @warning This function is by no means tread-safe. It is written for convenience
- *          If you log from different application-contexts you may get different results  
+ * @note This function not thread-safe. It is written for convenience.
+ *          If you log from different application contexts, you might get different results.
  *
- * @returns NULL by default
+ * @retval NULL By default.
  */
 const char* log_hex(uint32_t value);
 
-/**@brief Function to write hex-char
+/**@brief Function for writing HEX characters.
  *
- * @warning This function is by no means tread-safe. It is written for convenience
- *          If you log from different application-contexts you may get different results  
+ * @note This function not thread-safe. It is written for convenience.
+ *          If you log from different application contexts, you might get different results.
  *
- * @returns NULL by default
+ * @retval NULL By default.
  */
 const char* log_hex_char(const char value);
 
+
+
+
+#else // DOXYGEN
+
+/** @defgroup nrf_log UART/RTT logging
+ * @{
+ * @ingroup app_common
+ *
+ * @brief Library to output logging information over SEGGER's Real Time Transfer
+ *       (RTT), UART, or raw UART.
+ *
+ * This library provides macros that call the respective functions depending on
+ * which protocol is used. Define LOG_USES_RTT=1 to enable logging over RTT,
+ * NRF_LOG_USES_UART=1 to enable logging over UART, or NRF_LOG_USES_RAW_UART=1
+ * to enable logging over raw UART. One of these defines must be set for any of
+ * the macros to have effect. If you choose to not output information, all
+ * logging macros can be left in the code without any cost; they will just be
+ * ignored.
+ */
+
+
+
+/**@brief Macro for initializing the logger.
+ *
+ * @retval     NRF_SUCCESS     If initialization was successful.
+ * @retval     NRF_ERROR       Otherwise.
+ */
+uint32_t NRF_LOG_INIT(void);
+
+/**@brief Macro for logging null-terminated strings.
+ *
+ * @details This function is more efficient than using printf.
+ *          The null termination will not be logged.
+ *
+ * @param  msg  Null-terminated string.
+ */
+void NRF_LOG(const char* msg);
+
+/**@brief Macro for logging a printf string.
+ *
+ * @details  Printf requires more processor time
+ * than other logging functions. Therefore, applications that require logging
+ * but need it to interfere as little as possible with the execution, should
+ * avoid using printf.
+ *
+ * @note When NRF_LOG_USES_UART is set to 1, this macro is non-blocking.
+ *       If too much data is sent, some characters might be skipped.
+ *
+ * @param  format_msg      Printf format string.
+ * @param  ...             Additional arguments replacing format specifiers in format_msg.
+ */
+void NRF_LOG_PRINTF(const char * format_msg, ...);
+
+/**@brief Macro for logging an integer value as HEX.
+ *
+ * @details The output data is formatted as, for example, 0x89ABCDEF.
+ * This function is more efficient than printf.
+ *
+ * @note When NRF_LOG_USES_UART is set to 1, this macro is non-blocking.
+ *       If too much data is sent, some characters might be skipped.
+ *
+ * @param   value   Integer value to be printed as HEX.
+ */
+void NRF_LOG_HEX(uint32_t value);
+
+/**@brief Macro for logging a single character as HEX.
+ *
+ * @details The output string is formatted as, for example, AA.
+ *
+ * @note When NRF_LOG_USES_UART is set to 1, this macro is non-blocking.
+ *       If too much data is sent, some characters might be skipped.
+ *
+ * @param c Character.
+  */
+void NRF_LOG_HEX_CHAR(uint8_t c);
+
+/**@brief Macro for checking if data is available in the input buffer.
+ *
+ * @note When NRF_LOG_USES_UART is set to 1, this macro is non-blocking.
+ *       If too much data is sent, some characters might be skipped.
+ *
+ * @retval      1 If characters are available to read.
+ * @retval      0 If no characters are available.
+ */
+int NRF_LOG_HAS_INPUT(void);
+
+/**@brief Macro for reading one character from the input buffer.
+ *
+ * @param[out]   p_char  Pointer where to store the character.
+ *
+ * @retval      NRF_SUCCESS If the character was read out.
+ * @retval      NRF_ERROR_INVALID_DATA If no character could be read.
+ */
+uint32_t NRF_LOG_READ_INPUT(char* p_char);
+
+/** @} */
+#endif // DOXYGEN
 #endif // NRF_LOG_H_

@@ -27,6 +27,7 @@
 #include "softdevice_handler.h"
 #include "ser_hal_transport.h"
 #include "ser_conn_handlers.h"
+#include "boards.h"
 
 #include "ser_phy_debug_comm.h"
 
@@ -47,7 +48,8 @@ int main(void)
     /* Initialize SoftDevice.
      * SoftDevice Event IRQ is not scheduled but immediately copies BLE events to the application
      * scheduler queue */
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
 
     
     /* Subscribe for BLE events. */

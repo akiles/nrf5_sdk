@@ -25,10 +25,10 @@ typedef struct
     uint8_t  channel_number;        ///< Assigned channel number.
     uint8_t  channel_type;          ///< Channel type (see Assign Channel Parameters in ant_parameters.h: @ref ant_parameters).
     uint8_t  ext_assign;            ///< Extended assign (see Ext. Assign Channel Parameters in ant_parameters.h: @ref ant_parameters).
-    uint8_t  rf_freq;               ///< Radio frequency offset from 2400 MHz (for example, 2466 MHz, ucFreq = 66).
+    uint8_t  rf_freq;               ///< Radio frequency offset from 2400 MHz (for example, 2466 MHz, rf_freq = 66).
     uint8_t  transmission_type;     ///< Transmission type.
     uint8_t  device_type;           ///< Device type.
-    uint8_t  device_number;         ///< Device number.
+    uint16_t device_number;         ///< Device number.
     uint16_t channel_period;        ///< The period in 32 kHz counts.
     uint8_t  network_number;        ///< Network number denoting the network key.
     

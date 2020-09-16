@@ -32,7 +32,7 @@
 #define DEBUG_EVT_SPI_MASTER_RAW_XFER_RESTARTED(data)
 
 #else
-#include "stdint.h"
+#include <stdint.h>
 
 //Low level hardware events
 typedef enum

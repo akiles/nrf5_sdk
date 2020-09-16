@@ -14,7 +14,7 @@
 
 #include <stdint.h>
 
-/**@brief Handles @ref sd_ble_tx_buffer_count_get command and prepares response.
+/**@brief Handles @ref sd_ble_tx_packet_count_get command and prepares response.
  *
  * @param[in]     p_rx_buf            Pointer to input buffer.
  * @param[in]     rx_buf_len          Size of p_rx_buf.
@@ -27,7 +27,7 @@
  * @retval NRF_ERROR_INVALID_LENGTH   Handler failure. Incorrect buffer length.
  * @retval NRF_ERROR_INVALID_PARAM    Handler failure. Invalid operation type.
  */
-uint32_t conn_mw_ble_tx_buffer_count_get(uint8_t const * const p_rx_buf,
+uint32_t conn_mw_ble_tx_packet_count_get(uint8_t const * const p_rx_buf,
                                          uint32_t rx_buf_len,
                                          uint8_t * const p_tx_buf,
                                          uint32_t * const p_tx_buf_len);

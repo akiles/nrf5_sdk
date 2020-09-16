@@ -157,7 +157,7 @@ void ant_request_controller_sens_evt_handler(ant_request_controller_t * p_contro
     ASSERT(p_controller != NULL);
     ASSERT(p_ant_event != NULL);
 
-    ANT_MESSAGE                 * p_message         = (ANT_MESSAGE *)p_ant_event->evt_buffer;
+    ANT_MESSAGE                 * p_message         = (ANT_MESSAGE *)p_ant_event->msg.evt_buffer;
     ant_common_message_layout_t * p_message_payload =
         (ant_common_message_layout_t *)p_message->ANT_MESSAGE_aucPayload;
 
@@ -171,13 +171,15 @@ void ant_request_controller_sens_evt_handler(ant_request_controller_t * p_contro
             }
             break;
 
-        case EVENT_TX:
         case EVENT_TRANSFER_TX_COMPLETED:
 
             if (p_controller->state == ANT_REQUEST_CONTROLLER_ACK_UNTIL_SUCCESS_REQUESTED)
             {
                 p_controller->state = ANT_REQUEST_CONTROLLER_IDLE;
             }
+            /* fall through */
+
+        case EVENT_TX:
 
             if (p_controller->state == ANT_REQUEST_CONTROLLER_BROADCAST_REQUESTED
                 || p_controller->state == ANT_REQUEST_CONTROLLER_ACK_REQUESTED)

@@ -1155,5 +1155,166 @@ uint32_t ble_gap_rssi_get_rsp_dec(uint8_t const * const p_buf,
                                   int8_t * const        p_rssi,
                                   uint32_t      * const p_result_code);
 
+/**@brief Encodes @ref sd_ble_gap_keypress_notify command request.
+ *
+ * @sa @ref nrf51_keypress_notify_encoding for packet format,
+ *     @ref ble_gap_keypress_notify_rsp_dec for command response decoder.
+ *
+ * @param[in]      conn_handle    Connection handle.
+ * @param[in]      kp_not         See @ref sd_ble_gap_keypress_notify
+ * @param[in]      p_buf          Pointer to buffer where encoded data command will be returned.
+ * @param[in, out] p_buf_len      \c in: size of \p p_buf buffer.
+ *                                \c out: Length of encoded command packet.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
+ */
+uint32_t ble_gap_keypress_notify_req_enc(uint16_t                           conn_handle,
+                                          uint8_t                           kp_not,
+                                          uint8_t * const                   p_buf,
+                                          uint32_t * const                  p_buf_len);
+
+/**@brief Decodes response to @ref sd_ble_gap_keypress_notify command.
+ *
+ * @sa @ref nrf51_keypress_notify_encoding for packet format,
+ *     @ref ble_gap_keypress_notify_req_enc for command request encoder.
+ *
+ * @param[in]  p_buf           Pointer to beginning of command response packet.
+ * @param[in]  packet_len      Length (in bytes) of response packet.
+ * @param[out] p_result_code   Command response result code.
+ *
+ * @retval NRF_SUCCESS              Decoding success.
+ * @retval NRF_ERROR_NULL           Decoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_DATA_SIZE      Decoding failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_DATA   Decoding failure. Decoded operation code does not match expected
+ *                                  operation code.
+ */
+uint32_t ble_gap_keypress_notify_rsp_dec(uint8_t const * const              p_buf,
+                                        uint32_t                           packet_len,
+                                        uint32_t * const                   p_result_code);
+
+/**@brief Encodes @ref sd_ble_gap_lesc_dhkey_reply command request.
+ *
+ * @sa @ref nrf51_lesc_dhkey_reply_encoding for packet format,
+ *     @ref ble_gap_lesc_dhkey_reply_rsp_dec for command response decoder.
+ *
+ * @param[in]      conn_handle    Connection handle.
+ * @param[in]      p_dhkey        See @ref sd_ble_gap_lesc_dhkey_reply
+ * @param[in]      p_buf          Pointer to buffer where encoded data command will be returned.
+ * @param[in, out] p_buf_len      \c in: size of \p p_buf buffer.
+ *                                \c out: Length of encoded command packet.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
+ */
+uint32_t ble_gap_lesc_dhkey_reply_req_enc(uint16_t             conn_handle,
+                                          ble_gap_lesc_dhkey_t const *p_dhkey,
+                                          uint8_t * const      p_buf,
+                                          uint32_t * const     p_buf_len);
+
+/**@brief Decodes response to @ref sd_ble_gap_lesc_dhkey_reply command.
+ *
+ * @sa @ref nrf51_lesc_dhkey_reply_encoding for packet format,
+ *     @ref ble_gap_lesc_dhkey_reply_req_enc for command request encoder.
+ *
+ * @param[in]  p_buf           Pointer to beginning of command response packet.
+ * @param[in]  packet_len      Length (in bytes) of response packet.
+ * @param[out] p_result_code   Command response result code.
+ *
+ * @retval NRF_SUCCESS              Decoding success.
+ * @retval NRF_ERROR_NULL           Decoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_DATA_SIZE      Decoding failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_DATA   Decoding failure. Decoded operation code does not match expected
+ *                                  operation code.
+ */
+uint32_t ble_gap_lesc_dhkey_reply_rsp_dec(uint8_t const * const              p_buf,
+                                        uint32_t                           packet_len,
+                                        uint32_t * const                   p_result_code);
+
+/**@brief Encodes @ref sd_ble_gap_lesc_oob_data_set command request.
+ *
+ * @sa @ref nrf51_lesc_oob_data_set_encoding for packet format,
+ *     @ref ble_gap_lesc_oob_data_set_rsp_dec for command response decoder.
+ *
+ * @param[in]      conn_handle    Connection handle.
+ * @param[in]      p_oobd_own     See @ref sd_ble_gap_lesc_oob_data_set
+ * @param[in]      p_oobd_peer    See @ref sd_ble_gap_lesc_oob_data_set
+ * @param[in]      p_buf          Pointer to buffer where encoded data command will be returned.
+ * @param[in, out] p_buf_len      \c in: size of \p p_buf buffer.
+ *                                \c out: Length of encoded command packet.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
+ */
+uint32_t ble_gap_lesc_oob_data_set_req_enc(uint16_t             conn_handle,
+                                           ble_gap_lesc_oob_data_t const *p_oobd_own,
+                                           ble_gap_lesc_oob_data_t const *p_oobd_peer,
+                                           uint8_t * const      p_buf,
+                                           uint32_t * const     p_buf_len);
+
+/**@brief Decodes response to @ref sd_ble_gap_lesc_oob_data_set command.
+ *
+ * @sa @ref nrf51_lesc_oob_data_set_encoding for packet format,
+ *     @ref ble_gap_lesc_oob_data_set_req_enc for command request encoder.
+ *
+ * @param[in]  p_buf           Pointer to beginning of command response packet.
+ * @param[in]  packet_len      Length (in bytes) of response packet.
+ * @param[out] p_result_code   Command response result code.
+ *
+ * @retval NRF_SUCCESS              Decoding success.
+ * @retval NRF_ERROR_NULL           Decoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_DATA_SIZE      Decoding failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_DATA   Decoding failure. Decoded operation code does not match expected
+ *                                  operation code.
+ */
+uint32_t ble_gap_lesc_oob_data_set_rsp_dec(uint8_t const * const              p_buf,
+                                           uint32_t                           packet_len,
+                                           uint32_t * const                   p_result_code);
+
+/**@brief Encodes @ref sd_ble_gap_lesc_oob_data_get command request.
+ *
+ * @sa @ref nrf51_lesc_oob_data_get_encoding for packet format,
+ *     @ref ble_gap_lesc_oob_data_get_rsp_dec for command response decoder.
+ *
+ * @param[in]      conn_handle    Connection handle.
+ * @param[in]      p_pk_own       See @ref sd_ble_gap_lesc_oob_data_get
+ * @param[in]      p_oobd_own     See @ref sd_ble_gap_lesc_oob_data_get
+ * @param[in]      p_buf          Pointer to buffer where encoded data command will be returned.
+ * @param[in, out] p_buf_len      \c in: size of \p p_buf buffer.
+ *                                \c out: Length of encoded command packet.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
+ */
+uint32_t ble_gap_lesc_oob_data_get_req_enc(uint16_t                      conn_handle,
+                                           ble_gap_lesc_p256_pk_t const *p_pk_own,
+                                           ble_gap_lesc_oob_data_t      *p_oobd_own,
+                                           uint8_t * const               p_buf,
+                                           uint32_t * const              p_buf_len);
+
+/**@brief Decodes response to @ref sd_ble_gap_lesc_oob_data_get command.
+ *
+ * @sa @ref nrf51_lesc_oob_data_get_encoding for packet format,
+ *     @ref ble_gap_lesc_oob_data_get_req_enc for command request encoder.
+ *
+ * @param[in]  p_buf           Pointer to beginning of command response packet.
+ * @param[in]  packet_len      Length (in bytes) of response packet.
+ * @param[out] pp_oobd_own     Pointer to pointer to location where OOB data is decoded.
+ * @param[out] p_result_code   Command response result code.
+ *
+ * @retval NRF_SUCCESS              Decoding success.
+ * @retval NRF_ERROR_NULL           Decoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_DATA_SIZE      Decoding failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_DATA   Decoding failure. Decoded operation code does not match expected
+ *                                  operation code.
+ */
+uint32_t ble_gap_lesc_oob_data_get_rsp_dec(uint8_t const * const       p_buf,
+                                           uint32_t                    packet_len,
+                                           ble_gap_lesc_oob_data_t  * *pp_oobd_own,
+                                           uint32_t * const            p_result_code);
 /** @} */
 #endif

@@ -13,6 +13,12 @@ All rights reserved.
  * to receive a command to restart into bootloader.
  * Build configurations can be used to create two slightly different images,
  * identified by the transmitted payload and the LED that flashes on transmissions.
+ *
+ * Before compiling this example for NRF52, complete the following steps:
+ * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
+ * - Extract the downloaded zip file and copy the S212 SoftDevice headers to <tt>\<InstallFolder\>/components/softdevice/s212/headers</tt>.
+ * If you are using Keil packs, copy the files into a @c headers folder in your example folder.
+ * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
  */
 
 #include <stdbool.h>
@@ -29,6 +35,8 @@ All rights reserved.
 #include "ant_boot_settings_api.h"
 #include <string.h>
 #include "ant_stack_config.h"
+#include "app_util_platform.h"
+#include "boards.h"
 
 
 // Channel configuration.
@@ -57,15 +65,17 @@ All rights reserved.
 #define COMMAND_RESTART_BOOTLOADER      0x01u
 
 static const uint8_t m_version_string[] = VERSION_STRING; // Version string
-
+nrf_nvic_state_t     nrf_nvic_state;
 
 /**@brief Function for handling an error.
  *
- * @param[in] error_code  Error code supplied to the handler.
- * @param[in] line_num    Line number where the error occurred.
- * @param[in] p_file_name Pointer to the file name.
+ * @param[in] id    Fault identifier. See @ref NRF_FAULT_IDS.
+ * @param[in] pc    The program counter of the instruction that triggered the fault, or 0 if
+ *                  unavailable.
+ * @param[in] info  Optional additional information regarding the fault. Refer to each fault
+ *                  identifier for details.
  */
-void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
+void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
     for (;;)
     {
@@ -193,21 +203,16 @@ void SD_EVT_IRQHandler(void)
    }
 }
 
-
 /**@brief Function for handling SoftDevice asserts.
  *
- * @param[in] pc          Value of the program counter.
- * @param[in] line_num    Line number where the assert occurred.
- * @param[in] p_file_name Pointer to the file name.
  */
-void softdevice_assert_callback(uint32_t pc, uint16_t line_num, const uint8_t * p_file_name)
+void softdevice_assert_callback(uint32_t id, uint32_t pc, uint32_t info)
 {
     for (;;)
     {
         // No implementation needed.
     }
 }
-
 
 /**@brief Function for handling HardFault.
  */
@@ -229,11 +234,16 @@ int main(void)
 
     // Enable SoftDevice.
     uint32_t err_code;
-    err_code = sd_softdevice_enable(NRF_CLOCK_LFCLKSRC_XTAL_50_PPM, softdevice_assert_callback);
+
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+
+    err_code = sd_softdevice_enable(&clock_lf_cfg, 
+                                    softdevice_assert_callback,
+                                    ANT_LICENSE_KEY);
     APP_ERROR_CHECK(err_code);
 
     // Set application IRQ to lowest priority.
-    err_code = sd_nvic_SetPriority(SD_EVT_IRQn, NRF_APP_PRIORITY_LOW);
+    err_code = sd_nvic_SetPriority(SD_EVT_IRQn, APP_IRQ_PRIORITY_LOW);
     APP_ERROR_CHECK(err_code);
 
     // Enable application IRQ (triggered from protocol).

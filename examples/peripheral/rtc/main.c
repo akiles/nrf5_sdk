@@ -74,10 +74,10 @@ static void leds_config(void)
  */
 static void lfclk_config(void)
 {
-    ret_code_t err_code = nrf_drv_clock_init(NULL);
+    ret_code_t err_code = nrf_drv_clock_init();
     APP_ERROR_CHECK(err_code);
 
-    nrf_drv_clock_lfclk_request();
+    nrf_drv_clock_lfclk_request(NULL);
 }
 
 /** @brief Function initialization and configuration of RTC driver instance.

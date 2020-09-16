@@ -32,8 +32,10 @@ STATIC_ASSERT(ANT_BPWR_ACC_TORQUE_DISP_PRECISION == 10);      ///< Display forma
 
 void ant_bpwr_page_torque_log(ant_bpwr_page_torque_data_t const * p_page_data)
 {
+#ifdef ENABLE_DEBUG_LOG_SUPPORT
     uint16_t period     = ANT_BPWR_TORQUE_PERIOD_RESCALE(p_page_data->period);
     uint32_t acc_torque = ANT_BPWR_ACC_TORQUE_RESCALE(p_page_data->accumulated_torque);
+#endif // ENABLE_DEBUG_LOG_SUPPORT
 
     app_trace_log("event count:                      %u\n\r", p_page_data->update_event_count);
     app_trace_log("tick:                             %u\n\r", p_page_data->tick);

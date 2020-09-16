@@ -7157,7 +7157,6 @@
         <register>
           <dim>8</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-7</dimIndex>
           <name>DAB[%s]</name>
           <description>Device address base segment.</description>
           <addressOffset>0x600</addressOffset>
@@ -7165,7 +7164,6 @@
         <register>
           <dim>8</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-7</dimIndex>
           <name>DAP[%s]</name>
           <description>Device address prefix.</description>
           <addressOffset>0x620</addressOffset>
@@ -10459,7 +10457,6 @@
         <register>
           <dim>4</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-3</dimIndex>
           <name>TASKS_OUT[%s]</name>
           <description>Tasks asssociated with GPIOTE channels.</description>
           <addressOffset>0x000</addressOffset>
@@ -10469,7 +10466,6 @@
         <register>
           <dim>4</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-3</dimIndex>
           <name>EVENTS_IN[%s]</name>
           <description>Tasks asssociated with GPIOTE channels.</description>
           <addressOffset>0x100</addressOffset>
@@ -10758,7 +10754,6 @@
         <register>
           <dim>4</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-3</dimIndex>
           <name>CONFIG[%s]</name>
           <description>Channel configuration registers.</description>
           <addressOffset>0x510</addressOffset>
@@ -11284,7 +11279,6 @@
         <register>
           <dim>4</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-3</dimIndex>
           <name>TASKS_CAPTURE[%s]</name>
           <description>Capture Timer value to CC[n] registers.</description>
           <addressOffset>0x040</addressOffset>
@@ -11294,7 +11288,6 @@
         <register>
           <dim>4</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-3</dimIndex>
           <name>EVENTS_COMPARE[%s]</name>
           <description>Compare event on CC[n] match.</description>
           <addressOffset>0x140</addressOffset>
@@ -11743,7 +11736,6 @@
         <register>
           <dim>4</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-3</dimIndex>
           <name>CC[%s]</name>
           <description>Capture/compare registers.</description>
           <addressOffset>0x540</addressOffset>
@@ -11865,7 +11857,6 @@
         <register>
           <dim>4</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-3</dimIndex>
           <name>EVENTS_COMPARE[%s]</name>
           <description>Compare event on CC[n] match.</description>
           <addressOffset>0x140</addressOffset>
@@ -12664,7 +12655,6 @@
         <register>
           <dim>4</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-3</dimIndex>
           <name>CC[%s]</name>
           <description>Capture/compare registers.</description>
           <addressOffset>0x540</addressOffset>
@@ -13532,7 +13522,7 @@
         </register>
         <register>
           <name>SCRATCHPTR</name>
-          <description>Pointer to a "scratch" data area used for temporary storage during resolution. A minimum of 3 bytes must be reserved.</description>
+          <description>Pointer to a scratch data area used for temporary storage during resolution. A minimum of 3 bytes must be reserved.</description>
           <addressOffset>0x514</addressOffset>
         </register>
         
@@ -13911,7 +13901,7 @@
         </register>
         <register>
           <name>SCRATCHPTR</name>
-          <description>Pointer to a "scratch" data area used for temporary storage during resolution. A minimum of 43 bytes must be reserved.</description>
+          <description>Pointer to a scratch data area used for temporary storage during resolution. A minimum of 43 bytes must be reserved.</description>
           <addressOffset>0x514</addressOffset>
         </register>
         
@@ -14414,7 +14404,6 @@
         <register>
           <dim>8</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-7</dimIndex>
           <name>RR[%s]</name>
           <description>Reload requests registers.</description>
           <addressOffset>0x600</addressOffset>
@@ -15882,7 +15871,6 @@
         <cluster>
           <dim>4</dim>
           <dimIncrement>0x08</dimIncrement>
-          <dimIndex>0-3</dimIndex>
           <name>TASKS_CHG[%s]</name>
           <description>Channel group tasks.</description>
           <headerStructName>PPI_TASKS_CHG</headerStructName>
@@ -17858,7 +17846,6 @@
         <cluster>
           <dim>16</dim>
           <dimIncrement>0x08</dimIncrement>
-          <dimIndex>0-15</dimIndex>
           <name>CH[%s]</name>
           <description>PPI Channel.</description>
           <headerStructName>PPI_CH</headerStructName>
@@ -17878,7 +17865,6 @@
         <register>
           <dim>4</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-3</dimIndex>
           <name>CHG[%s]</name>
           <description>Channel group configuration.</description>
           <addressOffset>0x800</addressOffset>
@@ -18436,7 +18422,6 @@
         <register>
           <dim>4</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-3</dimIndex>
           <name>SIZERAMBLOCK[%s]</name>
           <description>Deprecated array of size of RAM block in bytes. This name is kept for backward compatinility purposes. Use SIZERAMBLOCKS instead.</description>
           <addressOffset>0x038</addressOffset>
@@ -18464,7 +18449,6 @@
         <register>
           <dim>2</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-1</dimIndex>
           <name>DEVICEID[%s]</name>
           <description>Device identifier.</description>
           <addressOffset>0x060</addressOffset>
@@ -18473,7 +18457,6 @@
         <register>
           <dim>4</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-3</dimIndex>
           <name>ER[%s]</name>
           <description>Encryption root.</description>
           <addressOffset>0x080</addressOffset>
@@ -18482,7 +18465,6 @@
         <register>
           <dim>4</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-3</dimIndex>
           <name>IR[%s]</name>
           <description>Identity root.</description>
           <addressOffset>0x090</addressOffset>
@@ -18516,7 +18498,6 @@
         <register>
           <dim>2</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-1</dimIndex>
           <name>DEVICEADDR[%s]</name>
           <description>Device address.</description>
           <addressOffset>0x0A4</addressOffset>
@@ -18567,7 +18548,6 @@
         <register>
           <dim>5</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-4</dimIndex>
           <name>NRF_1MBIT[%s]</name>
           <description>Override values for the OVERRIDEn registers in RADIO for NRF_1Mbit mode.</description>
           <addressOffset>0x0B0</addressOffset>
@@ -18575,7 +18555,6 @@
         <register>
           <dim>5</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-4</dimIndex>
           <name>BLE_1MBIT[%s]</name>
           <description>Override values for the OVERRIDEn registers in RADIO for BLE_1Mbit mode.</description>
           <addressOffset>0x0EC</addressOffset>
@@ -18697,7 +18676,6 @@
         <register>
           <dim>15</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-14</dimIndex>
           <name>NRFFW[%s]</name>
           <description>Reserved for Nordic firmware design.</description>
           <addressOffset>0x014</addressOffset>
@@ -18706,7 +18684,6 @@
         <register>
           <dim>12</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-11</dimIndex>
           <name>NRFHW[%s]</name>
           <description>Reserved for Nordic hardware design.</description>
           <addressOffset>0x050</addressOffset>
@@ -18714,7 +18691,6 @@
         <register>
           <dim>32</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-31</dimIndex>
           <name>CUSTOMER[%s]</name>
           <description>Reserved for customer.</description>
           <addressOffset>0x080</addressOffset>
@@ -23756,7 +23732,6 @@
         <register>
           <dim>32</dim>
           <dimIncrement>0x04</dimIncrement>
-          <dimIndex>0-31</dimIndex>
           <name>PIN_CNF[%s]</name>
           <description>Configuration of GPIO pins.</description>
           <addressOffset>0x700</addressOffset>

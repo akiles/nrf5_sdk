@@ -103,6 +103,19 @@ uint32_t nrf_drv_ppi_channel_free(nrf_ppi_channel_t channel);
  */
 uint32_t nrf_drv_ppi_channel_assign(nrf_ppi_channel_t channel, uint32_t eep, uint32_t tep);
 
+/**@brief Function for assigning or clearing fork endpoint to the PPI channel.
+ *
+ * @param[in]  channel                 PPI channel to be assigned endpoints.
+ *
+ * @param[in]  fork_tep                Fork task endpoint address or 0 to clear.
+ *
+ * @retval     NRF_SUCCESS             If the channel was successfully assigned.
+ * @retval     NRF_ERROR_INVALID_STATE If the channel is not allocated for the user.
+ * @retval     NRF_ERROR_INVALID_PARAM If the channel is not user-configurable.
+ * @retval     NRF_ERROR_NOT_SUPPORTED If function is not supported.
+ */
+uint32_t nrf_drv_ppi_channel_fork_assign(nrf_ppi_channel_t channel, uint32_t fork_tep);
+
 /**@brief Function for enabling a PPI channel.
  *
  * @param[in]  channel                 PPI channel to be enabled.

@@ -45,7 +45,7 @@
 // uint32_t m_error_line_num;
 // const uint8_t *m_p_error_file_name;
 
-void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
+void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
 	// disable INTs
     CRITICAL_REGION_ENTER();
@@ -63,7 +63,7 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
     // m_error_line_num = line_num;
 
     /* Do not reset when warning. */
-    if(SER_WARNING_CODE != error_code)
+    if(SER_WARNING_CODE != id)
     {
         /* This call can be used for debug purposes during application development.
         * @note CAUTION: Activating code below will write the stack to flash on an error.

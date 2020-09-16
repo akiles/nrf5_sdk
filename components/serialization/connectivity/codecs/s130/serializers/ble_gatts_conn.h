@@ -509,6 +509,83 @@ uint32_t ble_gatts_service_changed_rsp_enc(uint32_t         return_code,
                                            uint8_t * const  p_buf,
                                            uint32_t * const p_buf_len);
 
+/**@brief Decodes @ref ble_gatts_attr_get_req_dec command request.
+ *
+ * @sa @ref ble_gatts_attr_get_rsp_enc for response encoding.
+ *
+ * @param[in] p_buf                 Pointer to beginning of command request packet.
+ * @param[in] packet_len            Length (in bytes) of response packet.
+ * @param[out] p_handle             Pointer to handle.
+ * @param[out] pp_uuid              Pointer to pointer to location for decoded uuid structure.
+ * @param[out] pp_md                Pointer to pointer to location for md structure.
+ *
+ * @retval NRF_SUCCESS                Decoding success.
+ * @retval NRF_ERROR_NULL             Decoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Decoding failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Decoding failure. Invalid operation type.
+ */
+uint32_t ble_gatts_attr_get_req_dec(uint8_t   const * const p_buf,
+                                    uint32_t                packet_len,
+                                    uint16_t              * p_handle,
+                                    ble_uuid_t          * * pp_uuid,
+                                    ble_gatts_attr_md_t * * pp_md);
+
+/**@brief Encodes @ref ble_gatts_attr_get_rsp_enc command response.
+ *
+ * @sa @ref ble_gatts_attr_get_req_dec for request decoding.
+ *
+ * @param[in] return_code         Return code indicating if command was successful or not.
+ * @param[out] p_buf              Pointer to buffer where encoded data command response will be
+ *                                returned.
+ * @param[in,out] p_buf_len       \c in: size of \p p_buf buffer.
+ *                                \c out: Length of encoded command response packet.
+ * @param[in] p_md                Pointer to structure to be encoded.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
+ */
+uint32_t ble_gatts_attr_get_rsp_enc(uint32_t               return_code,
+                                    uint8_t * const        p_buf,
+                                    uint32_t * const       p_buf_len,
+                                    ble_gatts_attr_md_t  * p_md);
+
+/**@brief Decodes @ref ble_gatts_initial_user_handle_get_req_dec command request.
+ *
+ * @sa @ref ble_gatts_initial_user_handle_get_rsp_enc for response encoding.
+ *
+ * @param[in]  p_buf                 Pointer to beginning of command request packet.
+ * @param[in]  packet_len            Length (in bytes) of response packet.
+ * @param[out] pp_handle             Pointer to pointer to handle.
+ *
+ * @retval NRF_SUCCESS                Decoding success.
+ * @retval NRF_ERROR_NULL             Decoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Decoding failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Decoding failure. Invalid operation type.
+ */
+uint32_t ble_gatts_initial_user_handle_get_req_dec(uint8_t   const * const p_buf,
+                                                   uint32_t                packet_len,
+                                                   uint16_t            * * pp_handle);
+
+/**@brief Encodes @ref ble_gatts_initial_user_handle_get_rsp_enc command response.
+ *
+ * @sa @ref ble_gatts_initial_user_handle_get_req_dec for request decoding.
+ *
+ * @param[in] return_code         Return code indicating if command was successful or not.
+ * @param[out] p_buf              Pointer to buffer where encoded data command response will be
+ *                                returned.
+ * @param[in,out] p_buf_len       \c in: size of \p p_buf buffer.
+ *                                \c out: Length of encoded command response packet.
+ * @param[in] p_handle            Pointer to handle to be encoded.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
+ */
+uint32_t ble_gatts_initial_user_handle_get_rsp_enc(uint32_t           return_code,
+                                                   uint8_t * const    p_buf,
+                                                   uint32_t * const   p_buf_len,
+                                                   uint16_t         * p_handle);
 /** @} */
 #endif //BLE_GATTS_CONN_H__
 

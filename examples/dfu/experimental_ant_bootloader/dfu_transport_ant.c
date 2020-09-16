@@ -44,8 +44,6 @@ All rights reserved.
 #define ANTFS_UPLOAD_DATA_BUFFER_MIN_SIZE       128
 #define ANTFS_UPLOAD_DATA_BUFFER_MAX_SIZE       160   // Maximum amount or it can cause trouble.
 
-#define ANTFS_CLIENT_SERIAL_NUMBER              NRF_FICR->DEVICEID[0]                               /**< Serial number of client device. */
-
 // The following parameters can be customized, and should match the OTA Updater tool Connection & Authentication settings
 #define ANTFS_CLIENT_DEV_TYPE                   1u                                                  /**< Beacon device type . Set to Product ID*/
 #define ANTFS_CLIENT_MANUF_ID                   255u                                                /**< Beacon manufacturer ID.  Set to your own Manufacturer ID (managed by ANT+) */
@@ -140,6 +138,11 @@ static bool                     m_upload_swap_space_prepared    = false;
 static void services_init(void);
 static bool flash_busy(void);
 static void upload_data_response_fail_reset(void);
+
+static uint32_t serial_num_get(void)
+{
+    return NRF_FICR->DEVICEID[0];                               /**< Serial number of client device. */
+}
 
 //static pstorage_handle_t m_storage_handle_ant = {0};
 //static void boot_return_set (uint32_t status)
@@ -990,7 +993,7 @@ static void antfs_event_process(const antfs_event_return_t * p_event)
  */
 static void ant_evt_dispatch(ant_evt_t * p_ant_evt)
 {
-    antfs_message_process(p_ant_evt->evt_buffer);                         // process regular ant event messages.
+    antfs_message_process(p_ant_evt->msg.evt_buffer);                         // process regular ant event messages.
 
     while (antfs_event_extract(&m_antfs_event))                             // check for antfs events.
     {
@@ -1023,10 +1026,12 @@ static bool flash_busy(void)
  */
 static void services_init(void)
 {
+    const uint32_t serial_num = serial_num_get();
+
     // Initializing ANTFS service.
     const antfs_params_t params =
     {
-        ANTFS_CLIENT_SERIAL_NUMBER,
+        serial_num,
         ANTFS_CLIENT_DEV_TYPE,
         ANTFS_CLIENT_MANUF_ID,
         ANTFS_LINK_FREQ,

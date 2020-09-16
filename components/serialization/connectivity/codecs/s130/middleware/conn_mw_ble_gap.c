@@ -604,12 +604,14 @@ uint32_t conn_mw_ble_gap_sec_params_reply(uint8_t const * const p_rx_buf,
     // Set up global structure for command decoder
     ble_gap_sec_keyset_t * p_sec_keyset = &(m_conn_keys_table[sec_tab_index].keyset);
 
-    p_sec_keyset->keys_periph.p_enc_key   = &(m_conn_keys_table[sec_tab_index].enc_key_periph);
-    p_sec_keyset->keys_periph.p_id_key    = &(m_conn_keys_table[sec_tab_index].id_key_periph);
-    p_sec_keyset->keys_periph.p_sign_key  = &(m_conn_keys_table[sec_tab_index].sign_key_periph);
-    p_sec_keyset->keys_central.p_enc_key  = &(m_conn_keys_table[sec_tab_index].enc_key_central);
-    p_sec_keyset->keys_central.p_id_key   = &(m_conn_keys_table[sec_tab_index].id_key_central);
-    p_sec_keyset->keys_central.p_sign_key = &(m_conn_keys_table[sec_tab_index].sign_key_central);
+    p_sec_keyset->keys_own.p_enc_key   = &(m_conn_keys_table[sec_tab_index].enc_key_own);
+    p_sec_keyset->keys_own.p_id_key    = &(m_conn_keys_table[sec_tab_index].id_key_own);
+    p_sec_keyset->keys_own.p_sign_key  = &(m_conn_keys_table[sec_tab_index].sign_key_own);
+    p_sec_keyset->keys_own.p_pk        = &(m_conn_keys_table[sec_tab_index].pk_own);
+    p_sec_keyset->keys_peer.p_enc_key  = &(m_conn_keys_table[sec_tab_index].enc_key_peer);
+    p_sec_keyset->keys_peer.p_id_key   = &(m_conn_keys_table[sec_tab_index].id_key_peer);
+    p_sec_keyset->keys_peer.p_sign_key = &(m_conn_keys_table[sec_tab_index].sign_key_peer);
+    p_sec_keyset->keys_peer.p_pk       = &(m_conn_keys_table[sec_tab_index].pk_peer);
 
     err_code = ble_gap_sec_params_reply_req_dec(p_rx_buf,
                                                 rx_buf_len,
@@ -848,6 +850,117 @@ uint32_t conn_mw_ble_gap_rssi_get(uint8_t const * const p_rx_buf,
     sd_err_code = sd_ble_gap_rssi_get(conn_handle, p_rssi);
 
     err_code = ble_gap_rssi_get_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len, rssi);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    return err_code;
+}
+
+uint32_t conn_mw_ble_gap_keypress_notify(uint8_t const * const p_rx_buf,
+                                  uint32_t              rx_buf_len,
+                                  uint8_t       * const p_tx_buf,
+                                  uint32_t      * const p_tx_buf_len)
+{
+    SER_ASSERT_NOT_NULL(p_rx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf_len);
+
+    uint32_t err_code = NRF_SUCCESS;
+    uint32_t sd_err_code;
+
+    uint16_t conn_handle;
+    uint8_t  kp_not;
+
+    err_code = ble_gap_keypress_notify_req_dec(p_rx_buf, rx_buf_len, &conn_handle, &kp_not);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    sd_err_code = sd_ble_gap_keypress_notify(conn_handle, kp_not);
+
+    err_code = ble_gap_keypress_notify_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    return err_code;
+}
+
+uint32_t conn_mw_ble_gap_lesc_dhkey_reply(uint8_t const * const p_rx_buf,
+                                  uint32_t              rx_buf_len,
+                                  uint8_t       * const p_tx_buf,
+                                  uint32_t      * const p_tx_buf_len)
+{
+    SER_ASSERT_NOT_NULL(p_rx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf_len);
+
+    uint32_t err_code = NRF_SUCCESS;
+    uint32_t sd_err_code;
+
+    uint16_t conn_handle;
+    ble_gap_lesc_dhkey_t  dhkey;
+    ble_gap_lesc_dhkey_t * p_dhkey = &dhkey;
+
+    err_code = ble_gap_lesc_dhkey_reply_req_dec(p_rx_buf, rx_buf_len, &conn_handle, &p_dhkey);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    sd_err_code = sd_ble_gap_lesc_dhkey_reply(conn_handle, p_dhkey);
+
+    err_code = ble_gap_lesc_dhkey_reply_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    return err_code;
+}
+
+uint32_t conn_mw_ble_gap_lesc_oob_data_set(uint8_t const * const p_rx_buf,
+                                           uint32_t              rx_buf_len,
+                                           uint8_t       * const p_tx_buf,
+                                           uint32_t      * const p_tx_buf_len)
+{
+    SER_ASSERT_NOT_NULL(p_rx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf_len);
+
+    uint32_t err_code = NRF_SUCCESS;
+    uint32_t sd_err_code;
+
+    uint16_t conn_handle;
+    ble_gap_lesc_oob_data_t own;
+    ble_gap_lesc_oob_data_t peer;
+    ble_gap_lesc_oob_data_t * p_own = &own;
+    ble_gap_lesc_oob_data_t * p_peer = &peer;
+
+    err_code = ble_gap_lesc_oob_data_set_req_dec(p_rx_buf, rx_buf_len, &conn_handle, &p_own, &p_peer);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    sd_err_code = sd_ble_gap_lesc_oob_data_set(conn_handle, p_own, p_peer);
+
+    err_code = ble_gap_lesc_oob_data_set_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    return err_code;
+}
+
+uint32_t conn_mw_ble_gap_lesc_oob_data_get(uint8_t const * const p_rx_buf,
+                                           uint32_t              rx_buf_len,
+                                           uint8_t       * const p_tx_buf,
+                                           uint32_t      * const p_tx_buf_len)
+{
+    SER_ASSERT_NOT_NULL(p_rx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf_len);
+
+    uint32_t err_code = NRF_SUCCESS;
+    uint32_t sd_err_code;
+
+    uint16_t conn_handle;
+    ble_gap_lesc_oob_data_t own;
+    ble_gap_lesc_oob_data_t * p_own = &own;
+    ble_gap_lesc_p256_pk_t  pk;
+    ble_gap_lesc_p256_pk_t * p_pk = &pk;
+
+    err_code = ble_gap_lesc_oob_data_get_req_dec(p_rx_buf, rx_buf_len, &conn_handle, &p_pk, &p_own);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    sd_err_code = sd_ble_gap_lesc_oob_data_get(conn_handle, p_pk, p_own);
+
+    err_code = ble_gap_lesc_oob_data_get_rsp_enc(sd_err_code, p_own, p_tx_buf, p_tx_buf_len);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
 
     return err_code;

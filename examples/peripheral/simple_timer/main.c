@@ -45,7 +45,7 @@ static volatile state_t  m_state;                                               
 void timeout_handler(void * p_context);
 
 
-void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
+void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
     LEDS_OFF(BSP_LED_0 | BSP_LED_1);
                 

@@ -20,7 +20,7 @@
 #ifndef NRF_GZLL_H__
 #define NRF_GZLL_H__
 
-#include "stdbool.h"
+#include <stdbool.h>
 #include "nrf.h"
 #include "nrf_gzll_constants.h"
 

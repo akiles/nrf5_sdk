@@ -126,7 +126,7 @@ static sample_t m_sample_buffer[NUMBER_OF_SAMPLES] = {0};
 /* Indicates if reading operation from accelerometer has ended. */
 static volatile bool m_xfer_done = true;
 /* Indicates if setting mode operation has ended. */
-static volatile bool m_set_mode_done;
+static volatile bool m_set_mode_done = false;
 /* TWI instance. */
 static const nrf_drv_twi_t m_twi_mma_7660 = NRF_DRV_TWI_INSTANCE(0);
 
@@ -177,7 +177,7 @@ static void uart_config(void)
         CTS_PIN_NUMBER,
         APP_UART_FLOW_CONTROL_DISABLED,
         false,
-        UART_BAUDRATE_BAUDRATE_Baud38400
+        UART_BAUDRATE_BAUDRATE_Baud115200
     };
 
     APP_UART_FIFO_INIT(&comm_params,
@@ -281,20 +281,25 @@ void twi_handler(nrf_drv_twi_evt_t const * p_event, void * p_context)
     
     switch(p_event->type)
     {
-        case NRF_DRV_TWI_RX_DONE:
-            read_data(&m_sample);
-            m_xfer_done = true;
-            break;
-        case NRF_DRV_TWI_TX_DONE:
-            if(m_set_mode_done != true)
+        case NRF_DRV_TWI_EVT_DONE:
+            if ((p_event->type == NRF_DRV_TWI_EVT_DONE) &&
+                (p_event->xfer_desc.type == NRF_DRV_TWI_XFER_TX))
             {
-                m_set_mode_done  = true;
-                return;
+                if(m_set_mode_done != true)
+                {
+                    m_set_mode_done  = true;
+                    return;
+                }
+                m_xfer_done = false;
+                /* Read 4 bytes from the specified address. */
+                err_code = nrf_drv_twi_rx(&m_twi_mma_7660, MMA7660_ADDR, (uint8_t*)&m_sample, sizeof(m_sample));
+                APP_ERROR_CHECK(err_code);
             }
-            m_xfer_done = false;
-            /* Read 4 bytes from the specified address. */
-            err_code = nrf_drv_twi_rx(&m_twi_mma_7660, MMA7660_ADDR, (uint8_t*)&m_sample, sizeof(m_sample), false);
-            APP_ERROR_CHECK(err_code);
+            else
+            {
+                read_data(&m_sample);
+                m_xfer_done = true;
+            }
             break;
         default:
             break;        

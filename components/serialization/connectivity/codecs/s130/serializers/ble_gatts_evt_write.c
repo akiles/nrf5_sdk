@@ -16,7 +16,7 @@
 #include "conn_ble_user_mem.h"
 #include "app_util.h"
 
-extern ser_ble_user_mem_t m_conn_user_mem_table[];
+extern sercon_ble_user_mem_t m_conn_user_mem_table[];
 
 uint32_t ble_gatts_evt_write_enc(ble_evt_t const * const p_event,
                                  uint32_t                event_len,

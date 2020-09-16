@@ -17,52 +17,12 @@
 
 
 #ifdef ENABLE_DEBUG_LOG_SUPPORT
-#include "app_uart.h"
-#include "nordic_common.h"
-#include "boards.h"
 #include "app_trace.h"
-#include "app_error.h"
-
-#ifndef UART_TX_BUF_SIZE
-    #define UART_TX_BUF_SIZE 1024                         /**< UART TX buffer size. */
-#endif
-#ifndef UART_RX_BUF_SIZE
-    #define UART_RX_BUF_SIZE 1                           /**< UART RX buffer size. */
-#endif
-__WEAK void uart_error_handle(app_uart_evt_t * p_event)
-{
-    if (p_event->evt_type == APP_UART_COMMUNICATION_ERROR)
-    {
-        //Skipping communication errors, they are only for Rx and app_trace is Tx only.
-        //APP_ERROR_HANDLER(p_event->data.error_communication);
-    }
-    else if (p_event->evt_type == APP_UART_FIFO_ERROR)
-    {
-        APP_ERROR_HANDLER(p_event->data.error_code);
-    }
-}
+#include "nrf_log.h"
 
 void app_trace_init(void)
 {
-    uint32_t err_code = NRF_SUCCESS;
-    const app_uart_comm_params_t comm_params =  
-    {
-        RX_PIN_NUMBER, 
-        TX_PIN_NUMBER, 
-        RTS_PIN_NUMBER, 
-        CTS_PIN_NUMBER, 
-        APP_UART_FLOW_CONTROL_DISABLED, 
-        false, 
-        UART_BAUDRATE_BAUDRATE_Baud38400
-    }; 
-        
-    APP_UART_FIFO_INIT(&comm_params, 
-                       UART_RX_BUF_SIZE, 
-                       UART_TX_BUF_SIZE, 
-                       uart_error_handle, 
-                       APP_IRQ_PRIORITY_LOW,
-                       err_code);
-    UNUSED_VARIABLE(err_code);
+    (void)NRF_LOG_INIT();
 }
 
 void app_trace_dump(uint8_t * p_buffer, uint32_t len)

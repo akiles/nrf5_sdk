@@ -34,7 +34,7 @@
 #define DEBUG_EVT_TX_REQ(data)
 
 #else
-#include "stdint.h"
+#include <stdint.h>
 
 //Low level hardware events
 typedef enum

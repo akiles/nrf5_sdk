@@ -13,10 +13,9 @@
 
 
 #include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
 #include "sha256.h"
 #include "sdk_errors.h"
+#include "sdk_common.h"
 
 
 #define ROTLEFT(a,b) (((a) << (b)) | ((a) >> (32-(b))))
@@ -91,10 +90,7 @@ void sha256_transform(sha256_context_t *ctx, const uint8_t * data)
 
 ret_code_t sha256_init(sha256_context_t *ctx)
 {
-    if (ctx == NULL)
-    {
-        return NRF_ERROR_NULL;
-    }
+    VERIFY_PARAM_NOT_NULL(ctx);
 
     ctx->datalen = 0;
     ctx->bitlen = 0;
@@ -113,7 +109,8 @@ ret_code_t sha256_init(sha256_context_t *ctx)
 
 ret_code_t sha256_update(sha256_context_t *ctx, const uint8_t * data, size_t len)
 {
-    if ((ctx == NULL) || ((len > 0) && (data == NULL)))
+    VERIFY_PARAM_NOT_NULL(ctx);
+    if (((len > 0) && (data == NULL)))
     {
         return NRF_ERROR_NULL;
     }
@@ -136,10 +133,8 @@ ret_code_t sha256_update(sha256_context_t *ctx, const uint8_t * data, size_t len
 
 ret_code_t sha256_final(sha256_context_t *ctx, uint8_t * hash)
 {
-    if ((ctx == NULL) || (hash == NULL))
-    {
-        return NRF_ERROR_NULL;
-    }
+    VERIFY_PARAM_NOT_NULL(ctx);
+    VERIFY_PARAM_NOT_NULL(hash);
 
     uint32_t i;
 

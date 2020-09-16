@@ -272,7 +272,7 @@ static void sc_ctrlpt_resp_send(ble_sc_ctrlpt_t * p_sc_ctrlpt)
                 // Wait for HVC event
                 break;
 
-            case BLE_ERROR_NO_TX_BUFFERS:
+            case BLE_ERROR_NO_TX_PACKETS:
                 // Wait for TX_COMPLETE event to retry transmission
                 p_sc_ctrlpt->procedure_status = BLE_SCPT_INDICATION_PENDING;
                 break;
@@ -307,7 +307,11 @@ static void on_ctrlpt_write(ble_sc_ctrlpt_t       * p_sc_ctrlpt,
     ble_sc_ctrlpt_evt_t                   evt;
 
     auth_reply.type                     = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
+    auth_reply.params.write.offset      = 0;
+    auth_reply.params.write.len         = 0;
+    auth_reply.params.write.p_data      = NULL;
     auth_reply.params.write.gatt_status = BLE_GATT_STATUS_SUCCESS;
+    auth_reply.params.write.update      = 1;
 
     if (is_cccd_configured(p_sc_ctrlpt))
     {

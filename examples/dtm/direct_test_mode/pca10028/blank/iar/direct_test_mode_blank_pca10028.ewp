@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -244,7 +244,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -310,13 +310,13 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\..\config\direct_test_mode_blank_pca10028</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_dtm</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..</state>
-          <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -466,7 +466,7 @@
         </option>
         <option>
           <name>ADebug</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>AltRegisterNames</name>
@@ -574,10 +574,11 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$\..\..\..\config\direct_test_mode_blank_pca10028</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_dtm</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..</state>
         </option>

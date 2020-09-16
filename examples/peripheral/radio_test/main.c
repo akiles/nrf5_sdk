@@ -287,7 +287,7 @@ int main(void)
         CTS_PIN_NUMBER,
         APP_UART_FLOW_CONTROL_ENABLED,
         false,
-        UART_BAUDRATE_BAUDRATE_Baud38400
+        UART_BAUDRATE_BAUDRATE_Baud115200
     };
 
     APP_UART_FIFO_INIT(&comm_params,
@@ -326,8 +326,7 @@ int main(void)
             case 'b':
                 while (true)
                 {
-                    printf("Enter end channel \
-                            (two decimal digits, 00 to 80):\r\n");
+                    printf("Enter end channel (two decimal digits, 00 to 80):\r\n");
                     scanf("%d",&channel_end_);
                     if ((channel_end_ <= 80)&&(channel_start_ >= 0))
                     {
@@ -398,11 +397,12 @@ int main(void)
                 break;
 
             case 'h':
-                // Fall through.
-        
-            default:
                 help();
-                break;
+				break;
+				
+            default:
+                // No implementation needed
+				break;
         }
     
         switch (test)

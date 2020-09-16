@@ -21,7 +21,7 @@
 * @defgroup nrf_egu EGU (Event Generator Unit) abstraction
 * @{
 * @ingroup nrf_drivers
-* @brief EGU (Event Generator Unit) module functions.
+* @brief @tagAPI52 EGU (Event Generator Unit) module functions.
 *
 */
 

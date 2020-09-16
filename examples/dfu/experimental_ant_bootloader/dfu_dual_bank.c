@@ -59,6 +59,12 @@ static pstorage_handle_t            m_storage_handle_app;
 static pstorage_module_param_t      m_storage_module_param;
 static dfu_callback_t               m_data_pkt_cb;
 
+#ifdef NRF52
+/** This variable ensures that the linker script will write the retaining page address to the UICR register.
+    This value will be written in the HEX file and thus written to UICR when the bootloader is flashed into the chip. */
+uint32_t m_uicr_nrffw_1 __attribute__((at(NRF_UICR_NRFFW_1))) = BOOTLOADER_MBR_RETAINING_PAGE_ADDRESS;
+#endif
+
 #define APP_TIMER_PRESCALER         0                                                       /**< Value of the RTC1 PRESCALER register. */
 #define DFU_TIMEOUT_INTERVAL        APP_TIMER_TICKS(120000, APP_TIMER_PRESCALER)            /**< DFU timeout interval in units of timer ticks. */
 

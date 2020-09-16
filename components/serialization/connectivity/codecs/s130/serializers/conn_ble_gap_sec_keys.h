@@ -42,15 +42,17 @@
  */
 typedef struct
 {
-  uint16_t             conn_handle;        /**< Connection handle.*/
-  uint8_t              conn_active;        /**< Indication that keys for this connection are used by soft device. 0: keys used; 1: keys not used*/
-  ble_gap_sec_keyset_t keyset;             /**< Keyset structure see @ref ble_gap_sec_keyset_t.*/
-  ble_gap_enc_key_t    enc_key_periph;     /**< Peripheral Encryption Key, see @ref ble_gap_enc_key_t.*/
-  ble_gap_id_key_t     id_key_periph;      /**< Peripheral Identity Key, see @ref ble_gap_id_key_t.*/
-  ble_gap_sign_info_t  sign_key_periph;    /**< Peripheral Signing Information, see @ref ble_gap_sign_info_t.*/
-  ble_gap_enc_key_t    enc_key_central;    /**< Central Encryption Key, see @ref ble_gap_enc_key_t.*/
-  ble_gap_id_key_t     id_key_central;     /**< Central Identity Key, see @ref ble_gap_id_key_t.*/
-  ble_gap_sign_info_t  sign_key_central;   /**< Central Signing Information, see @ref ble_gap_sign_info_t.*/
+  uint16_t                conn_handle;     /**< Connection handle.*/
+  uint8_t                 conn_active;     /**< Indication that keys for this connection are used by soft device. 0: keys used; 1: keys not used*/
+  ble_gap_sec_keyset_t    keyset;          /**< Keyset structure see @ref ble_gap_sec_keyset_t.*/
+  ble_gap_enc_key_t       enc_key_own;     /**< Own Encryption Key, see @ref ble_gap_enc_key_t.*/
+  ble_gap_id_key_t        id_key_own;      /**< Own Identity Key, see @ref ble_gap_id_key_t.*/
+  ble_gap_sign_info_t     sign_key_own;    /**< Own Signing Information, see @ref ble_gap_sign_info_t.*/
+  ble_gap_lesc_p256_pk_t  pk_own;          /**< Own Public key, see @ref ble_gap_lesc_p256_pk_t.*/
+  ble_gap_enc_key_t       enc_key_peer;    /**< Peer Encryption Key, see @ref ble_gap_enc_key_t.*/
+  ble_gap_id_key_t        id_key_peer;     /**< Peer Identity Key, see @ref ble_gap_id_key_t.*/
+  ble_gap_sign_info_t     sign_key_peer;   /**< Peer Signing Information, see @ref ble_gap_sign_info_t.*/
+  ble_gap_lesc_p256_pk_t  pk_peer;         /**< Peer Public key, see @ref ble_gap_lesc_p256_pk_t.*/
 } ser_ble_gap_conn_keyset_t;
 
 /**@brief allocates instance in m_conn_keys_table[] for storage of encryption keys.

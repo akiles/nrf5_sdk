@@ -9,7 +9,7 @@
  * the file.
  *
  */
-#include "stdio.h"
+#include <stdio.h>
 #include "ant_key_manager.h"
 #include "ant_key_manager_config.h"
 #include "ant_interface.h"

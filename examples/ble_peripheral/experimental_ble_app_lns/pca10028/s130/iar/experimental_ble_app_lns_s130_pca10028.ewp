@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -180,6 +180,7 @@
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>S130</state>
           <state>BOARD_PCA10028</state>
+          <state>NRF_LOG_USES_UART=1</state>
           <state>SOFTDEVICE_PRESENT</state>
           <state>NRF51</state>
           <state>SWI_DISABLE0</state>
@@ -247,7 +248,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -313,24 +314,25 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\..\config\experimental_ble_app_lns_s130_pca10028</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_bas</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_dis</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\experimental_ble_lns</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\device_manager</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pstorage</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\trace</state>
@@ -338,7 +340,11 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\headers</state>
-          <state>$TOOLKIT_DIR$\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\headers\nrf51</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -488,7 +494,7 @@
         </option>
         <option>
           <name>ADebug</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>AltRegisterNames</name>
@@ -499,6 +505,7 @@
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>S130</state>
           <state>BOARD_PCA10028</state>
+          <state>NRF_LOG_USES_UART=1</state>
           <state>SOFTDEVICE_PRESENT</state>
           <state>NRF51</state>
           <state>SWI_DISABLE0</state>
@@ -599,24 +606,25 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$\..\..\..\config\experimental_ble_app_lns_s130_pca10028</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_bas</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_dis</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\experimental_ble_lns</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\device_manager</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pstorage</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\trace</state>
@@ -624,6 +632,11 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\headers</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\headers\nrf51</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1016,6 +1029,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</name>
     </file>
     <file>
@@ -1025,7 +1041,16 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\trace\app_trace.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fstorage\fstorage.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_log.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart\retarget.c</name>
@@ -1080,6 +1105,18 @@
     </file>
   </group>
   <group>
+  <name>nRF_Segger_RTT</name>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\RTT_Syscalls_IAR.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_printf.c</name>
+    </file>
+  </group>
+  <group>
   <name>nRF_BLE</name>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common\ble_advdata.c</name>
@@ -1095,6 +1132,12 @@
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_dis\ble_dis.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\experimental_ble_lns\ble_ln_cp.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\experimental_ble_lns\ble_ln_db.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\experimental_ble_lns\ble_lns.c</name>
@@ -1118,7 +1161,7 @@
   <group>
   <name>nRF_SoftDevice</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51822_1.0.0_licence_agreement.txt</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51_2.0.0_licence_agreement.txt</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler\softdevice_handler.c</name>

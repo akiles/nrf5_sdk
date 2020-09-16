@@ -118,7 +118,7 @@ __stackless void vPortStartFirstTask( void )
                         "i"(&__Vectors)
 #ifdef SOFTDEVICE_PRESENT
                         ,
-                        "i"(configMAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS))
+                        "i"(configKERNEL_INTERRUPT_PRIORITY  << (8 - configPRIO_BITS))
 #endif
                 );
 }

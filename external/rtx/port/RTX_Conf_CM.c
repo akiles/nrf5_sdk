@@ -221,6 +221,8 @@ void os_idle_demon (void)
     unsigned int expected_time;
     unsigned int prev_time;
 
+    NVIC_SetPriority(PendSV_IRQn, NVIC_GetPriority(RTC1_IRQn));
+
     for (;; )
     {
         rtos_suspend   = 1;

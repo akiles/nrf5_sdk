@@ -23,16 +23,20 @@
 #define SER_APP_HAL_H_
 
 #include <stdint.h>
+
+typedef void (*ser_app_hal_flash_op_done_handler_t)(bool success);
 /**@brief Function for initializing hw modules.
  *
  * @details Function can initilize can hardware modules on application processor. It is optional to
  * implement. It is called one connectivity chip is initialized.
  *
+ * @param handler Flash operation event handler
+ *
  * @return @ref NRF_SUCCESS HAL initialized successfully.
  * @return @ref nrf_error "NRF_ERROR_..." HAL initialization failed.
  *
  */
-uint32_t ser_app_hal_hw_init(void);
+uint32_t ser_app_hal_hw_init(ser_app_hal_flash_op_done_handler_t handler);
 
 /**@brief Function for waiting for given amount of time.
  *

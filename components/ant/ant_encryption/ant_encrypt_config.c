@@ -11,11 +11,10 @@
  */
 
 #include <stdlib.h>
-#include <stdbool.h>
 #include "ant_encrypt_config.h"
 #include "ant_interface.h"
 #include "ant_parameters.h"
-#include "nrf_error.h"
+#include "sdk_common.h"
 
 #ifdef ANT_ENCRYPT_SLAVE_NEGOTIATION_USED
     #include "ant_encrypt_negotiation_slave.h"
@@ -39,21 +38,13 @@ ret_code_t ant_stack_encryption_config(ant_encrypt_stack_settings_t const * cons
     for ( uint32_t i = 0; i < p_crypto_set->key_number; i++)
     {
         err_code = sd_ant_crypto_key_set(i, p_crypto_set->pp_key[i]);
-
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     if (p_crypto_set->p_adv_burst_config != NULL)
     {
         err_code = ant_enc_advance_burs_config_apply(p_crypto_set->p_adv_burst_config);
-
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     // subcomands LUT for @ref sd_ant_crypto_info_set calls
@@ -71,10 +62,7 @@ ret_code_t ant_stack_encryption_config(ant_encrypt_stack_settings_t const * cons
             err_code = sd_ant_crypto_info_set(set_enc_info_param_lut[i],
                                               p_crypto_set->info.pp_array[i]);
 
-            if (err_code != NRF_SUCCESS)
-            {
-                return err_code;
-            }
+            VERIFY_SUCCESS(err_code);
         }
     }
 

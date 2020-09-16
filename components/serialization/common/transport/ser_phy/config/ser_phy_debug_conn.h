@@ -35,7 +35,7 @@
 
 #else
 
-#include "stdint.h"
+#include <stdint.h>
 
 // low level hardware event types
 typedef enum

@@ -291,3 +291,32 @@ uint32_t conn_mw_ble_gattc_hv_confirm(uint8_t const * const p_rx_buf,
 
     return err_code;
 }
+
+uint32_t conn_mw_ble_gattc_attr_info_discover(uint8_t const * const p_rx_buf,
+                                              uint32_t              rx_buf_len,
+                                              uint8_t * const       p_tx_buf,
+                                              uint32_t * const      p_tx_buf_len)
+{
+    SER_ASSERT_NOT_NULL(p_rx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf);
+    SER_ASSERT_NOT_NULL(p_tx_buf_len);
+
+    uint16_t   conn_handle;
+    uint16_t * p_conn_handle = &conn_handle;
+
+    ble_gattc_handle_range_t   range   = {0};
+    ble_gattc_handle_range_t * p_range = &range;
+
+    uint32_t err_code = NRF_SUCCESS;
+    uint32_t sd_err_code;
+
+    err_code = ble_gattc_attr_info_discover_req_dec(p_rx_buf, rx_buf_len, p_conn_handle, &p_range);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    sd_err_code = sd_ble_gattc_attr_info_discover(conn_handle, p_range);
+
+    err_code = ble_gattc_attr_info_discover_rsp_enc(sd_err_code, p_tx_buf, p_tx_buf_len);
+    SER_ASSERT(err_code == NRF_SUCCESS, err_code);
+
+    return err_code;
+}

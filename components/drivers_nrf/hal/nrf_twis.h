@@ -15,7 +15,7 @@
  * @defgroup nrf_twis_hal TWIS HAL
  * @{
  *
- * @brief Hardware access layer for Two Wire Interface Slave with EasyDMA
+ * @brief @tagAPI52 Hardware access layer for Two Wire Interface Slave with EasyDMA
  * (TWIS) peripheral.
  */
 #ifndef NRF_TWIS_H__
@@ -27,14 +27,13 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-
 /**
  * @brief TWIS tasks
  */
 typedef enum
 {
     /*lint -save -e30*/
-#if !NRF_TWIS_PATCH_FOR_MPW3 /* STOP task is not functional in MPW3 (PAN-30) */
+#ifndef NRF52_PAN_30 /* STOP task is not functional in MPW3 (PAN-30) */
     /* Stop task is not working properly for first release */
     NRF_TWIS_TASK_STOP      = offsetof(NRF_TWIS_Type, TASKS_STOP),      /**< Stop TWIS transaction */
 #endif
@@ -88,7 +87,7 @@ typedef enum
 typedef enum
 {
     NRF_TWIS_ERROR_OVERFLOW  = TWIS_ERRORSRC_OVERFLOW_Msk, /**< RX buffer overflow detected, and prevented */
-#if NRF_TWIS_PATCH_FOR_MPW3
+#ifdef NRF52_PAN_29
     /* Patched version of bit positions in ERRORSRC register (PAN-29) */
     NRF_TWIS_ERROR_DATA_NACK = 1U << 1,                    /**< NACK sent after receiving a data byte */
     NRF_TWIS_ERROR_OVERREAD  = 1U << 2                     /**< TX buffer over-read detected, and prevented */

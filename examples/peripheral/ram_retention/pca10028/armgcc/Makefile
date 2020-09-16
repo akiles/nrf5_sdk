@@ -40,6 +40,7 @@ C_SOURCE_FILES += \
 $(abspath ../../../../../components/toolchain/system_nrf51.c) \
 $(abspath ../../main.c) \
 $(abspath ../../../../../components/libraries/util/app_error.c) \
+$(abspath ../../../../../components/libraries/util/app_error_weak.c) \
 $(abspath ../../../../../components/drivers_nrf/delay/nrf_delay.c) \
 
 #assembly files common to all targets
@@ -53,6 +54,7 @@ INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/nrf_soc_nosd)
 INC_PATHS += -I$(abspath ../../../../../components/device)
 INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/hal)
 INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/delay)
+INC_PATHS += -I$(abspath ../../../../../components/toolchain/CMSIS/Include)
 INC_PATHS += -I$(abspath ../..)
 INC_PATHS += -I$(abspath ../../../../../components/libraries/util)
 INC_PATHS += -I$(abspath ../../../../../components/toolchain)
@@ -71,12 +73,11 @@ CFLAGS += -DBOARD_PCA10028
 CFLAGS += -DBSP_DEFINES_ONLY
 CFLAGS += -mcpu=cortex-m0
 CFLAGS += -mthumb -mabi=aapcs --std=gnu99
-CFLAGS += -Wall -Werror -O3
+CFLAGS += -Wall -Werror -O3 -g3
 CFLAGS += -mfloat-abi=soft
 # keep every function in separate section. This will allow linker to dump unused functions
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -fno-builtin --short-enums
-
+CFLAGS += -fno-builtin --short-enums 
 # keep every function in separate section. This will allow linker to dump unused functions
 LDFLAGS += -Xlinker -Map=$(LISTING_DIRECTORY)/$(OUTPUT_FILENAME).map
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)
@@ -91,6 +92,7 @@ ASMFLAGS += -x assembler-with-cpp
 ASMFLAGS += -DNRF51
 ASMFLAGS += -DBOARD_PCA10028
 ASMFLAGS += -DBSP_DEFINES_ONLY
+
 #default target - first one defined
 default: clean nrf51422_xxac
 
@@ -103,7 +105,6 @@ all: clean
 help:
 	@echo following targets are available:
 	@echo 	nrf51422_xxac
-
 
 C_SOURCE_FILE_NAMES = $(notdir $(C_SOURCE_FILES))
 C_PATHS = $(call remduplicates, $(dir $(C_SOURCE_FILES) ) )
@@ -120,9 +121,10 @@ OBJECTS = $(C_OBJECTS) $(ASM_OBJECTS)
 
 nrf51422_xxac: OUTPUT_FILENAME := nrf51422_xxac
 nrf51422_xxac: LINKER_SCRIPT=ram_retention_gcc_nrf51.ld
+
 nrf51422_xxac: $(BUILD_DIRECTORIES) $(OBJECTS)
 	@echo Linking target: $(OUTPUT_FILENAME).out
-	$(NO_ECHO)$(CC) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
+	$(NO_ECHO)$(CC) $(LDFLAGS) $(OBJECTS) $(LIBS) -lm -o $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
 	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e finalize
 
 ## Create build directories
@@ -137,16 +139,12 @@ $(OBJECT_DIRECTORY)/%.o: %.c
 
 # Assemble files
 $(OBJECT_DIRECTORY)/%.o: %.s
-	@echo Compiling file: $(notdir $<)
+	@echo Assembly file: $(notdir $<)
 	$(NO_ECHO)$(CC) $(ASMFLAGS) $(INC_PATHS) -c -o $@ $<
-
-
 # Link
 $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out: $(BUILD_DIRECTORIES) $(OBJECTS)
 	@echo Linking target: $(OUTPUT_FILENAME).out
-	$(NO_ECHO)$(CC) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
-
-
+	$(NO_ECHO)$(CC) $(LDFLAGS) $(OBJECTS) $(LIBS) -lm -o $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
 ## Create binary .bin file from the .out file
 $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).bin: $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
 	@echo Preparing: $(OUTPUT_FILENAME).bin
@@ -167,7 +165,6 @@ genbin:
 genhex: 
 	@echo Preparing: $(OUTPUT_FILENAME).hex
 	$(NO_ECHO)$(OBJCOPY) -O ihex $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).hex
-
 echosize:
 	-@echo ''
 	$(NO_ECHO)$(SIZE) $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
@@ -178,10 +175,9 @@ clean:
 
 cleanobj:
 	$(RM) $(BUILD_DIRECTORIES)/*.o
-
-flash: $(MAKECMDGOALS)
+flash: nrf51422_xxac
 	@echo Flashing: $(OUTPUT_BINARY_DIRECTORY)/$<.hex
 	nrfjprog --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex -f nrf51  --chiperase
-	nrfjprog --reset
+	nrfjprog --reset -f nrf51
 
 ## Flash softdevice

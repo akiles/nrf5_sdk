@@ -94,7 +94,12 @@ uint32_t ble_event_enc(ble_evt_t const * const p_event,
         case BLE_GAP_EVT_SEC_REQUEST:
             ret_val = ble_gap_evt_sec_request_enc(p_event, event_len, p_buf, p_buf_len);
             break;
-
+        case BLE_GAP_EVT_KEY_PRESSED:
+            ret_val = ble_gap_evt_key_pressed_enc(p_event, event_len, p_buf, p_buf_len);
+            break;
+        case BLE_GAP_EVT_LESC_DHKEY_REQUEST:
+            ret_val = ble_gap_evt_lesc_dhkey_request_enc(p_event, event_len, p_buf, p_buf_len);
+            break;
         case BLE_GATTC_EVT_CHAR_DISC_RSP:
             ret_val = ble_gattc_evt_char_disc_rsp_enc(p_event, event_len, p_buf, p_buf_len);
             break;
@@ -136,6 +141,10 @@ uint32_t ble_event_enc(ble_evt_t const * const p_event,
 
         case BLE_GATTC_EVT_CHAR_VALS_READ_RSP:
             ret_val = ble_gattc_evt_char_vals_read_rsp_enc(p_event, event_len, p_buf, p_buf_len);
+            break;
+
+        case BLE_GATTC_EVT_ATTR_INFO_DISC_RSP:
+            ret_val = ble_gattc_evt_attr_info_disc_rsp_enc(p_event, event_len, p_buf, p_buf_len);
             break;
 
         case BLE_GATTS_EVT_HVC:

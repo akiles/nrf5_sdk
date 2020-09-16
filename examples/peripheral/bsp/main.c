@@ -123,8 +123,8 @@ static void uart_init(void)
         CTS_PIN_NUMBER, 
         APP_UART_FLOW_CONTROL_ENABLED, 
         false, 
-        UART_BAUDRATE_BAUDRATE_Baud38400
-    }; 
+        UART_BAUDRATE_BAUDRATE_Baud115200
+    };
 
     APP_UART_FIFO_INIT(&comm_params, 
                        UART_RX_BUF_SIZE, 

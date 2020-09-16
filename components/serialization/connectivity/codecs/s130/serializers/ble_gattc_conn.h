@@ -393,6 +393,42 @@ uint32_t ble_gattc_char_value_by_uuid_read_rsp_enc(uint32_t         return_code,
                                                    uint8_t * const  p_buf,
                                                    uint32_t * const p_buf_len);
 
+/**@brief Decodes @ref sd_ble_gattc_attr_info_discover command request.
+ *
+ * @sa @ref ble_gattc_attr_info_discover_rsp_enc for response encoding.
+ *
+ * @param[in]  p_buf            Pointer to beginning of command request packet.
+ * @param[in]  buf_len       Length (in bytes) of request packet.
+ * @param[out] p_conn_handle    Pointer to connection handle of the connection.
+ * @param[out] pp_handle_range  Pointer to pointer to the range of handles
+ *
+ * @retval NRF_SUCCESS                Decoding success.
+ * @retval NRF_ERROR_NULL             Decoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Decoding failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_DATA     Decoding failure. Invalid operation type.
+ */
+uint32_t ble_gattc_attr_info_discover_req_dec(uint8_t const * const              p_buf,
+                                              uint16_t                           buf_len,
+                                              uint16_t * const                   p_conn_handle,
+                                              ble_gattc_handle_range_t * * const pp_handle_range);
+
+/**@brief Encodes @ref sd_ble_gattc_attr_info_discover command response.
+ *
+ * @sa @ref ble_gattc_attr_info_discover_req_dec for request decoding.
+ *
+ * @param[in]      return_code    Return code indicating if command was successful or not.
+ * @param[in]      p_buf          Pointer to buffer where encoded data command response will be
+ *                                returned.
+ * @param[in, out] p_buf_len      \c in: size of \p p_buf buffer.
+ *                                \c out: Length of encoded command response packet.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
+ */
+uint32_t ble_gattc_attr_info_discover_rsp_enc(uint32_t         return_code,
+                                              uint8_t * const  p_buf,
+                                              uint32_t * const p_buf_len);
 /** @} */
 #endif
 

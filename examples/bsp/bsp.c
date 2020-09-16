@@ -18,6 +18,10 @@
 #include "nrf_gpio.h"
 #include "nrf_error.h"
 
+#ifdef BSP_UART_SUPPORT
+#include "nrf_log.h"
+#endif // BSP_UART_SUPPORT
+
 #ifndef BSP_SIMPLE
 #include "app_timer.h"
 #include "app_button.h"
@@ -497,7 +501,7 @@ uint32_t bsp_indication_text_set(bsp_indication_t indicate, char const * p_text)
     uint32_t err_code = bsp_indication_set(indicate);
 
 #ifdef BSP_UART_SUPPORT
-    printf("%s", p_text);
+    NRF_LOG_PRINTF("%s", p_text);
 #endif // BSP_UART_SUPPORT
 
     return err_code;

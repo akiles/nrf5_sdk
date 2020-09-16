@@ -13,6 +13,12 @@ All rights reserved.
  * @ingroup nrf_ant_broadcast
  *
  * @brief Example of basic ANT Broadcast RX.
+ *
+ * Before compiling this example for NRF52, complete the following steps:
+ * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
+ * - Extract the downloaded zip file and copy the S212 SoftDevice headers to <tt>\<InstallFolder\>/components/softdevice/s212/headers</tt>.
+ * If you are using Keil packs, copy the files into a @c headers folder in your example folder.
+ * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
  */
 
 #include <stdbool.h>
@@ -62,7 +68,7 @@ void ant_evt_dispatch(ant_evt_t * p_ant_evt)
 
     if (p_ant_evt->channel == ANT_BROADCAST_CHANNEL_NUMBER)
     {
-        ANT_MESSAGE * p_message = (ANT_MESSAGE *)p_ant_evt->evt_buffer;
+        ANT_MESSAGE * p_message = (ANT_MESSAGE *)p_ant_evt->msg.evt_buffer;
 
         switch (p_ant_evt->event)
         {
@@ -106,10 +112,12 @@ static void softdevice_setup(void)
 {
     uint32_t err_code;
 
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+
     err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
     APP_ERROR_CHECK(err_code);
 
-    err_code = softdevice_handler_init(NRF_CLOCK_LFCLKSRC, NULL, 0, NULL);
+    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, NULL);
     APP_ERROR_CHECK(err_code);
 
     err_code = ant_stack_static_config();

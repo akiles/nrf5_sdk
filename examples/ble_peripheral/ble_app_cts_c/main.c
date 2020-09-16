@@ -31,7 +31,6 @@
 #include "app_error.h"
 #include "app_scheduler.h"
 #include "app_timer_appsh.h"
-#include "app_trace.h"
 #include "ble.h"
 #include "ble_cts_c.h"
 #include "ble_db_discovery.h"
@@ -44,14 +43,17 @@
 #include "bsp_btn_ble.h"
 #include "device_manager.h"
 #include "nordic_common.h"
+#include "nrf_log.h"
 #include "nrf.h"
 #include "nrf_gpio.h"
 #include "pstorage.h"
 #include "softdevice_handler.h"
 
+//#undef UART_TX_BUF_SIZE
+//#define UART_TX_BUF_SIZE 512
 
-#define UART_TX_BUF_SIZE                1024         /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE                1            /**< UART RX buffer size. */
+#define CENTRAL_LINK_COUNT              0            /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
+#define PERIPHERAL_LINK_COUNT           1            /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 0            /**< Include or exclude the service_changed characteristic. If excluded, the server's database cannot be changed for the lifetime of the device. */
 
@@ -81,6 +83,8 @@
 #define SEC_PARAM_TIMEOUT               30                                          /**< Time-out for pairing request or security request (in seconds). */
 #define SEC_PARAM_BOND                  1                                           /**< Perform bonding. */
 #define SEC_PARAM_MITM                  0                                           /**< Man In The Middle protection requirement. */
+#define SEC_PARAM_LESC                  0                                           /**< LE Secure Connections not enabled. */
+#define SEC_PARAM_KEYPRESS              0                                           /**< Keypress notifications not enabled. */
 #define SEC_PARAM_IO_CAPABILITIES       BLE_GAP_IO_CAPS_NONE                        /**< I/O capabilities. */
 #define SEC_PARAM_OOB                   0                                           /**< Out Of Band data availability. */
 #define SEC_PARAM_MIN_KEY_SIZE          7                                           /**< Minimum encryption key size. */
@@ -89,10 +93,8 @@
 #define DEAD_BEEF                       0xDEADBEEF                                  /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
 
-static uint16_t m_conn_handle               = BLE_CONN_HANDLE_INVALID; /**< Handle of the current connection. */
-
 static ble_db_discovery_t        m_ble_db_discovery;                   /**< Structure used to identify the DB Discovery module. */
-static ble_cts_c_t               m_cts;                                /**< Structure to store the data of the current time service. */
+static ble_cts_c_t               m_cts;                                /**< Instance of Current Time Service. The instance uses this struct to store data related to the service. */
 static dm_application_instance_t m_app_handle;                         /**< Application identifier allocated by the Device Manager. */
 static dm_handle_t               m_peer_handle;                        /**< The peer that is currently connected. */
 
@@ -154,23 +156,6 @@ static void current_time_error_handler(uint32_t nrf_error)
 }
 
 
-/**@brief Function for handling UART errors.
- *
- * @param[in] nrf_error  Error code containing information about what went wrong.
- */
-static void uart_error_handle(app_uart_evt_t * p_event)
-{
-    if (p_event->evt_type == APP_UART_COMMUNICATION_ERROR)
-    {
-        APP_ERROR_HANDLER(p_event->data.error_communication);
-    }
-    else if (p_event->evt_type == APP_UART_FIFO_ERROR)
-    {
-        APP_ERROR_HANDLER(p_event->data.error_code);
-    }
-}
-
-
 /**@brief Function for handling the security request timer time-out.
  *
  * @details This function will be called each time the security request timer expires.
@@ -183,7 +168,7 @@ static void sec_req_timeout_handler(void * p_context)
     uint32_t             err_code;
     dm_security_status_t status;
 
-    if (m_conn_handle != BLE_CONN_HANDLE_INVALID)
+    if (m_peer_handle.connection_id != DM_INVALID_ID)
     {
         err_code = dm_security_status_req(&m_peer_handle, &status);
         APP_ERROR_CHECK(err_code);
@@ -204,10 +189,10 @@ static void sec_req_timeout_handler(void * p_context)
  */
 static void current_time_print(ble_cts_c_evt_t * p_evt)
 {
-    printf("\nCurrent Time:\n");
-    printf("\nDate:\n");
+    NRF_LOG("\nCurrent Time:\r\n");
+    NRF_LOG("\nDate:\r\n");
 
-    printf("\tDay of week   %s\n", day_of_week[p_evt->
+    NRF_LOG_PRINTF("\tDay of week   %s\r\n", day_of_week[p_evt->
                                                params.
                                                current_time.
                                                exact_time_256.
@@ -216,43 +201,43 @@ static void current_time_print(ble_cts_c_evt_t * p_evt)
 
     if (p_evt->params.current_time.exact_time_256.day_date_time.date_time.day == 0)
     {
-        printf("\tDay of month  Unknown\n");
+        NRF_LOG("\tDay of month  Unknown\r\n");
     }
     else
     {
-        printf("\tDay of month  %i\n",
+        NRF_LOG_PRINTF("\tDay of month  %i\r\n",
                p_evt->params.current_time.exact_time_256.day_date_time.date_time.day);
     }
 
-    printf("\tMonth of year %s\n",
+    NRF_LOG_PRINTF("\tMonth of year %s\r\n",
            month_of_year[p_evt->params.current_time.exact_time_256.day_date_time.date_time.month]);
     if (p_evt->params.current_time.exact_time_256.day_date_time.date_time.year == 0)
     {
-        printf("\tYear          Unknown\n");
+        NRF_LOG("\tYear          Unknown\r\n");
     }
     else
     {
-        printf("\tYear          %i\n",
+        NRF_LOG_PRINTF("\tYear          %i\r\n",
                p_evt->params.current_time.exact_time_256.day_date_time.date_time.year);
     }
-    printf("\nTime:\n");
-    printf("\tHours     %i\n",
+    NRF_LOG("\nTime:\n");
+    NRF_LOG_PRINTF("\tHours     %i\r\n",
            p_evt->params.current_time.exact_time_256.day_date_time.date_time.hours);
-    printf("\tMinutes   %i\n",
+    NRF_LOG_PRINTF("\tMinutes   %i\r\n",
            p_evt->params.current_time.exact_time_256.day_date_time.date_time.minutes);
-    printf("\tSeconds   %i\n",
+    NRF_LOG_PRINTF("\tSeconds   %i\r\n",
            p_evt->params.current_time.exact_time_256.day_date_time.date_time.seconds);
-    printf("\tFractions %i/256 of a second\n",
+    NRF_LOG_PRINTF("\tFractions %i/256 of a second\r\n",
            p_evt->params.current_time.exact_time_256.fractions256);
 
-    printf("\nAdjust reason:\n");
-    printf("\tDaylight savings %x\n",
+    NRF_LOG("\nAdjust reason:\r\n");
+    NRF_LOG_PRINTF("\tDaylight savings %x\r\n",
            p_evt->params.current_time.adjust_reason.change_of_daylight_savings_time);
-    printf("\tTime zone        %x\n",
+    NRF_LOG_PRINTF("\tTime zone        %x\r\n",
            p_evt->params.current_time.adjust_reason.change_of_time_zone);
-    printf("\tExternal update  %x\n",
+    NRF_LOG_PRINTF("\tExternal update  %x\r\n",
            p_evt->params.current_time.adjust_reason.external_reference_time_update);
-    printf("\tManual update    %x\n",
+    NRF_LOG_PRINTF("\tManual update    %x\r\n",
            p_evt->params.current_time.adjust_reason.manual_time_update);
 }
 
@@ -286,27 +271,39 @@ static void timers_init(void)
  */
 static void on_cts_c_evt(ble_cts_c_t * p_cts, ble_cts_c_evt_t * p_evt)
 {
+    uint32_t err_code;
+
     switch (p_evt->evt_type)
     {
         case BLE_CTS_C_EVT_DISCOVERY_COMPLETE:
-            printf("Current Time Service discovered on server.\n");
+            NRF_LOG("Current Time Service discovered on server.\n\r");
+            err_code = ble_cts_c_handles_assign(&m_cts,p_evt->conn_handle, &p_evt->params.char_handles);
+            APP_ERROR_CHECK(err_code);
             break;
 
-        case BLE_CTS_C_EVT_SERVICE_NOT_FOUND:
-            printf("Current Time Service not found on server.\n");
+        case BLE_CTS_C_EVT_DISCOVERY_FAILED:
+            NRF_LOG("Current Time Service not found on server. \n\r");
+            // CTS not found in this case we just disconnect. There is no reason to stay
+            // in the connection for this simple app since it all wants is to interact with CT
+            if (p_evt->conn_handle != BLE_CONN_HANDLE_INVALID)
+            {
+                err_code = sd_ble_gap_disconnect(p_evt->conn_handle,
+                                                 BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+                APP_ERROR_CHECK(err_code);
+            }
             break;
 
         case BLE_CTS_C_EVT_DISCONN_COMPLETE:
-            printf("Disconnect Complete.\n");
+            NRF_LOG("Disconnect Complete.\n\r");
             break;
 
         case BLE_CTS_C_EVT_CURRENT_TIME:
-            printf("Current Time received.\n");
+            NRF_LOG("Current Time received.\n\r");
             current_time_print(p_evt);
             break;
 
         case BLE_CTS_C_EVT_INVALID_TIME:
-            printf("Invalid Time received.\n");
+            NRF_LOG("Invalid Time received.\n\r");
             break;
 
         default:
@@ -376,7 +373,7 @@ static void on_conn_params_evt(ble_conn_params_evt_t * p_evt)
 
     if (p_evt->evt_type == BLE_CONN_PARAMS_EVT_FAILED)
     {
-        err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_CONN_INTERVAL_UNACCEPTABLE);
+        err_code = sd_ble_gap_disconnect(m_cts.conn_handle, BLE_HCI_CONN_INTERVAL_UNACCEPTABLE);
         APP_ERROR_CHECK(err_code);
     }
 }
@@ -426,6 +423,20 @@ static void sys_evt_dispatch(uint32_t sys_evt)
 {
     pstorage_sys_event_handler(sys_evt);
     ble_advertising_on_sys_evt(sys_evt);
+}
+
+
+/**@brief Function for handling Database Discovery events.
+ *
+ * @details This function is a callback function to handle events from the database discovery module.
+ *          Depending on the UUIDs that are discovered, this function should forward the events
+ *          to their respective service instances.
+ *
+ * @param[in] p_event  Pointer to the database discovery event.
+ */
+static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
+{
+    ble_cts_c_on_db_disc_evt(&m_cts, p_evt);
 }
 
 
@@ -486,6 +497,8 @@ static void device_manager_init(bool erase_bonds)
 
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
+    register_param.sec_param.lesc         = SEC_PARAM_LESC;
+    register_param.sec_param.keypress     = SEC_PARAM_KEYPRESS;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
     register_param.sec_param.oob          = SEC_PARAM_OOB;
     register_param.sec_param.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
@@ -592,12 +605,13 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
         case BLE_GAP_EVT_CONNECTED:
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
-
-            m_conn_handle      = p_ble_evt->evt.gap_evt.conn_handle;
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
-            m_conn_handle = BLE_CONN_HANDLE_INVALID;
+            if (p_ble_evt->evt.gap_evt.conn_handle == m_cts.conn_handle)
+            {
+                m_cts.conn_handle = BLE_CONN_HANDLE_INVALID;
+            }
             break;
 
         default:
@@ -622,7 +636,8 @@ void bsp_event_handler(bsp_event_t event)
             break;
 
         case BSP_EVENT_DISCONNECT:
-            err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+            err_code = sd_ble_gap_disconnect(m_cts.conn_handle,
+                                             BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             if (err_code != NRF_ERROR_INVALID_STATE)
             {
                 APP_ERROR_CHECK(err_code);
@@ -630,20 +645,20 @@ void bsp_event_handler(bsp_event_t event)
             break;
 
         case BSP_EVENT_WHITELIST_OFF:
-//            err_code = ble_advertising_restart_without_whitelist();
-//            if (err_code != NRF_ERROR_INVALID_STATE)
-//            {
-//                APP_ERROR_CHECK(err_code);
-//            }
+            err_code = ble_advertising_restart_without_whitelist();
+            if (err_code != NRF_ERROR_INVALID_STATE)
+            {
+                APP_ERROR_CHECK(err_code);
+            }
             break;
 
         case BSP_EVENT_KEY_0:
-            if (m_conn_handle != BLE_CONN_HANDLE_INVALID)
+            if (m_cts.conn_handle != BLE_CONN_HANDLE_INVALID)
             {
                 err_code = ble_cts_c_current_time_read(&m_cts);
                 if (err_code == NRF_ERROR_NOT_FOUND)
                 {
-                    printf("Current Time Service is not discovered.\r\n");
+                    NRF_LOG("Current Time Service is not discovered.\r\n");
                 }
             }
             break;
@@ -681,21 +696,24 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 static void ble_stack_init(void)
 {
     uint32_t err_code;
-
+    
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
-
-#if defined(S110) || defined(S130) || defined(S132)
-    // Enable BLE stack
+    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
+    
     ble_enable_params_t ble_enable_params;
-    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#if (defined(S130) || defined(S132))
-    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
-#endif	
-    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
-    err_code = sd_ble_enable(&ble_enable_params);
+    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
+                                                    PERIPHERAL_LINK_COUNT,
+                                                    &ble_enable_params);
     APP_ERROR_CHECK(err_code);
-#endif
+    
+    //Check the ram settings against the used number of links
+    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
+    
+    // Enable BLE stack.
+    err_code = softdevice_enable(&ble_enable_params);
+    APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
     err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
@@ -768,39 +786,22 @@ static void advertising_init()
 }
 
 
-/**@brief Function for initializing the UART.
- */
-static void uart_init(void)
-{
-    uint32_t                     err_code;
-    const app_uart_comm_params_t comm_params =
-    {
-        RX_PIN_NUMBER,
-        TX_PIN_NUMBER,
-        RTS_PIN_NUMBER,
-        CTS_PIN_NUMBER,
-        APP_UART_FLOW_CONTROL_ENABLED,
-        false,
-        UART_BAUDRATE_BAUDRATE_Baud38400
-    };
-
-    APP_UART_FIFO_INIT(&comm_params,
-                       UART_RX_BUF_SIZE,
-                       UART_TX_BUF_SIZE,
-                       uart_error_handle,
-                       APP_IRQ_PRIORITY_LOW,
-                       err_code);
-    APP_ERROR_CHECK(err_code);
-}
-
-
 /**
  * @brief Database discovery collector initialization.
  */
 static void db_discovery_init(void)
 {
-    uint32_t err_code = ble_db_discovery_init();
+    uint32_t err_code = ble_db_discovery_init(db_disc_handler);
 
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for initializing the nrf log module.
+ */
+static void nrf_log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -824,7 +825,7 @@ int main(void)
 
     // Initialize
     timers_init();
-    uart_init();
+    nrf_log_init();
     buttons_leds_init(&erase_bonds);
     ble_stack_init();
     device_manager_init(erase_bonds);
@@ -839,7 +840,7 @@ int main(void)
     err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
     APP_ERROR_CHECK(err_code);
 
-    printf("\r\nCTS Start!\r\n");
+    NRF_LOG("\r\nCTS Start!\r\n");
     
     // Enter main loop
     for (;;)

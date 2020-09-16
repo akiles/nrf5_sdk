@@ -13,9 +13,12 @@
 #ifndef NRF_DRV_COMMON_H__
 #define NRF_DRV_COMMON_H__
 
-#include "nrf.h"
 #include <stdint.h>
 #include <stdbool.h>
+#include "nrf.h"
+#include "sdk_errors.h"
+#include "nrf_drv_config.h"
+
 
 /**
  * @brief Offset of event registers in every peripheral instance
@@ -25,7 +28,6 @@
 #define NRF_DRV_COMMON_EVREGS_OFFSET 0x100U
 
 /**
- * @enum nrf_drv_state_t
  * @brief Driver state.
  */
 typedef enum 
@@ -36,7 +38,6 @@ typedef enum
 } nrf_drv_state_t;
 
 /**
- * @enum nrf_drv_pwr_ctrl_t
  * @brief Driver power state selection.
  */
 typedef enum
@@ -44,6 +45,52 @@ typedef enum
     NRF_DRV_PWR_CTRL_ON,   /**< Power on request. */
     NRF_DRV_PWR_CTRL_OFF   /**< Power off request. */
 } nrf_drv_pwr_ctrl_t;
+
+/**
+ * @brief IRQ handler type.
+ */
+typedef void (*nrf_drv_irq_handler_t)(void);
+
+
+#if PERIPHERAL_RESOURCE_SHARING_ENABLED
+
+/**
+ * @brief Function for acquiring shared peripheral resources associated with
+ *        the specified peripheral.
+ *
+ * Certain resources and registers are shared among peripherals that have
+ * the same ID (for example: SPI0, SPIM0, SPIS0, TWI0, TWIM0, and TWIS0).
+ * Only one of them can be utilized at a given time. This function reserves
+ * proper resources to be used by the specified peripheral.
+ * If PERIPHERAL_RESOURCE_SHARING_ENABLED is set to a non-zero value, IRQ
+ * handlers for peripherals that are sharing resources with others are
+ * implemented by the nrf_drv_common module instead of individual drivers.
+ * The drivers must then specify their interrupt handling routines and
+ * register them by using this function.
+ *
+ * @param[in] p_per_base Requested peripheral base pointer.
+ * @param[in] handler    Interrupt handler to register. May be NULL
+ *                       if interrupts are not used for the peripheral.
+ *
+ * @retval NRF_SUCCESS             If resources were acquired successfully.
+ * @retval NRF_ERROR_BUSY          If resources were already acquired.
+ * @retval NRF_ERROR_INVALID_PARAM If the specified peripheral is not enabled 
+ *                                 or the peripheral does not share resources 
+ *                                 with other peripherals.
+ */
+ret_code_t nrf_drv_common_per_res_acquire(void const * p_per_base,
+                                          nrf_drv_irq_handler_t handler);
+
+/**
+ * @brief Function for releasing shared resources reserved previously by
+ *        @ref nrf_drv_common_per_res_acquire() for the specified peripheral.
+ *
+ * @param[in] p_per_base Requested peripheral base pointer.
+ */
+void nrf_drv_common_per_res_release(void const * p_per_base);
+
+#endif // PERIPHERAL_RESOURCE_SHARING_ENABLED
+
 
 /**
  * @brief Function sets priority and enables NVIC interrupt
@@ -102,7 +149,6 @@ __STATIC_INLINE uint32_t nrf_drv_event_to_bitpos(uint32_t event);
  */
 __STATIC_INLINE IRQn_Type nrf_drv_get_IRQn(void const * const pinst);
 
-
 /**
  * @brief Check if given object is in RAM
  *
@@ -116,11 +162,11 @@ __STATIC_INLINE bool nrf_drv_is_in_RAM(void const * const ptr);
 
 
 #ifndef SUPPRESS_INLINE_IMPLEMENTATION
+
 __STATIC_INLINE void nrf_drv_common_irq_disable(IRQn_Type IRQn)
 {
     NVIC_DisableIRQ(IRQn);
 }
-
 
 __STATIC_INLINE uint32_t nrf_drv_bitpos_to_event(uint32_t bit)
 {
@@ -142,6 +188,7 @@ __STATIC_INLINE bool nrf_drv_is_in_RAM(void const * const ptr)
 {
     return ((((uintptr_t)ptr) & 0xE0000000u) == 0x20000000u);
 }
-#endif
 
-#endif //NRF_DRV_COMMON_H__
+#endif // SUPPRESS_INLINE_IMPLEMENTATION
+
+#endif // NRF_DRV_COMMON_H__

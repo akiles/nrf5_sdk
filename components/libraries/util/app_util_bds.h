@@ -239,8 +239,10 @@ static __INLINE uint8_t bds_int16_decode(const uint8_t len,
                                          int16_t       * p_decoded_val)
 {
     UNUSED_VARIABLE(len);
-    uint16_t tmp = *p_decoded_val;
-    return bds_uint16_decode(len, p_encoded_data, &tmp);
+    uint16_t tmp = 0;
+    uint8_t retval = bds_uint16_decode(len, p_encoded_data, &tmp);
+    *p_decoded_val = (int16_t)tmp;
+    return retval;
 }
 
 

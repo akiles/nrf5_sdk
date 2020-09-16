@@ -21,12 +21,13 @@
 
 #include <stdint.h>
 
+
 #define PSTORAGE_FLASH_PAGE_SIZE    ((uint16_t)NRF_FICR->CODEPAGESIZE)   /**< Size of one flash page. */
 #define PSTORAGE_FLASH_EMPTY_MASK    0xFFFFFFFF                          /**< Bit mask that defines an empty address in flash. */
 
 #define PSTORAGE_FLASH_PAGE_END                                     \
-        ((NRF_UICR->BOOTLOADERADDR != PSTORAGE_FLASH_EMPTY_MASK)    \
-        ? (NRF_UICR->BOOTLOADERADDR / PSTORAGE_FLASH_PAGE_SIZE)     \
+        ((NRF_UICR->NRFFW[0] != PSTORAGE_FLASH_EMPTY_MASK)    \
+        ? (NRF_UICR->NRFFW[0] / PSTORAGE_FLASH_PAGE_SIZE)     \
         : NRF_FICR->CODESIZE)
 
 

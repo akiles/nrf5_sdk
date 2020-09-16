@@ -28,8 +28,10 @@
 #include "app_util.h"
 #include "nrf_sdm.h"
 #include "ant_dfu_constrains.h"
+#include "nrf_mbr.h"
 
 #define NRF_UICR_BOOT_START_ADDRESS     (NRF_UICR_BASE + 0x14)                                  /**< Register where the bootloader start address is stored in the UICR register. */
+#define NRF_UICR_NRFFW_1                (NRF_UICR_BASE + 0x18)                                  /**< Register where the MBR retaining address is stored in the UICR register. */
 
 #define CODE_REGION_1_START             SD_SIZE_GET(MBR_SIZE)                                   /**< This field should correspond to the size of Code Region 0, (which is identical to Start of Code Region 1), found in UICR.CLEN0 register. This value is used for compile safety, as the linker will fail if application expands into bootloader. Runtime, the bootloader will use the value found in UICR.CLEN0. */
 

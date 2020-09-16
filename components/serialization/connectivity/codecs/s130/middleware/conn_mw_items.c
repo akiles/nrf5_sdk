@@ -10,8 +10,9 @@ static const conn_mw_item_t conn_mw_item[] = {
     //Functions from nrf_soc.h
     {SD_POWER_SYSTEM_OFF, conn_mw_power_system_off},
     {SD_TEMP_GET, conn_mw_temp_get},
+    {SD_ECB_BLOCK_ENCRYPT, conn_mw_ecb_block_encrypt},
     //Functions from ble.h
-    {SD_BLE_TX_BUFFER_COUNT_GET, conn_mw_ble_tx_buffer_count_get},
+    {SD_BLE_TX_PACKET_COUNT_GET, conn_mw_ble_tx_packet_count_get},
     {SD_BLE_UUID_VS_ADD, conn_mw_ble_uuid_vs_add},
     {SD_BLE_UUID_DECODE, conn_mw_ble_uuid_decode},
     {SD_BLE_UUID_ENCODE, conn_mw_ble_uuid_encode},
@@ -19,6 +20,7 @@ static const conn_mw_item_t conn_mw_item[] = {
     {SD_BLE_OPT_GET, conn_mw_ble_opt_get},
     {SD_BLE_OPT_SET, conn_mw_ble_opt_set},
     {SD_BLE_ENABLE, conn_mw_ble_enable},
+    {SD_BLE_USER_MEM_REPLY, conn_mw_ble_user_mem_reply},
     //Functions from ble_l2cap.h
     {SD_BLE_L2CAP_CID_REGISTER, conn_mw_ble_l2cap_cid_register},
     {SD_BLE_L2CAP_CID_UNREGISTER, conn_mw_ble_l2cap_cid_unregister},
@@ -51,6 +53,10 @@ static const conn_mw_item_t conn_mw_item[] = {
     {SD_BLE_GAP_CONN_SEC_GET, conn_mw_ble_gap_conn_sec_get},
     {SD_BLE_GAP_RSSI_START, conn_mw_ble_gap_rssi_start},
     {SD_BLE_GAP_RSSI_STOP, conn_mw_ble_gap_rssi_stop},
+    {SD_BLE_GAP_KEYPRESS_NOTIFY, conn_mw_ble_gap_keypress_notify},
+    {SD_BLE_GAP_LESC_DHKEY_REPLY, conn_mw_ble_gap_lesc_dhkey_reply},
+    {SD_BLE_GAP_LESC_OOB_DATA_SET, conn_mw_ble_gap_lesc_oob_data_set},
+    {SD_BLE_GAP_LESC_OOB_DATA_GET, conn_mw_ble_gap_lesc_oob_data_get},
     //Functions from ble_gattc.h
     {SD_BLE_GATTC_PRIMARY_SERVICES_DISCOVER, conn_mw_ble_gattc_primary_services_discover},
     {SD_BLE_GATTC_RELATIONSHIPS_DISCOVER, conn_mw_ble_gattc_relationships_discover},
@@ -61,6 +67,7 @@ static const conn_mw_item_t conn_mw_item[] = {
     {SD_BLE_GATTC_CHAR_VALUES_READ, conn_mw_ble_gattc_char_values_read},
     {SD_BLE_GATTC_WRITE, conn_mw_ble_gattc_write},
     {SD_BLE_GATTC_HV_CONFIRM, conn_mw_ble_gattc_hv_confirm},
+    {SD_BLE_GATTC_ATTR_INFO_DISCOVER, conn_mw_ble_gattc_attr_info_discover},
     //Functions from ble_gatts.h
     {SD_BLE_GATTS_SERVICE_ADD, conn_mw_ble_gatts_service_add},
     {SD_BLE_GATTS_INCLUDE_ADD, conn_mw_ble_gatts_include_add},

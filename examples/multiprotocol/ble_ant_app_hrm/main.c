@@ -63,11 +63,13 @@
 #include "bsp.h"
 #include "ant_error.h"
 #include "ant_stack_config.h"
+#include "ant_key_manager.h"
+#include "ant_hrm.h"
 
-#define WAKEUP_BUTTON_ID               	0                                            /**< Button used to wake up the application. */
+#define WAKEUP_BUTTON_ID                0                                            /**< Button used to wake up the application. */
 #define BOND_DELETE_ALL_BUTTON_ID       1                                            /**< Button used for deleting all bonded centrals during startup. */
 
-#define DEVICE_NAME                     "nrf51422_HRM"                               /**< Name of device. Will be included in the advertising data. */
+#define DEVICE_NAME                     "Nordic_HRM"                                 /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME               "NordicSemiconductor"                        /**< Manufacturer. Will be passed to Device Information Service. */
 #define APP_ADV_INTERVAL                40                                           /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
 #define APP_ADV_TIMEOUT_IN_SECONDS      180                                          /**< The advertising timeout in units of seconds. */
@@ -95,31 +97,27 @@
 #define SEC_PARAM_MIN_KEY_SIZE          7                                            /**< Minimum encryption key size. */
 #define SEC_PARAM_MAX_KEY_SIZE          16                                           /**< Maximum encryption key size. */
 
+#define CENTRAL_LINK_COUNT              0                                            /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
+#define PERIPHERAL_LINK_COUNT           1                                            /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
+
 #define DEAD_BEEF                       0xDEADBEEF                                   /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
 #define ANT_HRMRX_ANT_CHANNEL           0                                            /**< Default ANT Channel. */
-#define ANT_HRMRX_CHANNEL_TYPE          0x40                                         /**< Channel Type Slave RX only. */
-#define ANT_HRMRX_DEVICE_TYPE           0x78                                         /**< Channel ID device type. */
 #define ANT_HRMRX_DEVICE_NUMBER         0                                            /**< Device Number. */
 #define ANT_HRMRX_TRANS_TYPE            0                                            /**< Transmission Type. */
-#define ANT_HRMRX_MSG_PERIOD            0x1F86                                       /**< Message Periods, decimal 8070 (4.06Hz). */
-#define ANT_HRMRX_EXT_ASSIGN            0x00                                         /**< ANT Ext Assign. */
-#define ANT_HRM_TOGGLE_MASK             0x80                                         /**< HRM Page Toggle Bit Mask. */
 #define ANTPLUS_NETWORK_NUMBER          0                                            /**< Network number. */
-#define ANTPLUS_RF_FREQ                 0x39                                         /**< Frequency, Decimal 57 (2457 MHz). */
-#define ANT_HRM_PAGE_0                  0                                            /**< HRM page 0 constant. */
-#define ANT_HRM_PAGE_1                  1                                            /**< HRM page 1 constant. */
-#define ANT_HRM_PAGE_2                  2                                            /**< HRM page 2 constant. */
-#define ANT_HRM_PAGE_3                  3                                            /**< HRM page 3 constant. */
-#define ANT_HRM_PAGE_4                  4                                            /**< HRM page 4 constant. */
-#define ANT_BUFFER_INDEX_MESG_ID        0x01                                         /**< Index for Message ID. */
-#define ANT_BUFFER_INDEX_MESG_DATA      0x03                                         /**< Index for Data. */
-#define ANT_HRMRX_NETWORK_KEY           {0, 0, 0, 0, 0, 0, 0, 0}                     /**< The default network key used. */
 
 static uint16_t                         m_conn_handle = BLE_CONN_HANDLE_INVALID;     /**< Handle of the current connection. */
 static ble_gap_adv_params_t             m_adv_params;                                /**< Parameters to be passed to the stack when starting advertising. */
 static ble_hrs_t                        m_hrs;                                       /**< Structure used to identify the heart rate service. */
-static uint8_t                          m_ant_network_key[] = ANT_HRMRX_NETWORK_KEY; /**< ANT PLUS network key. */
+
+HRM_DISP_CHANNEL_CONFIG_DEF(m_ant_hrm,
+                            ANT_HRMRX_ANT_CHANNEL,
+                            ANT_HRMRX_TRANS_TYPE,
+                            ANT_HRMRX_DEVICE_NUMBER,
+                            ANTPLUS_NETWORK_NUMBER,
+                            HRM_MSG_PERIOD_4Hz);
+ant_hrm_profile_t m_ant_hrm;
 
 #ifdef BONDING_ENABLE
 static dm_application_instance_t        m_app_handle;                                /**< Application identifier allocated by device manager */
@@ -148,13 +146,13 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 static void advertising_start(void)
 {
     uint32_t err_code;
-    
+
     err_code = sd_ble_gap_adv_start(&m_adv_params);
     if (err_code != NRF_SUCCESS && err_code != NRF_ERROR_INVALID_STATE)
     {
         APP_ERROR_HANDLER(err_code);
     }
-    
+
     err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
     APP_ERROR_CHECK(err_code);
 }
@@ -164,11 +162,8 @@ static void advertising_start(void)
  */
 static void ant_hrm_rx_start(void)
 {
-    uint32_t err_code = sd_ant_channel_open(ANT_HRMRX_ANT_CHANNEL);
-    if (err_code != NRF_SUCCESS && err_code != NRF_ANT_ERROR_CHANNEL_IN_WRONG_STATE)
-    {
-        APP_ERROR_HANDLER(err_code);
-    }
+    uint32_t err_code = ant_hrm_disp_open(&m_ant_hrm);
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -205,12 +200,14 @@ static void gap_params_init(void)
 
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&sec_mode);
     
-    err_code = sd_ble_gap_device_name_set(&sec_mode, (const uint8_t *)DEVICE_NAME, strlen(DEVICE_NAME));
+    err_code = sd_ble_gap_device_name_set(&sec_mode,
+                                          (const uint8_t *)DEVICE_NAME, 
+                                          strlen(DEVICE_NAME));
     APP_ERROR_CHECK(err_code);
 
     err_code = sd_ble_gap_appearance_set(BLE_APPEARANCE_HEART_RATE_SENSOR_HEART_RATE_BELT);
     APP_ERROR_CHECK(err_code);
-    
+
     memset(&gap_conn_params, 0, sizeof(gap_conn_params));
 
     gap_conn_params.min_conn_interval = MIN_CONN_INTERVAL;
@@ -233,7 +230,7 @@ static void advertising_init(void)
     uint32_t      err_code;
     ble_advdata_t advdata;
     uint8_t       flags = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
-    
+
     ble_uuid_t adv_uuids[] =
     {
         {BLE_UUID_HEART_RATE_SERVICE,         BLE_UUID_TYPE_BLE},
@@ -248,13 +245,13 @@ static void advertising_init(void)
     advdata.flags                   = flags;
     advdata.uuids_complete.uuid_cnt = sizeof(adv_uuids) / sizeof(adv_uuids[0]);
     advdata.uuids_complete.p_uuids  = adv_uuids;
-    
+
     err_code = ble_advdata_set(&advdata, NULL);
     APP_ERROR_CHECK(err_code);
 
     // Initialise advertising parameters (used when starting advertising).
     memset(&m_adv_params, 0, sizeof(m_adv_params));
-    
+
     m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_IND;
     m_adv_params.p_peer_addr = NULL;
     m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
@@ -273,12 +270,12 @@ static void services_init(void)
     ble_hrs_init_t hrs_init;
     ble_dis_init_t dis_init;
     uint8_t        body_sensor_location;
-    
+
     // Initialize Heart Rate Service.
     body_sensor_location = BLE_HRS_BODY_SENSOR_LOCATION_FINGER;
-    
+
     memset(&hrs_init, 0, sizeof(hrs_init));
-    
+
     hrs_init.evt_handler                 = NULL;
     hrs_init.is_sensor_contact_supported = false;
     hrs_init.p_body_sensor_location      = &body_sensor_location;
@@ -296,7 +293,7 @@ static void services_init(void)
 
     // Initialize Device Information Service
     memset(&dis_init, 0, sizeof(dis_init));
-    
+
     ble_srv_ascii_to_utf8(&dis_init.manufact_name_str, MANUFACTURER_NAME);
 
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&dis_init.dis_attr_md.read_perm);
@@ -320,14 +317,14 @@ static void services_init(void)
 static void on_conn_params_evt(ble_conn_params_evt_t * p_evt)
 {
     uint32_t err_code;
-    
+
     switch (p_evt->evt_type)
     {
         case BLE_CONN_PARAMS_EVT_FAILED:
             err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_CONN_INTERVAL_UNACCEPTABLE);
             APP_ERROR_CHECK(err_code);
             break;
-            
+
         default:
             // No implementation needed.
             break;
@@ -368,121 +365,6 @@ static void conn_params_init(void)
 }
 
 
-/**@brief Initialize the ANT HRM reception.
- */
-static void ant_hrm_rx_init(void)
-{
-    uint32_t err_code;
-    
-    err_code = ant_stack_static_config();
-    APP_ERROR_CHECK(err_code);
-	
-    err_code = sd_ant_network_address_set(ANTPLUS_NETWORK_NUMBER, m_ant_network_key);
-    APP_ERROR_CHECK(err_code);
-    
-    err_code = sd_ant_channel_assign(ANT_HRMRX_ANT_CHANNEL,
-                                     ANT_HRMRX_CHANNEL_TYPE,
-                                     ANTPLUS_NETWORK_NUMBER,
-                                     ANT_HRMRX_EXT_ASSIGN);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = sd_ant_channel_id_set(ANT_HRMRX_ANT_CHANNEL,
-                                     ANT_HRMRX_DEVICE_NUMBER,
-                                     ANT_HRMRX_DEVICE_TYPE,
-                                     ANT_HRMRX_TRANS_TYPE);
-    APP_ERROR_CHECK(err_code);
-    
-    err_code = sd_ant_channel_radio_freq_set(ANT_HRMRX_ANT_CHANNEL, ANTPLUS_RF_FREQ);
-    APP_ERROR_CHECK(err_code);
-    
-    err_code = sd_ant_channel_period_set(ANT_HRMRX_ANT_CHANNEL, ANT_HRMRX_MSG_PERIOD);
-    APP_ERROR_CHECK(err_code);
-}
-
-
-/**@brief Handle received ANT data message.
- * 
- * @param[in]  p_evt_buffer   The buffer containing received data. 
- */
-static void ant_data_messages_handle(uint8_t * p_evt_buffer)
-{
-    static uint32_t s_previous_beat_count = 0;    // Heart beat count from previously received page
-    uint32_t        err_code;
-    uint32_t        current_page;
-    uint8_t         beat_count;
-    uint8_t         computed_heart_rate;
-    uint16_t        beat_time;
-
-    // Decode the default page data present in all pages
-    beat_time           = uint16_decode(&p_evt_buffer[ANT_BUFFER_INDEX_MESG_DATA + 4]);
-    beat_count          = (uint8_t)p_evt_buffer[ANT_BUFFER_INDEX_MESG_DATA + 6];
-    computed_heart_rate = (uint8_t)p_evt_buffer[ANT_BUFFER_INDEX_MESG_DATA + 7];
-
-    // Decode page specific data
-    current_page = p_evt_buffer[ANT_BUFFER_INDEX_MESG_DATA];
-    switch (current_page & ~ANT_HRM_TOGGLE_MASK)
-    {
-        case ANT_HRM_PAGE_4:
-            // Ensure that there is only one beat between time intervals.
-            if ((beat_count - s_previous_beat_count) == 1)
-            {
-                uint16_t prev_beat = uint16_decode(&p_evt_buffer[ANT_BUFFER_INDEX_MESG_DATA + 2]);
-                
-                // Subtracting the event time gives the R-R interval
-                ble_hrs_rr_interval_add(&m_hrs, beat_time - prev_beat);
-            }
-
-            s_previous_beat_count = beat_count;
-            break;
-          
-        case ANT_HRM_PAGE_0:
-        case ANT_HRM_PAGE_1:
-        case ANT_HRM_PAGE_2:
-        case ANT_HRM_PAGE_3:
-        default:
-            // No implementation needed.
-            break;
-    }
-    
-    // Notify the received heart rate measurement
-    err_code = ble_hrs_heart_rate_measurement_send(&m_hrs, computed_heart_rate);
-    if (
-        (err_code != NRF_SUCCESS)
-        &&
-        (err_code != NRF_ERROR_INVALID_STATE)
-        &&
-        (err_code != BLE_ERROR_NO_TX_BUFFERS)
-        &&
-        (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
-    )
-    {
-        APP_ERROR_HANDLER(err_code);
-    }
-}
-
-
-/**@brief ANT RX event handler.
- *
- * @param[in]   p_ant_evt   Event received from the stack.
- */
-static void on_ant_evt_rx(ant_evt_t * p_ant_evt)
-{
-    uint32_t message_id = p_ant_evt->evt_buffer[ANT_BUFFER_INDEX_MESG_ID];
-
-    switch (message_id)
-    {
-        case MESG_BROADCAST_DATA_ID:
-        case MESG_ACKNOWLEDGED_DATA_ID:
-            ant_data_messages_handle(p_ant_evt->evt_buffer);
-            break;
-
-        default:
-            // No implementation needed.
-            break;
-    }
-}
-
-
 /**@brief ANT CHANNEL_CLOSED event handler.
  */
 static void on_ant_evt_channel_closed(void)
@@ -502,7 +384,7 @@ static void on_ant_evt(ant_evt_t * p_ant_evt)
         switch (p_ant_evt->event)
         {
             case EVENT_RX:
-                on_ant_evt_rx(p_ant_evt);
+                ant_hrm_disp_evt_handler(&m_ant_hrm, p_ant_evt);
                 break;
 
             case EVENT_CHANNEL_CLOSED:
@@ -513,6 +395,64 @@ static void on_ant_evt(ant_evt_t * p_ant_evt)
                 // No implementation needed.
                 break;
         }
+    }
+}
+
+
+/**@brief Handle received ANT+ HRM data.
+ * 
+ * @param[in]   p_profile       Pointer to the ANT+ HRM profile instance.
+ * @param[in]   event           Event related with ANT+ HRM Display profile. 
+ */
+static void ant_hrm_evt_handler(ant_hrm_profile_t * p_profile, ant_hrm_evt_t event)
+{
+    static uint32_t     s_previous_beat_count  = 0;    // Heart beat count from previously received page
+    uint32_t            err_code;
+    uint16_t            beat_time              = p_profile->page_0.beat_time;
+    uint32_t            beat_count             = p_profile->page_0.beat_count;
+    uint32_t            computed_heart_rate    = p_profile->page_0.computed_heart_rate;
+
+    switch (event)
+    {
+        case ANT_HRM_PAGE_0_UPDATED:
+            /* fall through */
+        case ANT_HRM_PAGE_1_UPDATED:
+            /* fall through */
+        case ANT_HRM_PAGE_2_UPDATED:
+            /* fall through */
+        case ANT_HRM_PAGE_3_UPDATED:
+            break;
+        case ANT_HRM_PAGE_4_UPDATED:
+        
+            // Ensure that there is only one beat between time intervals.
+            if ((beat_count - s_previous_beat_count) == 1)
+            {
+                uint16_t prev_beat = p_profile->page_4.prev_beat;
+                
+                // Subtracting the event time gives the R-R interval
+                ble_hrs_rr_interval_add(&m_hrs, beat_time - prev_beat);
+            }
+
+            s_previous_beat_count = beat_count;
+            break;
+
+        default:
+            break;
+    }
+
+    // Notify the received heart rate measurement
+    err_code = ble_hrs_heart_rate_measurement_send(&m_hrs, computed_heart_rate);
+    if (
+        (err_code != NRF_SUCCESS)
+        &&
+        (err_code != NRF_ERROR_INVALID_STATE)
+        &&
+        (err_code != BLE_ERROR_NO_TX_PACKETS)
+        &&
+        (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
+    )
+    {
+        APP_ERROR_HANDLER(err_code);
     }
 }
 
@@ -692,15 +632,25 @@ static void device_manager_init(void)
 static void ble_ant_stack_init(void)
 {
     uint32_t                err_code;
+    
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
 
     // Initialize SoftDevice
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
+    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
     
     // Initialize BLE stack
     ble_enable_params_t ble_enable_params;
-    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
+                                                    PERIPHERAL_LINK_COUNT,
+                                                    &ble_enable_params);
+    APP_ERROR_CHECK(err_code);
+
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
-    err_code = sd_ble_enable(&ble_enable_params);
+
+    //Check the ram settings against the used number of links
+    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
+
+    err_code = softdevice_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
 
     // Subscribe for BLE events.
@@ -709,6 +659,12 @@ static void ble_ant_stack_init(void)
         
     // Subscribe for ANT events.
     err_code = softdevice_ant_evt_handler_set(on_ant_evt);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = ant_stack_static_config();
+    APP_ERROR_CHECK(err_code);
+
+    err_code = ant_plus_key_set(ANTPLUS_NETWORK_NUMBER);
     APP_ERROR_CHECK(err_code);
 
 #ifdef BONDING_ENABLE
@@ -738,8 +694,9 @@ int main(void)
     uint32_t err_code;
     // Initialize peripherals
     timers_init();
+    app_trace_init();
 
-    // Initialize S310 SoftDevice
+    // Initialize S332 SoftDevice
     ble_ant_stack_init();
 
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
@@ -753,8 +710,11 @@ int main(void)
     services_init();
     conn_params_init();
 
-    // Initialize ANT HRM recieve channel.
-    ant_hrm_rx_init();
+    // Initialize ANT+ HRM receive channel.
+    err_code = ant_hrm_disp_init(&m_ant_hrm,
+                                 HRM_DISP_CHANNEL_CONFIG(m_ant_hrm),
+                                 ant_hrm_evt_handler);
+    APP_ERROR_CHECK(err_code);
 
 #ifdef BONDING_ENABLE
     uint32_t count; 

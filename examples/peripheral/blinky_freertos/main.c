@@ -70,7 +70,7 @@ int main(void)
     TimerHandle_t xLed1Handle;       /**< Reference to LED1 toggling FreeRTOS timer. */
     ret_code_t err_code;
 
-    err_code = nrf_drv_clock_init(NULL);
+    err_code = nrf_drv_clock_init();
     APP_ERROR_CHECK(err_code);
 
     // Configure LED-pins as outputs

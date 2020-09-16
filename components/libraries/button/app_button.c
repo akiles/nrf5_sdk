@@ -11,13 +11,11 @@
  */
 
 #include "app_button.h"
-#include <string.h>
-#include "nordic_common.h"
-#include "app_util.h"
 #include "app_timer.h"
 #include "app_error.h"
 #include "nrf_drv_gpiote.h"
 #include "nrf_assert.h"
+#include "sdk_common.h"
 
 static app_button_cfg_t *             mp_buttons = NULL;           /**< Button configuration. */
 static uint8_t                        m_button_count;              /**< Number of configured buttons. */
@@ -122,10 +120,7 @@ uint32_t app_button_init(app_button_cfg_t *             p_buttons,
     if (!nrf_drv_gpiote_is_init())
     {
         err_code = nrf_drv_gpiote_init();
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     // Save configuration.
@@ -144,10 +139,7 @@ uint32_t app_button_init(app_button_cfg_t *             p_buttons,
         config.pull = p_btn->pull_cfg;
         
         err_code = nrf_drv_gpiote_in_init(p_btn->pin_no, &config, gpiote_event_handler);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     // Create polling timer.

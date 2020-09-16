@@ -11,11 +11,9 @@
  */
 
 #include "ble_advdata.h"
-#include "nordic_common.h"
-#include "nrf_error.h"
 #include "ble_gap.h"
 #include "ble_srv_common.h"
-#include "app_util.h"
+#include "sdk_common.h"
 
 // NOTE: For now, Security Manager Out of Band Flags (OOB) are omitted from the advertising data.
 
@@ -103,10 +101,7 @@ static uint32_t ble_device_addr_encode(uint8_t  * p_encoded_data,
 
     // Get BLE address
     err_code = sd_ble_gap_address_get(&device_addr);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     // Encode LE Bluetooth Device Address
     p_encoded_data[*p_offset]  = (uint8_t)(ADV_AD_TYPE_FIELD_SIZE +
@@ -160,10 +155,7 @@ static uint32_t name_encode(const ble_advdata_t * p_advdata,
     // Get GAP device name and length
     err_code = sd_ble_gap_device_name_get(&p_encoded_data[(*p_offset) + ADV_AD_DATA_OFFSET],
                                           &actual_length);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
     
     // Check if device intend to use short name and it can fit available data size.
     if ((p_advdata->name_type == BLE_ADVDATA_FULL_NAME) && (actual_length <= rem_adv_data_len))
@@ -223,10 +215,7 @@ static uint32_t appearance_encode(uint8_t  * p_encoded_data,
 
     // Get GAP appearance field.
     err_code = sd_ble_gap_appearance_get(&appearance);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     // Encode Length, AD Type and Appearance.
     p_encoded_data[*p_offset]  = (uint8_t)(ADV_AD_TYPE_FIELD_SIZE + AD_TYPE_APPEARANCE_DATA_SIZE);
@@ -326,10 +315,7 @@ static uint32_t uuid_list_sized_encode(const ble_advdata_uuid_list_t * p_uuid_li
         
         // Find encoded uuid size.
         err_code = sd_ble_uuid_encode(&uuid, &encoded_size, NULL);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
 
         // Check size.
         if (encoded_size == uuid_size)
@@ -353,10 +339,7 @@ static uint32_t uuid_list_sized_encode(const ble_advdata_uuid_list_t * p_uuid_li
 
             // Write UUID.
             err_code = sd_ble_uuid_encode(&uuid, &encoded_size, &p_encoded_data[*p_offset]);
-            if (err_code != NRF_SUCCESS)
-            {
-                return err_code;
-            }
+            VERIFY_SUCCESS(err_code);
             *p_offset += encoded_size;
         }
     }
@@ -393,10 +376,7 @@ static uint32_t uuid_list_encode(const ble_advdata_uuid_list_t * p_uuid_list,
                                       p_encoded_data,
                                       p_offset,
                                       max_size);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     // Encode 128 bit UUIDs.
     err_code = uuid_list_sized_encode(p_uuid_list,
@@ -405,10 +385,7 @@ static uint32_t uuid_list_encode(const ble_advdata_uuid_list_t * p_uuid_list,
                                       p_encoded_data,
                                       p_offset,
                                       max_size);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     return NRF_SUCCESS;
 }
@@ -466,10 +443,7 @@ static uint32_t conn_int_encode(const ble_advdata_conn_int_t * p_conn_int,
 
     // Check parameters.
     err_code = conn_int_check(p_conn_int);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     // Encode Length and AD Type.
     p_encoded_data[*p_offset]  = (uint8_t)(ADV_AD_TYPE_FIELD_SIZE + AD_TYPE_CONN_INT_DATA_SIZE);
@@ -595,60 +569,42 @@ uint32_t adv_data_encode(ble_advdata_t const * const p_advdata,
                                              p_encoded_data,
                                              p_len,
                                              max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 		
     // Encode Security Manager TK value
     if (NULL != p_advdata->p_tk_value)
     {
         err_code = tk_value_encode(p_advdata->p_tk_value, p_encoded_data, p_len, max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     // Encode LE Role
     if (BLE_ADVDATA_ROLE_NOT_PRESENT != p_advdata->le_role)
     {
         err_code = le_role_encode(p_advdata->le_role, p_encoded_data, p_len, max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     // Encode LE Bluetooth Device Address
     if (p_advdata->include_ble_device_addr)
     {
         err_code = ble_device_addr_encode(p_encoded_data, p_len, max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     // Encode appearance.
     if (p_advdata->include_appearance)
     {
         err_code = appearance_encode(p_encoded_data, p_len, max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     //Encode Flags
     if(p_advdata->flags != 0 )
     {
         err_code = flags_encode(p_advdata->flags, p_encoded_data, p_len, max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     } 
 
     // Encode TX power level.
@@ -658,10 +614,7 @@ uint32_t adv_data_encode(ble_advdata_t const * const p_advdata,
                                          p_encoded_data,
                                          p_len,
                                          max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
     
     // Encode 'more available' uuid list.
@@ -673,10 +626,7 @@ uint32_t adv_data_encode(ble_advdata_t const * const p_advdata,
                                     p_encoded_data,
                                     p_len,
                                     max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     // Encode 'complete' uuid list.
@@ -688,10 +638,7 @@ uint32_t adv_data_encode(ble_advdata_t const * const p_advdata,
                                     p_encoded_data,
                                     p_len,
                                     max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     // Encode 'solicited service' uuid list.
@@ -703,20 +650,14 @@ uint32_t adv_data_encode(ble_advdata_t const * const p_advdata,
                                     p_encoded_data,
                                     p_len,
                                     max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     // Encode Slave Connection Interval Range.
     if (p_advdata->p_slave_conn_int != NULL)
     {
         err_code = conn_int_encode(p_advdata->p_slave_conn_int, p_encoded_data, p_len, max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     // Encode Manufacturer Specific Data.
@@ -726,30 +667,21 @@ uint32_t adv_data_encode(ble_advdata_t const * const p_advdata,
                                               p_encoded_data,
                                               p_len,
                                               max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     // Encode Service Data.
     if (p_advdata->service_data_count > 0)
     {
         err_code = service_data_encode(p_advdata, p_encoded_data, p_len, max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     // Encode name. WARNING: it is encoded last on purpose since too long device name is truncated.
     if (p_advdata->name_type != BLE_ADVDATA_NO_NAME)
     {
         err_code = name_encode(p_advdata, p_encoded_data, p_len, max_size);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
     }
 
     return err_code;
@@ -796,16 +728,10 @@ uint32_t ble_advdata_set(const ble_advdata_t * p_advdata, const ble_advdata_t * 
     if (p_advdata != NULL)
     {
         err_code = advdata_check(p_advdata);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
 
         err_code = adv_data_encode(p_advdata, encoded_advdata, &len_advdata);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
         p_encoded_advdata = encoded_advdata;
     }
     else
@@ -818,16 +744,10 @@ uint32_t ble_advdata_set(const ble_advdata_t * p_advdata, const ble_advdata_t * 
     if (p_srdata != NULL)
     {
         err_code = srdata_check(p_srdata);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
 
         err_code = adv_data_encode(p_srdata, encoded_srdata, &len_srdata);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        VERIFY_SUCCESS(err_code);
         p_encoded_srdata = encoded_srdata;
     }
     else

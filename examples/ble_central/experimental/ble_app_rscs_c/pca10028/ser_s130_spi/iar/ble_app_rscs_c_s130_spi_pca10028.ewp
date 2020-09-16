@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -186,6 +186,7 @@
           <state>BSP_UART_SUPPORT</state>
           <state>NRF51</state>
           <state>SWI_DISABLE0</state>
+          <state>NRF_LOG_USES_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -250,7 +251,7 @@
         </option>
         <option>
           <name>CCDebugInfo</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>IEndianMode</name>
@@ -316,24 +317,26 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\..\config\ble_app_rscs_c_s130_spi_pca10028</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\ble_db_discovery</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\ble_services\ble_rscs_c</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\device_manager</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\ble_flash</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\hal</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\pstorage</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\spi_master</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crc16</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fds</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fds\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fstorage</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fstorage\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\mailbox</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\scheduler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\timer</state>
@@ -350,7 +353,11 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s130\headers</state>
-          <state>$TOOLKIT_DIR$\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s130\headers\nrf51</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\segger_rtt</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -500,7 +507,7 @@
         </option>
         <option>
           <name>ADebug</name>
-          <state>1</state>
+          <state></state>
         </option>
         <option>
           <name>AltRegisterNames</name>
@@ -517,6 +524,7 @@
           <state>BSP_UART_SUPPORT</state>
           <state>NRF51</state>
           <state>SWI_DISABLE0</state>
+          <state>NRF_LOG_USES_UART=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -614,24 +622,26 @@
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$\..\..\..\config\ble_app_rscs_c_s130_spi_pca10028</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\ble_db_discovery</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\ble_services\ble_rscs_c</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\device_manager</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\ble_flash</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\hal</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\pstorage</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\spi_master</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crc16</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\experimental_section_vars</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fds</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fds\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fstorage</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fstorage\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\mailbox</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\scheduler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\timer</state>
@@ -648,6 +658,11 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s130\headers</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s130\headers\nrf51</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\components\toolchain\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\external\segger_rtt</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1148,6 +1163,12 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gap_evt_disconnected.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gap_evt_key_pressed.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gap_evt_lesc_dhkey_request.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gap_evt_passkey_display.c</name>
     </file>
     <file>
@@ -1167,6 +1188,18 @@
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gap_evt_timeout.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gap_keypress_notify.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gap_lesc_dhkey_reply.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gap_lesc_oob_data_get.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gap_lesc_oob_data_set.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gap_ppcp_get.c</name>
@@ -1202,6 +1235,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gap_tx_power_set.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gattc_attr_info_discover.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gattc_char_value_by_uuid_read.c</name>
     </file>
     <file>
@@ -1212,6 +1248,9 @@
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gattc_descriptors_discover.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gattc_evt_attr_info_disc_rsp.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gattc_evt_char_disc_rsp.c</name>
@@ -1262,6 +1301,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gattc_write.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gatts_attr_get.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gatts_characteristic_add.c</name>
     </file>
     <file>
@@ -1290,6 +1332,9 @@
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gatts_include_add.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gatts_initial_user_handle_get.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_gatts_rw_authorize_reply.c</name>
@@ -1340,7 +1385,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\common\struct_ser\s130\ble_struct_serialization.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_tx_buffer_count_get.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_tx_packet_count_get.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ble_user_mem_reply.c</name>
@@ -1359,6 +1404,12 @@
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\common\cond_field_serialization.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\ecb_block_encrypt.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\common\struct_ser\s130\nrf_soc_struct_serialization.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\power_system_off.c</name>
@@ -1394,6 +1445,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\app_error.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</name>
     </file>
     <file>
@@ -1412,10 +1466,25 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\crc16\crc16.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fds\fds.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\fstorage\fstorage.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\nrf_log.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\uart\retarget.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\util\sdk_mapped_flags.c</name>
     </file>
   </group>
   <group>
@@ -1433,9 +1502,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\ble_flash\ble_flash.c</name>
-    </file>
-    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</name>
     </file>
     <file>
@@ -1451,10 +1517,10 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\hal\nrf_nvmc.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\pstorage\pstorage_nosd.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>
     </file>
   </group>
   <group>
@@ -1473,12 +1539,27 @@
     </file>
   </group>
   <group>
+  <name>nRF_Segger_RTT</name>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\segger_rtt\RTT_Syscalls_IAR.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_printf.c</name>
+    </file>
+  </group>
+  <group>
   <name>nRF_BLE</name>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\common\ble_advdata.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\common\ble_conn_params.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\common\ble_conn_state.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\ble_db_discovery\ble_db_discovery.c</name>
@@ -1490,7 +1571,43 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\common\ble_srv_common.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\device_manager\device_manager_central.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager\gatt_cache_manager.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager\gattc_cache_manager.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager\gatts_cache_manager.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager\id_manager.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager\peer_data.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager\peer_data_storage.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager\peer_database.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager\peer_id.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager\peer_manager.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager\pm_buffer.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager\pm_mutex.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager\security_dispatcher.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\ble\peer_manager\security_manager.c</name>
     </file>
   </group>
   <group>
@@ -1505,7 +1622,7 @@
   <group>
   <name>nRF_SoftDevice</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51822_1.0.0_licence_agreement.txt</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\s130\doc\s130_nrf51_2.0.0_licence_agreement.txt</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\softdevice\common\softdevice_handler\softdevice_handler.c</name>

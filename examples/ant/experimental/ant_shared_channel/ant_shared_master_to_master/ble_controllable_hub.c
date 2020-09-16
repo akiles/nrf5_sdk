@@ -256,12 +256,17 @@ static void on_ctrlpt_write(ble_achs_t *            p_achs,
 {
     ble_gatts_rw_authorize_reply_params_t auth_reply;
 
-    auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
+    auth_reply.type                 = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
+    auth_reply.params.write.update  = 1;
+    auth_reply.params.write.offset  = 0;
+    auth_reply.params.write.len     = 0;
+    auth_reply.params.write.p_data  = NULL;
 
     if (is_cccd_configured(p_achs->conn_handle))
     {
         auth_reply.params.write.gatt_status = BLE_GATT_STATUS_SUCCESS;
         uint32_t err_code = sd_ble_gatts_rw_authorize_reply(p_achs->conn_handle, &auth_reply);
+
         (void)err_code;
     }
     else

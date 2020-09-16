@@ -88,14 +88,14 @@ void setup_example(void)
 int main(void)
 {
     uint32_t err_code;
-    err_code = nrf_drv_clock_init(NULL);
+    err_code = nrf_drv_clock_init();
     APP_ERROR_CHECK(err_code);
     setup_example();
 
     while (true)
     {
         nrf_delay_ms(1000);
-        nrf_drv_clock_lfclk_request();
+        nrf_drv_clock_lfclk_request(NULL);
 
         nrf_delay_ms(1000);
         nrf_drv_clock_lfclk_release();

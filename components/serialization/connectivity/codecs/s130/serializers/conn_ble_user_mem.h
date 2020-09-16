@@ -18,7 +18,7 @@
  */
  
 /**
- * @addtogroup ser_conn_s110_codecs Connectivity s110 codecs
+ * @addtogroup ser_conn_s130_codecs
  * @ingroup ser_codecs
  */
 
@@ -26,7 +26,7 @@
  *
  * @defgroup conn_ble_user_mem Functions for managing memory for user memory request on connectivity device.
  * @{
- * @ingroup  ser_conn_s110_codecs
+ * @ingroup  ser_conn_s130_codecs
  *
  * @brief    Connectivity auxiliary functions for providing static memory required by Soft Device.
  */
@@ -46,7 +46,7 @@ typedef struct
   uint8_t              conn_active;        /**< Indication that user memory for this connection is used by soft device. 0: memory used; 1: memory not used*/
   ble_user_mem_block_t mem_block;          /**< User memory block structure, see @ref ble_user_mem_block_t.*/
   uint8_t              mem_table[64];      /**< Memory table.*/ 
-} ser_ble_user_mem_t;
+} sercon_ble_user_mem_t;
 
 /**@brief allocates instance in m_user_mem_table[] for storage.
  *

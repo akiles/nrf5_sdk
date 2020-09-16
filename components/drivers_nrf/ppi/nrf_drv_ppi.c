@@ -10,15 +10,14 @@
  *
  */
 
-#include <stdint.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 #include "nrf.h"
 #include "nrf_drv_ppi.h"
 #include "nrf_drv_common.h"
 #include "nrf_ppi.h"
 #include "app_util_platform.h"
+#include "sdk_common.h"
 
 
 static nrf_drv_state_t     m_drv_state;            /**< Driver state */
@@ -248,10 +247,9 @@ uint32_t nrf_drv_ppi_channel_free(nrf_ppi_channel_t channel)
 
 uint32_t nrf_drv_ppi_channel_assign(nrf_ppi_channel_t channel, uint32_t eep, uint32_t tep)
 {
-    if (((uint32_t *)eep == NULL) || ((uint32_t *)tep == NULL))
-    {
-        return NRF_ERROR_NULL;
-    }
+    VERIFY_PARAM_NOT_NULL((uint32_t *)eep);
+    VERIFY_PARAM_NOT_NULL((uint32_t *)tep);
+
     if (!is_programmable_app_channel(channel))
     {
         return NRF_ERROR_INVALID_PARAM;
@@ -265,6 +263,23 @@ uint32_t nrf_drv_ppi_channel_assign(nrf_ppi_channel_t channel, uint32_t eep, uin
     return NRF_SUCCESS;
 }
 
+uint32_t nrf_drv_ppi_channel_fork_assign(nrf_ppi_channel_t channel, uint32_t fork_tep)
+{
+#ifdef NRF51
+    return NRF_ERROR_NOT_SUPPORTED;
+#else
+    if (!is_programmable_app_channel(channel))
+    {
+        return NRF_ERROR_INVALID_PARAM;
+    }
+    if (!is_allocated_channel(channel))
+    {
+        return NRF_ERROR_INVALID_STATE;
+    }
+    nrf_ppi_fork_endpoint_setup(channel, fork_tep);
+    return NRF_SUCCESS;
+#endif
+}
 
 uint32_t nrf_drv_ppi_channel_enable(nrf_ppi_channel_t channel)
 {

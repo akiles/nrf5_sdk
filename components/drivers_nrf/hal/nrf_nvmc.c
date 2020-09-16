@@ -16,7 +16,7 @@
  *@brief NMVC driver implementation 
  */
 
-#include "stdbool.h"
+#include <stdbool.h>
 #include "nrf.h"
 #include "nrf_nvmc.h"
 

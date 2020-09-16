@@ -32,9 +32,9 @@
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 0 /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
-#define DTM_INIT_BUTTON_ID 0  /**< Button to initializing DTM mode on connectivity chip. */
-#define DTM_TX_PIN_NO      9  /**< Pin used by DTM to transmitting a data. */
-#define DTM_RX_PIN_NO      11 /**< Pin used by DTM to receiving a data. */
+#define DTM_INIT_BUTTON_ID 0              /**< Button to initializing DTM mode on connectivity chip. */
+#define DTM_TX_PIN_NO      TX_PIN_NUMBER  /**< Pin used by DTM to transmitting a data. */
+#define DTM_RX_PIN_NO      RX_PIN_NUMBER  /**< Pin used by DTM to receiving a data. */
 
 #define DEVICE_NAME                "Nordic_DTM" /**< Name of device. Will be included in the advertising data. */
 #define APP_ADV_INTERVAL           64           /**< The advertising interval (in units of 0.625 ms. This value corresponds to 40 ms). */
@@ -185,15 +185,18 @@ static void bsp_event_handler(bsp_event_t event)
 static void ble_stack_init(void)
 {
     uint32_t err_code;
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
 
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
+    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
 
     // Enable BLE stack
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof (ble_enable_params));
+    ble_enable_params.gap_enable_params.periph_conn_count = 1;
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
-    err_code = sd_ble_enable(&ble_enable_params);
+
+    err_code = sd_ble_enable(&ble_enable_params, NULL);
     APP_ERROR_CHECK(err_code);
 }
 

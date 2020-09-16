@@ -44,6 +44,9 @@
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT         0                                       /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
+#define CENTRAL_LINK_COUNT                      0                                       /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
+#define PERIPHERAL_LINK_COUNT                   1                                       /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
+
 #define SEARCHED_MAJOR                          0x1234
 #define SEARCHED_MINOR                          0x5678
 #define APP_COMPANY_IDENTIFIER                  0x0059                                  /**< Company identifier for Nordic Semiconductor ASA. as per www.bluetooth.org. */
@@ -118,6 +121,8 @@ static ble_beacon_scanner_init_t m_beacon_scanner_init;
 
 #define SEC_PARAM_BOND                       1                                          /**< Perform bonding. */
 #define SEC_PARAM_MITM                       0                                          /**< Man In The Middle protection not required. */
+#define SEC_PARAM_LESC                       0                                          /**< LE Secure Connections not enabled. */
+#define SEC_PARAM_KEYPRESS                   0                                          /**< Keypress notifications not enabled. */
 #define SEC_PARAM_IO_CAPABILITIES            BLE_GAP_IO_CAPS_NONE                       /**< No I/O capabilities. */
 #define SEC_PARAM_OOB                        0                                          /**< Out Of Band data not available. */
 #define SEC_PARAM_MIN_KEY_SIZE               7                                          /**< Minimum encryption key size. */
@@ -182,7 +187,7 @@ static void battery_level_update(void)
     err_code = ble_bas_battery_level_update(&m_bas, battery_level);
     if ((err_code != NRF_SUCCESS) &&
         (err_code != NRF_ERROR_INVALID_STATE) &&
-        (err_code != BLE_ERROR_NO_TX_BUFFERS) &&
+        (err_code != BLE_ERROR_NO_TX_PACKETS) &&
         (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
     )
     {
@@ -227,7 +232,7 @@ static void heart_rate_meas_timeout_handler(void * p_context)
     err_code = ble_hrs_heart_rate_measurement_send(&m_hrs, heart_rate);
     if ((err_code != NRF_SUCCESS) &&
         (err_code != NRF_ERROR_INVALID_STATE) &&
-        (err_code != BLE_ERROR_NO_TX_BUFFERS) &&
+        (err_code != BLE_ERROR_NO_TX_PACKETS) &&
         (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
     )
     {
@@ -653,15 +658,23 @@ static void scanner_start()
 static void ble_stack_init(void)
 {
     uint32_t err_code;
-
+    
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
-
-    // Enable BLE stack 
+    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
+    
     ble_enable_params_t ble_enable_params;
-    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
-    err_code = sd_ble_enable(&ble_enable_params);
+    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
+                                                    PERIPHERAL_LINK_COUNT,
+                                                    &ble_enable_params);
+    APP_ERROR_CHECK(err_code);
+    
+    //Check the ram settings against the used number of links
+    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
+    
+    // Enable BLE stack.
+    err_code = softdevice_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
@@ -736,6 +749,8 @@ static void device_manager_init(bool erase_bonds)
     
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
+    register_param.sec_param.lesc         = SEC_PARAM_LESC;
+    register_param.sec_param.keypress     = SEC_PARAM_KEYPRESS;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
     register_param.sec_param.oob          = SEC_PARAM_OOB;
     register_param.sec_param.min_key_size = SEC_PARAM_MIN_KEY_SIZE;

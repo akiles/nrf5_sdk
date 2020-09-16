@@ -32,13 +32,14 @@
  */
 #include "ble.h"
 
-/**@brief Decodes @ref sd_ble_tx_buffer_count_get command request.
+/**@brief Decodes @ref sd_ble_tx_packet_count_get command request.
  *
- * @sa @ref nrf51_tx_buffer_count_get_encoding for packet format,
- *     @ref ble_tx_buffer_count_get_rsp_enc for response encoding.
+ * @sa @ref nrf51_tx_packet_count_get_encoding for packet format,
+ *     @ref ble_tx_packet_count_get_rsp_enc for response encoding.
  *
  * @param[in] p_buf           Pointer to beginning of command request packet.
  * @param[in] packet_len      Length (in bytes) of response packet.
+ * @param[out] p_conn_handle  Pointer to connection handle.
  * @param[out] pp_count       Pointer to pointer to location for count.
  *
  * @retval NRF_SUCCESS                Decoding success.
@@ -46,14 +47,15 @@
  * @retval NRF_ERROR_INVALID_LENGTH   Decoding failure. Incorrect buffer length.
  * @retval NRF_ERROR_INVALID_PARAM    Decoding failure. Invalid operation type.
  */
-uint32_t ble_tx_buffer_count_get_req_dec(uint8_t const * const p_buf,
+uint32_t ble_tx_packet_count_get_req_dec(uint8_t const * const p_buf,
                                          uint16_t              packet_len,
+                                         uint16_t      * const p_conn_handle,
                                          uint8_t * * const     pp_count);
 
-/**@brief Encodes @ref sd_ble_tx_buffer_count_get command response.
+/**@brief Encodes @ref sd_ble_tx_packet_count_get command response.
  *
- * @sa @ref nrf51_tx_buffer_count_get_encoding for packet format.
- *     @ref ble_tx_buffer_count_get_req_dec for request decoding.
+ * @sa @ref nrf51_tx_packet_count_get_encoding for packet format.
+ *     @ref ble_tx_packet_count_get_req_dec for request decoding.
  *
  * @param[in] return_code         Return code indicating if command was successful or not.
  * @param[out] p_buf              Pointer to buffer where encoded data command response will be
@@ -66,7 +68,7 @@ uint32_t ble_tx_buffer_count_get_req_dec(uint8_t const * const p_buf,
  * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
  * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
  */
-uint32_t ble_tx_buffer_count_get_rsp_enc(uint32_t              return_code,
+uint32_t ble_tx_packet_count_get_rsp_enc(uint32_t              return_code,
                                          uint8_t * const       p_buf,
                                          uint32_t * const      p_buf_len,
                                          uint8_t const * const p_count);

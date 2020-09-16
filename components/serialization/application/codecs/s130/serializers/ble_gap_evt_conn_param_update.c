@@ -27,9 +27,8 @@ uint32_t ble_gap_evt_conn_param_update_dec(uint8_t const * const p_buf,
 
     SER_ASSERT_LENGTH_LEQ(SER_EVT_CONN_HANDLE_SIZE + 2, packet_len);
 
-    uint32_t event_len = (uint16_t) (offsetof(ble_evt_t, evt.gap_evt.params.conn_param_update)) +
-                         sizeof (ble_gap_evt_conn_param_update_t) -
-                         sizeof (ble_evt_hdr_t);
+    uint32_t event_len = (uint16_t) (offsetof(ble_gap_evt_t, params.conn_param_update)) +
+                         sizeof (ble_gap_evt_conn_param_update_t);
 
     if (p_event == NULL)
     {

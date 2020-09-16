@@ -12,13 +12,11 @@
  
 #include "app_simple_timer.h"
 #include "nrf.h"
-#include "nordic_common.h"
 #include "app_util_platform.h"
 #include "app_error.h"
 #include "nrf_timer.h"
 #include "nrf_drv_timer.h"
-#include <string.h>
-#include <stdbool.h>
+#include "sdk_common.h"
 
 /**@brief States of simple timer state machine.
  */
@@ -110,10 +108,7 @@ uint32_t app_simple_timer_start(app_simple_timer_mode_t            mode,
     uint32_t err_code = NRF_SUCCESS;
     nrf_timer_short_mask_t timer_short;
 
-    if (NULL == timeout_handler)
-    {
-        return NRF_ERROR_NULL;
-    }
+    VERIFY_PARAM_NOT_NULL(timeout_handler);
 
     if (APP_SIMPLE_TIMER_MODE_REPEATED == mode)
     {

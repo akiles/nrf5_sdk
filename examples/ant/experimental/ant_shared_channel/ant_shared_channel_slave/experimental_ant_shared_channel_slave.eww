@@ -2,7 +2,10 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\pca10028\iar\experimental_ant_shared_channel_slave_s210_pca10028.ewp</path>
+    <path>$WS_DIR$\pca10040\iar\experimental_ant_shared_channel_slave_s212_pca10040.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\pca10036\iar\experimental_ant_shared_channel_slave_s212_pca10036.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

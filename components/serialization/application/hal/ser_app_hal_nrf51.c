@@ -16,17 +16,23 @@
 #include "nrf_gpio.h"
 #include "nrf_soc.h"
 #include "nrf_delay.h"
+#include "nrf_nvmc.h"
 #include "boards.h"
 #include "ser_phy.h"
 #include "ser_phy_config_app_nrf51.h"
 
 #ifdef NRF51
-#define SOFTDEVICE_EVT_IRQ  SD_EVT_IRQn         /**< SoftDevice Event IRQ number. Used for both protocol events and SoC events. */
+#define SOFTDEVICE_EVT_IRQ      SD_EVT_IRQn         /**< SoftDevice Event IRQ number. Used for both protocol events and SoC events. */
+#define FLASH_WRITE_MAX_LENGTH  256
 #elif defined NRF52
-#define SOFTDEVICE_EVT_IRQ  SWI2_EGU2_IRQn
+#define SOFTDEVICE_EVT_IRQ      SWI2_EGU2_IRQn
+#define FLASH_WRITE_MAX_LENGTH  1024
 #endif /* NRF51 */
 
-uint32_t ser_app_hal_hw_init()
+#define BLE_FLASH_PAGE_SIZE     ((uint16_t)NRF_FICR->CODEPAGESIZE)  /**< Size of one flash page. */
+
+static ser_app_hal_flash_op_done_handler_t m_flash_op_handler;
+uint32_t ser_app_hal_hw_init(ser_app_hal_flash_op_done_handler_t handler)
 {
     nrf_gpio_cfg_output(CONN_CHIP_RESET_PIN_NO);
 
@@ -40,7 +46,7 @@ uint32_t ser_app_hal_hw_init()
     }
 
     NRF_CLOCK->EVENTS_LFCLKSTARTED = 0;
-
+    m_flash_op_handler = handler;
     return NRF_SUCCESS;
 }
 
@@ -87,5 +93,47 @@ uint32_t sd_ppi_channel_assign(uint8_t               channel_num,
 {
     NRF_PPI->CH[channel_num].TEP = (uint32_t)task_endpoint;
     NRF_PPI->CH[channel_num].EEP = (uint32_t)evt_endpoint;
+    return NRF_SUCCESS;
+}
+/**
+ * @brief Check if given address is in device FLASH range.
+ *
+ * @param[in] ptr Address to check.
+ * @retval true  Given address is located in FLASH.
+ * @retval false Given address is not located in FLASH.
+ */
+__STATIC_INLINE bool addr_is_in_FLASH(void const * const ptr)
+{
+    return ((((uintptr_t)ptr) & 0xFF000000u) == 0x00000000u);
+}
+
+uint32_t sd_flash_page_erase(uint32_t page_number)
+{
+    uint32_t * p_page = (uint32_t *)(BLE_FLASH_PAGE_SIZE * page_number);
+
+    if (!addr_is_in_FLASH(p_page))
+    {
+        return NRF_ERROR_INVALID_ADDR;
+    }
+
+    nrf_nvmc_page_erase((uint32_t) p_page);
+    m_flash_op_handler(true);
+    return NRF_SUCCESS;
+}
+
+uint32_t sd_flash_write(uint32_t * const p_dst, uint32_t const * const p_src, uint32_t size)
+{
+    if (size > FLASH_WRITE_MAX_LENGTH)
+    {
+        return NRF_ERROR_INVALID_LENGTH;
+    }
+
+    if (!addr_is_in_FLASH(p_dst))
+    {
+        return NRF_ERROR_INVALID_ADDR;
+    }
+
+    nrf_nvmc_write_words((uint32_t) p_dst, p_src, size);
+    m_flash_op_handler(true);
     return NRF_SUCCESS;
 }

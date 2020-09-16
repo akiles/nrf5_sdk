@@ -219,7 +219,7 @@ __STATIC_INLINE void nrf_gpio_cfg_sense_set(uint32_t pin_number, nrf_gpio_pin_se
 /**
  * @brief Function for setting the direction for a GPIO pin.
  *
- * @param pin_number specifies the pin number [0:31] for which to
+ * @param pin_number specifies the pin number (0-31) for which to
  * set the direction.
  *
  * @param direction specifies the direction
@@ -232,19 +232,17 @@ __STATIC_INLINE void nrf_gpio_pin_dir_set(uint32_t pin_number, nrf_gpio_pin_dir_
  * Note that the pin must be configured as an output for this
  * function to have any effect.
  *
- * @param pin_number specifies the pin number [0:31] to
- * set.
+ * @param pin_number Specifies the pin number (0-31) to set.
  */
 __STATIC_INLINE void nrf_gpio_pin_set(uint32_t pin_number);
 
 /**
  * @brief Function for setting GPIO pins.
  *
- * Note that pins must be configured as an output for this
+ * Note that the pins must be configured as outputs for this
  * function to have any effect.
  *
  * @param pin_mask Specifies the pins to set.
- * set.
  */
 __STATIC_INLINE void nrf_gpio_pins_set(uint32_t pin_mask);
 
@@ -254,19 +252,17 @@ __STATIC_INLINE void nrf_gpio_pins_set(uint32_t pin_mask);
  * Note that the pin must be configured as an output for this
  * function to have any effect.
  *
- * @param pin_number specifies the pin number [0:31] to
- * clear.
+ * @param pin_number Specifies the pin number (0-31) to clear.
  */
 __STATIC_INLINE void nrf_gpio_pin_clear(uint32_t pin_number);
 
 /**
  * @brief Function for clearing GPIO pins.
  *
- * Note that pins must be configured as an output for this
+ * Note that the pins must be configured as outputs for this
  * function to have any effect.
  *
  * @param pin_mask Specifies the pins to clear.
- * set.
  */
 __STATIC_INLINE void nrf_gpio_pins_clear(uint32_t pin_mask);
 
@@ -276,10 +272,19 @@ __STATIC_INLINE void nrf_gpio_pins_clear(uint32_t pin_mask);
  * Note that the pin must be configured as an output for this
  * function to have any effect.
  *
- * @param pin_number specifies the pin number [0:31] to
- * toggle.
+ * @param pin_number Specifies the pin number (0-31) to toggle.
  */
 __STATIC_INLINE void nrf_gpio_pin_toggle(uint32_t pin_number);
+
+/**
+ * @brief Function for toggling GPIO pins.
+ *
+ * Note that the pins must be configured as outputs for this
+ * function to have any effect.
+ *
+ * @param pin_mask Specifies the pins to toggle.
+ */
+__STATIC_INLINE void nrf_gpio_pins_toggle(uint32_t pin_mask);
 
 /**
  * @brief Function for writing a value to a GPIO pin.
@@ -287,7 +292,7 @@ __STATIC_INLINE void nrf_gpio_pin_toggle(uint32_t pin_number);
  * Note that the pin must be configured as an output for this
  * function to have any effect.
  *
- * @param pin_number specifies the pin number [0:31] to
+ * @param pin_number specifies the pin number (0-31) to
  * write.
  *
  * @param value specifies the value to be written to the pin.
@@ -302,7 +307,7 @@ __STATIC_INLINE void nrf_gpio_pin_write(uint32_t pin_number, uint32_t value);
  * Note that the pin must have input connected for the value
  * returned from this function to be valid.
  *
- * @param pin_number specifies the pin number [0:31] to
+ * @param pin_number specifies the pin number (0-31) to
  * read.
  *
  * @return
@@ -325,7 +330,7 @@ __STATIC_INLINE uint32_t nrf_gpio_pins_read(void);
 /**
  * @brief Function for reading the sense configuration of a GPIO pin.
  *
- * @param pin_number specifies the pin number [0:31] to
+ * @param pin_number specifies the pin number (0-31) to
  * read.
  *
  * @retval Sense configuration
@@ -558,19 +563,14 @@ __STATIC_INLINE void nrf_gpio_pins_clear(uint32_t pin_mask)
 
 __STATIC_INLINE void nrf_gpio_pin_toggle(uint32_t pin_number)
 {
-    const uint32_t pin_bit   = 1UL << pin_number;
-    const uint32_t pin_state = ((NRF_GPIO->OUT >> pin_number) & 1UL);
+    nrf_gpio_pins_toggle(1UL << pin_number);
+}
 
-    if (pin_state == 0)
-    {
-        // Current state low, set high.
-        NRF_GPIO->OUTSET = pin_bit;
-    }
-    else
-    {
-        // Current state high, set low.
-        NRF_GPIO->OUTCLR = pin_bit;
-    }
+__STATIC_INLINE void nrf_gpio_pins_toggle(uint32_t pin_mask)
+{
+    uint32_t pins_state = NRF_GPIO->OUT;
+    NRF_GPIO->OUTSET = (~pins_state & pin_mask);
+    NRF_GPIO->OUTCLR = ( pins_state & pin_mask);
 }
 
 __STATIC_INLINE void nrf_gpio_pin_write(uint32_t pin_number, uint32_t value)

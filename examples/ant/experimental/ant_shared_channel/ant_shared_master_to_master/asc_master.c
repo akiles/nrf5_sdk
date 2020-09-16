@@ -105,7 +105,7 @@ static __INLINE void ascm_send_busy_acquiring_page(void)
 static __INLINE void send_polling_message(void)
 {
     uint32_t err_code;
-    volatile asc_request_data_t request = {
+    asc_request_data_t request = {
         m_current_shared_address_polling,
         UPDATE_DATA_PID
     };

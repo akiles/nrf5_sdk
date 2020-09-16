@@ -428,7 +428,7 @@ static void racp_send(ble_gls_t * p_gls, ble_racp_value_t * p_racp_val)
             state_set(STATE_RACP_RESPONSE_IND_VERIF);
             break;
 
-        case BLE_ERROR_NO_TX_BUFFERS:
+        case BLE_ERROR_NO_TX_PACKETS:
             // Wait for TX_COMPLETE event to retry transmission
             state_set(STATE_RACP_RESPONSE_PENDING);
             break;
@@ -715,7 +715,7 @@ static void racp_report_records_procedure(ble_gls_t * p_gls)
                 }
                 break;
 
-            case BLE_ERROR_NO_TX_BUFFERS:
+            case BLE_ERROR_NO_TX_PACKETS:
                 // Wait for TX_COMPLETE event to resume transmission
                 return;
 
@@ -1005,7 +1005,10 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
     bool                                  are_cccd_configured;
     uint32_t                              err_code;
 
-    auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
+    auth_reply.type                = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
+    auth_reply.params.write.offset = 0;
+    auth_reply.params.write.len    = 0;
+    auth_reply.params.write.p_data = NULL;
 
     err_code = ble_gls_are_cccd_configured(p_gls, &are_cccd_configured);
     if (err_code != NRF_SUCCESS)
@@ -1040,8 +1043,10 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
     if (is_request_to_be_executed(&racp_request, &response_code))
     {
         auth_reply.params.write.gatt_status = BLE_GATT_STATUS_SUCCESS;
-        err_code                            = sd_ble_gatts_rw_authorize_reply(p_gls->conn_handle,
-                                                                              &auth_reply);
+        auth_reply.params.write.update      = 1;
+        
+        err_code = sd_ble_gatts_rw_authorize_reply(p_gls->conn_handle,
+                                                   &auth_reply);
 
         if (err_code != NRF_SUCCESS)
         {
@@ -1064,6 +1069,7 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
     else if (response_code != RACP_RESPONSE_RESERVED)
     {
         auth_reply.params.write.gatt_status = BLE_GATT_STATUS_SUCCESS;
+        auth_reply.params.write.update      = 1;
         err_code                            = sd_ble_gatts_rw_authorize_reply(p_gls->conn_handle,
                                                                               &auth_reply);
 

@@ -10,6 +10,14 @@
  *
  */
 
+/*
+ * Before compiling this example for NRF52, complete the following steps:
+ * - Download the S212 SoftDevice from <a href="https://www.thisisant.com/developer/components/nrf52832" target="_blank">thisisant.com</a>.
+ * - Extract the downloaded zip file and copy the S212 SoftDevice headers to <tt>\<InstallFolder\>/components/softdevice/s212/headers</tt>.
+ * If you are using Keil packs, copy the files into a @c headers folder in your example folder.
+ * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
+ */
+
 #include "dfu.h"
 #include "dfu_transport.h"
 #include "bootloader.h"
@@ -21,7 +29,7 @@
 #include "nrf.h"
 #include "app_error.h"
 #include "nrf_gpio.h"
-#include "nrf_nvmc.h"
+#include "nrf_soc.h"
 #include "nrf_delay.h"
 #include "ant_interface.h"
 #include "ant_parameters.h"
@@ -82,12 +90,10 @@ uint32_t line_num_;
 const uint8_t * p_file_name_;
 #endif // DEBUG_DFU_BOOTLOADER
 
-void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
+void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
 #if defined (DEBUG_DFU_BOOTLOADER)
-    error_code_      = error_code;
-    line_num_        = line_num;
-    p_file_name_     = p_file_name;
+    app_error_save_and_stop(id, pc, info);
 #endif // DEBUG_DFU_BOOTLOADER
 
 #if defined (ENABLE_IO_LED)
@@ -96,8 +102,7 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
 
     // This call can be used for debug purposes during application development.
     // On assert, the system can only recover on reset.
-     if(error_code)
-          NVIC_SystemReset();
+    NVIC_SystemReset();
 }
 
 void HardFault_Handler(uint32_t ulProgramCounter, uint32_t ulLinkRegister)
@@ -204,19 +209,9 @@ static void sys_evt_dispatch(uint32_t event)
 static void ant_stack_init(void)
 {
     uint32_t         err_code;
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
 
-#if !defined (S210_V3_STACK)
-    sd_mbr_command_t com = {SD_MBR_COMMAND_INIT_SD, };
-
-    err_code = sd_mbr_command(&com);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = sd_softdevice_vector_table_base_set(BOOTLOADER_REGION_START);
-    APP_ERROR_CHECK(err_code);
-#endif // !S210_V3_STACK
-
-    //SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, softdevice_evt_schedule);
-    err_code = softdevice_handler_init(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL, 0, softdevice_evt_schedule);
+    err_code = softdevice_handler_init(&clock_lf_cfg, NULL, 0, softdevice_evt_schedule);
     APP_ERROR_CHECK(err_code);
 
     err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
@@ -259,8 +254,9 @@ static void enter_boot_set (uint32_t value)
 
     ant_boot_param_flags &= ~PARAM_FLAGS_ENTER_BOOT_Msk;
     ant_boot_param_flags |= value << PARAM_FLAGS_ENTER_BOOT_Pos;
-
-    nrf_nvmc_write_word(ANT_BOOT_PARAM_FLAGS_BASE, ant_boot_param_flags);
+  
+    uint32_t err_code = blocking_flash_word_write(ANT_BOOT_PARAM_FLAGS, ant_boot_param_flags);
+    APP_ERROR_CHECK(err_code);
 }
 
 static void enter_boot_update (void)
@@ -289,7 +285,8 @@ static void enter_boot_update (void)
    {
        if(*ANT_BOOT_APP_SIZE != APP_SIZE_Empty)
        {
-           nrf_nvmc_write_word(ANT_BOOT_APP_SIZE_BASE, APP_SIZE_Clear);
+            uint32_t err_code = blocking_flash_word_write(ANT_BOOT_APP_SIZE, APP_SIZE_Clear);
+            APP_ERROR_CHECK(err_code);
        }
    }
 }
@@ -317,11 +314,19 @@ int main(void)
 #endif //DBG_DFU_BOOTLOADER_PATH
 
     // This check ensures that the defined fields in the bootloader corresponds with actual
-    // setting in the nRF51 chip.
+    // setting in the chip.
     APP_ERROR_CHECK_BOOL(*((uint32_t *)NRF_UICR_BOOT_START_ADDRESS) == BOOTLOADER_REGION_START);
     APP_ERROR_CHECK_BOOL(NRF_FICR->CODEPAGESIZE == CODE_PAGE_SIZE);
 
 #if !defined (S210_V3_STACK)
+    sd_mbr_command_t com = {SD_MBR_COMMAND_INIT_SD, };
+
+    err_code = sd_mbr_command(&com);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = sd_softdevice_vector_table_base_set(BOOTLOADER_REGION_START);
+    APP_ERROR_CHECK(err_code);
+
     err_code = bootloader_dfu_sd_update_continue();
     APP_ERROR_CHECK(err_code);
 

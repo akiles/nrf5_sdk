@@ -24,8 +24,10 @@
  * with 'YOUR_JOB' indicates where and how you can customize.
  */
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
+
 #include "nordic_common.h"
 #include "nrf.h"
 #include "app_error.h"
@@ -43,10 +45,18 @@
 #include "app_trace.h"
 #include "bsp.h"
 #include "bsp_btn_ble.h"
+#include "sensorsim.h"
+#include "nrf_gpio.h"
+#include "ble_hci.h"
+#include "ble_advdata.h"
+#include "ble_advertising.h"
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT  1                                          /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
-#define DEVICE_NAME                      "Nordic_Template"                               /**< Name of device. Will be included in the advertising data. */
+#define CENTRAL_LINK_COUNT               0                                          /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
+#define PERIPHERAL_LINK_COUNT            1                                          /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
+
+#define DEVICE_NAME                      "Nordic_Template"                          /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                "NordicSemiconductor"                      /**< Manufacturer. Will be passed to Device Information Service. */
 #define APP_ADV_INTERVAL                 300                                        /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
 #define APP_ADV_TIMEOUT_IN_SECONDS       180                                        /**< The advertising timeout in units of seconds. */
@@ -65,6 +75,8 @@
 
 #define SEC_PARAM_BOND                   1                                          /**< Perform bonding. */
 #define SEC_PARAM_MITM                   0                                          /**< Man In The Middle protection not required. */
+#define SEC_PARAM_LESC                   0                                          /**< LE Secure Connections not enabled. */
+#define SEC_PARAM_KEYPRESS               0                                          /**< Keypress notifications not enabled. */
 #define SEC_PARAM_IO_CAPABILITIES        BLE_GAP_IO_CAPS_NONE                       /**< No I/O capabilities. */
 #define SEC_PARAM_OOB                    0                                          /**< Out Of Band data not available. */
 #define SEC_PARAM_MIN_KEY_SIZE           7                                          /**< Minimum encryption key size. */
@@ -72,7 +84,7 @@
 
 #define DEAD_BEEF                        0xDEADBEEF                                 /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
-static dm_application_instance_t        m_app_handle;                               /**< Application identifier allocated by device manager */
+static dm_application_instance_t         m_app_handle;                              /**< Application identifier allocated by device manager */
 
 static uint16_t                          m_conn_handle = BLE_CONN_HANDLE_INVALID;   /**< Handle of the current connection. */
 
@@ -393,21 +405,24 @@ static void sys_evt_dispatch(uint32_t sys_evt)
 static void ble_stack_init(void)
 {
     uint32_t err_code;
-
+    
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
-
-#if defined(S110) || defined(S130) || defined(S132)
-    // Enable BLE stack.
+    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
+    
     ble_enable_params_t ble_enable_params;
-    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#if (defined(S130) || defined(S132))
-    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
-#endif
-    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
-    err_code = sd_ble_enable(&ble_enable_params);
+    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
+                                                    PERIPHERAL_LINK_COUNT,
+                                                    &ble_enable_params);
     APP_ERROR_CHECK(err_code);
-#endif
+    
+    //Check the ram settings against the used number of links
+    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
+    
+    // Enable BLE stack.
+    err_code = softdevice_enable(&ble_enable_params);
+    APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
     err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
@@ -497,6 +512,8 @@ static void device_manager_init(bool erase_bonds)
 
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
+    register_param.sec_param.lesc         = SEC_PARAM_LESC;
+    register_param.sec_param.keypress     = SEC_PARAM_KEYPRESS;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
     register_param.sec_param.oob          = SEC_PARAM_OOB;
     register_param.sec_param.min_key_size = SEC_PARAM_MIN_KEY_SIZE;

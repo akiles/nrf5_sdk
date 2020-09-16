@@ -43,6 +43,7 @@ uint32_t ble_evt_user_mem_release_enc(ble_evt_t const * const p_event,
     err_code = uint16_t_enc((void *)&(p_event->evt.common_evt.params.user_mem_release.mem_block.len), p_buf, *p_buf_len, &index);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
     
+    SER_ASSERT_LENGTH_LEQ(1, *p_buf_len - index);
     p_buf[index++] = p_event->evt.common_evt.params.user_mem_release.mem_block.p_mem ? SER_FIELD_PRESENT : SER_FIELD_NOT_PRESENT;
     
     // Now user memory context can be released

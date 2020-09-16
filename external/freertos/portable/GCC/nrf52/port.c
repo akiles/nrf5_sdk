@@ -92,7 +92,7 @@ void xPortPendSVHandler( void ) __attribute__ (( naked ));
 void vPortStartFirstTask( void )
 {
     __asm volatile(
-                    " ldr r0, =__Vectors    \n" /* Locate the stack using __Vectors table. */
+                    " ldr r0, =__isr_vector \n" /* Locate the stack using __isr_vector table. */
                     " ldr r0, [r0]          \n"
                     " msr msp, r0           \n" /* Set the msp back to the start of the stack. */
                     " cpsie i               \n" /* Globally enable interrupts. */

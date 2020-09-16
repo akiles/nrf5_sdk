@@ -12,11 +12,9 @@
 
 #include "app_gpiote.h"
 #include <stdlib.h>
-#include <string.h>
-#include "app_util.h"
 #include "app_util_platform.h"
-#include "nrf_error.h"
 #include "nrf_gpio.h"
+#include "sdk_common.h"
 
 #define NRF51_GPIOTE_CHANNEL 4
 #define NRF51_PINS           31
@@ -47,6 +45,8 @@ static uint8_t         m_user_array_size;    /**< Size of user array. */
 static uint8_t         m_user_count;         /**< Number of registered users. */
 static gpiote_user_t * mp_users = NULL;      /**< Array of GPIOTE users. */
 
+#define MODULE_INITIALIZED (mp_users != NULL)
+#include "sdk_macros.h"
 
 static app_gpiote_input_event_handler_t m_app_gpiote_input_event_handlers[4] = {0};
 
@@ -286,10 +286,7 @@ uint32_t app_gpiote_user_register(app_gpiote_user_id_t *     p_user_id,
                                   app_gpiote_event_handler_t event_handler)
 {
     //Check state and parameters.
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
 
     if (event_handler == NULL)
     {
@@ -436,10 +433,7 @@ uint32_t app_gpiote_user_enable(app_gpiote_user_id_t user_id)
     uint32_t pins_state;
 
     //Check state and parameters.
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
 
     if (user_id >= m_user_count)
     {
@@ -491,10 +485,7 @@ uint32_t app_gpiote_user_enable(app_gpiote_user_id_t user_id)
 uint32_t app_gpiote_user_disable(app_gpiote_user_id_t user_id)
 {
     //Check state and parameters.
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
 
     if (user_id >= m_user_count)
     {
@@ -521,10 +512,7 @@ uint32_t app_gpiote_pins_state_get(app_gpiote_user_id_t user_id, uint32_t * p_pi
     gpiote_user_t * p_user;
 
     //Check state and parameters.
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
 
     if (user_id >= m_user_count)
     {

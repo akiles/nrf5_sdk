@@ -36,8 +36,6 @@
 #define UART_RX_BUF_SIZE 1                                                            /**< UART RX buffer size. */
 #define RANDOM_BUFF_SIZE 16                                                           /**< Random numbers buffer size. */
 
-extern void softdevice_assertion_handler(uint32_t pc, uint16_t line_num, const uint8_t * file_name);
-
 void assert_nrf_callback(uint16_t line_num, const uint8_t *file_name)
 {
     /* empty function - needed by softdevice handler */
@@ -87,7 +85,7 @@ int main(void)
           CTS_PIN_NUMBER,
           APP_UART_FLOW_CONTROL_ENABLED,
           false,
-          UART_BAUDRATE_BAUDRATE_Baud38400
+          UART_BAUDRATE_BAUDRATE_Baud115200
       };
 
     APP_UART_FIFO_INIT(&comm_params,
@@ -100,7 +98,8 @@ int main(void)
     APP_ERROR_CHECK(err_code);
 
 #ifdef SOFTDEVICE_PRESENT
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
 #endif // SOFTDEVICE_PRESENT
 
     err_code = nrf_drv_rng_init(NULL);

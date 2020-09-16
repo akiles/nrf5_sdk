@@ -14,10 +14,9 @@
 #include <stdlib.h>
 #include "nrf.h"
 #include "nrf_soc.h"
-#include "app_error.h"
 #include "nrf_delay.h"
-#include "app_util.h"
 #include "app_util_platform.h"
+#include "sdk_common.h"
 
 #define RTC1_IRQ_PRI            APP_IRQ_PRIORITY_LOW                        /**< Priority of the RTC1 interrupt (used for checking for timeouts and executing timeout handlers). */
 #define SWI_IRQ_PRI             APP_IRQ_PRIORITY_LOW                        /**< Priority of the SWI  interrupt (used for updating the timer list). */
@@ -134,6 +133,10 @@ static app_timer_evt_schedule_func_t m_evt_schedule_func;                       
 static bool                          m_rtc1_running;                            /**< Boolean indicating if RTC1 is running. */
 static bool                          m_rtc1_reset;                              /**< Boolean indicating if RTC1 counter has been reset due to last timer removed from timer list during the timer list handling. */
  
+
+#define MODULE_INITIALIZED (mp_users != NULL)
+#include "sdk_macros.h"
+
 
 /**@brief Function for initializing the RTC1 counter.
  *
@@ -990,10 +993,8 @@ uint32_t app_timer_create(app_timer_id_t const *      p_timer_id,
                           app_timer_timeout_handler_t timeout_handler)
 {
     // Check state and parameters
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
+
     if (timeout_handler == NULL)
     {
         return NRF_ERROR_INVALID_PARAM;
@@ -1050,10 +1051,8 @@ uint32_t app_timer_start(app_timer_id_t timer_id, uint32_t timeout_ticks, void *
     timer_node_t * p_node = (timer_node_t*)timer_id;
     
     // Check state and parameters
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
+
     if (timer_id == 0)
     {
         return NRF_ERROR_INVALID_STATE;
@@ -1082,10 +1081,8 @@ uint32_t app_timer_stop(app_timer_id_t timer_id)
 {
     timer_node_t * p_node = (timer_node_t*)timer_id;
     // Check state and parameters
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
+
     if ((timer_id == NULL) || (p_node->p_timeout_handler == NULL))
     {
         return NRF_ERROR_INVALID_STATE;
@@ -1099,10 +1096,8 @@ uint32_t app_timer_stop(app_timer_id_t timer_id)
 uint32_t app_timer_stop_all(void)
 {
     // Check state
-    if (mp_users == NULL)
-    {
-        return NRF_ERROR_INVALID_STATE;
-    }
+    VERIFY_MODULE_INITIALIZED();
+
     return timer_stop_all_op_schedule(user_id_get());
 }
 

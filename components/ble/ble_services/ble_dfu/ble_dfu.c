@@ -11,15 +11,11 @@
  */
 
 #include "ble_dfu.h"
-#include "nrf_error.h"
 #include "ble_types.h"
 #include "ble_gatts.h"
-#include "app_util.h"
 #include "ble_srv_common.h"
-#include "nordic_common.h"
-#include <stdint.h>
-#include <string.h>
 #include <stddef.h>
+#include "sdk_common.h"
 
 #define MAX_DFU_PKT_LEN         20                                              /**< Maximum length (in bytes) of the DFU Packet characteristic. */
 #define PKT_START_DFU_PARAM_LEN 2                                               /**< Length (in bytes) of the parameters for Packet Start DFU Request. */
@@ -260,31 +256,33 @@ static bool is_cccd_configured(ble_dfu_t * p_dfu)
  */
 static uint32_t on_ctrl_pt_write(ble_dfu_t * p_dfu, ble_gatts_evt_write_t * p_ble_write_evt)
 {
-    ble_gatts_rw_authorize_reply_params_t write_authorize_reply;
+    ble_gatts_rw_authorize_reply_params_t auth_reply;
 
-    write_authorize_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
+    auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
+    auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
+    auth_reply.params.write.update = 1;
+    auth_reply.params.write.offset = p_ble_write_evt->offset;
+    auth_reply.params.write.len = p_ble_write_evt->len;
+    auth_reply.params.write.p_data = p_ble_write_evt->data;
+
 
     if (!is_cccd_configured(p_dfu))
     {
         // Send an error response to the peer indicating that the CCCD is improperly configured.
-        write_authorize_reply.params.write.gatt_status =
+        auth_reply.params.write.gatt_status =
             BLE_GATT_STATUS_ATTERR_CPS_CCCD_CONFIG_ERROR;
 
-        return (sd_ble_gatts_rw_authorize_reply(p_dfu->conn_handle, &write_authorize_reply));
+        return (sd_ble_gatts_rw_authorize_reply(p_dfu->conn_handle, &auth_reply));
 
     }
     else
     {
         uint32_t err_code;
 
-        write_authorize_reply.params.write.gatt_status = BLE_GATT_STATUS_SUCCESS;
+        auth_reply.params.write.gatt_status = BLE_GATT_STATUS_SUCCESS;
 
-        err_code = (sd_ble_gatts_rw_authorize_reply(p_dfu->conn_handle, &write_authorize_reply));
-
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
+        err_code = (sd_ble_gatts_rw_authorize_reply(p_dfu->conn_handle, &auth_reply));
+        VERIFY_SUCCESS(err_code);
     }
 
     ble_dfu_evt_t ble_dfu_evt;
@@ -479,38 +477,23 @@ uint32_t ble_dfu_init(ble_dfu_t * p_dfu, ble_dfu_init_t * p_dfu_init)
     service_uuid.uuid = BLE_DFU_SERVICE_UUID;
 
     err_code = sd_ble_uuid_vs_add(&base_uuid128, &(service_uuid.type));
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY,
                                         &service_uuid,
                                         &(p_dfu->service_handle));
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     p_dfu->uuid_type = service_uuid.type;
 
     err_code = dfu_pkt_char_add(p_dfu);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     err_code = dfu_ctrl_pt_add(p_dfu);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     err_code = dfu_rev_char_add(p_dfu, p_dfu_init);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     p_dfu->evt_handler = p_dfu_init->evt_handler;
 

@@ -140,7 +140,7 @@ void ant_slave_encrypt_negotiation(ant_evt_t * p_ant_evt)
 
         case EVENT_RX:
             /*lint -e545 -save*/
-            p_ant_msg = (ANT_MESSAGE *) &(p_ant_evt->evt_buffer);
+            p_ant_msg = (ANT_MESSAGE *) &(p_ant_evt->msg.evt_buffer);
             /*lint -restore*/
             ant_slave_encrypt_try_enable(ant_channel, p_ant_msg->ANT_MESSAGE_ucMesgID);
             break;

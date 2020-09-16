@@ -232,5 +232,25 @@ uint32_t ble_gattc_evt_write_rsp_enc(ble_evt_t const * const p_event,
                                      uint8_t * const         p_buf,
                                      uint32_t * const        p_buf_len);
 
+/**
+ * @brief Encodes ble_gattc_evt_attr_info_disc_rsp event.
+ *
+ * @sa @ref nrf51_gattc_evt_attr_info_disc_rsp_encoding for packet format.
+ *
+ * @param[in] p_event          Pointer to the \ref ble_evt_t buffer that shall be encoded.
+ * @param[in] event_len        Size (in bytes) of \p p_event buffer.
+ * @param[out] p_buf           Pointer to the beginning of a buffer for encoded event packet.
+ * @param[in,out] p_buf_len    \c in: Size (in bytes) of \p p_buf buffer.
+ *                             \c out: Length of encoded contents in \p p_buf.
+ *
+ * @retval NRF_SUCCESS               Encoding success.
+ * @retval NRF_ERROR_NULL            Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH  Encoding failure. Incorrect buffer length.
+ */
+uint32_t ble_gattc_evt_attr_info_disc_rsp_enc(ble_evt_t const * const p_event,
+                                              uint32_t                event_len,
+                                              uint8_t * const         p_buf,
+                                              uint32_t * const        p_buf_len);
+
 /** @} */
 #endif

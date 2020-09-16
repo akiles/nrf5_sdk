@@ -1,36 +1,26 @@
+/* Copyright (c) 2015 Nordic Semiconductor. All Rights Reserved.
+ *
+ * The information contained herein is property of Nordic Semiconductor ASA.
+ * Terms and conditions of usage are described in detail in NORDIC
+ * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
+ *
+ * Licensees are granted free, non-transferable use of the information. NO
+ * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
+ * the file.
+ *
+ */
+
 
 #include "gattc_cache_manager.h"
 
-#include <string.h>
 #include "ble_gap.h"
 #include "ble_conn_state.h"
 #include "peer_manager_types.h"
 #include "peer_database.h"
 #include "id_manager.h"
-
+#include "sdk_common.h"
 
 #define MAX_SIMUL_SEC_PROCEDURES 2
-
-
-#define VERIFY_MODULE_INITIALIZED()     \
-do                                      \
-{                                       \
-    if (m_gccm.evt_handler == NULL)     \
-    {                                   \
-        return NRF_ERROR_INVALID_STATE; \
-    }                                   \
-} while(0)
-
-#define VERIFY_PARAM_NOT_NULL(param)    \
-do                                      \
-{                                       \
-    if (param == NULL)                  \
-    {                                   \
-        return NRF_ERROR_NULL;          \
-    }                                   \
-} while(0)
-
-
 
 typedef struct
 {
@@ -38,6 +28,9 @@ typedef struct
 } gccm_t;
 
 static gccm_t m_gccm;
+
+#define MODULE_INITIALIZED (m_gccm.evt_handler != NULL)
+#include "sdk_macros.h"
 
 static void internal_state_reset(gccm_t * gccm)
 {
@@ -78,7 +71,9 @@ ret_code_t gccm_init(gccm_evt_handler_t evt_handler)
 }
 
 
-ret_code_t gccm_remote_db_store(pm_peer_id_t peer_id, pm_peer_data_remote_gatt_db_t * p_remote_db)
+ret_code_t gccm_remote_db_store(pm_peer_id_t        peer_id,
+                                ble_gatt_db_srv_t * p_remote_db,
+                                uint32_t            n_services)
 {
     VERIFY_MODULE_INITIALIZED();
     VERIFY_PARAM_NOT_NULL(p_remote_db);
@@ -86,23 +81,32 @@ ret_code_t gccm_remote_db_store(pm_peer_id_t peer_id, pm_peer_data_remote_gatt_d
     // Initialize the peer_data
     pm_peer_data_const_t peer_data;
     memset(&peer_data, 0, sizeof(peer_data));
-    peer_data.data_type = PM_PEER_DATA_ID_GATT_REMOTE;
-    peer_data.data.p_remote_gatt_db = p_remote_db;
+    peer_data.data_id = PM_PEER_DATA_ID_GATT_REMOTE;
+    peer_data.p_remote_gatt_db = p_remote_db;
+    peer_data.length_words = PM_REMOTE_DB_N_WORDS(n_services);
 
     return pdb_raw_store(peer_id, &peer_data, NULL);
 }
 
 
-ret_code_t gccm_remote_db_retrieve(pm_peer_id_t peer_id, pm_peer_data_remote_gatt_db_t * p_remote_db)
+ret_code_t gccm_remote_db_retrieve(pm_peer_id_t        peer_id,
+                                   ble_gatt_db_srv_t * p_remote_db,
+                                   uint32_t          * p_n_services)
 {
     VERIFY_MODULE_INITIALIZED();
     VERIFY_PARAM_NOT_NULL(p_remote_db);
+    VERIFY_PARAM_NOT_NULL(p_n_services);
 
     // Initialize the peer_data
     pm_peer_data_t peer_data;
     memset(&peer_data, 0, sizeof(peer_data));
-    peer_data.data_type = PM_PEER_DATA_ID_GATT_REMOTE;
-    peer_data.data.p_remote_gatt_db = p_remote_db;
+    peer_data.data_id = PM_PEER_DATA_ID_GATT_REMOTE;
+    peer_data.p_remote_gatt_db = p_remote_db;
+    peer_data.length_words = PM_REMOTE_DB_N_WORDS(*p_n_services);
 
-    return pdb_raw_read(peer_id, PM_PEER_DATA_ID_GATT_REMOTE, &peer_data);
+    ret_code_t err_code = pdb_raw_read(peer_id, PM_PEER_DATA_ID_GATT_REMOTE, &peer_data);
+
+    *p_n_services = PM_REMOTE_DB_N_SERVICES(peer_data.length_words);
+
+    return err_code;
 }

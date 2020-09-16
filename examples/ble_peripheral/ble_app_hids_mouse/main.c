@@ -60,8 +60,11 @@
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                          /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
-#define UART_TX_BUF_SIZE 256                                                       /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                                                         /**< UART RX buffer size. */
+#define CENTRAL_LINK_COUNT              0                                          /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
+#define PERIPHERAL_LINK_COUNT           1                                          /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
+
+#define UART_TX_BUF_SIZE                256                                        /**< UART TX buffer size. */
+#define UART_RX_BUF_SIZE                1                                          /**< UART RX buffer size. */
 
 #define LEFT_BUTTON_ID                  0                                          /**< Button used for moving the mouse pointer to the left. */
 #define UP_BUTTON_ID                    1                                          /**< Button used for moving the mouse pointer upwards. */
@@ -97,6 +100,8 @@
 
 #define SEC_PARAM_BOND                  1                                           /**< Perform bonding. */
 #define SEC_PARAM_MITM                  0                                           /**< Man In The Middle protection not required. */
+#define SEC_PARAM_LESC                  0                                           /**< LE Secure Connections not enabled. */
+#define SEC_PARAM_KEYPRESS              0                                           /**< Keypress notifications not enabled. */
 #define SEC_PARAM_IO_CAPABILITIES       BLE_GAP_IO_CAPS_NONE                        /**< No I/O capabilities. */
 #define SEC_PARAM_OOB                   0                                           /**< Out Of Band data not available. */
 #define SEC_PARAM_MIN_KEY_SIZE          7                                           /**< Minimum encryption key size. */
@@ -202,7 +207,7 @@ static void battery_level_update(void)
     err_code = ble_bas_battery_level_update(&m_bas, battery_level);
     if ((err_code != NRF_SUCCESS) &&
         (err_code != NRF_ERROR_INVALID_STATE) &&
-        (err_code != BLE_ERROR_NO_TX_BUFFERS) &&
+        (err_code != BLE_ERROR_NO_TX_PACKETS) &&
         (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
     )
     {
@@ -736,13 +741,16 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
             // Only Give peer address if we have a handle to the bonded peer.
             if(m_bonded_peer_handle.appl_id != DM_INVALID_ID)
             {
-                            
+         
                 err_code = dm_peer_addr_get(&m_bonded_peer_handle, &peer_address);
-                APP_ERROR_CHECK(err_code);
-            
-                err_code = ble_advertising_peer_addr_reply(&peer_address);
-                APP_ERROR_CHECK(err_code);
-                
+                if (err_code != (NRF_ERROR_NOT_FOUND | DEVICE_MANAGER_ERR_BASE))
+                {
+                    APP_ERROR_CHECK(err_code);
+
+                    err_code = ble_advertising_peer_addr_reply(&peer_address);
+                    APP_ERROR_CHECK(err_code);
+                }
+
             }
             break;
         }
@@ -864,18 +872,23 @@ static void sys_evt_dispatch(uint32_t sys_evt)
 static void ble_stack_init(void)
 {
     uint32_t err_code;
-
+    
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_APPSH_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, true);
-
-    // Enable BLE stack.
+    SOFTDEVICE_HANDLER_APPSH_INIT(&clock_lf_cfg, true);
+    
     ble_enable_params_t ble_enable_params;
-    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
-    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
-#endif
-    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
-    err_code = sd_ble_enable(&ble_enable_params);
+    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
+                                                    PERIPHERAL_LINK_COUNT,
+                                                    &ble_enable_params);
+    APP_ERROR_CHECK(err_code);
+    
+    //Check the ram settings against the used number of links
+    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
+    
+    // Enable BLE stack.
+    err_code = softdevice_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
@@ -970,7 +983,7 @@ static void mouse_movement_send(int16_t x_delta, int16_t y_delta)
 
     if ((err_code != NRF_SUCCESS) &&
         (err_code != NRF_ERROR_INVALID_STATE) &&
-        (err_code != BLE_ERROR_NO_TX_BUFFERS) &&
+        (err_code != BLE_ERROR_NO_TX_PACKETS) &&
         (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
     )
     {
@@ -1089,6 +1102,8 @@ static void device_manager_init(bool erase_bonds)
 
     register_param.sec_param.bond         = SEC_PARAM_BOND;
     register_param.sec_param.mitm         = SEC_PARAM_MITM;
+    register_param.sec_param.lesc         = SEC_PARAM_LESC;
+    register_param.sec_param.keypress     = SEC_PARAM_KEYPRESS;
     register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
     register_param.sec_param.oob          = SEC_PARAM_OOB;
     register_param.sec_param.min_key_size = SEC_PARAM_MIN_KEY_SIZE;

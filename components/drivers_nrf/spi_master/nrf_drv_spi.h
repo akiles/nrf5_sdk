@@ -124,14 +124,17 @@ typedef struct
 {
     uint8_t sck_pin;      ///< SCK pin number.
     uint8_t mosi_pin;     ///< MOSI pin number (optional).
-                          /**< Set @ref NRF_DRV_SPI_PIN_NOT_USED
+                          /**< Set to @ref NRF_DRV_SPI_PIN_NOT_USED
                            *   if this signal is not needed. */
     uint8_t miso_pin;     ///< MISO pin number (optional).
-                          /**< Set @ref NRF_DRV_SPI_PIN_NOT_USED
+                          /**< Set to @ref NRF_DRV_SPI_PIN_NOT_USED
                            *   if this signal is not needed. */
     uint8_t ss_pin;       ///< Slave Select pin number (optional).
-                          /**< Set @ref NRF_DRV_SPI_PIN_NOT_USED
-                           *   if this signal is not needed. */
+                          /**< Set to @ref NRF_DRV_SPI_PIN_NOT_USED
+                           *   if this signal is not needed. The driver 
+                           *   supports only active low for this signal. 
+                           *   If the signal should be active high,
+                           *   it must be controlled externally. */
     uint8_t irq_priority; ///< Interrupt priority.
     uint8_t orc;          ///< Over-run character.
                           /**< This character is used when all bytes from the TX buffer are sent,
@@ -157,19 +160,77 @@ typedef struct
     .bit_order    = NRF_DRV_SPI_BIT_ORDER_MSB_FIRST,         \
 }
 
+#define NRF_DRV_SPI_FLAG_TX_POSTINC          (1UL << 0) /**< TX buffer address incremented after transfer. */
+#define NRF_DRV_SPI_FLAG_RX_POSTINC          (1UL << 1) /**< RX buffer address incremented after transfer. */
+#define NRF_DRV_SPI_FLAG_NO_XFER_EVT_HANDLER (1UL << 2) /**< Interrupt after each transfer is suppressed, and the event handler is not called. */
+#define NRF_DRV_SPI_FLAG_HOLD_XFER           (1UL << 3) /**< Set up the transfer but do not start it. */
+#define NRF_DRV_SPI_FLAG_REPEATED_XFER       (1UL << 4) /**< Flag indicating that the transfer will be executed multiple times. */
+
 /**
- * @brief SPI master driver events, passed to the handler routine provided
+ * @brief Single transfer descriptor structure.
+ */
+typedef struct
+{
+    uint8_t const * p_tx_buffer; ///< Pointer to TX buffer.
+    uint8_t         tx_length;   ///< TX buffer length.
+    uint8_t       * p_rx_buffer; ///< Pointer to RX buffer.
+    uint8_t         rx_length;   ///< RX buffer length.
+}nrf_drv_spi_xfer_desc_t;
+
+
+/**
+ * @brief Macro for setting up single transfer descriptor.
+ *
+ * This macro is for internal use only.
+ */
+#define NRF_DRV_SPI_SINGLE_XFER(p_tx, tx_len, p_rx, rx_len)  \
+    {                                                        \
+    .p_tx_buffer = (uint8_t const *)(p_tx),                  \
+    .tx_length = (tx_len),                                   \
+    .p_rx_buffer = (p_rx),                                   \
+    .rx_length = (rx_len),                                   \
+    }
+
+/**
+ * @brief Macro for setting duplex TX RX transfer.
+ */
+#define NRF_DRV_SPI_XFER_TRX(p_tx_buf, tx_length, p_rx_buf, rx_length)                    \
+        NRF_DRV_SPI_SINGLE_XFER(p_tx_buf, tx_length, p_rx_buf, rx_length)
+
+/**
+ * @brief Macro for setting TX transfer.
+ */
+#define NRF_DRV_SPI_XFER_TX(p_buf, length) \
+        NRF_DRV_SPI_SINGLE_XFER(p_buf, length, NULL, 0)
+
+/**
+ * @brief Macro for setting RX transfer.
+ */
+#define NRF_DRV_SPI_XFER_RX(p_buf, length) \
+        NRF_DRV_SPI_SINGLE_XFER(NULL, 0, p_buf, length)
+
+/**
+ * @brief SPI master driver event types, passed to the handler routine provided
  *        during initialization.
  */
 typedef enum
 {
     NRF_DRV_SPI_EVENT_DONE, ///< Transfer done.
-} nrf_drv_spi_event_t;
+} nrf_drv_spi_evt_type_t;
+
+typedef struct
+{
+    nrf_drv_spi_evt_type_t  type;      ///< Event type.
+    union
+    {
+        nrf_drv_spi_xfer_desc_t done;  ///< Event data for DONE event.
+    } data;
+} nrf_drv_spi_evt_t;
 
 /**
  * @brief SPI master driver event handler type.
  */
-typedef void (*nrf_drv_spi_handler_t)(nrf_drv_spi_event_t event);
+typedef void (*nrf_drv_spi_handler_t)(nrf_drv_spi_evt_t const * p_event);
 
 
 /**
@@ -185,6 +246,10 @@ typedef void (*nrf_drv_spi_handler_t)(nrf_drv_spi_event_t event);
  *
  * @retval NRF_SUCCESS             If initialization was successful.
  * @retval NRF_ERROR_INVALID_STATE If the driver was already initialized.
+ * @retval NRF_ERROR_BUSY          If some other peripheral with the same
+ *                                 instance ID is already in use. This is 
+ *                                 possible only if PERIPHERAL_RESOURCE_SHARING_ENABLED 
+ *                                 is set to a value other than zero.
  */
 ret_code_t nrf_drv_spi_init(nrf_drv_spi_t const * const p_instance,
                             nrf_drv_spi_config_t const * p_config,
@@ -206,7 +271,7 @@ void       nrf_drv_spi_uninit(nrf_drv_spi_t const * const p_instance);
  * returns when the transfer is finished.
  *
  * @note Peripherals using EasyDMA (for example, SPIM) require the transfer buffers
- *       to be placed in the data RAM region. If they are not and an SPIM instance is
+ *       to be placed in the Data RAM region. If they are not and an SPIM instance is
  *       used, this function will fail with the error code NRF_ERROR_INVALID_ADDR.
  *
  * @param[in] p_instance       Pointer to the instance structure.
@@ -220,7 +285,7 @@ void       nrf_drv_spi_uninit(nrf_drv_spi_t const * const p_instance);
  * @retval NRF_SUCCESS            If the operation was successful.
  * @retval NRF_ERROR_BUSY         If a previously started transfer has not finished
  *                                yet.
- * @retval NRF_ERROR_INVALID_ADDR If the provided buffers are not placed in the data
+ * @retval NRF_ERROR_INVALID_ADDR If the provided buffers are not placed in the Data
  *                                RAM region.
  */
 ret_code_t nrf_drv_spi_transfer(nrf_drv_spi_t const * const p_instance,
@@ -229,6 +294,75 @@ ret_code_t nrf_drv_spi_transfer(nrf_drv_spi_t const * const p_instance,
                                 uint8_t       * p_rx_buffer,
                                 uint8_t         rx_buffer_length);
 
+
+/**
+ * @brief Function for starting the SPI data transfer with additional option flags.
+ *
+ * Function enables customizing the transfer by using option flags.
+ *
+ * Additional options are provided using the flags parameter:
+ *
+ * - @ref NRF_DRV_SPI_FLAG_TX_POSTINC and @ref NRF_DRV_SPI_FLAG_RX_POSTINC<span></span>:
+ *   Post-incrementation of buffer addresses. Supported only by SPIM.
+ * - @ref NRF_DRV_SPI_FLAG_HOLD_XFER<span></span>: Driver is not starting the transfer. Use this
+ *   flag if the transfer is triggered externally by PPI. Supported only by SPIM. Use
+ *   @ref nrf_drv_twi_start_task_get to get the address of the start task.
+ * - @ref NRF_DRV_SPI_FLAG_NO_XFER_EVT_HANDLER<span></span>: No user event handler after transfer
+ *   completion. This also means no interrupt at the end of the transfer. Supported only by SPIM.
+ *   If @ref NRF_DRV_SPI_FLAG_NO_XFER_EVT_HANDLER is used, the driver does not set the instance into
+ *   busy state, so you must ensure that the next transfers are set up when SPIM is not active.
+ *   @ref nrf_drv_spi_end_event_get function can be used to detect end of transfer. Option can be used
+ *   together with @ref NRF_DRV_SPI_FLAG_REPEATED_XFER to prepare a sequence of SPI transfers
+ *   without interruptions.
+ * - @ref NRF_DRV_SPI_FLAG_REPEATED_XFER<span></span>: Prepare for repeated transfers. You can set
+ *   up a number of transfers that will be triggered externally (for example by PPI). An example is
+ *   a TXRX transfer with the options @ref NRF_DRV_SPI_FLAG_RX_POSTINC,
+ *   @ref NRF_DRV_SPI_FLAG_NO_XFER_EVT_HANDLER, and @ref NRF_DRV_SPI_FLAG_REPEATED_XFER. After the
+ *   transfer is set up, a set of transfers can be triggered by PPI that will read, for example,
+ *   the same register of an external component and put it into a RAM buffer without any interrupts.
+ *   @ref nrf_drv_spi_end_event_get can be used to get the address of the END event, which can be
+ *   used to count the number of transfers. If @ref NRF_DRV_SPI_FLAG_REPEATED_XFER is used,
+ *   the driver does not set the instance into busy state, so you must ensure that the next
+ *   transfers are set up when SPIM is not active. Supported only by SPIM.
+ * @note Function is intended to be used only in non-blocking mode.
+ *
+ * @param p_instance  SPI instance.
+ * @param p_xfer_desc Pointer to the transfer descriptor.
+ * @param flags       Transfer options (0 for default settings).
+ *
+ * @retval NRF_SUCCESS             If the procedure was successful.
+ * @retval NRF_ERROR_BUSY          If the driver is not ready for a new transfer.
+ * @retval NRF_ERROR_NOT_SUPPORTED If the provided parameters are not supported.
+ * @retval NRF_ERROR_INVALID_ADDR  If the provided buffers are not placed in the Data
+ *                                 RAM region.
+ */
+ret_code_t nrf_drv_spi_xfer(nrf_drv_spi_t     const * const p_instance,
+                            nrf_drv_spi_xfer_desc_t const * p_xfer_desc,
+                            uint32_t                        flags);
+
+/**
+ * @brief Function for returning the address of a SPIM start task.
+ *
+ * This function should be used if @ref nrf_drv_spi_xfer was called with the flag @ref NRF_DRV_SPI_FLAG_HOLD_XFER.
+ * In that case, the transfer is not started by the driver, but it must be started externally by PPI.
+ *
+ * @param[in]  p_instance SPI instance.
+ *
+ * @return     Start task address.
+ */
+uint32_t nrf_drv_spi_start_task_get(nrf_drv_spi_t const * p_instance);
+
+/**
+ * @brief Function for returning the address of a END SPIM event.
+ *
+ * A END event can be used to detect the end of a transfer if the @ref NRF_DRV_SPI_FLAG_NO_XFER_EVT_HANDLER
+ * option is used.
+ *
+ * @param[in]  p_instance  SPI instance.
+ *
+ * @return     END event address.
+ */
+uint32_t nrf_drv_spi_end_event_get(nrf_drv_spi_t const * p_instance);
 #endif // NRF_DRV_SPI_H__
 
 /** @} */

@@ -12,7 +12,7 @@
 
 #include "ant_search_config.h"
 #include "ant_interface.h"
-#include "nrf_error.h"
+#include "sdk_common.h"
 
 uint32_t ant_search_init(ant_search_config_t const * p_config)
 {
@@ -26,31 +26,19 @@ uint32_t ant_search_init(ant_search_config_t const * p_config)
 
     err_code = sd_ant_search_channel_priority_set(p_config->channel_number,
                                                   p_config->search_priority);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     err_code = sd_ant_search_waveform_set(p_config->channel_number,
                                           p_config->waveform);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     err_code = sd_ant_channel_rx_search_timeout_set(p_config->channel_number,
                                                     p_config->high_priority_timeout);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     err_code = sd_ant_channel_low_priority_rx_search_timeout_set(p_config->channel_number,
                                                                  p_config->low_priority_timeout);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    VERIFY_SUCCESS(err_code);
 
     err_code = sd_ant_active_search_sharing_cycles_set(p_config->channel_number,
                                                        p_config->search_sharing_cycles);

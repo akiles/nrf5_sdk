@@ -13,6 +13,7 @@
  *          ENABLE_DEBUG_LOG_SUPPORT is defined in the project.
  */
 #ifdef ENABLE_DEBUG_LOG_SUPPORT
+#include "nrf_log.h"
 /**
  * @brief Module Initialization.
  *
@@ -30,7 +31,7 @@ void app_trace_init(void);
  *
  * @note Though this is currently a macro, it should be used used and treated as function.
  */
-#define app_trace_log printf
+#define app_trace_log NRF_LOG_PRINTF
 
 /**
  * @brief Dump auxiliary byte buffer to the debug trace.

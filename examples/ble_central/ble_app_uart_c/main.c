@@ -1,70 +1,65 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
-
 #include "nordic_common.h"
 #include "app_error.h"
 #include "app_uart.h"
-
-#include "nrf.h"
+#include "app_trace.h"
 #include "ble_db_discovery.h"
-
 #include "app_timer.h"
 #include "app_trace.h"
 #include "app_util.h"
 #include "app_error.h"
-
 #include "bsp.h"
 #include "bsp_btn_ble.h"
 #include "boards.h"
-
 #include "ble.h"
 #include "ble_gap.h"
 #include "ble_hci.h"
-
 #include "softdevice_handler.h"
-
 #include "ble_advdata.h"
-
 #include "ble_nus_c.h"
+
+#define CENTRAL_LINK_COUNT      1                               /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
+#define PERIPHERAL_LINK_COUNT   0                               /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 
 #define UART_TX_BUF_SIZE        256                             /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE        256                             /**< UART RX buffer size. */
-                                                                
+
 #define NUS_SERVICE_UUID_TYPE   BLE_UUID_TYPE_VENDOR_BEGIN      /**< UUID type for the Nordic UART Service (vendor specific). */
-                                                                
+
 #define APP_TIMER_PRESCALER     0                               /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE 2                               /**< Size of timer operation queues. */
-                                                                
+
 #define APPL_LOG                app_trace_log                   /**< Debug logger macro that will be used in this file to do logging of debug information over UART. */
-                                                                
+
 #define SCAN_INTERVAL           0x00A0                          /**< Determines scan interval in units of 0.625 millisecond. */
 #define SCAN_WINDOW             0x0050                          /**< Determines scan window in units of 0.625 millisecond. */
 #define SCAN_ACTIVE             1                               /**< If 1, performe active scanning (scan requests). */
 #define SCAN_SELECTIVE          0                               /**< If 1, ignore unknown devices (non whitelisted). */
-#define SCAN_TIMEOUT            0x0000                          /**< */
-                                                                
+#define SCAN_TIMEOUT            0x0000                          /**< Timout when scanning. 0x0000 disables timeout. */
+
 #define MIN_CONNECTION_INTERVAL MSEC_TO_UNITS(20, UNIT_1_25_MS) /**< Determines minimum connection interval in millisecond. */
 #define MAX_CONNECTION_INTERVAL MSEC_TO_UNITS(75, UNIT_1_25_MS) /**< Determines maximum connection interval in millisecond. */
 #define SLAVE_LATENCY           0                               /**< Determines slave latency in counts of connection events. */
 #define SUPERVISION_TIMEOUT     MSEC_TO_UNITS(4000, UNIT_10_MS) /**< Determines supervision time-out in units of 10 millisecond. */
-                                                                
+
 #define UUID16_SIZE             2                               /**< Size of 16 bit UUID */
-#define UUID32_SIZE	            4                               /**< Size of 32 bit UUID */
+#define UUID32_SIZE             4                               /**< Size of 32 bit UUID */
 #define UUID128_SIZE            16                              /**< Size of 128 bit UUID */
 
-static ble_nus_c_t              m_ble_nus_c;
-static ble_db_discovery_t       m_ble_db_discovery;
+static ble_nus_c_t              m_ble_nus_c;                    /**< Instance of NUS service. Must be passed to all NUS_C API calls. */
+static ble_db_discovery_t       m_ble_db_discovery;             /**< Instance of database discovery module. Must be passed to all db_discovert API calls */
 
 /**
  * @brief Connection parameters requested for connection.
  */
 static const ble_gap_conn_params_t m_connection_param =
   {
-    (uint16_t)MIN_CONNECTION_INTERVAL,   // Minimum connection
-    (uint16_t)MAX_CONNECTION_INTERVAL,   // Maximum connection
-    0,                                   // Slave latency
-    (uint16_t)SUPERVISION_TIMEOUT        // Supervision time-out
+    (uint16_t)MIN_CONNECTION_INTERVAL,  // Minimum connection
+    (uint16_t)MAX_CONNECTION_INTERVAL,  // Maximum connection
+    (uint16_t)SLAVE_LATENCY,            // Slave latency
+    (uint16_t)SUPERVISION_TIMEOUT       // Supervision time-out
   };
 
 /**
@@ -86,7 +81,7 @@ static const ble_gap_scan_params_t m_scan_params =
 static const ble_uuid_t m_nus_uuid = 
   {
     .uuid = BLE_UUID_NUS_SERVICE,
-    .type = NUS_SERVICE_UUID_TYPE	
+    .type = NUS_SERVICE_UUID_TYPE
   };
 
 /**@brief Function for asserts in the SoftDevice.
@@ -118,6 +113,21 @@ static void scan_start(void)
     APP_ERROR_CHECK(err_code);
 }
 
+
+/**@brief Function for handling database discovery events.
+ *
+ * @details This function is callback function to handle events from the database discovery module.
+ *          Depending on the UUIDs that are discovered, this function should forward the events
+ *          to their respective services.
+ *
+ * @param[in] p_event  Pointer to the database discovery event.
+ */
+static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
+{
+    ble_nus_c_on_db_disc_evt(&m_ble_nus_c, p_evt);
+}
+
+
 /**@brief   Function for handling app_uart events.
  *
  * @details This function will receive a single character from the app_uart module and append it to 
@@ -139,9 +149,9 @@ void uart_event_handle(app_uart_evt_t * p_event)
 
             if ((data_array[index - 1] == '\n') || (index >= (BLE_NUS_MAX_DATA_LEN)))
             {
-                while (ble_nus_c_string_send(&m_ble_nus_c, data_array, index) != NRF_SUCCESS)			
+                while (ble_nus_c_string_send(&m_ble_nus_c, data_array, index) != NRF_SUCCESS)
                 {
-                    // repeat until sent
+                    // repeat until sent.
                 }
                 index = 0;
             }
@@ -168,21 +178,20 @@ void uart_event_handle(app_uart_evt_t * p_event)
  * @param[in]   p_ble_nus_c   NUS Client Handle. This identifies the NUS client
  * @param[in]   p_ble_nus_evt Pointer to the NUS Client event.
  */
-  
+
 /**@snippet [Handling events from the ble_nus_c module] */ 
 static void ble_nus_c_evt_handler(ble_nus_c_t * p_ble_nus_c, const ble_nus_c_evt_t * p_ble_nus_evt)
 {
     uint32_t err_code;
     switch (p_ble_nus_evt->evt_type)
     {
-        case BLE_NUS_C_EVT_FOUND_NUS_TX_CHARACTERISTIC:
-            APPL_LOG("The device has the device TX characteristic\r\n");
-            break;
-        
-        case BLE_NUS_C_EVT_FOUND_NUS_RX_CHARACTERISTIC:
+        case BLE_NUS_C_EVT_DISCOVERY_COMPLETE:
+            err_code = ble_nus_c_handles_assign(p_ble_nus_c, p_ble_nus_evt->conn_handle, &p_ble_nus_evt->handles);
+            APP_ERROR_CHECK(err_code);
+
             err_code = ble_nus_c_rx_notif_enable(p_ble_nus_c);
             APP_ERROR_CHECK(err_code);
-            APPL_LOG("The device has the device RX characteristic\r\n");
+            APPL_LOG("The device has the Nordic UART Service\r\n");
             break;
         
         case BLE_NUS_C_EVT_NUS_RX_EVT:
@@ -193,7 +202,7 @@ static void ble_nus_c_evt_handler(ble_nus_c_t * p_ble_nus_c, const ble_nus_c_evt
             break;
         
         case BLE_NUS_C_EVT_DISCONNECTED:
-            APPL_LOG("NUS device disconnected\r\n");
+            APPL_LOG("Disconnected\r\n");
             scan_start();
             break;
     }
@@ -261,7 +270,7 @@ static bool is_uuid_present(const ble_uuid_t *p_target_uuid,
                 }
             }
         }
-        
+
         else if ( (field_type == BLE_GAP_AD_TYPE_32BIT_SERVICE_UUID_MORE_AVAILABLE)
                 || (field_type == BLE_GAP_AD_TYPE_32BIT_SERVICE_UUID_COMPLETE)
                 )
@@ -305,30 +314,29 @@ static bool is_uuid_present(const ble_uuid_t *p_target_uuid,
 
 /**@brief Function for handling the Application's BLE Stack events.
  *
- * @param[in]   p_ble_evt   Bluetooth stack event.
+ * @param[in] p_ble_evt  Bluetooth stack event.
  */
 static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
     uint32_t              err_code;
-    const ble_gap_evt_t * p_gap_evt = &p_ble_evt->evt.gap_evt;	
-    
+    const ble_gap_evt_t * p_gap_evt = &p_ble_evt->evt.gap_evt;
+
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_ADV_REPORT:
         {
-            const ble_gap_evt_adv_report_t *p_adv_report = &p_gap_evt->params.adv_report;
-                        
+            const ble_gap_evt_adv_report_t * p_adv_report = &p_gap_evt->params.adv_report;
+
             if (is_uuid_present(&m_nus_uuid, p_adv_report))
             {
 
                 err_code = sd_ble_gap_connect(&p_adv_report->peer_addr,
                                               &m_scan_params,
                                               &m_connection_param);
-                
+
                 if (err_code == NRF_SUCCESS)
                 {
                     // scan is automatically stopped by the connect
-                                      
                     err_code = bsp_indication_set(BSP_INDICATE_IDLE);
                     APP_ERROR_CHECK(err_code);
                     APPL_LOG("Connecting to target %02x%02x%02x%02x%02x%02x\r\n",
@@ -343,18 +351,17 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             }
             break;
         }
-        
+
         case BLE_GAP_EVT_CONNECTED:
             APPL_LOG("Connected to target\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
-            
-            m_ble_nus_c.conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
+
             // start discovery of services. The NUS Client waits for a discovery result
             err_code = ble_db_discovery_start(&m_ble_db_discovery, p_ble_evt->evt.gap_evt.conn_handle);
             APP_ERROR_CHECK(err_code);
             break;
-    
+
         case BLE_GAP_EVT_TIMEOUT:
             if (p_gap_evt->params.timeout.src == BLE_GAP_TIMEOUT_SRC_SCAN)
             {
@@ -366,13 +373,13 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                 APPL_LOG("[APPL]: Connection Request timed out.\r\n");
             }
             break;
-            
+
         case BLE_GAP_EVT_SEC_PARAMS_REQUEST:
             // Pairing not supported
             err_code = sd_ble_gap_sec_params_reply(p_ble_evt->evt.gap_evt.conn_handle, BLE_GAP_SEC_STATUS_PAIRING_NOT_SUPP, NULL, NULL);
             APP_ERROR_CHECK(err_code);
             break;
-    
+
         case BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST:
             // Accepting parameters requested by peer.
             err_code = sd_ble_gap_conn_param_update(p_gap_evt->conn_handle,
@@ -388,13 +395,13 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 /**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
  *
  * @details This function is called from the scheduler in the main loop after a BLE stack event has
- *  been received.
+ *          been received.
  *
- * @param[in]   p_ble_evt   Bluetooth stack event.
+ * @param[in] p_ble_evt  Bluetooth stack event.
  */
 static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
-    on_ble_evt(p_ble_evt);  
+    on_ble_evt(p_ble_evt);
     bsp_btn_ble_on_ble_evt(p_ble_evt);
     ble_db_discovery_on_ble_evt(&m_ble_db_discovery, p_ble_evt);
     ble_nus_c_on_ble_evt(&m_ble_nus_c,p_ble_evt);
@@ -407,22 +414,23 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 static void ble_stack_init(void)
 {
     uint32_t err_code;
-
+    
+    nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
+    
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
-
-    // Enable BLE stack.
+    SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
+    
     ble_enable_params_t ble_enable_params;
-    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
-    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
-#endif
-    ble_enable_params.gatts_enable_params.service_changed = false;
-#ifdef S120
-    ble_enable_params.gap_enable_params.role              = BLE_GAP_ROLE_CENTRAL;
-#endif
-
-    err_code = sd_ble_enable(&ble_enable_params);
+    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
+                                                    PERIPHERAL_LINK_COUNT,
+                                                    &ble_enable_params);
+    APP_ERROR_CHECK(err_code);
+    
+    //Check the ram settings against the used number of links
+    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
+    
+    // Enable BLE stack.
+    err_code = softdevice_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
@@ -432,7 +440,7 @@ static void ble_stack_init(void)
 
 /**@brief Function for handling events from the BSP module.
  *
- * @param[in]   event   Event generated by button press.
+ * @param[in] event  Event generated by button press.
  */
 void bsp_event_handler(bsp_event_t event)
 {
@@ -444,7 +452,8 @@ void bsp_event_handler(bsp_event_t event)
             break;
 
         case BSP_EVENT_DISCONNECT:
-            err_code = sd_ble_gap_disconnect(m_ble_nus_c.conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+            err_code = sd_ble_gap_disconnect(m_ble_nus_c.conn_handle,
+                                             BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             if (err_code != NRF_ERROR_INVALID_STATE)
             {
                 APP_ERROR_CHECK(err_code);
@@ -470,7 +479,7 @@ static void uart_init(void)
         .cts_pin_no   = CTS_PIN_NUMBER,
         .flow_control = APP_UART_FLOW_CONTROL_ENABLED,
         .use_parity   = false,
-        .baud_rate    = UART_BAUDRATE_BAUDRATE_Baud38400
+        .baud_rate    = UART_BAUDRATE_BAUDRATE_Baud115200
       };
 
     APP_UART_FIFO_INIT(&comm_params,
@@ -512,6 +521,14 @@ static void buttons_leds_init(void)
 }
 
 
+/** @brief Function for initializing the Database Discovery Module.
+ */
+static void db_discovery_init(void)
+{
+    uint32_t err_code = ble_db_discovery_init(db_disc_handler);
+    APP_ERROR_CHECK(err_code);
+}
+
 /** @brief Function for the Power manager.
  */
 static void power_manage(void)
@@ -524,24 +541,19 @@ static void power_manage(void)
 
 int main(void)
 {
-    uint32_t err_code;
-    
+
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
-    
+
     uart_init();
     buttons_leds_init();
-    
+    db_discovery_init();
     ble_stack_init();
-    
-    err_code = ble_db_discovery_init();
-    APP_ERROR_CHECK(err_code);
-    
     nus_c_init();
 
     // Start scanning for peripherals and initiate connection
     // with devices that advertise NUS UUID.
     scan_start();
-    APPL_LOG("Scan started\r\n");
+    printf("Scan started\r\n");
 
     for (;;)
     {

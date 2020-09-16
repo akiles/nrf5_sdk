@@ -1,4 +1,4 @@
-/* Copyright (C) 2014 Nordic Semiconductor. All Rights Reserved.
+/* Copyright (c)  2013 Nordic Semiconductor. All Rights Reserved.
  *
  * The information contained herein is property of Nordic Semiconductor ASA.
  * Terms and conditions of usage are described in detail in NORDIC
@@ -22,24 +22,23 @@
 #include <stdint.h>
 #include "nrf.h"
 
-#define PSTORAGE_FLASH_PAGE_SIZE    ((uint16_t)NRF_FICR->CODEPAGESIZE)   /**< Size of one flash page. */
-#define PSTORAGE_FLASH_EMPTY_MASK    0xFFFFFFFF                          /**< Bit mask that defines an empty address in flash. */
+static __INLINE uint16_t pstorage_flash_page_size()
+{
+  return (uint16_t)NRF_FICR->CODEPAGESIZE;
+}
 
-#ifdef NRF51
-#define BOOTLOADER_ADDRESS           (NRF_UICR->BOOTLOADERADDR)
-#elif defined NRF52
-#define BOOTLOADER_ADDRESS           (PSTORAGE_FLASH_EMPTY_MASK)
-#endif
+#define PSTORAGE_FLASH_PAGE_SIZE     pstorage_flash_page_size()          /**< Size of one flash page. */
+#define PSTORAGE_FLASH_EMPTY_MASK    0xFFFFFFFF                          /**< Bit mask that defines an empty address in flash. */
 
 static __INLINE uint32_t pstorage_flash_page_end()
 {
-   uint32_t bootloader_addr = BOOTLOADER_ADDRESS;
+   uint32_t bootloader_addr = NRF_UICR->NRFFW[0];
   
    return ((bootloader_addr != PSTORAGE_FLASH_EMPTY_MASK) ?
            (bootloader_addr/ PSTORAGE_FLASH_PAGE_SIZE) : NRF_FICR->CODESIZE);
 }
 
-#define PSTORAGE_FLASH_PAGE_END  pstorage_flash_page_end()
+#define PSTORAGE_FLASH_PAGE_END     pstorage_flash_page_end()
 
 #define PSTORAGE_NUM_OF_PAGES       1                                                           /**< Number of flash pages allocated for the pstorage module excluding the swap page, configurable based on system requirements. */
 #define PSTORAGE_MIN_BLOCK_SIZE     0x0010                                                      /**< Minimum size of block that can be registered with the module. Should be configured based on system requirements, recommendation is not have this value to be at least size of word. */

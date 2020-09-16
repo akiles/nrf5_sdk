@@ -15,7 +15,8 @@
 #define NRF_ASSERT_H_
 
 #include <stdint.h>
-#include "compiler_abstraction.h"
+#include "nrf.h"
+#include "app_error.h"
 
 #if defined(DEBUG_NRF) || defined(DEBUG_NRF_USER)
 
@@ -49,7 +50,7 @@ if (expr)                                                                     \
 }                                                                             \
 else                                                                          \
 {                                                                             \
-  assert_nrf_callback((uint16_t)__LINE__, (uint8_t *)__FILE__);               \
+    assert_nrf_callback((uint16_t)__LINE__, (uint8_t *)__FILE__);             \
 }
 #else
 #define ASSERT(expr) //!< Assert empty when disabled

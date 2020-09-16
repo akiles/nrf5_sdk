@@ -26,6 +26,7 @@
 #include "spi_5W_master.h"
 #include "ser_config_5W_app.h"
 #include "ser_phy_debug_app.h"
+#include "sdk_common.h"
 
 
 #define _static
@@ -291,10 +292,7 @@ uint32_t spi_master_open(const spi_master_hw_instance_t    spi_master_hw_instanc
     #if defined(SPI_MASTER_0_ENABLE) || defined(SPI_MASTER_1_ENABLE)
 
 
-    if (p_spi_master_config == NULL)
-    {
-        return NRF_ERROR_NULL;
-    }
+    VERIFY_PARAM_NOT_NULL(p_spi_master_config);
 
     spi_master_instance_t * p_spi_instance = spi_master_get_instance(spi_master_hw_instance);
 

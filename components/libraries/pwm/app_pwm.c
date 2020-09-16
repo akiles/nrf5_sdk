@@ -40,6 +40,11 @@
 #define PWM_MAIN_CC_CHANNEL                        2
 #define PWM_SECONDARY_CC_CHANNEL                   3
 
+#ifdef NRF52
+    static bool m_use_ppi_delay_workaround;
+#endif
+
+
 /**
  * @brief PWM busy status
  *
@@ -106,7 +111,6 @@ static void pan73_workaround(NRF_TIMER_Type * p_timer, bool enable)
 #endif
     return;
 }
-
 
 bool app_pwm_busy_check(app_pwm_t const * const p_instance)
 {
@@ -342,11 +346,17 @@ static void pwm_transition_n_to_m(app_pwm_t const * const p_instance,
                 nrf_drv_timer_compare_event_address_get(p_instance->p_timer, PWM_SECONDARY_CC_CHANNEL),
                 nrf_drv_timer_capture_task_address_get(p_instance->p_timer, channel));
 
+#ifdef NRF52
+    if (ticks + ((nrf_timer_frequency_get(p_instance->p_timer->p_reg) == 
+        (m_use_ppi_delay_workaround ? NRF_TIMER_FREQ_8MHz : NRF_TIMER_FREQ_16MHz) ) ? 1 : 0)
+        < p_ch_cb->pulsewidth)
+#else
     if (ticks + ((nrf_timer_frequency_get(p_instance->p_timer->p_reg) == NRF_TIMER_FREQ_16MHz) ? 1 : 0)
         < p_ch_cb->pulsewidth)
+#endif
     {
         // For lower value, we need one more transition. Timer task delay is included.
-        // If prescaler is enabled, one tick must be added because of 1 PCLK16M clock cycle delay.
+        // If prescaler is disabled, one tick must be added because of 1 PCLK16M clock cycle delay.
         nrf_drv_ppi_channel_assign(p_cb->ppi_channels[1],
                 nrf_drv_timer_compare_event_address_get(p_instance->p_timer, PWM_SECONDARY_CC_CHANNEL),
                 nrf_drv_gpiote_out_task_addr_get(p_ch_cb->gpio_pin));
@@ -637,17 +647,25 @@ static ret_code_t app_pwm_channel_init(app_pwm_t const * const p_instance, uint8
  *
  * @retval    Timer frequency.
  */
-inline nrf_timer_frequency_t pwm_calculate_timer_frequency(uint32_t period_us)
+__STATIC_INLINE nrf_timer_frequency_t pwm_calculate_timer_frequency(uint32_t period_us)
 {
-    uint32_t f   = (uint32_t)NRF_TIMER_FREQ_16MHz;
-    uint32_t min = (uint32_t)NRF_TIMER_FREQ_31250Hz;
+    uint32_t f   = (uint32_t) NRF_TIMER_FREQ_16MHz;
+    uint32_t min = (uint32_t) NRF_TIMER_FREQ_31250Hz;
 
     while ((period_us > TIMER_MAX_PULSEWIDTH_US_ON_16M) && (f < min))
     {
         period_us >>= 1;
         ++f;
     }
-    return (nrf_timer_frequency_t)f;
+
+#ifdef NRF52
+    if ((m_use_ppi_delay_workaround) && (f == (uint32_t) NRF_TIMER_FREQ_16MHz))
+    {
+        f = (uint32_t) NRF_TIMER_FREQ_8MHz;
+    }
+#endif
+
+    return (nrf_timer_frequency_t) f;
 }
 
 
@@ -684,6 +702,17 @@ ret_code_t app_pwm_init(app_pwm_t const * const p_instance, app_pwm_config_t con
 		}
     }
 
+#ifdef NRF52
+    if (((*(uint32_t *)0xF0000FE8) & 0x000000F0) == 0x30)
+    {
+        m_use_ppi_delay_workaround = false;
+    }
+    else
+    {
+        m_use_ppi_delay_workaround = true;
+    }
+#endif
+    
     // Innitialize resource status:
     p_cb->ppi_channels[0] = (nrf_ppi_channel_t)UNALLOCATED;
     p_cb->ppi_channels[1] = (nrf_ppi_channel_t)UNALLOCATED;

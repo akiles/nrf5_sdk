@@ -30,21 +30,17 @@ uint32_t ble_opt_set_req_dec(uint8_t const * const   p_buf,
     SER_ASSERT_NOT_NULL(pp_opt);
     SER_ASSERT_NOT_NULL(*pp_opt);
     SER_ASSERT_LENGTH_LEQ(SER_CMD_HEADER_SIZE + 4 + 1, packet_len);
-
     SER_ASSERT(p_buf[index] == SD_BLE_OPT_SET, NRF_ERROR_INVALID_PARAM);
     index++;
-
     err_code = uint32_t_dec(p_buf, packet_len, &index, p_opt_id);
     SER_ASSERT(err_code == NRF_SUCCESS, err_code);
-
-    SER_ASSERT(((*p_opt_id == BLE_COMMON_OPT_RADIO_CPU_MUTEX) ||
+    SER_ASSERT(((*p_opt_id == BLE_COMMON_OPT_CONN_BW) ||
                 (*p_opt_id == BLE_GAP_OPT_CH_MAP)             ||
                 (*p_opt_id == BLE_GAP_OPT_LOCAL_CONN_LATENCY) ||
                 (*p_opt_id == BLE_GAP_OPT_PASSKEY)            ||
                 (*p_opt_id == BLE_GAP_OPT_PRIVACY)            ||
                 (*p_opt_id == BLE_GAP_OPT_SCAN_REQ_REPORT)    ||
                 (*p_opt_id == BLE_GAP_OPT_COMPAT_MODE)), NRF_ERROR_INVALID_PARAM);
-
     if (p_buf[index++] == SER_FIELD_NOT_PRESENT)
     {
         *pp_opt = NULL;
@@ -53,8 +49,8 @@ uint32_t ble_opt_set_req_dec(uint8_t const * const   p_buf,
     {
         switch(*p_opt_id)
         {
-            case BLE_COMMON_OPT_RADIO_CPU_MUTEX:
-                err_code = ble_common_opt_radio_cpu_mutex_t_dec(p_buf, packet_len, &index, &((*pp_opt)->common_opt.radio_cpu_mutex));
+            case BLE_COMMON_OPT_CONN_BW:
+                err_code = ble_common_opt_conn_bw_t_dec(p_buf, packet_len, &index, &((*pp_opt)->common_opt.conn_bw));
                 SER_ASSERT(err_code == NRF_SUCCESS, err_code);
                 break;
             case BLE_GAP_OPT_CH_MAP:
@@ -83,7 +79,6 @@ uint32_t ble_opt_set_req_dec(uint8_t const * const   p_buf,
                 break;
         }
     }
-
     SER_ASSERT_LENGTH_EQ(index, packet_len);
 
     return err_code;

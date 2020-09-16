@@ -36,121 +36,171 @@
  */
 
 /**
- * @brief Calibration interval configuration for the low-frequency RC oscillator.
- *
- * @details  Calibration can be affected by radio transmission. To avoid this problem,
- *           call @ref nrf_drv_clock_calibration_force() and wait for end of calibration.
+ * @brief Clock events.
  */
 typedef enum
 {
-    RC_250MS_CALIBRATION_INTERVAL   = 1,  /*< Calibration every 250 ms. */
-    RC_500MS_CALIBRATION_INTERVAL   = 2,  /*< Calibration every 500 ms. */
-    RC_1000MS_CALIBRATION_INTERVAL  = 4,  /*< Calibration every 1000 ms. */
-    RC_2000MS_CALIBRATION_INTERVAL  = 8,  /*< Calibration every 2000 ms. */
-    RC_4000MS_CALIBRATION_INTERVAL  = 16, /*< Calibration every 4000 ms. */
-    RC_8000MS_CALIBRATION_INTERVAL  = 32, /*< Calibration every 8000 ms. */
-    RC_16000MS_CALIBRATION_INTERVAL = 64  /*< Calibration every 16000 ms. */
-} nrf_drv_clock_lf_cal_interval_t;
-
-/**@brief Struct for Clock initialization. Thise parameters are used when SoftDevice is not present
- *        and low-frequency RC oscillator is selected.
- */
-typedef struct
-{
-    nrf_drv_clock_lf_cal_interval_t    cal_interval;       /**< Calibration interval. */
-    uint8_t                            interrupt_priority; /**< Clock interrupt priority. */
-} nrf_drv_clock_config_t;
-
-/**@brief Clock default configuration.*/
-#define NRF_DRV_CLOCK_DEAFULT_CONFIG                             \
-    {                                                            \
-        .cal_interval       = CLOCK_CONFIG_LF_RC_CAL_INTERVAL,   \
-        .interrupt_priority = CLOCK_CONFIG_IRQ_PRIORITY,         \
-    }
+    NRF_DRV_CLOCK_EVT_HFCLK_STARTED, ///< HFCLK has been started.
+    NRF_DRV_CLOCK_EVT_LFCLK_STARTED, ///< LFCLK has been started.
+    NRF_DRV_CLOCK_EVT_CAL_DONE,      ///< Calibration is done.
+    NRF_DRV_CLOCK_EVT_CAL_ABORTED,   ///< Calibration has been aborted.
+} nrf_drv_clock_evt_type_t;
 
 /**
- * @brief Function for initialization the nrf_drv_clock module.
+ * @brief Clock event handler.
+ *
+ * @param[in] event  Event.
+ */
+typedef void (*nrf_drv_clock_event_handler_t)(nrf_drv_clock_evt_type_t event);
+
+// Forward declaration of the nrf_drv_clock_handler_item_t type.
+typedef struct nrf_drv_clock_handler_item_s nrf_drv_clock_handler_item_t;
+
+struct nrf_drv_clock_handler_item_s
+{
+    nrf_drv_clock_handler_item_t * p_next;        ///< A pointer to the next handler that should be called when the clock is started.
+    nrf_drv_clock_event_handler_t  event_handler; ///< Function to be called when the clock is started.
+};
+
+/**
+ * @brief Function for initializing the nrf_drv_clock module.
  *
  * After initialization, the module is in power off state (clocks are not requested).
- *
- * @param[in]  p_config                           Initial configuration. Default configuration used if NULL.
  *
  * @retval     NRF_SUCCESS                        If the procedure was successful.
  * @retval     MODULE_ALREADY_INITIALIZED         If the driver was already initialized.
  * @retval     NRF_ERROR_SOFTDEVICE_NOT_ENABLED   If the SoftDevice was not enabled.
  */
-ret_code_t nrf_drv_clock_init(nrf_drv_clock_config_t const * p_config);
+ret_code_t nrf_drv_clock_init(void);
 
 /**
- * @brief Function for uninitialization the nrf_drv_clock module.
+ * @brief Function for uninitializing the clock module.
  *
- * After uninitialization, the module is in idle state.
  */
 void nrf_drv_clock_uninit(void);
 
 /**
- * @brief Function for requesting LFCLK. LFCLK can be repeatedly requested.
+ * @brief Function for requesting the LFCLK. 
+ * 
+ * The low-frequency clock can be requested by different modules
+ * or contexts. The driver ensures that the clock will be started only when it is requested
+ * the first time. If the clock is not ready but it was already started, the handler item that is
+ * provided as an input parameter is added to the list of handlers that will be notified
+ * when the clock is started. If the clock is already enabled, user callback is called from the
+ * current context.
  *
- * @note When Softdevice is enabled, LFCLK is always running.
+ * The first request will start the selected LFCLK source. If an event handler is
+ * provided, it will be called once the LFCLK is started. If the LFCLK was already started at this 
+ * time, the event handler will be called from the context of this function. Additionally,
+ * the @ref nrf_drv_clock_lfclk_is_running function can be polled to check if the clock has started.
  *
- * @details If it is first request, selected LFCLK source will be started. 
- *          The @ref nrf_drv_clock_lfclk_is_running() function can be polled to check if it has started.
+ * @note When a SoftDevice is enabled, the LFCLK is always running and the driver cannot control it.
+ *
+ * @note The handler item provided by the user cannot be an automatic variable.
+ *
+ * @param[in] p_handler_item A pointer to the event handler structure.
  */
-void nrf_drv_clock_lfclk_request(void);
+void nrf_drv_clock_lfclk_request(nrf_drv_clock_handler_item_t * p_handler_item);
 
 /**
- * @brief Function for releasing LFCLK. If there is no more requests, LFCLK source will be stopped.
+ * @brief Function for releasing the LFCLK. 
  *
- * @note When Softdevice is enabled, LFCLK is always running.
+ * If there are no more requests, the LFCLK source will be stopped.
+ *
+ * @note When a SoftDevice is enabled, the LFCLK is always running.
  */
 void nrf_drv_clock_lfclk_release(void);
 
 /**
- * @brief Function for checking LFCLK state.
+ * @brief Function for checking the LFCLK state.
  *
- * @retval true if the LFCLK is running, false if not.
+ * @retval true If the LFCLK is running.
+ * @retval false If the LFCLK is not running.
  */
 bool nrf_drv_clock_lfclk_is_running(void);
 
 /**
- * @brief Function for requesting high-accuracy (for \nRFXX it is XTAL) source HFCLK. High-accuracy source 
- *        can be repeatedly requested.
+ * @brief Function for requesting the high-accuracy source HFCLK. 
  *
- * @details The @ref nrf_drv_clock_hfclk_is_running() function can be polled to check if it has started.
+ * The high-accuracy source 
+ * can be requested by different modules or contexts. The driver ensures that the high-accuracy
+ * clock will be started only when it is requested the first time. If the clock is not ready
+ * but it was already started, the handler item that is provided as an input parameter is added
+ * to the list of handlers that will be notified when the clock is started.
+ *
+ * If an event handler is provided, it will be called once the clock is started. If the clock was already
+ * started at this time, the event handler will be called from the context of this function. Additionally,
+ * the @ref nrf_drv_clock_hfclk_is_running function can be polled to check if the clock has started.
+ *
+ * @note If a SoftDevice is running, the clock is managed by the SoftDevice and all requests are handled by
+ *       the SoftDevice. This function cannot be called from all interrupt priority levels in that case.
+ * @note The handler item provided by the user cannot be an automatic variable.
+ *
+ * @param[in] p_handler_item A pointer to the event handler structure.
  */
-void nrf_drv_clock_hfclk_request(void);
+void nrf_drv_clock_hfclk_request(nrf_drv_clock_handler_item_t * p_handler_item);
 
 /**
- * @brief Function for releasing high-accuracy source HFCLK. If there is no more requests, high-accuracy 
- *        source will be released.
+ * @brief Function for releasing the high-accuracy source HFCLK. 
+ *
+ * If there are no more requests, the high-accuracy source will be released.
  */
 void nrf_drv_clock_hfclk_release(void);
 
 /**
- * @brief Function for checking HFCLK state.
+ * @brief Function for checking the HFCLK state.
  *
- * @retval true if the HFCLK is running (for \nRFXX XTAL source), false if not.
+ * @retval true If the HFCLK is running (for \nRFXX XTAL source).
+ * @retval false If the HFCLK is not running.
  */
 bool nrf_drv_clock_hfclk_is_running(void);
 
 /**
- * @brief Function for forcing calibration. 
+ * @brief Function for starting a single calibration process.
  *
- * @details This function resets the calibration interval timer. The @ref nrf_drv_clock_is_calibrating() 
- *          function can be polled to check if calibration is still in progress.
+ * This function can also delay the start of calibration by a user-specified value. The delay will use
+ * a low-power timer that is part of the CLOCK module. @ref nrf_drv_clock_is_calibrating can be called to
+ * check if calibration is still in progress. If a handler is provided, the user can be notified when
+ * calibration is completed. The ext calibration can be started from the handler context.
+ *
+ * The calibration process consists of three phases:
+ * - Delay (optional)
+ * - Requesting the high-accuracy HFCLK
+ * - Hardware-supported calibration
+ *
+ * @param[in]  delay   Time after which the calibration will be started (in 0.25 s units).
+ * @param[in]  handler NULL or user function to be called when calibration is completed or aborted.
  *
  * @retval     NRF_SUCCESS                        If the procedure was successful.
- * @retval     NRF_ERROR_FORBIDDEN                If Softdevice is present or selected LFCLK source is not RC oscillator.
+ * @retval     NRF_ERROR_FORBIDDEN                If a SoftDevice is present or the selected LFCLK source is not an RC oscillator.
+ * @retval     NRF_ERROR_INVALID_STATE            If the low-frequency clock is off.
+ * @retval     NRF_ERROR_BUSY                     If calibration is in progress.
  */
-ret_code_t nrf_drv_clock_calibration_force(void);
+ret_code_t nrf_drv_clock_calibration_start(uint8_t delay, nrf_drv_clock_event_handler_t handler);
+
+/**
+ * @brief Function for aborting calibration.
+ *
+ * This function aborts on-going calibration. If calibration was started, it cannot be stopped. If a handler
+ * was provided by @ref nrf_drv_clock_calibration_start, this handler will be called once
+ * aborted calibration is completed. @ref nrf_drv_clock_is_calibrating can also be used to check
+ * if the system is calibrating.
+ *
+ * @retval     NRF_SUCCESS                        If the procedure was successful.
+ * @retval     NRF_ERROR_FORBIDDEN                If a SoftDevice is present or the selected LFCLK source is not an RC oscillator.
+ */
+ret_code_t nrf_drv_clock_calibration_abort(void);
 
 /**
  * @brief Function for checking if calibration is in progress. 
  *
- * @param[out] p_is_calibrating                   true if calibration is in progress, false if not.
+ * This function indicates that the system is
+ * in calibration if it is in any of the calibration process phases (see @ref nrf_drv_clock_calibration_start).
+ *
+ * @param[out] p_is_calibrating                   True if calibration is in progress, false if not.
  *
  * @retval     NRF_SUCCESS                        If the procedure was successful.
- * @retval     NRF_ERROR_FORBIDDEN                If Softdevice is present or selected LFCLK source is not RC oscillator.
+ * @retval     NRF_ERROR_FORBIDDEN                If a SoftDevice is present or the selected LFCLK source is not an RC oscillator.
  */
 ret_code_t nrf_drv_clock_is_calibrating(bool * p_is_calibrating);
 
@@ -158,26 +208,39 @@ ret_code_t nrf_drv_clock_is_calibrating(bool * p_is_calibrating);
  *
  * @param[in]  task                               One of the peripheral tasks.
  *
- * @retval     Task address.
+ * @return     Task address.
  */
-__STATIC_INLINE uint32_t nrf_drv_clock_ppi_task_addr(nrf_clock_task_t task)
-{
-    return nrf_clock_task_address_get(task);
-}
+__STATIC_INLINE uint32_t nrf_drv_clock_ppi_task_addr(nrf_clock_task_t task);
 
 /**@brief Function for returning a requested event address for the clock driver module.
  *
  * @param[in]  event                              One of the peripheral events.
  *
- * @retval     Event address.
+ * @return     Event address.
  */
+__STATIC_INLINE uint32_t nrf_drv_clock_ppi_event_addr(nrf_clock_event_t event);
+
+/**
+ * @brief Function called by the SoftDevice handler if an @ref nrf_soc event is received from the SoftDevice.
+ */
+#ifdef SOFTDEVICE_PRESENT
+void nrf_drv_clock_on_soc_event(uint32_t evt_id);
+#endif
+/**
+ *@}
+ **/
+
+#ifndef SUPPRESS_INLINE_IMPLEMENTATION
+__STATIC_INLINE uint32_t nrf_drv_clock_ppi_task_addr(nrf_clock_task_t task)
+{
+    return nrf_clock_task_address_get(task);
+}
+
 __STATIC_INLINE uint32_t nrf_drv_clock_ppi_event_addr(nrf_clock_event_t event)
 {
     return nrf_clock_event_address_get(event);
 }
-/**
- *@}
- **/
+#endif //SUPPRESS_INLINE_IMPLEMENTATION
 
 /*lint --flb "Leave library region" */
 #endif // NRF_CLOCK_H__

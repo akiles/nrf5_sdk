@@ -348,7 +348,7 @@ static void uart_config(void)
         CTS_PIN_NUMBER,
         APP_UART_FLOW_CONTROL_ENABLED,
         false,
-        UART_BAUDRATE_BAUDRATE_Baud38400
+        UART_BAUDRATE_BAUDRATE_Baud115200
     };
 
     APP_UART_FIFO_INIT(&comm_params,
@@ -412,10 +412,10 @@ static void lfclk_config(void)
 {
     uint32_t err_code;
 
-    err_code = nrf_drv_clock_init(NULL);
+    err_code = nrf_drv_clock_init();
     APP_ERROR_CHECK(err_code);
 
-    nrf_drv_clock_lfclk_request();
+    nrf_drv_clock_lfclk_request(NULL);
 }
 
 

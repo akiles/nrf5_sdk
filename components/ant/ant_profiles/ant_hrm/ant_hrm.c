@@ -287,7 +287,7 @@ void ant_hrm_disp_evt_handler(ant_hrm_profile_t * p_profile, ant_evt_t * p_ant_e
 {
     if (p_ant_event->channel == p_profile->channel_number)
     {
-        ANT_MESSAGE * p_message = (ANT_MESSAGE *)p_ant_event->evt_buffer;
+        ANT_MESSAGE * p_message = (ANT_MESSAGE *)p_ant_event->msg.evt_buffer;
 
         switch (p_ant_event->event)
         {
