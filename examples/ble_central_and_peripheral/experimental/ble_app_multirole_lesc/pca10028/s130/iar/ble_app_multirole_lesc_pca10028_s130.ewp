@@ -181,8 +181,8 @@
           <state>SVC_INTERFACE_CALL_AS_NORMAL_FUNCTION</state>
           <state>NRF51422</state>
           <state>BOARD_PCA10028</state>
-          <state>S130</state>
           <state>NRF_SD_BLE_API_VERSION=2</state>
+          <state>S130</state>
           <state>NRF51</state>
           <state>SOFTDEVICE_PRESENT</state>
           <state>SWI_DISABLE0</state>
@@ -585,8 +585,8 @@
           <state>SVC_INTERFACE_CALL_AS_NORMAL_FUNCTION</state>
           <state>NRF51422</state>
           <state>BOARD_PCA10028</state>
-          <state>S130</state>
           <state>NRF_SD_BLE_API_VERSION=2</state>
+          <state>S130</state>
           <state>NRF51</state>
           <state>SOFTDEVICE_PRESENT</state>
           <state>SWI_DISABLE0</state>
@@ -1199,8 +1199,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\libraries\sha256\sha256.c</name>    </file>  </group>  <group>
   <name>nRF_micro_ecc</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\external\micro-ecc\nrf51_iar\armgcc\micro_ecc_lib_nrf51.a</name>    </file>  </group>  <group>
-  <name>Documentation</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\license.txt</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>

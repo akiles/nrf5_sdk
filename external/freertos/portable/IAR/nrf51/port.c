@@ -115,6 +115,7 @@ __stackless void vPortStartFirstTask( void )
     "   pop {pc}                  \n" /* Finally, pop the PC to jump to the user defined task code. */
     "                             \n"
     "   nop                       \n" /* Manual alignment of the label below */
+    "DATA                         \n"
     "1:                           \n"
     "   DC32 %c0                  \n"
     "2:                           \n"
@@ -177,6 +178,7 @@ __stackless void xPortPendSVHandler( void )
     "   bx r3                               \n"
     "                                       \n"
     "   nop                                 \n" /* Manual alignment of the label below */
+    "DATA                                   \n"
     "1:                                     \n"
     "   DC32  %c0                           \n"
     : /* Outputs */

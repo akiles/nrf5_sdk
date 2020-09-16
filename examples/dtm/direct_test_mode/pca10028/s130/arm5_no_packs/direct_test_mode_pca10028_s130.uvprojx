@@ -362,7 +362,7 @@
             <vShortWch>0</vShortWch>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define> BLE_STACK_SUPPORT_REQD NRF51422 BOARD_PCA10028 S130 NRF_SD_BLE_API_VERSION=2 BSP_DEFINES_ONLY NRF51 SOFTDEVICE_PRESENT</Define>
+              <Define> BLE_STACK_SUPPORT_REQD NRF51422 BOARD_PCA10028 NRF_SD_BLE_API_VERSION=2 S130 BSP_DEFINES_ONLY NRF51 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config\direct_test_mode_pca10028_s130;..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ble\ble_dtm;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\s130\headers;..\..\..\..\..\..\components\softdevice\s130\headers\nrf51;..\..\..\..\..\..\components\toolchain;..\..\..;..\config</IncludePath>
             </VariousControls>
@@ -378,8 +378,8 @@
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DBLE_STACK_SUPPORT_REQD,-DNRF51422,-DBOARD_PCA10028,-DS130,-DNRF_SD_BLE_API_VERSION=2,-DBSP_DEFINES_ONLY,-DNRF51,-DSOFTDEVICE_PRESENT</MiscControls>
-              <Define> BLE_STACK_SUPPORT_REQD NRF51422 BOARD_PCA10028 S130 NRF_SD_BLE_API_VERSION=2 BSP_DEFINES_ONLY NRF51 SOFTDEVICE_PRESENT</Define>
+              <MiscControls> --cpreproc_opts=-DBLE_STACK_SUPPORT_REQD,-DNRF51422,-DBOARD_PCA10028,-DNRF_SD_BLE_API_VERSION=2,-DS130,-DBSP_DEFINES_ONLY,-DNRF51,-DSOFTDEVICE_PRESENT</MiscControls>
+              <Define> BLE_STACK_SUPPORT_REQD NRF51422 BOARD_PCA10028 NRF_SD_BLE_API_VERSION=2 S130 BSP_DEFINES_ONLY NRF51 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config\direct_test_mode_pca10028_s130;..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ble\ble_dtm;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\s130\headers;..\..\..\..\..\..\components\softdevice\s130\headers\nrf51;..\..\..\..\..\..\components\toolchain;..\..\..;..\config</IncludePath>
             </VariousControls>
@@ -458,12 +458,6 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>            </File>          </Files>
-        </Group>        <Group>
-          <GroupName>Documentation</GroupName>
-          <Files>            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\license.txt</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_BLE</GroupName>
           <Files>            <File>
@@ -1096,12 +1090,6 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>            </File>          </Files>
-        </Group>        <Group>
-          <GroupName>Documentation</GroupName>
-          <Files>            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\license.txt</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_BLE</GroupName>
           <Files>            <File>

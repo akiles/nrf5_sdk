@@ -1095,8 +1095,6 @@
   <name>FATFS</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\fatfs\port\diskio_blkdev.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\fatfs\src\ff.c</name>    </file>  </group>  <group>
-  <name>Documentation</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\license.txt</name>    </file>  </group>  <group>
   <name>Device</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\iar\iar_startup_nrf52840.s</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\system_nrf52840.c</name>    </file>  </group></project>

@@ -1,3 +1,118 @@
+nRF5 SDK v12.3.0
+----------------
+Release Date: Week 19, 2017
+ 
+Highlights:
+ 
+The main update for this release is the Eddystone implementation for nRF51.
+In addition to this, we have included some bug fixes. Apart from this, this SDK is identical to SDK v12.2.0.
+The licenses in this SDK release have been updated in the same way as the licenses in SDK v13.0.0.
+This SDK is distributed with nRF5x MDK v8.11.1.
+ 
+- Eddystone implementation upgraded from experimental to production quality.
+- Various bug fixes. See the Bugfixes section below.
+ 
+The following toolchains/devices have been used for testing and
+verification:
+- ARM: MDK-ARM version 5.18a
+- GCC: GCC ARM Embedded 4.9 2015q3
+- IAR: IAR Workbench 7.80.4
+ 
+Supported SoftDevices:
+- S130 v2.0.1
+- S132 v3.0.0
+- S212 v2.0.0
+- S332 v2.0.0
+  
+Supported boards:
+- PCA10028
+- PCA10031
+- PCA10040
+- PCA10056 (limited support; see the "Scope for the nRF52840" section)
+- PCA20006 (only for beacon examples)
+- Dynastream's N5DK1 (only for ANT examples)
+  
+For other devices and boards, see the SDK documentation, section "Using
+the SDK with other boards".
+  
+  
+*** Scope for the nRF52840 chip
+********************************
+The PCA10056 development board is supported but all examples and libraries 
+for the new chip should be treated as experimental.
+  
+The following SDK features are supported on the new nRF52840 chip:
+  - Most BLE, hardware peripheral, and NFC examples (with some
+    exceptions; see the available example projects for details)
+  - Peripheral HAL and drivers (both for existing and new peripherals)
+  - Library supporting CC310 CryptoCell
+  - NFC Type 2 Tag and Type 4 Tag
+ 
+The following SDK features are not supported on the new nRF52840 chip:
+   - ANT
+   - Secure DFU
+   - Serialization
+   - DTM
+   - ESB and Gazell
+   - RTX and FreeRTOS
+   - Eddystone
+ 
+ 
+*** Overall
+***********
+- Updated the license texts across the SDK.
+ 
+ 
+*** Features
+************
+ 
+** BLE **
+- Eddystone implementation upgraded from experimental to production quality.
+ 
+*** Bugfixes
+***********
+** Drivers and libraries **
+- Fixed a bug in FDS where fds_record_update() did not set the page on which the record was stored as applicable for garbage collection.
+- Fixed a bug in FDS where optimization for size in GCC would cause a variable to not be word aligned which resulted in FDS_ERR_UNALIGNED_ADDR when attempting some flash operations.
+- Fixed a bug in FDS where updating the firmware with DFU to a firmware with different flash settings could cause a missing swap page to fail to be detected.
+- Fixed a bug in SAADC where calling nrf_saadc_int_enable() would enable the wrong interrupt.
+- Fixed a bug in SAADC where optimization in Keil would cause nrf_drv_saadc_abort() to time out.
+- Fixed a bug in SAADC where certain conditions would cause only the first convertion to succeed.
+- Fixed a bug in Peer Manager which made it possible for Peer Manager to corrupt the flash memory under certain circumstances.
+- Fixed a bug in NRF Timer where a bit width 8 would fail a validation check for Timer 1 and Timer 2.
+ 
+** BLE **
+- Changed the device name to "Nordic_Buttonless" and enabled write property on DFU Service Control Point.
+  
+*** Known Issues
+****************
+  
+** Overall **
+- Updating the MDK requires to manually copy the header and linker files
+  into the SDK folder (ARM Keil uVision 4, IAR Workbench, ARMGCC).
+- When uploading an application to an nRF52 IC using nrfjprog, you must
+  provide the "--reset/-r" argument or powercycle the board.
+- RTX is not supported on nRF52 chips.
+  
+** BLE **
+- Some examples might have excessively verbose logging.
+- In the Proximity Application, writing "High Alert" to the AlertLevel
+  characteristic of the Link Loss Service does not trigger a high alert
+  when the link is lost.
+- When an Android device is used as a peripheral, it sends slave
+  security request with the MITM bit set. The central applications in
+  the SDK will reject the security request (Pairing Failed) because
+  they do not support MITM.
+  
+** NFC **
+- NFC Type 2 and Type 4 Tag HAL modules require using TIMER4 on nRF52832.
+- Type 2 Tag on nRF52840 chips might fail unpredictably.
+- Some mobile phone apps cannot write Type 4 Tag ("NFC Tool" seems to be okay to use).
+
+
+========================================================================
+
+
 nRF5 SDK v12.2.0
 ----------------
 Release Date: Week 49, 2016

@@ -1022,8 +1022,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\RTT_Syscalls_IAR.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_printf.c</name>    </file>  </group>  <group>
-  <name>Documentation</name>    <file>
-    <name>$PROJ_DIR$\..\..\license.txt</name>    </file>  </group>  <group>
   <name>nRF_Properitary_RF</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\proprietary_rf\gzll\iar\gzll_nrf51_iar.a</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\proprietary_rf\gzll\nrf_gzp.c</name>    </file>    <file>

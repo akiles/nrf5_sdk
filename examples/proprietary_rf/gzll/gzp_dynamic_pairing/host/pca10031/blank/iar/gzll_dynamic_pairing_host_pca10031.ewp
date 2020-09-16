@@ -179,8 +179,8 @@
           <state>USE_SD_HW_RESOURCES</state>
           <state>NRF51422</state>
           <state>BOARD_PCA10031</state>
-          <state>GAZELL_PRESENT</state>
           <state>GAZELL_ALTERNATIVE_RESOURCES</state>
+          <state>GAZELL_PRESENT</state>
           <state>NRF51</state>
           <state>SWI_DISABLE0</state>
         </option>
@@ -494,8 +494,8 @@
           <state>USE_SD_HW_RESOURCES</state>
           <state>NRF51422</state>
           <state>BOARD_PCA10031</state>
-          <state>GAZELL_PRESENT</state>
           <state>GAZELL_ALTERNATIVE_RESOURCES</state>
+          <state>GAZELL_PRESENT</state>
           <state>NRF51</state>
           <state>SWI_DISABLE0</state>
         </option>
@@ -1028,8 +1028,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\external\segger_rtt\RTT_Syscalls_IAR.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_printf.c</name>    </file>  </group>  <group>
-  <name>Documentation</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\license.txt</name>    </file>  </group>  <group>
   <name>nRF_Properitary_RF</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\proprietary_rf\gzll\iar\gzll_nrf51_sd_resource_iar.a</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\proprietary_rf\gzll\nrf_gzp.c</name>    </file>    <file>

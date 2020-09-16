@@ -179,8 +179,8 @@
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>NRF51422</state>
           <state>BOARD_PCA10031</state>
-          <state>S130</state>
           <state>NRF_SD_BLE_API_VERSION=2</state>
+          <state>S130</state>
           <state>BSP_DEFINES_ONLY</state>
           <state>NRF51</state>
           <state>SOFTDEVICE_PRESENT</state>
@@ -575,8 +575,8 @@
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>NRF51422</state>
           <state>BOARD_PCA10031</state>
-          <state>S130</state>
           <state>NRF_SD_BLE_API_VERSION=2</state>
+          <state>S130</state>
           <state>BSP_DEFINES_ONLY</state>
           <state>NRF51</state>
           <state>SOFTDEVICE_PRESENT</state>
@@ -1185,8 +1185,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\RTT_Syscalls_IAR.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_printf.c</name>    </file>  </group>  <group>
-  <name>Documentation</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\license.txt</name>    </file>  </group>  <group>
   <name>Device</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\iar\iar_startup_nrf51.s</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\system_nrf51.c</name>    </file>  </group>  <group>

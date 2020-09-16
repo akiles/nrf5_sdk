@@ -179,8 +179,8 @@
           <state>FPU_INTERRUPT_MODE</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>BOARD_PCA10056</state>
-          <state>S132</state>
           <state>NRF_SD_BLE_API_VERSION=3</state>
+          <state>S132</state>
           <state>BSP_DEFINES_ONLY</state>
           <state>ARM_MATH_CM4</state>
           <state>NRF52840_XXAA</state>
@@ -497,8 +497,8 @@
           <state>FPU_INTERRUPT_MODE</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>BOARD_PCA10056</state>
-          <state>S132</state>
           <state>NRF_SD_BLE_API_VERSION=3</state>
+          <state>S132</state>
           <state>BSP_DEFINES_ONLY</state>
           <state>ARM_MATH_CM4</state>
           <state>NRF52840_XXAA</state>
@@ -1015,8 +1015,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\sdk_errors.c</name>    </file>  </group>  <group>
-  <name>Documentation</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\license.txt</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>

@@ -178,17 +178,17 @@
           <name>CCDefines</name>
           <state>HCI_TIMER2</state>
           <state>BLE_STACK_SUPPORT_REQD</state>
+          <state>NRF_SD_BLE_API_VERSION=3</state>
           <state>SVCALL_AS_NORMAL_FUNCTION</state>
           <state>S132</state>
-          <state>NRF_SD_BLE_API_VERSION=3</state>
           <state>BOARD_PCA10040</state>
           <state>NRF52_PAN_12</state>
           <state>NRF52_PAN_15</state>
           <state>NRF52_PAN_20</state>
           <state>NRF52_PAN_31</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_36</state>
           <state>NRF52_PAN_51</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_54</state>
           <state>NRF52_PAN_55</state>
           <state>NRF52_PAN_58</state>
@@ -593,17 +593,17 @@
       <name>ADefines</name>
           <state>HCI_TIMER2</state>
           <state>BLE_STACK_SUPPORT_REQD</state>
+          <state>NRF_SD_BLE_API_VERSION=3</state>
           <state>SVCALL_AS_NORMAL_FUNCTION</state>
           <state>S132</state>
-          <state>NRF_SD_BLE_API_VERSION=3</state>
           <state>BOARD_PCA10040</state>
           <state>NRF52_PAN_12</state>
           <state>NRF52_PAN_15</state>
           <state>NRF52_PAN_20</state>
           <state>NRF52_PAN_31</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_36</state>
           <state>NRF52_PAN_51</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_54</state>
           <state>NRF52_PAN_55</state>
           <state>NRF52_PAN_58</state>
@@ -1275,8 +1275,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common\ble_advdata.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common\ble_conn_params.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common\ble_srv_common.c</name>    </file>  </group>  <group>
-  <name>Documentation</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\license.txt</name>    </file>  </group>  <group>
   <name>Device</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\iar\iar_startup_nrf52.s</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\system_nrf52.c</name>    </file>  </group>  <group>

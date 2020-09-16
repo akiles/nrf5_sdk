@@ -350,7 +350,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> BLE_STACK_SUPPORT_REQD NRF52832 NRF52 BOARD_PCA10040 NRF52_PAN_12 NRF52_PAN_15 NRF52_PAN_20 NRF52_PAN_31 CONFIG_GPIO_AS_PINRESET NRF52_PAN_36 NRF52_PAN_51 NRF52_PAN_54 NRF52_PAN_55 NRF52_PAN_58 NRF52_PAN_64 S132 NRF_SD_BLE_API_VERSION=3 BSP_DEFINES_ONLY SOFTDEVICE_PRESENT</Define>
+              <Define> BLE_STACK_SUPPORT_REQD NRF52832 NRF52 BOARD_PCA10040 NRF52_PAN_12 NRF52_PAN_15 NRF52_PAN_20 NRF52_PAN_31 NRF52_PAN_36 NRF52_PAN_51 CONFIG_GPIO_AS_PINRESET NRF52_PAN_54 NRF52_PAN_55 NRF52_PAN_58 NRF52_PAN_64 NRF_SD_BLE_API_VERSION=3 S132 BSP_DEFINES_ONLY SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config\direct_test_mode_pca10040_s132;..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ble\ble_dtm;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\s132\headers;..\..\..\..\..\..\components\softdevice\s132\headers\nrf52;..\..\..\..\..\..\components\toolchain;..\..\..;..\config</IncludePath>
             </VariousControls>
@@ -365,8 +365,8 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DBLE_STACK_SUPPORT_REQD,-DNRF52832,-DNRF52,-DBOARD_PCA10040,-DNRF52_PAN_12,-DNRF52_PAN_15,-DNRF52_PAN_20,-DNRF52_PAN_31,-DCONFIG_GPIO_AS_PINRESET,-DNRF52_PAN_36,-DNRF52_PAN_51,-DNRF52_PAN_54,-DNRF52_PAN_55,-DNRF52_PAN_58,-DNRF52_PAN_64,-DS132,-DNRF_SD_BLE_API_VERSION=3,-DBSP_DEFINES_ONLY,-DSOFTDEVICE_PRESENT</MiscControls>
-              <Define> BLE_STACK_SUPPORT_REQD NRF52832 NRF52 BOARD_PCA10040 NRF52_PAN_12 NRF52_PAN_15 NRF52_PAN_20 NRF52_PAN_31 CONFIG_GPIO_AS_PINRESET NRF52_PAN_36 NRF52_PAN_51 NRF52_PAN_54 NRF52_PAN_55 NRF52_PAN_58 NRF52_PAN_64 S132 NRF_SD_BLE_API_VERSION=3 BSP_DEFINES_ONLY SOFTDEVICE_PRESENT</Define>
+              <MiscControls> --cpreproc_opts=-DBLE_STACK_SUPPORT_REQD,-DNRF52832,-DNRF52,-DBOARD_PCA10040,-DNRF52_PAN_12,-DNRF52_PAN_15,-DNRF52_PAN_20,-DNRF52_PAN_31,-DNRF52_PAN_36,-DNRF52_PAN_51,-DCONFIG_GPIO_AS_PINRESET,-DNRF52_PAN_54,-DNRF52_PAN_55,-DNRF52_PAN_58,-DNRF52_PAN_64,-DNRF_SD_BLE_API_VERSION=3,-DS132,-DBSP_DEFINES_ONLY,-DSOFTDEVICE_PRESENT</MiscControls>
+              <Define> BLE_STACK_SUPPORT_REQD NRF52832 NRF52 BOARD_PCA10040 NRF52_PAN_12 NRF52_PAN_15 NRF52_PAN_20 NRF52_PAN_31 NRF52_PAN_36 NRF52_PAN_51 CONFIG_GPIO_AS_PINRESET NRF52_PAN_54 NRF52_PAN_55 NRF52_PAN_58 NRF52_PAN_64 NRF_SD_BLE_API_VERSION=3 S132 BSP_DEFINES_ONLY SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config\direct_test_mode_pca10040_s132;..\..\..\config;..\..\..\..\..\..\components;..\..\..\..\..\..\components\ble\ble_dtm;..\..\..\..\..\..\components\boards;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\s132\headers;..\..\..\..\..\..\components\softdevice\s132\headers\nrf52;..\..\..\..\..\..\components\toolchain;..\..\..;..\config</IncludePath>
             </VariousControls>
@@ -533,12 +533,6 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>            </File>          </Files>
-        </Group>        <Group>
-          <GroupName>Documentation</GroupName>
-          <Files>            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\license.txt</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_BLE</GroupName>
           <Files>            <File>
@@ -1246,12 +1240,6 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>            </File>          </Files>
-        </Group>        <Group>
-          <GroupName>Documentation</GroupName>
-          <Files>            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\license.txt</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_BLE</GroupName>
           <Files>            <File>

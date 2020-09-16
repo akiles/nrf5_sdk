@@ -419,12 +419,6 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\boards\boards.c</FilePath>            </File>          </Files>
         </Group>        <Group>
-          <GroupName>Documentation</GroupName>
-          <Files>            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\license.txt</FilePath>            </File>          </Files>
-        </Group>        <Group>
           <GroupName>Third Parties</GroupName>
           <Files>            <File>
               <FileName>RTX_CM0.lib</FileName>

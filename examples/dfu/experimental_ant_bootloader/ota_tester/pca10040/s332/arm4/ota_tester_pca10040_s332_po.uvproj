@@ -350,7 +350,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> ANT_STACK_SUPPORT_REQD NRF52832 NRF52 BOARD_PCA10040 NRF52_PAN_12 NRF52_PAN_15 NRF52_PAN_20 NRF52_PAN_31 CONFIG_GPIO_AS_PINRESET NRF52_PAN_36 NRF52_PAN_51 NRF52_PAN_54 NRF52_PAN_55 NRF52_PAN_58 NRF52_PAN_64 S332 NRF_SD_BLE_API_VERSION=3 SOFTDEVICE_PRESENT</Define>
+              <Define> ANT_STACK_SUPPORT_REQD NRF52832 NRF52 BOARD_PCA10040 NRF52_PAN_12 NRF52_PAN_15 NRF52_PAN_20 NRF52_PAN_31 NRF52_PAN_36 NRF52_PAN_51 CONFIG_GPIO_AS_PINRESET NRF52_PAN_54 NRF52_PAN_55 NRF52_PAN_58 NRF52_PAN_64 S332 NRF_SD_BLE_API_VERSION=3 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config;..\..\..\..\..\..\..\components;..\..\..\..\..\..\..\components\ant\ant_stack_config;..\..\..\..\..\..\..\components\boards;..\..\..\..\..\..\..\components\device;..\..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\..\components\softdevice\s332\headers;..\..\..\..\..\..\..\components\softdevice\s332\headers\nrf52;..\..\..\..\..\..\..\components\toolchain;..\..\..\..\include\boot_common;..\..\..\include;..\..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
@@ -365,8 +365,8 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DANT_STACK_SUPPORT_REQD,-DNRF52832,-DNRF52,-DBOARD_PCA10040,-DNRF52_PAN_12,-DNRF52_PAN_15,-DNRF52_PAN_20,-DNRF52_PAN_31,-DCONFIG_GPIO_AS_PINRESET,-DNRF52_PAN_36,-DNRF52_PAN_51,-DNRF52_PAN_54,-DNRF52_PAN_55,-DNRF52_PAN_58,-DNRF52_PAN_64,-DS332,-DNRF_SD_BLE_API_VERSION=3,-DSOFTDEVICE_PRESENT</MiscControls>
-              <Define> ANT_STACK_SUPPORT_REQD NRF52832 NRF52 BOARD_PCA10040 NRF52_PAN_12 NRF52_PAN_15 NRF52_PAN_20 NRF52_PAN_31 CONFIG_GPIO_AS_PINRESET NRF52_PAN_36 NRF52_PAN_51 NRF52_PAN_54 NRF52_PAN_55 NRF52_PAN_58 NRF52_PAN_64 S332 NRF_SD_BLE_API_VERSION=3 SOFTDEVICE_PRESENT</Define>
+              <MiscControls> --cpreproc_opts=-DANT_STACK_SUPPORT_REQD,-DNRF52832,-DNRF52,-DBOARD_PCA10040,-DNRF52_PAN_12,-DNRF52_PAN_15,-DNRF52_PAN_20,-DNRF52_PAN_31,-DNRF52_PAN_36,-DNRF52_PAN_51,-DCONFIG_GPIO_AS_PINRESET,-DNRF52_PAN_54,-DNRF52_PAN_55,-DNRF52_PAN_58,-DNRF52_PAN_64,-DS332,-DNRF_SD_BLE_API_VERSION=3,-DSOFTDEVICE_PRESENT</MiscControls>
+              <Define> ANT_STACK_SUPPORT_REQD NRF52832 NRF52 BOARD_PCA10040 NRF52_PAN_12 NRF52_PAN_15 NRF52_PAN_20 NRF52_PAN_31 NRF52_PAN_36 NRF52_PAN_51 CONFIG_GPIO_AS_PINRESET NRF52_PAN_54 NRF52_PAN_55 NRF52_PAN_58 NRF52_PAN_64 S332 NRF_SD_BLE_API_VERSION=3 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config;..\..\..\..\..\..\..\components;..\..\..\..\..\..\..\components\ant\ant_stack_config;..\..\..\..\..\..\..\components\boards;..\..\..\..\..\..\..\components\device;..\..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\..\components\libraries\hardfault;..\..\..\..\..\..\..\components\libraries\hardfault\nrf52;..\..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\..\components\softdevice\s332\headers;..\..\..\..\..\..\..\components\softdevice\s332\headers\nrf52;..\..\..\..\..\..\..\components\toolchain;..\..\..\..\include\boot_common;..\..\..\include;..\..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
@@ -416,12 +416,6 @@
               <FileName>system_nrf52.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\..\components\toolchain\system_nrf52.c</FilePath>            </File>          </Files>
-        </Group>        <Group>
-          <GroupName>Documentation</GroupName>
-          <Files>            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\license.txt</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_ANT</GroupName>
           <Files>            <File>

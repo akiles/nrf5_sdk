@@ -183,15 +183,15 @@
           <state>NRF52_PAN_15</state>
           <state>NRF52_PAN_20</state>
           <state>NRF52_PAN_31</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_36</state>
           <state>NRF52_PAN_51</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_54</state>
           <state>NRF52_PAN_55</state>
           <state>NRF52_PAN_58</state>
           <state>NRF52_PAN_64</state>
-          <state>S132</state>
           <state>NRF_SD_BLE_API_VERSION=3</state>
+          <state>S132</state>
           <state>BSP_DEFINES_ONLY</state>
           <state>ARM_MATH_CM4</state>
           <state>SOFTDEVICE_PRESENT</state>
@@ -511,15 +511,15 @@
           <state>NRF52_PAN_15</state>
           <state>NRF52_PAN_20</state>
           <state>NRF52_PAN_31</state>
-          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_36</state>
           <state>NRF52_PAN_51</state>
+          <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52_PAN_54</state>
           <state>NRF52_PAN_55</state>
           <state>NRF52_PAN_58</state>
           <state>NRF52_PAN_64</state>
-          <state>S132</state>
           <state>NRF_SD_BLE_API_VERSION=3</state>
+          <state>S132</state>
           <state>BSP_DEFINES_ONLY</state>
           <state>ARM_MATH_CM4</state>
           <state>SOFTDEVICE_PRESENT</state>
@@ -1035,8 +1035,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\sdk_errors.c</name>    </file>  </group>  <group>
-  <name>Documentation</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\license.txt</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>

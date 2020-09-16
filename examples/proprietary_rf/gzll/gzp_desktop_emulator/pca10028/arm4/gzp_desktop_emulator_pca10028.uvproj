@@ -429,12 +429,6 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\toolchain\system_nrf51.c</FilePath>            </File>          </Files>
         </Group>        <Group>
-          <GroupName>Documentation</GroupName>
-          <Files>            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\license.txt</FilePath>            </File>          </Files>
-        </Group>        <Group>
           <GroupName>nRF_Drivers</GroupName>
           <Files>            <File>
               <FileName>nrf_drv_common.c</FileName>

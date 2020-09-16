@@ -177,8 +177,8 @@
         <option>
           <name>CCDefines</name>
           <state>BLE_STACK_SUPPORT_REQD</state>
-          <state>S132</state>
           <state>NRF_SD_BLE_API_VERSION=3</state>
+          <state>S132</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>BOARD_PCA10056</state>
           <state>SOFTDEVICE_PRESENT</state>
@@ -575,8 +575,8 @@
         <option>
       <name>ADefines</name>
           <state>BLE_STACK_SUPPORT_REQD</state>
-          <state>S132</state>
           <state>NRF_SD_BLE_API_VERSION=3</state>
+          <state>S132</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>BOARD_PCA10056</state>
           <state>SOFTDEVICE_PRESENT</state>
@@ -1182,8 +1182,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\sdk_errors.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\sdk_mapped_flags.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim\sensorsim.c</name>    </file>  </group>  <group>
-  <name>Documentation</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\license.txt</name>    </file>  </group>  <group>
   <name>Board Definition</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>

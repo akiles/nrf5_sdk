@@ -179,8 +179,8 @@
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>NRF51422</state>
           <state>BOARD_PCA10028</state>
-          <state>S130</state>
           <state>NRF_SD_BLE_API_VERSION=2</state>
+          <state>S130</state>
           <state>NRF51</state>
           <state>SOFTDEVICE_PRESENT</state>
           <state>NRF_DFU_SETTINGS_VERSION=1</state>
@@ -577,8 +577,8 @@
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>NRF51422</state>
           <state>BOARD_PCA10028</state>
-          <state>S130</state>
           <state>NRF_SD_BLE_API_VERSION=2</state>
+          <state>S130</state>
           <state>NRF51</state>
           <state>SOFTDEVICE_PRESENT</state>
           <state>NRF_DFU_SETTINGS_VERSION=1</state>
@@ -1222,8 +1222,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\pm_mutex.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\security_dispatcher.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\peer_manager\security_manager.c</name>    </file>  </group>  <group>
-  <name>Documentation</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\license.txt</name>    </file>  </group>  <group>
   <name>Device</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\iar\iar_startup_nrf51.s</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\system_nrf51.c</name>    </file>  </group>  <group>

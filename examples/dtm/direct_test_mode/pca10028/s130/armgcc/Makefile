@@ -10,14 +10,14 @@ $(OUTPUT_DIRECTORY)/nrf51422_xxac.out: \
 
 # Source files common to all targets
 SRC_FILES += \
-  $(SDK_ROOT)/components/libraries/util/app_error.c \
-  $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
-  $(SDK_ROOT)/components/boards/boards.c \
-  $(PROJ_DIR)/main.c \
-  $(SDK_ROOT)/components/ble/ble_dtm/ble_dtm.c \
-  $(SDK_ROOT)/components/ble/ble_dtm/ble_dtm_hw_nrf51.c \
   $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf51.S \
   $(SDK_ROOT)/components/toolchain/system_nrf51.c \
+  $(PROJ_DIR)/main.c \
+  $(SDK_ROOT)/components/libraries/util/app_error.c \
+  $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
+  $(SDK_ROOT)/components/ble/ble_dtm/ble_dtm.c \
+  $(SDK_ROOT)/components/ble/ble_dtm/ble_dtm_hw_nrf51.c \
+  $(SDK_ROOT)/components/boards/boards.c \
 
 # Include folders common to all targets
 INC_FOLDERS += \

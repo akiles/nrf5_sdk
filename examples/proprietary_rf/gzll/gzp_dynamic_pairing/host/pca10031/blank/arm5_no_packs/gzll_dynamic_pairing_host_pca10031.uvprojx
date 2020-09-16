@@ -362,7 +362,7 @@
             <vShortWch>0</vShortWch>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define> USE_SD_HW_RESOURCES NRF51422 BOARD_PCA10031 GAZELL_PRESENT GAZELL_ALTERNATIVE_RESOURCES NRF51 SWI_DISABLE0</Define>
+              <Define> USE_SD_HW_RESOURCES NRF51422 BOARD_PCA10031 GAZELL_ALTERNATIVE_RESOURCES GAZELL_PRESENT NRF51 SWI_DISABLE0</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config\gzll_dynamic_pairing_host_pca10031;..\..\..\config;..\..\..\..\..\..\..\..\components;..\..\..\..\..\..\..\..\components\boards;..\..\..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\..\..\components\proprietary_rf\gzll;..\..\..\..\..\..\..\..\components\toolchain;..\..\..;..\..\..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
@@ -378,8 +378,8 @@
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls> --cpreproc_opts=-DUSE_SD_HW_RESOURCES,-DNRF51422,-DBOARD_PCA10031,-DGAZELL_PRESENT,-DGAZELL_ALTERNATIVE_RESOURCES,-DNRF51,-DSWI_DISABLE0</MiscControls>
-              <Define> USE_SD_HW_RESOURCES NRF51422 BOARD_PCA10031 GAZELL_PRESENT GAZELL_ALTERNATIVE_RESOURCES NRF51 SWI_DISABLE0</Define>
+              <MiscControls> --cpreproc_opts=-DUSE_SD_HW_RESOURCES,-DNRF51422,-DBOARD_PCA10031,-DGAZELL_ALTERNATIVE_RESOURCES,-DGAZELL_PRESENT,-DNRF51,-DSWI_DISABLE0</MiscControls>
+              <Define> USE_SD_HW_RESOURCES NRF51422 BOARD_PCA10031 GAZELL_ALTERNATIVE_RESOURCES GAZELL_PRESENT NRF51 SWI_DISABLE0</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config\gzll_dynamic_pairing_host_pca10031;..\..\..\config;..\..\..\..\..\..\..\..\components;..\..\..\..\..\..\..\..\components\boards;..\..\..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\..\..\components\libraries\bsp;..\..\..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\..\..\components\libraries\log;..\..\..\..\..\..\..\..\components\libraries\log\src;..\..\..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\..\..\components\proprietary_rf\gzll;..\..\..\..\..\..\..\..\components\toolchain;..\..\..;..\..\..\..\..\..\..\..\external\segger_rtt;..\config</IncludePath>
             </VariousControls>
@@ -427,12 +427,6 @@
               <FileName>bsp_nfc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\..\..\components\libraries\bsp\bsp_nfc.c</FilePath>            </File>          </Files>
-        </Group>        <Group>
-          <GroupName>Documentation</GroupName>
-          <Files>            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\license.txt</FilePath>            </File>          </Files>
         </Group>        <Group>
           <GroupName>nRF_Drivers</GroupName>
           <Files>            <File>

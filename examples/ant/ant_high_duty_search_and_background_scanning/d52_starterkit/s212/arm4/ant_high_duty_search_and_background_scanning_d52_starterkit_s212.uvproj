@@ -423,12 +423,6 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\toolchain\system_nrf52.c</FilePath>            </File>          </Files>
         </Group>        <Group>
-          <GroupName>Documentation</GroupName>
-          <Files>            <File>
-              <FileName>license.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\license.txt</FilePath>            </File>          </Files>
-        </Group>        <Group>
           <GroupName>nRF_ANT</GroupName>
           <Files>            <File>
               <FileName>ant_channel_config.c</FileName>

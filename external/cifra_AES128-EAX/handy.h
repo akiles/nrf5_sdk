@@ -45,8 +45,8 @@
  * These expect a zero = success, non-zero = error convention.
  */
 
-/** Error: return. 
- *  
+/** Error: return.
+ *
  *  If the expression fails, return the error from this function. */
 #define ER(expr) do { typeof (expr) err_ = (expr); if (err_) return err_; } while (0)
 
@@ -73,11 +73,13 @@ static inline unsigned mem_eq(const void *va, const void *vb, size_t len)
 {
   const volatile uint8_t *a = va;
   const volatile uint8_t *b = vb;
+  uint8_t tmp;
   uint8_t diff = 0;
 
   while (len--)
   {
-    diff |= *a++ ^ *b++;
+    tmp = *b++;
+    diff |= *a++ ^ tmp;
   }
 
   return !diff;
