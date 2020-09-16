@@ -14,6 +14,7 @@
 #include <stdint.h>
 #include "ant_stack_handler_types.h"
 
+
 /**
  * @brief Function for initializing the ANT channel state indicator.
  *
@@ -26,14 +27,17 @@
  */
 void ant_state_indicator_init( uint8_t channel, uint8_t channel_type);
 
-/**@brief Function for handling ANT events.
+
+/**
+ * @brief Function for handling ANT events.
  *
  * @details This function handles all events from the ANT stack that are of interest to the channel state indicator.
  *          This function should always be called when an ANT event occurs.
  *
  * @param[in]   p_ant_evt       Event received from the ANT stack.
  */
-void ant_state_indicator_evt_handle(ant_evt_t * p_ant_evt);
+void ant_state_indicator_evt_handler(ant_evt_t * p_ant_evt);
+
 
 /**
  * @brief Function for indicating the channel opening.
@@ -46,6 +50,16 @@ void ant_state_indicator_evt_handle(ant_evt_t * p_ant_evt);
  *                                        or the internal timer has not been created.
  */
 uint32_t ant_state_indicator_channel_opened(void);
+
+
+/**@brief Function for putting the chip into sleep mode.
+ *
+ * @details This function sets up a wakeup button and puts the chip into deep sleep mode.
+ *
+ * @note This function will not return.
+ */
+void ant_state_indicator_sleep_mode_enter(void);
+
 
 #endif
 /** @} */

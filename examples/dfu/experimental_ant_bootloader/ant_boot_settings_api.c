@@ -17,8 +17,6 @@ All rights reserved.
 #include "bootloader_types.h"
 #include "ant_boot_settings_api.h"
 
-#define BOOTLOADER_SETTINGS_ADDRESS                            (NRF51_FLASH_END - 1024)
-
 uint8_t  m_ant_boot_settings[ANT_BOOT_SETTINGS_SIZE] __attribute__((at(ANT_BOOT_SETTINGS_LOCATION)));          /**< This variable reserves a codepage for bootloader specific settings, to ensure the compiler doesn't locate any code or variables at his location. */
 
 volatile uint8_t mb_flash_busy = false;
@@ -63,7 +61,7 @@ uint32_t ant_boot_settings_clear(ant_boot_settings_t * boot_settings)
 
     // Erases entire bootloader_settings in flash
     mb_flash_busy = true;
-    ulErrorCode = sd_flash_page_erase(0xFF); // last flash page
+    ulErrorCode = sd_flash_page_erase(FLASH_LAST_PAGE); // last flash page
     if (ulErrorCode == NRF_SUCCESS)
     {
         while (mb_flash_busy); // wait until it is done

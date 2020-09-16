@@ -46,6 +46,4 @@ void bsp_init_app(void)
                         APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         bsp_event_handler);
     APP_ERROR_CHECK(err_code);
-    // err_code = bsp_buttons_enable((1 << BLE_BUTTON_ID) | (1 << GZLL_BUTTON_ID));
-    // APP_ERROR_CHECK(err_code);
 }

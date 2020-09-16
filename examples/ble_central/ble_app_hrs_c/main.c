@@ -43,7 +43,6 @@
 #define BOND_DELETE_ALL_BUTTON_ID  0                                  /**< Button used for deleting all bonded centrals during startup. */
 
 #define APP_TIMER_PRESCALER        0                                  /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS       (2+BSP_APP_TIMERS_NUMBER)          /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE    2                                  /**< Size of timer operation queues. */
 
 #define APPL_LOG                   app_trace_log                      /**< Debug logger macro that will be used in this file to do logging of debug information over UART. */
@@ -182,9 +181,8 @@ static ret_code_t device_manager_event_handler(const dm_handle_t    * p_handle,
 
             m_dm_device_handle = (*p_handle);
 
-            // Discover peer's services. 
-            err_code = ble_db_discovery_start(&m_ble_db_discovery,
-                                              p_event->event_param.p_gap_param->conn_handle);
+            // Initiate bonding.
+            err_code = dm_security_setup_req(&m_dm_device_handle);
             APP_ERROR_CHECK(err_code);
 
             m_peer_count++;
@@ -228,15 +226,16 @@ static ret_code_t device_manager_event_handler(const dm_handle_t    * p_handle,
         case DM_EVT_SECURITY_SETUP_COMPLETE:
         {
             APPL_LOG("[APPL]: >> DM_EVT_SECURITY_SETUP_COMPLETE\r\n");
-            // Heart rate service discovered. Enable notification of Heart Rate Measurement.
-            err_code = ble_hrs_c_hrm_notif_enable(&m_ble_hrs_c);
-            APP_ERROR_CHECK(err_code);
             APPL_LOG("[APPL]: << DM_EVT_SECURITY_SETUP_COMPLETE\r\n");
             break;
         }
 
         case DM_EVT_LINK_SECURED:
             APPL_LOG("[APPL]: >> DM_LINK_SECURED_IND\r\n");
+            // Discover peer's services. 
+            err_code = ble_db_discovery_start(&m_ble_db_discovery,
+                                              p_event->event_param.p_gap_param->conn_handle);
+            APP_ERROR_CHECK(err_code);
             APPL_LOG("[APPL]: << DM_LINK_SECURED_IND\r\n");
             break;
 
@@ -378,6 +377,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                         APP_ERROR_CHECK(err_code);
 
                         m_scan_param.selective = 0; 
+                        m_scan_param.p_whitelist = NULL;
 
                         // Initiate connection.
                         err_code = sd_ble_gap_connect(&p_gap_evt->params.adv_report.peer_addr,
@@ -494,7 +494,7 @@ static void ble_stack_init(void)
     // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
+#if (defined(S130) || defined(s132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif
     ble_enable_params.gatts_enable_params.service_changed = false;
@@ -620,9 +620,6 @@ static void hrs_c_evt_handler(ble_hrs_c_t * p_hrs_c, ble_hrs_c_evt_t * p_hrs_c_e
     switch (p_hrs_c_evt->evt_type)
     {
         case BLE_HRS_C_EVT_DISCOVERY_COMPLETE:
-            // Initiate bonding.
-            err_code = dm_security_setup_req(&m_dm_device_handle);
-            APP_ERROR_CHECK(err_code);
 
             // Heart rate service discovered. Enable notification of Heart Rate Measurement.
             err_code = ble_hrs_c_hrm_notif_enable(p_hrs_c);
@@ -857,7 +854,7 @@ int main(void)
     bool erase_bonds;
 
     // Initialize.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
     buttons_leds_init(&erase_bonds);
     uart_init();
     printf("Heart rate collector example\r\n");

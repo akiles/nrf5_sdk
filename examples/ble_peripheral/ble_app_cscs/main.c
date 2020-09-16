@@ -30,7 +30,6 @@
 #include "nordic_common.h"
 #include "nrf.h"
 #include "app_error.h"
-#include "nrf51_bitfields.h"
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
@@ -57,7 +56,6 @@
 #define APP_ADV_TIMEOUT_IN_SECONDS      180                                        /**< The advertising timeout in units of seconds. */
 
 #define APP_TIMER_PRESCALER             0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            (4+BSP_APP_TIMERS_NUMBER)                  /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                          /**< Size of timer operation queues. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL     APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). */
@@ -104,16 +102,16 @@ static uint16_t                         m_conn_handle = BLE_CONN_HANDLE_INVALID;
 static ble_bas_t                        m_bas;                                     /**< Structure used to identify the battery service. */
 static ble_cscs_t                       m_cscs;                                    /**< Structure used to identify the cycling speed and cadence service. */
 
-static sensorsim_cfg_t                  m_battery_sim_cfg;                    /**< Battery Level sensor simulator configuration. */
-static sensorsim_state_t                m_battery_sim_state;                  /**< Battery Level sensor simulator state. */
+static sensorsim_cfg_t                  m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
+static sensorsim_state_t                m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
 
-static sensorsim_cfg_t                  m_speed_kph_sim_cfg;                  /**< Speed simulator configuration. */
-static sensorsim_state_t                m_speed_kph_sim_state;                /**< Speed simulator state. */
-static sensorsim_cfg_t                  m_crank_rpm_sim_cfg;                  /**< Crank simulator configuration. */
-static sensorsim_state_t                m_crank_rpm_sim_state;                /**< Crank simulator state. */
+static sensorsim_cfg_t                  m_speed_kph_sim_cfg;                       /**< Speed simulator configuration. */
+static sensorsim_state_t                m_speed_kph_sim_state;                     /**< Speed simulator state. */
+static sensorsim_cfg_t                  m_crank_rpm_sim_cfg;                       /**< Crank simulator configuration. */
+static sensorsim_state_t                m_crank_rpm_sim_state;                     /**< Crank simulator state. */
 
-static app_timer_id_t                   m_battery_timer_id;                        /**< Battery timer. */
-static app_timer_id_t                   m_csc_meas_timer_id;                       /**< CSC measurement timer. */
+APP_TIMER_DEF(m_battery_timer_id);                                                 /**< Battery timer. */
+APP_TIMER_DEF(m_csc_meas_timer_id);                                                /**< CSC measurement timer. */
 static dm_application_instance_t        m_app_handle;                              /**< Application identifier allocated by device manager. */
 static uint32_t                         m_cumulative_wheel_revs;                   /**< Cumulative wheel revolutions. */
 static bool                             m_auto_calibration_in_progress;            /**< Set when an autocalibration is in progress. */
@@ -287,7 +285,7 @@ static void timers_init(void)
     uint32_t err_code;
 
     // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
 
     // Create timers.
     err_code = app_timer_create(&m_battery_timer_id,
@@ -691,7 +689,7 @@ static void ble_stack_init(void)
     // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
+#if (defined(S130) || defined(S132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;

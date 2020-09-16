@@ -64,7 +64,6 @@
 #define UPDATE_IN_PROGRESS_LED          BSP_LED_2                                               /**< Led used to indicate that DFU is active. */
 
 #define APP_TIMER_PRESCALER             0                                                       /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            3                                                       /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                                       /**< Size of timer operation queues. */
 
 #define SCHED_MAX_EVENT_DATA_SIZE       MAX(APP_TIMER_SCHED_EVT_SIZE, 0)                        /**< Maximum size of scheduler events. */
@@ -103,7 +102,7 @@ static void leds_init(void)
 static void timers_init(void)
 {
     // Initialize timer module, making it use the scheduler.
-    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, true);
+    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, true);
 }
 
 

@@ -25,13 +25,13 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0nrf51xxx -FS00 -FL0200000 -FP0($$Device:nRF51822_xxAA$Flash\nrf51xxx.flm))</Name>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0nrf51xxx -FS00 -FL0200000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>flash_softdevice</TargetName>
+    <TargetName>flash_s310_nrf51422_3.0.0_softdevice</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -47,7 +47,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0nrf51xxx -FS00 -FL0200000 -FP0($$Device:nRF51822_xxAA$Flash\nrf51xxx.flm))</Name>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0nrf51xxx -FS00 -FL0200000)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
     </TargetOption>

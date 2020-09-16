@@ -4,7 +4,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>nrf51422_xxac</name>
+    <name>nrf51422_xxac_s110</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -68,7 +68,7 @@
           <name>OGCoreOrChip</name>
           <state>1</state>
         </option>
-               <option>
+        <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
           <state>2</state>
@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -311,12 +311,15 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\..\..\..</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s110\headers</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\config\blinky_s110_pca10028</state>
+          <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s110\headers</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..</state>
           <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
@@ -576,7 +579,15 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$PROJ_DIR$\..\..\..\config\blinky_s110_pca10028</state>
+          <state>$PROJ_DIR$\..\..\..\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s110\headers</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -728,7 +739,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-      <state>$PROJ_DIR$\blinky_iar_nrf51.icf</state>
+      <state>$PROJ_DIR$\blinky_iar_nRF5x.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -993,7 +1004,7 @@
   <group>
   <name>nRF_Drivers</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</name>
     </file>
   </group>
 </project>

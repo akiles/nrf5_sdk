@@ -24,7 +24,6 @@
 #include "nrf.h"
 #include "app_error.h"
 #include "nrf_gpio.h"
-#include "nrf51_bitfields.h"
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
@@ -64,13 +63,12 @@ static ble_beacon_init_t beacon_init;
 
 /*end addition for beacon*/
 
-#define DEVICE_NAME                          "Nordic_HRM"                               /**< Name of device. Will be included in the advertising data. */
+#define DEVICE_NAME                          "Nordic_HRM_adv"                           /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                    "NordicSemiconductor"                      /**< Manufacturer. Will be passed to Device Information Service. */
 #define APP_ADV_INTERVAL                     480                                         /**< The advertising interval (in units of 0.625 ms. This value corresponds to 300 ms). */
 #define APP_ADV_TIMEOUT_IN_SECONDS           180                                        /**< The advertising timeout in units of seconds. */
 
 #define APP_TIMER_PRESCALER                  0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS                 (6 + BSP_APP_TIMERS_NUMBER)                /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE              4                                          /**< Size of timer operation queues. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL          APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). */
@@ -120,10 +118,10 @@ static sensorsim_state_t                     m_heart_rate_sim_state;            
 static sensorsim_cfg_t                       m_rr_interval_sim_cfg;                     /**< RR Interval sensor simulator configuration. */
 static sensorsim_state_t                     m_rr_interval_sim_state;                   /**< RR Interval sensor simulator state. */
 
-static app_timer_id_t                        m_battery_timer_id;                        /**< Battery timer. */
-static app_timer_id_t                        m_heart_rate_timer_id;                     /**< Heart rate measurement timer. */
-static app_timer_id_t                        m_rr_interval_timer_id;                    /**< RR interval timer. */
-static app_timer_id_t                        m_sensor_contact_timer_id;                 /**< Sensor contact detected timer. */
+APP_TIMER_DEF(m_battery_timer_id);                                                      /**< Battery timer. */
+APP_TIMER_DEF(m_heart_rate_timer_id);                                                   /**< Heart rate measurement timer. */
+APP_TIMER_DEF(m_rr_interval_timer_id);                                                  /**< RR interval timer. */
+APP_TIMER_DEF(m_sensor_contact_timer_id);                                               /**< Sensor contact detected timer. */
 
 static dm_application_instance_t             m_app_handle;                              /**< Application identifier allocated by device manager. */
 
@@ -272,7 +270,7 @@ static void timers_init(void)
     uint32_t err_code;
 
     // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
 
     // Create timers.
     err_code = app_timer_create(&m_battery_timer_id,
@@ -539,6 +537,30 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
     }
 }
 
+/**@brief Function for initializing the Advertising functionality.
+ */
+static void advertising_init(void)
+{
+    uint32_t      err_code;
+    ble_advdata_t advdata;
+
+    // Build advertising data struct to pass into @ref ble_advertising_init.
+    memset(&advdata, 0, sizeof(advdata));
+
+    advdata.name_type               = BLE_ADVDATA_FULL_NAME;
+    advdata.include_appearance      = true;
+    advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
+    advdata.uuids_complete.uuid_cnt = sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
+    advdata.uuids_complete.p_uuids  = m_adv_uuids;
+
+    ble_adv_modes_config_t options = {0};
+    options.ble_adv_fast_enabled  = BLE_ADV_FAST_ENABLED;
+    options.ble_adv_fast_interval = APP_ADV_INTERVAL;
+    options.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;
+
+    err_code = ble_advertising_init(&advdata, NULL, &options, on_adv_evt, NULL);
+    APP_ERROR_CHECK(err_code);
+}
 
 /**@brief Function for handling the Application's BLE Stack events.
  *
@@ -564,6 +586,12 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             APP_ERROR_CHECK(err_code);
 
             app_beacon_stop();
+        
+            // when not using the timeslot implementation, it is necessary to initialize the advertizing data again.
+            advertising_init();
+            err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
+            APP_ERROR_CHECK(err_code);
+        
             break;
 
         default:
@@ -602,7 +630,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
     pstorage_sys_event_handler(sys_evt);
-    app_beacon_sd_evt_signal_handler(sys_evt);
+    app_beacon_on_sys_evt(sys_evt);
     ble_advertising_on_sys_evt(sys_evt);
 }
 
@@ -621,7 +649,7 @@ static void ble_stack_init(void)
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
+#if (defined(S130) || defined(S132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
@@ -720,32 +748,6 @@ static void device_manager_init(bool erase_bonds)
 }
 
 
-/**@brief Function for initializing the Advertising functionality.
- */
-static void advertising_init(void)
-{
-    uint32_t      err_code;
-    ble_advdata_t advdata;
-
-    // Build advertising data struct to pass into @ref ble_advertising_init.
-    memset(&advdata, 0, sizeof(advdata));
-
-    advdata.name_type               = BLE_ADVDATA_FULL_NAME;
-    advdata.include_appearance      = true;
-    advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
-    advdata.uuids_complete.uuid_cnt = sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
-    advdata.uuids_complete.p_uuids  = m_adv_uuids;
-
-    ble_adv_modes_config_t options = {0};
-    options.ble_adv_fast_enabled  = BLE_ADV_FAST_ENABLED;
-    options.ble_adv_fast_interval = APP_ADV_INTERVAL;
-    options.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;
-
-    err_code = ble_advertising_init(&advdata, NULL, &options, on_adv_evt, NULL);
-    APP_ERROR_CHECK(err_code);
-}
-
-
 /**@brief Function for handling a BeaconAdvertiser error.
  *
  * @param[in]   nrf_error   Error code containing information about what went wrong.
@@ -818,7 +820,6 @@ int main(void)
     ble_stack_init();
     beacon_adv_init();
     device_manager_init(erase_bonds);
-    beacon_adv_init();
     gap_params_init();
     advertising_init();
     services_init();

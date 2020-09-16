@@ -101,7 +101,6 @@ static void rtc_config(void)
     nrf_drv_rtc_enable(&rtc);
 }
 
-
 /**
  * @brief Function for application main entry.
  */
@@ -112,7 +111,7 @@ int main(void)
     lfclk_config();
 
     rtc_config();
-	
+
     while (true)
     {
         __SEV();

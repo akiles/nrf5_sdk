@@ -23,13 +23,12 @@
 #include "nrf_gpio.h"
 #include "nrf_nvmc.h"
 #include "nrf_delay.h"
-#include "nrf51_bitfields.h"
 #include "ant_interface.h"
 #include "ant_parameters.h"
 #include "ant_error.h"
-#include "nrf51.h"
+#include "nrf.h"
 #include "app_scheduler.h"
-#include "app_timer.h"
+#include "app_timer_appsh.h"
 #include "nrf_error.h"
 #include "boards.h"
 #include "softdevice_handler.h"
@@ -41,6 +40,8 @@
 #endif // !S210_V3_STACK
 #include "ant_stack_config.h"
 #include "debug_pin.h"
+#include "app_timer_appsh.h"
+#include "softdevice_handler_appsh.h"
 
 #define ENABLE_BUTTON // include button detection
 //#define ENABLE_IO_LED // include LED status on N5DK1 i/o board
@@ -58,8 +59,7 @@
    #define BOOTLOADER_ACTIVE_LED        LED_D
 #endif // ENABLE_IO_LED
 
-#define APP_TIMER_PRESCALER             0                                                       /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            3                                                       /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_PRESCALER             0                                                       /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                                       /**< Size of timer operation queues. */
 
 #define SCHED_MAX_EVENT_DATA_SIZE       MAX(ANT_STACK_EVT_MSG_BUF_SIZE, 0)                      /**< Maximum size of scheduler events. */
@@ -168,7 +168,7 @@ static void leds_off(void)
 static void timers_init(void)
 {
     // Initialize timer module, making it use the scheduler.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, true);
+    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, true);
 }
 
 
@@ -215,7 +215,9 @@ static void ant_stack_init(void)
     APP_ERROR_CHECK(err_code);
 #endif // !S210_V3_STACK
 
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, true);
+    //SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, softdevice_evt_schedule);
+    err_code = softdevice_handler_init(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL, 0, softdevice_evt_schedule);
+    APP_ERROR_CHECK(err_code);
 
     err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
     APP_ERROR_CHECK(err_code);

@@ -86,7 +86,10 @@ int main(void)
 
     err_code = nrf_drv_timer_init(&timer, NULL, timer_dummy_handler);
     APP_ERROR_CHECK(err_code);
+#ifdef NRF51
+    //Workaround for PAN-73.
     *(uint32_t *)0x40008C0C = 1;
+#endif
 
     // Setup PPI channel with event from TIMER compare and task GPIOTE pin toggle.
     led_blinking_setup();

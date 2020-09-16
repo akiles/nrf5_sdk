@@ -23,14 +23,14 @@ NO_ECHO := @
 endif
 
 # Toolchain commands
-CC       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-gcc"
-AS       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-as"
-AR       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ar" -r
-LD       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ld"
-NM       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-nm"
-OBJDUMP  		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objdump"
-OBJCOPY  		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objcopy"
-SIZE    		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-size"
+CC              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-gcc'
+AS              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-as'
+AR              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ar' -r
+LD              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ld'
+NM              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-nm'
+OBJDUMP         := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objdump'
+OBJCOPY         := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objcopy'
+SIZE            := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-size'
 
 #function for removing duplicates in a list
 remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-out $(firstword $1),$1))))
@@ -39,18 +39,21 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 C_SOURCE_FILES += \
 $(abspath ../../../../../../components/toolchain/system_nrf51.c) \
 $(abspath ../../../main.c) \
-$(abspath ../../../../../../components/drivers_nrf/hal/nrf_delay.c) \
+$(abspath ../../../../../../components/drivers_nrf/delay/nrf_delay.c) \
 
 #assembly files common to all targets
 ASM_SOURCE_FILES  = $(abspath ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s)
 
 #includes common to all targets
-INC_PATHS  = -I$(abspath ../../../../../../components/toolchain/gcc)
+INC_PATHS  = -I$(abspath ../../../config/blinky_s110_pca10031)
+INC_PATHS += -I$(abspath ../../../config)
+INC_PATHS += -I$(abspath ../../../../../../components/toolchain/gcc)
 INC_PATHS += -I$(abspath ../../../../../../components/toolchain)
 INC_PATHS += -I$(abspath ../../../../../../components/softdevice/s110/headers)
 INC_PATHS += -I$(abspath ../../..)
 INC_PATHS += -I$(abspath ../../../../../bsp)
 INC_PATHS += -I$(abspath ../../../../../../components/device)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/delay)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/hal)
 
 OBJECT_DIRECTORY = _build
@@ -93,17 +96,17 @@ ASMFLAGS += -DS110
 ASMFLAGS += -DBLE_STACK_SUPPORT_REQD
 ASMFLAGS += -DBSP_DEFINES_ONLY
 #default target - first one defined
-default: clean nrf51422_xxac
+default: clean nrf51422_xxac_s110
 
 #building all targets
 all: clean
 	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e cleanobj
-	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf51422_xxac
+	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf51422_xxac_s110
 
 #target for printing all targets
 help:
 	@echo following targets are available:
-	@echo 	nrf51422_xxac
+	@echo 	nrf51422_xxac_s110
 	@echo 	flash_softdevice
 
 
@@ -120,9 +123,9 @@ vpath %.s $(ASM_PATHS)
 
 OBJECTS = $(C_OBJECTS) $(ASM_OBJECTS)
 
-nrf51422_xxac: OUTPUT_FILENAME := nrf51422_xxac
-nrf51422_xxac: LINKER_SCRIPT=blinky_gcc_nrf51.ld
-nrf51422_xxac: $(BUILD_DIRECTORIES) $(OBJECTS)
+nrf51422_xxac_s110: OUTPUT_FILENAME := nrf51422_xxac_s110
+nrf51422_xxac_s110: LINKER_SCRIPT=blinky_gcc_nrf51.ld
+nrf51422_xxac_s110: $(BUILD_DIRECTORIES) $(OBJECTS)
 	@echo Linking target: $(OUTPUT_FILENAME).out
 	$(NO_ECHO)$(CC) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
 	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e finalize
@@ -171,9 +174,9 @@ genhex:
 	$(NO_ECHO)$(OBJCOPY) -O ihex $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).hex
 
 echosize:
-	-@echo ""
+	-@echo ''
 	$(NO_ECHO)$(SIZE) $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
-	-@echo ""
+	-@echo ''
 
 clean:
 	$(RM) $(BUILD_DIRECTORIES)
@@ -183,9 +186,11 @@ cleanobj:
 
 flash: $(MAKECMDGOALS)
 	@echo Flashing: $(OUTPUT_BINARY_DIRECTORY)/$<.hex
-	nrfjprog --reset --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex
+	nrfjprog --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex -f nrf51  --sectorerase
+	nrfjprog --reset
 
 ## Flash softdevice
-flash_softdevice: 
-	@echo Flashing: s110_softdevice.hex
-	nrfjprog --reset --program ../../../../../../components/softdevice/s110/hex/s110_softdevice.hex
+flash_softdevice:
+	@echo Flashing: s110_nrf51_8.0.0_softdevice.hex
+	nrfjprog --program ../../../../../../components/softdevice/s110/hex/s110_nrf51_8.0.0_softdevice.hex -f nrf51 --chiperase
+	nrfjprog --reset

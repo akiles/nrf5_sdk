@@ -68,7 +68,7 @@
           <name>OGCoreOrChip</name>
           <state>1</state>
         </option>
-               <option>
+        <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
           <state>2</state>
@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -177,7 +177,6 @@
         </option>
         <option>
           <name>CCDefines</name>
-          <state>SPI_MASTER_0_ENABLE</state>
           <state>BOARD_PCA10028</state>
           <state>NRF51</state>
           <state>SWI_DISABLE0</state>
@@ -309,20 +308,22 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$\..\..\config\spi_master_with_spi_slave_pca10028</state>
           <state>$PROJ_DIR$\..\..\config</state>
-          <state>$PROJ_DIR$\..\..</state>
-          <state>$PROJ_DIR$\..\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\spi_master</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\button</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\gpiote</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\delay</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\gpiote</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\spi_master</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..</state>
           <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
@@ -481,7 +482,6 @@
         </option>
         <option>
       <name>ADefines</name>
-          <state>SPI_MASTER_0_ENABLE</state>
           <state>BOARD_PCA10028</state>
           <state>NRF51</state>
           <state>SWI_DISABLE0</state>
@@ -580,7 +580,22 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$PROJ_DIR$\..\..\config\spi_master_with_spi_slave_pca10028</state>
+          <state>$PROJ_DIR$\..\..\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\device</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\delay</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\gpiote</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\spi_master</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -732,7 +747,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-      <state>$PROJ_DIR$\spi_master_with_spi_slave_iar_nrf51.icf</state>
+      <state>$PROJ_DIR$\spi_master_with_spi_slave_iar_nRF5x.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -994,7 +1009,7 @@
   <group>
   <name>nRF_Drivers</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>
@@ -1003,10 +1018,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>
-    </file>
-    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\spi_master\spi_master.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\spi_master\nrf_drv_spi.c</name>
     </file>
   </group>
   <group>

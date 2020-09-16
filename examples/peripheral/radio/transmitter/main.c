@@ -34,7 +34,6 @@
 #include "nrf_error.h"
 
 #define APP_TIMER_PRESCALER      0                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS     (1 + BSP_APP_TIMERS_NUMBER) /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE  2                           /**< Size of timer operation queues. */
 
 #define UART_TX_BUF_SIZE 256                                 /**< UART TX buffer size. */
@@ -152,7 +151,7 @@ int main(void)
     uint32_t err_code = NRF_SUCCESS;
     
     clock_initialization();
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
         
     const app_uart_comm_params_t comm_params =  
     {

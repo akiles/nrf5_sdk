@@ -121,7 +121,9 @@ static void radio_disable(void)
 {
     NRF_RADIO->SHORTS          = 0;
     NRF_RADIO->EVENTS_DISABLED = 0;
+#ifdef NRF51
     NRF_RADIO->TEST            = 0;
+#endif
     NRF_RADIO->TASKS_DISABLE   = 1;
     while (NRF_RADIO->EVENTS_DISABLED == 0)
     {
@@ -151,8 +153,10 @@ void radio_tx_carrier(uint8_t txpower, uint8_t mode, uint8_t channel)
     NRF_RADIO->TXPOWER    = (txpower << RADIO_TXPOWER_TXPOWER_Pos);    
     NRF_RADIO->MODE       = (mode << RADIO_MODE_MODE_Pos);
     NRF_RADIO->FREQUENCY  = channel;
+#ifdef NRF51
     NRF_RADIO->TEST       = (RADIO_TEST_CONST_CARRIER_Enabled << RADIO_TEST_CONST_CARRIER_Pos) \
                             | (RADIO_TEST_PLL_LOCK_Enabled << RADIO_TEST_PLL_LOCK_Pos);
+#endif
     NRF_RADIO->TASKS_TXEN = 1;
 }
 

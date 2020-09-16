@@ -43,7 +43,6 @@
 #define APP_BUTTON_DETECTION_DELAY 100 /**< Delay of detecting button events. */
 
 #define APP_TIMER_PRESCALER     0                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS    (4 + BSP_APP_TIMERS_NUMBER) /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE 4                           /**< Size of timer operation queues. */
 
 #define DEAD_BEEF 0xDEADBEEF /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
@@ -207,7 +206,7 @@ int main(void)
 
     // Initialize.
     ble_stack_init();
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
 
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                         APP_TIMER_TICKS(APP_BUTTON_DETECTION_DELAY, APP_TIMER_PRESCALER),

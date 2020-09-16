@@ -1,5 +1,5 @@
 /*
-This software is subject to the license described in the License.txt file
+This software is subject to the license described in the license.txt file
 included with this software distribution. You may not use this file except in compliance
 with this license.
 
@@ -24,7 +24,7 @@ All rights reserved.
 #include "asc_events.h"
 #include "asc_parameters.h"
 #include "nrf_soc.h"
-#include "nrf51.h"
+#include "nrf.h"
 #include "asc_pages.h"
 #include "ant_stack_config.h"
 

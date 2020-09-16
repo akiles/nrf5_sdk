@@ -4,8 +4,8 @@ Copyright © Dynastream Innovations Inc. 2014
 All rights reserved.
 */
 
-#include "nrf51.h"
-#include "nrf51_bitfields.h"
+#include "nrf.h"
+//#include "nrf51_bitfields.h"
 #include "debug_pin.h"
 
 #if defined (DEBUGGING_PINS_ENABLE)

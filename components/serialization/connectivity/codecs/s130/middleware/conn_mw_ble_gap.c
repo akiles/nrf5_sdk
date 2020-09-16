@@ -60,6 +60,18 @@ uint32_t conn_mw_ble_gap_connect(uint8_t const * const p_rx_buf,
     
     ble_gap_addr_t * pp_addr_tab[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
     ble_gap_irk_t * pp_irk_tab[BLE_GAP_WHITELIST_IRK_MAX_COUNT];
+    
+    ble_gap_addr_t addr_tab[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
+    ble_gap_irk_t  irk_tab[BLE_GAP_WHITELIST_IRK_MAX_COUNT];
+    
+    for (uint8_t i = 0; i < BLE_GAP_WHITELIST_ADDR_MAX_COUNT; ++i)
+    {
+        pp_addr_tab[i] = &addr_tab[i];
+    }
+    for (uint8_t i = 0; i < BLE_GAP_WHITELIST_IRK_MAX_COUNT; ++i)
+    {
+        pp_irk_tab[i] = &irk_tab[i];
+    }
 
     ble_gap_whitelist_t whitelist;
     whitelist.addr_count = BLE_GAP_WHITELIST_ADDR_MAX_COUNT;
@@ -119,6 +131,18 @@ uint32_t conn_mw_ble_gap_scan_start(uint8_t const * const p_rx_buf,
     
     ble_gap_addr_t * pp_addr_tab[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
     ble_gap_irk_t * pp_irk_tab[BLE_GAP_WHITELIST_IRK_MAX_COUNT];
+    
+    ble_gap_addr_t addr_tab[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
+    ble_gap_irk_t  irk_tab[BLE_GAP_WHITELIST_IRK_MAX_COUNT];
+    
+    for (uint8_t i = 0; i < BLE_GAP_WHITELIST_ADDR_MAX_COUNT; ++i)
+    {
+        pp_addr_tab[i] = &addr_tab[i];
+    }
+    for (uint8_t i = 0; i < BLE_GAP_WHITELIST_IRK_MAX_COUNT; ++i)
+    {
+        pp_irk_tab[i] = &irk_tab[i];
+    }
 
     ble_gap_whitelist_t whitelist;
     whitelist.addr_count = BLE_GAP_WHITELIST_ADDR_MAX_COUNT;

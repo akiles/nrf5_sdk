@@ -22,7 +22,6 @@
 #include "nordic_common.h"
 #include "nrf.h"
 #include "app_error.h"
-#include "nrf51_bitfields.h"
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
@@ -83,13 +82,12 @@ static void beacon_scanner_error_handler(uint32_t nrf_error)
 static ble_beacon_scanner_init_t m_beacon_scanner_init;
 /*end addition for beacon*/
 
-#define DEVICE_NAME                          "Nordic_HRM"                               /**< Name of device. Will be included in the advertising data. */
+#define DEVICE_NAME                          "Nordic_HRM_sca"                               /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                    "NordicSemiconductor"                      /**< Manufacturer. Will be passed to Device Information Service. */
 #define APP_ADV_INTERVAL                     480                                         /**< The advertising interval (in units of 0.625 ms. This value corresponds to 300 ms). */
 #define APP_ADV_TIMEOUT_IN_SECONDS           180                                        /**< The advertising timeout in units of seconds. */
 
 #define APP_TIMER_PRESCALER                  0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS                 (6 + BSP_APP_TIMERS_NUMBER)                /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE              4                                          /**< Size of timer operation queues. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL          APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). */
@@ -139,10 +137,10 @@ static sensorsim_state_t                     m_heart_rate_sim_state;            
 static sensorsim_cfg_t                       m_rr_interval_sim_cfg;                     /**< RR Interval sensor simulator configuration. */
 static sensorsim_state_t                     m_rr_interval_sim_state;                   /**< RR Interval sensor simulator state. */
 
-static app_timer_id_t                        m_battery_timer_id;                        /**< Battery timer. */
-static app_timer_id_t                        m_heart_rate_timer_id;                     /**< Heart rate measurement timer. */
-static app_timer_id_t                        m_rr_interval_timer_id;                    /**< RR interval timer. */
-static app_timer_id_t                        m_sensor_contact_timer_id;                 /**< Sensor contact detected timer. */
+APP_TIMER_DEF(m_battery_timer_id);                                                      /**< Battery timer. */
+APP_TIMER_DEF(m_heart_rate_timer_id);                                                   /**< Heart rate measurement timer. */
+APP_TIMER_DEF(m_rr_interval_timer_id);                                                  /**< RR interval timer. */
+APP_TIMER_DEF(m_sensor_contact_timer_id);                                               /**< Sensor contact detected timer. */
 
 static dm_application_instance_t             m_app_handle;                              /**< Application identifier allocated by device manager */
 
@@ -291,7 +289,7 @@ static void timers_init(void)
     uint32_t err_code;
 
     // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
 
     // Create timers.
     err_code = app_timer_create(&m_battery_timer_id,
@@ -604,6 +602,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
  */
 static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
+    app_beacon_scanner_on_ble_evt(p_ble_evt);
     dm_ble_evt_handler(p_ble_evt);
     ble_hrs_on_ble_evt(&m_hrs, p_ble_evt);
     ble_bas_on_ble_evt(&m_bas, p_ble_evt);
@@ -624,7 +623,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
     pstorage_sys_event_handler(sys_evt);
-    app_beacon_scanner_sd_evt_signal_handler(sys_evt);
+    app_beacon_scanner_on_sys_evt(sys_evt);
     ble_advertising_on_sys_evt(sys_evt);
 }
 

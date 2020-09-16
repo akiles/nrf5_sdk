@@ -167,12 +167,13 @@ int main(void)
             if (patold != patwr)
             {
                 patold = patwr;
-                flash_word_write(++addr, (uint32_t)patwr);
+                flash_word_write(addr, (uint32_t)patwr);
+                ++addr;
                 i += 4;
                 printf("'%c' was write to flash\n\r", patwr);
             }
-            // Read pattern from flash and send it back:
-            patrd = (uint8_t)*addr;
+            // Read from flash the last written data and send it back:
+            patrd = (uint8_t)*(addr - 1);
             printf("'%c' was read from flash\n\r\n\r", patrd);
         }
         while (i < pg_size);

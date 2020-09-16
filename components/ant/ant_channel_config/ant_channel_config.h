@@ -10,6 +10,14 @@
  */
 
 #include <stdint.h>
+#include "ant_stack_config_defs.h"
+
+
+#ifndef ANT_CONFIG_ENCRYPTED_CHANNELS
+    #error Undefined ANT_CONFIG_ENCRYPTED_CHANNELS. It should be defined in ant_stack_config_defs.h file.
+#elif ANT_CONFIG_ENCRYPTED_CHANNELS > 0
+    #include "ant_encrypt_config.h"
+#endif
 
 /**@brief ANT channel configuration structure. */
 typedef struct
@@ -23,7 +31,12 @@ typedef struct
     uint8_t  device_number;         ///< Device number.
     uint16_t channel_period;        ///< The period in 32 kHz counts.
     uint8_t  network_number;        ///< Network number denoting the network key.
-}ant_channel_config_t;
+    
+#if ANT_CONFIG_ENCRYPTED_CHANNELS > 0
+    ant_encrypt_channel_settings_t * p_crypto_settings; ///< Pointer to cryptographic settings, NULL if this configuration have to be omitted.
+#endif
+
+} ant_channel_config_t;
 
 /**@brief Function for configuring the ANT channel.
  *

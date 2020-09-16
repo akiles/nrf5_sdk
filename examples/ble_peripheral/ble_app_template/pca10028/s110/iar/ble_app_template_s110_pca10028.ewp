@@ -68,7 +68,7 @@
           <name>OGCoreOrChip</name>
           <state>1</state>
         </option>
-               <option>
+        <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
           <state>2</state>
@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -312,24 +312,26 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s110\headers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\device_manager</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\device_manager</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\trace</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pstorage</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\trace</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s110\headers</state>
           <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
@@ -589,7 +591,27 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$PROJ_DIR$\..\..\..\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\device_manager</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pstorage</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\trace</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s110\headers</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -741,7 +763,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-      <state>$PROJ_DIR$\ble_app_template_iar_nrf51.icf</state>
+      <state>$PROJ_DIR$\ble_app_template_iar_nRF5x.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1006,16 +1028,19 @@
   <group>
   <name>nRF_Drivers</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart\app_uart.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart\app_uart.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pstorage\pstorage.c</name>

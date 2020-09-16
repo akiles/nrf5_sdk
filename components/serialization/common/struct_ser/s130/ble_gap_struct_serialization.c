@@ -72,9 +72,12 @@ uint32_t ble_gap_addr_dec(uint8_t const * const p_buf,
 {
     ble_gap_addr_t * p_address = (ble_gap_addr_t *) p_addr;
 
-    SER_ASSERT_LENGTH_LEQ(sizeof (ble_gap_addr_t), buf_len - *p_index);
-    memcpy(p_address, &p_buf[*p_index], sizeof (ble_gap_addr_t));
-    *p_index += sizeof (ble_gap_addr_t);
+    SER_ASSERT_LENGTH_LEQ(1 + BLE_GAP_ADDR_LEN, (int32_t)buf_len - *p_index);
+
+    p_address->addr_type = p_buf[*p_index];
+    (*p_index)++;
+    memcpy(p_address->addr, &p_buf[*p_index], BLE_GAP_ADDR_LEN);
+    *p_index += BLE_GAP_ADDR_LEN;
 
     return NRF_SUCCESS;
 }

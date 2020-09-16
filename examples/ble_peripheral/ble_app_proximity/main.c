@@ -32,7 +32,6 @@
 #include "nrf_soc.h"
 #include "nrf_adc.h"
 #include "app_error.h"
-#include "nrf51_bitfields.h"
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
@@ -53,54 +52,60 @@
 #include "bsp.h"
 #include "bsp_btn_ble.h"
 
+#ifndef NRF51
+#include "nrf_drv_saadc.h"
+#endif //NRF51
 
-#define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                            /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
+#define IS_SRVC_CHANGED_CHARACT_PRESENT     0                                            /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
-#define SIGNAL_ALERT_BUTTON_ID          0                                            /**< Button used for send or cancel High Alert to the peer. */
-#define STOP_ALERTING_BUTTON_ID         1                                            /**< Button used for clearing the Alert LED that may be blinking or turned ON because of alerts from the central. */
+#define SIGNAL_ALERT_BUTTON_ID              0                                            /**< Button used for send or cancel High Alert to the peer. */
+#define STOP_ALERTING_BUTTON_ID             1                                            /**< Button used for clearing the Alert LED that may be blinking or turned ON because of alerts from the central. */
 
-#define DEVICE_NAME                     "Nordic_Prox"                                /**< Name of device. Will be included in the advertising data. */
-#define APP_ADV_INTERVAL_FAST           0x0028                                       /**< Fast advertising interval (in units of 0.625 ms. This value corresponds to 25 ms.). */
-#define APP_ADV_INTERVAL_SLOW           0x0C80                                       /**< Slow advertising interval (in units of 0.625 ms. This value corresponds to 2 seconds). */
-#define APP_SLOW_ADV_TIMEOUT            180                                          /**< The duration of the slow advertising period (in seconds). */
-#define APP_FAST_ADV_TIMEOUT            30                                           /**< The duration of the fast advertising period (in seconds). */
+#define DEVICE_NAME                         "Nordic_Prox"                                /**< Name of device. Will be included in the advertising data. */
+#define APP_ADV_INTERVAL_FAST               0x0028                                       /**< Fast advertising interval (in units of 0.625 ms. This value corresponds to 25 ms.). */
+#define APP_ADV_INTERVAL_SLOW               0x0C80                                       /**< Slow advertising interval (in units of 0.625 ms. This value corresponds to 2 seconds). */
+#define APP_SLOW_ADV_TIMEOUT                180                                          /**< The duration of the slow advertising period (in seconds). */
+#define APP_FAST_ADV_TIMEOUT                30                                           /**< The duration of the fast advertising period (in seconds). */
 
-#define APP_TIMER_PRESCALER             0                                            /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            (3+BSP_APP_TIMERS_NUMBER)                    /**< Maximum number of simultaneously created timers. 1 for Battery measurement, 2 for flashing Advertising LED and Alert LED, 1 for connection parameters module, 1 for button polling timer needed by the app_button module,  */
-#define APP_TIMER_OP_QUEUE_SIZE         6                                            /**< Size of timer operation queues. */
+#define APP_TIMER_PRESCALER                 0                                            /**< Value of the RTC1 PRESCALER register. */
+#define APP_TIMER_OP_QUEUE_SIZE             6                                            /**< Size of timer operation queues. */
 
-#define BATTERY_LEVEL_MEAS_INTERVAL     APP_TIMER_TICKS(120000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). This value corresponds to 120 seconds. */
+#define BATTERY_LEVEL_MEAS_INTERVAL         APP_TIMER_TICKS(120000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). This value corresponds to 120 seconds. */
 
-#define ADV_LED_ON_TIME                 APP_TIMER_TICKS(100, APP_TIMER_PRESCALER)    /**< Advertisement LED ON period when in blinking state. */
-#define ADV_LED_OFF_TIME                APP_TIMER_TICKS(900, APP_TIMER_PRESCALER)    /**< Advertisement LED OFF period when in blinking state. */
+#define ADV_LED_ON_TIME                     APP_TIMER_TICKS(100, APP_TIMER_PRESCALER)    /**< Advertisement LED ON period when in blinking state. */
+#define ADV_LED_OFF_TIME                    APP_TIMER_TICKS(900, APP_TIMER_PRESCALER)    /**< Advertisement LED OFF period when in blinking state. */
 
-#define MILD_ALERT_LED_ON_TIME          APP_TIMER_TICKS(100, APP_TIMER_PRESCALER)    /**< Alert LED ON period when in blinking state. */
-#define MILD_ALERT_LED_OFF_TIME         APP_TIMER_TICKS(900, APP_TIMER_PRESCALER)    /**< Alert LED OFF period when in blinking state. */
+#define MILD_ALERT_LED_ON_TIME              APP_TIMER_TICKS(100, APP_TIMER_PRESCALER)    /**< Alert LED ON period when in blinking state. */
+#define MILD_ALERT_LED_OFF_TIME             APP_TIMER_TICKS(900, APP_TIMER_PRESCALER)    /**< Alert LED OFF period when in blinking state. */
 
-#define MIN_CONN_INTERVAL               MSEC_TO_UNITS(500, UNIT_1_25_MS)             /**< Minimum acceptable connection interval (0.5 seconds).  */
-#define MAX_CONN_INTERVAL               MSEC_TO_UNITS(1000, UNIT_1_25_MS)            /**< Maximum acceptable connection interval (1 second). */
-#define SLAVE_LATENCY                   0                                            /**< Slave latency. */
-#define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(4000, UNIT_10_MS)              /**< Connection supervisory timeout (4 seconds). */
+#define MIN_CONN_INTERVAL                   MSEC_TO_UNITS(500, UNIT_1_25_MS)             /**< Minimum acceptable connection interval (0.5 seconds).  */
+#define MAX_CONN_INTERVAL                   MSEC_TO_UNITS(1000, UNIT_1_25_MS)            /**< Maximum acceptable connection interval (1 second). */
+#define SLAVE_LATENCY                       0                                            /**< Slave latency. */
+#define CONN_SUP_TIMEOUT                    MSEC_TO_UNITS(4000, UNIT_10_MS)              /**< Connection supervisory timeout (4 seconds). */
 
-#define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)   /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
-#define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER)  /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
-#define MAX_CONN_PARAMS_UPDATE_COUNT    3                                            /**< Number of attempts before giving up the connection parameter negotiation. */
+#define FIRST_CONN_PARAMS_UPDATE_DELAY      APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)   /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
+#define NEXT_CONN_PARAMS_UPDATE_DELAY       APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER)  /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
+#define MAX_CONN_PARAMS_UPDATE_COUNT        3                                            /**< Number of attempts before giving up the connection parameter negotiation. */
 
-#define SEC_PARAM_BOND                  1                                            /**< Perform bonding. */
-#define SEC_PARAM_MITM                  0                                            /**< Man In The Middle protection not required. */
-#define SEC_PARAM_IO_CAPABILITIES       BLE_GAP_IO_CAPS_NONE                         /**< No I/O capabilities. */
-#define SEC_PARAM_OOB                   0                                            /**< Out Of Band data not available. */
-#define SEC_PARAM_MIN_KEY_SIZE          7                                            /**< Minimum encryption key size. */
-#define SEC_PARAM_MAX_KEY_SIZE          16                                           /**< Maximum encryption key size. */
+#define SEC_PARAM_BOND                      1                                            /**< Perform bonding. */
+#define SEC_PARAM_MITM                      0                                            /**< Man In The Middle protection not required. */
+#define SEC_PARAM_IO_CAPABILITIES           BLE_GAP_IO_CAPS_NONE                         /**< No I/O capabilities. */
+#define SEC_PARAM_OOB                       0                                            /**< Out Of Band data not available. */
+#define SEC_PARAM_MIN_KEY_SIZE              7                                            /**< Minimum encryption key size. */
+#define SEC_PARAM_MAX_KEY_SIZE              16                                           /**< Maximum encryption key size. */
 
-#define INITIAL_LLS_ALERT_LEVEL         BLE_CHAR_ALERT_LEVEL_NO_ALERT                /**< Initial value for the Alert Level characteristic in the Link Loss service. */
-#define TX_POWER_LEVEL                  (-8)                                         /**< TX Power Level value. This will be set both in the TX Power service, in the advertising data, and also used to set the radio transmit power. */
+#define INITIAL_LLS_ALERT_LEVEL             BLE_CHAR_ALERT_LEVEL_NO_ALERT                /**< Initial value for the Alert Level characteristic in the Link Loss service. */
+#define TX_POWER_LEVEL                      (-8)                                         /**< TX Power Level value. This will be set both in the TX Power service, in the advertising data, and also used to set the radio transmit power. */
 
-#define ADC_REF_VOLTAGE_IN_MILLIVOLTS   1200                                         /**< Reference voltage (in milli volts) used by ADC while doing conversion. */
-#define ADC_PRE_SCALING_COMPENSATION    3                                            /**< The ADC is configured to use VDD with 1/3 prescaling as input. And hence the result of conversion is to be multiplied by 3 to get the actual value of the battery voltage.*/
-#define DIODE_FWD_VOLT_DROP_MILLIVOLTS  270                                          /**< Typical forward voltage drop of the diode (Part no: SD103ATW-7-F) that is connected in series with the voltage supply. This is the voltage drop when the forward current is 1mA. Source: Data sheet of 'SURFACE MOUNT SCHOTTKY BARRIER DIODE ARRAY' available at www.diodes.com. */
+#define ADC_REF_VOLTAGE_IN_MILLIVOLTS       600                                          /**< Reference voltage (in milli volts) used by ADC while doing conversion. */
+#define ADC_PRE_SCALING_COMPENSATION        6                                            /**< The ADC is configured to use VDD with 1/3 prescaling as input. And hence the result of conversion is to be multiplied by 3 to get the actual value of the battery voltage.*/
+#define DIODE_FWD_VOLT_DROP_MILLIVOLTS      270                                          /**< Typical forward voltage drop of the diode (Part no: SD103ATW-7-F) that is connected in series with the voltage supply. This is the voltage drop when the forward current is 1mA. Source: Data sheet of 'SURFACE MOUNT SCHOTTKY BARRIER DIODE ARRAY' available at www.diodes.com. */
 
-#define DEAD_BEEF                       0xDEADBEEF                                   /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
+#define DEAD_BEEF                           0xDEADBEEF                                   /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
+
+#define ADC_REF_VBG_VOLTAGE_IN_MILLIVOLTS   1200                                         /**< Value in millivolts for voltage used as reference in ADC conversion on NRF51. */
+#define ADC_INPUT_PRESCALER                 3                                            /**< Input prescaler for ADC convestion on NRF51. */
+#define ADC_RES_10BIT                       1024                                         /**< Maximum digital value for 10-bit ADC conversion. */
 
 /**@brief Macro to convert the result of ADC conversion in millivolts.
  *
@@ -108,8 +113,13 @@
  *
  * @retval     Result converted to millivolts.
  */
+#ifdef NRF51
 #define ADC_RESULT_IN_MILLI_VOLTS(ADC_VALUE)\
-        ((((ADC_VALUE) * ADC_REF_VOLTAGE_IN_MILLIVOLTS) / 255) * ADC_PRE_SCALING_COMPENSATION)
+        ((((ADC_VALUE) * ADC_REF_VBG_VOLTAGE_IN_MILLIVOLTS) / ADC_RES_10BIT) * ADC_INPUT_PRESCALER)
+#else // NRF52
+#define ADC_RESULT_IN_MILLI_VOLTS(ADC_VALUE)\
+        ((((ADC_VALUE) * ADC_REF_VOLTAGE_IN_MILLIVOLTS) / ADC_RES_10BIT) * ADC_PRE_SCALING_COMPENSATION)
+#endif // NRF51
 
 /**@brief Advertisement states. */
 typedef enum
@@ -134,7 +144,7 @@ static uint16_t                         m_conn_handle = BLE_CONN_HANDLE_INVALID;
 static volatile bool                    m_is_high_alert_signalled;                   /**< Variable to indicate whether a high alert has been signalled to the peer. */
 static volatile bool                    m_is_ias_present = false;                    /**< Variable to indicate whether the immediate alert service has been discovered at the connected peer. */
 
-static app_timer_id_t                   m_battery_timer_id;                          /**< Battery measurement timer. */
+APP_TIMER_DEF(m_battery_timer_id);                                                   /**< Battery measurement timer. */
 static dm_application_instance_t        m_app_handle;                                /**< Application identifier allocated by device manager */
 
 static bool                             m_memory_access_in_progress = false;         /**< Flag to keep track of ongoing operations on persistent memory. */
@@ -145,6 +155,9 @@ static void on_ias_c_evt(ble_ias_c_t * p_lls, ble_ias_c_evt_t * p_evt);
 static void on_bas_evt(ble_bas_t * p_bas, ble_bas_evt_t * p_evt);
 static void advertising_init(uint8_t adv_flags);
 
+#ifdef NRF52
+static nrf_saadc_value_t adc_buf[2];
+#endif //NRF52
 
 /**@brief Callback function for asserts in the SoftDevice.
  *
@@ -162,7 +175,6 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
     app_error_handler(DEAD_BEEF, line_num, p_file_name);
 }
 
-
 /**@brief Function for handling Service errors.
  *
  * @details A pointer to this function will be passed to each service which may need to inform the
@@ -175,7 +187,7 @@ static void service_error_handler(uint32_t nrf_error)
     APP_ERROR_HANDLER(nrf_error);
 }
 
-
+#ifdef NRF51
 /**@brief Function for handling the ADC interrupt.
  *
  * @details  This function will fetch the conversion result from the ADC, convert the value into
@@ -183,16 +195,53 @@ static void service_error_handler(uint32_t nrf_error)
  */
 void ADC_IRQHandler(void)
 {
-    if (nrf_adc_conversion_finished())
+    uint32_t err_code;
+    uint16_t adc_value;
+    uint8_t  percentage_batt_lvl;
+    uint16_t batt_lvl_in_milli_volts;
+    nrf_adc_conversion_event_clean();
+    nrf_adc_stop();
+    
+    adc_value = nrf_adc_result_get();
+    
+    
+    batt_lvl_in_milli_volts = ADC_RESULT_IN_MILLI_VOLTS(adc_value);
+    
+    percentage_batt_lvl     = battery_level_in_percent(batt_lvl_in_milli_volts);
+
+    err_code = ble_bas_battery_level_update(&m_bas, percentage_batt_lvl);
+    if (
+        (err_code != NRF_SUCCESS)
+        &&
+        (err_code != NRF_ERROR_INVALID_STATE)
+        &&
+        (err_code != BLE_ERROR_NO_TX_BUFFERS)
+        &&
+        (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
+       )
     {
-        uint8_t  adc_result;
+        APP_ERROR_HANDLER(err_code);
+    }
+}
+#else // NRF52
+/**@brief Function for handling the ADC interrupt.
+ *
+ * @details  This function will fetch the conversion result from the ADC, convert the value into
+ *           percentage and send it to peer.
+ */
+void saadc_event_handler(nrf_drv_saadc_evt_t const * p_event)
+{
+    if (p_event->type == NRF_DRV_SAADC_EVT_DONE)
+    {
+        nrf_saadc_value_t  adc_result;
         uint16_t batt_lvl_in_milli_volts;
         uint8_t  percentage_batt_lvl;
         uint32_t err_code;
 
-        nrf_adc_conversion_event_clean();
+        adc_result = p_event->data.done.p_buffer[0];
 
-        adc_result = nrf_adc_result_get();
+        err_code = nrf_drv_saadc_buffer_convert(p_event->data.done.p_buffer,1);
+        APP_ERROR_CHECK(err_code);
 
         batt_lvl_in_milli_volts = ADC_RESULT_IN_MILLI_VOLTS(adc_result) +
                                   DIODE_FWD_VOLT_DROP_MILLIVOLTS;
@@ -213,31 +262,34 @@ void ADC_IRQHandler(void)
         }
     }
 }
-
+#endif //NRF51
 
 /**@brief Function for configuring ADC to do battery level conversion.
  */
 static void adc_configure(void)
-{
-    uint32_t err_code;
+{    
+    #ifdef NRF51
     nrf_adc_config_t adc_config = NRF_ADC_CONFIG_DEFAULT;
-
-    // Configure ADC
-    adc_config.reference  = NRF_ADC_CONFIG_REF_VBG;
-    adc_config.resolution = NRF_ADC_CONFIG_RES_8BIT;
-    adc_config.scaling    = NRF_ADC_CONFIG_SCALING_SUPPLY_ONE_THIRD;
-    nrf_adc_configure(&adc_config);
-
-    // Enable ADC interrupt
+    adc_config.scaling = NRF_ADC_CONFIG_SCALING_SUPPLY_ONE_THIRD;
+    nrf_adc_configure(&adc_config); 
     nrf_adc_int_enable(ADC_INTENSET_END_Msk);
-    err_code = sd_nvic_ClearPendingIRQ(ADC_IRQn);
+    NVIC_EnableIRQ(ADC_IRQn);
+    NVIC_SetPriority(ADC_IRQn, 3);
+    nrf_adc_input_select(NRF_ADC_CONFIG_INPUT_DISABLED);
+    #else //  NRF52
+    ret_code_t err_code = nrf_drv_saadc_init(NULL, saadc_event_handler);
     APP_ERROR_CHECK(err_code);
 
-    err_code = sd_nvic_SetPriority(ADC_IRQn, NRF_APP_PRIORITY_LOW);
+    nrf_saadc_channel_config_t config = NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(NRF_SAADC_INPUT_VDD);
+    err_code = nrf_drv_saadc_channel_init(0,&config);
     APP_ERROR_CHECK(err_code);
 
-    err_code = sd_nvic_EnableIRQ(ADC_IRQn);
+    err_code = nrf_drv_saadc_buffer_convert(&adc_buf[0],1);
     APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_drv_saadc_buffer_convert(&adc_buf[1],1);
+    APP_ERROR_CHECK(err_code);
+    #endif //NRF51
 }
 
 
@@ -354,7 +406,13 @@ static void advertising_start(void)
 static void battery_level_meas_timeout_handler(void * p_context)
 {
     UNUSED_PARAMETER(p_context);
+    #ifdef NRF51
     nrf_adc_start();
+    #else // NRF52
+    uint32_t err_code;
+    err_code = nrf_drv_saadc_sample();
+    APP_ERROR_CHECK(err_code);
+    #endif // NRF51
 }
 
 
@@ -367,7 +425,7 @@ static void timers_init(void)
     uint32_t err_code;
 
     // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
 
     // Create battery timer.
     err_code = app_timer_create(&m_battery_timer_id,
@@ -887,7 +945,7 @@ static void ble_stack_init(void)
     // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
+#if (defined(S130) || defined(S132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif	
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
@@ -970,14 +1028,6 @@ static void bsp_event_handler(bsp_event_t event)
             {
                 APP_ERROR_CHECK(err_code);
             }
-            break;
-
-        case BSP_EVENT_WHITELIST_OFF:
-//            err_code = ble_advertising_restart_without_whitelist();
-//            if (err_code != NRF_ERROR_INVALID_STATE)
-//            {
-//                APP_ERROR_CHECK(err_code);
-//            }
             break;
 
         case BSP_EVENT_KEY_0:

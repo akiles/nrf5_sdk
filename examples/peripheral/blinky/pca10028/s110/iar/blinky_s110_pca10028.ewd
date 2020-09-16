@@ -3,7 +3,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>nrf51422_xxac</name>
+    <name>nrf51422_xxac_s110</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>

@@ -20,12 +20,9 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "nrf51.h"
-#include "nrf51_bitfields.h"
+#include "nrf.h"
 #include "ble_dtm.h"
 #include "bsp.h"
-#include "nrf_gpio.h"
-
 
 // Configuration parameters.
 #define BITRATE  UART_BAUDRATE_BAUDRATE_Baud19200  /**< Serial bitrate on the UART */

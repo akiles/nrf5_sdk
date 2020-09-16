@@ -68,7 +68,7 @@
           <name>OGCoreOrChip</name>
           <state>1</state>
         </option>
-               <option>
+        <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
           <state>2</state>
@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -309,18 +309,19 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\config</state>
-          <state>$PROJ_DIR$\..\..</state>
-          <state>$PROJ_DIR$\..\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\uart</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\fifo</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\gpiote</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\delay</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..</state>
           <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
@@ -577,7 +578,20 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$PROJ_DIR$\..\..\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\device</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\delay</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -729,7 +743,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-      <state>$PROJ_DIR$\simple_adc_iar_nrf51.icf</state>
+      <state>$PROJ_DIR$\simple_adc_iar_nRF5x.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -985,6 +999,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\fifo\app_fifo.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>
     </file>
     <file>
@@ -994,16 +1011,19 @@
   <group>
   <name>nRF_Drivers</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\uart\app_uart_fifo.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal\nrf_adc.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</name>
     </file>
   </group>
   <group>

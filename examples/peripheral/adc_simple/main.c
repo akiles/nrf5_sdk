@@ -20,15 +20,19 @@
  *
  * @image html example_board_setup_a.jpg "Use board setup A for this example."
  */
+ 
+#include "nrf.h"
+
+#ifdef NRF51
 
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
-#include "nrf.h"
 #include "nrf_adc.h"
 #include "boards.h"
 #include "app_uart.h"
 #include "app_error.h"
+#include "nrf_delay.h"
 
 volatile int32_t adc_sample;
 
@@ -52,7 +56,7 @@ void uart_events_handler(app_uart_evt_t * p_event)
         case APP_UART_FIFO_ERROR:          APP_ERROR_HANDLER(p_event->data.error_code);
             break;
 
-        case APP_UART_TX_EMPTY:            printf("%d\r\n", (int)adc_sample); // out ADC result
+        case APP_UART_TX_EMPTY:            
             break;
 
         default: break;
@@ -68,9 +72,6 @@ void ADC_IRQHandler(void)
     nrf_adc_conversion_event_clean();
 
     adc_sample = nrf_adc_result_get();
-
-    // trigger next ADC conversion
-    nrf_adc_start();
 }
 
 
@@ -131,16 +132,20 @@ int main(void)
 
     printf("Current sample value:\r\n");
 
-    nrf_adc_start();
-
     while (true)
     {
+			  // trigger next ADC conversion
+			  nrf_adc_start();
         // enter into sleep mode
         __SEV();
         __WFE();
         __WFE();
+			
+			  nrf_delay_ms(100);	
+				printf("%d\r\n", (int)adc_sample); // out ADC result
     }
 }
 
+#endif /* NRF51 */
 
 /** @} */

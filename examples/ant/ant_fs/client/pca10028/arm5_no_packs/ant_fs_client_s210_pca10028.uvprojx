@@ -14,12 +14,12 @@
         <TargetCommonOption>
           <Device>nRF51422_xxAC</Device>
           <Vendor>Nordic Semiconductor</Vendor>
-          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.7.2.1</PackID>
+          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.8.2.0</PackID>
           <PackURL>http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x8000) CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll>UL2CM3(-UM0049BUE -O4175 -S0 -C0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC800 -FN1 -FF0nRF5Prog -FS00 -FL08000)</FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-UM0364FCE -O78 -S0 -C0 -TO18 -TC16000000 -TP21 -TDS800D -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC2000 -FN1 -FF0nRF51xxx -FS00 -FL0200000)</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>core.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
@@ -360,7 +360,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> ANT_STACK_SUPPORT_REQD TRACE_MEM_WRITE_OFF LEDDRIVER_ACTIVE S210 BOARD_PCA10028 NRF51 SOFTDEVICE_PRESENT SWI_DISABLE0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\config;..\..\include;..\..\..\..\..\..\components\softdevice\s210\headers;..\..\..\..\..\bsp;..\..\..\..\..\..\components\libraries\ant_fs;..\..\..\..\..\..\components\ant\ant_stack_config;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\timer</IncludePath>
+              <IncludePath>..\..\config\ant_fs_client_s210_pca10028;..\..\config;..\..\..\..\..\bsp;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\ant\ant_stack_config;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\ant_fs;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\uart;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\softdevice\s210\headers;..\..\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -388,6 +388,7 @@
             <useFile>0</useFile>
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x00000000</DataAddressRange>
+            <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -663,7 +664,7 @@
             <File>
               <FileName>app_uart_fifo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\uart\app_uart_fifo.c</FilePath>
+              <FilePath>..\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -709,7 +710,7 @@
             <File>
               <FileName>nrf_delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</FilePath>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -802,6 +803,52 @@
               <FileName>nrf_drv_gpiote.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>1</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+            <File>
+              <FileName>nrf_drv_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -1173,61 +1220,10 @@
             </File>
           </Files>
         </Group>
-        <Group>
-          <GroupName>nRF_SoftDevice</GroupName>
-          <Files>
-            <File>
-              <FileName>s210_nrf51422_5.0.0_licence_agreement.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\..\..\..\components\softdevice\s210\doc\s210_nrf51422_5.0.0_licence_agreement.txt</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>0</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>1</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-          </Files>
-        </Group>
       </Groups>
     </Target>    
     <Target>
-      <TargetName>flash_softdevice</TargetName>
+      <TargetName>flash_s210_nrf51422_5.0.0_softdevice</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -1239,7 +1235,7 @@
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x8000) CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll>UL2CM3(-UM0049BUE -O4175 -S0 -C0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC800 -FN1 -FF0nRF5Prog -FS00 -FL08000)</FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-UM0364FCE -O78 -S0 -C0 -TO18 -TC16000000 -TP21 -TDS800D -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC2000 -FN1 -FF0nRF51xxx -FS00 -FL0200000)</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>core.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
@@ -1251,7 +1247,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile></SFDFile>
+          <SFDFile>..\..\..\..\..\..\SVD\nrf51.xml</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -1267,7 +1263,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>..\..\..\..\..\..\components\softdevice\s210\hex\</OutputDirectory>
-          <OutputName>s210_softdevice.hex</OutputName>
+          <OutputName>s210_nrf51422_5.0.0_softdevice.hex</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -1578,9 +1574,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> ANT_STACK_SUPPORT_REQD TRACE_MEM_WRITE_OFF LEDDRIVER_ACTIVE ANT_CONFIG_CHANNEL_USED=1>ant_stack_config ANT_CONFIG_ENC_CHANNEL_USED=0>ant_stack_config ANT_CONFIG_BURST_QUEUE_SIZE=128>ant_stack_config</Define>
+              <Define> ANT_STACK_SUPPORT_REQD TRACE_MEM_WRITE_OFF LEDDRIVER_ACTIVE NRF51</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\config;..\..\include</IncludePath>
+              <IncludePath>..\..\config\ant_fs_client_s210_pca10028;..\..\config;..\..\..\..\..\..\components\toolchain;..\..\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1594,7 +1590,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define> ANT_STACK_SUPPORT_REQD TRACE_MEM_WRITE_OFF LEDDRIVER_ACTIVE ANT_CONFIG_CHANNEL_USED=1>ant_stack_config ANT_CONFIG_ENC_CHANNEL_USED=0>ant_stack_config ANT_CONFIG_BURST_QUEUE_SIZE=128>ant_stack_config</Define>
+              <Define> ANT_STACK_SUPPORT_REQD TRACE_MEM_WRITE_OFF LEDDRIVER_ACTIVE NRF51</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -1608,6 +1604,7 @@
             <useFile>0</useFile>
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x00000000</DataAddressRange>
+            <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -1883,7 +1880,7 @@
             <File>
               <FileName>app_uart_fifo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\uart\app_uart_fifo.c</FilePath>
+              <FilePath>..\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -1929,7 +1926,7 @@
             <File>
               <FileName>nrf_delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</FilePath>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -2022,6 +2019,52 @@
               <FileName>nrf_drv_gpiote.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+            <File>
+              <FileName>nrf_drv_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -2393,57 +2436,6 @@
             </File>
           </Files>
         </Group>
-        <Group>
-          <GroupName>nRF_SoftDevice</GroupName>
-          <Files>
-            <File>
-              <FileName>s210_nrf51422_5.0.0_licence_agreement.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\..\..\..\components\softdevice\s210\doc\s210_nrf51422_5.0.0_licence_agreement.txt</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>0</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-          </Files>
-        </Group>
       </Groups>
     </Target>
   </Targets>
@@ -2452,33 +2444,33 @@
     <filter>
       <targetInfos/>
     </filter>
-    <package name="CMSIS" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="4.2.0">
+    <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0">
       <targetInfos>
-        <targetInfo name="nrf51422_xxac"/>
-        <targetInfo excluded="1" name="flash_softdevice"/>
+        <targetInfo name="nrf51422_xxac" versionMatchMode="fixed"/>
+        <targetInfo excluded="1" name="flash_s210_nrf51422_5.0.0_softdevice"/>
       </targetInfos>
     </package>
-    <package name="nRF_DeviceFamilyPack" schemaVersion="1.0" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="7.2.1">
+    <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.2.0">
       <targetInfos>
-        <targetInfo name="nrf51422_xxac"/>
-        <targetInfo excluded="1" name="flash_softdevice"/>
+        <targetInfo name="nrf51422_xxac" versionMatchMode="fixed"/>
+        <targetInfo excluded="1" name="flash_s210_nrf51422_5.0.0_softdevice"/>
       </targetInfos>
     </package>
   </packages>
   <apis/>
   <components>
-    <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="3.40.0" condition="CMSIS Core">
-      <package name="CMSIS" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="4.2.0"/>
+    <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="4.3.0" condition="CMSIS Core">
+      <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
       <targetInfos>
-        <targetInfo name="nrf51422_xxac"/>
-        <targetInfo excluded="1" name="flash_softdevice"/>
+        <targetInfo name="nrf51422_xxac" versionMatchMode="fixed"/>
+        <targetInfo excluded="1" name="flash_s210_nrf51422_5.0.0_softdevice"/>
       </targetInfos>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="7.2.1" condition="nRF51 Series CMSIS Device">
-      <package name="nRF_DeviceFamilyPack" schemaVersion="1.0" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="7.2.1"/>
+    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="8.2.0" condition="nRF51 Series CMSIS Device">
+      <package name="nRF_DeviceFamilyPack" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="8.2.0"/>
       <targetInfos>
-        <targetInfo name="nrf51422_xxac"/>
-        <targetInfo excluded="1" name="flash_softdevice"/>
+        <targetInfo name="nrf51422_xxac" versionMatchMode="fixed"/>
+        <targetInfo excluded="1" name="flash_s210_nrf51422_5.0.0_softdevice"/>
       </targetInfos>
     </component> 
   </components>

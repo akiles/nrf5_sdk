@@ -22,46 +22,59 @@
 */
 
 #include "nrf_delay.h"
-#include "nrf_gpio.h"
 #include "app_error.h"
 #include "app_util_platform.h"
-#include "spi_master.h"
+#include "nrf_drv_spi.h"
 #include "bsp.h"
 #include "app_timer.h"
 #include "nordic_common.h"
 
 
-#define APP_TIMER_PRESCALER      0                      /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS     BSP_APP_TIMERS_NUMBER  /**< Maximum number of simultaneously created timers. */
-#define APP_TIMER_OP_QUEUE_SIZE  2                      /**< Size of timer operation queues. */
+#define APP_TIMER_PRESCALER      0                      ///< Value of the RTC1 PRESCALER register.
+#define APP_TIMER_OP_QUEUE_SIZE  2                      ///< Size of timer operation queues.
 
-#define DELAY_MS                 1000                   /**< Timer Delay in milli-seconds. */
+#define DELAY_MS                 1000                   ///< Timer Delay in milli-seconds.
 
 /** @def  TX_RX_MSG_LENGTH
  * number of bytes to transmit and receive. This amount of bytes will also be tested to see that
  * the received bytes from slave are the same as the transmitted bytes from the master */
 #define TX_RX_MSG_LENGTH         100
 
-#if defined(SPI_MASTER_0_ENABLE) || defined(SPI_MASTER_1_ENABLE)
+#if (SPI0_ENABLED == 1) || (SPI1_ENABLED == 1) || (SPI2_ENABLED == 1)
 
 typedef enum
 {
-    TEST_STATE_SPI0_LSB,    /**< Test SPI0, bits order LSB */
-    TEST_STATE_SPI0_MSB,    /**< Test SPI0, bits order MSB */
-    TEST_STATE_SPI1_LSB,    /**< Test SPI1, bits order LSB */
-    TEST_STATE_SPI1_MSB     /**< Test SPI1, bits order MSB */
+    #if (SPI0_ENABLED == 1)
+    TEST_STATE_SPI0_LSB,    ///< Test SPI0, bits order LSB
+    TEST_STATE_SPI0_MSB,    ///< Test SPI0, bits order MSB
+    #endif
+    #if (SPI1_ENABLED == 1)
+    TEST_STATE_SPI1_LSB,    ///< Test SPI1, bits order LSB
+    TEST_STATE_SPI1_MSB,    ///< Test SPI1, bits order MSB
+    #endif
+    #if (SPI2_ENABLED == 1)
+    TEST_STATE_SPI2_LSB,    ///< Test SPI2, bits order LSB
+    TEST_STATE_SPI2_MSB,    ///< Test SPI2, bits order MSB
+    #endif
+    END_OF_TEST_SEQUENCE
 } spi_master_ex_state_t;
 
-static uint8_t m_tx_data_spi[TX_RX_MSG_LENGTH]; /**< SPI master TX buffer. */
-static uint8_t m_rx_data_spi[TX_RX_MSG_LENGTH]; /**< SPI master RX buffer. */
+static uint8_t m_tx_data_spi[TX_RX_MSG_LENGTH]; ///< SPI master TX buffer.
+static uint8_t m_rx_data_spi[TX_RX_MSG_LENGTH]; ///< SPI master RX buffer.
 
 static volatile bool m_transfer_completed = true;
+static spi_master_ex_state_t m_spi_master_ex_state = (spi_master_ex_state_t)0;
 
-#ifdef SPI_MASTER_0_ENABLE
-static spi_master_ex_state_t m_spi_master_ex_state = TEST_STATE_SPI0_LSB;
-#else
-static spi_master_ex_state_t m_spi_master_ex_state = TEST_STATE_SPI1_LSB;
+#if (SPI0_ENABLED == 1)
+static const nrf_drv_spi_t m_spi_master_0 = NRF_DRV_SPI_INSTANCE(0);
 #endif
+#if (SPI1_ENABLED == 1)
+static const nrf_drv_spi_t m_spi_master_1 = NRF_DRV_SPI_INSTANCE(1);
+#endif
+#if (SPI2_ENABLED == 1)
+static const nrf_drv_spi_t m_spi_master_2 = NRF_DRV_SPI_INSTANCE(2);
+#endif
+
 
 /**@brief Function for error handling, which is called when an error has occurred. 
  *
@@ -73,12 +86,11 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
 {
     UNUSED_VARIABLE(bsp_indication_set(BSP_INDICATE_FATAL_ERROR));
 
-    for (;; )
+    for (;;)
     {
         // No implementation needed.
     }
 }
-
 
 
 /**@brief The function initializes TX buffer to values to be sent and clears RX buffer.
@@ -132,25 +144,24 @@ static bool check_buf_equal(const uint8_t * const p_tx_buf,
 }
 
 
-#ifdef SPI_MASTER_0_ENABLE
+#if (SPI0_ENABLED == 1)
 /**@brief Handler for SPI0 master events.
  *
- * @param[in] spi_master_evt    SPI master event.
+ * @param[in] event SPI master event.
  */
-void spi_master_0_event_handler(spi_master_evt_t spi_master_evt)
+void spi_master_0_event_handler(nrf_drv_spi_event_t event)
 {
     uint32_t err_code = NRF_SUCCESS;
     bool result = false;
 
-    switch (spi_master_evt.evt_type)
+    switch (event)
     {
-        case SPI_MASTER_EVT_TRANSFER_COMPLETED:
+        case NRF_DRV_SPI_EVENT_DONE:
             // Check if received data is correct.
             result = check_buf_equal(m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
             APP_ERROR_CHECK_BOOL(result);
 
-            // Close SPI master.
-            spi_master_close(SPI_MASTER_0);
+            nrf_drv_spi_uninit(&m_spi_master_0);
 
             err_code = bsp_indication_set(BSP_INDICATE_RCV_OK);
             APP_ERROR_CHECK(err_code);
@@ -163,28 +174,27 @@ void spi_master_0_event_handler(spi_master_evt_t spi_master_evt)
             break;
     }
 }
-#endif /* SPI_MASTER_0_ENABLE */
+#endif // (SPI0_ENABLED == 1)
 
 
-#ifdef SPI_MASTER_1_ENABLE
+#if (SPI1_ENABLED == 1)
 /**@brief Handler for SPI1 master events.
  *
- * @param[in] spi_master_evt    SPI master event.
+ * @param[in] event SPI master event.
  */
-void spi_master_1_event_handler(spi_master_evt_t spi_master_evt)
+void spi_master_1_event_handler(nrf_drv_spi_event_t event)
 {
     uint32_t err_code = NRF_SUCCESS;
     bool result = false;
 
-    switch (spi_master_evt.evt_type)
+    switch (event)
     {
-        case SPI_MASTER_EVT_TRANSFER_COMPLETED:
+        case NRF_DRV_SPI_EVENT_DONE:
             // Check if received data is correct.
             result = check_buf_equal(m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
             APP_ERROR_CHECK_BOOL(result);
 
-            // Close SPI master.
-            spi_master_close(SPI_MASTER_1);
+            nrf_drv_spi_uninit(&m_spi_master_1);
 
             err_code = bsp_indication_set(BSP_INDICATE_RCV_OK);
             APP_ERROR_CHECK(err_code);
@@ -197,80 +207,121 @@ void spi_master_1_event_handler(spi_master_evt_t spi_master_evt)
             break;
     }
 }
-#endif /* SPI_MASTER_1_ENABLE */
+#endif // (SPI1_ENABLED == 1)
+
+
+#if (SPI2_ENABLED == 1)
+/**@brief Handler for SPI2 master events.
+ *
+ * @param[in] event SPI master event.
+ */
+void spi_master_2_event_handler(nrf_drv_spi_event_t event)
+{
+    uint32_t err_code = NRF_SUCCESS;
+    bool result = false;
+
+    switch (event)
+    {
+        case NRF_DRV_SPI_EVENT_DONE:
+            // Check if received data is correct.
+            result = check_buf_equal(m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
+            APP_ERROR_CHECK_BOOL(result);
+
+            nrf_drv_spi_uninit(&m_spi_master_2);
+
+            err_code = bsp_indication_set(BSP_INDICATE_RCV_OK);
+            APP_ERROR_CHECK(err_code);
+
+            m_transfer_completed = true;
+            break;
+
+        default:
+            // No implementation needed.
+            break;
+    }
+}
+#endif // (SPI2_ENABLED == 1)
 
 
 /**@brief Function for initializing a SPI master driver.
  *
- * @param[in] spi_master_instance       An instance of SPI master module.
- * @param[in] spi_master_event_handler  An event handler for SPI master events.
- * @param[in] lsb                       Bits order LSB if true, MSB if false.
+ * @param[in] p_instance    Pointer to SPI master driver instance.
+ * @param[in] lsb           Bits order LSB if true, MSB if false.
  */
-static void spi_master_init(spi_master_hw_instance_t   spi_master_instance,
-                            spi_master_event_handler_t spi_master_event_handler,
-                            const bool                 lsb)
+static void spi_master_init(nrf_drv_spi_t const * p_instance, bool lsb)
 {
     uint32_t err_code = NRF_SUCCESS;
 
-    // Configure SPI master.
-    spi_master_config_t spi_config = SPI_MASTER_INIT_DEFAULT;
-
-    switch (spi_master_instance)
+    nrf_drv_spi_config_t config =
     {
-        #ifdef SPI_MASTER_0_ENABLE
-        case SPI_MASTER_0:
-        {
-            spi_config.SPI_Pin_SCK  = SPIM0_SCK_PIN;
-            spi_config.SPI_Pin_MISO = SPIM0_MISO_PIN;
-            spi_config.SPI_Pin_MOSI = SPIM0_MOSI_PIN;
-            spi_config.SPI_Pin_SS   = SPIM0_SS_PIN;
-        }
-        break;
-        #endif /* SPI_MASTER_0_ENABLE */
+        .ss_pin       = NRF_DRV_SPI_PIN_NOT_USED,
+        .irq_priority = APP_IRQ_PRIORITY_LOW,
+        .orc          = 0xCC,
+        .frequency    = NRF_DRV_SPI_FREQ_1M,
+        .mode         = NRF_DRV_SPI_MODE_0,
+        .bit_order    = (lsb ?
+            NRF_DRV_SPI_BIT_ORDER_LSB_FIRST : NRF_DRV_SPI_BIT_ORDER_MSB_FIRST),
+    };
 
-        #ifdef SPI_MASTER_1_ENABLE
-        case SPI_MASTER_1:
-        {
-            spi_config.SPI_Pin_SCK  = SPIM1_SCK_PIN;
-            spi_config.SPI_Pin_MISO = SPIM1_MISO_PIN;
-            spi_config.SPI_Pin_MOSI = SPIM1_MOSI_PIN;
-            spi_config.SPI_Pin_SS   = SPIM1_SS_PIN;
-        }
-        break;
-        #endif /* SPI_MASTER_1_ENABLE */
-
-        default:
-            break;
+    #if (SPI0_ENABLED == 1)
+    if (p_instance == &m_spi_master_0)
+    {
+        config.sck_pin  = SPIM0_SCK_PIN;
+        config.mosi_pin = SPIM0_MOSI_PIN;
+        config.miso_pin = SPIM0_MISO_PIN;
+        err_code = nrf_drv_spi_init(p_instance, &config,
+            spi_master_0_event_handler);
     }
+    else
+    #endif // (SPI0_ENABLED == 1)
 
-    spi_config.SPI_CONFIG_ORDER = (lsb ? SPI_CONFIG_ORDER_LsbFirst : SPI_CONFIG_ORDER_MsbFirst);
+    #if (SPI1_ENABLED == 1)
+    if (p_instance == &m_spi_master_1)
+    {
+        config.sck_pin  = SPIM1_SCK_PIN;
+        config.mosi_pin = SPIM1_MOSI_PIN;
+        config.miso_pin = SPIM1_MISO_PIN;
+        err_code = nrf_drv_spi_init(p_instance, &config,
+            spi_master_1_event_handler);
+    }
+    else
+    #endif // (SPI1_ENABLED == 1)
 
-    err_code = spi_master_open(spi_master_instance, &spi_config);
+    #if (SPI2_ENABLED == 1)
+    if (p_instance == &m_spi_master_2)
+    {
+        config.sck_pin  = SPIM2_SCK_PIN;
+        config.mosi_pin = SPIM2_MOSI_PIN;
+        config.miso_pin = SPIM2_MISO_PIN;
+        err_code = nrf_drv_spi_init(p_instance, &config,
+            spi_master_2_event_handler);
+    }
+    else
+    #endif // (SPI2_ENABLED == 1)
+
+    {}
+
     APP_ERROR_CHECK(err_code);
-
-    // Register event handler for SPI master.
-    spi_master_evt_handler_reg(spi_master_instance, spi_master_event_handler);
 }
 
 
 /**@brief Function for sending and receiving data.
  *
- * @param[in]   spi_master_hw_instance  SPI master instance.
- * @param[in]   p_tx_data               A pointer to a buffer TX.
- * @param[out]  p_rx_data               A pointer to a buffer RX.
- * @param[in]   len                     A length of the data buffers.
+ * @param[in]   p_instance   Pointer to SPI master driver instance.
+ * @param[in]   p_tx_data    A pointer to a buffer TX.
+ * @param[out]  p_rx_data    A pointer to a buffer RX.
+ * @param[in]   len          A length of the data buffers.
  */
-static void spi_send_recv(const spi_master_hw_instance_t spi_master_hw_instance,
-                          uint8_t * const                p_tx_data,
-                          uint8_t * const                p_rx_data,
-                          const uint16_t                 len)
+static void spi_send_recv(nrf_drv_spi_t const * p_instance,
+                          uint8_t * p_tx_data,
+                          uint8_t * p_rx_data,
+                          uint16_t  len)
 {
     // Initalize buffers.
     init_buf(p_tx_data, p_rx_data, len);
 
-    // Start transfer.
-    uint32_t err_code =
-        spi_master_send_recv(spi_master_hw_instance, p_tx_data, len, p_rx_data, len);
+    uint32_t err_code = nrf_drv_spi_transfer(p_instance,
+        p_tx_data, len, p_rx_data, len);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -280,63 +331,59 @@ static void spi_send_recv(const spi_master_hw_instance_t spi_master_hw_instance,
  */
 static void switch_state(void)
 {
+    nrf_drv_spi_t const * p_instance;
+
     switch (m_spi_master_ex_state)
     {
-        #ifdef SPI_MASTER_0_ENABLE
+        #if (SPI0_ENABLED == 1)
         case TEST_STATE_SPI0_LSB:
-            spi_master_init(SPI_MASTER_0, spi_master_0_event_handler, true);
-
-            spi_send_recv(SPI_MASTER_0, m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
-            m_spi_master_ex_state = TEST_STATE_SPI0_MSB;
-
+            p_instance = &m_spi_master_0;
+            spi_master_init(p_instance, true);
             break;
 
         case TEST_STATE_SPI0_MSB:
-            spi_master_init(SPI_MASTER_0, spi_master_0_event_handler, false);
-
-            spi_send_recv(SPI_MASTER_0, m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
-
-            #ifdef SPI_MASTER_1_ENABLE
-            m_spi_master_ex_state = TEST_STATE_SPI1_LSB;
-            #else
-            m_spi_master_ex_state = TEST_STATE_SPI0_LSB;
-            #endif /* SPI_MASTER_1_ENABLE */
-
+            p_instance = &m_spi_master_0;
+            spi_master_init(p_instance, false);
             break;
-        #endif /* SPI_MASTER_0_ENABLE */
+        #endif // (SPI0_ENABLED == 1)
 
-        #ifdef SPI_MASTER_1_ENABLE
+        #if (SPI1_ENABLED == 1)
         case TEST_STATE_SPI1_LSB:
-            spi_master_init(SPI_MASTER_1, spi_master_1_event_handler, true);
-
-            spi_send_recv(SPI_MASTER_1, m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
-            m_spi_master_ex_state = TEST_STATE_SPI1_MSB;
-
+            p_instance = &m_spi_master_1;
+            spi_master_init(p_instance, true);
             break;
 
         case TEST_STATE_SPI1_MSB:
-            spi_master_init(SPI_MASTER_1, spi_master_1_event_handler, false);
-
-            spi_send_recv(SPI_MASTER_1, m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
-
-            #ifdef SPI_MASTER_0_ENABLE
-            m_spi_master_ex_state = TEST_STATE_SPI0_LSB;
-            #else
-            m_spi_master_ex_state = TEST_STATE_SPI1_LSB;
-            #endif /* SPI_MASTER_0_ENABLE */
-
+            p_instance = &m_spi_master_1;
+            spi_master_init(p_instance, false);
             break;
-        #endif /* SPI_MASTER_1_ENABLE */
+        #endif // (SPI1_ENABLED == 1)
+
+        #if (SPI2_ENABLED == 1)
+        case TEST_STATE_SPI2_LSB:
+            p_instance = &m_spi_master_2;
+            spi_master_init(p_instance, true);
+            break;
+
+        case TEST_STATE_SPI2_MSB:
+            p_instance = &m_spi_master_2;
+            spi_master_init(p_instance, false);
+            break;
+        #endif // (SPI2_ENABLED == 1)
 
         default:
-            break;
+            return;
+    }
+    if (++m_spi_master_ex_state >= END_OF_TEST_SEQUENCE)
+    {
+        m_spi_master_ex_state = (spi_master_ex_state_t)0;
     }
 
-    nrf_delay_ms(DELAY_MS);
+    spi_send_recv(p_instance, m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
 }
 
+#endif // (SPI0_ENABLED == 1) || (SPI1_ENABLED == 1) || (SPI2_ENABLED == 1)
 
-#endif /* defined(SPI_MASTER_0_ENABLE) || defined(SPI_MASTER_1_ENABLE) */
 
 /**@brief Function for initializing bsp module.
  */
@@ -352,9 +399,9 @@ void bsp_configuration()
     {
         // Do nothing.
     }
-        
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
-        
+
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
+
     err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
     APP_ERROR_CHECK(err_code);
 }
@@ -367,17 +414,18 @@ int main(void)
     // Setup bsp module.
     bsp_configuration();
 
-    for (;; )
+    for (;;)
     {
-        #if defined(SPI_MASTER_0_ENABLE) || defined(SPI_MASTER_1_ENABLE)
+        #if (SPI0_ENABLED == 1) || (SPI1_ENABLED == 1) || (SPI2_ENABLED == 1)
         if (m_transfer_completed)
         {
             m_transfer_completed = false;
+
             switch_state();
+            nrf_delay_ms(DELAY_MS);
         }
-        #endif // defined(SPI_MASTER_0_ENABLE) || defined(SPI_MASTER_1_ENABLE)
+        #endif // (SPI0_ENABLED == 1) || (SPI1_ENABLED == 1) || (SPI2_ENABLED == 1)
     }
 }
-
 
 /** @} */

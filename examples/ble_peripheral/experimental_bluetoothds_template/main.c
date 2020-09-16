@@ -12,10 +12,10 @@
 
 /** @file
  *
- * @defgroup ble_sdk_bluetoothds_template_main main.c
+ * @defgroup ble_sdk_bluetooth_template_main main.c
  * @{
- * @ingroup bluetoothds_template
- * @brief bluetoothds_template main file.
+ * @ingroup bluetooth_template
+ * @brief bluetooth_template main file.
  *
  * This file contains a template for creating a new application using Bluetooth Developper Studio generated code. 
  * It has the code necessary to wakeup from button, advertise, get a connection restart advertising on disconnect and if no new
@@ -29,7 +29,6 @@
 #include "nordic_common.h"
 #include "nrf.h"
 #include "app_error.h"
-#include "nrf51_bitfields.h"
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
@@ -44,16 +43,16 @@
 #include "app_trace.h"
 #include "bsp.h"
 #include "bsp_btn_ble.h"
+#include "service_if.h"
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT  1                                          /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
-#define DEVICE_NAME                      "Nordic_XXX"                               /**< Name of device. Will be included in the advertising data. */
+#define DEVICE_NAME                      "Nordic_BDS"                               /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                "NordicSemiconductor"                      /**< Manufacturer. Will be passed to Device Information Service. */
 #define APP_ADV_INTERVAL                 300                                        /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
 #define APP_ADV_TIMEOUT_IN_SECONDS       180                                        /**< The advertising timeout in units of seconds. */
 
 #define APP_TIMER_PRESCALER              0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS             (6+BSP_APP_TIMERS_NUMBER)                  /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE          4                                          /**< Size of timer operation queues. */
 
 #define MIN_CONN_INTERVAL                MSEC_TO_UNITS(100, UNIT_1_25_MS)           /**< Minimum acceptable connection interval (0.1 seconds). */
@@ -73,15 +72,12 @@
 #define SEC_PARAM_MAX_KEY_SIZE           16                                         /**< Maximum encryption key size. */
 
 #define DEAD_BEEF                        0xDEADBEEF                                 /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
+#define APPL_LOG                         app_trace_log
 
 static dm_application_instance_t        m_app_handle;                               /**< Application identifier allocated by device manager */
 
 static uint16_t                          m_conn_handle = BLE_CONN_HANDLE_INVALID;   /**< Handle of the current connection. */
 
-/* YOUR_JOB: Declare all services structure your application is using
-static ble_xx_service_t                     m_xxs;
-static ble_yy_service_t                     m_yys;
-*/
 
 // YOUR_JOB: Use UUIDs for service(s) used in your application.
 static ble_uuid_t m_adv_uuids[] = {{BLE_UUID_DEVICE_INFORMATION_SERVICE, BLE_UUID_TYPE_BLE}}; /**< Universally unique service identifiers. */
@@ -112,14 +108,12 @@ static void timers_init(void)
 {
 
     // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
 
     // Create timers.
 
     /* YOUR_JOB: Create any timers to be used by the application.
                  Below is an example of how to create a timer.
-                 For every new timer needed, increase the value of the macro APP_TIMER_MAX_TIMERS by
-                 one.
     uint32_t err_code;
     err_code = app_timer_create(&m_app_timer_id, APP_TIMER_MODE_REPEATED, timer_timeout_handler);
     APP_ERROR_CHECK(err_code); */
@@ -160,58 +154,12 @@ static void gap_params_init(void)
 }
 
 
-/**@brief Function for handling the YYY Service events. 
- * YOUR_JOB implement a service handler function depending on the event the service you are using can generate
- *
- * @details This function will be called for all YY Service events which are passed to
- *          the application.
- *
- * @param[in]   p_yy_service   YY Service structure.
- * @param[in]   p_evt          Event received from the YY Service.
- *
- *
-static void on_yys_evt(ble_yy_service_t     * p_yy_service, 
-                       ble_yy_service_evt_t * p_evt)
-{
-    switch (p_evt->evt_type)
-    {
-        case BLE_YY_NAME_EVT_WRITE:
-            APPL_LOG("[APPL]: charact written with value %s. \r\n", p_evt->params.char_xx.value.p_str);
-            break;
-        
-        default:
-            // No implementation needed.
-            break;
-    }
-}*/
-
 /**@brief Function for initializing services that will be used by the application.
  */
 static void services_init(void)
 {
-    /* YOUR_JOB: Add code to initialize the services used by the application.
-    uint32_t                           err_code;
-    ble_xxs_init_t                     xxs_init;
-    ble_yys_init_t                     yys_init;
-
-    // Initialize XXX Service.
-    memset(&xxs_init, 0, sizeof(xxs_init));
-
-    xxs_init.evt_handler                = NULL;
-    xxs_init.is_xxx_notify_supported    = true;
-    xxs_init.ble_xx_initial_value.level = 100; 
-    
-    err_code = ble_xxs_init(&m_xxs, &xxs_init);
+    uint32_t err_code = bluetooth_init();
     APP_ERROR_CHECK(err_code);
-
-    // Initialize YYY Service.
-    memset(&yys_init, 0, sizeof(yys_init));
-    yys_init.evt_handler                  = on_yys_evt;
-    yys_init.ble_yy_initial_value.counter = 0;
-
-    err_code = ble_yy_service_init(&m_yys, &yy_init);
-    APP_ERROR_CHECK(err_code);
-    */
 }
 
 
@@ -278,7 +226,6 @@ static void application_timers_start(void)
     uint32_t err_code;
     err_code = app_timer_start(m_app_timer_id, TIMER_INTERVAL, NULL);
     APP_ERROR_CHECK(err_code); */
-   
 }
 
 
@@ -367,10 +314,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
     bsp_btn_ble_on_ble_evt(p_ble_evt);
     ble_advertising_on_ble_evt(p_ble_evt);
     on_ble_evt(p_ble_evt);
-    /*YOUR_JOB add calls to _on_ble_evt functions from each service your application is using
-    ble_xxs_on_ble_evt(&m_xxs, p_ble_evt);
-    ble_yys_on_ble_evt(&m_yys, p_ble_evt);
-    */
+    bluetooth_on_ble_evt(p_ble_evt);
 }
 
 
@@ -573,6 +517,7 @@ int main(void)
     uint32_t err_code;
     bool erase_bonds;
 
+    app_trace_init();
     // Initialize.
     timers_init();
     buttons_leds_init(&erase_bonds);
@@ -585,6 +530,7 @@ int main(void)
 
     // Start execution.
     application_timers_start();
+    APPL_LOG("Start Advertising \r\n");
     err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
     APP_ERROR_CHECK(err_code);
 

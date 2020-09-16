@@ -24,50 +24,24 @@
 #define DFU_TYPES_H__
 
 #include <stdint.h>
-#include "nrf51.h"
+#include "nrf.h"
 #include "app_util.h"
-
-typedef struct
-{
-    uint8_t  info_size;
-    uint8_t  reserved1[3];
-    uint32_t magic_number;
-    uint32_t softdevice_size;
-    uint8_t  config_id[3];
-    uint8_t  reserved2;
-} SOFTDEVICE_INFORMATION_Type;
-
-#define SOFTDEVICE_INFORMATION_BASE     0x0003000
-
-#define SOFTDEVICE_INFORMATION          ((SOFTDEVICE_INFORMATION_Type *) SOFTDEVICE_INFORMATION_BASE)
+#include "nrf_sdm.h"
+#include "ant_dfu_constrains.h"
 
 #define NRF_UICR_BOOT_START_ADDRESS     (NRF_UICR_BASE + 0x14)                                  /**< Register where the bootloader start address is stored in the UICR register. */
 
+#define CODE_REGION_1_START             SD_SIZE_GET(MBR_SIZE)                                   /**< This field should correspond to the size of Code Region 0, (which is identical to Start of Code Region 1), found in UICR.CLEN0 register. This value is used for compile safety, as the linker will fail if application expands into bootloader. Runtime, the bootloader will use the value found in UICR.CLEN0. */
 
-#ifdef S310_STACK
-    #define CODE_REGION_1_START         0x00020000                                              /**< This field should correspond to the size of Code Region 0, (which is identical to Start of Code Region 1), found in UICR.CLEN0 register. This value is used for compile safety, as the linker will fail if application expands into bootloader. Runtime, the bootloader will use the value found in UICR.CLEN0. */
-#elif defined(S210_V3_STACK)
-    #define CODE_REGION_1_START         0x0000C000
-#else
-    #define CODE_REGION_1_START         SOFTDEVICE_INFORMATION->softdevice_size                 /**< This field should correspond to the size of Code Region 0, (which is identical to Start of Code Region 1), found in UICR.CLEN0 register. This value is used for compile safety, as the linker will fail if application expands into bootloader. Runtime, the bootloader will use the value found in UICR.CLEN0. */
-#endif
-
-#ifdef S210_V3_STACK
-    #define SOFTDEVICE_REGION_START     0x00000000
-#else
-    #define SOFTDEVICE_REGION_START     0x00001000                                              /**< This field should correspond to start address of the bootloader, found in UICR.RESERVED, 0x10001014, register. This value is used for sanity check, so the bootloader will fail immediately if this value differs from runtime value. The value is used to determine max application size for updating. */
-#endif
-
-//#define BOOTLOADER_REGION_START         0x0003C000
-#define BOOTLOADER_REGION_START         0x0003B800                                              /**< This field should correspond to start address of the bootloader, found in UICR.BOOTLOADERADDR, 0x10001014, register. This value is used for sanity check, so the bootloader will fail immediately if this value differes from runitime value. The value is used to determin max DUF region size. */
-
-#define BOOTLOADER_SETTINGS_ADDRESS     0x0003FC00                                              /**< The field specifies the page location of the bootloader settings address. */
+#define SOFTDEVICE_REGION_START         MBR_SIZE                                                /**< This field should correspond to start address of the bootloader, found in UICR.RESERVED, 0x10001014, register. This value is used for sanity check, so the bootloader will fail immediately if this value differs from runtime value. The value is used to determine max application size for updating. */
 
 #define DFU_REGION_TOTAL_SIZE           (BOOTLOADER_REGION_START - CODE_REGION_1_START)         /**< Total size of the region between SD and Bootloader. */
 
 #define DFU_APP_DATA_RESERVED           0x0000                                                  /**< Size of Application Data that must be preserved between application updates. This value must be a multiple of page size. Page size is 0x400 (1024d) bytes, thus this value must be 0x0000, 0x0400, 0x0800, 0x0C00, 0x1000, etc. */
 #define DFU_IMAGE_MAX_SIZE_FULL         (DFU_REGION_TOTAL_SIZE - DFU_APP_DATA_RESERVED)         /**< Maximum size of a application, excluding save data from the application. */
-#define DFU_IMAGE_MAX_SIZE_BANKED       (((DFU_REGION_TOTAL_SIZE)/2) - DFU_APP_DATA_RESERVED)   /**< Maximum size of a application, excluding save data from the application. */
+
+#define DFU_IMAGE_MAX_SIZE_BANKED       (((((DFU_REGION_TOTAL_SIZE)/2) - DFU_APP_DATA_RESERVED) / CODE_PAGE_SIZE) * CODE_PAGE_SIZE)  /**< Maximum size of a application in dual bank mode, excluding save data from the application. */ 
+
 #define DFU_BL_IMAGE_MAX_SIZE           (BOOTLOADER_SETTINGS_ADDRESS - BOOTLOADER_REGION_START) /**< Maximum size of a bootloader, excluding save data from the current bootloader. */
 
 #define DFU_BANK_0_REGION_START         CODE_REGION_1_START                                     /**< Bank 0 region start. */
@@ -76,7 +50,6 @@ typedef struct
 #define PACKET_SIZE                     512                                                     /**< Size of each data packet. Also used for initial receiving of packets from transport layer. */
 #define PACKET_HEADER_SIZE              sizeof(uint32_t)                                        /**< Size of the data packet header. */
 
-#define CODE_PAGE_SIZE                  1024                                                    /**< Size of a flash codepage. Used for size of the reserved flash space in the bootloader region. Will be runtime checked against NRF_UICR->CODEPAGESIZE to ensure the region is correct. */
 #define EMPTY_FLASH_MASK                0xFFFFFFFF                                              /**< Bit mask that defines an empty address in flash. */
 
 #define INVALID_PACKET                  0x00                                                    /**< Invalid packet identifies. */

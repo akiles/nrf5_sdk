@@ -23,7 +23,6 @@
 #include "nordic_common.h"
 #include "nrf.h"
 #include "app_error.h"
-#include "nrf51_bitfields.h"
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
@@ -56,12 +55,11 @@
 #define APP_ADV_TIMEOUT_IN_SECONDS       180                                        /**< The advertising timeout in units of seconds. */
 
 #define APP_TIMER_PRESCALER              0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS             (6+BSP_APP_TIMERS_NUMBER)                  /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE          4                                          /**< Size of timer operation queues. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL      APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). */
 #define MIN_BATTERY_LEVEL                81                                         /**< Minimum simulated battery level. */
-#define MAX_BATTERY_LEVEL                100                                        /**< Maximum simulated battery level. */
+#define MAX_BATTERY_LEVEL                100                                        /**< Maximum simulated 7battery level. */
 #define BATTERY_LEVEL_INCREMENT          1                                          /**< Increment between each simulated battery level measurement. */
 
 #define HEART_RATE_MEAS_INTERVAL         APP_TIMER_TICKS(1000, APP_TIMER_PRESCALER) /**< Heart rate measurement interval (ticks). */
@@ -116,10 +114,10 @@ static sensorsim_state_t                 m_heart_rate_sim_state;                
 static sensorsim_cfg_t                   m_rr_interval_sim_cfg;                     /**< RR Interval sensor simulator configuration. */
 static sensorsim_state_t                 m_rr_interval_sim_state;                   /**< RR Interval sensor simulator state. */
 
-static app_timer_id_t                    m_battery_timer_id;                        /**< Battery timer. */
-static app_timer_id_t                    m_heart_rate_timer_id;                     /**< Heart rate measurement timer. */
-static app_timer_id_t                    m_rr_interval_timer_id;                    /**< RR interval timer. */
-static app_timer_id_t                    m_sensor_contact_timer_id;                 /**< Sensor contact detected timer. */
+APP_TIMER_DEF(m_battery_timer_id);                                                  /**< Battery timer. */
+APP_TIMER_DEF(m_heart_rate_timer_id);                                               /**< Heart rate measurement timer. */
+APP_TIMER_DEF(m_rr_interval_timer_id);                                              /**< RR interval timer. */                 /**< RR interval timer. */
+APP_TIMER_DEF(m_sensor_contact_timer_id);                                           /**< Sensor contact detected timer. */
 
 static dm_application_instance_t         m_app_handle;                              /**< Application identifier allocated by device manager */
 
@@ -269,7 +267,7 @@ static void timers_init(void)
     uint32_t err_code;
 
     // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
 
     // Create timers.
     err_code = app_timer_create(&m_battery_timer_id,
@@ -732,11 +730,11 @@ static void ble_stack_init(void)
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
-#if defined(S110) || defined(S130) || defined(S310)
+#if defined(S110) || defined(S130) || defined(S310)  || defined(S132)
     // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#if defined(S130) || defined(S310)
+#if defined(S130) || defined(S310) || defined(S132)
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
@@ -907,6 +905,7 @@ int main(void)
     bool erase_bonds;
 
     // Initialize.
+    app_trace_init();
     timers_init();
     buttons_leds_init(&erase_bonds);
     ble_stack_init();

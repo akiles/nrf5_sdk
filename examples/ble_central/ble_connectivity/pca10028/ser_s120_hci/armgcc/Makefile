@@ -23,21 +23,20 @@ NO_ECHO := @
 endif
 
 # Toolchain commands
-CC       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-gcc"
-AS       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-as"
-AR       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ar" -r
-LD       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ld"
-NM       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-nm"
-OBJDUMP  		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objdump"
-OBJCOPY  		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objcopy"
-SIZE    		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-size"
+CC              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-gcc'
+AS              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-as'
+AR              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ar' -r
+LD              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ld'
+NM              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-nm'
+OBJDUMP         := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objdump'
+OBJCOPY         := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objcopy'
+SIZE            := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-size'
 
 #function for removing duplicates in a list
 remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-out $(firstword $1),$1))))
 
 #source common to all targets
 C_SOURCE_FILES += \
-$(abspath ../../../../../../components/serialization/application/transport/app_mailbox.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/common/ble_dtm_init.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s120/serializers/ble_enable.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s120/serializers/ble_event.c) \
@@ -158,19 +157,21 @@ $(abspath ../../../../../../components/serialization/connectivity/ser_conn_error
 $(abspath ../../../../../../components/serialization/connectivity/ser_conn_event_encoder.c) \
 $(abspath ../../../../../../components/serialization/connectivity/ser_conn_handlers.c) \
 $(abspath ../../../../../../components/serialization/connectivity/ser_conn_pkt_decoder.c) \
+$(abspath ../../../../../../components/serialization/connectivity/ser_conn_reset_cmd_decoder.c) \
 $(abspath ../../../../../../components/serialization/common/transport/ser_hal_transport.c) \
 $(abspath ../../../../../../components/serialization/common/transport/ser_phy/ser_phy_hci.c) \
 $(abspath ../../../../../../components/serialization/common/transport/ser_phy/ser_phy_hci_slip.c) \
 $(abspath ../../../../../../components/serialization/connectivity/codecs/s120/serializers/temp_get.c) \
 $(abspath ../../../../../../components/libraries/util/app_error.c) \
+$(abspath ../../../../../../components/libraries/mailbox/app_mailbox.c) \
 $(abspath ../../../../../../components/libraries/scheduler/app_scheduler_serconn.c) \
 $(abspath ../../../../../../components/libraries/timer/app_timer.c) \
 $(abspath ../../../../../../components/libraries/crc16/crc16.c) \
 $(abspath ../../../../../../components/libraries/util/nrf_assert.c) \
-$(abspath ../../../../../../components/drivers_nrf/uart/app_uart.c) \
-$(abspath ../../../../../../components/drivers_nrf/hal/nrf_delay.c) \
+$(abspath ../../../../../../components/libraries/uart/app_uart.c) \
+$(abspath ../../../../../../components/drivers_nrf/delay/nrf_delay.c) \
 $(abspath ../../../../../../components/drivers_nrf/common/nrf_drv_common.c) \
-$(abspath ../../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c) \
+$(abspath ../../../../../../components/drivers_nrf/uart/nrf_drv_uart.c) \
 $(abspath ../../../main.c) \
 $(abspath ../../../../../../components/ble/ble_dtm/ble_dtm.c) \
 $(abspath ../../../../../../components/toolchain/system_nrf51.c) \
@@ -180,25 +181,28 @@ $(abspath ../../../../../../components/softdevice/common/softdevice_handler/soft
 ASM_SOURCE_FILES  = $(abspath ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s)
 
 #includes common to all targets
-INC_PATHS  = -I$(abspath ../../../config)
+INC_PATHS  = -I$(abspath ../../../config/ble_connectivity_s120_hci_pca10028)
+INC_PATHS += -I$(abspath ../../../config)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/connectivity/hal)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/connectivity/codecs/s120/middleware)
-INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/transport/ser_phy/config)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/scheduler)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/config)
 INC_PATHS += -I$(abspath ../../../../../bsp)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/connectivity)
-INC_PATHS += -I$(abspath ../../../../../../components/libraries/crc16)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/delay)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/common)
 INC_PATHS += -I$(abspath ../../../../../../components/ble/ble_dtm)
-INC_PATHS += -I$(abspath ../../../../../../components/softdevice/s120/headers)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/crc16)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/mailbox)
 INC_PATHS += -I$(abspath ../../../../../../components/libraries/util)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/uart)
-INC_PATHS += -I$(abspath ../../../../../../components/libraries/scheduler)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/transport/ser_phy/config)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/uart)
 INC_PATHS += -I$(abspath ../../../../../../components/device)
+INC_PATHS += -I$(abspath ../../../../../../components/softdevice/s120/headers)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/struct_ser/s120)
 INC_PATHS += -I$(abspath ../../../../../../components/libraries/timer)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/transport/ser_phy)
-INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/gpiote)
-INC_PATHS += -I$(abspath ../../../../../../components/serialization/application/transport)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/connectivity/codecs/common)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/hal)
 INC_PATHS += -I$(abspath ../../../../../../components/toolchain/gcc)
@@ -206,7 +210,6 @@ INC_PATHS += -I$(abspath ../../../../../../components/toolchain)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/common)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/transport)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/connectivity/codecs/s120/serializers)
-INC_PATHS += -I$(abspath ../../../../../../components/serialization/common)
 INC_PATHS += -I$(abspath ../../../../../../components/softdevice/common/softdevice_handler)
 
 OBJECT_DIRECTORY = _build
@@ -217,14 +220,14 @@ OUTPUT_BINARY_DIRECTORY = $(OBJECT_DIRECTORY)
 BUILD_DIRECTORIES := $(sort $(OBJECT_DIRECTORY) $(OUTPUT_BINARY_DIRECTORY) $(LISTING_DIRECTORY) )
 
 #flags common to all targets
-CFLAGS  = -DSER_CONNECTIVITY
-CFLAGS += -DSWI_DISABLE0
-CFLAGS += -DBOARD_PCA10028
+CFLAGS  = -DBOARD_PCA10028
 CFLAGS += -DSOFTDEVICE_PRESENT
 CFLAGS += -DNRF51
 CFLAGS += -DS120
 CFLAGS += -DAPP_SCHEDULER_WITH_PAUSE
+CFLAGS += -DSWI_DISABLE0
 CFLAGS += -DBLE_STACK_SUPPORT_REQD
+CFLAGS += -DSER_CONNECTIVITY
 CFLAGS += -DHCI_TIMER2
 CFLAGS += -DBSP_DEFINES_ONLY
 CFLAGS += -mcpu=cortex-m0
@@ -246,14 +249,14 @@ LDFLAGS += --specs=nano.specs -lc -lnosys
 
 # Assembler flags
 ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DSER_CONNECTIVITY
-ASMFLAGS += -DSWI_DISABLE0
 ASMFLAGS += -DBOARD_PCA10028
 ASMFLAGS += -DSOFTDEVICE_PRESENT
 ASMFLAGS += -DNRF51
 ASMFLAGS += -DS120
 ASMFLAGS += -DAPP_SCHEDULER_WITH_PAUSE
+ASMFLAGS += -DSWI_DISABLE0
 ASMFLAGS += -DBLE_STACK_SUPPORT_REQD
+ASMFLAGS += -DSER_CONNECTIVITY
 ASMFLAGS += -DHCI_TIMER2
 ASMFLAGS += -DBSP_DEFINES_ONLY
 #default target - first one defined
@@ -335,9 +338,9 @@ genhex:
 	$(NO_ECHO)$(OBJCOPY) -O ihex $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).hex
 
 echosize:
-	-@echo ""
+	-@echo ''
 	$(NO_ECHO)$(SIZE) $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
-	-@echo ""
+	-@echo ''
 
 clean:
 	$(RM) $(BUILD_DIRECTORIES)
@@ -347,9 +350,11 @@ cleanobj:
 
 flash: $(MAKECMDGOALS)
 	@echo Flashing: $(OUTPUT_BINARY_DIRECTORY)/$<.hex
-	nrfjprog --reset --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex
+	nrfjprog --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex -f nrf51  --sectorerase
+	nrfjprog --reset
 
 ## Flash softdevice
-flash_softdevice: 
-	@echo Flashing: s120_softdevice.hex
-	nrfjprog --reset --program ../../../../../../components/softdevice/s120/hex/s120_softdevice.hex
+flash_softdevice:
+	@echo Flashing: s120_nrf51_2.1.0_softdevice.hex
+	nrfjprog --program ../../../../../../components/softdevice/s120/hex/s120_nrf51_2.1.0_softdevice.hex -f nrf51 --chiperase
+	nrfjprog --reset

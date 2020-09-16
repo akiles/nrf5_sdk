@@ -1,6 +1,5 @@
-
 /*
-This software is subject to the license described in the License.txt file
+This software is subject to the license described in the license.txt file
 included with this software distribution. You may not use this file except in compliance
 with this license.
 

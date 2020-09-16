@@ -49,7 +49,7 @@
  *          Maximum value : Maximum links supported by SoftDevice.
  *          Dependencies  : None.
  */
-#define DEVICE_MANAGER_MAX_CONNECTIONS   2
+#define DEVICE_MANAGER_MAX_CONNECTIONS   3
 
 
 /**

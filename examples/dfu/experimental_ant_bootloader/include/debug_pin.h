@@ -7,8 +7,8 @@ All rights reserved.
 #ifndef DEBUG_PIN_H_
 #define DEBUG_PIN_H_
 
-#include "nrf51.h"
-#include "nrf51_bitfields.h"
+#include "nrf.h"
+//#include "nrf51_bitfields.h"
 
 /**********************************************************************************/
 /* Comment this out to DISABLE all Debugging pins especially on official releases.*/

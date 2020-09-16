@@ -48,7 +48,6 @@
 #define DEAD_BEEF                       0xDEADBEEF                        /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
 #define APP_TIMER_PRESCALER             0                                 /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            (2+BSP_APP_TIMERS_NUMBER)         /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                 /**< Size of timer operation queues. */
 
 #if defined(USE_UICR_FOR_MAJ_MIN_VALUES)
@@ -116,11 +115,11 @@ static void advertising_init(void)
 
     uint8_t index = MAJ_VAL_OFFSET_IN_BEACON_INFO;
 
-    m_beacon_info[index++] = MSB(major_value);
-    m_beacon_info[index++] = LSB(major_value);
+    m_beacon_info[index++] = MSB_16(major_value);
+    m_beacon_info[index++] = LSB_16(major_value);
 
-    m_beacon_info[index++] = MSB(minor_value);
-    m_beacon_info[index++] = LSB(minor_value);
+    m_beacon_info[index++] = MSB_16(minor_value);
+    m_beacon_info[index++] = LSB_16(minor_value);
 #endif
 
     manuf_specific_data.data.p_data = (uint8_t *) m_beacon_info;
@@ -174,7 +173,7 @@ static void ble_stack_init(void)
     uint32_t err_code;
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
+#if (defined(S130) && defined(S132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
@@ -199,7 +198,7 @@ int main(void)
 {
     uint32_t err_code;
     // Initialize.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
     err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
     APP_ERROR_CHECK(err_code);
     ble_stack_init();

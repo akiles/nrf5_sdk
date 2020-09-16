@@ -68,7 +68,7 @@
           <name>OGCoreOrChip</name>
           <state>1</state>
         </option>
-               <option>
+        <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
           <state>2</state>
@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -308,17 +308,18 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$\..\..\config\timer_pca10028</state>
           <state>$PROJ_DIR$\..\..\config</state>
-          <state>$PROJ_DIR$\..\..</state>
-          <state>$PROJ_DIR$\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\device</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\device</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
+          <state>$PROJ_DIR$\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..</state>
           <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
@@ -575,7 +576,18 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$PROJ_DIR$\..\..\config\timer_pca10028</state>
+          <state>$PROJ_DIR$\..\..\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\device</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -727,7 +739,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-      <state>$PROJ_DIR$\timer_iar_nrf51.icf</state>
+      <state>$PROJ_DIR$\timer_iar_nRF5x.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>

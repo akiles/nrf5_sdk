@@ -15,8 +15,8 @@
 #include "dfu.h"
 #include <dfu_types.h>
 #include "nrf.h"
-#include "nrf51.h"
-#include "nrf51_bitfields.h"
+//#include "nrf.h"
+//#include "nrf51_bitfields.h"
 #include "app_util.h"
 #include "nrf_sdm.h"
 #include "app_error.h"
@@ -52,7 +52,7 @@ static dfu_start_packet_t           m_start_packet;                             
 static uint8_t                      m_active_bank;                                          /**< Activated bank for new image buffering */
 
 static uint32_t                     m_data_received;                                        /**< Amount of received data. */
-static app_timer_id_t               m_dfu_timer_id;                                         /**< Application timer id. */
+APP_TIMER_DEF(m_dfu_timer_id);                                                              /**< Application timer id. */
 static bool                         m_dfu_timed_out = false;                                /**< Boolean flag value for tracking DFU timer timeout state. */
 static pstorage_handle_t            m_storage_handle_swap;
 static pstorage_handle_t            m_storage_handle_app;
@@ -91,7 +91,7 @@ static void pstorage_callback_handler(pstorage_handle_t * handle, uint8_t op_cod
     }
 
     //clearing done.
-    if ((op_code == PSTORAGE_CLEAR_OP_CODE))
+    if (op_code == PSTORAGE_CLEAR_OP_CODE)
     {
         if (m_data_pkt_cb != NULL)
         {

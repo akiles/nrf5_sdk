@@ -1,3 +1,161 @@
+nRF51 SDK v10.0.0
+-----------------
+Release Date: Week 46
+  
+Highlights:
+    - New BLE Peer Manager (experimental), replacement for the BLE Device 
+      Manager
+    - FreeRTOS support
+    - New ANT modules, additional examples, and new and expanded ANT+ 
+      profiles
+    - Support for Dynastream's N5 Starter Kit
+    - Three new BLE Services
+    - Precompiled HEX files
+  
+The following toolchains/devices have been used for testing and 
+verification:
+    - ARM: MDK-ARM version 5.14.0.0 and 5.16a
+    - GCC: GCC ARM Embedded 4.9 2015q1
+    - IAR: IAR Workbench 7.30.4
+    - Windows XP SP3 32-bit
+    - Windows 7 SP1 64-bit
+    - Windows 8.1
+  
+Supported SoftDevices:
+    - S110 v8.0.0
+    - S120 v2.1.0
+    - S130 v1.0.0
+    - S210 v5.0.0
+    - S310 v3.0.0
+  
+Supported boards:
+    - PCA10028
+    - PCA10031
+    - Dynastream's N5DK1 (only for ANT examples)
+  
+    For other devices and boards, see the SDK documentation, section "Using
+    the SDK with other boards".
+  
+Changes:
+    
+  Drivers and libraries:
+    New features:
+        - Ported FreeRTOS to run on nRF51. Added two FreeRTOS examples: one
+          to run on bare metal and one running a BLE HRS example using the 
+          S110 and S130 SoftDevices.
+        - Added a TWI transaction manager module for managing access to an 
+          I2C bus. Added an example that uses this module to control two 
+          sensors on the same I2C bus.
+        - Added an example that shows how to use the TWI driver.
+        - Added a low-power PWM module (software-controlled low-accuracy 
+          PWM). Added an example that shows how to use this module.
+        - Added an LED softblink module that uses the low-power PWM. Added 
+          an example that shows how to use this module. 
+        - Ported app_uart to use the UART driver and moved it to the 
+          libraries folder.
+        - Ported app_gpiote to use the GPIOTE driver.
+        - Added nrf_log, a logging module that supports printf and that can
+          use either UART or SEGGER RTT as transport medium.
+    Fixed issues:
+        - Mailbox module moved out of serialization.
+        - Bug fixes in app_timer module.
+        - App_timer module no longer requires to define the number of 
+          timers used in the application.
+        - Bug fixes in PWM module.
+    Changes:
+        - FIFO library: Extended APIs for multi-byte read and write to the 
+          FIFO.
+        - Memory Manager module:
+                - Extended number of block categories to 7 (from 3).
+                - More RAM-efficient management of memory blocks.
+                - Added a diagnostic function to help determine the right 
+                  configuration needed for the application.
+
+  Serialization:
+    New features:
+     - Added a command for resetting the connectivity chip.
+ 
+  ANT:
+    New features:
+     - Added the following new ANT modules: 
+         - ant_encryption 
+         - ant_key_manager
+         - ant_search_config 
+     - Extended/changed the following existing ANT modules:
+         - ant_channel_config
+         - ant_stack_config
+         - ant_state_indicator      
+     - Refactored the ANT/ANT+ examples and profiles to make them look more
+       similar to the BLE profiles and examples:
+         - The following ANT+ profiles have been extracted and extended: 
+           Bicycle Power (ant_bpwr), Bicycle Speed & Cadence (ant_bsc), 
+           Stride Based Speed & Distance (ant_sdm)
+         - All ANT+ examples have been refactored to use extracted 
+           profiles.
+         - All ANT+/ANT examples have been refactored to use created 
+           modules.
+     - Added three new ANT examples:
+         - ant_scalable
+         - ant_scalable_encrypted
+         - ant_scan_and_forward
+ 
+    BLE:
+     - Added an experimental module named Peer Manager. This module will 
+       eventually replace the existing Device Manager. The new Peer Manager
+       improves on the Device Manager in multiple ways, mainly by 
+       supporting concurrent central and peripheral connections.
+     - Added an experimental flash memory module named Flash Data Storage 
+       (FDS), which greatly reduces the need for time-consuming write and 
+       clear operations. When using FDS, data can be arbitrarily long or 
+       short (within about a page). All pieces of data are tagged with 
+       types, which makes it easy to version data.
+     - Updated the experimental HRS/RSCS Relay example:
+        - It now uses the new Peer Manager instead of the Device Manager. 
+          Therefore, it now supports bonding in both central and peripheral
+          roles.
+        - It uses the new nrf_log module, which can use SEGGER RTT.
+     - Removed the app_s130_demo example.
+     - Added an experimental example supporting the Eddystone beacon 
+       format.
+     - Added the BLE Connection State module, which keeps track of certain 
+       states of each connection (for example, whether it is encrypted) and
+       can also keep track of user-defined states.
+     - Added the Mapped Flags module, which keeps track of flags that are 
+       mapped to keys. It is used by the BLE Connection State module.
+     - Added ble_gatt_db.h (containing a GATT service structure) and 
+       modified ble_db_discovery module to use it.
+    BLE Services:
+     - Updated the Bluetoothds_template application (experimental) to be 
+       compatible with Bluetooth Developer Studio v1.0 and the Nordic 
+       Semiconductor NRF5X v1.1.8 plugin.
+     - Added three new services:
+        - Location Navigation Service (experimental)
+        - Proprietary LED Button Service (experimental)
+        - Nordic UART Client Service (experimental)
+
+Fixed issues:
+     - App_pwm occasionally gives inverted signal.
+  
+Known issues:
+    - Device Manager is not supported in multi-role S130 operation.
+        - Device Manager works in peripheral or central only operation on 
+          S130. This must be decided at compile time.
+    - The DFU over BLE example has been tested to work with a minimum 
+      connection interval of 11.25 ms. The application cannot handle 
+      connection intervals lower than 11.25 ms and may undergo a system 
+      reset in the middle of a firmware update.
+      Workaround: If you face unexpected disconnects during the firmware
+                  update process, consider increasing the connection 
+                  interval used by the master.
+    - The old manual procedure for testing buttonless DFU, as specified in
+      the documentation, can lead to the DFU process hanging or returning 
+      an error when used with Master Control Panel 3.8 and newer.
+    - Bootloader binaries (.bin files) generated with the GCC makefile 
+      should not be used. Instead, generate the bootloader bin files using 
+      nrfutils, found on GitHub.
+
+========================================================================
+
 nRF51 SDK v9.0.0
 ----------------
 Release Date: Week 28
@@ -93,6 +251,8 @@ Known issues:
       the documentation, can lead to the DFU process hanging or returning 
       an error when used with Master Control Panel 3.8 and newer.
 
+========================================================================
+
 nRF51 SDK v. 8.1.1
 ------------------
 This is a supplement to the nRF51 SDK v8.1.0 release notes.
@@ -112,6 +272,8 @@ Supported SoftDevices:
     - S120 2.0.0
     - S130 1.0.0
     - S210 4.0.1
+
+========================================================================
 
 nRF51 SDK v8.1.0
 ----------------
@@ -217,6 +379,8 @@ Known issues:
             - Channel table: Edit the gzll_params.h file used in the nRF24Lxx projects or use the 
               nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
+
+========================================================================
 
 nRF51 SDK v8.0.0
 ----------------
@@ -374,7 +538,7 @@ Known issues:
               nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
 
-
+========================================================================
 
 nRF51 SDK v7.2.0
 ----------------
@@ -484,6 +648,7 @@ Known issues:
               nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
 
+========================================================================
 
 nRF51 SDK v7.1.0
 ----------------
@@ -560,6 +725,7 @@ Known issues:
             - Channel table: Edit the gzll_params.h file used in the nRF24Lxx projects or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
 
+========================================================================
 
 nRF51 SDK v. 7.0.1
 ------------------
@@ -696,6 +862,8 @@ Known issues:
             - Channel table: Edit the gzll_params.h file used in the nRF24Lxx projects or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
     
+========================================================================
+
 nRF51 SDK v. 6.1.0
 ------------------
 
@@ -825,6 +993,8 @@ Known issues:
         - Timeslot period: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_timeslot_period() function in the nRF51 projects (nRF51 Gazell timeslot period = 0.5*GZLL_RX_PERIOD).
         - Channel table: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
+
+========================================================================
 
 nRF51 SDK v. 6.0.0
 ------------------
@@ -965,6 +1135,7 @@ Known issues:
         - Channel table: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
 
+========================================================================
 
 nRF51 SDK v. 5.2.0
 ------------------
@@ -1119,8 +1290,8 @@ Known issues:
         - Channel table: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
 
-
-        
+========================================================================
+      
 nRF51 SDK v. 5.1.0
 ------------------
 
@@ -1252,6 +1423,7 @@ Known issues:
         - Channel table: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
 
+========================================================================
 
 nRF51 SDK v. 5.0.0
 ------------------
@@ -1372,9 +1544,8 @@ Known issues:
         - Channel table: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
 
-    
-    
-    
+========================================================================
+
 nRF51 SDK v. 4.4.2
 ------------------
 
@@ -1484,7 +1655,7 @@ Known issues:
         - Channel table: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
 
-
+========================================================================
 
 nRF51 SDK v. 4.4.1
 ------------------
@@ -1585,7 +1756,7 @@ Known issues:
         - Channel table: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
 
-
+========================================================================
 
 nRF51 SDK v. 4.4.0
 ------------------
@@ -1693,6 +1864,7 @@ Known issues:
         - Channel table: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
 
+========================================================================
 
 nRF51 SDK v. 4.3.0
 ------------------
@@ -1818,6 +1990,8 @@ Known issues:
         - Channel table: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
 		
+========================================================================
+
 nRF51 SDK v. 4.2.0
 ------------------
 
@@ -1902,6 +2076,8 @@ Known issues:
         - Channel table: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
         
+========================================================================
+
 nRF51 SDK v. 4.1.0
 ------------------
 
@@ -1985,6 +2161,8 @@ Known issues:
         - Channel table: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
 
+========================================================================
+
 nRF51 SDK v. 4.0.1
 ------------------
 
@@ -2056,6 +2234,8 @@ Known issues:
         - Timeslot period: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_timeslot_period() function in the nRF51 projects (nRF51 Gazell timeslot period = 0.5*GZLL_RX_PERIOD).
         - Channel table: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
         - Gazell does not support "Low Power Host mode" (Host mode 1).
+
+========================================================================
 
 nRF51 SDK v. 4.0.0
 -----------------
@@ -2138,11 +2318,7 @@ Known issues:
         
         - Gazell does not support "Low Power Host mode" (Host mode 1).
 
-
-
-
-
-========================================================
+========================================================================
 
 nRF51 SDK v3.0.0
 -----------------
@@ -2340,11 +2516,11 @@ Known issues:
     - On some Windows XP machines JLink CDC installer fails with error message saying it could not find JLinkCDCDriver_x86.msi. 
       Try running the installer C:\Program Files\SEGGER\JLinkARM_V<version>\USBDriver\JLinkCDCInstaller_V1.2b.exe manually.
     - When the bundled JLink OB CDC driver installation dialog appears, it might pop up an error saying "Failed to install driver (Timeout occurred)". Ignore it. (DRGN-1807)
-    - Reset button won’t work after programing without cycling the target power. (DRGN-1885)
+    - Reset button won't work after programing without cycling the target power. (DRGN-1885)
     - Flashing a software using SEGGER is possible only when NOT in SYSTEM_OFF mode (implies to wake-up the current application with a button press for example before flashing a new application).(DRGN-1925)
       
     Bluetooth:
-        - Only the “….\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\” and “....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ ” applications are power optimized.(DRGN-1914)
+        - Only the ..\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\ and ..\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ applications are power optimized.(DRGN-1914)
         - ble_bondmngr_store_bonded_masters function from the bond manager cannot be used when advertising nor when in a connection (DRGN-1915)
          (flash erase/write prevents the CPU from running which means the stack will not be able to run properly.) 
           If ble_bondmngr_store_bonded_masters function is called while advertising or in a connection, the behavior is UNDEFINED.
@@ -2398,7 +2574,7 @@ Known issues:
 - When using Keil ARM MDK v4.60 the ram retention, temperature and blinky examples might fail during compilation and leave an error message like this:
     C3900U: Unrecognized option '--asm'.
     C3900U: Unrecognized option '--interleave'.
-  To fix this Click Alt+F7, choose «Listing» tab. Uncheck “C Compiler Listing…” 
+  To fix this Click Alt+F7, choose "Listing" tab. Uncheck "C Compiler Listing" 
 - Previous issues from v1.1.0 does still apply
 
 

@@ -1,15 +1,11 @@
-/**< @todo Copyright? We had to change this... */
-/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
- */
+/*
+This software is subject to the license described in the license.txt file
+included with this software distribution. You may not use this file except in compliance
+with this license.
+
+Copyright (c) Dynastream Innovations Inc. 2014
+All rights reserved.
+*/
 
 #include "ble_controllable_hub.h"
 #include <string.h>

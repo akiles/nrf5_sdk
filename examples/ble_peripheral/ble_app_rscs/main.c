@@ -27,7 +27,6 @@
 #include "nrf.h"
 #include "app_error.h"
 #include "nrf_gpio.h"
-#include "nrf51_bitfields.h"
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
@@ -55,7 +54,6 @@
 #define APP_ADV_TIMEOUT_IN_SECONDS      180                                        /**< The advertising timeout in units of seconds. */
 
 #define APP_TIMER_PRESCALER             0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            (5+BSP_APP_TIMERS_NUMBER)                  /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                          /**< Size of timer operation queues. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL     APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER)  /**< Battery level measurement interval (ticks). */
@@ -122,9 +120,9 @@ static sensorsim_state_t                m_cadence_rpm_sim_state;                
 static sensorsim_cfg_t                  m_cadence_stl_sim_cfg;                     /**< stride length simulator configuration. */
 static sensorsim_state_t                m_cadence_stl_sim_state;                   /**< stride length simulator state. */
 
-static app_timer_id_t                   m_battery_timer_id;                         /**< Battery timer. */
-static app_timer_id_t                   m_rsc_meas_timer_id;                        /**< RSC measurement timer. */
-static dm_application_instance_t        m_app_handle;                               /**< Application identifier allocated by device manager. */
+APP_TIMER_DEF(m_battery_timer_id);                                                 /**< Battery timer. */
+APP_TIMER_DEF(m_rsc_meas_timer_id);                                                /**< RSC measurement timer. */
+static dm_application_instance_t        m_app_handle;                              /**< Application identifier allocated by device manager. */
 
 static ble_uuid_t m_adv_uuids[] = {{BLE_UUID_RUNNING_SPEED_AND_CADENCE,  BLE_UUID_TYPE_BLE},
                                    {BLE_UUID_BATTERY_SERVICE,            BLE_UUID_TYPE_BLE},
@@ -249,7 +247,7 @@ static void timers_init(void)
     uint32_t err_code;
 
     // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
 
     // Create timers.
     err_code = app_timer_create(&m_battery_timer_id,
@@ -316,7 +314,12 @@ static void services_init(void)
     rscs_init.evt_handler = NULL;
     rscs_init.feature     = BLE_RSCS_FEATURE_INSTANT_STRIDE_LEN_BIT |
                             BLE_RSCS_FEATURE_WALKING_OR_RUNNING_STATUS_BIT;
-
+    
+    rscs_init.initial_rcm.is_inst_stride_len_present = true;
+    rscs_init.initial_rcm.is_total_distance_present  = false;
+    rscs_init.initial_rcm.is_running                 = false;
+    rscs_init.initial_rcm.inst_stride_length         = 0;
+    
     // Here the sec level for the Running Speed and Cadence Service can be changed/increased.
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&rscs_init.rsc_meas_attr_md.cccd_write_perm);
     BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&rscs_init.rsc_meas_attr_md.read_perm);
@@ -585,7 +588,7 @@ static void ble_stack_init(void)
     // Enable BLE stack
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#if defined(S130) || defined(S310)
+#if (defined(S130) || defined(S310) || defined(S132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;

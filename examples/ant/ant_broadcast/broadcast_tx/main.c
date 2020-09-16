@@ -1,14 +1,11 @@
-/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
- */
+/*
+This software is subject to the license described in the license.txt file
+included with this software distribution. You may not use this file except in compliance
+with this license.
+
+Copyright (c) Dynastream Innovations Inc. 2014
+All rights reserved.
+*/
 
 /**@file
  * @defgroup nrf_ant_broadcast_tx_example ANT Broadcast TX Example
@@ -20,6 +17,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
 #include "app_error.h"
 #include "nrf.h"
 #include "ant_interface.h"
@@ -30,213 +28,167 @@
 #include "nordic_common.h"
 #include "bsp.h"
 #include "ant_stack_config.h"
+#include "ant_channel_config.h"
+#include "softdevice_handler.h"
 
-#define APP_TIMER_PRESCALER      0                     /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS     BSP_APP_TIMERS_NUMBER /**< Maximum number of simultaneously created timers. */
-#define APP_TIMER_OP_QUEUE_SIZE  2                     /**< Size of timer operation queues. */
+#define APP_TIMER_PRESCALER             0x00    /**< Value of the RTC1 PRESCALER register. */
+#define APP_TIMER_OP_QUEUE_SIZE         0x04    /**< Size of timer operation queues. */
 
 // Channel configuration. 
-#define CHANNEL_0                       0x00                 /**< ANT Channel 0. */
-#define CHANNEL_0_ANT_EXT_ASSIGN        0x00                 /**< ANT Ext Assign. */
+#define ANT_BROADCAST_CHANNEL_NUMBER    0x00    /**< ANT Channel 0. */
+#define EXT_ASSIGN_NONE                 0x00    /**< ANT Ext Assign. */
 
 // Channel ID configuration. 
-#define CHANNEL_0_CHAN_ID_DEV_TYPE      0x02u                /**< Device type. */
-#define CHANNEL_0_CHAN_ID_DEV_NUM       0x02u                /**< Device number. */
-#define CHANNEL_0_CHAN_ID_TRANS_TYPE    0x01u                /**< Transmission type. */
+#define ANT_BROADCAST_TRANSMISSION_TYPE 0x01    /**< Wildcard transmission type. */
+#define ANT_BROADCAST_DEVICE_TYPE       0x02    /**< Wildcard device type. */
+#define ANT_BROADCAST_DEVICE_NUMBER     0x02    /**< Wildcard device number. */
+
+#define ANT_CHANNEL_PERIOD              8192    /**< 4Hz */
+#define ANT_FREQUENCY                   66      /**< 2425 MHz */
 
 // Miscellaneous defines. 
-#define ANT_CHANNEL_DEFAULT_NETWORK     0x00                 /**< ANT Channel Network. */
-#define ANT_EVENT_MSG_BUFFER_MIN_SIZE   32u                  /**< Minimum size of ANT event message buffer. */
-#define BROADCAST_DATA_BUFFER_SIZE      8u                   /**< Size of the broadcast data buffer. */
+#define ANT_NETWORK_NUMBER              0x00    /**< Default public network number. */
 
-// Static variables and buffers. 
-static uint8_t m_broadcast_data[BROADCAST_DATA_BUFFER_SIZE]; /**< Primary data transmit buffer. */
-static uint8_t m_counter = 1u;                               /**< Counter to increment the ANT broadcast data payload. */
+static uint8_t m_counter = 1u;                  /**< Counter to increment the ANT broadcast data payload. */
+
+/**@brief Function for setting payload for ANT message and sending it.
+ */
+void ant_message_send()
+{
+    uint32_t err_code;
+    uint8_t  message_payload[ANT_STANDARD_DATA_PAYLOAD_SIZE];
+
+    memset(message_payload, 0, ANT_STANDARD_DATA_PAYLOAD_SIZE);
+    // Assign a new value to the broadcast data. 
+    message_payload[ANT_STANDARD_DATA_PAYLOAD_SIZE - 1] = m_counter;
+
+    // Broadcast the data. 
+    err_code = sd_ant_broadcast_message_tx(ANT_BROADCAST_CHANNEL_NUMBER, 
+                                           ANT_STANDARD_DATA_PAYLOAD_SIZE, 
+                                           message_payload);
+    APP_ERROR_CHECK(err_code);
+
+    // Increment the counter.
+    m_counter++;
+}
+
+/**@brief Function for dispatching a ANT stack event to all modules with a ANT stack event handler.
+ *
+ * @details This function is called from the ANT Stack event interrupt handler after a ANT stack
+ *          event has been received.
+ *
+ * @param[in] p_ant_evt  ANT stack event.
+ */
+void ant_evt_dispatch(ant_evt_t * p_ant_evt)
+{
+    uint32_t err_code;
+
+    if (p_ant_evt->channel == ANT_BROADCAST_CHANNEL_NUMBER)
+    {
+        switch (p_ant_evt->event)
+        {
+            case EVENT_TX:
+                ant_message_send();
+
+                err_code = bsp_indication_set(BSP_INDICATE_SENT_OK);
+                APP_ERROR_CHECK(err_code);
+                break;
+
+            default:
+                break;
+        }
+    }
+}
+
+/**@brief Function for the Timer and BSP initialization.
+ */
+static void utils_setup(void)
+{
+    uint32_t err_code;
+
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
+    err_code = bsp_init(BSP_INIT_LED,
+                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
+                        NULL);
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for ANT stack initialization.
+ *
+ * @details Initializes the SoftDevice and the ANT event interrupt.
+ */
+static void softdevice_setup(void)
+{
+    uint32_t err_code;
+
+    err_code = softdevice_ant_evt_handler_set(ant_evt_dispatch);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = softdevice_handler_init(NRF_CLOCK_LFCLKSRC, NULL, 0, NULL);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = ant_stack_static_config();
+    APP_ERROR_CHECK(err_code);
+}
 
 
 /**@brief Function for setting up the ANT module to be ready for TX broadcast.
- *
- * The following commands are issued in this order:
- * - assign channel 
- * - set channel ID 
- * - open channel 
  */
 static void ant_channel_tx_broadcast_setup(void)
 {
     uint32_t err_code;
-    
-    // Set Channel Number. 
-    err_code = sd_ant_channel_assign(CHANNEL_0, 
-                                     CHANNEL_TYPE_MASTER_TX_ONLY, 
-                                     ANT_CHANNEL_DEFAULT_NETWORK, 
-                                     CHANNEL_0_ANT_EXT_ASSIGN);
-    
+
+    ant_channel_config_t broadcast_channel_config =
+    {
+        .channel_number    = ANT_BROADCAST_CHANNEL_NUMBER,
+        .channel_type      = CHANNEL_TYPE_MASTER_TX_ONLY,
+        .ext_assign        = EXT_ASSIGN_NONE,
+        .rf_freq           = ANT_FREQUENCY,
+        .transmission_type = ANT_BROADCAST_TRANSMISSION_TYPE,
+        .device_type       = ANT_BROADCAST_DEVICE_TYPE,
+        .device_number     = ANT_BROADCAST_DEVICE_NUMBER,
+        .channel_period    = ANT_CHANNEL_PERIOD,
+        .network_number    = ANT_NETWORK_NUMBER,
+    };
+
+    err_code = ant_channel_init(&broadcast_channel_config);
     APP_ERROR_CHECK(err_code);
 
-    // Set Channel ID. 
-    err_code = sd_ant_channel_id_set(CHANNEL_0, 
-                                     CHANNEL_0_CHAN_ID_DEV_NUM, 
-                                     CHANNEL_0_CHAN_ID_DEV_TYPE, 
-                                     CHANNEL_0_CHAN_ID_TRANS_TYPE);
+    // Fill tx buffer for the first frame.
+    ant_message_send();
+
+    // Open channel.
+    err_code = sd_ant_channel_open(ANT_BROADCAST_CHANNEL_NUMBER);
     APP_ERROR_CHECK(err_code);
-
-    // Open channel. 
-    err_code = sd_ant_channel_open(CHANNEL_0);
-    APP_ERROR_CHECK(err_code);
-}
-
-
-/**@brief Function for handling ANT TX channel events. 
- *
- * @param[in] event The received ANT event to handle.
- */
-static void channel_event_handle(uint32_t event)
-{
-    uint32_t err_code;
-    
-    switch (event)
-    {
-        // ANT broadcast success.
-        // Send a new broadcast and increment the counter.
-        case EVENT_TX:
-            
-            // Assign a new value to the broadcast data. 
-            m_broadcast_data[BROADCAST_DATA_BUFFER_SIZE - 1] = m_counter;
-            
-            // Broadcast the data. 
-            err_code = sd_ant_broadcast_message_tx(CHANNEL_0, 
-                                                   BROADCAST_DATA_BUFFER_SIZE, 
-                                                   m_broadcast_data);
-            APP_ERROR_CHECK(err_code);
-            
-            // Increment the counter.
-            m_counter++;
-            
-            err_code = bsp_indication_set(BSP_INDICATE_SENT_OK);
-            APP_ERROR_CHECK(err_code);
-            break;
-            
-        default:
-            break;
-    }
-}
-
-
-/**@brief Function for stack interrupt handling.
- *
- * Implemented to clear the pending flag when receiving 
- * an interrupt from the stack.
- */
-void SD_EVT_IRQHandler(void)
-{
-
-}
-
-
-/**@brief Function for handling SoftDevice asserts. 
- *
- * @param[in] pc          Value of the program counter.
- * @param[in] line_num    Line number where the assert occurred.
- * @param[in] p_file_name Pointer to the file name. 
- */
-void softdevice_assert_callback(uint32_t pc, uint16_t line_num, const uint8_t * p_file_name)
-{
-    for (;;)
-    {
-        // No implementation needed. 
-    }
-}
-
-
-/**@brief Function for handling HardFault.
- */
-void HardFault_Handler(void)
-{
-    for (;;)
-    {
-        // No implementation needed. 
-    }
 }
 
 
 /**@brief Function for application main entry. Does not return.
  */ 
 int main(void)
-{    
-    // ANT event message buffer. 
-    static uint8_t event_message_buffer[ANT_EVENT_MSG_BUFFER_MIN_SIZE];
-    
-    // Enable SoftDevice. 
-    uint32_t err_code;
-    err_code = sd_softdevice_enable(NRF_CLOCK_LFCLKSRC_XTAL_50_PPM, softdevice_assert_callback);
-    APP_ERROR_CHECK(err_code);
+{
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
-
-    err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
-    APP_ERROR_CHECK(err_code);
-
-    // Set application IRQ to lowest priority. 
-    err_code = sd_nvic_SetPriority(SD_EVT_IRQn, NRF_APP_PRIORITY_LOW); 
-    APP_ERROR_CHECK(err_code);
-  
-    // Enable application IRQ (triggered from protocol). 
-    err_code = sd_nvic_EnableIRQ(SD_EVT_IRQn);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = ant_stack_static_config();
-    APP_ERROR_CHECK(err_code);
-    
-    // Setup Channel_0 as a TX Master Only. 
+    utils_setup();
+    softdevice_setup();
     ant_channel_tx_broadcast_setup();
-    
-    // Write counter value to last byte of the broadcast data.
-    // The last byte is chosen to get the data more visible in the end of an printout
-    // on the recieving end. 
-    m_broadcast_data[BROADCAST_DATA_BUFFER_SIZE - 1] = m_counter;
-  
-    // Initiate the broadcast loop by sending a packet on air, 
-    // then start waiting for an event on this broadcast message.
-    err_code = sd_ant_broadcast_message_tx(CHANNEL_0, BROADCAST_DATA_BUFFER_SIZE, m_broadcast_data);
-    APP_ERROR_CHECK(err_code);
 
-    uint8_t event;
-    uint8_t ant_channel;
-  
     // Main loop. 
     for (;;)
-    {   
-        // Use BSP_INDICATE_ALERT_0 to indicate sleep state
-        err_code =    bsp_indication_set(BSP_INDICATE_ALERT_0);
-        APP_ERROR_CHECK(err_code);
-        
+    {
+#ifdef CPU_LOAD_TRACE
+        // Disabling interrupts in this way is highly not recommended. It has an impact on the work
+        // of the softdecive and it is used only in order to show CPU load.
+        __disable_irq();
+        LEDS_OFF(BSP_LED_0_MASK);
+        __WFI();
+        LEDS_ON(BSP_LED_0_MASK);
+        __enable_irq();
+#else
         // Put CPU in sleep if possible. 
-        err_code = sd_app_evt_wait();
+        uint32_t err_code = sd_app_evt_wait();
         APP_ERROR_CHECK(err_code);
-        
-        err_code = bsp_indication_set(BSP_INDICATE_ALERT_OFF);
-        APP_ERROR_CHECK(err_code);
-    
-        // Extract and process all pending ANT events as long as there are any left. 
-        do
-        {
-            // Fetch the event. 
-            err_code = sd_ant_event_get(&ant_channel, &event, event_message_buffer);
-            if (err_code == NRF_SUCCESS)
-            {
-                // Handle event. 
-                switch (event)
-                {
-                    case EVENT_TX:
-                        channel_event_handle(event);
-                        break;
-                        
-                    default:
-                        break;
-                }
-            }          
-        } 
-        while (err_code == NRF_SUCCESS);
+#endif // CPU_LOAD_TRACE
     }
 }
 

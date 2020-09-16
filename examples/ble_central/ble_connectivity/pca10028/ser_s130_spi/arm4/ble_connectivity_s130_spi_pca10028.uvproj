@@ -17,7 +17,7 @@
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x8000) CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll>UL2CM3(-UM0049BUE -O4175 -S0 -C0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC800 -FN1 -FF0nRF5Prog -FS00 -FL08000)</FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-UM0364FCE -O78 -S0 -C0 -TO18 -TC16000000 -TP21 -TDS800D -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC2000 -FN1 -FF0nRF51xxx -FS00 -FL0200000)</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>core.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
@@ -353,7 +353,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> BLE_STACK_SUPPORT_REQD S130 BOARD_PCA10028 SER_CONNECTIVITY APP_SCHEDULER_WITH_PAUSE BSP_DEFINES_ONLY NRF51 SOFTDEVICE_PRESENT SWI_DISABLE0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config;..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\middleware;..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers;..\..\..\..\..\..\components\softdevice\s130\headers;..\..\..\..\..\..\components\serialization\common\transport\ser_phy;..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config;..\..\..\..\..\bsp;..\..\..\..\..\..\components\serialization\connectivity\codecs\common;..\..\..\..\..\..\components\serialization\connectivity;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\serialization\common;..\..\..\..\..\..\components\serialization\common\struct_ser\s130;..\..\..\..\..\..\components\ble\common;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\drivers_nrf\spi_slave;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\serialization\common\transport;..\..\..\..\..\..\components\serialization\connectivity\hal;..\..\..\..\..\..\components\ble\ble_dtm;..\..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\..\components\libraries\timer</IncludePath>
+              <IncludePath>..\..\..\config\ble_connectivity_s130_spi_pca10028;..\..\..\config;..\..\..\..\..\bsp;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\ble\ble_dtm;..\..\..\..\..\..\components\ble\common;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\spi_slave;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\serialization\common;..\..\..\..\..\..\components\serialization\common\struct_ser\s130;..\..\..\..\..\..\components\serialization\common\transport;..\..\..\..\..\..\components\serialization\common\transport\ser_phy;..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config;..\..\..\..\..\..\components\serialization\connectivity;..\..\..\..\..\..\components\serialization\connectivity\codecs\common;..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\middleware;..\..\..\..\..\..\components\serialization\connectivity\codecs\s130\serializers;..\..\..\..\..\..\components\serialization\connectivity\hal;..\..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\..\components\softdevice\s130\headers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -381,6 +381,7 @@
             <useFile>0</useFile>
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x00000000</DataAddressRange>
+            <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -748,7 +749,7 @@
             <File>
               <FileName>nrf_delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</FilePath>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -884,9 +885,55 @@
               </FileOption>
             </File>
             <File>
-              <FileName>spi_slave.c</FileName>
+              <FileName>nrf_drv_spis.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\spi_slave\spi_slave.c</FilePath>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\spi_slave\nrf_drv_spis.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>1</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+            <File>
+              <FileName>nrf_drv_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -6601,6 +6648,52 @@
               <FileName>ser_conn_pkt_decoder.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\serialization\connectivity\ser_conn_pkt_decoder.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>1</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+            <File>
+              <FileName>ser_conn_reset_cmd_decoder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\serialization\connectivity\ser_conn_reset_cmd_decoder.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -6883,7 +6976,7 @@
       </Groups>
     </Target>    
     <Target>
-      <TargetName>flash_softdevice</TargetName>
+      <TargetName>flash_s130_nrf51_1.0.0_softdevice</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -6893,7 +6986,7 @@
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x8000) CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll>UL2CM3(-UM0049BUE -O4175 -S0 -C0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC800 -FN1 -FF0nRF5Prog -FS00 -FL08000)</FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-UM0364FCE -O78 -S0 -C0 -TO18 -TC16000000 -TP21 -TDS800D -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC2000 -FN1 -FF0nRF51xxx -FS00 -FL0200000)</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>core.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
@@ -6905,7 +6998,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile></SFDFile>
+          <SFDFile>..\..\..\..\..\..\SVD\nrf51.xml</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -6921,7 +7014,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>..\..\..\..\..\..\components\softdevice\s130\hex\</OutputDirectory>
-          <OutputName>s130_softdevice.hex</OutputName>
+          <OutputName>s130_nrf51_1.0.0_softdevice.hex</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -7006,7 +7099,7 @@
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
           </Simulator>
           <Target>
-            <UseTarget>0</UseTarget>
+            <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -7227,9 +7320,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> BLE_STACK_SUPPORT_REQD</Define>
+              <Define> BLE_STACK_SUPPORT_REQD NRF51</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config</IncludePath>
+              <IncludePath>..\..\..\config\ble_connectivity_s130_spi_pca10028;..\..\..\config;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\toolchain</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7243,7 +7336,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define> BLE_STACK_SUPPORT_REQD</Define>
+              <Define> BLE_STACK_SUPPORT_REQD NRF51</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -7257,6 +7350,7 @@
             <useFile>0</useFile>
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x00000000</DataAddressRange>
+            <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -7624,7 +7718,7 @@
             <File>
               <FileName>nrf_delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</FilePath>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -7760,9 +7854,55 @@
               </FileOption>
             </File>
             <File>
-              <FileName>spi_slave.c</FileName>
+              <FileName>nrf_drv_spis.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\drivers_nrf\spi_slave\spi_slave.c</FilePath>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\spi_slave\nrf_drv_spis.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+            <File>
+              <FileName>nrf_drv_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -13477,6 +13617,52 @@
               <FileName>ser_conn_pkt_decoder.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\serialization\connectivity\ser_conn_pkt_decoder.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+            <File>
+              <FileName>ser_conn_reset_cmd_decoder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\serialization\connectivity\ser_conn_reset_cmd_decoder.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>

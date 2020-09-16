@@ -46,13 +46,13 @@ typedef struct
 } ble_beacon_init_t;
 
 
-/**@brief Function for handling SoftDevice events.
+/**@brief Function for handling system events.
  *
- * @details Handles all events from the SoftDevice of interest to the Advertiser module.
+ * @details Handles all system events of interest to the Advertiser module. 
  *
  * @param[in]   event     received event.
  */
-void app_beacon_sd_evt_signal_handler(uint32_t event);
+void app_beacon_on_sys_evt(uint32_t event);
 
 /**@brief Function for initializing the advertiser module.
  *

@@ -23,14 +23,14 @@ NO_ECHO := @
 endif
 
 # Toolchain commands
-CC       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-gcc"
-AS       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-as"
-AR       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ar" -r
-LD       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ld"
-NM       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-nm"
-OBJDUMP  		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objdump"
-OBJCOPY  		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objcopy"
-SIZE    		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-size"
+CC              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-gcc'
+AS              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-as'
+AR              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ar' -r
+LD              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ld'
+NM              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-nm'
+OBJDUMP         := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objdump'
+OBJCOPY         := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objcopy'
+SIZE            := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-size'
 
 #function for removing duplicates in a list
 remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-out $(firstword $1),$1))))
@@ -45,9 +45,12 @@ $(abspath ../../../../../components/libraries/util/app_error.c) \
 ASM_SOURCE_FILES  = $(abspath ../../../../../components/toolchain/gcc/gcc_startup_nrf51.s)
 
 #includes common to all targets
-INC_PATHS  = -I$(abspath ../../../../bsp)
+INC_PATHS  = -I$(abspath ../../config/template_pca10028)
+INC_PATHS += -I$(abspath ../../config)
+INC_PATHS += -I$(abspath ../../../../bsp)
 INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/nrf_soc_nosd)
 INC_PATHS += -I$(abspath ../../../../../components/device)
+INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/hal)
 INC_PATHS += -I$(abspath ../..)
 INC_PATHS += -I$(abspath ../../../../../components/libraries/util)
 INC_PATHS += -I$(abspath ../../../../../components/toolchain)
@@ -164,9 +167,9 @@ genhex:
 	$(NO_ECHO)$(OBJCOPY) -O ihex $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).hex
 
 echosize:
-	-@echo ""
+	-@echo ''
 	$(NO_ECHO)$(SIZE) $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
-	-@echo ""
+	-@echo ''
 
 clean:
 	$(RM) $(BUILD_DIRECTORIES)
@@ -176,6 +179,7 @@ cleanobj:
 
 flash: $(MAKECMDGOALS)
 	@echo Flashing: $(OUTPUT_BINARY_DIRECTORY)/$<.hex
-	nrfjprog --reset --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex
+	nrfjprog --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex -f nrf51  --chiperase
+	nrfjprog --reset
 
 ## Flash softdevice

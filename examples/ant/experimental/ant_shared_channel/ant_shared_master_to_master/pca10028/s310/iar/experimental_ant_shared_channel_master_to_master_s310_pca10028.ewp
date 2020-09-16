@@ -4,7 +4,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>nrf51422_xxac</name>
+    <name>nrf51422_xxac_s310</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -68,7 +68,7 @@
           <name>OGCoreOrChip</name>
           <state>1</state>
         </option>
-               <option>
+        <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
           <state>2</state>
@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -314,19 +314,20 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\..\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\softdevice\s310\headers</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\ble\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\ant\ant_stack_config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\toolchain</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\util</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\ant\ant_stack_config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\ble\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\button</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\softdevice\s310\headers</state>
           <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
@@ -587,7 +588,22 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$PROJ_DIR$\..\..\..\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\device</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\ant\ant_stack_config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\ble\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\delay</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\softdevice\s310\headers</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -739,7 +755,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-      <state>$PROJ_DIR$\experimental_ant_shared_channel_master_to_master_iar_nrf51.icf</state>
+      <state>$PROJ_DIR$\experimental_ant_shared_channel_master_to_master_iar_nRF5x.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -998,7 +1014,7 @@
   <group>
   <name>nRF_Drivers</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>

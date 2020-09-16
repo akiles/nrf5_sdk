@@ -46,7 +46,6 @@
 #include "nordic_common.h"
 #include "nrf.h"
 #include "nrf_gpio.h"
-#include "nrf51_bitfields.h"
 #include "pstorage.h"
 #include "softdevice_handler.h"
 
@@ -67,7 +66,6 @@
 #define APP_ADV_FAST_TIMEOUT            30           /**< The duration of the fast advertising period (in seconds). */
 
 #define APP_TIMER_PRESCALER             0                                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            (3 + BSP_APP_TIMERS_NUMBER)                 /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                           /**< Size of timer operation queues. */
 
 #define MIN_CONN_INTERVAL               MSEC_TO_UNITS(500, UNIT_1_25_MS)            /**< Minimum acceptable connection interval (0.5 seconds). */
@@ -98,7 +96,7 @@ static ble_cts_c_t               m_cts;                                /**< Stru
 static dm_application_instance_t m_app_handle;                         /**< Application identifier allocated by the Device Manager. */
 static dm_handle_t               m_peer_handle;                        /**< The peer that is currently connected. */
 
-static app_timer_id_t m_sec_req_timer_id;                              /**< Security request timer. */
+APP_TIMER_DEF(m_sec_req_timer_id);                                     /**< Security request timer. */
 
 #define SCHED_MAX_EVENT_DATA_SIZE sizeof(app_timer_event_t)            /**< Maximum size of scheduler events. Note that scheduler BLE stack events do not contain any data, as the events are being pulled from the stack in the event handler. */
 #define SCHED_QUEUE_SIZE          10                                   /**< Maximum number of events in the scheduler queue. */
@@ -268,7 +266,7 @@ static void timers_init(void)
     uint32_t err_code;
 
     // Initialize timer module, making it use the scheduler
-    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, true);
+    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, true);
 
     // Create security request timer.
     err_code = app_timer_create(&m_sec_req_timer_id,
@@ -687,11 +685,11 @@ static void ble_stack_init(void)
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
-#if defined(S110) || defined(S130)
+#if defined(S110) || defined(S130) || defined(S132)
     // Enable BLE stack
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
+#if (defined(S130) || defined(S132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif	
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
@@ -825,10 +823,8 @@ int main(void)
     bool     erase_bonds;
 
     // Initialize
-    app_trace_init();
     timers_init();
     uart_init();
-    printf("CTS Start!\n");
     buttons_leds_init(&erase_bonds);
     ble_stack_init();
     device_manager_init(erase_bonds);
@@ -842,6 +838,9 @@ int main(void)
     // Start execution
     err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
     APP_ERROR_CHECK(err_code);
+
+    printf("\r\nCTS Start!\r\n");
+    
     // Enter main loop
     for (;;)
     {

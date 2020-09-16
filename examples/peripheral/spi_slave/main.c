@@ -27,7 +27,6 @@
 #include <stdint.h>
 
 #define APP_TIMER_PRESCALER      0                     /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS     BSP_APP_TIMERS_NUMBER /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE  2                     /**< Size of timer operation queues. */
 
 
@@ -46,7 +45,7 @@ void bsp_configuration()
         // Do nothing.
     }
         
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
 
     err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
     APP_ERROR_CHECK(err_code);

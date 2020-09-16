@@ -1,10 +1,11 @@
-/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
- *
- * The information contained herein is confidential property of Nordic Semiconductor. The use,
- * copying, transfer or disclosure of such information is prohibited except by express written
- * agreement with Nordic Semiconductor.
- *
- */
+/*
+This software is subject to the license described in the license.txt file
+included with this software distribution. You may not use this file except in compliance
+with this license.
+
+Copyright (c) Dynastream Innovations Inc. 2014
+All rights reserved.
+*/
 
 #include "ble_phone_connection.h"
 #include "ble_gap.h"
@@ -37,7 +38,6 @@
 #define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(3000, UNIT_10_MS)               /**< Connection supervisory timeout (3 seconds), Supervision Timeout uses 10 ms units. */
 
 #define APP_TIMER_PRESCALER             0                                            /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            1                                            /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                            /**< Size of timer operation queues. */
 
 #define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)   /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */

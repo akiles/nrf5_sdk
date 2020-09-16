@@ -33,8 +33,7 @@
  *---------------------------------------------------------------------------*/
 
 #include "cmsis_os.h"
-#include "nrf51.h"
-#include "nrf51_bitfields.h"
+#include "nrf.h"
 
 /*----------------------------------------------------------------------------
  *      RTX User configuration part BEGIN
@@ -274,6 +273,9 @@ int os_tick_init (void)
     {
         // Do nothing.
     }
+    //set the same level as svc calls
+    NVIC_SetPriority(RTC1_IRQn, 2);
+
     NRF_RTC1->PRESCALER   = OS_TRV;
     NRF_RTC1->INTENSET    = RTC_INTENSET_TICK_Msk;
     NRF_RTC1->TASKS_START = 1;

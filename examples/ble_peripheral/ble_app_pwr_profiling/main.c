@@ -30,7 +30,6 @@
 #include "nordic_common.h"
 #include "nrf.h"
 #include "app_error.h"
-#include "nrf51_bitfields.h"
 #include "nrf_gpio.h"
 #include "ble.h"
 #include "ble_hci.h"  
@@ -61,7 +60,6 @@
 #define DEVICE_NAME                   "Nordic_Power_Mgmt"                           /**< Name of device. Will be included in the advertising data. */
 
 #define APP_TIMER_PRESCALER           0                                             /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS          (3 + BSP_APP_TIMERS_NUMBER)                   /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE       4                                             /**< Size of timer operation queues. */
 
 #define CHAR_NOTIF_TIMEOUT_IN_TKS     APP_TIMER_TICKS(APP_CFG_CHAR_NOTIF_TIMEOUT,\
@@ -129,8 +127,8 @@ static ble_gatts_char_handles_t m_char_handles;                                 
 static uint16_t                 m_conn_handle = BLE_CONN_HANDLE_INVALID;            /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection).*/
 static uint16_t                 m_service_handle;                                   /**< Handle of local service (as provided by the BLE stack).*/
 static bool                     m_is_notifying_enabled = false;                     /**< Variable to indicate whether the notification is enabled by the peer.*/
-static app_timer_id_t           m_conn_int_timer_id;                                /**< Connection interval timer. */
-static app_timer_id_t           m_notif_timer_id;                                   /**< Notification timer. */
+APP_TIMER_DEF(m_conn_int_timer_id);                                                 /**< Connection interval timer. */
+APP_TIMER_DEF(m_notif_timer_id);                                                    /**< Notification timer. */
 
 
 /**@brief Callback function for asserts in the SoftDevice.
@@ -469,7 +467,7 @@ static void timers_init(void)
     uint32_t err_code;
 
     // Initialize timer module
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
 
     // Create timers
     err_code = app_timer_create(&m_conn_int_timer_id,
@@ -606,7 +604,7 @@ static void ble_stack_init(void)
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
+#if (defined(S130) || defined(S132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif	
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;

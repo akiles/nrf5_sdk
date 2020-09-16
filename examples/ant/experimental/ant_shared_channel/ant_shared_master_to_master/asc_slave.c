@@ -24,7 +24,7 @@ All rights reserved.
 #include "asc_events.h"
 #include "asc_parameters.h"
 #include "nrf_soc.h"
-#include "nrf51.h"
+#include "nrf.h"
 #include "asc_pages.h"
 
 // Private Definitions

@@ -1,5 +1,5 @@
 /*
-This software is subject to the license described in the License.txt file
+This software is subject to the license described in the license.txt file
 included with this software distribution. You may not use this file except in compliance
 with this license.
 
@@ -71,7 +71,7 @@ static const asc_ant_params_t   m_asc_parameters = {
     ASCS_RF_FREQUENCY,
     RADIO_TX_POWER_LVL_3
 }; /**< Structure containing setup parameters for an auto shared slave. */
-
+APP_TIMER_DEF(m_timer_id);
 
 /**@brief Function for handling an error.
  *
@@ -151,15 +151,14 @@ void one_second_timer_callback(void * p_context)
 void init_timer(void)
 {
     uint32_t       err_code;
-    app_timer_id_t timer_id;
 
-    APP_TIMER_INIT(RTC_PRESCALER, 1u, 1u, false);
-    err_code = app_timer_create(&timer_id,
+    APP_TIMER_INIT(RTC_PRESCALER, 1u, false);
+    err_code = app_timer_create(&m_timer_id,
                                 APP_TIMER_MODE_REPEATED,
                                 one_second_timer_callback);
     APP_ERROR_CHECK(err_code);
 
-    err_code = app_timer_start(timer_id, APP_TIMER_TICKS(RTC_EVENT_INTERVAL_MS, RTC_PRESCALER), NULL);
+    err_code = app_timer_start(m_timer_id, APP_TIMER_TICKS(RTC_EVENT_INTERVAL_MS, RTC_PRESCALER), NULL);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -313,7 +312,7 @@ int main(void)
     led_init();
 
     // Enable SoftDevice.
-    err_code = sd_softdevice_enable(NRF_CLOCK_LFCLKSRC_XTAL_50_PPM, softdevice_assert_callback);
+    err_code = sd_softdevice_enable(NRF_CLOCK_LFCLKSRC, softdevice_assert_callback);
     APP_ERROR_CHECK(err_code);
 
     // Set application IRQ to lowest priority.

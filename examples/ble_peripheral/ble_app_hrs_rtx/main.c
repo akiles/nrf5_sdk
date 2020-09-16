@@ -24,7 +24,6 @@
 #include "nordic_common.h"
 #include "nrf.h"
 #include "app_error.h"
-#include "nrf51_bitfields.h"
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
@@ -53,7 +52,6 @@
 #define APP_ADV_TIMEOUT_IN_SECONDS           180                                        /**< The advertising timeout in units of seconds. */
 
 #define APP_TIMER_PRESCALER                  0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS                 (6+BSP_APP_TIMERS_NUMBER)                  /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE              4                                          /**< Size of timer operation queues. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL          2000                                       /**< Battery level measurement interval (ms). */
@@ -276,7 +274,7 @@ static void sensor_contact_detected_timeout_handler(void const * p_context)
 static void timers_init(void)
 {
     // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
 
     // Create timers.
     m_battery_timer_id = osTimerCreate(osTimer(battery_timer), osTimerPeriodic, NULL);
@@ -586,11 +584,11 @@ static void ble_stack_init(void)
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
-#if defined(S110) || defined(S130)
+#if defined(S110) || defined(S130) || defined(S132)
     // Enable BLE stack
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
+#if (defined(S130) || defined(S132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;

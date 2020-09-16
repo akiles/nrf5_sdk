@@ -1,5 +1,5 @@
 /*
-This software is subject to the license described in the License.txt file
+This software is subject to the license described in the license.txt file
 included with this software distribution. You may not use this file except in compliance
 with this license.
 
@@ -445,7 +445,7 @@ static void ble_stack_init(void)
     uint32_t err_code;
 
     // Initialize SoftDevice
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_50_PPM, false);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC, false);
 
     // Initialize BLE stack
     ble_enable_params_t ble_enable_params;

@@ -30,7 +30,6 @@
 #include "radio_test.h"
 #include "app_uart.h"
 #include "app_error.h"
-#include "nrf51_bitfields.h"
 #include "nordic_common.h"
 
 static uint8_t mode_          = RADIO_MODE_MODE_Nrf_2Mbit;

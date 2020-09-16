@@ -66,7 +66,7 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 static void timers_init(void)
 {
     // Initialize timer module, making it use the scheduler
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
 }
 
 /**@brief Function for the Power Management.
@@ -120,15 +120,12 @@ int main(void)
                 // Stop all heart rate functionality before disabling the SoftDevice.
                 ble_hrs_app_stop();
                 
-                nrf_drv_gpiote_uninit();
                 // Disable the S110 stack.
                 ble_stack_stop();
                 err_code = bsp_indication_set(BSP_INDICATE_IDLE);
                 APP_ERROR_CHECK(err_code);
                 // Enable Gazell.
                 gzll_app_start();
-                timers_init();
-                bsp_init_app();
             }
             else if (running_mode == BLE)
             {
@@ -138,8 +135,6 @@ int main(void)
                 APP_ERROR_CHECK(err_code);
                 // Re-enable the S110 stack.
                 ble_stack_start();
-                timers_init();
-                bsp_init_app();
                 ble_hrs_app_start();
             }
         }

@@ -43,7 +43,7 @@
 #include "nrf.h"
 #include "app_error.h"
 #include "nrf_gpio.h"
-#include "nrf51_bitfields.h"
+#include "nrf.h"
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
@@ -74,7 +74,6 @@
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                            /**< Whether or not to include the service_changed characteristic. If not enabled, the server's database cannot be changed for the lifetime of the device */
 #define APP_TIMER_PRESCALER             0                                            /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            (2 + BSP_APP_TIMERS_NUMBER)                  /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                            /**< Size of timer operation queues. */
 
 #define SECOND_1_25_MS_UNITS            800                                          /**< Definition of 1 second, when 1 unit is 1.25 ms. */
@@ -189,7 +188,7 @@ static void ant_and_adv_start(void)
 static void timers_init(void)
 {
     // Initialize timer module
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
 }
 
 

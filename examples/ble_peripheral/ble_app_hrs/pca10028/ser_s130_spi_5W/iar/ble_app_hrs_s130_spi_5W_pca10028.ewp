@@ -68,7 +68,7 @@
           <name>OGCoreOrChip</name>
           <state>1</state>
         </option>
-               <option>
+        <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
           <state>2</state>
@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -180,11 +180,11 @@
           <state>SPI_MASTER_0_ENABLE</state>
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>SWI_DISABLE3</state>
-          <state>SVCALL_AS_NORMAL_FUNCTION</state>
           <state>S130</state>
+          <state>SVCALL_AS_NORMAL_FUNCTION</state>
           <state>BOARD_PCA10028</state>
-          <state>NRF51</state>
           <state>SWI_DISABLE0</state>
+          <state>NRF51</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -313,41 +313,45 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$\..\..\..\config\ble_app_hrs_s130_spi_5W_pca10028</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport\ser_phy</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\headers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_hrs</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_dis</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_bas</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_master</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\struct_ser\s130</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\application\transport</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\application\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_bas</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_dis</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_hrs</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\device_manager</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\ble_flash</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pstorage</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_master</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\mailbox</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\trace</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pstorage</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\ble_flash</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\application\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\application\transport</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\struct_ser\s130</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport\ser_phy</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\headers</state>
           <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
@@ -509,11 +513,11 @@
           <state>SPI_MASTER_0_ENABLE</state>
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>SWI_DISABLE3</state>
-          <state>SVCALL_AS_NORMAL_FUNCTION</state>
           <state>S130</state>
+          <state>SVCALL_AS_NORMAL_FUNCTION</state>
           <state>BOARD_PCA10028</state>
-          <state>NRF51</state>
           <state>SWI_DISABLE0</state>
+          <state>NRF51</state>
         </option>
         <option>
           <name>AList</name>
@@ -609,7 +613,45 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$PROJ_DIR$\..\..\..\config\ble_app_hrs_s130_spi_5W_pca10028</state>
+          <state>$PROJ_DIR$\..\..\..\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_bas</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_dis</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_hrs</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\device_manager</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\ble_flash</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pstorage</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_master</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\mailbox</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\trace</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\application\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\application\transport</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\struct_ser\s130</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport\ser_phy</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s130\headers</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -761,7 +803,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-      <state>$PROJ_DIR$\ble_app_hrs_iar_nrf51.icf</state>
+      <state>$PROJ_DIR$\ble_app_hrs_iar_nRF5x.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1000,9 +1042,6 @@
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\application\codecs\s130\serializers\app_ble_user_mem.c</name>
-    </file>
-    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\application\transport\app_mailbox.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\application\codecs\s130\middleware\app_mw_ble.c</name>
@@ -1362,6 +1401,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\mailbox\app_mailbox.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</name>
     </file>
     <file>
@@ -1395,19 +1437,22 @@
   <group>
   <name>nRF_Drivers</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart\app_uart_fifo.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\ble_flash\ble_flash.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd\nrf_soc.c</name>

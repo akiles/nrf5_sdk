@@ -25,7 +25,7 @@
 #include "nrf_delay.h"
 #include "bsp.h"
 #include "app_timer.h"
-#include "spi_master.h"
+#include "nrf_drv_spi.h"
 #include "nordic_common.h"
 
 /*
@@ -34,19 +34,20 @@
  */
 
 #define APP_TIMER_PRESCALER      0                      /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS     BSP_APP_TIMERS_NUMBER  /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE  2                      /**< Size of timer operation queues. */
 
 #define DELAY_MS                 1000                /**< Timer Delay in milli-seconds. */
 
 #define TX_RX_BUF_LENGTH         16u                 /**< SPI transaction buffer length. */
 
-#if defined(SPI_MASTER_0_ENABLE)
-    #define SPI_MASTER_HW SPI_MASTER_0
-#elif defined(SPI_MASTER_1_ENABLE)
-    #define SPI_MASTER_HW SPI_MASTER_1
+#if (SPI0_ENABLED == 1)
+    static const nrf_drv_spi_t m_spi_master = NRF_DRV_SPI_INSTANCE(0);
+#elif (SPI1_ENABLED == 1)
+    static const nrf_drv_spi_t m_spi_master = NRF_DRV_SPI_INSTANCE(1);
+#elif (SPI2_ENABLED == 1)
+    static const nrf_drv_spi_t m_spi_master = NRF_DRV_SPI_INSTANCE(2);
 #else
-    #error "No SPI enabled"
+    #error "No SPI enabled."
 #endif
 
 // Data buffers.
@@ -54,6 +55,23 @@ static uint8_t m_tx_data[TX_RX_BUF_LENGTH] = {0}; /**< A buffer with data to tra
 static uint8_t m_rx_data[TX_RX_BUF_LENGTH] = {0}; /**< A buffer for incoming data. */
 
 static volatile bool m_transfer_completed = true; /**< A flag to inform about completed transfer. */
+
+
+/**@brief Function for error handling, which is called when an error has occurred.
+ *
+ * @param[in] error_code  Error code supplied to the handler.
+ * @param[in] line_num    Line number where the handler is called.
+ * @param[in] p_file_name Pointer to the file name.
+ */
+void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
+{
+    UNUSED_VARIABLE(bsp_indication_set(BSP_INDICATE_FATAL_ERROR));
+
+    for (;;)
+    {
+        // No implementation needed.
+    }
+}
 
 
 /**@brief Function for checking if data coming from a SPI slave are valid.
@@ -82,45 +100,22 @@ static __INLINE bool buf_check(uint8_t * p_buf, uint16_t len)
 }
 
 
-/** @brief Function for initializing a SPI master driver.
- */
-static uint32_t spi_master_init(void)
-{
-    spi_master_config_t spi_config = SPI_MASTER_INIT_DEFAULT;
-    
-    #if defined(SPI_MASTER_0_ENABLE)
-    spi_config.SPI_Pin_SCK  = SPIM0_SCK_PIN;
-    spi_config.SPI_Pin_MISO = SPIM0_MISO_PIN;
-    spi_config.SPI_Pin_MOSI = SPIM0_MOSI_PIN;
-    spi_config.SPI_Pin_SS   = SPIM0_SS_PIN;
-    #elif defined(SPI_MASTER_1_ENABLE)
-    spi_config.SPI_Pin_SCK  = SPIM1_SCK_PIN;
-    spi_config.SPI_Pin_MISO = SPIM1_MISO_PIN;
-    spi_config.SPI_Pin_MOSI = SPIM1_MOSI_PIN;
-    spi_config.SPI_Pin_SS   = SPIM1_SS_PIN;
-    #endif /* SPI_MASTER_ENABLE */
-
-    return spi_master_open(SPI_MASTER_HW, &spi_config);
-}
-
-
 /**@brief Function for SPI master event callback.
  *
  * Upon receiving an SPI transaction complete event, checks if received data are valid.
  *
  * @param[in] spi_master_evt    SPI master driver event.
  */
-static void spi_master_event_handler(spi_master_evt_t spi_master_evt)
+static void spi_master_event_handler(nrf_drv_spi_event_t event)
 {
     uint32_t err_code = NRF_SUCCESS;
     bool result = false;
 
-    switch (spi_master_evt.evt_type)
+    switch (event)
     {
-        case SPI_MASTER_EVT_TRANSFER_COMPLETED:
-
-            // Check if data are vaild.
-            result = buf_check(m_rx_data, spi_master_evt.data_count);
+        case NRF_DRV_SPI_EVENT_DONE:
+            // Check if data are valid.
+            result = buf_check(m_rx_data, TX_RX_BUF_LENGTH);
             APP_ERROR_CHECK_BOOL(result);
 
             err_code = bsp_indication_set(BSP_INDICATE_RCV_OK);
@@ -174,7 +169,8 @@ static void spi_send_recv(uint8_t * const p_tx_data,
     init_buffers(p_tx_data, p_rx_data, len);
 
     // Start transfer.
-    uint32_t err_code = spi_master_send_recv(SPI_MASTER_HW, p_tx_data, len, p_rx_data, len);
+    uint32_t err_code = nrf_drv_spi_transfer(&m_spi_master,
+        p_tx_data, len, p_rx_data, len);
     APP_ERROR_CHECK(err_code);
     nrf_delay_ms(DELAY_MS);
 }
@@ -195,7 +191,7 @@ void bsp_configuration()
         // Do nothing.
     }
 
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
         
     err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
     APP_ERROR_CHECK(err_code);
@@ -208,11 +204,32 @@ int main(void)
     // Setup bsp module.
     bsp_configuration();
 
-    uint32_t err_code = spi_master_init();
+    nrf_drv_spi_config_t const config =
+    {
+        #if (SPI0_ENABLED == 1)
+            .sck_pin  = SPIM0_SCK_PIN,
+            .mosi_pin = SPIM0_MOSI_PIN,
+            .miso_pin = SPIM0_MISO_PIN,
+            .ss_pin   = SPIM0_SS_PIN,
+        #elif (SPI1_ENABLED == 1)
+            .sck_pin  = SPIM1_SCK_PIN,
+            .mosi_pin = SPIM1_MOSI_PIN,
+            .miso_pin = SPIM1_MISO_PIN,
+            .ss_pin   = SPIM1_SS_PIN,
+        #elif (SPI2_ENABLED == 1)
+            .sck_pin  = SPIM2_SCK_PIN,
+            .mosi_pin = SPIM2_MOSI_PIN,
+            .miso_pin = SPIM2_MISO_PIN,
+            .ss_pin   = SPIM2_SS_PIN,
+        #endif
+        .irq_priority = APP_IRQ_PRIORITY_LOW,
+        .orc          = 0xCC,
+        .frequency    = NRF_DRV_SPI_FREQ_1M,
+        .mode         = NRF_DRV_SPI_MODE_0,
+        .bit_order    = NRF_DRV_SPI_BIT_ORDER_LSB_FIRST,
+    };
+    ret_code_t err_code = nrf_drv_spi_init(&m_spi_master, &config, spi_master_event_handler);
     APP_ERROR_CHECK(err_code);
-
-    // Register SPI master event handler.
-    spi_master_evt_handler_reg(SPI_MASTER_HW, spi_master_event_handler);
 
     for (;;)
     {

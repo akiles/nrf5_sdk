@@ -33,7 +33,6 @@
 #include "nrf_sdm.h"
 #include "app_error.h"
 #include "nrf_gpio.h"
-#include "nrf51_bitfields.h"
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
@@ -74,7 +73,6 @@
 #define MANUFACTURER_NAME               "NordicSemiconductor"                      /**< Manufacturer. Will be passed to Device Information Service. */
 
 #define APP_TIMER_PRESCALER             0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            (4 + BSP_APP_TIMERS_NUMBER)                /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                          /**< Size of timer operation queues. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL     APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). */
@@ -140,7 +138,7 @@ static uint16_t                         m_conn_handle = BLE_CONN_HANDLE_INVALID;
 static sensorsim_cfg_t                  m_battery_sim_cfg;                          /**< Battery Level sensor simulator configuration. */
 static sensorsim_state_t                m_battery_sim_state;                        /**< Battery Level sensor simulator state. */
 
-static app_timer_id_t                   m_battery_timer_id;                         /**< Battery timer. */
+APP_TIMER_DEF(m_battery_timer_id);                                                  /**< Battery timer. */
 
 static dm_application_instance_t        m_app_handle;                               /**< Application identifier allocated by device manager. */
 static dm_handle_t                      m_bonded_peer_handle;                       /**< Device reference handle to the current connected peer. */
@@ -236,7 +234,7 @@ static void timers_init(void)
     uint32_t err_code;
 
     // Initialize timer module, making it use the scheduler.
-    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, true);
+    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, true);
 
     // Create battery timer.
     err_code = app_timer_create(&m_battery_timer_id,

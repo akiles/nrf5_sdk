@@ -68,7 +68,7 @@
           <name>OGCoreOrChip</name>
           <state>1</state>
         </option>
-               <option>
+        <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
           <state>2</state>
@@ -148,7 +148,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -314,32 +314,35 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$\..\..\..\config\ble_connectivity_s110_spi_5W_pca10028</state>
           <state>$PROJ_DIR$\..\..\..\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport\ser_phy</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s110\middleware</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s110\serializers</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s110\headers</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\common</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_slave</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_dtm</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_slave</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\struct_ser\s110</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport\ser_phy</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s110\middleware</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s110\serializers</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\hal</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_dtm</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s110\headers</state>
           <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
@@ -602,7 +605,35 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$PROJ_DIR$\..\..\..\config\ble_connectivity_s110_spi_5W_pca10028</state>
+          <state>$PROJ_DIR$\..\..\..\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_dtm</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_slave</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\scheduler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\struct_ser\s110</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport\ser_phy</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport\ser_phy\config</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s110\middleware</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\codecs\s110\serializers</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\hal</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\s110\headers</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -754,7 +785,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-      <state>$PROJ_DIR$\ble_connectivity_iar_nrf51.icf</state>
+      <state>$PROJ_DIR$\ble_connectivity_iar_nRF5x.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1349,6 +1380,9 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\ser_conn_pkt_decoder.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\connectivity\ser_conn_reset_cmd_decoder.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\serialization\common\transport\ser_hal_transport.c</name>
     </file>
     <file>
@@ -1385,7 +1419,7 @@
   <group>
   <name>nRF_Drivers</name>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>
@@ -1394,7 +1428,10 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_slave\spi_slave.c</name>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\spi_slave\nrf_drv_spis.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</name>
     </file>
   </group>
   <group>

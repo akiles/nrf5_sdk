@@ -7,7 +7,7 @@ All rights reserved.
 #include "dfu_transport.h"
 #include "dfu.h"
 #include <dfu_types.h>
-#include "nrf51.h"
+#include "nrf.h"
 #include "nrf_sdm.h"
 #include "nrf_gpio.h"
 #include "nrf_delay.h"
@@ -22,7 +22,6 @@ All rights reserved.
 #include "softdevice_handler.h"
 #include "nordic_common.h"
 #include "app_timer.h"
-#include "hci_mem_pool.h"
 #include "crc.h"
 #include "pstorage.h"
 
@@ -1036,7 +1035,7 @@ static void services_init(void)
         m_friendly_name
     };
 
-    antfs_init(&params);
+    antfs_init(&params, NULL);
     antfs_channel_setup();
 
     /* adjust coex settings

@@ -17,7 +17,7 @@
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x8000) CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll>UL2CM3(-UM0049BUE -O4175 -S0 -C0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC800 -FN1 -FF0nRF5Prog -FS00 -FL08000)</FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-UM0364FCE -O78 -S0 -C0 -TO18 -TC16000000 -TP21 -TDS800D -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC2000 -FN1 -FF0nRF51xxx -FS00 -FL0200000)</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>core.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
@@ -353,7 +353,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> __HEAP_SIZE=0 BLE_STACK_SUPPORT_REQD S130 BOARD_PCA10028 BSP_UART_SUPPORT NRF51 SOFTDEVICE_PRESENT SWI_DISABLE0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config;..\..\..\..\..\..\..\components\softdevice\s130\headers;..\..\..\..\..\..\bsp;..\..\..\..\..\..\..\components\ble\common;..\..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\..\components\ble\device_manager;..\..\..\..\..\..\..\components\ble\ble_services\ble_rscs_c;..\..\..\..\..\..\..\components\device;..\..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\..\components\ble\ble_db_discovery;..\..\..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\..\components\drivers_nrf\pstorage;..\..\..\..\..\..\..\components\libraries\trace</IncludePath>
+              <IncludePath>..\..\..\config\ble_app_rscs_c_s130_pca10028;..\..\..\config;..\..\..\..\..\..\bsp;..\..\..\..\..\..\..\components\device;..\..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\..\components\ble\ble_db_discovery;..\..\..\..\..\..\..\components\ble\ble_services\ble_rscs_c;..\..\..\..\..\..\..\components\ble\common;..\..\..\..\..\..\..\components\ble\device_manager;..\..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\..\components\drivers_nrf\delay;..\..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\..\components\drivers_nrf\pstorage;..\..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\..\components\libraries\trace;..\..\..\..\..\..\..\components\libraries\uart;..\..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\..\..\components\softdevice\s130\headers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -381,6 +381,7 @@
             <useFile>0</useFile>
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x00000000</DataAddressRange>
+            <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -937,7 +938,7 @@
             <File>
               <FileName>app_uart_fifo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\..\components\drivers_nrf\uart\app_uart_fifo.c</FilePath>
+              <FilePath>..\..\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -983,7 +984,7 @@
             <File>
               <FileName>nrf_delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</FilePath>
+              <FilePath>..\..\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -1076,6 +1077,52 @@
               <FileName>nrf_drv_gpiote.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>1</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+            <File>
+              <FileName>nrf_drv_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -1593,7 +1640,7 @@
       </Groups>
     </Target>    
     <Target>
-      <TargetName>flash_softdevice</TargetName>
+      <TargetName>flash_s130_nrf51_1.0.0_softdevice</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -1603,7 +1650,7 @@
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x8000) CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll>UL2CM3(-UM0049BUE -O4175 -S0 -C0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD20000000 -FC800 -FN1 -FF0nRF5Prog -FS00 -FL08000)</FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-UM0364FCE -O78 -S0 -C0 -TO18 -TC16000000 -TP21 -TDS800D -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC2000 -FN1 -FF0nRF51xxx -FS00 -FL0200000)</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>core.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
@@ -1615,7 +1662,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile></SFDFile>
+          <SFDFile>..\..\..\..\..\..\..\SVD\nrf51.xml</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -1631,7 +1678,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>..\..\..\..\..\..\..\components\softdevice\s130\hex\</OutputDirectory>
-          <OutputName>s130_softdevice.hex</OutputName>
+          <OutputName>s130_nrf51_1.0.0_softdevice.hex</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -1716,7 +1763,7 @@
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
           </Simulator>
           <Target>
-            <UseTarget>0</UseTarget>
+            <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -1937,9 +1984,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> __HEAP_SIZE=0 BLE_STACK_SUPPORT_REQD</Define>
+              <Define> __HEAP_SIZE=0 BLE_STACK_SUPPORT_REQD NRF51</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config</IncludePath>
+              <IncludePath>..\..\..\config\ble_app_rscs_c_s130_pca10028;..\..\..\config;..\..\..\..\..\..\..\components\device;..\..\..\..\..\..\..\components\toolchain</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1953,7 +2000,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define> __HEAP_SIZE=0 BLE_STACK_SUPPORT_REQD</Define>
+              <Define> __HEAP_SIZE=0 BLE_STACK_SUPPORT_REQD NRF51</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -1967,6 +2014,7 @@
             <useFile>0</useFile>
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x00000000</DataAddressRange>
+            <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -2523,7 +2571,7 @@
             <File>
               <FileName>app_uart_fifo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\..\components\drivers_nrf\uart\app_uart_fifo.c</FilePath>
+              <FilePath>..\..\..\..\..\..\..\components\libraries\uart\app_uart_fifo.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -2569,7 +2617,7 @@
             <File>
               <FileName>nrf_delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</FilePath>
+              <FilePath>..\..\..\..\..\..\..\components\drivers_nrf\delay\nrf_delay.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -2662,6 +2710,52 @@
               <FileName>nrf_drv_gpiote.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>0</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+            <File>
+              <FileName>nrf_drv_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\..\components\drivers_nrf\uart\nrf_drv_uart.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>

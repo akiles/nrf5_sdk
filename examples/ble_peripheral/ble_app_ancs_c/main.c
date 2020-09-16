@@ -42,7 +42,6 @@
 #include "nrf_gpio.h"
 #include "ble_srv_common.h"
 #include "ble_conn_params.h"
-#include "nrf51_bitfields.h"
 #include "device_manager.h"
 #include "app_button.h"
 #include "app_timer.h"
@@ -75,7 +74,6 @@
 #define ADV_INTERVAL_FAST_PERIOD        30                                          /**< The duration of the fast advertising period (in seconds). */
 
 #define APP_TIMER_PRESCALER             0                                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            (3 + BSP_APP_TIMERS_NUMBER)                 /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         5                                           /**< Size of timer operation queues. */
 
 #define MIN_CONN_INTERVAL               MSEC_TO_UNITS(500, UNIT_1_25_MS)            /**< Minimum acceptable connection interval (0.5 seconds). */
@@ -149,7 +147,7 @@ static uint8_t                   m_ancs_uuid_type;                         /**< 
 static dm_application_instance_t m_app_handle;                             /**< Application identifier allocated by the Device Manager. */
 static dm_handle_t               m_peer_handle;                            /**< Identifies the peer that is currently connected. */
 static ble_gap_sec_params_t      m_sec_param;                              /**< Security parameter for use in security requests. */
-static app_timer_id_t            m_sec_req_timer_id;                       /**< Security request timer. The timer lets us start pairing request if one does not arrive from the Central. */
+APP_TIMER_DEF(m_sec_req_timer_id);                                         /**< Security request timer. The timer lets us start pairing request if one does not arrive from the Central. */
 
 static ble_ancs_c_evt_notif_t m_notification_latest;                       /**< Local copy to keep track of the newest arriving notifications. */
 
@@ -306,7 +304,7 @@ static void timers_init(void)
     uint32_t err_code;
 
     // Initialize timer module, making it use the scheduler.
-    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, true);
+    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, true);
 
     // Create security request timer.
     err_code = app_timer_create(&m_sec_req_timer_id,
@@ -712,7 +710,7 @@ static void ble_stack_init(void)
     // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
+#if (defined(S130) || defined(S132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif
     err_code = sd_ble_enable(&ble_enable_params);
@@ -898,13 +896,11 @@ int main(void)
     uint32_t err_code;
 
     // Initialize.
-    app_trace_init();
     timers_init();
     uart_init();
     buttons_leds_init(&erase_bonds);
     ble_stack_init();
     APP_SCHED_INIT(SCHED_MAX_EVENT_DATA_SIZE, SCHED_QUEUE_SIZE);
-    printf("BLE ANCS\n");
     device_manager_init(erase_bonds);
     db_discovery_init();
     scheduler_init();
@@ -916,6 +912,8 @@ int main(void)
     // Start execution.
     err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
     APP_ERROR_CHECK(err_code);
+
+    printf("\r\nBLE ANCS\r\n");
 
     // Enter main loop.
     for (;;)

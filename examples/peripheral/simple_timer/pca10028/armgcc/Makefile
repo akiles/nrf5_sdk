@@ -23,14 +23,14 @@ NO_ECHO := @
 endif
 
 # Toolchain commands
-CC       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-gcc"
-AS       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-as"
-AR       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ar" -r
-LD       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ld"
-NM       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-nm"
-OBJDUMP  		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objdump"
-OBJCOPY  		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objcopy"
-SIZE    		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-size"
+CC              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-gcc'
+AS              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-as'
+AR              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ar' -r
+LD              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ld'
+NM              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-nm'
+OBJDUMP         := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objdump'
+OBJCOPY         := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objcopy'
+SIZE            := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-size'
 
 #function for removing duplicates in a list
 remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-out $(firstword $1),$1))))
@@ -43,7 +43,7 @@ $(abspath ../../../../../components/libraries/simple_timer/app_simple_timer.c) \
 $(abspath ../../../../../components/libraries/timer/app_timer.c) \
 $(abspath ../../../../../components/libraries/util/app_util_platform.c) \
 $(abspath ../../../../../components/libraries/util/nrf_assert.c) \
-$(abspath ../../../../../components/drivers_nrf/hal/nrf_delay.c) \
+$(abspath ../../../../../components/drivers_nrf/delay/nrf_delay.c) \
 $(abspath ../../../../../components/drivers_nrf/common/nrf_drv_common.c) \
 $(abspath ../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c) \
 $(abspath ../../../../../components/drivers_nrf/timer/nrf_drv_timer.c) \
@@ -56,20 +56,22 @@ $(abspath ../../../../../components/toolchain/system_nrf51.c) \
 ASM_SOURCE_FILES  = $(abspath ../../../../../components/toolchain/gcc/gcc_startup_nrf51.s)
 
 #includes common to all targets
-INC_PATHS  = -I$(abspath ../../config)
+INC_PATHS  = -I$(abspath ../../config/simple_timer_pca10028)
+INC_PATHS += -I$(abspath ../../config)
 INC_PATHS += -I$(abspath ../../../../bsp)
 INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/nrf_soc_nosd)
 INC_PATHS += -I$(abspath ../../../../../components/device)
 INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/hal)
 INC_PATHS += -I$(abspath ../../../../../components/libraries/button)
 INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/timer)
-INC_PATHS += -I$(abspath ../../../../../components/libraries/util)
+INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/delay)
 INC_PATHS += -I$(abspath ../..)
 INC_PATHS += -I$(abspath ../../../../../components/libraries/simple_timer)
 INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/common)
 INC_PATHS += -I$(abspath ../../../../../components/toolchain)
 INC_PATHS += -I$(abspath ../../../../../components/libraries/timer)
 INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/config)
+INC_PATHS += -I$(abspath ../../../../../components/libraries/util)
 INC_PATHS += -I$(abspath ../../../../../components/drivers_nrf/gpiote)
 INC_PATHS += -I$(abspath ../../../../../components/toolchain/gcc)
 
@@ -184,9 +186,9 @@ genhex:
 	$(NO_ECHO)$(OBJCOPY) -O ihex $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).hex
 
 echosize:
-	-@echo ""
+	-@echo ''
 	$(NO_ECHO)$(SIZE) $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
-	-@echo ""
+	-@echo ''
 
 clean:
 	$(RM) $(BUILD_DIRECTORIES)
@@ -196,6 +198,7 @@ cleanobj:
 
 flash: $(MAKECMDGOALS)
 	@echo Flashing: $(OUTPUT_BINARY_DIRECTORY)/$<.hex
-	nrfjprog --reset --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex
+	nrfjprog --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex -f nrf51  --chiperase
+	nrfjprog --reset
 
 ## Flash softdevice

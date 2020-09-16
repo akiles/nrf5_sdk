@@ -1,5 +1,5 @@
 /*
-This software is subject to the license described in the License.txt file
+This software is subject to the license described in the license.txt file
 included with this software distribution. You may not use this file except in compliance
 with this license.
 
@@ -70,7 +70,6 @@ All rights reserved.
 
 
 #define APP_TIMER_PRESCALER           0                                         /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS          1u                                        /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE       2u                                        /**< Size of timer operation queues. */
 
 #define BUTTON_DETECTION_DELAY        APP_TIMER_TICKS(50u, APP_TIMER_PRESCALER) /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
@@ -151,10 +150,7 @@ void button_event_handler(uint8_t pin_no, uint8_t button_action)
                 // Toggle the ste of the LED
                 m_led_change_counter++;
 
-                if(nrf_gpio_pin_read(BSP_LED_0) == 0)
-                    nrf_gpio_pin_set(BSP_LED_0);
-                else
-                    nrf_gpio_pin_clear(BSP_LED_0);
+                LEDS_INVERT(BSP_LED_0_MASK);
                 break;
             case BSP_BUTTON_1:
             {
@@ -182,7 +178,7 @@ void button_event_handler(uint8_t pin_no, uint8_t button_action)
 void button_init(void)
 {
     // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
 
     // Initialize and enable button handler module.
     static app_button_cfg_t buttons[] =
@@ -455,7 +451,7 @@ void ant_process_relay_slave(ant_evt_t* p_ant_event)
             // Channel has closed.
             // Re-initialize proximity search settings. 
             uint32_t err_code = sd_ant_prox_search_set(ANT_RELAY_SLAVE_CHANNEL, ANT_PROXIMITY_BIN, 0);
-            APP_ERROR_CHECK(err_code);      
+            APP_ERROR_CHECK(err_code);
             LEDS_OFF(BSP_LED_1_MASK);
             break;
         }
@@ -576,7 +572,7 @@ int main(void)
 
     // Enable SoftDevice.
     uint32_t err_code;
-    err_code = sd_softdevice_enable(NRF_CLOCK_LFCLKSRC_XTAL_50_PPM, softdevice_assert_callback);
+    err_code = sd_softdevice_enable(NRF_CLOCK_LFCLKSRC, softdevice_assert_callback);
     APP_ERROR_CHECK(err_code);
 
     // Set application IRQ to lowest priority.

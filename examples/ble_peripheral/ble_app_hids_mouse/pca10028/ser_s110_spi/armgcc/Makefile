@@ -23,14 +23,14 @@ NO_ECHO := @
 endif
 
 # Toolchain commands
-CC       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-gcc"
-AS       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-as"
-AR       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ar" -r
-LD       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ld"
-NM       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-nm"
-OBJDUMP  		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objdump"
-OBJCOPY  		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objcopy"
-SIZE    		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-size"
+CC              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-gcc'
+AS              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-as'
+AR              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ar' -r
+LD              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ld'
+NM              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-nm'
+OBJDUMP         := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objdump'
+OBJCOPY         := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objcopy'
+SIZE            := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-size'
 
 #function for removing duplicates in a list
 remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-out $(firstword $1),$1))))
@@ -39,7 +39,6 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 C_SOURCE_FILES += \
 $(abspath ../../../../../../components/serialization/application/codecs/s110/serializers/app_ble_gap_sec_keys.c) \
 $(abspath ../../../../../../components/serialization/application/codecs/s110/serializers/app_ble_user_mem.c) \
-$(abspath ../../../../../../components/serialization/application/transport/app_mailbox.c) \
 $(abspath ../../../../../../components/serialization/application/codecs/s110/middleware/app_mw_ble.c) \
 $(abspath ../../../../../../components/serialization/application/codecs/s110/middleware/app_mw_ble_gap.c) \
 $(abspath ../../../../../../components/serialization/application/codecs/s110/middleware/app_mw_ble_gattc.c) \
@@ -151,13 +150,14 @@ $(abspath ../../../../../../components/serialization/application/codecs/s110/ser
 $(abspath ../../../../../../components/serialization/application/hal/ser_app_hal_nrf51.c) \
 $(abspath ../../../../../../components/serialization/application/hal/ser_app_power_system_off.c) \
 $(abspath ../../../../../../components/serialization/common/transport/ser_hal_transport.c) \
-$(abspath ../../../../../../components/serialization/common/transport/ser_phy/ser_phy_nrf51_spi_master.c) \
+$(abspath ../../../../../../components/serialization/common/transport/ser_phy/ser_phy_nrf51_nrf_drv_spi.c) \
 $(abspath ../../../../../../components/serialization/application/transport/ser_sd_transport.c) \
 $(abspath ../../../../../../components/serialization/application/transport/ser_softdevice_handler.c) \
 $(abspath ../../../../../../components/serialization/application/codecs/s110/serializers/temp_get.c) \
 $(abspath ../../../../../../components/libraries/button/app_button.c) \
 $(abspath ../../../../../../components/libraries/util/app_error.c) \
 $(abspath ../../../../../../components/libraries/fifo/app_fifo.c) \
+$(abspath ../../../../../../components/libraries/mailbox/app_mailbox.c) \
 $(abspath ../../../../../../components/libraries/scheduler/app_scheduler.c) \
 $(abspath ../../../../../../components/libraries/timer/app_timer.c) \
 $(abspath ../../../../../../components/libraries/timer/app_timer_appsh.c) \
@@ -166,14 +166,15 @@ $(abspath ../../../../../../components/libraries/util/app_util_platform.c) \
 $(abspath ../../../../../../components/libraries/util/nrf_assert.c) \
 $(abspath ../../../../../../components/libraries/uart/retarget.c) \
 $(abspath ../../../../../../components/libraries/sensorsim/sensorsim.c) \
-$(abspath ../../../../../../components/drivers_nrf/uart/app_uart_fifo.c) \
+$(abspath ../../../../../../components/libraries/uart/app_uart_fifo.c) \
 $(abspath ../../../../../../components/drivers_nrf/ble_flash/ble_flash.c) \
-$(abspath ../../../../../../components/drivers_nrf/hal/nrf_delay.c) \
+$(abspath ../../../../../../components/drivers_nrf/delay/nrf_delay.c) \
 $(abspath ../../../../../../components/drivers_nrf/common/nrf_drv_common.c) \
 $(abspath ../../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c) \
+$(abspath ../../../../../../components/drivers_nrf/spi_master/nrf_drv_spi.c) \
+$(abspath ../../../../../../components/drivers_nrf/uart/nrf_drv_uart.c) \
 $(abspath ../../../../../../components/drivers_nrf/nrf_soc_nosd/nrf_soc.c) \
 $(abspath ../../../../../../components/drivers_nrf/pstorage/pstorage_nosd.c) \
-$(abspath ../../../../../../components/drivers_nrf/spi_master/spi_master.c) \
 $(abspath ../../../../../bsp/bsp.c) \
 $(abspath ../../../../../bsp/bsp_btn_ble.c) \
 $(abspath ../../../main.c) \
@@ -193,32 +194,36 @@ $(abspath ../../../../../../components/softdevice/common/softdevice_handler/soft
 ASM_SOURCE_FILES  = $(abspath ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s)
 
 #includes common to all targets
-INC_PATHS  = -I$(abspath ../../../config)
-INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/transport/ser_phy/config)
+INC_PATHS  = -I$(abspath ../../../config/ble_app_hids_mouse_s110_spi_pca10028)
+INC_PATHS += -I$(abspath ../../../config)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/scheduler)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/spi_master)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/config)
 INC_PATHS += -I$(abspath ../../../../../bsp)
 INC_PATHS += -I$(abspath ../../../../../../components/libraries/fifo)
 INC_PATHS += -I$(abspath ../../../../../../components/ble/ble_services/ble_hids)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/delay)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/common)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/mailbox)
 INC_PATHS += -I$(abspath ../../../../../../components/libraries/util)
-INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/pstorage)
+INC_PATHS += -I$(abspath ../../../../../../components/ble/device_manager)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/uart)
 INC_PATHS += -I$(abspath ../../../../../../components/ble/common)
 INC_PATHS += -I$(abspath ../../../../../../components/libraries/sensorsim)
-INC_PATHS += -I$(abspath ../../../../../../components/libraries/button)
-INC_PATHS += -I$(abspath ../../../../../../components/ble/device_manager)
+INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/pstorage)
 INC_PATHS += -I$(abspath ../../../../../../components/ble/ble_services/ble_dis)
 INC_PATHS += -I$(abspath ../../../../../../components/device)
-INC_PATHS += -I$(abspath ../../../../../../components/ble/ble_services/ble_bas)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/uart)
+INC_PATHS += -I$(abspath ../../../../../../components/libraries/button)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/application/codecs/s110/serializers)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/ble_flash)
 INC_PATHS += -I$(abspath ../../../../../../components/libraries/timer)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/struct_ser/s110)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/transport/ser_phy)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/transport/ser_phy/config)
 INC_PATHS += -I$(abspath ../../../../../../components/softdevice/s110/headers)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/gpiote)
-INC_PATHS += -I$(abspath ../../../../../../components/libraries/scheduler)
-INC_PATHS += -I$(abspath ../../../../../../components/serialization/application/transport)
+INC_PATHS += -I$(abspath ../../../../../../components/softdevice/common/softdevice_handler)
 INC_PATHS += -I$(abspath ../../../../../../components/drivers_nrf/hal)
 INC_PATHS += -I$(abspath ../../../../../../components/toolchain/gcc)
 INC_PATHS += -I$(abspath ../../../../../../components/toolchain)
@@ -227,8 +232,8 @@ INC_PATHS += -I$(abspath ../../../../../../components/ble/ble_advertising)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/transport)
 INC_PATHS += -I$(abspath ../../../../../../components/libraries/trace)
 INC_PATHS += -I$(abspath ../../../../../../components/serialization/application/hal)
-INC_PATHS += -I$(abspath ../../../../../../components/serialization/common/struct_ser/s110)
-INC_PATHS += -I$(abspath ../../../../../../components/softdevice/common/softdevice_handler)
+INC_PATHS += -I$(abspath ../../../../../../components/ble/ble_services/ble_bas)
+INC_PATHS += -I$(abspath ../../../../../../components/serialization/application/transport)
 
 OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)
@@ -353,9 +358,9 @@ genhex:
 	$(NO_ECHO)$(OBJCOPY) -O ihex $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).hex
 
 echosize:
-	-@echo ""
+	-@echo ''
 	$(NO_ECHO)$(SIZE) $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
-	-@echo ""
+	-@echo ''
 
 clean:
 	$(RM) $(BUILD_DIRECTORIES)
@@ -365,6 +370,7 @@ cleanobj:
 
 flash: $(MAKECMDGOALS)
 	@echo Flashing: $(OUTPUT_BINARY_DIRECTORY)/$<.hex
-	nrfjprog --reset --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex
+	nrfjprog --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex -f nrf51  --chiperase
+	nrfjprog --reset
 
 ## Flash softdevice

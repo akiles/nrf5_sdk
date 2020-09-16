@@ -28,6 +28,8 @@
 #include "nrf_gpio.h"
 #include "pstorage.h"
 #include "device_manager.h"
+#include "bsp.h"
+#include "bsp_btn_ble.h"
 #include "app_trace.h"
 #include "app_util.h"
 
@@ -169,7 +171,7 @@ static ret_code_t device_manager_event_handler(const dm_handle_t    * p_handle,
         {
             dm_handle_t handle = (*p_handle);
             APPL_LOG("[APPL]:[0x%02X] >> DM_EVT_SECURITY_SETUP\r\n", p_handle->connection_id);
-            // Slave securtiy request received from peer, if from a non bonded device, 
+            // Slave securtiy request received from peer, if from a non bonded device,
             // initiate security setup, else, wait for encryption to complete.
             err_code = dm_security_setup_req(&handle);
             APP_ERROR_CHECK(err_code);
@@ -383,7 +385,7 @@ static void ble_stack_init(void)
     // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
+#if (defined(S130) || defined(S132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif
     ble_enable_params.gatts_enable_params.service_changed = false;
@@ -480,11 +482,11 @@ static void scan_start(void)
 {
     uint32_t err_code;
     uint32_t count;
-    // Verify if there is any flash access pending, if yes delay starting scanning until 
+    // Verify if there is any flash access pending, if yes delay starting scanning until
     // it's complete.
     err_code = pstorage_access_status_get(&count);
     APP_ERROR_CHECK(err_code);
-    
+
     if (count != 0)
     {
         m_memory_access_in_progress = true;

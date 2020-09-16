@@ -1,4 +1,4 @@
-PROJECT_NAME := ble_app_hrs_rscs_relay_s130_pca10028
+PROJECT_NAME := ble_app_hrs_rscs_relay_pca10028
 
 export OUTPUT_FILENAME
 #MAKEFILE_NAME := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
@@ -23,47 +23,65 @@ NO_ECHO := @
 endif
 
 # Toolchain commands
-CC       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-gcc"
-AS       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-as"
-AR       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ar" -r
-LD       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ld"
-NM       		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-nm"
-OBJDUMP  		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objdump"
-OBJCOPY  		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objcopy"
-SIZE    		:= "$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-size"
+CC              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-gcc'
+AS              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-as'
+AR              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ar' -r
+LD              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-ld'
+NM              := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-nm'
+OBJDUMP         := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objdump'
+OBJCOPY         := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-objcopy'
+SIZE            := '$(GNU_INSTALL_ROOT)/bin/$(GNU_PREFIX)-size'
 
 #function for removing duplicates in a list
 remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-out $(firstword $1),$1))))
 
 #source common to all targets
 C_SOURCE_FILES += \
+$(abspath ../../../../../../../components/drivers_ext/segger_rtt/RTT_Syscalls_GCC.c) \
+$(abspath ../../../../../../../components/drivers_ext/segger_rtt/SEGGER_RTT.c) \
+$(abspath ../../../../../../../components/drivers_ext/segger_rtt/SEGGER_RTT_printf.c) \
 $(abspath ../../../../../../../components/libraries/button/app_button.c) \
 $(abspath ../../../../../../../components/libraries/util/app_error.c) \
-$(abspath ../../../../../../../components/libraries/fifo/app_fifo.c) \
 $(abspath ../../../../../../../components/libraries/timer/app_timer.c) \
 $(abspath ../../../../../../../components/libraries/trace/app_trace.c) \
+$(abspath ../../../../../../../components/libraries/fds/fds.c) \
+$(abspath ../../../../../../../components/libraries/fstorage/fstorage.c) \
 $(abspath ../../../../../../../components/libraries/util/nrf_assert.c) \
+$(abspath ../../../../../../../components/libraries/util/nrf_log.c) \
 $(abspath ../../../../../../../components/libraries/uart/retarget.c) \
-$(abspath ../../../../../../../components/drivers_nrf/uart/app_uart_fifo.c) \
-$(abspath ../../../../../../../components/drivers_nrf/hal/nrf_delay.c) \
+$(abspath ../../../../../../../components/libraries/util/sdk_mapped_flags.c) \
+$(abspath ../../../../../../../components/libraries/uart/app_uart.c) \
+$(abspath ../../../../../../../components/drivers_nrf/delay/nrf_delay.c) \
 $(abspath ../../../../../../../components/drivers_nrf/common/nrf_drv_common.c) \
 $(abspath ../../../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c) \
+$(abspath ../../../../../../../components/drivers_nrf/uart/nrf_drv_uart.c) \
 $(abspath ../../../../../../../components/drivers_nrf/pstorage/pstorage.c) \
 $(abspath ../../../../../../bsp/bsp.c) \
 $(abspath ../../../../../../bsp/bsp_btn_ble.c) \
 $(abspath ../../../main.c) \
 $(abspath ../../../../../../../components/ble/common/ble_advdata.c) \
 $(abspath ../../../../../../../components/ble/ble_advertising/ble_advertising.c) \
-$(abspath ../../../../../../../components/ble/ble_services/ble_bas/ble_bas.c) \
-$(abspath ../../../../../../../components/ble/ble_services/ble_bas_c/ble_bas_c.c) \
 $(abspath ../../../../../../../components/ble/common/ble_conn_params.c) \
+$(abspath ../../../../../../../components/ble/common/ble_conn_state.c) \
 $(abspath ../../../../../../../components/ble/ble_db_discovery/ble_db_discovery.c) \
 $(abspath ../../../../../../../components/ble/ble_services/ble_hrs/ble_hrs.c) \
 $(abspath ../../../../../../../components/ble/ble_services/ble_hrs_c/ble_hrs_c.c) \
 $(abspath ../../../../../../../components/ble/ble_services/ble_rscs/ble_rscs.c) \
 $(abspath ../../../../../../../components/ble/ble_services/ble_rscs_c/ble_rscs_c.c) \
 $(abspath ../../../../../../../components/ble/common/ble_srv_common.c) \
-$(abspath ../../../../../../../components/ble/device_manager/device_manager_central.c) \
+$(abspath ../../../../../../../components/ble/peer_manager/gatt_cache_manager.c) \
+$(abspath ../../../../../../../components/ble/peer_manager/gattc_cache_manager.c) \
+$(abspath ../../../../../../../components/ble/peer_manager/gatts_cache_manager.c) \
+$(abspath ../../../../../../../components/ble/peer_manager/id_manager.c) \
+$(abspath ../../../../../../../components/ble/peer_manager/peer_data.c) \
+$(abspath ../../../../../../../components/ble/peer_manager/peer_data_storage.c) \
+$(abspath ../../../../../../../components/ble/peer_manager/peer_database.c) \
+$(abspath ../../../../../../../components/ble/peer_manager/peer_id.c) \
+$(abspath ../../../../../../../components/ble/peer_manager/peer_manager.c) \
+$(abspath ../../../../../../../components/ble/peer_manager/pm_buffer.c) \
+$(abspath ../../../../../../../components/ble/peer_manager/pm_mutex.c) \
+$(abspath ../../../../../../../components/ble/peer_manager/security_dispatcher.c) \
+$(abspath ../../../../../../../components/ble/peer_manager/security_manager.c) \
 $(abspath ../../../../../../../components/toolchain/system_nrf51.c) \
 $(abspath ../../../../../../../components/softdevice/common/softdevice_handler/softdevice_handler.c) \
 
@@ -72,28 +90,31 @@ ASM_SOURCE_FILES  = $(abspath ../../../../../../../components/toolchain/gcc/gcc_
 
 #includes common to all targets
 INC_PATHS  = -I$(abspath ../../../config)
+INC_PATHS += -I$(abspath ../../../../../../../components/libraries/timer)
 INC_PATHS += -I$(abspath ../../../../../../../components/drivers_nrf/common)
 INC_PATHS += -I$(abspath ../../../../../../../components/softdevice/common/softdevice_handler)
-INC_PATHS += -I$(abspath ../../../../../../../components/ble/ble_services/ble_bas_c)
+INC_PATHS += -I$(abspath ../../../../../../../components/libraries/experimental_section_vars)
 INC_PATHS += -I$(abspath ../../../../../../../components/drivers_nrf/hal)
 INC_PATHS += -I$(abspath ../../../../../../../components/ble/common)
-INC_PATHS += -I$(abspath ../../../../../../../components/libraries/fifo)
 INC_PATHS += -I$(abspath ../../../../../../../components/libraries/trace)
-INC_PATHS += -I$(abspath ../../../../../../../components/ble/ble_services/ble_hrs)
+INC_PATHS += -I$(abspath ../../../../../../../components/drivers_nrf/pstorage)
+INC_PATHS += -I$(abspath ../../../../../../../components/device)
+INC_PATHS += -I$(abspath ../../../../../../../components/libraries/uart)
 INC_PATHS += -I$(abspath ../../../../../../../components/drivers_nrf/config)
+INC_PATHS += -I$(abspath ../../../../../../../components/libraries/fds)
 INC_PATHS += -I$(abspath ../../../../../../../components/ble/ble_services/ble_rscs)
 INC_PATHS += -I$(abspath ../../../../../../../components/drivers_nrf/uart)
 INC_PATHS += -I$(abspath ../../../../../../../components/ble/ble_services/ble_rscs_c)
-INC_PATHS += -I$(abspath ../../../../../../../components/device)
+INC_PATHS += -I$(abspath ../../../../../../../components/ble/ble_services/ble_hrs)
 INC_PATHS += -I$(abspath ../../../../../../../components/ble/ble_db_discovery)
-INC_PATHS += -I$(abspath ../../../../../../../components/ble/ble_services/ble_bas)
-INC_PATHS += -I$(abspath ../../../../../../../components/drivers_nrf/pstorage)
+INC_PATHS += -I$(abspath ../../../../../../../components/ble/peer_manager)
 INC_PATHS += -I$(abspath ../../../../../../../components/softdevice/s130/headers)
 INC_PATHS += -I$(abspath ../../../../../../../components/toolchain/gcc)
+INC_PATHS += -I$(abspath ../../../../../../../components/drivers_nrf/delay)
 INC_PATHS += -I$(abspath ../../../../../../../components/ble/ble_services/ble_hrs_c)
-INC_PATHS += -I$(abspath ../../../../../../../components/ble/device_manager)
 INC_PATHS += -I$(abspath ../../../../../../../components/drivers_nrf/gpiote)
-INC_PATHS += -I$(abspath ../../../../../../../components/libraries/timer)
+INC_PATHS += -I$(abspath ../../../../../../../components/libraries/fstorage)
+INC_PATHS += -I$(abspath ../../../../../../../components/drivers_ext/segger_rtt)
 INC_PATHS += -I$(abspath ../../../../../../../components/libraries/button)
 INC_PATHS += -I$(abspath ../../../../../../../components/ble/ble_advertising)
 INC_PATHS += -I$(abspath ../../../../../../../components/libraries/util)
@@ -108,14 +129,13 @@ OUTPUT_BINARY_DIRECTORY = $(OBJECT_DIRECTORY)
 BUILD_DIRECTORIES := $(sort $(OBJECT_DIRECTORY) $(OUTPUT_BINARY_DIRECTORY) $(LISTING_DIRECTORY) )
 
 #flags common to all targets
-CFLAGS  = -DSWI_DISABLE0
+CFLAGS  = -DNRF_LOG_USES_RTT=1
 CFLAGS += -DBOARD_PCA10028
 CFLAGS += -DSOFTDEVICE_PRESENT
 CFLAGS += -DNRF51
-CFLAGS += -D__HEAP_SIZE=0
 CFLAGS += -DS130
 CFLAGS += -DBLE_STACK_SUPPORT_REQD
-CFLAGS += -DBSP_UART_SUPPORT
+CFLAGS += -DSWI_DISABLE0
 CFLAGS += -mcpu=cortex-m0
 CFLAGS += -mthumb -mabi=aapcs --std=gnu99
 CFLAGS += -Wall -Werror -O3
@@ -135,26 +155,25 @@ LDFLAGS += --specs=nano.specs -lc -lnosys
 
 # Assembler flags
 ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DSWI_DISABLE0
+ASMFLAGS += -DNRF_LOG_USES_RTT=1
 ASMFLAGS += -DBOARD_PCA10028
 ASMFLAGS += -DSOFTDEVICE_PRESENT
 ASMFLAGS += -DNRF51
-ASMFLAGS += -D__HEAP_SIZE=0
 ASMFLAGS += -DS130
 ASMFLAGS += -DBLE_STACK_SUPPORT_REQD
-ASMFLAGS += -DBSP_UART_SUPPORT
+ASMFLAGS += -DSWI_DISABLE0
 #default target - first one defined
-default: clean nrf51422_xxac_s130
+default: clean nrf51422_xxaa_s130
 
 #building all targets
 all: clean
 	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e cleanobj
-	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf51422_xxac_s130
+	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf51422_xxaa_s130
 
 #target for printing all targets
 help:
 	@echo following targets are available:
-	@echo 	nrf51422_xxac_s130
+	@echo 	nrf51422_xxaa_s130
 	@echo 	flash_softdevice
 
 
@@ -171,9 +190,9 @@ vpath %.s $(ASM_PATHS)
 
 OBJECTS = $(C_OBJECTS) $(ASM_OBJECTS)
 
-nrf51422_xxac_s130: OUTPUT_FILENAME := nrf51422_xxac_s130
-nrf51422_xxac_s130: LINKER_SCRIPT=ble_app_hrs_rscs_relay_gcc_nrf51.ld
-nrf51422_xxac_s130: $(BUILD_DIRECTORIES) $(OBJECTS)
+nrf51422_xxaa_s130: OUTPUT_FILENAME := nrf51422_xxaa_s130
+nrf51422_xxaa_s130: LINKER_SCRIPT=ble_app_hrs_rscs_relay_gcc_nrf51.ld
+nrf51422_xxaa_s130: $(BUILD_DIRECTORIES) $(OBJECTS)
 	@echo Linking target: $(OUTPUT_FILENAME).out
 	$(NO_ECHO)$(CC) $(LDFLAGS) $(OBJECTS) $(LIBS) -o $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
 	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e finalize
@@ -222,9 +241,9 @@ genhex:
 	$(NO_ECHO)$(OBJCOPY) -O ihex $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).hex
 
 echosize:
-	-@echo ""
+	-@echo ''
 	$(NO_ECHO)$(SIZE) $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
-	-@echo ""
+	-@echo ''
 
 clean:
 	$(RM) $(BUILD_DIRECTORIES)
@@ -234,9 +253,11 @@ cleanobj:
 
 flash: $(MAKECMDGOALS)
 	@echo Flashing: $(OUTPUT_BINARY_DIRECTORY)/$<.hex
-	nrfjprog --reset --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex
+	nrfjprog --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex -f nrf51  --sectorerase
+	nrfjprog --reset
 
 ## Flash softdevice
-flash_softdevice: 
-	@echo Flashing: s130_softdevice.hex
-	nrfjprog --reset --program ../../../../../../../components/softdevice/s130/hex/s130_softdevice.hex
+flash_softdevice:
+	@echo Flashing: s130_nrf51_1.0.0_softdevice.hex
+	nrfjprog --program ../../../../../../../components/softdevice/s130/hex/s130_nrf51_1.0.0_softdevice.hex -f nrf51 --chiperase
+	nrfjprog --reset

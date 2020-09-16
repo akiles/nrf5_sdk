@@ -13,7 +13,7 @@
 #ifndef ANT_STACK_CONFIG_H__
 #define ANT_STACK_CONFIG_H__
 
-#include "stdint.h"
+#include <stdint.h>
 
 /**
  * @file

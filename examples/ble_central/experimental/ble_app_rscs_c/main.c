@@ -42,7 +42,6 @@
 #define BOND_DELETE_ALL_BUTTON_ID 0                                  /**< Button used for deleting all bonded centrals during startup. */
 
 #define APP_TIMER_PRESCALER       0                                  /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS      (2 + BSP_APP_TIMERS_NUMBER)        /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE   2                                  /**< Size of timer operation queues. */
 
 #define APPL_LOG                  app_trace_log                      /**< Debug logger macro that will be used in this file to do logging of debug information over UART. */
@@ -816,7 +815,7 @@ int main(void)
     bool erase_bonds;
 
     // Initialize.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
     buttons_leds_init(&erase_bonds);
     uart_init();
     printf("Running Speed collector example\r\n");

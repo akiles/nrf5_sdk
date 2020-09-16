@@ -92,10 +92,10 @@ static sensorsim_state_t                  m_heart_rate_sim_state;               
 static sensorsim_cfg_t                    m_rr_interval_sim_cfg;                     /**< RR Interval sensor simulator configuration. */
 static sensorsim_state_t                  m_rr_interval_sim_state;                   /**< RR Interval sensor simulator state. */
 
-static app_timer_id_t                     m_battery_timer_id;                        /**< Battery timer. */
-static app_timer_id_t                     m_heart_rate_timer_id;                     /**< Heart rate measurement timer. */
-static app_timer_id_t                     m_rr_interval_timer_id;                    /**< RR interval timer. */
-static app_timer_id_t                     m_sensor_contact_timer_id;                 /**< Sensor contact detected timer. */
+APP_TIMER_DEF(m_battery_timer_id);                                                   /**< Battery timer. */
+APP_TIMER_DEF(m_heart_rate_timer_id);                                                /**< Heart rate measurement timer. */
+APP_TIMER_DEF(m_rr_interval_timer_id);                                               /**< RR interval timer. */
+APP_TIMER_DEF(m_sensor_contact_timer_id);                                            /**< Sensor contact detected timer. */
 
 
 /**@brief Function for performing a battery measurement, and updating the Battery Level characteristic in the Battery Service.
@@ -501,9 +501,9 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             break;
 
         case BLE_GAP_EVT_SEC_PARAMS_REQUEST:
-            s_sec_keyset.keys_central.p_enc_key = NULL;
-            s_sec_keyset.keys_central.p_id_key  = NULL;
-            s_sec_keyset.keys_central.p_enc_key = NULL;
+            s_sec_keyset.keys_central.p_enc_key  = NULL;
+            s_sec_keyset.keys_central.p_id_key   = NULL;
+            s_sec_keyset.keys_central.p_sign_key = NULL;
             err_code = sd_ble_gap_sec_params_reply(s_conn_handle, 
                                                    BLE_GAP_SEC_STATUS_SUCCESS,        
                                                    &m_sec_params,
@@ -597,7 +597,7 @@ void ble_stack_start(void)
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
+#if (defined(S130) || defined(S132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
@@ -650,9 +650,6 @@ void ble_hrs_app_stop(void)
     APP_ERROR_CHECK(err_code);
 
     err_code = app_timer_stop(m_sensor_contact_timer_id);
-    APP_ERROR_CHECK(err_code);
-    
-    err_code = app_button_disable();
     APP_ERROR_CHECK(err_code);
 }
 

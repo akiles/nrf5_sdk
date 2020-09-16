@@ -82,13 +82,21 @@ typedef struct
 } ble_beacon_scanner_init_t;
 
 
-/**@brief Function for handling SoftDevice events.
+/**@brief Function for handling system events.
  *
- * @details Handles all events from the SoftDevice of interest to the Scanner module.
+ * @details Handles all events from the system of interest to the Scanner module.
  *
  * @param[in]   event     received event.
  */
-void app_beacon_scanner_sd_evt_signal_handler(uint32_t event);
+void app_beacon_scanner_on_sys_evt(uint32_t event);
+
+/**@brief Function for handling BLE events.
+ *
+ * @details Handles all events from the Softdevice of interest to the Scanner module.
+ *
+ * @param[in]   p_ble_evt     received event.
+ */
+void app_beacon_scanner_on_ble_evt(ble_evt_t * p_ble_evt);
 
 
 /**@brief Function for initializing the scanner module.

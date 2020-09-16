@@ -16,9 +16,15 @@
 #include "nrf_qdec.h"
 
 // ToDo: Move #defines to bsp.h
+#ifdef NRF51
 #define QENC_CONFIG_PIO_LED         4
 #define QENC_CONFIG_PIO_A           6
 #define QENC_CONFIG_PIO_B           5
+#elif defined NRF52
+#define QENC_CONFIG_PIO_LED         29
+#define QENC_CONFIG_PIO_A           31
+#define QENC_CONFIG_PIO_B           30
+#endif
 #define QENC_CONFIG_PIO_PULL_CFG    NRF_GPIO_PIN_NOPULL
 
 /**@brief quadrature encoder simulator initialization.

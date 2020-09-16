@@ -35,7 +35,6 @@
 #define DEVICE_NAME                        "Multilink"                                /**< Name of device. Will be included in the advertising data. */
 
 #define APP_TIMER_PRESCALER                0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS               (1 + BSP_APP_TIMERS_NUMBER)                /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE            4                                          /**< Size of timer operation queues. */
 
 #define APP_ADV_INTERVAL                   MSEC_TO_UNITS(50, UNIT_0_625_MS)           /**< The advertising interval (in units of 0.625 ms. This value corresponds to 40 ms). */
@@ -317,11 +316,11 @@ static void ble_stack_init(void)
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
 
-#if defined(S110) || defined(S130)
+#if defined(S110) || defined(S130) || defined(S132)
     // Enable BLE stack. 
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
+#if (defined(S130) || defined(S132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
@@ -519,7 +518,7 @@ int main(void)
     bool erase_bonds;
 
     // Initialize.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
     buttons_leds_init(&erase_bonds);
     ble_stack_init();
     device_manager_init(erase_bonds);

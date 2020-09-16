@@ -129,7 +129,7 @@ static void db_discovery_evt_handler(ble_db_discovery_evt_t * p_evt)
 
         for (i = 0; i < p_evt->params.discovered_db.char_count; i++)
         {
-            ble_db_discovery_char_t * p_characteristic;
+            ble_gatt_db_char_t * p_characteristic;
 
             p_characteristic = &(p_evt->params.discovered_db.charateristics[i]);
 

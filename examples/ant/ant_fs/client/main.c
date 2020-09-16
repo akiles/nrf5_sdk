@@ -45,7 +45,6 @@ All rights reserved.
 #define ANTFS_CLIENT_NAME             { "Ref Design" }                                                                                 /**< Client's friendly name. */
 #define ANTFS_CLIENT_PASSKEY          {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10} /**< Client passkey. */
 
-#define APP_TIMER_MAX_TIMERS          (2u + BSP_APP_TIMERS_NUMBER)                                                                     /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE       4u                                                                                               /**< Size of timer operation queues. */ 
                                                                                            /**< Maximum number of users of the GPIOTE handler. */
 
@@ -552,7 +551,7 @@ static __INLINE void softdevice_setup(void)
 {
     printf("softdevice_setup\n");
     
-    uint32_t err_code = sd_softdevice_enable(NRF_CLOCK_LFCLKSRC_XTAL_50_PPM, 
+    uint32_t err_code = sd_softdevice_enable(NRF_CLOCK_LFCLKSRC, 
                                              softdevice_assert_callback);
     APP_ERROR_CHECK(err_code);
 
@@ -597,7 +596,7 @@ int main(void)
 #endif
 
     // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
       
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), button_event_handler);
     APP_ERROR_CHECK(err_code);

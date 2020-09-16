@@ -28,7 +28,6 @@
 #include "nrf.h"
 #include "app_error.h"
 #include "nrf_gpio.h"
-#include "nrf51_bitfields.h"
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
@@ -56,7 +55,7 @@
 #error "Not enough resources on board to run example"
 #endif
 
-#define UART_TX_BUF_SIZE 256                                                       /**< UART TX buffer size. */
+#define UART_TX_BUF_SIZE 1024                                                      /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE 1                                                         /**< UART RX buffer size. */
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                          /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
@@ -71,7 +70,6 @@
 #define APP_ADV_TIMEOUT_IN_SECONDS     180                                         /**< The advertising timeout in units of seconds. */
 
 #define APP_TIMER_PRESCALER            0                                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS           (5+BSP_APP_TIMERS_NUMBER)                   /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE        4                                           /**< Size of timer operation queues. */
 
 #define SECURITY_REQUEST_DELAY         APP_TIMER_TICKS(4000, APP_TIMER_PRESCALER)  /**< Delay after connection until Security Request is sent, if necessary (ticks). */
@@ -111,8 +109,8 @@ static ble_gls_t                       m_gls;                                   
 static sensorsim_cfg_t                 m_battery_sim_cfg;                         /**< Battery Level sensor simulator configuration. */
 static sensorsim_state_t               m_battery_sim_state;                       /**< Battery Level sensor simulator state. */
 
-static app_timer_id_t                  m_battery_timer_id;                         /**< Battery timer. */
-static app_timer_id_t                  m_sec_req_timer_id;                         /**< Security Request timer. */
+APP_TIMER_DEF(m_battery_timer_id);                                                /**< Battery timer. */
+APP_TIMER_DEF(m_sec_req_timer_id);                                                /**< Security Request timer. */
 
 static dm_application_instance_t       m_app_handle;                               /**< Application identifier allocated by device manager. */
 
@@ -284,7 +282,7 @@ static void timers_init(void)
     uint32_t err_code;
 
     // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
 
     // Create timers.
     err_code = app_timer_create(&m_battery_timer_id,
@@ -639,7 +637,7 @@ static void ble_stack_init(void)
     // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-#ifdef S130
+#if (defined(S130) || defined(S132))
     ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
 #endif	
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
@@ -853,7 +851,6 @@ int main(void)
     bool erase_bonds;
 
     // Initialize.
-    app_trace_init();
     timers_init();
     uart_init();
     buttons_leds_init(&erase_bonds);
@@ -869,6 +866,8 @@ int main(void)
     application_timers_start();
     err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
     APP_ERROR_CHECK(err_code);
+
+    printf("\r\nGLS Start!\r\n");    
 
     // Enter main loop.
     for (;;)
